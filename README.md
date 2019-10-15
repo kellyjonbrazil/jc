@@ -1,6 +1,5 @@
 # JC
-JSON CLI output utility
-v0.1
+JSON CLI output utility v0.1
 
 `jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. Parsers for `ls`, `ifconfig`, and `netstat` are currently included and more can be added via modules.
 
