@@ -9,11 +9,9 @@ setuptools.setup(
     author="Kelly Brazil",
     description="This tool serializes the output of popular command line tools to structured JSON output.",
     install_requires=[
-        collections,
-        ifconfigparser,
-        json
+        "ifconfigparser"
     ],
-    license='MIT',
+    license="MIT",
     long_description=long_description,
     long_description_content_type="text/markdown",
     python_requires='~=3.4',

@@ -1,3 +1,5 @@
-__all__ = ['ifconfig',
-           'ls',
-           'netstat']
+__all__ = [
+    'ifconfig',
+    'ls',
+    'netstat'
+]
