@@ -19,7 +19,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     entry_points={
         'console_scripts': [
-            'jc=jc:main',
+            'jc=jc.jc:main',
         ],
     },
     classifiers=[
