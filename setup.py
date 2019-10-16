@@ -17,7 +17,7 @@ setuptools.setup(
     python_requires='~=3.4',
     url='https://github.com/kellyjonbrazil/jc',
     packages=setuptools.find_packages(),
-    scripts=['jc/jc.py'],
+    scripts=['jc/jc'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
