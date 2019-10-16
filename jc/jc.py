@@ -6,9 +6,9 @@ Main input module
 
 import sys
 import json
-import jc.parsers.ifconfig
-import jc.parsers.ls
-import jc.parsers.netstat
+from parsers import ifconfig
+from parsers import ls
+from parsers import netstat
 
 def main():
     pretty = False
@@ -27,11 +27,11 @@ def main():
             pretty = True
 
     if arg == '--ifconfig':
-        result = jc.parsers.ifconfig.parse(data)
+        result = ifconfig.parse(data)
     elif arg == '--ls':
-        result = jc.parsers.ls.parse(data)
+        result = ls.parse(data)
     elif arg == '--netstat':
-        result = jc.parsers.netstat.parse(data)
+        result = netstat.parse(data)
 
     # output resulting dictionary as json
     if pretty:
