@@ -1,25 +1,26 @@
 import setuptools
 
-with open("README.md", "r") as f:
+with open('README.md', 'r') as f:
     long_description = f.read()
 
 setuptools.setup(
-    name="jc",
-    version="0.1",
-    author="Kelly Brazil",
-    description="This tool serializes the output of popular command line tools to structured JSON output.",
+    name='jc',
+    version='0.1',
+    author='Kelly Brazil',
+    description='This tool serializes the output of popular command line tools to structured JSON output.',
     install_requires=[
-        "ifconfigparser"
+        'ifconfigparser'
     ],
-    license="MIT",
+    license='MIT',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     python_requires='~=3.4',
-    url="https://github.com/kellyjonbrazil/jc",
+    url='https://github.com/kellyjonbrazil/jc',
     packages=setuptools.find_packages(),
+    scripts=['jc/jc.py'],
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ]
 )

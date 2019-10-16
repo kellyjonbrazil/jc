@@ -6,8 +6,9 @@ Main input module
 
 import sys
 import json
-import parsers
-from parsers import *
+import parsers.ifconfig
+import parsers.ls
+import parsers.netstat
 
 pretty = False
 data = sys.stdin.read()
