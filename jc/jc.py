@@ -6,9 +6,9 @@ Main input module
 
 import sys
 import json
-from parsers import ifconfig
-from parsers import ls
-from parsers import netstat
+from jc.parsers import ifconfig
+from jc.parsers import ls
+from jc.parsers import netstat
 
 def main():
     pretty = False

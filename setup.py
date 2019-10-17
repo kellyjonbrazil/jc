@@ -7,6 +7,7 @@ setuptools.setup(
     name='jc',
     version='0.1.1',
     author='Kelly Brazil',
+    author_email='kellyjonbrazil@gmail.com',
     description='This tool serializes the output of popular command line tools to structured JSON output.',
     install_requires=[
         'ifconfig-parser'
