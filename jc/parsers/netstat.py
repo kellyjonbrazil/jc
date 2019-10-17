@@ -21,7 +21,7 @@ $ netstat -p | jc --netstat -p
           "foreign_address": "lb-192-30-255-113",
           "foreign_port": "https",
           "state": "ESTABLISHED",
-          "pid": "53550",
+          "pid": 53550,
           "program_name": "git-remote-ht",
           "receive_q": 0,
           "send_q": 0
@@ -32,7 +32,7 @@ $ netstat -p | jc --netstat -p
           "foreign_address": "lb-192-30-255-113",
           "foreign_port": "https",
           "state": "ESTABLISHED",
-          "pid": "53550",
+          "pid": 53550,
           "program_name": "git-remote-ht",
           "receive_q": 0,
           "send_q": 0
@@ -53,7 +53,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "1594",
+          "pid": 1594,
           "program_name": "master",
           "receive_q": 0,
           "send_q": 0
@@ -64,7 +64,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "21918",
+          "pid": 21918,
           "program_name": "sshd",
           "receive_q": 0,
           "send_q": 0
@@ -77,7 +77,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "[::]",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "1594",
+          "pid": 1594,
           "program_name": "master",
           "receive_q": 0,
           "send_q": 0
@@ -88,7 +88,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "[::]",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "21918",
+          "pid": 21918,
           "program_name": "sshd",
           "receive_q": 0,
           "send_q": 0
@@ -102,7 +102,7 @@ $ netstat -lp | jc --netstat -p
           "local_port": "bootpc",
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
-          "pid": "13903",
+          "pid": 13903,
           "program_name": "dhclient",
           "receive_q": 0,
           "send_q": 0
@@ -112,7 +112,7 @@ $ netstat -lp | jc --netstat -p
           "local_port": "323",
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
-          "pid": "30926",
+          "pid": 30926,
           "program_name": "chronyd",
           "receive_q": 0,
           "send_q": 0
@@ -124,7 +124,7 @@ $ netstat -lp | jc --netstat -p
           "local_port": "323",
           "foreign_address": "[::]",
           "foreign_port": "*",
-          "pid": "30926",
+          "pid": 30926,
           "program_name": "chronyd",
           "receive_q": 0,
           "send_q": 0
@@ -168,10 +168,10 @@ def parse_line(entry):
             output_line['state'] = parsed_line[5]
             
             if len(parsed_line) > 6:
-                output_line['pid'] = parsed_line[6].split('/')[0]
+                output_line['pid'] = int(parsed_line[6].split('/')[0])
                 output_line['program_name'] = parsed_line[6].split('/')[1]
         else:
-            output_line['pid'] = parsed_line[5].split('/')[0]
+            output_line['pid'] = int(parsed_line[5].split('/')[0])
             output_line['program_name'] = parsed_line[5].split('/')[1]
 
     output_line['receive_q'] = int(parsed_line[1])

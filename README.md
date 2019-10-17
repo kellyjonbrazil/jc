@@ -1,5 +1,5 @@
 # JC
-JSON CLI output utility v0.1
+JSON CLI output utility
 
 `jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. Parsers for `ls`, `ifconfig`, and `netstat` are currently included and more can be added via modules.
 
@@ -140,7 +140,7 @@ $ netstat -p | jc --netstat -p
           "foreign_address": "lb-192-30-255-113",
           "foreign_port": "https",
           "state": "ESTABLISHED",
-          "pid": "53550",
+          "pid": 53550,
           "program_name": "git-remote-ht",
           "receive_q": 0,
           "send_q": 0
@@ -151,7 +151,7 @@ $ netstat -p | jc --netstat -p
           "foreign_address": "lb-192-30-255-113",
           "foreign_port": "https",
           "state": "ESTABLISHED",
-          "pid": "53550",
+          "pid": 53550,
           "program_name": "git-remote-ht",
           "receive_q": 0,
           "send_q": 0
@@ -172,7 +172,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "1594",
+          "pid": 1594,
           "program_name": "master",
           "receive_q": 0,
           "send_q": 0
@@ -183,7 +183,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "21918",
+          "pid": 21918,
           "program_name": "sshd",
           "receive_q": 0,
           "send_q": 0
@@ -196,7 +196,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "[::]",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "1594",
+          "pid": 1594,
           "program_name": "master",
           "receive_q": 0,
           "send_q": 0
@@ -207,7 +207,7 @@ $ netstat -lp | jc --netstat -p
           "foreign_address": "[::]",
           "foreign_port": "*",
           "state": "LISTEN",
-          "pid": "21918",
+          "pid": 21918,
           "program_name": "sshd",
           "receive_q": 0,
           "send_q": 0
@@ -221,7 +221,7 @@ $ netstat -lp | jc --netstat -p
           "local_port": "bootpc",
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
-          "pid": "13903",
+          "pid": 13903,
           "program_name": "dhclient",
           "receive_q": 0,
           "send_q": 0
@@ -231,7 +231,7 @@ $ netstat -lp | jc --netstat -p
           "local_port": "323",
           "foreign_address": "0.0.0.0",
           "foreign_port": "*",
-          "pid": "30926",
+          "pid": 30926,
           "program_name": "chronyd",
           "receive_q": 0,
           "send_q": 0
@@ -243,7 +243,7 @@ $ netstat -lp | jc --netstat -p
           "local_port": "323",
           "foreign_address": "[::]",
           "foreign_port": "*",
-          "pid": "30926",
+          "pid": 30926,
           "program_name": "chronyd",
           "receive_q": 0,
           "send_q": 0
