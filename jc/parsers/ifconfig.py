@@ -7,7 +7,7 @@ Usage:
 
 Example:
 
-$ ifconfig | ./jc.py --ifconfig -p
+$ ifconfig | jc --ifconfig -p
 
 """
 from collections import namedtuple
