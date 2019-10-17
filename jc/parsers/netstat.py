@@ -30,8 +30,6 @@ class state():
 
 def parse_line(entry):
     parsed_line = entry.split()
-    print(parsed_line)
-
     output_line = {}
 
     output_line['local_address'] = parsed_line[3].rsplit(':', 1)[0]
@@ -101,12 +99,6 @@ def parse(data):
                     state.network = 'ipv6'
                 else:
                     state.network = 'ipv4'
-
-        print(line)
-        print(f'section: {state.section}')
-        print(f'session: {state.session}')
-        print(f'network: {state.network}')
-        print()
 
         if state.section == 'client' and state.session == 'tcp' and state.network == 'ipv4':
             state.client_tcp_ip4.append(parse_line(line))
