@@ -185,11 +185,11 @@ def parse(data):
     for line in cleandata:
 
         if line.find('Active Internet connections (w/o servers)') == 0:
-            state.section = "client"
+            state.section = 'client'
             continue
 
         if line.find('Active Internet connections (only servers)') == 0:
-            state.section = "server"
+            state.section = 'server'
             continue
         
         if line.find('Proto') == 0:
