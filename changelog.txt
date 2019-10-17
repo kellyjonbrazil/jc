@@ -1,0 +1,9 @@
+jc changelog
+
+2019xxxx v0.5.0
+- Add ps parser
+- Add route parser
+- Change some ifconfig fields to integers
+
+20191017 v0.2.0
+- ifconfig, ls, and netstat support
