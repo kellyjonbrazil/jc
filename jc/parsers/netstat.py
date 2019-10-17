@@ -9,6 +9,7 @@ $ netstat | jc --netstat -p
 
 $ netstat -lp | jc --netstat -p
 """
+import string
 
 output = {}
 
@@ -33,14 +34,25 @@ def parse_line(entry):
 
     output_line = {}
 
-    output_line['local'] = parsed_line[3]
-    output_line['foreign'] = parsed_line[4]
+    output_line['local_address'] = parsed_line[3].rsplit(':', 1)[0]
+    output_line['local_port'] = parsed_line[3].rsplit(':', 1)[-1]
+    output_line['foreign_address'] = parsed_line[4].rsplit(':', 1)[0]
+    output_line['foreign_port'] = parsed_line[4].rsplit(':', 1)[-1]
+
     if len(parsed_line) > 5:
-        output_line['state'] = parsed_line[5]
-    output_line['recvq'] = int(parsed_line[1])
-    output_line['sendq'] = int(parsed_line[2])
-    # output_line['pid'] = int(parsed_line[1])
-    # output_line['pname'] = int(parsed_line[1])
+
+        if parsed_line[5][0] not in string.digits:
+            output_line['state'] = parsed_line[5]
+            
+            if len(parsed_line) > 6:
+                output_line['pid'] = parsed_line[6].split('/')[0]
+                output_line['program_name'] = parsed_line[6].split('/')[1]
+        else:
+            output_line['pid'] = parsed_line[5].split('/')[0]
+            output_line['program_name'] = parsed_line[5].split('/')[1]
+
+    output_line['receive_q'] = int(parsed_line[1])
+    output_line['send_q'] = int(parsed_line[2])
 
     return output_line
 
