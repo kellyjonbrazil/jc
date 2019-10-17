@@ -35,7 +35,8 @@ def parse_line(entry):
 
     output_line['local'] = parsed_line[3]
     output_line['foreign'] = parsed_line[4]
-    # output_line['state'] = parsed_line[6]
+    if len(parsed_line) > 5:
+        output_line['state'] = parsed_line[5]
     output_line['recvq'] = int(parsed_line[1])
     output_line['sendq'] = int(parsed_line[2])
     # output_line['pid'] = int(parsed_line[1])
@@ -47,6 +48,7 @@ def parse(data):
     cleandata = data.splitlines()
 
     for line in cleandata:
+
         if line.find('Active Internet connections (w/o servers)') == 0:
             state.section = "client"
             continue
@@ -61,7 +63,20 @@ def parse(data):
         if line.find('Active UNIX') == 0:
             break
         
-        if state.section == "client":
+        if state.section == 'client':
+            if line.find('tcp') == 0:
+                state.session = 'tcp'
+                if line.find('p6') == 2:
+                    state.network = 'ipv6'
+                else:
+                    state.network = 'ipv4'
+            elif line.find('udp') == 0:
+                state.session = 'udp'
+                if line.find('p6') == 2:
+                    state.network = 'ipv6'
+                else:
+                    state.network = 'ipv4'
+        elif state.section == 'server':
             if line.find('tcp') == 0:
                 state.session = 'tcp'
                 if line.find('p6') == 2:
@@ -75,19 +90,11 @@ def parse(data):
                 else:
                     state.network = 'ipv4'
 
-        if state.section == "server":
-            if line.find('tcp') == 0:
-                state.session = 'tcp'
-                if line.find('p6') == 2:
-                    state.network = 'ipv6'
-                else:
-                    state.network = 'ipv4'
-            elif line.find('udp') == 0:
-                state.session = 'udp'
-                if line.find('p6') == 2:
-                    state.network = 'ipv6'
-                else:
-                    state.network = 'ipv4'
+        print(line)
+        print(f'section: {state.section}')
+        print(f'session: {state.session}')
+        print(f'network: {state.network}')
+        print()
 
         if state.section == 'client' and state.session == 'tcp' and state.network == 'ipv4':
             state.client_tcp_ip4.append(parse_line(line))
@@ -105,14 +112,17 @@ def parse(data):
         if state.section == 'server' and state.session == 'tcp' and state.network == 'ipv4':
             state.server_tcp_ip4.append(parse_line(line))
 
-        if state.section == 'client' and state.session == 'tcp' and state.network == 'ipv6':
+        if state.section == 'server' and state.session == 'tcp' and state.network == 'ipv6':
             state.server_tcp_ip6.append(parse_line(line))
 
-        if state.section == 'client' and state.session == 'udp' and state.network == 'ipv4':
+        if state.section == 'server' and state.session == 'udp' and state.network == 'ipv4':
             state.server_udp_ip4.append(parse_line(line))
 
-        if state.section == 'client' and state.session == 'udp' and state.network == 'ipv6':
+        if state.section == 'server' and state.session == 'udp' and state.network == 'ipv6':
             state.server_udp_ip6.append(parse_line(line))
+
+        state.session = ''
+        state.network = ''
 
     # build dictionary
     if state.client_tcp_ip4:
