@@ -15,9 +15,9 @@ def main():
     data = sys.stdin.read()
 
     if len(sys.argv) < 2:
-        print(f'\nError: {sys.argv[0]}\n  Must specify parser. (e.g. --ls, --netstat, --ifconfig, etc.)')
+        print(f'\nError: jc\n  Must specify parser. (e.g. --ls, --netstat, --ifconfig, etc.)')
         print('  Use -p to pretty print')
-        print(f'\nExample: ls -al | {sys.argv[0]} --ls -p\n')
+        print(f'\nExample: ls -al | jc --ls -p\n')
         exit()
 
     arg = sys.argv[1]
