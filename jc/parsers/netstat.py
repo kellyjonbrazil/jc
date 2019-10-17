@@ -89,39 +89,39 @@ def parse(data):
                 else:
                     state.network = 'ipv4'
 
-        if state.section == client && state.session == tcp && state.network == ipv4:
-            client_tcp_ip4.append(parse_line(line))
+        if state.section == client and state.session == tcp and state.network == ipv4:
+            state.client_tcp_ip4.append(parse_line(line))
 
-        if state.section == client && state.session == tcp && state.network == ipv6:
-            client_tcp_ip6.append(parse_line(line))
+        if state.section == client and state.session == tcp and state.network == ipv6:
+            state.client_tcp_ip6.append(parse_line(line))
 
-        if state.section == client && state.session == udp && state.network == ipv4:
-            client_udp_ip4.append(parse_line(line))
+        if state.section == client and state.session == udp and state.network == ipv4:
+            state.client_udp_ip4.append(parse_line(line))
 
-        if state.section == client && state.session == udp && state.network == ipv6:
-            client_udp_ip6.append(parse_line(line))
+        if state.section == client and state.session == udp and state.network == ipv6:
+            state.client_udp_ip6.append(parse_line(line))
 
 
-        if state.section == server && state.session == tcp && state.network == ipv4:
-            server_tcp_ip4.append(parse_line(line))
+        if state.section == server and state.session == tcp and state.network == ipv4:
+            state.server_tcp_ip4.append(parse_line(line))
 
-        if state.section == client && state.session == tcp && state.network == ipv6:
-            server_tcp_ip6.append(parse_line(line))
+        if state.section == client and state.session == tcp and state.network == ipv6:
+            state.server_tcp_ip6.append(parse_line(line))
 
-        if state.section == client && state.session == udp && state.network == ipv4:
-            server_udp_ip4.append(parse_line(line))
+        if state.section == client and state.session == udp and state.network == ipv4:
+            state.server_udp_ip4.append(parse_line(line))
 
-        if state.section == client && state.session == udp && state.network == ipv6:
-            server_udp_ip6.append(parse_line(line))
+        if state.section == client and state.session == udp and state.network == ipv6:
+            state.server_udp_ip6.append(parse_line(line))
 
-    output['client']['tcp']['ipv4'] = client_tcp_ip4
-    output['client']['tcp']['ipv6'] = client_tcp_ip6
-    output['client']['udp']['ipv4'] = client_udp_ip4
-    output['client']['udp']['ipv6'] = client_udp_ip6
+    output['client']['tcp']['ipv4'] = state.client_tcp_ip4
+    output['client']['tcp']['ipv6'] = state.client_tcp_ip6
+    output['client']['udp']['ipv4'] = state.client_udp_ip4
+    output['client']['udp']['ipv6'] = state.client_udp_ip6
 
-    output['server']['tcp']['ipv4'] = server_tcp_ip4
-    output['server']['tcp']['ipv6'] = server_tcp_ip6
-    output['server']['udp']['ipv4'] = server_udp_ip4
-    output['server']['udp']['ipv6'] = server_udp_ip6
+    output['server']['tcp']['ipv4'] = state.server_tcp_ip4
+    output['server']['tcp']['ipv6'] = state.server_tcp_ip6
+    output['server']['udp']['ipv4'] = state.server_udp_ip4
+    output['server']['udp']['ipv6'] = state.server_udp_ip6
 
     return output
