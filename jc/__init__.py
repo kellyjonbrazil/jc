@@ -1,7 +1,5 @@
 """JC - JSON CLI output utility
 
-v0.1
-
 * kellyjonbrazil@gmail.com
 
 This module serializes standard unix command line output to structured JSON

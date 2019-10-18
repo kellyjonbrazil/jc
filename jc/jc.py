@@ -9,6 +9,7 @@ import json
 import jc.parsers.ifconfig
 import jc.parsers.ls
 import jc.parsers.netstat
+import jc.parsers.ps
 
 
 def main():
@@ -34,6 +35,8 @@ def main():
         result = jc.parsers.ls.parse(data)
     elif arg == '--netstat':
         result = jc.parsers.netstat.parse(data)
+    elif arg == '--ps':
+        result = jc.parsers.ps.parse(data)
 
     # output resulting dictionary as json
     if pretty:
