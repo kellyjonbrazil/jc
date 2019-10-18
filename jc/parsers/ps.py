@@ -7,8 +7,52 @@ Usage:
     - ef
     - axu
 
-Examples:
+Example:
 
+$ ps -ef | jc --ps -p
+[
+  {
+    "UID": "root",
+    "PID": "1",
+    "PPID": "0",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:05",
+    "CMD": "/lib/systemd/systemd --system --deserialize 35"
+  },
+  {
+    "UID": "root",
+    "PID": "2",
+    "PPID": "0",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[kthreadd]"
+  },
+  {
+    "UID": "root",
+    "PID": "4",
+    "PPID": "2",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[kworker/0:0H]"
+  },
+  {
+    "UID": "root",
+    "PID": "6",
+    "PPID": "2",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[mm_percpu_wq]"
+  },
+  ...
+]
 """
 
 

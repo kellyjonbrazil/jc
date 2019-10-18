@@ -2,7 +2,7 @@ jc changelog
 
 2019xxxx v0.5.0
 - Fix netstat -p parsing for Ubuntu
-+ Add ps parser
+- Add ps parser
 + Add route parser
 + Change some ifconfig fields to integers
 + Use maxsplit option in split in ls.py line 109... otherwise filenames with multiple spaces

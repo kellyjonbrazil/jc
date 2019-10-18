@@ -30,6 +30,7 @@ The first argument is required and identifies the command that is piping output 
 - `--ls` enables the `ls` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--netstat` enables the `netstat` parser
+- `--ps` enables the `ps` parser
 
 The second `-p` argument is optional and specifies whether to pretty format the JSON output.
 
@@ -279,5 +280,57 @@ $ netstat -lp | jc --netstat -p
   }
 }
 ```
+### ps
+```
+$ ps -ef | jc --ps -p
+[
+  {
+    "UID": "root",
+    "PID": "1",
+    "PPID": "0",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:05",
+    "CMD": "/lib/systemd/systemd --system --deserialize 35"
+  },
+  {
+    "UID": "root",
+    "PID": "2",
+    "PPID": "0",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[kthreadd]"
+  },
+  {
+    "UID": "root",
+    "PID": "4",
+    "PPID": "2",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[kworker/0:0H]"
+  },
+  {
+    "UID": "root",
+    "PID": "6",
+    "PPID": "2",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[mm_percpu_wq]"
+  },
+  ...
+]
+```
+
+## Contributions
+Feel free to add/improve code or parsers!
+
 ## Acknowledgments
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
+- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
