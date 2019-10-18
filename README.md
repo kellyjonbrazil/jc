@@ -31,6 +31,7 @@ The first argument is required and identifies the command that is piping output 
 - `--ifconfig` enables the `ifconfig` parser
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
+- `--route` enables the `route` parser
 
 The second `-p` argument is optional and specifies whether to pretty format the JSON output.
 
@@ -325,6 +326,52 @@ $ ps -ef | jc --ps -p
     "CMD": "[mm_percpu_wq]"
   },
   ...
+]
+```
+### route
+```
+$ route -n | jc --route -p
+[
+  {
+    "Destination": "0.0.0.0",
+    "Gateway": "192.168.71.2",
+    "Genmask": "0.0.0.0",
+    "Flags": "UG",
+    "Metric": "100",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "ens33"
+  },
+  {
+    "Destination": "172.17.0.0",
+    "Gateway": "0.0.0.0",
+    "Genmask": "255.255.0.0",
+    "Flags": "U",
+    "Metric": "0",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "docker0"
+  },
+  {
+    "Destination": "192.168.71.0",
+    "Gateway": "0.0.0.0",
+    "Genmask": "255.255.255.0",
+    "Flags": "U",
+    "Metric": "0",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "ens33"
+  },
+  {
+    "Destination": "192.168.71.2",
+    "Gateway": "0.0.0.0",
+    "Genmask": "255.255.255.255",
+    "Flags": "UH",
+    "Metric": "100",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "ens33"
+  }
 ]
 ```
 
