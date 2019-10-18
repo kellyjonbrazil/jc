@@ -166,15 +166,16 @@ def parse_line(entry):
 
     if len(parsed_line) > 5:
 
-        if parsed_line[5][0] not in string.digits:
+        if parsed_line[5][0] not in string.digits and parsed_line[5][0] != '-':
             output_line['state'] = parsed_line[5]
 
-            if len(parsed_line) > 6:
+            if len(parsed_line) > 6 and parsed_line[6][0] in string.digits:
                 output_line['pid'] = int(parsed_line[6].split('/')[0])
                 output_line['program_name'] = parsed_line[6].split('/')[1]
         else:
-            output_line['pid'] = int(parsed_line[5].split('/')[0])
-            output_line['program_name'] = parsed_line[5].split('/')[1]
+            if parsed_line[5][0] in string.digits:
+                output_line['pid'] = int(parsed_line[5].split('/')[0])
+                output_line['program_name'] = parsed_line[5].split('/')[1]
 
     output_line['receive_q'] = int(parsed_line[1])
     output_line['send_q'] = int(parsed_line[2])

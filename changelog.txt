@@ -7,6 +7,7 @@ jc changelog
 - Fix netstat -p parsing for Ubuntu
 - Use maxsplit option in split in ls.py line 109... otherwise filenames with multiple spaces
     between words can be incorrectly represented with the .join operation
+- Use list(filter(None, cleandata)) or list comprehension to clean any blank entries in ls.py line 98
 
 20191017 v0.2.0
 - ifconfig, ls, and netstat support
