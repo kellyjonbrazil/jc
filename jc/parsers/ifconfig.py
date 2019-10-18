@@ -13,9 +13,10 @@ $ ifconfig | jc --ifconfig -p
 from collections import namedtuple
 from ifconfigparser import IfconfigParser
 
+
 def parse(data):
     output = []
-    
+
     parsed = IfconfigParser(console_output=data)
     interfaces = parsed.get_interfaces()
 
@@ -24,7 +25,5 @@ def parse(data):
         d = interfaces[iface]._asdict()
         dct = dict(d)
         output.append(dct)
- 
+
     return output
-
-

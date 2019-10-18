@@ -10,14 +10,16 @@ import jc.parsers.ifconfig
 import jc.parsers.ls
 import jc.parsers.netstat
 
+
 def main():
     pretty = False
     data = sys.stdin.read()
 
     if len(sys.argv) < 2:
-        print(f'\nError: jc\n  Must specify parser. (e.g. --ls, --netstat, --ifconfig, etc.)')
+        print('Error: jc')
+        print('  Must specify parser. (e.g. --ls, --netstat, --ifconfig, etc.)')
         print('  Use -p to pretty print')
-        print(f'\nExample: ls -al | jc --ls -p\n')
+        print('Example: ls -al | jc --ls -p\n')
         exit()
 
     arg = sys.argv[1]
@@ -38,6 +40,7 @@ def main():
         print(json.dumps(result, indent=2))
     else:
         print(json.dumps(result))
+
 
 if __name__ == '__main__':
     main()

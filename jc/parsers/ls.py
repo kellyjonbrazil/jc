@@ -85,9 +85,10 @@ $ $ ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
 """
 import re
 
+
 def parse(data):
     output = []
-    
+
     cleandata = data.splitlines()
 
     # Delete first line if it starts with 'total'
