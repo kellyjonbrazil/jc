@@ -3,6 +3,21 @@ JSON CLI output utility
 
 `jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. Parsers for `ls`, `ifconfig`, and `netstat` are currently included and more can be added via modules.
 
+This allows further command line processing of output with tools like `jq` simply by piping commands:
+
+```
+$ ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+{
+  "filename": "emacs",
+  "flags": "-r-xr-xr-x",
+  "links": 1,
+  "owner": "root",
+  "group": "wheel",
+  "bytes": 117164432,
+  "date": "May 3 22:26"
+}
+```
+
 ## Installation
 ```
 $ pip3 install jc
@@ -19,6 +34,7 @@ The first argument is required and identifies the command that is piping output 
 The second `-p` argument is optional and specifies whether to pretty format the JSON output.
 
 ## Examples
+### ls
 ```
 $ ls -l /bin | jc --ls -p
 [
@@ -52,6 +68,7 @@ $ ls -l /bin | jc --ls -p
   ...
 ]
 ```
+### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p
 [
@@ -135,6 +152,7 @@ $ ifconfig | jc --ifconfig -p
   }
 ]
 ```
+### netstat
 ```
 $ netstat -p | jc --netstat -p
 {
@@ -261,6 +279,5 @@ $ netstat -lp | jc --netstat -p
   }
 }
 ```
-
-
-
+## Acknowledgments
+- `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
