@@ -92,8 +92,9 @@ def parse(data):
     linedata = data.splitlines()
 
     # Delete first line if it starts with 'total'
-    if linedata[0].find('total') == 0:
-        linedata.pop(0)
+    if linedata:
+        if linedata[0].find('total') == 0:
+            linedata.pop(0)
 
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
