@@ -1,13 +1,10 @@
 jc changelog
 
-2019xxxx v0.5.0
+20191018 v0.5.4
 - Fix netstat -p parsing for Ubuntu
 - Add ps parser
 - Add route parser
-+ Change some ifconfig fields to integers
-+ Use maxsplit option in split in ls.py line 109... otherwise filenames with multiple spaces
-    between words can be incorrectly represented with the .join operation
-+ Use list(filter(None, cleandata)) or list comprehension to clean any blank entries in ls.py line 98
+- ls parser fixes
 
 20191017 v0.2.0
 - ifconfig, ls, and netstat support
