@@ -1,0 +1,10 @@
+jc changelog
+
+20191018 v0.5.5
+- Fix netstat -p parsing for Ubuntu
+- Add ps parser
+- Add route parser
+- ls parser fixes
+
+20191017 v0.2.0
+- ifconfig, ls, and netstat support

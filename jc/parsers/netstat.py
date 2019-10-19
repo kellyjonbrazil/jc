@@ -138,6 +138,7 @@ import string
 
 output = {}
 
+
 class state():
     section = ''
     session = ''
@@ -147,11 +148,12 @@ class state():
     client_tcp_ip6 = []
     client_udp_ip4 = []
     client_udp_ip6 = []
-    
+
     server_tcp_ip4 = []
     server_tcp_ip6 = []
     server_udp_ip4 = []
     server_udp_ip6 = []
+
 
 def parse_line(entry):
     parsed_line = entry.split()
@@ -164,20 +166,22 @@ def parse_line(entry):
 
     if len(parsed_line) > 5:
 
-        if parsed_line[5][0] not in string.digits:
+        if parsed_line[5][0] not in string.digits and parsed_line[5][0] != '-':
             output_line['state'] = parsed_line[5]
-            
-            if len(parsed_line) > 6:
+
+            if len(parsed_line) > 6 and parsed_line[6][0] in string.digits:
                 output_line['pid'] = int(parsed_line[6].split('/')[0])
                 output_line['program_name'] = parsed_line[6].split('/')[1]
         else:
-            output_line['pid'] = int(parsed_line[5].split('/')[0])
-            output_line['program_name'] = parsed_line[5].split('/')[1]
+            if parsed_line[5][0] in string.digits:
+                output_line['pid'] = int(parsed_line[5].split('/')[0])
+                output_line['program_name'] = parsed_line[5].split('/')[1]
 
     output_line['receive_q'] = int(parsed_line[1])
     output_line['send_q'] = int(parsed_line[2])
 
     return output_line
+
 
 def parse(data):
     cleandata = data.splitlines()
@@ -185,19 +189,19 @@ def parse(data):
     for line in cleandata:
 
         if line.find('Active Internet connections (w/o servers)') == 0:
-            state.section = "client"
+            state.section = 'client'
             continue
 
         if line.find('Active Internet connections (only servers)') == 0:
-            state.section = "server"
+            state.section = 'server'
             continue
-        
+
         if line.find('Proto') == 0:
             continue
 
         if line.find('Active UNIX') == 0:
             break
-        
+
         if state.section == 'client':
             if line.find('tcp') == 0:
                 state.session = 'tcp'
@@ -225,6 +229,7 @@ def parse(data):
                 else:
                     state.network = 'ipv4'
 
+        # client section
         if state.section == 'client' and state.session == 'tcp' and state.network == 'ipv4':
             state.client_tcp_ip4.append(parse_line(line))
 
@@ -237,7 +242,7 @@ def parse(data):
         if state.section == 'client' and state.session == 'udp' and state.network == 'ipv6':
             state.client_udp_ip6.append(parse_line(line))
 
-
+        # server section
         if state.section == 'server' and state.session == 'tcp' and state.network == 'ipv4':
             state.server_tcp_ip4.append(parse_line(line))
 
@@ -254,6 +259,7 @@ def parse(data):
         state.network = ''
 
     # build dictionary
+    # client section
     if state.client_tcp_ip4:
         if 'client' not in output:
             output['client'] = {}
@@ -281,8 +287,8 @@ def parse(data):
         if 'udp' not in output['client']:
             output['client']['udp'] = {}
         output['client']['udp']['ipv6'] = state.client_udp_ip6
-    
-    
+
+    # server section
     if state.server_tcp_ip4:
         if 'server' not in output:
             output['server'] = {}
@@ -303,7 +309,7 @@ def parse(data):
         if 'udp' not in output['server']:
             output['server']['udp'] = {}
         output['server']['udp']['ipv4'] = state.server_udp_ip4
-    
+
     if state.server_udp_ip6:
         if 'server' not in output:
             output['server'] = {}

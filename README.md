@@ -3,6 +3,21 @@ JSON CLI output utility
 
 `jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. Parsers for `ls`, `ifconfig`, and `netstat` are currently included and more can be added via modules.
 
+This allows further command line processing of output with tools like `jq` simply by piping commands:
+
+```
+$ ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+{
+  "filename": "emacs",
+  "flags": "-r-xr-xr-x",
+  "links": 1,
+  "owner": "root",
+  "group": "wheel",
+  "bytes": 117164432,
+  "date": "May 3 22:26"
+}
+```
+
 ## Installation
 ```
 $ pip3 install jc
@@ -15,10 +30,13 @@ The first argument is required and identifies the command that is piping output 
 - `--ls` enables the `ls` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--netstat` enables the `netstat` parser
+- `--ps` enables the `ps` parser
+- `--route` enables the `route` parser
 
 The second `-p` argument is optional and specifies whether to pretty format the JSON output.
 
 ## Examples
+### ls
 ```
 $ ls -l /bin | jc --ls -p
 [
@@ -52,6 +70,7 @@ $ ls -l /bin | jc --ls -p
   ...
 ]
 ```
+### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p
 [
@@ -135,6 +154,7 @@ $ ifconfig | jc --ifconfig -p
   }
 ]
 ```
+### netstat
 ```
 $ netstat -p | jc --netstat -p
 {
@@ -261,6 +281,103 @@ $ netstat -lp | jc --netstat -p
   }
 }
 ```
+### ps
+```
+$ ps -ef | jc --ps -p
+[
+  {
+    "UID": "root",
+    "PID": "1",
+    "PPID": "0",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:05",
+    "CMD": "/lib/systemd/systemd --system --deserialize 35"
+  },
+  {
+    "UID": "root",
+    "PID": "2",
+    "PPID": "0",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[kthreadd]"
+  },
+  {
+    "UID": "root",
+    "PID": "4",
+    "PPID": "2",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[kworker/0:0H]"
+  },
+  {
+    "UID": "root",
+    "PID": "6",
+    "PPID": "2",
+    "C": "0",
+    "STIME": "13:58",
+    "TTY": "?",
+    "TIME": "00:00:00",
+    "CMD": "[mm_percpu_wq]"
+  },
+  ...
+]
+```
+### route
+```
+$ route -n | jc --route -p
+[
+  {
+    "Destination": "0.0.0.0",
+    "Gateway": "192.168.71.2",
+    "Genmask": "0.0.0.0",
+    "Flags": "UG",
+    "Metric": "100",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "ens33"
+  },
+  {
+    "Destination": "172.17.0.0",
+    "Gateway": "0.0.0.0",
+    "Genmask": "255.255.0.0",
+    "Flags": "U",
+    "Metric": "0",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "docker0"
+  },
+  {
+    "Destination": "192.168.71.0",
+    "Gateway": "0.0.0.0",
+    "Genmask": "255.255.255.0",
+    "Flags": "U",
+    "Metric": "0",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "ens33"
+  },
+  {
+    "Destination": "192.168.71.2",
+    "Gateway": "0.0.0.0",
+    "Genmask": "255.255.255.255",
+    "Flags": "UH",
+    "Metric": "100",
+    "Ref": "0",
+    "Use": "0",
+    "Iface": "ens33"
+  }
+]
+```
 
+## Contributions
+Feel free to add/improve code or parsers!
 
-
+## Acknowledgments
+- `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
+- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
