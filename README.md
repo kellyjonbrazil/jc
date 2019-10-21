@@ -18,6 +18,14 @@ $ ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
 }
 ```
 
+The `jc` parsers can also be used as python modules by referencing them via:
+```
+import jc.parsers.[parser]
+
+data = 'data to parse'
+jc.parsers.[parser].parse(data)
+```
+
 ## Installation
 ```
 $ pip3 install jc

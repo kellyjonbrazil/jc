@@ -1,5 +1,9 @@
 jc changelog
 
+20191021 v0.6.1
+- Flatten netstat parser output
+- Clean up argument parsing
+
 20191018 v0.5.5
 - Fix netstat -p parsing for Ubuntu
 - Add ps parser
