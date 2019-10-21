@@ -126,7 +126,6 @@ output = []
 
 
 def parse_line(entry):
-    parsed_line = entry.split()
     output_line = {}
 
     if entry.find('tcp') == 0:
@@ -148,6 +147,8 @@ def parse_line(entry):
             output_line['network_protocol'] = 'ipv4'
     else:
         return
+
+    parsed_line = entry.split()
 
     output_line['local_address'] = parsed_line[3].rsplit(':', 1)[0]
     output_line['local_port'] = parsed_line[3].rsplit(':', 1)[-1]
