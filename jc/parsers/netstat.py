@@ -11,148 +11,118 @@ Limitations:
 Examples:
 
 $ netstat -p | jc --netstat -p
-{
-  "client": {
-    "tcp": {
-      "ipv4": [
-        {
-          "local_address": "localhost.localdo",
-          "local_port": "34480",
-          "foreign_address": "lb-192-30-255-113",
-          "foreign_port": "https",
-          "state": "ESTABLISHED",
-          "pid": 53550,
-          "program_name": "git-remote-ht",
-          "receive_q": 0,
-          "send_q": 0
-        },
-        {
-          "local_address": "localhost.localdo",
-          "local_port": "34478",
-          "foreign_address": "lb-192-30-255-113",
-          "foreign_port": "https",
-          "state": "ESTABLISHED",
-          "pid": 53550,
-          "program_name": "git-remote-ht",
-          "receive_q": 0,
-          "send_q": 0
-        }
-      ]
-    }
+[
+  {
+    "session_protocol": "tcp",
+    "network_protocol": "ipv4",
+    "local_address": "localhost.localdo",
+    "local_port": "34480",
+    "foreign_address": "lb-192-30-255-113",
+    "foreign_port": "https",
+    "state": "ESTABLISHED",
+    "pid": 53550,
+    "program_name": "git-remote-ht",
+    "receive_q": 0,
+    "send_q": 0
+  },
+  {
+    "session_protocol": "tcp",
+    "network_protocol": "ipv4",
+    "local_address": "localhost.localdo",
+    "local_port": "34478",
+    "foreign_address": "lb-192-30-255-113",
+    "foreign_port": "https",
+    "state": "ESTABLISHED",
+    "pid": 53550,
+    "program_name": "git-remote-ht",
+    "receive_q": 0,
+    "send_q": 0
   }
-}
+]
 
-$ netstat -lp | jc --netstat -p
-{
-  "server": {
-    "tcp": {
-      "ipv4": [
-        {
-          "local_address": "localhost",
-          "local_port": "smtp",
-          "foreign_address": "0.0.0.0",
-          "foreign_port": "*",
-          "state": "LISTEN",
-          "pid": 1594,
-          "program_name": "master",
-          "receive_q": 0,
-          "send_q": 0
-        },
-        {
-          "local_address": "0.0.0.0",
-          "local_port": "ssh",
-          "foreign_address": "0.0.0.0",
-          "foreign_port": "*",
-          "state": "LISTEN",
-          "pid": 21918,
-          "program_name": "sshd",
-          "receive_q": 0,
-          "send_q": 0
-        }
-      ],
-      "ipv6": [
-        {
-          "local_address": "localhost",
-          "local_port": "smtp",
-          "foreign_address": "[::]",
-          "foreign_port": "*",
-          "state": "LISTEN",
-          "pid": 1594,
-          "program_name": "master",
-          "receive_q": 0,
-          "send_q": 0
-        },
-        {
-          "local_address": "[::]",
-          "local_port": "ssh",
-          "foreign_address": "[::]",
-          "foreign_port": "*",
-          "state": "LISTEN",
-          "pid": 21918,
-          "program_name": "sshd",
-          "receive_q": 0,
-          "send_q": 0
-        }
-      ]
-    },
-    "udp": {
-      "ipv4": [
-        {
-          "local_address": "0.0.0.0",
-          "local_port": "bootpc",
-          "foreign_address": "0.0.0.0",
-          "foreign_port": "*",
-          "pid": 13903,
-          "program_name": "dhclient",
-          "receive_q": 0,
-          "send_q": 0
-        },
-        {
-          "local_address": "localhost",
-          "local_port": "323",
-          "foreign_address": "0.0.0.0",
-          "foreign_port": "*",
-          "pid": 30926,
-          "program_name": "chronyd",
-          "receive_q": 0,
-          "send_q": 0
-        }
-      ],
-      "ipv6": [
-        {
-          "local_address": "localhost",
-          "local_port": "323",
-          "foreign_address": "[::]",
-          "foreign_port": "*",
-          "pid": 30926,
-          "program_name": "chronyd",
-          "receive_q": 0,
-          "send_q": 0
-        }
-      ]
-    }
+$ netstat -lpn | jc --netstat -p
+[
+  {
+    "session_protocol": "tcp",
+    "network_protocol": "ipv4",
+    "local_address": "127.0.0.1",
+    "local_port": "42351",
+    "foreign_address": "0.0.0.0",
+    "foreign_port": "*",
+    "state": "LISTEN",
+    "pid": 1112,
+    "program_name": "containerd",
+    "receive_q": 0,
+    "send_q": 0
+  },
+  {
+    "session_protocol": "tcp",
+    "network_protocol": "ipv4",
+    "local_address": "127.0.0.53",
+    "local_port": "53",
+    "foreign_address": "0.0.0.0",
+    "foreign_port": "*",
+    "state": "LISTEN",
+    "pid": 885,
+    "program_name": "systemd-resolve",
+    "receive_q": 0,
+    "send_q": 0
+  },
+  {
+    "session_protocol": "tcp",
+    "network_protocol": "ipv4",
+    "local_address": "0.0.0.0",
+    "local_port": "22",
+    "foreign_address": "0.0.0.0",
+    "foreign_port": "*",
+    "state": "LISTEN",
+    "pid": 1127,
+    "program_name": "sshd",
+    "receive_q": 0,
+    "send_q": 0
+  },
+  {
+    "session_protocol": "tcp",
+    "network_protocol": "ipv6",
+    "local_address": "::",
+    "local_port": "22",
+    "foreign_address": "::",
+    "foreign_port": "*",
+    "state": "LISTEN",
+    "pid": 1127,
+    "program_name": "sshd",
+    "receive_q": 0,
+    "send_q": 0
+  },
+  {
+    "session_protocol": "udp",
+    "network_protocol": "ipv4",
+    "local_address": "127.0.0.53",
+    "local_port": "53",
+    "foreign_address": "0.0.0.0",
+    "foreign_port": "*",
+    "pid": 885,
+    "program_name": "systemd-resolve",
+    "receive_q": 0,
+    "send_q": 0
+  },
+  {
+    "session_protocol": "udp",
+    "network_protocol": "ipv4",
+    "local_address": "192.168.71.131",
+    "local_port": "68",
+    "foreign_address": "0.0.0.0",
+    "foreign_port": "*",
+    "pid": 867,
+    "program_name": "systemd-network",
+    "receive_q": 0,
+    "send_q": 0
   }
-}
+]
 """
 import string
 
 output = []
-
-
-class state():
-    section = ''
-    session = ''
-    network = ''
-
-    client_tcp_ip4 = []
-    client_tcp_ip6 = []
-    client_udp_ip4 = []
-    client_udp_ip6 = []
-
-    server_tcp_ip4 = []
-    server_tcp_ip6 = []
-    server_udp_ip4 = []
-    server_udp_ip6 = []
 
 
 def parse_line(entry):
@@ -176,6 +146,8 @@ def parse_line(entry):
 
         else:
             output_line['network_protocol'] = 'ipv4'
+    else:
+        return
 
     output_line['local_address'] = parsed_line[3].rsplit(':', 1)[0]
     output_line['local_port'] = parsed_line[3].rsplit(':', 1)[-1]
@@ -220,4 +192,5 @@ def parse(data):
 
         output.append(parse_line(line))
 
-    return output
+    clean_output = list(filter(None, output))
+    return clean_output
