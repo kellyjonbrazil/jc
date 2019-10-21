@@ -136,7 +136,7 @@ $ netstat -lp | jc --netstat -p
 """
 import string
 
-output = {}
+output = []
 
 
 class state():
