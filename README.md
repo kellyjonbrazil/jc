@@ -173,7 +173,7 @@ $ ls -l /bin | jc --ls -p
 $ netstat -p | jc --netstat -p
 [
   {
-    "session_protocol": "tcp",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "localhost.localdo",
     "local_port": "34480",
@@ -186,7 +186,7 @@ $ netstat -p | jc --netstat -p
     "send_q": 0
   },
   {
-    "session_protocol": "tcp",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "localhost.localdo",
     "local_port": "34478",
@@ -204,7 +204,7 @@ $ netstat -p | jc --netstat -p
 $ netstat -lpn | jc --netstat -p
 [
   {
-    "session_protocol": "tcp",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "127.0.0.1",
     "local_port": "42351",
@@ -217,7 +217,7 @@ $ netstat -lpn | jc --netstat -p
     "send_q": 0
   },
   {
-    "session_protocol": "tcp",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "127.0.0.53",
     "local_port": "53",
@@ -230,7 +230,7 @@ $ netstat -lpn | jc --netstat -p
     "send_q": 0
   },
   {
-    "session_protocol": "tcp",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "0.0.0.0",
     "local_port": "22",
@@ -243,7 +243,7 @@ $ netstat -lpn | jc --netstat -p
     "send_q": 0
   },
   {
-    "session_protocol": "tcp",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv6",
     "local_address": "::",
     "local_port": "22",
@@ -256,7 +256,7 @@ $ netstat -lpn | jc --netstat -p
     "send_q": 0
   },
   {
-    "session_protocol": "udp",
+    "transport_protocol": "udp",
     "network_protocol": "ipv4",
     "local_address": "127.0.0.53",
     "local_port": "53",
@@ -268,7 +268,7 @@ $ netstat -lpn | jc --netstat -p
     "send_q": 0
   },
   {
-    "session_protocol": "udp",
+    "transport_protocol": "udp",
     "network_protocol": "ipv4",
     "local_address": "192.168.71.131",
     "local_port": "68",

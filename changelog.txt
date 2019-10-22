@@ -1,6 +1,6 @@
 jc changelog
 
-20191021 v0.6.3
+20191021 v0.6.4
 - Flatten netstat parser output
 - Clean up argument parsing
 - Fix command help
