@@ -6,7 +6,7 @@ JSON CLI output utility
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
 ```
-$ ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+$ ls -l /usr/bin | jc --ls | jq '.[] | select(.bytes > 50000000)'
 {
   "filename": "emacs",
   "flags": "-r-xr-xr-x",
