@@ -10,6 +10,7 @@ import jc.parsers.df
 import jc.parsers.env
 import jc.parsers.free
 import jc.parsers.ifconfig
+import jc.parsers.iptables
 import jc.parsers.ls
 import jc.parsers.lsblk
 import jc.parsers.mount
@@ -37,6 +38,9 @@ def main():
 
     elif '--ifconfig' in sys.argv:
         result = jc.parsers.ifconfig.parse(data)
+
+    elif '--iptables' in sys.argv:
+        result = jc.parsers.iptables.parse(data)
 
     elif '--ls' in sys.argv:
         result = jc.parsers.ls.parse(data)
@@ -67,6 +71,7 @@ def main():
         print('        --env        env parser', file=sys.stderr)
         print('        --free       free parser', file=sys.stderr)
         print('        --ifconfig   iconfig parser', file=sys.stderr)
+        print('        --iptables   iptables parser', file=sys.stderr)
         print('        --ls         ls parser', file=sys.stderr)
         print('        --lsblk      lsblk parser', file=sys.stderr)
         print('        --mount      mount parser', file=sys.stderr)
