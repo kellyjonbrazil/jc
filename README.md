@@ -65,6 +65,7 @@ jc [parser] [options]
 - `--free` enables the `free` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--ls` enables the `ls` parser
+- `--lsblk` enables the `lsblk` parser
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
@@ -259,6 +260,54 @@ $ ls -l /bin | jc --ls -p
     "date": "May 3 22:26"
   },
   ...
+]
+```
+### lsblk
+```
+$ lsblk | jc --lsblk -p
+[
+  {
+    "NAME": "loop0",
+    "MAJ:MIN": "7:0",
+    "RM": "0",
+    "SIZE": "54.5M",
+    "RO": "1",
+    "TYPE": "loop",
+    "MOUNTPOINT": "/snap/core18/1223"
+  },
+  {
+    "NAME": "sda",
+    "MAJ:MIN": "8:0",
+    "RM": "0",
+    "SIZE": "20G",
+    "RO": "0",
+    "TYPE": "disk"
+  },
+  {
+    "NAME": "sda1",
+    "MAJ:MIN": "8:1",
+    "RM": "0",
+    "SIZE": "1M",
+    "RO": "0",
+    "TYPE": "part"
+  },
+  {
+    "NAME": "sda2",
+    "MAJ:MIN": "8:2",
+    "RM": "0",
+    "SIZE": "20G",
+    "RO": "0",
+    "TYPE": "part",
+    "MOUNTPOINT": "/"
+  },
+  {
+    "NAME": "sr0",
+    "MAJ:MIN": "11:0",
+    "RM": "1",
+    "SIZE": "64.8M",
+    "RO": "0",
+    "TYPE": "rom"
+  }
 ]
 ```
 ### netstat
