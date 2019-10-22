@@ -1,7 +1,7 @@
 # JC
 JSON CLI output utility
 
-`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. Parsers for `ls`, `ifconfig`, `ps`, `route`, and `netstat` are currently included and more can be added via modules.
+`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. See the Parsers section for supported commands.
 
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
@@ -60,6 +60,9 @@ jc [parser] [options]
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
 Parsers:
+- `--df` enables the `df` parser
+- `--env` enables the `env` parser
+- `--free` enables the `free` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--ls` enables the `ls` parser
 - `--netstat` enables the `netstat` parser
