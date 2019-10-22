@@ -47,7 +47,7 @@ def main():
         print('Options:', file=sys.stderr)
         print('        -p           pretty print output\n', file=sys.stderr)
         print('Example:', file=sys.stderr)
-        print('        ls -al | jc -p --ls\n', file=sys.stderr)
+        print('        ls -al | jc --ls -p\n', file=sys.stderr)
         exit()
 
     # output resulting dictionary as json
