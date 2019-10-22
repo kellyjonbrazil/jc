@@ -14,32 +14,41 @@ import jc.parsers.route
 
 
 def main():
-    pretty = False
     data = sys.stdin.read()
+    pretty = False
 
-    if len(sys.argv) < 2:
-        print('Error: jc')
-        print('  Must specify parser. (e.g. --ls, --netstat, --ifconfig, etc.)')
-        print('  Use -p to pretty print')
-        print('Example: ls -al | jc --ls -p\n')
-        exit()
+    if '-p' in sys.argv:
+        pretty = True
 
-    arg = sys.argv[1]
-
-    if len(sys.argv) > 2:
-        if sys.argv[2] == '-p':
-            pretty = True
-
-    if arg == '--ifconfig':
+    if '--ifconfig' in sys.argv:
         result = jc.parsers.ifconfig.parse(data)
-    elif arg == '--ls':
+
+    elif '--ls' in sys.argv:
         result = jc.parsers.ls.parse(data)
-    elif arg == '--netstat':
+
+    elif '--netstat' in sys.argv:
         result = jc.parsers.netstat.parse(data)
-    elif arg == '--ps':
+
+    elif '--ps' in sys.argv:
         result = jc.parsers.ps.parse(data)
-    elif arg == '--route':
+
+    elif '--route' in sys.argv:
         result = jc.parsers.route.parse(data)
+
+    else:
+        print('jc:     missing arguments', file=sys.stderr)
+        print('Usage:  jc [parser] [options]\n', file=sys.stderr)
+        print('Parsers:', file=sys.stderr)
+        print('        --ifconfig   iconfig parser', file=sys.stderr)
+        print('        --ls         ls parser', file=sys.stderr)
+        print('        --netstat    netstat parser', file=sys.stderr)
+        print('        --ps         ps parser', file=sys.stderr)
+        print('        --route      route parser\n', file=sys.stderr)
+        print('Options:', file=sys.stderr)
+        print('        -p           pretty print output\n', file=sys.stderr)
+        print('Example:', file=sys.stderr)
+        print('        ls -al | jc -p --ls\n', file=sys.stderr)
+        exit()
 
     # output resulting dictionary as json
     if pretty:
