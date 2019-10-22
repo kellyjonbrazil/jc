@@ -70,6 +70,7 @@ jc [parser] [options]
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
+- `--uname` enables the `uname -a` parser
 
 ### Options
 - `-p` specifies whether to pretty format the JSON output
@@ -560,6 +561,20 @@ $ route -n | jc --route -p
     "Iface": "ens33"
   }
 ]
+```
+### uname -a
+```
+$ uname -a | jc --uname -p
+{
+  "kernel_name": "Linux",
+  "node_name": "user-ubuntu",
+  "kernel_release": "4.15.0-65-generic",
+  "operating_system": "GNU/Linux",
+  "hardware_platform": "x86_64",
+  "processor": "x86_64",
+  "machine": "x86_64",
+  "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
+}
 ```
 
 ## Contributions

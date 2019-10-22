@@ -16,6 +16,7 @@ import jc.parsers.mount
 import jc.parsers.netstat
 import jc.parsers.ps
 import jc.parsers.route
+import jc.parsers.uname
 
 
 def main():
@@ -55,6 +56,9 @@ def main():
     elif '--route' in sys.argv:
         result = jc.parsers.route.parse(data)
 
+    elif '--uname' in sys.argv:
+        result = jc.parsers.uname.parse(data)
+
     else:
         print('jc:     missing arguments\n', file=sys.stderr)
         print('Usage:  jc [parser] [options]\n', file=sys.stderr)
@@ -68,7 +72,8 @@ def main():
         print('        --mount      mount parser', file=sys.stderr)
         print('        --netstat    netstat parser', file=sys.stderr)
         print('        --ps         ps parser', file=sys.stderr)
-        print('        --route      route parser\n', file=sys.stderr)
+        print('        --route      route parser', file=sys.stderr)
+        print('        --uname      uname parser\n', file=sys.stderr)
         print('Options:', file=sys.stderr)
         print('        -p           pretty print output\n', file=sys.stderr)
         print('Example:', file=sys.stderr)
