@@ -70,6 +70,79 @@ Options:
 - `-p` specifies whether to pretty format the JSON output
 
 ## Examples
+### df
+```
+$ df | jc --df -p
+[
+  {
+    "Filesystem": "/dev/disk1s1",
+    "512-blocks": "976490576",
+    "Used": "268326664",
+    "Available": "702568152",
+    "Capacity": "28%",
+    "iused": "1395740",
+    "ifree": "9223372036853380067",
+    "%iused": "0%",
+    "Mounted": "/"
+  },
+  {
+    "Filesystem": "devfs",
+    "512-blocks": "680",
+    "Used": "680",
+    "Available": "0",
+    "Capacity": "100%",
+    "iused": "1178",
+    "ifree": "0",
+    "%iused": "100%",
+    "Mounted": "/dev"
+  },
+  {
+    "Filesystem": "map",
+    "512-blocks": "auto_home",
+    "Used": "0",
+    "Available": "0",
+    "Capacity": "0",
+    "iused": "100%",
+    "ifree": "0",
+    "%iused": "0",
+    "Mounted": "100%",
+    "on": "/home"
+  }
+]
+```
+### env
+```
+$ env | jc --env -p
+[
+  {
+    "TERM": "xterm-256color"
+  },
+  {
+    "SHELL": "/bin/bash"
+  },
+  {
+    "USER": "root"
+  },
+  {
+    "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  },
+  {
+    "PWD": "/bin"
+  },
+  {
+    "LANG": "en_US.UTF-8"
+  },
+  {
+    "HOME": "/root"
+  },
+  {
+    "_": "/usr/bin/env"
+  }
+]
+```
+### df
+```
+```
 ### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p

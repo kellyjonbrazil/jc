@@ -6,6 +6,9 @@ Main input module
 
 import sys
 import json
+import jc.parsers.df
+import jc.parsers.env
+import jc.parsers.free
 import jc.parsers.ifconfig
 import jc.parsers.ls
 import jc.parsers.netstat
@@ -20,7 +23,16 @@ def main():
     if '-p' in sys.argv:
         pretty = True
 
-    if '--ifconfig' in sys.argv:
+    if '--df' in sys.argv:
+        result = jc.parsers.df.parse(data)
+
+    elif '--env' in sys.argv:
+        result = jc.parsers.env.parse(data)
+
+    elif '--free' in sys.argv:
+        result = jc.parsers.free.parse(data)
+
+    elif '--ifconfig' in sys.argv:
         result = jc.parsers.ifconfig.parse(data)
 
     elif '--ls' in sys.argv:
@@ -39,6 +51,9 @@ def main():
         print('jc:     missing arguments', file=sys.stderr)
         print('Usage:  jc [parser] [options]\n', file=sys.stderr)
         print('Parsers:', file=sys.stderr)
+        print('        --df         df parser', file=sys.stderr)
+        print('        --env        env parser', file=sys.stderr)
+        print('        --free       free parser', file=sys.stderr)
         print('        --ifconfig   iconfig parser', file=sys.stderr)
         print('        --ls         ls parser', file=sys.stderr)
         print('        --netstat    netstat parser', file=sys.stderr)

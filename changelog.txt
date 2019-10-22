@@ -1,5 +1,10 @@
 jc changelog
 
+2019xxxx v0.x.x
+- Add env parser
+- Add df parser
+- Add free parser
+
 20191021 v0.6.4
 - Flatten netstat parser output
 - Clean up argument parsing
