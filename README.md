@@ -140,9 +140,6 @@ $ env | jc --env -p
   }
 ]
 ```
-### df
-```
-```
 ### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p
