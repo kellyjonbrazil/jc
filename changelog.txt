@@ -5,6 +5,7 @@ jc changelog
 - Add df parser
 - Add free parser
 - Add lsblk parser
+- Add mount parser
 
 20191021 v0.6.4
 - Flatten netstat parser output

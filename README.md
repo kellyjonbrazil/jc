@@ -66,6 +66,7 @@ jc [parser] [options]
 - `--ifconfig` enables the `ifconfig` parser
 - `--ls` enables the `ls` parser
 - `--lsblk` enables the `lsblk` parser
+- `--mount` enables the `mount` parser
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
@@ -308,6 +309,50 @@ $ lsblk | jc --lsblk -p
     "RO": "0",
     "TYPE": "rom"
   }
+]
+```
+### mount
+```
+$ mount | jc --mount -p
+[
+  {
+    "filesystem": "sysfs",
+    "mount_point": "/sys",
+    "type": "sysfs",
+    "access": [
+      "rw",
+      "nosuid",
+      "nodev",
+      "noexec",
+      "relatime"
+    ]
+  },
+  {
+    "filesystem": "proc",
+    "mount_point": "/proc",
+    "type": "proc",
+    "access": [
+      "rw",
+      "nosuid",
+      "nodev",
+      "noexec",
+      "relatime"
+    ]
+  },
+  {
+    "filesystem": "udev",
+    "mount_point": "/dev",
+    "type": "devtmpfs",
+    "access": [
+      "rw",
+      "nosuid",
+      "relatime",
+      "size=977500k",
+      "nr_inodes=244375",
+      "mode=755"
+    ]
+  },
+  ...
 ]
 ```
 ### netstat

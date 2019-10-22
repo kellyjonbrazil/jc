@@ -12,6 +12,7 @@ import jc.parsers.free
 import jc.parsers.ifconfig
 import jc.parsers.ls
 import jc.parsers.lsblk
+import jc.parsers.mount
 import jc.parsers.netstat
 import jc.parsers.ps
 import jc.parsers.route
@@ -42,6 +43,9 @@ def main():
     elif '--lsblk' in sys.argv:
         result = jc.parsers.lsblk.parse(data)
 
+    elif '--mount' in sys.argv:
+        result = jc.parsers.mount.parse(data)
+
     elif '--netstat' in sys.argv:
         result = jc.parsers.netstat.parse(data)
 
@@ -52,7 +56,7 @@ def main():
         result = jc.parsers.route.parse(data)
 
     else:
-        print('jc:     missing arguments', file=sys.stderr)
+        print('jc:     missing arguments\n', file=sys.stderr)
         print('Usage:  jc [parser] [options]\n', file=sys.stderr)
         print('Parsers:', file=sys.stderr)
         print('        --df         df parser', file=sys.stderr)
@@ -61,6 +65,7 @@ def main():
         print('        --ifconfig   iconfig parser', file=sys.stderr)
         print('        --ls         ls parser', file=sys.stderr)
         print('        --lsblk      lsblk parser', file=sys.stderr)
+        print('        --mount      mount parser', file=sys.stderr)
         print('        --netstat    netstat parser', file=sys.stderr)
         print('        --ps         ps parser', file=sys.stderr)
         print('        --route      route parser\n', file=sys.stderr)
