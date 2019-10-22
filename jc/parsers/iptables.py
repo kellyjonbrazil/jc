@@ -25,31 +25,27 @@ def parse(data):
             state.output.append(state.chain)
             state.chain = {}
             state.headers = []
-            state.chain['rules'] = []
 
             parsed_line = line.split()
 
             state.chain['chain'] = parsed_line[1]
-            state.chain['references'] = parsed_line[2].lstrip('(').rstrip(')').split()[0]
+            # state.chain['references'] = parsed_line[2].lstrip('(').rstrip(')').split()[0]
+            state.chain['rules'] = []
 
             continue
 
-        if line.find('target') == 0:
+        if line.find('target') == 0 or line.find('pkts') == 1:
             state.headers = []
-
             state.headers = [h for h in ' '.join(line.strip().split()).split() if h]
             state.headers.append("options")
 
             continue
 
         else:
-            rule = line.split()
-            temp_rule = {}
-            for h, r in zip(state.headers, rule):
-                temp_rule[h] = r
+            rule = line.split(maxsplit=len(state.headers) - 1)
+            temp_rule = dict(zip(state.headers, rule))
+            if temp_rule:
                 state.chain['rules'].append(temp_rule)
-
-                continue
 
     state.output = list(filter(None, state.output))
 
