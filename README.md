@@ -25,6 +25,7 @@ import jc.parsers.[parser]
 data = 'data to parse'
 jc.parsers.[parser].parse(data)
 ```
+In this case the output will be a python dictionary instead of JSON.
 
 ## Installation
 ```
