@@ -40,8 +40,8 @@ jc [parser] [options]
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
 Parsers:
-- `--ls` enables the `ls` parser
 - `--ifconfig` enables the `ifconfig` parser
+- `--ls` enables the `ls` parser
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
@@ -50,40 +50,6 @@ Options:
 - `-p` specifies whether to pretty format the JSON output
 
 ## Examples
-### ls
-```
-$ ls -l /bin | jc --ls -p
-[
-  {
-    "filename": "bash",
-    "flags": "-r-xr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 618416,
-    "date": "May 3 22:26"
-  },
-  {
-    "filename": "cat",
-    "flags": "-rwxr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 23648,
-    "date": "May 3 22:26"
-  },
-  {
-    "filename": "chmod",
-    "flags": "-rwxr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 30016,
-    "date": "May 3 22:26"
-  },
-  ...
-]
-```
 ### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p
@@ -166,6 +132,40 @@ $ ifconfig | jc --ifconfig -p
     "tx_collisions": "0",
     "metric": null
   }
+]
+```
+### ls
+```
+$ ls -l /bin | jc --ls -p
+[
+  {
+    "filename": "bash",
+    "flags": "-r-xr-xr-x",
+    "links": 1,
+    "owner": "root",
+    "group": "wheel",
+    "bytes": 618416,
+    "date": "May 3 22:26"
+  },
+  {
+    "filename": "cat",
+    "flags": "-rwxr-xr-x",
+    "links": 1,
+    "owner": "root",
+    "group": "wheel",
+    "bytes": 23648,
+    "date": "May 3 22:26"
+  },
+  {
+    "filename": "chmod",
+    "flags": "-rwxr-xr-x",
+    "links": 1,
+    "owner": "root",
+    "group": "wheel",
+    "bytes": 30016,
+    "date": "May 3 22:26"
+  },
+  ...
 ]
 ```
 ### netstat
