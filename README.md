@@ -64,6 +64,7 @@ jc [parser] [options]
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
 - `--ifconfig` enables the `ifconfig` parser
+- `--iptables` enables the `iptables` parser
 - `--ls` enables the `ls` parser
 - `--lsblk` enables the `lsblk` parser
 - `--mount` enables the `mount` parser
