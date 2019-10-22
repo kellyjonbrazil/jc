@@ -1,7 +1,7 @@
 # JC
 JSON CLI output utility
 
-`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. See the Parsers section for supported commands.
+`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. See the **Parsers** section for supported commands.
 
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
