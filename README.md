@@ -59,7 +59,7 @@ jc [parser] [options]
 
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
-Parsers:
+### Parsers
 - `--df` enables the `df` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
@@ -69,7 +69,7 @@ Parsers:
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 
-Options:
+### Options
 - `-p` specifies whether to pretty format the JSON output
 
 ## Examples
