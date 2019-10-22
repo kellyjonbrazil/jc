@@ -5,7 +5,24 @@ Usage:
 
 Example:
 
-
+$ free | jc --free -p
+[
+  {
+    "type": "Mem",
+    "total": "2017300",
+    "used": "213104",
+    "free": "1148452",
+    "shared": "1176",
+    "buff/cache": "655744",
+    "available": "1622204"
+  },
+  {
+    "type": "Swap",
+    "total": "2097148",
+    "used": "0",
+    "free": "2097148"
+  }
+]
 """
 
 
@@ -20,4 +37,9 @@ def parse(data):
     headers.insert(0, "type")
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    return [dict(zip(headers, r)) for r in raw_data]
+    output = [dict(zip(headers, r)) for r in raw_data]
+
+    for entry in output:
+        entry['type'] = entry['type'].rstrip(':')
+
+    return output
