@@ -8,39 +8,38 @@ Example:
 $ df | jc --df -p
 [
   {
-    "Filesystem": "/dev/disk1s1",
-    "512-blocks": "976490576",
-    "Used": "268326664",
-    "Available": "702568152",
-    "Capacity": "28%",
-    "iused": "1395740",
-    "ifree": "9223372036853380067",
-    "%iused": "0%",
-    "Mounted": "/"
-  },
-  {
-    "Filesystem": "devfs",
-    "512-blocks": "680",
-    "Used": "680",
-    "Available": "0",
-    "Capacity": "100%",
-    "iused": "1178",
-    "ifree": "0",
-    "%iused": "100%",
+    "Filesystem": "udev",
+    "1K-blocks": "977500",
+    "Used": "0",
+    "Available": "977500",
+    "Use%": "0%",
     "Mounted": "/dev"
   },
   {
-    "Filesystem": "map",
-    "512-blocks": "auto_home",
+    "Filesystem": "tmpfs",
+    "1K-blocks": "201732",
+    "Used": "1180",
+    "Available": "200552",
+    "Use%": "1%",
+    "Mounted": "/run"
+  },
+  {
+    "Filesystem": "/dev/sda2",
+    "1K-blocks": "20508240",
+    "Used": "5747284",
+    "Available": "13696152",
+    "Use%": "30%",
+    "Mounted": "/"
+  },
+  {
+    "Filesystem": "tmpfs",
+    "1K-blocks": "1008648",
     "Used": "0",
-    "Available": "0",
-    "Capacity": "0",
-    "iused": "100%",
-    "ifree": "0",
-    "%iused": "0",
-    "Mounted": "100%",
-    "on": "/home"
-  }
+    "Available": "1008648",
+    "Use%": "0%",
+    "Mounted": "/dev/shm"
+  },
+  ...
 ]
 """
 
