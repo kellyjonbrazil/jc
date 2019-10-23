@@ -1,5 +1,14 @@
 jc changelog
 
+20191022 v0.8.1
+- Add env parser
+- Add df parser
+- Add free parser
+- Add lsblk parser
+- Add mount parser
+- Add uname parser
+- Add iptables parser
+
 20191021 v0.6.4
 - Flatten netstat parser output
 - Clean up argument parsing

@@ -1,7 +1,7 @@
 # JC
 JSON CLI output utility
 
-`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. Parsers for `ls`, `ifconfig`, `ps`, `route`, and `netstat` are currently included and more can be added via modules.
+`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. See the **Parsers** section for supported commands.
 
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
@@ -59,17 +59,93 @@ jc [parser] [options]
 
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
-Parsers:
+### Parsers
+- `--df` enables the `df` parser
+- `--env` enables the `env` parser
+- `--free` enables the `free` parser
 - `--ifconfig` enables the `ifconfig` parser
+- `--iptables` enables the `iptables` parser
 - `--ls` enables the `ls` parser
+- `--lsblk` enables the `lsblk` parser
+- `--mount` enables the `mount` parser
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
+- `--uname` enables the `uname -a` parser
 
-Options:
+### Options
 - `-p` specifies whether to pretty format the JSON output
 
 ## Examples
+### df
+```
+$ df | jc --df -p
+[
+  {
+    "Filesystem": "udev",
+    "1K-blocks": "977500",
+    "Used": "0",
+    "Available": "977500",
+    "Use%": "0%",
+    "Mounted": "/dev"
+  },
+  {
+    "Filesystem": "tmpfs",
+    "1K-blocks": "201732",
+    "Used": "1180",
+    "Available": "200552",
+    "Use%": "1%",
+    "Mounted": "/run"
+  },
+  {
+    "Filesystem": "/dev/sda2",
+    "1K-blocks": "20508240",
+    "Used": "5747284",
+    "Available": "13696152",
+    "Use%": "30%",
+    "Mounted": "/"
+  },
+  {
+    "Filesystem": "tmpfs",
+    "1K-blocks": "1008648",
+    "Used": "0",
+    "Available": "1008648",
+    "Use%": "0%",
+    "Mounted": "/dev/shm"
+  },
+  ...
+]
+```
+### env
+```
+$ env | jc --env -p
+[
+  {
+    "TERM": "xterm-256color"
+  },
+  {
+    "SHELL": "/bin/bash"
+  },
+  {
+    "USER": "root"
+  },
+  {
+    "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  },
+  {
+    "PWD": "/bin"
+  },
+  {
+    "LANG": "en_US.UTF-8"
+  },
+  {
+    "HOME": "/root"
+  },
+  {
+    "_": "/usr/bin/env"
+  }
+]
+```
 ### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p
@@ -154,6 +230,325 @@ $ ifconfig | jc --ifconfig -p
   }
 ]
 ```
+### iptables
+```
+$ sudo iptables -L -t nat | jc --iptables -p
+[
+  {
+    "chain": "PREROUTING",
+    "rules": [
+      {
+        "target": "PREROUTING_direct",
+        "prot": "all",
+        "opt": "--",
+        "source": "anywhere",
+        "destination": "anywhere"
+      },
+      {
+        "target": "PREROUTING_ZONES_SOURCE",
+        "prot": "all",
+        "opt": "--",
+        "source": "anywhere",
+        "destination": "anywhere"
+      },
+      {
+        "target": "PREROUTING_ZONES",
+        "prot": "all",
+        "opt": "--",
+        "source": "anywhere",
+        "destination": "anywhere"
+      },
+      {
+        "target": "DOCKER",
+        "prot": "all",
+        "opt": "--",
+        "source": "anywhere",
+        "destination": "anywhere",
+        "options": "ADDRTYPE match dst-type LOCAL"
+      }
+    ]
+  },
+  {
+    "chain": "INPUT",
+    "rules": []
+  },
+  {
+    "chain": "OUTPUT",
+    "rules": [
+      {
+        "target": "OUTPUT_direct",
+        "prot": "all",
+        "opt": "--",
+        "source": "anywhere",
+        "destination": "anywhere"
+      },
+      {
+        "target": "DOCKER",
+        "prot": "all",
+        "opt": "--",
+        "source": "anywhere",
+        "destination": "!loopback/8",
+        "options": "ADDRTYPE match dst-type LOCAL"
+      }
+    ]
+  },
+  ...
+]
+```
+```
+$ sudo iptables -vnL -t filter | jc --iptables -p
+[
+  {
+    "chain": "INPUT",
+    "rules": [
+      {
+        "pkts": "1571",
+        "bytes": "3394K",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "ctstate RELATED,ESTABLISHED"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "lo",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "711",
+        "bytes": "60126",
+        "target": "INPUT_direct",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "711",
+        "bytes": "60126",
+        "target": "INPUT_ZONES_SOURCE",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "711",
+        "bytes": "60126",
+        "target": "INPUT_ZONES",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "DROP",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "ctstate INVALID"
+      },
+      {
+        "pkts": "710",
+        "bytes": "60078",
+        "target": "REJECT",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "reject-with icmp-host-prohibited"
+      }
+    ]
+  },
+  {
+    "chain": "FORWARD",
+    "rules": [
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "DOCKER-ISOLATION",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "DOCKER",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "docker0",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "docker0",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "ctstate RELATED,ESTABLISHED"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "docker0",
+        "out": "!docker0",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "docker0",
+        "out": "docker0",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "ctstate RELATED,ESTABLISHED"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "ACCEPT",
+        "prot": "all",
+        "opt": "--",
+        "in": "lo",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "FORWARD_direct",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "FORWARD_IN_ZONES_SOURCE",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "FORWARD_IN_ZONES",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "FORWARD_OUT_ZONES_SOURCE",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "FORWARD_OUT_ZONES",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "DROP",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "ctstate INVALID"
+      },
+      {
+        "pkts": "0",
+        "bytes": "0",
+        "target": "REJECT",
+        "prot": "all",
+        "opt": "--",
+        "in": "*",
+        "out": "*",
+        "source": "0.0.0.0/0",
+        "destination": "0.0.0.0/0",
+        "options": "reject-with icmp-host-prohibited"
+      }
+    ]
+  },
+  ...
+]
+```
 ### ls
 ```
 $ ls -l /bin | jc --ls -p
@@ -184,6 +579,98 @@ $ ls -l /bin | jc --ls -p
     "group": "wheel",
     "bytes": 30016,
     "date": "May 3 22:26"
+  },
+  ...
+]
+```
+### lsblk
+```
+$ lsblk | jc --lsblk -p
+[
+  {
+    "NAME": "loop0",
+    "MAJ:MIN": "7:0",
+    "RM": "0",
+    "SIZE": "54.5M",
+    "RO": "1",
+    "TYPE": "loop",
+    "MOUNTPOINT": "/snap/core18/1223"
+  },
+  {
+    "NAME": "sda",
+    "MAJ:MIN": "8:0",
+    "RM": "0",
+    "SIZE": "20G",
+    "RO": "0",
+    "TYPE": "disk"
+  },
+  {
+    "NAME": "sda1",
+    "MAJ:MIN": "8:1",
+    "RM": "0",
+    "SIZE": "1M",
+    "RO": "0",
+    "TYPE": "part"
+  },
+  {
+    "NAME": "sda2",
+    "MAJ:MIN": "8:2",
+    "RM": "0",
+    "SIZE": "20G",
+    "RO": "0",
+    "TYPE": "part",
+    "MOUNTPOINT": "/"
+  },
+  {
+    "NAME": "sr0",
+    "MAJ:MIN": "11:0",
+    "RM": "1",
+    "SIZE": "64.8M",
+    "RO": "0",
+    "TYPE": "rom"
+  }
+]
+```
+### mount
+```
+$ mount | jc --mount -p
+[
+  {
+    "filesystem": "sysfs",
+    "mount_point": "/sys",
+    "type": "sysfs",
+    "access": [
+      "rw",
+      "nosuid",
+      "nodev",
+      "noexec",
+      "relatime"
+    ]
+  },
+  {
+    "filesystem": "proc",
+    "mount_point": "/proc",
+    "type": "proc",
+    "access": [
+      "rw",
+      "nosuid",
+      "nodev",
+      "noexec",
+      "relatime"
+    ]
+  },
+  {
+    "filesystem": "udev",
+    "mount_point": "/dev",
+    "type": "devtmpfs",
+    "access": [
+      "rw",
+      "nosuid",
+      "relatime",
+      "size=977500k",
+      "nr_inodes=244375",
+      "mode=755"
+    ]
   },
   ...
 ]
@@ -393,6 +880,20 @@ $ route -n | jc --route -p
     "Iface": "ens33"
   }
 ]
+```
+### uname -a
+```
+$ uname -a | jc --uname -p
+{
+  "kernel_name": "Linux",
+  "node_name": "user-ubuntu",
+  "kernel_release": "4.15.0-65-generic",
+  "operating_system": "GNU/Linux",
+  "hardware_platform": "x86_64",
+  "processor": "x86_64",
+  "machine": "x86_64",
+  "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
+}
 ```
 
 ## Contributions
