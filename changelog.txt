@@ -1,6 +1,6 @@
 jc changelog
 
-2019xxxx v0.x.x
+20191022 v0.8.1
 - Add env parser
 - Add df parser
 - Add free parser
