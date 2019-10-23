@@ -346,7 +346,7 @@ def parse(data):
 
             continue
 
-        if line.find('target') == 0 or line.find('pkts') == 1:
+        elif line.find('target') == 0 or line.find('pkts') == 1:
             headers = []
             headers = [h for h in ' '.join(line.strip().split()).split() if h]
             headers.append("options")
