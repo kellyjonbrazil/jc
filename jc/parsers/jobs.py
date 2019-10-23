@@ -3,9 +3,45 @@
 Usage:
     specify --jobs as the first argument if the piped input is coming from jobs
 
+    Also supports the -l option
+
 Examples:
 
-
+$ jobs -l | jc --jobs -p
+[
+  {
+    "job_number": 1,
+    "pid": 14798,
+    "status": "Running",
+    "command": "sleep 10000 &"
+  },
+  {
+    "job_number": 2,
+    "pid": 14799,
+    "status": "Running",
+    "command": "sleep 10001 &"
+  },
+  {
+    "job_number": 3,
+    "pid": 14800,
+    "status": "Running",
+    "command": "sleep 10002 &"
+  },
+  {
+    "job_number": 4,
+    "pid": 14814,
+    "history": "previous",
+    "status": "Running",
+    "command": "sleep 10003 &"
+  },
+  {
+    "job_number": 5,
+    "pid": 14815,
+    "history": "current",
+    "status": "Running",
+    "command": "sleep 10004 &"
+  }
+]
 """
 
 
