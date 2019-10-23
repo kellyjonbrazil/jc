@@ -5,7 +5,7 @@ Usage:
 
     Also supports the -l option
 
-Examples:
+Example:
 
 $ jobs -l | jc --jobs -p
 [
