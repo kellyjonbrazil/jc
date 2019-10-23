@@ -20,13 +20,41 @@ import jc.parsers.route
 import jc.parsers.uname
 
 
+def helptext():
+    print('Usage:  jc [parser] [options]\n', file=sys.stderr)
+    print('Parsers:', file=sys.stderr)
+    print('        --df         df parser', file=sys.stderr)
+    print('        --env        env parser', file=sys.stderr)
+    print('        --free       free parser', file=sys.stderr)
+    print('        --ifconfig   iconfig parser', file=sys.stderr)
+    print('        --iptables   iptables parser', file=sys.stderr)
+    print('        --ls         ls parser', file=sys.stderr)
+    print('        --lsblk      lsblk parser', file=sys.stderr)
+    print('        --mount      mount parser', file=sys.stderr)
+    print('        --netstat    netstat parser', file=sys.stderr)
+    print('        --ps         ps parser', file=sys.stderr)
+    print('        --route      route parser', file=sys.stderr)
+    print('        --uname      uname parser\n', file=sys.stderr)
+    print('Options:', file=sys.stderr)
+    print('        -p           pretty print output\n', file=sys.stderr)
+    print('Example:', file=sys.stderr)
+    print('        ls -al | jc --ls -p\n', file=sys.stderr)
+
+
 def main():
+    if sys.stdin.isatty():
+        print('jc:     missing piped data\n', file=sys.stderr)
+        helptext()
+        exit()
+
     data = sys.stdin.read()
     pretty = False
 
+    # options
     if '-p' in sys.argv:
         pretty = True
 
+    # parsers
     if '--df' in sys.argv:
         result = jc.parsers.df.parse(data)
 
@@ -64,25 +92,8 @@ def main():
         result = jc.parsers.uname.parse(data)
 
     else:
-        print('jc:     missing arguments\n', file=sys.stderr)
-        print('Usage:  jc [parser] [options]\n', file=sys.stderr)
-        print('Parsers:', file=sys.stderr)
-        print('        --df         df parser', file=sys.stderr)
-        print('        --env        env parser', file=sys.stderr)
-        print('        --free       free parser', file=sys.stderr)
-        print('        --ifconfig   iconfig parser', file=sys.stderr)
-        print('        --iptables   iptables parser', file=sys.stderr)
-        print('        --ls         ls parser', file=sys.stderr)
-        print('        --lsblk      lsblk parser', file=sys.stderr)
-        print('        --mount      mount parser', file=sys.stderr)
-        print('        --netstat    netstat parser', file=sys.stderr)
-        print('        --ps         ps parser', file=sys.stderr)
-        print('        --route      route parser', file=sys.stderr)
-        print('        --uname      uname parser\n', file=sys.stderr)
-        print('Options:', file=sys.stderr)
-        print('        -p           pretty print output\n', file=sys.stderr)
-        print('Example:', file=sys.stderr)
-        print('        ls -al | jc --ls -p\n', file=sys.stderr)
+        print('jc:     missing or incorrect arguments\n', file=sys.stderr)
+        helptext()
         exit()
 
     # output resulting dictionary as json
