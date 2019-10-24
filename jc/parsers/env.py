@@ -5,37 +5,23 @@ Usage:
 
 Example:
 $ env | jc --env -p
-[
-  {
-    "TERM": "xterm-256color"
-  },
-  {
-    "SHELL": "/bin/bash"
-  },
-  {
-    "USER": "root"
-  },
-  {
-    "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-  },
-  {
-    "PWD": "/bin"
-  },
-  {
-    "LANG": "en_US.UTF-8"
-  },
-  {
-    "HOME": "/root"
-  },
-  {
-    "_": "/usr/bin/env"
-  }
-]
+{
+  "TERM": "xterm-256color",
+  "SHELL": "/bin/bash",
+  "USER": "root",
+  "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "PWD": "/root",
+  "LANG": "en_US.UTF-8",
+  "HOME": "/root",
+  "LOGNAME": "root",
+  "_": "/usr/bin/env"
+}
+
 """
 
 
 def parse(data):
-    output = []
+    output = {}
 
     linedata = data.splitlines()
 
@@ -45,9 +31,7 @@ def parse(data):
     if cleandata:
 
         for entry in cleandata:
-            output_line = {}
             parsed_line = entry.split('=', maxsplit=1)
-            output_line[parsed_line[0]] = parsed_line[1]
-            output.append(output_line)
+            output[parsed_line[0]] = parsed_line[1]
 
     return output

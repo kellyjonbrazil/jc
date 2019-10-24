@@ -122,32 +122,17 @@ $ df | jc --df -p
 ### env
 ```
 $ env | jc --env -p
-[
-  {
-    "TERM": "xterm-256color"
-  },
-  {
-    "SHELL": "/bin/bash"
-  },
-  {
-    "USER": "root"
-  },
-  {
-    "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-  },
-  {
-    "PWD": "/bin"
-  },
-  {
-    "LANG": "en_US.UTF-8"
-  },
-  {
-    "HOME": "/root"
-  },
-  {
-    "_": "/usr/bin/env"
-  }
-]
+{
+  "TERM": "xterm-256color",
+  "SHELL": "/bin/bash",
+  "USER": "root",
+  "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "PWD": "/root",
+  "LANG": "en_US.UTF-8",
+  "HOME": "/root",
+  "LOGNAME": "root",
+  "_": "/usr/bin/env"
+}
 ```
 ### ifconfig
 ```
