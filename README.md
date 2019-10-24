@@ -75,6 +75,7 @@ jc [parser] [options]
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--uname` enables the `uname -a` parser
+- `--w` enables the `w` parser
 
 ### Options
 - `-p` specifies whether to pretty format the JSON output
@@ -1041,6 +1042,32 @@ $ uname -a | jc --uname -p
   "machine": "x86_64",
   "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
 }
+```
+### w
+```
+$ w | jc --w -p
+[
+  {
+    "USER": "root",
+    "TTY": "ttyS0",
+    "FROM": "-",
+    "LOGIN@": "Mon20",
+    "IDLE": "2:27",
+    "JCPU": "10.61s",
+    "PCPU": "10.53s",
+    "WHAT": "-bash"
+  },
+  {
+    "USER": "root",
+    "TTY": "pts/0",
+    "FROM": "192.168.71.1",
+    "LOGIN@": "22:58",
+    "IDLE": "2.00s",
+    "JCPU": "0.04s",
+    "PCPU": "0.00s",
+    "WHAT": "w"
+  }
+]
 ```
 
 ## Contributions

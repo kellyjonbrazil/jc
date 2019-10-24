@@ -21,10 +21,11 @@ import jc.parsers.netstat
 import jc.parsers.ps
 import jc.parsers.route
 import jc.parsers.uname
+import jc.parsers.w
 
 
 def helptext():
-    print('Usage:  jc [parser] [options]\n', file=sys.stderr)
+    print('Usage:  jc PARSER [OPTIONS]\n', file=sys.stderr)
     print('Parsers:', file=sys.stderr)
     print('        --df         df parser', file=sys.stderr)
     print('        --env        env parser', file=sys.stderr)
@@ -40,7 +41,8 @@ def helptext():
     print('        --netstat    netstat parser', file=sys.stderr)
     print('        --ps         ps parser', file=sys.stderr)
     print('        --route      route parser', file=sys.stderr)
-    print('        --uname      uname parser\n', file=sys.stderr)
+    print('        --uname      uname parser', file=sys.stderr)
+    print('        --w          w parser\n', file=sys.stderr)
     print('Options:', file=sys.stderr)
     print('        -p           pretty print output\n', file=sys.stderr)
     print('Example:', file=sys.stderr)
@@ -105,6 +107,9 @@ def main():
 
     elif '--uname' in sys.argv:
         result = jc.parsers.uname.parse(data)
+
+    elif '--w' in sys.argv:
+        result = jc.parsers.w.parse(data)
 
     else:
         print('jc:     missing or incorrect arguments\n', file=sys.stderr)
