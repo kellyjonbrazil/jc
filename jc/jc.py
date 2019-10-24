@@ -14,6 +14,7 @@ import jc.parsers.iptables
 import jc.parsers.jobs
 import jc.parsers.ls
 import jc.parsers.lsblk
+import jc.parsers.lsof
 import jc.parsers.mount
 import jc.parsers.netstat
 import jc.parsers.ps
@@ -32,6 +33,7 @@ def helptext():
     print('        --jobs       jobs parser', file=sys.stderr)
     print('        --ls         ls parser', file=sys.stderr)
     print('        --lsblk      lsblk parser', file=sys.stderr)
+    print('        --lsof       lsof parser', file=sys.stderr)
     print('        --mount      mount parser', file=sys.stderr)
     print('        --netstat    netstat parser', file=sys.stderr)
     print('        --ps         ps parser', file=sys.stderr)
@@ -80,6 +82,9 @@ def main():
 
     elif '--lsblk' in sys.argv:
         result = jc.parsers.lsblk.parse(data)
+
+    elif '--lsof' in sys.argv:
+        result = jc.parsers.lsof.parse(data)
 
     elif '--mount' in sys.argv:
         result = jc.parsers.mount.parse(data)
