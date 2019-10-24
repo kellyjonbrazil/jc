@@ -325,42 +325,40 @@ $ sudo iptables -vnL -t filter | jc --iptables -p
 """
 
 
-class state():
+def parse(data):
     output = []
     chain = {}
     headers = []
 
-
-def parse(data):
     cleandata = data.splitlines()
 
     for line in cleandata:
 
         if line.find('Chain') == 0:
-            state.output.append(state.chain)
-            state.chain = {}
-            state.headers = []
+            output.append(chain)
+            chain = {}
+            headers = []
 
             parsed_line = line.split()
 
-            state.chain['chain'] = parsed_line[1]
-            state.chain['rules'] = []
+            chain['chain'] = parsed_line[1]
+            chain['rules'] = []
 
             continue
 
-        if line.find('target') == 0 or line.find('pkts') == 1:
-            state.headers = []
-            state.headers = [h for h in ' '.join(line.strip().split()).split() if h]
-            state.headers.append("options")
+        elif line.find('target') == 0 or line.find('pkts') == 1:
+            headers = []
+            headers = [h for h in ' '.join(line.strip().split()).split() if h]
+            headers.append("options")
 
             continue
 
         else:
-            rule = line.split(maxsplit=len(state.headers) - 1)
-            temp_rule = dict(zip(state.headers, rule))
+            rule = line.split(maxsplit=len(headers) - 1)
+            temp_rule = dict(zip(headers, rule))
             if temp_rule:
-                state.chain['rules'].append(temp_rule)
+                chain['rules'].append(temp_rule)
 
-    state.output = list(filter(None, state.output))
+    output = list(filter(None, output))
 
-    return state.output
+    return output
