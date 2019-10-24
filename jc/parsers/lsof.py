@@ -3,9 +3,6 @@
 Usage:
     specify --lsof as the first argument if the piped input is coming from lsof
 
-    Limitations:
-        No additional columns are supported
-
 Example:
 
 $ sudo lsof | jc --lsof -p
