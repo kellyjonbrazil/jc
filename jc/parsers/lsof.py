@@ -35,14 +35,14 @@ def parse(data):
         for entry in cleandata:
             output_line = {}
 
-            # normalize data by inserting -- for missing data
+            # normalize data by inserting Null for missing data
             temp_line = entry.split(maxsplit=len(headers) - 1)
 
             for spec in header_spec:
                 if spec[1] == 'COMMAND' or spec[1] == 'NAME':
                     continue
                 if entry[spec[2] - 1] == ' ':
-                    temp_line.insert(spec[0], '--')
+                    temp_line.insert(spec[0], None)
 
             name = ' '.join(temp_line[9:])
             fixed_line = temp_line[0:9]
