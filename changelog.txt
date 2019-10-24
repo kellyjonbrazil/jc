@@ -1,6 +1,6 @@
 jc changelog
 
-2019xxxx v0.9.0
+20191023 v0.9.1
 - Add jobs parser
 - Add lsof parser
 - Add lsmod parser
