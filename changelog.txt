@@ -3,6 +3,7 @@ jc changelog
 2019xxxx v0.9.0
 - Add jobs parser
 - Add lsof parser
+- Add lsmod parser
 - No blocking if no piped data
 - Better help text
 - Clean up iptables parser code
