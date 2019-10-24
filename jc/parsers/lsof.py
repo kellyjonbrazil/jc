@@ -8,7 +8,70 @@ Usage:
 
 Example:
 
-
+$ sudo lsof | jc --lsof -p
+[
+  {
+    "COMMAND": "systemd",
+    "PID": "1",
+    "TID": null,
+    "USER": "root",
+    "FD": "cwd",
+    "TYPE": "DIR",
+    "DEVICE": "253,0",
+    "SIZE/OFF": "224",
+    "NODE": "64",
+    "NAME": "/"
+  },
+  {
+    "COMMAND": "systemd",
+    "PID": "1",
+    "TID": null,
+    "USER": "root",
+    "FD": "rtd",
+    "TYPE": "DIR",
+    "DEVICE": "253,0",
+    "SIZE/OFF": "224",
+    "NODE": "64",
+    "NAME": "/"
+  },
+  {
+    "COMMAND": "systemd",
+    "PID": "1",
+    "TID": null,
+    "USER": "root",
+    "FD": "txt",
+    "TYPE": "REG",
+    "DEVICE": "253,0",
+    "SIZE/OFF": "1624520",
+    "NODE": "50360451",
+    "NAME": "/usr/lib/systemd/systemd"
+  },
+  {
+    "COMMAND": "systemd",
+    "PID": "1",
+    "TID": null,
+    "USER": "root",
+    "FD": "mem",
+    "TYPE": "REG",
+    "DEVICE": "253,0",
+    "SIZE/OFF": "20064",
+    "NODE": "8146",
+    "NAME": "/usr/lib64/libuuid.so.1.3.0"
+  },
+  {
+    "COMMAND": "systemd",
+    "PID": "1",
+    "TID": null,
+    "USER": "root",
+    "FD": "mem",
+    "TYPE": "REG",
+    "DEVICE": "253,0",
+    "SIZE/OFF": "265600",
+    "NODE": "8147",
+    "NAME": "/usr/lib64/libblkid.so.1.1.0"
+  },
+  ...
+]
 """
 
 
