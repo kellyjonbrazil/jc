@@ -48,7 +48,7 @@ The goal is to keep the resulting JSON as flat and simple as possible. Also, key
 
 ## Installation
 ```
-$ pip3 install jc
+$ pip3 install --upgrade jc
 ```
 
 ## Usage
