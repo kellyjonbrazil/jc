@@ -29,7 +29,7 @@ def parse(data):
         for entry in cleandata:
             try:
                 parsed_line = entry.split(maxsplit=1)
-                # prepend a alpha character n to be more json compliant
+                # prepend alpha character n to key so the resulting JSON is easier to work with
                 output['n' + parsed_line[0]] = parsed_line[1]
             except IndexError:
                 # need to catch indexerror in case there is weird input from prior commands
