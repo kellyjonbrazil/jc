@@ -147,7 +147,7 @@ $ free | jc --free -p
     "used": "213104",
     "free": "1148452",
     "shared": "1176",
-    "buff/cache": "655744",
+    "buff_cache": "655744",
     "available": "1622204"
   },
   {
