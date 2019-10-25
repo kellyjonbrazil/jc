@@ -19,7 +19,8 @@ $ history | jc --history -p
 def parse(data):
     output = {}
 
-    linedata = data.splitlines()
+    # split lines and clear out any non-ascii chars
+    linedata = data.splitlines().encode('ascii', errors='ignore').decode()
 
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
