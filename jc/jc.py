@@ -5,6 +5,7 @@ Main input module
 """
 
 import sys
+import signal
 import json
 import jc.parsers.df
 import jc.parsers.env
@@ -53,7 +54,13 @@ def helptext():
     print('        ls -al | jc --ls -p\n', file=sys.stderr)
 
 
+def ctrlc(signum, frame):
+    exit()
+
+
 def main():
+    signal.signal(signal.SIGINT, ctrlc)
+
     if sys.stdin.isatty():
         print('jc:     missing piped data\n', file=sys.stderr)
         helptext()
