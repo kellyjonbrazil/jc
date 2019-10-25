@@ -8,6 +8,7 @@ jc changelog
 - Remove problematic characters from key names in: df, free, history, lsblk, lsof, and w
 - Where possible, lowercase all keys (except cases like env where the key is the variable name)
 - Remove integer values
+- Handle CTRL-C gracefully
 
 20191023 v0.9.1
 - Add jobs parser
