@@ -95,9 +95,9 @@ def parse(data):
             parsed_line[0] = parsed_line[0].lstrip('[').rstrip(']')
 
             # create list of dictionaries
-            output_line['job_number'] = int(parsed_line[0])
+            output_line['job_number'] = parsed_line[0]
             if pid:
-                output_line['pid'] = int(pid)
+                output_line['pid'] = pid
             if job_history:
                 output_line['history'] = job_history
             output_line['status'] = parsed_line[1]

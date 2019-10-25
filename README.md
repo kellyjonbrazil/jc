@@ -6,22 +6,22 @@ JSON CLI output utility
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
 ```
-$ ls -l /usr/bin | jc --ls | jq '.[] | select(.bytes > 50000000)'
+$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
 {
   "filename": "emacs",
   "flags": "-r-xr-xr-x",
   "links": 1,
   "owner": "root",
   "group": "wheel",
-  "bytes": 117164432,
+  "size": "117164432",
   "date": "May 3 22:26"
 }
 ```
 
-The `jc` parsers can also be used as python modules:
+The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary instead of JSON:
 ```
 >>> import jc.parsers.ls
->>>
+>>> 
 >>> data='''-rwxr-xr-x  1 root  wheel    23648 May  3 22:26 cat
 ... -rwxr-xr-x  1 root  wheel    30016 May  3 22:26 chmod
 ... -rwxr-xr-x  1 root  wheel    29024 May  3 22:26 cp
@@ -30,22 +30,12 @@ The `jc` parsers can also be used as python modules:
 ... -rwxr-xr-x  1 root  wheel    32000 May  3 22:26 dd
 ... -rwxr-xr-x  1 root  wheel    23392 May  3 22:26 df
 ... -rwxr-xr-x  1 root  wheel    18128 May  3 22:26 echo'''
->>>
+>>> 
 >>> jc.parsers.ls.parse(data)
-[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 
-'bytes': 23648, 'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 
-'owner': 'root', 'group': 'wheel', 'bytes': 30016, 'date': 'May 3 22:26'}, {'filename': 'cp', 
-'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'bytes': 29024, 
-'date': 'May 3 22:26'}, {'filename': 'csh', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
-'group': 'wheel', 'bytes': 375824, 'date': 'May 3 22:26'}, {'filename': 'date', 
-'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'bytes': 28608, 
-'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
-'group': 'wheel', 'bytes': 32000, 'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x', 
-'links': 1, 'owner': 'root', 'group': 'wheel', 'bytes': 23392, 'date': 'May 3 22:26'}, 
-{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 
-'bytes': 18128, 'date': 'May 3 22:26'}]
+[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '23648', 'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '30016', 'date': 'May 3 22:26'}, {'filename': 'cp', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '29024', 'date': 'May 3 22:26'}, {'filename': 'csh', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '375824', 'date': 'May 3 22:26'}, {'filename': 'date', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '28608', 'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '32000', 'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '23392', 'date': 'May 3 22:26'}, {'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '18128', 'date': 'May 3 22:26'}]
 ```
-In this case the output will be a python dictionary instead of JSON.
+
+The goal is to keep the resulting JSON as flat and simple as possible. Also, keys have been converted to lowercase and special characters are replaced whenever possible.  Numbers are kept as strings because, depending on context or the output options, numbers can sometimes turn into strings. (e.g 'human readable' options)
 
 ## Installation
 ```
@@ -577,69 +567,92 @@ $ sudo iptables -vnL -t filter | jc --iptables -p
 $ jobs -l | jc --jobs -p
 [
   {
-    "job_number": 1,
-    "pid": 14798,
+    "job_number": "1",
+    "pid": "19510",
     "status": "Running",
-    "command": "sleep 10000 &"
+    "command": "sleep 1000 &"
   },
   {
-    "job_number": 2,
-    "pid": 14799,
+    "job_number": "2",
+    "pid": "19511",
     "status": "Running",
-    "command": "sleep 10001 &"
+    "command": "sleep 1001 &"
   },
   {
-    "job_number": 3,
-    "pid": 14800,
-    "status": "Running",
-    "command": "sleep 10002 &"
-  },
-  {
-    "job_number": 4,
-    "pid": 14814,
+    "job_number": "3",
+    "pid": "19512",
     "history": "previous",
     "status": "Running",
-    "command": "sleep 10003 &"
+    "command": "sleep 1002 &"
   },
   {
-    "job_number": 5,
-    "pid": 14815,
+    "job_number": "4",
+    "pid": "19513",
     "history": "current",
     "status": "Running",
-    "command": "sleep 10004 &"
+    "command": "sleep 1003 &"
   }
 ]
 ```
 ### ls
 ```
-$ ls -l /bin | jc --ls -p
+$ ls -l /usr/bin | jc --ls -p
 [
   {
+    "filename": "apropos",
+    "link_to": "whatis",
+    "flags": "lrwxrwxrwx.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "6",
+    "date": "Aug 15 10:53"
+  },
+  {
+    "filename": "arch",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "33080",
+    "date": "Aug 19 23:25"
+  },
+  {
+    "filename": "awk",
+    "link_to": "gawk",
+    "flags": "lrwxrwxrwx.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "4",
+    "date": "Aug 15 10:53"
+  },
+  {
+    "filename": "base64",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "37360",
+    "date": "Aug 19 23:25"
+  },
+  {
+    "filename": "basename",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "29032",
+    "date": "Aug 19 23:25"
+  },
+  {
     "filename": "bash",
-    "flags": "-r-xr-xr-x",
-    "links": 1,
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
     "owner": "root",
-    "group": "wheel",
-    "bytes": 618416,
-    "date": "May 3 22:26"
-  },
-  {
-    "filename": "cat",
-    "flags": "-rwxr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 23648,
-    "date": "May 3 22:26"
-  },
-  {
-    "filename": "chmod",
-    "flags": "-rwxr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 30016,
-    "date": "May 3 22:26"
+    "group": "root",
+    "size": "964600",
+    "date": "Aug 8 05:06"
   },
   ...
 ]
@@ -875,8 +888,8 @@ $ netstat -p | jc --netstat -p
     "state": "ESTABLISHED",
     "pid": 53550,
     "program_name": "git-remote-ht",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
@@ -888,39 +901,26 @@ $ netstat -p | jc --netstat -p
     "state": "ESTABLISHED",
     "pid": 53550,
     "program_name": "git-remote-ht",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   }
 ]
 ```
 ```
-$ netstat -lpn | jc --netstat -p
+$ sudo netstat -lpn | jc --netstat -p
 [
   {
     "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "127.0.0.1",
-    "local_port": "42351",
+    "local_port": "25",
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1112,
-    "program_name": "containerd",
-    "receive_q": 0,
-    "send_q": 0
-  },
-  {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_address": "127.0.0.53",
-    "local_port": "53",
-    "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
-    "state": "LISTEN",
-    "pid": 885,
-    "program_name": "systemd-resolve",
-    "receive_q": 0,
-    "send_q": 0
+    "pid": "1584",
+    "program_name": "master",
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
@@ -930,48 +930,37 @@ $ netstat -lpn | jc --netstat -p
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1127,
+    "pid": "1213",
     "program_name": "sshd",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
     "network_protocol": "ipv6",
-    "local_address": "::",
-    "local_port": "22",
+    "local_address": "::1",
+    "local_port": "25",
     "foreign_address": "::",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1127,
-    "program_name": "sshd",
-    "receive_q": 0,
-    "send_q": 0
+    "pid": "1584",
+    "program_name": "master",
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "udp",
     "network_protocol": "ipv4",
-    "local_address": "127.0.0.53",
-    "local_port": "53",
-    "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
-    "pid": 885,
-    "program_name": "systemd-resolve",
-    "receive_q": 0,
-    "send_q": 0
-  },
-  {
-    "transport_protocol": "udp",
-    "network_protocol": "ipv4",
-    "local_address": "192.168.71.131",
+    "local_address": "0.0.0.0",
     "local_port": "68",
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
-    "pid": 867,
-    "program_name": "systemd-network",
-    "receive_q": 0,
-    "send_q": 0
-  }
+    "pid": "19177",
+    "program_name": "dhclient",
+    "receive_q": "0",
+    "send_q": "0"
+  },
+  ...
 ]
 ```
 ### ps

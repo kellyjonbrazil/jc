@@ -22,8 +22,8 @@ $ netstat -p | jc --netstat -p
     "state": "ESTABLISHED",
     "pid": 53550,
     "program_name": "git-remote-ht",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
@@ -35,38 +35,25 @@ $ netstat -p | jc --netstat -p
     "state": "ESTABLISHED",
     "pid": 53550,
     "program_name": "git-remote-ht",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   }
 ]
 
-$ netstat -lpn | jc --netstat -p
+$ sudo netstat -lpn | jc --netstat -p
 [
   {
     "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "127.0.0.1",
-    "local_port": "42351",
+    "local_port": "25",
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1112,
-    "program_name": "containerd",
-    "receive_q": 0,
-    "send_q": 0
-  },
-  {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_address": "127.0.0.53",
-    "local_port": "53",
-    "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
-    "state": "LISTEN",
-    "pid": 885,
-    "program_name": "systemd-resolve",
-    "receive_q": 0,
-    "send_q": 0
+    "pid": "1584",
+    "program_name": "master",
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
@@ -76,48 +63,37 @@ $ netstat -lpn | jc --netstat -p
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1127,
+    "pid": "1213",
     "program_name": "sshd",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
     "network_protocol": "ipv6",
-    "local_address": "::",
-    "local_port": "22",
+    "local_address": "::1",
+    "local_port": "25",
     "foreign_address": "::",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1127,
-    "program_name": "sshd",
-    "receive_q": 0,
-    "send_q": 0
+    "pid": "1584",
+    "program_name": "master",
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "udp",
     "network_protocol": "ipv4",
-    "local_address": "127.0.0.53",
-    "local_port": "53",
-    "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
-    "pid": 885,
-    "program_name": "systemd-resolve",
-    "receive_q": 0,
-    "send_q": 0
-  },
-  {
-    "transport_protocol": "udp",
-    "network_protocol": "ipv4",
-    "local_address": "192.168.71.131",
+    "local_address": "0.0.0.0",
     "local_port": "68",
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
-    "pid": 867,
-    "program_name": "systemd-network",
-    "receive_q": 0,
-    "send_q": 0
-  }
+    "pid": "19177",
+    "program_name": "dhclient",
+    "receive_q": "0",
+    "send_q": "0"
+  },
+  ...
 ]
 """
 import string
@@ -161,15 +137,15 @@ def parse_line(entry):
             output_line['state'] = parsed_line[5]
 
             if len(parsed_line) > 6 and parsed_line[6][0] in string.digits:
-                output_line['pid'] = int(parsed_line[6].split('/')[0])
+                output_line['pid'] = parsed_line[6].split('/')[0]
                 output_line['program_name'] = parsed_line[6].split('/')[1]
         else:
             if parsed_line[5][0] in string.digits:
-                output_line['pid'] = int(parsed_line[5].split('/')[0])
+                output_line['pid'] = parsed_line[5].split('/')[0]
                 output_line['program_name'] = parsed_line[5].split('/')[1]
 
-    output_line['receive_q'] = int(parsed_line[1])
-    output_line['send_q'] = int(parsed_line[2])
+    output_line['receive_q'] = parsed_line[1]
+    output_line['send_q'] = parsed_line[2]
 
     return output_line
 

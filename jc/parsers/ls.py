@@ -5,81 +5,96 @@ Usage:
 
     ls options supported:
     - None
-    - l
-    - a
+    - lah
 
 Examples:
 
-$ ls -a /usr/bin | jc --ls -p
+$ ls /usr/bin | jc --ls -p
 [
   {
-    "filename": "."
+    "filename": "apropos"
   },
   {
-    "filename": ".."
+    "filename": "arch"
   },
   {
-    "filename": "2to3-"
+    "filename": "awk"
   },
   {
-    "filename": "2to3-2.7"
-  },
-  {
-    "filename": "AssetCacheLocatorUtil"
+    "filename": "base64"
   },
   ...
 ]
 
-$ ls -al /usr/bin | jc --ls -p
+$ ls -l /usr/bin | jc --ls -p
 [
   {
-    "filename": ".",
-    "flags": "drwxr-xr-x",
-    "links": 970,
+    "filename": "apropos",
+    "link_to": "whatis",
+    "flags": "lrwxrwxrwx.",
+    "links": "1",
     "owner": "root",
-    "group": "wheel",
-    "bytes": 31040,
-    "date": "Aug 27 21:20"
+    "group": "root",
+    "size": "6",
+    "date": "Aug 15 10:53"
   },
   {
-    "filename": "..",
-    "flags": "drwxr-xr-x@",
-    "links": 9,
+    "filename": "arch",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
     "owner": "root",
-    "group": "wheel",
-    "bytes": 288,
-    "date": "May 3 22:14"
+    "group": "root",
+    "size": "33080",
+    "date": "Aug 19 23:25"
   },
   {
-    "filename": "2to3-",
-    "flags": "-rwxr-xr-x",
-    "links": 4,
+    "filename": "awk",
+    "link_to": "gawk",
+    "flags": "lrwxrwxrwx.",
+    "links": "1",
     "owner": "root",
-    "group": "wheel",
-    "bytes": 925,
-    "date": "Feb 22 2019"
+    "group": "root",
+    "size": "4",
+    "date": "Aug 15 10:53"
   },
   {
-    "filename": "2to3-2.7",
-    "link_to": "../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7",
-    "flags": "lrwxr-xr-x",
-    "links": 1,
+    "filename": "base64",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
     "owner": "root",
-    "group": "wheel",
-    "bytes": 74,
-    "date": "May 4 02:12"
+    "group": "root",
+    "size": "37360",
+    "date": "Aug 19 23:25"
+  },
+  {
+    "filename": "basename",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "29032",
+    "date": "Aug 19 23:25"
+  },
+  {
+    "filename": "bash",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "964600",
+    "date": "Aug 8 05:06"
   },
   ...
 ]
 
-$ $ ls -l /usr/bin | jc --ls | jq '.[] | 'select(.bytes > 50000000)'
+$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
 {
   "filename": "emacs",
   "flags": "-r-xr-xr-x",
   "links": 1,
   "owner": "root",
   "group": "wheel",
-  "bytes": 117164432,
+  "size": "117164432",
   "date": "May 3 22:26"
 }
 """
@@ -117,10 +132,10 @@ def parse(data):
                     output_line['link_to'] = filename_field[1]
 
                 output_line['flags'] = parsed_line[0]
-                output_line['links'] = int(parsed_line[1])
+                output_line['links'] = parsed_line[1]
                 output_line['owner'] = parsed_line[2]
                 output_line['group'] = parsed_line[3]
-                output_line['bytes'] = int(parsed_line[4])
+                output_line['size'] = parsed_line[4]
                 output_line['date'] = ' '.join(parsed_line[5:8])
                 output.append(output_line)
         else:
