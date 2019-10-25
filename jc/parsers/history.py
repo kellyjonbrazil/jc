@@ -7,10 +7,10 @@ Example:
 
 $ history | jc --history -p
 {
-  "118": "sleep 100",
-  "119": "ls /bin",
-  "120": "echo \"hello\"",
-  "121": "docker images",
+  "n118": "sleep 100",
+  "n119": "ls /bin",
+  "n120": "echo \"hello\"",
+  "n121": "docker images",
   ...
 }
 """
@@ -26,7 +26,12 @@ def parse(data):
 
     if cleandata:
         for entry in cleandata:
-            parsed_line = entry.split(maxsplit=1)
-            output[parsed_line[0]] = parsed_line[1]
+            try:
+                parsed_line = entry.split(maxsplit=1)
+                # prepend a alpha character n to be more json compliant
+                output['n' + parsed_line[0]] = parsed_line[1]
+            except IndexError:
+                # need to catch indexerror in case there is weird input from prior commands
+                pass
 
     return output

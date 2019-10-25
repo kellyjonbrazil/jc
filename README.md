@@ -162,10 +162,10 @@ $ free | jc --free -p
 ```
 $ history | jc --history -p
 {
-  "118": "sleep 100",
-  "119": "ls /bin",
-  "120": "echo \"hello\"",
-  "121": "docker images",
+  "n118": "sleep 100",
+  "n119": "ls /bin",
+  "n120": "echo \"hello\"",
+  "n121": "docker images",
   ...
 }
 ```
