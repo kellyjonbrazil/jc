@@ -92,7 +92,6 @@ def parse(data):
         headers = ['SIZE_OFF' if x == 'SIZE/OFF' else x for x in headers]
 
         header_spec = []
-
         for i, h in enumerate(headers):
             # header tuple is (index, header_name, col)
             header_spec.append((i, h, header_row.find(h) + len(h)))
@@ -108,11 +107,11 @@ def parse(data):
 
                 index = spec[0]
                 header_name = spec[1]
-                col = spec[2]
+                col = spec[2] - 1
 
                 if header_name == 'COMMAND' or header_name == 'NAME':
                     continue
-                if entry[col - 1] == string.whitespace:
+                if entry[col] == string.whitespace:
                     temp_line.insert(index, None)
 
             name = ' '.join(temp_line[9:])
