@@ -3,7 +3,6 @@
 Usage:
     specify --w as the first argument if the piped input is coming from w
 
-
 Example:
 
 $ w | jc --w -p
