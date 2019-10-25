@@ -32,7 +32,7 @@ def parse(data):
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
 
     cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].strip().split()).split() if h]
+    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
     headers.insert(0, "type")
 
     # clean up 'buff/cache' header
