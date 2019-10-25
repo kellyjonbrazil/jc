@@ -4,6 +4,7 @@ Usage:
     specify --env as the first argument if the piped input is coming from env
 
 Example:
+
 $ env | jc --env -p
 {
   "TERM": "xterm-256color",
@@ -16,7 +17,6 @@ $ env | jc --env -p
   "LOGNAME": "root",
   "_": "/usr/bin/env"
 }
-
 """
 
 
