@@ -8,24 +8,24 @@ Example:
 $ w | jc --w -p
 [
   {
-    "USER": "root",
-    "TTY": "ttyS0",
-    "FROM": "-",
-    "LOGIN_AT": "Mon20",
-    "IDLE": "2:27",
-    "JCPU": "10.61s",
-    "PCPU": "10.53s",
-    "WHAT": "-bash"
+    "user": "root",
+    "tty": "ttyS0",
+    "from": "-",
+    "login_at": "Mon20",
+    "idle": "0.00s",
+    "jcpu": "14.70s",
+    "pcpu": "0.00s",
+    "what": "bash"
   },
   {
-    "USER": "root",
-    "TTY": "pts/0",
-    "FROM": "192.168.71.1",
-    "LOGIN_AT": "22:58",
-    "IDLE": "2.00s",
-    "JCPU": "0.04s",
-    "PCPU": "0.00s",
-    "WHAT": "w"
+    "user": "root",
+    "tty": "pts/0",
+    "from": "192.168.71.1",
+    "login_at": "Thu22",
+    "idle": "22:46m",
+    "jcpu": "0.05s",
+    "pcpu": "0.05s",
+    "what": "-bash"
   }
 ]
 """

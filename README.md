@@ -88,37 +88,37 @@ jc PARSER [OPTIONS]
 $ df | jc --df -p
 [
   {
-    "Filesystem": "udev",
-    "1K-blocks": "977500",
-    "Used": "0",
-    "Available": "977500",
-    "Use_percent": "0%",
-    "Mounted": "/dev"
+    "filesystem": "udev",
+    "1k-blocks": "977500",
+    "used": "0",
+    "available": "977500",
+    "use_percent": "0%",
+    "mounted": "/dev"
   },
   {
-    "Filesystem": "tmpfs",
-    "1K-blocks": "201732",
-    "Used": "1180",
-    "Available": "200552",
-    "Use_percent": "1%",
-    "Mounted": "/run"
+    "filesystem": "tmpfs",
+    "1k-blocks": "201732",
+    "used": "1204",
+    "available": "200528",
+    "use_percent": "1%",
+    "mounted": "/run"
   },
   {
-    "Filesystem": "/dev/sda2",
-    "1K-blocks": "20508240",
-    "Used": "5747284",
-    "Available": "13696152",
-    "Use_percent": "30%",
-    "Mounted": "/"
+    "filesystem": "/dev/sda2",
+    "1k-blocks": "20508240",
+    "used": "5748312",
+    "available": "13695124",
+    "use_percent": "30%",
+    "mounted": "/"
   },
   {
-    "Filesystem": "tmpfs",
-    "1K-blocks": "1008648",
-    "Used": "0",
-    "Available": "1008648",
-    "Use_percent": "0%",
-    "Mounted": "/dev/shm"
-  },
+    "filesystem": "tmpfs",
+    "1k-blocks": "1008648",
+    "used": "0",
+    "available": "1008648",
+    "use_percent": "0%",
+    "mounted": "/dev/shm"
+  }
   ...
 ]
 ```
@@ -649,46 +649,55 @@ $ ls -l /bin | jc --ls -p
 $ lsblk | jc --lsblk -p
 [
   {
-    "NAME": "loop0",
-    "MAJ_MIN": "7:0",
-    "RM": "0",
-    "SIZE": "54.5M",
-    "RO": "1",
-    "TYPE": "loop",
-    "MOUNTPOINT": "/snap/core18/1223"
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": "0",
+    "size": "20G",
+    "ro": "0",
+    "type": "disk"
   },
   {
-    "NAME": "sda",
-    "MAJ_MIN": "8:0",
-    "RM": "0",
-    "SIZE": "20G",
-    "RO": "0",
-    "TYPE": "disk"
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": "0",
+    "size": "1G",
+    "ro": "0",
+    "type": "part",
+    "mountpoint": "/boot"
   },
   {
-    "NAME": "sda1",
-    "MAJ_MIN": "8:1",
-    "RM": "0",
-    "SIZE": "1M",
-    "RO": "0",
-    "TYPE": "part"
+    "name": "sda2",
+    "maj_min": "8:2",
+    "rm": "0",
+    "size": "19G",
+    "ro": "0",
+    "type": "part"
   },
   {
-    "NAME": "sda2",
-    "MAJ_MIN": "8:2",
-    "RM": "0",
-    "SIZE": "20G",
-    "RO": "0",
-    "TYPE": "part",
-    "MOUNTPOINT": "/"
+    "name": "centos-root",
+    "maj_min": "253:0",
+    "rm": "0",
+    "size": "17G",
+    "ro": "0",
+    "type": "lvm",
+    "mountpoint": "/"
   },
   {
-    "NAME": "sr0",
-    "MAJ_MIN": "11:0",
-    "RM": "1",
-    "SIZE": "64.8M",
-    "RO": "0",
-    "TYPE": "rom"
+    "name": "centos-swap",
+    "maj_min": "253:1",
+    "rm": "0",
+    "size": "2G",
+    "ro": "0",
+    "type": "lvm",
+    "mountpoint": "[SWAP]"
+  },
+  {
+    "name": "sr0",
+    "maj_min": "11:0",
+    "rm": "1",
+    "size": "1024M",
+    "ro": "0",
+    "type": "rom"
   }
 ]
 ```
@@ -696,44 +705,12 @@ $ lsblk | jc --lsblk -p
 ```
 $ lsmod | jc --lsmod -p
 [
- {
-    "Module": "nf_nat_ipv4",
-    "Size": "14115",
-    "Used": "1",
-    "By": [
-      "iptable_nat"
-    ]
-  },
+  ...
   {
-    "Module": "nf_nat",
-    "Size": "26583",
-    "Used": "3",
-    "By": [
-      "nf_nat_ipv4",
-      "nf_nat_ipv6",
-      "nf_nat_masquerade_ipv4"
-    ]
-  },
-  {
-    "Module": "iptable_mangle",
-    "Size": "12695",
-    "Used": "1"
-  },
-  {
-    "Module": "iptable_security",
-    "Size": "12705",
-    "Used": "1"
-  },
-  {
-    "Module": "iptable_raw",
-    "Size": "12678",
-    "Used": "1"
-  },
-  {
-    "Module": "nf_conntrack",
-    "Size": "139224",
-    "Used": "7",
-    "By": [
+    "module": "nf_conntrack",
+    "size": "139224",
+    "used": "7",
+    "by": [
       "nf_nat",
       "nf_nat_ipv4",
       "nf_nat_ipv6",
@@ -743,72 +720,99 @@ $ lsmod | jc --lsmod -p
       "nf_conntrack_ipv6"
     ]
   },
+  {
+    "module": "ip_set",
+    "size": "45799",
+    "used": "0"
+  },
+  {
+    "module": "nfnetlink",
+    "size": "14519",
+    "used": "1",
+    "by": [
+      "ip_set"
+    ]
+  },
+  {
+    "module": "ebtable_filter",
+    "size": "12827",
+    "used": "1"
+  },
+  {
+    "module": "ebtables",
+    "size": "35009",
+    "used": "2",
+    "by": [
+      "ebtable_nat",
+      "ebtable_filter"
+    ]
+  },
   ...
 ]
 ```
 ### lsof
 ```
-$ sudo lsof | jc --lsof -p
+$ sudo lsof | jc --lsof -p | more
 [
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "cwd",
-    "TYPE": "DIR",
-    "DEVICE": "253,0",
-    "SIZE_OFF": "224",
-    "NODE": "64",
-    "NAME": "/"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "cwd",
+    "type": "DIR",
+    "device": "8,2",
+    "size_off": "4096",
+    "node": "2",
+    "name": "/"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "rtd",
-    "TYPE": "DIR",
-    "DEVICE": "253,0",
-    "SIZE_OFF": "224",
-    "NODE": "64",
-    "NAME": "/"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "rtd",
+    "type": "DIR",
+    "device": "8,2",
+    "size_off": "4096",
+    "node": "2",
+    "name": "/"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "txt",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE_OFF": "1624520",
-    "NODE": "50360451",
-    "NAME": "/usr/lib/systemd/systemd"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "txt",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "1595792",
+    "node": "668802",
+    "name": "/lib/systemd/systemd"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "mem",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE_OFF": "20064",
-    "NODE": "8146",
-    "NAME": "/usr/lib64/libuuid.so.1.3.0"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "mem",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "1700792",
+    "node": "656167",
+    "name": "/lib/x86_64-linux-gnu/libm-2.27.so"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "mem",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE_OFF": "265600",
-    "NODE": "8147",
-    "NAME": "/usr/lib64/libblkid.so.1.1.0"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "mem",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "121016",
+    "node": "655394",
+    "name": "/lib/x86_64-linux-gnu/libudev.so.1.6.9"
   },
   ...
 ]
@@ -974,92 +978,93 @@ $ netstat -lpn | jc --netstat -p
 ```
 $ ps -ef | jc --ps -p
 [
+  ...
   {
-    "UID": "root",
-    "PID": "1",
-    "PPID": "0",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:05",
-    "CMD": "/lib/systemd/systemd --system --deserialize 35"
+    "uid": "root",
+    "pid": "545",
+    "ppid": "1",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:03",
+    "cmd": "/usr/lib/systemd/systemd-journald"
   },
   {
-    "UID": "root",
-    "PID": "2",
-    "PPID": "0",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:00",
-    "CMD": "[kthreadd]"
+    "uid": "root",
+    "pid": "566",
+    "ppid": "1",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "/usr/sbin/lvmetad -f"
   },
   {
-    "UID": "root",
-    "PID": "4",
-    "PPID": "2",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:00",
-    "CMD": "[kworker/0:0H]"
+    "uid": "root",
+    "pid": "580",
+    "ppid": "1",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "/usr/lib/systemd/systemd-udevd"
   },
   {
-    "UID": "root",
-    "PID": "6",
-    "PPID": "2",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:00",
-    "CMD": "[mm_percpu_wq]"
+    "uid": "root",
+    "pid": "659",
+    "ppid": "2",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "[kworker/u257:0]"
+  },
+  {
+    "uid": "root",
+    "pid": "666",
+    "ppid": "2",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "[hci0]"
   },
   ...
 ]
 ```
 ### route
 ```
-$ route -n | jc --route -p
+$ route | jc --route -p
 [
   {
-    "Destination": "0.0.0.0",
-    "Gateway": "192.168.71.2",
-    "Genmask": "0.0.0.0",
-    "Flags": "UG",
-    "Metric": "100",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "ens33"
+    "destination": "default",
+    "gateway": "gateway",
+    "genmask": "0.0.0.0",
+    "flags": "UG",
+    "metric": "100",
+    "ref": "0",
+    "use": "0",
+    "iface": "ens33"
   },
   {
-    "Destination": "172.17.0.0",
-    "Gateway": "0.0.0.0",
-    "Genmask": "255.255.0.0",
-    "Flags": "U",
-    "Metric": "0",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "docker0"
+    "destination": "172.17.0.0",
+    "gateway": "0.0.0.0",
+    "genmask": "255.255.0.0",
+    "flags": "U",
+    "metric": "0",
+    "ref": "0",
+    "use": "0",
+    "iface": "docker0"
   },
   {
-    "Destination": "192.168.71.0",
-    "Gateway": "0.0.0.0",
-    "Genmask": "255.255.255.0",
-    "Flags": "U",
-    "Metric": "0",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "ens33"
-  },
-  {
-    "Destination": "192.168.71.2",
-    "Gateway": "0.0.0.0",
-    "Genmask": "255.255.255.255",
-    "Flags": "UH",
-    "Metric": "100",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "ens33"
+    "destination": "192.168.71.0",
+    "gateway": "0.0.0.0",
+    "genmask": "255.255.255.0",
+    "flags": "U",
+    "metric": "100",
+    "ref": "0",
+    "use": "0",
+    "iface": "ens33"
   }
 ]
 ```
@@ -1094,24 +1099,24 @@ $ uptime | jc --uptime -p
 $ w | jc --w -p
 [
   {
-    "USER": "root",
-    "TTY": "ttyS0",
-    "FROM": "-",
-    "LOGIN_AT": "Mon20",
-    "IDLE": "2:27",
-    "JCPU": "10.61s",
-    "PCPU": "10.53s",
-    "WHAT": "-bash"
+    "user": "root",
+    "tty": "ttyS0",
+    "from": "-",
+    "login_at": "Mon20",
+    "idle": "0.00s",
+    "jcpu": "14.70s",
+    "pcpu": "0.00s",
+    "what": "bash"
   },
   {
-    "USER": "root",
-    "TTY": "pts/0",
-    "FROM": "192.168.71.1",
-    "LOGIN_AT": "22:58",
-    "IDLE": "2.00s",
-    "JCPU": "0.04s",
-    "PCPU": "0.00s",
-    "WHAT": "w"
+    "user": "root",
+    "tty": "pts/0",
+    "from": "192.168.71.1",
+    "login_at": "Thu22",
+    "idle": "22:46m",
+    "jcpu": "0.05s",
+    "pcpu": "0.05s",
+    "what": "-bash"
   }
 ]
 ```

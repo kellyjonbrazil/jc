@@ -7,44 +7,12 @@ Example:
 
 $ lsmod | jc --lsmod -p
 [
- {
-    "Module": "nf_nat_ipv4",
-    "Size": "14115",
-    "Used": "1",
-    "By": [
-      "iptable_nat"
-    ]
-  },
+  ...
   {
-    "Module": "nf_nat",
-    "Size": "26583",
-    "Used": "3",
-    "By": [
-      "nf_nat_ipv4",
-      "nf_nat_ipv6",
-      "nf_nat_masquerade_ipv4"
-    ]
-  },
-  {
-    "Module": "iptable_mangle",
-    "Size": "12695",
-    "Used": "1"
-  },
-  {
-    "Module": "iptable_security",
-    "Size": "12705",
-    "Used": "1"
-  },
-  {
-    "Module": "iptable_raw",
-    "Size": "12678",
-    "Used": "1"
-  },
-  {
-    "Module": "nf_conntrack",
-    "Size": "139224",
-    "Used": "7",
-    "By": [
+    "module": "nf_conntrack",
+    "size": "139224",
+    "used": "7",
+    "by": [
       "nf_nat",
       "nf_nat_ipv4",
       "nf_nat_ipv6",
@@ -52,6 +20,33 @@ $ lsmod | jc --lsmod -p
       "nf_nat_masquerade_ipv4",
       "nf_conntrack_ipv4",
       "nf_conntrack_ipv6"
+    ]
+  },
+  {
+    "module": "ip_set",
+    "size": "45799",
+    "used": "0"
+  },
+  {
+    "module": "nfnetlink",
+    "size": "14519",
+    "used": "1",
+    "by": [
+      "ip_set"
+    ]
+  },
+  {
+    "module": "ebtable_filter",
+    "size": "12827",
+    "used": "1"
+  },
+  {
+    "module": "ebtables",
+    "size": "35009",
+    "used": "2",
+    "by": [
+      "ebtable_nat",
+      "ebtable_filter"
     ]
   },
   ...

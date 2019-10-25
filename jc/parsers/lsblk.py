@@ -8,46 +8,55 @@ Example:
 $ lsblk | jc --lsblk -p
 [
   {
-    "NAME": "loop0",
-    "MAJ_MIN": "7:0",
-    "RM": "0",
-    "SIZE": "54.5M",
-    "RO": "1",
-    "TYPE": "loop",
-    "MOUNTPOINT": "/snap/core18/1223"
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": "0",
+    "size": "20G",
+    "ro": "0",
+    "type": "disk"
   },
   {
-    "NAME": "sda",
-    "MAJ_MIN": "8:0",
-    "RM": "0",
-    "SIZE": "20G",
-    "RO": "0",
-    "TYPE": "disk"
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": "0",
+    "size": "1G",
+    "ro": "0",
+    "type": "part",
+    "mountpoint": "/boot"
   },
   {
-    "NAME": "sda1",
-    "MAJ_MIN": "8:1",
-    "RM": "0",
-    "SIZE": "1M",
-    "RO": "0",
-    "TYPE": "part"
+    "name": "sda2",
+    "maj_min": "8:2",
+    "rm": "0",
+    "size": "19G",
+    "ro": "0",
+    "type": "part"
   },
   {
-    "NAME": "sda2",
-    "MAJ_MIN": "8:2",
-    "RM": "0",
-    "SIZE": "20G",
-    "RO": "0",
-    "TYPE": "part",
-    "MOUNTPOINT": "/"
+    "name": "centos-root",
+    "maj_min": "253:0",
+    "rm": "0",
+    "size": "17G",
+    "ro": "0",
+    "type": "lvm",
+    "mountpoint": "/"
   },
   {
-    "NAME": "sr0",
-    "MAJ_MIN": "11:0",
-    "RM": "1",
-    "SIZE": "64.8M",
-    "RO": "0",
-    "TYPE": "rom"
+    "name": "centos-swap",
+    "maj_min": "253:1",
+    "rm": "0",
+    "size": "2G",
+    "ro": "0",
+    "type": "lvm",
+    "mountpoint": "[SWAP]"
+  },
+  {
+    "name": "sr0",
+    "maj_min": "11:0",
+    "rm": "1",
+    "size": "1024M",
+    "ro": "0",
+    "type": "rom"
   }
 ]
 """

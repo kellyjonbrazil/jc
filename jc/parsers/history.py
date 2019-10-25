@@ -20,7 +20,7 @@ def parse(data):
     output = {}
 
     # split lines and clear out any non-ascii chars
-    linedata = data.splitlines().encode('ascii', errors='ignore').decode()
+    linedata = data.encode('ascii', errors='ignore').decode().splitlines()
 
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
