@@ -11,7 +11,7 @@ $ w | jc --w -p
     "USER": "root",
     "TTY": "ttyS0",
     "FROM": "-",
-    "LOGIN@": "Mon20",
+    "LOGIN_AT": "Mon20",
     "IDLE": "2:27",
     "JCPU": "10.61s",
     "PCPU": "10.53s",
@@ -21,7 +21,7 @@ $ w | jc --w -p
     "USER": "root",
     "TTY": "pts/0",
     "FROM": "192.168.71.1",
-    "LOGIN@": "22:58",
+    "LOGIN_AT": "22:58",
     "IDLE": "2.00s",
     "JCPU": "0.04s",
     "PCPU": "0.00s",
@@ -38,5 +38,10 @@ def parse(data):
 
     cleandata = data.splitlines()[1:]
     headers = [h for h in ' '.join(cleandata[0].strip().split()).split() if h]
+
+    # clean up 'LOGIN@' header
+    # even though @ in a key is valid json, it can make things difficult
+    headers = ['LOGIN_AT' if x == 'LOGIN@' else x for x in headers]
+
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
     return [dict(zip(headers, r)) for r in raw_data]
