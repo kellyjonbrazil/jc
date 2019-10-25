@@ -25,6 +25,10 @@ def parse(data):
     if cleandata:
         parsed_line = cleandata[0].split()
 
+        # fix parsing if uptime is only a few minutes
+        if len(parsed_line) == 11:
+            parsed_line.insert(2, 'only')
+
         output['time'] = parsed_line[0]
         output['uptime'] = ' '.join(parsed_line[2:5]).rstrip(',')
         output['users'] = parsed_line[5]
