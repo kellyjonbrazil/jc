@@ -650,7 +650,7 @@ $ lsblk | jc --lsblk -p
 [
   {
     "NAME": "loop0",
-    "MAJ:MIN": "7:0",
+    "MAJ_MIN": "7:0",
     "RM": "0",
     "SIZE": "54.5M",
     "RO": "1",
@@ -659,7 +659,7 @@ $ lsblk | jc --lsblk -p
   },
   {
     "NAME": "sda",
-    "MAJ:MIN": "8:0",
+    "MAJ_MIN": "8:0",
     "RM": "0",
     "SIZE": "20G",
     "RO": "0",
@@ -667,7 +667,7 @@ $ lsblk | jc --lsblk -p
   },
   {
     "NAME": "sda1",
-    "MAJ:MIN": "8:1",
+    "MAJ_MIN": "8:1",
     "RM": "0",
     "SIZE": "1M",
     "RO": "0",
@@ -675,7 +675,7 @@ $ lsblk | jc --lsblk -p
   },
   {
     "NAME": "sda2",
-    "MAJ:MIN": "8:2",
+    "MAJ_MIN": "8:2",
     "RM": "0",
     "SIZE": "20G",
     "RO": "0",
@@ -684,7 +684,7 @@ $ lsblk | jc --lsblk -p
   },
   {
     "NAME": "sr0",
-    "MAJ:MIN": "11:0",
+    "MAJ_MIN": "11:0",
     "RM": "1",
     "SIZE": "64.8M",
     "RO": "0",
