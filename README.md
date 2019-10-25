@@ -54,7 +54,7 @@ $ pip3 install jc
 
 ## Usage
 ``` 
-jc [parser] [options]
+jc PARSER [OPTIONS]
 ```
 
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
