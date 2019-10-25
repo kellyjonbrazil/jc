@@ -12,7 +12,7 @@ $ df | jc --df -p
     "1K-blocks": "977500",
     "Used": "0",
     "Available": "977500",
-    "Use%": "0%",
+    "Use_percent": "0%",
     "Mounted": "/dev"
   },
   {
@@ -20,7 +20,7 @@ $ df | jc --df -p
     "1K-blocks": "201732",
     "Used": "1180",
     "Available": "200552",
-    "Use%": "1%",
+    "Use_percent": "1%",
     "Mounted": "/run"
   },
   {
@@ -28,7 +28,7 @@ $ df | jc --df -p
     "1K-blocks": "20508240",
     "Used": "5747284",
     "Available": "13696152",
-    "Use%": "30%",
+    "Use_percent": "30%",
     "Mounted": "/"
   },
   {
@@ -36,7 +36,7 @@ $ df | jc --df -p
     "1K-blocks": "1008648",
     "Used": "0",
     "Available": "1008648",
-    "Use%": "0%",
+    "Use_percent": "0%",
     "Mounted": "/dev/shm"
   },
   ...
@@ -51,5 +51,10 @@ def parse(data):
 
     cleandata = data.splitlines()
     headers = [h for h in ' '.join(cleandata[0].strip().split()).split() if h]
+
+    # clean up 'Use%' header
+    # even though % in a key is valid json, it can make things difficult
+    headers = ['Use_percent' if x == 'Use%' else x for x in headers]
+
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
     return [dict(zip(headers, r)) for r in raw_data]
