@@ -86,9 +86,11 @@ def parse(data):
         # find column value of last character of each header
         header_row = cleandata.pop(0)
         headers = header_row.split()
+
         # clean up 'SIZE/OFF' header
         # even though forward slash in a key is valid json, it can make things difficult
         headers = ['SIZE_OFF' if x == 'SIZE/OFF' else x for x in headers]
+
         header_spec = []
 
         for i, h in enumerate(headers):
