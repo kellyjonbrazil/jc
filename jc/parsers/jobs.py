@@ -10,41 +10,33 @@ Example:
 $ jobs -l | jc --jobs -p
 [
   {
-    "job_number": 1,
-    "pid": 14798,
+    "job_number": "1",
+    "pid": "19510",
     "status": "Running",
-    "command": "sleep 10000 &"
+    "command": "sleep 1000 &"
   },
   {
-    "job_number": 2,
-    "pid": 14799,
+    "job_number": "2",
+    "pid": "19511",
     "status": "Running",
-    "command": "sleep 10001 &"
+    "command": "sleep 1001 &"
   },
   {
-    "job_number": 3,
-    "pid": 14800,
-    "status": "Running",
-    "command": "sleep 10002 &"
-  },
-  {
-    "job_number": 4,
-    "pid": 14814,
+    "job_number": "3",
+    "pid": "19512",
     "history": "previous",
     "status": "Running",
-    "command": "sleep 10003 &"
+    "command": "sleep 1002 &"
   },
   {
-    "job_number": 5,
-    "pid": 14815,
+    "job_number": "4",
+    "pid": "19513",
     "history": "current",
     "status": "Running",
-    "command": "sleep 10004 &"
+    "command": "sleep 1003 &"
   }
 ]
 """
-
-
 import string
 
 
