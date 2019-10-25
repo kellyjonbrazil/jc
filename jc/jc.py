@@ -9,6 +9,7 @@ import json
 import jc.parsers.df
 import jc.parsers.env
 import jc.parsers.free
+import jc.parsers.history
 import jc.parsers.ifconfig
 import jc.parsers.iptables
 import jc.parsers.jobs
@@ -21,6 +22,7 @@ import jc.parsers.netstat
 import jc.parsers.ps
 import jc.parsers.route
 import jc.parsers.uname
+import jc.parsers.uptime
 import jc.parsers.w
 
 
@@ -30,6 +32,7 @@ def helptext():
     print('        --df         df parser', file=sys.stderr)
     print('        --env        env parser', file=sys.stderr)
     print('        --free       free parser', file=sys.stderr)
+    print('        --history    history parser', file=sys.stderr)
     print('        --ifconfig   iconfig parser', file=sys.stderr)
     print('        --iptables   iptables parser', file=sys.stderr)
     print('        --jobs       jobs parser', file=sys.stderr)
@@ -42,6 +45,7 @@ def helptext():
     print('        --ps         ps parser', file=sys.stderr)
     print('        --route      route parser', file=sys.stderr)
     print('        --uname      uname parser', file=sys.stderr)
+    print('        --uptime     uptime parser', file=sys.stderr)
     print('        --w          w parser\n', file=sys.stderr)
     print('Options:', file=sys.stderr)
     print('        -p           pretty print output\n', file=sys.stderr)
@@ -71,6 +75,9 @@ def main():
 
     elif '--free' in sys.argv:
         result = jc.parsers.free.parse(data)
+
+    elif '--history' in sys.argv:
+        result = jc.parsers.history.parse(data)
 
     elif '--ifconfig' in sys.argv:
         result = jc.parsers.ifconfig.parse(data)
@@ -107,6 +114,9 @@ def main():
 
     elif '--uname' in sys.argv:
         result = jc.parsers.uname.parse(data)
+
+    elif '--uptime' in sys.argv:
+        result = jc.parsers.uptime.parse(data)
 
     elif '--w' in sys.argv:
         result = jc.parsers.w.parse(data)

@@ -63,6 +63,7 @@ jc [parser] [options]
 - `--df` enables the `df` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
+- `--history` enables the `history` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
@@ -75,6 +76,7 @@ jc [parser] [options]
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--uname` enables the `uname -a` parser
+- `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
 
 ### Options
@@ -133,6 +135,38 @@ $ env | jc --env -p
   "HOME": "/root",
   "LOGNAME": "root",
   "_": "/usr/bin/env"
+}
+```
+### free
+```
+$ free | jc --free -p
+[
+  {
+    "type": "Mem",
+    "total": "2017300",
+    "used": "213104",
+    "free": "1148452",
+    "shared": "1176",
+    "buff/cache": "655744",
+    "available": "1622204"
+  },
+  {
+    "type": "Swap",
+    "total": "2097148",
+    "used": "0",
+    "free": "2097148"
+  }
+]
+```
+### history
+```
+$ history | jc --history -p
+{
+  "118": "sleep 100",
+  "119": "ls /bin",
+  "120": "echo \"hello\"",
+  "121": "docker images",
+  ...
 }
 ```
 ### ifconfig
@@ -1041,6 +1075,18 @@ $ uname -a | jc --uname -p
   "processor": "x86_64",
   "machine": "x86_64",
   "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
+}
+```
+### uptime
+```
+$ uptime | jc --uptime -p
+{
+  "time": "16:52",
+  "uptime": "3 days, 4:49",
+  "users": "5",
+  "load_1m": "1.85",
+  "load_5m": "1.90",
+  "load_15m": "1.91"
 }
 ```
 ### w
