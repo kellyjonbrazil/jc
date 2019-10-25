@@ -15,7 +15,7 @@ $ sudo lsof | jc --lsof -p
     "FD": "cwd",
     "TYPE": "DIR",
     "DEVICE": "253,0",
-    "SIZE/OFF": "224",
+    "SIZE_OFF": "224",
     "NODE": "64",
     "NAME": "/"
   },
@@ -27,7 +27,7 @@ $ sudo lsof | jc --lsof -p
     "FD": "rtd",
     "TYPE": "DIR",
     "DEVICE": "253,0",
-    "SIZE/OFF": "224",
+    "SIZE_OFF": "224",
     "NODE": "64",
     "NAME": "/"
   },
@@ -39,7 +39,7 @@ $ sudo lsof | jc --lsof -p
     "FD": "txt",
     "TYPE": "REG",
     "DEVICE": "253,0",
-    "SIZE/OFF": "1624520",
+    "SIZE_OFF": "1624520",
     "NODE": "50360451",
     "NAME": "/usr/lib/systemd/systemd"
   },
@@ -51,7 +51,7 @@ $ sudo lsof | jc --lsof -p
     "FD": "mem",
     "TYPE": "REG",
     "DEVICE": "253,0",
-    "SIZE/OFF": "20064",
+    "SIZE_OFF": "20064",
     "NODE": "8146",
     "NAME": "/usr/lib64/libuuid.so.1.3.0"
   },
@@ -63,13 +63,14 @@ $ sudo lsof | jc --lsof -p
     "FD": "mem",
     "TYPE": "REG",
     "DEVICE": "253,0",
-    "SIZE/OFF": "265600",
+    "SIZE_OFF": "265600",
     "NODE": "8147",
     "NAME": "/usr/lib64/libblkid.so.1.1.0"
   },
   ...
 ]
 """
+import string
 
 
 def parse(data):
@@ -85,6 +86,9 @@ def parse(data):
         # find column value of last character of each header
         header_row = cleandata.pop(0)
         headers = header_row.split()
+        # clean up 'SIZE/OFF' header
+        # even though forward slash in a key is valid json, it can make things difficult
+        headers = ['SIZE_OFF' if x == 'SIZE/OFF' else x for x in headers]
         header_spec = []
 
         for i, h in enumerate(headers):
@@ -99,10 +103,15 @@ def parse(data):
             temp_line = entry.split(maxsplit=len(headers) - 1)
 
             for spec in header_spec:
-                if spec[1] == 'COMMAND' or spec[1] == 'NAME':
+
+                index = spec[0]
+                header_name = spec[1]
+                col = spec[2]
+
+                if header_name == 'COMMAND' or header_name == 'NAME':
                     continue
-                if entry[spec[2] - 1] == ' ':
-                    temp_line.insert(spec[0], None)
+                if entry[col - 1] == string.whitespace:
+                    temp_line.insert(index, None)
 
             name = ' '.join(temp_line[9:])
             fixed_line = temp_line[0:9]
