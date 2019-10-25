@@ -73,7 +73,7 @@ def parse(data):
                 remainder = parsed_line.pop(1)
                 job_number = parsed_line.pop(0)
                 remainder = remainder.split(maxsplit=1)
-                
+
                 # rebuild parsed_line
                 parsed_line = []
 
