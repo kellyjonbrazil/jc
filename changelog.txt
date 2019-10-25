@@ -4,7 +4,8 @@ jc changelog
 - Add w parser
 - Add uptime parser
 - Add history parser
-- Fix env parser
+- Flatten env parser output
+- Remove problematic characters from key names in: free, history, lsblk, lsof, and w
 
 20191023 v0.9.1
 - Add jobs parser
