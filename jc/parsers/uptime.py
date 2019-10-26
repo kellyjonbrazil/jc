@@ -25,19 +25,21 @@ def parse(data):
     if cleandata:
         parsed_line = cleandata[0].split()
 
-        # fix parsing if uptime is only a few minutes
-        if len(parsed_line) < 12:
+        # allow space for odd times
+        while len(parsed_line) < 20:
             parsed_line.insert(2, ' ')
 
-        # fix parsing if uptime is only a few hours
-        if len(parsed_line) == 11:
-            parsed_line.insert(2, ' ')
+        # find first part of time
+        for i, word in enumerate(parsed_line[2:]):
+            if word != ' ':
+                marker = i + 2
+                break
 
         output['time'] = parsed_line[0]
-        output['uptime'] = ' '.join(parsed_line[2:5]).lstrip().rstrip(',')
-        output['users'] = parsed_line[5]
-        output['load_1m'] = parsed_line[9].rstrip(',')
-        output['load_5m'] = parsed_line[10].rstrip(',')
-        output['load_15m'] = parsed_line[11]
+        output['uptime'] = ' '.join(parsed_line[marker:13]).lstrip().rstrip(',')
+        output['users'] = parsed_line[13]
+        output['load_1m'] = parsed_line[17].rstrip(',')
+        output['load_5m'] = parsed_line[18].rstrip(',')
+        output['load_15m'] = parsed_line[19]
 
     return output
