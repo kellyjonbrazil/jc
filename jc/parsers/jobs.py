@@ -10,41 +10,33 @@ Example:
 $ jobs -l | jc --jobs -p
 [
   {
-    "job_number": 1,
-    "pid": 14798,
+    "job_number": "1",
+    "pid": "19510",
     "status": "Running",
-    "command": "sleep 10000 &"
+    "command": "sleep 1000 &"
   },
   {
-    "job_number": 2,
-    "pid": 14799,
+    "job_number": "2",
+    "pid": "19511",
     "status": "Running",
-    "command": "sleep 10001 &"
+    "command": "sleep 1001 &"
   },
   {
-    "job_number": 3,
-    "pid": 14800,
-    "status": "Running",
-    "command": "sleep 10002 &"
-  },
-  {
-    "job_number": 4,
-    "pid": 14814,
+    "job_number": "3",
+    "pid": "19512",
     "history": "previous",
     "status": "Running",
-    "command": "sleep 10003 &"
+    "command": "sleep 1002 &"
   },
   {
-    "job_number": 5,
-    "pid": 14815,
+    "job_number": "4",
+    "pid": "19513",
     "history": "current",
     "status": "Running",
-    "command": "sleep 10004 &"
+    "command": "sleep 1003 &"
   }
 ]
 """
-
-
 import string
 
 
@@ -73,7 +65,7 @@ def parse(data):
                 remainder = parsed_line.pop(1)
                 job_number = parsed_line.pop(0)
                 remainder = remainder.split(maxsplit=1)
-                
+
                 # rebuild parsed_line
                 parsed_line = []
 
@@ -95,9 +87,9 @@ def parse(data):
             parsed_line[0] = parsed_line[0].lstrip('[').rstrip(']')
 
             # create list of dictionaries
-            output_line['job_number'] = int(parsed_line[0])
+            output_line['job_number'] = parsed_line[0]
             if pid:
-                output_line['pid'] = int(pid)
+                output_line['pid'] = pid
             if job_history:
                 output_line['history'] = job_history
             output_line['status'] = parsed_line[1]

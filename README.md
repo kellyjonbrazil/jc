@@ -6,22 +6,22 @@ JSON CLI output utility
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
 ```
-$ ls -l /usr/bin | jc --ls | jq '.[] | select(.bytes > 50000000)'
+$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
 {
   "filename": "emacs",
   "flags": "-r-xr-xr-x",
   "links": 1,
   "owner": "root",
   "group": "wheel",
-  "bytes": 117164432,
+  "size": "117164432",
   "date": "May 3 22:26"
 }
 ```
 
-The `jc` parsers can also be used as python modules:
+The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary instead of JSON:
 ```
 >>> import jc.parsers.ls
->>>
+>>> 
 >>> data='''-rwxr-xr-x  1 root  wheel    23648 May  3 22:26 cat
 ... -rwxr-xr-x  1 root  wheel    30016 May  3 22:26 chmod
 ... -rwxr-xr-x  1 root  wheel    29024 May  3 22:26 cp
@@ -30,31 +30,30 @@ The `jc` parsers can also be used as python modules:
 ... -rwxr-xr-x  1 root  wheel    32000 May  3 22:26 dd
 ... -rwxr-xr-x  1 root  wheel    23392 May  3 22:26 df
 ... -rwxr-xr-x  1 root  wheel    18128 May  3 22:26 echo'''
->>>
+>>> 
 >>> jc.parsers.ls.parse(data)
-[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 
-'bytes': 23648, 'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 
-'owner': 'root', 'group': 'wheel', 'bytes': 30016, 'date': 'May 3 22:26'}, {'filename': 'cp', 
-'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'bytes': 29024, 
-'date': 'May 3 22:26'}, {'filename': 'csh', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
-'group': 'wheel', 'bytes': 375824, 'date': 'May 3 22:26'}, {'filename': 'date', 
-'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'bytes': 28608, 
-'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
-'group': 'wheel', 'bytes': 32000, 'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x', 
-'links': 1, 'owner': 'root', 'group': 'wheel', 'bytes': 23392, 'date': 'May 3 22:26'}, 
-{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 
-'bytes': 18128, 'date': 'May 3 22:26'}]
+[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '23648', 
+'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
+'group': 'wheel', 'size': '30016', 'date': 'May 3 22:26'}, {'filename': 'cp', 'flags': '-rwxr-xr-x', 
+'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '29024', 'date': 'May 3 22:26'}, {'filename': 'csh', 
+'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '375824', 'date': 'May 3 22:26'}, 
+{'filename': 'date', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '28608', 
+'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 
+'size': '32000', 'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
+'group': 'wheel', 'size': '23392', 'date': 'May 3 22:26'}, {'filename': 'echo', 'flags': '-rwxr-xr-x', 
+'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '18128', 'date': 'May 3 22:26'}]
 ```
-In this case the output will be a python dictionary instead of JSON.
+
+The goal is to keep the resulting JSON as flat and simple as possible. Also, keys have been converted to lowercase and special characters are replaced whenever possible.  Numbers are kept as strings because, depending on context or the output options, numbers can sometimes turn into strings. (e.g 'human readable' options)
 
 ## Installation
 ```
-$ pip3 install jc
+$ pip3 install --upgrade jc
 ```
 
 ## Usage
 ``` 
-jc [parser] [options]
+jc PARSER [OPTIONS]
 ```
 
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
@@ -63,6 +62,7 @@ jc [parser] [options]
 - `--df` enables the `df` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
+- `--history` enables the `history` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
@@ -75,6 +75,8 @@ jc [parser] [options]
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--uname` enables the `uname -a` parser
+- `--uptime` enables the `uptime` parser
+- `--w` enables the `w` parser
 
 ### Options
 - `-p` specifies whether to pretty format the JSON output
@@ -85,69 +87,86 @@ jc [parser] [options]
 $ df | jc --df -p
 [
   {
-    "Filesystem": "udev",
-    "1K-blocks": "977500",
-    "Used": "0",
-    "Available": "977500",
-    "Use%": "0%",
-    "Mounted": "/dev"
+    "filesystem": "udev",
+    "1k-blocks": "977500",
+    "used": "0",
+    "available": "977500",
+    "use_percent": "0%",
+    "mounted": "/dev"
   },
   {
-    "Filesystem": "tmpfs",
-    "1K-blocks": "201732",
-    "Used": "1180",
-    "Available": "200552",
-    "Use%": "1%",
-    "Mounted": "/run"
+    "filesystem": "tmpfs",
+    "1k-blocks": "201732",
+    "used": "1204",
+    "available": "200528",
+    "use_percent": "1%",
+    "mounted": "/run"
   },
   {
-    "Filesystem": "/dev/sda2",
-    "1K-blocks": "20508240",
-    "Used": "5747284",
-    "Available": "13696152",
-    "Use%": "30%",
-    "Mounted": "/"
+    "filesystem": "/dev/sda2",
+    "1k-blocks": "20508240",
+    "used": "5748312",
+    "available": "13695124",
+    "use_percent": "30%",
+    "mounted": "/"
   },
   {
-    "Filesystem": "tmpfs",
-    "1K-blocks": "1008648",
-    "Used": "0",
-    "Available": "1008648",
-    "Use%": "0%",
-    "Mounted": "/dev/shm"
-  },
+    "filesystem": "tmpfs",
+    "1k-blocks": "1008648",
+    "used": "0",
+    "available": "1008648",
+    "use_percent": "0%",
+    "mounted": "/dev/shm"
+  }
   ...
 ]
 ```
 ### env
 ```
 $ env | jc --env -p
+{
+  "TERM": "xterm-256color",
+  "SHELL": "/bin/bash",
+  "USER": "root",
+  "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "PWD": "/root",
+  "LANG": "en_US.UTF-8",
+  "HOME": "/root",
+  "LOGNAME": "root",
+  "_": "/usr/bin/env"
+}
+```
+### free
+```
+$ free | jc --free -p
 [
   {
-    "TERM": "xterm-256color"
+    "type": "Mem",
+    "total": "2017300",
+    "used": "213104",
+    "free": "1148452",
+    "shared": "1176",
+    "buff_cache": "655744",
+    "available": "1622204"
   },
   {
-    "SHELL": "/bin/bash"
-  },
-  {
-    "USER": "root"
-  },
-  {
-    "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-  },
-  {
-    "PWD": "/bin"
-  },
-  {
-    "LANG": "en_US.UTF-8"
-  },
-  {
-    "HOME": "/root"
-  },
-  {
-    "_": "/usr/bin/env"
+    "type": "Swap",
+    "total": "2097148",
+    "used": "0",
+    "free": "2097148"
   }
 ]
+```
+### history
+```
+$ history | jc --history -p
+{
+  "n118": "sleep 100",
+  "n119": "ls /bin",
+  "n120": "echo \"hello\"",
+  "n121": "docker images",
+  ...
+}
 ```
 ### ifconfig
 ```
@@ -557,69 +576,92 @@ $ sudo iptables -vnL -t filter | jc --iptables -p
 $ jobs -l | jc --jobs -p
 [
   {
-    "job_number": 1,
-    "pid": 14798,
+    "job_number": "1",
+    "pid": "19510",
     "status": "Running",
-    "command": "sleep 10000 &"
+    "command": "sleep 1000 &"
   },
   {
-    "job_number": 2,
-    "pid": 14799,
+    "job_number": "2",
+    "pid": "19511",
     "status": "Running",
-    "command": "sleep 10001 &"
+    "command": "sleep 1001 &"
   },
   {
-    "job_number": 3,
-    "pid": 14800,
-    "status": "Running",
-    "command": "sleep 10002 &"
-  },
-  {
-    "job_number": 4,
-    "pid": 14814,
+    "job_number": "3",
+    "pid": "19512",
     "history": "previous",
     "status": "Running",
-    "command": "sleep 10003 &"
+    "command": "sleep 1002 &"
   },
   {
-    "job_number": 5,
-    "pid": 14815,
+    "job_number": "4",
+    "pid": "19513",
     "history": "current",
     "status": "Running",
-    "command": "sleep 10004 &"
+    "command": "sleep 1003 &"
   }
 ]
 ```
 ### ls
 ```
-$ ls -l /bin | jc --ls -p
+$ ls -l /usr/bin | jc --ls -p
 [
   {
+    "filename": "apropos",
+    "link_to": "whatis",
+    "flags": "lrwxrwxrwx.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "6",
+    "date": "Aug 15 10:53"
+  },
+  {
+    "filename": "arch",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "33080",
+    "date": "Aug 19 23:25"
+  },
+  {
+    "filename": "awk",
+    "link_to": "gawk",
+    "flags": "lrwxrwxrwx.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "4",
+    "date": "Aug 15 10:53"
+  },
+  {
+    "filename": "base64",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "37360",
+    "date": "Aug 19 23:25"
+  },
+  {
+    "filename": "basename",
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
+    "owner": "root",
+    "group": "root",
+    "size": "29032",
+    "date": "Aug 19 23:25"
+  },
+  {
     "filename": "bash",
-    "flags": "-r-xr-xr-x",
-    "links": 1,
+    "flags": "-rwxr-xr-x.",
+    "links": "1",
     "owner": "root",
-    "group": "wheel",
-    "bytes": 618416,
-    "date": "May 3 22:26"
-  },
-  {
-    "filename": "cat",
-    "flags": "-rwxr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 23648,
-    "date": "May 3 22:26"
-  },
-  {
-    "filename": "chmod",
-    "flags": "-rwxr-xr-x",
-    "links": 1,
-    "owner": "root",
-    "group": "wheel",
-    "bytes": 30016,
-    "date": "May 3 22:26"
+    "group": "root",
+    "size": "964600",
+    "date": "Aug 8 05:06"
   },
   ...
 ]
@@ -629,46 +671,55 @@ $ ls -l /bin | jc --ls -p
 $ lsblk | jc --lsblk -p
 [
   {
-    "NAME": "loop0",
-    "MAJ:MIN": "7:0",
-    "RM": "0",
-    "SIZE": "54.5M",
-    "RO": "1",
-    "TYPE": "loop",
-    "MOUNTPOINT": "/snap/core18/1223"
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": "0",
+    "size": "20G",
+    "ro": "0",
+    "type": "disk"
   },
   {
-    "NAME": "sda",
-    "MAJ:MIN": "8:0",
-    "RM": "0",
-    "SIZE": "20G",
-    "RO": "0",
-    "TYPE": "disk"
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": "0",
+    "size": "1G",
+    "ro": "0",
+    "type": "part",
+    "mountpoint": "/boot"
   },
   {
-    "NAME": "sda1",
-    "MAJ:MIN": "8:1",
-    "RM": "0",
-    "SIZE": "1M",
-    "RO": "0",
-    "TYPE": "part"
+    "name": "sda2",
+    "maj_min": "8:2",
+    "rm": "0",
+    "size": "19G",
+    "ro": "0",
+    "type": "part"
   },
   {
-    "NAME": "sda2",
-    "MAJ:MIN": "8:2",
-    "RM": "0",
-    "SIZE": "20G",
-    "RO": "0",
-    "TYPE": "part",
-    "MOUNTPOINT": "/"
+    "name": "centos-root",
+    "maj_min": "253:0",
+    "rm": "0",
+    "size": "17G",
+    "ro": "0",
+    "type": "lvm",
+    "mountpoint": "/"
   },
   {
-    "NAME": "sr0",
-    "MAJ:MIN": "11:0",
-    "RM": "1",
-    "SIZE": "64.8M",
-    "RO": "0",
-    "TYPE": "rom"
+    "name": "centos-swap",
+    "maj_min": "253:1",
+    "rm": "0",
+    "size": "2G",
+    "ro": "0",
+    "type": "lvm",
+    "mountpoint": "[SWAP]"
+  },
+  {
+    "name": "sr0",
+    "maj_min": "11:0",
+    "rm": "1",
+    "size": "1024M",
+    "ro": "0",
+    "type": "rom"
   }
 ]
 ```
@@ -676,44 +727,12 @@ $ lsblk | jc --lsblk -p
 ```
 $ lsmod | jc --lsmod -p
 [
- {
-    "Module": "nf_nat_ipv4",
-    "Size": "14115",
-    "Used": "1",
-    "By": [
-      "iptable_nat"
-    ]
-  },
+  ...
   {
-    "Module": "nf_nat",
-    "Size": "26583",
-    "Used": "3",
-    "By": [
-      "nf_nat_ipv4",
-      "nf_nat_ipv6",
-      "nf_nat_masquerade_ipv4"
-    ]
-  },
-  {
-    "Module": "iptable_mangle",
-    "Size": "12695",
-    "Used": "1"
-  },
-  {
-    "Module": "iptable_security",
-    "Size": "12705",
-    "Used": "1"
-  },
-  {
-    "Module": "iptable_raw",
-    "Size": "12678",
-    "Used": "1"
-  },
-  {
-    "Module": "nf_conntrack",
-    "Size": "139224",
-    "Used": "7",
-    "By": [
+    "module": "nf_conntrack",
+    "size": "139224",
+    "used": "7",
+    "by": [
       "nf_nat",
       "nf_nat_ipv4",
       "nf_nat_ipv6",
@@ -723,72 +742,99 @@ $ lsmod | jc --lsmod -p
       "nf_conntrack_ipv6"
     ]
   },
+  {
+    "module": "ip_set",
+    "size": "45799",
+    "used": "0"
+  },
+  {
+    "module": "nfnetlink",
+    "size": "14519",
+    "used": "1",
+    "by": [
+      "ip_set"
+    ]
+  },
+  {
+    "module": "ebtable_filter",
+    "size": "12827",
+    "used": "1"
+  },
+  {
+    "module": "ebtables",
+    "size": "35009",
+    "used": "2",
+    "by": [
+      "ebtable_nat",
+      "ebtable_filter"
+    ]
+  },
   ...
 ]
 ```
 ### lsof
 ```
-$ sudo lsof | jc --lsof -p
+$ sudo lsof | jc --lsof -p | more
 [
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "cwd",
-    "TYPE": "DIR",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "224",
-    "NODE": "64",
-    "NAME": "/"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "cwd",
+    "type": "DIR",
+    "device": "8,2",
+    "size_off": "4096",
+    "node": "2",
+    "name": "/"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "rtd",
-    "TYPE": "DIR",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "224",
-    "NODE": "64",
-    "NAME": "/"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "rtd",
+    "type": "DIR",
+    "device": "8,2",
+    "size_off": "4096",
+    "node": "2",
+    "name": "/"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "txt",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "1624520",
-    "NODE": "50360451",
-    "NAME": "/usr/lib/systemd/systemd"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "txt",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "1595792",
+    "node": "668802",
+    "name": "/lib/systemd/systemd"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "mem",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "20064",
-    "NODE": "8146",
-    "NAME": "/usr/lib64/libuuid.so.1.3.0"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "mem",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "1700792",
+    "node": "656167",
+    "name": "/lib/x86_64-linux-gnu/libm-2.27.so"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "mem",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "265600",
-    "NODE": "8147",
-    "NAME": "/usr/lib64/libblkid.so.1.1.0"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "mem",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "121016",
+    "node": "655394",
+    "name": "/lib/x86_64-linux-gnu/libudev.so.1.6.9"
   },
   ...
 ]
@@ -851,8 +897,8 @@ $ netstat -p | jc --netstat -p
     "state": "ESTABLISHED",
     "pid": 53550,
     "program_name": "git-remote-ht",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
@@ -864,39 +910,26 @@ $ netstat -p | jc --netstat -p
     "state": "ESTABLISHED",
     "pid": 53550,
     "program_name": "git-remote-ht",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   }
 ]
 ```
 ```
-$ netstat -lpn | jc --netstat -p
+$ sudo netstat -lpn | jc --netstat -p
 [
   {
     "transport_protocol": "tcp",
     "network_protocol": "ipv4",
     "local_address": "127.0.0.1",
-    "local_port": "42351",
+    "local_port": "25",
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1112,
-    "program_name": "containerd",
-    "receive_q": 0,
-    "send_q": 0
-  },
-  {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_address": "127.0.0.53",
-    "local_port": "53",
-    "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
-    "state": "LISTEN",
-    "pid": 885,
-    "program_name": "systemd-resolve",
-    "receive_q": 0,
-    "send_q": 0
+    "pid": "1584",
+    "program_name": "master",
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
@@ -906,140 +939,130 @@ $ netstat -lpn | jc --netstat -p
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1127,
+    "pid": "1213",
     "program_name": "sshd",
-    "receive_q": 0,
-    "send_q": 0
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "tcp",
     "network_protocol": "ipv6",
-    "local_address": "::",
-    "local_port": "22",
+    "local_address": "::1",
+    "local_port": "25",
     "foreign_address": "::",
     "foreign_port": "*",
     "state": "LISTEN",
-    "pid": 1127,
-    "program_name": "sshd",
-    "receive_q": 0,
-    "send_q": 0
+    "pid": "1584",
+    "program_name": "master",
+    "receive_q": "0",
+    "send_q": "0"
   },
   {
     "transport_protocol": "udp",
     "network_protocol": "ipv4",
-    "local_address": "127.0.0.53",
-    "local_port": "53",
-    "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
-    "pid": 885,
-    "program_name": "systemd-resolve",
-    "receive_q": 0,
-    "send_q": 0
-  },
-  {
-    "transport_protocol": "udp",
-    "network_protocol": "ipv4",
-    "local_address": "192.168.71.131",
+    "local_address": "0.0.0.0",
     "local_port": "68",
     "foreign_address": "0.0.0.0",
     "foreign_port": "*",
-    "pid": 867,
-    "program_name": "systemd-network",
-    "receive_q": 0,
-    "send_q": 0
-  }
+    "pid": "19177",
+    "program_name": "dhclient",
+    "receive_q": "0",
+    "send_q": "0"
+  },
+  ...
 ]
 ```
 ### ps
 ```
 $ ps -ef | jc --ps -p
 [
+  ...
   {
-    "UID": "root",
-    "PID": "1",
-    "PPID": "0",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:05",
-    "CMD": "/lib/systemd/systemd --system --deserialize 35"
+    "uid": "root",
+    "pid": "545",
+    "ppid": "1",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:03",
+    "cmd": "/usr/lib/systemd/systemd-journald"
   },
   {
-    "UID": "root",
-    "PID": "2",
-    "PPID": "0",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:00",
-    "CMD": "[kthreadd]"
+    "uid": "root",
+    "pid": "566",
+    "ppid": "1",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "/usr/sbin/lvmetad -f"
   },
   {
-    "UID": "root",
-    "PID": "4",
-    "PPID": "2",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:00",
-    "CMD": "[kworker/0:0H]"
+    "uid": "root",
+    "pid": "580",
+    "ppid": "1",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "/usr/lib/systemd/systemd-udevd"
   },
   {
-    "UID": "root",
-    "PID": "6",
-    "PPID": "2",
-    "C": "0",
-    "STIME": "13:58",
-    "TTY": "?",
-    "TIME": "00:00:00",
-    "CMD": "[mm_percpu_wq]"
+    "uid": "root",
+    "pid": "659",
+    "ppid": "2",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "[kworker/u257:0]"
+  },
+  {
+    "uid": "root",
+    "pid": "666",
+    "ppid": "2",
+    "c": "0",
+    "stime": "Oct21",
+    "tty": "?",
+    "time": "00:00:00",
+    "cmd": "[hci0]"
   },
   ...
 ]
 ```
 ### route
 ```
-$ route -n | jc --route -p
+$ route | jc --route -p
 [
   {
-    "Destination": "0.0.0.0",
-    "Gateway": "192.168.71.2",
-    "Genmask": "0.0.0.0",
-    "Flags": "UG",
-    "Metric": "100",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "ens33"
+    "destination": "default",
+    "gateway": "gateway",
+    "genmask": "0.0.0.0",
+    "flags": "UG",
+    "metric": "100",
+    "ref": "0",
+    "use": "0",
+    "iface": "ens33"
   },
   {
-    "Destination": "172.17.0.0",
-    "Gateway": "0.0.0.0",
-    "Genmask": "255.255.0.0",
-    "Flags": "U",
-    "Metric": "0",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "docker0"
+    "destination": "172.17.0.0",
+    "gateway": "0.0.0.0",
+    "genmask": "255.255.0.0",
+    "flags": "U",
+    "metric": "0",
+    "ref": "0",
+    "use": "0",
+    "iface": "docker0"
   },
   {
-    "Destination": "192.168.71.0",
-    "Gateway": "0.0.0.0",
-    "Genmask": "255.255.255.0",
-    "Flags": "U",
-    "Metric": "0",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "ens33"
-  },
-  {
-    "Destination": "192.168.71.2",
-    "Gateway": "0.0.0.0",
-    "Genmask": "255.255.255.255",
-    "Flags": "UH",
-    "Metric": "100",
-    "Ref": "0",
-    "Use": "0",
-    "Iface": "ens33"
+    "destination": "192.168.71.0",
+    "gateway": "0.0.0.0",
+    "genmask": "255.255.255.0",
+    "flags": "U",
+    "metric": "100",
+    "ref": "0",
+    "use": "0",
+    "iface": "ens33"
   }
 ]
 ```
@@ -1056,6 +1079,44 @@ $ uname -a | jc --uname -p
   "machine": "x86_64",
   "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
 }
+```
+### uptime
+```
+$ uptime | jc --uptime -p
+{
+  "time": "16:52",
+  "uptime": "3 days, 4:49",
+  "users": "5",
+  "load_1m": "1.85",
+  "load_5m": "1.90",
+  "load_15m": "1.91"
+}
+```
+### w
+```
+$ w | jc --w -p
+[
+  {
+    "user": "root",
+    "tty": "ttyS0",
+    "from": "-",
+    "login_at": "Mon20",
+    "idle": "0.00s",
+    "jcpu": "14.70s",
+    "pcpu": "0.00s",
+    "what": "bash"
+  },
+  {
+    "user": "root",
+    "tty": "pts/0",
+    "from": "192.168.71.1",
+    "login_at": "Thu22",
+    "idle": "22:46m",
+    "jcpu": "0.05s",
+    "pcpu": "0.05s",
+    "what": "-bash"
+  }
+]
 ```
 
 ## Contributions

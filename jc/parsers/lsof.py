@@ -5,71 +5,72 @@ Usage:
 
 Example:
 
-$ sudo lsof | jc --lsof -p
+$ sudo lsof | jc --lsof -p | more
 [
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "cwd",
-    "TYPE": "DIR",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "224",
-    "NODE": "64",
-    "NAME": "/"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "cwd",
+    "type": "DIR",
+    "device": "8,2",
+    "size_off": "4096",
+    "node": "2",
+    "name": "/"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "rtd",
-    "TYPE": "DIR",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "224",
-    "NODE": "64",
-    "NAME": "/"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "rtd",
+    "type": "DIR",
+    "device": "8,2",
+    "size_off": "4096",
+    "node": "2",
+    "name": "/"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "txt",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "1624520",
-    "NODE": "50360451",
-    "NAME": "/usr/lib/systemd/systemd"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "txt",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "1595792",
+    "node": "668802",
+    "name": "/lib/systemd/systemd"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "mem",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "20064",
-    "NODE": "8146",
-    "NAME": "/usr/lib64/libuuid.so.1.3.0"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "mem",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "1700792",
+    "node": "656167",
+    "name": "/lib/x86_64-linux-gnu/libm-2.27.so"
   },
   {
-    "COMMAND": "systemd",
-    "PID": "1",
-    "TID": null,
-    "USER": "root",
-    "FD": "mem",
-    "TYPE": "REG",
-    "DEVICE": "253,0",
-    "SIZE/OFF": "265600",
-    "NODE": "8147",
-    "NAME": "/usr/lib64/libblkid.so.1.1.0"
+    "command": "systemd",
+    "pid": "1",
+    "tid": null,
+    "user": "root",
+    "fd": "mem",
+    "type": "REG",
+    "device": "8,2",
+    "size_off": "121016",
+    "node": "655394",
+    "name": "/lib/x86_64-linux-gnu/libudev.so.1.6.9"
   },
   ...
 ]
 """
+import string
 
 
 def parse(data):
@@ -83,10 +84,15 @@ def parse(data):
     if cleandata:
 
         # find column value of last character of each header
-        header_row = cleandata.pop(0)
-        headers = header_row.split()
-        header_spec = []
+        header_text = cleandata.pop(0).lower()
 
+        # clean up 'size/off' header
+        # even though forward slash in a key is valid json, it can make things difficult
+        header_row = header_text.replace('size/off', 'size_off')
+
+        headers = header_row.split()
+
+        header_spec = []
         for i, h in enumerate(headers):
             # header tuple is (index, header_name, col)
             header_spec.append((i, h, header_row.find(h) + len(h)))
@@ -99,10 +105,15 @@ def parse(data):
             temp_line = entry.split(maxsplit=len(headers) - 1)
 
             for spec in header_spec:
-                if spec[1] == 'COMMAND' or spec[1] == 'NAME':
+
+                index = spec[0]
+                header_name = spec[1]
+                col = spec[2] - 1     # subtract one since column starts at 0 instead of 1
+
+                if header_name == 'command' or header_name == 'name':
                     continue
-                if entry[spec[2] - 1] == ' ':
-                    temp_line.insert(spec[0], None)
+                if entry[col] in string.whitespace:
+                    temp_line.insert(index, None)
 
             name = ' '.join(temp_line[9:])
             fixed_line = temp_line[0:9]

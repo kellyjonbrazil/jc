@@ -8,37 +8,37 @@ Example:
 $ df | jc --df -p
 [
   {
-    "Filesystem": "udev",
-    "1K-blocks": "977500",
-    "Used": "0",
-    "Available": "977500",
-    "Use%": "0%",
-    "Mounted": "/dev"
+    "filesystem": "udev",
+    "1k-blocks": "977500",
+    "used": "0",
+    "available": "977500",
+    "use_percent": "0%",
+    "mounted": "/dev"
   },
   {
-    "Filesystem": "tmpfs",
-    "1K-blocks": "201732",
-    "Used": "1180",
-    "Available": "200552",
-    "Use%": "1%",
-    "Mounted": "/run"
+    "filesystem": "tmpfs",
+    "1k-blocks": "201732",
+    "used": "1204",
+    "available": "200528",
+    "use_percent": "1%",
+    "mounted": "/run"
   },
   {
-    "Filesystem": "/dev/sda2",
-    "1K-blocks": "20508240",
-    "Used": "5747284",
-    "Available": "13696152",
-    "Use%": "30%",
-    "Mounted": "/"
+    "filesystem": "/dev/sda2",
+    "1k-blocks": "20508240",
+    "used": "5748312",
+    "available": "13695124",
+    "use_percent": "30%",
+    "mounted": "/"
   },
   {
-    "Filesystem": "tmpfs",
-    "1K-blocks": "1008648",
-    "Used": "0",
-    "Available": "1008648",
-    "Use%": "0%",
-    "Mounted": "/dev/shm"
-  },
+    "filesystem": "tmpfs",
+    "1k-blocks": "1008648",
+    "used": "0",
+    "available": "1008648",
+    "use_percent": "0%",
+    "mounted": "/dev/shm"
+  }
   ...
 ]
 """
@@ -50,6 +50,11 @@ def parse(data):
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
 
     cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].strip().split()).split() if h]
+    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
+
+    # clean up 'use%' header
+    # even though % in a key is valid json, it can make things difficult
+    headers = ['use_percent' if x == 'use%' else x for x in headers]
+
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
     return [dict(zip(headers, r)) for r in raw_data]
