@@ -26,17 +26,19 @@ def parse(data):
     output = {}
     parsed_line = data.split(maxsplit=3)
 
-    output['kernel_name'] = parsed_line.pop(0)
-    output['node_name'] = parsed_line.pop(0)
-    output['kernel_release'] = parsed_line.pop(0)
+    if len(parsed_line) > 1:
 
-    parsed_line = parsed_line[-1].rsplit(maxsplit=4)
+        output['kernel_name'] = parsed_line.pop(0)
+        output['node_name'] = parsed_line.pop(0)
+        output['kernel_release'] = parsed_line.pop(0)
 
-    output['operating_system'] = parsed_line.pop(-1)
-    output['hardware_platform'] = parsed_line.pop(-1)
-    output['processor'] = parsed_line.pop(-1)
-    output['machine'] = parsed_line.pop(-1)
+        parsed_line = parsed_line[-1].rsplit(maxsplit=4)
 
-    output['kernel_version'] = parsed_line.pop(0)
+        output['operating_system'] = parsed_line.pop(-1)
+        output['hardware_platform'] = parsed_line.pop(-1)
+        output['processor'] = parsed_line.pop(-1)
+        output['machine'] = parsed_line.pop(-1)
+
+        output['kernel_version'] = parsed_line.pop(0)
 
     return output
