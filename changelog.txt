@@ -1,9 +1,10 @@
 jc changelog
 
-2019xxxx v1.0.1
+20191025 v1.0.1
 - Add w parser
 - Add uptime parser
 - Add history parser
+- Fix uptime parser
 - Flatten env parser output
 - Remove problematic characters from key names in: df, free, history, lsblk, lsof, and w
 - Where possible, lowercase all keys (except cases like env where the key is the variable name)
