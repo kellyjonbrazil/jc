@@ -899,7 +899,7 @@ $ netstat -p | jc --netstat -p
     "foreign_address": "lb-192-30-255-113",
     "foreign_port": "https",
     "state": "ESTABLISHED",
-    "pid": 53550,
+    "pid": "53550",
     "program_name": "git-remote-ht",
     "receive_q": "0",
     "send_q": "0"
@@ -912,7 +912,7 @@ $ netstat -p | jc --netstat -p
     "foreign_address": "lb-192-30-255-113",
     "foreign_port": "https",
     "state": "ESTABLISHED",
-    "pid": 53550,
+    "pid": "53550",
     "program_name": "git-remote-ht",
     "receive_q": "0",
     "send_q": "0"
