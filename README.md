@@ -1126,6 +1126,11 @@ $ w | jc --w -p
 ## Contributions
 Feel free to add/improve code or parsers!
 
+## Compatibility
+Tested on:
+- Centos 7.7
+- Ubuntu 18.4
+
 ## Acknowledgments
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
-- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
