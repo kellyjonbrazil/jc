@@ -1,5 +1,11 @@
 jc changelog
 
+2019xxxx v1.1.1
+- Add dig parser
+- Add nslookup parser
+- Add unit tests
+- fix netstat parser (remove side effects due to global variable)
+
 20191025 v1.0.1
 - Add w parser
 - Add uptime parser
