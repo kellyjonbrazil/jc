@@ -1,0 +1,80 @@
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+PREROUTING_direct  all  --  anywhere             anywhere            
+PREROUTING_ZONES_SOURCE  all  --  anywhere             anywhere            
+PREROUTING_ZONES  all  --  anywhere             anywhere            
+DOCKER     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+OUTPUT_direct  all  --  anywhere             anywhere            
+DOCKER     all  --  anywhere            !loopback/8           ADDRTYPE match dst-type LOCAL
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+MASQUERADE  all  --  172.17.0.0/16        anywhere            
+POSTROUTING_direct  all  --  anywhere             anywhere            
+POSTROUTING_ZONES_SOURCE  all  --  anywhere             anywhere            
+POSTROUTING_ZONES  all  --  anywhere             anywhere            
+
+Chain DOCKER (2 references)
+target     prot opt source               destination         
+RETURN     all  --  anywhere             anywhere            
+
+Chain OUTPUT_direct (1 references)
+target     prot opt source               destination         
+
+Chain POSTROUTING_ZONES (1 references)
+target     prot opt source               destination         
+POST_public  all  --  anywhere             anywhere            [goto] 
+POST_public  all  --  anywhere             anywhere            [goto] 
+
+Chain POSTROUTING_ZONES_SOURCE (1 references)
+target     prot opt source               destination         
+
+Chain POSTROUTING_direct (1 references)
+target     prot opt source               destination         
+
+Chain POST_public (2 references)
+target     prot opt source               destination         
+POST_public_log  all  --  anywhere             anywhere            
+POST_public_deny  all  --  anywhere             anywhere            
+POST_public_allow  all  --  anywhere             anywhere            
+
+Chain POST_public_allow (1 references)
+target     prot opt source               destination         
+
+Chain POST_public_deny (1 references)
+target     prot opt source               destination         
+
+Chain POST_public_log (1 references)
+target     prot opt source               destination         
+
+Chain PREROUTING_ZONES (1 references)
+target     prot opt source               destination         
+PRE_public  all  --  anywhere             anywhere            [goto] 
+PRE_public  all  --  anywhere             anywhere            [goto] 
+
+Chain PREROUTING_ZONES_SOURCE (1 references)
+target     prot opt source               destination         
+
+Chain PREROUTING_direct (1 references)
+target     prot opt source               destination         
+
+Chain PRE_public (2 references)
+target     prot opt source               destination         
+PRE_public_log  all  --  anywhere             anywhere            
+PRE_public_deny  all  --  anywhere             anywhere            
+PRE_public_allow  all  --  anywhere             anywhere            
+
+Chain PRE_public_allow (1 references)
+target     prot opt source               destination         
+
+Chain PRE_public_deny (1 references)
+target     prot opt source               destination         
+
+Chain PRE_public_log (1 references)
+target     prot opt source               destination         

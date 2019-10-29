@@ -1,0 +1,45 @@
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 localhost:smtp          0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN     
+tcp6       0      0 localhost:smtp          [::]:*                  LISTEN     
+tcp6       0      0 [::]:ssh                [::]:*                  LISTEN     
+udp        0      0 0.0.0.0:bootpc          0.0.0.0:*                          
+udp        0      0 localhost:323           0.0.0.0:*                          
+udp6       0      0 localhost:323           [::]:*                             
+raw6       0      0 [::]:ipv6-icmp          [::]:*                  7          
+Active UNIX domain sockets (only servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  2      [ ACC ]     STREAM     LISTENING     13851    /run/lvm/lvmpolld.socket
+unix  2      [ ACC ]     STREAM     LISTENING     8991     /run/systemd/journal/stdout
+unix  2      [ ACC ]     STREAM     LISTENING     22321    public/pickup
+unix  2      [ ACC ]     STREAM     LISTENING     22332    private/tlsmgr
+unix  2      [ ACC ]     STREAM     LISTENING     22839    /run/docker/libnetwork/fe53fe5029258e61eb7a9173ec80150ea3595abe7d69e47af064f451212110bf.sock
+unix  2      [ ACC ]     STREAM     LISTENING     21822    /var/run/docker.sock
+unix  2      [ ACC ]     STREAM     LISTENING     13918    /run/lvm/lvmetad.socket
+unix  2      [ ACC ]     STREAM     LISTENING     21877    /var/run/docker/libcontainerd/docker-containerd.sock
+unix  2      [ ACC ]     STREAM     LISTENING     20600    /var/run/NetworkManager/private-dhcp
+unix  2      [ ACC ]     STREAM     LISTENING     17785    /run/dbus/system_bus_socket
+unix  2      [ ACC ]     STREAM     LISTENING     22325    public/cleanup
+unix  2      [ ACC ]     SEQPACKET  LISTENING     13962    /run/udev/control
+unix  2      [ ACC ]     STREAM     LISTENING     22328    public/qmgr
+unix  2      [ ACC ]     STREAM     LISTENING     22350    public/flush
+unix  2      [ ACC ]     STREAM     LISTENING     22365    public/showq
+unix  2      [ ACC ]     STREAM     LISTENING     22335    private/rewrite
+unix  2      [ ACC ]     STREAM     LISTENING     13771    /run/systemd/private
+unix  2      [ ACC ]     STREAM     LISTENING     22338    private/bounce
+unix  2      [ ACC ]     STREAM     LISTENING     22341    private/defer
+unix  2      [ ACC ]     STREAM     LISTENING     22344    private/trace
+unix  2      [ ACC ]     STREAM     LISTENING     22347    private/verify
+unix  2      [ ACC ]     STREAM     LISTENING     22353    private/proxymap
+unix  2      [ ACC ]     STREAM     LISTENING     22356    private/proxywrite
+unix  2      [ ACC ]     STREAM     LISTENING     22359    private/smtp
+unix  2      [ ACC ]     STREAM     LISTENING     22362    private/relay
+unix  2      [ ACC ]     STREAM     LISTENING     22368    private/error
+unix  2      [ ACC ]     STREAM     LISTENING     22371    private/retry
+unix  2      [ ACC ]     STREAM     LISTENING     22374    private/discard
+unix  2      [ ACC ]     STREAM     LISTENING     22377    private/local
+unix  2      [ ACC ]     STREAM     LISTENING     22380    private/virtual
+unix  2      [ ACC ]     STREAM     LISTENING     22383    private/lmtp
+unix  2      [ ACC ]     STREAM     LISTENING     22386    private/anvil
+unix  2      [ ACC ]     STREAM     LISTENING     22389    private/scache

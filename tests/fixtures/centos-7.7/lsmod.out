@@ -1,0 +1,99 @@
+Module                  Size  Used by
+ipt_MASQUERADE         12678  1 
+nf_nat_masquerade_ipv4    13430  1 ipt_MASQUERADE
+xt_addrtype            12676  2 
+br_netfilter           22256  0 
+bridge                151336  1 br_netfilter
+stp                    12976  1 bridge
+llc                    14552  2 stp,bridge
+ip6t_rpfilter          12595  1 
+ip6t_REJECT            12625  2 
+nf_reject_ipv6         13717  1 ip6t_REJECT
+ipt_REJECT             12541  2 
+nf_reject_ipv4         13373  1 ipt_REJECT
+xt_conntrack           12760  22 
+ebtable_nat            12807  1 
+ip6table_nat           12864  1 
+nf_conntrack_ipv6      18935  7 
+nf_defrag_ipv6         35104  1 nf_conntrack_ipv6
+nf_nat_ipv6            14131  1 ip6table_nat
+ip6table_mangle        12700  1 
+ip6table_security      12710  1 
+ip6table_raw           12683  1 
+iptable_nat            12875  1 
+nf_conntrack_ipv4      15053  17 
+nf_defrag_ipv4         12729  1 nf_conntrack_ipv4
+nf_nat_ipv4            14115  1 iptable_nat
+nf_nat                 26583  3 nf_nat_ipv4,nf_nat_ipv6,nf_nat_masquerade_ipv4
+iptable_mangle         12695  1 
+iptable_security       12705  1 
+iptable_raw            12678  1 
+nf_conntrack          139224  7 nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_ipv4,nf_conntrack_ipv6
+ip_set                 45799  0 
+nfnetlink              14519  1 ip_set
+ebtable_filter         12827  1 
+ebtables               35009  2 ebtable_nat,ebtable_filter
+ip6table_filter        12815  1 
+ip6_tables             26912  5 ip6table_filter,ip6table_mangle,ip6table_security,ip6table_nat,ip6table_raw
+iptable_filter         12810  1 
+overlay                91659  0 
+iosf_mbi               15582  0 
+crc32_pclmul           13133  0 
+ppdev                  17671  0 
+ghash_clmulni_intel    13273  0 
+vmw_balloon            18094  0 
+btusb                  41449  0 
+aesni_intel           189456  0 
+btrtl                  12945  1 btusb
+btbcm                  14040  1 btusb
+btintel                15709  1 btusb
+lrw                    13286  1 aesni_intel
+bluetooth             548688  5 btbcm,btrtl,btusb,btintel
+gf128mul               15139  1 lrw
+glue_helper            13990  1 aesni_intel
+ablk_helper            13597  1 aesni_intel
+cryptd                 21190  3 ghash_clmulni_intel,aesni_intel,ablk_helper
+joydev                 17389  0 
+pcspkr                 12718  0 
+sg                     40719  0 
+rfkill                 22391  1 bluetooth
+vmw_vmci               67168  0 
+i2c_piix4              22401  0 
+parport_pc             28205  0 
+parport                46395  2 ppdev,parport_pc
+ip_tables              27126  5 iptable_security,iptable_filter,iptable_mangle,iptable_nat,iptable_raw
+xfs                   993020  2 
+libcrc32c              12644  3 xfs,nf_nat,nf_conntrack
+sr_mod                 22416  0 
+cdrom                  42556  1 sr_mod
+ata_generic            12923  0 
+pata_acpi              13053  0 
+vmwgfx                291993  1 
+sd_mod                 46281  3 
+crc_t10dif             12912  1 sd_mod
+crct10dif_generic      12647  0 
+drm_kms_helper        186531  1 vmwgfx
+syscopyarea            12529  1 drm_kms_helper
+sysfillrect            12701  1 drm_kms_helper
+sysimgblt              12640  1 drm_kms_helper
+fb_sys_fops            12703  1 drm_kms_helper
+crct10dif_pclmul       14307  1 
+crct10dif_common       12595  3 crct10dif_pclmul,crct10dif_generic,crc_t10dif
+ttm                    96673  1 vmwgfx
+crc32c_intel           22094  1 
+drm                   456166  4 ttm,drm_kms_helper,vmwgfx
+ata_piix               35052  0 
+serio_raw              13434  0 
+nfit                   55479  0 
+mptspi                 22673  2 
+libata                243133  3 pata_acpi,ata_generic,ata_piix
+scsi_transport_spi     30732  1 mptspi
+libnvdimm             155545  1 nfit
+e1000                 137624  0 
+mptscsih               40150  1 mptspi
+mptbase               106036  2 mptspi,mptscsih
+drm_panel_orientation_quirks    17180  1 drm
+dm_mirror              22289  0 
+dm_region_hash         20813  1 dm_mirror
+dm_log                 18411  2 dm_region_hash,dm_mirror
+dm_mod                124501  8 dm_log,dm_mirror

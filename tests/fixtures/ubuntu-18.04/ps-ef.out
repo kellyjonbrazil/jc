@@ -1,0 +1,173 @@
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 Oct26 ?        00:00:10 /sbin/init auto automatic-ubiquity noprompt
+root          2      0  0 Oct26 ?        00:00:00 [kthreadd]
+root          4      2  0 Oct26 ?        00:00:00 [kworker/0:0H]
+root          6      2  0 Oct26 ?        00:00:00 [mm_percpu_wq]
+root          7      2  0 Oct26 ?        00:00:04 [ksoftirqd/0]
+root          8      2  0 Oct26 ?        00:00:38 [rcu_sched]
+root          9      2  0 Oct26 ?        00:00:00 [rcu_bh]
+root         10      2  0 Oct26 ?        00:00:00 [migration/0]
+root         11      2  0 Oct26 ?        00:00:00 [watchdog/0]
+root         12      2  0 Oct26 ?        00:00:00 [cpuhp/0]
+root         13      2  0 Oct26 ?        00:00:00 [kdevtmpfs]
+root         14      2  0 Oct26 ?        00:00:00 [netns]
+root         15      2  0 Oct26 ?        00:00:00 [rcu_tasks_kthre]
+root         16      2  0 Oct26 ?        00:00:00 [kauditd]
+root         17      2  0 Oct26 ?        00:00:00 [khungtaskd]
+root         18      2  0 Oct26 ?        00:00:00 [oom_reaper]
+root         19      2  0 Oct26 ?        00:00:00 [writeback]
+root         20      2  0 Oct26 ?        00:00:00 [kcompactd0]
+root         21      2  0 Oct26 ?        00:00:00 [ksmd]
+root         22      2  0 Oct26 ?        00:00:00 [khugepaged]
+root         23      2  0 Oct26 ?        00:00:00 [crypto]
+root         24      2  0 Oct26 ?        00:00:00 [kintegrityd]
+root         25      2  0 Oct26 ?        00:00:00 [kblockd]
+root         26      2  0 Oct26 ?        00:00:00 [ata_sff]
+root         27      2  0 Oct26 ?        00:00:00 [md]
+root         28      2  0 Oct26 ?        00:00:00 [edac-poller]
+root         29      2  0 Oct26 ?        00:00:00 [devfreq_wq]
+root         30      2  0 Oct26 ?        00:00:00 [watchdogd]
+root         34      2  0 Oct26 ?        00:00:00 [kswapd0]
+root         35      2  0 Oct26 ?        00:00:00 [kworker/u257:0]
+root         36      2  0 Oct26 ?        00:00:00 [ecryptfs-kthrea]
+root         78      2  0 Oct26 ?        00:00:00 [kthrotld]
+root         79      2  0 Oct26 ?        00:00:00 [acpi_thermal_pm]
+root         80      2  0 Oct26 ?        00:00:00 [scsi_eh_0]
+root         81      2  0 Oct26 ?        00:00:00 [scsi_tmf_0]
+root         82      2  0 Oct26 ?        00:00:00 [scsi_eh_1]
+root         83      2  0 Oct26 ?        00:00:00 [scsi_tmf_1]
+root         89      2  0 Oct26 ?        00:00:00 [ipv6_addrconf]
+root         99      2  0 Oct26 ?        00:00:00 [kstrp]
+root        116      2  0 Oct26 ?        00:00:00 [charger_manager]
+root        170      2  0 Oct26 ?        00:00:00 [mpt_poll_0]
+root        171      2  0 Oct26 ?        00:00:00 [scsi_eh_2]
+root        172      2  0 Oct26 ?        00:00:00 [mpt/0]
+root        173      2  0 Oct26 ?        00:00:00 [scsi_tmf_2]
+root        174      2  0 Oct26 ?        00:00:00 [scsi_eh_3]
+root        175      2  0 Oct26 ?        00:00:00 [scsi_tmf_3]
+root        176      2  0 Oct26 ?        00:00:00 [scsi_eh_4]
+root        177      2  0 Oct26 ?        00:00:00 [scsi_tmf_4]
+root        178      2  0 Oct26 ?        00:00:00 [scsi_eh_5]
+root        179      2  0 Oct26 ?        00:00:00 [scsi_tmf_5]
+root        180      2  0 Oct26 ?        00:00:00 [scsi_eh_6]
+root        181      2  0 Oct26 ?        00:00:00 [scsi_tmf_6]
+root        182      2  0 Oct26 ?        00:00:00 [scsi_eh_7]
+root        183      2  0 Oct26 ?        00:00:00 [scsi_tmf_7]
+root        188      2  0 Oct26 ?        00:00:00 [scsi_eh_8]
+root        189      2  0 Oct26 ?        00:00:00 [scsi_tmf_8]
+root        191      2  0 Oct26 ?        00:00:00 [scsi_eh_9]
+root        196      2  0 Oct26 ?        00:00:00 [scsi_tmf_9]
+root        198      2  0 Oct26 ?        00:00:00 [scsi_eh_10]
+root        199      2  0 Oct26 ?        00:00:00 [scsi_tmf_10]
+root        201      2  0 Oct26 ?        00:00:00 [scsi_eh_11]
+root        203      2  0 Oct26 ?        00:00:00 [scsi_tmf_11]
+root        205      2  0 Oct26 ?        00:00:00 [scsi_eh_12]
+root        208      2  0 Oct26 ?        00:00:00 [scsi_tmf_12]
+root        209      2  0 Oct26 ?        00:00:00 [scsi_eh_13]
+root        212      2  0 Oct26 ?        00:00:00 [scsi_tmf_13]
+root        213      2  0 Oct26 ?        00:00:00 [scsi_eh_14]
+root        216      2  0 Oct26 ?        00:00:00 [scsi_tmf_14]
+root        217      2  0 Oct26 ?        00:00:00 [scsi_eh_15]
+root        219      2  0 Oct26 ?        00:00:00 [scsi_tmf_15]
+root        221      2  0 Oct26 ?        00:00:00 [scsi_eh_16]
+root        223      2  0 Oct26 ?        00:00:00 [scsi_tmf_16]
+root        225      2  0 Oct26 ?        00:00:00 [scsi_eh_17]
+root        227      2  0 Oct26 ?        00:00:00 [scsi_tmf_17]
+root        229      2  0 Oct26 ?        00:00:00 [scsi_eh_18]
+root        230      2  0 Oct26 ?        00:00:00 [scsi_tmf_18]
+root        232      2  0 Oct26 ?        00:00:00 [scsi_eh_19]
+root        233      2  0 Oct26 ?        00:00:00 [scsi_tmf_19]
+root        235      2  0 Oct26 ?        00:00:00 [scsi_eh_20]
+root        237      2  0 Oct26 ?        00:00:00 [scsi_tmf_20]
+root        238      2  0 Oct26 ?        00:00:00 [scsi_eh_21]
+root        240      2  0 Oct26 ?        00:00:00 [scsi_tmf_21]
+root        241      2  0 Oct26 ?        00:00:00 [scsi_eh_22]
+root        243      2  0 Oct26 ?        00:00:00 [scsi_tmf_22]
+root        245      2  0 Oct26 ?        00:00:00 [scsi_eh_23]
+root        246      2  0 Oct26 ?        00:00:00 [scsi_tmf_23]
+root        248      2  0 Oct26 ?        00:00:00 [scsi_eh_24]
+root        250      2  0 Oct26 ?        00:00:00 [scsi_tmf_24]
+root        252      2  0 Oct26 ?        00:00:00 [scsi_eh_25]
+root        254      2  0 Oct26 ?        00:00:00 [scsi_tmf_25]
+root        256      2  0 Oct26 ?        00:00:00 [scsi_eh_26]
+root        258      2  0 Oct26 ?        00:00:00 [scsi_tmf_26]
+root        259      2  0 Oct26 ?        00:00:00 [scsi_eh_27]
+root        260      2  0 Oct26 ?        00:00:00 [scsi_tmf_27]
+root        261      2  0 Oct26 ?        00:00:00 [scsi_eh_28]
+root        262      2  0 Oct26 ?        00:00:00 [scsi_tmf_28]
+root        263      2  0 Oct26 ?        00:00:00 [scsi_eh_29]
+root        264      2  0 Oct26 ?        00:00:00 [scsi_tmf_29]
+root        265      2  0 Oct26 ?        00:00:00 [scsi_eh_30]
+root        266      2  0 Oct26 ?        00:00:00 [scsi_tmf_30]
+root        267      2  0 Oct26 ?        00:00:00 [scsi_eh_31]
+root        268      2  0 Oct26 ?        00:00:00 [scsi_tmf_31]
+root        295      2  0 Oct26 ?        00:00:00 [scsi_eh_32]
+root        296      2  0 Oct26 ?        00:00:00 [scsi_tmf_32]
+root        302      2  0 Oct26 ?        00:00:00 [ttm_swap]
+root        303      2  0 Oct26 ?        00:00:00 [irq/16-vmwgfx]
+root        305      2  0 Oct26 ?        00:00:02 [kworker/0:1H]
+root        369      2  0 Oct26 ?        00:00:00 [raid5wq]
+root        422      2  0 Oct26 ?        00:00:03 [jbd2/sda2-8]
+root        423      2  0 Oct26 ?        00:00:00 [ext4-rsv-conver]
+root        495      1  0 Oct26 ?        00:00:04 /lib/systemd/systemd-journald
+root        498      2  0 Oct26 ?        00:00:00 [iscsi_eh]
+root        509      1  0 Oct26 ?        00:00:03 /lib/systemd/systemd-udevd
+root        511      1  0 Oct26 ?        00:00:00 /sbin/lvmetad -f
+root        512      2  0 Oct26 ?        00:00:00 [ib-comp-wq]
+root        513      2  0 Oct26 ?        00:00:00 [ib_mcast]
+root        514      2  0 Oct26 ?        00:00:00 [ib_nl_sa_wq]
+root        523      2  0 Oct26 ?        00:00:00 [rdma_cm]
+root        541      2  0 Oct26 ?        00:00:00 [loop0]
+root        545      2  0 Oct26 ?        00:00:00 [loop1]
+root        548      2  0 Oct26 ?        00:00:00 [loop2]
+root        552      2  0 Oct26 ?        00:00:00 [loop3]
+root        554      2  0 Oct26 ?        00:00:00 [loop5]
+root        556      2  0 Oct26 ?        00:00:00 [loop7]
+root        557      2  0 Oct26 ?        00:00:00 [loop8]
+root        559      2  0 Oct26 ?        00:00:00 [loop10]
+systemd+    606      1  0 Oct26 ?        00:00:01 /lib/systemd/systemd-timesyncd
+root        607      1  0 Oct26 ?        00:00:00 /usr/bin/VGAuthService
+root        671      2  0 Oct26 ?        00:00:00 [kworker/u257:2]
+root        680      1  0 Oct26 ?        00:05:44 /usr/bin/vmtoolsd
+systemd+    867      1  0 Oct26 ?        00:00:01 /lib/systemd/systemd-networkd
+systemd+    885      1  0 Oct26 ?        00:00:01 /lib/systemd/systemd-resolved
+syslog      955      1  0 Oct26 ?        00:00:00 /usr/sbin/rsyslogd -n
+root        956      1  0 Oct26 ?        00:00:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root        960      1  0 Oct26 ?        00:00:13 /usr/bin/lxcfs /var/lib/lxcfs/
+root        961      1  0 Oct26 ?        00:00:05 /usr/lib/accountsservice/accounts-daemon
+root       1017      1  0 Oct26 ?        00:00:23 /usr/lib/snapd/snapd
+root       1018      1  0 Oct26 ?        00:00:00 /lib/systemd/systemd-logind
+root       1038      1  0 Oct26 ?        00:00:00 /usr/sbin/cron -f
+root       1043      1  0 Oct26 ttyS0    00:00:00 /bin/login --
+message+   1048      1  0 Oct26 ?        00:00:01 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root       1099      1  0 Oct26 ?        00:00:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+daemon     1100      1  0 Oct26 ?        00:00:00 /usr/sbin/atd -f
+root       1112      1  0 Oct26 ?        00:02:53 /usr/bin/containerd
+root       1127      1  0 Oct26 ?        00:00:00 /usr/sbin/sshd -D
+root       1153      1  0 Oct26 tty1     00:00:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root       1154      1  0 Oct26 ?        00:00:00 /usr/lib/policykit-1/polkitd --no-debug
+root       1532      2  0 Oct26 ?        00:00:00 [loop11]
+kbrazil    1723      1  0 Oct26 ?        00:00:00 /lib/systemd/systemd --user
+kbrazil    1734   1723  0 Oct26 ?        00:00:00 (sd-pam)
+kbrazil    1749   1043  0 Oct26 ttyS0    00:00:18 -bash
+root       3451      2  0 Oct26 ?        00:00:00 [loop9]
+root       3657      2  0 Oct26 ?        00:00:00 [loop4]
+root      15892      2  0 Oct27 ?        00:00:00 [xfsalloc]
+root      15896      2  0 Oct27 ?        00:00:00 [xfs_mru_cache]
+root      15900      2  0 Oct27 ?        00:00:00 [jfsIO]
+root      15901      2  0 Oct27 ?        00:00:00 [jfsCommit]
+root      15902      2  0 Oct27 ?        00:00:00 [jfsSync]
+root      16944   1127  0 Oct27 ?        00:00:00 sshd: kbrazil [priv]
+kbrazil   17058  16944  0 Oct27 ?        00:00:00 sshd: kbrazil@pts/0
+kbrazil   17059  17058  0 Oct27 pts/0    00:00:00 -bash
+root      19890      2  0 Oct27 ?        00:03:11 [kworker/0:2]
+root      23282      2  0 18:39 ?        00:00:00 [kworker/0:1]
+root      23289      2  0 18:52 ?        00:00:00 [kworker/u256:0]
+root      23310      2  0 19:02 ?        00:00:00 [kworker/u256:1]
+root      23851      2  0 19:38 ?        00:00:00 [kworker/u256:2]
+kbrazil   23870  17059  0 19:43 pts/0    00:00:00 /bin/bash ./tests.sh
+kbrazil   23903  23870  0 19:43 pts/0    00:00:00 sleep 11
+kbrazil   23904  23870  0 19:43 pts/0    00:00:00 sleep 12
+kbrazil   23905  23870  0 19:43 pts/0    00:00:00 sleep 13
+kbrazil   23906  23870  0 19:43 pts/0    00:00:00 sleep 14
+kbrazil   23932  23870  0 19:43 pts/0    00:00:00 ps -ef

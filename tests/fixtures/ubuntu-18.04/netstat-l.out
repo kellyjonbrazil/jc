@@ -1,0 +1,32 @@
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 localhost:42351         0.0.0.0:*               LISTEN     
+tcp        0      0 localhost:domain        0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN     
+tcp6       0      0 [::]:ssh                [::]:*                  LISTEN     
+udp        0      0 localhost:domain        0.0.0.0:*                          
+udp        0      0 kbrazil-ubuntu:bootpc   0.0.0.0:*                          
+raw6       0      0 [::]:ipv6-icmp          [::]:*                  7          
+Active UNIX domain sockets (only servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  2      [ ACC ]     SEQPACKET  LISTENING     20812    /run/udev/control
+unix  2      [ ACC ]     STREAM     LISTENING     33765    /run/user/1000/systemd/private
+unix  2      [ ACC ]     STREAM     LISTENING     33808    /run/user/1000/gnupg/S.gpg-agent.ssh
+unix  2      [ ACC ]     STREAM     LISTENING     33809    /run/user/1000/gnupg/S.dirmngr
+unix  2      [ ACC ]     STREAM     LISTENING     33810    /run/user/1000/gnupg/S.gpg-agent.browser
+unix  2      [ ACC ]     STREAM     LISTENING     33811    /run/user/1000/gnupg/S.gpg-agent
+unix  2      [ ACC ]     STREAM     LISTENING     33812    /run/user/1000/gnupg/S.gpg-agent.extra
+unix  2      [ ACC ]     STREAM     LISTENING     20655    /run/systemd/private
+unix  2      [ ACC ]     STREAM     LISTENING     20662    /run/lvm/lvmetad.socket
+unix  2      [ ACC ]     STREAM     LISTENING     20664    /run/systemd/journal/stdout
+unix  2      [ ACC ]     STREAM     LISTENING     20891    /run/lvm/lvmpolld.socket
+unix  2      [ ACC ]     STREAM     LISTENING     27473    /run/acpid.socket
+unix  2      [ ACC ]     STREAM     LISTENING     27443    /run/snapd.socket
+unix  2      [ ACC ]     STREAM     LISTENING     27445    /run/snapd-snap.socket
+unix  2      [ ACC ]     STREAM     LISTENING     27475    /run/uuidd/request
+unix  2      [ ACC ]     STREAM     LISTENING     27481    /var/run/docker.sock
+unix  2      [ ACC ]     STREAM     LISTENING     27489    /var/run/dbus/system_bus_socket
+unix  2      [ ACC ]     STREAM     LISTENING     27468    /var/lib/lxd/unix.socket
+unix  2      [ ACC ]     STREAM     LISTENING     30726    /run/containerd/containerd.sock
+unix  2      [ ACC ]     STREAM     LISTENING     27436    @ISCSIADM_ABSTRACT_NAMESPACE
+unix  2      [ ACC ]     STREAM     LISTENING     25548    /var/run/vmware/guestServicePipe

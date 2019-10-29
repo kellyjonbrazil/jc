@@ -1,0 +1,30 @@
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+DROP       all  --  anywhere             anywhere             ctstate INVALID
+ACCEPT     tcp  --  15.15.15.0/24        anywhere             tcp dpt:ssh ctstate NEW,ESTABLISHED
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+DROP       all  --  anywhere             anywhere             ctstate INVALID
+ACCEPT     tcp  --  15.15.15.0/24        anywhere             tcp dpt:ssh ctstate NEW,ESTABLISHED
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+DROP       all  --  anywhere             anywhere             ctstate INVALID
+DROP       all  --  15.15.15.51          anywhere            
+ACCEPT     tcp  --  15.15.15.0/24        anywhere             tcp dpt:ssh ctstate NEW,ESTABLISHED
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp spt:ssh ctstate ESTABLISHED
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp spt:ssh ctstate ESTABLISHED
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp spt:ssh ctstate ESTABLISHED
