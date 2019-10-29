@@ -98,8 +98,6 @@ $ sudo netstat -lpn | jc --netstat -p
 """
 import string
 
-output = []
-
 
 def parse_line(entry):
     output_line = {}
@@ -151,6 +149,7 @@ def parse_line(entry):
 
 
 def parse(data):
+    output = []
     cleandata = data.splitlines()
 
     for line in cleandata:
