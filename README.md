@@ -97,10 +97,43 @@ $ arp | jc --arp -p
     "iface": "ens33"
   },
   {
+    "address": "192.168.71.1",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:c0:00:08",
+    "flags_mask": "C",
+    "iface": "ens33"
+  },
+  {
     "address": "192.168.71.254",
     "hwtype": "ether",
     "hwaddress": "00:50:56:fe:7a:b4",
     "flags_mask": "C",
+    "iface": "ens33"
+  }
+]
+```
+```
+$ arp -a | jc --arp -p
+[
+  {
+    "name": "?",
+    "address": "192.168.71.1",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:c0:00:08",
+    "iface": "ens33"
+  },
+  {
+    "name": "?",
+    "address": "192.168.71.254",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:fe:7a:b4",
+    "iface": "ens33"
+  },
+  {
+    "name": "_gateway",
+    "address": "192.168.71.2",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:f7:4a:fc",
     "iface": "ens33"
   }
 ]
