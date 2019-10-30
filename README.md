@@ -61,6 +61,7 @@ jc PARSER [OPTIONS]
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
 ### Parsers
+- `--arp` enables the `arp` parser
 - `--df` enables the `df` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
@@ -84,6 +85,26 @@ jc PARSER [OPTIONS]
 - `-p` specifies whether to pretty format the JSON output
 
 ## Examples
+### arp
+```
+$ arp | jc --arp -p
+[
+  {
+    "address": "gateway",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:f7:4a:fc",
+    "flags_mask": "C",
+    "iface": "ens33"
+  },
+  {
+    "address": "192.168.71.254",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:fe:7a:b4",
+    "flags_mask": "C",
+    "iface": "ens33"
+  }
+]
+```
 ### df
 ```
 $ df | jc --df -p
