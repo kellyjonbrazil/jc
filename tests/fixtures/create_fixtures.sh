@@ -2,6 +2,7 @@
 
 arp      > arp.out
 arp -v   > arp-v.out
+arp -a   > arp-a.out
 df       > df.out
 df -h    > df-h.out
 env      > env.out
