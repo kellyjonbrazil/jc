@@ -9,6 +9,7 @@ import signal
 import json
 import jc.parsers.arp
 import jc.parsers.df
+import jc.parsers.dig
 import jc.parsers.env
 import jc.parsers.free
 import jc.parsers.history
@@ -33,6 +34,7 @@ def helptext():
     print('Parsers:', file=sys.stderr)
     print('        --arp        arp parser', file=sys.stderr)
     print('        --df         df parser', file=sys.stderr)
+    print('        --dig        dig parser', file=sys.stderr)
     print('        --env        env parser', file=sys.stderr)
     print('        --free       free parser', file=sys.stderr)
     print('        --history    history parser', file=sys.stderr)
@@ -81,6 +83,9 @@ def main():
 
     elif '--df' in sys.argv:
         result = jc.parsers.df.parse(data)
+
+    elif '--dig' in sys.argv:
+        result = jc.parsers.dig.parse(data)
 
     elif '--env' in sys.argv:
         result = jc.parsers.env.parse(data)
