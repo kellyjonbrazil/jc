@@ -1,6 +1,7 @@
 jc changelog
 
 2019xxxx v1.1.1
+- Add arp parser
 - Add dig parser
 - Add nslookup parser
 - Add unit tests
