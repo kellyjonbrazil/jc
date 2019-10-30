@@ -7,6 +7,7 @@ Main input module
 import sys
 import signal
 import json
+import jc.parsers.arp
 import jc.parsers.df
 import jc.parsers.env
 import jc.parsers.free
@@ -30,6 +31,7 @@ import jc.parsers.w
 def helptext():
     print('Usage:  jc PARSER [OPTIONS]\n', file=sys.stderr)
     print('Parsers:', file=sys.stderr)
+    print('        --arp        arp parser', file=sys.stderr)
     print('        --df         df parser', file=sys.stderr)
     print('        --env        env parser', file=sys.stderr)
     print('        --free       free parser', file=sys.stderr)
@@ -74,7 +76,10 @@ def main():
         pretty = True
 
     # parsers
-    if '--df' in sys.argv:
+    if '--arp' in sys.argv:
+        result = jc.parsers.arp.parse(data)
+
+    elif '--df' in sys.argv:
         result = jc.parsers.df.parse(data)
 
     elif '--env' in sys.argv:
