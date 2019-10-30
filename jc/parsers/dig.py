@@ -31,6 +31,7 @@ turner-tls.map.fastly.net. 5    IN  A   151.101.65.67
 
 
 """
+import pprint
 
 
 def parse_header(header):
@@ -46,11 +47,38 @@ def parse_header(header):
 
 
 def parse_flags_line(flagsline):
-    return {}
+    # ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+    flagsline = flagsline.split(';')
+    flags = flagsline.pop(0)
+    flags = flagsline.pop(0)
+    flags = flagsline.pop(0).split(':')
+    flags = flags[1].lstrip()
+
+    restline = flagsline[0].replace(',', ' ').replace(':', ' ')
+    restlist = restline.split()
+
+    query_num = restlist[1]
+    answer_num = restlist[3]
+    authority_num = restlist[5]
+    additional_num = restlist[7]
+
+    return {'flags': flags,
+            'query_num': query_num,
+            'answer_num': answer_num,
+            'authority_num': authority_num,
+            'additional_num': additional_num}
 
 
 def parse_question(question):
-    return {}
+    # ;www.cnn.com.           IN  A
+    question = question.split()
+    dns_name = question[0].lstrip(';')
+    dns_class = question[1]
+    dns_type = question[2]
+
+    return {'name': dns_name,
+            'class': dns_class,
+            'type': dns_type}
 
 
 def parse_authority(authority):
@@ -58,7 +86,19 @@ def parse_authority(authority):
 
 
 def parse_answer(answer):
-    return {}
+    # www.cnn.com.        5   IN  CNAME   turner-tls.map.fastly.net.
+    answer = answer.split()
+    answer_name = answer[0]
+    answer_class = answer[2]
+    answer_type = answer[3]
+    answer_ttl = answer[1]
+    answer_data = answer[4]
+
+    return {'name': answer_name,
+            'class': answer_class,
+            'type': answer_type,
+            'ttl': answer_ttl,
+            'data': answer_data}
 
 
 def parse(data):
@@ -75,10 +115,10 @@ def parse(data):
     for line in cleandata:
 
         if line.find('; <<>> DiG') == 0:
-            output_entry = {}
             continue
 
         if line.find(';; ->>HEADER<<-') == 0:
+            output_entry = {}
             output_entry.update(parse_header(line))
             continue
 
@@ -90,18 +130,17 @@ def parse(data):
             question = True
             authority = False
             answer = False
-
             continue
 
-        if line.find(';') == -1 and question:
+        if question:
             output_entry['question'] = parse_question(line)
+            question = False
             continue
 
         if line.find(';; AUTHORITY SECTION:') == 0:
             question = False
             authority = True
             answer = False
-
             continue
 
         if authority:
@@ -112,7 +151,6 @@ def parse(data):
             question = False
             authority = False
             answer = True
-
             answer_list = []
             continue
 
@@ -145,6 +183,6 @@ def parse(data):
                 output.append(output_entry)
 
     clean_output = list(filter(None, output))
-    print(clean_output)
+    pprint.pprint(clean_output)
     exit()
     # return clean_output
