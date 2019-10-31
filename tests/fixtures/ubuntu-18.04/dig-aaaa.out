@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.11.3-1ubuntu1.8-Ubuntu <<>> www.google.com AAAA
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45806
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;www.google.com.			IN	AAAA
+
+;; ANSWER SECTION:
+www.google.com.		5	IN	AAAA	2607:f8b0:4000:812::2004
+
+;; Query time: 39 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Thu Oct 31 14:21:04 UTC 2019
+;; MSG SIZE  rcvd: 71
+

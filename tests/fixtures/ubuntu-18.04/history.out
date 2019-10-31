@@ -1,0 +1,453 @@
+    1  ls
+    2  top
+    3  cd /etc/systemd/system/
+    4  ls
+    5  docker ps
+    6  sudo su
+    7  sudo su -
+    8  vi resizeterm.sh
+    9  chmod +x resizeterm.sh 
+   10  .
+   11  clear
+   12  ./resizeterm.sh 
+   13  ls
+   14  cd ..
+   15  ls
+   16  cd ..
+   17  ls
+   18  cd root/
+   19  ls
+   20  sudo su -
+   21  snap
+   22  snap update
+   23  snap help
+   24  snap help --all
+   25  top
+   26  vi
+   27  ls
+   28  ./resizeterm.sh 
+   29  top
+   30  ls
+   31  exit
+   32  ./resizeterm.sh 
+   33  docker ps
+   34  sudo su - 
+   35  ls
+   36  top
+   37  vi trafficgen.sh
+   38  chmod +x trafficgen.sh 
+   39  ./trafficgen.sh 
+   40  sudo su -
+   41  ls
+   42  nmap
+   43  ./trafficgen.sh 
+   44  nmap --help
+   45  ./trafficgen.sh 
+   46  ifconfig ens33 | grep "inet " | cut -d " " -f 10
+   47  ifconfig ens33 | grep "inet " | cut -d " " -f 11
+   48  ifconfig ens33 | grep "inet " | cut -d " " -f 12
+   49  ifconfig ens33 | grep "inet " | cut -d " " -f 13
+   50  ip address
+   51  ifconfig ens33 | grep "inet " | cut -d " " -f 10
+   52  ifconfig ens33 | grep "inet " | cut -d " " -f 9
+   53  ifconfig ens33 | grep "inet " | cut -d " " -f 10
+   54  ifconfig ens33 | grep "inet " | cut -d " " -f 11
+   55  ifconfig ens33 | grep "inet " | cut -d " " -f 12
+   56  ifconfig ens33 | grep "inet " | cut -d " " -f 13
+   57  ifconfig ens33 | grep "inet " | cut -d "/"
+   58  ifconfig ens33 | grep "inet " | cut -d "/" -f 1
+   59  ifconfig ens33 | grep "inet " | cut -d "\/" -f 1
+   60  ifconfig ens33 | grep "inet " | tr "/" " "
+   61  ifconfig -a ens33 | grep "inet " | tr "/" " "
+   62  ifconfig ens33 | grep "inet " | cut -d " " -f 10
+   63  ifconfig ens33 | grep "inet "
+   64  ifconfig ens33 -a | grep "inet "
+   65  ifconfig -a ens33 | grep "inet "
+   66  ifconfig -v ens33 | grep "inet "
+   67  ifconfig  ens33 | grep "inet "
+   68  ip address
+   69  rm trafficgen.sh 
+   70  vi trafficgen.sh
+   71  chmod +x trafficgen.sh 
+   72  ./trafficgen.sh 
+   73  vi trafficgen.sh 
+   74  ./trafficgen.sh 
+   75  sudo su -
+   76  snap update
+   77  ls
+   78  ./trafficgen.sh 
+   79  sudo su -
+   80  nmap
+   81  nmap 192.168.71.10
+   82  ls
+   83  ./resizeterm.sh 
+   84  ./trafficgen.sh 
+   85  sudo su
+   86  docker ps
+   87  sudo docker ps
+   88  systemctl reboot
+   89  sudo su
+   90  docker ps
+   91  sudo su
+   92  pip
+   93  python3
+   94  sudo apt update
+   95  sudo apt upgrade
+   96  apt list --upgradable
+   97  sudo apt update all
+   98  sudo apt update
+   99  sudo apt-get upgrade
+  100  ps
+  101  ps -ef
+  102  top
+  103  pip3
+  104  sudo apt install python3-pip
+  105  ./resizeterm.sh 
+  106  pip3 install jc
+  107  jc
+  108  which jc
+  109  pip3 install --user jc
+  110  jc
+  111  sudo pip3 install jc
+  112  jc
+  113  which jc
+  114  exit
+  115  jc
+  116  ifconfig | jc --ifconfig
+  117  ifconfig | jc --ifconfig -p
+  118  ls -l | jc --ls
+  119  ls -l | jc --ls -p
+  120  ls -l /bin | jc --ls -p
+  121  netstat
+  122  netstat | jc --netstat -p
+  123  netstat -l | jc --netstat -p
+  124  netstat -nl | jc --netstat -p
+  125  netstat -n | jc --netstat -p
+  126  netstat -n | jc --netstat | jq .
+  127  sudo apt-get jq
+  128  sudo apt-get install jq
+  129  netstat -n | jc --netstat | jq .
+  130  netstat -lnp | jc --netstat | jq .
+  131  netstat -lp | jc --netstat | jq .
+  132  netstat -l | jc --netstat | jq .
+  133  netstat -lnp
+  134  netstat -ln
+  135  netstat
+  136  netstat -l | jc --netstat | jq .
+  137  curl
+  138  netstat -p
+  139  sudo netstat -p
+  140  apt update & sudo netstat
+  141  apt update & sleep 1; sudo netstat
+  142  sudo apt update & sleep 1; sudo netstat
+  143  sudo apt update & sleep 2; sudo netstat -p
+  144  sudo apt update & sleep 1; sudo netstat -p
+  145  sudo netstat -lp | jc --netstat -p
+  146  sudo netstat -lp | jc --netstat | jq .
+  147  netstat -lp | jc --netstat | jq .
+  148  sudo netstat -lp | jc --netstat | jq .
+  149  sudo netstat -lpn | jc --netstat | jq .
+  150  sudo netstat -lpnw | jc --netstat | jq .
+  151  man netstat
+  152  ./resizeterm.sh 
+  153  man netstat 
+  154  sudo netstat -lpnW | jc --netstat | jq .
+  155  sudo netstat -lpn -W | jc --netstat | jq .
+  156  man netstat
+  157  sudo netstat -lp -W | jc --netstat | jq .
+  158  ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+  159  ls -l /usr/bin | jc --ls | jq .[].'select(.bytes > 50000000)'
+  160  ls -l /usr/bin | jc --ls | jq .[]'select(.bytes > 50000000)'
+  161  ls -l /usr/bin | jc --ls | jq [].'select(.bytes > 50000000)'
+  162  ls -l /usr/bin | jc --ls | jq [.'select(.bytes > 50000000)]'
+  163  ls -l /usr/bin | jc --ls | jq .'select(.bytes > 50000000)'
+  164  ls -l /usr/bin | jc --ls | jq [].'select(.bytes > 50000000)'
+  165  ls -l /usr/bin | jc --ls | jq .[].'select(.bytes > 50000000)'
+  166  ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+  167  netstat | jc --netstat
+  168  netstat -l | jc --netstat
+  169  netstat -l | jc --netstat | jq .
+  170  sudo netstat -lp | jc --netstat | jq .
+  171  ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+  172  ls -l /usr/bin | jc --ls | jq .[] 'select(.bytes > 50000000)'
+  173  ls -l /usr/bin | jc --ls | jq .[]. 'select(.bytes > 50000000)'
+  174  ls -l /usr/bin | jc --ls | jq .[]'
+  175  ls -l /usr/bin | jc --ls | jq .[].'
+  176  ls -l /usr/bin | jc --ls | jq .[]
+  177  ls -l /usr/bin | jc --ls | jq .[].
+  178  ls -l /usr/bin | jc --ls | jq '.[] select(.bytes > 50000000)'
+  179  ls -l /usr/bin | jc --ls | jq '.[]. select(.bytes > 50000000)'
+  180  ls -l /usr/bin | jc --ls | jq '.[] select(.bytes > 50000000)'
+  181  ls -l /usr/bin | jc --ls | jq '.[] . select(.bytes > 50000000)'
+  182  ls -l /usr/bin | jc --ls | jq '[]. select(.bytes > 50000000)'
+  183  ls -l /usr/bin | jc --ls | jq '[].select(.bytes > 50000000)'
+  184  ls -l /usr/bin | jc --ls | jq '.[].select(.bytes > 50000000)'
+  185  ls -l /usr/bin | jc --ls | jq .[] | jq 'select(.bytes > 50000000)'
+  186  ls
+  187  mkdir git
+  188  cd git/
+  189  ls
+  190  git clone https://github.com/kellyjonbrazil/jc.git
+  191  cd jc/
+  192  ls
+  193  cat README.md 
+  194  cd ..
+  195  ls
+  196  rm -rf jc/
+  197  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  198  ls
+  199  cd jc/
+  200  ls
+  201  cat README.md 
+  202  pip3 list
+  203  pip3 unistall jc
+  204  pip3 uninstall jc
+  205  jc
+  206  ls
+  207  pip3 install --upgrade -e .
+  208  jc
+  209  ls
+  210  cd jc
+  211  ls
+  212  cd parsers/
+  213  ls
+  214  netstat -lp | jc --netstat
+  215  ls
+  216  netstat -p | jc --netstat
+  217  netstat -lp | jc --netstat
+  218  rm netstat.py 
+  219  vi netstat.py
+  220  netstat -lp | jc --netstat
+  221  netstat -l | jc --netstat
+  222  netstat -l | jc --netstat -p
+  223  netstat -lp | jc --netstat -p
+  224  netstat -lp
+  225  sudo netstat -lp | jc --netstat -p
+  226  rm netstat.py 
+  227  vi netstat.py
+  228  sudo netstat -lp | jc --netstat -p
+  229  netstat -lp | jc --netstat -p
+  230  rm netstat.py 
+  231  vi netstat.py
+  232  netstat -lp | jc --netstat -p
+  233  sudo netstat -lp | jc --netstat -p
+  234  sudo netstat -p | jc --netstat -p
+  235  netstat -p | jc --netstat -p
+  236  cd ..
+  237  cd ~
+  238  ls
+  239  cat trafficgen.sh 
+  240  mkdir tmp
+  241  cd tmp
+  242  history | grep clone
+  243  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat | jc --netstat
+  244  ls
+  245  rm -rf jc/
+  246  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat
+  247  rm -rf jc/
+  248  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat | jc --netstat
+  249  rm -rf jc/
+  250  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat -p | jc --netstat
+  251  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat -p | jc --netstat -p
+  252  rm -rf jc/
+  253  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat -p | jc --netstat -p
+  254  rm -rf jc/
+  255  git clone https://github.com/kellyjonbrazil/jc.git & sleep 1; netstat -p | jc --netstat -p
+  256  netstat -l | jc --netstat -p
+  257  netstat -ln | jc --netstat -p
+  258  netstat -lnp | jc --netstat -p
+  259  sudo netstat -lnp | jc --netstat -p
+  260  history | grep clone
+  261  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  262  ls
+  263  ps -a
+  264  ps -ef
+  265  ps -axz
+  266  ps -ax
+  267  ps -axu
+  268  cd ~/git/
+  269  pip3 uninstall jc
+  270  history | grep clone
+  271  ls
+  272  rm -rf jc/
+  273  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  274  pip3 install --user -e .
+  275  cd jc/
+  276  pip3 install --user -e .
+  277  jc
+  278  ps | jc --ps
+  279  ps | jc --ps -p
+  280  ps -ef | jc --ps -p
+  281  ps -ax | jc --ps -p
+  282  ps -axu | jc --ps -p
+  283  ps -axu | jc --ps | jq .
+  284  ps -ef | jc --ps -p
+  285  route
+  286  route -n
+  287  ls
+  288  cd ..
+  289  pip3 uninstall jc
+  290  ls
+  291  rm -rf jc/
+  292  history | grep clone
+  293  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  294  ls
+  295  cd jc/
+  296  pip3 install --user -e .
+  297  route | jc --route -p
+  298  route -v | jc --route -p
+  299  route | jc --route -p
+  300  route -n | jc --route -p
+  301  route -n | jc --route
+  302  ls -l | jc --ls
+  303  netstat -l | jc --ls
+  304  netstat -l | jc --netstat
+  305  netstat -l | jc
+  306  ifconfig | jc --ifconfig
+  307  route | jc --route
+  308  ps -ef | jc --ps -p
+  309  pip list
+  310  pip3 list
+  311  ls
+  312  netstat | jc --netstat -p
+  313  netstat -l | jc --netstat -p
+  314  pip3 list
+  315  cd jc/parsers/
+  316  ls
+  317  ls -l | jc --ls
+  318  ls -l | jc --ls -p
+  319  ls -l /var | jc --ls -p
+  320  ls -l /usr/local/bin | jc --ls -p
+  321  ls -l /usr/local/bin/
+  322  ls -l /usr/local
+  323  ls -l ~/.local/
+  324  ls -l ~/.local/bin/
+  325  ls -l ~/.local/lib
+  326  ls -l ~/.local/lib/python3.6/
+  327  ls -l ~/.local/lib/python3.6/site-packages/
+  328  ls -l ~/.local/lib/python3.6/site-packages/ifconfigparser/
+  329  ls -l ~/.local/lib/python3.6/site-packages/ifconfigparser/__pycache__/
+  330  ls -l /
+  331  ls -l / | jc --ls
+  332  ls -l / | jc --ls -p
+  333  rm ls.py 
+  334  vi ls.py
+  335  ls -l / | jc --ls -p
+  336  ls -l /
+  337  rm ls.py 
+  338  vi ls.py
+  339  ls -l / | jc --ls -p
+  340  rm ls.py 
+  341  vi ls.py
+  342  ls -l / | jc --ls -p
+  343  ls -l /usr/local/bin | jc --ls -p
+  344  rm ls.py 
+  345  vi ls.py
+  346  ls -l /usr/local/bin | jc --ls -p
+  347  ls -l / | jc --ls -p
+  348  cd ~
+  349  pip3 uninstall jc
+  350  cd git/
+  351  ls
+  352  rm -rf jc/
+  353  history | grep clone
+  354  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  355  ls
+  356  cd jc/
+  357  pip3 install --user --upgrade -e .
+  358  jc
+  359  ls /usr/local/bin | jc --ls
+  360  ls /usr/local/bin 
+  361  ls /usr/local/bin -l
+  362  cd jc/parsers/
+  363  ls
+  364  rm ls.py 
+  365  vi ls.py
+  366  ls /usr/local/bin 
+  367  ls /usr/local/bin | jc --ls
+  368  ls -l /usr/local/bin | jc --ls
+  369  ls -al /usr/local/bin | jc --ls
+  370  ls -al /usr/local/bin | jc --ls -p
+  371  cd ..
+  372  pip3 uninstall jc
+  373  rm -rf jc/
+  374  history | grep clone
+  375  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  376  cd jc/
+  377  pip3 install --user --upgrade -e .
+  378  jc
+  379  ls /usr/local/bin | jc --ls
+  380  ls -l /usr/local/bin | jc --ls
+  381  ls -al /usr/local/bin | jc --ls
+  382  ls -al /usr/local/bin | jc --ls -p
+  383  ps -ef | jc --ps
+  384  ps -ef | jc --ps -p
+  385  pip3 list
+  386  ls
+  387  ./build-package.sh 
+  388  ls
+  389  ./pypi-upload.sh 
+  390  cd ..
+  391  ls
+  392  pip3 uninstall jc
+  393  rm -rf jc/
+  394  pip3 install --user --upgrade jc
+  395  pip3 list
+  396  w
+  397  w -f
+  398  w | jc --route
+  399  w | jc --route -p
+  400  w -f | jc --route -p
+  401  route
+  402  uptime
+  403  ls -l /bin | jc --ls -p
+  404  lsof | jc --lsof -p
+  405  sudo lsof | jc --lsof -p
+  406  w | jc --w -p
+  407  uptime | jc --uptime -p
+  408  ls
+  409  cd testfiles/
+  410  ls
+  411  rm tests.sh 
+  412  vi tests.sh
+  413  chmod +x tests.sh 
+  414  ./tests.sh 
+  415  ls
+  416  cat iptables-filter.out 
+  417  cat iptables-filter-nv.out 
+  418  ls
+  419  ls -al
+  420  man history
+  421  rm tests.sh 
+  422  vi tests.sh
+  423  chmod +x tests.sh 
+  424  ./tests.sh 
+  425  ls -al
+  426  cat netstat.out 
+  427  ls
+  428  cat w
+  429  cat w.out 
+  430  cat uname-a.out 
+  431  rm tests.sh 
+  432  vi tests.sh
+  433  chmod +x tests.sh 
+  434  ./tests.sh 
+  435  ls -al
+  436  cat iptables-filter.out 
+  437  uname
+  438  uname -a
+  439  cd /etc/
+  440  ls
+  441  uname -a
+  442  ls
+  443  cat debian_version 
+  444  lsb_release -a 
+  445  uname -a
+  446  lsb_release 
+  447  lsb_release -a
+  448  ifconfig
+  449  cd ~
+  450  cd testfiles/
+  451  ls
+  452  cat history.out 
+  453  history > history.out

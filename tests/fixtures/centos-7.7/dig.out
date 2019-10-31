@@ -1,0 +1,38 @@
+
+; <<>> DiG 9.11.4-P2-RedHat-9.11.4-9.P2.el7 <<>> www.cnn.com www.google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 44295
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; MBZ: 0x0005, udp: 4096
+;; QUESTION SECTION:
+;www.cnn.com.			IN	A
+
+;; ANSWER SECTION:
+www.cnn.com.		5	IN	CNAME	turner-tls.map.fastly.net.
+turner-tls.map.fastly.net. 5	IN	A	151.101.189.67
+
+;; Query time: 25 msec
+;; SERVER: 192.168.71.2#53(192.168.71.2)
+;; WHEN: Wed Oct 30 05:13:22 PDT 2019
+;; MSG SIZE  rcvd: 95
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 34074
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; MBZ: 0x0005, udp: 4096
+;; QUESTION SECTION:
+;www.google.com.			IN	A
+
+;; ANSWER SECTION:
+www.google.com.		5	IN	A	216.58.194.100
+
+;; Query time: 25 msec
+;; SERVER: 192.168.71.2#53(192.168.71.2)
+;; WHEN: Wed Oct 30 05:13:22 PDT 2019
+;; MSG SIZE  rcvd: 59
+

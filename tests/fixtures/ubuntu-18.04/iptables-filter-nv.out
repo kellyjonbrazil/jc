@@ -1,0 +1,30 @@
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+   66  6034 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+ 1137  318K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    0     0 ACCEPT     tcp  --  *      *       15.15.15.0/24        0.0.0.0/0            tcp dpt:22 ctstate NEW,ESTABLISHED
+    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    0     0 ACCEPT     tcp  --  *      *       15.15.15.0/24        0.0.0.0/0            tcp dpt:22 ctstate NEW,ESTABLISHED
+    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    0     0 DROP       all  --  lo     *       15.15.15.51          0.0.0.0/0           
+    0     0 ACCEPT     tcp  --  *      *       15.15.15.0/24        0.0.0.0/0            tcp dpt:22 ctstate NEW,ESTABLISHED
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 4 packets, 277 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+   66  6034 ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0           
+  889  158K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate ESTABLISHED
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22 ctstate ESTABLISHED
+    0     0 ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate ESTABLISHED
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22 ctstate ESTABLISHED
+    0     0 ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate ESTABLISHED
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22 ctstate ESTABLISHED

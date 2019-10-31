@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.11.4-P2-RedHat-9.11.4-9.P2.el7 <<>> -x 1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 36298
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; MBZ: 0x0005, udp: 4096
+;; QUESTION SECTION:
+;1.1.1.1.in-addr.arpa.		IN	PTR
+
+;; ANSWER SECTION:
+1.1.1.1.in-addr.arpa.	5	IN	PTR	one.one.one.one.
+
+;; Query time: 32 msec
+;; SERVER: 192.168.71.2#53(192.168.71.2)
+;; WHEN: Wed Oct 30 05:13:36 PDT 2019
+;; MSG SIZE  rcvd: 78
+

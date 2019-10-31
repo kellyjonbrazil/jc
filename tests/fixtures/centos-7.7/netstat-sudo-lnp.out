@@ -1,0 +1,45 @@
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1469/master         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1206/sshd           
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1469/master         
+tcp6       0      0 :::22                   :::*                    LISTEN      1206/sshd           
+udp        0      0 0.0.0.0:68              0.0.0.0:*                           1939/dhclient       
+udp        0      0 127.0.0.1:323           0.0.0.0:*                           795/chronyd         
+udp6       0      0 ::1:323                 :::*                                795/chronyd         
+raw6       0      0 :::58                   :::*                    7           865/NetworkManager  
+Active UNIX domain sockets (only servers)
+Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path
+unix  2      [ ACC ]     STREAM     LISTENING     13851    1/systemd            /run/lvm/lvmpolld.socket
+unix  2      [ ACC ]     STREAM     LISTENING     8991     1/systemd            /run/systemd/journal/stdout
+unix  2      [ ACC ]     STREAM     LISTENING     22321    1469/master          public/pickup
+unix  2      [ ACC ]     STREAM     LISTENING     22332    1469/master          private/tlsmgr
+unix  2      [ ACC ]     STREAM     LISTENING     22839    1205/dockerd-curren  /run/docker/libnetwork/fe53fe5029258e61eb7a9173ec80150ea3595abe7d69e47af064f451212110bf.sock
+unix  2      [ ACC ]     STREAM     LISTENING     21822    1205/dockerd-curren  /var/run/docker.sock
+unix  2      [ ACC ]     STREAM     LISTENING     13918    1/systemd            /run/lvm/lvmetad.socket
+unix  2      [ ACC ]     STREAM     LISTENING     21877    1256/docker-contain  /var/run/docker/libcontainerd/docker-containerd.sock
+unix  2      [ ACC ]     STREAM     LISTENING     20600    865/NetworkManager   /var/run/NetworkManager/private-dhcp
+unix  2      [ ACC ]     STREAM     LISTENING     17785    1/systemd            /run/dbus/system_bus_socket
+unix  2      [ ACC ]     STREAM     LISTENING     22325    1469/master          public/cleanup
+unix  2      [ ACC ]     SEQPACKET  LISTENING     13962    1/systemd            /run/udev/control
+unix  2      [ ACC ]     STREAM     LISTENING     22328    1469/master          public/qmgr
+unix  2      [ ACC ]     STREAM     LISTENING     22350    1469/master          public/flush
+unix  2      [ ACC ]     STREAM     LISTENING     22365    1469/master          public/showq
+unix  2      [ ACC ]     STREAM     LISTENING     22335    1469/master          private/rewrite
+unix  2      [ ACC ]     STREAM     LISTENING     13771    1/systemd            /run/systemd/private
+unix  2      [ ACC ]     STREAM     LISTENING     22338    1469/master          private/bounce
+unix  2      [ ACC ]     STREAM     LISTENING     22341    1469/master          private/defer
+unix  2      [ ACC ]     STREAM     LISTENING     22344    1469/master          private/trace
+unix  2      [ ACC ]     STREAM     LISTENING     22347    1469/master          private/verify
+unix  2      [ ACC ]     STREAM     LISTENING     22353    1469/master          private/proxymap
+unix  2      [ ACC ]     STREAM     LISTENING     22356    1469/master          private/proxywrite
+unix  2      [ ACC ]     STREAM     LISTENING     22359    1469/master          private/smtp
+unix  2      [ ACC ]     STREAM     LISTENING     22362    1469/master          private/relay
+unix  2      [ ACC ]     STREAM     LISTENING     22368    1469/master          private/error
+unix  2      [ ACC ]     STREAM     LISTENING     22371    1469/master          private/retry
+unix  2      [ ACC ]     STREAM     LISTENING     22374    1469/master          private/discard
+unix  2      [ ACC ]     STREAM     LISTENING     22377    1469/master          private/local
+unix  2      [ ACC ]     STREAM     LISTENING     22380    1469/master          private/virtual
+unix  2      [ ACC ]     STREAM     LISTENING     22383    1469/master          private/lmtp
+unix  2      [ ACC ]     STREAM     LISTENING     22386    1469/master          private/anvil
+unix  2      [ ACC ]     STREAM     LISTENING     22389    1469/master          private/scache

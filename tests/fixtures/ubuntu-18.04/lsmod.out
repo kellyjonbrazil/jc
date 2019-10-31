@@ -1,0 +1,102 @@
+Module                  Size  Used by
+xt_tcpudp              16384  6
+xt_conntrack           16384  15
+ufs                    77824  0
+qnx4                   16384  0
+hfsplus               106496  0
+hfs                    57344  0
+minix                  32768  0
+ntfs                  102400  0
+msdos                  20480  0
+jfs                   188416  0
+xfs                  1204224  0
+cpuid                  16384  0
+unix_diag              16384  0
+iptable_mangle         16384  0
+iptable_security       16384  0
+iptable_raw            16384  0
+iptable_nat            16384  0
+nf_conntrack_ipv4      16384  16
+nf_defrag_ipv4         16384  1 nf_conntrack_ipv4
+nf_nat_ipv4            16384  1 iptable_nat
+nf_nat                 32768  1 nf_nat_ipv4
+nf_conntrack          131072  4 xt_conntrack,nf_conntrack_ipv4,nf_nat,nf_nat_ipv4
+iptable_filter         16384  1
+aufs                  241664  0
+overlay                77824  0
+vmw_balloon            20480  0
+intel_rapl_perf        16384  0
+input_leds             16384  0
+joydev                 24576  0
+vmw_vsock_vmci_transport    32768  1
+vsock                  36864  2 vmw_vsock_vmci_transport
+serio_raw              16384  0
+btusb                  45056  0
+btrtl                  16384  1 btusb
+btbcm                  16384  1 btusb
+btintel                16384  1 btusb
+bluetooth             544768  5 btrtl,btintel,btbcm,btusb
+ecdh_generic           24576  1 bluetooth
+vmw_vmci               69632  2 vmw_balloon,vmw_vsock_vmci_transport
+mac_hid                16384  0
+shpchp                 36864  0
+sch_fq_codel           20480  2
+ib_iser                49152  0
+rdma_cm                61440  1 ib_iser
+iw_cm                  45056  1 rdma_cm
+ib_cm                  53248  1 rdma_cm
+ib_core               225280  4 rdma_cm,iw_cm,ib_iser,ib_cm
+iscsi_tcp              20480  0
+libiscsi_tcp           20480  1 iscsi_tcp
+libiscsi               53248  3 libiscsi_tcp,iscsi_tcp,ib_iser
+scsi_transport_iscsi    98304  3 iscsi_tcp,ib_iser,libiscsi
+ip_tables              28672  5 iptable_filter,iptable_security,iptable_raw,iptable_nat,iptable_mangle
+x_tables               40960  7 xt_conntrack,iptable_filter,iptable_security,xt_tcpudp,iptable_raw,ip_tables,iptable_mangle
+autofs4                40960  2
+btrfs                1138688  0
+zstd_compress         163840  1 btrfs
+raid10                 53248  0
+raid456               147456  0
+async_raid6_recov      20480  1 raid456
+async_memcpy           16384  2 raid456,async_raid6_recov
+async_pq               16384  2 raid456,async_raid6_recov
+async_xor              16384  3 async_pq,raid456,async_raid6_recov
+async_tx               16384  5 async_pq,async_memcpy,async_xor,raid456,async_raid6_recov
+xor                    24576  2 async_xor,btrfs
+raid6_pq              114688  4 async_pq,btrfs,raid456,async_raid6_recov
+libcrc32c              16384  4 nf_conntrack,nf_nat,xfs,raid456
+raid1                  40960  0
+raid0                  20480  0
+multipath              16384  0
+linear                 16384  0
+hid_generic            16384  0
+usbhid                 53248  0
+hid                   110592  2 usbhid,hid_generic
+crct10dif_pclmul       16384  0
+crc32_pclmul           16384  0
+ghash_clmulni_intel    16384  0
+pcbc                   16384  0
+aesni_intel           188416  0
+aes_x86_64             20480  1 aesni_intel
+crypto_simd            16384  1 aesni_intel
+vmwgfx                274432  1
+glue_helper            16384  1 aesni_intel
+cryptd                 24576  3 crypto_simd,ghash_clmulni_intel,aesni_intel
+ttm                   106496  1 vmwgfx
+drm_kms_helper        172032  1 vmwgfx
+syscopyarea            16384  1 drm_kms_helper
+sysfillrect            16384  1 drm_kms_helper
+psmouse               151552  0
+sysimgblt              16384  1 drm_kms_helper
+fb_sys_fops            16384  1 drm_kms_helper
+mptspi                 24576  1
+mptscsih               36864  1 mptspi
+mptbase               102400  2 mptspi,mptscsih
+drm                   401408  4 vmwgfx,drm_kms_helper,ttm
+e1000                 143360  0
+ahci                   40960  0
+libahci                32768  1 ahci
+scsi_transport_spi     32768  1 mptspi
+pata_acpi              16384  0
+i2c_piix4              24576  0
+floppy                 77824  0

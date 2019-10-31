@@ -1,0 +1,30 @@
+total 2.1G
+drwxr-xr-x  24 root root 4.0K Oct 24 06:33 .
+drwxr-xr-x  24 root root 4.0K Oct 24 06:33 ..
+drwxr-xr-x   2 root root 4.0K Oct 18 00:12 bin
+drwxr-xr-x   3 root root 4.0K Oct 25 07:14 boot
+drwxr-xr-x   2 root root 4.0K Aug 12 17:21 cdrom
+drwxr-xr-x  19 root root 4.0K Oct 24 06:33 dev
+drwxr-xr-x  93 root root 4.0K Oct 24 06:32 etc
+drwxr-xr-x   3 root root 4.0K Aug 12 17:24 home
+lrwxrwxrwx   1 root root   33 Oct 24 06:33 initrd.img -> boot/initrd.img-4.15.0-66-generic
+lrwxrwxrwx   1 root root   33 Oct 24 06:33 initrd.img.old -> boot/initrd.img-4.15.0-65-generic
+drwxr-xr-x  23 root root 4.0K Oct 18 00:14 lib
+drwxr-xr-x   2 root root 4.0K Aug  5 19:23 lib64
+drwx------   2 root root  16K Aug 12 17:21 lost+found
+drwxr-xr-x   2 root root 4.0K Aug  5 19:22 media
+drwxr-xr-x   2 root root 4.0K Aug  5 19:22 mnt
+drwxr-xr-x   3 root root 4.0K Aug 14 02:02 opt
+dr-xr-xr-x 184 root root    0 Oct 21 20:17 proc
+drwx------   4 root root 4.0K Aug 13 23:27 root
+drwxr-xr-x  29 root root 1.1K Oct 28 08:49 run
+drwxr-xr-x   2 root root  12K Oct 18 00:11 sbin
+drwxr-xr-x   9 root root 4.0K Aug 14 02:01 snap
+drwxr-xr-x   2 root root 4.0K Aug  5 19:22 srv
+-rw-------   1 root root 2.0G Aug 12 17:22 swap.img
+dr-xr-xr-x  13 root root    0 Oct 22 00:54 sys
+drwxrwxrwt  11 root root 4.0K Oct 28 19:42 tmp
+drwxr-xr-x  10 root root 4.0K Aug  5 19:22 usr
+drwxr-xr-x  13 root root 4.0K Aug  5 19:24 var
+lrwxrwxrwx   1 root root   30 Oct 24 06:33 vmlinuz -> boot/vmlinuz-4.15.0-66-generic
+lrwxrwxrwx   1 root root   30 Oct 24 06:33 vmlinuz.old -> boot/vmlinuz-4.15.0-65-generic

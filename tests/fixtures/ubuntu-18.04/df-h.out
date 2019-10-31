@@ -1,0 +1,19 @@
+Filesystem      Size  Used Avail Use% Mounted on
+udev            955M     0  955M   0% /dev
+tmpfs           198M  1.2M  196M   1% /run
+/dev/sda2        20G  5.5G   14G  30% /
+tmpfs           986M     0  986M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           986M     0  986M   0% /sys/fs/cgroup
+/dev/loop0       55M   55M     0 100% /snap/core18/1223
+/dev/loop1       11M   11M     0 100% /snap/slcli/383
+/dev/loop2       89M   89M     0 100% /snap/core/7396
+/dev/loop3       67M   67M     0 100% /snap/google-cloud-sdk/103
+/dev/loop5       55M   55M     0 100% /snap/core18/1074
+/dev/loop7      8.7M  8.7M     0 100% /snap/doctl/187
+/dev/loop8      3.2M  3.2M     0 100% /snap/stress-ng/847
+/dev/loop10      90M   90M     0 100% /snap/core/7917
+/dev/loop11     3.3M  3.3M     0 100% /snap/stress-ng/924
+tmpfs           197M     0  197M   0% /run/user/1000
+/dev/loop9      8.7M  8.7M     0 100% /snap/doctl/215
+/dev/loop4       67M   67M     0 100% /snap/google-cloud-sdk/104

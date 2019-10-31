@@ -10,7 +10,7 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
 {
   "filename": "emacs",
   "flags": "-r-xr-xr-x",
-  "links": 1,
+  "links": "1",
   "owner": "root",
   "group": "wheel",
   "size": "117164432",
@@ -32,20 +32,18 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 ... -rwxr-xr-x  1 root  wheel    18128 May  3 22:26 echo'''
 >>> 
 >>> jc.parsers.ls.parse(data)
-[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 
-'group': 'wheel', 'size': '23648', 'date': 'May 3 22:26'}, {'filename': 
-'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 
-'wheel', 'size': '30016', 'date': 'May 3 22:26'}, {'filename': 'cp', 'flags': 
-'-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '29024', 
-'date': 'May 3 22:26'}, {'filename': 'csh', 'flags': '-rwxr-xr-x', 'links': 1, 
-'owner': 'root', 'group': 'wheel', 'size': '375824', 'date': 'May 3 22:26'}, 
-{'filename': 'date', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 
-'wheel', 'size': '28608', 'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': 
-'-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': '32000', 
-'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x', 'links': 1, 
-'owner': 'root', 'group': 'wheel', 'size': '23392', 'date': 'May 3 22:26'}, 
-{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 
-'wheel', 'size': '18128', 'date': 'May 3 22:26'}]
+[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
+'size': '23648', 'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x',
+'links': '1', 'owner': 'root', 'group': 'wheel', 'size': '30016', 'date': 'May 3 22:26'},
+{'filename': 'cp', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
+'size': '29024', 'date': 'May 3 22:26'}, {'filename': 'csh', 'flags': '-rwxr-xr-x', 'links': '1', 
+'owner': 'root', 'group': 'wheel', 'size': '375824', 'date': 'May 3 22:26'}, {'filename': 'date',
+'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel', 'size': '28608',
+'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root',
+'group': 'wheel', 'size': '32000', 'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x',
+'links': '1', 'owner': 'root', 'group': 'wheel', 'size': '23392', 'date': 'May 3 22:26'}, 
+{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
+'size': '18128', 'date': 'May 3 22:26'}]
 ```
 
 The goal is to keep the resulting JSON as flat and simple as possible. Also, keys have been converted to lowercase and special characters are replaced whenever possible.  Numbers are kept as strings because, depending on context or the output options, numbers can sometimes turn into strings. (e.g 'human readable' options)
@@ -63,7 +61,9 @@ jc PARSER [OPTIONS]
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
 ### Parsers
+- `--arp` enables the `arp` parser
 - `--df` enables the `df` parser
+- `--dig` enables the `dig` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
 - `--history` enables the `history` parser
@@ -86,6 +86,59 @@ jc PARSER [OPTIONS]
 - `-p` specifies whether to pretty format the JSON output
 
 ## Examples
+### arp
+```
+$ arp | jc --arp -p
+[
+  {
+    "address": "gateway",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:f7:4a:fc",
+    "flags_mask": "C",
+    "iface": "ens33"
+  },
+  {
+    "address": "192.168.71.1",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:c0:00:08",
+    "flags_mask": "C",
+    "iface": "ens33"
+  },
+  {
+    "address": "192.168.71.254",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:fe:7a:b4",
+    "flags_mask": "C",
+    "iface": "ens33"
+  }
+]
+```
+```
+$ arp -a | jc --arp -p
+[
+  {
+    "name": "?",
+    "address": "192.168.71.1",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:c0:00:08",
+    "iface": "ens33"
+  },
+  {
+    "name": "?",
+    "address": "192.168.71.254",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:fe:7a:b4",
+    "iface": "ens33"
+  },
+  {
+    "name": "_gateway",
+    "address": "192.168.71.2",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:f7:4a:fc",
+    "iface": "ens33"
+  }
+]
+```
 ### df
 ```
 $ df | jc --df -p
@@ -123,6 +176,152 @@ $ df | jc --df -p
     "mounted": "/dev/shm"
   }
   ...
+]
+```
+### dig
+```
+$ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
+[
+  {
+    "id": "28182",
+    "opcode": "QUERY",
+    "status": "NOERROR",
+    "flags": "qr rd ra",
+    "query_num": "1",
+    "answer_num": "4",
+    "authority_num": "0",
+    "additional_num": "1",
+    "question": {
+      "name": "cnn.com.",
+      "class": "IN",
+      "type": "A"
+    },
+    "answer": [
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": "5",
+        "data": "151.101.193.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": "5",
+        "data": "151.101.1.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": "5",
+        "data": "151.101.129.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": "5",
+        "data": "151.101.65.67"
+      }
+    ],
+    "query_time": "45 msec",
+    "server": "192.168.71.2#53(192.168.71.2)",
+    "when": "Wed Oct 30 03:11:21 PDT 2019",
+    "rcvd": "100"
+  },
+  {
+    "id": "23264",
+    "opcode": "QUERY",
+    "status": "NOERROR",
+    "flags": "qr aa rd",
+    "query_num": "1",
+    "answer_num": "1",
+    "authority_num": "4",
+    "additional_num": "1",
+    "question": {
+      "name": "www.cnn.com.",
+      "class": "IN",
+      "type": "A"
+    },
+    "answer": [
+      {
+        "name": "www.cnn.com.",
+        "class": "IN",
+        "type": "CNAME",
+        "ttl": "300",
+        "data": "turner-tls.map.fastly.net."
+      }
+    ],
+    "authority": [
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "NS",
+        "ttl": "3600",
+        "data": "ns-1086.awsdns-07.org."
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "NS",
+        "ttl": "3600",
+        "data": "ns-1630.awsdns-11.co.uk."
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "NS",
+        "ttl": "3600",
+        "data": "ns-47.awsdns-05.com."
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "NS",
+        "ttl": "3600",
+        "data": "ns-576.awsdns-08.net."
+      }
+    ],
+    "query_time": "33 msec",
+    "server": "205.251.194.64#53(205.251.194.64)",
+    "when": "Wed Oct 30 03:11:21 PDT 2019",
+    "rcvd": "212"
+  }
+]
+```
+```
+$ dig -x 1.1.1.1 | jc --dig -p
+[
+  {
+    "id": "27526",
+    "opcode": "QUERY",
+    "status": "NOERROR",
+    "flags": "qr rd ra",
+    "query_num": "1",
+    "answer_num": "1",
+    "authority_num": "0",
+    "additional_num": "1",
+    "question": {
+      "name": "1.1.1.1.in-addr.arpa.",
+      "class": "IN",
+      "type": "PTR"
+    },
+    "answer": [
+      {
+        "name": "1.1.1.1.IN-ADDR.ARPA.",
+        "class": "IN",
+        "type": "PTR",
+        "ttl": "5",
+        "data": "one.one.one.one."
+      }
+    ],
+    "query_time": "34 msec",
+    "server": "192.168.71.2#53(192.168.71.2)",
+    "when": "Wed Oct 30 03:13:48 PDT 2019",
+    "rcvd": "98"
+  }
 ]
 ```
 ### env
@@ -1126,6 +1325,11 @@ $ w | jc --w -p
 ## Contributions
 Feel free to add/improve code or parsers!
 
+## Compatibility
+Tested on:
+- Centos 7.7
+- Ubuntu 18.4
+
 ## Acknowledgments
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
-- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers

@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.11.3-1ubuntu1.8-Ubuntu <<>> -x 1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 28514
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;1.1.1.1.in-addr.arpa.		IN	PTR
+
+;; ANSWER SECTION:
+1.1.1.1.in-addr.arpa.	5	IN	PTR	one.one.one.one.
+
+;; Query time: 37 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Thu Oct 31 14:21:05 UTC 2019
+;; MSG SIZE  rcvd: 78
+

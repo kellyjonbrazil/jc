@@ -1,0 +1,1000 @@
+   65  sudo iptables -w -vL -t filter | jc --iptables -p
+   66  sudo iptables -vnL -t filter | jc --iptables -p
+   67  sudo iptables -vnL -t filter
+   68  rm iptables.py 
+   69  vi iptables.py
+   70  sudo iptables -vnL -t filter | jc --iptables -p
+   71  sudo iptables -vL -t filter | jc --iptables -p
+   72  sudo iptables -L -t filter | jc --iptables -p
+   73  sudo iptables -L -t nat | jc --iptables -p
+   74  sudo iptables -vnL -t filter | jc --iptables -p
+   75  sudo iptables -vnL -t filter | jc
+   76  sudo iptables -vnL -t filter | jc --iptables
+   77  sudo iptables -vnL -t raw | jc --iptables
+   78  sudo iptables -vnL -t raw | jc --iptables -p
+   79  jobs
+   80  sleep 100 &
+   81  jobs
+   82  sleep 101 &
+   83  jobs
+   84  sleep 102 &
+   85  jobs
+   86  sleep 103 &
+   87  jobs
+   88  iptable
+   89  sudo iptables -L | jc --iptables
+   90  sudo iptables -L | jc --iptables -p
+   91  sudo iptables -L | jc --iptables | jq .
+   92  pip3 install jq
+   93  pip3 install --user jq
+   94  jq
+   95  yum install jq
+   96  sudo yum install jq
+   97  sudo dnf install jq
+   98  curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+   99  ls
+  100  ls -al
+  101  cd ~
+  102  curl https://github-production-release-asset-2e65be.s3.amazonaws.com/5101141/6387d980-de1f-11e8-8d3e-4455415aa408?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20191023T000342Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=6d4aad2941c281a57ea469d57115f0a3d877fc24998ded52e1c51cbf7b482705&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;response-content-disposition=attachment%3B%20filename%3Djq-linux64&amp;response-content-type=application%2Foctet-stream
+  103  ls
+  104  curl 'https://github-production-release-asset-2e65be.s3.amazonaws.com/5101141/6387d980-de1f-11e8-8d3e-4455415aa408?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20191023T000342Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=6d4aad2941c281a57ea469d57115f0a3d877fc24998ded52e1c51cbf7b482705&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;response-content-disposition=attachment%3B%20filename%3Djq-linux64&amp;response-content-type=application%2Foctet-stream'
+  105  ifconfig
+  106  ls
+  107  chmod jq-linux64 
+  108  chmod +x jq-linux64 
+  109  ./jq-linux64 
+  110  mv jq-linux64 jq
+  111  sudo mv jq /usr/local/bin/
+  112  jq
+  113  iptables -L | jc --iptables | jq .
+  114  sudo iptables -L | jc --iptables | jq .
+  115  sudo iptables -L 
+  116  sudo iptables -vL 
+  117  sudo iptables -vL | jc --iptables | jq .
+  118  df | jc --df -p
+  119  cd ~
+  120  pip3 uninstall jc
+  121  cd git/
+  122  ls
+  123  rm -rf jc/
+  124  history | grep clone
+  125  git clone https://github.com/kellyjonbrazil/jc.git
+  126  ls
+  127  cd jc/
+  128  ./build-package.sh 
+  129  ./pypi-upload.sh 
+  130  cd ..
+  131  ls
+  132  pip3 uninstall jc
+  133  rm -rf jc/
+  134  pip3 install --user --upgrade jc
+  135  iptables -L | jc --iptables | jq
+  136  sudo iptables -L | jc --iptables | jq
+  137  mount | jc --mount -p
+  138  uname -a | jc --uname
+  139  uname -a | jc --uname -p
+  140  df | jc --df -p
+  141  free | jc --free -p
+  142  lsblk | jc --lsblk -p
+  143  ls | jc
+  144  env | jc --env -p
+  145  ls | jc
+  146  route | jc --route -p
+  147  iptables -L | jc --iptables | jq .
+  148  sudo iptables -L | jc --iptables | jq .
+  149  ls
+  150  pip3 uninstall jc
+  151  history | grep clone
+  152  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  153  cd jc/
+  154  pip3 install --user --upgrade -e .
+  155  sudo iptables -L | jc --iptables -p
+  156  sudo iptables -L | jc --iptables
+  157  sudo iptables -L | jc --iptables | jq .
+  158  pip3 list
+  159  cd jc
+  160  ls
+  161  vi jc.py 
+  162  jc
+  163  ls | jc
+  164  vi jc.py 
+  165  jc
+  166  ls | jc
+  167  cat
+  168  jc
+  169  vi jc.py 
+  170  jc
+  171  ls | jc
+  172  vi jc.py 
+  173  jc
+  174  vi jc.py 
+  175  jc
+  176  ls | jc
+  177  vi jc.py 
+  178  jc
+  179  ls | jc
+  180  ls | jc --ls
+  181  jc << ls -l
+  182  jc < ls -l
+  183  jc < ls / -l
+  184  jc < ls -l /
+  185  jc <<< ls -l /
+  186  jc --ls  <<< ls -l /
+  187  jc --ls -p  <<< ls -l /
+  188  jc --ls -p  <<< 'ls -a /'
+  189  cat jc.py 
+  190  ls
+  191  rm jc.py 
+  192  vi jc.py
+  193  jc
+  194  rm jc.py 
+  195  vi jc.py
+  196  jc
+  197  jc --ls
+  198  ls | jc --ls
+  199  ls -al | jc --ls
+  200  ls -al | jc --ls -p
+  201  ls -al | jc --p
+  202  jc
+  203  sudo iptables -L | jc --iptables -p
+  204  mount | jc --mount -p
+  205  jc
+  206  jc --mount
+  207  ps | jc --hello
+  208  jc
+  209  jq
+  210  jq --help
+  211  jc
+  212  ps | jc -p
+  213  ps | jc -p --ps
+  214  jc -p --ps
+  215  ps -ef | jc -p --ps | jq .
+  216  jc
+  217  df | jc --df
+  218  env | jc --env
+  219  free | jc --free
+  220  ifconfig | jc --ifconfig
+  221  jc
+  222  iptables -L | jc --iptables
+  223  sudo iptables -L | jc --iptables
+  224  jc
+  225  ls -l | jc --ls
+  226  lsblk | jc --lsblk
+  227  mount | jc --mount
+  228  jc
+  229  netstat -l | jc --netstat
+  230  ps -ef | jc --ps
+  231  jc
+  232  route | jc --route
+  233  uname -a | jc --uname
+  234  cd parsers/
+  235  rm iptables.py 
+  236  vi iptables.py
+  237  sudo iptables -L | jc --iptables
+  238  sudo iptables -L | jc --iptables -p
+  239  lsof
+  240  journalctl 
+  241  python3
+  242  ls
+  243  vi jobs.py
+  244  cd ..
+  245  ls
+  246  rm jc.py 
+  247  vi jc.py
+  248  sleep 500 &
+  249  sleep 501 &
+  250  sleep 502 &
+  251  sleep 503 &
+  252  jobs
+  253  jobs | jc --jobs
+  254  jobs -l | jc --jobs
+  255  jobs -l
+  256  python3
+  257  ls
+  258  cd parsers/
+  259  ls
+  260  rm jobs.py 
+  261  vi jobs.py
+  262  jobs | jc --jobs
+  263  jobs
+  264  rm jobs
+  265  rm jobs.py 
+  266  vi jobs
+  267  vi jobs.py
+  268  jobs | jc --jobs -p
+  269  jobs -l | jc --jobs -p
+  270  jobs
+  271  sleep 500 &
+  272  sleep 501 &
+  273  sleep 502 &
+  274  sleep 503 &
+  275  jobs -l | jc --jobs -p
+  276  jobs | jc --jobs -p
+  277  rm jobs.py 
+  278  vi jobs.py
+  279  jobs | jc --jobs -p
+  280  jobs -l | jc --jobs -p
+  281  jobs
+  282  jobs -l
+  283  rm jobs.py 
+  284  vi jobs.py
+  285  jobs -l | jc --jobs -p
+  286  rm jobs.py 
+  287  vi jobs.py
+  288  sleep 500 &
+  289  sleep 501 &
+  290  sleep 502 &
+  291  sleep 503 &
+  292  sleep 504 &
+  293  jobs
+  294  jobs -l | jc --jobs -p
+  295  rm jobs.py 
+  296  vi jobs.py
+  297  sleep 1000 &
+  298  sleep 1001 &
+  299  sleep 1002 &
+  300  sleep 1003 &
+  301  sleep 1004 &
+  302  jobs | jc --jobs -p
+  303  jobs -l | jc --jobs -p
+  304  python3
+  305  rm jobs.py 
+  306  vi jobs.py
+  307  jobs | jc --jobs -p
+  308  rm jobs.py 
+  309  vi jobs.py
+  310  jobs | jc --jobs -p
+  311  rm jobs.py 
+  312  vi jobs.py
+  313  jobs | jc --jobs -p
+  314  rm jobs.py 
+  315  vi jobs.py
+  316  jobs | jc --jobs -p
+  317  jobs -l | jc --jobs -p
+  318  jobs  | jc --jobs -p
+  319  rm jobs.py 
+  320  vi jobs.py
+  321  jobs  | jc --jobs -p
+  322  """jc - JSON CLI output utility jobs Parser
+  323  Usage:
+  324      specify --jobs as the first argument if the piped input is coming from jobs
+  325  Examples:
+  326  """
+  327  import string
+  328  def parse(data):
+  329      output = []
+  330      linedata = data.splitlines()
+  331      # Clear any blank lines
+  332      cleandata = list(filter(None, linedata))
+  333      if cleandata:;          for entry in cleandata:;             output_line = {}
+  334              job_number = ''
+  335              pid = ''
+  336              job_history = ''
+  337              parsed_line = entry.split(maxsplit=2)
+  338              print(parsed_line)
+  339              # check if -l was used
+  340              if parsed_line[1][0] in string.digits:;                 pid = parsed_line.pop(1)
+  341              print(parsed_line)
+  342              # check for + or - in first field
+  343              if parsed_line[0].find('+') != -1:
+  344                  job_history = 'current'
+  345                  job_number = parsed_line[0].rstrip('+')
+  346                  if pid:;                     remainder = parsed_line[1].split(maxsplit=1)
+  347                  else:
+  348                      remainder = list(parsed_line[1])
+  349                  remainder.insert(0, job_number)
+  350                  parsed_line = remainder
+  351              if parsed_line[0].find('-') != -1:
+  352                  job_history = 'previous'
+  353                  job_number = parsed_line[0].rstrip('-')
+  354                  if pid:;                     remainder = parsed_line[1].split(maxsplit=1)
+  355                  else:
+  356                      remainder = list(parsed_line[1])
+  357                  remainder = parsed_line[1].split(maxsplit=1)
+  358                  remainder.insert(0, job_number)
+  359                  parsed_line = remainder
+  360              # clean up first field
+  361              parsed_line[0] = parsed_line[0].lstrip('[').rstrip(']')
+  362              print(parsed_line)
+  363              # create list of dictionaries
+  364      #         output_line['job_number'] = int(parsed_line[0])
+  365      #         if pid:
+  366      #             output_line['pid'] = int(pid)
+  367      #         if job_history:
+  368      #             output_line['history'] = job_history
+  369      #         output_line['status'] = parsed_line[1]
+  370      #         output_line['command'] = parsed_line[2]
+  371      #         output.append(output_line)
+  372      # return output
+  373  rm jobs.py 
+  374  vi jobs.py
+  375  jobs  | jc --jobs -p
+  376  jobs
+  377  sleep
+  378  sleep 1000 &
+  379  sleep 1001 &
+  380  sleep 1002 &
+  381  sleep 1003 &
+  382  sleep 1004 &
+  383  jobs  | jc --jobs -p
+  384  jobs -l | jc --jobs -p
+  385  rm jobs.py 
+  386  vi jobs.py
+  387  jobs -l | jc --jobs -p
+  388  jobs | jc --jobs -p
+  389  rm jobs.py 
+  390  vi jobs.py
+  391  jobs | jc --jobs -p
+  392  jobs -l | jc --jobs -p
+  393  jobs
+  394  rm jobs.py 
+  395  vi jobs.py
+  396  sleep 10000 &
+  397  sleep 10001 &
+  398  sleep 10002 &
+  399  sleep 10003 &
+  400  sleep 10004 &
+  401  jobs -l | jc --jobs -p
+  402  jobs | jc --jobs -p
+  403  rm jobs.py 
+  404  vi jobs.py
+  405  jobs | jc --jobs -p
+  406  jobs -l| jc --jobs -p
+  407  rm jobs.py 
+  408  vi jobs.py
+  409  jobs -l| jc --jobs -p
+  410  jobs | jc --jobs -p
+  411  rm jobs.py 
+  412  vi jobs.py
+  413  jobs | jc --jobs -p
+  414  jobs -l | jc --jobs -p
+  415  rm jobs.py 
+  416  vi jobs.py
+  417  jobs -l | jc --jobs -p
+  418  jobs| jc --jobs -p
+  419  jc
+  420  lsof
+  421  yum install lsof
+  422  sudo yum install lsof
+  423  lsof
+  424  vi lsof.py
+  425  cd ..
+  426  ls
+  427  rm jc.py 
+  428  vi jc.py
+  429  lsof | jc --lsof
+  430  cd parsers/
+  431  rm lsof.py 
+  432  vi lsof.py
+  433  lsof | jc --lsof -p
+  434  rm lsof.py 
+  435  vi lsof.py
+  436  lsof | jc --lsof -p
+  437  rm lsof.py 
+  438  vi lsof.py
+  439  lsof | jc --lsof -p
+  440  rm lsof.py 
+  441  vi lsof.py
+  442  lsof | jc --lsof -p
+  443  lsof | head
+  444  rm lsof.py 
+  445  vi lsof.py
+  446  lsof | jc --lsof 
+  447  rm lsof.py 
+  448  vi lsof.py
+  449  lsof | jc --lsof 
+  450  rm lsof.py 
+  451  vi lsof.py
+  452  lsof | jc --lsof 
+  453   rm lsof.py 
+  454  vi lsof.py
+  455  lsof | jc --lsof 
+  456  rm lsof.py 
+  457  vi lsof.py
+  458  lsof | jc --lsof 
+  459  rm lsof.py 
+  460  vi lsof.py
+  461  lsof | jc --lsof 
+  462  rm lsof.py 
+  463  vi lsof.py
+  464  lsof | jc --lsof 
+  465  rm lsof.py 
+  466  vi lsof.py
+  467  lsof | jc --lsof 
+  468  rm lsof.py 
+  469  vi lsof.py
+  470  lsof | jc --lsof 
+  471  python3
+  472  rm lsof.py 
+  473  vi lsof.py
+  474  lsof | jc --lsof 
+  475  lsof
+  476  lsof | head
+  477  rm lsof.py 
+  478  vi lsof.py
+  479  lsof | jc --lsof 
+  480  lsof | tail
+  481  rm lsof.py 
+  482  vi lsof.py
+  483  lsof | jc --lsof 
+  484  rm lsof.py 
+  485  vi lsof.py
+  486  lsof | jc --lsof 
+  487  rm lsof.py 
+  488  vi lsof.py
+  489  lsof | jc --lsof 
+  490  rm lsof.py 
+  491  vi lsof.py
+  492  lsof | jc --lsof 
+  493  rm lsof.py 
+  494  vi lsof.py
+  495  lsof | jc --lsof 
+  496  ~/resizeterm.sh 
+  497  rm lsof.py 
+  498  vi lsof.py
+  499  lsof | jc --lsof 
+  500  rm lsof.py 
+  501  vi lsof.py
+  502  lsof | jc --lsof 
+  503  rm lsof.py 
+  504  vi lsof.py
+  505  lsof | jc --lsof 
+  506  rm lsof.py 
+  507  vi lsof.py
+  508  lsof | jc --lsof 
+  509  rm lsof.py 
+  510  vi lsof.py
+  511  lsof | jc --lsof 
+  512  sudo lsof | jc --lsof 
+  513  lsof
+  514  rm lsof.py 
+  515  vi lsof.py
+  516  sudo lsof | jc --lsof 
+  517  rm lsof.py 
+  518  vi lsof.py
+  519  sudo lsof | jc --lsof -p
+  520  sudo lsof | more
+  521  rm lsof.py 
+  522  vi lsof.py
+  523  sudo lsof | jc --lsof -p
+  524  lsof | jc --lsof -p
+  525  lsof | jc --lsof
+  526  lsof | jc --lsof | jq .
+  527  jc
+  528  sudo lsof | jc --lsof -p
+  529  man lsof
+  530  ~/resizeterm.sh 
+  531  sudo lsof | jc --lsof -p
+  532  python3
+  533  lsmod
+  534  ~/resizeterm.sh 
+  535  lsmod
+  536  cd ~
+  537  pip3 uninstall jc
+  538  cd git/
+  539  rm -rf jc/
+  540  pip3 install --upgrade --user -e .
+  541  history | grep clone
+  542  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  543  cd jc/
+  544  pip3 install --upgrade --user -e .
+  545  jc
+  546  lsmod | jc --lsmod -p
+  547  cd pypi-upload.sh 
+  548  cd jc
+  549  cd parsers/
+  550  ls
+  551  rm lsmod.py 
+  552  vi lsmod.py
+  553  lsmod | jc --lsmod -p
+  554  rm lsmod.py 
+  555  vi lsmod.py
+  556  lsmod | jc --lsmod -p
+  557  rm lsmod.py 
+  558  vi lsmod.py
+  559  lsmod | jc --lsmod -p
+  560  rm lsmod.py 
+  561  vi lsmod.py
+  562  lsmod | jc --lsmod -p
+  563  rm lsmod.py 
+  564  vi lsmod.py
+  565  lsmod | jc --lsmod -p
+  566  rm lsmod.py 
+  567  vi lsmod.py
+  568  lsmod | jc --lsmod -p
+  569  rm lsmod.py 
+  570  vi lsmod.py
+  571  lsmod | jc --lsmod -p
+  572  rm lsmod.py 
+  573  vi lsmod.py
+  574  lsmod | jc --lsmod -p
+  575  rm lsmod.py 
+  576  vi lsmod.py
+  577  lsmod | jc --lsmod -p
+  578  jc
+  579  cd ~
+  580  pip3 uninstall jc
+  581  cd git/
+  582  rm -rf jc/
+  583  history | grep clone
+  584  ls
+  585  git clone https://github.com/kellyjonbrazil/jc.git
+  586  cd jc/
+  587  ls
+  588  ./build-package.sh 
+  589  ls
+  590  ./pypi-upload.sh 
+  591  cd ..
+  592  ls
+  593  pip3 uninstall jc
+  594  rm -rf jc/
+  595  pip3 install --upgrade --user jc
+  596  pip3 list
+  597  jc
+  598  jc -p
+  599  sudo iptables -L | jc --iptables -p
+  600  jc
+  601  lsmod | jc --lsmod -p
+  602  jc
+  603  jobs
+  604  sleep 500 &
+  605  jobs -l | jc --jobs -p
+  606  jobs | jc --jobs -p
+  607  lsof
+  608  cd ~
+  609  pip3 list
+  610  lsof | jc --lsof > testfile
+  611  cat testfile 
+  612  iptables -L | jc --iptables > testfile 
+  613  sudo iptables -L | jc --iptables > testfile 
+  614  cat testfile 
+  615  cat testfile | jq .
+  616  w
+  617  w -h
+  618  w --help
+  619  w -f
+  620  w -i
+  621  w -s
+  622  w -o
+  623  date
+  624  ls | jc --ls
+  625  ls | jc --ls | jq '.select("filename" = "git)'
+  626  ls | jc --ls | jq '.select(.filename="git)'
+  627  ls | jc --ls | jq '.select(.filename="git")'
+  628  ls | jc --ls | jq 'select(.filename == "git")'
+  629  ls | jc --ls | jq '.[] | select(.filename == "git")'
+  630  ls | jc --ls | jq -r '.[] | select(.filename == "git")'
+  631  ls | jc --ls | jq -r '.[] | select(.filename == "git") | .filename'
+  632  ifconfig | jc --ifconfig -p
+  633  jc -p
+  634  jc
+  635  ls | jc -p
+  636  ip
+  637  ip address
+  638  ip --help
+  639  ip address --help
+  640  ip address -h
+  641  ip -h address
+  642  ip -b address
+  643  ip -iec address
+  644  ip address
+  645  ip --help
+  646  ip -br address
+  647  ip -d address
+  648  ifconfig
+  649  cat
+  650  jc
+  651  jc | cat
+  652  jc > testing
+  653  cat testing 
+  654  rm testing 
+  655  jc &2 > testing
+  656  cat testing 
+  657  ls
+  658  cat testing 
+  659  rm testing 
+  660  jc 2>&1 | jc --ls
+  661  jc 2>&1 | jc --ls -p
+  662  jc 2>&1 | jc --route -p
+  663  jc 2>&1 | jc --ps -p
+  664  jc 2>&1 | jc --iptables -p
+  665  jc 2>&1 | jc --lsof -p
+  666  jc 2>&1 | jc --ls -p
+  667  jc 2>&1 | jc --env -p
+  668  jc 2>&1 | jc --netstat -p
+  669  jc 2>&1 | jc --uname -p
+  670  jc
+  671  journalctl 
+  672  man journalctl
+  673  man journalctl -o=json
+  674  journalctl -o=json
+  675  journalctl -o json
+  676  journalctl -o json >journaljson
+  677  cat journaljson 
+  678  dig
+  679  uptime
+  680  uptime --help
+  681  uptime -p
+  682  uptime -s
+  683  uptime 
+  684  date
+  685  uptime
+  686  history
+  687  pip3 uninstall jc
+  688  cd git/
+  689  ls
+  690  history | grep clone
+  691  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  692  cd jc
+  693  pip3 install --upgrade --user -e .
+  694  jc
+  695  w | jc --w -p
+  696  history | jc --history
+  697  history
+  698  history | jc --history -p
+  699  history | head
+  700  cd jc/parsers/
+  701  vi history.py 
+  702  history | jc --history -p
+  703  vi history.py 
+  704  history | jc --history -p
+  705  echo "hello"
+  706  history | jc --history -p
+  707  cat history.py 
+  708  rm history.py 
+  709  vi history.py
+  710  history | jc --history -p
+  711  history | jc --history
+  712  history | jc --history -p
+  713  history | jc --history -p | jq .1700
+  714  history | jc --history -p | jq .1709
+  715  history | jc --history | jq .1709
+  716  history | jc --history | jq .
+  717  history | jc --history | jq ."1713"
+  718  history | jc --history | jq .[1713]
+  719  history | jc --history | jq .["1713"]
+  720  history | jc --history | jq '.1713'
+  721  history | jc --history | jq '.[1713]'
+  722  history | jc --history | jq '.["1713"]'
+  723  rm history.py 
+  724  vi history.py
+  725  history | jc --history -p
+  726  history | jc --history -p | jq .n1723
+  727  cd ~
+  728  pip3 uninstall jc
+  729  cd git/
+  730  rm -rf jc/
+  731  history | grep clone
+  732  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  733  cd jc/
+  734  pip3 install --upgrade --user -e .
+  735  jc
+  736  history | jc --history -p
+  737  jc
+  738  w | jc --w -p
+  739  uptime | jc --uptime -p
+  740  ls
+  741  stat build-package.sh 
+  742  ls
+  743  stat jc.egg-info/
+  744  stat README.md 
+  745  lstat
+  746  cd /proc/
+  747  ls
+  748  cd 1
+  749  ls
+  750  ls -al
+  751  cd attr/
+  752  ls
+  753  ls -al
+  754  cat current 
+  755  cat exec 
+  756  cat prev 
+  757  dig
+  758  sudo yum install dig
+  759  sudo yum install bind-utils
+  760  dig
+  761  dig www.google.com
+  762  dig www.cnn.com
+  763  man dig
+  764  dig www.cnn.com www.google.com
+  765  pip3 list
+  766  cd ~/git/jc/jc/parsers/
+  767  rm history.py 
+  768  vi history.py
+  769  history | jc --history
+  770  history | jc --history -p
+  771  ifconfig | jc --ifconfig -p
+  772  rm iptables.py 
+  773  vi iptables.py
+  774  iptables -L | jc --iptables -p
+  775  sudo iptables -L | jc --iptables -p
+  776  lsblk | jc --lsblk -p
+  777  rm lsblk.py 
+  778  vi lsblk.py
+  779  lsblk | jc --lsblk -p
+  780  rm lsmod.py 
+  781  vi lsmod.py
+  782  lsmod
+  783  lsmod | jc --lsmod -p
+  784  rm lsof.py 
+  785  vi lsof.py
+  786  lsof | jc --lsof -p
+  787  sudo lsof | jc --lsof -p
+  788  sudo lsof | jc --lsof | jq .
+  789  ps | jc --ps -p
+  790  clear
+  791  rm ps.py 
+  792  vi ps.py
+  793  ps | jc --ps -p
+  794  ps axu | jc --ps -p
+  795  rm ps.py 
+  796  vi ps.py
+  797  ps | jc --ps -p
+  798  ps axu | jc --ps -p
+  799  ps -ef | jc --ps -p
+  800  ps -ef | jc --ps -p | jq .
+  801  ps axu | jc --ps -p | jq .
+  802  ps -ef | jc --ps -p
+  803  ls
+  804  rm route.py 
+  805  vi route.py
+  806  route | jc --route -p
+  807  w | jc --w -p
+  808  rm w.py 
+  809  vi w.py
+  810  w | jc --w -p
+  811  rm ls.py 
+  812  vi ls.py
+  813  ls -lh | jc --ps -p
+  814  ls | jc --ls -p
+  815  ls -alh | jc --ls -p
+  816  ls -lh | jc --ls -p
+  817  ls -l /usr/bin | jc --ls | jq '.[] | select(.bytes|tonumber > 50000000)'
+  818  ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
+  819  ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 5000000)'
+  820  $ ls -l /bin | jc --ls -p
+  821  ls -l /bin | jc --ls -p
+  822  python3
+  823  rm jobs.py 
+  824  vi jobs.py
+  825  sleep 1000 &
+  826  sleep 1001 &
+  827  sleep 1002 &
+  828  sleep 1003 &
+  829  jobs | jc --jobs -p
+  830  jobs -l | jc --jobs -p
+  831  rm ls.py 
+  832  vi ls.py
+  833  ls -al | jc --ls -p
+  834  ls -alh | jc --ls -p
+  835  ls -al /usr/bin | jc --ls -p
+  836  ls /usr/bin | jc --ls -p
+  837  rm netstat.py 
+  838  vi netstat.py
+  839  history | grep netstat
+  840  netstat -l | jc --netstat -p
+  841  netstat -lv | jc --netstat -p
+  842  netstat -ln | jc --netstat -p
+  843  sudo netstat -lpn | jc --netstat -p
+  844  sudo systemctl restart
+  845  reboot
+  846  jc
+  847  w | jc --w -p
+  848  uptime | jc --uptime -p
+  849  uptime
+  850  cd git/jc/jc/parsers/
+  851  rm uptime.py 
+  852  vi uptime.py
+  853  uptime | jc --uptime -p
+  854  ~/resizeterm.sh 
+  855  rm uptime.py 
+  856  vi uptime.py
+  857  uptime | jc --uptime -p
+  858  w | jc --w -p
+  859  uptime | jc --uptime -p
+  860  cd ..
+  861  ls
+  862  rm jc.py 
+  863  vi jc.py
+  864  lsof | jc --lsof -p
+  865  cat jc.py 
+  866  uptime | jc --uptime -p
+  867  vi jc.py 
+  868  rm jc.py 
+  869  vi jc.py
+  870  jc
+  871  lsof | jc --lsof -p
+  872  uptime | jc --uptime -p
+  873  lsof | jc --lsof -p
+  874  sudo lsof | jc --lsof -p
+  875  uptime | jc --uptime -p
+  876  ls
+  877  cd ..
+  878  ls
+  879  pip3 uninstall jc
+  880  rm -rf jc/
+  881  history | grep clone
+  882  git clone --single-branch --branch dev https://github.com/kellyjonbrazil/jc.git
+  883  cd jc/
+  884  pip3 install --upgrade --user -e .
+  885  jc
+  886  uptime | jc --uptime -p
+  887  uptime | jc --uptime
+  888  lsof | jc --lsof -p
+  889  ls
+  890  cat changelog.txt 
+  891  env | jc -env -p
+  892  env | jc --env -p
+  893  history | jc --history -p
+  894  history | jc --history | jq 'select("vi")'
+  895  history | jc --history | jq 'select(.value="ls")'
+  896  history | jc --history | jq 'select(.value=="ls")'
+  897  history | jc --history | jq 'select(.value=="jc")'
+  898  history | jc --history | jq 'select(.value == jc)'
+  899  history | jc --history -p
+  900  uptime | jc --uptime -p
+  901  pip3 list
+  902  pip3 install --upgrade pip
+  903  pip3 install --upgrade --user pip
+  904  pip3 list
+  905  jc
+  906  df | jc --df -p
+  907  jc
+  908  env | jc --env -p
+  909  env | jc --env
+  910  env | jc --env | jq '. paths'
+  911  env | jc --env | jq 'paths()'
+  912  env | jc --env | jq '[paths("ls")]'
+  913  env
+  914  env | jc --env | jq '[paths("kbrazil")]'
+  915  uptime | jc --uptime -p
+  916  jc
+  917  free | jc --free -p
+  918  history | jc --history
+  919  jc
+  920  ifconfig | jc --ifconfig -p
+  921  jc
+  922  sudo iptables -vnL | jc --iptables -p
+  923  jc
+  924  sudo iptables -vnL | jc --iptables -p
+  925  ls
+  926  jc
+  927  jobs | jc --jobs -p
+  928  jobs -p| jc --jobs -p
+  929  jobs -a| jc --jobs -p
+  930  jobs -l| jc --jobs -p
+  931  sleep 100 &
+  932  jobs -l| jc --jobs -p
+  933  jc
+  934  ls -alh | jc --ls -p
+  935  jc
+  936  lsblk | jc --lsblk -p
+  937  uptime | jc --uptime -p
+  938  jc
+  939  lsmod | jc --lsmod -p
+  940  jc
+  941  lsof | jc --lsof -p
+  942  sudo lsof | jc --lsof -p
+  943  uptime | jc --uptime -p
+  944  uptime | jc --uptime | jq .
+  945  uptime
+  946  uptime | jc --uptime | jq .
+  947  uptime | jc --uptime -p
+  948  cd jc/parsers/
+  949  rm uptime.py 
+  950  vi uptime.py
+  951  uptime | jc --uptime -p
+  952  rm uptime.py 
+  953  vi uptime.py
+  954  rm uptime.py 
+  955  vi uptime.py
+  956  uptime | jc --uptime -p
+  957  uptime
+  958  rm uptime.py 
+  959  vi uptime.py
+  960  uptime | jc --uptime -p
+  961  rm uptime.py 
+  962  vi uptime.py
+  963  uptime | jc --uptime -p
+  964  rm uptime.py 
+  965  vi uptime.py
+  966  uptime | jc --uptime -p
+  967  rm uptime.py 
+  968  vi uptime.py
+  969  uptime | jc --uptime -p
+  970  reboot
+  971  uptime
+  972  uptime | jc --uptime -p
+  973  python3
+  974  uptime | sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'
+  975  echo '22:19 up 54 days, 1 min, 4 users, load averages: 2.08 2.06 2.27' | sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'
+  976  ~/resizeterm.sh 
+  977  echo '22:19 up 54 days, 1 min, 4 users, load averages: 2.08 2.06 2.27' | sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'
+  978  uptime | jc --uptime -p
+  979  cd git/jc/jc/parsers/
+  980  rm uptime.py 
+  981  vi uptime.py
+  982  uptime | jc --uptime -p
+  983  rm uptime.py 
+  984  vi uptime.py
+  985  uptime | jc --uptime -p
+  986  python3
+  987  uptime | jc --uptime -p
+  988  rm uptime.py 
+  989  vi uptime.py
+  990  uptime | jc --uptime -p
+  991  rm uptime.py 
+  992  vi uptime.py
+  993  uptime | jc --uptime -p
+  994  reboot
+  995  ls
+  996  w
+  997  mkdir testfiles
+  998  ls
+  999  cat testfile
+ 1000  rm testfile
+ 1001  ls
+ 1002  cd testfiles/
+ 1003  vi tests.sh
+ 1004  chmod +x tests.sh 
+ 1005  ls
+ 1006  ./tests.sh 
+ 1007  ls
+ 1008  cat jobs.out 
+ 1009  cat w.out 
+ 1010  cat uname-a.out 
+ 1011  jc
+ 1012  rm tests.sh 
+ 1013  vi tests.sh
+ 1014  chmod +x tests.sh 
+ 1015  ./tests.sh 
+ 1016  uptime 
+ 1017  rm tests.sh 
+ 1018  vi tests.sh
+ 1019  chmod +x tests.sh 
+ 1020  ./tests.sh 
+ 1021  ls
+ 1022  cat uptime.out 
+ 1023  cat uptime.out | jc --uptime -p
+ 1024  route -n > route-n.out
+ 1025  cat route-n.out 
+ 1026  route -vn
+ 1027  rm route-n.out 
+ 1028  ls
+ 1029  cat iptables-filter-nv.out 
+ 1030  cat iptables-filter-nv.out  | jc --iptables -p
+ 1031  ls
+ 1032  cat iptables-mangle.out 
+ 1033  rm tests.sh 
+ 1034  vi tests.sh
+ 1035  chmod +x tests.sh 
+ 1036  ./tests.sh 
+ 1037  ls
+ 1038  ls -al
+ 1039  cat history.out 
+ 1040  history
+ 1041  history > kbhistory.out
+ 1042  cat kbhistory.out 
+ 1043  rm kbhistory.out 
+ 1044  ls
+ 1045  ls -al
+ 1046  rm tests.sh 
+ 1047  vi tests.sh
+ 1048  chmod +x tests.sh 
+ 1049  ./tests.sh 
+ 1050  ls -al
+ 1051  vi iptables-filter.out 
+ 1052  uname -a
+ 1053  cd /
+ 1054  ls
+ 1055  cd etc/
+ 1056  ls
+ 1057  cat environment 
+ 1058  cat centos-release
+ 1059  lsb_release -a
+ 1060  ifconfig
+ 1061  cd ~
+ 1062  ls
+ 1063  cd testfiles/
+ 1064  history > history.out 

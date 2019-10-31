@@ -1,0 +1,4 @@
+ 19:43:06 up 2 days, 19:32,  2 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+kbrazil  ttyS0    -                21Oct19 14:32  18.09s 18.01s -bash
+kbrazil  pts/0    192.168.71.1     Thu22   10.00s  0.17s  0.00s w

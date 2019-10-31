@@ -1,0 +1,19 @@
+Filesystem     1K-blocks    Used Available Use% Mounted on
+udev              977500       0    977500   0% /dev
+tmpfs             201732    1204    200528   1% /run
+/dev/sda2       20508240 5748028  13695408  30% /
+tmpfs            1008648       0   1008648   0% /dev/shm
+tmpfs               5120       0      5120   0% /run/lock
+tmpfs            1008648       0   1008648   0% /sys/fs/cgroup
+/dev/loop0         55936   55936         0 100% /snap/core18/1223
+/dev/loop1         11264   11264         0 100% /snap/slcli/383
+/dev/loop2         90880   90880         0 100% /snap/core/7396
+/dev/loop3         68096   68096         0 100% /snap/google-cloud-sdk/103
+/dev/loop5         55808   55808         0 100% /snap/core18/1074
+/dev/loop7          8832    8832         0 100% /snap/doctl/187
+/dev/loop8          3200    3200         0 100% /snap/stress-ng/847
+/dev/loop10        91264   91264         0 100% /snap/core/7917
+/dev/loop11         3328    3328         0 100% /snap/stress-ng/924
+tmpfs             201728       0    201728   0% /run/user/1000
+/dev/loop9          8832    8832         0 100% /snap/doctl/215
+/dev/loop4         68224   68224         0 100% /snap/google-cloud-sdk/104

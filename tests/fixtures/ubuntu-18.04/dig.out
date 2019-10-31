@@ -1,0 +1,41 @@
+
+; <<>> DiG 9.11.3-1ubuntu1.8-Ubuntu <<>> www.cnn.com www.google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52284
+;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;www.cnn.com.			IN	A
+
+;; ANSWER SECTION:
+www.cnn.com.		5	IN	CNAME	turner-tls.map.fastly.net.
+turner-tls.map.fastly.net. 4	IN	A	151.101.65.67
+turner-tls.map.fastly.net. 4	IN	A	151.101.1.67
+turner-tls.map.fastly.net. 4	IN	A	151.101.193.67
+turner-tls.map.fastly.net. 4	IN	A	151.101.129.67
+
+;; Query time: 31 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Thu Oct 31 14:21:04 UTC 2019
+;; MSG SIZE  rcvd: 143
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 47686
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;www.google.com.			IN	A
+
+;; ANSWER SECTION:
+www.google.com.		5	IN	A	172.217.1.228
+
+;; Query time: 32 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Thu Oct 31 14:21:04 UTC 2019
+;; MSG SIZE  rcvd: 59
+
