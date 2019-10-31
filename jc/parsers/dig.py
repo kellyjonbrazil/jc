@@ -241,9 +241,6 @@ def parse(data):
     output_entry = {}
     for line in cleandata:
 
-        if line.find('; <<>> DiG') == 0:
-            continue
-
         if line.find(';; ->>HEADER<<-') == 0:
             output_entry = {}
             output_entry.update(parse_header(line))
