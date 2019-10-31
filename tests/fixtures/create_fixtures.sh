@@ -5,12 +5,14 @@ arp -v   > arp-v.out
 arp -a   > arp-a.out
 df       > df.out
 df -h    > df-h.out
+dig www.google.com AAAA        > dig-aaaa.out
+dig www.cnn.com www.google.com > dig.out
+dig -x 1.1.1.1                 > dig-x.out
 env      > env.out
 free     > free.out
 free -h  > free-h.out
 history  > history.out
 ifconfig > ifconfig.out
-
 
 sudo iptables -A INPUT -i lo -j ACCEPT
 sudo iptables -A OUTPUT -o lo -j ACCEPT
@@ -28,6 +30,7 @@ sudo iptables -nvL -t filter > iptables-filter-nv.out
 
 sleep 11 & sleep 12 & sleep 13 & sleep 14 &
 jobs       > jobs.out
+
 ls /       > ls.out
 ls -al /   > ls-al.out
 ls -alh /  > ls-alh.out
@@ -42,6 +45,7 @@ git clone https://github.com/kellyjonbrazil/jc.git /tmp/jc & sleep 1; netstat   
 netstat -p > netstat-p.out
 netstat -l > netstat-l.out
 sudo netstat -lnp > netstat-sudo-lnp.out
+
 ps -ef     > ps-ef.out
 ps axu     > ps-axu.out
 route      > route.out

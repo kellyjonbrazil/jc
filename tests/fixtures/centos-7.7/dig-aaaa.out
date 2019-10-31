@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.11.4-P2-RedHat-9.11.4-9.P2.el7 <<>> www.google.com AAAA
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 25779
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; MBZ: 0x0005, udp: 4096
+;; QUESTION SECTION:
+;www.google.com.			IN	AAAA
+
+;; ANSWER SECTION:
+www.google.com.		5	IN	AAAA	2607:f8b0:4000:808::2004
+
+;; Query time: 28 msec
+;; SERVER: 192.168.71.2#53(192.168.71.2)
+;; WHEN: Wed Oct 30 05:12:53 PDT 2019
+;; MSG SIZE  rcvd: 71
+
