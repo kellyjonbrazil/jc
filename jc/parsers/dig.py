@@ -82,7 +82,19 @@ def parse_question(question):
 
 
 def parse_authority(authority):
-    return {}
+    # cnn.com.      3600    IN  NS  ns-1086.awsdns-07.org.
+    authority = authority.split()
+    authority_name = authority[0]
+    authority_class = authority[2]
+    authority_type = authority[3]
+    authority_ttl = authority[1]
+    authority_data = authority[4]
+
+    return {'name': authority_name,
+            'class': authority_class,
+            'type': authority_type,
+            'ttl': authority_ttl,
+            'data': authority_data}
 
 
 def parse_answer(answer):
@@ -135,16 +147,20 @@ def parse(data):
         if question:
             output_entry['question'] = parse_question(line)
             question = False
+            authority = False
+            answer = False
             continue
 
         if line.find(';; AUTHORITY SECTION:') == 0:
             question = False
             authority = True
             answer = False
+            authority_list = []
             continue
 
-        if authority:
-            output_entry['authority'] = parse_authority(line)
+        if line.find(';') == -1 and authority:
+            authority_list.append(parse_authority(line))
+            output_entry.update({'authority': authority_list})
             continue
 
         if line.find(';; ANSWER SECTION:') == 0:
