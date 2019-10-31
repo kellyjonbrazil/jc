@@ -172,7 +172,7 @@ def parse(data):
 
         # footer line 3
         if line.find(';; WHEN:') == 0:
-            output_entry.update({'when': line.split(':')[1].lstrip()})
+            output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
             continue
 
         # footer line 4 (last line)
