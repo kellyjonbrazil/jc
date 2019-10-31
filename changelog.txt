@@ -1,9 +1,8 @@
 jc changelog
 
-2019xxxx v1.1.1
+20191031 v1.1.1
 - Add arp parser
 - Add dig parser
-- Add nslookup parser
 - Add unit tests
 - fix netstat parser (remove side effects due to global variable)
 
