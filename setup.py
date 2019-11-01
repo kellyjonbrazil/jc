@@ -20,12 +20,13 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     entry_points={
         'console_scripts': [
-            'jc=jc.jc:main',
+            'jc=jc.jc:main'
         ],
     },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
+        'Topic :: Utilities'
     ]
 )
