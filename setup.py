@@ -21,7 +21,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
             'jc=jc.jc:main'
-        ],
+        ]
     },
     classifiers=[
         'Programming Language :: Python :: 3',
