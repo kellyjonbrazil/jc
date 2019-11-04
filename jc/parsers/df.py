@@ -66,6 +66,18 @@ $ df | jc --df -p -r
 
 
 def process(proc_data):
+    ''' schema:
+        [
+          {
+            "filesystem":   string,
+            "1k-blocks":    integer,
+            "used":         integer,
+            "available":    integer,
+            "use_percent":  integer,
+            "mounted":      string
+          }
+        ]
+    '''
     for entry in proc_data:
         # change any entry for key with '-blocks' in the name to int
         for k in entry:
@@ -83,6 +95,10 @@ def process(proc_data):
                 entry['used'] = used_int
             except (ValueError, TypeError):
                 entry['used'] = None
+
+        # rename 'avail' to 'available'
+        if 'avail' in entry:
+            entry['available'] = entry.pop('avail')
 
         # change 'available' to int
         if 'available' in entry:
