@@ -4,6 +4,7 @@ Usage:
     specify --free as the first argument if the piped input is coming from free
 
 Examples:
+
 $ free | jc --free -p
 [
   {

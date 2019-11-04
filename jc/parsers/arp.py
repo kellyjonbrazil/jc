@@ -3,7 +3,8 @@
 Usage:
     specify --arp as the first argument if the piped input is coming from arp
 
-Example:
+Examples:
+
 $ arp | jc --arp -p
 [
   {

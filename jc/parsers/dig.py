@@ -4,6 +4,7 @@ Usage:
     Specify --dig as the first argument if the piped input is coming from dig
 
 Examples:
+
 $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
 [
   {
