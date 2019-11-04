@@ -4,20 +4,30 @@ Usage:
     specify --arp as the first argument if the piped input is coming from arp
 
 Example:
-
 $ arp | jc --arp -p
 [
+  {
+    "address": "192.168.71.254",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:f0:98:26",
+    "flags_mask": "C",
+    "iface": "ens33"
+  },
   {
     "address": "gateway",
     "hwtype": "ether",
     "hwaddress": "00:50:56:f7:4a:fc",
     "flags_mask": "C",
     "iface": "ens33"
-  },
+  }
+]
+
+$ arp | jc --arp -p -r
+[
   {
-    "address": "192.168.71.1",
+    "address": "gateway",
     "hwtype": "ether",
-    "hwaddress": "00:50:56:c0:00:08",
+    "hwaddress": "00:50:56:f7:4a:fc",
     "flags_mask": "C",
     "iface": "ens33"
   },
@@ -33,12 +43,24 @@ $ arp | jc --arp -p
 $ arp -a | jc --arp -p
 [
   {
-    "name": "?",
-    "address": "192.168.71.1",
+    "name": null,
+    "address": "192.168.71.254",
     "hwtype": "ether",
-    "hwaddress": "00:50:56:c0:00:08",
+    "hwaddress": "00:50:56:f0:98:26",
     "iface": "ens33"
   },
+  {
+    "name": "gateway",
+    "address": "192.168.71.2",
+    "hwtype": "ether",
+    "hwaddress": "00:50:56:f7:4a:fc",
+    "iface": "ens33"
+  }
+]
+
+
+$ arp -a | jc --arp -p -r
+[
   {
     "name": "?",
     "address": "192.168.71.254",
