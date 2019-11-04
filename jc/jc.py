@@ -29,45 +29,49 @@ import jc.parsers.uptime
 import jc.parsers.w
 
 
-def helptext():
-    print('Usage:  jc PARSER [OPTIONS]\n', file=sys.stderr)
-    print('Parsers:', file=sys.stderr)
-    print('        --arp        arp parser', file=sys.stderr)
-    print('        --df         df parser', file=sys.stderr)
-    print('        --dig        dig parser', file=sys.stderr)
-    print('        --env        env parser', file=sys.stderr)
-    print('        --free       free parser', file=sys.stderr)
-    print('        --history    history parser', file=sys.stderr)
-    print('        --ifconfig   iconfig parser', file=sys.stderr)
-    print('        --iptables   iptables parser', file=sys.stderr)
-    print('        --jobs       jobs parser', file=sys.stderr)
-    print('        --ls         ls parser', file=sys.stderr)
-    print('        --lsblk      lsblk parser', file=sys.stderr)
-    print('        --lsmod      lsmod parser', file=sys.stderr)
-    print('        --lsof       lsof parser', file=sys.stderr)
-    print('        --mount      mount parser', file=sys.stderr)
-    print('        --netstat    netstat parser', file=sys.stderr)
-    print('        --ps         ps parser', file=sys.stderr)
-    print('        --route      route parser', file=sys.stderr)
-    print('        --uname      uname parser', file=sys.stderr)
-    print('        --uptime     uptime parser', file=sys.stderr)
-    print('        --w          w parser\n', file=sys.stderr)
-    print('Options:', file=sys.stderr)
-    print('        -p           pretty print output\n', file=sys.stderr)
-    print('Example:', file=sys.stderr)
-    print('        ls -al | jc --ls -p\n', file=sys.stderr)
-
-
 def ctrlc(signum, frame):
     exit()
 
 
 def main():
+    helptext = '''
+
+Usage:  jc PARSER [OPTIONS]
+
+Parsers:
+        --arp        arp parser
+        --df         df parser
+        --dig        dig parser
+        --env        env parser
+        --free       free parser
+        --history    history parser
+        --ifconfig   iconfig parser
+        --iptables   iptables parser
+        --jobs       jobs parser
+        --ls         ls parser
+        --lsblk      lsblk parser
+        --lsmod      lsmod parser
+        --lsof       lsof parser
+        --mount      mount parser
+        --netstat    netstat parser
+        --ps         ps parser
+        --route      route parser
+        --uname      uname parser
+        --uptime     uptime parser
+        --w          w parser
+
+Options:
+        -p           pretty print output
+
+Example:
+        ls -al | jc --ls -p
+
+'''
+
     signal.signal(signal.SIGINT, ctrlc)
 
     if sys.stdin.isatty():
-        print('jc:     missing piped data\n', file=sys.stderr)
-        helptext()
+        print('jc:     missing piped data' + helptext, file=sys.stderr)
         exit()
 
     data = sys.stdin.read()
@@ -139,8 +143,7 @@ def main():
         result = jc.parsers.w.parse(data)
 
     else:
-        print('jc:     missing or incorrect arguments\n', file=sys.stderr)
-        helptext()
+        print('jc:     missing or incorrect arguments' + helptext, file=sys.stderr)
         exit()
 
     # output resulting dictionary as json
