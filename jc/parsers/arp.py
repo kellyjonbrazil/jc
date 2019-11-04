@@ -57,7 +57,16 @@ $ arp -a | jc --arp -p
 """
 
 
-def parse(data):
+def process(proc_data):
+    # in BSD style, change name to null if it is a question mark
+    for entry in proc_data:
+        if entry['name'] and entry['name'] == '?':
+            entry['name'] = None
+
+    return proc_data
+
+
+def parse(data, raw=False):
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
@@ -76,11 +85,15 @@ def parse(data):
 
         headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
         raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
+        raw_output = [dict(zip(headers, r)) for r in raw_data]
 
-        return [dict(zip(headers, r)) for r in raw_data]
+        if raw:
+            return raw_output
+        else:
+            return process(raw_output)
 
     else:
-        output = []
+        raw_output = []
         for line in cleandata:
             line = line.split()
             output_line = {}
@@ -89,6 +102,9 @@ def parse(data):
             output_line['hwtype'] = line[4].lstrip('[').rstrip(']')
             output_line['hwaddress'] = line[3]
             output_line['iface'] = line[6]
-            output.append(output_line)
+            raw_output.append(output_line)
 
-        return output
+        if raw:
+            return raw_output
+        else:
+            return process(raw_output)
