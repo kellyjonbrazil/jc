@@ -3,9 +3,34 @@
 Usage:
     specify --env as the first argument if the piped input is coming from env
 
-Example:
+Examples:
 
 $ env | jc --env -p
+[
+  {
+    "name": "XDG_SESSION_ID",
+    "value": "1"
+  },
+  {
+    "name": "HOSTNAME",
+    "value": "localhost.localdomain"
+  },
+  {
+    "name": "TERM",
+    "value": "vt220"
+  },
+  {
+    "name": "SHELL",
+    "value": "/bin/bash"
+  },
+  {
+    "name": "HISTSIZE",
+    "value": "1000"
+  },
+  ...
+]
+
+$ env | jc --env -p -r
 {
   "TERM": "xterm-256color",
   "SHELL": "/bin/bash",
@@ -20,8 +45,29 @@ $ env | jc --env -p
 """
 
 
-def parse(data):
-    output = {}
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "name":     string,
+        "value":    string
+      }
+    ]
+    '''
+
+    # rebuild output for added semantic information
+    processed = []
+    for k, v in proc_data.items():
+        proc_line = {}
+        proc_line['name'] = k
+        proc_line['value'] = v
+        processed.append(proc_line)
+
+    return processed
+
+
+def parse(data, raw=False):
+    raw_output = {}
 
     linedata = data.splitlines()
 
@@ -32,6 +78,9 @@ def parse(data):
 
         for entry in cleandata:
             parsed_line = entry.split('=', maxsplit=1)
-            output[parsed_line[0]] = parsed_line[1]
+            raw_output[parsed_line[0]] = parsed_line[1]
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
