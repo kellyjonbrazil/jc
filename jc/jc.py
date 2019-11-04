@@ -63,6 +63,7 @@ def main():
 
     Options:
             -p           pretty print output
+            -r           raw JSON output
 
     Example:
             ls -al | jc --ls -p
@@ -77,71 +78,75 @@ def main():
 
     data = sys.stdin.read()
     pretty = False
+    raw = False
 
     # options
     if '-p' in sys.argv:
         pretty = True
 
+    if '-r' in sys.argv:
+        raw = True
+
     # parsers
     if '--arp' in sys.argv:
-        result = jc.parsers.arp.parse(data)
+        result = jc.parsers.arp.parse(data, raw=raw)
 
     elif '--df' in sys.argv:
-        result = jc.parsers.df.parse(data)
+        result = jc.parsers.df.parse(data, raw=raw)
 
     elif '--dig' in sys.argv:
-        result = jc.parsers.dig.parse(data)
+        result = jc.parsers.dig.parse(data, raw=raw)
 
     elif '--env' in sys.argv:
-        result = jc.parsers.env.parse(data)
+        result = jc.parsers.env.parse(data, raw=raw)
 
     elif '--free' in sys.argv:
-        result = jc.parsers.free.parse(data)
+        result = jc.parsers.free.parse(data, raw=raw)
 
     elif '--history' in sys.argv:
-        result = jc.parsers.history.parse(data)
+        result = jc.parsers.history.parse(data, raw=raw)
 
     elif '--ifconfig' in sys.argv:
-        result = jc.parsers.ifconfig.parse(data)
+        result = jc.parsers.ifconfig.parse(data, raw=raw)
 
     elif '--iptables' in sys.argv:
-        result = jc.parsers.iptables.parse(data)
+        result = jc.parsers.iptables.parse(data, raw=raw)
 
     elif '--jobs' in sys.argv:
-        result = jc.parsers.jobs.parse(data)
+        result = jc.parsers.jobs.parse(data, raw=raw)
 
     elif '--ls' in sys.argv:
-        result = jc.parsers.ls.parse(data)
+        result = jc.parsers.ls.parse(data, raw=raw)
 
     elif '--lsblk' in sys.argv:
-        result = jc.parsers.lsblk.parse(data)
+        result = jc.parsers.lsblk.parse(data, raw=raw)
 
     elif '--lsmod' in sys.argv:
-        result = jc.parsers.lsmod.parse(data)
+        result = jc.parsers.lsmod.parse(data, raw=raw)
 
     elif '--lsof' in sys.argv:
-        result = jc.parsers.lsof.parse(data)
+        result = jc.parsers.lsof.parse(data, raw=raw)
 
     elif '--mount' in sys.argv:
-        result = jc.parsers.mount.parse(data)
+        result = jc.parsers.mount.parse(data, raw=raw)
 
     elif '--netstat' in sys.argv:
-        result = jc.parsers.netstat.parse(data)
+        result = jc.parsers.netstat.parse(data, raw=raw)
 
     elif '--ps' in sys.argv:
-        result = jc.parsers.ps.parse(data)
+        result = jc.parsers.ps.parse(data, raw=raw)
 
     elif '--route' in sys.argv:
-        result = jc.parsers.route.parse(data)
+        result = jc.parsers.route.parse(data, raw=raw)
 
     elif '--uname' in sys.argv:
-        result = jc.parsers.uname.parse(data)
+        result = jc.parsers.uname.parse(data, raw=raw)
 
     elif '--uptime' in sys.argv:
-        result = jc.parsers.uptime.parse(data)
+        result = jc.parsers.uptime.parse(data, raw=raw)
 
     elif '--w' in sys.argv:
-        result = jc.parsers.w.parse(data)
+        result = jc.parsers.w.parse(data, raw=raw)
 
     else:
         print('jc:     missing or incorrect arguments' + textwrap.dedent(helptext), file=sys.stderr)
