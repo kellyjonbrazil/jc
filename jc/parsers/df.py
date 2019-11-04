@@ -56,7 +56,7 @@ def process(proc_data):
                     entry[k] = None
 
         # change 'used' to int
-        if entry['used']:
+        if 'used' in entry:
             try:
                 used_int = int(entry['used'])
                 entry['used'] = used_int
@@ -64,7 +64,7 @@ def process(proc_data):
                 entry['used'] = None
 
         # change 'available' to int
-        if entry['available']:
+        if 'available' in entry:
             try:
                 available_int = int(entry['available'])
                 entry['available'] = available_int
@@ -72,7 +72,7 @@ def process(proc_data):
                 entry['available'] = None
 
         # remove percent sign from 'use_percent' and change to int
-        if entry['use_percent']:
+        if 'use_percent' in entry:
             try:
                 use_percent_int = entry['use_percent'].rstrip('%')
                 use_percent_int = int(use_percent_int)

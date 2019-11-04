@@ -60,7 +60,7 @@ $ arp -a | jc --arp -p
 def process(proc_data):
     # in BSD style, change name to null if it is a question mark
     for entry in proc_data:
-        if entry['name'] and entry['name'] == '?':
+        if 'name' in entry and entry['name'] == '?':
             entry['name'] = None
 
     return proc_data
