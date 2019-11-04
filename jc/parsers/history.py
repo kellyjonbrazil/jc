@@ -3,21 +3,63 @@
 Usage:
     specify --history as the first argument if the piped input is coming from history
 
-Example:
+Examples:
 
 $ history | jc --history -p
+[
+  {
+    "line": "118",
+    "command": "sleep 100"
+  },
+  {
+    "line": "119",
+    "command": "ls /bin"
+  },
+  {
+    "line": "120",
+    "command": "echo \"hello\""
+  },
+  {
+    "line": "121",
+    "command": "docker images"
+  },
+  ...
+]
+
+$ history | jc --history -p -r
 {
-  "n118": "sleep 100",
-  "n119": "ls /bin",
-  "n120": "echo \"hello\"",
-  "n121": "docker images",
+  "118": "sleep 100",
+  "119": "ls /bin",
+  "120": "echo \"hello\"",
+  "121": "docker images",
   ...
 }
 """
 
 
-def parse(data):
-    output = {}
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "line":     string,
+        "command":  string
+      }
+    ]
+    '''
+
+    # rebuild output for added semantic information
+    processed = []
+    for k, v in proc_data.items():
+        proc_line = {}
+        proc_line['line'] = k
+        proc_line['command'] = v
+        processed.append(proc_line)
+
+    return processed
+
+
+def parse(data, raw=False):
+    raw_output = {}
 
     # split lines and clear out any non-ascii chars
     linedata = data.encode('ascii', errors='ignore').decode().splitlines()
@@ -29,10 +71,12 @@ def parse(data):
         for entry in cleandata:
             try:
                 parsed_line = entry.split(maxsplit=1)
-                # prepend alpha character n to key so the resulting JSON is easier to work with
-                output['n' + parsed_line[0]] = parsed_line[1]
+                raw_output[parsed_line[0]] = parsed_line[1]
             except IndexError:
                 # need to catch indexerror in case there is weird input from prior commands
                 pass
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
