@@ -44,7 +44,46 @@ $ df | jc --df -p
 """
 
 
-def parse(data):
+def process(proc_data):
+    for entry in proc_data:
+        # change any entry for key with '-blocks' in the name to int
+        for k in entry:
+            if str(k).find('-blocks') != -1:
+                try:
+                    blocks_int = int(entry[k])
+                    entry[k] = blocks_int
+                except ValueError:
+                    entry[k] = None
+
+        # change 'used' to int
+        if entry['used']:
+            try:
+                used_int = int(entry['used'])
+                entry['used'] = used_int
+            except ValueError:
+                entry['used'] = None
+
+        # change 'available' to int
+        if entry['available']:
+            try:
+                available_int = int(entry['available'])
+                entry['available'] = available_int
+            except ValueError:
+                entry['available'] = None
+
+        # remove percent sign from 'use_percent' and change to int
+        if entry['use_percent']:
+            try:
+                entry['use_percent'].rstrip('%')
+                use_percent_int = int(entry['use_percent'])
+                entry['use_percent'] = use_percent_int
+            except ValueError:
+                entry['use_percent'] = None
+
+    return proc_data
+
+
+def parse(data, raw=False):
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
@@ -57,4 +96,9 @@ def parse(data):
     headers = ['use_percent' if x == 'use%' else x for x in headers]
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    return [dict(zip(headers, r)) for r in raw_data]
+    raw_output = [dict(zip(headers, r)) for r in raw_data]
+
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
