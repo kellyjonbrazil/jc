@@ -74,8 +74,8 @@ def process(proc_data):
         # remove percent sign from 'use_percent' and change to int
         if entry['use_percent']:
             try:
-                entry['use_percent'].rstrip('%')
-                use_percent_int = int(entry['use_percent'])
+                use_percent_int = entry['use_percent'].rstrip('%')
+                use_percent_int = int(use_percent_int)
                 entry['use_percent'] = use_percent_int
             except ValueError:
                 entry['use_percent'] = None
