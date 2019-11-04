@@ -3,42 +3,63 @@
 Usage:
     specify --df as the first argument if the piped input is coming from df
 
-Example:
+Examples:
 
-$ df | jc --df -p
+$ df | jc --df -p 
 [
   {
-    "filesystem": "udev",
-    "1k-blocks": "977500",
+    "filesystem": "devtmpfs",
+    "1k-blocks": 1918820,
+    "used": 0,
+    "available": 1918820,
+    "use_percent": 0,
+    "mounted": "/dev"
+  },
+  {
+    "filesystem": "tmpfs",
+    "1k-blocks": 1930668,
+    "used": 0,
+    "available": 1930668,
+    "use_percent": 0,
+    "mounted": "/dev/shm"
+  },
+  {
+    "filesystem": "tmpfs",
+    "1k-blocks": 1930668,
+    "used": 11800,
+    "available": 1918868,
+    "use_percent": 1,
+    "mounted": "/run"
+  },
+  ...
+]
+
+$ df | jc --df -p -r
+[
+  {
+    "filesystem": "devtmpfs",
+    "1k-blocks": "1918820",
     "used": "0",
-    "available": "977500",
+    "available": "1918820",
     "use_percent": "0%",
     "mounted": "/dev"
   },
   {
     "filesystem": "tmpfs",
-    "1k-blocks": "201732",
-    "used": "1204",
-    "available": "200528",
-    "use_percent": "1%",
-    "mounted": "/run"
-  },
-  {
-    "filesystem": "/dev/sda2",
-    "1k-blocks": "20508240",
-    "used": "5748312",
-    "available": "13695124",
-    "use_percent": "30%",
-    "mounted": "/"
+    "1k-blocks": "1930668",
+    "used": "0",
+    "available": "1930668",
+    "use_percent": "0%",
+    "mounted": "/dev/shm"
   },
   {
     "filesystem": "tmpfs",
-    "1k-blocks": "1008648",
-    "used": "0",
-    "available": "1008648",
-    "use_percent": "0%",
-    "mounted": "/dev/shm"
-  }
+    "1k-blocks": "1930668",
+    "used": "11800",
+    "available": "1918868",
+    "use_percent": "1%",
+    "mounted": "/run"
+  },
   ...
 ]
 """
@@ -52,7 +73,7 @@ def process(proc_data):
                 try:
                     blocks_int = int(entry[k])
                     entry[k] = blocks_int
-                except ValueError:
+                except (ValueError, TypeError):
                     entry[k] = None
 
         # change 'used' to int
@@ -60,7 +81,7 @@ def process(proc_data):
             try:
                 used_int = int(entry['used'])
                 entry['used'] = used_int
-            except ValueError:
+            except (ValueError, TypeError):
                 entry['used'] = None
 
         # change 'available' to int
@@ -68,8 +89,10 @@ def process(proc_data):
             try:
                 available_int = int(entry['available'])
                 entry['available'] = available_int
-            except ValueError:
+            except (ValueError, TypeError):
                 entry['available'] = None
+        else:
+            entry['available'] = None
 
         # remove percent sign from 'use_percent' and change to int
         if 'use_percent' in entry:
@@ -77,7 +100,7 @@ def process(proc_data):
                 use_percent_int = entry['use_percent'].rstrip('%')
                 use_percent_int = int(use_percent_int)
                 entry['use_percent'] = use_percent_int
-            except ValueError:
+            except (ValueError, TypeError):
                 entry['use_percent'] = None
 
     return proc_data
