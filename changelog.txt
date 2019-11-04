@@ -1,6 +1,7 @@
 jc changelog
 
 201911xx v1.5.1
+- Add -r and raw=True options. By default, jc will now convert numbers, if possible and add other semantic information, while the raw output will keep all values as text and provide a more literal JSON output
 - Clean up helptext code
 
 20191031 v1.1.1
