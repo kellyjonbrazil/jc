@@ -149,6 +149,84 @@ $ dig -x 1.1.1.1 | jc --dig -p
 """
 
 
+def process(proc_data):
+    ''' schema:
+    [
+      {
+        "id":             integer,
+        "opcode":         string,
+        "status":         string,
+        "flags":          [string],
+        "query_num":      integer,
+        "answer_num":     integer,
+        "authority_num":  integer,
+        "additional_num": integer,
+        "question": {
+          "name":         string,
+          "class":        string,
+          "type":         string
+        },
+        "answer": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "authority": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "query_time":     integer,   # in msec
+        "server":         string,
+        "when":           string,
+        "rcvd":           integer
+      }
+    ]
+    '''
+    for entry in proc_data:
+        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError, TypeError):
+                    entry[key] = None
+
+        if 'answer' in entry:
+            for ans in entry['answer']:
+                try:
+                    ttl_int = int(ans['ttl'])
+                    ans['ttl'] = ttl_int
+                except (ValueError, TypeError):
+                    ans['ttl'] = None
+
+        if 'authority' in entry:
+            for auth in entry['authority']:
+                try:
+                    ttl_int = int(auth['ttl'])
+                    auth['ttl'] = ttl_int
+                except (ValueError, TypeError):
+                    auth['ttl'] = None
+
+        if 'query_time' in entry:
+            try:
+                qt_int = int(entry['query_time'].split()[0])
+                entry['query_time'] = qt_int
+            except (ValueError, TypeError):
+                entry['query_time'] = None
+
+    return proc_data
+
+
 def parse_header(header):
     # ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 6140
     header = header.split()
@@ -168,6 +246,7 @@ def parse_flags_line(flagsline):
     flags = flagsline.pop(0)
     flags = flagsline.pop(0).split(':')
     flags = flags[1].lstrip()
+    flags = flags.split()
 
     restline = flagsline[0].replace(',', ' ').replace(':', ' ')
     restlist = restline.split()
@@ -228,8 +307,8 @@ def parse_answer(answer):
             'data': answer_data}
 
 
-def parse(data):
-    output = []
+def parse(data, raw=False):
+    raw_output = []
     cleandata = data.splitlines()
     # remove blank lines
     cleandata = list(filter(None, cleandata))
@@ -308,7 +387,10 @@ def parse(data):
             output_entry.update({'rcvd': line.split(':')[1].lstrip()})
 
             if output_entry:
-                output.append(output_entry)
+                raw_output.append(output_entry)
 
-    clean_output = list(filter(None, output))
-    return clean_output
+    raw_output = list(filter(None, raw_output))
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
