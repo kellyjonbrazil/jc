@@ -156,7 +156,9 @@ def process(proc_data):
         "id":             integer,
         "opcode":         string,
         "status":         string,
-        "flags":          [string],
+        "flags": [
+                          string
+        ],
         "query_num":      integer,
         "answer_num":     integer,
         "authority_num":  integer,
