@@ -1,5 +1,8 @@
 jc changelog
 
+201911xx v1.5.1
+- Clean up helptext code
+
 20191031 v1.1.1
 - Add arp parser
 - Add dig parser

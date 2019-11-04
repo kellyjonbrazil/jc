@@ -15,7 +15,7 @@ setuptools.setup(
     license='MIT',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    python_requires='~=3.4',
+    python_requires='~=3.6',
     url='https://github.com/kellyjonbrazil/jc',
     packages=setuptools.find_packages(),
     entry_points={
