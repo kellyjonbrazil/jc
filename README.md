@@ -45,8 +45,7 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 {'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
 'size': '18128', 'date': 'May 3 22:26'}]
 ```
-
-The goal is to keep the resulting JSON as flat and simple as possible. Also, keys have been converted to lowercase and special characters are replaced whenever possible.  Numbers are kept as strings because, depending on context or the output options, numbers can sometimes turn into strings. (e.g 'human readable' options)
+Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of None are converted to JSON Null, and, in some cases, additional semantic context fields are added. To access the raw, pre-processed JSON, use the `-r` or `raw=True` options.
 
 ## Installation
 ```
@@ -83,7 +82,8 @@ jc PARSER [OPTIONS]
 - `--w` enables the `w` parser
 
 ### Options
-- `-p` specifies whether to pretty format the JSON output
+- `-p` pretty format the JSON output
+- `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
 
 ## Examples
 ### arp
