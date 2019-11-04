@@ -3,9 +3,27 @@
 Usage:
     specify --free as the first argument if the piped input is coming from free
 
-Example:
-
+Examples:
 $ free | jc --free -p
+[
+  {
+    "type": "Mem",
+    "total": 3861340,
+    "used": 220508,
+    "free": 3381972,
+    "shared": 11800,
+    "buff_cache": 258860,
+    "available": 3397784
+  },
+  {
+    "type": "Swap",
+    "total": 2097148,
+    "used": 0,
+    "free": 2097148
+  }
+]
+
+$ free | jc --free -p -r
 [
   {
     "type": "Mem",
@@ -26,7 +44,35 @@ $ free | jc --free -p
 """
 
 
-def parse(data):
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "type":         string,
+        "total":        integer,
+        "used":         integer,
+        "free":         integer,
+        "shared":       integer,
+        "buff_cache":   integer,
+        "available":    integer
+      }
+    ]
+    '''
+
+    for entry in proc_data:
+        int_list = ['total', 'used', 'free', 'shared', 'buff_cache', 'available']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError, TypeError):
+                    entry[key] = None
+
+    return proc_data
+
+
+def parse(data, raw=False):
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
@@ -40,9 +86,12 @@ def parse(data):
     headers = ['buff_cache' if x == 'buff/cache' else x for x in headers]
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    output = [dict(zip(headers, r)) for r in raw_data]
+    raw_output = [dict(zip(headers, r)) for r in raw_data]
 
-    for entry in output:
+    for entry in raw_output:
         entry['type'] = entry['type'].rstrip(':')
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
