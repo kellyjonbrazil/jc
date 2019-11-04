@@ -7,6 +7,7 @@ Main input module
 import sys
 import signal
 import json
+import textwrap
 import jc.parsers.arp
 import jc.parsers.df
 import jc.parsers.dig
@@ -36,42 +37,42 @@ def ctrlc(signum, frame):
 def main():
     helptext = '''
 
-Usage:  jc PARSER [OPTIONS]
+    Usage:  jc PARSER [OPTIONS]
 
-Parsers:
-        --arp        arp parser
-        --df         df parser
-        --dig        dig parser
-        --env        env parser
-        --free       free parser
-        --history    history parser
-        --ifconfig   iconfig parser
-        --iptables   iptables parser
-        --jobs       jobs parser
-        --ls         ls parser
-        --lsblk      lsblk parser
-        --lsmod      lsmod parser
-        --lsof       lsof parser
-        --mount      mount parser
-        --netstat    netstat parser
-        --ps         ps parser
-        --route      route parser
-        --uname      uname parser
-        --uptime     uptime parser
-        --w          w parser
+    Parsers:
+            --arp        arp parser
+            --df         df parser
+            --dig        dig parser
+            --env        env parser
+            --free       free parser
+            --history    history parser
+            --ifconfig   iconfig parser
+            --iptables   iptables parser
+            --jobs       jobs parser
+            --ls         ls parser
+            --lsblk      lsblk parser
+            --lsmod      lsmod parser
+            --lsof       lsof parser
+            --mount      mount parser
+            --netstat    netstat parser
+            --ps         ps parser
+            --route      route parser
+            --uname      uname parser
+            --uptime     uptime parser
+            --w          w parser
 
-Options:
-        -p           pretty print output
+    Options:
+            -p           pretty print output
 
-Example:
-        ls -al | jc --ls -p
+    Example:
+            ls -al | jc --ls -p
 
-'''
+    '''
 
     signal.signal(signal.SIGINT, ctrlc)
 
     if sys.stdin.isatty():
-        print('jc:     missing piped data' + helptext, file=sys.stderr)
+        print('jc:     missing piped data' + textwrap.dedent(helptext), file=sys.stderr)
         exit()
 
     data = sys.stdin.read()
@@ -143,7 +144,7 @@ Example:
         result = jc.parsers.w.parse(data)
 
     else:
-        print('jc:     missing or incorrect arguments' + helptext, file=sys.stderr)
+        print('jc:     missing or incorrect arguments' + textwrap.dedent(helptext), file=sys.stderr)
         exit()
 
     # output resulting dictionary as json
