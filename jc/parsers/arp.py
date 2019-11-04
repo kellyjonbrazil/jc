@@ -80,6 +80,19 @@ $ arp -a | jc --arp -p -r
 
 
 def process(proc_data):
+    '''schema:
+    [
+      {
+        "name":       string,
+        "address":    string,
+        "hwtype":     string,
+        "hwaddress":  string,
+        "flags_mask": string,
+        "iface":      string
+      }
+    ]
+    '''
+
     # in BSD style, change name to null if it is a question mark
     for entry in proc_data:
         if 'name' in entry and entry['name'] == '?':
