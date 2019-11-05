@@ -34,8 +34,9 @@ def ctrlc(signum, frame):
     exit()
 
 
-def main():
-    helptext = '''
+def helptext(message):
+    helptext_string = f'''
+    jc:     {message}
 
     Usage:  jc PARSER [OPTIONS]
 
@@ -70,10 +71,14 @@ def main():
 
     '''
 
+    print(textwrap.dedent(helptext_string), file=sys.stderr)
+
+
+def main():
     signal.signal(signal.SIGINT, ctrlc)
 
     if sys.stdin.isatty():
-        print('jc:     missing piped data' + textwrap.dedent(helptext), file=sys.stderr)
+        helptext('missing piped data')
         exit()
 
     data = sys.stdin.read()
@@ -149,7 +154,7 @@ def main():
         result = jc.parsers.w.parse(data, raw=raw)
 
     else:
-        print('jc:     missing or incorrect arguments' + textwrap.dedent(helptext), file=sys.stderr)
+        helptext('missing or incorrect arguments')
         exit()
 
     # output resulting dictionary as json
