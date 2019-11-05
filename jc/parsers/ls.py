@@ -135,6 +135,7 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 }
 """
 import re
+import jc
 
 
 def process(proc_data):
@@ -165,6 +166,9 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    jc.jc.compatibility(__name__,
+                        ['linux', 'darwin'])
+
     raw_output = []
 
     linedata = data.splitlines()

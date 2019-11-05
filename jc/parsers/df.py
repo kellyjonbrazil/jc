@@ -63,6 +63,7 @@ $ df | jc --df -p -r
   ...
 ]
 """
+import jc
 
 
 def process(proc_data):
@@ -106,6 +107,9 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     cleandata = data.splitlines()
     fix_headers = cleandata[0].lower().replace('avail ', 'available ')
     fix_headers = fix_headers.replace('use%', 'use_percent')
