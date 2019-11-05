@@ -79,6 +79,7 @@ $ lsblk | jc --lsblk -p
 ]
 """
 import string
+import jc
 
 
 def process(proc_data):
@@ -129,6 +130,9 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     raw_output = []
     linedata = data.splitlines()
     # Clear any blank lines

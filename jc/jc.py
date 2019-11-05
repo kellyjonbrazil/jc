@@ -68,10 +68,24 @@ def helptext(message):
 
     Example:
             ls -al | jc --ls -p
-
     '''
 
     print(textwrap.dedent(helptext_string), file=sys.stderr)
+
+
+def errormessage(message):
+    error_string = f'''
+    jc:  {message}
+    '''
+
+    print(textwrap.dedent(error_string), file=sys.stderr)
+
+
+def compatibility(mod_name, compatible):
+    if sys.platform not in compatible:
+        mod = mod_name.split('.')[-1]
+        errormessage(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compatible}')
+        exit()
 
 
 def main():
