@@ -79,7 +79,6 @@ def errormessage(message):
     '''
 
     print(textwrap.dedent(error_string), file=sys.stderr)
-    exit()
 
 
 def compatibility(mod_name, compatible):
@@ -87,6 +86,7 @@ def compatibility(mod_name, compatible):
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
         errormessage(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
+        exit()
 
 
 def main():
