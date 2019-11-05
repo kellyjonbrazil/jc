@@ -13,7 +13,7 @@ $ df | jc --df -p
     "used": 0,
     "available": 1918820,
     "use_percent": 0,
-    "mounted": "/dev"
+    "mounted_on": "/dev"
   },
   {
     "filesystem": "tmpfs",
@@ -21,7 +21,7 @@ $ df | jc --df -p
     "used": 0,
     "available": 1930668,
     "use_percent": 0,
-    "mounted": "/dev/shm"
+    "mounted_on": "/dev/shm"
   },
   {
     "filesystem": "tmpfs",
@@ -29,7 +29,7 @@ $ df | jc --df -p
     "used": 11800,
     "available": 1918868,
     "use_percent": 1,
-    "mounted": "/run"
+    "mounted_on": "/run"
   },
   ...
 ]
@@ -42,7 +42,7 @@ $ df | jc --df -p -r
     "used": "0",
     "available": "1918820",
     "use_percent": "0%",
-    "mounted": "/dev"
+    "mounted_on": "/dev"
   },
   {
     "filesystem": "tmpfs",
@@ -50,7 +50,7 @@ $ df | jc --df -p -r
     "used": "0",
     "available": "1930668",
     "use_percent": "0%",
-    "mounted": "/dev/shm"
+    "mounted_on": "/dev/shm"
   },
   {
     "filesystem": "tmpfs",
@@ -58,7 +58,7 @@ $ df | jc --df -p -r
     "used": "11800",
     "available": "1918868",
     "use_percent": "1%",
-    "mounted": "/run"
+    "mounted_on": "/run"
   },
   ...
 ]
@@ -74,7 +74,7 @@ def process(proc_data):
             "used":         integer,
             "available":    integer,
             "use_percent":  integer,
-            "mounted":      string
+            "mounted_on":   string
           }
         ]
     '''
@@ -85,54 +85,32 @@ def process(proc_data):
                 try:
                     blocks_int = int(entry[k])
                     entry[k] = blocks_int
-                except (ValueError, TypeError):
+                except (ValueError):
                     entry[k] = None
 
-        # change 'used' to int
-        if 'used' in entry:
-            try:
-                used_int = int(entry['used'])
-                entry['used'] = used_int
-            except (ValueError, TypeError):
-                entry['used'] = None
-
-        # rename 'avail' to 'available'
-        if 'avail' in entry:
-            entry['available'] = entry.pop('avail')
-
-        # change 'available' to int
-        if 'available' in entry:
-            try:
-                available_int = int(entry['available'])
-                entry['available'] = available_int
-            except (ValueError, TypeError):
-                entry['available'] = None
-        else:
-            entry['available'] = None
-
-        # remove percent sign from 'use_percent' and change to int
+        # remove percent sign from 'use_percent'
         if 'use_percent' in entry:
-            try:
-                use_percent_int = entry['use_percent'].rstrip('%')
-                use_percent_int = int(use_percent_int)
-                entry['use_percent'] = use_percent_int
-            except (ValueError, TypeError):
-                entry['use_percent'] = None
+            entry['use_percent'] = entry['use_percent'].rstrip('%')
+
+        # change used, available, and use_percent to int
+        int_list = ['used', 'available', 'use_percent']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError, TypeError):
+                    entry[key] = None
 
     return proc_data
 
 
 def parse(data, raw=False):
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
-
     cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-
-    # clean up 'use%' header
-    # even though % in a key is valid json, it can make things difficult
-    headers = ['use_percent' if x == 'use%' else x for x in headers]
+    fix_headers = cleandata[0].lower().replace('avail ', 'available ')
+    fix_headers = fix_headers.replace('use%', 'use_percent')
+    fix_headers = fix_headers.replace('mounted on', 'mounted_on')
+    headers = [h for h in ' '.join(fix_headers.strip().split()).split() if h]
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
     raw_output = [dict(zip(headers, r)) for r in raw_data]
