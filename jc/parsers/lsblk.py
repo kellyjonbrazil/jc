@@ -118,10 +118,10 @@ def process(proc_data):
         "disc-max":     string,
         "disc-zero":    boolean,
         "wsame":        string,
-        "wwn": "2:0:0:0",
-        "rand": "ata",
-        "pkname": "1.00",
-        "hctl": "NECVMWar"
+        "wwn":          string,
+        "rand":         boolean,
+        "pkname":       string,
+        "hctl":         string
       }
     ]
     '''
