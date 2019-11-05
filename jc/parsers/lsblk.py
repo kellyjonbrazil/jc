@@ -3,6 +3,24 @@
 Usage:
     specify --lsblk as the first argument if the piped input is coming from lsblk
 
+Limitations:
+    the following columns can only be used as the last column:
+        HCTL
+        LABEL
+        MODEL
+        MOUNTPOINT
+        PARTLABEL
+        PARTUUID
+        PKNAME
+        REV
+        SERIAL
+        STATE
+        SCHED
+        TRAN
+        UUID
+        VENDOR
+        WWN
+
 Example:
 
 $ lsblk | jc --lsblk -p
@@ -60,24 +78,89 @@ $ lsblk | jc --lsblk -p
   }
 ]
 """
+import string
 
 
-def parse(data):
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "name":         string,
+        "maj_min":      string,
+        "rm":           boolean,
+        "size":         string,
+        "ro":           boolean,
+        "type":         string,
+        "mountpoint":   string,
+        "kname":        string,
+        "fstype":       string,
+        "label":        string,
+        "uuid":         string,
+        "partlabel":    string,
+        "partuuid":     string,
+        "ra":           boolean,
+        "model":        string,
+        "serial":       string,
+        "state":        string,
+        "owner":        string,
+        "group":        string,
+        "mode":         string,
+        "alignment":    integer,
+        "min-io":       integer,
+        "opt-io":       integer,
+        "phy-sec":      integer,
+        "log-sec":      integer,
+        "rota":         boolean,
+        "sched":        string,
+        "rq-size":      integer,
+        "disc-aln":     integer,
+        "disc-gran":    string,
+        "disc-max":     string,
+        "disc-zero":    boolean,
+        "wsame":        string,
+        "wwn": "2:0:0:0",
+        "rand": "ata",
+        "pkname": "1.00",
+        "hctl": "NECVMWar"
+      }
+    ]
+    '''
+    return proc_data
 
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
 
+def parse(data, raw=False):
+    raw_output = []
+    linedata = data.splitlines()
+    # Clear any blank lines
+    cleandata = list(filter(None, linedata))
     cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
 
-    # clean up 'maj:min' header
-    # even though colon in a key is valid json, it can make things difficult
-    headers = ['maj_min' if x == 'maj:min' else x for x in headers]
+    fix_headers = cleandata.pop(0).lower()
+    fix_headers = fix_headers.replace('maj:min', 'maj_min')
+    fix_headers = fix_headers.replace('-', '_')
 
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    output = [dict(zip(headers, r)) for r in raw_data]
+    # find mountpoint starting column for fixup
+    mpt_col = fix_headers.find('mountpoint')
 
-    for entry in output:
-        entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
+    headers = fix_headers.split()
 
-    return output
+    # parse lines
+    if cleandata:
+        for entry in cleandata:
+            output_line = {}
+
+            # normalize data by inserting Null for missing data
+            temp_line = entry.split(maxsplit=len(headers) - 1)
+
+            # fix mountpoint column, always at column 6
+            if len(entry) > mpt_col:
+                if entry[mpt_col] in string.whitespace:
+                    temp_line.insert(6, None)
+
+            output_line = dict(zip(headers, temp_line))
+            raw_output.append(output_line)
+
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
