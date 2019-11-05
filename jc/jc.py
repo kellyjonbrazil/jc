@@ -84,7 +84,8 @@ def errormessage(message):
 def compatibility(mod_name, compatible):
     if sys.platform not in compatible:
         mod = mod_name.split('.')[-1]
-        errormessage(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compatible}')
+        compat_list = ', '.join(compatible)
+        errormessage(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
         exit()
 
 
