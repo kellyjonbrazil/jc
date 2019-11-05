@@ -5,7 +5,10 @@ Usage:
 
     ls options supported:
     - None
-    - lah
+    - la
+    - h   file sizes will be available in text form with -r but larger file sizes
+          with human readable suffixes will be converted to Null in default view
+          since the parser attempts to convert this field to an integer.
 
 Examples:
 
@@ -27,6 +30,39 @@ $ ls /usr/bin | jc --ls -p
 ]
 
 $ ls -l /usr/bin | jc --ls -p
+[
+  {
+    "filename": "apropos",
+    "link_to": "whatis",
+    "flags": "lrwxrwxrwx.",
+    "links": 1,
+    "owner": "root",
+    "group": "root",
+    "size": 6,
+    "date": "Aug 15 10:53"
+  },
+  {
+    "filename": "ar",
+    "flags": "-rwxr-xr-x.",
+    "links": 1,
+    "owner": "root",
+    "group": "root",
+    "size": 62744,
+    "date": "Aug 8 16:14"
+  },
+  {
+    "filename": "arch",
+    "flags": "-rwxr-xr-x.",
+    "links": 1,
+    "owner": "root",
+    "group": "root",
+    "size": 33080,
+    "date": "Aug 19 23:25"
+  },
+  ...
+]
+
+$ ls -l /usr/bin | jc --ls -p -r
 [
   {
     "filename": "apropos",
@@ -87,22 +123,49 @@ $ ls -l /usr/bin | jc --ls -p
   ...
 ]
 
-$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
+$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 {
   "filename": "emacs",
   "flags": "-r-xr-xr-x",
   "links": 1,
   "owner": "root",
   "group": "wheel",
-  "size": "117164432",
-  "date": "May 3 22:26"
+  "size": 117164432,
+  "date": "May 3 2019"
 }
 """
 import re
 
 
-def parse(data):
-    output = []
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "filename": string,
+        "flags":    string,
+        "links":    integer,
+        "owner":    string,
+        "group":    string,
+        "size":     integer,
+        "date":     string
+      }
+    ]
+    '''
+    for entry in proc_data:
+        int_list = ['links', 'size']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError, TypeError):
+                    entry[key] = None
+
+    return proc_data
+
+
+def parse(data, raw=False):
+    raw_output = []
 
     linedata = data.splitlines()
 
@@ -137,11 +200,14 @@ def parse(data):
                 output_line['group'] = parsed_line[3]
                 output_line['size'] = parsed_line[4]
                 output_line['date'] = ' '.join(parsed_line[5:8])
-                output.append(output_line)
+                raw_output.append(output_line)
         else:
             for entry in cleandata:
                 output_line = {}
                 output_line['filename'] = entry
-                output.append(output_line)
+                raw_output.append(output_line)
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
