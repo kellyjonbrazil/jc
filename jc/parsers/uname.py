@@ -20,9 +20,14 @@ $ uname -a | jc --uname -p
   "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
 }
 """
+import jc
 
 
 def parse(data):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     output = {}
     parsed_line = data.split(maxsplit=3)
 

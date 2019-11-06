@@ -97,9 +97,14 @@ $ sudo netstat -lpn | jc --netstat -p
 ]
 """
 import string
+import jc
 
 
 def parse_line(entry):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     output_line = {}
 
     if entry.find('tcp') == 0:

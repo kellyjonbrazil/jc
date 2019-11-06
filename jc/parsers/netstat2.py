@@ -3,6 +3,7 @@
 Usage:
     Specify --netstat as the first argument if the piped input is coming from netstat
 """
+import jc
 
 
 def normalize_headers(header):
@@ -44,6 +45,10 @@ def post_process(network_list, socket_list):
 
 
 def parse(data):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     cleandata = data.splitlines()
 
     network = False

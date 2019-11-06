@@ -43,6 +43,7 @@ $ env | jc --env -p -r
   "_": "/usr/bin/env"
 }
 """
+import jc
 
 
 def process(proc_data):
@@ -67,6 +68,10 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'])
+
     raw_output = {}
 
     linedata = data.splitlines()

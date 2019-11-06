@@ -35,6 +35,7 @@ $ history | jc --history -p -r
   ...
 }
 """
+import jc
 
 
 def process(proc_data):
@@ -59,6 +60,10 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'])
+
     raw_output = {}
 
     # split lines and clear out any non-ascii chars

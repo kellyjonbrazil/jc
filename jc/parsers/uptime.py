@@ -15,9 +15,14 @@ $ uptime | jc --uptime -p
   "load_15m": "1.91"
 }
 """
+import jc
 
 
 def parse(data):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux', 'darwin', 'cygwin', 'aix', 'freebsd'])
+
     output = {}
 
     cleandata = data.splitlines()

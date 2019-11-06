@@ -125,6 +125,7 @@ $ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p -r
   ...
 ]
 """
+import jc
 
 
 def process(proc_data):
@@ -193,6 +194,10 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     raw_output = []
     chain = {}
     headers = []

@@ -148,6 +148,7 @@ $ dig -x 1.1.1.1 | jc --dig -p
   }
 ]
 """
+import jc
 
 
 def process(proc_data):
@@ -311,6 +312,10 @@ def parse_answer(answer):
 
 
 def parse(data, raw=False):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'])
+
     raw_output = []
     cleandata = data.splitlines()
     # remove blank lines

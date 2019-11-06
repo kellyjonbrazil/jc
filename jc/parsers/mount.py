@@ -47,9 +47,14 @@ $ mount | jc --mount -p
   ...
 ]
 """
+import jc
 
 
 def parse(data):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux'])
+
     output = []
 
     linedata = data.splitlines()

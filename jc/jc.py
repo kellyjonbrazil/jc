@@ -73,7 +73,7 @@ def helptext(message):
     print(textwrap.dedent(helptext_string), file=sys.stderr)
 
 
-def errormessage(message):
+def error_message(message):
     error_string = f'''
     jc:  {message}
     '''
@@ -82,11 +82,13 @@ def errormessage(message):
 
 
 def compatibility(mod_name, compatible):
+    '''
+    compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    '''
     if sys.platform not in compatible:
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
-        errormessage(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
-        exit()
+        error_message(f'Warning - {mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
 
 
 def main():

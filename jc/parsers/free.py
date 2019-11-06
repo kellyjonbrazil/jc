@@ -43,6 +43,7 @@ $ free | jc --free -p -r
   }
 ]
 """
+import jc
 
 
 def process(proc_data):
@@ -74,6 +75,9 @@ def process(proc_data):
 
 
 def parse(data, raw=False):
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    jc.jc.compatibility(__name__,
+                        ['linux'])
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
