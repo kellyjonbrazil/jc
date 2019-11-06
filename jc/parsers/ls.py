@@ -159,7 +159,7 @@ def process(proc_data):
                 try:
                     key_int = int(entry[key])
                     entry[key] = key_int
-                except (ValueError, TypeError):
+                except (ValueError):
                     entry[key] = None
 
     return proc_data

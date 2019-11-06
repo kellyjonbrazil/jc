@@ -202,7 +202,7 @@ def process(proc_data):
                 try:
                     key_int = int(entry[key])
                     entry[key] = key_int
-                except (ValueError, TypeError):
+                except (ValueError):
                     entry[key] = None
 
         if 'answer' in entry:
@@ -210,7 +210,7 @@ def process(proc_data):
                 try:
                     ttl_int = int(ans['ttl'])
                     ans['ttl'] = ttl_int
-                except (ValueError, TypeError):
+                except (ValueError):
                     ans['ttl'] = None
 
         if 'authority' in entry:
@@ -218,14 +218,14 @@ def process(proc_data):
                 try:
                     ttl_int = int(auth['ttl'])
                     auth['ttl'] = ttl_int
-                except (ValueError, TypeError):
+                except (ValueError):
                     auth['ttl'] = None
 
         if 'query_time' in entry:
             try:
                 qt_int = int(entry['query_time'].split()[0])
                 entry['query_time'] = qt_int
-            except (ValueError, TypeError):
+            except (ValueError):
                 entry['query_time'] = None
 
     return proc_data

@@ -159,7 +159,7 @@ def process(proc_data):
                     try:
                         key_int = int(rule[key])
                         rule[key] = key_int
-                    except (ValueError, TypeError):
+                    except (ValueError):
                         rule[key] = None
 
             if 'bytes' in rule:
@@ -183,7 +183,7 @@ def process(proc_data):
                 try:
                     bytes_int = int(rule['bytes'])
                     rule['bytes'] = bytes_int * multiplier
-                except (ValueError, TypeError):
+                except (ValueError):
                     rule['bytes'] = None
 
             if 'opt' in rule:
