@@ -21,9 +21,71 @@ Limitations:
         VENDOR
         WWN
 
-Example:
+Examples:
 
-$ lsblk | jc --lsblk -p
+$ lsblk -o +STATE | jc --lsblk -p
+[
+  {
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": false,
+    "size": "20G",
+    "ro": false,
+    "type": "disk",
+    "mountpoint": null,
+    "state": "running"
+  },
+  {
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": false,
+    "size": "1G",
+    "ro": false,
+    "type": "part",
+    "mountpoint": "/boot"
+  },
+  {
+    "name": "sda2",
+    "maj_min": "8:2",
+    "rm": false,
+    "size": "19G",
+    "ro": false,
+    "type": "part",
+    "mountpoint": null
+  },
+  {
+    "name": "centos-root",
+    "maj_min": "253:0",
+    "rm": false,
+    "size": "17G",
+    "ro": false,
+    "type": "lvm",
+    "mountpoint": "/",
+    "state": "running"
+  },
+  {
+    "name": "centos-swap",
+    "maj_min": "253:1",
+    "rm": false,
+    "size": "2G",
+    "ro": false,
+    "type": "lvm",
+    "mountpoint": "[SWAP]",
+    "state": "running"
+  },
+  {
+    "name": "sr0",
+    "maj_min": "11:0",
+    "rm": true,
+    "size": "1024M",
+    "ro": false,
+    "type": "rom",
+    "mountpoint": null,
+    "state": "running"
+  }
+]
+
+$ lsblk -o +STATE | jc --lsblk -p -r
 [
   {
     "name": "sda",
@@ -31,7 +93,9 @@ $ lsblk | jc --lsblk -p
     "rm": "0",
     "size": "20G",
     "ro": "0",
-    "type": "disk"
+    "type": "disk",
+    "mountpoint": null,
+    "state": "running"
   },
   {
     "name": "sda1",
@@ -48,7 +112,8 @@ $ lsblk | jc --lsblk -p
     "rm": "0",
     "size": "19G",
     "ro": "0",
-    "type": "part"
+    "type": "part",
+    "mountpoint": null
   },
   {
     "name": "centos-root",
@@ -57,7 +122,8 @@ $ lsblk | jc --lsblk -p
     "size": "17G",
     "ro": "0",
     "type": "lvm",
-    "mountpoint": "/"
+    "mountpoint": "/",
+    "state": "running"
   },
   {
     "name": "centos-swap",
@@ -66,7 +132,8 @@ $ lsblk | jc --lsblk -p
     "size": "2G",
     "ro": "0",
     "type": "lvm",
-    "mountpoint": "[SWAP]"
+    "mountpoint": "[SWAP]",
+    "state": "running"
   },
   {
     "name": "sr0",
@@ -74,7 +141,9 @@ $ lsblk | jc --lsblk -p
     "rm": "1",
     "size": "1024M",
     "ro": "0",
-    "type": "rom"
+    "type": "rom",
+    "mountpoint": null,
+    "state": "running"
   }
 ]
 """
