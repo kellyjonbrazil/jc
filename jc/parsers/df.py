@@ -5,7 +5,7 @@ Usage:
 
 Examples:
 
-$ df | jc --df -p 
+$ df | jc --df -p
 [
   {
     "filesystem": "devtmpfs",
@@ -71,6 +71,7 @@ def process(proc_data):
         [
           {
             "filesystem":   string,
+            "size":         string,
             "1k-blocks":    integer,
             "used":         integer,
             "available":    integer,
@@ -100,7 +101,7 @@ def process(proc_data):
                 try:
                     key_int = int(entry[key])
                     entry[key] = key_int
-                except (ValueError, TypeError):
+                except (ValueError):
                     entry[key] = None
 
     return proc_data

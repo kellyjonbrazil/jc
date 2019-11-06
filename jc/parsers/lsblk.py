@@ -107,17 +107,17 @@ def process(proc_data):
         "group":        string,
         "mode":         string,
         "alignment":    integer,
-        "min-io":       integer,
-        "opt-io":       integer,
-        "phy-sec":      integer,
-        "log-sec":      integer,
+        "min_io":       integer,
+        "opt_io":       integer,
+        "phy_sec":      integer,
+        "log_sec":      integer,
         "rota":         boolean,
         "sched":        string,
-        "rq-size":      integer,
-        "disc-aln":     integer,
-        "disc-gran":    string,
-        "disc-max":     string,
-        "disc-zero":    boolean,
+        "rq_size":      integer,
+        "disc_aln":     integer,
+        "disc_gran":    string,
+        "disc_max":     string,
+        "disc_zero":    boolean,
         "wsame":        string,
         "wwn":          string,
         "rand":         boolean,
@@ -126,6 +126,27 @@ def process(proc_data):
       }
     ]
     '''
+    for entry in proc_data:
+        # boolean changes
+        int_list = ['rm', 'ro', 'ra', 'rota', 'disc_zero', 'rand']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = bool(int(entry[key]))
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
+        # integer changes
+        int_list = ['alignment', 'min_io', 'opt_io', 'phy_sec', 'log_sec', 'rq_size', 'disc_aln']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
     return proc_data
 
 
@@ -164,6 +185,9 @@ def parse(data, raw=False):
 
             output_line = dict(zip(headers, temp_line))
             raw_output.append(output_line)
+
+        for entry in raw_output:
+            entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
 
     if raw:
         return raw_output
