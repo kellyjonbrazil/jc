@@ -384,7 +384,7 @@ def process(proc_data):
         "security_context":  string,
         "refcnt":            integer,
         "flags":             string,
-        "type":              stromg,
+        "type":              string,
         "inode":             integer,
         "path":              string,
         "kind":              string
