@@ -39,6 +39,29 @@ def process(proc_data):
       }
     ]
     '''
+    for entry in proc_data:
+        # integer changes
+        int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
+        if 'local_port' in entry:
+            try:
+                entry['local_port_num'] = int(entry['local_port'])
+            except (ValueError):
+                pass
+
+        if 'foreign_port' in entry:
+            try:
+                entry['foreign_port_num'] = int(entry['foreign_port'])
+            except (ValueError):
+                pass
+
     return proc_data
 
 
