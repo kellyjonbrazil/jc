@@ -67,6 +67,23 @@ $ ps -ef | jc --ps -p
 """
 import jc.utils
 
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "uid":    string,
+        "pid":    integer,
+        "ppid":   integer,
+        "c":      integer,
+        "stime":  string,
+        "tty":    string,    # ? = Null
+        "time":   string,
+        "cmd":    string
+      }
+    ]
+    '''
+    return proc_data
+
 
 def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
@@ -87,4 +104,9 @@ def parse(data, raw=False, quiet=False):
     headers = ['mem_percent' if x == '%mem' else x for x in headers]
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    return [dict(zip(headers, r)) for r in raw_data]
+    raw_output = [dict(zip(headers, r)) for r in raw_data]
+
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
