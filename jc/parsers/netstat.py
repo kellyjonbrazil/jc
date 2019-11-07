@@ -88,7 +88,9 @@ def parse_socket(header_text, headers, entry):
 
 
 def parse_post(raw_data):
+    # clean up trailing whitespace on each item in each entry
     # flags --- = null
+    # program_name - = null
     # post process to split pid and program name and ip addresses and ports
 
     for entry in raw_data:
@@ -102,9 +104,44 @@ def parse_post(raw_data):
         if 'flags' in entry:
             if entry['flags'] == '---':
                 entry['flags'] = None
+
         if 'program_name' in entry:
             if entry['program_name'] == '-':
                 entry['program_name'] = None
+
+            if entry['program_name']:
+                pid = entry['program_name'].split('/', maxsplit=1)[0]
+                name = entry['program_name'].split('/', maxsplit=1)[1]
+                entry['pid'] = pid
+                entry['program_name'] = name
+
+        if 'local_address' in entry:
+            if entry['local_address']:
+                ladd = entry['local_address'].rsplit(':', maxsplit=1)[0]
+                lport = entry['local_address'].rsplit(':', maxsplit=1)[1]
+                entry['local_address'] = ladd
+                entry['local_port'] = lport
+
+        if 'foreign_address' in entry:
+            if entry['foreign_address']:
+                fadd = entry['foreign_address'].rsplit(':', maxsplit=1)[0]
+                fport = entry['foreign_address'].rsplit(':', maxsplit=1)[1]
+                entry['foreign_address'] = fadd
+                entry['foreign_port'] = fport
+
+        if 'proto' in entry and 'kind' in entry:
+            if entry['kind'] == 'network':
+                if entry['proto'].find('tcp') != -1:
+                    entry['transport_protocol'] = 'tcp'
+                elif entry['proto'].find('udp') != -1:
+                    entry['transport_protocol'] = 'udp'
+                else:
+                    entry['transport_protocol'] = None
+
+                if entry['proto'].find('6') != -1:
+                    entry['network_protocol'] = 'ipv6'
+                else:
+                    entry['network_protocol'] = 'ipv4'
 
     return raw_data
 
