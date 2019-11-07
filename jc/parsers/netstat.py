@@ -92,11 +92,17 @@ def parse_post(raw_data):
     # post process to split pid and program name and ip addresses and ports
 
     for entry in raw_data:
+        for item in entry:
+            try:
+                entry[item] = entry[item].rstrip()
+            except (AttributeError):
+                # skips trying to rstrip Null entries
+                pass
+
         if 'flags' in entry:
             if entry['flags'] == '---':
                 entry['flags'] = None
         if 'program_name' in entry:
-            entry['program_name'] = entry['program_name'].rstrip()
             if entry['program_name'] == '-':
                 entry['program_name'] = None
 
