@@ -118,6 +118,8 @@ def main():
         '--w': jc.parsers.w.parse
     }
 
+    found = False
+
     for arg in sys.argv:
         if arg in list(parser_map.keys()):
             result = parser_map[arg](data, raw=raw, quiet=quiet)
