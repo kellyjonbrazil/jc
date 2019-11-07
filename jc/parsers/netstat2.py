@@ -2,6 +2,10 @@
 
 Usage:
     Specify --netstat as the first argument if the piped input is coming from netstat
+
+Limitations:
+    -Z option may rarely cause incorrect parsing of the program_name, security_context, and path
+       for lines with spaces in the program_name
 """
 import string
 import jc
@@ -12,8 +16,8 @@ def process(proc_data):
     [
       {
         "proto": "tcp",
-        "recv-q": "0",
-        "send-q": "0",
+        "recv_q": "0",
+        "send_q": "0",
         "local_address": "0.0.0.0:22",
         "foreign_address": "0.0.0.0:*",
         "state": "LISTEN",
@@ -22,7 +26,7 @@ def process(proc_data):
         "refcnt": "2",
         "flags": "ACC",
         "type": "STREAM",
-        "i-node": "20782",
+        "inode": "20782",
         "path": "/var/run/NetworkManager/private-dhcp",
         "kind": "network"
       }
@@ -37,6 +41,8 @@ def normalize_headers(header):
     header = header.replace('foreign address', 'foreign_address')
     header = header.replace('pid/program name', 'program_name')
     header = header.replace('security context', 'security_context')
+    header = header.replace('i-node', 'inode')
+    header = header.replace('-', '_')
 
     return header
 
@@ -130,62 +136,3 @@ def parse(data, raw=False):
         return raw_output
     else:
         return process(raw_output)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if entry.find('tcp') == 0:
-        output_line['transport_protocol'] = 'tcp'
-
-        if entry.find('p6') == 2:
-            output_line['network_protocol'] = 'ipv6'
-
-        else:
-            output_line['network_protocol'] = 'ipv4'
-
-    elif entry.find('udp') == 0:
-        output_line['transport_protocol'] = 'udp'
-
-        if entry.find('p6') == 2:
-            output_line['network_protocol'] = 'ipv6'
-
-        else:
-            output_line['network_protocol'] = 'ipv4'
-    else:
-        return
-
-    parsed_line = entry.split()
-
-    output_line['local_address'] = parsed_line[3].rsplit(':', 1)[0]
-    output_line['local_port'] = parsed_line[3].rsplit(':', 1)[-1]
-    output_line['foreign_address'] = parsed_line[4].rsplit(':', 1)[0]
-    output_line['foreign_port'] = parsed_line[4].rsplit(':', 1)[-1]
-
-    if len(parsed_line) > 5:
-
-        if parsed_line[5][0] not in string.digits and parsed_line[5][0] != '-':
-            output_line['state'] = parsed_line[5]
-
-            if len(parsed_line) > 6 and parsed_line[6][0] in string.digits:
-                output_line['pid'] = parsed_line[6].split('/')[0]
-                output_line['program_name'] = parsed_line[6].split('/')[1]
-        else:
-            if parsed_line[5][0] in string.digits:
-                output_line['pid'] = parsed_line[5].split('/')[0]
-                output_line['program_name'] = parsed_line[5].split('/')[1]
-
-    output_line['receive_q'] = parsed_line[1]
-    output_line['send_q'] = parsed_line[2]
-
-    return output_line
