@@ -7,7 +7,7 @@ Main input module
 import sys
 import signal
 import json
-import textwrap
+from jc.utils import *
 import jc.parsers.arp
 import jc.parsers.df
 import jc.parsers.dig
@@ -30,67 +30,6 @@ import jc.parsers.uptime
 import jc.parsers.w
 
 
-def ctrlc(signum, frame):
-    exit()
-
-
-def helptext(message):
-    helptext_string = f'''
-    jc:     {message}
-
-    Usage:  jc PARSER [OPTIONS]
-
-    Parsers:
-            --arp        arp parser
-            --df         df parser
-            --dig        dig parser
-            --env        env parser
-            --free       free parser
-            --history    history parser
-            --ifconfig   iconfig parser
-            --iptables   iptables parser
-            --jobs       jobs parser
-            --ls         ls parser
-            --lsblk      lsblk parser
-            --lsmod      lsmod parser
-            --lsof       lsof parser
-            --mount      mount parser
-            --netstat    netstat parser
-            --ps         ps parser
-            --route      route parser
-            --uname      uname parser
-            --uptime     uptime parser
-            --w          w parser
-
-    Options:
-            -p           pretty print output
-            -r           raw JSON output
-
-    Example:
-            ls -al | jc --ls -p
-    '''
-
-    print(textwrap.dedent(helptext_string), file=sys.stderr)
-
-
-def error_message(message):
-    error_string = f'''
-    jc:  {message}
-    '''
-
-    print(textwrap.dedent(error_string), file=sys.stderr)
-
-
-def compatibility(mod_name, compatible):
-    '''
-    compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    '''
-    if sys.platform not in compatible:
-        mod = mod_name.split('.')[-1]
-        compat_list = ', '.join(compatible)
-        error_message(f'Warning - {mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
-
-
 def main():
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -100,75 +39,79 @@ def main():
 
     data = sys.stdin.read()
     pretty = False
+    quiet = False
     raw = False
 
     # options
     if '-p' in sys.argv:
         pretty = True
 
+    if '-q' in sys.argv:
+        quiet = True
+
     if '-r' in sys.argv:
         raw = True
 
     # parsers
     if '--arp' in sys.argv:
-        result = jc.parsers.arp.parse(data, raw=raw)
+        result = jc.parsers.arp.parse(data, raw=raw, quiet=quiet)
 
     elif '--df' in sys.argv:
-        result = jc.parsers.df.parse(data, raw=raw)
+        result = jc.parsers.df.parse(data, raw=raw, quiet=quiet)
 
     elif '--dig' in sys.argv:
-        result = jc.parsers.dig.parse(data, raw=raw)
+        result = jc.parsers.dig.parse(data, raw=raw, quiet=quiet)
 
     elif '--env' in sys.argv:
-        result = jc.parsers.env.parse(data, raw=raw)
+        result = jc.parsers.env.parse(data, raw=raw, quiet=quiet)
 
     elif '--free' in sys.argv:
-        result = jc.parsers.free.parse(data, raw=raw)
+        result = jc.parsers.free.parse(data, raw=raw, quiet=quiet)
 
     elif '--history' in sys.argv:
-        result = jc.parsers.history.parse(data, raw=raw)
+        result = jc.parsers.history.parse(data, raw=raw, quiet=quiet)
 
     elif '--ifconfig' in sys.argv:
-        result = jc.parsers.ifconfig.parse(data, raw=raw)
+        result = jc.parsers.ifconfig.parse(data, raw=raw, quiet=quiet)
 
     elif '--iptables' in sys.argv:
-        result = jc.parsers.iptables.parse(data, raw=raw)
+        result = jc.parsers.iptables.parse(data, raw=raw, quiet=quiet)
 
     elif '--jobs' in sys.argv:
-        result = jc.parsers.jobs.parse(data, raw=raw)
+        result = jc.parsers.jobs.parse(data, raw=raw, quiet=quiet)
 
     elif '--ls' in sys.argv:
-        result = jc.parsers.ls.parse(data, raw=raw)
+        result = jc.parsers.ls.parse(data, raw=raw, quiet=quiet)
 
     elif '--lsblk' in sys.argv:
-        result = jc.parsers.lsblk.parse(data, raw=raw)
+        result = jc.parsers.lsblk.parse(data, raw=raw, quiet=quiet)
 
     elif '--lsmod' in sys.argv:
-        result = jc.parsers.lsmod.parse(data, raw=raw)
+        result = jc.parsers.lsmod.parse(data, raw=raw, quiet=quiet)
 
     elif '--lsof' in sys.argv:
-        result = jc.parsers.lsof.parse(data, raw=raw)
+        result = jc.parsers.lsof.parse(data, raw=raw, quiet=quiet)
 
     elif '--mount' in sys.argv:
-        result = jc.parsers.mount.parse(data, raw=raw)
+        result = jc.parsers.mount.parse(data, raw=raw, quiet=quiet)
 
     elif '--netstat' in sys.argv:
-        result = jc.parsers.netstat.parse(data, raw=raw)
+        result = jc.parsers.netstat.parse(data, raw=raw, quiet=quiet)
 
     elif '--ps' in sys.argv:
-        result = jc.parsers.ps.parse(data, raw=raw)
+        result = jc.parsers.ps.parse(data, raw=raw, quiet=quiet)
 
     elif '--route' in sys.argv:
-        result = jc.parsers.route.parse(data, raw=raw)
+        result = jc.parsers.route.parse(data, raw=raw, quiet=quiet)
 
     elif '--uname' in sys.argv:
-        result = jc.parsers.uname.parse(data, raw=raw)
+        result = jc.parsers.uname.parse(data, raw=raw, quiet=quiet)
 
     elif '--uptime' in sys.argv:
-        result = jc.parsers.uptime.parse(data, raw=raw)
+        result = jc.parsers.uptime.parse(data, raw=raw, quiet=quiet)
 
     elif '--w' in sys.argv:
-        result = jc.parsers.w.parse(data, raw=raw)
+        result = jc.parsers.w.parse(data, raw=raw, quiet=quiet)
 
     else:
         helptext('missing or incorrect arguments')
