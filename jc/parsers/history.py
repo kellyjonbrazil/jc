@@ -59,10 +59,12 @@ def process(proc_data):
     return processed
 
 
-def parse(data, raw=False):
+def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    jc.jc.compatibility(__name__,
-                        ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'])
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
 
     raw_output = {}
 

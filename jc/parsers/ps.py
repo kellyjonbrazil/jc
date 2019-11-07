@@ -65,13 +65,15 @@ $ ps -ef | jc --ps -p
   ...
 ]
 """
-import jc
+import jc.utils
 
 
-def parse(data):
+def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    jc.jc.compatibility(__name__,
-                        ['linux', 'darwin', 'cygwin', 'aix', 'freebsd'])
+    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501

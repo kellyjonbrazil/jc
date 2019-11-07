@@ -15,13 +15,15 @@ $ uptime | jc --uptime -p
   "load_15m": "1.91"
 }
 """
-import jc
+import jc.utils
 
 
-def parse(data):
+def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    jc.jc.compatibility(__name__,
-                        ['linux', 'darwin', 'cygwin', 'aix', 'freebsd'])
+    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
 
     output = {}
 

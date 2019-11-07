@@ -63,7 +63,7 @@ $ df | jc --df -p -r
   ...
 ]
 """
-from jc.utils import *
+import jc.utils
 
 
 def process(proc_data):
@@ -112,7 +112,7 @@ def parse(data, raw=False, quiet=False):
     compatible = ['linux']
 
     if not quiet:
-        compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, compatible)
 
     cleandata = data.splitlines()
     fix_headers = cleandata[0].lower().replace('avail ', 'available ')

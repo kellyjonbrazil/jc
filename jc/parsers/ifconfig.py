@@ -120,7 +120,7 @@ $ ifconfig | jc --ifconfig -p -r
   }
 ]
 """
-import jc
+import jc.utils
 from ifconfigparser import IfconfigParser
 
 
@@ -170,10 +170,12 @@ def process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False):
+def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    jc.jc.compatibility(__name__,
-                        ['linux', 'aix', 'freebsd'])
+    compatible = ['linux', 'aix', 'freebsd']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
 
     raw_output = []
 

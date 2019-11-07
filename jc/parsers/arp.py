@@ -78,7 +78,7 @@ $ arp -a | jc --arp -p -r
   }
 ]
 """
-from jc.utils import *
+import jc.utils
 
 
 def process(proc_data):
@@ -108,7 +108,7 @@ def parse(data, raw=False, quiet=False):
     compatible = ['linux', 'aix', 'freebsd']
 
     if not quiet:
-        compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, compatible)
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
