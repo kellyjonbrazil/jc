@@ -7,60 +7,74 @@ Usage:
     - ef
     - axu
 
-Example:
+Examples:
 
 $ ps -ef | jc --ps -p
 [
+  {
+    "uid": "root",
+    "pid": 1,
+    "ppid": 0,
+    "c": 0,
+    "stime": "Nov01",
+    "tty": null,
+    "time": "00:00:11",
+    "cmd": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+  },
+  {
+    "uid": "root",
+    "pid": 2,
+    "ppid": 0,
+    "c": 0,
+    "stime": "Nov01",
+    "tty": null,
+    "time": "00:00:00",
+    "cmd": "[kthreadd]"
+  },
+  {
+    "uid": "root",
+    "pid": 4,
+    "ppid": 2,
+    "c": 0,
+    "stime": "Nov01",
+    "tty": null,
+    "time": "00:00:00",
+    "cmd": "[kworker/0:0H]"
+  },
   ...
+]
+
+$ ps -ef | jc --ps -p -r
+[
   {
     "uid": "root",
-    "pid": "545",
-    "ppid": "1",
+    "pid": "1",
+    "ppid": "0",
     "c": "0",
-    "stime": "Oct21",
+    "stime": "Nov01",
     "tty": "?",
-    "time": "00:00:03",
-    "cmd": "/usr/lib/systemd/systemd-journald"
+    "time": "00:00:11",
+    "cmd": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
   },
   {
     "uid": "root",
-    "pid": "566",
-    "ppid": "1",
+    "pid": "2",
+    "ppid": "0",
     "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:00",
-    "cmd": "/usr/sbin/lvmetad -f"
-  },
-  {
-    "uid": "root",
-    "pid": "580",
-    "ppid": "1",
-    "c": "0",
-    "stime": "Oct21",
+    "stime": "Nov01",
     "tty": "?",
     "time": "00:00:00",
-    "cmd": "/usr/lib/systemd/systemd-udevd"
+    "cmd": "[kthreadd]"
   },
   {
     "uid": "root",
-    "pid": "659",
+    "pid": "4",
     "ppid": "2",
     "c": "0",
-    "stime": "Oct21",
+    "stime": "Nov01",
     "tty": "?",
     "time": "00:00:00",
-    "cmd": "[kworker/u257:0]"
-  },
-  {
-    "uid": "root",
-    "pid": "666",
-    "ppid": "2",
-    "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:00",
-    "cmd": "[hci0]"
+    "cmd": "[kworker/0:0H]"
   },
   ...
 ]
@@ -92,6 +106,10 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError):
                     entry[key] = None
+
+        if 'tty' in entry:
+            if entry['tty'] == '?':
+                entry['tty'] = None
 
     return proc_data
 
