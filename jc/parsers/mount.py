@@ -50,12 +50,30 @@ $ mount | jc --mount -p
 import jc
 
 
-def parse(data):
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "filesystem":   string,
+        "mount_point":  string,
+        "type":         string,
+        "access": [
+                        string
+        ]
+      }
+    ]
+
+    nothing to process
+    '''
+    return proc_data
+
+
+def parse(data, raw=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     jc.jc.compatibility(__name__,
                         ['linux'])
 
-    output = []
+    raw_output = []
 
     linedata = data.splitlines()
 
@@ -73,8 +91,11 @@ def parse(data):
 
             access = parsed_line[5].lstrip('(').rstrip(')').split(',')
 
-            output_line['access'] = access
+            output_line['options'] = access
 
-            output.append(output_line)
+            raw_output.append(output_line)
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
