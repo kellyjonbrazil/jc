@@ -91,7 +91,8 @@ def parse_post(raw_data):
     # clean up trailing whitespace on each item in each entry
     # flags --- = null
     # program_name - = null
-    # post process to split pid and program name and ip addresses and ports
+    # split pid and program name and ip addresses and ports
+    # create network and transport protocol fields
 
     for entry in raw_data:
         for item in entry:
