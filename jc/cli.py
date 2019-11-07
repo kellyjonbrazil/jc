@@ -121,7 +121,7 @@ def main():
     found = False
 
     for arg in sys.argv:
-        if arg in list(parser_map.keys()):
+        if arg in parser_map:
             result = parser_map[arg](data, raw=raw, quiet=quiet)
             found = True
             break
