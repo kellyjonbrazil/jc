@@ -4,8 +4,7 @@ Usage:
     Specify --netstat as the first argument if the piped input is coming from netstat
 
 Limitations:
-    -Z option may rarely cause incorrect parsing of the program_name, security_context, and path
-       for lines with spaces in the program_name
+    incorrect parsing can occur when there is a space in the program_name field when using the -p option in netstat
 """
 import string
 import jc.utils
@@ -15,20 +14,28 @@ def process(proc_data):
     '''schema:
     [
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "0.0.0.0:22",
-        "foreign_address": "0.0.0.0:*",
-        "state": "LISTEN",
-        "program_name": "1219/sshd",
-        "security_context": "system_u:system_r:sshd_t:s0-s0:c0.c1023           ",
-        "refcnt": "2",
-        "flags": "ACC",
-        "type": "STREAM",
-        "inode": "20782",
-        "path": "/var/run/NetworkManager/private-dhcp",
-        "kind": "network"
+        "proto":             string,
+        "recv_q":            integer,
+        "send_q":            integer,
+        "transport_protocol" string,
+        "network_protocol":  string,
+        "local_address":     string,
+        "local_port":        string,
+        "local_port_num":    integer,
+        "foreign_address":   string,
+        "foreign_port":      string,
+        "foreign_port_num":  integer,
+        "state":             string,
+        "program_name":      string,
+        "pid":               integer,
+        "user":              string,
+        "security_context":  string,           ",
+        "refcnt":            integer,
+        "flags":             string,
+        "type":              stromg,
+        "inode":             integer,
+        "path":              string,
+        "kind":              string
       }
     ]
     '''
@@ -81,8 +88,17 @@ def parse_socket(header_text, headers, entry):
 
 
 def parse_post(raw_data):
-
+    # flags --- = null
     # post process to split pid and program name and ip addresses and ports
+
+    for entry in raw_data:
+        if 'flags' in entry:
+            if entry['flags'] == '---':
+                entry['flags'] = None
+        if 'program_name' in entry:
+            entry['program_name'] = entry['program_name'].rstrip()
+            if entry['program_name'] == '-':
+                entry['program_name'] = None
 
     return raw_data
 
@@ -95,6 +111,8 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, compatible)
 
     cleandata = data.splitlines()
+    cleandata = list(filter(None, cleandata))
+
     raw_output = []
 
     network = False
