@@ -32,6 +32,31 @@ $ w | jc --w -p
 import jc.utils
 
 
+def process(proc_data):
+    '''schema:
+    [
+      {
+        "user":     string,     # '-'' = null
+        "tty":      string,     # '-'' = null
+        "from":     string,     # '-'' = null
+        "login_at": string,     # '-'' = null
+        "idle":     string,     # '-'' = null
+        "jcpu":     string,
+        "pcpu":     string,
+        "what":     string      # '-'' = null
+      }
+    ]
+    '''
+    for entry in proc_data:
+        null_list = ['user', 'tty', 'from', 'login_at', 'idle', 'what']
+        for key in null_list:
+            if key in entry:
+                if key == '-':
+                    entry[key] = None
+
+    return proc_data
+
+
 def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
@@ -50,4 +75,9 @@ def parse(data, raw=False, quiet=False):
     headers = ['login_at' if x == 'login@' else x for x in headers]
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    return [dict(zip(headers, r)) for r in raw_data]
+    raw_output = [dict(zip(headers, r)) for r in raw_data]
+
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
