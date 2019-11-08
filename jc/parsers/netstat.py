@@ -3,9 +3,6 @@
 Usage:
     Specify --netstat as the first argument if the piped input is coming from netstat
 
-Limitations:
-    incorrect parsing can occur when there is a space in the program_name field when using the -p option in netstat
-
 Examples:
 
 $ sudo netstat -apWn | jc --netstat -p
@@ -444,20 +441,36 @@ def parse_network(headers, entry):
 
 
 def parse_socket(header_text, headers, entry):
-    # get the column # of first letter of "state"
-    # for each line check column # to see if state column is populated
-    # remove [ and ] from each line
     output_line = {}
+    # get the column # of first letter of "state"
     state_col = header_text.find('state')
+    # get the program name column area
+    pn_start = header_text.find('program_name')
+    pn_end = header_text.find('path') - 1
 
+    # remove [ and ] from each line
     entry = entry.replace('[ ]', '---')
     entry = entry.replace('[', ' ').replace(']', ' ')
+
+    # find program_name column area and substitute spaces with \u2026 there
+    old_pn = entry[pn_start:pn_end]
+    new_pn = old_pn.replace(' ', '\u2026')
+    entry = entry.replace(old_pn, new_pn)
+
     entry_list = entry.split(maxsplit=len(headers) - 1)
+    # check column # to see if state column is populated
     if entry[state_col] in string.whitespace:
         entry_list.insert(4, None)
 
     output_line = dict(zip(headers, entry_list))
     output_line['kind'] = 'socket'
+
+    # fix program_name field to turn \u2026 back to spaces
+    if 'program_name' in output_line:
+        if output_line['program_name']:
+            old_d_pn = output_line['program_name']
+            new_d_pn = old_d_pn.replace('\u2026', ' ')
+            output_line['program_name'] = new_d_pn
 
     return output_line
 
