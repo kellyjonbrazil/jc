@@ -3,28 +3,72 @@
 Usage:
     specify --w as the first argument if the piped input is coming from w
 
-Example:
+Examples:
 
 $ w | jc --w -p
 [
   {
     "user": "root",
-    "tty": "ttyS0",
-    "from": "-",
-    "login_at": "Mon20",
-    "idle": "0.00s",
-    "jcpu": "14.70s",
+    "tty": "tty1",
+    "from": null,
+    "login_at": "07:49",
+    "idle": "1:15m",
+    "jcpu": "0.00s",
     "pcpu": "0.00s",
-    "what": "bash"
+    "what": "-bash"
+  },
+  {
+    "user": "root",
+    "tty": "ttyS0",
+    "from": null,
+    "login_at": "06:24",
+    "idle": "0.00s",
+    "jcpu": "0.43s",
+    "pcpu": "0.00s",
+    "what": "w"
   },
   {
     "user": "root",
     "tty": "pts/0",
     "from": "192.168.71.1",
-    "login_at": "Thu22",
-    "idle": "22:46m",
-    "jcpu": "0.05s",
-    "pcpu": "0.05s",
+    "login_at": "06:29",
+    "idle": "2:35m",
+    "jcpu": "0.00s",
+    "pcpu": "0.00s",
+    "what": "-bash"
+  }
+]
+
+$ w | jc --w -p -r
+[
+  {
+    "user": "kbrazil",
+    "tty": "tty1",
+    "from": "-",
+    "login_at": "07:49",
+    "idle": "1:16m",
+    "jcpu": "0.00s",
+    "pcpu": "0.00s",
+    "what": "-bash"
+  },
+  {
+    "user": "kbrazil",
+    "tty": "ttyS0",
+    "from": "-",
+    "login_at": "06:24",
+    "idle": "2.00s",
+    "jcpu": "0.46s",
+    "pcpu": "0.00s",
+    "what": "w"
+  },
+  {
+    "user": "kbrazil",
+    "tty": "pts/0",
+    "from": "192.168.71.1",
+    "login_at": "06:29",
+    "idle": "2:36m",
+    "jcpu": "0.00s",
+    "pcpu": "0.00s",
     "what": "-bash"
   }
 ]
