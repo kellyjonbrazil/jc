@@ -29,6 +29,7 @@ $ w | jc --w -p
   }
 ]
 """
+import string
 import jc.utils
 
 
@@ -51,7 +52,7 @@ def process(proc_data):
         null_list = ['user', 'tty', 'from', 'login_at', 'idle', 'what']
         for key in null_list:
             if key in entry:
-                if key == '-':
+                if entry[key] == '-':
                     entry[key] = None
 
     return proc_data
@@ -64,18 +65,31 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
 
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
-
     cleandata = data.splitlines()[1:]
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-
+    header_text = cleandata[0].lower()
+    # fixup for 'from' column that can be blank
+    from_col = header_text.find('from')
     # clean up 'login@' header
     # even though @ in a key is valid json, it can make things difficult
-    headers = ['login_at' if x == 'login@' else x for x in headers]
+    header_text = header_text.replace('login@', 'login_at')
+    headers = [h for h in ' '.join(header_text.strip().split()).split() if h]
 
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
+    # parse lines
+    raw_output = []
+    if cleandata:
+        for entry in cleandata[1:]:
+            output_line = {}
+
+            # normalize data by inserting Null for missing data
+            temp_line = entry.split(maxsplit=len(headers) - 1)
+
+            # fix from column, always at column 2
+            if 'from' in headers:
+                if entry[from_col] in string.whitespace:
+                    temp_line.insert(2, '-')
+
+            output_line = dict(zip(headers, temp_line))
+            raw_output.append(output_line)
 
     if raw:
         return raw_output
