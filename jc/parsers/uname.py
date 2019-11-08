@@ -23,6 +23,24 @@ $ uname -a | jc --uname -p
 import jc.utils
 
 
+def process(proc_data):
+    '''schema:
+    {
+        "kernel_name":        string,
+        "node_name":          string,
+        "kernel_release":     string,
+        "operating_system":   string,
+        "hardware_platform":  string,
+        "processor":          string,
+        "machine":            string,
+        "kernel_version":     string
+    }
+
+    no extra processing
+    '''
+    return proc_data
+
+
 def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
@@ -30,22 +48,25 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
 
-    output = {}
+    raw_output = {}
     parsed_line = data.split(maxsplit=3)
 
     if len(parsed_line) > 1:
 
-        output['kernel_name'] = parsed_line.pop(0)
-        output['node_name'] = parsed_line.pop(0)
-        output['kernel_release'] = parsed_line.pop(0)
+        raw_output['kernel_name'] = parsed_line.pop(0)
+        raw_output['node_name'] = parsed_line.pop(0)
+        raw_output['kernel_release'] = parsed_line.pop(0)
 
         parsed_line = parsed_line[-1].rsplit(maxsplit=4)
 
-        output['operating_system'] = parsed_line.pop(-1)
-        output['hardware_platform'] = parsed_line.pop(-1)
-        output['processor'] = parsed_line.pop(-1)
-        output['machine'] = parsed_line.pop(-1)
+        raw_output['operating_system'] = parsed_line.pop(-1)
+        raw_output['hardware_platform'] = parsed_line.pop(-1)
+        raw_output['processor'] = parsed_line.pop(-1)
+        raw_output['machine'] = parsed_line.pop(-1)
 
-        output['kernel_version'] = parsed_line.pop(0)
+        raw_output['kernel_version'] = parsed_line.pop(0)
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)
