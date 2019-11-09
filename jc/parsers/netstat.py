@@ -443,6 +443,7 @@ def parse_post(raw_data):
                 entry['flags'] = None
 
         if 'program_name' in entry:
+            entry['program_name'] = entry['program_name'].strip()
             if entry['program_name'] == '-':
                 entry['program_name'] = None
 
