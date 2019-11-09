@@ -1,0 +1,1 @@
+[{"user": "kbrazil", "tty": "ttyS0", "from": null, "login_at": "Fri18", "idle": "32:16", "jcpu": "2.66s", "pcpu": "2.66s", "what": "-bash"}, {"user": "kbrazil", "tty": "pts/0", "from": "192.168.71.1", "login_at": "09:53", "idle": "8.00s", "jcpu": "0.10s", "pcpu": "0.00s", "what": "w"}]
