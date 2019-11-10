@@ -3,151 +3,12 @@
 Usage:
     specify --lsblk as the first argument if the piped input is coming from lsblk
 
-Limitations:
-    the following columns can only be used as the last column:
-        HCTL
-        LABEL
-        MODEL
-        MOUNTPOINT
-        PARTLABEL
-        PARTUUID
-        PKNAME
-        REV
-        SERIAL
-        STATE
-        SCHED
-        TRAN
-        UUID
-        VENDOR
-        WWN
+
 
 Examples:
 
-$ lsblk -o +STATE | jc --lsblk -p
-[
-  {
-    "name": "sda",
-    "maj_min": "8:0",
-    "rm": false,
-    "size": "20G",
-    "ro": false,
-    "type": "disk",
-    "mountpoint": null,
-    "state": "running"
-  },
-  {
-    "name": "sda1",
-    "maj_min": "8:1",
-    "rm": false,
-    "size": "1G",
-    "ro": false,
-    "type": "part",
-    "mountpoint": "/boot"
-  },
-  {
-    "name": "sda2",
-    "maj_min": "8:2",
-    "rm": false,
-    "size": "19G",
-    "ro": false,
-    "type": "part",
-    "mountpoint": null
-  },
-  {
-    "name": "centos-root",
-    "maj_min": "253:0",
-    "rm": false,
-    "size": "17G",
-    "ro": false,
-    "type": "lvm",
-    "mountpoint": "/",
-    "state": "running"
-  },
-  {
-    "name": "centos-swap",
-    "maj_min": "253:1",
-    "rm": false,
-    "size": "2G",
-    "ro": false,
-    "type": "lvm",
-    "mountpoint": "[SWAP]",
-    "state": "running"
-  },
-  {
-    "name": "sr0",
-    "maj_min": "11:0",
-    "rm": true,
-    "size": "1024M",
-    "ro": false,
-    "type": "rom",
-    "mountpoint": null,
-    "state": "running"
-  }
-]
 
-$ lsblk -o +STATE | jc --lsblk -p -r
-[
-  {
-    "name": "sda",
-    "maj_min": "8:0",
-    "rm": "0",
-    "size": "20G",
-    "ro": "0",
-    "type": "disk",
-    "mountpoint": null,
-    "state": "running"
-  },
-  {
-    "name": "sda1",
-    "maj_min": "8:1",
-    "rm": "0",
-    "size": "1G",
-    "ro": "0",
-    "type": "part",
-    "mountpoint": "/boot"
-  },
-  {
-    "name": "sda2",
-    "maj_min": "8:2",
-    "rm": "0",
-    "size": "19G",
-    "ro": "0",
-    "type": "part",
-    "mountpoint": null
-  },
-  {
-    "name": "centos-root",
-    "maj_min": "253:0",
-    "rm": "0",
-    "size": "17G",
-    "ro": "0",
-    "type": "lvm",
-    "mountpoint": "/",
-    "state": "running"
-  },
-  {
-    "name": "centos-swap",
-    "maj_min": "253:1",
-    "rm": "0",
-    "size": "2G",
-    "ro": "0",
-    "type": "lvm",
-    "mountpoint": "[SWAP]",
-    "state": "running"
-  },
-  {
-    "name": "sr0",
-    "maj_min": "11:0",
-    "rm": "1",
-    "size": "1024M",
-    "ro": "0",
-    "type": "rom",
-    "mountpoint": null,
-    "state": "running"
-  }
-]
 """
-import string
 import jc.utils
 
 
@@ -191,7 +52,10 @@ def process(proc_data):
         "wwn":          string,
         "rand":         boolean,
         "pkname":       string,
-        "hctl":         string
+        "hctl":         string,
+        "tran":         string,
+        "rev":          string,
+        "vendor":       string
       }
     ]
     '''
@@ -219,6 +83,11 @@ def process(proc_data):
     return proc_data
 
 
+def parse_pairs(p_data):
+    '''Used if -P option is detected'''
+    pass
+
+
 def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
@@ -232,29 +101,55 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, linedata))
     cleandata = data.splitlines()
 
-    fix_headers = cleandata.pop(0).lower()
-    fix_headers = fix_headers.replace('maj:min', 'maj_min')
-    fix_headers = fix_headers.replace('-', '_')
+    header_text = cleandata.pop(0).lower()
+    header_text = header_text.replace(':', '_')
+    header_text = header_text.replace('-', '_')
+    header_text = header_text + ' '
 
-    # find mountpoint starting column for fixup
-    mpt_col = fix_headers.find('mountpoint')
+    header_list = header_text.split()
 
-    headers = fix_headers.split()
+    # find each column index and end position
+    header_search = [header_list[0]]
+    for h in header_list[1:]:
+        header_search.append(' ' + h + ' ')
+
+    header_spec_list = []
+    for i, column in enumerate(header_list[0:len(header_list) - 1]):
+        header_spec = {
+            'name': column,
+            'end': header_text.find(header_search[i + 1]) + 1
+        }
+
+        # fix weird 'rev' column
+        if header_search[i + 1] == ' rev ':
+            end_fix = header_spec['end'] - 1
+            header_spec['end'] = end_fix
+
+        header_spec_list.append(header_spec)
 
     # parse lines
     if cleandata:
         for entry in cleandata:
             output_line = {}
 
-            # normalize data by inserting Null for missing data
-            temp_line = entry.split(maxsplit=len(headers) - 1)
+            # insert new separator since data can contain spaces
+            for col in reversed(header_list):
+                # find the right header_spec
+                for h_spec in header_spec_list:
+                    if h_spec['name'] == col:
+                        h_end = h_spec['end']
+                        # insert \u2026 delimiter
+                        entry = entry[:h_end] + '~' + entry[h_end:]
 
-            # fix mountpoint column, always at column 6
-            if len(entry) > mpt_col:
-                if entry[mpt_col] in string.whitespace:
-                    temp_line.insert(6, None)
+            # create the entry list from the new delimiter
+            entry_list = entry.split('~', maxsplit=len(header_list) - 1)
 
-            output_line = dict(zip(headers, temp_line))
+            # clean up leading and trailing spaces in entry
+            clean_entry_list = []
+            for col in entry_list:
+                clean_entry_list.append(col.strip().rstrip())
+
+            output_line = dict(zip(header_list, clean_entry_list))
             raw_output.append(output_line)
 
         for entry in raw_output:

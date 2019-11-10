@@ -4,7 +4,7 @@ jc changelog
 - Add -r and raw=True options. By default, jc will now convert numbers and boolean, if possible, and add other semantic information, while the raw output will keep all values as text and provide a more literal JSON output
 - Add -q and quiet=True options to suppress warnings to stderr
 - Add compatibility warnings to stderr
-- Updated lsof parser to allow parsing of added columns
+- Updated lsblk parser to allow parsing of added columns
 - Updated mount parser: changed 'access' field name to 'options'
 - Updated netstat parser to allow parsing of unix sockets and raw network connections
 - Updated w parser to fix unaligned data where blanks are possible
