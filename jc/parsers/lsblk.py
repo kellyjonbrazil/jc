@@ -9,6 +9,7 @@ Examples:
 
 
 """
+import string
 import jc.utils
 
 
@@ -29,7 +30,7 @@ def process(proc_data):
         "uuid":         string,
         "partlabel":    string,
         "partuuid":     string,
-        "ra":           boolean,
+        "ra":           integer,
         "model":        string,
         "serial":       string,
         "state":        string,
@@ -61,7 +62,7 @@ def process(proc_data):
     '''
     for entry in proc_data:
         # boolean changes
-        bool_list = ['rm', 'ro', 'ra', 'rota', 'disc_zero', 'rand']
+        bool_list = ['rm', 'ro', 'rota', 'disc_zero', 'rand']
         for key in bool_list:
             if key in entry:
                 try:
@@ -71,7 +72,7 @@ def process(proc_data):
                     entry[key] = None
 
         # integer changes
-        int_list = ['alignment', 'min_io', 'opt_io', 'phy_sec', 'log_sec', 'rq_size', 'disc_aln']
+        int_list = ['ra', 'alignment', 'min_io', 'opt_io', 'phy_sec', 'log_sec', 'rq_size', 'disc_aln']
         for key in int_list:
             if key in entry:
                 try:
@@ -95,6 +96,9 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
 
+    # unicode \u2063 = invisible separator and should not be seen in lsblk output
+    delim = '\u2063'
+
     raw_output = []
     linedata = data.splitlines()
     # Clear any blank lines
@@ -117,13 +121,8 @@ def parse(data, raw=False, quiet=False):
     for i, column in enumerate(header_list[0:len(header_list) - 1]):
         header_spec = {
             'name': column,
-            'end': header_text.find(header_search[i + 1]) + 1
+            'end': header_text.find(header_search[i + 1])
         }
-
-        # fix weird 'rev' column
-        if header_search[i + 1] == ' rev ':
-            end_fix = header_spec['end'] - 1
-            header_spec['end'] = end_fix
 
         header_spec_list.append(header_spec)
 
@@ -138,11 +137,16 @@ def parse(data, raw=False, quiet=False):
                 for h_spec in header_spec_list:
                     if h_spec['name'] == col:
                         h_end = h_spec['end']
-                        # insert \u2026 delimiter
-                        entry = entry[:h_end] + '~' + entry[h_end:]
+                        # check if the location contains whitespace. if not
+                        # then move to the left until a space is found
+                        while h_end > 0 and entry[h_end] not in string.whitespace:
+                            h_end -= 1
 
-            # create the entry list from the new delimiter
-            entry_list = entry.split('~', maxsplit=len(header_list) - 1)
+                        # insert custom delimiter
+                        entry = entry[:h_end] + delim + entry[h_end + 1:]
+
+            # create the entry list from the new custom delimiter
+            entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
 
             # clean up leading and trailing spaces in entry
             clean_entry_list = []
