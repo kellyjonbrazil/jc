@@ -35,6 +35,7 @@ ls /       > ls.out
 ls -al /   > ls-al.out
 ls -alh /  > ls-alh.out
 lsblk      > lsblk.out
+lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,PKNAME,HCTL,TRAN,REV,VENDOR > lsblk-allcols.out
 lsmod      > lsmod.out
 lsof       > lsof.out
 sudo lsof  > lsof-sudo.out
