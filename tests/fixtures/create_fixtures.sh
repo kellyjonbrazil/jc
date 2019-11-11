@@ -46,6 +46,7 @@ git clone https://github.com/kellyjonbrazil/jc.git /tmp/jc & sleep 1; netstat   
 netstat -p > netstat-p.out
 netstat -l > netstat-l.out
 sudo netstat -lnp > netstat-sudo-lnp.out
+sudo netstat -aeep > netstat-sudo-aeep.out
 
 ps -ef     > ps-ef.out
 ps axu     > ps-axu.out
