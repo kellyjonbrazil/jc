@@ -78,6 +78,107 @@ $ ps -ef | jc --ps -p -r
   },
   ...
 ]
+
+$ ps axu | jc --ps -p
+[
+  {
+    "user": "root",
+    "pid": 1,
+    "cpu_percent": "0.0",
+    "mem_percent": "0.1",
+    "vsz": "128072",
+    "rss": "6676",
+    "tty": null,
+    "stat": "Ss",
+    "start": "Nov09",
+    "time": "0:06",
+    "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+  },
+  {
+    "user": "root",
+    "pid": 2,
+    "cpu_percent": "0.0",
+    "mem_percent": "0.0",
+    "vsz": "0",
+    "rss": "0",
+    "tty": null,
+    "stat": "S",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[kthreadd]"
+  },
+  {
+    "user": "root",
+    "pid": 4,
+    "cpu_percent": "0.0",
+    "mem_percent": "0.0",
+    "vsz": "0",
+    "rss": "0",
+    "tty": null,
+    "stat": "S<",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[kworker/0:0H]"
+  },
+  ...
+]
+
+$ ps axu | jc --ps -p -r
+[
+  {
+    "user": "root",
+    "pid": "1",
+    "cpu_percent": "0.0",
+    "mem_percent": "0.1",
+    "vsz": "128072",
+    "rss": "6676",
+    "tty": "?",
+    "stat": "Ss",
+    "start": "Nov09",
+    "time": "0:06",
+    "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+  },
+  {
+    "user": "root",
+    "pid": "2",
+    "cpu_percent": "0.0",
+    "mem_percent": "0.0",
+    "vsz": "0",
+    "rss": "0",
+    "tty": "?",
+    "stat": "S",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[kthreadd]"
+  },
+  {
+    "user": "root",
+    "pid": "4",
+    "cpu_percent": "0.0",
+    "mem_percent": "0.0",
+    "vsz": "0",
+    "rss": "0",
+    "tty": "?",
+    "stat": "S<",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[kworker/0:0H]"
+  },
+  {
+    "user": "root",
+    "pid": "6",
+    "cpu_percent": "0.0",
+    "mem_percent": "0.0",
+    "vsz": "0",
+    "rss": "0",
+    "tty": "?",
+    "stat": "S",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[ksoftirqd/0]"
+  },
+  ...
+]
 """
 import jc.utils
 
@@ -86,24 +187,43 @@ def process(proc_data):
     '''schema:
     [
       {
-        "uid":    string,
-        "pid":    integer,
-        "ppid":   integer,
-        "c":      integer,
-        "stime":  string,
-        "tty":    string,    # ? = Null
-        "time":   string,
-        "cmd":    string
+        "uid":           string,
+        "pid":           integer,
+        "ppid":          integer,
+        "c":             integer,
+        "stime":         string,
+        "tty":           string,    # ? = Null
+        "time":          string,
+        "cmd":           string,
+        "user":          string,
+        "cpu_percent":   float,
+        "mem_percent":   float,
+        "vsz":           integer,
+        "rss":           integer,
+        "stat":          string,
+        "start":         string,
+        "command":       string
       }
     ]
     '''
     for entry in proc_data:
-        int_list = ['pid', 'ppid', 'c']
+        # change to int
+        int_list = ['pid', 'ppid', 'c', 'vsz', 'rss']
         for key in int_list:
             if key in entry:
                 try:
                     key_int = int(entry[key])
                     entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
+        # change to float
+        float_list = ['cpu_percent', 'mem_percent']
+        for key in float_list:
+            if key in entry:
+                try:
+                    key_float = float(entry[key])
+                    entry[key] = key_float
                 except (ValueError):
                     entry[key] = None
 
