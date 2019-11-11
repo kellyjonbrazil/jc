@@ -400,9 +400,9 @@ def parse_socket(header_text, headers, entry):
     entry = entry.replace('[ ]', '---')
     entry = entry.replace('[', ' ').replace(']', ' ')
 
-    # find program_name column area and substitute spaces with \u2026 there
+    # find program_name column area and substitute spaces with \u2063 there
     old_pn = entry[pn_start:pn_end]
-    new_pn = old_pn.replace(' ', '\u2026')
+    new_pn = old_pn.replace(' ', '\u2063')
     entry = entry.replace(old_pn, new_pn)
 
     entry_list = entry.split(maxsplit=len(headers) - 1)
@@ -413,11 +413,11 @@ def parse_socket(header_text, headers, entry):
     output_line = dict(zip(headers, entry_list))
     output_line['kind'] = 'socket'
 
-    # fix program_name field to turn \u2026 back to spaces
+    # fix program_name field to turn \u2063 back to spaces
     if 'program_name' in output_line:
         if output_line['program_name']:
             old_d_pn = output_line['program_name']
-            new_d_pn = old_d_pn.replace('\u2026', ' ')
+            new_d_pn = old_d_pn.replace('\u2063', ' ')
             output_line['program_name'] = new_d_pn
 
     return output_line
