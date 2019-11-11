@@ -279,12 +279,7 @@ def process(proc_data):
                     entry[key] = None
 
     return proc_data
-
-
-def parse_pairs(p_data):
-    '''Used if -P option is detected'''
-    pass
-
+    
 
 def parse(data, raw=False, quiet=False):
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
