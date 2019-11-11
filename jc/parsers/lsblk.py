@@ -3,11 +3,208 @@
 Usage:
     specify --lsblk as the first argument if the piped input is coming from lsblk
 
-
-
 Examples:
 
+$ lsblk | jc --lsblk -p
+[
+  {
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": false,
+    "size": "20G",
+    "ro": false,
+    "type": "disk",
+    "mountpoint": null
+  },
+  {
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": false,
+    "size": "1G",
+    "ro": false,
+    "type": "part",
+    "mountpoint": "/boot"
+  },
+  ...
+]
 
+$ lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,PKNAME,HCTL,TRAN,REV,VENDOR | jc --lsblk -p
+[
+  {
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": false,
+    "size": "20G",
+    "ro": false,
+    "type": "disk",
+    "mountpoint": null,
+    "kname": "sda",
+    "fstype": null,
+    "label": null,
+    "uuid": null,
+    "partlabel": null,
+    "partuuid": null,
+    "ra": 4096,
+    "model": "VMware Virtual S",
+    "serial": null,
+    "state": "running",
+    "owner": "root",
+    "group": "disk",
+    "mode": "brw-rw----",
+    "alignment": 0,
+    "min_io": 512,
+    "opt_io": 0,
+    "phy_sec": 512,
+    "log_sec": 512,
+    "rota": true,
+    "sched": "deadline",
+    "rq_size": 128,
+    "disc_aln": 0,
+    "disc_gran": "0B",
+    "disc_max": "0B",
+    "disc_zero": false,
+    "wsame": "32M",
+    "wwn": null,
+    "rand": true,
+    "pkname": null,
+    "hctl": "0:0:0:0",
+    "tran": "spi",
+    "rev": "1.0",
+    "vendor": "VMware,"
+  },
+  {
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": false,
+    "size": "1G",
+    "ro": false,
+    "type": "part",
+    "mountpoint": "/boot",
+    "kname": "sda1",
+    "fstype": "xfs",
+    "label": null,
+    "uuid": "05d927bb-5875-49e3-ada1-7f46cb31c932",
+    "partlabel": null,
+    "partuuid": null,
+    "ra": 4096,
+    "model": null,
+    "serial": null,
+    "state": null,
+    "owner": "root",
+    "group": "disk",
+    "mode": "brw-rw----",
+    "alignment": 0,
+    "min_io": 512,
+    "opt_io": 0,
+    "phy_sec": 512,
+    "log_sec": 512,
+    "rota": true,
+    "sched": "deadline",
+    "rq_size": 128,
+    "disc_aln": 0,
+    "disc_gran": "0B",
+    "disc_max": "0B",
+    "disc_zero": false,
+    "wsame": "32M",
+    "wwn": null,
+    "rand": true,
+    "pkname": "sda",
+    "hctl": null,
+    "tran": null,
+    "rev": null,
+    "vendor": null
+  },
+  ...
+]
+
+$ lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,PKNAME,HCTL,TRAN,REV,VENDOR | jc --lsblk -p -r
+[
+  {
+    "name": "sda",
+    "maj_min": "8:0",
+    "rm": "0",
+    "size": "20G",
+    "ro": "0",
+    "type": "disk",
+    "mountpoint": null,
+    "kname": "sda",
+    "fstype": null,
+    "label": null,
+    "uuid": null,
+    "partlabel": null,
+    "partuuid": null,
+    "ra": "4096",
+    "model": "VMware Virtual S",
+    "serial": null,
+    "state": "running",
+    "owner": "root",
+    "group": "disk",
+    "mode": "brw-rw----",
+    "alignment": "0",
+    "min_io": "512",
+    "opt_io": "0",
+    "phy_sec": "512",
+    "log_sec": "512",
+    "rota": "1",
+    "sched": "deadline",
+    "rq_size": "128",
+    "disc_aln": "0",
+    "disc_gran": "0B",
+    "disc_max": "0B",
+    "disc_zero": "0",
+    "wsame": "32M",
+    "wwn": null,
+    "rand": "1",
+    "pkname": null,
+    "hctl": "0:0:0:0",
+    "tran": "spi",
+    "rev": "1.0",
+    "vendor": "VMware,"
+  },
+  {
+    "name": "sda1",
+    "maj_min": "8:1",
+    "rm": "0",
+    "size": "1G",
+    "ro": "0",
+    "type": "part",
+    "mountpoint": "/boot",
+    "kname": "sda1",
+    "fstype": "xfs",
+    "label": null,
+    "uuid": "05d927bb-5875-49e3-ada1-7f46cb31c932",
+    "partlabel": null,
+    "partuuid": null,
+    "ra": "4096",
+    "model": null,
+    "serial": null,
+    "state": null,
+    "owner": "root",
+    "group": "disk",
+    "mode": "brw-rw----",
+    "alignment": "0",
+    "min_io": "512",
+    "opt_io": "0",
+    "phy_sec": "512",
+    "log_sec": "512",
+    "rota": "1",
+    "sched": "deadline",
+    "rq_size": "128",
+    "disc_aln": "0",
+    "disc_gran": "0B",
+    "disc_max": "0B",
+    "disc_zero": "0",
+    "wsame": "32M",
+    "wwn": null,
+    "rand": "1",
+    "pkname": "sda",
+    "hctl": null,
+    "tran": null,
+    "rev": null,
+    "vendor": null
+  },
+  ...
+]
 """
 import string
 import jc.utils
@@ -160,6 +357,7 @@ def parse(data, raw=False, quiet=False):
             output_line = dict(zip(header_list, clean_entry_list))
             raw_output.append(output_line)
 
+        # clean up non-ascii characters, if any
         for entry in raw_output:
             entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
 
