@@ -151,7 +151,11 @@ def parse(data, raw=False, quiet=False):
             # clean up leading and trailing spaces in entry
             clean_entry_list = []
             for col in entry_list:
-                clean_entry_list.append(col.strip().rstrip())
+                clean_entry = col.strip().rstrip()
+                if clean_entry == '':
+                    clean_entry = None
+                
+                clean_entry_list.append(clean_entry)
 
             output_line = dict(zip(header_list, clean_entry_list))
             raw_output.append(output_line)
