@@ -23,10 +23,13 @@ def error_message(message):
 
 def compatibility(mod_name, compatible):
     """Checks for the parser's compatibility with the running OS platform.
+    
+    Arguments:
 
-    compatible options: 
-
-        linux, darwin, cygwin, win32, aix, freebsd
+        mod_name        (string) __name__ of the calling module
+        compatible      (list) sys.platform name(s) compatible with the parser
+                        compatible options: 
+                        linux, darwin, cygwin, win32, aix, freebsd
     """
     if sys.platform not in compatible:
         mod = mod_name.split('.')[-1]
