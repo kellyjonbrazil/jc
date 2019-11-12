@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility ls Parser
+# jc.parsers.ls
+jc - JSON CLI output utility ls Parser
 
 Usage:
     specify --ls as the first argument if the piped input is coming from ls
@@ -133,100 +134,35 @@ Examples:
       "size": 117164432,
       "date": "May 3 2019"
     }
-"""
-import re
-import jc.utils
 
+## process
+```python
+process(proc_data)
+```
 
-def process(proc_data):
-    """
-    schema:
-    
-        [
-          {
-            "filename": string,
-            "flags":    string,
-            "links":    integer,
-            "owner":    string,
-            "group":    string,
-            "size":     integer,
-            "date":     string
-          }
-        ]
-    """
+schema:
 
-    for entry in proc_data:
-        int_list = ['links', 'size']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+    [
+      {
+        "filename": string,
+        "flags":    string,
+        "links":    integer,
+        "owner":    string,
+        "group":    string,
+        "size":     integer,
+        "date":     string
+      }
+    ]
 
-    return proc_data
+## parse
+```python
+parse(data, raw=False, quiet=False)
+```
 
+Main parsing function
 
-def parse(data, raw=False, quiet=False):
-    """
-    Main parsing function
+Arguments:
 
-    Arguments:
+    raw:    (boolean) output preprocessed JSON if True
+    quiet:  (boolean) suppress warning messages if True
 
-        raw:    (boolean) output preprocessed JSON if True
-        quiet:  (boolean) suppress warning messages if True
-    """
-    
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-
-    if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    raw_output = []
-
-    linedata = data.splitlines()
-
-    # Delete first line if it starts with 'total'
-    if linedata:
-        if linedata[0].find('total') == 0:
-            linedata.pop(0)
-
-    # Clear any blank lines
-    cleandata = list(filter(None, linedata))
-
-    if cleandata:
-        # Check if -l was used to parse extra data
-        if re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', cleandata[0]):
-            for entry in cleandata:
-                output_line = {}
-
-                parsed_line = entry.split(maxsplit=8)
-
-                # split filenames and links
-                filename_field = parsed_line[8].split(' -> ')
-
-                # create list of dictionaries
-                output_line['filename'] = filename_field[0]
-
-                if len(filename_field) > 1:
-                    output_line['link_to'] = filename_field[1]
-
-                output_line['flags'] = parsed_line[0]
-                output_line['links'] = parsed_line[1]
-                output_line['owner'] = parsed_line[2]
-                output_line['group'] = parsed_line[3]
-                output_line['size'] = parsed_line[4]
-                output_line['date'] = ' '.join(parsed_line[5:8])
-                raw_output.append(output_line)
-        else:
-            for entry in cleandata:
-                output_line = {}
-                output_line['filename'] = entry
-                raw_output.append(output_line)
-
-    if raw:
-        return raw_output
-    else:
-        return process(raw_output)

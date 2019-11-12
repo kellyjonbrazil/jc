@@ -5,56 +5,58 @@ Usage:
 
 Examples:
 
-$ env | jc --env -p
-[
-  {
-    "name": "XDG_SESSION_ID",
-    "value": "1"
-  },
-  {
-    "name": "HOSTNAME",
-    "value": "localhost.localdomain"
-  },
-  {
-    "name": "TERM",
-    "value": "vt220"
-  },
-  {
-    "name": "SHELL",
-    "value": "/bin/bash"
-  },
-  {
-    "name": "HISTSIZE",
-    "value": "1000"
-  },
-  ...
-]
+    $ env | jc --env -p
+    [
+      {
+        "name": "XDG_SESSION_ID",
+        "value": "1"
+      },
+      {
+        "name": "HOSTNAME",
+        "value": "localhost.localdomain"
+      },
+      {
+        "name": "TERM",
+        "value": "vt220"
+      },
+      {
+        "name": "SHELL",
+        "value": "/bin/bash"
+      },
+      {
+        "name": "HISTSIZE",
+        "value": "1000"
+      },
+      ...
+    ]
 
-$ env | jc --env -p -r
-{
-  "TERM": "xterm-256color",
-  "SHELL": "/bin/bash",
-  "USER": "root",
-  "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-  "PWD": "/root",
-  "LANG": "en_US.UTF-8",
-  "HOME": "/root",
-  "LOGNAME": "root",
-  "_": "/usr/bin/env"
-}
+    $ env | jc --env -p -r
+    {
+      "TERM": "xterm-256color",
+      "SHELL": "/bin/bash",
+      "USER": "root",
+      "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "PWD": "/root",
+      "LANG": "en_US.UTF-8",
+      "HOME": "/root",
+      "LOGNAME": "root",
+      "_": "/usr/bin/env"
+    }
 """
 import jc.utils
 
 
 def process(proc_data):
-    '''schema:
-    [
-      {
-        "name":     string,
-        "value":    string
-      }
-    ]
-    '''
+    """
+    schema:
+    
+        [
+          {
+            "name":     string,
+            "value":    string
+          }
+        ]
+    """
 
     # rebuild output for added semantic information
     processed = []
@@ -68,6 +70,15 @@ def process(proc_data):
 
 
 def parse(data, raw=False, quiet=False):
+    """
+    Main parsing function
+
+    Arguments:
+
+        raw:    (boolean) output preprocessed JSON if True
+        quiet:  (boolean) suppress warning messages if True
+    """
+    
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 

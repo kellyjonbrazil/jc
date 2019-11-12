@@ -5,31 +5,42 @@ Usage:
 
 Examples:
 
-$ foo | jc --foo -p
-[]
+    $ foo | jc --foo -p
+    []
 
-$ foo | jc --foo -p -r
-[]
+    $ foo | jc --foo -p -r
+    []
 """
 import jc.utils
 
 
 def process(proc_data):
-    '''schema:
-    [
-      {
-        "foo":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
-    '''
+    """
+    schema:
+    
+        [
+          {
+            "foo":     string,
+            "bar":     boolean,
+            "baz":     integer
+          }
+        ]
+    """
 
     # rebuild output for added semantic information
     return proc_data
 
 
 def parse(data, raw=False, quiet=False):
+    """
+    Main parsing function
+
+    Arguments:
+
+        raw:    (boolean) output preprocessed JSON if True
+        quiet:  (boolean) suppress warning messages if True
+    """
+    
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 

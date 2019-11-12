@@ -8,40 +8,51 @@ Limitations:
 
 Example:
 
-$ uname -a | jc --uname -p
-{
-  "kernel_name": "Linux",
-  "node_name": "user-ubuntu",
-  "kernel_release": "4.15.0-65-generic",
-  "operating_system": "GNU/Linux",
-  "hardware_platform": "x86_64",
-  "processor": "x86_64",
-  "machine": "x86_64",
-  "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
-}
+    $ uname -a | jc --uname -p
+    {
+      "kernel_name": "Linux",
+      "node_name": "user-ubuntu",
+      "kernel_release": "4.15.0-65-generic",
+      "operating_system": "GNU/Linux",
+      "hardware_platform": "x86_64",
+      "processor": "x86_64",
+      "machine": "x86_64",
+      "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
+    }
 """
 import jc.utils
 
 
 def process(proc_data):
-    '''schema:
-    {
-        "kernel_name":        string,
-        "node_name":          string,
-        "kernel_release":     string,
-        "operating_system":   string,
-        "hardware_platform":  string,
-        "processor":          string,
-        "machine":            string,
-        "kernel_version":     string
-    }
+    """
+    schema:
+    
+        {
+            "kernel_name":        string,
+            "node_name":          string,
+            "kernel_release":     string,
+            "operating_system":   string,
+            "hardware_platform":  string,
+            "processor":          string,
+            "machine":            string,
+            "kernel_version":     string
+        }
 
     no extra processing
-    '''
+    """
     return proc_data
 
 
 def parse(data, raw=False, quiet=False):
+    """
+    Main parsing function
+
+    Arguments:
+
+        raw:    (boolean) output preprocessed JSON if True
+        quiet:  (boolean) suppress warning messages if True
+    """
+    
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
 

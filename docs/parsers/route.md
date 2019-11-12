@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility route Parser
+# jc.parsers.route
+jc - JSON CLI output utility route Parser
 
 Usage:
     specify --route as the first argument if the piped input is coming from route
@@ -90,68 +91,39 @@ Examples:
         "irtt": "0"
       }
     ]
-"""
-import jc.utils
 
+## process
+```python
+process(proc_data)
+```
 
-def process(proc_data):
-    """
-    schema:
-    
-        [
-          {
-            "destination":  string,
-            "gateway":      string,
-            "genmask":      string,
-            "flags":        string,
-            "metric":       integer,
-            "ref":          integer,
-            "use":          integer,
-            "mss":          integer,
-            "window":       integer,
-            "irtt":         integer,
-            "iface":        string
-          }
-        ]
-    """
-    for entry in proc_data:
-        int_list = ['metric', 'ref', 'use', 'mss', 'window', 'irtt']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+schema:
 
-    return proc_data
+    [
+      {
+        "destination":  string,
+        "gateway":      string,
+        "genmask":      string,
+        "flags":        string,
+        "metric":       integer,
+        "ref":          integer,
+        "use":          integer,
+        "mss":          integer,
+        "window":       integer,
+        "irtt":         integer,
+        "iface":        string
+      }
+    ]
 
+## parse
+```python
+parse(data, raw=False, quiet=False)
+```
 
-def parse(data, raw=False, quiet=False):
-    """
-    Main parsing function
+Main parsing function
 
-    Arguments:
+Arguments:
 
-        raw:    (boolean) output preprocessed JSON if True
-        quiet:  (boolean) suppress warning messages if True
-    """
-    
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
+    raw:    (boolean) output preprocessed JSON if True
+    quiet:  (boolean) suppress warning messages if True
 
-    if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
-
-    cleandata = data.splitlines()[1:]
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
-
-    if raw:
-        return raw_output
-    else:
-        return process(raw_output)

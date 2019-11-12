@@ -5,70 +5,81 @@ Usage:
 
 Example:
 
-$ mount | jc --mount -p
-[
-  {
-    "filesystem": "sysfs",
-    "mount_point": "/sys",
-    "type": "sysfs",
-    "access": [
-      "rw",
-      "nosuid",
-      "nodev",
-      "noexec",
-      "relatime"
+    $ mount | jc --mount -p
+    [
+      {
+        "filesystem": "sysfs",
+        "mount_point": "/sys",
+        "type": "sysfs",
+        "access": [
+          "rw",
+          "nosuid",
+          "nodev",
+          "noexec",
+          "relatime"
+        ]
+      },
+      {
+        "filesystem": "proc",
+        "mount_point": "/proc",
+        "type": "proc",
+        "access": [
+          "rw",
+          "nosuid",
+          "nodev",
+          "noexec",
+          "relatime"
+        ]
+      },
+      {
+        "filesystem": "udev",
+        "mount_point": "/dev",
+        "type": "devtmpfs",
+        "access": [
+          "rw",
+          "nosuid",
+          "relatime",
+          "size=977500k",
+          "nr_inodes=244375",
+          "mode=755"
+        ]
+      },
+      ...
     ]
-  },
-  {
-    "filesystem": "proc",
-    "mount_point": "/proc",
-    "type": "proc",
-    "access": [
-      "rw",
-      "nosuid",
-      "nodev",
-      "noexec",
-      "relatime"
-    ]
-  },
-  {
-    "filesystem": "udev",
-    "mount_point": "/dev",
-    "type": "devtmpfs",
-    "access": [
-      "rw",
-      "nosuid",
-      "relatime",
-      "size=977500k",
-      "nr_inodes=244375",
-      "mode=755"
-    ]
-  },
-  ...
-]
 """
 import jc.utils
 
 
 def process(proc_data):
-    '''schema:
-    [
-      {
-        "filesystem":   string,
-        "mount_point":  string,
-        "type":         string,
-        "access": [
-                        string
+    """
+    schema:
+    
+        [
+          {
+            "filesystem":   string,
+            "mount_point":  string,
+            "type":         string,
+            "access": [
+                            string
+            ]
+          }
         ]
-      }
-    ]
 
-    nothing to process
-    '''
+        nothing to process
+    """
     return proc_data
 
 
 def parse(data, raw=False, quiet=False):
+    """
+    Main parsing function
+
+    Arguments:
+
+        raw:    (boolean) output preprocessed JSON if True
+        quiet:  (boolean) suppress warning messages if True
+    """
+    
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
 

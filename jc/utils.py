@@ -4,6 +4,8 @@ import sys
 
 
 def warning_message(message):
+    """Prints a warning message for non-fatal issues"""
+
     error_string = f'''
     jc:  Warning - {message}
     '''
@@ -11,6 +13,8 @@ def warning_message(message):
 
 
 def error_message(message):
+    """Prints an error message for fatal issues"""
+    
     error_string = f'''
     jc:  Error - {message}
     '''
@@ -18,8 +22,11 @@ def error_message(message):
 
 
 def compatibility(mod_name, compatible):
-    """
-    compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    """Checks for the parser's compatibility with the running OS platform.
+
+    compatible options: 
+
+        linux, darwin, cygwin, win32, aix, freebsd
     """
     if sys.platform not in compatible:
         mod = mod_name.split('.')[-1]

@@ -5,69 +5,71 @@ Usage:
 
 Examples:
 
-$ df | jc --df -p
-[
-  {
-    "filesystem": "devtmpfs",
-    "1k-blocks": 1918820,
-    "used": 0,
-    "available": 1918820,
-    "use_percent": 0,
-    "mounted_on": "/dev"
-  },
-  {
-    "filesystem": "tmpfs",
-    "1k-blocks": 1930668,
-    "used": 0,
-    "available": 1930668,
-    "use_percent": 0,
-    "mounted_on": "/dev/shm"
-  },
-  {
-    "filesystem": "tmpfs",
-    "1k-blocks": 1930668,
-    "used": 11800,
-    "available": 1918868,
-    "use_percent": 1,
-    "mounted_on": "/run"
-  },
-  ...
-]
+    $ df | jc --df -p
+    [
+      {
+        "filesystem": "devtmpfs",
+        "1k-blocks": 1918820,
+        "used": 0,
+        "available": 1918820,
+        "use_percent": 0,
+        "mounted_on": "/dev"
+      },
+      {
+        "filesystem": "tmpfs",
+        "1k-blocks": 1930668,
+        "used": 0,
+        "available": 1930668,
+        "use_percent": 0,
+        "mounted_on": "/dev/shm"
+      },
+      {
+        "filesystem": "tmpfs",
+        "1k-blocks": 1930668,
+        "used": 11800,
+        "available": 1918868,
+        "use_percent": 1,
+        "mounted_on": "/run"
+      },
+      ...
+    ]
 
-$ df | jc --df -p -r
-[
-  {
-    "filesystem": "devtmpfs",
-    "1k-blocks": "1918820",
-    "used": "0",
-    "available": "1918820",
-    "use_percent": "0%",
-    "mounted_on": "/dev"
-  },
-  {
-    "filesystem": "tmpfs",
-    "1k-blocks": "1930668",
-    "used": "0",
-    "available": "1930668",
-    "use_percent": "0%",
-    "mounted_on": "/dev/shm"
-  },
-  {
-    "filesystem": "tmpfs",
-    "1k-blocks": "1930668",
-    "used": "11800",
-    "available": "1918868",
-    "use_percent": "1%",
-    "mounted_on": "/run"
-  },
-  ...
-]
+    $ df | jc --df -p -r
+    [
+      {
+        "filesystem": "devtmpfs",
+        "1k-blocks": "1918820",
+        "used": "0",
+        "available": "1918820",
+        "use_percent": "0%",
+        "mounted_on": "/dev"
+      },
+      {
+        "filesystem": "tmpfs",
+        "1k-blocks": "1930668",
+        "used": "0",
+        "available": "1930668",
+        "use_percent": "0%",
+        "mounted_on": "/dev/shm"
+      },
+      {
+        "filesystem": "tmpfs",
+        "1k-blocks": "1930668",
+        "used": "11800",
+        "available": "1918868",
+        "use_percent": "1%",
+        "mounted_on": "/run"
+      },
+      ...
+    ]
 """
 import jc.utils
 
 
 def process(proc_data):
-    ''' schema:
+    """
+    schema:
+    
         [
           {
             "filesystem":   string,
@@ -79,7 +81,7 @@ def process(proc_data):
             "mounted_on":   string
           }
         ]
-    '''
+    """
     for entry in proc_data:
         # change any entry for key with '-blocks' in the name to int
         for k in entry:
@@ -108,6 +110,15 @@ def process(proc_data):
 
 
 def parse(data, raw=False, quiet=False):
+    """
+    Main parsing function
+
+    Arguments:
+
+        raw:    (boolean) output preprocessed JSON if True
+        quiet:  (boolean) suppress warning messages if True
+    """
+    
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
 

@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility ifconfig Parser
+# jc.parsers.ifconfig
+jc - JSON CLI output utility ifconfig Parser
 
 Usage:
     specify --ifconfig as the first argument if the piped input is coming from ifconfig
@@ -118,87 +119,52 @@ Examples:
         "metric": null
       }
     ]
-"""
-import jc.utils
-from ifconfigparser import IfconfigParser
 
+## process
+```python
+process(proc_data)
+```
 
-def process(proc_data):
-    """
-    schema:
-    
-        [
-          {
-            "name":             string,
-            "flags":            integer,
-            "state":            string,
-            "mtu":              integer,
-            "ipv4_addr":        string,
-            "ipv4_mask":        string,
-            "ipv4_bcast":       string,
-            "ipv6_addr":        string,
-            "ipv6_mask":        integer,
-            "ipv6_scope":       string,
-            "mac_addr":         string,
-            "type":             string,
-            "rx_packets":       integer,
-            "rx_errors":        integer,
-            "rx_dropped":       integer,
-            "rx_overruns":      integer,
-            "rx_frame":         integer,
-            "tx_packets":       integer,
-            "tx_errors":        integer,
-            "tx_dropped":       integer,
-            "tx_overruns":      integer,
-            "tx_carrier":       integer,
-            "tx_collisions":    integer,
-            "metric":           integer
-          }
-        ]
-    """
-    for entry in proc_data:
-        int_list = ['flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_errors', 'rx_dropped', 'rx_overruns',
-                    'rx_frame', 'tx_packets', 'tx_errors', 'tx_dropped', 'tx_overruns', 'tx_carrier',
-                    'tx_collisions', 'metric']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError, TypeError):
-                    entry[key] = None
+schema:
 
-    return proc_data
+    [
+      {
+        "name":             string,
+        "flags":            integer,
+        "state":            string,
+        "mtu":              integer,
+        "ipv4_addr":        string,
+        "ipv4_mask":        string,
+        "ipv4_bcast":       string,
+        "ipv6_addr":        string,
+        "ipv6_mask":        integer,
+        "ipv6_scope":       string,
+        "mac_addr":         string,
+        "type":             string,
+        "rx_packets":       integer,
+        "rx_errors":        integer,
+        "rx_dropped":       integer,
+        "rx_overruns":      integer,
+        "rx_frame":         integer,
+        "tx_packets":       integer,
+        "tx_errors":        integer,
+        "tx_dropped":       integer,
+        "tx_overruns":      integer,
+        "tx_carrier":       integer,
+        "tx_collisions":    integer,
+        "metric":           integer
+      }
+    ]
 
+## parse
+```python
+parse(data, raw=False, quiet=False)
+```
 
-def parse(data, raw=False, quiet=False):
-    """
-    Main parsing function
+Main parsing function
 
-    Arguments:
+Arguments:
 
-        raw:    (boolean) output preprocessed JSON if True
-        quiet:  (boolean) suppress warning messages if True
-    """
-    
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
+    raw:    (boolean) output preprocessed JSON if True
+    quiet:  (boolean) suppress warning messages if True
 
-    if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    raw_output = []
-
-    parsed = IfconfigParser(console_output=data)
-    interfaces = parsed.get_interfaces()
-
-    # convert ifconfigparser output to a dictionary
-    for iface in interfaces:
-        d = interfaces[iface]._asdict()
-        dct = dict(d)
-        raw_output.append(dct)
-
-    if raw:
-        return raw_output
-    else:
-        return process(raw_output)

@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility lsmod Parser
+# jc.parsers.lsmod
+jc - JSON CLI output utility lsmod Parser
 
 Usage:
     specify --lsmod as the first argument if the piped input is coming from lsmod
@@ -96,69 +97,34 @@ Examples:
       },
       ...
     ]
-"""
-import jc.utils
 
+## process
+```python
+process(proc_data)
+```
 
-def process(proc_data):
-    """
-    schema:
-    
-        [
-          {
-            "module": string,
-            "size":   integer,
-            "used":   integer,
-            "by": [
-                      string
-            ]
-          }
+schema:
+
+    [
+      {
+        "module": string,
+        "size":   integer,
+        "used":   integer,
+        "by": [
+                  string
         ]
-    """
-    for entry in proc_data:
-        # integer changes
-        int_list = ['size', 'used']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+      }
+    ]
 
-    return proc_data
+## parse
+```python
+parse(data, raw=False, quiet=False)
+```
 
+Main parsing function
 
-def parse(data, raw=False, quiet=False):
-    """
-    Main parsing function
+Arguments:
 
-    Arguments:
+    raw:    (boolean) output preprocessed JSON if True
+    quiet:  (boolean) suppress warning messages if True
 
-        raw:    (boolean) output preprocessed JSON if True
-        quiet:  (boolean) suppress warning messages if True
-    """
-    
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
-
-    if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
-
-    cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
-
-    for mod in raw_output:
-        if 'by' in mod:
-            mod['by'] = mod['by'].split(',')
-
-    if raw:
-        return raw_output
-    else:
-        return process(raw_output)
