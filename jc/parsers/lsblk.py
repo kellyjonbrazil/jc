@@ -212,7 +212,15 @@ import jc.utils
 
 def process(proc_data):
     """
-    schema:
+    Final processing to conform to the schema.
+
+    Parameters:
+        
+        proc_data    (dictionary) raw structured data to process
+
+    Returns:
+
+        dictionary   structured data with the following schema:
     
         [
           {
