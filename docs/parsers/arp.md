@@ -101,7 +101,7 @@ schema:
 parse(data, raw=False, quiet=False)
 ```
 
-Main parsing function
+Main text parsing function
 
 Parameters:
 
