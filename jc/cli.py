@@ -7,6 +7,7 @@ import sys
 import textwrap
 import signal
 import json
+import jc.utils
 import jc.parsers.arp
 import jc.parsers.df
 import jc.parsers.dig
@@ -62,6 +63,7 @@ def helptext(message):
             --w          w parser
 
     Options:
+            -d           debug - show trace messages
             -p           pretty print output
             -q           quiet - suppress warnings
             -r           raw JSON output
@@ -80,11 +82,15 @@ def main():
         exit()
 
     data = sys.stdin.read()
+    debug = False
     pretty = False
     quiet = False
     raw = False
 
     # options
+    if '-d' in sys.argv:
+        debug = True
+
     if '-p' in sys.argv:
         pretty = True
 
@@ -120,11 +126,23 @@ def main():
 
     found = False
 
-    for arg in sys.argv:
-        if arg in parser_map:
-            result = parser_map[arg](data, raw=raw, quiet=quiet)
-            found = True
-            break
+    if debug:
+        for arg in sys.argv:
+            if arg in parser_map:
+                result = parser_map[arg](data, raw=raw, quiet=quiet)
+                found = True
+                break
+    else:
+        for arg in sys.argv:
+            if arg in parser_map:
+                try:
+                    parser_name = arg.lstrip('--')
+                    result = parser_map[arg](data, raw=raw, quiet=quiet)
+                    found = True
+                    break
+                except:
+                    jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
+                    exit(1)
 
     if not found:
         helptext('missing or incorrect arguments')
