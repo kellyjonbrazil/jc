@@ -483,12 +483,17 @@ def parse_answer(answer):
 
 def parse(data, raw=False, quiet=False):
     """
-    Main parsing function
+    Main text parsing function
 
-    Arguments:
+    Parameters:
+        
+        data:        (string)  text data to parse
+        raw:         (boolean) output preprocessed JSON if True
+        quiet:       (boolean) suppress warning messages if True
 
-        raw:    (boolean) output preprocessed JSON if True
-        quiet:  (boolean) suppress warning messages if True
+    Returns:
+
+        dictionary   raw or processed structured data
     """
     
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
