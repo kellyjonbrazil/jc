@@ -51,6 +51,10 @@ def compatibility(mod_name, compatible):
         compatible      (list) sys.platform name(s) compatible with the parser
                         compatible options: 
                         linux, darwin, cygwin, win32, aix, freebsd
+
+    Returns:
+
+        no return, just prints output to STDERR
     """
     if sys.platform not in compatible:
         mod = mod_name.split('.')[-1]

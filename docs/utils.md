@@ -44,3 +44,7 @@ Parameters:
                     compatible options:
                     linux, darwin, cygwin, win32, aix, freebsd
 
+Returns:
+
+    no return, just prints output to STDERR
+
