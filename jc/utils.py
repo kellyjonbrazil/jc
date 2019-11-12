@@ -4,7 +4,17 @@ import sys
 
 
 def warning_message(message):
-    """Prints a warning message for non-fatal issues"""
+    """
+    Prints a warning message for non-fatal issues
+
+    Parameters:
+
+        message         (string) text of message
+
+    Returns:
+
+        no return, just prints output to STDERR
+    """
 
     error_string = f'''
     jc:  Warning - {message}
@@ -13,7 +23,17 @@ def warning_message(message):
 
 
 def error_message(message):
-    """Prints an error message for fatal issues"""
+    """
+    Prints an error message for fatal issues
+
+    Parameters:
+
+        message         (string) text of message
+
+    Returns:
+
+        no return, just prints output to STDERR
+    """
     
     error_string = f'''
     jc:  Error - {message}
@@ -24,7 +44,7 @@ def error_message(message):
 def compatibility(mod_name, compatible):
     """Checks for the parser's compatibility with the running OS platform.
     
-    Arguments:
+    Parameters:
 
         mod_name        (string) __name__ of the calling module
         
