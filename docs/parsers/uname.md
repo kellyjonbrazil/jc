@@ -39,8 +39,6 @@ schema:
         "kernel_version":     string
     }
 
-no extra processing
-
 ## parse
 ```python
 parse(data, raw=False, quiet=False)

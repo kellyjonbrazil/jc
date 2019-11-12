@@ -4,7 +4,7 @@ jc - JSON CLI output utility ipables Parser
 Usage:
     Specify --iptables as the first argument if the piped input is coming from iptables
 
-    Supports -vLn for all tables
+    Supports -vLn and --line-numbers for all tables
 
 Examples:
 

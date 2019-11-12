@@ -66,8 +66,6 @@ schema:
       }
     ]
 
-    nothing to process
-
 ## parse
 ```python
 parse(data, raw=False, quiet=False)
