@@ -1084,6 +1084,20 @@ $ w | jc --w -p
   }
 ]
 ```
+## TODO
+Future parsers:
+- ss
+- nslookup
+- stat
+- sar
+- sadf
+- systemctl
+- journalctl
+- hosts file
+- fstab file
+- crontab files
+- /proc files
+- /sys files
 
 ## Contributions
 Feel free to add/improve code or parsers!
