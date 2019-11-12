@@ -45,7 +45,11 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 {'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
 'size': '18128', 'date': 'May 3 22:26'}]
 ```
-Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of None are converted to JSON Null, and, in some cases, additional semantic context fields are added. To access the raw, pre-processed JSON, use the `-r` or `raw=True` options.
+Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of None are converted to JSON Null, known boolean values are converted, and, in some cases, additional semantic context fields are added.
+
+To access the raw, pre-processed JSON, use the `-r` or `raw=True` options.
+
+Schemas for each parser can be found in the `docs/parsers` folder.
 
 ## Installation
 ```
@@ -82,7 +86,9 @@ jc PARSER [OPTIONS]
 - `--w` enables the `w` parser
 
 ### Options
+- `-d` debug mode. Prints trace messages if parsing issues encountered
 - `-p` pretty format the JSON output
+- `-q` quiet mode. Suppresses warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
 
 ## Examples
@@ -183,14 +189,18 @@ $ df | jc --df -p
 $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
 [
   {
-    "id": "28182",
+    "id": 5509,
     "opcode": "QUERY",
     "status": "NOERROR",
-    "flags": "qr rd ra",
-    "query_num": "1",
-    "answer_num": "4",
-    "authority_num": "0",
-    "additional_num": "1",
+    "flags": [
+      "qr",
+      "rd",
+      "ra"
+    ],
+    "query_num": 1,
+    "answer_num": 4,
+    "authority_num": 0,
+    "additional_num": 1,
     "question": {
       "name": "cnn.com.",
       "class": "IN",
@@ -201,45 +211,49 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": "5",
-        "data": "151.101.193.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": "5",
-        "data": "151.101.1.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": "5",
+        "ttl": 60,
         "data": "151.101.129.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": "5",
+        "ttl": 60,
+        "data": "151.101.193.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 60,
+        "data": "151.101.1.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 60,
         "data": "151.101.65.67"
       }
     ],
-    "query_time": "45 msec",
-    "server": "192.168.71.2#53(192.168.71.2)",
-    "when": "Wed Oct 30 03:11:21 PDT 2019",
-    "rcvd": "100"
+    "query_time": 28,
+    "server": "2600",
+    "when": "Tue Nov 12 07:13:03 PST 2019",
+    "rcvd": 100
   },
   {
-    "id": "23264",
+    "id": 62696,
     "opcode": "QUERY",
     "status": "NOERROR",
-    "flags": "qr aa rd",
-    "query_num": "1",
-    "answer_num": "1",
-    "authority_num": "4",
-    "additional_num": "1",
+    "flags": [
+      "qr",
+      "aa",
+      "rd"
+    ],
+    "query_num": 1,
+    "answer_num": 1,
+    "authority_num": 4,
+    "additional_num": 1,
     "question": {
       "name": "www.cnn.com.",
       "class": "IN",
@@ -250,7 +264,7 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
         "name": "www.cnn.com.",
         "class": "IN",
         "type": "CNAME",
-        "ttl": "300",
+        "ttl": 300,
         "data": "turner-tls.map.fastly.net."
       }
     ],
@@ -259,35 +273,35 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-1086.awsdns-07.org."
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-1630.awsdns-11.co.uk."
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-47.awsdns-05.com."
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-576.awsdns-08.net."
       }
     ],
-    "query_time": "33 msec",
+    "query_time": 29,
     "server": "205.251.194.64#53(205.251.194.64)",
-    "when": "Wed Oct 30 03:11:21 PDT 2019",
-    "rcvd": "212"
+    "when": "Tue Nov 12 07:13:03 PST 2019",
+    "rcvd": 212
   }
 ]
 ```
@@ -295,14 +309,18 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
 $ dig -x 1.1.1.1 | jc --dig -p
 [
   {
-    "id": "27526",
+    "id": 50324,
     "opcode": "QUERY",
     "status": "NOERROR",
-    "flags": "qr rd ra",
-    "query_num": "1",
-    "answer_num": "1",
-    "authority_num": "0",
-    "additional_num": "1",
+    "flags": [
+      "qr",
+      "rd",
+      "ra"
+    ],
+    "query_num": 1,
+    "answer_num": 1,
+    "authority_num": 0,
+    "additional_num": 1,
     "question": {
       "name": "1.1.1.1.in-addr.arpa.",
       "class": "IN",
@@ -310,17 +328,17 @@ $ dig -x 1.1.1.1 | jc --dig -p
     },
     "answer": [
       {
-        "name": "1.1.1.1.IN-ADDR.ARPA.",
+        "name": "1.1.1.1.in-addr.arpa.",
         "class": "IN",
         "type": "PTR",
-        "ttl": "5",
+        "ttl": 1634,
         "data": "one.one.one.one."
       }
     ],
-    "query_time": "34 msec",
-    "server": "192.168.71.2#53(192.168.71.2)",
-    "when": "Wed Oct 30 03:13:48 PDT 2019",
-    "rcvd": "98"
+    "query_time": 36,
+    "server": "2600",
+    "when": "Tue Nov 12 07:13:49 PST 2019",
+    "rcvd": 78
   }
 ]
 ```
