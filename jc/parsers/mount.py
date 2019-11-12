@@ -64,9 +64,8 @@ def process(proc_data):
             ]
           }
         ]
-
-        nothing to process
     """
+    # nothing to process
     return proc_data
 
 

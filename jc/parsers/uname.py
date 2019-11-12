@@ -37,9 +37,8 @@ def process(proc_data):
             "machine":            string,
             "kernel_version":     string
         }
-
-    no extra processing
     """
+    # nothing to process
     return proc_data
 
 
