@@ -51,6 +51,8 @@ To access the raw, pre-processed JSON, use the `-r` or `raw=True` options.
 
 Schemas for each parser can be found in the `docs/parsers` folder.
 
+| Note: due to the introduction of the new schemas in version `1.5.1` the output will be different than in versions `1.1.1` and below.  Now that schemas are defined the output will be stable for future versions. You can still get similar output to prior versions with the `-r` or `raw=true` options.
+
 ## Installation
 ```
 $ pip3 install --upgrade jc
