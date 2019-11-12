@@ -3,7 +3,6 @@
 
 cd jc
 pydocmd simple jc+ > ../docs/readme.md
-pydocmd simple cli+ > ../docs/cli.md
 pydocmd simple utils+ > ../docs/utils.md
 pydocmd simple jc.parsers.arp+ > ../docs/parsers/arp.md
 pydocmd simple jc.parsers.df+ > ../docs/parsers/df.md
