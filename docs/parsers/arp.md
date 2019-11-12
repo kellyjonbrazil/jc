@@ -103,8 +103,13 @@ parse(data, raw=False, quiet=False)
 
 Main parsing function
 
-Arguments:
+Parameters:
 
-    raw:    (boolean) output preprocessed JSON if True
-    quiet:  (boolean) suppress warning messages if True
+    data:        (string)  text data to parse
+    raw:         (boolean) output preprocessed JSON if True
+    quiet:       (boolean) suppress warning messages if True
+
+Returns:
+
+    dictionary   raw or processed structured data
 
