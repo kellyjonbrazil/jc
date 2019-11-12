@@ -1100,7 +1100,7 @@ Future parsers:
 - /sys files
 
 ## Contributions
-Feel free to add/improve code or parsers!
+Feel free to add/improve code or parsers! You can use the `jc/parsers/foo.py` parser as a template and submit your parser with a pull request.
 
 ## Compatibility
 Tested on:
