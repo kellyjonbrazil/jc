@@ -1170,6 +1170,12 @@ Future parsers:
 Feel free to add/improve code or parsers! You can use the `jc/parsers/foo.py` parser as a template and submit your parser with a pull request.
 
 ## Compatibility
+Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` or `quiet=True` options:
+
+```
+$ cat lsof.out | jc --lsof -q
+```
+
 Tested on:
 - Centos 7.7
 - Ubuntu 18.4
