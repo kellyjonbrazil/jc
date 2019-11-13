@@ -5,11 +5,133 @@ Usage:
 
 Examples:
 
-    $ ss | jc --ss -p
-    []
+      $ sudo ss -a | jc --ss -p
+      [
+        {
+          "netid": "nl",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_address": "rtnl",
+          "local_port": "kernel",
+          "peer_address": "*"
+        },
+        {
+          "netid": "nl",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_address": "rtnl",
+          "local_port": "systemd-resolve/893",
+          "peer_address": "*"
+        },
+        {
+          "netid": "nl",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_address": "rtnl",
+          "local_port": "systemd/1",
+          "peer_address": "*"
+        },
+        ...
+        {
+          "netid": "tcp",
+          "state": "LISTEN",
+          "recv_q": 0,
+          "send_q": 128,
+          "local_address": "127.0.0.1",
+          "local_port": "35485",
+          "peer_address": "0.0.0.0",
+          "peer_port": "*",
+          "interface": "lo"
+        },
+        {
+          "netid": "tcp",
+          "state": "LISTEN",
+          "recv_q": 0,
+          "send_q": 128,
+          "local_address": "[::]",
+          "local_port": "ssh",
+          "peer_address": "[::]",
+          "peer_port": "*"
+        },
+        {
+          "netid": "v_str",
+          "state": "ESTAB",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_address": "999900439",
+          "local_port": "1023",
+          "peer_address": "0",
+          "peer_port": "976",
+          "local_port_num": 1023,
+          "peer_port_num": 976
+        }
+      ]
 
-    $ ss | jc --ss -p -r
-    []
+      $ sudo ss -a | jc --ss -p -r
+      [
+        {
+          "netid": "nl",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_address": "rtnl",
+          "local_port": "kernel",
+          "peer_address": "*"
+        },
+        {
+          "netid": "nl",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_address": "rtnl",
+          "local_port": "systemd-resolve/893",
+          "peer_address": "*"
+        },
+        {
+          "netid": "nl",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_address": "rtnl",
+          "local_port": "systemd/1",
+          "peer_address": "*"
+        },
+        ...
+        {
+          "netid": "tcp",
+          "state": "LISTEN",
+          "recv_q": "0",
+          "send_q": "128",
+          "local_address": "127.0.0.1",
+          "local_port": "35485",
+          "peer_address": "0.0.0.0",
+          "peer_port": "*",
+          "interface": "lo"
+        },
+        {
+          "netid": "tcp",
+          "state": "LISTEN",
+          "recv_q": "0",
+          "send_q": "128",
+          "local_address": "[::]",
+          "local_port": "ssh",
+          "peer_address": "[::]",
+          "peer_port": "*"
+        },
+        {
+          "netid": "v_str",
+          "state": "ESTAB",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_address": "999900439",
+          "local_port": "1023",
+          "peer_address": "0",
+          "peer_port": "976"
+        }
+      ]
 """
 import string
 import jc.utils
