@@ -148,7 +148,8 @@ def process(proc_data):
     Returns:
 
         dictionary   structured data with the following schema:
-    
+
+        [
           {
             "netid":            string,
             "state":            string,

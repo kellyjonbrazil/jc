@@ -21,6 +21,7 @@ pydocmd simple jc.parsers.mount+ > ../docs/parsers/mount.md
 pydocmd simple jc.parsers.netstat+ > ../docs/parsers/netstat.md
 pydocmd simple jc.parsers.ps+ > ../docs/parsers/ps.md
 pydocmd simple jc.parsers.route+ > ../docs/parsers/route.md
+pydocmd simple jc.parsers.ss+ > ../docs/parsers/ss.md
 pydocmd simple jc.parsers.uname+ > ../docs/parsers/uname.md
 pydocmd simple jc.parsers.uptime+ > ../docs/parsers/uptime.md
 pydocmd simple jc.parsers.w+ > ../docs/parsers/w.md
