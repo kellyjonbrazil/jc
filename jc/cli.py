@@ -25,6 +25,7 @@ import jc.parsers.mount
 import jc.parsers.netstat
 import jc.parsers.ps
 import jc.parsers.route
+import jc.parsers.ss
 import jc.parsers.uname
 import jc.parsers.uptime
 import jc.parsers.w
@@ -58,6 +59,7 @@ def helptext(message):
             --netstat    netstat parser
             --ps         ps parser
             --route      route parser
+            --ss         ss parser
             --uname      uname -a parser
             --uptime     uptime parser
             --w          w parser
@@ -119,6 +121,7 @@ def main():
         '--netstat': jc.parsers.netstat.parse,
         '--ps': jc.parsers.ps.parse,
         '--route': jc.parsers.route.parse,
+        '--ss': jc.parsers.ss.parse,
         '--uname': jc.parsers.uname.parse,
         '--uptime': jc.parsers.uptime.parse,
         '--w': jc.parsers.w.parse
