@@ -519,10 +519,11 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, cleandata))
 
     raw_output = []
-
     network = False
     socket = False
     headers = ''
+    network_list = []
+    socket_list = []
 
     for line in cleandata:
 
