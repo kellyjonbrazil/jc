@@ -9,7 +9,7 @@ def warning_message(message):
 
     Parameters:
 
-        message         (string) text of message
+        message:        (string) text of message
 
     Returns:
 
@@ -28,7 +28,7 @@ def error_message(message):
 
     Parameters:
 
-        message         (string) text of message
+        message:        (string) text of message
 
     Returns:
 
@@ -46,9 +46,9 @@ def compatibility(mod_name, compatible):
     
     Parameters:
 
-        mod_name        (string) __name__ of the calling module
+        mod_name:       (string) __name__ of the calling module
         
-        compatible      (list) sys.platform name(s) compatible with the parser
+        compatible:     (list) sys.platform name(s) compatible with the parser
                         compatible options: 
                         linux, darwin, cygwin, win32, aix, freebsd
 

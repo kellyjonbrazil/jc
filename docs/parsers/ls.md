@@ -144,7 +144,7 @@ Final processing to conform to the schema.
 
 Parameters:
 
-    proc_data    (dictionary) raw structured data to process
+    proc_data:   (dictionary) raw structured data to process
 
 Returns:
 

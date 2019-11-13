@@ -9,7 +9,7 @@ Prints a warning message for non-fatal issues
 
 Parameters:
 
-    message         (string) text of message
+    message:        (string) text of message
 
 Returns:
 
@@ -24,7 +24,7 @@ Prints an error message for fatal issues
 
 Parameters:
 
-    message         (string) text of message
+    message:        (string) text of message
 
 Returns:
 
@@ -38,9 +38,9 @@ Checks for the parser's compatibility with the running OS platform.
 
 Parameters:
 
-    mod_name        (string) __name__ of the calling module
+    mod_name:       (string) __name__ of the calling module
 
-    compatible      (list) sys.platform name(s) compatible with the parser
+    compatible:     (list) sys.platform name(s) compatible with the parser
                     compatible options:
                     linux, darwin, cygwin, win32, aix, freebsd
 
