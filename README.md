@@ -1154,7 +1154,6 @@ $ w | jc --w -p
 ```
 ## TODO
 Future parsers:
-- ss
 - nslookup
 - stat
 - sar
