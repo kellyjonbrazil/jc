@@ -61,7 +61,7 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
 
-    contain_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
+    contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
     cleandata = data.splitlines()
 
@@ -87,29 +87,32 @@ def parse(data, raw=False, quiet=False):
 
         # if % in col 4 or 6 then split that out to 'interface' field
         header_text = cleandata[0].lower()
-        header_text = header_text.replace('local address:port', 'local_address:port')
-        header_text = header_text.replace('peer address:port', 'peer_address:port')
-        header_text = header_text.replace(':', ' ')
+        header_text = header_text.replace('local address:port', 'local_address local_port')
+        header_text = header_text.replace('peer address:port', 'peer_address peer_port')
 
         header_list = header_text.split()
 
         for entry in cleandata[1:]:
+            output_line = {}
             if entry[0] not in string.whitespace:
                 entry_list = entry.split()
 
-                if entry[0] in contain_colon and ':' in entry_list[4]:
-                    l_address = entry_list[4].rsplit(':', maxsplit=1)[0]
-                    l_port = entry_list[4].rsplit(':', maxsplit=1)[1]
+                if entry_list[0] in contains_colon and ':' in entry_list[4]:
+                    l_field = entry_list[4].rsplit(':', maxsplit=1)
+                    l_address = l_field[0]
+                    l_port = l_field[1]
                     entry_list[4] = l_address
-                    entry_list[5] = l_port
+                    entry_list.insert(5, l_port)
 
-                if entry[0] in contain_colon and ':' in entry_list[6]:
-                    l_address = entry_list[6].rsplit(':', maxsplit=1)[0]
-                    l_port = entry_list[6].rsplit(':', maxsplit=1)[1]
-                    entry_list[6] = l_address
-                    entry_list[7] = l_port
+                if entry_list[0] in contains_colon and ':' in entry_list[6]:
+                    p_field = entry_list[6].rsplit(':', maxsplit=1)
+                    p_address = p_field[0]
+                    p_port = p_field[1]
+                    entry_list[6] = p_address
+                    entry_list.insert(7, p_port)
 
-            raw_output.append(entry_list)
+            output_line = dict(zip(header_list, entry_list))
+            raw_output.append(output_line)
 
     if raw:
         return raw_output
