@@ -27,16 +27,43 @@ def process(proc_data):
 
         dictionary   structured data with the following schema:
     
-        [
           {
-            "ss":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "netid":            string,
+            "state":            string,
+            "recv_q":           integer,
+            "send_q":           integer,
+            "local_address":    string,
+            "local_port":       string,
+            "local_port_num":   integer,
+            "peer_address":     string,
+            "peer_port":        string,
+            "peer_port_num":    integer,
+            "interface":        string
           }
         ]
     """
+    for entry in proc_data:
+        int_list = ['recv_q', 'send_q']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
-    # rebuild output for added semantic information
+    if 'local_port' in entry:
+            try:
+                entry['local_port_num'] = int(entry['local_port'])
+            except (ValueError):
+                pass
+
+    if 'peer_port' in entry:
+        try:
+            entry['peer_port_num'] = int(entry['peer_port'])
+        except (ValueError):
+            pass
+
     return proc_data
 
 
@@ -69,32 +96,21 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, cleandata))
 
     if cleandata:
-        # fix 'local address' to 'local_address', same with 'peer_address'
-        # split headers by whitespace and :    = 8 columns
-
-        # only parse lines if col 0 is not whitespace
-
-        # These require additional rsplit(':') and replace/add cols 4,5,6,7
-        #     check if ':' is in the field first...
-        #     final columns may not have x:y and may just have *
-        # nl
-        # p_raw
-        # raw
-        # udp
-        # tcp
-        # v_str
-        # icmp6
-
-        # if % in col 4 or 6 then split that out to 'interface' field
         header_text = cleandata[0].lower()
+        header_text = header_text.replace('netidstate', 'netid state')
         header_text = header_text.replace('local address:port', 'local_address local_port')
         header_text = header_text.replace('peer address:port', 'peer_address peer_port')
+        header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()
 
         for entry in cleandata[1:]:
             output_line = {}
             if entry[0] not in string.whitespace:
+                
+                # fix weird ss bug where first two columns have no space between them sometimes
+                entry = entry[:5] + ' ' + entry[5:]
+
                 entry_list = entry.split()
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
@@ -112,6 +128,12 @@ def parse(data, raw=False, quiet=False):
                     entry_list.insert(7, p_port)
 
             output_line = dict(zip(header_list, entry_list))
+
+            if '%' in output_line['local_address']:
+                i_field = output_line['local_address'].rsplit('%', maxsplit=1)
+                output_line['local_address'] = i_field[0]
+                output_line['interface'] = i_field[1]
+
             raw_output.append(output_line)
 
     if raw:
