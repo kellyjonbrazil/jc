@@ -3,6 +3,9 @@
 Usage:
     specify --ss as the first argument if the piped input is coming from ss
 
+Limitations:
+    Extended information otions like -e and -p are not supported and may cause parsing irregularities
+
 Examples:
 
       $ sudo ss -a | jc --ss -p
