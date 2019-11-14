@@ -50,7 +50,7 @@ To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True`
 
 Schemas for each parser can be found in the `docs/parsers` folder.
 
-> ***Note:** Due to the introduction of schemas in version `1.5.1` the output will be different than in versions `1.1.1` and below.  Now that schemas are defined, the output will be stable for future versions. You can still get similar output to prior versions with the `-r` or `raw=true` options. Though the goal is to keep all output stable, raw output is not guaranteed to stay the same in future releases.*
+> ***Note:** Due to the introduction of schemas in version `1.5.1` the output for some parsers will be different than in versions `1.1.1` and below.  Now that schemas are defined, the output will be stable for future versions. You can still get similar output to prior versions with the `-r` or `raw=true` options. Though the goal is to keep all output stable, raw output is not guaranteed to stay the same in future releases.*
 
 ## Installation
 ```
