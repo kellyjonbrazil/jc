@@ -1,0 +1,159 @@
+Netid  State    Recv-Q   Send-Q                                   Local Address:Port                                            Peer Address:Port               
+nl     UNCONN   0        0                                                 rtnl:kernel                                                      *                   
+nl     UNCONN   0        0                                                 rtnl:systemd-resolve/893                                         *                   
+nl     UNCONN   0        0                                                 rtnl:systemd/1                                                   *                   
+nl     UNCONN   0        0                                                 rtnl:systemd-resolve/893                                         *                   
+nl     UNCONN   0        0                                                 rtnl:systemd/1                                                   *                   
+nl     UNCONN   768      0                                              tcpdiag:kernel                                                      *                   
+nl     UNCONN   4352     0                                              tcpdiag:ss/25293                                                    *                   
+nl     UNCONN   0        0                                              selinux:kernel                                                      *                   
+nl     UNCONN   0        0                                                iscsi:kernel                                                      *                   
+nl     UNCONN   0        0                                                audit:-1100095455                                                 *                   
+nl     UNCONN   0        0                                                audit:kernel                                                      *                   
+nl     UNCONN   0        0                                                audit:sudo/25292                                                  *                   
+nl     UNCONN   0        0                                                audit:systemd/1                                                   *                   
+nl     UNCONN   0        0                                                audit:systemd/1                                                   *                   
+nl     UNCONN   0        0                                            fiblookup:kernel                                                      *                   
+nl     UNCONN   0        0                                            connector:kernel                                                      *                   
+nl     UNCONN   0        0                                               uevent:-15116454                                                   *                   
+nl     UNCONN   0        0                                               uevent:systemd-logind/1018                                         *                   
+nl     UNCONN   0        0                                               uevent:systemd/4229                                                *                   
+nl     UNCONN   0        0                                               uevent:systemd/1                                                   *                   
+nl     UNCONN   0        0                                               uevent:-866834182                                                  *                   
+nl     UNCONN   0        0                                               uevent:-1118001981                                                 *                   
+nl     UNCONN   0        0                                               uevent:-400364679                                                  *                   
+nl     UNCONN   0        0                                               uevent:systemd-network/874                                         *                   
+nl     UNCONN   0        0                                               uevent:kernel                                                      *                   
+nl     UNCONN   0        0                                               uevent:snapd/970                                                   *                   
+nl     UNCONN   0        0                                               uevent:systemd/4229                                                *                   
+nl     UNCONN   0        0                                               uevent:snapd/970                                                   *                   
+nl     UNCONN   0        0                                               uevent:-400364679                                                  *                   
+nl     UNCONN   0        0                                               uevent:-866834182                                                  *                   
+nl     UNCONN   0        0                                               uevent:-1118001981                                                 *                   
+nl     UNCONN   0        0                                               uevent:systemd-logind/1018                                         *                   
+nl     UNCONN   0        0                                               uevent:systemd-network/874                                         *                   
+nl     UNCONN   0        0                                               uevent:-15116454                                                   *                   
+nl     UNCONN   0        0                                               uevent:systemd/1                                                   *                   
+nl     UNCONN   0        0                                                 genl:kernel                                                      *                   
+nl     UNCONN   0        0                                                 genl:systemd-network/874                                         *                   
+nl     UNCONN   0        0                                           scsi-trans:kernel                                                      *                   
+nl     UNCONN   0        0                                                 rdma:kernel                                                      *                   
+p_raw  UNCONN   0        0                                                 LLDP:ens33                                                       *                   
+u_dgr  UNCONN   0        0                        /run/user/1000/systemd/notify 93066                                                      * 0                  
+u_seq  LISTEN   0        128                                  /run/udev/control 20699                                                      * 0                  
+u_str  LISTEN   0        128                     /run/user/1000/systemd/private 93069                                                      * 0                  
+u_str  LISTEN   0        128                     /run/user/1000/gnupg/S.dirmngr 93073                                                      * 0                  
+u_str  LISTEN   0        128                   /run/user/1000/gnupg/S.gpg-agent 93074                                                      * 0                  
+u_str  LISTEN   0        128             /run/user/1000/gnupg/S.gpg-agent.extra 93075                                                      * 0                  
+u_str  LISTEN   0        128               /run/user/1000/gnupg/S.gpg-agent.ssh 93076                                                      * 0                  
+u_str  LISTEN   0        128           /run/user/1000/gnupg/S.gpg-agent.browser 93077                                                      * 0                  
+u_dgr  UNCONN   0        0                                  /run/systemd/notify 20676                                                      * 0                  
+u_str  LISTEN   0        128                               /run/systemd/private 20679                                                      * 0                  
+u_str  LISTEN   0        128                            /run/lvm/lvmetad.socket 20689                                                      * 0                  
+u_str  LISTEN   0        128                        /run/systemd/journal/stdout 20692                                                      * 0                  
+u_dgr  UNCONN   0        0                          /run/systemd/journal/socket 20694                                                      * 0                  
+u_str  LISTEN   0        128                           /run/lvm/lvmpolld.socket 20701                                                      * 0                  
+u_dgr  UNCONN   0        0                          /run/systemd/journal/syslog 20891                                                      * 0                  
+u_dgr  UNCONN   0        0                         /run/systemd/journal/dev-log 21046                                                      * 0                  
+u_str  LISTEN   0        128                           /var/lib/lxd/unix.socket 27320                                                      * 0                  
+u_str  LISTEN   0        32                    /var/run/vmware/guestServicePipe 25903                                                      * 0                  
+u_str  LISTEN   0        128                                  /run/acpid.socket 27335                                                      * 0                  
+u_str  LISTEN   0        128                                  /run/snapd.socket 27345                                                      * 0                  
+u_str  LISTEN   0        128                             /run/snapd-snap.socket 27347                                                      * 0                  
+u_str  LISTEN   0        128                    /var/run/dbus/system_bus_socket 27358                                                      * 0                  
+u_str  LISTEN   0        128                               /var/run/docker.sock 27362                                                      * 0                  
+u_str  LISTEN   0        128                                 /run/uuidd/request 27366                                                      * 0                  
+u_str  LISTEN   0        128                    /run/containerd/containerd.sock 30955                                                      * 0                  
+u_str  LISTEN   0        128                       @ISCSIADM_ABSTRACT_NAMESPACE 27357                                                      * 0                  
+u_dgr  UNCONN   0        0                                                    * 25672                                                      * 25671              
+u_str  ESTAB    0        0                                                    * 29901                                                      * 29903              
+u_str  ESTAB    0        0                                                    * 25635                                                      * 25636              
+u_str  ESTAB    0        0                                                    * 25608                                                      * 25610              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 93027                                                      * 93023              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 29596                                                      * 29594              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 29816                                                      * 29515              
+u_str  ESTAB    0        0                                                    * 30026                                                      * 30140              
+u_dgr  UNCONN   0        0                                                    * 93030                                                      * 21046              
+u_str  ESTAB    0        0                                                    * 28214                                                      * 28300              
+u_dgr  UNCONN   0        0                                                    * 25674                                                      * 25673              
+u_dgr  UNCONN   0        0                                                    * 25671                                                      * 25672              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 28301                                                      * 28298              
+u_str  ESTAB    0        0                                                    * 27703                                                      * 27780              
+u_str  ESTAB    0        0                                                    * 29809                                                      * 29810              
+u_str  ESTAB    0        0                                                    * 30839                                                      * 30840              
+u_str  ESTAB    0        0                                                    * 28135                                                      * 28299              
+u_dgr  UNCONN   0        0                                                    * 25673                                                      * 25674              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 28299                                                      * 28135              
+u_str  ESTAB    0        0                                                    * 29594                                                      * 29596              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 30140                                                      * 30026              
+u_str  ESTAB    0        0                                                    * 27623                                                      * 27626              
+u_str  ESTAB    0        0                                                    * 28298                                                      * 28301              
+u_str  ESTAB    0        0                                                    * 21255                                                      * 21770              
+u_dgr  UNCONN   0        0                                                    * 29734                                                      * 21046              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 29903                                                      * 29901              
+u_str  ESTAB    0        0                                                    * 93023                                                      * 93027              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 25636                                                      * 25635              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 25610                                                      * 25608              
+u_dgr  UNCONN   0        0                                                    * 93035                                                      * 20694              
+u_str  ESTAB    0        0                                                    * 29515                                                      * 29816              
+u_dgr  UNCONN   4        0                                                    * 25485                                                      * 25486              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 28300                                                      * 28214              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 27780                                                      * 27703              
+u_dgr  UNCONN   0        0                                                    * 29808                                                      * 21046              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 30840                                                      * 30839              
+u_dgr  UNCONN   0        0                                                    * 62021                                                      * 20694              
+u_str  ESTAB    0        0                                                    * 29810                                                      * 29809              
+u_dgr  UNCONN   0        0                                                    * 92910                                                      * 21046              
+u_dgr  UNCONN   0        0                                                    * 22601                                                      * 22602              
+u_dgr  UNCONN   0        0                                                    * 21485                                                      * 20676              
+u_dgr  UNCONN   0        0                                                    * 26725                                                      * 26726              
+u_dgr  UNCONN   0        0                                                    * 20678                                                      * 20677              
+u_dgr  UNCONN   0        0                                                    * 26709                                                      * 20694              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 29815                                                      * 28703              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 26886                                                      * 26820              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 30141                                                      * 30134              
+u_dgr  UNCONN   0        0                                                    * 21731                                                      * 20694              
+u_str  ESTAB    0        0                                                    * 30635                                                      * 30636              
+u_str  ESTAB    0        0                                                    * 27361                                                      * 29811              
+u_dgr  UNCONN   0        0                                                    * 93067                                                      * 93068              
+u_dgr  UNCONN   0        0                                                    * 26726                                                      * 26725              
+u_dgr  UNCONN   0        0                                                    * 25780                                                      * 0                  
+u_dgr  UNCONN   0        0                                                    * 93068                                                      * 93067              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 30696                                                      * 30695              
+u_str  ESTAB    0        0                                                    * 30134                                                      * 30141              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 29814                                                      * 27995              
+u_str  ESTAB    0        0                                                    * 27993                                                      * 27996              
+u_str  ESTAB    0        0                                                    * 26820                                                      * 26886              
+u_dgr  UNCONN   0        0                                                    * 25668                                                      * 20694              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 21770                                                      * 21255              
+u_dgr  UNCONN   0        0                                                    * 26959                                                      * 20694              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 27996                                                      * 27993              
+u_str  ESTAB    0        0                                                    * 28703                                                      * 29815              
+u_str  ESTAB    0        0                                                    * 30695                                                      * 30696              
+u_str  ESTAB    0        0                                                    * 27995                                                      * 29814              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 29812                                                      * 27364              
+u_dgr  UNCONN   0        0                                                    * 20677                                                      * 20678              
+u_str  ESTAB    0        0                                                    * 21558                                                      * 21775              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 30636                                                      * 30635              
+u_str  ESTAB    0        0                                                    * 26667                                                      * 26668              
+u_dgr  UNCONN   0        0                                                    * 163478                                                     * 21046              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 27626                                                      * 27623              
+u_dgr  UNCONN   0        0                                                    * 28684                                                      * 20694              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 26069                                                      * 26068              
+u_str  ESTAB    0        0                                                    * 26068                                                      * 26069              
+u_dgr  UNCONN   0        0                                                    * 26728                                                      * 26727              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 26668                                                      * 26667              
+u_str  ESTAB    0        0                          /run/systemd/journal/stdout 21775                                                      * 21558              
+u_str  ESTAB    0        0                                                    * 27364                                                      * 29812              
+u_dgr  UNCONN   0        768                                                  * 25486                                                      * 25485              
+u_dgr  UNCONN   0        0                                                    * 26727                                                      * 26728              
+u_str  ESTAB    0        0                      /var/run/dbus/system_bus_socket 29811                                                      * 27361              
+u_dgr  UNCONN   0        0                                                    * 22602                                                      * 22601              
+icmp6  UNCONN   0        0                                              *%ens33:ipv6-icmp                                                  *:*                  
+udp    UNCONN   0        0                                        127.0.0.53%lo:domain                                               0.0.0.0:*                  
+udp    UNCONN   0        0                                 192.168.71.131%ens33:bootpc                                               0.0.0.0:*                  
+tcp    LISTEN   0        128                                      127.0.0.53%lo:domain                                               0.0.0.0:*                  
+tcp    LISTEN   0        128                                            0.0.0.0:ssh                                                  0.0.0.0:*                  
+tcp    LISTEN   0        128                                          127.0.0.1:35485                                                0.0.0.0:*                  
+tcp    LISTEN   0        128                                               [::]:ssh                                                     [::]:*                  
+v_str  ESTAB    0        0                                            999900439:1023                                                       0:976                
