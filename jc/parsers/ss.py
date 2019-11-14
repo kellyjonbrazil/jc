@@ -12,39 +12,91 @@ Examples:
           "state": "UNCONN",
           "recv_q": 0,
           "send_q": 0,
-          "local_address": "rtnl",
-          "local_port": "kernel",
-          "peer_address": "*"
+          "peer_address": "*",
+          "channel": "rtnl:kernel"
         },
         {
           "netid": "nl",
           "state": "UNCONN",
           "recv_q": 0,
           "send_q": 0,
-          "local_address": "rtnl",
-          "local_port": "systemd-resolve/893",
-          "peer_address": "*"
-        },
-        {
-          "netid": "nl",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "local_address": "rtnl",
-          "local_port": "systemd/1",
-          "peer_address": "*"
+          "peer_address": "*",
+          "pid": 893,
+          "channel": "rtnl:systemd-resolve"
         },
         ...
+        {
+          "netid": "p_raw",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "peer_address": "*",
+          "link_layer": "LLDP",
+          "interface": "ens33"
+        },
+        {
+          "netid": "u_dgr",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_port": "93066",
+          "peer_address": "*",
+          "peer_port": "0",
+          "path": "/run/user/1000/systemd/notify"
+        },
+        {
+          "netid": "u_seq",
+          "state": "LISTEN",
+          "recv_q": 0,
+          "send_q": 128,
+          "local_port": "20699",
+          "peer_address": "*",
+          "peer_port": "0",
+          "path": "/run/udev/control"
+        },
+        ...
+        {
+          "netid": "icmp6",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_address": "*",
+          "local_port": "ipv6-icmp",
+          "peer_address": "*",
+          "peer_port": "*",
+          "interface": "ens33"
+        },
+        {
+          "netid": "udp",
+          "state": "UNCONN",
+          "recv_q": 0,
+          "send_q": 0,
+          "local_address": "127.0.0.53",
+          "local_port": "domain",
+          "peer_address": "0.0.0.0",
+          "peer_port": "*",
+          "interface": "lo"
+        },
         {
           "netid": "tcp",
           "state": "LISTEN",
           "recv_q": 0,
           "send_q": 128,
-          "local_address": "127.0.0.1",
-          "local_port": "35485",
+          "local_address": "127.0.0.53",
+          "local_port": "domain",
           "peer_address": "0.0.0.0",
           "peer_port": "*",
           "interface": "lo"
+        },
+        {
+          "netid": "tcp",
+          "state": "LISTEN",
+          "recv_q": 0,
+          "send_q": 128,
+          "local_address": "0.0.0.0",
+          "local_port": "ssh",
+          "peer_address": "0.0.0.0",
+          "peer_port": "*"
         },
         {
           "netid": "tcp",
@@ -77,39 +129,91 @@ Examples:
           "state": "UNCONN",
           "recv_q": "0",
           "send_q": "0",
-          "local_address": "rtnl",
-          "local_port": "kernel",
-          "peer_address": "*"
+          "peer_address": "*",
+          "channel": "rtnl:kernel"
         },
         {
           "netid": "nl",
           "state": "UNCONN",
           "recv_q": "0",
           "send_q": "0",
-          "local_address": "rtnl",
-          "local_port": "systemd-resolve/893",
-          "peer_address": "*"
-        },
-        {
-          "netid": "nl",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "local_address": "rtnl",
-          "local_port": "systemd/1",
-          "peer_address": "*"
+          "peer_address": "*",
+          "pid": "893",
+          "channel": "rtnl:systemd-resolve"
         },
         ...
+        {
+          "netid": "p_raw",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "peer_address": "*",
+          "link_layer": "LLDP",
+          "interface": "ens33"
+        },
+        {
+          "netid": "u_dgr",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_port": "93066",
+          "peer_address": "*",
+          "peer_port": "0",
+          "path": "/run/user/1000/systemd/notify"
+        },
+        {
+          "netid": "u_seq",
+          "state": "LISTEN",
+          "recv_q": "0",
+          "send_q": "128",
+          "local_port": "20699",
+          "peer_address": "*",
+          "peer_port": "0",
+          "path": "/run/udev/control"
+        },
+        ...
+        {
+          "netid": "icmp6",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_address": "*",
+          "local_port": "ipv6-icmp",
+          "peer_address": "*",
+          "peer_port": "*",
+          "interface": "ens33"
+        },
+        {
+          "netid": "udp",
+          "state": "UNCONN",
+          "recv_q": "0",
+          "send_q": "0",
+          "local_address": "127.0.0.53",
+          "local_port": "domain",
+          "peer_address": "0.0.0.0",
+          "peer_port": "*",
+          "interface": "lo"
+        },
         {
           "netid": "tcp",
           "state": "LISTEN",
           "recv_q": "0",
           "send_q": "128",
-          "local_address": "127.0.0.1",
-          "local_port": "35485",
+          "local_address": "127.0.0.53",
+          "local_port": "domain",
           "peer_address": "0.0.0.0",
           "peer_port": "*",
           "interface": "lo"
+        },
+        {
+          "netid": "tcp",
+          "state": "LISTEN",
+          "recv_q": "0",
+          "send_q": "128",
+          "local_address": "0.0.0.0",
+          "local_port": "ssh",
+          "peer_address": "0.0.0.0",
+          "peer_port": "*"
         },
         {
           "netid": "tcp",
@@ -142,7 +246,7 @@ def process(proc_data):
     Final processing to conform to the schema.
 
     Parameters:
-        
+
         proc_data:   (dictionary) raw structured data to process
 
     Returns:
@@ -161,12 +265,18 @@ def process(proc_data):
             "peer_address":     string,
             "peer_port":        string,
             "peer_port_num":    integer,
-            "interface":        string
+            "interface":        string,
+            "link_layer"        string,
+            "channel":          string,
+            "path":             string,
+            "pid":              integer
           }
         ]
+
+        Information from https://www.cyberciti.biz/files/ss.html used to define field names
     """
     for entry in proc_data:
-        int_list = ['recv_q', 'send_q']
+        int_list = ['recv_q', 'send_q', 'pid']
         for key in int_list:
             if key in entry:
                 try:
@@ -195,7 +305,7 @@ def parse(data, raw=False, quiet=False):
     Main text parsing function
 
     Parameters:
-        
+
         data:        (string)  text data to parse
         raw:         (boolean) output preprocessed JSON if True
         quiet:       (boolean) suppress warning messages if True
@@ -204,7 +314,7 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-    
+
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
 
@@ -230,7 +340,7 @@ def parse(data, raw=False, quiet=False):
         for entry in cleandata[1:]:
             output_line = {}
             if entry[0] not in string.whitespace:
-                
+
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + ' ' + entry[5:]
 
@@ -252,10 +362,29 @@ def parse(data, raw=False, quiet=False):
 
             output_line = dict(zip(header_list, entry_list))
 
+            # some post processing to pull out fields: interface, link_layer, path, pid, channel
+            # Information from https://www.cyberciti.biz/files/ss.html used to define field names
             if '%' in output_line['local_address']:
                 i_field = output_line['local_address'].rsplit('%', maxsplit=1)
                 output_line['local_address'] = i_field[0]
                 output_line['interface'] = i_field[1]
+
+            if output_line['netid'] == 'nl':
+                channel = output_line.pop('local_address')
+                channel = channel + ':' + output_line.pop('local_port')
+                if '/' in channel:
+                    pid = channel.rsplit('/', maxsplit=1)[1]
+                    channel = channel.rsplit('/', maxsplit=1)[0]
+                    output_line['pid'] = pid
+
+                output_line['channel'] = channel
+
+            if output_line['netid'] == 'p_raw':
+                output_line['link_layer'] = output_line.pop('local_address')
+                output_line['interface'] = output_line.pop('local_port')
+
+            if output_line['netid'] not in contains_colon:
+                output_line['path'] = output_line.pop('local_address')
 
             raw_output.append(output_line)
 
