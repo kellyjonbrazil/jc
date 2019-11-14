@@ -1032,39 +1032,91 @@ $ sudo ss -a | jc --ss -p
     "state": "UNCONN",
     "recv_q": 0,
     "send_q": 0,
-    "local_address": "rtnl",
-    "local_port": "kernel",
-    "peer_address": "*"
+    "peer_address": "*",
+    "channel": "rtnl:kernel"
   },
   {
     "netid": "nl",
     "state": "UNCONN",
     "recv_q": 0,
     "send_q": 0,
-    "local_address": "rtnl",
-    "local_port": "systemd-resolve/893",
-    "peer_address": "*"
-  },
-  {
-    "netid": "nl",
-    "state": "UNCONN",
-    "recv_q": 0,
-    "send_q": 0,
-    "local_address": "rtnl",
-    "local_port": "systemd/1",
-    "peer_address": "*"
+    "peer_address": "*",
+    "pid": 893,
+    "channel": "rtnl:systemd-resolve"
   },
   ...
+  {
+    "netid": "p_raw",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "peer_address": "*",
+    "link_layer": "LLDP",
+    "interface": "ens33"
+  },
+  {
+    "netid": "u_dgr",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_port": "93066",
+    "peer_address": "*",
+    "peer_port": "0",
+    "path": "/run/user/1000/systemd/notify"
+  },
+  {
+    "netid": "u_seq",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_port": "20699",
+    "peer_address": "*",
+    "peer_port": "0",
+    "path": "/run/udev/control"
+  },
+  ...
+  {
+    "netid": "icmp6",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "*",
+    "local_port": "ipv6-icmp",
+    "peer_address": "*",
+    "peer_port": "*",
+    "interface": "ens33"
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "127.0.0.53",
+    "local_port": "domain",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "interface": "lo"
+  },
   {
     "netid": "tcp",
     "state": "LISTEN",
     "recv_q": 0,
     "send_q": 128,
-    "local_address": "127.0.0.1",
-    "local_port": "35485",
+    "local_address": "127.0.0.53",
+    "local_port": "domain",
     "peer_address": "0.0.0.0",
     "peer_port": "*",
     "interface": "lo"
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "0.0.0.0",
+    "local_port": "ssh",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*"
   },
   {
     "netid": "tcp",
