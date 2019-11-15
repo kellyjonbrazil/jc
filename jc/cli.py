@@ -29,6 +29,7 @@ import jc.parsers.ps
 import jc.parsers.route
 import jc.parsers.ss
 import jc.parsers.stat
+import jc.parsers.systemctl
 import jc.parsers.uname
 import jc.parsers.uptime
 import jc.parsers.w
@@ -66,6 +67,7 @@ def helptext(message):
             --route      route parser
             --ss         ss parser
             --stat       stat parser
+            --systemctl  systemctl parser
             --uname      uname -a parser
             --uptime     uptime parser
             --w          w parser
@@ -131,6 +133,7 @@ def main():
         '--route': jc.parsers.route.parse,
         '--ss': jc.parsers.ss.parse,
         '--stat': jc.parsers.stat.parse,
+        '--systemctl': jc.parsers.systemctl.parse,
         '--uname': jc.parsers.uname.parse,
         '--uptime': jc.parsers.uptime.parse,
         '--w': jc.parsers.w.parse

@@ -86,6 +86,7 @@ jc PARSER [OPTIONS]
 - `--route` enables the `route` parser
 - `--ss` enables the `ss` parser
 - `--stat` enables the `stat` parser
+- `--systemctl` enables the `systemctl` parser
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
@@ -1267,6 +1268,34 @@ $ stat /bin/* | jc --stat -p
     "modify_time": "2018-03-12 23:04:27.000000000 +0000",
     "change_time": "2019-08-12 17:21:29.545944399 +0000",
     "birth_time": null
+  },
+  ...
+]
+```
+### systemctl
+```
+$ systemctl -a | jc --systemctl -p
+[
+  {
+    "unit": "proc-sys-fs-binfmt_misc.automount",
+    "load": "loaded",
+    "active": "active",
+    "sub": "waiting",
+    "description": "Arbitrary Executable File Formats File System Automount Point"
+  },
+  {
+    "unit": "dev-block-8:2.device",
+    "load": "loaded",
+    "active": "active",
+    "sub": "plugged",
+    "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+  },
+  {
+    "unit": "dev-cdrom.device",
+    "load": "loaded",
+    "active": "active",
+    "sub": "plugged",
+    "description": "VMware_Virtual_IDE_CDROM_Drive"
   },
   ...
 ]
