@@ -70,7 +70,7 @@ jc PARSER [OPTIONS]
 - `--dig` enables the `dig` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
-- `--fstab` enables the `/etc/fstab` parser
+- `--fstab` enables the `/etc/fstab` file parser
 - `--history` enables the `history` parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--ifconfig` enables the `ifconfig` parser
