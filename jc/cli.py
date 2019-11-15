@@ -13,6 +13,7 @@ import jc.parsers.df
 import jc.parsers.dig
 import jc.parsers.env
 import jc.parsers.free
+import jc.parsers.fstab
 import jc.parsers.history
 import jc.parsers.hosts
 import jc.parsers.ifconfig
@@ -49,6 +50,7 @@ def helptext(message):
             --dig        dig parser
             --env        env parser
             --free       free parser
+            --fstab      /etc/fstab parser
             --history    history parser
             --hosts      /etc/hosts file parser
             --ifconfig   iconfig parser
@@ -113,6 +115,7 @@ def main():
         '--dig': jc.parsers.dig.parse,
         '--env': jc.parsers.env.parse,
         '--free': jc.parsers.free.parse,
+        '--fstab': jc.parsers.fstab.parse,
         '--history': jc.parsers.history.parse,
         '--hosts': jc.parsers.hosts.parse,
         '--ifconfig': jc.parsers.ifconfig.parse,
