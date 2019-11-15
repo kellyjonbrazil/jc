@@ -113,6 +113,7 @@ def process(proc_data):
         [
           {
             "file":         string,
+            "link_to"       string,
             "size":         integer,
             "blocks":       integer,
             "io_blocks":    integer,
@@ -182,6 +183,17 @@ def parse(data, raw=False, quiet=False):
                 output_line = {}
                 line_list = line.split(maxsplit=1)
                 output_line['file'] = line_list[1]
+
+                # populate link_to field if -> found
+                if output_line['file'].find(' -> ') != -1:
+                    filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
+                    link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
+                    output_line['file'] = filename
+                    output_line['link_to'] = link
+                else:
+                    filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
+                    output_line['file'] = filename
+
                 continue
 
             # line #2
@@ -232,6 +244,7 @@ def parse(data, raw=False, quiet=False):
             if line.find('Birth:') == 1:
                 line_list = line.split(maxsplit=1)
                 output_line['birth_time'] = line_list[1]
+
                 raw_output.append(output_line)
 
     if raw:
