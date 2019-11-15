@@ -128,7 +128,7 @@ def process(proc_data):
     Final processing to conform to the schema.
 
     Parameters:
-        
+
         proc_data:   (dictionary) raw structured data to process
 
     Returns:

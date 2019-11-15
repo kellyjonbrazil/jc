@@ -96,13 +96,13 @@ def process(proc_data):
     Final processing to conform to the schema.
 
     Parameters:
-        
+
         proc_data:   (dictionary) raw structured data to process
 
     Returns:
 
         dictionary   structured data with the following schema:
-    
+
         [
           {
             "command":    string,
@@ -136,7 +136,7 @@ def parse(data, raw=False, quiet=False):
     Main text parsing function
 
     Parameters:
-        
+
         data:        (string)  text data to parse
         raw:         (boolean) output preprocessed JSON if True
         quiet:       (boolean) suppress warning messages if True
@@ -145,7 +145,7 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-    
+
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
 
