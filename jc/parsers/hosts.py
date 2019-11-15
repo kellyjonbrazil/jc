@@ -120,6 +120,16 @@ def parse(data, raw=False, quiet=False):
             hosts = line_list[1]
             hosts_list = hosts.split()
 
+            comment_found = False
+            for i, item in enumerate(hosts_list):
+                if item.find('#') != -1:
+                    comment_found = True
+                    comment_item = i
+                    break
+
+            if comment_found:
+                hosts_list = hosts_list[:comment_item]
+
             output_line['ip'] = ip
             output_line['hostname'] = hosts_list
 
