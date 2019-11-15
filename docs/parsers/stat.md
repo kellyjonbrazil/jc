@@ -26,7 +26,7 @@ Examples:
         "access_time": "2019-11-14 08:18:03.509681766 +0000",
         "modify_time": "2019-06-06 22:28:15.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.521945390 +0000",
-        "birth_time": "-"
+        "birth_time": null
       },
       {
         "file": "/bin/btrfs",
@@ -71,7 +71,7 @@ Examples:
         "access_time": "2019-11-14 08:18:03.509681766 +0000",
         "modify_time": "2019-06-06 22:28:15.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.521945390 +0000",
-        "birth_time": "-"
+        "birth_time": null
       },
       {
         "file": "/bin/btrfs",

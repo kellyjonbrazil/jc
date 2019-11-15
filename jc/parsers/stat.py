@@ -25,7 +25,7 @@ Examples:
         "access_time": "2019-11-14 08:18:03.509681766 +0000",
         "modify_time": "2019-06-06 22:28:15.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.521945390 +0000",
-        "birth_time": "-"
+        "birth_time": null
       },
       {
         "file": "/bin/btrfs",
@@ -70,7 +70,7 @@ Examples:
         "access_time": "2019-11-14 08:18:03.509681766 +0000",
         "modify_time": "2019-06-06 22:28:15.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.521945390 +0000",
-        "birth_time": "-"
+        "birth_time": null
       },
       {
         "file": "/bin/btrfs",
@@ -237,16 +237,19 @@ def parse(data, raw=False, quiet=False):
             if line.find('Access: 2') == 0:
                 line_list = line.split(maxsplit=1)
                 output_line['access_time'] = line_list[1]
+                continue
 
             # line #6
             if line.find('Modify:') == 0:
                 line_list = line.split(maxsplit=1)
                 output_line['modify_time'] = line_list[1]
+                continue
 
             # line #7
             if line.find('Change:') == 0:
                 line_list = line.split(maxsplit=1)
                 output_line['change_time'] = line_list[1]
+                continue
 
             # line #8
             if line.find('Birth:') == 1:
@@ -254,6 +257,7 @@ def parse(data, raw=False, quiet=False):
                 output_line['birth_time'] = line_list[1]
 
                 raw_output.append(output_line)
+                continue
 
     if raw:
         return raw_output
