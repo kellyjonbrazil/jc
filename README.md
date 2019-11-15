@@ -83,6 +83,7 @@ jc PARSER [OPTIONS]
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--ss` enables the `ss` parser
+- `--stat` enables the `stat` parser
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
@@ -1140,6 +1141,53 @@ $ sudo ss -a | jc --ss -p
     "local_port_num": 1023,
     "peer_port_num": 976
   }
+]
+```
+### stat
+```
+$ stat /bin/* | jc --stat -p
+[
+  {
+    "file": "/bin/bash",
+    "size": 1113504,
+    "blocks": 2176,
+    "io_blocks": 4096,
+    "type": "regular file",
+    "device": "802h/2050d",
+    "inode": 131099,
+    "links": 1,
+    "access": "0755",
+    "flags": "-rwxr-xr-x",
+    "uid": 0,
+    "user": "root",
+    "gid": 0,
+    "group": "root",
+    "access_time": "2019-11-14 08:18:03.509681766 +0000",
+    "modify_time": "2019-06-06 22:28:15.000000000 +0000",
+    "change_time": "2019-08-12 17:21:29.521945390 +0000",
+    "birth_time": "-"
+  },
+  {
+    "file": "/bin/btrfs",
+    "size": 716464,
+    "blocks": 1400,
+    "io_blocks": 4096,
+    "type": "regular file",
+    "device": "802h/2050d",
+    "inode": 131100,
+    "links": 1,
+    "access": "0755",
+    "flags": "-rwxr-xr-x",
+    "uid": 0,
+    "user": "root",
+    "gid": 0,
+    "group": "root",
+    "access_time": "2019-11-14 08:18:28.990834276 +0000",
+    "modify_time": "2018-03-12 23:04:27.000000000 +0000",
+    "change_time": "2019-08-12 17:21:29.545944399 +0000",
+    "birth_time": "-"
+  },
+  ...
 ]
 ```
 ### uname -a
