@@ -1,0 +1,1360 @@
+  File: /bin/bash
+  Size: 1113504   	Blocks: 2176       IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131099      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:03.509681766 +0000
+Modify: 2019-06-06 22:28:15.000000000 +0000
+Change: 2019-08-12 17:21:29.521945390 +0000
+ Birth: -
+  File: /bin/btrfs
+  Size: 716464    	Blocks: 1400       IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131100      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:28.990834276 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.545944399 +0000
+ Birth: -
+  File: /bin/btrfsck -> btrfs
+  Size: 5         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131075      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.537346949 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/btrfs-debug-tree
+  Size: 375952    	Blocks: 736        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131101      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.565943573 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.565943573 +0000
+ Birth: -
+  File: /bin/btrfs-find-root
+  Size: 371856    	Blocks: 728        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131102      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.581942911 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.581942911 +0000
+ Birth: -
+  File: /bin/btrfs-image
+  Size: 396432    	Blocks: 776        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131103      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.597942250 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.597942250 +0000
+ Birth: -
+  File: /bin/btrfs-map-logical
+  Size: 375952    	Blocks: 736        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131104      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.613941590 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.613941590 +0000
+ Birth: -
+  File: /bin/btrfs-select-super
+  Size: 371856    	Blocks: 728        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131105      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.637940598 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.637940598 +0000
+ Birth: -
+  File: /bin/btrfstune
+  Size: 375952    	Blocks: 736        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131107      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.689938450 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.689938450 +0000
+ Birth: -
+  File: /bin/btrfs-zero-log
+  Size: 371856    	Blocks: 728        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131106      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:29.066876865 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.665939442 +0000
+ Birth: -
+  File: /bin/bunzip2
+  Size: 34888     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131112      Links: 3
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/busybox
+  Size: 2062296   	Blocks: 4032       IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131108      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.801933824 +0000
+Modify: 2019-03-06 20:51:41.000000000 +0000
+Change: 2019-08-12 17:21:29.801933824 +0000
+ Birth: -
+  File: /bin/bzcat
+  Size: 34888     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131112      Links: 3
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/bzcmp -> bzdiff
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131076      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.661350198 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/bzdiff
+  Size: 2140      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131109      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.805933659 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.805933659 +0000
+ Birth: -
+  File: /bin/bzegrep -> bzgrep
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131077      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.689350932 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/bzexe
+  Size: 4877      	Blocks: 16         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131110      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.805933659 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.805933659 +0000
+ Birth: -
+  File: /bin/bzfgrep -> bzgrep
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131078      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.713351561 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/bzgrep
+  Size: 3642      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131111      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.805933659 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.805933659 +0000
+ Birth: -
+  File: /bin/bzip2
+  Size: 34888     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131112      Links: 3
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/bzip2recover
+  Size: 14328     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131113      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/bzless -> bzmore
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131079      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.765352923 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/bzmore
+  Size: 1297      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131114      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2019-07-04 12:35:36.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/cat
+  Size: 35064     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131115      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:03.566042141 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/chacl
+  Size: 14328     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131116      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2017-04-21 20:44:54.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/chgrp
+  Size: 63672     	Blocks: 128        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131117      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.809933493 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.809933493 +0000
+ Birth: -
+  File: /bin/chmod
+  Size: 59608     	Blocks: 120        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131118      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 10:54:20.566474623 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.813933328 +0000
+ Birth: -
+  File: /bin/chown
+  Size: 67768     	Blocks: 136        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131119      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:11:12.522582075 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.813933328 +0000
+ Birth: -
+  File: /bin/chvt
+  Size: 10312     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131120      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.813933328 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:29.813933328 +0000
+ Birth: -
+  File: /bin/cp
+  Size: 141528    	Blocks: 280        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131121      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:17:59.512544818 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.821932998 +0000
+ Birth: -
+  File: /bin/cpio
+  Size: 157224    	Blocks: 312        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131319      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:28.974824949 +0000
+Modify: 2019-11-05 18:09:06.000000000 +0000
+Change: 2019-11-07 06:42:09.587720919 +0000
+ Birth: -
+  File: /bin/dash
+  Size: 121432    	Blocks: 240        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131123      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 21:16:56.055822496 +0000
+Modify: 2018-01-25 07:14:33.000000000 +0000
+Change: 2019-08-12 17:21:29.825932832 +0000
+ Birth: -
+  File: /bin/date
+  Size: 100568    	Blocks: 200        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131124      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:17:41.391968839 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.833932502 +0000
+ Birth: -
+  File: /bin/dd
+  Size: 76000     	Blocks: 152        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131125      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.844165468 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.837932336 +0000
+ Birth: -
+  File: /bin/df
+  Size: 84776     	Blocks: 168        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131126      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-08 17:58:16.342184000 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.845932006 +0000
+ Birth: -
+  File: /bin/dir
+  Size: 133792    	Blocks: 264        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131127      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.849931841 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.849931841 +0000
+ Birth: -
+  File: /bin/dmesg
+  Size: 72000     	Blocks: 136        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131128      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.853931676 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:29.853931676 +0000
+ Birth: -
+  File: /bin/dnsdomainname -> hostname
+  Size: 8         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131080      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.945357640 +0000
+Modify: 2018-01-31 12:08:15.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/domainname -> hostname
+  Size: 8         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131081      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:49.961358059 +0000
+Modify: 2018-01-31 12:08:15.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/dumpkeys
+  Size: 170520    	Blocks: 336        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131129      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.857931510 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:29.857931510 +0000
+ Birth: -
+  File: /bin/echo
+  Size: 35000     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131130      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:10.609310253 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.861931345 +0000
+ Birth: -
+  File: /bin/ed
+  Size: 51512     	Blocks: 104        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131131      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.861931345 +0000
+Modify: 2016-04-26 21:54:38.000000000 +0000
+Change: 2019-08-12 17:21:29.861931345 +0000
+ Birth: -
+  File: /bin/egrep
+  Size: 28        	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131132      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:01.135612133 +0000
+Modify: 2017-07-12 10:59:03.000000000 +0000
+Change: 2019-08-12 17:21:29.861931345 +0000
+ Birth: -
+  File: /bin/false
+  Size: 30904     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131133      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.865931179 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.865931179 +0000
+ Birth: -
+  File: /bin/fgconsole
+  Size: 10312     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131134      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.865931179 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:29.865931179 +0000
+ Birth: -
+  File: /bin/fgrep
+  Size: 28        	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131135      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:19:14.414633619 +0000
+Modify: 2017-07-12 10:59:03.000000000 +0000
+Change: 2019-08-12 17:21:29.865931179 +0000
+ Birth: -
+  File: /bin/findmnt
+  Size: 64784     	Blocks: 128        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131136      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.869931015 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:29.869931015 +0000
+ Birth: -
+  File: /bin/fsck.btrfs
+  Size: 1185      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131137      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.869931015 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.869931015 +0000
+ Birth: -
+  File: /bin/fuser
+  Size: 35928     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131138      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.873930850 +0000
+Modify: 2018-12-11 15:46:04.000000000 +0000
+Change: 2019-08-12 17:21:29.873930850 +0000
+ Birth: -
+  File: /bin/fusermount
+  Size: 30800     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131139      Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-08 14:20:05.052301501 +0000
+Modify: 2016-08-11 12:52:18.000000000 +0000
+Change: 2019-08-12 17:21:29.873930850 +0000
+ Birth: -
+  File: /bin/getfacl
+  Size: 23160     	Blocks: 48         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131140      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.873930850 +0000
+Modify: 2017-04-21 20:44:54.000000000 +0000
+Change: 2019-08-12 17:21:29.873930850 +0000
+ Birth: -
+  File: /bin/grep
+  Size: 219528    	Blocks: 432        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131141      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 04:33:55.887764474 +0000
+Modify: 2017-07-12 10:59:03.000000000 +0000
+Change: 2019-08-12 17:21:29.877930684 +0000
+ Birth: -
+  File: /bin/gunzip
+  Size: 2301      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131226      Links: 2
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.181918115 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.181918115 +0000
+ Birth: -
+  File: /bin/gzexe
+  Size: 5927      	Blocks: 16         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131142      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.877930684 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:29.877930684 +0000
+ Birth: -
+  File: /bin/gzip
+  Size: 101560    	Blocks: 200        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131143      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:17:59.732416722 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:29.897929858 +0000
+ Birth: -
+  File: /bin/hostname
+  Size: 18504     	Blocks: 40         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131144      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:24:44.838656738 +0000
+Modify: 2018-01-31 12:08:15.000000000 +0000
+Change: 2019-08-12 17:21:29.897929858 +0000
+ Birth: -
+  File: /bin/ip
+  Size: 554104    	Blocks: 1088       IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131145      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-11 20:49:49.156707208 +0000
+Modify: 2018-02-26 15:21:30.000000000 +0000
+Change: 2019-08-12 17:21:29.909929362 +0000
+ Birth: -
+  File: /bin/journalctl
+  Size: 63576     	Blocks: 128        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131097      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-11 20:49:42.852706909 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/kbd_mode
+  Size: 10312     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131147      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.956198362 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:29.913929198 +0000
+ Birth: -
+  File: /bin/kill
+  Size: 26704     	Blocks: 56         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131148      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-13 01:53:14.586424163 +0000
+Modify: 2018-05-14 12:01:40.000000000 +0000
+Change: 2019-08-12 17:21:29.913929198 +0000
+ Birth: -
+  File: /bin/kmod
+  Size: 149688    	Blocks: 296        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131149      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:22.017953568 +0000
+Modify: 2018-11-12 21:54:37.000000000 +0000
+Change: 2019-08-12 17:21:29.921928867 +0000
+ Birth: -
+  File: /bin/less
+  Size: 170760    	Blocks: 336        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131150      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 15:51:02.992033396 +0000
+Modify: 2017-12-01 04:11:09.000000000 +0000
+Change: 2019-08-12 17:21:29.925928702 +0000
+ Birth: -
+  File: /bin/lessecho
+  Size: 10256     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131151      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-14 01:52:29.673928677 +0000
+Modify: 2017-12-01 04:11:09.000000000 +0000
+Change: 2019-08-12 17:21:29.925928702 +0000
+ Birth: -
+  File: /bin/lessfile -> lesspipe
+  Size: 8         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131082      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.245365501 +0000
+Modify: 2017-12-01 04:11:09.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/lesskey
+  Size: 19856     	Blocks: 40         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131152      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.925928702 +0000
+Modify: 2017-12-01 04:11:09.000000000 +0000
+Change: 2019-08-12 17:21:29.925928702 +0000
+ Birth: -
+  File: /bin/lesspipe
+  Size: 8564      	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131153      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-13 01:53:24.066461414 +0000
+Modify: 2017-12-01 04:11:09.000000000 +0000
+Change: 2019-08-12 17:21:29.929928536 +0000
+ Birth: -
+  File: /bin/ln
+  Size: 67808     	Blocks: 136        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131154      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:21.953895931 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.929928536 +0000
+ Birth: -
+  File: /bin/loadkeys
+  Size: 211528    	Blocks: 416        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131155      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.964200712 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:29.937928206 +0000
+ Birth: -
+  File: /bin/login
+  Size: 52664     	Blocks: 104        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131156      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-13 01:53:20.870448859 +0000
+Modify: 2019-03-22 19:05:38.000000000 +0000
+Change: 2019-08-12 17:21:29.937928206 +0000
+ Birth: -
+  File: /bin/loginctl
+  Size: 51280     	Blocks: 104        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131146      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/lowntfs-3g
+  Size: 109232    	Blocks: 216        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131158      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.941928041 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:29.941928041 +0000
+ Birth: -
+  File: /bin/ls
+  Size: 133792    	Blocks: 264        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131159      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:21.873822659 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.941928041 +0000
+ Birth: -
+  File: /bin/lsblk
+  Size: 84048     	Blocks: 168        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131160      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:19:15.623162563 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:29.957927379 +0000
+ Birth: -
+  File: /bin/lsmod -> kmod
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131083      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.357368436 +0000
+Modify: 2018-11-12 21:54:37.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/mkdir
+  Size: 80056     	Blocks: 160        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131161      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:21.985925239 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.965927049 +0000
+ Birth: -
+  File: /bin/mkfs.btrfs
+  Size: 396464    	Blocks: 776        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131162      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.977926553 +0000
+Modify: 2018-03-12 23:04:27.000000000 +0000
+Change: 2019-08-12 17:21:29.977926553 +0000
+ Birth: -
+  File: /bin/mknod
+  Size: 67768     	Blocks: 136        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131163      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.981926388 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.981926388 +0000
+ Birth: -
+  File: /bin/mktemp
+  Size: 43192     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131164      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:21.977917912 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:29.981926388 +0000
+ Birth: -
+  File: /bin/more
+  Size: 38952     	Blocks: 80         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131165      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-13 01:44:29.834042309 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:29.981926388 +0000
+ Birth: -
+  File: /bin/mount
+  Size: 43088     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131166      Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 21:52:12.136609016 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:29.989926058 +0000
+ Birth: -
+  File: /bin/mountpoint
+  Size: 14408     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131167      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:29.989926058 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:29.989926058 +0000
+ Birth: -
+  File: /bin/mt -> /etc/alternatives/mt
+  Size: 20        	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131084      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.449370847 +0000
+Modify: 2019-08-05 19:23:23.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/mt-gnu
+  Size: 80512     	Blocks: 160        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131320      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-07 06:42:09.000000000 +0000
+Modify: 2019-11-05 18:09:06.000000000 +0000
+Change: 2019-11-07 06:42:09.587720919 +0000
+ Birth: -
+  File: /bin/mv
+  Size: 137440    	Blocks: 272        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131169      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:17:59.648465631 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.001925562 +0000
+ Birth: -
+  File: /bin/nano
+  Size: 245872    	Blocks: 488        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131170      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.005925397 +0000
+Modify: 2018-03-06 14:46:39.000000000 +0000
+Change: 2019-08-12 17:21:30.005925397 +0000
+ Birth: -
+  File: /bin/nc -> /etc/alternatives/nc
+  Size: 20        	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131085      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.493372000 +0000
+Modify: 2019-08-05 19:23:23.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/nc.openbsd
+  Size: 35312     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131171      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-14 01:56:09.191445751 +0000
+Modify: 2018-05-14 12:24:33.000000000 +0000
+Change: 2019-08-12 17:21:30.013925065 +0000
+ Birth: -
+  File: /bin/netcat -> /etc/alternatives/netcat
+  Size: 24        	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131086      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.517372629 +0000
+Modify: 2019-08-05 19:23:23.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/netstat
+  Size: 154192    	Blocks: 304        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131172      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-11 23:39:53.814731018 +0000
+Modify: 2017-01-10 04:25:08.000000000 +0000
+Change: 2019-08-12 17:21:30.021924734 +0000
+ Birth: -
+  File: /bin/networkctl
+  Size: 43080     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131210      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-11 20:49:49.968707247 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/nisdomainname -> hostname
+  Size: 8         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131087      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.553373573 +0000
+Modify: 2018-01-31 12:08:15.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/ntfs-3g
+  Size: 146128    	Blocks: 288        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131174      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.860170167 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.025924569 +0000
+ Birth: -
+  File: /bin/ntfs-3g.probe
+  Size: 10312     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131175      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.025924569 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.025924569 +0000
+ Birth: -
+  File: /bin/ntfscat
+  Size: 26728     	Blocks: 56         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131176      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.029924404 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.029924404 +0000
+ Birth: -
+  File: /bin/ntfscluster
+  Size: 34920     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131177      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.029924404 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.029924404 +0000
+ Birth: -
+  File: /bin/ntfscmp
+  Size: 34920     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131178      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.029924404 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.029924404 +0000
+ Birth: -
+  File: /bin/ntfsfallocate
+  Size: 34928     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131179      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.033924238 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.033924238 +0000
+ Birth: -
+  File: /bin/ntfsfix
+  Size: 43120     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131180      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.033924238 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.033924238 +0000
+ Birth: -
+  File: /bin/ntfsinfo
+  Size: 55416     	Blocks: 112        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131181      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.037924072 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.037924072 +0000
+ Birth: -
+  File: /bin/ntfsls
+  Size: 31928     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131182      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.041923907 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.041923907 +0000
+ Birth: -
+  File: /bin/ntfsmove
+  Size: 30824     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131183      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.041923907 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.041923907 +0000
+ Birth: -
+  File: /bin/ntfsrecover
+  Size: 116840    	Blocks: 232        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131184      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.049923576 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.049923576 +0000
+ Birth: -
+  File: /bin/ntfssecaudit
+  Size: 88672     	Blocks: 176        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131185      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.049923576 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.049923576 +0000
+ Birth: -
+  File: /bin/ntfstruncate
+  Size: 38944     	Blocks: 80         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131186      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.053923410 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.053923410 +0000
+ Birth: -
+  File: /bin/ntfsusermap
+  Size: 30744     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131187      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.053923410 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.053923410 +0000
+ Birth: -
+  File: /bin/ntfswipe
+  Size: 47752     	Blocks: 96         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131188      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.061923079 +0000
+Modify: 2019-03-21 21:33:01.000000000 +0000
+Change: 2019-08-12 17:21:30.061923079 +0000
+ Birth: -
+  File: /bin/open -> openvt
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131088      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.741378499 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/openvt
+  Size: 18872     	Blocks: 40         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131189      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.061923079 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:30.061923079 +0000
+ Birth: -
+  File: /bin/pidof -> /sbin/killall5
+  Size: 14        	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131089      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.761379023 +0000
+Modify: 2017-11-01 21:00:29.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/ping
+  Size: 64424     	Blocks: 128        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131190      Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-01 22:16:53.113917581 +0000
+Modify: 2019-06-28 11:05:23.000000000 +0000
+Change: 2019-08-12 17:21:30.061923079 +0000
+ Birth: -
+  File: /bin/ping4 -> ping
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131090      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.781379547 +0000
+Modify: 2019-06-28 11:05:23.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/ping6 -> ping
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131091      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.797379966 +0000
+Modify: 2019-06-28 11:05:23.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/plymouth
+  Size: 38904     	Blocks: 80         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131191      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.035928157 +0000
+Modify: 2019-04-04 15:41:18.000000000 +0000
+Change: 2019-08-12 17:21:30.069922749 +0000
+ Birth: -
+  File: /bin/ps
+  Size: 133432    	Blocks: 264        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131192      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-28 19:09:27.519652445 +0000
+Modify: 2018-05-14 12:01:40.000000000 +0000
+Change: 2019-08-12 17:21:30.073922584 +0000
+ Birth: -
+  File: /bin/pwd
+  Size: 35000     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131193      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.073922584 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.073922584 +0000
+ Birth: -
+  File: /bin/rbash -> bash
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131092      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.837381015 +0000
+Modify: 2019-06-06 22:28:15.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/readlink
+  Size: 43192     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131194      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 10:54:20.570474923 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.073922584 +0000
+ Birth: -
+  File: /bin/red
+  Size: 89        	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131195      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.073922584 +0000
+Modify: 2016-04-26 21:54:36.000000000 +0000
+Change: 2019-08-12 17:21:30.073922584 +0000
+ Birth: -
+  File: /bin/rm
+  Size: 63704     	Blocks: 128        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131196      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 01:37:57.885396670 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.081922252 +0000
+ Birth: -
+  File: /bin/rmdir
+  Size: 43192     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131197      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.081922252 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.081922252 +0000
+ Birth: -
+  File: /bin/rnano -> nano
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131093      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.897382586 +0000
+Modify: 2018-03-06 14:46:39.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/run-parts
+  Size: 18760     	Blocks: 40         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131198      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 05:17:28.584422537 +0000
+Modify: 2017-12-30 18:15:02.000000000 +0000
+Change: 2019-08-12 17:21:30.081922252 +0000
+ Birth: -
+  File: /bin/sed
+  Size: 109000    	Blocks: 216        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131199      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:00.867764210 +0000
+Modify: 2018-01-30 02:49:51.000000000 +0000
+Change: 2019-08-12 17:21:30.085922087 +0000
+ Birth: -
+  File: /bin/setfacl
+  Size: 35512     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131200      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.085922087 +0000
+Modify: 2017-04-21 20:44:54.000000000 +0000
+Change: 2019-08-12 17:21:30.085922087 +0000
+ Birth: -
+  File: /bin/setfont
+  Size: 43144     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131201      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.936192488 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:30.089921921 +0000
+ Birth: -
+  File: /bin/setupcon
+  Size: 39103     	Blocks: 80         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131202      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:24:38.122656700 +0000
+Modify: 2019-04-23 12:04:14.000000000 +0000
+Change: 2019-08-12 17:21:30.093921755 +0000
+ Birth: -
+  File: /bin/sh -> dash
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131094      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 21:16:56.055822496 +0000
+Modify: 2019-08-05 19:23:04.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/sh.distrib -> dash
+  Size: 4         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131095      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:50.973384578 +0000
+Modify: 2018-01-25 07:14:33.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/sleep
+  Size: 35000     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131203      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-01 22:18:08.992464281 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.097921590 +0000
+ Birth: -
+  File: /bin/ss
+  Size: 139904    	Blocks: 280        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131204      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 15:36:03.526897959 +0000
+Modify: 2018-02-26 15:21:30.000000000 +0000
+Change: 2019-08-12 17:21:30.101921424 +0000
+ Birth: -
+  File: /bin/static-sh -> busybox
+  Size: 7         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131096      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 23:29:20.250367903 +0000
+Modify: 2019-03-06 20:51:41.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/stty
+  Size: 75992     	Blocks: 152        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131205      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-12 19:43:10.723991008 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.105921259 +0000
+ Birth: -
+  File: /bin/su
+  Size: 44664     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131206      Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-13 21:52:13.551133801 +0000
+Modify: 2019-03-22 19:05:38.000000000 +0000
+Change: 2019-08-12 17:21:30.109921094 +0000
+ Birth: -
+  File: /bin/sync
+  Size: 35000     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131207      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:40.506907200 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.109921094 +0000
+ Birth: -
+  File: /bin/systemctl
+  Size: 182352    	Blocks: 360        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131211      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:01.023675168 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd -> /lib/systemd/systemd
+  Size: 20        	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131346      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:51.061386884 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.996677691 +0000
+ Birth: -
+  File: /bin/systemd-ask-password
+  Size: 10320     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131212      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-escape
+  Size: 14400     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131213      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-hwdb
+  Size: 84328     	Blocks: 168        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131208      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:11:48.695122304 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:11:48.067072790 +0000
+ Birth: -
+  File: /bin/systemd-inhibit
+  Size: 14416     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131214      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-machine-id-setup
+  Size: 18496     	Blocks: 40         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131215      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:05.488731680 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-notify
+  Size: 14408     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131216      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-sysusers
+  Size: 43080     	Blocks: 88         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131217      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-tmpfiles
+  Size: 71752     	Blocks: 144        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131222      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 20:28:25.580327175 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/systemd-tty-ask-password-agent
+  Size: 26696     	Blocks: 56         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131345      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-18 00:12:03.000000000 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:12:04.984676392 +0000
+ Birth: -
+  File: /bin/tar
+  Size: 423312    	Blocks: 832        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131218      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:00.783812255 +0000
+Modify: 2019-01-21 16:38:11.000000000 +0000
+Change: 2019-08-12 17:21:30.157919107 +0000
+ Birth: -
+  File: /bin/tempfile
+  Size: 10104     	Blocks: 24         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131219      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:19:13.642288621 +0000
+Modify: 2017-12-30 18:15:02.000000000 +0000
+Change: 2019-08-12 17:21:30.157919107 +0000
+ Birth: -
+  File: /bin/touch
+  Size: 88280     	Blocks: 176        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131220      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:21.973914249 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.157919107 +0000
+ Birth: -
+  File: /bin/true
+  Size: 30904     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131221      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:03.614351034 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.157919107 +0000
+ Birth: -
+  File: /bin/udevadm
+  Size: 584072    	Blocks: 1144       IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131209      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:18:32.400035064 +0000
+Modify: 2019-09-05 03:59:51.000000000 +0000
+Change: 2019-10-18 00:11:48.067072790 +0000
+ Birth: -
+  File: /bin/ulockmgr_server
+  Size: 14328     	Blocks: 32         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131223      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.177918280 +0000
+Modify: 2016-08-11 12:52:18.000000000 +0000
+Change: 2019-08-12 17:21:30.177918280 +0000
+ Birth: -
+  File: /bin/umount
+  Size: 26696     	Blocks: 56         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131224      Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-11 20:49:51.696707329 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:30.177918280 +0000
+ Birth: -
+  File: /bin/uname
+  Size: 35032     	Blocks: 72         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131225      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 04:33:55.883763457 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.181918115 +0000
+ Birth: -
+  File: /bin/uncompress
+  Size: 2301      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131226      Links: 2
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.181918115 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.181918115 +0000
+ Birth: -
+  File: /bin/unicode_start
+  Size: 2762      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131227      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.181918115 +0000
+Modify: 2018-01-22 13:49:48.000000000 +0000
+Change: 2019-08-12 17:21:30.181918115 +0000
+ Birth: -
+  File: /bin/vdir
+  Size: 133792    	Blocks: 264        IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131228      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.185917949 +0000
+Modify: 2018-01-18 09:43:49.000000000 +0000
+Change: 2019-08-12 17:21:30.185917949 +0000
+ Birth: -
+  File: /bin/wdctl
+  Size: 30800     	Blocks: 64         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131229      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.185917949 +0000
+Modify: 2018-10-15 20:29:48.000000000 +0000
+Change: 2019-08-12 17:21:30.185917949 +0000
+ Birth: -
+  File: /bin/which
+  Size: 946       	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131230      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-14 08:17:31.827105980 +0000
+Modify: 2017-12-30 18:15:02.000000000 +0000
+Change: 2019-08-12 17:21:30.185917949 +0000
+ Birth: -
+  File: /bin/whiptail
+  Size: 26632     	Blocks: 56         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131231      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.185917949 +0000
+Modify: 2018-01-12 16:42:24.000000000 +0000
+Change: 2019-08-12 17:21:30.185917949 +0000
+ Birth: -
+  File: /bin/ypdomainname -> hostname
+  Size: 8         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 802h/2050d	Inode: 131098      Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-11-15 00:17:51.337394117 +0000
+Modify: 2018-01-31 12:08:15.000000000 +0000
+Change: 2019-08-12 17:21:29.485946877 +0000
+ Birth: -
+  File: /bin/zcat
+  Size: 1937      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131232      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.185917949 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.185917949 +0000
+ Birth: -
+  File: /bin/zcmp
+  Size: 1777      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131233      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.185917949 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.185917949 +0000
+ Birth: -
+  File: /bin/zdiff
+  Size: 5764      	Blocks: 16         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131234      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/zegrep
+  Size: 140       	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131235      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/zfgrep
+  Size: 140       	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131236      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/zforce
+  Size: 2131      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131237      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/zgrep
+  Size: 5938      	Blocks: 16         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131238      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/zless
+  Size: 2037      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131239      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/zmore
+  Size: 1910      	Blocks: 8          IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131240      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
+  File: /bin/znew
+  Size: 5047      	Blocks: 16         IO Block: 4096   regular file
+Device: 802h/2050d	Inode: 131241      Links: 1
+Access: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-08-12 17:21:30.193917619 +0000
+Modify: 2017-04-28 03:50:19.000000000 +0000
+Change: 2019-08-12 17:21:30.193917619 +0000
+ Birth: -
