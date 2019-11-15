@@ -50,7 +50,7 @@ def helptext(message):
             --dig        dig parser
             --env        env parser
             --free       free parser
-            --fstab      /etc/fstab parser
+            --fstab      /etc/fstab file parser
             --history    history parser
             --hosts      /etc/hosts file parser
             --ifconfig   iconfig parser
