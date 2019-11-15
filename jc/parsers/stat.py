@@ -162,7 +162,7 @@ def parse(data, raw=False, quiet=False):
     """
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    compatible = ['linux']
 
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
