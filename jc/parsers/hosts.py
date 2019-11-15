@@ -5,11 +5,52 @@ Usage:
 
 Examples:
 
-    $ hosts | jc --hosts -p
-    []
-
-    $ hosts | jc --hosts -p -r
-    []
+    $ cat /etc/hosts | jc --hosts -p
+    [
+      {
+        "ip": "127.0.0.1",
+        "hostname": [
+          "localhost"
+        ]
+      },
+      {
+        "ip": "127.0.1.1",
+        "hostname": [
+          "kbrazil-ubuntu"
+        ]
+      },
+      {
+        "ip": "::1",
+        "hostname": [
+          "ip6-localhost",
+          "ip6-loopback"
+        ]
+      },
+      {
+        "ip": "fe00::0",
+        "hostname": [
+          "ip6-localnet"
+        ]
+      },
+      {
+        "ip": "ff00::0",
+        "hostname": [
+          "ip6-mcastprefix"
+        ]
+      },
+      {
+        "ip": "ff02::1",
+        "hostname": [
+          "ip6-allnodes"
+        ]
+      },
+      {
+        "ip": "ff02::2",
+        "hostname": [
+          "ip6-allrouters"
+        ]
+      }
+    ]
 """
 import jc.utils
 
@@ -28,14 +69,15 @@ def process(proc_data):
 
         [
           {
-            "hosts":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "ip":           string,
+            "hostname": [
+                            string
+            ]
           }
         ]
     """
 
-    # rebuild output for added semantic information
+    # no additional processing needed
     return proc_data
 
 
