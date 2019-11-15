@@ -30,6 +30,7 @@ import jc.parsers.route
 import jc.parsers.ss
 import jc.parsers.stat
 import jc.parsers.systemctl
+import jc.parsers.systemctl_luf
 import jc.parsers.uname
 import jc.parsers.uptime
 import jc.parsers.w
@@ -46,37 +47,38 @@ def helptext(message):
     Usage:  jc PARSER [OPTIONS]
 
     Parsers:
-            --arp        arp parser
-            --df         df parser
-            --dig        dig parser
-            --env        env parser
-            --free       free parser
-            --fstab      /etc/fstab file parser
-            --history    history parser
-            --hosts      /etc/hosts file parser
-            --ifconfig   iconfig parser
-            --iptables   iptables parser
-            --jobs       jobs parser
-            --ls         ls parser
-            --lsblk      lsblk parser
-            --lsmod      lsmod parser
-            --lsof       lsof parser
-            --mount      mount parser
-            --netstat    netstat parser
-            --ps         ps parser
-            --route      route parser
-            --ss         ss parser
-            --stat       stat parser
-            --systemctl  systemctl parser
-            --uname      uname -a parser
-            --uptime     uptime parser
-            --w          w parser
+            --arp            arp parser
+            --df             df parser
+            --dig            dig parser
+            --env            env parser
+            --free           free parser
+            --fstab          /etc/fstab file parser
+            --history        history parser
+            --hosts          /etc/hosts file parser
+            --ifconfig       iconfig parser
+            --iptables       iptables parser
+            --jobs           jobs parser
+            --ls             ls parser
+            --lsblk          lsblk parser
+            --lsmod          lsmod parser
+            --lsof           lsof parser
+            --mount          mount parser
+            --netstat        netstat parser
+            --ps             ps parser
+            --route          route parser
+            --ss             ss parser
+            --stat           stat parser
+            --systemctl      systemctl parser
+            --systemctl-luf  systemctl parser
+            --uname          uname -a parser
+            --uptime         uptime parser
+            --w              w parser
 
     Options:
-            -d           debug - show trace messages
-            -p           pretty print output
-            -q           quiet - suppress warnings
-            -r           raw JSON output
+            -d              debug - show trace messages
+            -p              pretty print output
+            -q              quiet - suppress warnings
+            -r              raw JSON output
 
     Example:
             ls -al | jc --ls -p
@@ -134,6 +136,7 @@ def main():
         '--ss': jc.parsers.ss.parse,
         '--stat': jc.parsers.stat.parse,
         '--systemctl': jc.parsers.systemctl.parse,
+        '--systemctl-luf': jc.parsers.systemctl_luf.parse,
         '--uname': jc.parsers.uname.parse,
         '--uptime': jc.parsers.uptime.parse,
         '--w': jc.parsers.w.parse
