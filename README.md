@@ -1338,7 +1338,6 @@ Future parsers:
 - nslookup
 - systemctl
 - journalctl
-- fstab file
 - crontab files
 - /proc files
 - /sys files
