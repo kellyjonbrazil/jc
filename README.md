@@ -70,6 +70,7 @@ jc PARSER [OPTIONS]
 - `--dig` enables the `dig` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
+- `--fstab` enables the `/etc/fstab` parser
 - `--history` enables the `history` parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--ifconfig` enables the `ifconfig` parser
@@ -375,6 +376,36 @@ $ free | jc --free -p
     "total": 2097148,
     "used": 0,
     "free": 2097148
+  }
+]
+```
+### /etc/fstab
+```
+$ cat /etc/fstab | jc --fstab -p
+[
+  {
+    "fs_spec": "/dev/mapper/centos-root",
+    "fs_file": "/",
+    "fs_vfstype": "xfs",
+    "fs_mntops": "defaults",
+    "fs_freq": 0,
+    "fs_passno": 0
+  },
+  {
+    "fs_spec": "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
+    "fs_file": "/boot",
+    "fs_vfstype": "xfs",
+    "fs_mntops": "defaults",
+    "fs_freq": 0,
+    "fs_passno": 0
+  },
+  {
+    "fs_spec": "/dev/mapper/centos-swap",
+    "fs_file": "swap",
+    "fs_vfstype": "swap",
+    "fs_mntops": "defaults",
+    "fs_freq": 0,
+    "fs_passno": 0
   }
 ]
 ```

@@ -5,7 +5,33 @@ Usage:
 
 Examples:
 
-    
+    $ cat /etc/fstab | jc --fstab -p
+    [
+      {
+        "fs_spec": "/dev/mapper/centos-root",
+        "fs_file": "/",
+        "fs_vfstype": "xfs",
+        "fs_mntops": "defaults",
+        "fs_freq": 0,
+        "fs_passno": 0
+      },
+      {
+        "fs_spec": "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
+        "fs_file": "/boot",
+        "fs_vfstype": "xfs",
+        "fs_mntops": "defaults",
+        "fs_freq": 0,
+        "fs_passno": 0
+      },
+      {
+        "fs_spec": "/dev/mapper/centos-swap",
+        "fs_file": "swap",
+        "fs_vfstype": "swap",
+        "fs_mntops": "defaults",
+        "fs_freq": 0,
+        "fs_passno": 0
+      }
+    ]
 """
 import jc.utils
 
@@ -24,15 +50,25 @@ def process(proc_data):
 
         [
           {
-            "ip":           string,
-            "hostname": [
-                            string
-            ]
+            "fs_spec":      string,
+            "fs_file":      string,
+            "fs_vfstype":   string,
+            "fs_mntops":    string,
+            "fs_freq":      integer,
+            "fs_passno":    integer
           }
         ]
     """
+    for entry in proc_data:
+        int_list = ['fs_freq', 'fs_passno']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
-    # no additional processing needed
     return proc_data
 
 
