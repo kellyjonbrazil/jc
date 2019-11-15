@@ -14,6 +14,7 @@ import jc.parsers.dig
 import jc.parsers.env
 import jc.parsers.free
 import jc.parsers.history
+import jc.parsers.hosts
 import jc.parsers.ifconfig
 import jc.parsers.iptables
 import jc.parsers.jobs
@@ -49,6 +50,7 @@ def helptext(message):
             --env        env parser
             --free       free parser
             --history    history parser
+            --hosts      /etc/hosts file parser
             --ifconfig   iconfig parser
             --iptables   iptables parser
             --jobs       jobs parser
@@ -112,6 +114,7 @@ def main():
         '--env': jc.parsers.env.parse,
         '--free': jc.parsers.free.parse,
         '--history': jc.parsers.history.parse,
+        '--hosts': jc.parsers.hosts.parse,
         '--ifconfig': jc.parsers.ifconfig.parse,
         '--iptables': jc.parsers.iptables.parse,
         '--jobs': jc.parsers.jobs.parse,
