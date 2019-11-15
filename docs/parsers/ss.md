@@ -1,245 +1,100 @@
-# jc.parsers.ss
-jc - JSON CLI output utility ss Parser
+# jc.parsers.stat
+jc - JSON CLI output utility stats Parser
 
 Usage:
-    specify --ss as the first argument if the piped input is coming from ss
-
-Limitations:
-    Extended information options like -e and -p are not supported and may cause parsing irregularities
+    specify --stats as the first argument if the piped input is coming from stats
 
 Examples:
 
-      $ sudo ss -a | jc --ss -p
-      [
-        {
-          "netid": "nl",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "peer_address": "*",
-          "channel": "rtnl:kernel"
-        },
-        {
-          "netid": "nl",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "peer_address": "*",
-          "pid": 893,
-          "channel": "rtnl:systemd-resolve"
-        },
-        ...
-        {
-          "netid": "p_raw",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "peer_address": "*",
-          "link_layer": "LLDP",
-          "interface": "ens33"
-        },
-        {
-          "netid": "u_dgr",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "local_port": "93066",
-          "peer_address": "*",
-          "peer_port": "0",
-          "path": "/run/user/1000/systemd/notify"
-        },
-        {
-          "netid": "u_seq",
-          "state": "LISTEN",
-          "recv_q": 0,
-          "send_q": 128,
-          "local_port": "20699",
-          "peer_address": "*",
-          "peer_port": "0",
-          "path": "/run/udev/control"
-        },
-        ...
-        {
-          "netid": "icmp6",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "local_address": "*",
-          "local_port": "ipv6-icmp",
-          "peer_address": "*",
-          "peer_port": "*",
-          "interface": "ens33"
-        },
-        {
-          "netid": "udp",
-          "state": "UNCONN",
-          "recv_q": 0,
-          "send_q": 0,
-          "local_address": "127.0.0.53",
-          "local_port": "domain",
-          "peer_address": "0.0.0.0",
-          "peer_port": "*",
-          "interface": "lo"
-        },
-        {
-          "netid": "tcp",
-          "state": "LISTEN",
-          "recv_q": 0,
-          "send_q": 128,
-          "local_address": "127.0.0.53",
-          "local_port": "domain",
-          "peer_address": "0.0.0.0",
-          "peer_port": "*",
-          "interface": "lo"
-        },
-        {
-          "netid": "tcp",
-          "state": "LISTEN",
-          "recv_q": 0,
-          "send_q": 128,
-          "local_address": "0.0.0.0",
-          "local_port": "ssh",
-          "peer_address": "0.0.0.0",
-          "peer_port": "*"
-        },
-        {
-          "netid": "tcp",
-          "state": "LISTEN",
-          "recv_q": 0,
-          "send_q": 128,
-          "local_address": "[::]",
-          "local_port": "ssh",
-          "peer_address": "[::]",
-          "peer_port": "*"
-        },
-        {
-          "netid": "v_str",
-          "state": "ESTAB",
-          "recv_q": 0,
-          "send_q": 0,
-          "local_address": "999900439",
-          "local_port": "1023",
-          "peer_address": "0",
-          "peer_port": "976",
-          "local_port_num": 1023,
-          "peer_port_num": 976
-        }
-      ]
+    $ stat /bin/* | jc --stat -p
+    [
+      {
+        "file": "/bin/bash",
+        "size": 1113504,
+        "blocks": 2176,
+        "io_blocks": 4096,
+        "type": "regular file",
+        "device": "802h/2050d",
+        "inode": 131099,
+        "links": 1,
+        "access": "0755",
+        "flags": "-rwxr-xr-x",
+        "uid": 0,
+        "user": "root",
+        "gid": 0,
+        "group": "root",
+        "access_time": "2019-11-14 08:18:03.509681766 +0000",
+        "modify_time": "2019-06-06 22:28:15.000000000 +0000",
+        "change_time": "2019-08-12 17:21:29.521945390 +0000",
+        "birth_time": "-"
+      },
+      {
+        "file": "/bin/btrfs",
+        "size": 716464,
+        "blocks": 1400,
+        "io_blocks": 4096,
+        "type": "regular file",
+        "device": "802h/2050d",
+        "inode": 131100,
+        "links": 1,
+        "access": "0755",
+        "flags": "-rwxr-xr-x",
+        "uid": 0,
+        "user": "root",
+        "gid": 0,
+        "group": "root",
+        "access_time": "2019-11-14 08:18:28.990834276 +0000",
+        "modify_time": "2018-03-12 23:04:27.000000000 +0000",
+        "change_time": "2019-08-12 17:21:29.545944399 +0000",
+        "birth_time": "-"
+      },
+      ...
+    ]
 
-      $ sudo ss -a | jc --ss -p -r
-      [
-        {
-          "netid": "nl",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "peer_address": "*",
-          "channel": "rtnl:kernel"
-        },
-        {
-          "netid": "nl",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "peer_address": "*",
-          "pid": "893",
-          "channel": "rtnl:systemd-resolve"
-        },
-        ...
-        {
-          "netid": "p_raw",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "peer_address": "*",
-          "link_layer": "LLDP",
-          "interface": "ens33"
-        },
-        {
-          "netid": "u_dgr",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "local_port": "93066",
-          "peer_address": "*",
-          "peer_port": "0",
-          "path": "/run/user/1000/systemd/notify"
-        },
-        {
-          "netid": "u_seq",
-          "state": "LISTEN",
-          "recv_q": "0",
-          "send_q": "128",
-          "local_port": "20699",
-          "peer_address": "*",
-          "peer_port": "0",
-          "path": "/run/udev/control"
-        },
-        ...
-        {
-          "netid": "icmp6",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "local_address": "*",
-          "local_port": "ipv6-icmp",
-          "peer_address": "*",
-          "peer_port": "*",
-          "interface": "ens33"
-        },
-        {
-          "netid": "udp",
-          "state": "UNCONN",
-          "recv_q": "0",
-          "send_q": "0",
-          "local_address": "127.0.0.53",
-          "local_port": "domain",
-          "peer_address": "0.0.0.0",
-          "peer_port": "*",
-          "interface": "lo"
-        },
-        {
-          "netid": "tcp",
-          "state": "LISTEN",
-          "recv_q": "0",
-          "send_q": "128",
-          "local_address": "127.0.0.53",
-          "local_port": "domain",
-          "peer_address": "0.0.0.0",
-          "peer_port": "*",
-          "interface": "lo"
-        },
-        {
-          "netid": "tcp",
-          "state": "LISTEN",
-          "recv_q": "0",
-          "send_q": "128",
-          "local_address": "0.0.0.0",
-          "local_port": "ssh",
-          "peer_address": "0.0.0.0",
-          "peer_port": "*"
-        },
-        {
-          "netid": "tcp",
-          "state": "LISTEN",
-          "recv_q": "0",
-          "send_q": "128",
-          "local_address": "[::]",
-          "local_port": "ssh",
-          "peer_address": "[::]",
-          "peer_port": "*"
-        },
-        {
-          "netid": "v_str",
-          "state": "ESTAB",
-          "recv_q": "0",
-          "send_q": "0",
-          "local_address": "999900439",
-          "local_port": "1023",
-          "peer_address": "0",
-          "peer_port": "976"
-        }
-      ]
+    $ stat /bin/* | jc --stat -p -r
+    [
+      {
+        "file": "/bin/bash",
+        "size": "1113504",
+        "blocks": "2176",
+        "io_blocks": "4096",
+        "type": "regular file",
+        "device": "802h/2050d",
+        "inode": "131099",
+        "links": "1",
+        "access": "0755",
+        "flags": "-rwxr-xr-x",
+        "uid": "0",
+        "user": "root",
+        "gid": "0",
+        "group": "root",
+        "access_time": "2019-11-14 08:18:03.509681766 +0000",
+        "modify_time": "2019-06-06 22:28:15.000000000 +0000",
+        "change_time": "2019-08-12 17:21:29.521945390 +0000",
+        "birth_time": "-"
+      },
+      {
+        "file": "/bin/btrfs",
+        "size": "716464",
+        "blocks": "1400",
+        "io_blocks": "4096",
+        "type": "regular file",
+        "device": "802h/2050d",
+        "inode": "131100",
+        "links": "1",
+        "access": "0755",
+        "flags": "-rwxr-xr-x",
+        "uid": "0",
+        "user": "root",
+        "gid": "0",
+        "group": "root",
+        "access_time": "2019-11-14 08:18:28.990834276 +0000",
+        "modify_time": "2018-03-12 23:04:27.000000000 +0000",
+        "change_time": "2019-08-12 17:21:29.545944399 +0000",
+        "birth_time": "-"
+      },
+      ..
+    ]
 
 ## process
 ```python
@@ -258,25 +113,27 @@ Returns:
 
     [
       {
-        "netid":            string,
-        "state":            string,
-        "recv_q":           integer,
-        "send_q":           integer,
-        "local_address":    string,
-        "local_port":       string,
-        "local_port_num":   integer,
-        "peer_address":     string,
-        "peer_port":        string,
-        "peer_port_num":    integer,
-        "interface":        string,
-        "link_layer"        string,
-        "channel":          string,
-        "path":             string,
-        "pid":              integer
+        "file":         string,
+        "link_to"       string,
+        "size":         integer,
+        "blocks":       integer,
+        "io_blocks":    integer,
+        "type":         string,
+        "device":       string,
+        "inode":        integer,
+        "links":        integer,
+        "access":       string,
+        "flags":        string,
+        "uid":          integer,
+        "user":         string,
+        "gid":          integer,
+        "group":        string,
+        "access_time":  string,
+        "modify_time":  string,
+        "change_time":  string,
+        "birth_time":   string
       }
     ]
-
-    Information from https://www.cyberciti.biz/files/ss.html used to define field names
 
 ## parse
 ```python
