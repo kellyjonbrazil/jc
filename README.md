@@ -71,6 +71,7 @@ jc PARSER [OPTIONS]
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
 - `--history` enables the `history` parser
+- `--hosts` enables the `/etc/hosts` file parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
@@ -398,6 +399,55 @@ $ history | jc --history -p
     "command": "docker images"
   },
   ...
+]
+```
+### /etc/hosts
+```
+$ cat /etc/hosts | jc --hosts -p
+[
+  {
+    "ip": "127.0.0.1",
+    "hostname": [
+      "localhost"
+    ]
+  },
+  {
+    "ip": "127.0.1.1",
+    "hostname": [
+      "root-ubuntu"
+    ]
+  },
+  {
+    "ip": "::1",
+    "hostname": [
+      "ip6-localhost",
+      "ip6-loopback"
+    ]
+  },
+  {
+    "ip": "fe00::0",
+    "hostname": [
+      "ip6-localnet"
+    ]
+  },
+  {
+    "ip": "ff00::0",
+    "hostname": [
+      "ip6-mcastprefix"
+    ]
+  },
+  {
+    "ip": "ff02::1",
+    "hostname": [
+      "ip6-allnodes"
+    ]
+  },
+  {
+    "ip": "ff02::2",
+    "hostname": [
+      "ip6-allrouters"
+    ]
+  }
 ]
 ```
 ### ifconfig
@@ -1257,7 +1307,6 @@ Future parsers:
 - nslookup
 - systemctl
 - journalctl
-- hosts file
 - fstab file
 - crontab files
 - /proc files

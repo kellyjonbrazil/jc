@@ -16,7 +16,7 @@ Examples:
       {
         "ip": "127.0.1.1",
         "hostname": [
-          "kbrazil-ubuntu"
+          "root-ubuntu"
         ]
       },
       {
