@@ -1,7 +1,7 @@
 """jc - JSON CLI output utility hosts Parser
 
 Usage:
-    specify --hosts as the first argument if the piped input is coming from hosts
+    specify --hosts as the first argument if the piped input is coming from a hosts file
 
 Examples:
 
