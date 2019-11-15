@@ -1255,8 +1255,6 @@ $ w | jc --w -p
 ## TODO
 Future parsers:
 - nslookup
-- sar
-- sadf
 - systemctl
 - journalctl
 - hosts file
