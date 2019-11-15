@@ -3,6 +3,7 @@ jc changelog
 201911xx v1.5.1
 - Add ss parser
 - Add stat parser
+- Add /etc/hosts parser
 - Add -r and raw=True options. By default, jc will now convert numbers and boolean, if possible, and add other semantic information, while the raw output will keep all values as text and provide a more literal JSON output
 - Add -q and quiet=True options to suppress warnings to stderr
 - Add -d option to debug parsing issues
