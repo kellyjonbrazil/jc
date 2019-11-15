@@ -45,7 +45,7 @@ Examples:
         "access_time": "2019-11-14 08:18:28.990834276 +0000",
         "modify_time": "2018-03-12 23:04:27.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.545944399 +0000",
-        "birth_time": "-"
+        "birth_time": null
       },
       ...
     ]
@@ -90,7 +90,7 @@ Examples:
         "access_time": "2019-11-14 08:18:28.990834276 +0000",
         "modify_time": "2018-03-12 23:04:27.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.545944399 +0000",
-        "birth_time": "-"
+        "birth_time": null
       },
       ..
     ]
@@ -127,10 +127,10 @@ def process(proc_data):
             "user":         string,
             "gid":          integer,
             "group":        string,
-            "access_time":  string,
-            "modify_time":  string,
-            "change_time":  string,
-            "birth_time":   string
+            "access_time":  string,    # - = null
+            "modify_time":  string,    # - = null
+            "change_time":  string,    # - = null
+            "birth_time":   string     # - = null
           }
         ]
     """
@@ -142,6 +142,14 @@ def process(proc_data):
                     key_int = int(entry[key])
                     entry[key] = key_int
                 except (ValueError):
+                    entry[key] = None
+
+    # turn - into null for time fields
+    for entry in proc_data:
+        null_list = ['access_time', 'modify_time', 'change_time', 'birth_time']
+        for key in null_list:
+            if key in entry:
+                if entry[key] == '-':
                     entry[key] = None
 
     return proc_data
