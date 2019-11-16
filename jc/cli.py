@@ -30,7 +30,7 @@ import jc.parsers.route
 import jc.parsers.ss
 import jc.parsers.stat
 import jc.parsers.systemctl
-# import jc.parsers.systemctl_lj
+import jc.parsers.systemctl_lj
 # import jc.parsers.systemctl_lm
 import jc.parsers.systemctl_ls
 import jc.parsers.systemctl_luf
@@ -142,7 +142,7 @@ def main():
         '--ss': jc.parsers.ss.parse,
         '--stat': jc.parsers.stat.parse,
         '--systemctl': jc.parsers.systemctl.parse,
-        # '--systemctl-lj': jc.parsers.systemctl_lj.parse,
+        '--systemctl-lj': jc.parsers.systemctl_lj.parse,
         # '--systemctl-lm': jc.parsers.systemctl_lm.parse,
         '--systemctl-ls': jc.parsers.systemctl_ls.parse,
         '--systemctl-luf': jc.parsers.systemctl_luf.parse,

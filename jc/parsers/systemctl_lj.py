@@ -1,35 +1,54 @@
-"""jc - JSON CLI output utility systemctl-luf Parser
+"""jc - JSON CLI output utility systemctl-lj Parser
 
 Usage:
-    specify --systemctl-luf as the first argument if the piped input is coming from systemctl --list-unit-files
+    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-jobs
 
 Examples:
 
-    $ systemctl -a | jc --systemctl -p
+    $ systemctl list-jobs| jc --systemctl-lj -p
     [
       {
-        "unit": "proc-sys-fs-binfmt_misc.automount",
-        "load": "loaded",
-        "active": "active",
-        "sub": "waiting",
-        "description": "Arbitrary Executable File Formats File System Automount Point"
+        "job": 3543,
+        "unit": "nginxAfterGlusterfs.service",
+        "type": "start",
+        "state": "waiting"
       },
       {
-        "unit": "dev-block-8:2.device",
-        "load": "loaded",
-        "active": "active",
-        "sub": "plugged",
-        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+        "job": 3545,
+        "unit": "glusterReadyForLocalhostMount.service",
+        "type": "start",
+        "state": "running"
       },
       {
-        "unit": "dev-cdrom.device",
-        "load": "loaded",
-        "active": "active",
-        "sub": "plugged",
-        "description": "VMware_Virtual_IDE_CDROM_Drive"
-      },
-      ...
+        "job": 3506,
+        "unit": "nginx.service",
+        "type": "start",
+        "state": "waiting"
+      }
     ]
+
+    $ systemctl list-jobs| jc --systemctl-lj -p -r
+    [
+      {
+        "job": "3543",
+        "unit": "nginxAfterGlusterfs.service",
+        "type": "start",
+        "state": "waiting"
+      },
+      {
+        "job": "3545",
+        "unit": "glusterReadyForLocalhostMount.service",
+        "type": "start",
+        "state": "running"
+      },
+      {
+        "job": "3506",
+        "unit": "nginx.service",
+        "type": "start",
+        "state": "waiting"
+      }
+    ]
+
 """
 import jc.utils
 
@@ -48,15 +67,22 @@ def process(proc_data):
 
         [
           {
-            "unit":          string,
-            "load":          string,
-            "active":        string,
-            "sub":           string,
-            "description":   string
+            "job":      integer,
+            "unit":     string,
+            "type":     string,
+            "state":    string
           }
         ]
     """
-    # nothing more to process
+    for entry in proc_data:
+        int_list = ['job']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
     return proc_data
 
 
@@ -90,13 +116,13 @@ def parse(data, raw=False, quiet=False):
         cleandata.append(entry.encode('ascii', errors='ignore').decode())
 
     header_text = cleandata[0]
-    header_text = header_text.lower().replace('unit file', 'unit_file')
+    header_text = header_text.lower()
     header_list = header_text.split()
 
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('unit files listed.') != -1:
+        if entry.find('No jobs running.') != -1:
             break
 
         else:
