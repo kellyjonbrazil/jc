@@ -122,7 +122,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('No jobs running.') != -1:
+        if entry.find('No jobs running.') != -1 or entry.find('jobs listed.') != -1:
             break
 
         else:
