@@ -87,6 +87,9 @@ jc PARSER [OPTIONS]
 - `--ss` enables the `ss` parser
 - `--stat` enables the `stat` parser
 - `--systemctl` enables the `systemctl` parser
+- `--systemctl-lj` enables the `systemctl list-jobs` parser
+- `--systemctl-ls` enables the `systemctl list-sockets` parser
+- `--systemctl-luf` enables the `systemctl list-unit-files` parser
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
@@ -1296,6 +1299,71 @@ $ systemctl -a | jc --systemctl -p
     "active": "active",
     "sub": "plugged",
     "description": "VMware_Virtual_IDE_CDROM_Drive"
+  },
+  ...
+]
+```
+### systemctl list-jobs
+```
+$ systemctl list-jobs| jc --systemctl-lj -p
+[
+  {
+    "job": 3543,
+    "unit": "nginxAfterGlusterfs.service",
+    "type": "start",
+    "state": "waiting"
+  },
+  {
+    "job": 3545,
+    "unit": "glusterReadyForLocalhostMount.service",
+    "type": "start",
+    "state": "running"
+  },
+  {
+    "job": 3506,
+    "unit": "nginx.service",
+    "type": "start",
+    "state": "waiting"
+  }
+]
+```
+### systemctl list-sockets
+```
+$ systemctl list-sockets | jc --systemctl-ls -p
+[
+  {
+    "listen": "/dev/log",
+    "unit": "systemd-journald.socket",
+    "activates": "systemd-journald.service"
+  },
+  {
+    "listen": "/run/dbus/system_bus_socket",
+    "unit": "dbus.socket",
+    "activates": "dbus.service"
+  },
+  {
+    "listen": "/run/dmeventd-client",
+    "unit": "dm-event.socket",
+    "activates": "dm-event.service"
+  },
+  ...
+]
+```
+### systemctl list-unit-files
+```
+$ systemctl list-unit-files | jc --systemctl-luf -p
+[
+  {
+    "unit_file": "proc-sys-fs-binfmt_misc.automount",
+    "state": "static"
+  },
+  {
+    "unit_file": "dev-hugepages.mount",
+    "state": "static"
+  },
+  {
+    "unit_file": "dev-mqueue.mount",
+    "state": "static"
   },
   ...
 ]
