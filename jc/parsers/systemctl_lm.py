@@ -1,7 +1,7 @@
-"""jc - JSON CLI output utility systemctl-luf Parser
+"""jc - JSON CLI output utility systemctl-lm Parser
 
 Usage:
-    specify --systemctl-luf as the first argument if the piped input is coming from systemctl --list-unit-files
+    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-machines
 
 Examples:
 
