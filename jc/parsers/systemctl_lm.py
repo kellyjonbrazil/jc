@@ -1,7 +1,7 @@
-"""jc - JSON CLI output utility systemctl Parser
+"""jc - JSON CLI output utility systemctl-luf Parser
 
 Usage:
-    specify --systemctl as the first argument if the piped input is coming from systemctl
+    specify --systemctl-luf as the first argument if the piped input is coming from systemctl --list-unit-files
 
 Examples:
 
@@ -90,16 +90,17 @@ def parse(data, raw=False, quiet=False):
         cleandata.append(entry.encode('ascii', errors='ignore').decode())
 
     header_text = cleandata[0]
-    header_list = header_text.lower().split()
+    header_text = header_text.lower().replace('unit file', 'unit_file')
+    header_list = header_text.split()
 
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('LOAD   = ') != -1:
+        if entry.find('unit files listed.') != -1:
             break
 
         else:
-            entry_list = entry.rstrip().split(maxsplit=4)
+            entry_list = entry.split(maxsplit=4)
             output_line = dict(zip(header_list, entry_list))
             raw_output.append(output_line)
 

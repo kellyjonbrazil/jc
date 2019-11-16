@@ -1,32 +1,23 @@
 """jc - JSON CLI output utility systemctl-luf Parser
 
 Usage:
-    specify --systemctl-luf as the first argument if the piped input is coming from systemctl --list-unit-files
+    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-unit-files
 
 Examples:
 
-    $ systemctl -a | jc --systemctl -p
+    $ systemctl list-unit-files | jc --systemctl-luf -p
     [
       {
-        "unit": "proc-sys-fs-binfmt_misc.automount",
-        "load": "loaded",
-        "active": "active",
-        "sub": "waiting",
-        "description": "Arbitrary Executable File Formats File System Automount Point"
+        "unit_file": "proc-sys-fs-binfmt_misc.automount",
+        "state": "static"
       },
       {
-        "unit": "dev-block-8:2.device",
-        "load": "loaded",
-        "active": "active",
-        "sub": "plugged",
-        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+        "unit_file": "dev-hugepages.mount",
+        "state": "static"
       },
       {
-        "unit": "dev-cdrom.device",
-        "load": "loaded",
-        "active": "active",
-        "sub": "plugged",
-        "description": "VMware_Virtual_IDE_CDROM_Drive"
+        "unit_file": "dev-mqueue.mount",
+        "state": "static"
       },
       ...
     ]
@@ -48,11 +39,8 @@ def process(proc_data):
 
         [
           {
-            "unit":          string,
-            "load":          string,
-            "active":        string,
-            "sub":           string,
-            "description":   string
+            "unit_file":   string,
+            "state":       string
           }
         ]
     """

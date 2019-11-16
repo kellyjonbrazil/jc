@@ -1,32 +1,26 @@
-"""jc - JSON CLI output utility systemctl Parser
+"""jc - JSON CLI output utility systemctl-ls Parser
 
 Usage:
-    specify --systemctl as the first argument if the piped input is coming from systemctl
+    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-sockets
 
 Examples:
 
-    $ systemctl -a | jc --systemctl -p
+    $ systemctl list-sockets | jc --systemctl-ls -p
     [
       {
-        "unit": "proc-sys-fs-binfmt_misc.automount",
-        "load": "loaded",
-        "active": "active",
-        "sub": "waiting",
-        "description": "Arbitrary Executable File Formats File System Automount Point"
+        "listen": "/dev/log",
+        "unit": "systemd-journald.socket",
+        "activates": "systemd-journald.service"
       },
       {
-        "unit": "dev-block-8:2.device",
-        "load": "loaded",
-        "active": "active",
-        "sub": "plugged",
-        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+        "listen": "/run/dbus/system_bus_socket",
+        "unit": "dbus.socket",
+        "activates": "dbus.service"
       },
       {
-        "unit": "dev-cdrom.device",
-        "load": "loaded",
-        "active": "active",
-        "sub": "plugged",
-        "description": "VMware_Virtual_IDE_CDROM_Drive"
+        "listen": "/run/dmeventd-client",
+        "unit": "dm-event.socket",
+        "activates": "dm-event.service"
       },
       ...
     ]
@@ -48,11 +42,9 @@ def process(proc_data):
 
         [
           {
-            "unit":          string,
-            "load":          string,
-            "active":        string,
-            "sub":           string,
-            "description":   string
+            "listen":       string,
+            "unit":         string,
+            "activates":     string
           }
         ]
     """
@@ -89,17 +81,17 @@ def parse(data, raw=False, quiet=False):
     for entry in linedata:
         cleandata.append(entry.encode('ascii', errors='ignore').decode())
 
-    header_text = cleandata[0]
-    header_list = header_text.lower().split()
+    header_text = cleandata[0].lower()
+    header_list = header_text.split()
 
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('LOAD   = ') != -1:
+        if entry.find('sockets listed.') != -1:
             break
 
         else:
-            entry_list = entry.rstrip().split(maxsplit=4)
+            entry_list = entry.rsplit(maxsplit=2)
             output_line = dict(zip(header_list, entry_list))
             raw_output.append(output_line)
 
