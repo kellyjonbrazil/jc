@@ -44,7 +44,7 @@ def process(proc_data):
           {
             "listen":       string,
             "unit":         string,
-            "activates":     string
+            "activates":    string
           }
         ]
     """

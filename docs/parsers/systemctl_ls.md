@@ -45,7 +45,7 @@ Returns:
       {
         "listen":       string,
         "unit":         string,
-        "activates":     string
+        "activates":    string
       }
     ]
 
