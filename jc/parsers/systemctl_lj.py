@@ -1,7 +1,7 @@
 """jc - JSON CLI output utility systemctl-lj Parser
 
 Usage:
-    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-jobs
+    specify --systemctl-lj as the first argument if the piped input is coming from systemctl list-jobs
 
 Examples:
 

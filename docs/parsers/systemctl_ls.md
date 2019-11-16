@@ -2,7 +2,7 @@
 jc - JSON CLI output utility systemctl-ls Parser
 
 Usage:
-    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-sockets
+    specify --systemctl-ls as the first argument if the piped input is coming from systemctl list-sockets
 
 Examples:
 
