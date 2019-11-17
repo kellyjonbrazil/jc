@@ -1,6 +1,6 @@
 jc changelog
 
-201911xx v1.5.1
+20191117 v1.5.1
 - Add ss parser
 - Add stat parser
 - Add /etc/hosts parser
