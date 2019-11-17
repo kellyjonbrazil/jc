@@ -6,15 +6,15 @@ JSON CLI output utility
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
 ```
-$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size|tonumber > 50000000)'
+$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 {
-  "filename": "emacs",
-  "flags": "-r-xr-xr-x",
-  "links": "1",
+  "filename": "docker",
+  "flags": "-rwxr-xr-x",
+  "links": 1,
   "owner": "root",
-  "group": "wheel",
-  "size": "117164432",
-  "date": "May 3 22:26"
+  "group": "root",
+  "size": 68677120,
+  "date": "Aug 14 19:41"
 }
 ```
 
@@ -30,23 +30,27 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 ... -rwxr-xr-x  1 root  wheel    32000 May  3 22:26 dd
 ... -rwxr-xr-x  1 root  wheel    23392 May  3 22:26 df
 ... -rwxr-xr-x  1 root  wheel    18128 May  3 22:26 echo'''
->>> 
+>>>
 >>> jc.parsers.ls.parse(data)
-[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
-'size': '23648', 'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x',
-'links': '1', 'owner': 'root', 'group': 'wheel', 'size': '30016', 'date': 'May 3 22:26'},
-{'filename': 'cp', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
-'size': '29024', 'date': 'May 3 22:26'}, {'filename': 'csh', 'flags': '-rwxr-xr-x', 'links': '1', 
-'owner': 'root', 'group': 'wheel', 'size': '375824', 'date': 'May 3 22:26'}, {'filename': 'date',
-'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel', 'size': '28608',
-'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root',
-'group': 'wheel', 'size': '32000', 'date': 'May 3 22:26'}, {'filename': 'df', 'flags': '-rwxr-xr-x',
-'links': '1', 'owner': 'root', 'group': 'wheel', 'size': '23392', 'date': 'May 3 22:26'}, 
-{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': '1', 'owner': 'root', 'group': 'wheel',
-'size': '18128', 'date': 'May 3 22:26'}]
+[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 23648,
+'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root',
+'group': 'wheel', 'size': 30016, 'date': 'May 3 22:26'}, {'filename': 'cp', 'flags': '-rwxr-xr-x',
+'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 29024, 'date': 'May 3 22:26'}, {'filename': 'csh',
+'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 375824, 'date': 'May 3
+22:26'}, {'filename': 'date', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel',
+'size': 28608, 'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner':
+'root', 'group': 'wheel', 'size': 32000, 'date': 'May 3 22:26'}, {'filename': 'df', 'flags':
+'-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 23392, 'date': 'May 3 22:26'},
+{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 18128,
+'date': 'May 3 22:26'}]
 ```
+Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of None are converted to JSON Null, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
-The goal is to keep the resulting JSON as flat and simple as possible. Also, keys have been converted to lowercase and special characters are replaced whenever possible.  Numbers are kept as strings because, depending on context or the output options, numbers can sometimes turn into strings. (e.g 'human readable' options)
+To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
+
+Schemas for each parser can be found in the `docs/parsers` folder.
+
+> ***Note:** Due to the introduction of schemas in version `1.5.1` the output of some parsers will be different than in versions `1.1.1` and below.  Now that schemas are defined, the output will be stable for future versions. You can still get similar output to prior versions with the `-r` or `raw=true` options. Though the goal is to keep all output stable, raw output is not guaranteed to stay the same in future releases.*
 
 ## Installation
 ```
@@ -66,7 +70,9 @@ jc PARSER [OPTIONS]
 - `--dig` enables the `dig` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
+- `--fstab` enables the `/etc/fstab` file parser
 - `--history` enables the `history` parser
+- `--hosts` enables the `/etc/hosts` file parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
@@ -78,12 +84,21 @@ jc PARSER [OPTIONS]
 - `--netstat` enables the `netstat` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
+- `--ss` enables the `ss` parser
+- `--stat` enables the `stat` parser
+- `--systemctl` enables the `systemctl` parser
+- `--systemctl-lj` enables the `systemctl list-jobs` parser
+- `--systemctl-ls` enables the `systemctl list-sockets` parser
+- `--systemctl-luf` enables the `systemctl list-unit-files` parser
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
 
 ### Options
-- `-p` specifies whether to pretty format the JSON output
+- `-d` debug mode. Prints trace messages if parsing issues encountered
+- `-p` pretty format the JSON output
+- `-q` quiet mode. Suppresses warning messages
+- `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
 
 ## Examples
 ### arp
@@ -117,14 +132,14 @@ $ arp | jc --arp -p
 $ arp -a | jc --arp -p
 [
   {
-    "name": "?",
+    "name": null,
     "address": "192.168.71.1",
     "hwtype": "ether",
     "hwaddress": "00:50:56:c0:00:08",
     "iface": "ens33"
   },
   {
-    "name": "?",
+    "name": null,
     "address": "192.168.71.254",
     "hwtype": "ether",
     "hwaddress": "00:50:56:fe:7a:b4",
@@ -144,37 +159,21 @@ $ arp -a | jc --arp -p
 $ df | jc --df -p
 [
   {
-    "filesystem": "udev",
-    "1k-blocks": "977500",
-    "used": "0",
-    "available": "977500",
-    "use_percent": "0%",
-    "mounted": "/dev"
+    "filesystem": "devtmpfs",
+    "1k-blocks": 1918816,
+    "used": 0,
+    "available": 1918816,
+    "use_percent": 0,
+    "mounted_on": "/dev"
   },
   {
     "filesystem": "tmpfs",
-    "1k-blocks": "201732",
-    "used": "1204",
-    "available": "200528",
-    "use_percent": "1%",
-    "mounted": "/run"
+    "1k-blocks": 1930664,
+    "used": 0,
+    "available": 1930664,
+    "use_percent": 0,
+    "mounted_on": "/dev/shm"
   },
-  {
-    "filesystem": "/dev/sda2",
-    "1k-blocks": "20508240",
-    "used": "5748312",
-    "available": "13695124",
-    "use_percent": "30%",
-    "mounted": "/"
-  },
-  {
-    "filesystem": "tmpfs",
-    "1k-blocks": "1008648",
-    "used": "0",
-    "available": "1008648",
-    "use_percent": "0%",
-    "mounted": "/dev/shm"
-  }
   ...
 ]
 ```
@@ -183,14 +182,18 @@ $ df | jc --df -p
 $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
 [
   {
-    "id": "28182",
+    "id": 5509,
     "opcode": "QUERY",
     "status": "NOERROR",
-    "flags": "qr rd ra",
-    "query_num": "1",
-    "answer_num": "4",
-    "authority_num": "0",
-    "additional_num": "1",
+    "flags": [
+      "qr",
+      "rd",
+      "ra"
+    ],
+    "query_num": 1,
+    "answer_num": 4,
+    "authority_num": 0,
+    "additional_num": 1,
     "question": {
       "name": "cnn.com.",
       "class": "IN",
@@ -201,45 +204,49 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": "5",
-        "data": "151.101.193.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": "5",
-        "data": "151.101.1.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": "5",
+        "ttl": 60,
         "data": "151.101.129.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": "5",
+        "ttl": 60,
+        "data": "151.101.193.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 60,
+        "data": "151.101.1.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 60,
         "data": "151.101.65.67"
       }
     ],
-    "query_time": "45 msec",
-    "server": "192.168.71.2#53(192.168.71.2)",
-    "when": "Wed Oct 30 03:11:21 PDT 2019",
-    "rcvd": "100"
+    "query_time": 28,
+    "server": "2600",
+    "when": "Tue Nov 12 07:13:03 PST 2019",
+    "rcvd": 100
   },
   {
-    "id": "23264",
+    "id": 62696,
     "opcode": "QUERY",
     "status": "NOERROR",
-    "flags": "qr aa rd",
-    "query_num": "1",
-    "answer_num": "1",
-    "authority_num": "4",
-    "additional_num": "1",
+    "flags": [
+      "qr",
+      "aa",
+      "rd"
+    ],
+    "query_num": 1,
+    "answer_num": 1,
+    "authority_num": 4,
+    "additional_num": 1,
     "question": {
       "name": "www.cnn.com.",
       "class": "IN",
@@ -250,7 +257,7 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
         "name": "www.cnn.com.",
         "class": "IN",
         "type": "CNAME",
-        "ttl": "300",
+        "ttl": 300,
         "data": "turner-tls.map.fastly.net."
       }
     ],
@@ -259,35 +266,35 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-1086.awsdns-07.org."
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-1630.awsdns-11.co.uk."
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-47.awsdns-05.com."
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "NS",
-        "ttl": "3600",
+        "ttl": 3600,
         "data": "ns-576.awsdns-08.net."
       }
     ],
-    "query_time": "33 msec",
+    "query_time": 29,
     "server": "205.251.194.64#53(205.251.194.64)",
-    "when": "Wed Oct 30 03:11:21 PDT 2019",
-    "rcvd": "212"
+    "when": "Tue Nov 12 07:13:03 PST 2019",
+    "rcvd": 212
   }
 ]
 ```
@@ -295,14 +302,18 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
 $ dig -x 1.1.1.1 | jc --dig -p
 [
   {
-    "id": "27526",
+    "id": 50324,
     "opcode": "QUERY",
     "status": "NOERROR",
-    "flags": "qr rd ra",
-    "query_num": "1",
-    "answer_num": "1",
-    "authority_num": "0",
-    "additional_num": "1",
+    "flags": [
+      "qr",
+      "rd",
+      "ra"
+    ],
+    "query_num": 1,
+    "answer_num": 1,
+    "authority_num": 0,
+    "additional_num": 1,
     "question": {
       "name": "1.1.1.1.in-addr.arpa.",
       "class": "IN",
@@ -310,34 +321,46 @@ $ dig -x 1.1.1.1 | jc --dig -p
     },
     "answer": [
       {
-        "name": "1.1.1.1.IN-ADDR.ARPA.",
+        "name": "1.1.1.1.in-addr.arpa.",
         "class": "IN",
         "type": "PTR",
-        "ttl": "5",
+        "ttl": 1634,
         "data": "one.one.one.one."
       }
     ],
-    "query_time": "34 msec",
-    "server": "192.168.71.2#53(192.168.71.2)",
-    "when": "Wed Oct 30 03:13:48 PDT 2019",
-    "rcvd": "98"
+    "query_time": 36,
+    "server": "2600",
+    "when": "Tue Nov 12 07:13:49 PST 2019",
+    "rcvd": 78
   }
 ]
 ```
 ### env
 ```
 $ env | jc --env -p
-{
-  "TERM": "xterm-256color",
-  "SHELL": "/bin/bash",
-  "USER": "root",
-  "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-  "PWD": "/root",
-  "LANG": "en_US.UTF-8",
-  "HOME": "/root",
-  "LOGNAME": "root",
-  "_": "/usr/bin/env"
-}
+[
+  {
+    "name": "XDG_SESSION_ID",
+    "value": "1"
+  },
+  {
+    "name": "HOSTNAME",
+    "value": "localhost.localdomain"
+  },
+  {
+    "name": "TERM",
+    "value": "vt220"
+  },
+  {
+    "name": "SHELL",
+    "value": "/bin/bash"
+  },
+  {
+    "name": "HISTSIZE",
+    "value": "1000"
+  },
+  ...
+]
 ```
 ### free
 ```
@@ -345,429 +368,236 @@ $ free | jc --free -p
 [
   {
     "type": "Mem",
-    "total": "2017300",
-    "used": "213104",
-    "free": "1148452",
-    "shared": "1176",
-    "buff_cache": "655744",
-    "available": "1622204"
+    "total": 3861340,
+    "used": 220508,
+    "free": 3381972,
+    "shared": 11800,
+    "buff_cache": 258860,
+    "available": 3397784
   },
   {
     "type": "Swap",
-    "total": "2097148",
-    "used": "0",
-    "free": "2097148"
+    "total": 2097148,
+    "used": 0,
+    "free": 2097148
+  }
+]
+```
+### /etc/fstab
+```
+$ cat /etc/fstab | jc --fstab -p
+[
+  {
+    "fs_spec": "/dev/mapper/centos-root",
+    "fs_file": "/",
+    "fs_vfstype": "xfs",
+    "fs_mntops": "defaults",
+    "fs_freq": 0,
+    "fs_passno": 0
+  },
+  {
+    "fs_spec": "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
+    "fs_file": "/boot",
+    "fs_vfstype": "xfs",
+    "fs_mntops": "defaults",
+    "fs_freq": 0,
+    "fs_passno": 0
+  },
+  {
+    "fs_spec": "/dev/mapper/centos-swap",
+    "fs_file": "swap",
+    "fs_vfstype": "swap",
+    "fs_mntops": "defaults",
+    "fs_freq": 0,
+    "fs_passno": 0
   }
 ]
 ```
 ### history
 ```
 $ history | jc --history -p
-{
-  "n118": "sleep 100",
-  "n119": "ls /bin",
-  "n120": "echo \"hello\"",
-  "n121": "docker images",
+[
+  {
+    "line": "118",
+    "command": "sleep 100"
+  },
+  {
+    "line": "119",
+    "command": "ls /bin"
+  },
+  {
+    "line": "120",
+    "command": "echo \"hello\""
+  },
+  {
+    "line": "121",
+    "command": "docker images"
+  },
   ...
-}
+]
+```
+### /etc/hosts
+```
+$ cat /etc/hosts | jc --hosts -p
+[
+  {
+    "ip": "127.0.0.1",
+    "hostname": [
+      "localhost"
+    ]
+  },
+  {
+    "ip": "127.0.1.1",
+    "hostname": [
+      "root-ubuntu"
+    ]
+  },
+  {
+    "ip": "::1",
+    "hostname": [
+      "ip6-localhost",
+      "ip6-loopback"
+    ]
+  },
+  {
+    "ip": "fe00::0",
+    "hostname": [
+      "ip6-localnet"
+    ]
+  },
+  {
+    "ip": "ff00::0",
+    "hostname": [
+      "ip6-mcastprefix"
+    ]
+  },
+  {
+    "ip": "ff02::1",
+    "hostname": [
+      "ip6-allnodes"
+    ]
+  },
+  {
+    "ip": "ff02::2",
+    "hostname": [
+      "ip6-allrouters"
+    ]
+  }
+]
 ```
 ### ifconfig
 ```
 $ ifconfig | jc --ifconfig -p
 [
   {
-    "name": "docker0",
-    "flags": "4099",
-    "state": "UP,BROADCAST,MULTICAST",
-    "mtu": "1500",
-    "ipv4_addr": "172.17.0.1",
-    "ipv4_mask": "255.255.0.0",
-    "ipv4_bcast": "0.0.0.0",
-    "mac_addr": "02:42:53:18:31:cc",
-    "type": "Ethernet",
-    "rx_packets": "0",
-    "rx_errors": "0",
-    "rx_dropped": "0",
-    "rx_overruns": "0",
-    "rx_frame": "0",
-    "tx_packets": "0",
-    "tx_errors": "0",
-    "tx_dropped": "0",
-    "tx_overruns": "0",
-    "tx_carrier": "0",
-    "tx_collisions": "0",
-    "ipv6_addr": null,
-    "ipv6_mask": null,
-    "ipv6_scope": null,
-    "metric": null
-  },
-  {
     "name": "ens33",
-    "flags": "4163",
+    "flags": 4163,
     "state": "UP,BROADCAST,RUNNING,MULTICAST",
-    "mtu": "1500",
-    "ipv4_addr": "192.168.71.135",
+    "mtu": 1500,
+    "ipv4_addr": "192.168.71.138",
     "ipv4_mask": "255.255.255.0",
     "ipv4_bcast": "192.168.71.255",
     "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
-    "ipv6_mask": "64",
+    "ipv6_mask": 64,
     "ipv6_scope": "link",
     "mac_addr": "00:0c:29:3b:58:0e",
     "type": "Ethernet",
-    "rx_packets": "26348",
-    "rx_errors": "0",
-    "rx_dropped": "0",
-    "rx_overruns": "0",
-    "rx_frame": "0",
-    "tx_packets": "5308",
-    "tx_errors": "0",
-    "tx_dropped": "0",
-    "tx_overruns": "0",
-    "tx_carrier": "0",
-    "tx_collisions": "0",
+    "rx_packets": 6374,
+    "rx_errors": 0,
+    "rx_dropped": 0,
+    "rx_overruns": 0,
+    "rx_frame": 0,
+    "tx_packets": 3707,
+    "tx_errors": 0,
+    "tx_dropped": 0,
+    "tx_overruns": 0,
+    "tx_carrier": 0,
+    "tx_collisions": 0,
     "metric": null
   },
   {
     "name": "lo",
-    "flags": "73",
+    "flags": 73,
     "state": "UP,LOOPBACK,RUNNING",
-    "mtu": "65536",
+    "mtu": 65536,
     "ipv4_addr": "127.0.0.1",
     "ipv4_mask": "255.0.0.0",
     "ipv4_bcast": null,
     "ipv6_addr": "::1",
-    "ipv6_mask": "128",
+    "ipv6_mask": 128,
     "ipv6_scope": "host",
     "mac_addr": null,
     "type": "Local Loopback",
-    "rx_packets": "64",
-    "rx_errors": "0",
-    "rx_dropped": "0",
-    "rx_overruns": "0",
-    "rx_frame": "0",
-    "tx_packets": "64",
-    "tx_errors": "0",
-    "tx_dropped": "0",
-    "tx_overruns": "0",
-    "tx_carrier": "0",
-    "tx_collisions": "0",
+    "rx_packets": 81,
+    "rx_errors": 0,
+    "rx_dropped": 0,
+    "rx_overruns": 0,
+    "rx_frame": 0,
+    "tx_packets": 81,
+    "tx_errors": 0,
+    "tx_dropped": 0,
+    "tx_overruns": 0,
+    "tx_carrier": 0,
+    "tx_collisions": 0,
     "metric": null
   }
 ]
 ```
 ### iptables
 ```
-$ sudo iptables -L -t nat | jc --iptables -p
+$ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p
 [
   {
     "chain": "PREROUTING",
     "rules": [
       {
+        "num": 1,
+        "pkts": 2183,
+        "bytes": 186000,
         "target": "PREROUTING_direct",
         "prot": "all",
-        "opt": "--",
+        "opt": null,
+        "in": "any",
+        "out": "any",
         "source": "anywhere",
         "destination": "anywhere"
       },
       {
+        "num": 2,
+        "pkts": 2183,
+        "bytes": 186000,
         "target": "PREROUTING_ZONES_SOURCE",
         "prot": "all",
-        "opt": "--",
+        "opt": null,
+        "in": "any",
+        "out": "any",
         "source": "anywhere",
         "destination": "anywhere"
       },
       {
+        "num": 3,
+        "pkts": 2183,
+        "bytes": 186000,
         "target": "PREROUTING_ZONES",
         "prot": "all",
-        "opt": "--",
+        "opt": null,
+        "in": "any",
+        "out": "any",
         "source": "anywhere",
         "destination": "anywhere"
       },
       {
+        "num": 4,
+        "pkts": 0,
+        "bytes": 0,
         "target": "DOCKER",
         "prot": "all",
-        "opt": "--",
+        "opt": null,
+        "in": "any",
+        "out": "any",
         "source": "anywhere",
         "destination": "anywhere",
         "options": "ADDRTYPE match dst-type LOCAL"
-      }
-    ]
-  },
-  {
-    "chain": "INPUT",
-    "rules": []
-  },
-  {
-    "chain": "OUTPUT",
-    "rules": [
-      {
-        "target": "OUTPUT_direct",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "anywhere"
-      },
-      {
-        "target": "DOCKER",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "!loopback/8",
-        "options": "ADDRTYPE match dst-type LOCAL"
-      }
-    ]
-  },
-  ...
-]
-```
-```
-$ sudo iptables -vnL -t filter | jc --iptables -p
-[
-  {
-    "chain": "INPUT",
-    "rules": [
-      {
-        "pkts": "1571",
-        "bytes": "3394K",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate RELATED,ESTABLISHED"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "lo",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "711",
-        "bytes": "60126",
-        "target": "INPUT_direct",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "711",
-        "bytes": "60126",
-        "target": "INPUT_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "711",
-        "bytes": "60126",
-        "target": "INPUT_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DROP",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate INVALID"
-      },
-      {
-        "pkts": "710",
-        "bytes": "60078",
-        "target": "REJECT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "reject-with icmp-host-prohibited"
-      }
-    ]
-  },
-  {
-    "chain": "FORWARD",
-    "rules": [
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DOCKER-ISOLATION",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DOCKER",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate RELATED,ESTABLISHED"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "docker0",
-        "out": "!docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "docker0",
-        "out": "docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate RELATED,ESTABLISHED"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "lo",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_direct",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_IN_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_IN_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_OUT_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_OUT_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DROP",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate INVALID"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "REJECT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "reject-with icmp-host-prohibited"
       }
     ]
   },
@@ -779,30 +609,30 @@ $ sudo iptables -vnL -t filter | jc --iptables -p
 $ jobs -l | jc --jobs -p
 [
   {
-    "job_number": "1",
-    "pid": "19510",
+    "job_number": 1,
+    "pid": 5283,
     "status": "Running",
-    "command": "sleep 1000 &"
+    "command": "sleep 10000 &"
   },
   {
-    "job_number": "2",
-    "pid": "19511",
+    "job_number": 2,
+    "pid": 5284,
     "status": "Running",
-    "command": "sleep 1001 &"
+    "command": "sleep 10100 &"
   },
   {
-    "job_number": "3",
-    "pid": "19512",
+    "job_number": 3,
+    "pid": 5285,
     "history": "previous",
     "status": "Running",
-    "command": "sleep 1002 &"
+    "command": "sleep 10001 &"
   },
   {
-    "job_number": "4",
-    "pid": "19513",
+    "job_number": 4,
+    "pid": 5286,
     "history": "current",
     "status": "Running",
-    "command": "sleep 1003 &"
+    "command": "sleep 10112 &"
   }
 ]
 ```
@@ -814,57 +644,29 @@ $ ls -l /usr/bin | jc --ls -p
     "filename": "apropos",
     "link_to": "whatis",
     "flags": "lrwxrwxrwx.",
-    "links": "1",
+    "links": 1,
     "owner": "root",
     "group": "root",
-    "size": "6",
+    "size": 6,
     "date": "Aug 15 10:53"
+  },
+  {
+    "filename": "ar",
+    "flags": "-rwxr-xr-x.",
+    "links": 1,
+    "owner": "root",
+    "group": "root",
+    "size": 62744,
+    "date": "Aug 8 16:14"
   },
   {
     "filename": "arch",
     "flags": "-rwxr-xr-x.",
-    "links": "1",
+    "links": 1,
     "owner": "root",
     "group": "root",
-    "size": "33080",
+    "size": 33080,
     "date": "Aug 19 23:25"
-  },
-  {
-    "filename": "awk",
-    "link_to": "gawk",
-    "flags": "lrwxrwxrwx.",
-    "links": "1",
-    "owner": "root",
-    "group": "root",
-    "size": "4",
-    "date": "Aug 15 10:53"
-  },
-  {
-    "filename": "base64",
-    "flags": "-rwxr-xr-x.",
-    "links": "1",
-    "owner": "root",
-    "group": "root",
-    "size": "37360",
-    "date": "Aug 19 23:25"
-  },
-  {
-    "filename": "basename",
-    "flags": "-rwxr-xr-x.",
-    "links": "1",
-    "owner": "root",
-    "group": "root",
-    "size": "29032",
-    "date": "Aug 19 23:25"
-  },
-  {
-    "filename": "bash",
-    "flags": "-rwxr-xr-x.",
-    "links": "1",
-    "owner": "root",
-    "group": "root",
-    "size": "964600",
-    "date": "Aug 8 05:06"
   },
   ...
 ]
@@ -876,54 +678,22 @@ $ lsblk | jc --lsblk -p
   {
     "name": "sda",
     "maj_min": "8:0",
-    "rm": "0",
+    "rm": false,
     "size": "20G",
-    "ro": "0",
-    "type": "disk"
+    "ro": false,
+    "type": "disk",
+    "mountpoint": null
   },
   {
     "name": "sda1",
     "maj_min": "8:1",
-    "rm": "0",
+    "rm": false,
     "size": "1G",
-    "ro": "0",
+    "ro": false,
     "type": "part",
     "mountpoint": "/boot"
   },
-  {
-    "name": "sda2",
-    "maj_min": "8:2",
-    "rm": "0",
-    "size": "19G",
-    "ro": "0",
-    "type": "part"
-  },
-  {
-    "name": "centos-root",
-    "maj_min": "253:0",
-    "rm": "0",
-    "size": "17G",
-    "ro": "0",
-    "type": "lvm",
-    "mountpoint": "/"
-  },
-  {
-    "name": "centos-swap",
-    "maj_min": "253:1",
-    "rm": "0",
-    "size": "2G",
-    "ro": "0",
-    "type": "lvm",
-    "mountpoint": "[SWAP]"
-  },
-  {
-    "name": "sr0",
-    "maj_min": "11:0",
-    "rm": "1",
-    "size": "1024M",
-    "ro": "0",
-    "type": "rom"
-  }
+  ...
 ]
 ```
 ### lsmod
@@ -932,9 +702,34 @@ $ lsmod | jc --lsmod -p
 [
   ...
   {
+    "module": "nf_nat",
+    "size": 26583,
+    "used": 3,
+    "by": [
+      "nf_nat_ipv4",
+      "nf_nat_ipv6",
+      "nf_nat_masquerade_ipv4"
+    ]
+  },
+  {
+    "module": "iptable_mangle",
+    "size": 12695,
+    "used": 1
+  },
+  {
+    "module": "iptable_security",
+    "size": 12705,
+    "used": 1
+  },
+  {
+    "module": "iptable_raw",
+    "size": 12678,
+    "used": 1
+  },
+  {
     "module": "nf_conntrack",
-    "size": "139224",
-    "used": "7",
+    "size": 139224,
+    "used": 7,
     "by": [
       "nf_nat",
       "nf_nat_ipv4",
@@ -945,99 +740,48 @@ $ lsmod | jc --lsmod -p
       "nf_conntrack_ipv6"
     ]
   },
-  {
-    "module": "ip_set",
-    "size": "45799",
-    "used": "0"
-  },
-  {
-    "module": "nfnetlink",
-    "size": "14519",
-    "used": "1",
-    "by": [
-      "ip_set"
-    ]
-  },
-  {
-    "module": "ebtable_filter",
-    "size": "12827",
-    "used": "1"
-  },
-  {
-    "module": "ebtables",
-    "size": "35009",
-    "used": "2",
-    "by": [
-      "ebtable_nat",
-      "ebtable_filter"
-    ]
-  },
   ...
 ]
 ```
 ### lsof
 ```
-$ sudo lsof | jc --lsof -p | more
+$ sudo lsof | jc --lsof -p
 [
   {
     "command": "systemd",
-    "pid": "1",
+    "pid": 1,
     "tid": null,
     "user": "root",
     "fd": "cwd",
     "type": "DIR",
-    "device": "8,2",
-    "size_off": "4096",
-    "node": "2",
+    "device": "253,0",
+    "size_off": 224,
+    "node": 64,
     "name": "/"
   },
   {
     "command": "systemd",
-    "pid": "1",
+    "pid": 1,
     "tid": null,
     "user": "root",
     "fd": "rtd",
     "type": "DIR",
-    "device": "8,2",
-    "size_off": "4096",
-    "node": "2",
+    "device": "253,0",
+    "size_off": 224,
+    "node": 64,
     "name": "/"
   },
   {
     "command": "systemd",
-    "pid": "1",
+    "pid": 1,
     "tid": null,
     "user": "root",
     "fd": "txt",
     "type": "REG",
-    "device": "8,2",
-    "size_off": "1595792",
-    "node": "668802",
-    "name": "/lib/systemd/systemd"
-  },
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "mem",
-    "type": "REG",
-    "device": "8,2",
-    "size_off": "1700792",
-    "node": "656167",
-    "name": "/lib/x86_64-linux-gnu/libm-2.27.so"
-  },
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "mem",
-    "type": "REG",
-    "device": "8,2",
-    "size_off": "121016",
-    "node": "655394",
-    "name": "/lib/x86_64-linux-gnu/libudev.so.1.6.9"
+    "device": "253,0",
+    "size_off": 1624520,
+    "node": 50360451,
+    "name": "/usr/lib/systemd/systemd"
   },
   ...
 ]
@@ -1050,7 +794,7 @@ $ mount | jc --mount -p
     "filesystem": "sysfs",
     "mount_point": "/sys",
     "type": "sysfs",
-    "access": [
+    "options": [
       "rw",
       "nosuid",
       "nodev",
@@ -1062,7 +806,7 @@ $ mount | jc --mount -p
     "filesystem": "proc",
     "mount_point": "/proc",
     "type": "proc",
-    "access": [
+    "options": [
       "rw",
       "nosuid",
       "nodev",
@@ -1074,7 +818,7 @@ $ mount | jc --mount -p
     "filesystem": "udev",
     "mount_point": "/dev",
     "type": "devtmpfs",
-    "access": [
+    "options": [
       "rw",
       "nosuid",
       "relatime",
@@ -1088,89 +832,152 @@ $ mount | jc --mount -p
 ```
 ### netstat
 ```
-$ netstat -p | jc --netstat -p
+$ sudo netstat -apee | jc --netstat -p
 [
   {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_address": "localhost.localdo",
-    "local_port": "34480",
-    "foreign_address": "lb-192-30-255-113",
-    "foreign_port": "https",
-    "state": "ESTABLISHED",
-    "pid": "53550",
-    "program_name": "git-remote-ht",
-    "receive_q": "0",
-    "send_q": "0"
-  },
-  {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_address": "localhost.localdo",
-    "local_port": "34478",
-    "foreign_address": "lb-192-30-255-113",
-    "foreign_port": "https",
-    "state": "ESTABLISHED",
-    "pid": "53550",
-    "program_name": "git-remote-ht",
-    "receive_q": "0",
-    "send_q": "0"
-  }
-]
-```
-```
-$ sudo netstat -lpn | jc --netstat -p
-[
-  {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_address": "127.0.0.1",
-    "local_port": "25",
+    "proto": "tcp",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "localhost",
     "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
     "state": "LISTEN",
-    "pid": "1584",
-    "program_name": "master",
-    "receive_q": "0",
-    "send_q": "0"
+    "user": "systemd-resolve",
+    "inode": 26958,
+    "program_name": "systemd-resolve",
+    "kind": "network",
+    "pid": 887,
+    "local_port": "domain",
+    "foreign_port": "*",
+    "transport_protocol": "tcp",
+    "network_protocol": "ipv4"
   },
   {
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
+    "proto": "tcp",
+    "recv_q": 0,
+    "send_q": 0,
     "local_address": "0.0.0.0",
-    "local_port": "22",
     "foreign_address": "0.0.0.0",
-    "foreign_port": "*",
     "state": "LISTEN",
-    "pid": "1213",
+    "user": "root",
+    "inode": 30499,
     "program_name": "sshd",
-    "receive_q": "0",
-    "send_q": "0"
-  },
-  {
+    "kind": "network",
+    "pid": 1186,
+    "local_port": "ssh",
+    "foreign_port": "*",
     "transport_protocol": "tcp",
-    "network_protocol": "ipv6",
-    "local_address": "::1",
-    "local_port": "25",
-    "foreign_address": "::",
-    "foreign_port": "*",
-    "state": "LISTEN",
-    "pid": "1584",
-    "program_name": "master",
-    "receive_q": "0",
-    "send_q": "0"
+    "network_protocol": "ipv4"
   },
   {
-    "transport_protocol": "udp",
+    "proto": "tcp",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "localhost",
+    "foreign_address": "localhost",
+    "state": "ESTABLISHED",
+    "user": "root",
+    "inode": 46829,
+    "program_name": "sshd: root",
+    "kind": "network",
+    "pid": 2242,
+    "local_port": "ssh",
+    "foreign_port": "52186",
+    "transport_protocol": "tcp",
     "network_protocol": "ipv4",
-    "local_address": "0.0.0.0",
-    "local_port": "68",
-    "foreign_address": "0.0.0.0",
+    "foreign_port_num": 52186
+  },
+  {
+    "proto": "tcp",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "localhost",
+    "foreign_address": "localhost",
+    "state": "ESTABLISHED",
+    "user": "root",
+    "inode": 46828,
+    "program_name": "ssh",
+    "kind": "network",
+    "pid": 2241,
+    "local_port": "52186",
+    "foreign_port": "ssh",
+    "transport_protocol": "tcp",
+    "network_protocol": "ipv4",
+    "local_port_num": 52186
+  },
+  {
+    "proto": "tcp6",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "[::]",
+    "foreign_address": "[::]",
+    "state": "LISTEN",
+    "user": "root",
+    "inode": 30510,
+    "program_name": "sshd",
+    "kind": "network",
+    "pid": 1186,
+    "local_port": "ssh",
     "foreign_port": "*",
-    "pid": "19177",
-    "program_name": "dhclient",
-    "receive_q": "0",
-    "send_q": "0"
+    "transport_protocol": "tcp",
+    "network_protocol": "ipv6"
+  },
+  {
+    "proto": "udp",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "localhost",
+    "foreign_address": "0.0.0.0",
+    "state": null,
+    "user": "systemd-resolve",
+    "inode": 26957,
+    "program_name": "systemd-resolve",
+    "kind": "network",
+    "pid": 887,
+    "local_port": "domain",
+    "foreign_port": "*",
+    "transport_protocol": "udp",
+    "network_protocol": "ipv4"
+  },
+  {
+    "proto": "raw6",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "[::]",
+    "foreign_address": "[::]",
+    "state": "7",
+    "user": "systemd-network",
+    "inode": 27001,
+    "program_name": "systemd-network",
+    "kind": "network",
+    "pid": 867,
+    "local_port": "ipv6-icmp",
+    "foreign_port": "*",
+    "transport_protocol": null,
+    "network_protocol": "ipv6"
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 33322,
+    "program_name": "systemd",
+    "path": "/run/user/1000/systemd/notify",
+    "kind": "socket",
+    "pid": 1607
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "SEQPACKET",
+    "state": "LISTENING",
+    "inode": 20835,
+    "program_name": "init",
+    "path": "/run/udev/control",
+    "kind": "socket",
+    "pid": 1
   },
   ...
 ]
@@ -1179,94 +986,386 @@ $ sudo netstat -lpn | jc --netstat -p
 ```
 $ ps -ef | jc --ps -p
 [
+  {
+    "uid": "root",
+    "pid": 1,
+    "ppid": 0,
+    "c": 0,
+    "stime": "Nov01",
+    "tty": null,
+    "time": "00:00:11",
+    "cmd": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+  },
+  {
+    "uid": "root",
+    "pid": 2,
+    "ppid": 0,
+    "c": 0,
+    "stime": "Nov01",
+    "tty": null,
+    "time": "00:00:00",
+    "cmd": "[kthreadd]"
+  },
+  {
+    "uid": "root",
+    "pid": 4,
+    "ppid": 2,
+    "c": 0,
+    "stime": "Nov01",
+    "tty": null,
+    "time": "00:00:00",
+    "cmd": "[kworker/0:0H]"
+  },
   ...
+]
+```
+```
+$ ps axu | jc --ps -p
+[
   {
-    "uid": "root",
-    "pid": "545",
-    "ppid": "1",
-    "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:03",
-    "cmd": "/usr/lib/systemd/systemd-journald"
+    "user": "root",
+    "pid": 1,
+    "cpu_percent": 0.0,
+    "mem_percent": 0.1,
+    "vsz": 128072,
+    "rss": 6784,
+    "tty": null,
+    "stat": "Ss",
+    "start": "Nov09",
+    "time": "0:08",
+    "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
   },
   {
-    "uid": "root",
-    "pid": "566",
-    "ppid": "1",
-    "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:00",
-    "cmd": "/usr/sbin/lvmetad -f"
+    "user": "root",
+    "pid": 2,
+    "cpu_percent": 0.0,
+    "mem_percent": 0.0,
+    "vsz": 0,
+    "rss": 0,
+    "tty": null,
+    "stat": "S",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[kthreadd]"
   },
   {
-    "uid": "root",
-    "pid": "580",
-    "ppid": "1",
-    "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:00",
-    "cmd": "/usr/lib/systemd/systemd-udevd"
-  },
-  {
-    "uid": "root",
-    "pid": "659",
-    "ppid": "2",
-    "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:00",
-    "cmd": "[kworker/u257:0]"
-  },
-  {
-    "uid": "root",
-    "pid": "666",
-    "ppid": "2",
-    "c": "0",
-    "stime": "Oct21",
-    "tty": "?",
-    "time": "00:00:00",
-    "cmd": "[hci0]"
+    "user": "root",
+    "pid": 4,
+    "cpu_percent": 0.0,
+    "mem_percent": 0.0,
+    "vsz": 0,
+    "rss": 0,
+    "tty": null,
+    "stat": "S<",
+    "start": "Nov09",
+    "time": "0:00",
+    "command": "[kworker/0:0H]"
   },
   ...
 ]
 ```
 ### route
 ```
-$ route | jc --route -p
+$ route -ee | jc --route -p
 [
   {
     "destination": "default",
     "gateway": "gateway",
     "genmask": "0.0.0.0",
     "flags": "UG",
-    "metric": "100",
-    "ref": "0",
-    "use": "0",
-    "iface": "ens33"
+    "metric": 100,
+    "ref": 0,
+    "use": 0,
+    "iface": "ens33",
+    "mss": 0,
+    "window": 0,
+    "irtt": 0
   },
   {
     "destination": "172.17.0.0",
     "gateway": "0.0.0.0",
     "genmask": "255.255.0.0",
     "flags": "U",
-    "metric": "0",
-    "ref": "0",
-    "use": "0",
-    "iface": "docker0"
+    "metric": 0,
+    "ref": 0,
+    "use": 0,
+    "iface": "docker",
+    "mss": 0,
+    "window": 0,
+    "irtt": 0
   },
   {
     "destination": "192.168.71.0",
     "gateway": "0.0.0.0",
     "genmask": "255.255.255.0",
     "flags": "U",
-    "metric": "100",
-    "ref": "0",
-    "use": "0",
-    "iface": "ens33"
+    "metric": 100,
+    "ref": 0,
+    "use": 0,
+    "iface": "ens33",
+    "mss": 0,
+    "window": 0,
+    "irtt": 0
   }
+]
+```
+### ss
+```
+$ sudo ss -a | jc --ss -p
+[
+  {
+    "netid": "nl",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "peer_address": "*",
+    "channel": "rtnl:kernel"
+  },
+  {
+    "netid": "nl",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "peer_address": "*",
+    "pid": 893,
+    "channel": "rtnl:systemd-resolve"
+  },
+  ...
+  {
+    "netid": "p_raw",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "peer_address": "*",
+    "link_layer": "LLDP",
+    "interface": "ens33"
+  },
+  {
+    "netid": "u_dgr",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_port": "93066",
+    "peer_address": "*",
+    "peer_port": "0",
+    "path": "/run/user/1000/systemd/notify"
+  },
+  {
+    "netid": "u_seq",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_port": "20699",
+    "peer_address": "*",
+    "peer_port": "0",
+    "path": "/run/udev/control"
+  },
+  ...
+  {
+    "netid": "icmp6",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "*",
+    "local_port": "ipv6-icmp",
+    "peer_address": "*",
+    "peer_port": "*",
+    "interface": "ens33"
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "127.0.0.53",
+    "local_port": "domain",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "interface": "lo"
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "127.0.0.53",
+    "local_port": "domain",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "interface": "lo"
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "0.0.0.0",
+    "local_port": "ssh",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*"
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "[::]",
+    "local_port": "ssh",
+    "peer_address": "[::]",
+    "peer_port": "*"
+  },
+  {
+    "netid": "v_str",
+    "state": "ESTAB",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "999900439",
+    "local_port": "1023",
+    "peer_address": "0",
+    "peer_port": "976",
+    "local_port_num": 1023,
+    "peer_port_num": 976
+  }
+]
+```
+### stat
+```
+$ stat /bin/* | jc --stat -p
+[
+  {
+    "file": "/bin/bash",
+    "size": 1113504,
+    "blocks": 2176,
+    "io_blocks": 4096,
+    "type": "regular file",
+    "device": "802h/2050d",
+    "inode": 131099,
+    "links": 1,
+    "access": "0755",
+    "flags": "-rwxr-xr-x",
+    "uid": 0,
+    "user": "root",
+    "gid": 0,
+    "group": "root",
+    "access_time": "2019-11-14 08:18:03.509681766 +0000",
+    "modify_time": "2019-06-06 22:28:15.000000000 +0000",
+    "change_time": "2019-08-12 17:21:29.521945390 +0000",
+    "birth_time": null
+  },
+  {
+    "file": "/bin/btrfs",
+    "size": 716464,
+    "blocks": 1400,
+    "io_blocks": 4096,
+    "type": "regular file",
+    "device": "802h/2050d",
+    "inode": 131100,
+    "links": 1,
+    "access": "0755",
+    "flags": "-rwxr-xr-x",
+    "uid": 0,
+    "user": "root",
+    "gid": 0,
+    "group": "root",
+    "access_time": "2019-11-14 08:18:28.990834276 +0000",
+    "modify_time": "2018-03-12 23:04:27.000000000 +0000",
+    "change_time": "2019-08-12 17:21:29.545944399 +0000",
+    "birth_time": null
+  },
+  ...
+]
+```
+### systemctl
+```
+$ systemctl -a | jc --systemctl -p
+[
+  {
+    "unit": "proc-sys-fs-binfmt_misc.automount",
+    "load": "loaded",
+    "active": "active",
+    "sub": "waiting",
+    "description": "Arbitrary Executable File Formats File System Automount Point"
+  },
+  {
+    "unit": "dev-block-8:2.device",
+    "load": "loaded",
+    "active": "active",
+    "sub": "plugged",
+    "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+  },
+  {
+    "unit": "dev-cdrom.device",
+    "load": "loaded",
+    "active": "active",
+    "sub": "plugged",
+    "description": "VMware_Virtual_IDE_CDROM_Drive"
+  },
+  ...
+]
+```
+### systemctl list-jobs
+```
+$ systemctl list-jobs| jc --systemctl-lj -p
+[
+  {
+    "job": 3543,
+    "unit": "nginxAfterGlusterfs.service",
+    "type": "start",
+    "state": "waiting"
+  },
+  {
+    "job": 3545,
+    "unit": "glusterReadyForLocalhostMount.service",
+    "type": "start",
+    "state": "running"
+  },
+  {
+    "job": 3506,
+    "unit": "nginx.service",
+    "type": "start",
+    "state": "waiting"
+  }
+]
+```
+### systemctl list-sockets
+```
+$ systemctl list-sockets | jc --systemctl-ls -p
+[
+  {
+    "listen": "/dev/log",
+    "unit": "systemd-journald.socket",
+    "activates": "systemd-journald.service"
+  },
+  {
+    "listen": "/run/dbus/system_bus_socket",
+    "unit": "dbus.socket",
+    "activates": "dbus.service"
+  },
+  {
+    "listen": "/run/dmeventd-client",
+    "unit": "dm-event.socket",
+    "activates": "dm-event.service"
+  },
+  ...
+]
+```
+### systemctl list-unit-files
+```
+$ systemctl list-unit-files | jc --systemctl-luf -p
+[
+  {
+    "unit_file": "proc-sys-fs-binfmt_misc.automount",
+    "state": "static"
+  },
+  {
+    "unit_file": "dev-hugepages.mount",
+    "state": "static"
+  },
+  {
+    "unit_file": "dev-mqueue.mount",
+    "state": "static"
+  },
+  ...
 ]
 ```
 ### uname -a
@@ -1287,12 +1386,12 @@ $ uname -a | jc --uname -p
 ```
 $ uptime | jc --uptime -p
 {
-  "time": "16:52",
-  "uptime": "3 days, 4:49",
-  "users": "5",
-  "load_1m": "1.85",
-  "load_5m": "1.90",
-  "load_15m": "1.91"
+  "time": "11:30:44",
+  "uptime": "1 day, 21:17",
+  "users": 1,
+  "load_1m": 0.01,
+  "load_5m": 0.04,
+  "load_15m": 0.05
 }
 ```
 ### w
@@ -1301,31 +1400,54 @@ $ w | jc --w -p
 [
   {
     "user": "root",
-    "tty": "ttyS0",
-    "from": "-",
-    "login_at": "Mon20",
-    "idle": "0.00s",
-    "jcpu": "14.70s",
+    "tty": "tty1",
+    "from": null,
+    "login_at": "07:49",
+    "idle": "1:15m",
+    "jcpu": "0.00s",
     "pcpu": "0.00s",
-    "what": "bash"
+    "what": "-bash"
+  },
+  {
+    "user": "root",
+    "tty": "ttyS0",
+    "from": null,
+    "login_at": "06:24",
+    "idle": "0.00s",
+    "jcpu": "0.43s",
+    "pcpu": "0.00s",
+    "what": "w"
   },
   {
     "user": "root",
     "tty": "pts/0",
     "from": "192.168.71.1",
-    "login_at": "Thu22",
-    "idle": "22:46m",
-    "jcpu": "0.05s",
-    "pcpu": "0.05s",
+    "login_at": "06:29",
+    "idle": "2:35m",
+    "jcpu": "0.00s",
+    "pcpu": "0.00s",
     "what": "-bash"
   }
 ]
 ```
+## TODO
+Future parsers:
+- nslookup
+- journalctl
+- crontab files
+- /proc files
+- /sys files
 
 ## Contributions
-Feel free to add/improve code or parsers!
+Feel free to add/improve code or parsers! You can use the `jc/parsers/foo.py` parser as a template and submit your parser with a pull request.
 
 ## Compatibility
+Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+
+```
+$ cat lsof.out | jc --lsof -q
+```
+
 Tested on:
 - Centos 7.7
 - Ubuntu 18.4

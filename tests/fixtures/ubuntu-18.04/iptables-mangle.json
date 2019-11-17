@@ -1,0 +1,1 @@
+[{"chain": "PREROUTING", "rules": []}, {"chain": "INPUT", "rules": []}, {"chain": "FORWARD", "rules": []}, {"chain": "OUTPUT", "rules": []}]

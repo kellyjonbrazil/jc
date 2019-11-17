@@ -3,58 +3,160 @@
 Usage:
     specify --lsmod as the first argument if the piped input is coming from lsmod
 
-Example:
+Examples:
 
-$ lsmod | jc --lsmod -p
-[
-  ...
-  {
-    "module": "nf_conntrack",
-    "size": "139224",
-    "used": "7",
-    "by": [
-      "nf_nat",
-      "nf_nat_ipv4",
-      "nf_nat_ipv6",
-      "xt_conntrack",
-      "nf_nat_masquerade_ipv4",
-      "nf_conntrack_ipv4",
-      "nf_conntrack_ipv6"
+    $ lsmod | jc --lsmod -p
+    [
+      ...
+      {
+        "module": "nf_nat",
+        "size": 26583,
+        "used": 3,
+        "by": [
+          "nf_nat_ipv4",
+          "nf_nat_ipv6",
+          "nf_nat_masquerade_ipv4"
+        ]
+      },
+      {
+        "module": "iptable_mangle",
+        "size": 12695,
+        "used": 1
+      },
+      {
+        "module": "iptable_security",
+        "size": 12705,
+        "used": 1
+      },
+      {
+        "module": "iptable_raw",
+        "size": 12678,
+        "used": 1
+      },
+      {
+        "module": "nf_conntrack",
+        "size": 139224,
+        "used": 7,
+        "by": [
+          "nf_nat",
+          "nf_nat_ipv4",
+          "nf_nat_ipv6",
+          "xt_conntrack",
+          "nf_nat_masquerade_ipv4",
+          "nf_conntrack_ipv4",
+          "nf_conntrack_ipv6"
+        ]
+      },
+      ...
     ]
-  },
-  {
-    "module": "ip_set",
-    "size": "45799",
-    "used": "0"
-  },
-  {
-    "module": "nfnetlink",
-    "size": "14519",
-    "used": "1",
-    "by": [
-      "ip_set"
+
+    $ lsmod | jc --lsmod -p -r
+    [
+      ...
+      {
+        "module": "nf_conntrack",
+        "size": "139224",
+        "used": "7",
+        "by": [
+          "nf_nat",
+          "nf_nat_ipv4",
+          "nf_nat_ipv6",
+          "xt_conntrack",
+          "nf_nat_masquerade_ipv4",
+          "nf_conntrack_ipv4",
+          "nf_conntrack_ipv6"
+        ]
+      },
+      {
+        "module": "ip_set",
+        "size": "45799",
+        "used": "0"
+      },
+      {
+        "module": "nfnetlink",
+        "size": "14519",
+        "used": "1",
+        "by": [
+          "ip_set"
+        ]
+      },
+      {
+        "module": "ebtable_filter",
+        "size": "12827",
+        "used": "1"
+      },
+      {
+        "module": "ebtables",
+        "size": "35009",
+        "used": "2",
+        "by": [
+          "ebtable_nat",
+          "ebtable_filter"
+        ]
+      },
+      ...
     ]
-  },
-  {
-    "module": "ebtable_filter",
-    "size": "12827",
-    "used": "1"
-  },
-  {
-    "module": "ebtables",
-    "size": "35009",
-    "used": "2",
-    "by": [
-      "ebtable_nat",
-      "ebtable_filter"
-    ]
-  },
-  ...
-]
 """
+import jc.utils
 
 
-def parse(data):
+def process(proc_data):
+    """
+    Final processing to conform to the schema.
+
+    Parameters:
+
+        proc_data:   (dictionary) raw structured data to process
+
+    Returns:
+
+        dictionary   structured data with the following schema:
+
+        [
+          {
+            "module": string,
+            "size":   integer,
+            "used":   integer,
+            "by": [
+                      string
+            ]
+          }
+        ]
+    """
+    for entry in proc_data:
+        # integer changes
+        int_list = ['size', 'used']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
+    return proc_data
+
+
+def parse(data, raw=False, quiet=False):
+    """
+    Main text parsing function
+
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) output preprocessed JSON if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        dictionary   raw or processed structured data
+    """
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
 
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
@@ -63,10 +165,13 @@ def parse(data):
     headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
 
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    output = [dict(zip(headers, r)) for r in raw_data]
+    raw_output = [dict(zip(headers, r)) for r in raw_data]
 
-    for mod in output:
+    for mod in raw_output:
         if 'by' in mod:
             mod['by'] = mod['by'].split(',')
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)

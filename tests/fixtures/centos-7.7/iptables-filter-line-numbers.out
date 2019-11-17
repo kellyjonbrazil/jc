@@ -1,0 +1,128 @@
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+2    ACCEPT     all  --  anywhere             anywhere            
+3    INPUT_direct  all  --  anywhere             anywhere            
+4    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+5    INPUT_ZONES  all  --  anywhere             anywhere            
+6    DROP       all  --  anywhere             anywhere             ctstate INVALID
+7    REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+8    ACCEPT     all  --  anywhere             anywhere            
+9    ACCEPT     all  --  anywhere             anywhere            
+10   ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+11   DROP       all  --  anywhere             anywhere             ctstate INVALID
+12   DROP       all  --  15.15.15.51          anywhere            
+13   ACCEPT     tcp  --  15.15.15.0/24        anywhere             tcp dpt:ssh ctstate NEW,ESTABLISHED
+
+Chain FORWARD (policy DROP)
+num  target     prot opt source               destination         
+1    DOCKER-ISOLATION  all  --  anywhere             anywhere            
+2    DOCKER     all  --  anywhere             anywhere            
+3    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+4    ACCEPT     all  --  anywhere             anywhere            
+5    ACCEPT     all  --  anywhere             anywhere            
+6    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+7    ACCEPT     all  --  anywhere             anywhere            
+8    FORWARD_direct  all  --  anywhere             anywhere            
+9    FORWARD_IN_ZONES_SOURCE  all  --  anywhere             anywhere            
+10   FORWARD_IN_ZONES  all  --  anywhere             anywhere            
+11   FORWARD_OUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+12   FORWARD_OUT_ZONES  all  --  anywhere             anywhere            
+13   DROP       all  --  anywhere             anywhere             ctstate INVALID
+14   REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     all  --  anywhere             anywhere            
+2    OUTPUT_direct  all  --  anywhere             anywhere            
+3    ACCEPT     all  --  anywhere             anywhere            
+4    ACCEPT     all  --  anywhere             anywhere             ctstate ESTABLISHED
+5    ACCEPT     tcp  --  anywhere             anywhere             tcp spt:ssh ctstate ESTABLISHED
+
+Chain DOCKER (1 references)
+num  target     prot opt source               destination         
+
+Chain DOCKER-ISOLATION (1 references)
+num  target     prot opt source               destination         
+1    RETURN     all  --  anywhere             anywhere            
+
+Chain FORWARD_IN_ZONES (1 references)
+num  target     prot opt source               destination         
+1    FWDI_public  all  --  anywhere             anywhere            [goto] 
+2    FWDI_public  all  --  anywhere             anywhere            [goto] 
+
+Chain FORWARD_IN_ZONES_SOURCE (1 references)
+num  target     prot opt source               destination         
+
+Chain FORWARD_OUT_ZONES (1 references)
+num  target     prot opt source               destination         
+1    FWDO_public  all  --  anywhere             anywhere            [goto] 
+2    FWDO_public  all  --  anywhere             anywhere            [goto] 
+
+Chain FORWARD_OUT_ZONES_SOURCE (1 references)
+num  target     prot opt source               destination         
+
+Chain FORWARD_direct (1 references)
+num  target     prot opt source               destination         
+
+Chain FWDI_public (2 references)
+num  target     prot opt source               destination         
+1    FWDI_public_log  all  --  anywhere             anywhere            
+2    FWDI_public_deny  all  --  anywhere             anywhere            
+3    FWDI_public_allow  all  --  anywhere             anywhere            
+4    ACCEPT     icmp --  anywhere             anywhere            
+
+Chain FWDI_public_allow (1 references)
+num  target     prot opt source               destination         
+
+Chain FWDI_public_deny (1 references)
+num  target     prot opt source               destination         
+
+Chain FWDI_public_log (1 references)
+num  target     prot opt source               destination         
+
+Chain FWDO_public (2 references)
+num  target     prot opt source               destination         
+1    FWDO_public_log  all  --  anywhere             anywhere            
+2    FWDO_public_deny  all  --  anywhere             anywhere            
+3    FWDO_public_allow  all  --  anywhere             anywhere            
+
+Chain FWDO_public_allow (1 references)
+num  target     prot opt source               destination         
+
+Chain FWDO_public_deny (1 references)
+num  target     prot opt source               destination         
+
+Chain FWDO_public_log (1 references)
+num  target     prot opt source               destination         
+
+Chain INPUT_ZONES (1 references)
+num  target     prot opt source               destination         
+1    IN_public  all  --  anywhere             anywhere            [goto] 
+2    IN_public  all  --  anywhere             anywhere            [goto] 
+
+Chain INPUT_ZONES_SOURCE (1 references)
+num  target     prot opt source               destination         
+
+Chain INPUT_direct (1 references)
+num  target     prot opt source               destination         
+
+Chain IN_public (2 references)
+num  target     prot opt source               destination         
+1    IN_public_log  all  --  anywhere             anywhere            
+2    IN_public_deny  all  --  anywhere             anywhere            
+3    IN_public_allow  all  --  anywhere             anywhere            
+4    ACCEPT     icmp --  anywhere             anywhere            
+
+Chain IN_public_allow (1 references)
+num  target     prot opt source               destination         
+1    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:ssh ctstate NEW,UNTRACKED
+
+Chain IN_public_deny (1 references)
+num  target     prot opt source               destination         
+
+Chain IN_public_log (1 references)
+num  target     prot opt source               destination         
+
+Chain OUTPUT_direct (1 references)
+num  target     prot opt source               destination         

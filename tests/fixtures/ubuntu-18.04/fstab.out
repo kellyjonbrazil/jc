@@ -1,0 +1,2 @@
+UUID=011527a0-c72a-4c00-a50e-ee90da26b6e2 / ext4 defaults 0 0
+/swap.img	none	swap	sw	0	0            # this is a comment

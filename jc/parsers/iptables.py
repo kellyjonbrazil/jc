@@ -3,330 +3,228 @@
 Usage:
     Specify --iptables as the first argument if the piped input is coming from iptables
 
-    Supports -vLn for all tables
+    Supports -vLn and --line-numbers for all tables
 
 Examples:
 
-$ sudo iptables -L -t nat | jc --iptables -p
-[
-  {
-    "chain": "PREROUTING",
-    "rules": [
+    $ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p
+    [
       {
-        "target": "PREROUTING_direct",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "anywhere"
+        "chain": "PREROUTING",
+        "rules": [
+          {
+            "num": 1,
+            "pkts": 2183,
+            "bytes": 186000,
+            "target": "PREROUTING_direct",
+            "prot": "all",
+            "opt": null,
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere"
+          },
+          {
+            "num": 2,
+            "pkts": 2183,
+            "bytes": 186000,
+            "target": "PREROUTING_ZONES_SOURCE",
+            "prot": "all",
+            "opt": null,
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere"
+          },
+          {
+            "num": 3,
+            "pkts": 2183,
+            "bytes": 186000,
+            "target": "PREROUTING_ZONES",
+            "prot": "all",
+            "opt": null,
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere"
+          },
+          {
+            "num": 4,
+            "pkts": 0,
+            "bytes": 0,
+            "target": "DOCKER",
+            "prot": "all",
+            "opt": null,
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere",
+            "options": "ADDRTYPE match dst-type LOCAL"
+          }
+        ]
       },
-      {
-        "target": "PREROUTING_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "anywhere"
-      },
-      {
-        "target": "PREROUTING_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "anywhere"
-      },
-      {
-        "target": "DOCKER",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "anywhere",
-        "options": "ADDRTYPE match dst-type LOCAL"
-      }
+      ...
     ]
-  },
-  {
-    "chain": "INPUT",
-    "rules": []
-  },
-  {
-    "chain": "OUTPUT",
-    "rules": [
-      {
-        "target": "OUTPUT_direct",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "anywhere"
-      },
-      {
-        "target": "DOCKER",
-        "prot": "all",
-        "opt": "--",
-        "source": "anywhere",
-        "destination": "!loopback/8",
-        "options": "ADDRTYPE match dst-type LOCAL"
-      }
-    ]
-  },
-  ...
-]
 
-$ sudo iptables -vnL -t filter | jc --iptables -p
-[
-  {
-    "chain": "INPUT",
-    "rules": [
+    $ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p -r
+    [
       {
-        "pkts": "1571",
-        "bytes": "3394K",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate RELATED,ESTABLISHED"
+        "chain": "PREROUTING",
+        "rules": [
+          {
+            "num": "1",
+            "pkts": "2183",
+            "bytes": "186K",
+            "target": "PREROUTING_direct",
+            "prot": "all",
+            "opt": "--",
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere"
+          },
+          {
+            "num": "2",
+            "pkts": "2183",
+            "bytes": "186K",
+            "target": "PREROUTING_ZONES_SOURCE",
+            "prot": "all",
+            "opt": "--",
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere"
+          },
+          {
+            "num": "3",
+            "pkts": "2183",
+            "bytes": "186K",
+            "target": "PREROUTING_ZONES",
+            "prot": "all",
+            "opt": "--",
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere"
+          },
+          {
+            "num": "4",
+            "pkts": "0",
+            "bytes": "0",
+            "target": "DOCKER",
+            "prot": "all",
+            "opt": "--",
+            "in": "any",
+            "out": "any",
+            "source": "anywhere",
+            "destination": "anywhere",
+            "options": "ADDRTYPE match dst-type LOCAL"
+          }
+        ]
       },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "lo",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "711",
-        "bytes": "60126",
-        "target": "INPUT_direct",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "711",
-        "bytes": "60126",
-        "target": "INPUT_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "711",
-        "bytes": "60126",
-        "target": "INPUT_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DROP",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate INVALID"
-      },
-      {
-        "pkts": "710",
-        "bytes": "60078",
-        "target": "REJECT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "reject-with icmp-host-prohibited"
-      }
+      ...
     ]
-  },
-  {
-    "chain": "FORWARD",
-    "rules": [
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DOCKER-ISOLATION",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DOCKER",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate RELATED,ESTABLISHED"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "docker0",
-        "out": "!docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "docker0",
-        "out": "docker0",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate RELATED,ESTABLISHED"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "ACCEPT",
-        "prot": "all",
-        "opt": "--",
-        "in": "lo",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_direct",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_IN_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_IN_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_OUT_ZONES_SOURCE",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "FORWARD_OUT_ZONES",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "DROP",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "ctstate INVALID"
-      },
-      {
-        "pkts": "0",
-        "bytes": "0",
-        "target": "REJECT",
-        "prot": "all",
-        "opt": "--",
-        "in": "*",
-        "out": "*",
-        "source": "0.0.0.0/0",
-        "destination": "0.0.0.0/0",
-        "options": "reject-with icmp-host-prohibited"
-      }
-    ]
-  },
-  ...
-]
 """
+import jc.utils
 
 
-def parse(data):
-    output = []
+def process(proc_data):
+    """
+    Final processing to conform to the schema.
+
+    Parameters:
+
+        proc_data:   (dictionary) raw structured data to process
+
+    Returns:
+
+        dictionary   structured data with the following schema:
+    
+        [
+          {
+            "chain":                string,
+            "rules": [
+              {
+                "num"               integer,
+                "pkts":             integer,
+                "bytes":            integer,  # converted based on suffix
+                "target":           string,
+                "prot":             string,
+                "opt":              string,   # "--" = Null
+                "in":               string,
+                "out":              string,
+                "source":           string,
+                "destination":      string,
+                "options":          string
+              }
+            ]
+          }
+        ]
+    """
+    for entry in proc_data:
+        for rule in entry['rules']:
+            int_list = ['num', 'pkts']
+            for key in int_list:
+                if key in rule:
+                    try:
+                        key_int = int(rule[key])
+                        rule[key] = key_int
+                    except (ValueError):
+                        rule[key] = None
+
+            if 'bytes' in rule:
+                multiplier = 1
+                if rule['bytes'][-1] == 'K':
+                    multiplier = 1000
+                    rule['bytes'] = rule['bytes'].rstrip('K')
+                elif rule['bytes'][-1] == 'M':
+                    multiplier = 1000000
+                    rule['bytes'] = rule['bytes'].rstrip('M')
+                elif rule['bytes'][-1] == 'G':
+                    multiplier = 1000000000
+                    rule['bytes'] = rule['bytes'].rstrip('G')
+                elif rule['bytes'][-1] == 'T':
+                    multiplier = 1000000000000
+                    rule['bytes'] = rule['bytes'].rstrip('T')
+                elif rule['bytes'][-1] == 'P':
+                    multiplier = 1000000000000000
+                    rule['bytes'] = rule['bytes'].rstrip('P')
+
+                try:
+                    bytes_int = int(rule['bytes'])
+                    rule['bytes'] = bytes_int * multiplier
+                except (ValueError):
+                    rule['bytes'] = None
+
+            if 'opt' in rule:
+                if rule['opt'] == '--':
+                    rule['opt'] = None
+
+    return proc_data
+
+
+def parse(data, raw=False, quiet=False):
+    """
+    Main text parsing function
+
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) output preprocessed JSON if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        dictionary   raw or processed structured data
+    """
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
+
+    raw_output = []
     chain = {}
     headers = []
 
@@ -335,7 +233,7 @@ def parse(data):
     for line in cleandata:
 
         if line.find('Chain') == 0:
-            output.append(chain)
+            raw_output.append(chain)
             chain = {}
             headers = []
 
@@ -346,7 +244,7 @@ def parse(data):
 
             continue
 
-        elif line.find('target') == 0 or line.find('pkts') == 1:
+        elif line.find('target') == 0 or line.find('pkts') == 1 or line.find('num') == 0:
             headers = []
             headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
             headers.append("options")
@@ -359,6 +257,9 @@ def parse(data):
             if temp_rule:
                 chain['rules'].append(temp_rule)
 
-    output = list(filter(None, output))
+    raw_output = list(filter(None, raw_output))
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)

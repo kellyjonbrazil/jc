@@ -1,0 +1,1 @@
+[{"fs_spec": "UUID=011527a0-c72a-4c00-a50e-ee90da26b6e2", "fs_file": "/", "fs_vfstype": "ext4", "fs_mntops": "defaults", "fs_freq": 0, "fs_passno": 0}, {"fs_spec": "/swap.img", "fs_file": "none", "fs_vfstype": "swap", "fs_mntops": "sw", "fs_freq": 0, "fs_passno": 0}]

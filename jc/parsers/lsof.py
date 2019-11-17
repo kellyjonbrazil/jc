@@ -3,78 +3,156 @@
 Usage:
     specify --lsof as the first argument if the piped input is coming from lsof
 
-Example:
+Examples:
 
-$ sudo lsof | jc --lsof -p | more
-[
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "cwd",
-    "type": "DIR",
-    "device": "8,2",
-    "size_off": "4096",
-    "node": "2",
-    "name": "/"
-  },
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "rtd",
-    "type": "DIR",
-    "device": "8,2",
-    "size_off": "4096",
-    "node": "2",
-    "name": "/"
-  },
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "txt",
-    "type": "REG",
-    "device": "8,2",
-    "size_off": "1595792",
-    "node": "668802",
-    "name": "/lib/systemd/systemd"
-  },
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "mem",
-    "type": "REG",
-    "device": "8,2",
-    "size_off": "1700792",
-    "node": "656167",
-    "name": "/lib/x86_64-linux-gnu/libm-2.27.so"
-  },
-  {
-    "command": "systemd",
-    "pid": "1",
-    "tid": null,
-    "user": "root",
-    "fd": "mem",
-    "type": "REG",
-    "device": "8,2",
-    "size_off": "121016",
-    "node": "655394",
-    "name": "/lib/x86_64-linux-gnu/libudev.so.1.6.9"
-  },
-  ...
-]
+    $ sudo lsof | jc --lsof -p
+    [
+      {
+        "command": "systemd",
+        "pid": 1,
+        "tid": null,
+        "user": "root",
+        "fd": "cwd",
+        "type": "DIR",
+        "device": "253,0",
+        "size_off": 224,
+        "node": 64,
+        "name": "/"
+      },
+      {
+        "command": "systemd",
+        "pid": 1,
+        "tid": null,
+        "user": "root",
+        "fd": "rtd",
+        "type": "DIR",
+        "device": "253,0",
+        "size_off": 224,
+        "node": 64,
+        "name": "/"
+      },
+      {
+        "command": "systemd",
+        "pid": 1,
+        "tid": null,
+        "user": "root",
+        "fd": "txt",
+        "type": "REG",
+        "device": "253,0",
+        "size_off": 1624520,
+        "node": 50360451,
+        "name": "/usr/lib/systemd/systemd"
+      },
+      ...
+    ]
+
+    $ sudo lsof | jc --lsof -p -r
+    [
+      {
+        "command": "systemd",
+        "pid": "1",
+        "tid": null,
+        "user": "root",
+        "fd": "cwd",
+        "type": "DIR",
+        "device": "8,2",
+        "size_off": "4096",
+        "node": "2",
+        "name": "/"
+      },
+      {
+        "command": "systemd",
+        "pid": "1",
+        "tid": null,
+        "user": "root",
+        "fd": "rtd",
+        "type": "DIR",
+        "device": "8,2",
+        "size_off": "4096",
+        "node": "2",
+        "name": "/"
+      },
+      {
+        "command": "systemd",
+        "pid": "1",
+        "tid": null,
+        "user": "root",
+        "fd": "txt",
+        "type": "REG",
+        "device": "8,2",
+        "size_off": "1595792",
+        "node": "668802",
+        "name": "/lib/systemd/systemd"
+      },
+      ...
+    ]
 """
 import string
+import jc.utils
 
 
-def parse(data):
-    output = []
+def process(proc_data):
+    """
+    Final processing to conform to the schema.
+
+    Parameters:
+
+        proc_data:   (dictionary) raw structured data to process
+
+    Returns:
+
+        dictionary   structured data with the following schema:
+
+        [
+          {
+            "command":    string,
+            "pid":        integer,
+            "tid":        integer,
+            "user":       string,
+            "fd":         string,
+            "type":       string,
+            "device":     string,
+            "size_off":   integer,
+            "node":       integer,
+            "name":       string
+          }
+        ]
+    """
+    for entry in proc_data:
+        # integer changes
+        int_list = ['pid', 'tid', 'size_off', 'node']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError, TypeError):
+                    entry[key] = None
+    return proc_data
+
+
+def parse(data, raw=False, quiet=False):
+    """
+    Main text parsing function
+
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) output preprocessed JSON if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        dictionary   raw or processed structured data
+    """
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
+
+    raw_output = []
 
     linedata = data.splitlines()
 
@@ -88,7 +166,7 @@ def parse(data):
 
         # clean up 'size/off' header
         # even though forward slash in a key is valid json, it can make things difficult
-        header_row = header_text.replace('size/off', 'size_off')
+        header_row = header_text.replace('/', '_')
 
         headers = header_row.split()
 
@@ -120,6 +198,9 @@ def parse(data):
             fixed_line.append(name)
 
             output_line = dict(zip(headers, fixed_line))
-            output.append(output_line)
+            raw_output.append(output_line)
 
-    return output
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)

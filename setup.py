@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='jc',
-    version='1.1.1',
+    version='1.5.1',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
     description='This tool serializes the output of popular command line tools to structured JSON output.',
@@ -15,17 +15,18 @@ setuptools.setup(
     license='MIT',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    python_requires='~=3.4',
+    python_requires='~=3.6',
     url='https://github.com/kellyjonbrazil/jc',
     packages=setuptools.find_packages(),
     entry_points={
         'console_scripts': [
-            'jc=jc.jc:main',
-        ],
+            'jc=jc.cli:main'
+        ]
     },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
+        'Topic :: Utilities'
     ]
 )

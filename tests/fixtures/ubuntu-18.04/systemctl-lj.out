@@ -1,0 +1,6 @@
+ JOB UNIT                                  TYPE  STATE  
+3543 nginxAfterGlusterfs.service           start waiting
+3545 glusterReadyForLocalhostMount.service start running
+3506 nginx.service                         start waiting
+
+4 jobs listed.

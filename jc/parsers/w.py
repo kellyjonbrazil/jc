@@ -3,45 +3,163 @@
 Usage:
     specify --w as the first argument if the piped input is coming from w
 
-Example:
+Examples:
 
-$ w | jc --w -p
-[
-  {
-    "user": "root",
-    "tty": "ttyS0",
-    "from": "-",
-    "login_at": "Mon20",
-    "idle": "0.00s",
-    "jcpu": "14.70s",
-    "pcpu": "0.00s",
-    "what": "bash"
-  },
-  {
-    "user": "root",
-    "tty": "pts/0",
-    "from": "192.168.71.1",
-    "login_at": "Thu22",
-    "idle": "22:46m",
-    "jcpu": "0.05s",
-    "pcpu": "0.05s",
-    "what": "-bash"
-  }
-]
+    $ w | jc --w -p
+    [
+      {
+        "user": "root",
+        "tty": "tty1",
+        "from": null,
+        "login_at": "07:49",
+        "idle": "1:15m",
+        "jcpu": "0.00s",
+        "pcpu": "0.00s",
+        "what": "-bash"
+      },
+      {
+        "user": "root",
+        "tty": "ttyS0",
+        "from": null,
+        "login_at": "06:24",
+        "idle": "0.00s",
+        "jcpu": "0.43s",
+        "pcpu": "0.00s",
+        "what": "w"
+      },
+      {
+        "user": "root",
+        "tty": "pts/0",
+        "from": "192.168.71.1",
+        "login_at": "06:29",
+        "idle": "2:35m",
+        "jcpu": "0.00s",
+        "pcpu": "0.00s",
+        "what": "-bash"
+      }
+    ]
+
+    $ w | jc --w -p -r
+    [
+      {
+        "user": "kbrazil",
+        "tty": "tty1",
+        "from": "-",
+        "login_at": "07:49",
+        "idle": "1:16m",
+        "jcpu": "0.00s",
+        "pcpu": "0.00s",
+        "what": "-bash"
+      },
+      {
+        "user": "kbrazil",
+        "tty": "ttyS0",
+        "from": "-",
+        "login_at": "06:24",
+        "idle": "2.00s",
+        "jcpu": "0.46s",
+        "pcpu": "0.00s",
+        "what": "w"
+      },
+      {
+        "user": "kbrazil",
+        "tty": "pts/0",
+        "from": "192.168.71.1",
+        "login_at": "06:29",
+        "idle": "2:36m",
+        "jcpu": "0.00s",
+        "pcpu": "0.00s",
+        "what": "-bash"
+      }
+    ]
 """
+import string
+import jc.utils
 
 
-def parse(data):
+def process(proc_data):
+    """
+    Final processing to conform to the schema.
 
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+    Parameters:
+
+        proc_data:   (dictionary) raw structured data to process
+
+    Returns:
+
+        dictionary   structured data with the following schema:
+
+        [
+          {
+            "user":     string,     # '-'' = null
+            "tty":      string,     # '-'' = null
+            "from":     string,     # '-'' = null
+            "login_at": string,     # '-'' = null
+            "idle":     string,     # '-'' = null
+            "jcpu":     string,
+            "pcpu":     string,
+            "what":     string      # '-'' = null
+          }
+        ]
+    """
+    for entry in proc_data:
+        null_list = ['user', 'tty', 'from', 'login_at', 'idle', 'what']
+        for key in null_list:
+            if key in entry:
+                if entry[key] == '-':
+                    entry[key] = None
+
+    return proc_data
+
+
+def parse(data, raw=False, quiet=False):
+    """
+    Main text parsing function
+
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) output preprocessed JSON if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        dictionary   raw or processed structured data
+    """
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+
+    if not quiet:
+        jc.utils.compatibility(__name__, compatible)
 
     cleandata = data.splitlines()[1:]
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-
+    header_text = cleandata[0].lower()
+    # fixup for 'from' column that can be blank
+    from_col = header_text.find('from')
     # clean up 'login@' header
     # even though @ in a key is valid json, it can make things difficult
-    headers = ['login_at' if x == 'login@' else x for x in headers]
+    header_text = header_text.replace('login@', 'login_at')
+    headers = [h for h in ' '.join(header_text.strip().split()).split() if h]
 
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    return [dict(zip(headers, r)) for r in raw_data]
+    # parse lines
+    raw_output = []
+    if cleandata:
+        for entry in cleandata[1:]:
+            output_line = {}
+
+            # normalize data by inserting Null for missing data
+            temp_line = entry.split(maxsplit=len(headers) - 1)
+
+            # fix from column, always at column 2
+            if 'from' in headers:
+                if entry[from_col] in string.whitespace:
+                    temp_line.insert(2, '-')
+
+            output_line = dict(zip(headers, temp_line))
+            raw_output.append(output_line)
+
+    if raw:
+        return raw_output
+    else:
+        return process(raw_output)

@@ -1,0 +1,1 @@
+[{"job": 3543, "unit": "nginxAfterGlusterfs.service", "type": "start", "state": "waiting"}, {"job": 3545, "unit": "glusterReadyForLocalhostMount.service", "type": "start", "state": "running"}, {"job": 3506, "unit": "nginx.service", "type": "start", "state": "waiting"}]

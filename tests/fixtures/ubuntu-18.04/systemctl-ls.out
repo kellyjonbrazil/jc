@@ -1,0 +1,27 @@
+LISTEN                          UNIT                            ACTIVATES
+/dev/rfkill                     systemd-rfkill.socket           systemd-rfkill.service
+/run/acpid.socket               acpid.socket                    acpid.service
+/run/apport.socket              apport-forward.socket          
+/run/dmeventd-client            dm-event.socket                 dm-event.service
+/run/dmeventd-server            dm-event.socket                 dm-event.service
+/run/lvm/lvmetad.socket         lvm2-lvmetad.socket             lvm2-lvmetad.service
+/run/lvm/lvmpolld.socket        lvm2-lvmpolld.socket            lvm2-lvmpolld.service
+/run/snapd-snap.socket          snapd.socket                    snapd.service
+/run/snapd.socket               snapd.socket                    snapd.service
+/run/systemd/fsck.progress      systemd-fsckd.socket            systemd-fsckd.service
+/run/systemd/initctl/fifo       systemd-initctl.socket          systemd-initctl.service
+/run/systemd/journal/dev-log    systemd-journald-dev-log.socket systemd-journald.service
+/run/systemd/journal/socket     systemd-journald.socket         systemd-journald.service
+/run/systemd/journal/stdout     systemd-journald.socket         systemd-journald.service
+/run/systemd/journal/syslog     syslog.socket                   rsyslog.service
+/run/udev/control               systemd-udevd-control.socket    systemd-udevd.service
+/run/uuidd/request              uuidd.socket                    uuidd.service
+/var/lib/lxd/unix.socket        lxd.socket                      lxd.service
+/var/run/dbus/system_bus_socket dbus.socket                     dbus.service
+/var/run/docker.sock            docker.socket                   docker.service
+@ISCSIADM_ABSTRACT_NAMESPACE    iscsid.socket                   iscsid.service
+audit 1                         systemd-journald-audit.socket   systemd-journald.service
+kobject-uevent 1                systemd-udevd-kernel.socket     systemd-udevd.service
+route 1361                      systemd-networkd.socket         systemd-networkd.service
+
+24 sockets listed.

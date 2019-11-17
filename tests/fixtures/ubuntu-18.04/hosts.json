@@ -1,0 +1,1 @@
+[{"ip": "127.0.0.1", "hostname": ["localhost"]}, {"ip": "127.0.1.1", "hostname": ["kbrazil-ubuntu"]}, {"ip": "::1", "hostname": ["ip6-localhost", "ip6-loopback"]}, {"ip": "fe00::0", "hostname": ["ip6-localnet"]}, {"ip": "ff00::0", "hostname": ["ip6-mcastprefix"]}, {"ip": "ff02::1", "hostname": ["ip6-allnodes"]}, {"ip": "ff02::2", "hostname": ["ip6-allrouters"]}]

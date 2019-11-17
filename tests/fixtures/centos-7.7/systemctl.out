@@ -1,0 +1,228 @@
+  UNIT                                                                                                             LOAD      ACTIVE   SUB       DESCRIPTION
+  proc-sys-fs-binfmt_misc.automount                                                                                loaded    active   waiting   Arbitrary Executable File Formats File System Automount Point
+  dev-block-8:2.device                                                                                             loaded    active   plugged   LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2
+  dev-cdrom.device                                                                                                 loaded    active   plugged   VMware_Virtual_IDE_CDROM_Drive
+  dev-centos-root.device                                                                                           loaded    active   plugged   /dev/centos/root
+  dev-centos-swap.device                                                                                           loaded    active   plugged   /dev/centos/swap
+  dev-disk-by\x2did-ata\x2dVMware_Virtual_IDE_CDROM_Drive_10000000000000000001.device                              loaded    active   plugged   VMware_Virtual_IDE_CDROM_Drive
+  dev-disk-by\x2did-dm\x2dname\x2dcentos\x2droot.device                                                            loaded    active   plugged   /dev/disk/by-id/dm-name-centos-root
+  dev-disk-by\x2did-dm\x2dname\x2dcentos\x2dswap.device                                                            loaded    active   plugged   /dev/disk/by-id/dm-name-centos-swap
+  dev-disk-by\x2did-dm\x2duuid\x2dLVM\x2dh68ze5IiKlTsLYPCc0MZYJ7wcin2QzP1smehAPSq6LXkM54sNRY3sncGbbkFLuEa.device   loaded    active   plugged   /dev/disk/by-id/dm-uuid-LVM-h68ze5IiKlTsLYPCc0MZYJ7wcin2QzP1smehAPSq6LXkM54sNRY3sncGbbkFLuEa
+  dev-disk-by\x2did-dm\x2duuid\x2dLVM\x2dh68ze5IiKlTsLYPCc0MZYJ7wcin2QzP1X9yq5NOn1nxOIuDLIZUagWAFM1bJV5pL.device   loaded    active   plugged   /dev/disk/by-id/dm-uuid-LVM-h68ze5IiKlTsLYPCc0MZYJ7wcin2QzP1X9yq5NOn1nxOIuDLIZUagWAFM1bJV5pL
+  dev-disk-by\x2did-lvm\x2dpv\x2duuid\x2d3klkIj\x2dw1qk\x2dDkJi\x2d0XBJ\x2dy3o7\x2di2Ac\x2dvHqWBM.device           loaded    active   plugged   LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2
+  dev-disk-by\x2dpath-pci\x2d0000:00:07.1\x2data\x2d2.0.device                                                     loaded    active   plugged   VMware_Virtual_IDE_CDROM_Drive
+  dev-disk-by\x2dpath-pci\x2d0000:00:10.0\x2dscsi\x2d0:0:0:0.device                                                loaded    active   plugged   VMware_Virtual_S
+  dev-disk-by\x2dpath-pci\x2d0000:00:10.0\x2dscsi\x2d0:0:0:0\x2dpart1.device                                       loaded    active   plugged   VMware_Virtual_S 1
+  dev-disk-by\x2dpath-pci\x2d0000:00:10.0\x2dscsi\x2d0:0:0:0\x2dpart2.device                                       loaded    active   plugged   LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2
+  dev-disk-by\x2duuid-05d927bb\x2d5875\x2d49e3\x2dada1\x2d7f46cb31c932.device                                      loaded    active   plugged   VMware_Virtual_S 1
+  dev-disk-by\x2duuid-07d718ef\x2d950c\x2d4e5b\x2d98e0\x2d42a1147b77d9.device                                      loaded    active   plugged   /dev/disk/by-uuid/07d718ef-950c-4e5b-98e0-42a1147b77d9
+  dev-disk-by\x2duuid-615eb89d\x2dbcbf\x2d46ad\x2d80e3\x2dc483ef5c931f.device                                      loaded    active   plugged   /dev/disk/by-uuid/615eb89d-bcbf-46ad-80e3-c483ef5c931f
+  dev-dm\x2d0.device                                                                                               loaded    active   plugged   /dev/dm-0
+  dev-dm\x2d1.device                                                                                               loaded    active   plugged   /dev/dm-1
+  dev-mapper-centos\x2droot.device                                                                                 loaded    active   plugged   /dev/mapper/centos-root
+  dev-mapper-centos\x2dswap.device                                                                                 loaded    active   plugged   /dev/mapper/centos-swap
+  dev-sda.device                                                                                                   loaded    active   plugged   VMware_Virtual_S
+  dev-sda1.device                                                                                                  loaded    active   plugged   VMware_Virtual_S 1
+  dev-sda2.device                                                                                                  loaded    active   plugged   LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2
+  dev-sr0.device                                                                                                   loaded    active   plugged   VMware_Virtual_IDE_CDROM_Drive
+  dev-ttyS0.device                                                                                                 loaded    active   plugged   /dev/ttyS0
+  dev-ttyS1.device                                                                                                 loaded    active   plugged   /dev/ttyS1
+  dev-ttyS2.device                                                                                                 loaded    active   plugged   /dev/ttyS2
+  dev-ttyS3.device                                                                                                 loaded    active   plugged   /dev/ttyS3
+  sys-devices-pci0000:00-0000:00:07.1-ata2-host2-target2:0:0-2:0:0:0-block-sr0.device                              loaded    active   plugged   VMware_Virtual_IDE_CDROM_Drive
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda1.device                              loaded    active   plugged   VMware_Virtual_S 1
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda2.device                              loaded    active   plugged   LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda.device                                   loaded    active   plugged   VMware_Virtual_S
+  sys-devices-pci0000:00-0000:00:11.0-0000:02:00.0-usb2-2\x2d2-2\x2d2.1-2\x2d2.1:1.0-bluetooth-hci0-rfkill0.device loaded    active   plugged   /sys/devices/pci0000:00/0000:00:11.0/0000:02:00.0/usb2/2-2/2-2.1/2-2.1:1.0/bluetooth/hci0/rfkill0
+  sys-devices-pci0000:00-0000:00:11.0-0000:02:00.0-usb2-2\x2d2-2\x2d2.1-2\x2d2.1:1.0-bluetooth-hci0.device         loaded    active   plugged   /sys/devices/pci0000:00/0000:00:11.0/0000:02:00.0/usb2/2-2/2-2.1/2-2.1:1.0/bluetooth/hci0
+  sys-devices-pci0000:00-0000:00:11.0-0000:02:01.0-net-ens33.device                                                loaded    active   plugged   82545EM Gigabit Ethernet Controller (Copper) (PRO/1000 MT Single Port Adapter)
+  sys-devices-platform-serial8250-tty-ttyS1.device                                                                 loaded    active   plugged   /sys/devices/platform/serial8250/tty/ttyS1
+  sys-devices-platform-serial8250-tty-ttyS2.device                                                                 loaded    active   plugged   /sys/devices/platform/serial8250/tty/ttyS2
+  sys-devices-platform-serial8250-tty-ttyS3.device                                                                 loaded    active   plugged   /sys/devices/platform/serial8250/tty/ttyS3
+  sys-devices-pnp0-00:05-tty-ttyS0.device                                                                          loaded    active   plugged   /sys/devices/pnp0/00:05/tty/ttyS0
+  sys-devices-virtual-block-dm\x2d0.device                                                                         loaded    active   plugged   /sys/devices/virtual/block/dm-0
+  sys-devices-virtual-block-dm\x2d1.device                                                                         loaded    active   plugged   /sys/devices/virtual/block/dm-1
+  sys-devices-virtual-net-docker0.device                                                                           loaded    active   plugged   /sys/devices/virtual/net/docker0
+  sys-module-configfs.device                                                                                       loaded    active   plugged   /sys/module/configfs
+  sys-subsystem-bluetooth-devices-hci0.device                                                                      loaded    active   plugged   /sys/subsystem/bluetooth/devices/hci0
+  sys-subsystem-net-devices-docker0.device                                                                         loaded    active   plugged   /sys/subsystem/net/devices/docker0
+  sys-subsystem-net-devices-ens33.device                                                                           loaded    active   plugged   82545EM Gigabit Ethernet Controller (Copper) (PRO/1000 MT Single Port Adapter)
+  sys-subsystem-rfkill-devices-rfkill0.device                                                                      loaded    active   plugged   /sys/subsystem/rfkill/devices/rfkill0
+  -.mount                                                                                                          loaded    active   mounted   /
+  boot.mount                                                                                                       loaded    active   mounted   /boot
+  dev-hugepages.mount                                                                                              loaded    active   mounted   Huge Pages File System
+  dev-mqueue.mount                                                                                                 loaded    active   mounted   POSIX Message Queue File System
+  proc-sys-fs-binfmt_misc.mount                                                                                    loaded    inactive dead      Arbitrary Executable File Formats File System
+  run-user-1000.mount                                                                                              loaded    active   mounted   /run/user/1000
+  sys-fs-fuse-connections.mount                                                                                    loaded    inactive dead      FUSE Control File System
+  sys-kernel-config.mount                                                                                          loaded    active   mounted   Configuration File System
+  sys-kernel-debug.mount                                                                                           loaded    active   mounted   Debug File System
+  tmp.mount                                                                                                        loaded    inactive dead      Temporary Directory
+  var-lib-docker-containers.mount                                                                                  loaded    active   mounted   /var/lib/docker/containers
+  var-lib-docker-overlay2.mount                                                                                    loaded    active   mounted   /var/lib/docker/overlay2
+  systemd-ask-password-console.path                                                                                loaded    inactive dead      Dispatch Password Requests to Console Directory Watch
+  systemd-ask-password-plymouth.path                                                                               loaded    active   waiting   Forward Password Requests to Plymouth Directory Watch
+  systemd-ask-password-wall.path                                                                                   loaded    active   waiting   Forward Password Requests to Wall Directory Watch
+  session-1.scope                                                                                                  loaded    active   running   Session 1 of user kbrazil
+  auditd.service                                                                                                   loaded    active   running   Security Auditing Service
+  chronyd.service                                                                                                  loaded    active   running   NTP client/server
+● cloud-init.service                                                                                               not-found inactive dead      cloud-init.service
+  cpupower.service                                                                                                 loaded    inactive dead      Configure CPU power related settings
+  crond.service                                                                                                    loaded    active   running   Command Scheduler
+  dbus.service                                                                                                     loaded    active   running   D-Bus System Message Bus
+● display-manager.service                                                                                          not-found inactive dead      display-manager.service
+  dm-event.service                                                                                                 loaded    inactive dead      Device-mapper event daemon
+  docker-cleanup.service                                                                                           loaded    inactive dead      Docker Cleanup
+  docker-storage-setup.service                                                                                     loaded    inactive dead      Docker Storage Setup
+  docker.service                                                                                                   loaded    active   running   Docker Application Container Engine
+  dracut-shutdown.service                                                                                          loaded    inactive dead      Restore /run/initramfs
+  ebtables.service                                                                                                 loaded    inactive dead      Ethernet Bridge Filtering tables
+  emergency.service                                                                                                loaded    inactive dead      Emergency Shell
+● exim.service                                                                                                     not-found inactive dead      exim.service
+  firewalld.service                                                                                                loaded    active   running   firewalld - dynamic firewall daemon
+  getty@tty1.service                                                                                               loaded    active   running   Getty on tty1
+● ip6tables.service                                                                                                not-found inactive dead      ip6tables.service
+● ipset.service                                                                                                    not-found inactive dead      ipset.service
+● iptables.service                                                                                                 not-found inactive dead      iptables.service
+  irqbalance.service                                                                                               loaded    inactive dead      irqbalance daemon
+  kdump.service                                                                                                    loaded    active   exited    Crash recovery kernel arming
+  kmod-static-nodes.service                                                                                        loaded    active   exited    Create list of required static device nodes for the current kernel
+● lvm2-activation.service                                                                                          not-found inactive dead      lvm2-activation.service
+  lvm2-lvmetad.service                                                                                             loaded    active   running   LVM2 metadata daemon
+  lvm2-lvmpolld.service                                                                                            loaded    inactive dead      LVM2 poll daemon
+  lvm2-monitor.service                                                                                             loaded    active   exited    Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling
+  lvm2-pvscan@8:2.service                                                                                          loaded    active   exited    LVM2 PV scan on device 8:2
+  microcode.service                                                                                                loaded    inactive dead      Load CPU microcode update
+  network.service                                                                                                  loaded    active   exited    LSB: Bring up/down networking
+  NetworkManager-wait-online.service                                                                               loaded    active   exited    Network Manager Wait Online
+  NetworkManager.service                                                                                           loaded    active   running   Network Manager
+● ntpd.service                                                                                                     not-found inactive dead      ntpd.service
+● ntpdate.service                                                                                                  not-found inactive dead      ntpdate.service
+  plymouth-quit-wait.service                                                                                       loaded    inactive dead      Wait for Plymouth Boot Screen to Quit
+  plymouth-quit.service                                                                                            loaded    inactive dead      Terminate Plymouth Boot Screen
+  plymouth-read-write.service                                                                                      loaded    inactive dead      Tell Plymouth To Write Out Runtime Data
+  plymouth-start.service                                                                                           loaded    inactive dead      Show Plymouth Boot Screen
+  polkit.service                                                                                                   loaded    active   running   Authorization Manager
+  postfix.service                                                                                                  loaded    active   running   Postfix Mail Transport Agent
+  rc-local.service                                                                                                 loaded    inactive dead      /etc/rc.d/rc.local Compatibility
+  rescue.service                                                                                                   loaded    inactive dead      Rescue Shell
+  rhel-autorelabel.service                                                                                         loaded    inactive dead      Relabel all filesystems, if necessary
+  rhel-configure.service                                                                                           loaded    inactive dead      Reconfigure the system on administrator request
+  rhel-dmesg.service                                                                                               loaded    active   exited    Dump dmesg to /var/log/dmesg
+  rhel-domainname.service                                                                                          loaded    active   exited    Read and set NIS domainname from /etc/sysconfig/network
+  rhel-import-state.service                                                                                        loaded    active   exited    Import network configuration from initramfs
+  rhel-loadmodules.service                                                                                         loaded    inactive dead      Load legacy module configuration
+  rhel-readonly.service                                                                                            loaded    active   exited    Configure read-only root support
+  rsyslog.service                                                                                                  loaded    active   running   System Logging Service
+  selinux-policy-migrate-local-changes@targeted.service                                                            loaded    inactive dead      Migrate local SELinux policy changes from the old store structure to the new structure
+● sendmail.service                                                                                                 not-found inactive dead      sendmail.service
+  serial-getty@ttyS0.service                                                                                       loaded    active   running   Serial Getty on ttyS0
+● sntp.service                                                                                                     not-found inactive dead      sntp.service
+  sshd-keygen.service                                                                                              loaded    inactive dead      OpenSSH Server Key Generation
+  sshd.service                                                                                                     loaded    active   running   OpenSSH server daemon
+● syslog.service                                                                                                   not-found inactive dead      syslog.service
+  sysstat.service                                                                                                  loaded    active   exited    Resets System Activity Logs
+  systemd-ask-password-console.service                                                                             loaded    inactive dead      Dispatch Password Requests to Console
+  systemd-ask-password-plymouth.service                                                                            loaded    inactive dead      Forward Password Requests to Plymouth
+  systemd-ask-password-wall.service                                                                                loaded    inactive dead      Forward Password Requests to Wall
+  systemd-binfmt.service                                                                                           loaded    inactive dead      Set Up Additional Binary Formats
+  systemd-firstboot.service                                                                                        loaded    inactive dead      First Boot Wizard
+  systemd-fsck-root.service                                                                                        loaded    inactive dead      File System Check on Root Device
+  systemd-hwdb-update.service                                                                                      loaded    inactive dead      Rebuild Hardware Database
+  systemd-initctl.service                                                                                          loaded    inactive dead      /dev/initctl Compatibility Daemon
+  systemd-journal-catalog-update.service                                                                           loaded    inactive dead      Rebuild Journal Catalog
+  systemd-journal-flush.service                                                                                    loaded    active   exited    Flush Journal to Persistent Storage
+  systemd-journald.service                                                                                         loaded    active   running   Journal Service
+  systemd-logind.service                                                                                           loaded    active   running   Login Service
+  systemd-machine-id-commit.service                                                                                loaded    inactive dead      Commit a transient machine-id on disk
+  systemd-modules-load.service                                                                                     loaded    inactive dead      Load Kernel Modules
+  systemd-random-seed.service                                                                                      loaded    active   exited    Load/Save Random Seed
+  systemd-readahead-collect.service                                                                                loaded    inactive dead      Collect Read-Ahead Data
+  systemd-readahead-done.service                                                                                   loaded    inactive dead      Stop Read-Ahead Data Collection
+  systemd-readahead-replay.service                                                                                 loaded    inactive dead      Replay Read-Ahead Data
+  systemd-reboot.service                                                                                           loaded    inactive dead      Reboot
+  systemd-remount-fs.service                                                                                       loaded    active   exited    Remount Root and Kernel File Systems
+  systemd-rfkill@rfkill0.service                                                                                   loaded    active   exited    Load/Save RF Kill Switch Status of rfkill0
+  systemd-shutdownd.service                                                                                        loaded    inactive dead      Delayed Shutdown Service
+  systemd-sysctl.service                                                                                           loaded    active   exited    Apply Kernel Variables
+● systemd-sysusers.service                                                                                         not-found inactive dead      systemd-sysusers.service
+● systemd-timesyncd.service                                                                                        not-found inactive dead      systemd-timesyncd.service
+  systemd-tmpfiles-clean.service                                                                                   loaded    inactive dead      Cleanup of Temporary Directories
+  systemd-tmpfiles-setup-dev.service                                                                               loaded    active   exited    Create Static Device Nodes in /dev
+  systemd-tmpfiles-setup.service                                                                                   loaded    active   exited    Create Volatile Files and Directories
+  systemd-udev-trigger.service                                                                                     loaded    active   exited    udev Coldplug all Devices
+  systemd-udevd.service                                                                                            loaded    active   running   udev Kernel Device Manager
+  systemd-update-done.service                                                                                      loaded    inactive dead      Update is Completed
+  systemd-update-utmp-runlevel.service                                                                             loaded    inactive dead      Update UTMP about System Runlevel Changes
+  systemd-update-utmp.service                                                                                      loaded    active   exited    Update UTMP about System Boot/Shutdown
+  systemd-user-sessions.service                                                                                    loaded    active   exited    Permit User Sessions
+  systemd-vconsole-setup.service                                                                                   loaded    active   exited    Setup Virtual Console
+  tuned.service                                                                                                    loaded    active   running   Dynamic System Tuning Daemon
+● ypbind.service                                                                                                   not-found inactive dead      ypbind.service
+● yppasswdd.service                                                                                                not-found inactive dead      yppasswdd.service
+● ypserv.service                                                                                                   not-found inactive dead      ypserv.service
+● ypxfrd.service                                                                                                   not-found inactive dead      ypxfrd.service
+  -.slice                                                                                                          loaded    active   active    Root Slice
+  system-getty.slice                                                                                               loaded    active   active    system-getty.slice
+  system-lvm2\x2dpvscan.slice                                                                                      loaded    active   active    system-lvm2\x2dpvscan.slice
+  system-selinux\x2dpolicy\x2dmigrate\x2dlocal\x2dchanges.slice                                                    loaded    active   active    system-selinux\x2dpolicy\x2dmigrate\x2dlocal\x2dchanges.slice
+  system-serial\x2dgetty.slice                                                                                     loaded    active   active    system-serial\x2dgetty.slice
+  system-systemd\x2drfkill.slice                                                                                   loaded    active   active    system-systemd\x2drfkill.slice
+  system.slice                                                                                                     loaded    active   active    System Slice
+  user-1000.slice                                                                                                  loaded    active   active    User Slice of kbrazil
+  user.slice                                                                                                       loaded    active   active    User and Session Slice
+  dbus.socket                                                                                                      loaded    active   running   D-Bus System Message Bus Socket
+  dm-event.socket                                                                                                  loaded    active   listening Device-mapper event daemon FIFOs
+  lvm2-lvmetad.socket                                                                                              loaded    active   running   LVM2 metadata daemon socket
+  lvm2-lvmpolld.socket                                                                                             loaded    active   listening LVM2 poll daemon socket
+  sshd.socket                                                                                                      loaded    inactive dead      OpenSSH Server Socket
+  syslog.socket                                                                                                    loaded    inactive dead      Syslog Socket
+  systemd-initctl.socket                                                                                           loaded    active   listening /dev/initctl Compatibility Named Pipe
+  systemd-journald.socket                                                                                          loaded    active   running   Journal Socket
+  systemd-shutdownd.socket                                                                                         loaded    active   listening Delayed Shutdown Socket
+  systemd-udevd-control.socket                                                                                     loaded    active   running   udev Control Socket
+  systemd-udevd-kernel.socket                                                                                      loaded    active   running   udev Kernel Socket
+  dev-centos-swap.swap                                                                                             loaded    active   active    /dev/centos/swap
+  dev-disk-by\x2did-dm\x2dname\x2dcentos\x2dswap.swap                                                              loaded    active   active    /dev/disk/by-id/dm-name-centos-swap
+  dev-disk-by\x2did-dm\x2duuid\x2dLVM\x2dh68ze5IiKlTsLYPCc0MZYJ7wcin2QzP1X9yq5NOn1nxOIuDLIZUagWAFM1bJV5pL.swap     loaded    active   active    /dev/disk/by-id/dm-uuid-LVM-h68ze5IiKlTsLYPCc0MZYJ7wcin2QzP1X9yq5NOn1nxOIuDLIZUagWAFM1bJV5pL
+  dev-disk-by\x2duuid-615eb89d\x2dbcbf\x2d46ad\x2d80e3\x2dc483ef5c931f.swap                                        loaded    active   active    /dev/disk/by-uuid/615eb89d-bcbf-46ad-80e3-c483ef5c931f
+  dev-dm\x2d1.swap                                                                                                 loaded    active   active    /dev/dm-1
+  dev-mapper-centos\x2dswap.swap                                                                                   loaded    active   active    /dev/mapper/centos-swap
+  basic.target                                                                                                     loaded    active   active    Basic System
+  bluetooth.target                                                                                                 loaded    active   active    Bluetooth
+  cryptsetup.target                                                                                                loaded    active   active    Local Encrypted Volumes
+  emergency.target                                                                                                 loaded    inactive dead      Emergency Mode
+  final.target                                                                                                     loaded    inactive dead      Final Step
+  getty-pre.target                                                                                                 loaded    inactive dead      Login Prompts (Pre)
+  getty.target                                                                                                     loaded    active   active    Login Prompts
+  graphical.target                                                                                                 loaded    inactive dead      Graphical Interface
+  local-fs-pre.target                                                                                              loaded    active   active    Local File Systems (Pre)
+  local-fs.target                                                                                                  loaded    active   active    Local File Systems
+  multi-user.target                                                                                                loaded    active   active    Multi-User System
+  network-online.target                                                                                            loaded    active   active    Network is Online
+  network-pre.target                                                                                               loaded    active   active    Network (Pre)
+  network.target                                                                                                   loaded    active   active    Network
+  nss-user-lookup.target                                                                                           loaded    inactive dead      User and Group Name Lookups
+  paths.target                                                                                                     loaded    active   active    Paths
+  remote-fs-pre.target                                                                                             loaded    inactive dead      Remote File Systems (Pre)
+  remote-fs.target                                                                                                 loaded    active   active    Remote File Systems
+  rescue.target                                                                                                    loaded    inactive dead      Rescue Mode
+  shutdown.target                                                                                                  loaded    inactive dead      Shutdown
+  slices.target                                                                                                    loaded    active   active    Slices
+  sockets.target                                                                                                   loaded    active   active    Sockets
+  swap.target                                                                                                      loaded    active   active    Swap
+  sysinit.target                                                                                                   loaded    active   active    System Initialization
+● syslog.target                                                                                                    not-found inactive dead      syslog.target
+  time-sync.target                                                                                                 loaded    inactive dead      System Time Synchronized
+  timers.target                                                                                                    loaded    active   active    Timers
+  umount.target                                                                                                    loaded    inactive dead      Unmount All Filesystems
+  docker-cleanup.timer                                                                                             loaded    active   waiting   Run docker-cleanup every hour
+  systemd-readahead-done.timer                                                                                     loaded    inactive dead      Stop Read-Ahead Data Collection 10s After Completed Startup
+  systemd-tmpfiles-clean.timer                                                                                     loaded    active   waiting   Daily Cleanup of Temporary Directories
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+220 loaded units listed.
+To show all installed unit files use 'systemctl list-unit-files'.

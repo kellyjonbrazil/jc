@@ -1,0 +1,1 @@
+[{"address": "192.168.71.254", "hwtype": "ether", "hwaddress": "00:50:56:fe:7a:b4", "flags_mask": "C", "iface": "ens33"}, {"address": "_gateway", "hwtype": "ether", "hwaddress": "00:50:56:f7:4a:fc", "flags_mask": "C", "iface": "ens33"}]

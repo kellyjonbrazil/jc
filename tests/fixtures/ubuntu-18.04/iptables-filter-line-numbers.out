@@ -1,0 +1,17 @@
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     all  --  anywhere             anywhere            
+2    ACCEPT     all  --  anywhere             anywhere            
+3    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+4    DROP       all  --  anywhere             anywhere             ctstate INVALID
+5    DROP       all  --  15.15.15.51          anywhere            
+6    ACCEPT     tcp  --  15.15.15.0/24        anywhere             tcp dpt:ssh ctstate NEW,ESTABLISHED
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     all  --  anywhere             anywhere            
+2    ACCEPT     all  --  anywhere             anywhere             ctstate ESTABLISHED
+3    ACCEPT     tcp  --  anywhere             anywhere             tcp spt:ssh ctstate ESTABLISHED
