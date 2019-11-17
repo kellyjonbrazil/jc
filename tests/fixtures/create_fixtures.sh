@@ -23,6 +23,7 @@ sudo iptables -A INPUT -i lo -s 15.15.15.51 -j DROP
 sudo iptables -A INPUT -p tcp -s 15.15.15.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -L -t filter   > iptables-filter.out
+sudo iptables --line-numbers -L -t filter   > iptables-filter-line-numbers.out
 sudo iptables -L -t nat      > iptables-nat.out
 sudo iptables -L -t mangle   > iptables-mangle.out
 sudo iptables -L -t raw      > iptables-raw.out
