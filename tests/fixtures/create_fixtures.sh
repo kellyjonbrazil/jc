@@ -55,3 +55,11 @@ route -vn  > route-vn.out
 uname -a   > uname-a.out
 uptime     > uptime.out
 w          > w.out
+
+cat /etc/hosts > hosts.out
+cat /etc/fstab > fstab.out
+
+systemctl -a > systemctl.out
+systemctl -a list-unit-files > systemctl-luf.out
+systemctl -a list-sockets > systemctl-ls.out
+systemctl -a list-jobs > systemctl-jobs.out

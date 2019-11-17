@@ -25,13 +25,13 @@ class MyTests(unittest.TestCase):
 
     def test_systemctl_centos_7_7(self):
         """
-        Test 'systemctl' on Centos 7.7
+        Test 'systemctl -a' on Centos 7.7
         """
         self.assertEqual(jc.parsers.systemctl.parse(self.centos_7_7_systemctl, quiet=True), self.centos_7_7_systemctl_json)
 
     def test_systemctl_ubuntu_18_4(self):
         """
-        Test 'systemctl' on Ubuntu 18.4
+        Test 'systemctl -a' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.systemctl.parse(self.ubuntu_18_4_systemctl, quiet=True), self.ubuntu_18_4_systemctl_json)
 

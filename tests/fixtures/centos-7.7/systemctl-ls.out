@@ -1,0 +1,17 @@
+LISTEN                      UNIT                         ACTIVATES
+/dev/log                    systemd-journald.socket      systemd-journald.service
+/run/dbus/system_bus_socket dbus.socket                  dbus.service
+/run/dmeventd-client        dm-event.socket              dm-event.service
+/run/dmeventd-server        dm-event.socket              dm-event.service
+/run/lvm/lvmetad.socket     lvm2-lvmetad.socket          lvm2-lvmetad.service
+/run/lvm/lvmpolld.socket    lvm2-lvmpolld.socket         lvm2-lvmpolld.service
+/run/systemd/initctl/fifo   systemd-initctl.socket       systemd-initctl.service
+/run/systemd/journal/socket systemd-journald.socket      systemd-journald.service
+/run/systemd/journal/stdout systemd-journald.socket      systemd-journald.service
+/run/systemd/journal/syslog syslog.socket                syslog.service
+/run/systemd/shutdownd      systemd-shutdownd.socket     systemd-shutdownd.service
+/run/udev/control           systemd-udevd-control.socket systemd-udevd.service
+[::]:22                     sshd.socket                 
+kobject-uevent 1            systemd-udevd-kernel.socket  systemd-udevd.service
+
+14 sockets listed.
