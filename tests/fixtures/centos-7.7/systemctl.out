@@ -1,0 +1,118 @@
+UNIT                                                                                                             LOAD   ACTIVE SUB       DESCRIPTION
+proc-sys-fs-binfmt_misc.automount                                                                                loaded active waiting   Arbitrary Executable File Formats File System Automount Point
+sys-devices-pci0000:00-0000:00:07.1-ata2-host2-target2:0:0-2:0:0:0-block-sr0.device                              loaded active plugged   VMware_Virtual_IDE_CDROM_Drive
+sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda1.device                              loaded active plugged   VMware_Virtual_S 1
+sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda2.device                              loaded active plugged   LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2
+sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda.device                                   loaded active plugged   VMware_Virtual_S
+sys-devices-pci0000:00-0000:00:11.0-0000:02:00.0-usb2-2\x2d2-2\x2d2.1-2\x2d2.1:1.0-bluetooth-hci0-rfkill0.device loaded active plugged   /sys/devices/pci0000:00/0000:00:11.0/0000:02:00.0/usb2/2-2/2-2.1/2-2.1:1.0/bluetooth/hci0/rfkill0
+sys-devices-pci0000:00-0000:00:11.0-0000:02:00.0-usb2-2\x2d2-2\x2d2.1-2\x2d2.1:1.0-bluetooth-hci0.device         loaded active plugged   /sys/devices/pci0000:00/0000:00:11.0/0000:02:00.0/usb2/2-2/2-2.1/2-2.1:1.0/bluetooth/hci0
+sys-devices-pci0000:00-0000:00:11.0-0000:02:01.0-net-ens33.device                                                loaded active plugged   82545EM Gigabit Ethernet Controller (Copper) (PRO/1000 MT Single Port Adapter)
+sys-devices-platform-serial8250-tty-ttyS1.device                                                                 loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS1
+sys-devices-platform-serial8250-tty-ttyS2.device                                                                 loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS2
+sys-devices-platform-serial8250-tty-ttyS3.device                                                                 loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS3
+sys-devices-pnp0-00:05-tty-ttyS0.device                                                                          loaded active plugged   /sys/devices/pnp0/00:05/tty/ttyS0
+sys-devices-virtual-block-dm\x2d0.device                                                                         loaded active plugged   /sys/devices/virtual/block/dm-0
+sys-devices-virtual-block-dm\x2d1.device                                                                         loaded active plugged   /sys/devices/virtual/block/dm-1
+sys-devices-virtual-net-docker0.device                                                                           loaded active plugged   /sys/devices/virtual/net/docker0
+sys-module-configfs.device                                                                                       loaded active plugged   /sys/module/configfs
+sys-subsystem-bluetooth-devices-hci0.device                                                                      loaded active plugged   /sys/subsystem/bluetooth/devices/hci0
+sys-subsystem-net-devices-docker0.device                                                                         loaded active plugged   /sys/subsystem/net/devices/docker0
+sys-subsystem-net-devices-ens33.device                                                                           loaded active plugged   82545EM Gigabit Ethernet Controller (Copper) (PRO/1000 MT Single Port Adapter)
+sys-subsystem-rfkill-devices-rfkill0.device                                                                      loaded active plugged   /sys/subsystem/rfkill/devices/rfkill0
+-.mount                                                                                                          loaded active mounted   /
+boot.mount                                                                                                       loaded active mounted   /boot
+dev-hugepages.mount                                                                                              loaded active mounted   Huge Pages File System
+dev-mqueue.mount                                                                                                 loaded active mounted   POSIX Message Queue File System
+run-user-1000.mount                                                                                              loaded active mounted   /run/user/1000
+sys-kernel-config.mount                                                                                          loaded active mounted   Configuration File System
+sys-kernel-debug.mount                                                                                           loaded active mounted   Debug File System
+var-lib-docker-containers.mount                                                                                  loaded active mounted   /var/lib/docker/containers
+var-lib-docker-overlay2.mount                                                                                    loaded active mounted   /var/lib/docker/overlay2
+systemd-ask-password-plymouth.path                                                                               loaded active waiting   Forward Password Requests to Plymouth Directory Watch
+systemd-ask-password-wall.path                                                                                   loaded active waiting   Forward Password Requests to Wall Directory Watch
+session-1.scope                                                                                                  loaded active running   Session 1 of user kbrazil
+auditd.service                                                                                                   loaded active running   Security Auditing Service
+chronyd.service                                                                                                  loaded active running   NTP client/server
+crond.service                                                                                                    loaded active running   Command Scheduler
+dbus.service                                                                                                     loaded active running   D-Bus System Message Bus
+docker.service                                                                                                   loaded active running   Docker Application Container Engine
+firewalld.service                                                                                                loaded active running   firewalld - dynamic firewall daemon
+getty@tty1.service                                                                                               loaded active running   Getty on tty1
+kdump.service                                                                                                    loaded active exited    Crash recovery kernel arming
+kmod-static-nodes.service                                                                                        loaded active exited    Create list of required static device nodes for the current kernel
+lvm2-lvmetad.service                                                                                             loaded active running   LVM2 metadata daemon
+lvm2-monitor.service                                                                                             loaded active exited    Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling
+lvm2-pvscan@8:2.service                                                                                          loaded active exited    LVM2 PV scan on device 8:2
+network.service                                                                                                  loaded active exited    LSB: Bring up/down networking
+NetworkManager-wait-online.service                                                                               loaded active exited    Network Manager Wait Online
+NetworkManager.service                                                                                           loaded active running   Network Manager
+polkit.service                                                                                                   loaded active running   Authorization Manager
+postfix.service                                                                                                  loaded active running   Postfix Mail Transport Agent
+rhel-dmesg.service                                                                                               loaded active exited    Dump dmesg to /var/log/dmesg
+rhel-domainname.service                                                                                          loaded active exited    Read and set NIS domainname from /etc/sysconfig/network
+rhel-import-state.service                                                                                        loaded active exited    Import network configuration from initramfs
+rhel-readonly.service                                                                                            loaded active exited    Configure read-only root support
+rsyslog.service                                                                                                  loaded active running   System Logging Service
+serial-getty@ttyS0.service                                                                                       loaded active running   Serial Getty on ttyS0
+sshd.service                                                                                                     loaded active running   OpenSSH server daemon
+sysstat.service                                                                                                  loaded active exited    Resets System Activity Logs
+systemd-journal-flush.service                                                                                    loaded active exited    Flush Journal to Persistent Storage
+systemd-journald.service                                                                                         loaded active running   Journal Service
+systemd-logind.service                                                                                           loaded active running   Login Service
+systemd-random-seed.service                                                                                      loaded active exited    Load/Save Random Seed
+systemd-remount-fs.service                                                                                       loaded active exited    Remount Root and Kernel File Systems
+systemd-rfkill@rfkill0.service                                                                                   loaded active exited    Load/Save RF Kill Switch Status of rfkill0
+systemd-sysctl.service                                                                                           loaded active exited    Apply Kernel Variables
+systemd-tmpfiles-setup-dev.service                                                                               loaded active exited    Create Static Device Nodes in /dev
+systemd-tmpfiles-setup.service                                                                                   loaded active exited    Create Volatile Files and Directories
+systemd-udev-trigger.service                                                                                     loaded active exited    udev Coldplug all Devices
+systemd-udevd.service                                                                                            loaded active running   udev Kernel Device Manager
+systemd-update-utmp.service                                                                                      loaded active exited    Update UTMP about System Boot/Shutdown
+systemd-user-sessions.service                                                                                    loaded active exited    Permit User Sessions
+systemd-vconsole-setup.service                                                                                   loaded active exited    Setup Virtual Console
+tuned.service                                                                                                    loaded active running   Dynamic System Tuning Daemon
+-.slice                                                                                                          loaded active active    Root Slice
+system-getty.slice                                                                                               loaded active active    system-getty.slice
+system-lvm2\x2dpvscan.slice                                                                                      loaded active active    system-lvm2\x2dpvscan.slice
+system-selinux\x2dpolicy\x2dmigrate\x2dlocal\x2dchanges.slice                                                    loaded active active    system-selinux\x2dpolicy\x2dmigrate\x2dlocal\x2dchanges.slice
+system-serial\x2dgetty.slice                                                                                     loaded active active    system-serial\x2dgetty.slice
+system-systemd\x2drfkill.slice                                                                                   loaded active active    system-systemd\x2drfkill.slice
+system.slice                                                                                                     loaded active active    System Slice
+user-1000.slice                                                                                                  loaded active active    User Slice of kbrazil
+user.slice                                                                                                       loaded active active    User and Session Slice
+dbus.socket                                                                                                      loaded active running   D-Bus System Message Bus Socket
+dm-event.socket                                                                                                  loaded active listening Device-mapper event daemon FIFOs
+lvm2-lvmetad.socket                                                                                              loaded active running   LVM2 metadata daemon socket
+lvm2-lvmpolld.socket                                                                                             loaded active listening LVM2 poll daemon socket
+systemd-initctl.socket                                                                                           loaded active listening /dev/initctl Compatibility Named Pipe
+systemd-journald.socket                                                                                          loaded active running   Journal Socket
+systemd-shutdownd.socket                                                                                         loaded active listening Delayed Shutdown Socket
+systemd-udevd-control.socket                                                                                     loaded active running   udev Control Socket
+systemd-udevd-kernel.socket                                                                                      loaded active running   udev Kernel Socket
+dev-mapper-centos\x2dswap.swap                                                                                   loaded active active    /dev/mapper/centos-swap
+basic.target                                                                                                     loaded active active    Basic System
+bluetooth.target                                                                                                 loaded active active    Bluetooth
+cryptsetup.target                                                                                                loaded active active    Local Encrypted Volumes
+getty.target                                                                                                     loaded active active    Login Prompts
+local-fs-pre.target                                                                                              loaded active active    Local File Systems (Pre)
+local-fs.target                                                                                                  loaded active active    Local File Systems
+multi-user.target                                                                                                loaded active active    Multi-User System
+network-online.target                                                                                            loaded active active    Network is Online
+network-pre.target                                                                                               loaded active active    Network (Pre)
+network.target                                                                                                   loaded active active    Network
+paths.target                                                                                                     loaded active active    Paths
+remote-fs.target                                                                                                 loaded active active    Remote File Systems
+slices.target                                                                                                    loaded active active    Slices
+sockets.target                                                                                                   loaded active active    Sockets
+swap.target                                                                                                      loaded active active    Swap
+sysinit.target                                                                                                   loaded active active    System Initialization
+timers.target                                                                                                    loaded active active    Timers
+docker-cleanup.timer                                                                                             loaded active waiting   Run docker-cleanup every hour
+systemd-tmpfiles-clean.timer                                                                                     loaded active waiting   Daily Cleanup of Temporary Directories
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+110 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use 'systemctl list-unit-files'.
