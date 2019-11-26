@@ -17,6 +17,7 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
   "date": "Aug 14 19:41"
 }
 ```
+For more information on the motivations for this project, please see my blog post at https://kellyjonbrazil.home.blog/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/.
 
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary instead of JSON:
 ```
