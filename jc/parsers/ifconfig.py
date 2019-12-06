@@ -197,7 +197,7 @@ def process(proc_data):
                 except (ValueError, TypeError):
                     entry[key] = None
 
-        # convert OSX-style subnet mask to decimal
+        # convert OSX-style subnet mask to dotted quad
         if 'ipv4_mask' in entry:
             try:
                 if entry['ipv4_mask'].find('0x') == 0:
