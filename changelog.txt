@@ -2,6 +2,7 @@ jc changelog
 
 2019xxxx v1.6.1
 - Add OSX support for the ifconfig parser
+- Add OSX support for the arp parser
 - Updated ifconfig parser to output state as an array
 
 20191117 v1.5.1
