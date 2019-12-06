@@ -1456,6 +1456,8 @@ $ cat lsof.out | jc --lsof -q
 Tested on:
 - Centos 7.7
 - Ubuntu 18.4
+- OSX 10.11.6
+- OSX 10.14.6
 
 ## Acknowledgments
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
