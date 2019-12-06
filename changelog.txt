@@ -2,7 +2,7 @@ jc changelog
 
 2019xxxx v1.6.1
 - Add OSX support for the ifconfig parser
-- Updated ifconfig parser to output flags as an array
+- Updated ifconfig parser to output state as an array
 
 20191117 v1.5.1
 - Add ss parser

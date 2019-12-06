@@ -12,24 +12,29 @@ Examples:
       {
         "name": "ens33",
         "flags": 4163,
-        "state": "UP,BROADCAST,RUNNING,MULTICAST",
+        "state": [
+          "UP",
+          "BROADCAST",
+          "RUNNING",
+          "MULTICAST"
+        ],
         "mtu": 1500,
-        "ipv4_addr": "192.168.71.138",
+        "ipv4_addr": "192.168.71.137",
         "ipv4_mask": "255.255.255.0",
         "ipv4_bcast": "192.168.71.255",
         "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
         "ipv6_mask": 64,
-        "ipv6_scope": "link",
+        "ipv6_scope": "0x20",
         "mac_addr": "00:0c:29:3b:58:0e",
         "type": "Ethernet",
-        "rx_packets": 6374,
-        "rx_bytes": 38310,
+        "rx_packets": 8061,
+        "rx_bytes": 1514413,
         "rx_errors": 0,
         "rx_dropped": 0,
         "rx_overruns": 0,
         "rx_frame": 0,
-        "tx_packets": 3707,
-        "tx_bytes": 13909,
+        "tx_packets": 4502,
+        "tx_bytes": 866622,
         "tx_errors": 0,
         "tx_dropped": 0,
         "tx_overruns": 0,
@@ -40,24 +45,28 @@ Examples:
       {
         "name": "lo",
         "flags": 73,
-        "state": "UP,LOOPBACK,RUNNING",
+        "state": [
+          "UP",
+          "LOOPBACK",
+          "RUNNING"
+        ],
         "mtu": 65536,
         "ipv4_addr": "127.0.0.1",
         "ipv4_mask": "255.0.0.0",
         "ipv4_bcast": null,
         "ipv6_addr": "::1",
         "ipv6_mask": 128,
-        "ipv6_scope": "host",
+        "ipv6_scope": "0x10",
         "mac_addr": null,
         "type": "Local Loopback",
-        "rx_packets": 81,
-        "rx_bytes": 310,
+        "rx_packets": 73,
+        "rx_bytes": 6009,
         "rx_errors": 0,
         "rx_dropped": 0,
         "rx_overruns": 0,
         "rx_frame": 0,
-        "tx_packets": 81,
-        "tx_bytes": 909,
+        "tx_packets": 73,
+        "tx_bytes": 6009,
         "tx_errors": 0,
         "tx_dropped": 0,
         "tx_overruns": 0,
@@ -74,22 +83,22 @@ Examples:
         "flags": "4163",
         "state": "UP,BROADCAST,RUNNING,MULTICAST",
         "mtu": "1500",
-        "ipv4_addr": "192.168.71.135",
+        "ipv4_addr": "192.168.71.137",
         "ipv4_mask": "255.255.255.0",
         "ipv4_bcast": "192.168.71.255",
         "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
         "ipv6_mask": "64",
-        "ipv6_scope": "link",
+        "ipv6_scope": "0x20",
         "mac_addr": "00:0c:29:3b:58:0e",
         "type": "Ethernet",
-        "rx_packets": "26348",
-        "rx_bytes": "38310",
+        "rx_packets": "8061",
+        "rx_bytes": "1514413",
         "rx_errors": "0",
         "rx_dropped": "0",
         "rx_overruns": "0",
         "rx_frame": "0",
-        "tx_packets": "5308",
-        "tx_bytes": "13909",
+        "tx_packets": "4502",
+        "tx_bytes": "866622",
         "tx_errors": "0",
         "tx_dropped": "0",
         "tx_overruns": "0",
@@ -107,17 +116,17 @@ Examples:
         "ipv4_bcast": null,
         "ipv6_addr": "::1",
         "ipv6_mask": "128",
-        "ipv6_scope": "host",
+        "ipv6_scope": "0x10",
         "mac_addr": null,
         "type": "Local Loopback",
-        "rx_packets": "64",
-        "rx_bytes": "310",
+        "rx_packets": "73",
+        "rx_bytes": "6009",
         "rx_errors": "0",
         "rx_dropped": "0",
         "rx_overruns": "0",
         "rx_frame": "0",
-        "tx_packets": "64",
-        "tx_bytes": "909",
+        "tx_packets": "73",
+        "tx_bytes": "6009",
         "tx_errors": "0",
         "tx_dropped": "0",
         "tx_overruns": "0",
@@ -147,7 +156,9 @@ def process(proc_data):
           {
             "name":             string,
             "flags":            integer,
-            "state":            string,
+            "state": [
+                                string
+            ],
             "mtu":              integer,
             "ipv4_addr":        string,
             "ipv4_mask":        string,
@@ -185,6 +196,25 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError, TypeError):
                     entry[key] = None
+
+        # convert OSX-style subnet mask to decimal
+        if 'ipv4_mask' in entry:
+            try:
+                if entry['ipv4_mask'].find('0x') == 0:
+                    new_mask = entry['ipv4_mask']
+                    new_mask = new_mask.lstrip('0x')
+                    new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
+                    entry['ipv4_mask'] = new_mask
+            except (ValueError, TypeError, AttributeError):
+                pass
+
+        # convert state value to an array
+        if 'state' in entry:
+            try:
+                new_state = entry['state'].split(',')
+                entry['state'] = new_state
+            except (ValueError, TypeError, AttributeError):
+                pass
 
     return proc_data
 
