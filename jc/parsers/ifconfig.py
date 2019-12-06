@@ -23,11 +23,13 @@ Examples:
         "mac_addr": "00:0c:29:3b:58:0e",
         "type": "Ethernet",
         "rx_packets": 6374,
+        "rx_bytes": 38310,
         "rx_errors": 0,
         "rx_dropped": 0,
         "rx_overruns": 0,
         "rx_frame": 0,
         "tx_packets": 3707,
+        "tx_bytes": 13909,
         "tx_errors": 0,
         "tx_dropped": 0,
         "tx_overruns": 0,
@@ -49,11 +51,13 @@ Examples:
         "mac_addr": null,
         "type": "Local Loopback",
         "rx_packets": 81,
+        "rx_bytes": 310,
         "rx_errors": 0,
         "rx_dropped": 0,
         "rx_overruns": 0,
         "rx_frame": 0,
         "tx_packets": 81,
+        "tx_bytes": 909,
         "tx_errors": 0,
         "tx_dropped": 0,
         "tx_overruns": 0,
@@ -79,11 +83,13 @@ Examples:
         "mac_addr": "00:0c:29:3b:58:0e",
         "type": "Ethernet",
         "rx_packets": "26348",
+        "rx_bytes": "38310",
         "rx_errors": "0",
         "rx_dropped": "0",
         "rx_overruns": "0",
         "rx_frame": "0",
         "tx_packets": "5308",
+        "tx_bytes": "13909",
         "tx_errors": "0",
         "tx_dropped": "0",
         "tx_overruns": "0",
@@ -105,11 +111,13 @@ Examples:
         "mac_addr": null,
         "type": "Local Loopback",
         "rx_packets": "64",
+        "rx_bytes": "310",
         "rx_errors": "0",
         "rx_dropped": "0",
         "rx_overruns": "0",
         "rx_frame": "0",
         "tx_packets": "64",
+        "tx_bytes": "909",
         "tx_errors": "0",
         "tx_dropped": "0",
         "tx_overruns": "0",
@@ -134,7 +142,7 @@ def process(proc_data):
     Returns:
 
         dictionary   structured data with the following schema:
-    
+
         [
           {
             "name":             string,
@@ -150,11 +158,13 @@ def process(proc_data):
             "mac_addr":         string,
             "type":             string,
             "rx_packets":       integer,
+            "rx_bytes":         integer,
             "rx_errors":        integer,
             "rx_dropped":       integer,
             "rx_overruns":      integer,
             "rx_frame":         integer,
             "tx_packets":       integer,
+            "tx_bytes":         integer,
             "tx_errors":        integer,
             "tx_dropped":       integer,
             "tx_overruns":      integer,
@@ -165,8 +175,8 @@ def process(proc_data):
         ]
     """
     for entry in proc_data:
-        int_list = ['flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_errors', 'rx_dropped', 'rx_overruns',
-                    'rx_frame', 'tx_packets', 'tx_errors', 'tx_dropped', 'tx_overruns', 'tx_carrier',
+        int_list = ['flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped', 'rx_overruns',
+                    'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped', 'tx_overruns', 'tx_carrier',
                     'tx_collisions', 'metric']
         for key in int_list:
             if key in entry:
@@ -184,7 +194,7 @@ def parse(data, raw=False, quiet=False):
     Main text parsing function
 
     Parameters:
-        
+
         data:        (string)  text data to parse
         raw:         (boolean) output preprocessed JSON if True
         quiet:       (boolean) suppress warning messages if True
@@ -193,9 +203,9 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-    
+
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
+    compatible = ['linux', 'aix', 'freebsd', 'darwin']
 
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
