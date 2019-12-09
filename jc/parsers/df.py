@@ -64,6 +64,7 @@ Examples:
     ]
 """
 import jc.utils
+import jc.parsers.universal
 
 
 def process(proc_data):
@@ -80,32 +81,49 @@ def process(proc_data):
 
         [
           {
-            "filesystem":   string,
-            "size":         string,
-            "1k-blocks":    integer,
-            "used":         integer,
-            "available":    integer,
-            "use_percent":  integer,
-            "mounted_on":   string
+            "filesystem":        string,
+            "size":              string,
+            "1k_blocks":         integer,
+            "512_blocks":        integer,
+            "used":              integer,
+            "available":         integer,
+            "capacity_percent":  integer, #
+            "ifree":             integer, #
+            "iused":             integer, #
+            "use_percent":       integer,
+            "iused_percent":     integer, #
+            "mounted_on":        string
           }
         ]
     """
+
+    # TODO change 'avail' to 'available'
+    # TODO change 'use%' to 'use_percent'
+    # TODO change 'capacity' to 'capacity_percent'
+    # TODO change '%iused' to 'iused_percent'
+
     for entry in proc_data:
-        # change any entry for key with '-blocks' in the name to int
+        # change any entry for key with '_blocks' in the name to int
         for k in entry:
-            if str(k).find('-blocks') != -1:
+            if str(k).find('_blocks') != -1:
                 try:
                     blocks_int = int(entry[k])
                     entry[k] = blocks_int
                 except (ValueError):
                     entry[k] = None
 
-        # remove percent sign from 'use_percent'
+        # remove percent sign from 'use_percent', 'capacity_percent', and 'iused_percent'
         if 'use_percent' in entry:
             entry['use_percent'] = entry['use_percent'].rstrip('%')
 
-        # change used, available, and use_percent to int
-        int_list = ['used', 'available', 'use_percent']
+        if 'capacity_percent' in entry:
+            entry['capacity_percent'] = entry['capacity_percent'].rstrip('%')
+
+        if 'iused_percent' in entry:
+            entry['iused_percent'] = entry['iused_percent'].rstrip('%')
+
+        # change used, available, use_percent, capacity_percent, ifree, iused, iused_percent to int
+        int_list = ['used', 'available', 'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent']
         for key in int_list:
             if key in entry:
                 try:
@@ -133,19 +151,20 @@ def parse(data, raw=False, quiet=False):
     """
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
+    compatible = ['linux', 'darwin']
 
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
 
     cleandata = data.splitlines()
-    fix_headers = cleandata[0].lower().replace('avail ', 'available ')
-    fix_headers = fix_headers.replace('use%', 'use_percent')
-    fix_headers = fix_headers.replace('mounted on', 'mounted_on')
-    headers = [h for h in ' '.join(fix_headers.strip().split()).split() if h]
 
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
+    # fix headers
+    cleandata[0] = cleandata[0].lower()
+    cleandata[0] = cleandata[0].replace('-', '_')
+    cleandata[0] = cleandata[0].replace('mounted on', 'mounted_on')
+
+    # parse the data
+    raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
 
     if raw:
         return raw_output
