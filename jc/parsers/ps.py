@@ -7,6 +7,9 @@ Usage:
     - ef
     - axu
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+
 Examples:
 
     $ ps -ef | jc --ps -p

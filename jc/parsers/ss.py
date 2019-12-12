@@ -6,6 +6,9 @@ Usage:
 Limitations:
     Extended information options like -e and -p are not supported and may cause parsing irregularities
 
+Compatibility:
+    'linux'
+
 Examples:
 
       $ sudo ss -a | jc --ss -p

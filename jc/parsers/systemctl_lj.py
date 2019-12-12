@@ -3,6 +3,9 @@
 Usage:
     specify --systemctl-lj as the first argument if the piped input is coming from systemctl list-jobs
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ systemctl list-jobs| jc --systemctl-lj -p

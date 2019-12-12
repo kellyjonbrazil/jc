@@ -6,6 +6,9 @@ Usage:
 Limitations:
     must use 'uname -a'
 
+Compatibility:
+    'linux'
+
 Example:
 
     $ uname -a | jc --uname -p

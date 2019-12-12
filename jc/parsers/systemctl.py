@@ -3,6 +3,9 @@
 Usage:
     specify --systemctl as the first argument if the piped input is coming from systemctl
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ systemctl -a | jc --systemctl -p

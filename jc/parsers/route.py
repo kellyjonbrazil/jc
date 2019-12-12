@@ -3,6 +3,9 @@
 Usage:
     specify --route as the first argument if the piped input is coming from route
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ route -ee | jc --route -p
@@ -151,7 +154,7 @@ def parse(data, raw=False, quiet=False):
     """
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
+    compatible = ['linux']
 
     if not quiet:
         jc.utils.compatibility(__name__, compatible)

@@ -4,6 +4,9 @@ jc - JSON CLI output utility route Parser
 Usage:
     specify --route as the first argument if the piped input is coming from route
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ route -ee | jc --route -p

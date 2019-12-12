@@ -3,6 +3,9 @@
 Usage:
     specify --uptime as the first argument if the piped input is coming from uptime
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+
 Example:
 
     $ uptime | jc --uptime -p
