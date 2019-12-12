@@ -66,7 +66,7 @@ def process(proc_data):
     Returns:
 
         dictionary   structured data with the following schema:
-    
+
         [
           {
             "filesystem":   string,
