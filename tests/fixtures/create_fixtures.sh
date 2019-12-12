@@ -64,3 +64,5 @@ systemctl -a > systemctl.out
 systemctl -a list-unit-files > systemctl-luf.out
 systemctl -a list-sockets > systemctl-ls.out
 systemctl -a list-jobs > systemctl-jobs.out
+
+du /usr > du.out
