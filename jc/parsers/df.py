@@ -97,12 +97,23 @@ def process(proc_data):
         ]
     """
 
-    # TODO change 'avail' to 'available'
-    # TODO change 'use%' to 'use_percent'
-    # TODO change 'capacity' to 'capacity_percent'
-    # TODO change '%iused' to 'iused_percent'
-
     for entry in proc_data:
+        # change 'avail' to 'available'
+        if 'avail' in entry:
+            entry['available'] = entry.pop('avail')
+
+        # change 'use%' to 'use_percent'
+        if 'use%' in entry:
+            entry['use_percent'] = entry.pop('use%')
+
+        # change 'capacity' to 'capacity_percent'
+        if 'capacity' in entry:
+            entry['capacity_percent'] = entry.pop('capacity')
+
+        # change '%iused' to 'iused_percent'
+        if '%iused' in entry:
+            entry['iused_percent'] = entry.pop('%iused')
+
         # change any entry for key with '_blocks' in the name to int
         for k in entry:
             if str(k).find('_blocks') != -1:

@@ -10,7 +10,7 @@ def sparse_table_parse(data, delim='\u2063'):
 
     Parameters:
 
-        data:        (list)  Text data to parse that has been split into lines via .splitlines().
+        data:       (list)   Text data to parse that has been split into lines via .splitlines().
                              Item 0 must be the header row. Any spaces in header names should be
                              changed to underscore '_'. You should also ensure headers are
                              lowercase by using .lower(). Do not change the position of header
