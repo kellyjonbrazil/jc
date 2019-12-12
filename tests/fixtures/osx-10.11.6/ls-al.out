@@ -1,29 +1,32 @@
-total 37
-drwxr-xr-x   28 root  wheel   896 Nov 18 18:16 .
-drwxr-xr-x   28 root  wheel   896 Nov 18 18:16 ..
--rw-rw-r--    1 root  admin  6148 Dec  2 13:27 .DS_Store
-d--x--x--x    9 root  wheel   288 Nov 22 14:30 .DocumentRevisions-V100
--rw-r--r--    1 root  wheel   591 Nov 18 18:16 .OSInstallerMessages
-drwxr-xr-x@   2 root  wheel    64 Dec 11 09:06 .PKInstallSandboxManager-SystemSoftware
-drwx------    5 root  wheel   160 Nov 18 17:45 .Spotlight-V100
-----------    1 root  admin     0 Feb 25  2019 .file
-drwx------  172 root  wheel  5504 Dec 11 17:13 .fseventsd
-drwxr-xr-x    2 root  wheel    64 Feb 25  2019 .vol
-drwxrwxr-x+  43 root  admin  1376 Dec  2 13:27 Applications
-drwxr-xr-x+  62 root  wheel  1984 Nov 22 14:33 Library
-drwxr-xr-x    2 root  wheel    64 Feb 25  2019 Network
-drwxr-xr-x@   5 root  wheel   160 Sep 20 18:36 System
-drwxr-xr-x    5 root  admin   160 Nov 18 17:48 Users
-drwxr-xr-x+   4 root  wheel   128 Dec 11 09:06 Volumes
-drwxr-xr-x@  37 root  wheel  1184 Nov 18 18:15 bin
-drwxrwxr-t    2 root  admin    64 Feb 25  2019 cores
-dr-xr-xr-x    3 root  wheel  4392 Nov 22 14:30 dev
-lrwxr-xr-x@   1 root  wheel    11 Nov 18 17:40 etc -> private/etc
-dr-xr-xr-x    2 root  wheel     1 Nov 22 15:21 home
--rw-r--r--    1 root  wheel   313 May 30  2019 installer.failurerequests
-dr-xr-xr-x    2 root  wheel     1 Nov 22 15:21 net
-drwxr-xr-x    6 root  wheel   192 Sep 20 18:37 private
-drwxr-xr-x@  64 root  wheel  2048 Nov 18 18:15 sbin
-lrwxr-xr-x@   1 root  wheel    11 Nov 18 17:40 tmp -> private/tmp
-drwxr-xr-x@   9 root  wheel   288 Sep 20 18:32 usr
-lrwxr-xr-x@   1 root  wheel    11 Nov 18 17:40 var -> private/var
+total 69
+drwxr-xr-x  33 root   wheel  1190 Oct  2 10:55 .
+drwxr-xr-x  33 root   wheel  1190 Oct  2 10:55 ..
+-rw-rw-r--   1 root   admin  6148 Nov  8  2018 .DS_Store
+d--x--x--x   9 root   wheel   306 Dec  2 22:46 .DocumentRevisions-V100
+drwxr-xr-x+  3 root   wheel   102 Oct  2 10:56 .MobileBackups
+drwx------   5 root   wheel   170 Jul  8  2011 .Spotlight-V100
+d-wx-wx-wt   2 root   wheel    68 Nov 10  2014 .Trashes
+----------   1 root   admin     0 Feb 25  2016 .file
+drwx------   6 root   wheel   204 Dec 12 11:10 .fseventsd
+drwxr-xr-x@  2 root   wheel    68 Apr 19  2016 .vol
+drwxrwxr-x+ 70 root   admin  2380 Dec 12 11:09 Applications
+drwxr-xr-x+ 64 root   wheel  2176 Jun  7  2018 Library
+drwxr-xr-x@  2 root   wheel    68 Apr 19  2016 Network
+drwxr-xr-x@  4 root   wheel   136 Jul 18  2018 System
+lrwxr-xr-x   1 root   wheel    60 Jan 25  2012 User Guides And Information -> /Library/Documentation/User Guides and Information.localized
+drwxr-xr-x   5 root   admin   170 Apr 19  2016 Users
+drwxrwxrwt@  5 root   admin   170 Dec 12 11:00 Volumes
+drwxr-xr-x@ 39 root   wheel  1326 Jul 18  2018 bin
+drwxrwxr-t@  2 root   admin    68 Apr 19  2016 cores
+dr-xr-xr-x   3 root   wheel  4183 Dec  2 22:45 dev
+lrwxr-xr-x@  1 root   wheel    11 Apr 19  2016 etc -> private/etc
+dr-xr-xr-x   2 root   wheel     1 Dec  2 22:45 home
+-rw-r--r--@  1 root   wheel   313 Aug  2  2015 installer.failurerequests
+drwxrwxrwt@  3 root   wheel   102 Jul 29  2017 lost+found
+dr-xr-xr-x   2 root   wheel     1 Dec  2 22:45 net
+drwxr-xr-x@  6 root   wheel   204 Apr 19  2016 private
+drwxr-xr-x   3 kelly  wheel   102 Aug  4  2012 recover
+drwxr-xr-x@ 59 root   wheel  2006 Jul 18  2018 sbin
+lrwxr-xr-x@  1 root   wheel    11 Apr 19  2016 tmp -> private/tmp
+drwxr-xr-x@ 13 root   wheel   442 Jun  7  2018 usr
+lrwxr-xr-x@  1 root   wheel    11 Apr 19  2016 var -> private/var
