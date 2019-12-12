@@ -1,0 +1,7 @@
+Filesystem                                               Size   Used  Avail Capacity   iused               ifree %iused  Mounted on
+/dev/disk1s1                                            466Gi  137Gi  326Gi    30%    674413 9223372036854101394    0%   /
+devfs                                                   188Ki  188Ki    0Bi   100%       650                   0  100%   /dev
+/dev/disk1s4                                            466Gi  2.0Gi  326Gi     1%         2 9223372036854775805    0%   /private/var/vm
+map -hosts                                                0Bi    0Bi    0Bi   100%         0                   0  100%   /net
+map auto_home                                             0Bi    0Bi    0Bi   100%         0                   0  100%   /home
+//brazil@MyCloudEX2Ultra._afpovertcp._tcp.local/brazil  3.5Ti  1.1Ti  2.4Ti    32% 301134832           649465741   32%   /Volumes/brazil

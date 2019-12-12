@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.10.6 <<>> -x 1.1.1.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 27071
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;1.1.1.1.in-addr.arpa.		IN	PTR
+
+;; ANSWER SECTION:
+1.1.1.1.in-addr.arpa.	1800	IN	PTR	one.one.one.one.
+
+;; Query time: 39 msec
+;; SERVER: 2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)
+;; WHEN: Wed Dec 11 16:54:51 PST 2019
+;; MSG SIZE  rcvd: 78
+
