@@ -3,6 +3,9 @@
 Usage:
     specify --foo as the first argument if the piped input is coming from foo
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+
 Examples:
 
     $ foo | jc --foo -p

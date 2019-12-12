@@ -4,6 +4,9 @@ jc - JSON CLI output utility lsblk Parser
 Usage:
     specify --lsblk as the first argument if the piped input is coming from lsblk
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ lsblk | jc --lsblk -p

@@ -3,6 +3,9 @@
 Usage:
     specify --fstab as the first argument if the piped input is coming from a fstab file
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ cat /etc/fstab | jc --fstab -p

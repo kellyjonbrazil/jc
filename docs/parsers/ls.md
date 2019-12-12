@@ -11,6 +11,9 @@ Usage:
           with human readable suffixes will be converted to Null in default view
           since the parser attempts to convert this field to an integer.
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+
 Examples:
 
     $ ls /usr/bin | jc --ls -p

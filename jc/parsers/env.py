@@ -3,6 +3,9 @@
 Usage:
     specify --env as the first argument if the piped input is coming from env
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+
 Examples:
 
     $ env | jc --env -p

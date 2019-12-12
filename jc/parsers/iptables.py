@@ -5,6 +5,9 @@ Usage:
 
     Supports -vLn and --line-numbers for all tables
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p
@@ -139,7 +142,7 @@ def process(proc_data):
     Returns:
 
         dictionary   structured data with the following schema:
-    
+
         [
           {
             "chain":                string,

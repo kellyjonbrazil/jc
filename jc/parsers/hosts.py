@@ -3,6 +3,9 @@
 Usage:
     specify --hosts as the first argument if the piped input is coming from a hosts file
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+
 Examples:
 
     $ cat /etc/hosts | jc --hosts -p

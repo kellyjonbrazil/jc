@@ -4,6 +4,9 @@ jc - JSON CLI output utility lsof Parser
 Usage:
     specify --lsof as the first argument if the piped input is coming from lsof
 
+Compatibility:
+    'linux'
+
 Examples:
 
     $ sudo lsof | jc --lsof -p

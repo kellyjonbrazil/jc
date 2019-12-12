@@ -3,6 +3,9 @@
 Usage:
     specify --history as the first argument if the piped input is coming from history
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+
 Examples:
 
     $ history | jc --history -p

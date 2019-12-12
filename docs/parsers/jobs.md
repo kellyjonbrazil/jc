@@ -6,6 +6,9 @@ Usage:
 
     Also supports the -l option
 
+Compatibility:
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+
 Example:
 
     $ jobs -l | jc --jobs -p

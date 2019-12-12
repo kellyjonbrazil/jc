@@ -6,6 +6,9 @@ Usage:
 
     no ifconfig options are supported.
 
+Compatibility:
+    'linux', 'aix', 'freebsd', 'darwin'
+
 Examples:
 
     $ ifconfig | jc --ifconfig -p
