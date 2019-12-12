@@ -8,6 +8,9 @@ def simple_table_parse(data):
     """
     Parse simple tables. The last column may contain data with spaces
 
+    code adapted from Conor Heine at:
+    https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+
     Parameters:
 
         data:       (list)   Text data to parse that has been split into lines via .splitlines().
