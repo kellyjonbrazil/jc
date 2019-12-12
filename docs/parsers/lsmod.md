@@ -2,9 +2,11 @@
 jc - JSON CLI output utility lsmod Parser
 
 Usage:
+
     specify --lsmod as the first argument if the piped input is coming from lsmod
 
 Compatibility:
+
     'linux'
 
 Examples:

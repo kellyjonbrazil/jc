@@ -2,12 +2,15 @@
 jc - JSON CLI output utility uname Parser
 
 Usage:
+
     specify --uname as the first argument if the piped input is coming from uname
 
 Limitations:
+
     must use 'uname -a'
 
 Compatibility:
+
     'linux'
 
 Example:

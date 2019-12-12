@@ -2,12 +2,15 @@
 jc - JSON CLI output utility ss Parser
 
 Usage:
+
     specify --ss as the first argument if the piped input is coming from ss
 
 Limitations:
+
     Extended information options like -e and -p are not supported and may cause parsing irregularities
 
 Compatibility:
+
     'linux'
 
 Examples:

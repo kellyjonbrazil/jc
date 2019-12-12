@@ -1,9 +1,11 @@
 """jc - JSON CLI output utility stats Parser
 
 Usage:
+
     specify --stat as the first argument if the piped input is coming from stat
 
 Compatibility:
+
     'linux'
 
 Examples:

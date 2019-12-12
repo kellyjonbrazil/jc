@@ -2,9 +2,11 @@
 jc - JSON CLI output utility w Parser
 
 Usage:
+
     specify --w as the first argument if the piped input is coming from w
 
 Compatibility:
+
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:

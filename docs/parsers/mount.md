@@ -2,9 +2,11 @@
 jc - JSON CLI output utility mount Parser
 
 Usage:
+
     specify --mount as the first argument if the piped input is coming from mount
 
 Compatibility:
+
     'linux'
 
 Example:

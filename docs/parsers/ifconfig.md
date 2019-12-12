@@ -2,11 +2,13 @@
 jc - JSON CLI output utility ifconfig Parser
 
 Usage:
+
     specify --ifconfig as the first argument if the piped input is coming from ifconfig
 
     no ifconfig options are supported.
 
 Compatibility:
+
     'linux', 'aix', 'freebsd', 'darwin'
 
 Examples:

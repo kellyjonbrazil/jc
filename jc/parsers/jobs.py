@@ -1,11 +1,13 @@
 """jc - JSON CLI output utility jobs Parser
 
 Usage:
+
     specify --jobs as the first argument if the piped input is coming from jobs
 
     Also supports the -l option
 
 Compatibility:
+
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Example:

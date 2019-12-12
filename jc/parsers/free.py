@@ -1,9 +1,11 @@
 """jc - JSON CLI output utility free Parser
 
 Usage:
+
     specify --free as the first argument if the piped input is coming from free
 
 Compatibility:
+
     'linux'
 
 Examples:

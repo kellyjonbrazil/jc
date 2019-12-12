@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility ps Parser
 
 Usage:
+
     specify --ps as the first argument if the piped input is coming from ps
 
     ps options supported:
@@ -8,6 +9,7 @@ Usage:
     - axu
 
 Compatibility:
+
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:

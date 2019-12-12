@@ -2,9 +2,11 @@
 jc - JSON CLI output utility dig Parser
 
 Usage:
+
     Specify --dig as the first argument if the piped input is coming from dig
 
 Compatibility:
+
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
 
 Examples:

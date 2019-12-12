@@ -1,9 +1,11 @@
 """jc - JSON CLI output utility netstat Parser
 
 Usage:
+
     Specify --netstat as the first argument if the piped input is coming from netstat
 
 Compatibility:
+
     'linux'
 
 Examples:

@@ -2,9 +2,11 @@
 jc - JSON CLI output utility systemctl-luf Parser
 
 Usage:
+
     specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-unit-files
 
 Compatibility:
+
     'linux'
 
 Examples:
