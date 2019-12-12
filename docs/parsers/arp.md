@@ -2,9 +2,11 @@
 jc - JSON CLI output utility arp Parser
 
 Usage:
+
     specify --arp as the first argument if the piped input is coming from arp
 
 Compatibility:
+
     'linux', 'aix', 'freebsd', 'darwin'
 
 Examples:
