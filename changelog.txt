@@ -6,6 +6,7 @@ jc changelog
 - Add OSX support for the df parser
 - Add tests for ls on OSX
 - Add tests for dig on OSX
+- Add tests for ps on OSX
 - Add universal parsers to refactor repetitive code
 - Updated ifconfig parser to output state as an array
 
