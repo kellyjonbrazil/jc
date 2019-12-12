@@ -161,7 +161,7 @@ $ df | jc --df -p
 [
   {
     "filesystem": "devtmpfs",
-    "1k-blocks": 1918816,
+    "1k_blocks": 1918816,
     "used": 0,
     "available": 1918816,
     "use_percent": 0,
@@ -169,7 +169,7 @@ $ df | jc --df -p
   },
   {
     "filesystem": "tmpfs",
-    "1k-blocks": 1930664,
+    "1k_blocks": 1930664,
     "used": 0,
     "available": 1930664,
     "use_percent": 0,

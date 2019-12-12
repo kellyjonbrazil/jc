@@ -9,7 +9,7 @@ Examples:
     [
       {
         "filesystem": "devtmpfs",
-        "1k-blocks": 1918820,
+        "1k_blocks": 1918820,
         "used": 0,
         "available": 1918820,
         "use_percent": 0,
@@ -17,7 +17,7 @@ Examples:
       },
       {
         "filesystem": "tmpfs",
-        "1k-blocks": 1930668,
+        "1k_blocks": 1930668,
         "used": 0,
         "available": 1930668,
         "use_percent": 0,
@@ -25,7 +25,7 @@ Examples:
       },
       {
         "filesystem": "tmpfs",
-        "1k-blocks": 1930668,
+        "1k_blocks": 1930668,
         "used": 11800,
         "available": 1918868,
         "use_percent": 1,
@@ -38,7 +38,7 @@ Examples:
     [
       {
         "filesystem": "devtmpfs",
-        "1k-blocks": "1918820",
+        "1k_blocks": "1918820",
         "used": "0",
         "available": "1918820",
         "use_percent": "0%",
@@ -46,7 +46,7 @@ Examples:
       },
       {
         "filesystem": "tmpfs",
-        "1k-blocks": "1930668",
+        "1k_blocks": "1930668",
         "used": "0",
         "available": "1930668",
         "use_percent": "0%",
@@ -54,7 +54,7 @@ Examples:
       },
       {
         "filesystem": "tmpfs",
-        "1k-blocks": "1930668",
+        "1k_blocks": "1930668",
         "used": "11800",
         "available": "1918868",
         "use_percent": "1%",
@@ -87,11 +87,11 @@ def process(proc_data):
             "512_blocks":        integer,
             "used":              integer,
             "available":         integer,
-            "capacity_percent":  integer, #
-            "ifree":             integer, #
-            "iused":             integer, #
+            "capacity_percent":  integer,
+            "ifree":             integer,
+            "iused":             integer,
             "use_percent":       integer,
-            "iused_percent":     integer, #
+            "iused_percent":     integer,
             "mounted_on":        string
           }
         ]
