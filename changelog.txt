@@ -4,6 +4,7 @@ jc changelog
 - Add OSX support for the ifconfig parser
 - Add OSX support for the arp parser
 - Add OSX support for the df parser
+- Add universal parsers to refactor repetitive code
 - Updated ifconfig parser to output state as an array
 
 20191117 v1.5.1

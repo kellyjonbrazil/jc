@@ -81,6 +81,7 @@ Examples:
     ]
 """
 import jc.utils
+import jc.parsers.universal
 
 
 def process(proc_data):
@@ -168,10 +169,9 @@ def parse(data, raw=False, quiet=False):
 
         # fix header row to change Flags Mask to flags_mask
         cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
+        cleandata[0] = cleandata[0].lower()
 
-        headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-        raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-        raw_output = [dict(zip(headers, r)) for r in raw_data]
+        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
         if raw:
             return raw_output
