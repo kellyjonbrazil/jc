@@ -92,8 +92,8 @@ Examples:
       ...
     ]
 """
-import string
 import jc.utils
+import jc.parsers.universal
 
 
 def process(proc_data):
@@ -165,7 +165,12 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, linedata))
 
     if cleandata:
+        cleandata[0] = cleandata[0].lower()
+        cleandata[0] = cleandata[0].replace('/', '_')
 
+        raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+
+        '''
         # find column value of last character of each header
         header_text = cleandata.pop(0).lower()
 
@@ -204,6 +209,7 @@ def parse(data, raw=False, quiet=False):
 
             output_line = dict(zip(headers, fixed_line))
             raw_output.append(output_line)
+        '''
 
     if raw:
         return raw_output
