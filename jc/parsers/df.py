@@ -3,6 +3,9 @@
 Usage:
     specify --df as the first argument if the piped input is coming from df
 
+Compatibility:
+    'linux', 'darwin'
+
 Examples:
 
     $ df | jc --df -p
