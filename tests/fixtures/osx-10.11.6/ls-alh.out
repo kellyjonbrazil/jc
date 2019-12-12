@@ -1,0 +1,29 @@
+total 37
+drwxr-xr-x   28 root  wheel   896B Nov 18 18:16 .
+drwxr-xr-x   28 root  wheel   896B Nov 18 18:16 ..
+-rw-rw-r--    1 root  admin   6.0K Dec  2 13:27 .DS_Store
+d--x--x--x    9 root  wheel   288B Nov 22 14:30 .DocumentRevisions-V100
+-rw-r--r--    1 root  wheel   591B Nov 18 18:16 .OSInstallerMessages
+drwxr-xr-x@   2 root  wheel    64B Dec 11 09:06 .PKInstallSandboxManager-SystemSoftware
+drwx------    5 root  wheel   160B Nov 18 17:45 .Spotlight-V100
+----------    1 root  admin     0B Feb 25  2019 .file
+drwx------  172 root  wheel   5.4K Dec 11 17:13 .fseventsd
+drwxr-xr-x    2 root  wheel    64B Feb 25  2019 .vol
+drwxrwxr-x+  43 root  admin   1.3K Dec  2 13:27 Applications
+drwxr-xr-x+  62 root  wheel   1.9K Nov 22 14:33 Library
+drwxr-xr-x    2 root  wheel    64B Feb 25  2019 Network
+drwxr-xr-x@   5 root  wheel   160B Sep 20 18:36 System
+drwxr-xr-x    5 root  admin   160B Nov 18 17:48 Users
+drwxr-xr-x+   4 root  wheel   128B Dec 11 09:06 Volumes
+drwxr-xr-x@  37 root  wheel   1.2K Nov 18 18:15 bin
+drwxrwxr-t    2 root  admin    64B Feb 25  2019 cores
+dr-xr-xr-x    3 root  wheel   4.3K Nov 22 14:30 dev
+lrwxr-xr-x@   1 root  wheel    11B Nov 18 17:40 etc -> private/etc
+dr-xr-xr-x    2 root  wheel     1B Nov 22 15:21 home
+-rw-r--r--    1 root  wheel   313B May 30  2019 installer.failurerequests
+dr-xr-xr-x    2 root  wheel     1B Nov 22 15:21 net
+drwxr-xr-x    6 root  wheel   192B Sep 20 18:37 private
+drwxr-xr-x@  64 root  wheel   2.0K Nov 18 18:15 sbin
+lrwxr-xr-x@   1 root  wheel    11B Nov 18 17:40 tmp -> private/tmp
+drwxr-xr-x@   9 root  wheel   288B Sep 20 18:32 usr
+lrwxr-xr-x@   1 root  wheel    11B Nov 18 17:40 var -> private/var
