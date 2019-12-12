@@ -173,6 +173,7 @@ Examples:
     ]
 """
 import jc.utils
+import jc.parsers.universal
 
 
 def process(proc_data):
@@ -194,7 +195,8 @@ def process(proc_data):
             "ppid":          integer,
             "c":             integer,
             "stime":         string,
-            "tty":           string,    # ? = Null
+            "tty":           string,    # ? or ?? = Null
+            "tt":            string,    # ?? = Null
             "time":          string,
             "cmd":           string,
             "user":          string,
@@ -209,6 +211,14 @@ def process(proc_data):
         ]
     """
     for entry in proc_data:
+        # change key name '%cpu' to 'cpu_percent'
+        if '%cpu' in entry:
+            entry['cpu_percent'] = entry.pop('%cpu')
+
+        # change key name '%mem' to 'mem_percent'
+        if '%mem' in entry:
+            entry['mem_percent'] = entry.pop('%mem')
+
         # change to int
         int_list = ['pid', 'ppid', 'c', 'vsz', 'rss']
         for key in int_list:
@@ -230,8 +240,12 @@ def process(proc_data):
                     entry[key] = None
 
         if 'tty' in entry:
-            if entry['tty'] == '?':
+            if entry['tty'] == '?' or entry['tty'] == '??':
                 entry['tty'] = None
+
+        if 'tt' in entry:
+            if entry['tt'] == '??':
+                entry['tt'] = None
 
     return proc_data
 
@@ -257,19 +271,10 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
 
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
-
     cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
+    cleandata[0] = cleandata[0].lower()
 
-    # clean up '%cpu' and '%mem' headers
-    # even though % in a key is valid json, it can make things difficult
-    headers = ['cpu_percent' if x == '%cpu' else x for x in headers]
-    headers = ['mem_percent' if x == '%mem' else x for x in headers]
-
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
+    raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output
