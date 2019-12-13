@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Example:
 
@@ -82,6 +82,51 @@ def process(proc_data):
     return proc_data
 
 
+def osx_parse(data):
+    output = []
+
+    for entry in data:
+        output_line = {}
+
+        filesystem = entry.split(' on ')
+        filesystem = filesystem[0]
+        output_line['filesystem'] = filesystem
+
+        mount_point = entry.split(' on ')
+        mount_point = mount_point[1].split(' (')
+        mount_point = mount_point[0]
+        output_line['mount_point'] = mount_point
+
+        options = entry.split('(', maxsplit=1)
+        options = options[1].rstrip(')')
+        options = options.split(', ')
+        output_line['options'] = options
+
+        output.append(output_line)
+
+    return output
+
+
+def linux_parse(data):
+    output = []
+
+    for entry in data:
+        output_line = {}
+        parsed_line = entry.split()
+
+        output_line['filesystem'] = parsed_line[0]
+        output_line['mount_point'] = parsed_line[2]
+        output_line['type'] = parsed_line[4]
+
+        options = parsed_line[5].lstrip('(').rstrip(')').split(',')
+
+        output_line['options'] = options
+
+        output.append(output_line)
+
+    return output
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -98,12 +143,10 @@ def parse(data, raw=False, quiet=False):
     """
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
+    compatible = ['linux', 'darwin']
 
     if not quiet:
         jc.utils.compatibility(__name__, compatible)
-
-    raw_output = []
 
     linedata = data.splitlines()
 
@@ -111,19 +154,12 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, linedata))
 
     if cleandata:
-        for entry in cleandata:
-            output_line = {}
-            parsed_line = entry.split()
+        # check for OSX output
+        if cleandata[0].find(' type ') == -1:
+            raw_output = osx_parse(cleandata)
 
-            output_line['filesystem'] = parsed_line[0]
-            output_line['mount_point'] = parsed_line[2]
-            output_line['type'] = parsed_line[4]
-
-            access = parsed_line[5].lstrip('(').rstrip(')').split(',')
-
-            output_line['options'] = access
-
-            raw_output.append(output_line)
+        else:
+            raw_output = linux_parse(cleandata)
 
     if raw:
         return raw_output
