@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility stats Parser
+"""jc - JSON CLI output utility stat Parser
 
 Usage:
 
