@@ -7,7 +7,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Example:
 

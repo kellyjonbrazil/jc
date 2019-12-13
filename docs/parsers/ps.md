@@ -195,7 +195,8 @@ Returns:
         "ppid":          integer,
         "c":             integer,
         "stime":         string,
-        "tty":           string,    # ? = Null
+        "tty":           string,    # ? or ?? = Null
+        "tt":            string,    # ?? = Null
         "time":          string,
         "cmd":           string,
         "user":          string,
