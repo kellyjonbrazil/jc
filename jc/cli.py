@@ -79,10 +79,10 @@ def helptext(message):
             --w              w parser
 
     Options:
-            -d              debug - show trace messages
-            -p              pretty print output
-            -q              quiet - suppress warnings
-            -r              raw JSON output
+            -d               debug - show trace messages
+            -p               pretty print output
+            -q               quiet - suppress warnings
+            -r               raw JSON output
 
     Example:
             ls -al | jc --ls -p
