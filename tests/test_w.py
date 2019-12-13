@@ -16,12 +16,24 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/w.out'), 'r') as f:
             self.ubuntu_18_4_w = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/w.out'), 'r') as f:
+            self.osx_10_11_6_w = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/w.out'), 'r') as f:
+            self.osx_10_14_6_w = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/w.json'), 'r') as f:
             self.centos_7_7_w_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/w.json'), 'r') as f:
             self.ubuntu_18_4_w_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/w.json'), 'r') as f:
+            self.osx_10_11_6_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/w.json'), 'r') as f:
+            self.osx_10_14_6_json = json.loads(f.read())
 
     def test_w_centos_7_7(self):
         """
@@ -34,6 +46,18 @@ class MyTests(unittest.TestCase):
         Test 'w' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.w.parse(self.ubuntu_18_4_w, quiet=True), self.ubuntu_18_4_w_json)
+
+    def test_w_osx_10_11_6(self):
+        """
+        Test 'w' on OSX 10.11.6
+        """
+        self.assertEqual(jc.parsers.w.parse(self.osx_10_11_6_w, quiet=True), self.osx_10_11_6_json)
+
+    def test_w_osx_10_14_6(self):
+        """
+        Test 'w' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.w.parse(self.osx_10_14_6_w, quiet=True), self.osx_10_14_6_json)
 
 
 if __name__ == '__main__':
