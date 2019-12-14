@@ -145,6 +145,17 @@ import jc.utils
 from ifconfigparser import IfconfigParser
 
 
+class info():
+    version = '1.5'
+    description = 'ifconfig parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+    details = 'Using ifconfig-parser package from https://github.com/KnightWhoSayNi/ifconfig-parser'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'aix', 'freebsd', 'darwin']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -238,12 +249,8 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd', 'darwin']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
 

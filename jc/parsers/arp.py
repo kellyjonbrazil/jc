@@ -2,7 +2,11 @@
 
 Usage:
 
-    specify --arp as the first argument if the piped input is coming from arp
+    specify --arp as the first argument if the piped input is coming from:
+
+    arp
+      or
+    arp -a
 
 Compatibility:
 
@@ -86,6 +90,16 @@ import jc.utils
 import jc.parsers.universal
 
 
+class info():
+    version = '1.1'
+    description = 'arp parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'aix', 'freebsd', 'darwin']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -132,15 +146,8 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd', 'darwin']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+        jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
 

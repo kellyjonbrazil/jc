@@ -33,6 +33,16 @@ Examples:
 import jc.utils
 
 
+class info():
+    version = '1.0'
+    description = 'systemctl list-sockets parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -71,12 +81,8 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, systemctlbsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     linedata = data.splitlines()
     # Clear any blank lines

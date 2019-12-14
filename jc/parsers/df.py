@@ -72,6 +72,16 @@ import jc.utils
 import jc.parsers.universal
 
 
+class info():
+    version = '1.1'
+    description = 'df parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'darwin']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -166,11 +176,8 @@ def parse(data, raw=False, quiet=False):
         dictionary   raw or processed structured data
     """
 
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
 

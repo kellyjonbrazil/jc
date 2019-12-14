@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """jc - JSON CLI output utility
-
 JC cli module
 """
 import sys
@@ -37,52 +36,76 @@ import jc.parsers.uname
 import jc.parsers.uptime
 import jc.parsers.w
 
+parser_map = {
+    '--arp': jc.parsers.arp,
+    '--df': jc.parsers.df,
+    '--dig': jc.parsers.dig,
+    '--env': jc.parsers.env,
+    '--free': jc.parsers.free,
+    '--fstab': jc.parsers.fstab,
+    '--history': jc.parsers.history,
+    '--hosts': jc.parsers.hosts,
+    '--ifconfig': jc.parsers.ifconfig,
+    '--iptables': jc.parsers.iptables,
+    '--jobs': jc.parsers.jobs,
+    '--ls': jc.parsers.ls,
+    '--lsblk': jc.parsers.lsblk,
+    '--lsmod': jc.parsers.lsmod,
+    '--lsof': jc.parsers.lsof,
+    '--mount': jc.parsers.mount,
+    '--netstat': jc.parsers.netstat,
+    '--ps': jc.parsers.ps,
+    '--route': jc.parsers.route,
+    '--ss': jc.parsers.ss,
+    '--stat': jc.parsers.stat,
+    '--systemctl': jc.parsers.systemctl,
+    '--systemctl-lj': jc.parsers.systemctl_lj,
+    '--systemctl-ls': jc.parsers.systemctl_ls,
+    '--systemctl-luf': jc.parsers.systemctl_luf,
+    '--uname': jc.parsers.uname,
+    '--uptime': jc.parsers.uptime,
+    '--w': jc.parsers.w
+}
+
+
+class info():
+    version = '1.6.1'
+    description = 'jc cli'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
 
 def ctrlc(signum, frame):
     exit()
 
 
+def parsers_text():
+    ptext = ''
+    for key in parser_map:
+        if hasattr(parser_map[key], 'info'):
+            padding = 16 - len(key)
+            padding_char = ' '
+            padding_text = padding_char * padding
+            ptext += '            ' + key + padding_text + parser_map[key].info.description + '\n'
+
+    return ptext
+
+
 def helptext(message):
+    parsers_string = parsers_text()
+
     helptext_string = f'''
     jc:     {message}
 
     Usage:  jc PARSER [OPTIONS]
 
     Parsers:
-            --arp            arp parser
-            --df             df parser
-            --dig            dig parser
-            --env            env parser
-            --free           free parser
-            --fstab          /etc/fstab file parser
-            --history        history parser
-            --hosts          /etc/hosts file parser
-            --ifconfig       iconfig parser
-            --iptables       iptables parser
-            --jobs           jobs parser
-            --ls             ls parser
-            --lsblk          lsblk parser
-            --lsmod          lsmod parser
-            --lsof           lsof parser
-            --mount          mount parser
-            --netstat        netstat parser
-            --ps             ps parser
-            --route          route parser
-            --ss             ss parser
-            --stat           stat parser
-            --systemctl      systemctl parser
-            --systemctl-lj   systemctl list-jobs parser
-            --systemctl-ls   systemctl list-sockets parser
-            --systemctl-luf  systemctl list-unit-files parser
-            --uname          uname -a parser
-            --uptime         uptime parser
-            --w              w parser
-
+{parsers_string}
     Options:
-            -d               debug - show trace messages
-            -p               pretty print output
-            -q               quiet - suppress warnings
-            -r               raw JSON output
+            -d              debug - show trace messages
+            -p              pretty print output
+            -q              quiet - suppress warnings
+            -r              raw JSON output
 
     Example:
             ls -al | jc --ls -p
@@ -116,51 +139,19 @@ def main():
     if '-r' in sys.argv:
         raw = True
 
-    # parsers
-    parser_map = {
-        '--arp': jc.parsers.arp.parse,
-        '--df': jc.parsers.df.parse,
-        '--dig': jc.parsers.dig.parse,
-        '--env': jc.parsers.env.parse,
-        '--free': jc.parsers.free.parse,
-        '--fstab': jc.parsers.fstab.parse,
-        '--history': jc.parsers.history.parse,
-        '--hosts': jc.parsers.hosts.parse,
-        '--ifconfig': jc.parsers.ifconfig.parse,
-        '--iptables': jc.parsers.iptables.parse,
-        '--jobs': jc.parsers.jobs.parse,
-        '--ls': jc.parsers.ls.parse,
-        '--lsblk': jc.parsers.lsblk.parse,
-        '--lsmod': jc.parsers.lsmod.parse,
-        '--lsof': jc.parsers.lsof.parse,
-        '--mount': jc.parsers.mount.parse,
-        '--netstat': jc.parsers.netstat.parse,
-        '--ps': jc.parsers.ps.parse,
-        '--route': jc.parsers.route.parse,
-        '--ss': jc.parsers.ss.parse,
-        '--stat': jc.parsers.stat.parse,
-        '--systemctl': jc.parsers.systemctl.parse,
-        '--systemctl-lj': jc.parsers.systemctl_lj.parse,
-        '--systemctl-ls': jc.parsers.systemctl_ls.parse,
-        '--systemctl-luf': jc.parsers.systemctl_luf.parse,
-        '--uname': jc.parsers.uname.parse,
-        '--uptime': jc.parsers.uptime.parse,
-        '--w': jc.parsers.w.parse
-    }
-
     found = False
 
     if debug:
         for arg in sys.argv:
             if arg in parser_map:
-                result = parser_map[arg](data, raw=raw, quiet=quiet)
+                result = parser_map[arg].parse(data, raw=raw, quiet=quiet)
                 found = True
                 break
     else:
         for arg in sys.argv:
             if arg in parser_map:
                 try:
-                    result = parser_map[arg](data, raw=raw, quiet=quiet)
+                    result = parser_map[arg].parse(data, raw=raw, quiet=quiet)
                     found = True
                     break
                 except:

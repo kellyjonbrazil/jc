@@ -19,6 +19,16 @@ Examples:
 import jc.utils
 
 
+class info():
+    version = '1.0'
+    description = 'foo parser'
+    author = 'John Doe'
+    author_email = 'johndoe@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -58,12 +68,8 @@ def parse(data, raw=False, quiet=False):
 
         dictionary   raw or processed structured data
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
     cleandata = data.splitlines()
