@@ -106,7 +106,7 @@ def about_jc():
             }
         parser_list.append(parser_entry)
 
-    result = {
+    return {
         'name': __name__,
         'version': info.version,
         'description': info.description,
@@ -114,8 +114,6 @@ def about_jc():
         'author_email': info.author_email,
         'parsers': parser_list
     }
-
-    return result
 
 
 def helptext(message):
@@ -197,7 +195,7 @@ def main():
                     found = True
                     break
                 except:
-                    parser_name = arg.lstrip('--')
+                    parser_name = parser_map[arg].__name__.split('.')[-1]
                     jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     exit(1)
 
