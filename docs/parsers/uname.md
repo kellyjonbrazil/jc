@@ -27,6 +27,11 @@ Example:
       "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
     }
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)

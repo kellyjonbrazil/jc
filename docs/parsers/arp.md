@@ -3,7 +3,11 @@ jc - JSON CLI output utility arp Parser
 
 Usage:
 
-    specify --arp as the first argument if the piped input is coming from arp
+    specify --arp as the first argument if the piped input is coming from:
+
+    arp
+      or
+    arp -a
 
 Compatibility:
 
@@ -82,6 +86,11 @@ Examples:
         "iface": "ens33"
       }
     ]
+
+## info
+```python
+info(self, /, *args, **kwargs)
+```
 
 ## process
 ```python

@@ -31,6 +31,11 @@ Example:
       "load_15m": "0.05"
     }
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
