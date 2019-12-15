@@ -96,6 +96,7 @@ jc PARSER [OPTIONS]
 - `--w` enables the `w` parser
 
 ### Options
+- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues encountered
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses warning messages
