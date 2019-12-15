@@ -97,6 +97,7 @@ def about_jc():
         if hasattr(parser_map[parser], 'info'):
             parser_entry = {
                 'name': parser_map[parser].__name__.split('.')[-1],
+                'version': parser_map[parser].info.version,
                 'description': parser_map[parser].info.description,
                 'author': parser_map[parser].info.author,
                 'author_email': parser_map[parser].info.author_email,
