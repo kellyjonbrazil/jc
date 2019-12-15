@@ -81,14 +81,40 @@ def ctrlc(signum, frame):
 
 def parsers_text():
     ptext = ''
-    for key in parser_map:
-        if hasattr(parser_map[key], 'info'):
-            padding = 16 - len(key)
+    for parser in parser_map:
+        if hasattr(parser_map[parser], 'info'):
+            padding = 16 - len(parser)
             padding_char = ' '
             padding_text = padding_char * padding
-            ptext += '            ' + key + padding_text + parser_map[key].info.description + '\n'
+            ptext += '            ' + parser + padding_text + parser_map[parser].info.description + '\n'
 
     return ptext
+
+
+def about_jc():
+    parser_list = []
+    for parser in parser_map:
+        if hasattr(parser_map[parser], 'info'):
+            parser_entry = {
+                'name': parser_map[parser].__name__.split('.')[-1],
+                'description': parser_map[parser].info.description,
+                'author': parser_map[parser].info.author,
+                'author_email': parser_map[parser].info.author_email,
+                'compatible': parser_map[parser].info.compatible,
+                'details': parser_map[parser].info.details
+            }
+        parser_list.append(parser_entry)
+
+    result = {
+        'name': __name__,
+        'version': info.version,
+        'description': info.description,
+        'author': info.author,
+        'author_email': info.author_email,
+        'parsers': parser_list
+    }
+
+    return result
 
 
 def helptext(message):
@@ -102,6 +128,7 @@ def helptext(message):
     Parsers:
 {parsers_string}
     Options:
+            -a              about jc
             -d              debug - show trace messages
             -p              pretty print output
             -q              quiet - suppress warnings
@@ -113,14 +140,17 @@ def helptext(message):
     print(textwrap.dedent(helptext_string), file=sys.stderr)
 
 
+def json_out(data, pretty=False):
+    if pretty:
+        print(json.dumps(data, indent=2))
+    else:
+        print(json.dumps(data))
+
+
 def main():
     signal.signal(signal.SIGINT, ctrlc)
 
-    if sys.stdin.isatty():
-        helptext('missing piped data')
-        exit()
-
-    data = sys.stdin.read()
+    about = False
     debug = False
     pretty = False
     quiet = False
@@ -139,15 +169,26 @@ def main():
     if '-r' in sys.argv:
         raw = True
 
+    if '-a' in sys.argv:
+        about = True
+        result = about_jc()
+
+    if sys.stdin.isatty() and not about:
+        helptext('missing piped data')
+        exit()
+
+    if not about:
+        data = sys.stdin.read()
+
     found = False
 
-    if debug:
+    if debug and not about:
         for arg in sys.argv:
             if arg in parser_map:
                 result = parser_map[arg].parse(data, raw=raw, quiet=quiet)
                 found = True
                 break
-    else:
+    elif not about:
         for arg in sys.argv:
             if arg in parser_map:
                 try:
@@ -159,15 +200,11 @@ def main():
                     jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     exit(1)
 
-    if not found:
+    if not found and not about:
         helptext('missing or incorrect arguments')
         exit()
 
-    # output resulting dictionary as json
-    if pretty:
-        print(json.dumps(result, indent=2))
-    else:
-        print(json.dumps(result))
+    json_out(result, pretty=pretty)
 
 
 if __name__ == '__main__':

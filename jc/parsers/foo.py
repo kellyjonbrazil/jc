@@ -24,6 +24,7 @@ class info():
     description = 'foo parser'
     author = 'John Doe'
     author_email = 'johndoe@gmail.com'
+    details = None
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
