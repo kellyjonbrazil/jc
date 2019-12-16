@@ -11,7 +11,7 @@ Limitations:
 
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Example:
 
