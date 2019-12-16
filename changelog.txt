@@ -1,10 +1,7 @@
 jc changelog
 
 2019xxxx v1.6.1
-- Add OSX support for the ifconfig parser
-- Add OSX support for the arp parser
-- Add OSX support for the df parser
-- Add OSX support for the mount parser
+- Add OSX support for the ifconfig, arp, df, and mount parsers
 - Add tests for ls, dig, ps, w, uptime on OSX
 - Add about option
 - Add universal parsers to refactor repetitive code
