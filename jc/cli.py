@@ -70,7 +70,7 @@ parser_map = {
 
 class info():
     version = '1.6.1'
-    description = 'jc cli'
+    description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
@@ -104,7 +104,7 @@ def about_jc():
         parser_list.append(info_dict)
 
     return {
-        'name': __name__,
+        'name': 'jc',
         'version': info.version,
         'description': info.description,
         'author': info.author,
