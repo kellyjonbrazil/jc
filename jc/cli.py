@@ -109,6 +109,7 @@ def about_jc():
         'description': info.description,
         'author': info.author,
         'author_email': info.author_email,
+        'parser_count': len(parser_list),
         'parsers': parser_list
     }
 
