@@ -96,6 +96,7 @@ def about_jc():
     for parser in parser_map:
         if hasattr(parser_map[parser], 'info'):
             info_dict = {}
+            info_dict['name'] = parser_map[parser].__name__.split('.')[-1]
             parser_entry = vars(parser_map[parser].info)
             for k, v in parser_entry.items():
                 if not k.startswith('__'):
