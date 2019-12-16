@@ -10,6 +10,7 @@ import jc.utils
 import jc.parsers.arp
 import jc.parsers.df
 import jc.parsers.dig
+import jc.parsers.du
 import jc.parsers.env
 import jc.parsers.free
 import jc.parsers.fstab
@@ -40,6 +41,7 @@ parser_map = {
     '--arp': jc.parsers.arp,
     '--df': jc.parsers.df,
     '--dig': jc.parsers.dig,
+    '--du': jc.parsers.du,
     '--env': jc.parsers.env,
     '--free': jc.parsers.free,
     '--fstab': jc.parsers.fstab,
