@@ -69,6 +69,7 @@ jc PARSER [OPTIONS]
 - `--arp` enables the `arp` parser
 - `--df` enables the `df` parser
 - `--dig` enables the `dig` parser
+- `--du` enables the `du` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
 - `--fstab` enables the `/etc/fstab` file parser
@@ -175,6 +176,37 @@ $ df | jc --df -p
     "available": 1930664,
     "use_percent": 0,
     "mounted_on": "/dev/shm"
+  },
+  ...
+]
+```
+### du
+```
+$ du /usr | jc --du -p
+[
+  {
+    "size": 104608,
+    "name": "/usr/bin"
+  },
+  {
+    "size": 56,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+  },
+  {
+    "size": 1008,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
   },
   ...
 ]
