@@ -95,16 +95,12 @@ def about_jc():
     parser_list = []
     for parser in parser_map:
         if hasattr(parser_map[parser], 'info'):
-            parser_entry = {
-                'name': parser_map[parser].__name__.split('.')[-1],
-                'version': parser_map[parser].info.version,
-                'description': parser_map[parser].info.description,
-                'author': parser_map[parser].info.author,
-                'author_email': parser_map[parser].info.author_email,
-                'compatible': parser_map[parser].info.compatible,
-                'details': parser_map[parser].info.details
-            }
-        parser_list.append(parser_entry)
+            info_dict = {}
+            parser_entry = vars(parser_map[parser].info)
+            for k, v in parser_entry.items():
+                if not k.startswith('__'):
+                    info_dict[k] = v
+        parser_list.append(info_dict)
 
     return {
         'name': __name__,
