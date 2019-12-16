@@ -149,7 +149,6 @@ def json_out(data, pretty=False):
 def main():
     signal.signal(signal.SIGINT, ctrlc)
 
-    about = False
     debug = False
     pretty = False
     quiet = False
@@ -169,25 +168,24 @@ def main():
         raw = True
 
     if '-a' in sys.argv:
-        about = True
-        result = about_jc()
+        json_out(about_jc(), pretty=pretty)
+        exit()
 
-    if sys.stdin.isatty() and not about:
+    if sys.stdin.isatty():
         helptext('missing piped data')
         exit()
 
-    if not about:
-        data = sys.stdin.read()
+    data = sys.stdin.read()
 
     found = False
 
-    if debug and not about:
+    if debug:
         for arg in sys.argv:
             if arg in parser_map:
                 result = parser_map[arg].parse(data, raw=raw, quiet=quiet)
                 found = True
                 break
-    elif not about:
+    else:
         for arg in sys.argv:
             if arg in parser_map:
                 try:
@@ -199,7 +197,7 @@ def main():
                     jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     exit(1)
 
-    if not found and not about:
+    if not found:
         helptext('missing or incorrect arguments')
         exit()
 
