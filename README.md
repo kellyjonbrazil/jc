@@ -180,37 +180,6 @@ $ df | jc --df -p
   ...
 ]
 ```
-### du
-```
-$ du /usr | jc --du -p
-[
-  {
-    "size": 104608,
-    "name": "/usr/bin"
-  },
-  {
-    "size": 56,
-    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
-  },
-  {
-    "size": 0,
-    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
-  },
-  {
-    "size": 0,
-    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
-  },
-  {
-    "size": 0,
-    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
-  },
-  {
-    "size": 1008,
-    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
-  },
-  ...
-]
-```
 ### dig
 ```
 $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
@@ -367,6 +336,37 @@ $ dig -x 1.1.1.1 | jc --dig -p
     "when": "Tue Nov 12 07:13:49 PST 2019",
     "rcvd": 78
   }
+]
+```
+### du
+```
+$ du /usr | jc --du -p
+[
+  {
+    "size": 104608,
+    "name": "/usr/bin"
+  },
+  {
+    "size": 56,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+  },
+  {
+    "size": 1008,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
+  },
+  ...
 ]
 ```
 ### env
