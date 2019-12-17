@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'aix', 'freebsd'
+    'linux', 'darwin', 'aix', 'freebsd'
 
 Examples:
 
@@ -139,7 +139,7 @@ class info():
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'aix', 'freebsd']
 
 
 def process(proc_data):
