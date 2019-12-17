@@ -1,0 +1,32 @@
+Name: pip
+Version: 19.3.1
+Summary: The PyPA recommended tool for installing Python packages.
+Home-page: https://pip.pypa.io/
+Author: The pip developers
+Author-email: pypa-dev@groups.google.com
+License: MIT
+Location: /usr/local/lib/python3.7/site-packages
+Requires: 
+Required-by: 
+---
+Name: setuptools
+Version: 41.6.0
+Summary: Easily download, build, install, upgrade, and uninstall Python packages
+Home-page: https://github.com/pypa/setuptools
+Author: Python Packaging Authority
+Author-email: distutils-sig@python.org
+License: UNKNOWN
+Location: /usr/local/lib/python3.7/site-packages
+Requires: 
+Required-by: 
+---
+Name: wheel
+Version: 0.33.6
+Summary: A built-package format for Python.
+Home-page: https://github.com/pypa/wheel
+Author: Daniel Holth
+Author-email: dholth@fastmail.fm
+License: MIT
+Location: /usr/local/lib/python3.7/site-packages
+Requires: 
+Required-by: 

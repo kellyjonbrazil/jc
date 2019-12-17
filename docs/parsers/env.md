@@ -2,7 +2,12 @@
 jc - JSON CLI output utility env Parser
 
 Usage:
+
     specify --env as the first argument if the piped input is coming from env
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
 
 Examples:
 
@@ -44,6 +49,11 @@ Examples:
       "_": "/usr/bin/env"
     }
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
@@ -57,7 +67,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    List of dictionaries. Structured data with the following schema:
 
     [
       {
@@ -81,5 +91,6 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    Dictionary of raw structured data or
+    list of dictionaries of processed structured data
 

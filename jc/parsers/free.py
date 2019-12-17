@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility free Parser
 
 Usage:
+
     specify --free as the first argument if the piped input is coming from free
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -44,6 +49,17 @@ Examples:
     ]
 """
 import jc.utils
+import jc.parsers.universal
+
+
+class info():
+    version = '1.0'
+    description = 'free parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
 
 
 def process(proc_data):
@@ -56,7 +72,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -96,28 +112,17 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+        jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-    headers.insert(0, "type")
+    cleandata[0] = cleandata[0].lower()
+    cleandata[0] = cleandata[0].replace('buff/cache', 'buff_cache')
+    cleandata[0] = 'type ' + cleandata[0]
 
-    # clean up 'buff/cache' header
-    # even though forward slash in a key is valid json, it can make things difficult
-    headers = ['buff_cache' if x == 'buff/cache' else x for x in headers]
-
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
+    raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     for entry in raw_output:
         entry['type'] = entry['type'].rstrip(':')

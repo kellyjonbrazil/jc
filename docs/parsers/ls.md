@@ -2,14 +2,19 @@
 jc - JSON CLI output utility ls Parser
 
 Usage:
+
     specify --ls as the first argument if the piped input is coming from ls
 
     ls options supported:
     - None
     - la
-    - h   file sizes will be available in text form with -r but larger file sizes
-          with human readable suffixes will be converted to Null in default view
-          since the parser attempts to convert this field to an integer.
+    - h       file sizes will be available in text form with -r but larger file sizes
+              with human readable suffixes will be converted to Null in default view
+              since the parser attempts to convert this field to an integer.
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:
 
@@ -135,6 +140,11 @@ Examples:
       "date": "May 3 2019"
     }
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
@@ -148,7 +158,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    List of dictionaries. Structured data with the following schema:
 
     [
       {
@@ -177,5 +187,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    List of dictionaries. Raw or processed structured data.
 

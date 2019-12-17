@@ -2,11 +2,16 @@
 jc - JSON CLI output utility ps Parser
 
 Usage:
+
     specify --ps as the first argument if the piped input is coming from ps
 
     ps options supported:
     - ef
     - axu
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:
 
@@ -168,6 +173,11 @@ Examples:
       ...
     ]
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
@@ -181,7 +191,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    List of dictionaries. Structured data with the following schema:
 
     [
       {
@@ -190,7 +200,8 @@ Returns:
         "ppid":          integer,
         "c":             integer,
         "stime":         string,
-        "tty":           string,    # ? = Null
+        "tty":           string,    # ? or ?? = Null
+        "tt":            string,    # ?? = Null
         "time":          string,
         "cmd":           string,
         "user":          string,
@@ -219,5 +230,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    List of dictionaries. Raw or processed structured data.
 

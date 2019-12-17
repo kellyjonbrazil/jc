@@ -1,7 +1,16 @@
 """jc - JSON CLI output utility arp Parser
 
 Usage:
-    specify --arp as the first argument if the piped input is coming from arp
+
+    specify --arp as the first argument if the piped input is coming from:
+
+    arp
+      or
+    arp -a
+
+Compatibility:
+
+    'linux', 'aix', 'freebsd', 'darwin'
 
 Examples:
 
@@ -78,6 +87,17 @@ Examples:
     ]
 """
 import jc.utils
+import jc.parsers.universal
+
+
+class info():
+    version = '1.1'
+    description = 'arp parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'aix', 'freebsd', 'darwin']
 
 
 def process(proc_data):
@@ -90,7 +110,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -124,39 +144,50 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+        jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
 
     # remove final Entries row if -v was used
-    if cleandata[-1].find("Entries:") == 0:
+    if cleandata[-1].find('Entries:') == 0:
         cleandata.pop(-1)
 
-    # detect if linux or bsd style was used
-    if cleandata[0].find('Address') == 0:
-
-        # fix header row to change Flags Mask to flags_mask
-        cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
-
-        headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-        raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-        raw_output = [dict(zip(headers, r)) for r in raw_data]
+    # detect if osx style was used
+    if cleandata[0].find(' ifscope ') != -1:
+        raw_output = []
+        for line in cleandata:
+            line = line.split()
+            output_line = {}
+            output_line['name'] = line[0]
+            output_line['address'] = line[1].lstrip('(').rstrip(')')
+            output_line['hwtype'] = line[-1].lstrip('[').rstrip(']')
+            output_line['hwaddress'] = line[3]
+            output_line['iface'] = line[5]
+            raw_output.append(output_line)
 
         if raw:
             return raw_output
         else:
             return process(raw_output)
 
+    # detect if linux style was used
+    elif cleandata[0].find('Address') == 0:
+
+        # fix header row to change Flags Mask to flags_mask
+        cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
+        cleandata[0] = cleandata[0].lower()
+
+        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+
+        if raw:
+            return raw_output
+        else:
+            return process(raw_output)
+
+    # otherwise, try bsd style
     else:
         raw_output = []
         for line in cleandata:

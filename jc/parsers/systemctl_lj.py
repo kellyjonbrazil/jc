@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility systemctl-lj Parser
 
 Usage:
+
     specify --systemctl-lj as the first argument if the piped input is coming from systemctl list-jobs
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -53,6 +58,16 @@ Examples:
 import jc.utils
 
 
+class info():
+    version = '1.0'
+    description = 'systemctl list-jobs parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -63,7 +78,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -98,14 +113,10 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, systemctlbsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     linedata = data.splitlines()
     # Clear any blank lines

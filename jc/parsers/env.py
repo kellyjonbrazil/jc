@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility env Parser
 
 Usage:
+
     specify --env as the first argument if the piped input is coming from env
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
 
 Examples:
 
@@ -46,6 +51,16 @@ Examples:
 import jc.utils
 
 
+class info():
+    version = '1.1'
+    description = 'env parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -56,7 +71,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -89,14 +104,11 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        Dictionary of raw structured data or
+        list of dictionaries of processed structured data
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = {}
 

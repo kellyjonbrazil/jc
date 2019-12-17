@@ -1,0 +1,48 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+#--------------------------------------------------
+# example unix/linux crontab file format:
+#--------------------------------------------------
+# min,hour,dayOfMonth,month,dayOfWeek command
+#
+# field          allowed values
+# -----          --------------
+# minute         0-59
+# hour           0-23
+# day of month   1-31
+# month          1-12 (or names, see below)
+# day of week    0-7 (0 or 7 is Sun, or use names)
+#
+#--------------------------------------------------
+
+# run the drupal cron process every hour of every day
+0 * * * * /usr/bin/wget -O - -q -t 1 http://localhost/cron.php
+
+# run this apache kludge every minute of every day
+* * * * * /var/www/devdaily.com/bin/check-apache.sh
+
+# generate links to new blog posts twice a day
+5 10-11,22 * * * /var/www/devdaily.com/bin/mk-new-links.php
+
+# run the backup scripts at 4:30am
+30 4/2 * * * /var/www/devdaily.com/bin/create-all-backups.sh
+
+# re-generate the blog "categories" list (four times a day)
+5 0,4,10,16 * * * /var/www/devdaily.com/bin/create-cat-list.sh
+
+# reset the contact form just after midnight
+5 0 * * * /var/www/devdaily.com/bin/resetContactForm.sh
+
+# example of shortcut versions
+@monthly /home/maverick/bin/tape-backup
+@reboot /home/cleanup
+@yearly /home/maverick/bin/annual-maintenance
+
+# rotate the ad banners every five minutes
+
+0,20,40  * * * * /var/www/bin/ads/freshMint.sh
+5,25,45  * * * * /var/www/bin/ads/greenTaffy.sh
+10,30,50 * * * * /var/www/bin/ads/raspberry.sh
+15,35,55 * * * * /var/www/bin/ads/robinsEgg.sh

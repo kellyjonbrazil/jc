@@ -1,0 +1,32 @@
+total 69
+drwxr-xr-x  33 root   wheel   1.2K Oct  2 10:55 .
+drwxr-xr-x  33 root   wheel   1.2K Oct  2 10:55 ..
+-rw-rw-r--   1 root   admin   6.0K Nov  8  2018 .DS_Store
+d--x--x--x   9 root   wheel   306B Dec  2 22:46 .DocumentRevisions-V100
+drwxr-xr-x+  3 root   wheel   102B Oct  2 10:56 .MobileBackups
+drwx------   5 root   wheel   170B Jul  8  2011 .Spotlight-V100
+d-wx-wx-wt   2 root   wheel    68B Nov 10  2014 .Trashes
+----------   1 root   admin     0B Feb 25  2016 .file
+drwx------   6 root   wheel   204B Dec 12 11:10 .fseventsd
+drwxr-xr-x@  2 root   wheel    68B Apr 19  2016 .vol
+drwxrwxr-x+ 70 root   admin   2.3K Dec 12 11:09 Applications
+drwxr-xr-x+ 64 root   wheel   2.1K Jun  7  2018 Library
+drwxr-xr-x@  2 root   wheel    68B Apr 19  2016 Network
+drwxr-xr-x@  4 root   wheel   136B Jul 18  2018 System
+lrwxr-xr-x   1 root   wheel    60B Jan 25  2012 User Guides And Information -> /Library/Documentation/User Guides and Information.localized
+drwxr-xr-x   5 root   admin   170B Apr 19  2016 Users
+drwxrwxrwt@  5 root   admin   170B Dec 12 11:00 Volumes
+drwxr-xr-x@ 39 root   wheel   1.3K Jul 18  2018 bin
+drwxrwxr-t@  2 root   admin    68B Apr 19  2016 cores
+dr-xr-xr-x   3 root   wheel   4.1K Dec  2 22:45 dev
+lrwxr-xr-x@  1 root   wheel    11B Apr 19  2016 etc -> private/etc
+dr-xr-xr-x   2 root   wheel     1B Dec  2 22:45 home
+-rw-r--r--@  1 root   wheel   313B Aug  2  2015 installer.failurerequests
+drwxrwxrwt@  3 root   wheel   102B Jul 29  2017 lost+found
+dr-xr-xr-x   2 root   wheel     1B Dec  2 22:45 net
+drwxr-xr-x@  6 root   wheel   204B Apr 19  2016 private
+drwxr-xr-x   3 kelly  wheel   102B Aug  4  2012 recover
+drwxr-xr-x@ 59 root   wheel   2.0K Jul 18  2018 sbin
+lrwxr-xr-x@  1 root   wheel    11B Apr 19  2016 tmp -> private/tmp
+drwxr-xr-x@ 13 root   wheel   442B Jun  7  2018 usr
+lrwxr-xr-x@  1 root   wheel    11B Apr 19  2016 var -> private/var

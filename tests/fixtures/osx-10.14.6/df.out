@@ -1,0 +1,9 @@
+Filesystem                                             512-blocks       Used  Available Capacity   iused               ifree %iused  Mounted on
+/dev/disk1s1                                            976490576  302197928  660310352    32%   1507695 9223372036853268112    0%   /
+devfs                                                         667        667          0   100%      1154                   0  100%   /dev
+/dev/disk1s4                                            976490576   12583000  660310352     2%         6 9223372036854775801    0%   /private/var/vm
+map -hosts                                                      0          0          0   100%         0                   0  100%   /net
+map auto_home                                                   0          0          0   100%         0                   0  100%   /home
+/dev/disk2s2                                             14463464   10887304    3576160    76%         8          4294967271    0%   /Volumes/InstallESD
+com.apple.TimeMachine.2019-11-29-075900@/dev/disk1s1    976490576  277166752  660310352    30%   1459164 9223372036853316643    0%   /Volumes/com.apple.TimeMachine.localsnapshots/Backups.backupdb/kbrazil-mac/2019-11-29-075900/Macintosh HD
+//brazil@MyCloudEX2Ultra._afpovertcp._tcp.local/brazil 7604804600 2409078672 5195725928    32% 301134832           649465741   32%   /Volumes/brazil

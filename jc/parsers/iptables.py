@@ -1,9 +1,14 @@
 """jc - JSON CLI output utility ipables Parser
 
 Usage:
+
     Specify --iptables as the first argument if the piped input is coming from iptables
 
     Supports -vLn and --line-numbers for all tables
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -128,6 +133,16 @@ Examples:
 import jc.utils
 
 
+class info():
+    version = '1.1'
+    description = 'iptables parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -138,8 +153,8 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
-    
+        List of dictionaries. Structured data with the following schema:
+
         [
           {
             "chain":                string,
@@ -215,14 +230,10 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
     chain = {}

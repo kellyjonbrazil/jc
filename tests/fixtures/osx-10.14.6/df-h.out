@@ -1,0 +1,9 @@
+Filesystem                                               Size   Used  Avail Capacity   iused               ifree %iused  Mounted on
+/dev/disk1s1                                            466Gi  144Gi  315Gi    32%   1507697 9223372036853268110    0%   /
+devfs                                                   334Ki  334Ki    0Bi   100%      1154                   0  100%   /dev
+/dev/disk1s4                                            466Gi  6.0Gi  315Gi     2%         6 9223372036854775801    0%   /private/var/vm
+map -hosts                                                0Bi    0Bi    0Bi   100%         0                   0  100%   /net
+map auto_home                                             0Bi    0Bi    0Bi   100%         0                   0  100%   /home
+/dev/disk2s2                                            6.9Gi  5.2Gi  1.7Gi    76%         8          4294967271    0%   /Volumes/InstallESD
+com.apple.TimeMachine.2019-11-29-075900@/dev/disk1s1    466Gi  132Gi  315Gi    30%   1459164 9223372036853316643    0%   /Volumes/com.apple.TimeMachine.localsnapshots/Backups.backupdb/kbrazil-mac/2019-11-29-075900/Macintosh HD
+//brazil@MyCloudEX2Ultra._afpovertcp._tcp.local/brazil  3.5Ti  1.1Ti  2.4Ti    32% 301134832           649465741   32%   /Volumes/brazil

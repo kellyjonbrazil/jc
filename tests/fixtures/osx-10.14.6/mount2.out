@@ -1,0 +1,7 @@
+/dev/disk1s1 on / (apfs, local, journaled)
+devfs on /dev (devfs, local, nobrowse)
+/dev/disk1s4 on /private/var/vm (apfs, local, noexec, journaled, noatime, nobrowse)
+map -hosts on /net (autofs, nosuid, automounted, nobrowse)
+map auto_home on /home (autofs, automounted, nobrowse)
+//brazil@MyCloudEX2Ultra._afpovertcp._tcp.local/brazil on /Volumes/brazil (afpfs, nodev, nosuid, mounted by kelly)
+/dev/disk1s3 on /Volumes/Recovery (apfs, local, journaled, nobrowse)

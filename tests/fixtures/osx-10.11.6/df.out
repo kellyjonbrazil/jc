@@ -1,0 +1,7 @@
+Filesystem                                             512-blocks       Used  Available Capacity   iused               ifree %iused  Mounted on
+/dev/disk1s1                                            976490576  286747768  684150392    30%    674410 9223372036854101397    0%   /
+devfs                                                         375        375          0   100%       650                   0  100%   /dev
+/dev/disk1s4                                            976490576    4194344  684150392     1%         2 9223372036854775805    0%   /private/var/vm
+map -hosts                                                      0          0          0   100%         0                   0  100%   /net
+map auto_home                                                   0          0          0   100%         0                   0  100%   /home
+//brazil@MyCloudEX2Ultra._afpovertcp._tcp.local/brazil 7604804600 2409078672 5195725928    32% 301134832           649465741   32%   /Volumes/brazil

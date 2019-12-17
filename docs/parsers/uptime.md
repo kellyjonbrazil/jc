@@ -2,7 +2,12 @@
 jc - JSON CLI output utility uptime Parser
 
 Usage:
+
     specify --uptime as the first argument if the piped input is coming from uptime
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Example:
 
@@ -26,6 +31,11 @@ Example:
       "load_15m": "0.05"
     }
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
@@ -39,7 +49,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    Dictionary. Structured data with the following schema:
 
     {
       "time":     string,
@@ -65,5 +75,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    Dictionary. Raw or processed structured data
 

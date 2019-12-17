@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility dig Parser
 
 Usage:
+
     Specify --dig as the first argument if the piped input is coming from dig
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
 
 Examples:
 
@@ -318,6 +323,16 @@ Examples:
 import jc.utils
 
 
+class info():
+    version = '1.0'
+    description = 'dig parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'aix', 'freebsd', 'darwin']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -328,7 +343,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -501,14 +516,11 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
 
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
     cleandata = data.splitlines()

@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility lsblk Parser
 
 Usage:
+
     specify --lsblk as the first argument if the piped input is coming from lsblk
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -206,8 +211,18 @@ Examples:
       ...
     ]
 """
-import string
 import jc.utils
+import jc.parsers.universal
+
+
+class info():
+    version = '1.3'
+    description = 'lsblk parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
 
 
 def process(proc_data):
@@ -220,7 +235,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -303,82 +318,25 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
-    # unicode \u2063 = invisible separator and should not be seen in lsblk output
-    delim = '\u2063'
-
-    raw_output = []
     linedata = data.splitlines()
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
     cleandata = data.splitlines()
 
-    header_text = cleandata.pop(0).lower()
-    header_text = header_text.replace(':', '_')
-    header_text = header_text.replace('-', '_')
-    header_text = header_text + ' '
+    cleandata[0] = cleandata[0].lower()
+    cleandata[0] = cleandata[0].replace(':', '_')
+    cleandata[0] = cleandata[0].replace('-', '_')
 
-    header_list = header_text.split()
+    raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
 
-    # find each column index and end position
-    header_search = [header_list[0]]
-    for h in header_list[1:]:
-        header_search.append(' ' + h + ' ')
-
-    header_spec_list = []
-    for i, column in enumerate(header_list[0:len(header_list) - 1]):
-        header_spec = {
-            'name': column,
-            'end': header_text.find(header_search[i + 1])
-        }
-
-        header_spec_list.append(header_spec)
-
-    # parse lines
-    if cleandata:
-        for entry in cleandata:
-            output_line = {}
-
-            # insert new separator since data can contain spaces
-            for col in reversed(header_list):
-                # find the right header_spec
-                for h_spec in header_spec_list:
-                    if h_spec['name'] == col:
-                        h_end = h_spec['end']
-                        # check if the location contains whitespace. if not
-                        # then move to the left until a space is found
-                        while h_end > 0 and entry[h_end] not in string.whitespace:
-                            h_end -= 1
-
-                        # insert custom delimiter
-                        entry = entry[:h_end] + delim + entry[h_end + 1:]
-
-            # create the entry list from the new custom delimiter
-            entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
-
-            # clean up leading and trailing spaces in entry
-            clean_entry_list = []
-            for col in entry_list:
-                clean_entry = col.strip().rstrip()
-                if clean_entry == '':
-                    clean_entry = None
-                
-                clean_entry_list.append(clean_entry)
-
-            output_line = dict(zip(header_list, clean_entry_list))
-            raw_output.append(output_line)
-
-        # clean up non-ascii characters, if any
-        for entry in raw_output:
-            entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
+    # clean up non-ascii characters, if any
+    for entry in raw_output:
+        entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
 
     if raw:
         return raw_output

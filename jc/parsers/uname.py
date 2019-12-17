@@ -1,10 +1,16 @@
 """jc - JSON CLI output utility uname Parser
 
 Usage:
+
     specify --uname as the first argument if the piped input is coming from uname
 
 Limitations:
+
     must use 'uname -a'
+
+Compatibility:
+
+    'linux', 'darwin'
 
 Example:
 
@@ -23,6 +29,16 @@ Example:
 import jc.utils
 
 
+class info():
+    version = '1.1'
+    description = 'uname -a parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'darwin']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -33,7 +49,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        Dictionary. Structured data with the following schema:
 
         {
             "kernel_name":        string,
@@ -62,32 +78,39 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        Dictionary. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = {}
-    parsed_line = data.split(maxsplit=3)
+    split_line = data.split()
 
-    if len(parsed_line) > 1:
+    if len(split_line) > 1:
+        # check for OSX output
+        if data.startswith('Darwin'):
+            parsed_line = data.split()
+            raw_output['machine'] = parsed_line.pop(-1)
+            raw_output['kernel_name'] = parsed_line.pop(0)
+            raw_output['node_name'] = parsed_line.pop(0)
+            raw_output['kernel_release'] = parsed_line.pop(0)
+            raw_output['kernel_version'] = ' '.join(parsed_line)
 
-        raw_output['kernel_name'] = parsed_line.pop(0)
-        raw_output['node_name'] = parsed_line.pop(0)
-        raw_output['kernel_release'] = parsed_line.pop(0)
+        # otherwise use linux parser
+        else:
+            parsed_line = data.split(maxsplit=3)
+            raw_output['kernel_name'] = parsed_line.pop(0)
+            raw_output['node_name'] = parsed_line.pop(0)
+            raw_output['kernel_release'] = parsed_line.pop(0)
 
-        parsed_line = parsed_line[-1].rsplit(maxsplit=4)
+            parsed_line = parsed_line[-1].rsplit(maxsplit=4)
 
-        raw_output['operating_system'] = parsed_line.pop(-1)
-        raw_output['hardware_platform'] = parsed_line.pop(-1)
-        raw_output['processor'] = parsed_line.pop(-1)
-        raw_output['machine'] = parsed_line.pop(-1)
+            raw_output['operating_system'] = parsed_line.pop(-1)
+            raw_output['hardware_platform'] = parsed_line.pop(-1)
+            raw_output['processor'] = parsed_line.pop(-1)
+            raw_output['machine'] = parsed_line.pop(-1)
 
-        raw_output['kernel_version'] = parsed_line.pop(0)
+            raw_output['kernel_version'] = parsed_line.pop(0)
 
     if raw:
         return raw_output

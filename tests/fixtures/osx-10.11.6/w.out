@@ -1,0 +1,8 @@
+10:03  up 10 days, 11:19, 6 users, load averages: 1.26 1.09 0.99
+USER     TTY      FROM              LOGIN@  IDLE WHAT
+kelly    console  -                02Dec19 10days -
+kelly    s000     -                Thu11       - ssh localhost
+kelly    s001     ::1              10:02       - -bash
+kelly    s002     -                10:02       - w
+kelly    s003     -                10:03       - ssh 127.0.0.1
+kelly    s004     127.0.0.1        10:03       - -bash

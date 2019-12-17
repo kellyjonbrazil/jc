@@ -1,0 +1,41 @@
+
+; <<>> DiG 9.10.6 <<>> www.cnn.com www.google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54065
+;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.cnn.com.			IN	A
+
+;; ANSWER SECTION:
+www.cnn.com.		72	IN	CNAME	turner-tls.map.fastly.net.
+turner-tls.map.fastly.net. 1	IN	A	151.101.65.67
+turner-tls.map.fastly.net. 1	IN	A	151.101.1.67
+turner-tls.map.fastly.net. 1	IN	A	151.101.193.67
+turner-tls.map.fastly.net. 1	IN	A	151.101.129.67
+
+;; Query time: 41 msec
+;; SERVER: 2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)
+;; WHEN: Wed Dec 11 16:54:50 PST 2019
+;; MSG SIZE  rcvd: 143
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 64484
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.google.com.			IN	A
+
+;; ANSWER SECTION:
+www.google.com.		64	IN	A	172.217.12.68
+
+;; Query time: 31 msec
+;; SERVER: 2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)
+;; WHEN: Wed Dec 11 16:54:50 PST 2019
+;; MSG SIZE  rcvd: 59
+

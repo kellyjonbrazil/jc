@@ -2,7 +2,12 @@
 jc - JSON CLI output utility w Parser
 
 Usage:
+
     specify --w as the first argument if the piped input is coming from w
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:
 
@@ -74,6 +79,11 @@ Examples:
       }
     ]
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
@@ -87,7 +97,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    List of dictionaries. Structured data with the following schema:
 
     [
       {
@@ -117,5 +127,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    List of dictionaries. Raw or processed structured data.
 

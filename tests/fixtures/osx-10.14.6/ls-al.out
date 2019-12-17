@@ -1,0 +1,35 @@
+total 196
+drwxr-xr-x  34 root     wheel   1088 Dec 12 00:13 .
+drwxr-xr-x  34 root     wheel   1088 Dec 12 00:13 ..
+-rw-rw-r--   1 root     admin   8196 Jul 25 18:21 .DS_Store
+d--x--x--x   9 root     wheel    288 Dec 12 00:14 .DocumentRevisions-V100
+-rw-r--r--   1 root     wheel    992 Dec 12 00:13 .OSInstallerMessages
+drwxr-xr-x   2 root     wheel     64 May  4  2019 .PKInstallSandboxManager
+drwx------   2 root     admin     64 Dec 12 00:13 .PKInstallSandboxManager-SystemSoftware
+drwx------   5 root     wheel    160 May  4  2019 .Spotlight-V100
+----------   1 root     admin      0 Feb 25  2019 .file
+drwx------  68 kbrazil  staff   2176 Dec 12 09:47 .fseventsd
+drwxr-xr-x   2 root     wheel     64 Feb 25  2019 .vol
+drwxrwxr-x+ 73 root     admin   2336 Dec 12 00:36 Applications
+drwxr-xr-x+ 69 root     wheel   2208 Dec 12 00:35 Library
+drwxr-xr-x   2 root     wheel     64 Feb 25  2019 Network
+drwxr-xr-x@  5 root     wheel    160 May  3  2019 System
+drwxr-xr-x   8 root     admin    256 Oct 14 07:21 Users
+drwxr-xr-x+  6 root     wheel    192 Dec 12 08:56 Volumes
+drwxr-xr-x@ 37 root     wheel   1184 Dec 12 00:12 bin
+drwxrwxr-t   2 root     admin     64 Feb 25  2019 cores
+dr-xr-xr-x   3 root     wheel   7728 Dec 12 00:14 dev
+lrwxr-xr-x@  1 root     wheel     11 May  4  2019 etc -> private/etc
+dr-xr-xr-x   2 root     wheel      1 Dec 12 07:41 home
+-rw-r--r--   1 root     wheel    313 Feb 24  2019 installer.failurerequests
+dr-xr-xr-x   2 root     wheel      1 Dec 12 07:41 net
+-rw-------   1 root     wheel  11984 Jul 30 21:02 obj_1_uhYWBO
+-rw-------   1 root     wheel   9080 Jul 30 21:02 obj_2_Q0HjZP
+-rw-------   1 root     wheel  15912 Jul 30 21:02 obj_3_OUvCmT
+-rw-------   1 root     wheel  16880 Jul 30 21:02 obj_4_q0hkvG
+-rw-------   1 root     wheel   9416 Jul 30 21:02 obj_5_qmI8ZT
+drwxr-xr-x   6 root     wheel    192 May  3  2019 private
+drwxr-xr-x@ 64 root     wheel   2048 Dec 12 00:12 sbin
+lrwxr-xr-x@  1 root     wheel     11 May  4  2019 tmp -> private/tmp
+drwxr-xr-x@  9 root     wheel    288 May  3  2019 usr
+lrwxr-xr-x@  1 root     wheel     11 May  4  2019 var -> private/var

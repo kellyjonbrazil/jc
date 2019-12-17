@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility uptime Parser
 
 Usage:
+
     specify --uptime as the first argument if the piped input is coming from uptime
+
+Compatibility:
+
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Example:
 
@@ -28,6 +33,16 @@ Example:
 import jc.utils
 
 
+class info():
+    version = '1.0'
+    description = 'uptime parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
@@ -38,7 +53,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        Dictionary. Structured data with the following schema:
 
         {
           "time":     string,
@@ -82,14 +97,10 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        Dictionary. Raw or processed structured data
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = {}
 

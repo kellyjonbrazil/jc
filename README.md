@@ -45,13 +45,11 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 {'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 18128,
 'date': 'May 3 22:26'}]
 ```
-Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of None are converted to JSON Null, known boolean values are converted, and, in some cases, additional semantic context fields are added.
+Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
 Schemas for each parser can be found in the `docs/parsers` folder.
-
-> ***Note:** Due to the introduction of schemas in version `1.5.1` the output of some parsers will be different than in versions `1.1.1` and below.  Now that schemas are defined, the output will be stable for future versions. You can still get similar output to prior versions with the `-r` or `raw=true` options. Though the goal is to keep all output stable, raw output is not guaranteed to stay the same in future releases.*
 
 ## Installation
 ```
@@ -67,8 +65,10 @@ jc PARSER [OPTIONS]
 
 ### Parsers
 - `--arp` enables the `arp` parser
+- `--crontab` enables the `crontab` file parser
 - `--df` enables the `df` parser
 - `--dig` enables the `dig` parser
+- `--du` enables the `du` parser
 - `--env` enables the `env` parser
 - `--free` enables the `free` parser
 - `--fstab` enables the `/etc/fstab` file parser
@@ -83,6 +83,8 @@ jc PARSER [OPTIONS]
 - `--lsof` enables the `lsof` parser
 - `--mount` enables the `mount` parser
 - `--netstat` enables the `netstat` parser
+- `--pip-list` enables the `pip list` parser
+- `--pip-show` enables the `pip show` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--ss` enables the `ss` parser
@@ -96,6 +98,7 @@ jc PARSER [OPTIONS]
 - `--w` enables the `w` parser
 
 ### Options
+- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues encountered
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses warning messages
@@ -155,13 +158,84 @@ $ arp -a | jc --arp -p
   }
 ]
 ```
+### crontab
+```
+$ cat /etc/crontab | jc --crontab -p
+{
+  "variables": [
+    {
+      "name": "MAILTO",
+      "value": "root"
+    },
+    {
+      "name": "PATH",
+      "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+    },
+    {
+      "name": "SHELL",
+      "value": "/bin/bash"
+    }
+  ],
+  "schedule": [
+    {
+      "minute": [
+        "5"
+      ],
+      "hour": [
+        "10-11",
+        "22"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+    },
+    {
+      "minute": [
+        "30"
+      ],
+      "hour": [
+        "4/2"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+    },
+    {
+      "occurrence": "yearly",
+      "command": "/home/maverick/bin/annual-maintenance"
+    },
+    {
+      "occurrence": "reboot",
+      "command": "/home/cleanup"
+    },
+    {
+      "occurrence": "monthly",
+      "command": "/home/maverick/bin/tape-backup"
+    }
+  ]
+}
+```
 ### df
 ```
 $ df | jc --df -p
 [
   {
     "filesystem": "devtmpfs",
-    "1k-blocks": 1918816,
+    "1k_blocks": 1918816,
     "used": 0,
     "available": 1918816,
     "use_percent": 0,
@@ -169,7 +243,7 @@ $ df | jc --df -p
   },
   {
     "filesystem": "tmpfs",
-    "1k-blocks": 1930664,
+    "1k_blocks": 1930664,
     "used": 0,
     "available": 1930664,
     "use_percent": 0,
@@ -336,6 +410,37 @@ $ dig -x 1.1.1.1 | jc --dig -p
   }
 ]
 ```
+### du
+```
+$ du /usr | jc --du -p
+[
+  {
+    "size": 104608,
+    "name": "/usr/bin"
+  },
+  {
+    "size": 56,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+  },
+  {
+    "size": 0,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+  },
+  {
+    "size": 1008,
+    "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
+  },
+  ...
+]
+```
 ### env
 ```
 $ env | jc --env -p
@@ -493,22 +598,29 @@ $ ifconfig | jc --ifconfig -p
   {
     "name": "ens33",
     "flags": 4163,
-    "state": "UP,BROADCAST,RUNNING,MULTICAST",
+    "state": [
+      "UP",
+      "BROADCAST",
+      "RUNNING",
+      "MULTICAST"
+    ],
     "mtu": 1500,
-    "ipv4_addr": "192.168.71.138",
+    "ipv4_addr": "192.168.71.137",
     "ipv4_mask": "255.255.255.0",
     "ipv4_bcast": "192.168.71.255",
     "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
     "ipv6_mask": 64,
-    "ipv6_scope": "link",
+    "ipv6_scope": "0x20",
     "mac_addr": "00:0c:29:3b:58:0e",
     "type": "Ethernet",
-    "rx_packets": 6374,
+    "rx_packets": 8061,
+    "rx_bytes": 1514413,
     "rx_errors": 0,
     "rx_dropped": 0,
     "rx_overruns": 0,
     "rx_frame": 0,
-    "tx_packets": 3707,
+    "tx_packets": 4502,
+    "tx_bytes": 866622,
     "tx_errors": 0,
     "tx_dropped": 0,
     "tx_overruns": 0,
@@ -519,22 +631,28 @@ $ ifconfig | jc --ifconfig -p
   {
     "name": "lo",
     "flags": 73,
-    "state": "UP,LOOPBACK,RUNNING",
+    "state": [
+      "UP",
+      "LOOPBACK",
+      "RUNNING"
+    ],
     "mtu": 65536,
     "ipv4_addr": "127.0.0.1",
     "ipv4_mask": "255.0.0.0",
     "ipv4_bcast": null,
     "ipv6_addr": "::1",
     "ipv6_mask": 128,
-    "ipv6_scope": "host",
+    "ipv6_scope": "0x10",
     "mac_addr": null,
     "type": "Local Loopback",
-    "rx_packets": 81,
+    "rx_packets": 73,
+    "rx_bytes": 6009,
     "rx_errors": 0,
     "rx_dropped": 0,
     "rx_overruns": 0,
     "rx_frame": 0,
-    "tx_packets": 81,
+    "tx_packets": 73,
+    "tx_bytes": 6009,
     "tx_errors": 0,
     "tx_dropped": 0,
     "tx_overruns": 0,
@@ -981,6 +1099,56 @@ $ sudo netstat -apee | jc --netstat -p
     "pid": 1
   },
   ...
+]
+```
+### pip list
+```
+$ pip list | jc --pip-list -p
+[
+  {
+    "package": "ansible",
+    "version": "2.8.5"
+  },
+  {
+    "package": "antlr4-python3-runtime",
+    "version": "4.7.2"
+  },
+  {
+    "package": "asn1crypto",
+    "version": "0.24.0"
+  },
+  ...
+]
+
+```
+### pip show
+```
+$ pip show wrapt wheel | jc --pip-show -p
+[
+  {
+    "name": "wrapt",
+    "version": "1.11.2",
+    "summary": "Module for decorators, wrappers and monkey patching.",
+    "home_page": "https://github.com/GrahamDumpleton/wrapt",
+    "author": "Graham Dumpleton",
+    "author_email": "Graham.Dumpleton@gmail.com",
+    "license": "BSD",
+    "location": "/usr/local/lib/python3.7/site-packages",
+    "requires": null,
+    "required_by": "astroid"
+  },
+  {
+    "name": "wheel",
+    "version": "0.33.4",
+    "summary": "A built-package format for Python.",
+    "home_page": "https://github.com/pypa/wheel",
+    "author": "Daniel Holth",
+    "author_email": "dholth@fastmail.fm",
+    "license": "MIT",
+    "location": "/usr/local/lib/python3.7/site-packages",
+    "requires": null,
+    "required_by": null
+  }
 ]
 ```
 ### ps
@@ -1433,9 +1601,6 @@ $ w | jc --w -p
 ```
 ## TODO
 Future parsers:
-- nslookup
-- journalctl
-- crontab files
 - /proc files
 - /sys files
 
@@ -1443,7 +1608,10 @@ Future parsers:
 Feel free to add/improve code or parsers! You can use the `jc/parsers/foo.py` parser as a template and submit your parser with a pull request.
 
 ## Compatibility
-Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -a -p`.
+
+
+You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
 ```
 $ cat lsof.out | jc --lsof -q
@@ -1452,6 +1620,8 @@ $ cat lsof.out | jc --lsof -q
 Tested on:
 - Centos 7.7
 - Ubuntu 18.4
+- OSX 10.11.6
+- OSX 10.14.6
 
 ## Acknowledgments
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser

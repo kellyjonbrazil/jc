@@ -1,0 +1,32 @@
+Name: pip
+Version: 19.3.1
+Summary: The PyPA recommended tool for installing Python packages.
+Home-page: https://pip.pypa.io/
+Author: The pip developers
+Author-email: pypa-dev@groups.google.com
+License: MIT
+Location: /usr/local/lib/python3.7/site-packages
+Requires: 
+Required-by: 
+---
+Name: jc
+Version: 1.5.1
+Summary: This tool serializes the output of popular command line tools to structured JSON output.
+Home-page: https://github.com/kellyjonbrazil/jc
+Author: Kelly Brazil
+Author-email: kellyjonbrazil@gmail.com
+License: MIT
+Location: /usr/local/lib/python3.7/site-packages
+Requires: ifconfig-parser
+Required-by: 
+---
+Name: ifconfig-parser
+Version: 0.0.4
+Summary: ifconfig-parser
+Home-page: https://github.com/KnightWhoSayNi/ifconfig-parser
+Author: KnightWhoSayNi
+Author-email: threeheadedknight@protonmail.com
+License: MIT license
+Location: /usr/local/lib/python3.7/site-packages
+Requires: 
+Required-by: jc

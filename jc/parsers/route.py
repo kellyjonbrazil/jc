@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility route Parser
 
 Usage:
+
     specify --route as the first argument if the piped input is coming from route
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -92,6 +97,17 @@ Examples:
     ]
 """
 import jc.utils
+import jc.parsers.universal
+
+
+class info():
+    version = '1.0'
+    description = 'route parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
 
 
 def process(proc_data):
@@ -104,7 +120,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -147,22 +163,15 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
-
-    # code adapted from Conor Heine at:
-    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+        jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()[1:]
-    headers = [h for h in ' '.join(cleandata[0].lower().strip().split()).split() if h]
-    raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), cleandata[1:])
-    raw_output = [dict(zip(headers, r)) for r in raw_data]
+    cleandata[0] = cleandata[0].lower()
+
+    raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output

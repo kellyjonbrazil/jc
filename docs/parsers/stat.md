@@ -1,8 +1,13 @@
 # jc.parsers.stat
-jc - JSON CLI output utility stats Parser
+jc - JSON CLI output utility stat Parser
 
 Usage:
-    specify --stats as the first argument if the piped input is coming from stats
+
+    specify --stat as the first argument if the piped input is coming from stat
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -96,6 +101,11 @@ Examples:
       ..
     ]
 
+## info
+```python
+info(self, /, *args, **kwargs)
+```
+
 ## process
 ```python
 process(proc_data)
@@ -109,7 +119,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    List of dictionaries. Structured data with the following schema:
 
     [
       {
@@ -150,5 +160,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    List of dictionaries. Raw or processed structured data.
 

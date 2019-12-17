@@ -1,7 +1,12 @@
 """jc - JSON CLI output utility lsof Parser
 
 Usage:
+
     specify --lsof as the first argument if the piped input is coming from lsof
+
+Compatibility:
+
+    'linux'
 
 Examples:
 
@@ -87,8 +92,18 @@ Examples:
       ...
     ]
 """
-import string
 import jc.utils
+import jc.parsers.universal
+
+
+class info():
+    version = '1.0'
+    description = 'lsof parser'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
+    compatible = ['linux']
 
 
 def process(proc_data):
@@ -101,7 +116,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        List of dictionaries. Structured data with the following schema:
 
         [
           {
@@ -143,14 +158,10 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        List of dictionaries. Raw or processed structured data.
     """
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
-
     if not quiet:
-        jc.utils.compatibility(__name__, compatible)
+        jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
 
@@ -160,7 +171,12 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, linedata))
 
     if cleandata:
+        cleandata[0] = cleandata[0].lower()
+        cleandata[0] = cleandata[0].replace('/', '_')
 
+        raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+
+        '''
         # find column value of last character of each header
         header_text = cleandata.pop(0).lower()
 
@@ -199,6 +215,7 @@ def parse(data, raw=False, quiet=False):
 
             output_line = dict(zip(headers, fixed_line))
             raw_output.append(output_line)
+        '''
 
     if raw:
         return raw_output

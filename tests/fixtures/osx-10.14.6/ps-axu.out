@@ -1,0 +1,378 @@
+USER               PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMMAND
+kbrazil           1046   3.7  3.0  6595412 498788   ??  S    12:10PM   7:53.61 com.docker.hyperkit -A -u -F vms/0/hyperkit.pid -c 4 -m 2048M -s 0:0,hostbridge -s 31,lpc -s 1:0,virtio-vpnkit,path=vpnkit.eth.sock,uuid=0bed4206-a5b8-40bf-b1fa-02cb5d5a7f54 -U 573cd650-b0d4-41ed-a405-9cffcdcd24cb -s 2:0,ahci-hd,/Users/kbrazil/Library/Containers/com.docker.docker/Data/vms/0/Docker.raw -s 3,virtio-sock,guest_cid=3,path=vms/0,guest_forwards=2376;1525 -s 4,ahci-cd,/Applications/Docker.app/Contents/Resources/linuxkit/docker-desktop.iso -s 5,ahci-cd,vms/0/config.iso -s 6,ahci-cd,/Applications/Docker.app/Contents/Resources/linuxkit/docker.iso -s 7,virtio-rnd -l com1,autopty=vms/0/tty,asl -f bootrom,/Applications/Docker.app/Contents/Resources/uefi/UEFI.fd,,
+kbrazil            556   3.5  0.7  5046052 109592   ??  S    12:10PM   0:37.91 /Applications/Utilities/Terminal.app/Contents/MacOS/Terminal -psn_0_102425
+_hidd              112   1.7  0.1  4382500   9940   ??  Ss   12:10PM   2:47.17 /usr/libexec/hidd
+kbrazil            633   1.1  0.4  4421912  61740   ??  S    12:10PM   1:48.29 /Applications/Sublime Text.app/Contents/MacOS/plugin_host 560 --auto-shell-env
+root                86   0.9  0.4  4486620  72908   ??  Ss   12:10PM   1:24.14 /Library/enSilo/enSiloCollector
+root                58   0.7  0.1  4383244  14084   ??  Ss   12:10PM   1:23.52 /Library/Application Support/JAMF/Jamf.app/Contents/MacOS/JamfDaemon.app/Contents/MacOS/JamfDaemon
+_windowserver      192   0.6  0.6  7877628 101144   ??  Ss   12:10PM  10:51.11 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer -daemon
+root             15535   0.5  0.1  4368408  23672   ??  Ss   12:48PM   2:17.82 /Library/Tanium/TaniumClient/Tools/Trace/TaniumRecorder
+kbrazil           8297   0.4  4.5  6938128 754604   ??  S    12:23PM   2:37.81 /Applications/Microsoft Outlook.app/Contents/MacOS/Microsoft Outlook
+kbrazil            609   0.3  0.0  4325216   1556 s000  S    12:10PM   0:00.14 -bash
+kbrazil            560   0.2  1.1  5376996 180740   ??  S    12:10PM   2:56.43 /Applications/Sublime Text.app/Contents/MacOS/Sublime Text -psn_0_110619
+root                57   0.1  0.1  4377044  13180   ??  Ss   12:10PM   0:10.25 /System/Library/CoreServices/powerd.bundle/powerd
+root               216   0.1  0.1  4362088  10252   ??  S    12:10PM   0:14.18 /Library/Tanium/TaniumClient/TaniumClient -m
+root                79   0.1  0.1  4404900  18656   ??  Ss   12:10PM   0:28.23 /usr/libexec/opendirectoryd
+root             57231   0.0  0.1  4315924  11092   ??  Ss    3:13PM   0:00.04 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storeinstalld
+kbrazil          57229   0.0  0.1  4378256  13020   ??  S     3:13PM   0:00.13 /System/Library/CoreServices/mapspushd
+kbrazil          54954   0.0  0.1  4390412  14248   ??  S     3:01PM   0:00.08 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker -s mdworker -c MDSImporterWorker -m com.apple.mdworker.single
+_spotlight       54454   0.0  0.2  4425076  37128   ??  S     2:58PM   0:02.19 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       54453   0.0  0.3  4442200  54860   ??  S     2:58PM   0:03.34 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          54435   0.0  0.1  4371660  14552   ??  S     2:58PM   0:00.58 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          51461   0.0  0.0  4307192   5396   ??  S     2:50PM   0:00.01 /System/Library/Frameworks/MediaAccessibility.framework/Versions/A/XPCServices/com.apple.accessibility.mediaaccessibilityd.xpc/Contents/MacOS/com.apple.accessibility.mediaaccessibilityd
+kbrazil          51460   0.0  0.1  4316148   9196   ??  Ss    2:50PM   0:00.01 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+_spotlight       48283   0.0  0.1  4358676  12708   ??  S     2:42PM   0:00.32 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       48282   0.0  0.1  4370660  13524   ??  S     2:42PM   0:00.47 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          37224   0.0  0.1  4371764  23364   ??  S     2:00PM   0:01.93 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          37211   0.0  0.2  4316408  28756   ??  S     2:00PM   0:12.71 /usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/Resources/Python.app/Contents/MacOS/Python -B /Users/kbrazil/Library/Application Support/Sublime Text 3/Packages/Anaconda/anaconda_server/jsonserver.py -p git 51762 -e /Users/kbrazil/git 633
+kbrazil          37114   0.0  0.1  4363676  24892   ??  S     2:00PM   0:02.90 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          37112   0.0  0.1  4363532  24976   ??  S     2:00PM   0:03.67 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          37111   0.0  0.1  4371764  23808   ??  S     2:00PM   0:02.17 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          36910   0.0  0.1  4408440  15596   ??  S     1:59PM   0:00.42 /System/Library/CoreServices/CoreServicesUIAgent.app/Contents/MacOS/CoreServicesUIAgent
+kbrazil          33592   0.0  0.1  4923136  16688   ??  S     1:48PM   0:00.39 /System/Library/CoreServices/OSDUIHelper.app/Contents/MacOS/OSDUIHelper
+kbrazil          33536   0.0  0.1  4871376  12472   ??  Ss    1:48PM   0:00.11 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+kbrazil          28662   0.0  0.0  4350188   4528   ??  S     1:30PM   0:00.02 /System/Library/PrivateFrameworks/ToneLibrary.framework/Versions/A/XPCServices/com.apple.tonelibraryd.xpc/Contents/MacOS/com.apple.tonelibraryd
+root             28349   0.0  0.3  4376368  42396   ??  S     1:28PM   0:03.20 /Library/Tanium/TaniumClient/TaniumClient -a
+kbrazil          24327   0.0  0.1 106190056  23576   ??  Ss    1:25PM   0:00.54 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+root             24324   0.0  0.2  4379072  39528   ??  S     1:25PM   0:41.29 /Library/Tanium/TaniumClient/TaniumClient -c
+kbrazil          24307   0.0  0.2  4468340  32696   ??  Ss    1:25PM   0:00.07 /System/Library/Frameworks/SafariServices.framework/Versions/A/XPCServices/com.apple.SafariServices.xpc/Contents/MacOS/com.apple.SafariServices
+kbrazil          24306   0.0  0.1  4389156  20372   ??  Ss    1:25PM   0:00.47 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+kbrazil          24149   0.0  0.1  4914400  16384   ??  S     1:24PM   0:00.44 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreautha.bundle/Contents/MacOS/coreautha
+kbrazil          24002   0.0  0.0  4343176   7892   ??  S     1:12PM   0:00.02 /usr/libexec/USBAgent
+kbrazil          23999   0.0  0.0  4368704   4992   ??  S     1:12PM   0:00.03 /System/Library/CoreServices/AirPort Base Station Agent.app/Contents/MacOS/AirPort Base Station Agent --launchd
+root             23995   0.0  0.0  4378708   6748   ??  S     1:12PM   0:00.14 /usr/libexec/secinitd
+root             23994   0.0  0.1  4386588   9564   ??  S     1:12PM   0:00.45 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+_softwareupdate  17515   0.0  0.1  4352904   9716   ??  Ss   12:50PM   0:00.04 /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdate_download_service
+_softwareupdate  17500   0.0  0.0  4342764   1176   ??  S    12:50PM   0:00.06 /usr/sbin/distnoted agent
+_softwareupdate  17499   0.0  0.0  4309216   1200   ??  S    12:50PM   0:00.09 /usr/sbin/cfprefsd agent
+_atsserver       17495   0.0  0.0  4378548   7852   ??  Ss   12:50PM   0:00.14 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/Support/fontd
+kbrazil          14604   0.0  0.1  4378208   8868   ??  S    12:46PM   0:00.14 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdwrite
+kbrazil           9214   0.0  0.1  4925960  17848   ??  S    12:29PM   0:00.93 /System/Library/CoreServices/NowPlayingTouchUI.app/Contents/MacOS/NowPlayingTouchUI
+kbrazil           8325   0.0  0.0  4324132   8156   ??  S    12:24PM   0:00.03 /System/Library/PrivateFrameworks/CoreCDP.framework/Versions/A/Resources/cdpd
+kbrazil           8322   0.0  0.1  4385988  15792   ??  S    12:24PM   0:00.57 /System/Library/PrivateFrameworks/CloudServices.framework/Versions/A/XPCServices/com.apple.sbd.xpc/Contents/MacOS/com.apple.sbd
+kbrazil           8321   0.0  0.2  4349992  26068   ??  S    12:24PM   0:00.08 /System/Library/CoreServices/EscrowSecurityAlert.app/Contents/MacOS/EscrowSecurityAlert
+kbrazil           8314   0.0  0.1  4383492  19548   ??  Ss   12:23PM   0:00.61 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+kbrazil           8311   0.0  0.1  4384516  19548   ??  Ss   12:23PM   0:00.60 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+kbrazil           8310   0.0  0.1 89351692  15404   ??  Ss   12:23PM   0:00.57 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+_spotlight        3836   0.0  0.1  4378508  10824   ??  S    12:17PM   0:05.81 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker -s mdworker-sizing -c MDSSizingWorker -m com.apple.mdworker.sizing
+kbrazil           3835   0.0  0.1  4378524  10908   ??  S    12:17PM   0:00.70 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker -s mdworker-sizing -c MDSSizingWorker -m com.apple.mdworker.sizing
+kbrazil           3724   0.0  0.0  4376420   5196   ??  S    12:17PM   0:00.07 /System/Library/PrivateFrameworks/ContextKit.framework/Versions/A/XPCServices/ContextService.xpc/Contents/MacOS/ContextService
+kbrazil           3468   0.0  0.2  4496632  30660   ??  S    12:17PM   0:02.79 /System/Library/CoreServices/SafariSupport.bundle/Contents/MacOS/SafariBookmarksSyncAgent
+kbrazil           3464   0.0  0.2  4368200  25980   ??  S    12:17PM   0:00.10 /System/Library/PrivateFrameworks/PhotoAnalysis.framework/Versions/A/Support/photoanalysisd
+kbrazil           3457   0.0  0.1  4380232  16996   ??  S    12:16PM   0:00.81 /System/Library/PrivateFrameworks/AppStoreDaemon.framework/Support/appstoreagent
+kbrazil           3021   0.0  0.0  4411016   5496   ??  S    12:15PM   0:00.22 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/Support/atsd
+root              1431   0.0  0.0  4354884   6456   ??  Ss   12:12PM   0:00.27 /usr/libexec/mobileactivationd
+kbrazil           1353   0.0  0.0  4333556   8332   ??  Ss   12:11PM   0:00.01 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+kbrazil           1351   0.0  0.1  4388208  10216   ??  S    12:11PM   0:00.34 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/SpeechSynthesis.framework/Resources/com.apple.speech.speechsynthesisd
+kbrazil           1331   0.0  0.0  4378708   6044   ??  Ss   12:11PM   0:00.04 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+kbrazil           1302   0.0  0.5 106614828  82516   ??  Ss   12:11PM   0:02.60 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+_spotlight        1205   0.0  0.0  4350956   1456   ??  S    12:11PM   0:00.10 /usr/sbin/distnoted agent
+kbrazil           1123   0.0  0.0  4381656   7128   ??  S    12:11PM   0:00.32 /System/Library/PrivateFrameworks/AssetCacheServices.framework/Versions/A/XPCServices/AssetCacheLocatorService.xpc/Contents/MacOS/AssetCacheLocatorService -a
+_spotlight        1121   0.0  0.1  4380928   8772   ??  S    12:11PM   0:00.89 /usr/libexec/trustd --agent
+kbrazil           1103   0.0  0.1  4342256   9368   ??  S    12:11PM   0:00.03 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/PrintCore.framework/Versions/A/printtool agent
+kbrazil           1055   0.0  0.1  4380576  12184   ??  Ss   12:10PM   0:00.09 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/XPCServices/com.apple.CommerceKit.TransactionService.xpc/Contents/MacOS/com.apple.CommerceKit.TransactionService
+kbrazil           1054   0.0  0.1  4404180  20960   ??  S    12:10PM   0:00.57 /System/Library/PrivateFrameworks/CommerceKit.framework/Resources/LaterAgent.app/Contents/MacOS/LaterAgent
+kbrazil           1051   0.0  0.1  4377564  15308   ??  S    12:10PM   0:00.08 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storelegacy
+root              1049   0.0  0.1  4342452   9868   ??  Ss   12:10PM   0:00.03 /System/Library/CoreServices/Software Update.app/Contents/Resources/suhelperd
+_softwareupdate   1048   0.0  0.2  4525656  39208   ??  Ss   12:10PM   0:06.83 /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated
+kbrazil           1047   0.0  0.1  4351004  11404   ??  S    12:10PM   0:00.06 /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdate_notify_agent
+kbrazil           1045   0.0  0.1  4880144  10584   ??  Ss   12:10PM   0:00.10 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+kbrazil           1042   0.0  0.1  4425016  11232   ??  S    12:10PM   0:00.64 com.docker.backend -addr fd:3
+kbrazil           1041   0.0  0.1  4522468  20676   ??  S    12:10PM   0:01.02 com.docker.driver.amd64-linux -addr fd:3 -debug
+kbrazil           1040   0.0  0.1  4399292  21372   ??  S    12:10PM   0:02.05 com.docker.vpnkit --ethernet fd:3 --diagnostics fd:4 --pcap fd:5 --vsock-path vms/0/connect --gateway-forwards /Users/kbrazil/Library/Group Containers/group.com.docker/gateway_forwards.json --host-names host.docker.internal,docker.for.mac.host.internal,docker.for.mac.localhost --listen-backlog 32 --mtu 1500 --allowed-bind-addresses 0.0.0.0 --http /Users/kbrazil/Library/Group Containers/group.com.docker/http_proxy.json --dhcp /Users/kbrazil/Library/Group Containers/group.com.docker/dhcp.json --port-max-idle-time 300 --max-connections 2000 --gateway-ip 192.168.65.1 --host-ip 192.168.65.2 --lowest-ip 192.168.65.3 --highest-ip 192.168.65.254 --log-destination asl --udpv4-forwards 123:127.0.0.1:58011 --gc-compact-interval 1800
+kbrazil           1039   0.0  0.1  4369156  14612   ??  S    12:10PM   0:12.36 com.docker.osxfs serve --address fd:3 --connect vms/0/connect --control fd:4 --log-destination asl
+kbrazil           1037   0.0  0.1  4482108  12420   ??  S    12:10PM   0:00.91 /Applications/Docker.app/Contents/MacOS/com.docker.supervisor -watchdog fd:0
+kbrazil           1036   0.0  0.0  4350828   5028   ??  S    12:10PM   0:00.03 /usr/libexec/loginitemregisterd
+_locationd        1023   0.0  0.0  4381528   7384   ??  S    12:10PM   0:00.19 /usr/libexec/trustd --agent
+_locationd        1022   0.0  0.0  4350176   1204   ??  S    12:10PM   0:00.11 /usr/sbin/cfprefsd agent
+_locationd        1017   0.0  0.0  4378884   6784   ??  S    12:10PM   0:00.12 /usr/libexec/secinitd
+_locationd        1015   0.0  0.0  4381456   8384   ??  S    12:10PM   0:00.25 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+root               984   0.0  0.1  4377748  15280   ??  Ss   12:10PM   0:00.07 /usr/libexec/dmd
+kbrazil            973   0.0  0.1  4351028  14048   ??  S    12:10PM   0:00.06 /usr/libexec/findmydevice-user-agent
+kbrazil            910   0.0  0.1  4352944  23268   ??  S    12:10PM   0:00.30 /System/Library/PrivateFrameworks/PrintingPrivate.framework/Versions/A/PrintUITool
+kbrazil            907   0.0  0.2  6029632  40220   ??  S    12:10PM   0:04.41 /Applications/Docker.app/Contents/MacOS/Docker
+kbrazil            893   0.0  0.1  4349940   9260   ??  Ss   12:10PM   0:00.02 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+root               892   0.0  0.0  4383248   6772   ??  Ss   12:10PM   0:00.22 /System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/Support/akd
+kbrazil            879   0.0  0.1  4351556  10716   ??  S    12:10PM   0:00.03 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd -tw
+kbrazil            877   0.0  0.1  4351120  10972   ??  S    12:10PM   0:00.04 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+kbrazil            876   0.0  0.1  4916624  18828   ??  S    12:10PM   0:25.04 /Applications/StatusClock.app/Contents/MacOS/StatusClock
+root               875   0.0  0.1  4351000  10612   ??  Ss   12:10PM   0:00.03 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp -d
+kbrazil            873   0.0  0.1  4386880  19176   ??  S    12:10PM   0:00.65 /usr/libexec/adprivacyd
+kbrazil            872   0.0  0.1  4404124  18876   ??  S    12:10PM   0:00.64 /System/Library/PrivateFrameworks/Noticeboard.framework/Versions/A/Resources/nbagent.app/Contents/MacOS/nbagent
+kbrazil            869   0.0  0.1  4378304  19000   ??  S    12:10PM   0:00.23 /System/Library/CoreServices/cloudpaird
+kbrazil            868   0.0  0.1  4908268  16476   ??  S    12:10PM   0:00.61 /System/Library/CoreServices/AirPlayUIAgent.app/Contents/MacOS/AirPlayUIAgent --launchd
+kbrazil            867   0.0  0.1  4412948  19148   ??  S    12:10PM   0:01.24 /Library/enSilo/enSiloCollectorTray.app/Contents/MacOS/enSiloCollectorTray
+kbrazil            866   0.0  0.2  4462712  31164   ??  S    12:10PM   0:14.80 /Applications/Egnyte WebEdit.app/Contents/MacOS/Egnyte WebEdit
+kbrazil            862   0.0  0.1  4378812  18720   ??  S    12:10PM   0:00.20 /System/Library/Image Capture/Support/icdd
+kbrazil            861   0.0  0.1  4428128  21504   ??  S    12:10PM   0:00.77 /Applications/Ivanti Agent.app/Contents/MacOS/Ivanti Agent
+kbrazil            860   0.0  0.1  4377808  16116   ??  S    12:10PM   0:00.09 /usr/libexec/dmd
+kbrazil            858   0.0  0.1  4377852  12768   ??  SN   12:10PM   0:00.83 /usr/local/jamf/bin/jamfAgent
+root               857   0.0  0.1  4352244  10196   ??  S    12:10PM   0:00.56 /Library/Application Support/LANDesk/bin/ldlockscreen
+kbrazil            854   0.0  0.1  4376432  12844   ??  S    12:10PM   0:00.04 /System/Library/CoreServices/SocialPushAgent.app/Contents/MacOS/SocialPushAgent
+kbrazil            849   0.0  0.1  4377680  25008   ??  S    12:10PM   0:01.34 /System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd
+kbrazil            848   0.0  0.1  4380176   9436   ??  S    12:10PM   0:00.16 /System/Library/CoreServices/ScopedBookmarkAgent
+root               847   0.0  0.1  4382212   8684   ??  Ss   12:10PM   0:00.06 /usr/libexec/dprivacyd
+_applepay          846   0.0  0.1  4369436   8552   ??  Ss   12:10PM   0:00.09 /usr/libexec/nfcd
+kbrazil            845   0.0  0.1  4382244  18272   ??  S    12:10PM   0:00.08 /System/Library/PrivateFrameworks/PhotoLibraryPrivate.framework/Versions/A/Support/photolibraryd
+kbrazil            844   0.0  0.1  4380560  19700   ??  S    12:10PM   0:00.20 /System/Library/PrivateFrameworks/CoreRecents.framework/Versions/A/Support/recentsd
+kbrazil            843   0.0  0.1  4377816  11104   ??  Ss   12:10PM   0:00.20 /System/Library/PrivateFrameworks/IMFoundation.framework/XPCServices/IMRemoteURLConnectionAgent.xpc/Contents/MacOS/IMRemoteURLConnectionAgent
+kbrazil            841   0.0  0.2  4427448  30984   ??  Ss   12:10PM   0:00.52 /System/Library/Frameworks/MediaLibrary.framework/Versions/A/XPCServices/com.apple.MediaLibraryService.xpc/Contents/MacOS/com.apple.MediaLibraryService
+kbrazil            835   0.0  0.1  4404688  17872   ??  S    12:10PM   0:00.70 /System/Library/CoreServices/CoreLocationAgent.app/Contents/MacOS/CoreLocationAgent
+kbrazil            830   0.0  0.2  4378556  26096   ??  S    12:10PM   0:00.15 /System/Library/PrivateFrameworks/CloudPhotoServices.framework/Versions/A/Frameworks/CloudPhotosConfigurationXPC.framework/Versions/A/XPCServices/com.apple.CloudPhotosConfiguration.xpc/Contents/MacOS/com.apple.CloudPhotosConfiguration
+kbrazil            829   0.0  0.0  4376612   7424   ??  S    12:10PM   0:00.03 /System/Library/PrivateFrameworks/QuickLookThumbnailing.framework/Support/com.apple.quicklook.ThumbnailsAgent
+root               828   0.0  0.1  4376860  10424   ??  Ss   12:10PM   0:00.03 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/system_installd
+root               827   0.0  0.0  4370136   7236   ??  Ss   12:10PM   0:00.05 /usr/bin/sysdiagnose
+root               825   0.0  0.2  4413016  41828   ??  Ss   12:10PM   0:38.19 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/installd
+kbrazil            824   0.0  0.2  4431344  35212   ??  S    12:10PM   0:00.91 /System/Library/CoreServices/cloudphotosd.app/Contents/MacOS/cloudphotosd
+_assetcache        823   0.0  0.1  4380196  13200   ??  Ss   12:10PM   0:00.06 /usr/libexec/AssetCache/AssetCache
+kbrazil            822   0.0  0.1  4377668  17268   ??  S    12:10PM   0:00.35 /System/Library/CoreServices/diagnostics_agent
+kbrazil            820   0.0  0.2  4658908  28960   ??  S    12:10PM   0:00.59 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
+kbrazil            819   0.0  0.0  4350040   6612   ??  S    12:10PM   0:00.04 /usr/libexec/assertiond
+kbrazil            818   0.0  0.1  4378708   9060   ??  S    12:10PM   0:00.11 /System/Library/Frameworks/AudioToolbox.framework/AudioComponentRegistrar
+_windowserver      816   0.0  0.1  4852944  17092   ??  Ss   12:10PM   0:00.08 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+kbrazil            813   0.0  0.1  4379112   9176   ??  S    12:10PM   0:00.18 /System/Library/PrivateFrameworks/CacheDelete.framework/deleted
+kbrazil            812   0.0  0.0  4362324   7308   ??  Ss   12:10PM   0:00.05 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+kbrazil            811   0.0  0.2  4481656  35208   ??  S    12:10PM   0:00.28 /System/Library/PrivateFrameworks/CoreSuggestions.framework/Versions/A/Support/reversetemplated
+kbrazil            808   0.0  0.1  4376960  11296   ??  Ss   12:10PM   0:00.36 /System/Library/PrivateFrameworks/CloudDocsDaemon.framework/XPCServices/ContainerMetadataExtractor.xpc/Contents/MacOS/ContainerMetadataExtractor
+root               806   0.0  0.1  4442876   9384   ??  Ss   12:10PM   0:10.25 /System/Library/CoreServices/iconservicesagent runAsRoot
+kbrazil            801   0.0  0.5  4558148  79460   ??  S    12:10PM   0:05.63 /System/Library/PrivateFrameworks/CoreSuggestions.framework/Versions/A/Support/suggestd
+kbrazil            800   0.0  0.0  4350336   5624   ??  S    12:10PM   0:00.06 /System/Library/Frameworks/ColorSync.framework/Support/colorsync.useragent
+kbrazil            799   0.0  0.2  4409480  28112   ??  Ss   12:10PM   0:02.33 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+kbrazil            798   0.0  0.4 106607040  74640   ??  Ss   12:10PM   0:03.12 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+kbrazil            797   0.0  0.1  4379824  17292   ??  S    12:10PM   0:00.09 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storedownloadd
+kbrazil            795   0.0  0.0  4350332   6060   ??  S    12:10PM   0:00.79 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/XPCServices/com.apple.hiservices-xpcservice.xpc/Contents/MacOS/com.apple.hiservices-xpcservice
+kbrazil            794   0.0  0.1  4391072  21172   ??  S    12:10PM   0:00.67 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storeassetd
+kbrazil            788   0.0  0.1  4407348  23464   ??  S    12:10PM   0:00.73 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storeuid.app/Contents/MacOS/storeuid
+root               787   0.0  0.1  4377084  10952   ??  Ss   12:10PM   0:00.38 /System/Library/PrivateFrameworks/AmbientDisplay.framework/Versions/A/XPCServices/com.apple.AmbientDisplayAgent.xpc/Contents/MacOS/com.apple.AmbientDisplayAgent
+kbrazil            785   0.0  0.1  4870928  16980   ??  Ss   12:10PM   0:00.09 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+kbrazil            684   0.0  0.1  4378128  10272   ??  S    12:10PM   0:00.03 /System/Library/CoreServices/Menu Extras/SafeEjectGPUExtra.menu/Contents/XPCServices/SafeEjectGPUService.xpc/Contents/MacOS/SafeEjectGPUService
+kbrazil            680   0.0  0.1  4830488   8988   ??  S    12:10PM   0:00.01 SafeEjectGPUAgent
+kbrazil            676   0.0  0.1  4377324   9024   ??  S    12:10PM   0:00.08 /usr/libexec/videosubscriptionsd
+kbrazil            667   0.0  0.0  4378708   8388   ??  Ss   12:10PM   0:00.05 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+kbrazil            665   0.0  0.1  4381012  14124   ??  S    12:10PM   0:00.06 /usr/libexec/keyboardservicesd
+kbrazil            664   0.0  0.0  4349696   4828   ??  Ss   12:10PM   0:00.02 /System/Library/PrivateFrameworks/IMFoundation.framework/XPCServices/IMRemoteURLConnectionAgent.xpc/Contents/MacOS/IMRemoteURLConnectionAgent
+kbrazil            661   0.0  0.0  4342728   5728   ??  S    12:10PM   0:00.03 /usr/libexec/spindump_agent
+kbrazil            659   0.0  0.7  4808808 123400   ??  S    12:10PM   0:14.00 /System/Library/Services/AppleSpell.service/Contents/MacOS/AppleSpell
+root               658   0.0  0.2  4397068  25752   ??  Ss   12:10PM   0:02.01 /usr/sbin/spindump
+_gamecontrollerd   642   0.0  0.1  4350400   9932   ??  Ss   12:10PM   0:00.66 /usr/libexec/gamecontrollerd
+kbrazil            640   0.0  0.1  4381520   8548   ??  S    12:10PM   0:00.39 /System/Library/CoreServices/pbs
+kbrazil            632   0.0  0.1  4377376  12260   ??  S    12:10PM   0:00.82 /System/Library/PrivateFrameworks/FileProvider.framework/Support/fileproviderd
+kbrazil            631   0.0  0.1  4382512  16596   ??  S    12:10PM   0:00.36 /usr/libexec/knowledge-agent
+root               627   0.0  0.1  4380048  22356   ??  Ss   12:10PM   0:00.46 /usr/libexec/findmydeviced
+kbrazil            617   0.0  0.1  4383672  17012   ??  S    12:10PM   0:00.21 /System/Library/PrivateFrameworks/ContactsDonation.framework/Versions/A/Support/contactsdonationagent
+kbrazil            608   0.0  0.2  4383852  27232   ??  Ss   12:10PM   0:00.52 /System/Library/PrivateFrameworks/WeatherKit.framework/Versions/A/XPCServices/com.apple.WeatherKitService.xpc/Contents/MacOS/com.apple.WeatherKitService
+kbrazil            607   0.0  0.1  4384120  15492   ??  S    12:10PM   0:00.26 /System/Library/PrivateFrameworks/CallHistory.framework/Support/CallHistoryPluginHelper
+root               606   0.0  0.0  4349720   5564 s000  Ss   12:10PM   0:00.03 login -pfl kbrazil /bin/bash -c exec -la bash /bin/bash
+kbrazil            605   0.0  0.1  4333464   9132   ??  S    12:10PM   0:00.03 /System/Library/PrivateFrameworks/CharacterPicker.framework/Versions/A/XPCServices/com.apple.CharacterPicker.FileService.xpc/Contents/MacOS/com.apple.CharacterPicker.FileService
+kbrazil            604   0.0  0.1  4383496  19992   ??  Ss   12:10PM   0:00.67 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+kbrazil            603   0.0  0.1 89347532  17772   ??  Ss   12:10PM   0:00.67 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+kbrazil            601   0.0  0.2  4910916  32480   ??  Ss   12:10PM   0:00.74 /System/Library/CoreServices/Dock.app/Contents/XPCServices/com.apple.dock.extra.xpc/Contents/MacOS/com.apple.dock.extra
+kbrazil            600   0.0  0.1  4880144  18124   ??  Ss   12:10PM   0:00.15 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+kbrazil            599   0.0  0.2  5091508  26004   ??  Ss   12:10PM   0:03.30 /System/Library/Input Methods/EmojiFunctionRowIM.app/Contents/PlugIns/EmojiFunctionRowIM_Extension.appex/Contents/MacOS/EmojiFunctionRowIM_Extension
+kbrazil            597   0.0  0.1  4901400  15444   ??  Ss   12:10PM   0:00.99 /System/Library/Input Methods/PressAndHold.app/Contents/PlugIns/PAH_Extension.appex/Contents/MacOS/PAH_Extension
+kbrazil            596   0.0  0.1  4385744  14876   ??  S    12:10PM   0:00.55 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+kbrazil            595   0.0  0.1  4390188  22924   ??  S    12:10PM   0:00.97 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/commerce
+kbrazil            594   0.0  0.1  4376888  13284   ??  Ss   12:10PM   0:00.55 /System/Library/PrivateFrameworks/CoreWLANKit.framework/Versions/A/XPCServices/WiFiProxy.xpc/Contents/MacOS/WiFiProxy
+kbrazil            593   0.0  0.1  4380168  13432   ??  S    12:10PM   0:00.51 /System/Library/Frameworks/InputMethodKit.framework/Resources/imklaunchagent
+root               592   0.0  0.0  4350728   6612   ??  Ss   12:10PM   0:00.09 /usr/sbin/filecoordinationd
+kbrazil            585   0.0  0.1  4387424  23416   ??  S    12:10PM   0:00.45 /System/Library/PrivateFrameworks/CoreParsec.framework/parsecd
+kbrazil            583   0.0  0.1  4349972   9296   ??  S    12:10PM   0:00.02 /System/Library/PrivateFrameworks/CoreFollowUp.framework/Versions/A/Support/followupd
+kbrazil            582   0.0  0.3  4976452  57784   ??  S    12:10PM   0:03.14 /System/Library/CoreServices/Spotlight.app/Contents/MacOS/Spotlight
+kbrazil            581   0.0  0.0  4376388   6608   ??  S    12:10PM   0:00.04 /System/Library/PrivateFrameworks/CommunicationsFilter.framework/CMFSyncAgent
+root               580   0.0  0.1  4388628  10196   ??  Ss   12:10PM   0:00.76 /usr/sbin/systemsoundserverd
+kbrazil            576   0.0  0.7  5097960 125460   ??  S    12:10PM   0:22.64 /System/Library/CoreServices/Finder.app/Contents/MacOS/Finder
+kbrazil            575   0.0  0.3  4947692  48880   ??  S    12:10PM   0:03.67 /System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer
+kbrazil            574   0.0  0.1  4351560  17760   ??  S    12:10PM   0:00.08 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storeaccountd
+kbrazil            573   0.0  0.3  5011644  48280   ??  S    12:10PM   0:17.55 /System/Library/CoreServices/Dock.app/Contents/MacOS/Dock
+kbrazil            572   0.0  0.1  4381696  18568   ??  S    12:10PM   0:03.47 /usr/libexec/pkd
+_fpsd              569   0.0  0.0  4354012   8388   ??  Ss   12:10PM   0:00.14 /System/Library/PrivateFrameworks/CoreADI.framework/adid
+kbrazil            567   0.0  0.4  5001940  69900   ??  S    12:10PM   0:04.34 /Applications/Contacts.app/Contents/MacOS/Contacts -psn_0_122910
+kbrazil            566   0.0  1.1  5564348 185784   ??  S    12:10PM   0:17.14 /Applications/Messages.app/Contents/MacOS/Messages -psn_0_118813
+kbrazil            565   0.0  0.1  4379596  21048   ??  S    12:10PM   0:00.64 /System/Library/PrivateFrameworks/CloudDocsDaemon.framework/Versions/A/Support/bird
+kbrazil            564   0.0  0.2  4385348  25344   ??  S    12:10PM   0:00.33 /System/Library/PrivateFrameworks/AssistantServices.framework/Versions/A/Support/assistantd
+kbrazil            563   0.0  0.0  4379864   6348   ??  S    12:10PM   0:00.32 /usr/libexec/swcd
+kbrazil            561   0.0  0.6  5166204 100748   ??  S    12:10PM   0:07.59 /Applications/Notes.app/Contents/MacOS/Notes -psn_0_114716
+kbrazil            559   0.0  0.1  4378448  18652   ??  S    12:10PM   0:00.06 /System/Library/PrivateFrameworks/FamilyCircle.framework/Versions/A/Resources/familycircled
+kbrazil            558   0.0  0.5  5027332  83612   ??  S    12:10PM   0:01.50 /Applications/Reminders.app/Contents/MacOS/Reminders -psn_0_106522
+kbrazil            557   0.0  0.1  4377880  12512   ??  Ss   12:10PM   0:00.15 /System/Library/PrivateFrameworks/IMFoundation.framework/XPCServices/IMRemoteURLConnectionAgent.xpc/Contents/MacOS/IMRemoteURLConnectionAgent
+kbrazil            555   0.0  0.2  4388844  26608   ??  S    12:10PM   0:00.39 /usr/libexec/fmfd
+kbrazil            554   0.0  0.0  4349736   5680   ??  S    12:10PM   0:00.03 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoteagent
+kbrazil            553   0.0  0.5  4988888  75964   ??  S    12:10PM   0:05.94 /Applications/Calendar.app/Contents/MacOS/Calendar -psn_0_98328
+kbrazil            552   0.0  0.2  4387004  39564   ??  Ss   12:10PM   0:01.59 /System/Library/PrivateFrameworks/CalendarNotification.framework/Versions/A/XPCServices/CalNCService.xpc/Contents/MacOS/CalNCService
+kbrazil            551   0.0  0.1  4387468  14204   ??  S    12:10PM   0:00.92 /usr/libexec/nsurlstoraged
+kbrazil            549   0.0  0.1  4378576  10748   ??  S    12:10PM   0:00.57 /System/Library/PrivateFrameworks/UserActivity.framework/Agents/useractivityd
+kbrazil            548   0.0  0.7  6316120 115788   ??  S    12:10PM   0:37.83 /Applications/Sourcetree.app/Contents/MacOS/Sourcetree -psn_0_86037
+kbrazil            547   0.0  0.3  4393608  43064   ??  S    12:10PM   0:03.48 /usr/libexec/sharingd
+kbrazil            546   0.0  0.7  4439908 123700   ??  S    12:10PM   0:15.02 /System/Library/PrivateFrameworks/MessagesKit.framework/Resources/soagent.app/Contents/MacOS/soagent
+kbrazil            545   0.0  0.1  4377880  13000   ??  Ss   12:10PM   0:00.18 /System/Library/PrivateFrameworks/IMFoundation.framework/XPCServices/IMRemoteURLConnectionAgent.xpc/Contents/MacOS/IMRemoteURLConnectionAgent
+kbrazil            543   0.0  0.5  5163276  81292   ??  S    12:10PM   0:03.70 /System/Library/CoreServices/NotificationCenter.app/Contents/MacOS/NotificationCenter
+root               542   0.0  0.0  4349756   5832   ??  Ss   12:10PM   0:00.02 /System/Library/CoreServices/CrashReporterSupportHelper server-init
+kbrazil            541   0.0  0.1  4379596  12232   ??  S    12:10PM   0:03.76 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/Support/fontd
+kbrazil            540   0.0  0.1  4408432  14504   ??  S    12:10PM   0:00.87 /System/Library/CoreServices/WiFiAgent.app/Contents/MacOS/WiFiAgent
+kbrazil            537   0.0  0.4  4445456  62588   ??  S    12:10PM   0:05.62 /System/Library/PrivateFrameworks/CalendarAgent.framework/Executables/CalendarAgent
+kbrazil            536   0.0  0.0  4342124   5516   ??  S    12:10PM   0:00.02 /System/Library/CoreServices/APFSUserAgent
+kbrazil            535   0.0  0.1  4378332  11004   ??  S    12:10PM   0:00.11 /usr/libexec/networkserviceproxy
+kbrazil            534   0.0  0.2  4938220  38492   ??  S    12:10PM   0:02.87 /System/Library/CoreServices/ControlStrip.app/Contents/MacOS/ControlStrip
+kbrazil            533   0.0  0.1  4381904  24136   ??  S    12:10PM   0:01.30 /usr/sbin/usernoted
+kbrazil            532   0.0  0.2  4386616  35908   ??  S    12:10PM   0:02.03 /usr/libexec/routined LAUNCHED_BY_LAUNCHD
+kbrazil            531   0.0  0.1  4379788  10132   ??  S    12:10PM   0:00.45 /System/Library/CoreServices/sharedfilelistd
+kbrazil            530   0.0  1.2  5866640 207544   ??  S    12:10PM   0:40.74 /Applications/Mail.app/Contents/MacOS/Mail -psn_0_69649
+kbrazil            529   0.0  0.1  4384616  11584   ??  S    12:10PM   0:00.46 /System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/Support/akd
+kbrazil            528   0.0  0.1  4378268  19776   ??  S    12:10PM   0:00.75 /usr/libexec/rapportd
+root               527   0.0  0.0  4377812   7316   ??  Ss   12:10PM   0:00.04 /usr/sbin/wirelessproxd
+kbrazil            526   0.0  0.1  4380252  13144   ??  S    12:10PM   0:00.99 /usr/libexec/secinitd
+kbrazil            525   0.0  0.1  4423320  19040   ??  S    12:10PM   0:29.59 /System/Library/CoreServices/iconservicesagent
+kbrazil            524   0.0  0.1  4349888  19360   ??  S    12:10PM   0:00.96 /System/Library/Frameworks/AddressBook.framework/Executables/ContactsAccountsService
+kbrazil            523   0.0  0.2  4434932  30768   ??  S    12:10PM   0:00.51 /System/Library/PrivateFrameworks/IMDPersistence.framework/XPCServices/IMDPersistenceAgent.xpc/Contents/MacOS/IMDPersistenceAgent
+kbrazil            522   0.0  0.2  4385832  29108   ??  S    12:10PM   0:00.70 /System/Library/PrivateFrameworks/IMCore.framework/imagent.app/Contents/MacOS/imagent
+kbrazil            521   0.0  0.1  4377276  11664   ??  S    12:10PM   0:02.50 /System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/XPCServices/ViewBridgeAuxiliary.xpc/Contents/MacOS/ViewBridgeAuxiliary
+kbrazil            520   0.0  0.3  4455356  44588   ??  S    12:10PM   0:01.06 /System/Library/CoreServices/talagent
+kbrazil            519   0.0  0.2  4392312  28916   ??  S    12:10PM   0:01.77 /System/Library/PrivateFrameworks/IDS.framework/identityservicesd.app/Contents/MacOS/identityservicesd
+kbrazil            518   0.0  0.1  4351228   8672   ??  S    12:10PM   0:00.06 /System/Library/Frameworks/Security.framework/Versions/A/Resources/CloudKeychainProxy.bundle/Contents/MacOS/CloudKeychainProxy
+kbrazil            517   0.0  0.3  4531964  56468   ??  S    12:10PM   0:09.12 /System/Library/Frameworks/Accounts.framework/Versions/A/Support/accountsd
+kbrazil            515   0.0  0.3  4426108  52332   ??  S    12:10PM   0:13.00 /System/Library/PrivateFrameworks/TelephonyUtilities.framework/callservicesd
+root               514   0.0  0.1  4377460  12404   ??  Ss   12:10PM   0:00.11 /usr/sbin/WirelessRadioManagerd
+kbrazil            513   0.0  0.1  4391696  19664   ??  S    12:10PM   0:01.11 /usr/libexec/nsurlsessiond
+kbrazil            512   0.0  0.1  4386144  12588   ??  S    12:10PM   0:01.19 /System/Library/PrivateFrameworks/TCC.framework/Resources/tccd
+kbrazil            511   0.0  0.0  4350816   6764   ??  S    12:10PM   0:00.26 /usr/libexec/pboard
+kbrazil            509   0.0  0.2  4398324  36328   ??  S    12:10PM   0:01.90 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+kbrazil            508   0.0  0.1  4378420   8852   ??  S    12:10PM   0:00.19 /System/Library/CoreServices/backgroundtaskmanagementagent
+kbrazil            507   0.0  0.1  4396992  24736   ??  S    12:10PM   0:05.95 /usr/libexec/secd
+kbrazil            506   0.0  0.1  4406800  25052   ??  S    12:10PM   0:13.16 /usr/libexec/trustd --agent
+kbrazil            505   0.0  0.1  4387720  14936   ??  S    12:10PM   0:01.60 /usr/libexec/lsd
+kbrazil            503   0.0  0.2  4391752  32332   ??  S    12:10PM   0:01.43 /System/Library/Frameworks/CoreTelephony.framework/Support/CommCenter -L
+kbrazil            502   0.0  0.1  4382492  12936   ??  S    12:10PM   0:01.69 /usr/sbin/universalaccessd launchd -s
+kbrazil            501   0.0  0.0  4350956   6232   ??  S    12:10PM   0:01.89 /usr/sbin/distnoted agent
+kbrazil            499   0.0  0.2  4379684  36572   ??  S    12:10PM   0:04.20 /usr/libexec/UserEventAgent (Aqua)
+root               498   0.0  0.0  4335004   5888   ??  Ss   12:10PM   0:00.02 /usr/libexec/securityd_service
+root               497   0.0  0.0  4376528   5120   ??  Ss   12:10PM   0:00.03 /usr/libexec/biokitaggdd
+kbrazil            496   0.0  0.0  4350696   4052   ??  S    12:10PM   0:10.88 /usr/sbin/cfprefsd agent
+root               495   0.0  0.1  4377868  13672   ??  Ss   12:10PM   0:00.23 /usr/libexec/biometrickitd --launchd
+kbrazil            494   0.0  0.1  4360160   9976   ??  S    12:10PM   0:00.02 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+root               493   0.0  0.1  4379804  10952   ??  Ss   12:10PM   0:02.24 /System/Library/PrivateFrameworks/FamilyControls.framework/Resources/parentalcontrolsd
+root               492   0.0  0.1  4377524  12428   ??  Ss   12:10PM   0:00.13 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+root               486   0.0  0.0  4353276   8300   ??  Ss   12:10PM   0:00.70 /System/Library/PrivateFrameworks/PerformanceAnalysis.framework/Versions/A/XPCServices/com.apple.PerformanceAnalysis.animationperfd.xpc/Contents/MacOS/com.apple.PerformanceAnalysis.animationperfd
+root               484   0.0  0.0  4342320   4816   ??  Ss   12:10PM   0:00.01 /System/Library/Frameworks/GSS.framework/Helpers/GSSCred
+root               479   0.0  0.0  4350412   6380   ??  Ss   12:10PM   0:00.04 /System/Library/PrivateFrameworks/SystemAdministration.framework/XPCServices/writeconfig.xpc/Contents/MacOS/writeconfig
+root               478   0.0  0.0  4342088    828   ??  Ss   12:10PM   0:00.02 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/XPCServices/com.apple.cmio.registerassistantservice.xpc/Contents/MacOS/com.apple.cmio.registerassistantservice
+root               477   0.0  0.0  4342020   5736   ??  Ss   12:10PM   0:00.02 /System/Library/PrivateFrameworks/AccountPolicy.framework/XPCServices/com.apple.AccountPolicyHelper.xpc/Contents/MacOS/com.apple.AccountPolicyHelper
+root               473   0.0  0.0  4377900   6388   ??  Ss   12:10PM   0:00.13 /System/Library/CoreServices/sharedfilelistd
+root               469   0.0  0.0  4378208   6092   ??  S    12:10PM   0:00.17 /usr/sbin/systemstats --logger-helper /private/var/db/systemstats
+root               467   0.0  0.1  4350608  10216   ??  Ss   12:10PM   0:00.02 /usr/libexec/bootinstalld
+root               466   0.0  0.0  4350176   4852   ??  Ss   12:10PM   0:00.90 /usr/libexec/sysmond
+root               462   0.0  0.0  4350548   6272   ??  Ss   12:10PM   0:00.02 /usr/libexec/colorsyncd
+root               458   0.0  0.0  4350956   2792   ??  S    12:10PM   0:00.07 /usr/sbin/distnoted agent
+root               455   0.0  0.0  4349780   6260   ??  Ss   12:10PM   0:00.04 /usr/libexec/colorsync.displayservices
+root               454   0.0  0.0  4359372   6244   ??  Ss   12:10PM   0:00.03 /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer
+root               453   0.0  0.1  4422052  19352   ??  Ss   12:10PM   0:19.77 /usr/libexec/TouchBarServer
+_netbios           452   0.0  0.1  4351864   9140   ??  SNs  12:10PM   0:00.19 /usr/sbin/netbiosd
+root               439   0.0  0.1  4378708   9752   ??  Ss   12:10PM   0:00.10 /usr/libexec/secinitd
+_captiveagent      437   0.0  0.0  4352040   7752   ??  Ss   12:10PM   0:00.09 /usr/libexec/captiveagent
+root               436   0.0  0.1  4377212  10612   ??  S    12:10PM   0:01.94 /System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/XPCServices/ViewBridgeAuxiliary.xpc/Contents/MacOS/ViewBridgeAuxiliary
+root               434   0.0  1.4  5359300 227192   ??  Ss   12:10PM  12:47.11 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mds_stores
+root               433   0.0  0.1  4382264  14100   ??  Ss   12:10PM   0:02.32 /System/Library/PrivateFrameworks/TCC.framework/Resources/tccd system
+root               432   0.0  0.1  4325156   9368   ??  Ss   12:10PM   0:00.06 /usr/libexec/thermald
+_coreaudiod        431   0.0  0.1  4308980   9108   ??  Ss   12:10PM   0:00.02 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+root               430   0.0  0.0  4327088   8160   ??  Ss   12:10PM   0:00.04 /System/Library/Frameworks/AudioToolbox.framework/AudioComponentRegistrar -daemon
+root               238   0.0  0.0  4326248   5736   ??  Ss   12:10PM   0:00.43 /usr/libexec/watchdogd
+root               231   0.0  0.0  4333528   4284   ??  Ss   12:10PM   0:00.02 /usr/libexec/smd
+_analyticsd        226   0.0  0.0  4377676   7640   ??  Ss   12:10PM   0:00.22 /System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsd
+root               219   0.0  0.1  4353608   8452   ??  Ss   12:10PM   0:00.21 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/com.apple.CodeSigningHelper.xpc/Contents/MacOS/com.apple.CodeSigningHelper
+_nsurlstoraged     218   0.0  0.0  4333992   7276   ??  Ss   12:10PM   0:00.05 /usr/libexec/nsurlstoraged --privileged
+root               208   0.0  0.0  4344232   6608   ??  Ss   12:10PM   0:00.23 /System/Library/PrivateFrameworks/CoreSymbolication.framework/coresymbolicationd
+root               206   0.0  0.2  4378040  32244   ??  Ss   12:10PM   0:00.85 /System/Library/CoreServices/backupd.bundle/Contents/Resources/backupd
+root               205   0.0  0.1  4376512  10420   ??  Ss   12:10PM   0:00.14 /System/Library/CoreServices/SubmitDiagInfo server-init
+root               204   0.0  0.1  4381436  11328   ??  Ss   12:10PM   0:11.52 /usr/libexec/ApplicationFirewall/socketfilterfw
+_softwareupdate    203   0.0  0.0  4350340   6212   ??  Ss   12:10PM   0:00.06 /System/Library/PrivateFrameworks/BridgeOSSoftwareUpdate.framework/Support/bosUpdateProxy
+_cmiodalassistants   202   0.0  0.1  4407184   9580   ??  Ss   12:10PM   0:00.13 /System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/Resources/VDCAssistant
+root               201   0.0  0.1  4377604   8744   ??  Ss   12:10PM   0:00.08 /usr/libexec/usbd
+root               200   0.0  0.1  4390308  18380   ??  Ss   12:10PM   0:24.98 /usr/libexec/airportd
+root               199   0.0  0.0  4341540   5932   ??  Ss   12:10PM   0:00.03 /usr/libexec/apfsd
+root               198   0.0  0.1  4341584   9656   ??  Ss   12:10PM   0:00.02 /System/Library/CryptoTokenKit/com.apple.ifdreader.slotd/Contents/MacOS/com.apple.ifdreader
+root               197   0.0  0.0  4324096   4988   ??  Ss   12:10PM   0:00.01 /usr/libexec/multiversed
+root               195   0.0  0.0  4377600   6824   ??  Ss   12:10PM   0:00.57 /usr/sbin/mDNSResponderHelper
+_mdnsresponder     194   0.0  0.1  4379160   9800   ??  Ss   12:10PM   0:05.65 /usr/sbin/mDNSResponder
+_networkd          193   0.0  0.1  4445724  12528   ??  Ss   12:10PM   0:06.46 /usr/libexec/symptomsd
+root               190   0.0  0.4  4485936  60600   ??  Ss   12:10PM   0:19.02 /usr/libexec/lsd runAsRoot
+root               189   0.0  0.1  4378276   9560   ??  Ss   12:10PM   0:00.60 /System/Library/PrivateFrameworks/WirelessDiagnostics.framework/Support/awdd
+root               188   0.0  0.1  4378384   9384   ??  Ss   12:10PM   0:04.39 /usr/libexec/nehelper
+_coreaudiod        187   0.0  0.0  4377092   7368   ??  Ss   12:10PM   0:00.11 /System/Library/Frameworks/CoreAudio.framework/Versions/A/XPCServices/com.apple.audio.DriverHelper.xpc/Contents/MacOS/com.apple.audio.DriverHelper
+root               186   0.0  0.1  4382916  17364   ??  Ss   12:10PM   0:03.63 /System/Library/PrivateFrameworks/CoreDuetContext.framework/Resources/contextstored
+_coreaudiod        185   0.0  0.2  4395472  28312   ??  Ss   12:10PM   1:25.16 /usr/sbin/coreaudiod
+_ctkd              182   0.0  0.1  4343256   9920   ??  Ss   12:10PM   0:00.02 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd -s
+_nsurlsessiond     168   0.0  0.1  4386244  18692   ??  Ss   12:10PM   0:00.86 /usr/libexec/nsurlsessiond --privileged
+root               166   0.0  0.1  4383064  16204   ??  Ss   12:10PM   0:01.40 /usr/libexec/mobileassetd
+root               159   0.0  0.1  4393864  20384   ??  Ss   12:10PM   0:38.79 /usr/libexec/trustd
+root               157   0.0  0.1  4350244   8900   ??  Ss   12:10PM   0:00.03 /System/Library/Frameworks/PCSC.framework/Versions/A/XPCServices/com.apple.ctkpcscd.xpc/Contents/MacOS/com.apple.ctkpcscd
+root               133   0.0  0.1  4394316  11452   ??  Ss   12:10PM   0:08.08 /System/Library/CoreServices/coreservicesd
+root               127   0.0  0.0  4350224   3880   ??  Ss   12:10PM   0:09.33 /usr/sbin/cfprefsd daemon
+root               125   0.0  0.2  4390992  25616   ??  Ss   12:10PM   0:12.30 /usr/libexec/syspolicyd
+root               124   0.0  0.0  4350296   5160   ??  Ss   12:10PM   0:00.04 aslmanager
+root               123   0.0  0.1  4380688  11612   ??  Ss   12:10PM   0:01.38 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/authd.xpc/Contents/MacOS/authd
+_distnote          121   0.0  0.0  4350956   3552   ??  Ss   12:10PM   0:01.09 /usr/sbin/distnoted daemon
+root               119   0.0  0.1  4384264  13624   ??  Ss   12:10PM   0:04.21 /usr/libexec/amfid
+root               118   0.0  0.0  4333888   6380   ??  Ss   12:10PM   0:00.54 /usr/libexec/taskgated
+root               116   0.0  0.0  4300784   2292   ??  Ss   12:10PM   0:10.22 /usr/sbin/notifyd
+root               115   0.0  0.1  4378012  13284   ??  Ss   12:10PM   0:00.60 /usr/libexec/AirPlayXPCHelper
+root               114   0.0  0.1  4379576  14924   ??  Ss   12:10PM   0:00.72 /usr/libexec/corebrightnessd --launchd
+root               113   0.0  0.3  4394556  45396   ??  Ss   12:10PM   0:04.54 /usr/libexec/sandboxd
+root               110   0.0  0.1  4381320  10772   ??  Ss   12:10PM   0:01.30 /usr/sbin/bluetoothd
+root               108   0.0  0.0  4354196   6548   ??  Ss   12:10PM   0:00.21 /Library/Application Support/LANDesk/bin/lddispatch -p ipc:///Library/Application Support/LANDesk/tmp/socket/sys -s
+root               107   0.0  0.0  4317140   4824   ??  Ss   12:10PM   0:00.01 /usr/sbin/KernelEventAgent
+root               106   0.0  0.0  4378980   5368   ??  Ss   12:10PM   0:00.11 /System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/Support/revisiond
+root               105   0.0  0.0  4349848   6400   ??  Ss   12:10PM   0:00.07 /System/Library/CoreServices/logind
+kbrazil            104   0.0  0.2  4980336  40300   ??  Ss   12:10PM   0:03.02 /System/Library/CoreServices/loginwindow.app/Contents/MacOS/loginwindow console
+root               103   0.0  0.0  4350036   5588   ??  Ss   12:10PM   0:00.05 /Library/Tanium/TaniumClient/TaniumClient -d
+root               101   0.0  0.1  4377748  11904   ??  Ss   12:10PM   0:03.30 /usr/libexec/PerfPowerServices
+root                99   0.0  0.1  4402096  20148   ??  Ss   12:10PM   0:03.32 /Library/Application Support/LANDesk/bin/IVMetrics.app/Contents/MacOS/IVMetrics --monitor
+root                97   0.0  0.1  4382008  13756   ??  Ss   12:10PM   0:02.68 /usr/libexec/dasd
+_displaypolicyd     96   0.0  0.1  4352920  10628   ??  Ss   12:10PM   0:00.08 /usr/libexec/displaypolicyd -k 1
+root                95   0.0  0.0  4342100   5456   ??  Ss   12:10PM   0:00.02 autofsd
+root                94   0.0  0.1  4383340  15224   ??  Ss   12:10PM   0:01.61 /Library/Application Support/LANDesk/bin/ldscheduler
+root                92   0.0  0.0  4369340   8376   ??  Ss   12:10PM   0:00.05 /Library/Application Support/LANDesk/bin/ldwatch
+_locationd          91   0.0  0.1  4388832  16756   ??  Ss   12:10PM   0:10.47 /usr/libexec/locationd
+_usbmuxd            89   0.0  0.0  4377220   6116   ??  Ss   12:10PM   0:00.30 /System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/Resources/usbmuxd -launchd
+root                88   0.0  0.1  4382596  15592   ??  Ss   12:10PM   0:07.13 /usr/sbin/securityd -i
+root                87   0.0  0.1  4362160  10212   ??  Ss   12:10PM   0:04.24 /Library/Application Support/LANDesk/bin/ldtmc
+_timed              85   0.0  0.0  4376816   7152   ??  Ss   12:10PM   0:00.33 /usr/libexec/timed
+root                84   0.0  0.1  4380380  12440   ??  Ss   12:10PM   0:05.12 /System/Library/CoreServices/launchservicesd
+root                83   0.0  0.0  4350540   4068   ??  Ss   12:10PM   0:00.02 /System/Library/PrivateFrameworks/Noticeboard.framework/Versions/A/Resources/nbstated
+root                82   0.0  0.0  4391948   7132   ??  Ss   12:10PM   0:00.04 /Library/PrivilegedHelperTools/com.docker.vmnetd
+root                81   0.0  0.1  4382876  22668   ??  Ss   12:10PM   0:01.51 /System/Library/PrivateFrameworks/ApplePushService.framework/apsd
+root                80   0.0  0.1  4357072   8548   ??  Ss   12:10PM   0:00.88 /Library/Application Support/LANDesk/bin/ldremote
+root                76   0.0  0.1  4384748  20528   ??  Ss   12:10PM   0:02.04 /usr/libexec/coreduetd
+root                75   0.0  0.2  4377452  30052   ??  Ss   12:10PM   0:06.74 /System/Library/CoreServices/backupd.bundle/Contents/Resources/backupd-helper -launchd
+root                71   0.0  0.0  4376396   7496   ??  Ss   12:10PM   0:01.66 /usr/libexec/diskarbitrationd
+_iconservices       70   0.0  0.0  4351356   4792   ??  Ss   12:10PM   0:00.03 /System/Library/CoreServices/iconservicesd
+root                69   0.0  0.1  4384136   9832   ??  Ss   12:10PM   0:00.94 /Library/Application Support/LANDesk/bin/IVRemoteControl.app/Contents/MacOS/ivremote
+root                68   0.0  0.5  4578216  80268   ??  Ss   12:10PM   1:38.14 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Support/mds
+root                62   0.0  0.0  4341688   4920   ??  Ss   12:10PM   0:00.02 /usr/libexec/keybagd -t 15
+root                61   0.0  0.2  4456772  28244   ??  Ss   12:10PM   0:10.04 /usr/libexec/logd
+root                56   0.0  0.1  4384592  20860   ??  Ss   12:10PM   0:03.31 /Library/Application Support/BeyondTrust/pbmac/pbmacd
+root                55   0.0  0.1  4383344  12924   ??  Ss   12:10PM   0:02.57 /usr/libexec/configd
+root                53   0.0  0.1  4381976  14184   ??  Ss   12:10PM   0:05.66 /usr/sbin/systemstats --daemon
+_appleevents        52   0.0  0.1  4379980   8812   ??  Ss   12:10PM   0:00.27 /System/Library/CoreServices/appleeventsd --server
+root                49   0.0  0.1  4379068  24416   ??  Ss   12:10PM   0:00.43 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted
+root                48   0.0  0.2  4388436  25180   ??  SNs  12:10PM   0:01.89 /usr/local/jamf/bin/jamf launchDaemon -monitorUsage
+root                46   0.0  0.1  5130616  13252   ??  Ss   12:10PM   0:53.59 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/Support/fseventsd
+root                45   0.0  0.2  4391256  26976   ??  Ss   12:10PM   0:06.00 /usr/libexec/kextd
+root                44   0.0  0.0  4324820   5224   ??  Ss   12:10PM   0:00.42 /System/Library/PrivateFrameworks/Uninstall.framework/Resources/uninstalld
+root                41   0.0  0.1  4379304  19440   ??  Ss   12:10PM   0:02.23 /usr/libexec/UserEventAgent (System)
+root                40   0.0  0.0  4350620   1168   ??  Ss   12:10PM   0:00.91 /usr/sbin/syslogd
+root                 1   0.0  0.1  4373320  21308   ??  Ss   12:09PM   1:08.19 /sbin/launchd
+root             69357   0.0  0.0  4268540   1092 s000  R+    3:49PM   0:00.00 ps axu
+kbrazil           1043   0.0  0.0        0      0   ??  Z    12:10PM   0:00.00 (uname)
+root             69327   0.0  0.0  4333636   6556   ??  Ss    3:49PM   0:00.02 /System/Library/PrivateFrameworks/Heimdal.framework/Helpers/kcm --launchd
+root             68539   0.0  0.0  4374360   4264   ??  Ss    3:44PM   0:00.35 /Library/Tanium/TaniumClient/Tools/Detect3/TaniumDetectEngine
+kbrazil          68384   0.0  0.1  4378164  16744   ??  S     3:44PM   0:00.09 /System/Library/PrivateFrameworks/AOSKit.framework/Versions/A/XPCServices/com.apple.iCloudHelper.xpc/Contents/MacOS/com.apple.iCloudHelper
+root             65695   0.0  0.0  4367412   7260   ??  Ss    3:40PM   0:00.11 /usr/sbin/ocspd
+_spotlight       64688   0.0  0.4  4474860  71244   ??  S     3:35PM   0:01.25 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64654   0.0  0.1  4358600  17180   ??  S     3:35PM   0:00.10 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64600   0.0  0.4  4466284  61156   ??  S     3:35PM   0:01.16 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64599   0.0  0.1  4358600  17760   ??  S     3:35PM   0:00.06 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64595   0.0  0.2  4434452  29604   ??  S     3:35PM   0:00.17 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+kbrazil          64594   0.0  0.1  4396884  20956   ??  S     3:35PM   0:00.70 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64590   0.0  0.1  4422896  18484   ??  S     3:35PM   0:00.11 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64530   0.0  0.3  4385716  53908   ??  S     3:35PM   0:00.23 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64529   0.0  0.2  4365596  29632   ??  S     3:35PM   0:00.16 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
+_spotlight       64474   0.0  0.2  4355696  37196   ??  S     3:34PM   0:00.14 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared -s mdworker -c MDSImporterWorker -m com.apple.mdworker.shared
