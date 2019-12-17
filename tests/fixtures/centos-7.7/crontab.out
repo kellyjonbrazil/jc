@@ -24,16 +24,21 @@ MAILTO=root
 * * * * * /var/www/devdaily.com/bin/check-apache.sh
 
 # generate links to new blog posts twice a day
-5 10,22 * * * /var/www/devdaily.com/bin/mk-new-links.php
+5 10-11,22 * * * /var/www/devdaily.com/bin/mk-new-links.php
 
 # run the backup scripts at 4:30am
-30 4 * * * /var/www/devdaily.com/bin/create-all-backups.sh
+30 4/2 * * * /var/www/devdaily.com/bin/create-all-backups.sh
 
 # re-generate the blog "categories" list (four times a day)
 5 0,4,10,16 * * * /var/www/devdaily.com/bin/create-cat-list.sh
 
 # reset the contact form just after midnight
 5 0 * * * /var/www/devdaily.com/bin/resetContactForm.sh
+
+# example of shortcut versions
+@monthly /home/maverick/bin/tape-backup
+@reboot /home/cleanup
+@yearly /home/maverick/bin/annual-maintenance
 
 # rotate the ad banners every five minutes
 

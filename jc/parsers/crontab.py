@@ -22,7 +22,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.0'
-    description = '/etc/crontab file parser'
+    description = 'crontab file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'
@@ -45,6 +45,7 @@ def process(proc_data):
 
         [
           {
+            "occurrence"        string,
             "minute": [
                                 string
             ],
@@ -66,12 +67,15 @@ def process(proc_data):
 
     """
     # put itmes in lists
-    for entry in proc_data['schedule']:
-        entry['minute'] = entry['minute'].split(',')
-        entry['hour'] = entry['hour'].split(',')
-        entry['day_of_month'] = entry['day_of_month'].split(',')
-        entry['month'] = entry['month'].split(',')
-        entry['day_of_week'] = entry['day_of_week'].split(',')
+    try:
+        for entry in proc_data['schedule']:
+            entry['minute'] = entry['minute'].split(',')
+            entry['hour'] = entry['hour'].split(',')
+            entry['day_of_month'] = entry['day_of_month'].split(',')
+            entry['month'] = entry['month'].split(',')
+            entry['day_of_week'] = entry['day_of_week'].split(',')
+    except (KeyError):
+        pass
 
     return proc_data
 
@@ -109,22 +113,36 @@ def parse(data, raw=False, quiet=False):
     for i, line in reversed(list(enumerate(cleandata))):
         if line.find('=') != -1:
             var_line = cleandata.pop(i)
-            var_name = var_line.split('=', maxsplit=1)[0]
-            var_value = var_line.split('=', maxsplit=1)[1]
+            var_name = var_line.split('=', maxsplit=1)[0].strip()
+            var_value = var_line.split('=', maxsplit=1)[1].strip()
             cron_var.append({'name': var_name,
                              'value': var_value})
 
     raw_output['variables'] = cron_var
 
-    # TODO: support @shortcuts
+    # Pop any shortcut lines
+    shortcut_list = []
+    for i, line in reversed(list(enumerate(cleandata))):
+        if line.strip().startswith('@'):
+            shortcut_line = cleandata.pop(i)
+            occurrence = shortcut_line.split(maxsplit=1)[0].strip().lstrip('@')
+            cmd = shortcut_line.split(maxsplit=1)[1].strip()
+            shortcut_list.append({'occurrence': occurrence,
+                                  'command': cmd})
+
+    print(shortcut_list)
 
     # Add header row for parsing
-    cleandata[0] = 'minute hour day_of_month month day_of_week username command'
+    cleandata[0] = 'minute hour day_of_month month day_of_week command'
 
     if len(cleandata) > 1:
         cron_list = jc.parsers.universal.simple_table_parse(cleandata)
 
     raw_output['schedule'] = cron_list
+
+    # Add shortcut entries back in
+    for item in shortcut_list:
+        raw_output['schedule'].append(item)
 
     if raw:
         return raw_output
