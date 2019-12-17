@@ -67,6 +67,7 @@ jc PARSER [OPTIONS]
 
 ### Parsers
 - `--arp` enables the `arp` parser
+- `--crontab` enables the `crontab` file parser
 - `--df` enables the `df` parser
 - `--dig` enables the `dig` parser
 - `--du` enables the `du` parser
@@ -156,6 +157,77 @@ $ arp -a | jc --arp -p
     "iface": "ens33"
   }
 ]
+```
+### crontab
+```
+$ crontab | jc --crontab -p
+{
+  "variables": [
+    {
+      "name": "MAILTO",
+      "value": "root"
+    },
+    {
+      "name": "PATH",
+      "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+    },
+    {
+      "name": "SHELL",
+      "value": "/bin/bash"
+    }
+  ],
+  "schedule": [
+    {
+      "minute": [
+        "5"
+      ],
+      "hour": [
+        "10-11",
+        "22"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+    },
+    {
+      "minute": [
+        "30"
+      ],
+      "hour": [
+        "4/2"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+    },
+    {
+      "occurrence": "yearly",
+      "command": "/home/maverick/bin/annual-maintenance"
+    },
+    {
+      "occurrence": "reboot",
+      "command": "/home/cleanup"
+    },
+    {
+      "occurrence": "monthly",
+      "command": "/home/maverick/bin/tape-backup"
+    }
+  ]
+}
 ```
 ### df
 ```
@@ -1481,7 +1553,6 @@ $ w | jc --w -p
 Future parsers:
 - nslookup
 - journalctl
-- crontab files
 - /proc files
 - /sys files
 
