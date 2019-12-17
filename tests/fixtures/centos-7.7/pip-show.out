@@ -1,0 +1,32 @@
+Name: setuptools
+Version: 39.2.0
+Summary: Easily download, build, install, upgrade, and uninstall Python packages
+Home-page: https://github.com/pypa/setuptools
+Author: Python Packaging Authority
+Author-email: distutils-sig@python.org
+License: UNKNOWN
+Location: /usr/lib/python3.6/site-packages
+Requires: 
+Required-by: twine
+---
+Name: pkginfo
+Version: 1.5.0.1
+Summary: Query metadatdata from sdists / bdists / installed packages.
+Home-page: https://code.launchpad.net/~tseaver/pkginfo/trunk
+Author: Tres Seaver, Agendaless Consulting
+Author-email: tseaver@agendaless.com
+License: MIT
+Location: /home/kbrazil/.local/lib/python3.6/site-packages
+Requires: 
+Required-by: twine
+---
+Name: six
+Version: 1.12.0
+Summary: Python 2 and 3 compatibility utilities
+Home-page: https://github.com/benjaminp/six
+Author: Benjamin Peterson
+Author-email: benjamin@python.org
+License: MIT
+Location: /home/kbrazil/.local/lib/python3.6/site-packages
+Requires: 
+Required-by: readme-renderer, bleach

@@ -1,0 +1,29 @@
+Name: pycrypto
+Version: 2.6.1
+Summary: Cryptographic modules for Python.
+Home-page: http://www.pycrypto.org/
+Author: Dwayne C. Litzenberger
+Author-email: dlitz@dlitz.net
+License: UNKNOWN
+Location: /usr/lib/python3/dist-packages
+Requires: 
+---
+Name: six
+Version: 1.11.0
+Summary: Python 2 and 3 compatibility utilities
+Home-page: http://pypi.python.org/pypi/six/
+Author: Benjamin Peterson
+Author-email: benjamin@python.org
+License: MIT
+Location: /usr/lib/python3/dist-packages
+Requires: 
+---
+Name: wheel
+Version: 0.30.0
+Summary: A built-package format for Python.
+Home-page: https://github.com/pypa/wheel
+Author: Alex Grönholm
+Author-email: alex.gronholm@nextday.fi
+License: MIT
+Location: /usr/lib/python3/dist-packages
+Requires: 

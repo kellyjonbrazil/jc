@@ -66,3 +66,5 @@ systemctl -a list-sockets > systemctl-ls.out
 systemctl -a list-jobs > systemctl-jobs.out
 
 du /usr > du.out
+pip3 list > pip-list.out
+pip3 show wheel pip jc > pip-show.out
