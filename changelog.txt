@@ -1,7 +1,10 @@
 jc changelog
 
-2019xxxx v1.6.1
+20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
+- Add crontab parser (tested on linux and OSX)
+- Add pip list parser (tested on linux and OSX)
+- Add pip show parser (tested on linux and OSX)
 - Add OSX support for the ifconfig, arp, df, mount, and uname parsers
 - Add tests for ls, dig, ps, w, uptime on OSX
 - Add about option
