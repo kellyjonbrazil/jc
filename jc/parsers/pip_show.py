@@ -25,18 +25,6 @@ Examples:
         "required_by": "astroid"
       },
       {
-        "name": "jc",
-        "version": "1.1.1",
-        "summary": "This tool serializes the output of popular command line tools to structured JSON output.",
-        "home_page": "https://github.com/kellyjonbrazil/jc",
-        "author": "Kelly Brazil",
-        "author_email": "kellyjonbrazil@gmail.com",
-        "license": "MIT",
-        "location": "/Users/kbrazil/git/jc",
-        "requires": "ifconfig-parser",
-        "required_by": null
-      },
-      {
         "name": "wheel",
         "version": "0.33.4",
         "summary": "A built-package format for Python.",

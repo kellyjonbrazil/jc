@@ -86,6 +86,7 @@ jc PARSER [OPTIONS]
 - `--mount` enables the `mount` parser
 - `--netstat` enables the `netstat` parser
 - `--pip-list` enables the `pip list` parser
+- `--pip-show` enables the `pip show` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--ss` enables the `ss` parser
@@ -1121,6 +1122,36 @@ $ pip list | jc --pip-list -p
   ...
 ]
 
+```
+### pip show
+```
+$ pip show wrapt wheel | jc --pip-show -p
+[
+  {
+    "name": "wrapt",
+    "version": "1.11.2",
+    "summary": "Module for decorators, wrappers and monkey patching.",
+    "home_page": "https://github.com/GrahamDumpleton/wrapt",
+    "author": "Graham Dumpleton",
+    "author_email": "Graham.Dumpleton@gmail.com",
+    "license": "BSD",
+    "location": "/usr/local/lib/python3.7/site-packages",
+    "requires": null,
+    "required_by": "astroid"
+  },
+  {
+    "name": "wheel",
+    "version": "0.33.4",
+    "summary": "A built-package format for Python.",
+    "home_page": "https://github.com/pypa/wheel",
+    "author": "Daniel Holth",
+    "author_email": "dholth@fastmail.fm",
+    "license": "MIT",
+    "location": "/usr/local/lib/python3.7/site-packages",
+    "requires": null,
+    "required_by": null
+  }
+]
 ```
 ### ps
 ```
