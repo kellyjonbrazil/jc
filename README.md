@@ -85,6 +85,7 @@ jc PARSER [OPTIONS]
 - `--lsof` enables the `lsof` parser
 - `--mount` enables the `mount` parser
 - `--netstat` enables the `netstat` parser
+- `--pip-list` enables the `pip list` parser
 - `--ps` enables the `ps` parser
 - `--route` enables the `route` parser
 - `--ss` enables the `ss` parser
@@ -1100,6 +1101,26 @@ $ sudo netstat -apee | jc --netstat -p
   },
   ...
 ]
+```
+### pip list
+```
+$ pip list | jc --pip-list -p
+[
+  {
+    "package": "ansible",
+    "version": "2.8.5"
+  },
+  {
+    "package": "antlr4-python3-runtime",
+    "version": "4.7.2"
+  },
+  {
+    "package": "asn1crypto",
+    "version": "0.24.0"
+  },
+  ...
+]
+
 ```
 ### ps
 ```

@@ -23,6 +23,7 @@ pydocmd simple jc.parsers.lsmod+ > ../docs/parsers/lsmod.md
 pydocmd simple jc.parsers.lsof+ > ../docs/parsers/lsof.md
 pydocmd simple jc.parsers.mount+ > ../docs/parsers/mount.md
 pydocmd simple jc.parsers.netstat+ > ../docs/parsers/netstat.md
+pydocmd simple jc.parsers.pip_list+ > ../docs/parsers/pip_list.md
 pydocmd simple jc.parsers.ps+ > ../docs/parsers/ps.md
 pydocmd simple jc.parsers.route+ > ../docs/parsers/route.md
 pydocmd simple jc.parsers.ss+ > ../docs/parsers/ss.md

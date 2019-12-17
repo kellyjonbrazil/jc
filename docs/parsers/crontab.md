@@ -7,7 +7,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'aix', 'freebsd'
+    'linux', 'darwin', 'aix', 'freebsd'
 
 Examples:
 

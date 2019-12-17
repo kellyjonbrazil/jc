@@ -26,6 +26,7 @@ import jc.parsers.lsmod
 import jc.parsers.lsof
 import jc.parsers.mount
 import jc.parsers.netstat
+import jc.parsers.pip_list
 import jc.parsers.ps
 import jc.parsers.route
 import jc.parsers.ss
@@ -58,6 +59,7 @@ parser_map = {
     '--lsof': jc.parsers.lsof,
     '--mount': jc.parsers.mount,
     '--netstat': jc.parsers.netstat,
+    '--pip-list': jc.parsers.pip_list,
     '--ps': jc.parsers.ps,
     '--route': jc.parsers.route,
     '--ss': jc.parsers.ss,
