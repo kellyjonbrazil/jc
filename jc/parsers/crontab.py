@@ -154,27 +154,34 @@ def process(proc_data):
 
         dictionary   structured data with the following schema:
 
-        [
-          {
-            "occurrence"        string,
-            "minute": [
-                                string
-            ],
-            "hour": [
-                                string
-            ],
-            "day_of_month": [
-                                string
-            ],
-            "month": [
-                                string
-            ],
-            "day_of_week": [
-                                string
-            ],
-            "username":         string
-          }
-        ]
+        {
+          "variables": [
+            "name":             string,
+            "value":            string
+          ],
+          "schedule": [
+            {
+              "occurrence"        string,
+              "minute": [
+                                  string
+              ],
+              "hour": [
+                                  string
+              ],
+              "day_of_month": [
+                                  string
+              ],
+              "month": [
+                                  string
+              ],
+              "day_of_week": [
+                                  string
+              ],
+              "occurrence":       string,
+              "command":          string
+            }
+          ]
+        }
 
     """
     # put itmes in lists
