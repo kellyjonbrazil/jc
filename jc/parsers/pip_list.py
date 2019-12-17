@@ -89,15 +89,23 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
 
-    # clear separator line
-    for i, line in reversed(list(enumerate(cleandata))):
-        if line.find('---') != -1:
-            cleandata.pop(i)
+    # detect legacy output type
+    if cleandata[0].find(' (') != -1:
+        for row in cleandata:
+            raw_output.append({'package': row.split(' (')[0],
+                               'version': row.split(' (')[1].rstrip(')')})
 
-    cleandata[0] = cleandata[0].lower()
+    # otherwise normal table output
+    else:
+        # clear separator line
+        for i, line in reversed(list(enumerate(cleandata))):
+            if line.find('---') != -1:
+                cleandata.pop(i)
 
-    if cleandata:
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+        cleandata[0] = cleandata[0].lower()
+
+        if cleandata:
+            raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output
