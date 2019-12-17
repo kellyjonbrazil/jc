@@ -10,7 +10,7 @@ Compatibility:
 
 Examples:
 
-    $ crontab | jc --crontab -p
+    $ cat /etc/crontab | jc --crontab -p
     {
       "variables": [
         {
@@ -79,7 +79,7 @@ Examples:
       ]
     }
 
-    $ crontab | jc --crontab -p -r
+    $ cat /etc/crontab | jc --crontab -p -r
     {
       "variables": [
         {

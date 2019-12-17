@@ -161,7 +161,7 @@ $ arp -a | jc --arp -p
 ```
 ### crontab
 ```
-$ crontab | jc --crontab -p
+$ cat /etc/crontab | jc --crontab -p
 {
   "variables": [
     {
