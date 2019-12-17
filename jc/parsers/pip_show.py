@@ -10,12 +10,47 @@ Compatibility:
 
 Examples:
 
-    $ pip show | jc --pip-show -p
+    $ pip show wrapt jc wheel | jc --pip-show -p
     [
+      {
+        "name": "wrapt",
+        "version": "1.11.2",
+        "summary": "Module for decorators, wrappers and monkey patching.",
+        "home_page": "https://github.com/GrahamDumpleton/wrapt",
+        "author": "Graham Dumpleton",
+        "author_email": "Graham.Dumpleton@gmail.com",
+        "license": "BSD",
+        "location": "/usr/local/lib/python3.7/site-packages",
+        "requires": null,
+        "required_by": "astroid"
+      },
+      {
+        "name": "jc",
+        "version": "1.1.1",
+        "summary": "This tool serializes the output of popular command line tools to structured JSON output.",
+        "home_page": "https://github.com/kellyjonbrazil/jc",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "license": "MIT",
+        "location": "/Users/kbrazil/git/jc",
+        "requires": "ifconfig-parser",
+        "required_by": null
+      },
+      {
+        "name": "wheel",
+        "version": "0.33.4",
+        "summary": "A built-package format for Python.",
+        "home_page": "https://github.com/pypa/wheel",
+        "author": "Daniel Holth",
+        "author_email": "dholth@fastmail.fm",
+        "license": "MIT",
+        "location": "/usr/local/lib/python3.7/site-packages",
+        "requires": null,
+        "required_by": null
+      }
     ]
 """
 import jc.utils
-import jc.parsers.universal
 
 
 class info():
@@ -42,8 +77,19 @@ def process(proc_data):
 
         [
           {
+            "name":             string,
+            "version":          string,
+            "summary":          string,
+            "home_page":        string,
+            "author":           string,
+            "author_email":     string,
+            "license":          string,
+            "location":         string,
+            "requires":         string,
+            "required_by":      string
           }
         ]
+
     """
     # no further processing
     return proc_data
@@ -67,16 +113,29 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
+    package = {}
 
     linedata = data.splitlines()
 
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
 
-    # '---' is record separator
-
     if cleandata:
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+        for row in cleandata:
+            if row.startswith('---'):
+                raw_output.append(package)
+                package = {}
+                continue
+
+            item_key = row.split(': ', maxsplit=1)[0].lower().replace('-', '_')
+            item_value = row.split(': ', maxsplit=1)[1]
+
+            if item_value == '':
+                item_value = None
+
+            package.update({item_key: item_value})
+
+        raw_output.append(package)
 
     if raw:
         return raw_output
