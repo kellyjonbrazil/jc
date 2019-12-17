@@ -78,7 +78,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        Dictionary. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)

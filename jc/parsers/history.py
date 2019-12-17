@@ -96,7 +96,8 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        dictionary   raw or processed structured data
+        Dictionary of raw structured data or
+        list of dictionaries of processed structured data
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)

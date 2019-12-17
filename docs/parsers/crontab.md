@@ -193,5 +193,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    Dictionary. Raw or processed structured data.
 

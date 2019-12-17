@@ -99,5 +99,5 @@ Parameters:
 
 Returns:
 
-    dictionary   raw or processed structured data
+    List of dictionaries. Raw or processed structured data.
 
