@@ -45,13 +45,11 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 {'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 18128,
 'date': 'May 3 22:26'}]
 ```
-Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of None are converted to JSON Null, known boolean values are converted, and, in some cases, additional semantic context fields are added.
+Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
 Schemas for each parser can be found in the `docs/parsers` folder.
-
-> ***Note:** Due to the introduction of schemas in version `1.5.1` the output of some parsers will be different than in versions `1.1.1` and below.  Now that schemas are defined, the output will be stable for future versions. You can still get similar output to prior versions with the `-r` or `raw=true` options. Though the goal is to keep all output stable, raw output is not guaranteed to stay the same in future releases.*
 
 ## Installation
 ```
