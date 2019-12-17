@@ -152,7 +152,7 @@ def process(proc_data):
 
     Returns:
 
-        dictionary   structured data with the following schema:
+        Dictionary. Structured data with the following schema:
 
         {
           "variables": [

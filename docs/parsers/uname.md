@@ -45,7 +45,7 @@ Parameters:
 
 Returns:
 
-    dictionary   structured data with the following schema:
+    Dictionary. Structured data with the following schema:
 
     {
         "kernel_name":        string,
