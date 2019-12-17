@@ -11,10 +11,121 @@ Compatibility:
 Examples:
 
     $ crontab | jc --crontab -p
-    []
+    {
+      "variables": [
+        {
+          "name": "MAILTO",
+          "value": "root"
+        },
+        {
+          "name": "PATH",
+          "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+        },
+        {
+          "name": "SHELL",
+          "value": "/bin/bash"
+        }
+      ],
+      "schedule": [
+        {
+          "minute": [
+            "5"
+          ],
+          "hour": [
+            "10-11",
+            "22"
+          ],
+          "day_of_month": [
+            "*"
+          ],
+          "month": [
+            "*"
+          ],
+          "day_of_week": [
+            "*"
+          ],
+          "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+        },
+        {
+          "minute": [
+            "30"
+          ],
+          "hour": [
+            "4/2"
+          ],
+          "day_of_month": [
+            "*"
+          ],
+          "month": [
+            "*"
+          ],
+          "day_of_week": [
+            "*"
+          ],
+          "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+        },
+        {
+          "occurrence": "yearly",
+          "command": "/home/maverick/bin/annual-maintenance"
+        },
+        {
+          "occurrence": "reboot",
+          "command": "/home/cleanup"
+        },
+        {
+          "occurrence": "monthly",
+          "command": "/home/maverick/bin/tape-backup"
+        }
+      ]
+    }
 
     $ crontab | jc --crontab -p -r
-    []
+    {
+      "variables": [
+        {
+          "name": "MAILTO",
+          "value": "root"
+        },
+        {
+          "name": "PATH",
+          "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+        },
+        {
+          "name": "SHELL",
+          "value": "/bin/bash"
+        }
+      ],
+      "schedule": [
+        {
+          "minute": "5",
+          "hour": "10-11,22",
+          "day_of_month": "*",
+          "month": "*",
+          "day_of_week": "*",
+          "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+        },
+        {
+          "minute": "30",
+          "hour": "4/2",
+          "day_of_month": "*",
+          "month": "*",
+          "day_of_week": "*",
+          "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+        },
+        {
+          "occurrence": "yearly",
+          "command": "/home/maverick/bin/annual-maintenance"
+        },
+        {
+          "occurrence": "reboot",
+          "command": "/home/cleanup"
+        },
+        {
+          "occurrence": "monthly",
+          "command": "/home/maverick/bin/tape-backup"
+        }
+      ]
+    }
 """
 import jc.utils
 import jc.parsers.universal
@@ -129,8 +240,6 @@ def parse(data, raw=False, quiet=False):
             cmd = shortcut_line.split(maxsplit=1)[1].strip()
             shortcut_list.append({'occurrence': occurrence,
                                   'command': cmd})
-
-    print(shortcut_list)
 
     # Add header row for parsing
     cleandata[0] = 'minute hour day_of_month month day_of_week command'
