@@ -232,6 +232,82 @@ $ cat /etc/crontab | jc --crontab -p
   ]
 }
 ```
+### crontab-u (with user specified)
+```
+$ cat /etc/crontab | jc --crontab-u -p
+{
+  "variables": [
+    {
+      "name": "MAILTO",
+      "value": "root"
+    },
+    {
+      "name": "PATH",
+      "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+    },
+    {
+      "name": "SHELL",
+      "value": "/bin/bash"
+    }
+  ],
+  "schedule": [
+    {
+      "minute": [
+        "5"
+      ],
+      "hour": [
+        "10-11",
+        "22"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "user": "root",
+      "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+    },
+    {
+      "minute": [
+        "30"
+      ],
+      "hour": [
+        "4/2"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "user": "root",
+      "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+    },
+    {
+      "occurrence": "yearly",
+      "user": "root",
+      "command": "/home/maverick/bin/annual-maintenance"
+    },
+    {
+      "occurrence": "reboot",
+      "user": "root",
+      "command": "/home/cleanup"
+    },
+    {
+      "occurrence": "monthly",
+      "user": "root",
+      "command": "/home/maverick/bin/tape-backup"
+    }
+  ]
+}
+```
 ### df
 ```
 $ df | jc --df -p
@@ -527,19 +603,19 @@ $ cat /etc/fstab | jc --fstab -p
 $ history | jc --history -p
 [
   {
-    "line": "118",
+    "line": 118,
     "command": "sleep 100"
   },
   {
-    "line": "119",
+    "line": 119,
     "command": "ls /bin"
   },
   {
-    "line": "120",
+    "line": 120,
     "command": "echo \"hello\""
   },
   {
-    "line": "121",
+    "line": 121,
     "command": "docker images"
   },
   ...

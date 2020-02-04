@@ -14,19 +14,19 @@ Examples:
     $ history | jc --history -p
     [
       {
-        "line": "118",
+        "line": 118,
         "command": "sleep 100"
       },
       {
-        "line": "119",
+        "line": 119,
         "command": "ls /bin"
       },
       {
-        "line": "120",
+        "line": 120,
         "command": "echo "hello""
       },
       {
-        "line": "121",
+        "line": 121,
         "command": "docker images"
       },
       ...
@@ -63,7 +63,7 @@ Returns:
 
     [
       {
-        "line":     string,
+        "line":     integer,
         "command":  string
       }
     ]
