@@ -1,5 +1,8 @@
 jc changelog
 
+202001XX v1.7.1
+- Add yaml file parser (tested on linux and OSX)
+
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
 - Add crontab parser (tested on linux and OSX)
