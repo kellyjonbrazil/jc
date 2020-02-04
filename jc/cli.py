@@ -39,6 +39,7 @@ import jc.parsers.systemctl_luf
 import jc.parsers.uname
 import jc.parsers.uptime
 import jc.parsers.w
+import jc.parsers.yaml
 
 parser_map = {
     '--arp': jc.parsers.arp,
@@ -72,12 +73,13 @@ parser_map = {
     '--systemctl-luf': jc.parsers.systemctl_luf,
     '--uname': jc.parsers.uname,
     '--uptime': jc.parsers.uptime,
-    '--w': jc.parsers.w
+    '--w': jc.parsers.w,
+    '--yaml': jc.parsers.yaml
 }
 
 
 class info():
-    version = '1.6.1'
+    version = '1.7.1'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
