@@ -9,7 +9,7 @@ Compatibility:
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
 
 Examples:
-    
+
     $ cat example.ini
     [DEFAULT]
     ServerAliveInterval = 45
@@ -73,7 +73,8 @@ def process(proc_data):
         Dictionary representing an ini document:
 
         {
-          ini Document converted to a Dictionary
+          ini document converted to a dictionary
+          see configparser standard library documentation for more details
         }
     """
 
