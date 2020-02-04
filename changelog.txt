@@ -1,7 +1,9 @@
 jc changelog
 
 202001XX v1.7.1
-- Add yaml file parser (tested on linux and OSX)
+- Add YAML file parser (tested on linux and OSX)
+- Add ini file parser
+- Add __version__ variable to parser modules
 
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
