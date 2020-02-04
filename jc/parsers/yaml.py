@@ -31,7 +31,7 @@ class info():
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the ruamel.yaml library at https://pypi.org/project/ruamel.yaml/'
+    details = 'Using the ruamel.yaml library at https://pypi.org/project/ruamel.yaml'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
@@ -83,13 +83,9 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
 
-    # support multiple documents in a file
-    cleandata = data.split('---')
-
-    if cleandata:
-        for document in cleandata:
-            yaml = YAML(typ='safe')
-            raw_output.append(yaml.load(document))
+    yaml = YAML(typ='safe')
+    for document in yaml.load_all(data):
+        raw_output.append(document)
 
     if raw:
         return raw_output
