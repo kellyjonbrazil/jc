@@ -1,0 +1,1 @@
+{"bitbucket.org": {"serveraliveinterval": "45", "compression": "yes", "compressionlevel": "9", "forwardx11": "yes", "user": "hg"}, "topsecret.server.com": {"serveraliveinterval": "45", "compression": "yes", "compressionlevel": "9", "forwardx11": "no", "port": "50022"}}
