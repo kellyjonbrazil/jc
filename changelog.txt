@@ -6,7 +6,10 @@ jc changelog
 - Add XML file parser
 - Add crontab with user specified file parser
 - Add __version__ variable to parser modules
-- TODO: fix history lines to int
+- Updated history parser to output "line" as an integer
+- TODO: add id parser
+- TODO: add who parser
+- TODO: add passwd and shadow parser
 
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
