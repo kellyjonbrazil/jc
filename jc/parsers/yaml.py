@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility yaml Parser
+"""jc - JSON CLI output utility YAML Parser
 
 Usage:
 
-    specify --yaml as the first argument if the piped input is coming from a yaml file
+    specify --yaml as the first argument if the piped input is coming from a YAML file
 
 Compatibility:
 
@@ -11,10 +11,16 @@ Compatibility:
 Examples:
 
     $ cat example.yaml | jc --yaml -p
-    []
-
-    $ cat example.yaml | jc --yaml -p -r
-    []
+    [
+        {
+            "Description": "This is a YAML document",
+            "Number": 42
+        },
+        {
+            "Description": "Yet Another YAML document"
+            "Boolean": true
+        }
+    ]
 """
 import jc.utils
 from ruamel.yaml import YAML
@@ -22,7 +28,7 @@ from ruamel.yaml import YAML
 
 class info():
     version = '1.0'
-    description = 'yaml file parser'
+    description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the ruamel.yaml library at https://pypi.org/project/ruamel.yaml/'
