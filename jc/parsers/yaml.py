@@ -44,18 +44,17 @@ def process(proc_data):
 
     Returns:
 
-        List of dictionaries. Structured data with the following schema:
+        List of dictionaries. Each dictionary represents a YAML document:
 
         [
           {
-            "yaml":     string,
-            "bar":     boolean,
-            "baz":     integer
+            YAML Document converted to a Dictionary
+            See https://pypi.org/project/ruamel.yaml for details
           }
         ]
     """
 
-    # rebuild output for added semantic information
+    # No further processing
     return proc_data
 
 
@@ -77,6 +76,8 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
+
+    # support multiple documents in a file
     cleandata = data.split('---')
 
     if cleandata:
