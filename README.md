@@ -1768,3 +1768,4 @@ Tested on:
 - `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
 - `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
 - Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
+- Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)

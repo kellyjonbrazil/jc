@@ -5,6 +5,7 @@ jc changelog
 - Add ini file parser
 - Add XML file parser
 - Add __version__ variable to parser modules
+- TODO: fix history lines to int
 
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
