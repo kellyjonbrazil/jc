@@ -61,6 +61,9 @@ class info():
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
 
+__version__ = info.version
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.
