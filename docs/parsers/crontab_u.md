@@ -1,9 +1,9 @@
-# jc.parsers.crontab
+# jc.parsers.crontab_u
 jc - JSON CLI output utility crontab file Parser
 
 Usage:
 
-    specify --crontab as the first argument if the piped input is coming from a crontab file
+    specify --crontab-u as the first argument if the piped input is coming from a crontab file with User specified
 
 Compatibility:
 
@@ -15,26 +15,21 @@ Examples:
     {
       "variables": [
         {
-          "name": "MAILTO",
-          "value": "root"
-        },
-        {
           "name": "PATH",
-          "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
         },
         {
           "name": "SHELL",
-          "value": "/bin/bash"
+          "value": "/bin/sh"
         }
       ],
       "schedule": [
         {
           "minute": [
-            "5"
+            "25"
           ],
           "hour": [
-            "10-11",
-            "22"
+            "6"
           ],
           "day_of_month": [
             "*"
@@ -45,14 +40,15 @@ Examples:
           "day_of_week": [
             "*"
           ],
-          "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+          "user": "root",
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )"
         },
         {
           "minute": [
-            "30"
+            "47"
           ],
           "hour": [
-            "4/2"
+            "6"
           ],
           "day_of_month": [
             "*"
@@ -61,72 +57,77 @@ Examples:
             "*"
           ],
           "day_of_week": [
+            "7"
+          ],
+          "user": "root",
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )"
+        },
+        {
+          "minute": [
+            "52"
+          ],
+          "hour": [
+            "6"
+          ],
+          "day_of_month": [
+            "1"
+          ],
+          "month": [
             "*"
           ],
-          "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
-        },
-        {
-          "occurrence": "yearly",
-          "command": "/home/maverick/bin/annual-maintenance"
-        },
-        {
-          "occurrence": "reboot",
-          "command": "/home/cleanup"
-        },
-        {
-          "occurrence": "monthly",
-          "command": "/home/maverick/bin/tape-backup"
+          "day_of_week": [
+            "*"
+          ],
+          "user": "root",
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )"
         }
       ]
     }
 
-    $ cat /etc/crontab | jc --crontab -p -r
+    $ cat /etc/crontab | jc --crontab-u -p -r
     {
       "variables": [
         {
-          "name": "MAILTO",
-          "value": "root"
-        },
-        {
           "name": "PATH",
-          "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
         },
         {
           "name": "SHELL",
-          "value": "/bin/bash"
+          "value": "/bin/sh"
         }
       ],
       "schedule": [
         {
-          "minute": "5",
-          "hour": "10-11,22",
+          "minute": "25",
+          "hour": "6",
           "day_of_month": "*",
           "month": "*",
           "day_of_week": "*",
-          "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+          "user": "root",
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )"
         },
         {
-          "minute": "30",
-          "hour": "4/2",
+          "minute": "47",
+          "hour": "6",
           "day_of_month": "*",
           "month": "*",
+          "day_of_week": "7",
+          "user": "root",
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )"
+        },
+        {
+          "minute": "52",
+          "hour": "6",
+          "day_of_month": "1",
+          "month": "*",
           "day_of_week": "*",
-          "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
-        },
-        {
-          "occurrence": "yearly",
-          "command": "/home/maverick/bin/annual-maintenance"
-        },
-        {
-          "occurrence": "reboot",
-          "command": "/home/cleanup"
-        },
-        {
-          "occurrence": "monthly",
-          "command": "/home/maverick/bin/tape-backup"
+          "user": "root",
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )"
         }
       ]
     }
+
+
 
 ## info
 ```python
@@ -172,6 +173,7 @@ Returns:
                               string
           ],
           "occurrence":       string,
+          "user":             string,
           "command":          string
         }
       ]
