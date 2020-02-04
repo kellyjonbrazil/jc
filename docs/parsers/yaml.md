@@ -11,16 +11,60 @@ Compatibility:
 
 Examples:
 
-    $ cat example.yaml | jc --yaml -p
+    $ cat istio-mtls-permissive.yaml
+    apiVersion: "authentication.istio.io/v1alpha1"
+    kind: "Policy"
+    metadata:
+      name: "default"
+      namespace: "default"
+    spec:
+      peers:
+      - mtls: {}
+    ---
+    apiVersion: "networking.istio.io/v1alpha3"
+    kind: "DestinationRule"
+    metadata:
+      name: "default"
+      namespace: "default"
+    spec:
+      host: "*.default.svc.cluster.local"
+      trafficPolicy:
+        tls:
+          mode: ISTIO_MUTUAL
+
+    $ cat istio-mtls-permissive.yaml | jc --yaml -p
     [
-        {
-            "Description": "This is a YAML document",
-            "Number": 42
+      {
+        "apiVersion": "authentication.istio.io/v1alpha1",
+        "kind": "Policy",
+        "metadata": {
+          "name": "default",
+          "namespace": "default"
         },
-        {
-            "Description": "Yet Another YAML document"
-            "Boolean": true
+        "spec": {
+          "peers": [
+            {
+              "mtls": {}
+            }
+          ]
         }
+      },
+      {
+        "apiVersion": "networking.istio.io/v1alpha3",
+        "kind": "DestinationRule",
+        "metadata": {
+          "name": "default",
+          "namespace": "default"
+        },
+        "spec": {
+          "host": "*.default.svc.cluster.local",
+          "trafficPolicy": {
+            "tls": {
+              "mode": "ISTIO_MUTUAL"
+            }
+          }
+        }
+      }
     ]
 
 ## info
