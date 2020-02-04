@@ -126,8 +126,8 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
-
     yaml = YAML(typ='safe')
+
     for document in yaml.load_all(data):
         raw_output.append(document)
 

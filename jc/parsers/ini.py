@@ -104,7 +104,7 @@ def parse(data, raw=False, quiet=False):
     if data:
         ini = configparser.ConfigParser()
         ini.read_string(data)
-        raw_output = {s:dict(ini.items(s)) for s in ini.sections()}
+        raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
 
     if raw:
         return raw_output
