@@ -97,6 +97,7 @@ jc PARSER [OPTIONS]
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
+- `--xml` enables the `XML` file parser
 - `--yaml` enables the `YAML` file parser
 
 ### Options
@@ -1634,6 +1635,51 @@ $ w | jc --w -p
     "what": "-bash"
   }
 ]
+```
+### XML
+```
+$ cat cd_catalog.xml 
+<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG>
+  <CD>
+    <TITLE>Empire Burlesque</TITLE>
+    <ARTIST>Bob Dylan</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Columbia</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEAR>1985</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Hide your heart</TITLE>
+    <ARTIST>Bonnie Tyler</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>CBS Records</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1988</YEAR>
+  </CD>
+  ...
+
+$ cat cd_catalog.xml | jc --xml -p
+{
+  "CATALOG": {
+    "CD": [
+      {
+        "TITLE": "Empire Burlesque",
+        "ARTIST": "Bob Dylan",
+        "COUNTRY": "USA",
+        "COMPANY": "Columbia",
+        "PRICE": "10.90",
+        "YEAR": "1985"
+      },
+      {
+        "TITLE": "Hide your heart",
+        "ARTIST": "Bonnie Tyler",
+        "COUNTRY": "UK",
+        "COMPANY": "CBS Records",
+        "PRICE": "9.90",
+        "YEAR": "1988"
+      },
+...
 ```
 ### YAML
 ```

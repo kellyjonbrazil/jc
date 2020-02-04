@@ -40,7 +40,9 @@ import jc.parsers.systemctl_luf
 import jc.parsers.uname
 import jc.parsers.uptime
 import jc.parsers.w
+import jc.parsers.xml
 import jc.parsers.yaml
+
 
 parser_map = {
     '--arp': jc.parsers.arp,
@@ -76,6 +78,7 @@ parser_map = {
     '--uname': jc.parsers.uname,
     '--uptime': jc.parsers.uptime,
     '--w': jc.parsers.w,
+    '--xml': jc.parsers.xml,
     '--yaml': jc.parsers.yaml
 }
 
