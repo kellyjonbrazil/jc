@@ -90,6 +90,9 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
 
 
+__version__ = info.version
+
+
 def ctrlc(signum, frame):
     exit()
 
