@@ -9,6 +9,7 @@ import json
 import jc.utils
 import jc.parsers.arp
 import jc.parsers.crontab
+import jc.parsers.crontab_u
 import jc.parsers.df
 import jc.parsers.dig
 import jc.parsers.du
@@ -47,6 +48,7 @@ import jc.parsers.yaml
 parser_map = {
     '--arp': jc.parsers.arp,
     '--crontab': jc.parsers.crontab,
+    '--crontab-u': jc.parsers.crontab_u,
     '--df': jc.parsers.df,
     '--dig': jc.parsers.dig,
     '--du': jc.parsers.du,

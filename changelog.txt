@@ -4,6 +4,7 @@ jc changelog
 - Add YAML file parser
 - Add ini file parser
 - Add XML file parser
+- Add crontab with user specified file parser
 - Add __version__ variable to parser modules
 - TODO: fix history lines to int
 
