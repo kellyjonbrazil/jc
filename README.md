@@ -75,6 +75,7 @@ jc PARSER [OPTIONS]
 - `--history` enables the `history` parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--ifconfig` enables the `ifconfig` parser
+- `--ini` enables the `ini` file parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
 - `--ls` enables the `ls` parser
@@ -96,6 +97,7 @@ jc PARSER [OPTIONS]
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
+- `--yaml` enables the `YAML` file parser
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
@@ -661,6 +663,40 @@ $ ifconfig | jc --ifconfig -p
     "metric": null
   }
 ]
+```
+### ini
+```
+$ cat example.ini
+[DEFAULT]
+ServerAliveInterval = 45
+Compression = yes
+CompressionLevel = 9
+ForwardX11 = yes
+
+[bitbucket.org]
+User = hg
+
+[topsecret.server.com]
+Port = 50022
+ForwardX11 = no
+
+$ cat example.ini | jc --ini -p
+{
+  "bitbucket.org": {
+    "serveraliveinterval": "45",
+    "compression": "yes",
+    "compressionlevel": "9",
+    "forwardx11": "yes",
+    "user": "hg"
+  },
+  "topsecret.server.com": {
+    "serveraliveinterval": "45",
+    "compression": "yes",
+    "compressionlevel": "9",
+    "forwardx11": "no",
+    "port": "50022"
+  }
+}
 ```
 ### iptables
 ```
@@ -1596,6 +1632,64 @@ $ w | jc --w -p
     "jcpu": "0.00s",
     "pcpu": "0.00s",
     "what": "-bash"
+  }
+]
+```
+### YAML
+```
+$ cat istio-mtls-permissive.yaml 
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "default"
+  namespace: "default"
+spec:
+  peers:
+  - mtls: {}
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: "default"
+  namespace: "default"
+spec:
+  host: "*.default.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+$ cat istio-mtls-permissive.yaml | jc --yaml -p
+[
+  {
+    "apiVersion": "authentication.istio.io/v1alpha1",
+    "kind": "Policy",
+    "metadata": {
+      "name": "default",
+      "namespace": "default"
+    },
+    "spec": {
+      "peers": [
+        {
+          "mtls": {}
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "networking.istio.io/v1alpha3",
+    "kind": "DestinationRule",
+    "metadata": {
+      "name": "default",
+      "namespace": "default"
+    },
+    "spec": {
+      "host": "*.default.svc.cluster.local",
+      "trafficPolicy": {
+        "tls": {
+          "mode": "ISTIO_MUTUAL"
+        }
+      }
+    }
   }
 ]
 ```
