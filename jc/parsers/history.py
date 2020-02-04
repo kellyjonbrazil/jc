@@ -70,7 +70,7 @@ def process(proc_data):
 
         [
           {
-            "line":     string,
+            "line":     integer,
             "command":  string
           }
         ]
@@ -83,6 +83,16 @@ def process(proc_data):
         proc_line['line'] = k
         proc_line['command'] = v
         processed.append(proc_line)
+
+    for entry in processed:
+        int_list = ['line']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
     return processed
 
