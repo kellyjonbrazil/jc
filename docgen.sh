@@ -37,4 +37,5 @@ pydocmd simple jc.parsers.systemctl_luf+ > ../docs/parsers/systemctl_luf.md
 pydocmd simple jc.parsers.uname+ > ../docs/parsers/uname.md
 pydocmd simple jc.parsers.uptime+ > ../docs/parsers/uptime.md
 pydocmd simple jc.parsers.w+ > ../docs/parsers/w.md
+pydocmd simple jc.parsers.xml+ > ../docs/parsers/xml.md
 pydocmd simple jc.parsers.yaml+ > ../docs/parsers/yaml.md

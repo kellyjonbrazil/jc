@@ -1679,7 +1679,8 @@ $ cat cd_catalog.xml | jc --xml -p
         "PRICE": "9.90",
         "YEAR": "1988"
       },
-...
+  ...
+}
 ```
 ### YAML
 ```

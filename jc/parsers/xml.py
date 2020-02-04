@@ -10,7 +10,7 @@ Compatibility:
 
 Examples:
 
-    $ cat cd_catalog.xml 
+    $ cat cd_catalog.xml
     <?xml version="1.0" encoding="UTF-8"?>
     <CATALOG>
       <CD>
@@ -51,7 +51,8 @@ Examples:
             "PRICE": "9.90",
             "YEAR": "1988"
           },
-    ...
+      ...
+    }
 """
 import jc.utils
 import xmltodict
