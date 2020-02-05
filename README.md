@@ -674,32 +674,32 @@ $ cat /etc/hosts | jc --hosts -p
 ### id
 ```
 $ id | jc --id -p
+{
+  "uid": {
+    "id": 1000,
+    "name": "kbrazil"
+  },
+  "gid": {
+    "id": 1000,
+    "name": "kbrazil"
+  },
+  "groups": [
     {
-      "uid": {
-        "id": 1000,
-        "name": "kbrazil"
-      },
-      "gid": {
-        "id": 1000,
-        "name": "kbrazil"
-      },
-      "groups": [
-        {
-          "id": 1000,
-          "name": "kbrazil"
-        },
-        {
-          "id": 10,
-          "name": "wheel"
-        }
-      ],
-      "context": {
-        "user": "unconfined_u",
-        "role": "unconfined_r",
-        "type": "unconfined_t",
-        "level": "s0-s0:c0.c1023"
-      }
+      "id": 1000,
+      "name": "kbrazil"
+    },
+    {
+      "id": 10,
+      "name": "wheel"
     }
+  ],
+  "context": {
+    "user": "unconfined_u",
+    "role": "unconfined_r",
+    "type": "unconfined_t",
+    "level": "s0-s0:c0.c1023"
+  }
+}
 ```
 ### ifconfig
 ```
