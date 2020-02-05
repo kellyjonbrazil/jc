@@ -569,7 +569,7 @@ $ free | jc --free -p
   }
 ]
 ```
-### /etc/fstab
+### /etc/fstab file
 ```
 $ cat /etc/fstab | jc --fstab -p
 [
@@ -622,7 +622,7 @@ $ history | jc --history -p
   ...
 ]
 ```
-### /etc/hosts
+### /etc/hosts file
 ```
 $ cat /etc/hosts | jc --hosts -p
 [
@@ -772,7 +772,7 @@ $ ifconfig | jc --ifconfig -p
   }
 ]
 ```
-### INI
+### INI files
 ```
 $ cat example.ini
 [DEFAULT]
@@ -1743,7 +1743,7 @@ $ w | jc --w -p
   }
 ]
 ```
-### XML
+### XML files
 ```
 $ cat cd_catalog.xml 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1789,7 +1789,7 @@ $ cat cd_catalog.xml | jc --xml -p
   ...
 }
 ```
-### YAML
+### YAML files
 ```
 $ cat istio-mtls-permissive.yaml 
 apiVersion: "authentication.istio.io/v1alpha1"
