@@ -14,16 +14,16 @@ Examples:
     {
       "uid": {
         "id": 1000,
-        "name": "kbrazil"
+        "name": "joeuser"
       },
       "gid": {
         "id": 1000,
-        "name": "kbrazil"
+        "name": "joeuser"
       },
       "groups": [
         {
           "id": 1000,
-          "name": "kbrazil"
+          "name": "joeuser"
         },
         {
           "id": 10,
@@ -42,16 +42,16 @@ Examples:
     {
       "uid": {
         "id": "1000",
-        "name": "kbrazil"
+        "name": "joeuser"
       },
       "gid": {
         "id": "1000",
-        "name": "kbrazil"
+        "name": "joeuser"
       },
       "groups": [
         {
           "id": "1000",
-          "name": "kbrazil"
+          "name": "joeuser"
         },
         {
           "id": "10",
