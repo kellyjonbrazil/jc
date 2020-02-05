@@ -257,7 +257,7 @@ def parse(data, raw=False, quiet=False):
     if len(cleandata) > 1:
         cron_list = jc.parsers.universal.simple_table_parse(cleandata)
 
-    raw_output['schedule'] = cron_list
+        raw_output['schedule'] = cron_list
 
     # Add shortcut entries back in
     for item in shortcut_list:
