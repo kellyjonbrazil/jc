@@ -1,15 +1,13 @@
 jc changelog
 
-202001XX v1.7.1
+20200205 v1.7.1
 - Add YAML file parser
 - Add ini file parser
 - Add XML file parser
+- Add id parser
 - Add crontab with user specified file parser
 - Add __version__ variable to parser modules
 - Updated history parser to output "line" as an integer
-- TODO: add id parser
-- TODO: add who parser
-- TODO: add passwd and shadow parser
 
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
