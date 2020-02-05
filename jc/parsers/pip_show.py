@@ -43,7 +43,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'pip-show parser'
+    description = 'pip show parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
