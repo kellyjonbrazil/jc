@@ -92,7 +92,7 @@ def parsers_text(indent=0, pad=0):
         parser_mod = parser_module(parser)
 
         if hasattr(parser_mod, 'info'):
-            parser_desc = getattr(parser_mod.info, 'description')
+            parser_desc = parser_mod.info.description
             padding = pad - len(parser_arg)
             padding_char = ' '
             indent_text = padding_char * indent
@@ -110,9 +110,9 @@ def about_jc():
 
         if hasattr(parser_mod, 'info'):
             info_dict = {}
-            info_dict['name'] = getattr(parser_mod, '__name__').split('.')[-1]
+            info_dict['name'] = parser_mod.__name__.split('.')[-1]
             info_dict['argument'] = parser_argument(parser)
-            parser_entry = vars(getattr(parser_mod, 'info'))
+            parser_entry = vars(parser_mod.info)
 
             for k, v in parser_entry.items():
                 if not k.startswith('__'):
@@ -200,9 +200,8 @@ def main():
 
             if parser_name in parsers:
                 # load parser module just in time so we don't need to load all modules
-                parser_mod = parser_module(arg)
-                parser = getattr(parser_mod, 'parse')
-                result = parser(data, raw=raw, quiet=quiet)
+                parser = parser_module(arg)
+                result = parser.parse(data, raw=raw, quiet=quiet)
                 found = True
                 break
     else:
@@ -211,10 +210,9 @@ def main():
 
             if parser_name in parsers:
                 # load parser module just in time so we don't need to load all modules
-                parser_mod = parser_module(arg)
+                parser = parser_module(arg)
                 try:
-                    parser = getattr(parser_mod, 'parse')
-                    result = parser(data, raw=raw, quiet=quiet)
+                    result = parser.parse(data, raw=raw, quiet=quiet)
                     found = True
                     break
                 except:
