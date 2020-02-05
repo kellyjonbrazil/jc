@@ -85,7 +85,7 @@ def ctrlc(signum, frame):
     exit()
 
 
-def parsers_text():
+def parsers_text(pad=0):
     ptext = ''
     for parser in parsers:
         parser_arg = parser_argument(parser)
@@ -93,7 +93,7 @@ def parsers_text():
 
         if hasattr(parser_mod, 'info'):
             parser_desc = getattr(parser_mod.info, 'description')
-            padding = 16 - len(parser_arg)
+            padding = pad - len(parser_arg)
             padding_char = ' '
             padding_text = padding_char * padding
             ptext += '            ' + parser_arg + padding_text + parser_desc + '\n'
@@ -131,7 +131,7 @@ def about_jc():
 
 
 def helptext(message):
-    parsers_string = parsers_text()
+    parsers_string = parsers_text(pad=17)
 
     helptext_string = f'''
     jc:     {message}
@@ -141,11 +141,11 @@ def helptext(message):
     Parsers:
 {parsers_string}
     Options:
-            -a              about jc
-            -d              debug - show trace messages
-            -p              pretty print output
-            -q              quiet - suppress warnings
-            -r              raw JSON output
+            -a               about jc
+            -d               debug - show trace messages
+            -p               pretty print output
+            -q               quiet - suppress warnings
+            -r               raw JSON output
 
     Example:
             ls -al | jc --ls -p
