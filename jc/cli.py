@@ -3,88 +3,72 @@
 JC cli module
 """
 import sys
+import importlib
 import textwrap
 import signal
 import json
 import jc.utils
-import jc.parsers.arp
-import jc.parsers.crontab
-import jc.parsers.crontab_u
-import jc.parsers.df
-import jc.parsers.dig
-import jc.parsers.du
-import jc.parsers.env
-import jc.parsers.free
-import jc.parsers.fstab
-import jc.parsers.history
-import jc.parsers.hosts
-import jc.parsers.id
-import jc.parsers.ifconfig
-import jc.parsers.ini
-import jc.parsers.iptables
-import jc.parsers.jobs
-import jc.parsers.ls
-import jc.parsers.lsblk
-import jc.parsers.lsmod
-import jc.parsers.lsof
-import jc.parsers.mount
-import jc.parsers.netstat
-import jc.parsers.pip_list
-import jc.parsers.pip_show
-import jc.parsers.ps
-import jc.parsers.route
-import jc.parsers.ss
-import jc.parsers.stat
-import jc.parsers.systemctl
-import jc.parsers.systemctl_lj
-import jc.parsers.systemctl_ls
-import jc.parsers.systemctl_luf
-import jc.parsers.uname
-import jc.parsers.uptime
-import jc.parsers.w
-import jc.parsers.xml
-import jc.parsers.yaml
+
+parsers = [
+    'arp',
+    'crontab',
+    'crontab-u',
+    'df',
+    'dig',
+    'du',
+    'env',
+    'free',
+    'fstab',
+    'history',
+    'hosts',
+    'id',
+    'ifconfig',
+    'ini',
+    'iptables',
+    'jobs',
+    'ls',
+    'lsblk',
+    'lsmod',
+    'lsof',
+    'mount',
+    'netstat',
+    'pip-list',
+    'pip-show',
+    'ps',
+    'route',
+    'ss',
+    'stat',
+    'systemctl',
+    'systemctl-lj',
+    'systemctl-ls',
+    'systemctl-luf',
+    'uname',
+    'uptime',
+    'w',
+    'xml',
+    'yaml'
+]
 
 
-parser_map = {
-    '--arp': jc.parsers.arp,
-    '--crontab': jc.parsers.crontab,
-    '--crontab-u': jc.parsers.crontab_u,
-    '--df': jc.parsers.df,
-    '--dig': jc.parsers.dig,
-    '--du': jc.parsers.du,
-    '--env': jc.parsers.env,
-    '--free': jc.parsers.free,
-    '--fstab': jc.parsers.fstab,
-    '--history': jc.parsers.history,
-    '--hosts': jc.parsers.hosts,
-    '--id': jc.parsers.id,
-    '--ifconfig': jc.parsers.ifconfig,
-    '--ini': jc.parsers.ini,
-    '--iptables': jc.parsers.iptables,
-    '--jobs': jc.parsers.jobs,
-    '--ls': jc.parsers.ls,
-    '--lsblk': jc.parsers.lsblk,
-    '--lsmod': jc.parsers.lsmod,
-    '--lsof': jc.parsers.lsof,
-    '--mount': jc.parsers.mount,
-    '--netstat': jc.parsers.netstat,
-    '--pip-list': jc.parsers.pip_list,
-    '--pip-show': jc.parsers.pip_show,
-    '--ps': jc.parsers.ps,
-    '--route': jc.parsers.route,
-    '--ss': jc.parsers.ss,
-    '--stat': jc.parsers.stat,
-    '--systemctl': jc.parsers.systemctl,
-    '--systemctl-lj': jc.parsers.systemctl_lj,
-    '--systemctl-ls': jc.parsers.systemctl_ls,
-    '--systemctl-luf': jc.parsers.systemctl_luf,
-    '--uname': jc.parsers.uname,
-    '--uptime': jc.parsers.uptime,
-    '--w': jc.parsers.w,
-    '--xml': jc.parsers.xml,
-    '--yaml': jc.parsers.yaml
-}
+def parser_shortname(parser_argument):
+    # short name of the parser with dashes and no -- prefix
+    return parser_argument[2:]
+
+
+def parser_argument(parser):
+    # short name of the parser with dashes and with -- prefix
+    return f'--{parser}'
+
+
+def parser_mod_shortname(parser):
+    # short name of the parser's module name (no -- prefix and dashes converted to underscores)
+    return parser.replace('--', '').replace('-', '_')
+
+
+def parser_module(parser):
+    # import the module just in time and present the module object
+    importlib.import_module('jc.parsers.' + parser_mod_shortname(parser))
+    return getattr(jc.parsers, parser_mod_shortname(parser))
 
 
 class info():
@@ -103,27 +87,36 @@ def ctrlc(signum, frame):
 
 def parsers_text():
     ptext = ''
-    for parser in parser_map:
-        if hasattr(parser_map[parser], 'info'):
-            padding = 16 - len(parser)
+    for parser in parsers:
+        parser_arg = parser_argument(parser)
+        parser_mod = parser_module(parser)
+
+        if hasattr(parser_mod, 'info'):
+            parser_desc = getattr(parser_mod.info, 'description')
+            padding = 16 - len(parser_arg)
             padding_char = ' '
             padding_text = padding_char * padding
-            ptext += '            ' + parser + padding_text + parser_map[parser].info.description + '\n'
+            ptext += '            ' + parser_arg + padding_text + parser_desc + '\n'
 
     return ptext
 
 
 def about_jc():
     parser_list = []
-    for parser in parser_map:
-        if hasattr(parser_map[parser], 'info'):
+
+    for parser in parsers:
+        parser_mod = parser_module(parser)
+
+        if hasattr(parser_mod, 'info'):
             info_dict = {}
-            info_dict['name'] = parser_map[parser].__name__.split('.')[-1]
-            info_dict['argument'] = parser
-            parser_entry = vars(parser_map[parser].info)
+            info_dict['name'] = getattr(parser_mod, '__name__').split('.')[-1]
+            info_dict['argument'] = parser_argument(parser)
+            parser_entry = vars(getattr(parser_mod, 'info'))
+
             for k, v in parser_entry.items():
                 if not k.startswith('__'):
                     info_dict[k] = v
+
         parser_list.append(info_dict)
 
     return {
@@ -202,19 +195,28 @@ def main():
 
     if debug:
         for arg in sys.argv:
-            if arg in parser_map:
-                result = parser_map[arg].parse(data, raw=raw, quiet=quiet)
+            parser_name = parser_shortname(arg)
+
+            if parser_name in parsers:
+                # load parser module just in time so we don't need to load all modules
+                parser_mod = parser_module(arg)
+                parser = getattr(parser_mod, 'parse')
+                result = parser(data, raw=raw, quiet=quiet)
                 found = True
                 break
     else:
         for arg in sys.argv:
-            if arg in parser_map:
+            parser_name = parser_shortname(arg)
+
+            if parser_name in parsers:
+                # load parser module just in time so we don't need to load all modules
+                parser_mod = parser_module(arg)
                 try:
-                    result = parser_map[arg].parse(data, raw=raw, quiet=quiet)
+                    parser = getattr(parser_mod, 'parse')
+                    result = parser(data, raw=raw, quiet=quiet)
                     found = True
                     break
                 except:
-                    parser_name = parser_map[arg].__name__.split('.')[-1]
                     jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     exit(1)
 
