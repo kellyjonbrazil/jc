@@ -187,7 +187,7 @@ def main():
 
     if sys.stdin.isatty():
         helptext('missing piped data')
-        exit()
+        exit(1)
 
     data = sys.stdin.read()
 
@@ -222,7 +222,7 @@ def main():
 
     if not found:
         helptext('missing or incorrect arguments')
-        exit()
+        exit(1)
 
     json_out(result, pretty=pretty)
 
