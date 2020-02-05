@@ -85,7 +85,7 @@ def ctrlc(signum, frame):
     exit()
 
 
-def parsers_text(pad=0):
+def parsers_text(indent=0, pad=0):
     ptext = ''
     for parser in parsers:
         parser_arg = parser_argument(parser)
@@ -95,8 +95,9 @@ def parsers_text(pad=0):
             parser_desc = getattr(parser_mod.info, 'description')
             padding = pad - len(parser_arg)
             padding_char = ' '
+            indent_text = padding_char * indent
             padding_text = padding_char * padding
-            ptext += '            ' + parser_arg + padding_text + parser_desc + '\n'
+            ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
 
     return ptext
 
@@ -131,7 +132,7 @@ def about_jc():
 
 
 def helptext(message):
-    parsers_string = parsers_text(pad=17)
+    parsers_string = parsers_text(indent=12, pad=17)
 
     helptext_string = f'''
     jc:     {message}
