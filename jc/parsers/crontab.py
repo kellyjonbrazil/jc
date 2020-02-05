@@ -132,7 +132,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'crontab file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -252,7 +252,7 @@ def parse(data, raw=False, quiet=False):
                                   'command': cmd})
 
     # Add header row for parsing
-    cleandata[0] = 'minute hour day_of_month month day_of_week command'
+    cleandata[:0] = ['minute hour day_of_month month day_of_week command']
 
     if len(cleandata) > 1:
         cron_list = jc.parsers.universal.simple_table_parse(cleandata)

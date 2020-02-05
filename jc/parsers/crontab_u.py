@@ -254,7 +254,7 @@ def parse(data, raw=False, quiet=False):
                                   'command': cmd})
 
     # Add header row for parsing
-    cleandata[0] = 'minute hour day_of_month month day_of_week user command'
+    cleandata[:0] = ['minute hour day_of_month month day_of_week user command']
 
     if len(cleandata) > 1:
         cron_list = jc.parsers.universal.simple_table_parse(cleandata)

@@ -8,6 +8,7 @@ jc changelog
 - Add crontab file parser with user support
 - Add __version__ variable to parser modules
 - Updated history parser to output "line" as an integer
+- Bugfix in crontab file parser: header insertion was clobbering first row
 - Just-in-time loading of parser modules instead of loading all at start
 
 20191217 v1.6.1
