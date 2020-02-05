@@ -2,7 +2,7 @@ jc changelog
 
 20200205 v1.7.1
 - Add YAML file parser
-- Add ini file parser
+- Add INI file parser
 - Add XML file parser
 - Add id parser
 - Add crontab with user specified file parser

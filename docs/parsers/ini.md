@@ -1,9 +1,9 @@
 # jc.parsers.ini
-jc - JSON CLI output utility ini Parser
+jc - JSON CLI output utility INI Parser
 
 Usage:
 
-    specify --ini as the first argument if the piped input is coming from a ini file
+    specify --ini as the first argument if the piped input is coming from a INI file
 
 Compatibility:
 

@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility ini Parser
+"""jc - JSON CLI output utility INI Parser
 
 Usage:
 
-    specify --ini as the first argument if the piped input is coming from a ini file
+    specify --ini as the first argument if the piped input is coming from a INI file
 
 Compatibility:
 
@@ -48,7 +48,7 @@ import configparser
 
 class info():
     version = '1.0'
-    description = 'ini file parser'
+    description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using configparser from the standard library'

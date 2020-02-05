@@ -76,7 +76,7 @@ jc PARSER [OPTIONS]
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` parser
 - `--ifconfig` enables the `ifconfig` parser
-- `--ini` enables the `ini` file parser
+- `--ini` enables the `INI` file parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
 - `--ls` enables the `ls` parser
@@ -772,7 +772,7 @@ $ ifconfig | jc --ifconfig -p
   }
 ]
 ```
-### ini
+### INI
 ```
 $ cat example.ini
 [DEFAULT]
