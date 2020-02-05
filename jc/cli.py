@@ -51,22 +51,22 @@ parsers = [
 
 
 def parser_shortname(parser_argument):
-    # short name of the parser with dashes and no -- prefix
+    """short name of the parser with dashes and no -- prefix"""
     return parser_argument[2:]
 
 
 def parser_argument(parser):
-    # short name of the parser with dashes and with -- prefix
+    """short name of the parser with dashes and with -- prefix"""
     return f'--{parser}'
 
 
 def parser_mod_shortname(parser):
-    # short name of the parser's module name (no -- prefix and dashes converted to underscores)
+    """short name of the parser's module name (no -- prefix and dashes converted to underscores)"""
     return parser.replace('--', '').replace('-', '_')
 
 
 def parser_module(parser):
-    # import the module just in time and present the module object
+    """import the module just in time and present the module object"""
     importlib.import_module('jc.parsers.' + parser_mod_shortname(parser))
     return getattr(jc.parsers, parser_mod_shortname(parser))
 
