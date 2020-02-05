@@ -5,9 +5,10 @@ jc changelog
 - Add INI file parser
 - Add XML file parser
 - Add id parser
-- Add crontab with user specified file parser
+- Add crontab file parser with user support
 - Add __version__ variable to parser modules
 - Updated history parser to output "line" as an integer
+- Just-in-time loading of parser modules instead of loading all at start
 
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
