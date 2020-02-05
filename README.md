@@ -66,6 +66,7 @@ jc PARSER [OPTIONS]
 ### Parsers
 - `--arp` enables the `arp` parser
 - `--crontab` enables the `crontab` file parser
+- `--crontab-u` enables the `crontab` file parser with user support
 - `--df` enables the `df` parser
 - `--dig` enables the `dig` parser
 - `--du` enables the `du` parser
@@ -233,7 +234,7 @@ $ cat /etc/crontab | jc --crontab -p
   ]
 }
 ```
-### crontab-u (with user specified)
+### crontab-u (with user support)
 ```
 $ cat /etc/crontab | jc --crontab-u -p
 {
