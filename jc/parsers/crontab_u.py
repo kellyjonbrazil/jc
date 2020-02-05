@@ -249,8 +249,10 @@ def parse(data, raw=False, quiet=False):
         if line.strip().startswith('@'):
             shortcut_line = cleandata.pop(i)
             occurrence = shortcut_line.split(maxsplit=1)[0].strip().lstrip('@')
-            cmd = shortcut_line.split(maxsplit=1)[1].strip()
+            usr = shortcut_line.split(maxsplit=2)[1].strip()
+            cmd = shortcut_line.split(maxsplit=2)[2].strip()
             shortcut_list.append({'occurrence': occurrence,
+                                  'user': usr,
                                   'command': cmd})
 
     # Add header row for parsing
@@ -259,7 +261,7 @@ def parse(data, raw=False, quiet=False):
     if len(cleandata) > 1:
         cron_list = jc.parsers.universal.simple_table_parse(cleandata)
 
-    raw_output['schedule'] = cron_list
+        raw_output['schedule'] = cron_list
 
     # Add shortcut entries back in
     for item in shortcut_list:
