@@ -18,6 +18,7 @@ import jc.parsers.free
 import jc.parsers.fstab
 import jc.parsers.history
 import jc.parsers.hosts
+import jc.parsers.id
 import jc.parsers.ifconfig
 import jc.parsers.ini
 import jc.parsers.iptables
@@ -57,6 +58,7 @@ parser_map = {
     '--fstab': jc.parsers.fstab,
     '--history': jc.parsers.history,
     '--hosts': jc.parsers.hosts,
+    '--id': jc.parsers.id,
     '--ifconfig': jc.parsers.ifconfig,
     '--ini': jc.parsers.ini,
     '--iptables': jc.parsers.iptables,

@@ -1,7 +1,7 @@
 # JC
 JSON CLI output utility
 
-`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. See the **Parsers** section for supported commands.
+`jc` is used to JSONify the output of many standard linux cli tools and file types for easier parsing in scripts. See the **Parsers** section for supported commands.
 
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
@@ -74,6 +74,7 @@ jc PARSER [OPTIONS]
 - `--fstab` enables the `/etc/fstab` file parser
 - `--history` enables the `history` parser
 - `--hosts` enables the `/etc/hosts` file parser
+- `--id` enables the `id` parser
 - `--ifconfig` enables the `ifconfig` parser
 - `--ini` enables the `ini` file parser
 - `--iptables` enables the `iptables` parser
@@ -669,6 +670,36 @@ $ cat /etc/hosts | jc --hosts -p
     ]
   }
 ]
+```
+### id
+```
+$ id | jc --id -p
+    {
+      "uid": {
+        "id": 1000,
+        "name": "kbrazil"
+      },
+      "gid": {
+        "id": 1000,
+        "name": "kbrazil"
+      },
+      "groups": [
+        {
+          "id": 1000,
+          "name": "kbrazil"
+        },
+        {
+          "id": 10,
+          "name": "wheel"
+        }
+      ],
+      "context": {
+        "user": "unconfined_u",
+        "role": "unconfined_r",
+        "type": "unconfined_t",
+        "level": "s0-s0:c0.c1023"
+      }
+    }
 ```
 ### ifconfig
 ```
