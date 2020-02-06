@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:
 
@@ -50,7 +50,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
 
 
 __version__ = info.version

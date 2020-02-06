@@ -7,7 +7,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:
 

@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    'linux', 'darwin', 'aix', 'freebsd'
 
 Examples:
 
@@ -73,14 +73,14 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'du parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'aix', 'freebsd']
 
 
 __version__ = info.version
