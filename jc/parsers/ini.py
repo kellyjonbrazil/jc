@@ -2,7 +2,7 @@
 
 Usage:
 
-    specify --ini as the first argument if the piped input is coming from a INI file
+    specify --ini as the first argument if the piped input is coming from an INI file
 
 Compatibility:
 

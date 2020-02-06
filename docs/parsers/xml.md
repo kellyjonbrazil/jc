@@ -3,7 +3,7 @@ jc - JSON CLI output utility XML Parser
 
 Usage:
 
-    specify --xml as the first argument if the piped input is coming from a XML file
+    specify --xml as the first argument if the piped input is coming from an XML file
 
 Compatibility:
 
