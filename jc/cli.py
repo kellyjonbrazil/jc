@@ -82,7 +82,7 @@ __version__ = info.version
 
 
 def ctrlc(signum, frame):
-    exit()
+    exit(1)
 
 
 def parsers_text(indent=0, pad=0):
