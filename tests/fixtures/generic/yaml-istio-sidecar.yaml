@@ -1,0 +1,174 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: www
+  testboolean: true
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: db
+  testboolean: false
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: www
+  template:
+    metadata:
+      labels:
+        app: www
+        version: v1.0       # add version
+    spec:
+      serviceAccountName: www      # add serviceAccountName
+      containers:
+      - name: modsecurity
+        image: owasp/modsecurity-crs:v3.2-modsec2-apache
+        ports:
+        - containerPort: 80
+        env:
+        - name: SETPROXY
+          value: "True"
+        - name: PROXYLOCATION
+          value: "http://127.0.0.1:8080/"
+      - name: microsimserver
+        image: kellybrazil/microsimserver
+        ports:
+        - containerPort: 8080       # add microsimserver port
+        env:
+        - name: STATS_PORT
+          value: "5000"
+      - name: microsimclient
+        image: kellybrazil/microsimclient
+        env:
+        - name: STATS_PORT
+          value: "5001"
+        - name: REQUEST_URLS
+          value: "http://auth.default.svc.cluster.local:8080/,http://db.default.svc.cluster.local:8080/"
+        - name: SEND_SQLI
+          value: "True"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+        version: v1.0        # add version
+    spec:
+      serviceAccountName: auth       # add serviceAccountName
+      containers:
+      - name: modsecurity
+        image: owasp/modsecurity-crs:v3.2-modsec2-apache
+        ports:
+        - containerPort: 80
+        env:
+        - name: SETPROXY
+          value: "True"
+        - name: PROXYLOCATION
+          value: "http://127.0.0.1:8080/"
+      - name: microsimserver
+        image: kellybrazil/microsimserver
+        ports:
+        - containerPort: 8080        # add microsimserver port
+        env:
+        - name: STATS_PORT
+          value: "5000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+        version: v1.0      # add version
+    spec:
+      serviceAccountName: db     # add serviceAccountName
+      containers:
+      - name: modsecurity
+        image: owasp/modsecurity-crs:v3.2-modsec2-apache
+        ports:
+        - containerPort: 80
+        env:
+        - name: SETPROXY
+          value: "True"
+        - name: PROXYLOCATION
+          value: "http://127.0.0.1:8080/"
+      - name: microsimserver
+        image: kellybrazil/microsimserver
+        ports:
+        - containerPort: 8080         # add microsimserver port
+        env:
+        - name: STATS_PORT
+          value: "5000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: www
+  name: www
+spec:
+  # externalTrafficPolicy: Local      # remove externalTrafficPolicy
+  ports:
+  - port: 8080
+    targetPort: 80
+    name: http         # add port name
+  selector:
+    app: www
+  sessionAffinity: None
+  # type: LoadBalancer          # remove LoadBalancer type
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth
+  name: auth
+spec:
+  ports:
+  - port: 8080
+    targetPort: 80
+    name: http            # add port name
+  selector:
+    app: auth
+  sessionAffinity: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db
+  name: db
+spec:
+  ports:
+  - port: 8080
+    targetPort: 80
+    name: http            # add port name
+  selector:
+    app: db
+  sessionAffinity: None

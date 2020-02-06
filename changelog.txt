@@ -1,5 +1,18 @@
 jc changelog
 
+20200205 v1.7.1
+- Add YAML file parser
+- Add INI file parser
+- Add XML file parser
+- Add id parser (tested on linux and OSX)
+- Add crontab file parser with user support (tested on linux)
+- Add __version__ variable to parser modules
+- Add exit code on error
+- Updated history parser to output "line" as an integer
+- Updated compatibility list for some parsers
+- Bugfix in crontab file parser: header insertion was clobbering first row
+- Just-in-time loading of parser modules instead of loading all at start
+
 20191217 v1.6.1
 - Add du parser (tested on linux and OSX)
 - Add crontab parser (tested on linux and OSX)

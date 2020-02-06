@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: sidecar-config
+  namespace: default
+  testboolean: true
+spec:
+  ingress:
+  - port:
+      number: 8080
+      protocol: HTTP
+      name: waf
+    defaultEndpoint: 127.0.0.1:80
+    captureMode: IPTABLES
+  egress:
+  - hosts:
+    - "*/*"

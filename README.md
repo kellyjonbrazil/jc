@@ -1,7 +1,7 @@
 # JC
 JSON CLI output utility
 
-`jc` is used to JSONify the output of many standard linux cli tools for easier parsing in scripts. See the **Parsers** section for supported commands.
+`jc` is used to JSONify the output of many standard linux cli tools and file types for easier parsing in scripts. See the **Parsers** section for supported commands.
 
 This allows further command line processing of output with tools like `jq` simply by piping commands:
 
@@ -66,6 +66,7 @@ jc PARSER [OPTIONS]
 ### Parsers
 - `--arp` enables the `arp` parser
 - `--crontab` enables the `crontab` file parser
+- `--crontab-u` enables the `crontab` file parser with user support
 - `--df` enables the `df` parser
 - `--dig` enables the `dig` parser
 - `--du` enables the `du` parser
@@ -74,7 +75,9 @@ jc PARSER [OPTIONS]
 - `--fstab` enables the `/etc/fstab` file parser
 - `--history` enables the `history` parser
 - `--hosts` enables the `/etc/hosts` file parser
+- `--id` enables the `id` parser
 - `--ifconfig` enables the `ifconfig` parser
+- `--ini` enables the `INI` file parser
 - `--iptables` enables the `iptables` parser
 - `--jobs` enables the `jobs` parser
 - `--ls` enables the `ls` parser
@@ -96,6 +99,8 @@ jc PARSER [OPTIONS]
 - `--uname` enables the `uname -a` parser
 - `--uptime` enables the `uptime` parser
 - `--w` enables the `w` parser
+- `--xml` enables the `XML` file parser
+- `--yaml` enables the `YAML` file parser
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
@@ -224,6 +229,82 @@ $ cat /etc/crontab | jc --crontab -p
     },
     {
       "occurrence": "monthly",
+      "command": "/home/maverick/bin/tape-backup"
+    }
+  ]
+}
+```
+### crontab-u (with user support)
+```
+$ cat /etc/crontab | jc --crontab-u -p
+{
+  "variables": [
+    {
+      "name": "MAILTO",
+      "value": "root"
+    },
+    {
+      "name": "PATH",
+      "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+    },
+    {
+      "name": "SHELL",
+      "value": "/bin/bash"
+    }
+  ],
+  "schedule": [
+    {
+      "minute": [
+        "5"
+      ],
+      "hour": [
+        "10-11",
+        "22"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "user": "root",
+      "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+    },
+    {
+      "minute": [
+        "30"
+      ],
+      "hour": [
+        "4/2"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "user": "root",
+      "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+    },
+    {
+      "occurrence": "yearly",
+      "user": "root",
+      "command": "/home/maverick/bin/annual-maintenance"
+    },
+    {
+      "occurrence": "reboot",
+      "user": "root",
+      "command": "/home/cleanup"
+    },
+    {
+      "occurrence": "monthly",
+      "user": "root",
       "command": "/home/maverick/bin/tape-backup"
     }
   ]
@@ -489,7 +570,7 @@ $ free | jc --free -p
   }
 ]
 ```
-### /etc/fstab
+### /etc/fstab file
 ```
 $ cat /etc/fstab | jc --fstab -p
 [
@@ -524,25 +605,25 @@ $ cat /etc/fstab | jc --fstab -p
 $ history | jc --history -p
 [
   {
-    "line": "118",
+    "line": 118,
     "command": "sleep 100"
   },
   {
-    "line": "119",
+    "line": 119,
     "command": "ls /bin"
   },
   {
-    "line": "120",
+    "line": 120,
     "command": "echo \"hello\""
   },
   {
-    "line": "121",
+    "line": 121,
     "command": "docker images"
   },
   ...
 ]
 ```
-### /etc/hosts
+### /etc/hosts file
 ```
 $ cat /etc/hosts | jc --hosts -p
 [
@@ -590,6 +671,36 @@ $ cat /etc/hosts | jc --hosts -p
     ]
   }
 ]
+```
+### id
+```
+$ id | jc --id -p
+{
+  "uid": {
+    "id": 1000,
+    "name": "joeuser"
+  },
+  "gid": {
+    "id": 1000,
+    "name": "joeuser"
+  },
+  "groups": [
+    {
+      "id": 1000,
+      "name": "joeuser"
+    },
+    {
+      "id": 10,
+      "name": "wheel"
+    }
+  ],
+  "context": {
+    "user": "unconfined_u",
+    "role": "unconfined_r",
+    "type": "unconfined_t",
+    "level": "s0-s0:c0.c1023"
+  }
+}
 ```
 ### ifconfig
 ```
@@ -661,6 +772,40 @@ $ ifconfig | jc --ifconfig -p
     "metric": null
   }
 ]
+```
+### INI files
+```
+$ cat example.ini
+[DEFAULT]
+ServerAliveInterval = 45
+Compression = yes
+CompressionLevel = 9
+ForwardX11 = yes
+
+[bitbucket.org]
+User = hg
+
+[topsecret.server.com]
+Port = 50022
+ForwardX11 = no
+
+$ cat example.ini | jc --ini -p
+{
+  "bitbucket.org": {
+    "serveraliveinterval": "45",
+    "compression": "yes",
+    "compressionlevel": "9",
+    "forwardx11": "yes",
+    "user": "hg"
+  },
+  "topsecret.server.com": {
+    "serveraliveinterval": "45",
+    "compression": "yes",
+    "compressionlevel": "9",
+    "forwardx11": "no",
+    "port": "50022"
+  }
+}
 ```
 ### iptables
 ```
@@ -1599,6 +1744,110 @@ $ w | jc --w -p
   }
 ]
 ```
+### XML files
+```
+$ cat cd_catalog.xml 
+<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG>
+  <CD>
+    <TITLE>Empire Burlesque</TITLE>
+    <ARTIST>Bob Dylan</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Columbia</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEAR>1985</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Hide your heart</TITLE>
+    <ARTIST>Bonnie Tyler</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>CBS Records</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1988</YEAR>
+  </CD>
+  ...
+
+$ cat cd_catalog.xml | jc --xml -p
+{
+  "CATALOG": {
+    "CD": [
+      {
+        "TITLE": "Empire Burlesque",
+        "ARTIST": "Bob Dylan",
+        "COUNTRY": "USA",
+        "COMPANY": "Columbia",
+        "PRICE": "10.90",
+        "YEAR": "1985"
+      },
+      {
+        "TITLE": "Hide your heart",
+        "ARTIST": "Bonnie Tyler",
+        "COUNTRY": "UK",
+        "COMPANY": "CBS Records",
+        "PRICE": "9.90",
+        "YEAR": "1988"
+      },
+  ...
+}
+```
+### YAML files
+```
+$ cat istio-mtls-permissive.yaml 
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "default"
+  namespace: "default"
+spec:
+  peers:
+  - mtls: {}
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: "default"
+  namespace: "default"
+spec:
+  host: "*.default.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+$ cat istio-mtls-permissive.yaml | jc --yaml -p
+[
+  {
+    "apiVersion": "authentication.istio.io/v1alpha1",
+    "kind": "Policy",
+    "metadata": {
+      "name": "default",
+      "namespace": "default"
+    },
+    "spec": {
+      "peers": [
+        {
+          "mtls": {}
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "networking.istio.io/v1alpha3",
+    "kind": "DestinationRule",
+    "metadata": {
+      "name": "default",
+      "namespace": "default"
+    },
+    "spec": {
+      "host": "*.default.svc.cluster.local",
+      "trafficPolicy": {
+        "tls": {
+          "mode": "ISTIO_MUTUAL"
+        }
+      }
+    }
+  }
+]
+```
 ## TODO
 Future parsers:
 - /proc files
@@ -1625,4 +1874,7 @@ Tested on:
 
 ## Acknowledgments
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
+- `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
+- `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
 - Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
+- Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)

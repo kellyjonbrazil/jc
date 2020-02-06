@@ -1,0 +1,1 @@
+uid=1000(kbrazil) gid=1000(kbrazil) groups=1000(kbrazil),10(wheel) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023

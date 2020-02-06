@@ -132,7 +132,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'crontab file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -140,6 +140,9 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
+
+
+__version__ = info.version
 
 
 def process(proc_data):
@@ -156,8 +159,8 @@ def process(proc_data):
 
         {
           "variables": [
-            "name":             string,
-            "value":            string
+            "name":               string,
+            "value":              string
           ],
           "schedule": [
             {
@@ -249,12 +252,12 @@ def parse(data, raw=False, quiet=False):
                                   'command': cmd})
 
     # Add header row for parsing
-    cleandata[0] = 'minute hour day_of_month month day_of_week command'
+    cleandata[:0] = ['minute hour day_of_month month day_of_week command']
 
     if len(cleandata) > 1:
         cron_list = jc.parsers.universal.simple_table_parse(cleandata)
 
-    raw_output['schedule'] = cron_list
+        raw_output['schedule'] = cron_list
 
     # Add shortcut entries back in
     for item in shortcut_list:

@@ -6,6 +6,7 @@ pydocmd simple jc+ > ../docs/readme.md
 pydocmd simple utils+ > ../docs/utils.md
 pydocmd simple jc.parsers.arp+ > ../docs/parsers/arp.md
 pydocmd simple jc.parsers.crontab+ > ../docs/parsers/crontab.md
+pydocmd simple jc.parsers.crontab_u+ > ../docs/parsers/crontab_u.md
 pydocmd simple jc.parsers.df+ > ../docs/parsers/df.md
 pydocmd simple jc.parsers.dig+ > ../docs/parsers/dig.md
 pydocmd simple jc.parsers.du+ > ../docs/parsers/du.md
@@ -14,7 +15,9 @@ pydocmd simple jc.parsers.free+ > ../docs/parsers/free.md
 pydocmd simple jc.parsers.fstab+ > ../docs/parsers/fstab.md
 pydocmd simple jc.parsers.history+ > ../docs/parsers/history.md
 pydocmd simple jc.parsers.hosts+ > ../docs/parsers/hosts.md
+pydocmd simple jc.parsers.id+ > ../docs/parsers/id.md
 pydocmd simple jc.parsers.ifconfig+ > ../docs/parsers/ifconfig.md
+pydocmd simple jc.parsers.ini+ > ../docs/parsers/ini.md
 pydocmd simple jc.parsers.iptables+ > ../docs/parsers/iptables.md
 pydocmd simple jc.parsers.jobs+ > ../docs/parsers/jobs.md
 pydocmd simple jc.parsers.ls+ > ../docs/parsers/ls.md
@@ -36,3 +39,5 @@ pydocmd simple jc.parsers.systemctl_luf+ > ../docs/parsers/systemctl_luf.md
 pydocmd simple jc.parsers.uname+ > ../docs/parsers/uname.md
 pydocmd simple jc.parsers.uptime+ > ../docs/parsers/uptime.md
 pydocmd simple jc.parsers.w+ > ../docs/parsers/w.md
+pydocmd simple jc.parsers.xml+ > ../docs/parsers/xml.md
+pydocmd simple jc.parsers.yaml+ > ../docs/parsers/yaml.md

@@ -322,6 +322,9 @@ class info():
     compatible = ['linux']
 
 
+__version__ = info.version
+
+
 def process(proc_data):
     """
     Final processing to conform to the schema.

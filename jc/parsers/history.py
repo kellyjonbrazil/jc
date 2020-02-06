@@ -6,26 +6,26 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
 
 Examples:
 
     $ history | jc --history -p
     [
       {
-        "line": "118",
+        "line": 118,
         "command": "sleep 100"
       },
       {
-        "line": "119",
+        "line": 119,
         "command": "ls /bin"
       },
       {
-        "line": "120",
+        "line": 120,
         "command": "echo \"hello\""
       },
       {
-        "line": "121",
+        "line": 121,
         "command": "docker images"
       },
       ...
@@ -50,7 +50,10 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+
+
+__version__ = info.version
 
 
 def process(proc_data):
@@ -67,7 +70,7 @@ def process(proc_data):
 
         [
           {
-            "line":     string,
+            "line":     integer,
             "command":  string
           }
         ]
@@ -80,6 +83,16 @@ def process(proc_data):
         proc_line['line'] = k
         proc_line['command'] = v
         processed.append(proc_line)
+
+    for entry in processed:
+        int_list = ['line']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
     return processed
 
