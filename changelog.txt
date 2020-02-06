@@ -4,8 +4,8 @@ jc changelog
 - Add YAML file parser
 - Add INI file parser
 - Add XML file parser
-- Add id parser
-- Add crontab file parser with user support
+- Add id parser (tested on linux and OSX)
+- Add crontab file parser with user support (tested on linux)
 - Add __version__ variable to parser modules
 - Add exit code on error
 - Updated history parser to output "line" as an integer
