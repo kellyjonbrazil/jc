@@ -82,7 +82,7 @@ __version__ = info.version
 
 
 def ctrlc(signum, frame):
-    exit(1)
+    sys.exit(1)
 
 
 def parsers_text(indent=0, pad=0):
@@ -188,7 +188,7 @@ def main():
 
     if sys.stdin.isatty():
         helptext('missing piped data')
-        exit(1)
+        sys.exit(1)
 
     data = sys.stdin.read()
 
@@ -217,11 +217,11 @@ def main():
                     break
                 except:
                     jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
-                    exit(1)
+                    sys.exit(1)
 
     if not found:
         helptext('missing or incorrect arguments')
-        exit(1)
+        sys.exit(1)
 
     json_out(result, pretty=pretty)
 
