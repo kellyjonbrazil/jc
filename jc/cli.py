@@ -9,6 +9,16 @@ import signal
 import json
 import jc.utils
 
+
+class info():
+    version = '1.7.1'
+    description = 'jc cli output JSON conversion tool'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+
+
+__version__ = info.version
+
 parsers = [
     'arp',
     'crontab',
@@ -50,6 +60,10 @@ parsers = [
 ]
 
 
+def ctrlc(signum, frame):
+    sys.exit(1)
+
+
 def parser_shortname(parser_argument):
     """short name of the parser with dashes and no -- prefix"""
     return parser_argument[2:]
@@ -69,20 +83,6 @@ def parser_module(parser):
     """import the module just in time and present the module object"""
     importlib.import_module('jc.parsers.' + parser_mod_shortname(parser))
     return getattr(jc.parsers, parser_mod_shortname(parser))
-
-
-class info():
-    version = '1.7.1'
-    description = 'jc cli output JSON conversion tool'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
-
-
-__version__ = info.version
-
-
-def ctrlc(signum, frame):
-    sys.exit(1)
 
 
 def parsers_text(indent=0, pad=0):
