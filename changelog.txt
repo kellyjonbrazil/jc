@@ -1,5 +1,8 @@
 jc changelog
 
+20200208 v1.7.2
+- Include test fixtures in wheel
+
 20200205 v1.7.1
 - Add YAML file parser
 - Add INI file parser
