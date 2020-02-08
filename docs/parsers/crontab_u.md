@@ -11,7 +11,7 @@ Compatibility:
 
 Examples:
 
-    $ cat /etc/crontab | jc --crontab -p
+    $ cat /etc/crontab | jc --crontab-u -p
     {
       "variables": [
         {
