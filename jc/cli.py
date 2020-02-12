@@ -141,9 +141,13 @@ def helptext(message):
 
     Usage:  jc PARSER [OPTIONS]
 
+            or
+
+            jc [OPTIONS] PARSER
+
             or magic syntax:
 
-            jc COMMAND
+            jc [OPTIONS] COMMAND
 
     Parsers:
 {parsers_string}
@@ -159,7 +163,7 @@ def helptext(message):
 
             or using the magic syntax:
 
-            jc ls -al
+            jc -p ls -al
     '''
     print(textwrap.dedent(helptext_string), file=sys.stderr)
 
@@ -172,12 +176,26 @@ def json_out(data, pretty=False):
 
 
 def magic():
-    """Parse with magic syntax: jc ls -al"""
-    if len(sys.argv) > 1 and not sys.argv[1].startswith('-'):
+    """Parse with magic syntax: jc -p ls -al"""
+    if len(sys.argv) > 1 and not sys.argv[1].startswith('--'):
         parser_info = about_jc()['parsers']
         args_given = sys.argv[1:]
+        options = []
         found_parser = None
 
+        # find the options
+        if args_given[0].startswith('-'):
+            p = 0
+            for i, arg in list(enumerate(args_given)):
+                if arg.startswith('--'):
+                    return
+                elif arg.startswith('-'):
+                    options.append(args_given.pop(i - p))
+                    p = p + 1
+                else:
+                    break
+
+        # find the command and parser
         for parser in parser_info:
             if 'magic_commands' in parser:
                 for magic_command in parser['magic_commands']:
@@ -189,8 +207,10 @@ def magic():
                         break
 
         if found_parser:
-            run_command = ' '.join(sys.argv[1:])
-            whole_command = [run_command, '|', 'jc', found_parser, '-p']
+            run_command = ' '.join(args_given)
+            cmd_options = ' '.join(options)
+            whole_command = [run_command, '|', 'jc', found_parser, cmd_options]
+
             os.system(' '.join(whole_command))
             exit()
         else:
