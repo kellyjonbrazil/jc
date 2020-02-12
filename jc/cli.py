@@ -225,7 +225,7 @@ def magic():
 def main():
     signal.signal(signal.SIGINT, ctrlc)
 
-    # try magic syntax first
+    # try magic syntax first: jc -p ls -al
     magic()
 
     debug = False
