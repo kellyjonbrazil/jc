@@ -77,6 +77,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
+    magic_commands = ['fstab']
 
 
 __version__ = info.version

@@ -63,6 +63,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin']
+    magic_commands = ['mount']
 
 
 __version__ = info.version

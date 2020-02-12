@@ -41,6 +41,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
+    magic_commands = ['systemctl list-sockets']
 
 
 __version__ = info.version

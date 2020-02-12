@@ -154,6 +154,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
+    magic_commands = ['ifconfig']
 
 
 __version__ = info.version

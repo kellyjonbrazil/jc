@@ -39,6 +39,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    magic_commands = ['pip list', 'pip3 list']
 
 
 __version__ = info.version

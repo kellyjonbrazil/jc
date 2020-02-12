@@ -84,6 +84,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    magic_commands = ['jobs']
 
 
 __version__ = info.version
