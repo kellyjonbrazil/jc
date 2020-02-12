@@ -12,7 +12,7 @@ import jc.utils
 
 
 class info():
-    version = '1.8.0'
+    version = '1.7.3'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -20,47 +20,45 @@ class info():
 
 __version__ = info.version
 
-# map of parser real-name -> matching command name for magic syntax
-# use lists as the value, then when reversing, loop through the list to create the new dict
-parsers = {
-    'arp': 'arp',
-    'crontab': 'crontab',
-    'crontab-u': None,
-    'df': 'df',
-    'dig': 'dig',
-    'du': 'du',
-    'env': 'env',
-    'free': 'free',
-    'fstab': None,     # might need this command for linux
-    'history': 'history',
-    'hosts': None,
-    'id': 'id',
-    'ifconfig': 'ifconfig',
-    'ini': None,
-    'iptables': 'iptables',
-    'jobs': 'jobs',
-    'ls': 'ls',
-    'lsblk': 'lsblk',
-    'lsmod': 'lsmod',
-    'lsof': 'lsof',
-    'mount': 'mount',
-    'netstat': 'netstat',
-    'pip-list': 'pip3 list',
-    'pip-show': 'pip3 show',
-    'ps': 'ps',
-    'route': 'route',
-    'ss': 'ss',
-    'stat': 'stat',
-    'systemctl': 'systemctl',
-    'systemctl-lj': 'systemctl list-jobs',
-    'systemctl-ls': 'systemctl list-sockets',
-    'systemctl-luf': 'systemctl list-unit-files',
-    'uname': 'uname -a',
-    'uptime': 'uptime',
-    'w': 'w',
-    'xml': None,
-    'yaml': None
-}
+parsers = [
+    'arp',
+    'crontab',
+    'crontab-u',
+    'df',
+    'dig',
+    'du',
+    'env',
+    'free',
+    'fstab',
+    'history',
+    'hosts',
+    'id',
+    'ifconfig',
+    'ini',
+    'iptables',
+    'jobs',
+    'ls',
+    'lsblk',
+    'lsmod',
+    'lsof',
+    'mount',
+    'netstat',
+    'pip-list',
+    'pip-show',
+    'ps',
+    'route',
+    'ss',
+    'stat',
+    'systemctl',
+    'systemctl-lj',
+    'systemctl-ls',
+    'systemctl-luf',
+    'uname',
+    'uptime',
+    'w',
+    'xml',
+    'yaml'
+]
 
 
 def ctrlc(signum, frame):
@@ -91,7 +89,7 @@ def parser_module(parser):
 
 def parsers_text(indent=0, pad=0):
     ptext = ''
-    for parser in parsers.keys():
+    for parser in parsers:
         parser_arg = parser_argument(parser)
         parser_mod = parser_module(parser)
 
@@ -109,7 +107,7 @@ def parsers_text(indent=0, pad=0):
 def about_jc():
     parser_list = []
 
-    for parser in parsers.keys():
+    for parser in parsers:
         parser_mod = parser_module(parser)
 
         if hasattr(parser_mod, 'info'):
@@ -143,6 +141,10 @@ def helptext(message):
 
     Usage:  jc PARSER [OPTIONS]
 
+            or magic syntax:
+
+            jc COMMAND
+
     Parsers:
 {parsers_string}
     Options:
@@ -154,6 +156,10 @@ def helptext(message):
 
     Example:
             ls -al | jc --ls -p
+
+            or using the magic syntax:
+
+            jc ls -al
     '''
     print(textwrap.dedent(helptext_string), file=sys.stderr)
 
@@ -168,32 +174,23 @@ def json_out(data, pretty=False):
 def magic():
     """Parse with magic syntax: jc ls -al"""
     if len(sys.argv) > 1 and not sys.argv[1].startswith('-'):
-        # reverse the parser dictionary keys and values
-        commands = {v: k for k, v in parsers.items() if v is not None}
+        parser_info = about_jc()['parsers']
         args_given = sys.argv[1:]
-        options = []
         found_parser = None
 
-        # first create a list of options from the commands dict based on the arguments passed
-        for comm, pars in commands.items():
-            if args_given[0] == comm.split()[0]:
-                options.append([comm, pars])
+        for parser in parser_info:
+            if 'magic_commands' in parser:
+                for magic_command in parser['magic_commands']:
+                    if ' '.join(args_given[0:2]) == magic_command:
+                        found_parser = parser['argument']
+                        break
+                    elif ''.join(args_given[0]) == magic_command:
+                        found_parser = parser['argument']
+                        break
 
-        if len(options) > 1:
-            for comm2, pars2 in options:
-                if args_given[1] == comm2.split()[1]:
-                    found_parser = pars2
-        else:
-            try:
-                found_parser = options[0][1]
-            except Exception:
-                found_parser = None
-
-        # run the command through the parser
-        run_command = ' '.join(sys.argv[1:])
-        whole_command = [run_command, '|', 'jc', parser_argument(found_parser), '-p']
-
-        if found_parser is not None:
+        if found_parser:
+            run_command = ' '.join(sys.argv[1:])
+            whole_command = [run_command, '|', 'jc', found_parser, '-p']
             os.system(' '.join(whole_command))
             exit()
         else:
@@ -242,7 +239,7 @@ def main():
         for arg in sys.argv:
             parser_name = parser_shortname(arg)
 
-            if parser_name in parsers.keys():
+            if parser_name in parsers:
                 # load parser module just in time so we don't need to load all modules
                 parser = parser_module(arg)
                 result = parser.parse(data, raw=raw, quiet=quiet)
@@ -252,7 +249,7 @@ def main():
         for arg in sys.argv:
             parser_name = parser_shortname(arg)
 
-            if parser_name in parsers.keys():
+            if parser_name in parsers:
                 # load parser module just in time so we don't need to load all modules
                 parser = parser_module(arg)
                 try:
