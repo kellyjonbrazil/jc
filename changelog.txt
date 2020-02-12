@@ -1,5 +1,8 @@
 jc changelog
 
+20200211 v1.7.3
+- Add alternative 'magic' syntax: e.g. `jc ls -al`
+
 20200208 v1.7.2
 - Include test fixtures in wheel
 
