@@ -199,12 +199,15 @@ def magic():
         for parser in parser_info:
             if 'magic_commands' in parser:
                 for magic_command in parser['magic_commands']:
-                    if ' '.join(args_given[0:2]) == magic_command:
-                        found_parser = parser['argument']
-                        break
-                    elif ''.join(args_given[0]) == magic_command:
-                        found_parser = parser['argument']
-                        break
+                    try:
+                        if ' '.join(args_given[0:2]) == magic_command:
+                            found_parser = parser['argument']
+                            break
+                        elif ''.join(args_given[0]) == magic_command:
+                            found_parser = parser['argument']
+                            break
+                    except Exception:
+                        return
 
         if found_parser:
             run_command = ' '.join(args_given)
