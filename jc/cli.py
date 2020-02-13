@@ -139,11 +139,11 @@ def helptext(message):
     helptext_string = f'''
     jc:     {message}
 
-    Usage:  jc PARSER [OPTIONS]
+    Usage:  COMMAND | jc PARSER [OPTIONS]
 
             or
 
-            jc [OPTIONS] PARSER
+            COMMAND | jc [OPTIONS] PARSER
 
             or magic syntax:
 
@@ -179,6 +179,7 @@ def magic():
     """Parse with magic syntax: jc -p ls -al"""
     if len(sys.argv) > 1 and not sys.argv[1].startswith('--'):
         parser_info = about_jc()['parsers']
+        # how can i get the literal text of the command entered instead of the argument list?
         args_given = sys.argv[1:]
         options = []
         found_parser = None
@@ -187,11 +188,14 @@ def magic():
         if args_given[0].startswith('-'):
             p = 0
             for i, arg in list(enumerate(args_given)):
+                # parser found
                 if arg.startswith('--'):
                     return
+                # option found
                 elif arg.startswith('-'):
-                    options.append(args_given.pop(i - p))
+                    options.append(args_given.pop(i - p)[1:])
                     p = p + 1
+                # command found
                 else:
                     break
 
@@ -209,16 +213,18 @@ def magic():
                     except Exception:
                         return
 
+        run_command = ' '.join(args_given)
         if found_parser:
-            run_command = ' '.join(args_given)
-            cmd_options = ' '.join(options)
-            whole_command = [run_command, '|', 'jc', found_parser, cmd_options]
+            if options:
+                cmd_options = '-' + ''.join(options)
+            else:
+                cmd_options = ''
+            whole_command = ' '.join([run_command, '|', 'jc', found_parser, cmd_options])
 
-            os.system(' '.join(whole_command))
+            os.system(whole_command)
             exit()
         else:
-            args_given_pretty = ' '.join(args_given)
-            helptext(f'parser not found for "{args_given_pretty}"')
+            helptext(f'parser not found for "{run_command}"')
             sys.exit(1)
 
 
@@ -228,25 +234,31 @@ def main():
     # try magic syntax first: jc -p ls -al
     magic()
 
+    options = []
     debug = False
     pretty = False
     quiet = False
     raw = False
 
     # options
-    if '-d' in sys.argv:
+    for opt in sys.argv:
+        if opt.startswith('-') and not opt.startswith('--'):
+            for flag in opt[1:]:
+                options.append(flag)
+
+    if 'd' in options:
         debug = True
 
-    if '-p' in sys.argv:
+    if 'p' in options:
         pretty = True
 
-    if '-q' in sys.argv:
+    if 'q' in options:
         quiet = True
 
-    if '-r' in sys.argv:
+    if 'r' in options:
         raw = True
 
-    if '-a' in sys.argv:
+    if 'a' in options:
         json_out(about_jc(), pretty=pretty)
         exit()
 
