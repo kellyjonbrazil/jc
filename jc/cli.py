@@ -210,12 +210,13 @@ def magic():
                         if ' '.join(args_given[0:2]) == magic_command:
                             found_parser = parser['argument']
                             break
-                        elif ''.join(args_given[0]) == magic_command:
+                        elif args_given[0] == magic_command:
                             found_parser = parser['argument']
                             break
                     except Exception:
                         return
 
+        # construct a new command line using the standard syntax: COMMAND | jc --PARSER -OPTIONS
         run_command = ' '.join(args_given)
         if found_parser:
             if options:
@@ -232,9 +233,10 @@ def magic():
 
 
 def main():
+    # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
-    # try magic syntax first: jc -p ls -al
+    # try magic syntax first: e.g. jc -p ls -al
     magic()
 
     options = []
