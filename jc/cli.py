@@ -191,14 +191,14 @@ def magic():
         if args_given[0].startswith('-'):
             p = 0
             for i, arg in list(enumerate(args_given)):
-                # parser found
+                # parser found - use standard syntax
                 if arg.startswith('--'):
                     return
-                # option found
+                # option found - populate option list
                 elif arg.startswith('-'):
                     options.append(args_given.pop(i - p)[1:])
                     p = p + 1
-                # command found
+                # command found if iterator didn't already stop - stop iterating
                 else:
                     break
 
@@ -207,12 +207,15 @@ def magic():
             if 'magic_commands' in parser:
                 for magic_command in parser['magic_commands']:
                     try:
+                        # two arguments: e.g. 'pip list'
                         if ' '.join(args_given[0:2]) == magic_command:
                             found_parser = parser['argument']
                             break
+                        # one argument: e.g. 'ls'
                         elif args_given[0] == magic_command:
                             found_parser = parser['argument']
                             break
+                    # No command found - use standard syntax (for cases like 'jc -a')
                     except Exception:
                         return
 
