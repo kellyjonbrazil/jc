@@ -88,6 +88,7 @@ def parser_module(parser):
 
 
 def parsers_text(indent=0, pad=0):
+    """return the argument and description information from each parser"""
     ptext = ''
     for parser in parsers:
         parser_arg = parser_argument(parser)
@@ -105,6 +106,7 @@ def parsers_text(indent=0, pad=0):
 
 
 def about_jc():
+    """return jc info and the contents of each parser.info as a dictionary"""
     parser_list = []
 
     for parser in parsers:
@@ -134,6 +136,7 @@ def about_jc():
 
 
 def helptext(message):
+    """return the help text with the list of parsers"""
     parsers_string = parsers_text(indent=12, pad=17)
 
     helptext_string = f'''
