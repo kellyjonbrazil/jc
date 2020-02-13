@@ -82,7 +82,7 @@ def parser_mod_shortname(parser):
 
 
 def parser_module(parser):
-    """import the module just in time and present the module object"""
+    """import the module just in time and return the module object"""
     importlib.import_module('jc.parsers.' + parser_mod_shortname(parser))
     return getattr(jc.parsers, parser_mod_shortname(parser))
 
