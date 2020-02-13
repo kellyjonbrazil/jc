@@ -4,6 +4,7 @@ JC cli module
 """
 import sys
 import os
+import shlex
 import importlib
 import textwrap
 import signal
@@ -182,8 +183,8 @@ def magic():
     """Parse with magic syntax: jc -p ls -al"""
     if len(sys.argv) > 1 and not sys.argv[1].startswith('--'):
         parser_info = about_jc()['parsers']
-        # how can i get the literal text of the command entered instead of the argument list?
-        args_given = sys.argv[1:]
+        # correctly parse escape characters and spaces with shlex
+        args_given = " ".join(map(shlex.quote, sys.argv[1:])).split()
         options = []
         found_parser = None
 
