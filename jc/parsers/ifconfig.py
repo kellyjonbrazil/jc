@@ -147,7 +147,7 @@ from ifconfigparser import IfconfigParser
 
 class info():
     version = '1.5'
-    description = 'ifconfig parser'
+    description = 'ifconfig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using ifconfig-parser package from https://github.com/KnightWhoSayNi/ifconfig-parser'

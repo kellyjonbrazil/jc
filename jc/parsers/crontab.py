@@ -133,7 +133,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.1'
-    description = 'crontab file parser'
+    description = 'crontab command and file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'

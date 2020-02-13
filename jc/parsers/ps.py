@@ -178,7 +178,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.1'
-    description = 'ps parser'
+    description = 'ps command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

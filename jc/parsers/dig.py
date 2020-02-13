@@ -325,7 +325,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'dig parser'
+    description = 'dig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

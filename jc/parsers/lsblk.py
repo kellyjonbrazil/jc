@@ -217,7 +217,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.3'
-    description = 'lsblk parser'
+    description = 'lsblk command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

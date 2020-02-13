@@ -35,7 +35,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'systemctl list-sockets parser'
+    description = 'systemctl list-sockets command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
