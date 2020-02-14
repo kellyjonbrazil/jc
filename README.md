@@ -72,8 +72,6 @@ $ pip3 install --upgrade jc
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
-
-Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given.
 ``` 
 COMMAND | jc PARSER [OPTIONS]
 ```
@@ -81,11 +79,10 @@ or
 ```
 COMMAND | jc [OPTIONS] PARSER
 ```
-or using the "magic" syntax
+Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given.
 ```
 jc [OPTIONS] COMMAND
 ```
-
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
 
 ### Parsers
