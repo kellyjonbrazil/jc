@@ -206,19 +206,26 @@ def magic():
         # find the command and parser
         for parser in parser_info:
             if 'magic_commands' in parser:
+                # first pass for two word commands: e.g. 'pip list'
                 for magic_command in parser['magic_commands']:
                     try:
-                        # two arguments: e.g. 'pip list'
                         if ' '.join(args_given[0:2]) == magic_command:
-                            found_parser = parser['argument']
-                            break
-                        # one argument: e.g. 'ls'
-                        elif args_given[0] == magic_command:
                             found_parser = parser['argument']
                             break
                     # No command found - use standard syntax (for cases like 'jc -a')
                     except Exception:
-                        return
+                        break
+
+                # second pass for one word commands: e.g. 'ls'
+                if not found_parser:
+                    for magic_command in parser['magic_commands']:
+                        try:
+                            if args_given[0] == magic_command:
+                                found_parser = parser['argument']
+                                break
+                        # No command found - use standard syntax (for cases like 'jc -a')
+                        except Exception:
+                            return
 
         # construct a new command line using the standard syntax: COMMAND | jc --PARSER -OPTIONS
         run_command = ' '.join(args_given)
