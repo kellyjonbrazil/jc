@@ -4,7 +4,6 @@ JSON CLI output utility
 `jc` is used to JSONify the output of many standard linux cli tools and file types for easier parsing in scripts. See the **Parsers** section for supported commands.
 
 This allows further command line processing of output with tools like `jq` simply by piping commands:
-
 ```
 $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 {
@@ -30,9 +29,6 @@ $ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
   "date": "Aug 14 19:41"
 }
 ```
-
-For more information on the motivations for this project, please see my blog post at https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/.
-
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary instead of JSON:
 ```
 >>> import jc.parsers.ls
@@ -64,6 +60,8 @@ Two representations of the data are possible. The default representation uses a 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
 Schemas for each parser can be found in the [`docs/parsers`](https://github.com/kellyjonbrazil/jc/tree/dev/docs/parsers) folder. 
+
+For more information on the motivations for this project, please see my blog post at https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/.
 
 ## Installation
 ```
