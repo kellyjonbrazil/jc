@@ -51,7 +51,6 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-    magic_commands = ['history']
 
 
 __version__ = info.version

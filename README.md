@@ -624,7 +624,7 @@ $ cat /etc/fstab | jc --fstab -p
 ```
 ### history
 ```
-$ history | jc --history -p          # or:  jc -p history
+$ history | jc --history -p
 [
   {
     "line": 118,
