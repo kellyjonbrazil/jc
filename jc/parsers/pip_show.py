@@ -43,12 +43,13 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'pip show parser'
+    description = 'pip show command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    magic_commands = ['pip show', 'pip3 show']
 
 
 __version__ = info.version

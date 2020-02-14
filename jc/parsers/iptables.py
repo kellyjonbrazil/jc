@@ -135,12 +135,13 @@ import jc.utils
 
 class info():
     version = '1.1'
-    description = 'iptables parser'
+    description = 'iptables command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
+    magic_commands = ['iptables']
 
 
 __version__ = info.version

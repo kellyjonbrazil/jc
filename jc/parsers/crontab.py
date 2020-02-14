@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility crontab file Parser
+"""jc - JSON CLI output utility crontab command and file Parser
 
 Usage:
 
-    specify --crontab as the first argument if the piped input is coming from a crontab file
+    specify --crontab as the first argument if the piped input is coming from crontab -l or a crontab file
 
 Compatibility:
 
@@ -10,7 +10,7 @@ Compatibility:
 
 Examples:
 
-    $ cat /etc/crontab | jc --crontab -p
+    $ crontab -l | jc --crontab -p
     {
       "variables": [
         {
@@ -133,13 +133,14 @@ import jc.parsers.universal
 
 class info():
     version = '1.1'
-    description = 'crontab file parser'
+    description = 'crontab command and file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
+    magic_commands = ['crontab']
 
 
 __version__ = info.version

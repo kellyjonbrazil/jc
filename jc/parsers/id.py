@@ -71,13 +71,14 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'id parser'
+    description = 'id command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
+    magic_commands = ['id']
 
 
 __version__ = info.version

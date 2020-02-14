@@ -74,13 +74,14 @@ import jc.parsers.universal
 
 class info():
     version = '1.1'
-    description = 'du parser'
+    description = 'du command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
+    magic_commands = ['du']
 
 
 __version__ = info.version

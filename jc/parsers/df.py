@@ -74,12 +74,13 @@ import jc.parsers.universal
 
 class info():
     version = '1.1'
-    description = 'df parser'
+    description = 'df command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin']
+    magic_commands = ['df']
 
 
 __version__ = info.version

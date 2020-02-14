@@ -32,12 +32,13 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'systemctl list-unit-files parser'
+    description = 'systemctl list-unit-files command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
+    magic_commands = ['systemctl list-unit-files']
 
 
 __version__ = info.version

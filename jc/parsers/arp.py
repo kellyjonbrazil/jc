@@ -92,12 +92,13 @@ import jc.parsers.universal
 
 class info():
     version = '1.1'
-    description = 'arp parser'
+    description = 'arp command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
+    magic_commands = ['arp']
 
 
 __version__ = info.version
