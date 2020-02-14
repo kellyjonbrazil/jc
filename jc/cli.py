@@ -212,7 +212,7 @@ def magic():
                         if ' '.join(args_given[0:2]) == magic_command:
                             found_parser = parser['argument']
                             break
-                    # No command found - use standard syntax (for cases like 'jc -a')
+                    # No command found - go to next loop (for cases like 'jc -a')
                     except Exception:
                         break
 
