@@ -17,6 +17,20 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
   "date": "Aug 14 19:41"
 }
 ```
+or using the alternative syntax:
+```
+$ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
+{
+  "filename": "docker",
+  "flags": "-rwxr-xr-x",
+  "links": 1,
+  "owner": "root",
+  "group": "root",
+  "size": 68677120,
+  "date": "Aug 14 19:41"
+}
+```
+
 For more information on the motivations for this project, please see my blog post at https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/.
 
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary instead of JSON:
@@ -58,47 +72,55 @@ $ pip3 install --upgrade jc
 
 ## Usage
 ``` 
-jc PARSER [OPTIONS]
+COMMAND | jc PARSER [OPTIONS]
+```
+or
+```
+COMMAND | jc [OPTIONS] PARSER
+```
+or
+```
+jc [OPTIONS] COMMAND
 ```
 
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`. The JSON output can be compact or pretty formatted.
 
 ### Parsers
-- `--arp` enables the `arp` parser
-- `--crontab` enables the `crontab` file parser
+- `--arp` enables the `arp` command parser
+- `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
-- `--df` enables the `df` parser
-- `--dig` enables the `dig` parser
-- `--du` enables the `du` parser
-- `--env` enables the `env` parser
-- `--free` enables the `free` parser
+- `--df` enables the `df` command parser
+- `--dig` enables the `dig` command parser
+- `--du` enables the `du` command parser
+- `--env` enables the `env` command parser
+- `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
-- `--history` enables the `history` parser
+- `--history` enables the `history` command parser
 - `--hosts` enables the `/etc/hosts` file parser
-- `--id` enables the `id` parser
-- `--ifconfig` enables the `ifconfig` parser
+- `--id` enables the `id` command parser
+- `--ifconfig` enables the `ifconfig` command parser
 - `--ini` enables the `INI` file parser
-- `--iptables` enables the `iptables` parser
-- `--jobs` enables the `jobs` parser
-- `--ls` enables the `ls` parser
-- `--lsblk` enables the `lsblk` parser
-- `--lsmod` enables the `lsmod` parser
-- `--lsof` enables the `lsof` parser
-- `--mount` enables the `mount` parser
-- `--netstat` enables the `netstat` parser
-- `--pip-list` enables the `pip list` parser
-- `--pip-show` enables the `pip show` parser
-- `--ps` enables the `ps` parser
-- `--route` enables the `route` parser
-- `--ss` enables the `ss` parser
-- `--stat` enables the `stat` parser
-- `--systemctl` enables the `systemctl` parser
-- `--systemctl-lj` enables the `systemctl list-jobs` parser
-- `--systemctl-ls` enables the `systemctl list-sockets` parser
-- `--systemctl-luf` enables the `systemctl list-unit-files` parser
-- `--uname` enables the `uname -a` parser
-- `--uptime` enables the `uptime` parser
-- `--w` enables the `w` parser
+- `--iptables` enables the `iptables` command parser
+- `--jobs` enables the `jobs` command parser
+- `--ls` enables the `ls` command parser
+- `--lsblk` enables the `lsblk` command parser
+- `--lsmod` enables the `lsmod` command parser
+- `--lsof` enables the `lsof` command parser
+- `--mount` enables the `mount` command parser
+- `--netstat` enables the `netstat` command parser
+- `--pip-list` enables the `pip list` command parser
+- `--pip-show` enables the `pip show` command parser
+- `--ps` enables the `ps` command parser
+- `--route` enables the `route` command parser
+- `--ss` enables the `ss` command parser
+- `--stat` enables the `stat` command parser
+- `--systemctl` enables the `systemctl` command parser
+- `--systemctl-lj` enables the `systemctl list-jobs` command parser
+- `--systemctl-ls` enables the `systemctl list-sockets` command parser
+- `--systemctl-luf` enables the `systemctl list-unit-files` command parser
+- `--uname` enables the `uname -a` command parser
+- `--uptime` enables the `uptime` command parser
+- `--w` enables the `w` command parser
 - `--xml` enables the `XML` file parser
 - `--yaml` enables the `YAML` file parser
 
@@ -112,7 +134,7 @@ jc PARSER [OPTIONS]
 ## Examples
 ### arp
 ```
-$ arp | jc --arp -p
+$ arp | jc --arp -p          # or:  jc -p arp
 [
   {
     "address": "gateway",
@@ -138,7 +160,7 @@ $ arp | jc --arp -p
 ]
 ```
 ```
-$ arp -a | jc --arp -p
+$ arp -a | jc --arp -p          # or:  jc -p arp -a
 [
   {
     "name": null,
@@ -165,7 +187,7 @@ $ arp -a | jc --arp -p
 ```
 ### crontab
 ```
-$ cat /etc/crontab | jc --crontab -p
+$ cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
 {
   "variables": [
     {
@@ -312,7 +334,7 @@ $ cat /etc/crontab | jc --crontab-u -p
 ```
 ### df
 ```
-$ df | jc --df -p
+$ df | jc --df -p          # or:  jc -p df
 [
   {
     "filesystem": "devtmpfs",
@@ -335,7 +357,7 @@ $ df | jc --df -p
 ```
 ### dig
 ```
-$ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
+$ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com www.cnn.com @205.251.194.64
 [
   {
     "id": 5509,
@@ -455,7 +477,7 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
 ]
 ```
 ```
-$ dig -x 1.1.1.1 | jc --dig -p
+$ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 [
   {
     "id": 50324,
@@ -493,7 +515,7 @@ $ dig -x 1.1.1.1 | jc --dig -p
 ```
 ### du
 ```
-$ du /usr | jc --du -p
+$ du /usr | jc --du -p          # or:  jc -p du /usr
 [
   {
     "size": 104608,
@@ -524,7 +546,7 @@ $ du /usr | jc --du -p
 ```
 ### env
 ```
-$ env | jc --env -p
+$ env | jc --env -p          # or:  jc -p env
 [
   {
     "name": "XDG_SESSION_ID",
@@ -551,7 +573,7 @@ $ env | jc --env -p
 ```
 ### free
 ```
-$ free | jc --free -p
+$ free | jc --free -p          # or:  jc -p free
 [
   {
     "type": "Mem",
@@ -602,7 +624,7 @@ $ cat /etc/fstab | jc --fstab -p
 ```
 ### history
 ```
-$ history | jc --history -p
+$ history | jc --history -p          # or:  jc -p history
 [
   {
     "line": 118,
@@ -674,7 +696,7 @@ $ cat /etc/hosts | jc --hosts -p
 ```
 ### id
 ```
-$ id | jc --id -p
+$ id | jc --id -p          # or:  jc -p id
 {
   "uid": {
     "id": 1000,
@@ -704,7 +726,7 @@ $ id | jc --id -p
 ```
 ### ifconfig
 ```
-$ ifconfig | jc --ifconfig -p
+$ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
 [
   {
     "name": "ens33",
@@ -809,7 +831,7 @@ $ cat example.ini | jc --ini -p
 ```
 ### iptables
 ```
-$ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p
+$ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  sudo jc -p iptables --line-numbers -v -L -t nat
 [
   {
     "chain": "PREROUTING",
@@ -870,7 +892,7 @@ $ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p
 ```
 ### jobs
 ```
-$ jobs -l | jc --jobs -p
+$ jobs -l | jc --jobs -p          # or:  jc -p jobs
 [
   {
     "job_number": 1,
@@ -902,7 +924,7 @@ $ jobs -l | jc --jobs -p
 ```
 ### ls
 ```
-$ ls -l /usr/bin | jc --ls -p
+$ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
 [
   {
     "filename": "apropos",
@@ -937,7 +959,7 @@ $ ls -l /usr/bin | jc --ls -p
 ```
 ### lsblk
 ```
-$ lsblk | jc --lsblk -p
+$ lsblk | jc --lsblk -p          # or:  jc -p lsblk
 [
   {
     "name": "sda",
@@ -962,7 +984,7 @@ $ lsblk | jc --lsblk -p
 ```
 ### lsmod
 ```
-$ lsmod | jc --lsmod -p
+$ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 [
   ...
   {
@@ -1009,7 +1031,7 @@ $ lsmod | jc --lsmod -p
 ```
 ### lsof
 ```
-$ sudo lsof | jc --lsof -p
+$ sudo lsof | jc --lsof -p          # or:  jc -p lsof
 [
   {
     "command": "systemd",
@@ -1052,7 +1074,7 @@ $ sudo lsof | jc --lsof -p
 ```
 ### mount
 ```
-$ mount | jc --mount -p
+$ mount | jc --mount -p          # or:  jc -p mount
 [
   {
     "filesystem": "sysfs",
@@ -1096,7 +1118,7 @@ $ mount | jc --mount -p
 ```
 ### netstat
 ```
-$ sudo netstat -apee | jc --netstat -p
+$ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
 [
   {
     "proto": "tcp",
@@ -1248,7 +1270,7 @@ $ sudo netstat -apee | jc --netstat -p
 ```
 ### pip list
 ```
-$ pip list | jc --pip-list -p
+$ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
 [
   {
     "package": "ansible",
@@ -1268,7 +1290,7 @@ $ pip list | jc --pip-list -p
 ```
 ### pip show
 ```
-$ pip show wrapt wheel | jc --pip-show -p
+$ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt wheel          # or:  jc -p pip3 show wrapt wheel
 [
   {
     "name": "wrapt",
@@ -1298,7 +1320,7 @@ $ pip show wrapt wheel | jc --pip-show -p
 ```
 ### ps
 ```
-$ ps -ef | jc --ps -p
+$ ps -ef | jc --ps -p          # or:  jc -p ps -ef
 [
   {
     "uid": "root",
@@ -1334,7 +1356,7 @@ $ ps -ef | jc --ps -p
 ]
 ```
 ```
-$ ps axu | jc --ps -p
+$ ps axu | jc --ps -p          # or:  jc -p ps axu
 [
   {
     "user": "root",
@@ -1380,7 +1402,7 @@ $ ps axu | jc --ps -p
 ```
 ### route
 ```
-$ route -ee | jc --route -p
+$ route -ee | jc --route -p          # or:  jc -p route -ee
 [
   {
     "destination": "default",
@@ -1425,7 +1447,7 @@ $ route -ee | jc --route -p
 ```
 ### ss
 ```
-$ sudo ss -a | jc --ss -p
+$ sudo ss -a | jc --ss -p          # or:  sudo jc -p ss -a
 [
   {
     "netid": "nl",
@@ -1544,7 +1566,7 @@ $ sudo ss -a | jc --ss -p
 ```
 ### stat
 ```
-$ stat /bin/* | jc --stat -p
+$ stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
 [
   {
     "file": "/bin/bash",
@@ -1591,7 +1613,7 @@ $ stat /bin/* | jc --stat -p
 ```
 ### systemctl
 ```
-$ systemctl -a | jc --systemctl -p
+$ systemctl -a | jc --systemctl -p          # or:  jc -p systemctl -a
 [
   {
     "unit": "proc-sys-fs-binfmt_misc.automount",
@@ -1619,7 +1641,7 @@ $ systemctl -a | jc --systemctl -p
 ```
 ### systemctl list-jobs
 ```
-$ systemctl list-jobs| jc --systemctl-lj -p
+$ systemctl list-jobs | jc --systemctl-lj -p          # or:  jc -p systemctl list-jobs
 [
   {
     "job": 3543,
@@ -1643,7 +1665,7 @@ $ systemctl list-jobs| jc --systemctl-lj -p
 ```
 ### systemctl list-sockets
 ```
-$ systemctl list-sockets | jc --systemctl-ls -p
+$ systemctl list-sockets | jc --systemctl-ls -p          # or:  jc -p systemctl list-sockets
 [
   {
     "listen": "/dev/log",
@@ -1665,7 +1687,7 @@ $ systemctl list-sockets | jc --systemctl-ls -p
 ```
 ### systemctl list-unit-files
 ```
-$ systemctl list-unit-files | jc --systemctl-luf -p
+$ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemctl list-unit-files
 [
   {
     "unit_file": "proc-sys-fs-binfmt_misc.automount",
@@ -1684,7 +1706,7 @@ $ systemctl list-unit-files | jc --systemctl-luf -p
 ```
 ### uname -a
 ```
-$ uname -a | jc --uname -p
+$ uname -a | jc --uname -p          # or:  jc -p uname -a
 {
   "kernel_name": "Linux",
   "node_name": "user-ubuntu",
@@ -1698,7 +1720,7 @@ $ uname -a | jc --uname -p
 ```
 ### uptime
 ```
-$ uptime | jc --uptime -p
+$ uptime | jc --uptime -p          # or:  jc -p uptime
 {
   "time": "11:30:44",
   "uptime": "1 day, 21:17",
@@ -1710,7 +1732,7 @@ $ uptime | jc --uptime -p
 ```
 ### w
 ```
-$ w | jc --w -p
+$ w | jc --w -p          # or:  jc -p w
 [
   {
     "user": "root",
@@ -1792,7 +1814,7 @@ $ cat cd_catalog.xml | jc --xml -p
 ```
 ### YAML files
 ```
-$ cat istio-mtls-permissive.yaml 
+$ cat istio.yaml 
 apiVersion: "authentication.istio.io/v1alpha1"
 kind: "Policy"
 metadata:
@@ -1813,7 +1835,7 @@ spec:
     tls:
       mode: ISTIO_MUTUAL
 
-$ cat istio-mtls-permissive.yaml | jc --yaml -p
+$ cat istio.yaml | jc --yaml -p
 [
   {
     "apiVersion": "authentication.istio.io/v1alpha1",
