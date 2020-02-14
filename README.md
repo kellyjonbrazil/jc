@@ -17,7 +17,7 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
   "date": "Aug 14 19:41"
 }
 ```
-or using the alternative syntax:
+or using the alternative "magic" syntax:
 ```
 $ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
 {
@@ -1031,7 +1031,7 @@ $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 ```
 ### lsof
 ```
-$ sudo lsof | jc --lsof -p          # or:  jc -p lsof
+$ sudo lsof | jc --lsof -p          # or:  sudo jc -p lsof
 [
   {
     "command": "systemd",
