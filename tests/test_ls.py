@@ -46,6 +46,33 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alh.out'), 'r') as f:
             self.osx_10_14_6_ls_alh = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-R.out'), 'r') as f:
+            self.centos_7_7_ls_R = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-R.out'), 'r') as f:
+            self.ubuntu_18_4_ls_R = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-R.out'), 'r') as f:
+            self.osx_10_14_6_ls_R = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alR.out'), 'r') as f:
+            self.centos_7_7_ls_alR = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alR.out'), 'r') as f:
+            self.ubuntu_18_4_ls_alR = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alR.out'), 'r') as f:
+            self.osx_10_14_6_ls_alR = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-glob.out'), 'r') as f:
+            self.centos_7_7_ls_glob = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-glob.out'), 'r') as f:
+            self.ubuntu_18_4_ls_glob = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-glob.out'), 'r') as f:
+            self.osx_10_14_6_ls_glob = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r') as f:
             self.centos_7_7_ls_json = json.loads(f.read())
@@ -82,6 +109,33 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alh.json'), 'r') as f:
             self.osx_10_14_6_ls_alh_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-R.json'), 'r') as f:
+            self.centos_7_7_ls_R_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-R.json'), 'r') as f:
+            self.ubuntu_18_4_ls_R_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-R.json'), 'r') as f:
+            self.osx_10_14_6_ls_R_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alR.json'), 'r') as f:
+            self.centos_7_7_ls_alR_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alR.json'), 'r') as f:
+            self.ubuntu_18_4_ls_alR_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alR.json'), 'r') as f:
+            self.osx_10_14_6_ls_alR_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-glob.json'), 'r') as f:
+            self.centos_7_7_ls_glob_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-glob.json'), 'r') as f:
+            self.ubuntu_18_4_ls_glob_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-glob.json'), 'r') as f:
+            self.osx_10_14_6_ls_glob_json = json.loads(f.read())
 
     def test_ls_centos_7_7(self):
         """
@@ -154,6 +208,60 @@ class MyTests(unittest.TestCase):
         Test 'ls -alh /' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_alh, quiet=True), self.osx_10_14_6_ls_alh_json)
+
+    def test_ls_R_centos_7_7(self):
+        """
+        Test 'ls -R /usr' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_R, quiet=True), self.centos_7_7_ls_R_json)
+
+    def test_ls_R_ubuntu_18_4(self):
+        """
+        Test 'ls -R /usr' on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_R, quiet=True), self.ubuntu_18_4_ls_R_json)
+
+    def test_ls_R_osx_10_14_6(self):
+        """
+        Test 'ls -R /usr' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_R, quiet=True), self.osx_10_14_6_ls_R_json)
+
+    def test_ls_alR_centos_7_7(self):
+        """
+        Test 'ls -alR /usr' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_alR, quiet=True), self.centos_7_7_ls_alR_json)
+
+    def test_ls_alR_ubuntu_18_4(self):
+        """
+        Test 'ls -alR /usr' on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_alR, quiet=True), self.ubuntu_18_4_ls_alR_json)
+
+    def test_ls_alR_osx_10_14_6(self):
+        """
+        Test 'ls -alR /usr' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_alR, quiet=True), self.osx_10_14_6_ls_alR_json)
+
+    def test_ls_glob_centos_7_7(self):
+        """
+        Test 'ls /usr/*' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_glob, quiet=True), self.centos_7_7_ls_glob_json)
+
+    def test_ls_glob_ubuntu_18_4(self):
+        """
+        Test 'ls /usr/*' on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_glob, quiet=True), self.ubuntu_18_4_ls_glob_json)
+
+    def test_ls_glob_osx_10_14_6(self):
+        """
+        Test 'ls /usr/*' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_glob, quiet=True), self.osx_10_14_6_ls_glob_json)
 
 
 if __name__ == '__main__':
