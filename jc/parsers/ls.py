@@ -235,7 +235,7 @@ def parse(data, raw=False, quiet=False):
     if linedata:
         # Check if -l was used to parse extra data
         if re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
-            for i, entry in list(enumerate(linedata)):
+            for entry in linedata:
                 output_line = {}
 
                 parsed_line = entry.split(maxsplit=8)
@@ -262,6 +262,7 @@ def parse(data, raw=False, quiet=False):
 
                 if parent:
                     output_line['parent'] = parent
+
                 output_line['flags'] = parsed_line[0]
                 output_line['links'] = parsed_line[1]
                 output_line['owner'] = parsed_line[2]
