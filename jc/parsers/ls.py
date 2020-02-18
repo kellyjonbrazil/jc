@@ -284,8 +284,10 @@ def parse(data, raw=False, quiet=False):
                     continue
 
                 output_line['filename'] = entry
+
                 if parent:
                     output_line['parent'] = parent
+
                 raw_output.append(output_line)
 
     if raw:
