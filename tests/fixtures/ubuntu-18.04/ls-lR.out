@@ -1,0 +1,712 @@
+.:
+total 136
+-rw-rw-r-- 1 kbrazil kbrazil   130 Feb  5 06:16 crayaml.yaml
+drwxrwxr-x 3 kbrazil kbrazil  4096 Feb 14 02:07 git
+-rw-rw-r-- 1 kbrazil kbrazil   891 Nov 27 17:10 ifconfig-ubuntu.out
+drwxrwxr-x 2 kbrazil kbrazil  4096 Nov 17 19:30 iptables-tests
+-rw-rw-r-- 1 kbrazil kbrazil   244 Nov 16 03:03 listjobs
+-rw-rw-r-- 1 kbrazil kbrazil     0 Feb 17 02:44 ls-lR.out
+-rw-rw-r-- 1 kbrazil kbrazil  9085 Nov  1 22:29 netstat-ae.out
+-rw-rw-r-- 1 kbrazil kbrazil  8968 Nov  1 22:29 netstat-aew.out
+-rw-rw-r-- 1 kbrazil kbrazil  9085 Nov  1 22:29 netstat-a.out
+-rw-rw-r-- 1 kbrazil kbrazil  9085 Nov  1 22:29 netstat-aw.out
+-rwxrwxr-x 1 kbrazil kbrazil   315 Aug 13  2019 resizeterm.sh
+drwxr-xr-x 4 kbrazil kbrazil  4096 Aug 13  2019 snap
+-rw-rw-r-- 1 kbrazil kbrazil 38378 Nov 13 01:55 ssout
+drwxrwxr-x 2 kbrazil kbrazil  4096 Dec 16 22:18 testfiles
+drwxrwxr-x 3 kbrazil kbrazil  4096 Dec 17 18:33 tmp
+-rwxrwxr-x 1 kbrazil kbrazil  4431 Aug 14  2019 trafficgen.sh
+-rw-rw-r-- 1 kbrazil kbrazil  1934 Feb  5 06:06 xmltest.xml
+
+./git:
+total 4
+drwxrwxr-x 7 kbrazil kbrazil 4096 Feb 14 02:07 jc
+
+./git/jc:
+total 96
+-rwxrwxr-x 1 kbrazil kbrazil   127 Feb 14 02:07 build-package.sh
+-rw-rw-r-- 1 kbrazil kbrazil  3123 Feb 14 02:07 changelog.txt
+-rw-rw-r-- 1 kbrazil kbrazil    26 Feb 14 02:07 _config.yml
+-rwxrwxr-x 1 kbrazil kbrazil  2362 Feb 14 02:07 docgen.sh
+drwxrwxr-x 3 kbrazil kbrazil  4096 Feb 14 02:07 docs
+-rwxrwxr-x 1 kbrazil kbrazil    46 Feb 14 02:07 install.sh
+drwxrwxr-x 4 kbrazil kbrazil  4096 Feb 14 02:07 jc
+drwxrwxr-x 2 kbrazil kbrazil  4096 Feb 14 02:07 jc.egg-info
+-rwxrwxr-x 1 kbrazil kbrazil  1068 Feb 14 02:07 LICENSE.md
+-rw-rw-r-- 1 kbrazil kbrazil    21 Feb 14 02:07 MANIFEST.in
+-rwxrwxr-x 1 kbrazil kbrazil    31 Feb 14 02:07 pypi-upload.sh
+-rwxrwxr-x 1 kbrazil kbrazil 39563 Feb 14 02:07 README.md
+-rwxrwxr-x 1 kbrazil kbrazil    36 Feb 14 02:07 runtests.sh
+-rwxrwxr-x 1 kbrazil kbrazil  1007 Feb 14 02:07 setup.py
+drwxrwxr-x 4 kbrazil kbrazil  4096 Feb 14 02:23 tests
+
+./git/jc/docs:
+total 12
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 parsers
+-rw-rw-r-- 1 kbrazil kbrazil 2523 Feb 14 02:07 readme.md
+-rw-rw-r-- 1 kbrazil kbrazil  918 Feb 14 02:07 utils.md
+
+./git/jc/docs/parsers:
+total 188
+-rw-rw-r-- 1 kbrazil kbrazil 2613 Feb 14 02:07 arp.md
+-rw-rw-r-- 1 kbrazil kbrazil 4075 Feb 14 02:07 crontab.md
+-rw-rw-r-- 1 kbrazil kbrazil 4286 Feb 14 02:07 crontab_u.md
+-rw-rw-r-- 1 kbrazil kbrazil 2544 Feb 14 02:07 df.md
+-rw-rw-r-- 1 kbrazil kbrazil 9210 Feb 14 02:07 dig.md
+-rw-rw-r-- 1 kbrazil kbrazil 2591 Feb 14 02:07 du.md
+-rw-rw-r-- 1 kbrazil kbrazil 1709 Feb 14 02:07 env.md
+-rw-rw-r-- 1 kbrazil kbrazil 1799 Feb 14 02:07 free.md
+-rw-rw-r-- 1 kbrazil kbrazil 2389 Feb 14 02:07 fstab.md
+-rw-rw-r-- 1 kbrazil kbrazil 1500 Feb 14 02:07 history.md
+-rw-rw-r-- 1 kbrazil kbrazil 1779 Feb 14 02:07 hosts.md
+-rw-rw-r-- 1 kbrazil kbrazil 2331 Feb 14 02:07 id.md
+-rw-rw-r-- 1 kbrazil kbrazil 5199 Feb 14 02:07 ifconfig.md
+-rw-rw-r-- 1 kbrazil kbrazil 1623 Feb 14 02:07 ini.md
+-rw-rw-r-- 1 kbrazil kbrazil 4501 Feb 14 02:07 iptables.md
+-rw-rw-r-- 1 kbrazil kbrazil 2326 Feb 14 02:07 jobs.md
+-rw-rw-r-- 1 kbrazil kbrazil 7177 Feb 14 02:07 lsblk.md
+-rw-rw-r-- 1 kbrazil kbrazil 3898 Feb 14 02:07 ls.md
+-rw-rw-r-- 1 kbrazil kbrazil 2723 Feb 14 02:07 lsmod.md
+-rw-rw-r-- 1 kbrazil kbrazil 2818 Feb 14 02:07 lsof.md
+-rw-rw-r-- 1 kbrazil kbrazil 1807 Feb 14 02:07 mount.md
+-rw-rw-r-- 1 kbrazil kbrazil 9469 Feb 14 02:07 netstat.md
+-rw-rw-r-- 1 kbrazil kbrazil 1309 Feb 14 02:07 pip_list.md
+-rw-rw-r-- 1 kbrazil kbrazil 2194 Feb 14 02:07 pip_show.md
+-rw-rw-r-- 1 kbrazil kbrazil 4860 Feb 14 02:07 ps.md
+-rw-rw-r-- 1 kbrazil kbrazil 3030 Feb 14 02:07 route.md
+-rw-rw-r-- 1 kbrazil kbrazil 7404 Feb 14 02:07 ss.md
+-rw-rw-r-- 1 kbrazil kbrazil 4013 Feb 14 02:07 stat.md
+-rw-rw-r-- 1 kbrazil kbrazil 1951 Feb 14 02:07 systemctl_lj.md
+-rw-rw-r-- 1 kbrazil kbrazil 1473 Feb 14 02:07 systemctl_ls.md
+-rw-rw-r-- 1 kbrazil kbrazil 1316 Feb 14 02:07 systemctl_luf.md
+-rw-rw-r-- 1 kbrazil kbrazil 1751 Feb 14 02:07 systemctl.md
+-rw-rw-r-- 1 kbrazil kbrazil 1530 Feb 14 02:07 uname.md
+-rw-rw-r-- 1 kbrazil kbrazil 1404 Feb 14 02:07 uptime.md
+-rw-rw-r-- 1 kbrazil kbrazil 2588 Feb 14 02:07 w.md
+-rw-rw-r-- 1 kbrazil kbrazil 2047 Feb 14 02:07 xml.md
+-rw-rw-r-- 1 kbrazil kbrazil 2257 Feb 14 02:07 yaml.md
+
+./git/jc/jc:
+total 28
+-rw-rw-r-- 1 kbrazil kbrazil 8677 Feb 14 02:07 cli.py
+-rw-rw-r-- 1 kbrazil kbrazil 2538 Feb 14 02:07 __init__.py
+drwxrwxr-x 3 kbrazil kbrazil 4096 Feb 14 02:07 parsers
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 __pycache__
+-rw-rw-r-- 1 kbrazil kbrazil 1471 Feb 14 02:07 utils.py
+
+./git/jc/jc/parsers:
+total 260
+-rw-rw-r-- 1 kbrazil kbrazil  5048 Feb 14 02:07 arp.py
+-rw-rw-r-- 1 kbrazil kbrazil  6756 Feb 14 02:07 crontab.py
+-rw-rw-r-- 1 kbrazil kbrazil  7055 Feb 14 02:07 crontab_u.py
+-rw-rw-r-- 1 kbrazil kbrazil  5176 Feb 14 02:07 df.py
+-rw-rw-r-- 1 kbrazil kbrazil 15625 Feb 14 02:07 dig.py
+-rw-rw-r-- 1 kbrazil kbrazil  3751 Feb 14 02:07 du.py
+-rw-rw-r-- 1 kbrazil kbrazil  2782 Feb 14 02:07 env.py
+-rw-rw-r-- 1 kbrazil kbrazil  1880 Feb 14 02:07 foo.py
+-rw-rw-r-- 1 kbrazil kbrazil  3037 Feb 14 02:07 free.py
+-rw-rw-r-- 1 kbrazil kbrazil  4098 Feb 14 02:07 fstab.py
+-rw-rw-r-- 1 kbrazil kbrazil  3123 Feb 14 02:07 history.py
+-rw-rw-r-- 1 kbrazil kbrazil  3258 Feb 14 02:07 hosts.py
+-rw-rw-r-- 1 kbrazil kbrazil  5595 Feb 14 02:07 id.py
+-rw-rw-r-- 1 kbrazil kbrazil  7611 Feb 14 02:07 ifconfig.py
+-rw-rw-r-- 1 kbrazil kbrazil  2418 Feb 14 02:07 ini.py
+-rw-rw-r-- 1 kbrazil kbrazil     0 Feb 14 02:07 __init__.py
+-rw-rw-r-- 1 kbrazil kbrazil  7465 Feb 14 02:07 iptables.py
+-rw-rw-r-- 1 kbrazil kbrazil  4885 Feb 14 02:07 jobs.py
+-rw-rw-r-- 1 kbrazil kbrazil  9105 Feb 14 02:07 lsblk.py
+-rw-rw-r-- 1 kbrazil kbrazil  3844 Feb 14 02:07 lsmod.py
+-rw-rw-r-- 1 kbrazil kbrazil  5434 Feb 14 02:07 lsof.py
+-rw-rw-r-- 1 kbrazil kbrazil  6213 Feb 14 02:07 ls.py
+-rw-rw-r-- 1 kbrazil kbrazil  3729 Feb 14 02:07 mount.py
+-rw-rw-r-- 1 kbrazil kbrazil 16129 Feb 14 02:07 netstat.py
+-rw-rw-r-- 1 kbrazil kbrazil  2658 Feb 14 02:07 pip_list.py
+-rw-rw-r-- 1 kbrazil kbrazil  3444 Feb 14 02:07 pip_show.py
+-rw-rw-r-- 1 kbrazil kbrazil  6793 Feb 14 02:07 ps.py
+drwxrwxr-x 2 kbrazil kbrazil  4096 Feb 14 02:07 __pycache__
+-rw-rw-r-- 1 kbrazil kbrazil  4085 Feb 14 02:07 route.py
+-rw-rw-r-- 1 kbrazil kbrazil 11491 Feb 14 02:07 ss.py
+-rw-rw-r-- 1 kbrazil kbrazil  8255 Feb 14 02:07 stat.py
+-rw-rw-r-- 1 kbrazil kbrazil  3483 Feb 14 02:07 systemctl_lj.py
+-rw-rw-r-- 1 kbrazil kbrazil  2675 Feb 14 02:07 systemctl_ls.py
+-rw-rw-r-- 1 kbrazil kbrazil  2585 Feb 14 02:07 systemctl_luf.py
+-rw-rw-r-- 1 kbrazil kbrazil  2940 Feb 14 02:07 systemctl.py
+-rw-rw-r-- 1 kbrazil kbrazil  3225 Feb 14 02:07 uname.py
+-rw-rw-r-- 1 kbrazil kbrazil  4041 Feb 14 02:07 universal.py
+-rw-rw-r-- 1 kbrazil kbrazil  3243 Feb 14 02:07 uptime.py
+-rw-rw-r-- 1 kbrazil kbrazil  4345 Feb 14 02:07 w.py
+-rw-rw-r-- 1 kbrazil kbrazil  2747 Feb 14 02:07 xml.py
+-rw-rw-r-- 1 kbrazil kbrazil  3045 Feb 14 02:07 yaml.py
+
+./git/jc/jc/parsers/__pycache__:
+total 244
+-rw-rw-r-- 1 kbrazil kbrazil  4293 Feb 14 02:07 arp.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  6112 Feb 14 02:07 crontab.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  6347 Feb 14 02:07 crontab_u.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  4234 Feb 14 02:07 df.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 13350 Feb 14 02:07 dig.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3745 Feb 14 02:07 du.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2829 Feb 14 02:07 env.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3083 Feb 14 02:07 free.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3774 Feb 14 02:07 fstab.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2866 Feb 14 02:07 history.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3026 Feb 14 02:07 hosts.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  4333 Feb 14 02:07 id.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  7466 Feb 14 02:07 ifconfig.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2728 Feb 14 02:07 ini.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil   126 Feb 14 02:07 __init__.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  6681 Feb 14 02:07 iptables.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  4054 Feb 14 02:07 jobs.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  8863 Feb 14 02:07 lsblk.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  5571 Feb 14 02:07 ls.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3894 Feb 14 02:07 lsmod.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  4060 Feb 14 02:07 lsof.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3514 Feb 14 02:07 mount.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 13405 Feb 14 02:07 netstat.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2603 Feb 14 02:07 pip_list.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3420 Feb 14 02:07 pip_show.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  6391 Feb 14 02:07 ps.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  4202 Feb 14 02:07 route.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  9856 Feb 14 02:07 ss.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  6403 Feb 14 02:07 stat.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2968 Feb 14 02:07 systemctl.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3381 Feb 14 02:07 systemctl_lj.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2710 Feb 14 02:07 systemctl_ls.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2595 Feb 14 02:07 systemctl_luf.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2876 Feb 14 02:07 uname.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3538 Feb 14 02:07 universal.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2941 Feb 14 02:07 uptime.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  4157 Feb 14 02:07 w.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  2952 Feb 14 02:07 xml.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil  3264 Feb 14 02:07 yaml.cpython-36.pyc
+
+./git/jc/jc/__pycache__:
+total 16
+-rw-rw-r-- 1 kbrazil kbrazil 6339 Feb 14 02:07 cli.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2667 Feb 14 02:07 __init__.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1740 Feb 14 02:07 utils.cpython-36.pyc
+
+./git/jc/jc.egg-info:
+total 88
+-rw-rw-r-- 1 kbrazil kbrazil     1 Feb 14 02:07 dependency_links.txt
+-rw-rw-r-- 1 kbrazil kbrazil    36 Feb 14 02:07 entry_points.txt
+-rw-rw-r-- 1 kbrazil kbrazil 55330 Feb 14 02:07 PKG-INFO
+-rw-rw-r-- 1 kbrazil kbrazil    61 Feb 14 02:07 requires.txt
+-rw-rw-r-- 1 kbrazil kbrazil 14128 Feb 14 02:07 SOURCES.txt
+-rw-rw-r-- 1 kbrazil kbrazil     9 Feb 14 02:07 top_level.txt
+
+./git/jc/tests:
+total 180
+drwxrwxr-x 7 kbrazil kbrazil 4096 Feb 14 02:07 fixtures
+-rw-rw-r-- 1 kbrazil kbrazil    0 Feb 14 02:07 __init__.py
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:23 __pycache__
+-rw-rw-r-- 1 kbrazil kbrazil 4458 Feb 14 02:07 test_arp.py
+-rw-rw-r-- 1 kbrazil kbrazil  801 Feb 14 02:07 test_crontab.py
+-rw-rw-r-- 1 kbrazil kbrazil 1426 Feb 14 02:07 test_crontab_u.py
+-rw-rw-r-- 1 kbrazil kbrazil 4381 Feb 14 02:07 test_df.py
+-rw-rw-r-- 1 kbrazil kbrazil 3440 Feb 14 02:07 test_dig.py
+-rw-rw-r-- 1 kbrazil kbrazil 2271 Feb 14 02:07 test_du.py
+-rw-rw-r-- 1 kbrazil kbrazil 1278 Feb 14 02:07 test_env.py
+-rw-rw-r-- 1 kbrazil kbrazil 2373 Feb 14 02:07 test_free.py
+-rw-rw-r-- 1 kbrazil kbrazil 1334 Feb 14 02:07 test_fstab.py
+-rw-rw-r-- 1 kbrazil kbrazil 1354 Feb 14 02:07 test_history.py
+-rw-rw-r-- 1 kbrazil kbrazil 1334 Feb 14 02:07 test_hosts.py
+-rw-rw-r-- 1 kbrazil kbrazil 1257 Feb 14 02:07 test_id.py
+-rw-rw-r-- 1 kbrazil kbrazil 3629 Feb 14 02:07 test_ifconfig.py
+-rw-rw-r-- 1 kbrazil kbrazil 1332 Feb 14 02:07 test_ini.py
+-rw-rw-r-- 1 kbrazil kbrazil 7909 Feb 14 02:07 test_iptables.py
+-rw-rw-r-- 1 kbrazil kbrazil 1297 Feb 14 02:07 test_jobs.py
+-rw-rw-r-- 1 kbrazil kbrazil 2940 Feb 14 02:07 test_lsblk.py
+-rw-rw-r-- 1 kbrazil kbrazil 1316 Feb 14 02:07 test_lsmod.py
+-rw-rw-r-- 1 kbrazil kbrazil 2419 Feb 14 02:07 test_lsof.py
+-rw-rw-r-- 1 kbrazil kbrazil 6587 Feb 14 02:07 test_ls.py
+-rw-rw-r-- 1 kbrazil kbrazil 2392 Feb 14 02:07 test_mount.py
+-rw-rw-r-- 1 kbrazil kbrazil 6114 Feb 14 02:07 test_netstat.py
+-rw-rw-r-- 1 kbrazil kbrazil 3123 Feb 14 02:07 test_pip_list.py
+-rw-rw-r-- 1 kbrazil kbrazil 2493 Feb 14 02:07 test_pip_show.py
+-rw-rw-r-- 1 kbrazil kbrazil 4517 Feb 14 02:07 test_ps.py
+-rw-rw-r-- 1 kbrazil kbrazil 2426 Feb 14 02:07 test_route.py
+-rw-rw-r-- 1 kbrazil kbrazil 1373 Feb 14 02:07 test_ss.py
+-rw-rw-r-- 1 kbrazil kbrazil 1311 Feb 14 02:07 test_stat.py
+-rw-rw-r-- 1 kbrazil kbrazil 1487 Feb 14 02:07 test_systemctl_lj.py
+-rw-rw-r-- 1 kbrazil kbrazil 1475 Feb 14 02:07 test_systemctl_ls.py
+-rw-rw-r-- 1 kbrazil kbrazil 1492 Feb 14 02:07 test_systemctl_luf.py
+-rw-rw-r-- 1 kbrazil kbrazil 1398 Feb 14 02:07 test_systemctl.py
+-rw-rw-r-- 1 kbrazil kbrazil 2442 Feb 14 02:07 test_uname.py
+-rw-rw-r-- 1 kbrazil kbrazil 2419 Feb 14 02:07 test_uptime.py
+-rw-rw-r-- 1 kbrazil kbrazil 2226 Feb 14 02:07 test_w.py
+-rw-rw-r-- 1 kbrazil kbrazil 1357 Feb 14 02:07 test_xml.py
+-rw-rw-r-- 1 kbrazil kbrazil 1401 Feb 14 02:07 test_yaml.py
+
+./git/jc/tests/fixtures:
+total 24
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 centos-7.7
+-rw-rw-r-- 1 kbrazil kbrazil 2437 Feb 14 02:07 create_fixtures.sh
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 generic
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 osx-10.11.6
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 osx-10.14.6
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 14 02:07 ubuntu-18.04
+
+./git/jc/tests/fixtures/centos-7.7:
+total 3160
+-rw-rw-r-- 1 kbrazil kbrazil    350 Feb 14 02:07 arp-a.json
+-rw-rw-r-- 1 kbrazil kbrazil    173 Feb 14 02:07 arp-a.out
+-rw-rw-r-- 1 kbrazil kbrazil    236 Feb 14 02:07 arp.json
+-rw-rw-r-- 1 kbrazil kbrazil    243 Feb 14 02:07 arp.out
+-rw-rw-r-- 1 kbrazil kbrazil    236 Feb 14 02:07 arp-v.json
+-rw-rw-r-- 1 kbrazil kbrazil    274 Feb 14 02:07 arp-v.out
+-rw-rw-r-- 1 kbrazil kbrazil   1940 Feb 14 02:07 crontab.json
+-rw-rw-r-- 1 kbrazil kbrazil   1564 Feb 14 02:07 crontab.out
+-rw-rw-r-- 1 kbrazil kbrazil    399 Feb 14 02:07 crontab-u.json
+-rw-rw-r-- 1 kbrazil kbrazil    163 Feb 14 02:07 crontab-u.out
+-rw-rw-r-- 1 kbrazil kbrazil    836 Feb 14 02:07 df-h.json
+-rw-rw-r-- 1 kbrazil kbrazil    444 Feb 14 02:07 df-h.out
+-rw-rw-r-- 1 kbrazil kbrazil    904 Feb 14 02:07 df.json
+-rw-rw-r-- 1 kbrazil kbrazil    524 Feb 14 02:07 df.out
+-rw-rw-r-- 1 kbrazil kbrazil    462 Feb 14 02:07 dig-aaaa.json
+-rw-rw-r-- 1 kbrazil kbrazil    556 Feb 14 02:07 dig-aaaa.out
+-rw-rw-r-- 1 kbrazil kbrazil   1005 Feb 14 02:07 dig.json
+-rw-rw-r-- 1 kbrazil kbrazil   1052 Feb 14 02:07 dig.out
+-rw-rw-r-- 1 kbrazil kbrazil    464 Feb 14 02:07 dig-x.json
+-rw-rw-r-- 1 kbrazil kbrazil    547 Feb 14 02:07 dig-x.out
+-rw-rw-r-- 1 kbrazil kbrazil 365319 Feb 14 02:07 du.json
+-rw-rw-r-- 1 kbrazil kbrazil 250940 Feb 14 02:07 du.out
+-rw-rw-r-- 1 kbrazil kbrazil   2932 Feb 14 02:07 env.json
+-rw-rw-r-- 1 kbrazil kbrazil   2331 Feb 14 02:07 env.out
+-rw-rw-r-- 1 kbrazil kbrazil    177 Feb 14 02:07 free-h.json
+-rw-rw-r-- 1 kbrazil kbrazil    204 Feb 14 02:07 free-h.out
+-rw-rw-r-- 1 kbrazil kbrazil    194 Feb 14 02:07 free.json
+-rw-rw-r-- 1 kbrazil kbrazil    204 Feb 14 02:07 free.out
+-rw-rw-r-- 1 kbrazil kbrazil    423 Feb 14 02:07 fstab.json
+-rw-rw-r-- 1 kbrazil kbrazil    488 Feb 14 02:07 fstab.out
+-rw-rw-r-- 1 kbrazil kbrazil  47552 Feb 14 02:07 history.json
+-rw-rw-r-- 1 kbrazil kbrazil  25967 Feb 14 02:07 history.out
+-rw-rw-r-- 1 kbrazil kbrazil    223 Feb 14 02:07 hosts.json
+-rw-rw-r-- 1 kbrazil kbrazil    193 Feb 14 02:07 hosts.out
+-rw-rw-r-- 1 kbrazil kbrazil    267 Feb 14 02:07 id.json
+-rw-rw-r-- 1 kbrazil kbrazil    129 Feb 14 02:07 id.out
+-rw-rw-r-- 1 kbrazil kbrazil   1598 Feb 14 02:07 ifconfig.json
+-rw-rw-r-- 1 kbrazil kbrazil   1259 Feb 14 02:07 ifconfig.out
+-rw-rw-r-- 1 kbrazil kbrazil   7749 Feb 14 02:07 iptables-filter.json
+-rw-rw-r-- 1 kbrazil kbrazil   7469 Feb 14 02:07 iptables-filter-line-numbers.json
+-rw-rw-r-- 1 kbrazil kbrazil   6643 Feb 14 02:07 iptables-filter-line-numbers.out
+-rw-rw-r-- 1 kbrazil kbrazil  10625 Feb 14 02:07 iptables-filter-nv.json
+-rw-rw-r-- 1 kbrazil kbrazil   9064 Feb 14 02:07 iptables-filter-nv.out
+-rw-rw-r-- 1 kbrazil kbrazil   6762 Feb 14 02:07 iptables-filter.out
+-rw-rw-r-- 1 kbrazil kbrazil   1938 Feb 14 02:07 iptables-mangle.json
+-rw-rw-r-- 1 kbrazil kbrazil   2399 Feb 14 02:07 iptables-mangle.out
+-rw-rw-r-- 1 kbrazil kbrazil   3211 Feb 14 02:07 iptables-nat.json
+-rw-rw-r-- 1 kbrazil kbrazil   3484 Feb 14 02:07 iptables-nat.out
+-rw-rw-r-- 1 kbrazil kbrazil   1386 Feb 14 02:07 iptables-raw.json
+-rw-rw-r-- 1 kbrazil kbrazil   1616 Feb 14 02:07 iptables-raw.out
+-rw-rw-r-- 1 kbrazil kbrazil    306 Feb 14 02:07 jobs.json
+-rw-rw-r-- 1 kbrazil kbrazil    164 Feb 14 02:07 jobs.out
+-rw-rw-r-- 1 kbrazil kbrazil   2776 Feb 14 02:07 ls-alh.json
+-rw-rw-r-- 1 kbrazil kbrazil   1071 Feb 14 02:07 ls-alh.out
+-rw-rw-r-- 1 kbrazil kbrazil   2776 Feb 14 02:07 ls-al.json
+-rw-rw-r-- 1 kbrazil kbrazil   1070 Feb 14 02:07 ls-al.out
+-rw-rw-r-- 1 kbrazil kbrazil   4102 Feb 14 02:07 lsblk-allcols.json
+-rw-rw-r-- 1 kbrazil kbrazil   2502 Feb 14 02:07 lsblk-allcols.out
+-rw-rw-r-- 1 kbrazil kbrazil    698 Feb 14 02:07 lsblk.json
+-rw-rw-r-- 1 kbrazil kbrazil    332 Feb 14 02:07 lsblk.out
+-rw-rw-r-- 1 kbrazil kbrazil    409 Feb 14 02:07 ls.json
+-rw-rw-r-- 1 kbrazil kbrazil   6655 Feb 14 02:07 lsmod.json
+-rw-rw-r-- 1 kbrazil kbrazil   4161 Feb 14 02:07 lsmod.out
+-rw-rw-r-- 1 kbrazil kbrazil 126050 Feb 14 02:07 lsof.json
+-rw-rw-r-- 1 kbrazil kbrazil  70567 Feb 14 02:07 lsof.out
+-rw-rw-r-- 1 kbrazil kbrazil 618317 Feb 14 02:07 lsof-sudo.json
+-rw-rw-r-- 1 kbrazil kbrazil 363073 Feb 14 02:07 lsof-sudo.out
+-rw-rw-r-- 1 kbrazil kbrazil     85 Feb 14 02:07 ls.out
+-rw-rw-r-- 1 kbrazil kbrazil   4848 Feb 14 02:07 mount.json
+-rw-rw-r-- 1 kbrazil kbrazil   2711 Feb 14 02:07 mount.out
+-rw-rw-r-- 1 kbrazil kbrazil  15637 Feb 14 02:07 netstat.json
+-rw-rw-r-- 1 kbrazil kbrazil   7020 Feb 14 02:07 netstat-l.json
+-rw-rw-r-- 1 kbrazil kbrazil   3499 Feb 14 02:07 netstat-l.out
+-rw-rw-r-- 1 kbrazil kbrazil   8068 Feb 14 02:07 netstat.out
+-rw-rw-r-- 1 kbrazil kbrazil  17621 Feb 14 02:07 netstat-p.json
+-rw-rw-r-- 1 kbrazil kbrazil  10407 Feb 14 02:07 netstat-p.out
+-rw-rw-r-- 1 kbrazil kbrazil  29188 Feb 14 02:07 netstat-sudo-aeep.json
+-rw-rw-r-- 1 kbrazil kbrazil  14986 Feb 14 02:07 netstat-sudo-aeep.out
+-rw-rw-r-- 1 kbrazil kbrazil   8734 Feb 14 02:07 netstat-sudo-lnp.json
+-rw-rw-r-- 1 kbrazil kbrazil   4402 Feb 14 02:07 netstat-sudo-lnp.out
+-rw-rw-r-- 1 kbrazil kbrazil    905 Feb 14 02:07 pip-list.json
+-rw-rw-r-- 1 kbrazil kbrazil    616 Feb 14 02:07 pip-list.out
+-rw-rw-r-- 1 kbrazil kbrazil   1129 Feb 14 02:07 pip-show.json
+-rw-rw-r-- 1 kbrazil kbrazil    974 Feb 14 02:07 pip-show.out
+-rw-rw-r-- 1 kbrazil kbrazil  20936 Feb 14 02:07 ps-axu.json
+-rw-rw-r-- 1 kbrazil kbrazil   9932 Feb 14 02:07 ps-axu.out
+-rw-rw-r-- 1 kbrazil kbrazil  14630 Feb 14 02:07 ps-ef.json
+-rw-rw-r-- 1 kbrazil kbrazil   8168 Feb 14 02:07 ps-ef.out
+-rw-rw-r-- 1 kbrazil kbrazil    437 Feb 14 02:07 route.json
+-rw-rw-r-- 1 kbrazil kbrazil    338 Feb 14 02:07 route.out
+-rw-rw-r-- 1 kbrazil kbrazil    442 Feb 14 02:07 route-vn.json
+-rw-rw-r-- 1 kbrazil kbrazil    338 Feb 14 02:07 route-vn.out
+-rw-rw-r-- 1 kbrazil kbrazil  29301 Feb 14 02:07 ss-sudo-a.json
+-rw-rw-r-- 1 kbrazil kbrazil  17945 Feb 14 02:07 ss-sudo-a.out
+-rw-rw-r-- 1 kbrazil kbrazil 322074 Feb 14 02:07 stat.json
+-rw-rw-r-- 1 kbrazil kbrazil 295777 Feb 14 02:07 stat.out
+-rw-rw-r-- 1 kbrazil kbrazil  31968 Feb 14 02:07 systemctl.json
+-rw-rw-r-- 1 kbrazil kbrazil   1439 Feb 14 02:07 systemctl-ls.json
+-rw-rw-r-- 1 kbrazil kbrazil   1159 Feb 14 02:07 systemctl-ls.out
+-rw-rw-r-- 1 kbrazil kbrazil  14574 Feb 14 02:07 systemctl-luf.json
+-rw-rw-r-- 1 kbrazil kbrazil  13499 Feb 14 02:07 systemctl-luf.out
+-rw-rw-r-- 1 kbrazil kbrazil  38560 Feb 14 02:07 systemctl.out
+-rw-rw-r-- 1 kbrazil kbrazil    276 Feb 14 02:07 uname-a.json
+-rw-rw-r-- 1 kbrazil kbrazil    122 Feb 14 02:07 uname-a.out
+-rw-rw-r-- 1 kbrazil kbrazil    103 Feb 14 02:07 uptime.json
+-rw-rw-r-- 1 kbrazil kbrazil     62 Feb 14 02:07 uptime.out
+-rw-rw-r-- 1 kbrazil kbrazil    287 Feb 14 02:07 w.json
+-rw-rw-r-- 1 kbrazil kbrazil    266 Feb 14 02:07 w.out
+
+./git/jc/tests/fixtures/generic:
+total 56
+-rw-rw-r-- 1 kbrazil kbrazil 4705 Feb 14 02:07 ini-iptelserver.ini
+-rw-rw-r-- 1 kbrazil kbrazil 1486 Feb 14 02:07 ini-iptelserver.json
+-rw-rw-r-- 1 kbrazil kbrazil  171 Feb 14 02:07 ini-test.ini
+-rw-rw-r-- 1 kbrazil kbrazil  270 Feb 14 02:07 ini-test.json
+-rw-rw-r-- 1 kbrazil kbrazil 3294 Feb 14 02:07 xml-cd_catalog.json
+-rw-rw-r-- 1 kbrazil kbrazil 5077 Feb 14 02:07 xml-cd_catalog.xml
+-rw-rw-r-- 1 kbrazil kbrazil  811 Feb 14 02:07 xml-foodmenu.json
+-rw-rw-r-- 1 kbrazil kbrazil 1102 Feb 14 02:07 xml-foodmenu.xml
+-rw-rw-r-- 1 kbrazil kbrazil  333 Feb 14 02:07 yaml-istio-sc.json
+-rw-rw-r-- 1 kbrazil kbrazil  305 Feb 14 02:07 yaml-istio-sc.yaml
+-rw-rw-r-- 1 kbrazil kbrazil 3178 Feb 14 02:07 yaml-istio-sidecar.json
+-rw-rw-r-- 1 kbrazil kbrazil 3681 Feb 14 02:07 yaml-istio-sidecar.yaml
+
+./git/jc/tests/fixtures/osx-10.11.6:
+total 672
+-rw-rw-r-- 1 kbrazil kbrazil   1669 Feb 14 02:07 arp-a.json
+-rwxrwxr-x 1 kbrazil kbrazil   1036 Feb 14 02:07 arp-a.out
+-rw-rw-r-- 1 kbrazil kbrazil   1151 Feb 14 02:07 df-h.json
+-rwxrwxr-x 1 kbrazil kbrazil    908 Feb 14 02:07 df-h.out
+-rw-rw-r-- 1 kbrazil kbrazil   1196 Feb 14 02:07 df.json
+-rwxrwxr-x 1 kbrazil kbrazil    992 Feb 14 02:07 df.out
+-rw-rw-r-- 1 kbrazil kbrazil    439 Feb 14 02:07 dig-aaaa.json
+-rwxrwxr-x 1 kbrazil kbrazil    537 Feb 14 02:07 dig-aaaa.out
+-rw-rw-r-- 1 kbrazil kbrazil   1272 Feb 14 02:07 dig.json
+-rwxrwxr-x 1 kbrazil kbrazil   1188 Feb 14 02:07 dig.out
+-rw-rw-r-- 1 kbrazil kbrazil    442 Feb 14 02:07 dig-x.json
+-rwxrwxr-x 1 kbrazil kbrazil    529 Feb 14 02:07 dig-x.out
+-rw-rw-r-- 1 kbrazil kbrazil 221050 Feb 14 02:07 du.json
+-rwxrwxr-x 1 kbrazil kbrazil 166687 Feb 14 02:07 du.out
+-rw-rw-r-- 1 kbrazil kbrazil   3791 Feb 14 02:07 ifconfig2.json
+-rwxrwxr-x 1 kbrazil kbrazil   1571 Feb 14 02:07 ifconfig2.out
+-rw-rw-r-- 1 kbrazil kbrazil   3791 Feb 14 02:07 ifconfig.json
+-rwxrwxr-x 1 kbrazil kbrazil   1571 Feb 14 02:07 ifconfig.out
+-rw-rw-r-- 1 kbrazil kbrazil   4296 Feb 14 02:07 ls-alh.json
+-rwxrwxr-x 1 kbrazil kbrazil   1882 Feb 14 02:07 ls-alh.out
+-rw-rw-r-- 1 kbrazil kbrazil   4259 Feb 14 02:07 ls-al.json
+-rwxrwxr-x 1 kbrazil kbrazil   1851 Feb 14 02:07 ls-al.out
+-rw-rw-r-- 1 kbrazil kbrazil    533 Feb 14 02:07 ls.json
+-rwxrwxr-x 1 kbrazil kbrazil    175 Feb 14 02:07 ls.out
+-rw-rw-r-- 1 kbrazil kbrazil    224 Feb 14 02:07 pip-list.json
+-rwxrwxr-x 1 kbrazil kbrazil    168 Feb 14 02:07 pip-list.out
+-rw-rw-r-- 1 kbrazil kbrazil   1028 Feb 14 02:07 pip-show.json
+-rwxrwxr-x 1 kbrazil kbrazil    867 Feb 14 02:07 pip-show.out
+-rw-rw-r-- 1 kbrazil kbrazil  53632 Feb 14 02:07 ps-axu.json
+-rwxrwxr-x 1 kbrazil kbrazil  32255 Feb 14 02:07 ps-axu.out
+-rw-rw-r-- 1 kbrazil kbrazil  38291 Feb 14 02:07 ps-ef.json
+-rwxrwxr-x 1 kbrazil kbrazil  25921 Feb 14 02:07 ps-ef.out
+-rw-rw-r-- 1 kbrazil kbrazil    233 Feb 14 02:07 uname-a.json
+-rwxrwxr-x 1 kbrazil kbrazil    142 Feb 14 02:07 uname-a.out
+-rw-rw-r-- 1 kbrazil kbrazil    102 Feb 14 02:07 uptime.json
+-rwxrwxr-x 1 kbrazil kbrazil     57 Feb 14 02:07 uptime.out
+-rw-rw-r-- 1 kbrazil kbrazil    627 Feb 14 02:07 w.json
+-rwxrwxr-x 1 kbrazil kbrazil    458 Feb 14 02:07 w.out
+
+./git/jc/tests/fixtures/osx-10.14.6:
+total 968
+-rw-rw-r-- 1 kbrazil kbrazil   1541 Feb 14 02:07 arp-a.json
+-rw-rw-r-- 1 kbrazil kbrazil    968 Feb 14 02:07 arp-a.out
+-rw-rw-r-- 1 kbrazil kbrazil   1686 Feb 14 02:07 df-h.json
+-rw-rw-r-- 1 kbrazil kbrazil   1276 Feb 14 02:07 df-h.out
+-rw-rw-r-- 1 kbrazil kbrazil   1764 Feb 14 02:07 df.json
+-rw-rw-r-- 1 kbrazil kbrazil   1384 Feb 14 02:07 df.out
+-rw-rw-r-- 1 kbrazil kbrazil    438 Feb 14 02:07 dig-aaaa.json
+-rw-rw-r-- 1 kbrazil kbrazil    536 Feb 14 02:07 dig-aaaa.out
+-rw-rw-r-- 1 kbrazil kbrazil   1266 Feb 14 02:07 dig.json
+-rw-rw-r-- 1 kbrazil kbrazil   1182 Feb 14 02:07 dig.out
+-rw-rw-r-- 1 kbrazil kbrazil    442 Feb 14 02:07 dig-x.json
+-rw-rw-r-- 1 kbrazil kbrazil    529 Feb 14 02:07 dig-x.out
+-rw-rw-r-- 1 kbrazil kbrazil 296296 Feb 14 02:07 du.json
+-rw-rw-r-- 1 kbrazil kbrazil 222287 Feb 14 02:07 du.out
+-rw-rw-r-- 1 kbrazil kbrazil    759 Feb 14 02:07 id.json
+-rw-rw-r-- 1 kbrazil kbrazil    386 Feb 14 02:07 id.out
+-rw-rw-r-- 1 kbrazil kbrazil  11375 Feb 14 02:07 ifconfig2.json
+-rw-rw-r-- 1 kbrazil kbrazil   3979 Feb 14 02:07 ifconfig2.out
+-rw-rw-r-- 1 kbrazil kbrazil  10823 Feb 14 02:07 ifconfig.json
+-rwxrwxr-x 1 kbrazil kbrazil   3779 Feb 14 02:07 ifconfig.out
+-rw-rw-r-- 1 kbrazil kbrazil   4684 Feb 14 02:07 ls-alh.json
+-rwxrwxr-x 1 kbrazil kbrazil   2111 Feb 14 02:07 ls-alh.out
+-rw-rw-r-- 1 kbrazil kbrazil   4653 Feb 14 02:07 ls-al.json
+-rwxrwxr-x 1 kbrazil kbrazil   2111 Feb 14 02:07 ls-al.out
+-rw-rw-r-- 1 kbrazil kbrazil    585 Feb 14 02:07 ls.json
+-rwxrwxr-x 1 kbrazil kbrazil    193 Feb 14 02:07 ls.out
+-rw-rw-r-- 1 kbrazil kbrazil    841 Feb 14 02:07 mount2.json
+-rwxrwxr-x 1 kbrazil kbrazil    464 Feb 14 02:07 mount2.out
+-rw-rw-r-- 1 kbrazil kbrazil    672 Feb 14 02:07 mount.json
+-rw-rw-r-- 1 kbrazil kbrazil    349 Feb 14 02:07 mount.out
+-rw-rw-r-- 1 kbrazil kbrazil    224 Feb 14 02:07 pip-list.json
+-rwxrwxr-x 1 kbrazil kbrazil    168 Feb 14 02:07 pip-list.out
+-rw-rw-r-- 1 kbrazil kbrazil   1067 Feb 14 02:07 pip-show.json
+-rwxrwxr-x 1 kbrazil kbrazil    910 Feb 14 02:07 pip-show.out
+-rw-rw-r-- 1 kbrazil kbrazil  99173 Feb 14 02:07 ps-axu.json
+-rw-rw-r-- 1 kbrazil kbrazil  60107 Feb 14 02:07 ps-axu.out
+-rw-rw-r-- 1 kbrazil kbrazil  71162 Feb 14 02:07 ps-ef.json
+-rw-rw-r-- 1 kbrazil kbrazil  48758 Feb 14 02:07 ps-ef.out
+-rw-rw-r-- 1 kbrazil kbrazil    221 Feb 14 02:07 uname-a.json
+-rwxrwxr-x 1 kbrazil kbrazil    131 Feb 14 02:07 uname-a.out
+-rw-rw-r-- 1 kbrazil kbrazil    110 Feb 14 02:07 uptime.json
+-rwxrwxr-x 1 kbrazil kbrazil     65 Feb 14 02:07 uptime.out
+-rw-rw-r-- 1 kbrazil kbrazil    836 Feb 14 02:07 w.json
+-rwxrwxr-x 1 kbrazil kbrazil    570 Feb 14 02:07 w.out
+
+./git/jc/tests/fixtures/ubuntu-18.04:
+total 4732
+-rw-rw-r-- 1 kbrazil kbrazil     351 Feb 14 02:07 arp-a.json
+-rw-rw-r-- 1 kbrazil kbrazil     174 Feb 14 02:07 arp-a.out
+-rw-rw-r-- 1 kbrazil kbrazil     237 Feb 14 02:07 arp.json
+-rw-rw-r-- 1 kbrazil kbrazil     243 Feb 14 02:07 arp.out
+-rw-rw-r-- 1 kbrazil kbrazil     237 Feb 14 02:07 arp-v.json
+-rw-rw-r-- 1 kbrazil kbrazil     274 Feb 14 02:07 arp-v.out
+-rw-rw-r-- 1 kbrazil kbrazil     939 Feb 14 02:07 crontab-u.json
+-rw-rw-r-- 1 kbrazil kbrazil     752 Feb 14 02:07 crontab-u.out
+-rw-rw-r-- 1 kbrazil kbrazil    2261 Feb 14 02:07 df-h.json
+-rw-rw-r-- 1 kbrazil kbrazil    1004 Feb 14 02:07 df-h.out
+-rw-rw-r-- 1 kbrazil kbrazil    2372 Feb 14 02:07 df.json
+-rw-rw-r-- 1 kbrazil kbrazil    1194 Feb 14 02:07 df.out
+-rw-rw-r-- 1 kbrazil kbrazil     458 Feb 14 02:07 dig-aaaa.json
+-rw-rw-r-- 1 kbrazil kbrazil     532 Feb 14 02:07 dig-aaaa.out
+-rw-rw-r-- 1 kbrazil kbrazil    1306 Feb 14 02:07 dig.json
+-rw-rw-r-- 1 kbrazil kbrazil    1156 Feb 14 02:07 dig.out
+-rw-rw-r-- 1 kbrazil kbrazil     460 Feb 14 02:07 dig-x.json
+-rw-rw-r-- 1 kbrazil kbrazil     523 Feb 14 02:07 dig-x.out
+-rw-rw-r-- 1 kbrazil kbrazil 1560353 Feb 14 02:07 du.json
+-rw-rw-r-- 1 kbrazil kbrazil 1136984 Feb 14 02:07 du.out
+-rw-rw-r-- 1 kbrazil kbrazil    2651 Feb 14 02:07 env.json
+-rw-rw-r-- 1 kbrazil kbrazil    2125 Feb 14 02:07 env.out
+-rw-rw-r-- 1 kbrazil kbrazil     177 Feb 14 02:07 free-h.json
+-rw-rw-r-- 1 kbrazil kbrazil     204 Feb 14 02:07 free-h.out
+-rw-rw-r-- 1 kbrazil kbrazil     195 Feb 14 02:07 free.json
+-rw-rw-r-- 1 kbrazil kbrazil     204 Feb 14 02:07 free.out
+-rw-rw-r-- 1 kbrazil kbrazil     268 Feb 14 02:07 fstab.json
+-rw-rw-r-- 1 kbrazil kbrazil     120 Feb 14 02:07 fstab.out
+-rw-rw-r-- 1 kbrazil kbrazil   22782 Feb 14 02:07 history.json
+-rw-rw-r-- 1 kbrazil kbrazil   12844 Feb 14 02:07 history.out
+-rw-rw-r-- 1 kbrazil kbrazil     365 Feb 14 02:07 hosts.json
+-rw-rw-r-- 1 kbrazil kbrazil     272 Feb 14 02:07 hosts.out
+-rw-rw-r-- 1 kbrazil kbrazil    1090 Feb 14 02:07 ifconfig.json
+-rw-rw-r-- 1 kbrazil kbrazil     894 Feb 14 02:07 ifconfig.out
+-rw-rw-r-- 1 kbrazil kbrazil    1730 Feb 14 02:07 iptables-filter.json
+-rw-rw-r-- 1 kbrazil kbrazil     847 Feb 14 02:07 iptables-filter-line-numbers.json
+-rw-rw-r-- 1 kbrazil kbrazil    1025 Feb 14 02:07 iptables-filter-line-numbers.out
+-rw-rw-r-- 1 kbrazil kbrazil    2363 Feb 14 02:07 iptables-filter-nv.json
+-rw-rw-r-- 1 kbrazil kbrazil    2763 Feb 14 02:07 iptables-filter-nv.out
+-rw-rw-r-- 1 kbrazil kbrazil    2035 Feb 14 02:07 iptables-filter.out
+-rw-rw-r-- 1 kbrazil kbrazil     141 Feb 14 02:07 iptables-mangle.json
+-rw-rw-r-- 1 kbrazil kbrazil     468 Feb 14 02:07 iptables-mangle.out
+-rw-rw-r-- 1 kbrazil kbrazil     106 Feb 14 02:07 iptables-nat.json
+-rw-rw-r-- 1 kbrazil kbrazil     375 Feb 14 02:07 iptables-nat.out
+-rw-rw-r-- 1 kbrazil kbrazil      39 Feb 14 02:07 iptables-raw.json
+-rw-rw-r-- 1 kbrazil kbrazil     187 Feb 14 02:07 iptables-raw.out
+-rw-rw-r-- 1 kbrazil kbrazil     306 Feb 14 02:07 jobs.json
+-rw-rw-r-- 1 kbrazil kbrazil     164 Feb 14 02:07 jobs.out
+-rw-rw-r-- 1 kbrazil kbrazil    3942 Feb 14 02:07 ls-alh.json
+-rw-rw-r-- 1 kbrazil kbrazil    1567 Feb 14 02:07 ls-alh.out
+-rw-rw-r-- 1 kbrazil kbrazil    3950 Feb 14 02:07 ls-al.json
+-rw-rw-r-- 1 kbrazil kbrazil    1744 Feb 14 02:07 ls-al.out
+-rw-rw-r-- 1 kbrazil kbrazil   11397 Feb 14 02:07 lsblk-allcols.json
+-rw-rw-r-- 1 kbrazil kbrazil    7364 Feb 14 02:07 lsblk-allcols.out
+-rw-rw-r-- 1 kbrazil kbrazil    2114 Feb 14 02:07 lsblk.json
+-rw-rw-r-- 1 kbrazil kbrazil     812 Feb 14 02:07 lsblk.out
+-rw-rw-r-- 1 kbrazil kbrazil     622 Feb 14 02:07 ls.json
+-rw-rw-r-- 1 kbrazil kbrazil    6744 Feb 14 02:07 lsmod.json
+-rw-rw-r-- 1 kbrazil kbrazil    4251 Feb 14 02:07 lsmod.out
+-rw-rw-r-- 1 kbrazil kbrazil  194044 Feb 14 02:07 lsof.json
+-rw-rw-r-- 1 kbrazil kbrazil  132043 Feb 14 02:07 lsof.out
+-rw-rw-r-- 1 kbrazil kbrazil  526695 Feb 14 02:07 lsof-sudo.json
+-rw-rw-r-- 1 kbrazil kbrazil  342863 Feb 14 02:07 lsof-sudo.out
+-rw-rw-r-- 1 kbrazil kbrazil     162 Feb 14 02:07 ls.out
+-rw-rw-r-- 1 kbrazil kbrazil    6547 Feb 14 02:07 mount.json
+-rw-rw-r-- 1 kbrazil kbrazil    3708 Feb 14 02:07 mount.out
+-rw-rw-r-- 1 kbrazil kbrazil   12550 Feb 14 02:07 netstat.json
+-rw-rw-r-- 1 kbrazil kbrazil    5079 Feb 14 02:07 netstat-l.json
+-rw-rw-r-- 1 kbrazil kbrazil    2606 Feb 14 02:07 netstat-l.out
+-rw-rw-r-- 1 kbrazil kbrazil    6711 Feb 14 02:07 netstat.out
+-rw-rw-r-- 1 kbrazil kbrazil   14711 Feb 14 02:07 netstat-p.json
+-rw-rw-r-- 1 kbrazil kbrazil    8706 Feb 14 02:07 netstat-p.out
+-rw-rw-r-- 1 kbrazil kbrazil   22957 Feb 14 02:07 netstat-sudo-aeep.json
+-rw-rw-r-- 1 kbrazil kbrazil   12016 Feb 14 02:07 netstat-sudo-aeep.out
+-rw-rw-r-- 1 kbrazil kbrazil    6259 Feb 14 02:07 netstat-sudo-lnp.json
+-rw-rw-r-- 1 kbrazil kbrazil    3236 Feb 14 02:07 netstat-sudo-lnp.out
+-rw-rw-r-- 1 kbrazil kbrazil    2638 Feb 14 02:07 pip-list.json
+-rw-rw-r-- 1 kbrazil kbrazil    2638 Feb 14 02:07 pip-list-legacy.json
+-rw-rw-r-- 1 kbrazil kbrazil    1041 Feb 14 02:07 pip-list-legacy.out
+-rw-rw-r-- 1 kbrazil kbrazil    2360 Feb 14 02:07 pip-list.out
+-rw-rw-r-- 1 kbrazil kbrazil     874 Feb 14 02:07 pip-show.json
+-rw-rw-r-- 1 kbrazil kbrazil     730 Feb 14 02:07 pip-show.out
+-rw-rw-r-- 1 kbrazil kbrazil   31390 Feb 14 02:07 ps-axu.json
+-rw-rw-r-- 1 kbrazil kbrazil   14127 Feb 14 02:07 ps-axu.out
+-rw-rw-r-- 1 kbrazil kbrazil   21583 Feb 14 02:07 ps-ef.json
+-rw-rw-r-- 1 kbrazil kbrazil   11355 Feb 14 02:07 ps-ef.out
+-rw-rw-r-- 1 kbrazil kbrazil     439 Feb 14 02:07 route.json
+-rw-rw-r-- 1 kbrazil kbrazil     336 Feb 14 02:07 route.out
+-rw-rw-r-- 1 kbrazil kbrazil     447 Feb 14 02:07 route-vn.json
+-rw-rw-r-- 1 kbrazil kbrazil     336 Feb 14 02:07 route-vn.out
+-rw-rw-r-- 1 kbrazil kbrazil   23277 Feb 14 02:07 ss-sudo-a.json
+-rw-rw-r-- 1 kbrazil kbrazil   25599 Feb 14 02:07 ss-sudo-a.out
+-rw-rw-r-- 1 kbrazil kbrazil   73147 Feb 14 02:07 stat.json
+-rw-rw-r-- 1 kbrazil kbrazil   60023 Feb 14 02:07 stat.out
+-rw-rw-r-- 1 kbrazil kbrazil   47895 Feb 14 02:07 systemctl.json
+-rw-rw-r-- 1 kbrazil kbrazil     270 Feb 14 02:07 systemctl-lj.json
+-rw-rw-r-- 1 kbrazil kbrazil     244 Feb 14 02:07 systemctl-lj.out
+-rw-rw-r-- 1 kbrazil kbrazil    2431 Feb 14 02:07 systemctl-ls.json
+-rw-rw-r-- 1 kbrazil kbrazil    2072 Feb 14 02:07 systemctl-ls.out
+-rw-rw-r-- 1 kbrazil kbrazil   18756 Feb 14 02:07 systemctl-luf.json
+-rw-rw-r-- 1 kbrazil kbrazil   17734 Feb 14 02:07 systemctl-luf.out
+-rw-rw-r-- 1 kbrazil kbrazil   76059 Feb 14 02:07 systemctl.out
+-rw-rw-r-- 1 kbrazil kbrazil     268 Feb 14 02:07 uname-a.json
+-rw-rw-r-- 1 kbrazil kbrazil     114 Feb 14 02:07 uname-a.out
+-rw-rw-r-- 1 kbrazil kbrazil     109 Feb 14 02:07 uptime.json
+-rw-rw-r-- 1 kbrazil kbrazil      70 Feb 14 02:07 uptime.out
+-rw-rw-r-- 1 kbrazil kbrazil     292 Feb 14 02:07 w.json
+-rw-rw-r-- 1 kbrazil kbrazil     274 Feb 14 02:07 w.out
+
+./git/jc/tests/__pycache__:
+total 176
+-rw-rw-r-- 1 kbrazil kbrazil  121 Feb 14 02:23 __init__.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 4492 Feb 14 02:23 test_arp.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1153 Feb 14 02:23 test_crontab.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1722 Feb 14 02:23 test_crontab_u.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 4432 Feb 14 02:23 test_df.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 3560 Feb 14 02:23 test_dig.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2497 Feb 14 02:23 test_du.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1586 Feb 14 02:23 test_env.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2584 Feb 14 02:23 test_free.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1638 Feb 14 02:23 test_fstab.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1654 Feb 14 02:23 test_history.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1638 Feb 14 02:23 test_hosts.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1567 Feb 14 02:23 test_id.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 3711 Feb 14 02:23 test_ifconfig.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1614 Feb 14 02:23 test_ini.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 7570 Feb 14 02:23 test_iptables.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1603 Feb 14 02:23 test_jobs.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 3139 Feb 14 02:23 test_lsblk.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 6453 Feb 14 02:23 test_ls.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1620 Feb 14 02:23 test_lsmod.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2624 Feb 14 02:23 test_lsof.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2599 Feb 14 02:23 test_mount.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 5956 Feb 14 02:23 test_netstat.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 3252 Feb 14 02:23 test_pip_list.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2683 Feb 14 02:23 test_pip_show.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 4548 Feb 14 02:23 test_ps.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2629 Feb 14 02:23 test_route.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1669 Feb 14 02:23 test_ss.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1617 Feb 14 02:23 test_stat.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1694 Feb 14 02:23 test_systemctl.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1222 Feb 14 02:23 test_systemctl_lj.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1765 Feb 14 02:23 test_systemctl_ls.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1780 Feb 14 02:23 test_systemctl_luf.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2634 Feb 14 02:23 test_uname.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2621 Feb 14 02:23 test_uptime.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 2462 Feb 14 02:23 test_w.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1636 Feb 14 02:23 test_xml.cpython-36.pyc
+-rw-rw-r-- 1 kbrazil kbrazil 1675 Feb 14 02:23 test_yaml.cpython-36.pyc
+
+./iptables-tests:
+total 8
+-rw-rw-r-- 1 kbrazil kbrazil 1025 Nov 17 19:30 iptables-filter-line-numbers.out
+-rw-rw-r-- 1 kbrazil kbrazil  965 Nov 17 19:30 iptables-filter.out
+
+./snap:
+total 8
+drwxr-xr-x 2 kbrazil kbrazil 4096 Aug 14  2019 docker
+drwxr-xr-x 2 kbrazil kbrazil 4096 Aug 14  2019 nmap
+
+./snap/docker:
+total 0
+lrwxrwxrwx 1 kbrazil kbrazil 3 Aug 12  2019 current -> 384
+
+./snap/nmap:
+total 0
+lrwxrwxrwx 1 kbrazil kbrazil 3 Aug 13  2019 current -> 564
+
+./testfiles:
+total 1988
+-rw-rw-r-- 1 kbrazil kbrazil     174 Oct 30 20:44 arp-a.out
+-rw-rw-r-- 1 kbrazil kbrazil     243 Oct 30 20:27 arp.out
+-rw-rw-r-- 1 kbrazil kbrazil     274 Oct 30 20:27 arp-v.out
+-rw-rw-r-- 1 kbrazil kbrazil    1004 Oct 28 19:43 df-h.out
+-rw-rw-r-- 1 kbrazil kbrazil    1194 Oct 28 19:43 df.out
+-rw-rw-r-- 1 kbrazil kbrazil     532 Oct 31 14:21 dig-aaaa.out
+-rw-rw-r-- 1 kbrazil kbrazil    1156 Oct 31 14:21 dig.out
+-rw-rw-r-- 1 kbrazil kbrazil     523 Oct 31 14:21 dig-x.out
+-rw-rw-r-- 1 kbrazil kbrazil 1136984 Dec 16 22:19 du.out
+-rw-rw-r-- 1 kbrazil kbrazil    2125 Oct 28 19:43 env.out
+-rw-rw-r-- 1 kbrazil kbrazil     204 Oct 28 19:43 free-h.out
+-rw-rw-r-- 1 kbrazil kbrazil     204 Oct 28 19:43 free.out
+-rw-rw-r-- 1 kbrazil kbrazil     120 Nov 17 18:22 fstab.out
+-rw-rw-r-- 1 kbrazil kbrazil   12844 Oct 28 20:13 history.out
+-rw-rw-r-- 1 kbrazil kbrazil     894 Oct 28 19:43 ifconfig.out
+-rw-rw-r-- 1 kbrazil kbrazil    2763 Oct 28 19:43 iptables-filter-nv.out
+-rw-rw-r-- 1 kbrazil kbrazil    2035 Oct 28 19:43 iptables-filter.out
+-rw-rw-r-- 1 kbrazil kbrazil     468 Oct 28 19:43 iptables-mangle.out
+-rw-rw-r-- 1 kbrazil kbrazil     375 Oct 28 19:43 iptables-nat.out
+-rw-rw-r-- 1 kbrazil kbrazil     187 Oct 28 19:43 iptables-raw.out
+-rw-rw-r-- 1 kbrazil kbrazil     164 Oct 28 19:43 jobs.out
+-rw-rw-r-- 1 kbrazil kbrazil    1567 Oct 28 19:43 ls-alh.out
+-rw-rw-r-- 1 kbrazil kbrazil    1744 Oct 28 19:43 ls-al.out
+-rw-rw-r-- 1 kbrazil kbrazil    7364 Nov 11 20:50 lsblk-allcols.out
+-rw-rw-r-- 1 kbrazil kbrazil     812 Oct 28 19:43 lsblk.out
+-rw-rw-r-- 1 kbrazil kbrazil    4251 Oct 28 19:43 lsmod.out
+-rw-rw-r-- 1 kbrazil kbrazil  132043 Oct 28 19:43 lsof.out
+-rw-rw-r-- 1 kbrazil kbrazil  342863 Oct 28 19:43 lsof-sudo.out
+-rw-rw-r-- 1 kbrazil kbrazil     162 Oct 28 19:43 ls.out
+-rw-rw-r-- 1 kbrazil kbrazil    3708 Oct 28 19:43 mount.out
+-rw-rw-r-- 1 kbrazil kbrazil    2606 Oct 28 19:43 netstat-l.out
+-rw-rw-r-- 1 kbrazil kbrazil    6711 Oct 28 19:43 netstat.out
+-rw-rw-r-- 1 kbrazil kbrazil    8706 Oct 28 19:43 netstat-p.out
+-rw-rw-r-- 1 kbrazil kbrazil   12016 Nov 11 23:43 netstat-sudo-aeep.out
+-rw-rw-r-- 1 kbrazil kbrazil    3236 Oct 28 19:43 netstat-sudo-lnp.out
+-rw-rw-r-- 1 kbrazil kbrazil   14127 Oct 28 19:43 ps-axu.out
+-rw-rw-r-- 1 kbrazil kbrazil   11355 Oct 28 19:43 ps-ef.out
+-rw-rw-r-- 1 kbrazil kbrazil     336 Oct 28 19:43 route.out
+-rw-rw-r-- 1 kbrazil kbrazil     336 Oct 28 19:43 route-vn.out
+-rw-rw-r-- 1 kbrazil kbrazil   25599 Nov 14 21:51 ss-sudo-a.out
+-rw-rw-r-- 1 kbrazil kbrazil   60023 Nov 15 05:02 stat.out
+-rw-rw-r-- 1 kbrazil kbrazil    2072 Nov 17 18:36 systemctl-ls.out
+-rw-rw-r-- 1 kbrazil kbrazil   17734 Nov 17 18:36 systemctl-luf.out
+-rw-rw-r-- 1 kbrazil kbrazil   76059 Nov 17 18:36 systemctl.out
+-rwxrwxr-x 1 kbrazil kbrazil    1568 Oct 28 19:42 tests.sh
+-rw-rw-r-- 1 kbrazil kbrazil     114 Oct 28 19:43 uname-a.out
+-rw-rw-r-- 1 kbrazil kbrazil      70 Oct 28 19:43 uptime.out
+-rw-rw-r-- 1 kbrazil kbrazil     274 Oct 28 19:43 w.out
+
+./tmp:
+total 16
+drwxrwxr-x 4 kbrazil kbrazil 4096 Oct 18 19:53 jc
+-rw-rw-r-- 1 kbrazil kbrazil 1041 Dec 17 18:33 pip-list-legacy.out
+-rw-rw-r-- 1 kbrazil kbrazil 2360 Dec 17 18:16 pip-list.out
+-rw-rw-r-- 1 kbrazil kbrazil  730 Dec 17 18:17 pip-show.out
+
+./tmp/jc:
+total 28
+-rwxrwxr-x 1 kbrazil kbrazil  127 Oct 18 19:53 build-package.sh
+drwxrwxr-x 3 kbrazil kbrazil 4096 Oct 18 19:53 jc
+-rwxrwxr-x 1 kbrazil kbrazil 1068 Oct 18 19:53 LICENSE.md
+-rwxrwxr-x 1 kbrazil kbrazil   31 Oct 18 19:53 pypi-upload.sh
+-rwxrwxr-x 1 kbrazil kbrazil 6195 Oct 18 19:53 README.md
+-rwxrwxr-x 1 kbrazil kbrazil  867 Oct 18 19:53 setup.py
+
+./tmp/jc/jc:
+total 12
+-rw-rw-r-- 1 kbrazil kbrazil 1305 Oct 18 19:53 __init__.py
+-rwxrwxr-x 1 kbrazil kbrazil  981 Oct 18 19:53 jc.py
+drwxrwxr-x 2 kbrazil kbrazil 4096 Oct 18 19:53 parsers
+
+./tmp/jc/jc/parsers:
+total 20
+-rw-rw-r-- 1 kbrazil kbrazil  629 Oct 18 19:53 ifconfig.py
+-rw-rw-r-- 1 kbrazil kbrazil    0 Oct 18 19:53 __init__.py
+-rw-rw-r-- 1 kbrazil kbrazil 2803 Oct 18 19:53 ls.py
+-rw-rw-r-- 1 kbrazil kbrazil 9182 Oct 18 19:53 netstat.py

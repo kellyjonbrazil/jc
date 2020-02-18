@@ -216,21 +216,39 @@ def parse(data, raw=False, quiet=False):
 
     linedata = data.splitlines()
 
-    # Delete first line if it starts with 'total'
+    # Delete first line if it starts with 'total 1234'
     if linedata:
-        if linedata[0].find('total') == 0:
+        if re.match('^total [0-9]+', linedata[0]):
             linedata.pop(0)
 
-    # Clear any blank lines
-    cleandata = list(filter(None, linedata))
+    parent = ''
+    next_is_parent = False
 
-    if cleandata:
+    # Look for parent line if glob or -R is used
+    if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
+       and linedata[0].endswith(':'):
+        parent = linedata.pop(0)[:-1]
+        # Pop following total line
+        linedata.pop(0)
+
+    if linedata:
         # Check if -l was used to parse extra data
-        if re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', cleandata[0]):
-            for entry in cleandata:
+        if re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
+            for i, entry in list(enumerate(linedata)):
                 output_line = {}
 
                 parsed_line = entry.split(maxsplit=8)
+
+                if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
+                   and entry.endswith(':'):
+                    parent = entry[:-1]
+                    continue
+
+                if re.match('^total [0-9]+', entry):
+                    continue
+
+                if entry == '':
+                    continue
 
                 # split filenames and links
                 filename_field = parsed_line[8].split(' -> ')
@@ -241,6 +259,8 @@ def parse(data, raw=False, quiet=False):
                 if len(filename_field) > 1:
                     output_line['link_to'] = filename_field[1]
 
+                if parent:
+                    output_line['parent'] = parent
                 output_line['flags'] = parsed_line[0]
                 output_line['links'] = parsed_line[1]
                 output_line['owner'] = parsed_line[2]
@@ -249,9 +269,21 @@ def parse(data, raw=False, quiet=False):
                 output_line['date'] = ' '.join(parsed_line[5:8])
                 raw_output.append(output_line)
         else:
-            for entry in cleandata:
+            for entry in linedata:
                 output_line = {}
+
+                if entry == '':
+                    next_is_parent = True
+                    continue
+
+                if next_is_parent:
+                    parent = entry[:-1]
+                    next_is_parent = False
+                    continue
+
                 output_line['filename'] = entry
+                if parent:
+                    output_line['parent'] = parent
                 raw_output.append(output_line)
 
     if raw:
