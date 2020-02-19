@@ -1,5 +1,8 @@
 jc changelog
 
+20200219 v1.7.4
+- Updated ls parser to support multiple directories, globbing, and -R (recursive)
+
 20200211 v1.7.3
 - Add alternative 'magic' syntax: e.g. `jc ls -al`
 - Options can now be condensed (e.g. -prq is equivalant to -p -r -q)
