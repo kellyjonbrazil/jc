@@ -77,7 +77,7 @@ or
 ```
 COMMAND | jc [OPTIONS] PARSER
 ```
-Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given.
+Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given. (Note: command aliases are not supported)
 ```
 jc [OPTIONS] COMMAND
 ```

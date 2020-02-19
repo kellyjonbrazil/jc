@@ -7,7 +7,8 @@ Usage:
 
     ls options supported:
     - None
-    - la
+    - laR
+    --time-style=full-iso
     - h       file sizes will be available in text form with -r but larger file sizes
               with human readable suffixes will be converted to Null in default view
               since the parser attempts to convert this field to an integer.
@@ -165,6 +166,7 @@ Returns:
         "filename": string,
         "flags":    string,
         "links":    integer,
+        "parent":   string,
         "owner":    string,
         "group":    string,
         "size":     integer,
