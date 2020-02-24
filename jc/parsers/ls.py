@@ -1,11 +1,14 @@
 """jc - JSON CLI output utility ls Parser
 
+Note: The -l option of ls should be used to correctly parse filenames that include newline characters.
+      Since ls does not encode newlines in filenames when outputting to a pipe it will cause jc to see
+      multiple files instead of a single file if -l is not used.
+
 Usage:
 
     specify --ls as the first argument if the piped input is coming from ls
 
     ls options supported:
-    - None
     - laR
     --time-style=full-iso
     - h       file sizes will be available in text form with -r but larger file sizes
@@ -145,7 +148,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -233,6 +236,8 @@ def parse(data, raw=False, quiet=False):
         # Pop following total line
         linedata.pop(0)
 
+    new_section = False
+
     if linedata:
         # Check if -l was used to parse extra data
         if re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
@@ -241,15 +246,24 @@ def parse(data, raw=False, quiet=False):
 
                 parsed_line = entry.split(maxsplit=8)
 
-                if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
+                if new_section \
+                   and not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
                    and entry.endswith(':'):
                     parent = entry[:-1]
+                    new_section = False
                     continue
 
                 if re.match('^total [0-9]+', entry):
                     continue
 
                 if entry == '':
+                    new_section = True
+                    continue
+
+                # fixup for filenames with newlines
+                if not new_section \
+                   and not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
+                    raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
                     continue
 
                 # split filenames and links
