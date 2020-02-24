@@ -29,7 +29,7 @@ $ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
   "date": "Aug 14 19:41"
 }
 ```
-The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary instead of JSON:
+The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary, or list of dictionaries, instead of JSON:
 ```
 >>> import jc.parsers.ls
 >>> 
