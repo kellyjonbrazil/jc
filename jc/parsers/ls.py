@@ -218,6 +218,10 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
+    warned = False
+    parent = ''
+    next_is_parent = False
+    new_section = False
 
     linedata = data.splitlines()
 
@@ -226,18 +230,12 @@ def parse(data, raw=False, quiet=False):
         if re.match('^total [0-9]+', linedata[0]):
             linedata.pop(0)
 
-    parent = ''
-    next_is_parent = False
-
     # Look for parent line if glob or -R is used
     if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
        and linedata[0].endswith(':'):
         parent = linedata.pop(0)[:-1]
         # Pop following total line
         linedata.pop(0)
-
-    warned = False
-    new_section = False
 
     if linedata:
         # Check if -l was used to parse extra data
