@@ -246,18 +246,17 @@ def parse(data, raw=False, quiet=False):
 
                 parsed_line = entry.split(maxsplit=8)
 
-                if new_section \
-                   and not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
+                if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
                    and entry.endswith(':'):
                     parent = entry[:-1]
-                    new_section = False
+                    new_section = True
+
+                    # fixup to remove trailing \n in previous entry
+                    raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
                     continue
 
                 if re.match('^total [0-9]+', entry):
-                    continue
-
-                if entry == '':
-                    new_section = True
+                    new_section = False
                     continue
 
                 # fixup for filenames with newlines
