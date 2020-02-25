@@ -266,7 +266,11 @@ def parse(data, raw=False, quiet=False):
                     continue
 
                 # split filenames and links
-                filename_field = parsed_line[8].split(' -> ')
+                if len(parsed_line) == 9:
+                    filename_field = parsed_line[8].split(' -> ')
+                else:
+                    # in case of filenames starting with a newline character
+                    filename_field = ['']
 
                 # create list of dictionaries
                 output_line['filename'] = filename_field[0]
