@@ -1,0 +1,151 @@
+total 584
+-rw-r--r--   1 kbrazil  wheel     0 Feb 24 16:55 
+
+
+three newlines start this file
+drwxr-xr-x   3 root     wheel    96 Feb 24 12:13 MacAgent
+-rw-------   1 root     wheel     0 Feb 24 16:33 _Library_Application Support_Fortinet_FortiClient_data__vir_high
+-rw-------   1 root     wheel     0 Feb 24 16:33 _Library_Application Support_Fortinet_FortiClient_tmp_avsig_delata_vir_high
+srwxr-xr-x   1 kbrazil  wheel     0 Feb 20 14:41 centosserial
+-rw-r--r--   1 root     wheel   382 Feb 20 14:41 centosserial.sh.log
+drwx------   3 kbrazil  wheel    96 Feb  7 23:32 com.apple.launchd.ZRwqedKmO9
+drwx------   3 kbrazil  wheel    96 Feb  7 23:32 com.apple.launchd.xPCDEP69Cl
+srwxrwxrwx   1 kbrazil  wheel     0 Feb  7 23:32 fctvpnctl.sock
+srw-------   1 kbrazil  wheel     0 Feb  7 23:32 fctvpnctl.sock_501
+-rw-r--r--   1 kbrazil  wheel     0 Feb 24 16:58 ls-newlines.out
+drwxr-xr-x  10 kbrazil  wheel   320 Feb 24 16:58 lstest
+srw-rw-rw-   1 root     wheel     0 Feb  7 23:31 olisne-WY4G9IZafUNsloCollectorServicePipe
+-rwx------   1 root     wheel   535 Feb 22 18:56 scriptcode.0JeYTA
+-rwx------   1 root     wheel   531 Feb 22 19:19 scriptcode.0d9OX9
+-rwx------   1 root     wheel   535 Feb 24 12:12 scriptcode.0jvSGh
+-rwx------   1 root     wheel  3312 Feb 20 17:43 scriptcode.26L6Aw
+-rwx------   1 root     wheel   311 Feb 22 18:56 scriptcode.2KJ0DB
+-rwx------   1 root     wheel   316 Feb 21 18:10 scriptcode.3iQbCH
+-rwx------   1 root     wheel  1068 Feb 21 18:10 scriptcode.47tsJK
+-rwx------   1 root     wheel   316 Feb 24 12:12 scriptcode.5EGutx
+-rwx------   1 root     wheel   279 Feb 24 12:12 scriptcode.73zg3m
+-rwx------   1 root     wheel   920 Feb 22 19:19 scriptcode.7EKhVr
+-rwx------   1 root     wheel   408 Feb 22 19:19 scriptcode.7XsHV0
+-rwx------   1 root     wheel   531 Feb 20 17:43 scriptcode.7lVOvs
+-rwx------   1 root     wheel  1068 Feb 20 17:43 scriptcode.AHABAG
+-rwx------   1 root     wheel   316 Feb 20 17:43 scriptcode.CnQHRy
+-rwx------   1 root     wheel   279 Feb 21 18:41 scriptcode.FEStzN
+-rwx------   1 root     wheel   277 Feb 20 17:43 scriptcode.FY7cUj
+-rwx------   1 root     wheel  1292 Feb 20 17:43 scriptcode.GY4L8Z
+-rwx------   1 root     wheel   535 Feb 20 17:05 scriptcode.Gz2pae
+-rwx------   1 root     wheel   311 Feb 21 18:09 scriptcode.GzIQzf
+-rwx------   1 root     wheel   920 Feb 24 12:12 scriptcode.HPloGp
+-rwx------   1 root     wheel   531 Feb 24 12:12 scriptcode.HtJdie
+-rwx------   1 root     wheel   311 Feb 24 12:11 scriptcode.Ihm1Oo
+-rwx------   1 root     wheel   277 Feb 22 19:19 scriptcode.IkV9ka
+-rwx------   1 root     wheel  3312 Feb 24 12:12 scriptcode.KKN22F
+-rwx------   1 root     wheel   279 Feb 24 12:12 scriptcode.Kx84Te
+-rwx------   1 root     wheel   408 Feb 24 12:12 scriptcode.LyuE2u
+-rwx------   1 root     wheel   400 Feb 21 18:41 scriptcode.N2AhIg
+-rwx------   1 root     wheel  1208 Feb 24 12:12 scriptcode.Nqmmg7
+-rwx------   1 root     wheel  3312 Feb 21 18:10 scriptcode.OHRPTO
+-rwx------   1 root     wheel   277 Feb 24 12:12 scriptcode.OQCX7n
+-rwx------   1 root     wheel   535 Feb 21 18:41 scriptcode.PoKNUA
+-rwx------   1 root     wheel   531 Feb 22 19:19 scriptcode.R2XvfH
+-rwx------   1 root     wheel   408 Feb 21 18:10 scriptcode.R4JK3n
+-rwx------   1 root     wheel  1292 Feb 21 18:41 scriptcode.RgJYtc
+-rwx------   1 root     wheel   531 Feb 20 17:43 scriptcode.SeUnOY
+-rwx------   1 root     wheel   316 Feb 22 19:19 scriptcode.SmpfaH
+-rwx------   1 root     wheel  1208 Feb 21 18:41 scriptcode.Sqk4gn
+-rwx------   1 root     wheel   311 Feb 21 18:09 scriptcode.SxoG8F
+-rwx------   1 root     wheel   531 Feb 24 12:12 scriptcode.ThENy0
+-rwx------   1 root     wheel   311 Feb 22 18:56 scriptcode.TjBafP
+-rwx------   1 root     wheel   279 Feb 20 17:43 scriptcode.VYNiW2
+-rwx------   1 root     wheel   535 Feb 24 12:11 scriptcode.Yyqf85
+-rwx------   1 root     wheel   535 Feb 22 19:19 scriptcode.aVTtu2
+-rwx------   1 root     wheel  1208 Feb 20 17:43 scriptcode.czs9l6
+-rwx------   1 root     wheel   920 Feb 20 17:43 scriptcode.eFVE3D
+-rwx------   1 root     wheel  1292 Feb 24 12:12 scriptcode.f88eGZ
+-rwx------   1 root     wheel   282 Feb 24 12:12 scriptcode.flB4nR
+-rwx------   1 root     wheel   277 Feb 21 18:41 scriptcode.iMzN8Y
+-rwx------   1 root     wheel   535 Feb 20 17:43 scriptcode.iPaXLd
+-rwx------   1 root     wheel   279 Feb 21 18:41 scriptcode.jkaeC8
+-rwx------   1 root     wheel  1292 Feb 22 19:19 scriptcode.k0Qc64
+-rwx------   1 root     wheel   279 Feb 20 17:43 scriptcode.kH4nP3
+-rwx------   1 root     wheel   282 Feb 20 17:43 scriptcode.l0Wcmj
+-rwx------   1 root     wheel   311 Feb 24 12:11 scriptcode.lWzSJu
+-rwx------   1 root     wheel   279 Feb 22 19:19 scriptcode.m1wgPP
+-rwx------   1 root     wheel  1208 Feb 22 19:19 scriptcode.mG7NEw
+-rwx------   1 root     wheel   531 Feb 21 18:41 scriptcode.mfGENQ
+-rwx------   1 root     wheel  1068 Feb 24 12:12 scriptcode.n4urXg
+-rwx------   1 root     wheel   535 Feb 21 18:09 scriptcode.n5Hn9m
+-rwx------   1 root     wheel   282 Feb 21 18:10 scriptcode.nggGXs
+-rwx------   1 root     wheel   400 Feb 24 12:12 scriptcode.obdjU7
+-rwx------   1 root     wheel  1068 Feb 22 19:19 scriptcode.pIBQku
+-rwx------   1 root     wheel   400 Feb 22 19:19 scriptcode.pmiMa5
+-rwx------   1 root     wheel   400 Feb 20 17:43 scriptcode.qd2MtX
+-rwx------   1 root     wheel   311 Feb 20 17:05 scriptcode.sF2VTO
+-rwx------   1 root     wheel   920 Feb 21 18:41 scriptcode.sWaDJU
+-rwx------   1 root     wheel   408 Feb 20 17:43 scriptcode.tb9thN
+-rwx------   1 root     wheel  3312 Feb 22 19:19 scriptcode.v5rHnt
+-rwx------   1 root     wheel   531 Feb 21 18:41 scriptcode.xSmYzD
+-rwx------   1 root     wheel   311 Feb 20 17:05 scriptcode.xztElJ
+-rwx------   1 root     wheel   282 Feb 22 19:19 scriptcode.z1R5gD
+-rwx------   1 root     wheel   279 Feb 22 19:19 scriptcode.zPNZQP
+drwx------   3 kbrazil  wheel    96 Feb 13 16:44 vmware-kbrazil
+
+./MacAgent:
+total 416
+-rw-r--r--  1 root  wheel  211848 Feb 24 12:13 vulscanOut.xml
+
+./com.apple.launchd.ZRwqedKmO9:
+total 0
+srw-rw-rw-  1 kbrazil  wheel  0 Feb  7 23:32 Render
+
+./com.apple.launchd.xPCDEP69Cl:
+total 0
+srw-rw-rw-  1 kbrazil  wheel  0 Feb  7 23:32 Listeners
+
+./lstest:
+total 0
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 16:58 
+
+
+combo of
+newlines
+
+inside
+and trailing
+
+this file
+
+
+
+
+
+
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 16:55 
+
+
+three newlines start this file
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 16:42 
+this file has a newline in the beginning
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 14:56 another filename with
+multiple
+newline characters
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 16:35 filename with
+
+two newlines and two trailing newlines
+
+
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 14:55 filename with a
+newline character
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 14:56 regularfile
+-rw-r--r--  1 kbrazil  wheel  0 Feb 24 15:44 this filename has
+
+
+
+four newlines in it
+
+./vmware-kbrazil:
+total 0
+drwx------  3 kbrazil  wheel  96 Feb 20 14:41 mksctrl
+
+./vmware-kbrazil/mksctrl:
+total 0
+srwxr-xr-x  1 kbrazil  wheel  0 Feb 20 14:41 mksctrl-0000002818-000-39aec79d
