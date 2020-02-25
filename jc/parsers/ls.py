@@ -296,7 +296,7 @@ def parse(data, raw=False, quiet=False):
                     next_is_parent = True
                     continue
 
-                if next_is_parent:
+                if next_is_parent and entry.endswith(':'):
                     parent = entry[:-1]
                     next_is_parent = False
                     continue
