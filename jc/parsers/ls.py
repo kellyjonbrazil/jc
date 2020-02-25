@@ -236,6 +236,7 @@ def parse(data, raw=False, quiet=False):
         # Pop following total line
         linedata.pop(0)
 
+    warned = False
     new_section = False
 
     if linedata:
@@ -300,6 +301,10 @@ def parse(data, raw=False, quiet=False):
                     parent = entry[:-1]
                     next_is_parent = False
                     continue
+
+                if not quiet and next_is_parent and not entry.endswith(':') and not warned:
+                    jc.utils.warning_message('Newline characters detected. Filenames probably corrupted. Use ls -l instead.')
+                    warned = True
 
                 output_line['filename'] = entry
 
