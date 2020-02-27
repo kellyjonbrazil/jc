@@ -11,10 +11,61 @@ Compatibility:
 Examples:
 
     $ last | jc --last -p
-    []
+    [
+      {
+        "user": "kbrazil",
+        "tty": "ttys002",
+        "hostname": null,
+        "login": "Thu Feb 27 14:31",
+        "logout": "still logged in"
+      },
+      {
+        "user": "kbrazil",
+        "tty": "ttys003",
+        "hostname": null,
+        "login": "Thu Feb 27 10:38",
+        "logout": "10:38",
+        "duration": "00:00"
+      },
+      {
+        "user": "kbrazil",
+        "tty": "ttys003",
+        "hostname": null,
+        "login": "Thu Feb 27 10:18",
+        "logout": "10:18",
+        "duration": "00:00"
+      },
+      ...
+    ]
 
     $ last | jc --last -p -r
-    []
+    [
+      {
+        "user": "kbrazil",
+        "tty": "ttys002",
+        "hostname": "-",
+        "login": "Thu Feb 27 14:31",
+        "logout": "still_logged_in"
+      },
+      {
+        "user": "kbrazil",
+        "tty": "ttys003",
+        "hostname": "-",
+        "login": "Thu Feb 27 10:38",
+        "logout": "10:38",
+        "duration": "00:00"
+      },
+      {
+        "user": "kbrazil",
+        "tty": "ttys003",
+        "hostname": "-",
+        "login": "Thu Feb 27 10:18",
+        "logout": "10:18",
+        "duration": "00:00"
+      },
+      ...
+    ]
+
 """
 import re
 import jc.utils
@@ -49,14 +100,28 @@ def process(proc_data):
 
         [
           {
-            "last":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "user":       string,
+            "tty":        string,
+            "hostname":   string,
+            "login":      string,
+            "logout":     string,
+            "duration":   string
           }
         ]
     """
+    for entry in proc_data:
+        if 'user' in entry and entry['user'] == 'system_boot':
+            entry['user'] = 'system boot'
 
-    # rebuild output for added semantic information
+        if 'tty' in entry and entry['tty'] == '~':
+            entry['tty'] = None
+
+        if 'hostname' in entry and entry['hostname'] == '-':
+            entry['hostname'] = None
+
+        if 'logout' in entry and entry['logout'] == 'still_logged_in':
+            entry['logout'] = 'still logged in'
+
     return proc_data
 
 

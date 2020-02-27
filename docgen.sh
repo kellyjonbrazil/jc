@@ -20,6 +20,7 @@ pydocmd simple jc.parsers.ifconfig+ > ../docs/parsers/ifconfig.md
 pydocmd simple jc.parsers.ini+ > ../docs/parsers/ini.md
 pydocmd simple jc.parsers.iptables+ > ../docs/parsers/iptables.md
 pydocmd simple jc.parsers.jobs+ > ../docs/parsers/jobs.md
+pydocmd simple jc.parsers.last+ > ../docs/parsers/last.md
 pydocmd simple jc.parsers.ls+ > ../docs/parsers/ls.md
 pydocmd simple jc.parsers.lsblk+ > ../docs/parsers/lsblk.md
 pydocmd simple jc.parsers.lsmod+ > ../docs/parsers/lsmod.md
