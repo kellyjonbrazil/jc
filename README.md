@@ -129,6 +129,32 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-q` quiet mode. Suppresses warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
 
+## Contributions
+Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
+
+## Compatibility
+Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
+
+
+You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+
+```
+$ cat lsof.out | jc --lsof -q
+```
+
+Tested on:
+- Centos 7.7
+- Ubuntu 18.4
+- OSX 10.11.6
+- OSX 10.14.6
+
+## Acknowledgments
+- `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
+- `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
+- `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
+- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
+- Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
+
 ## Examples
 ### arp
 ```
@@ -1868,33 +1894,3 @@ $ cat istio.yaml | jc --yaml -p
   }
 ]
 ```
-## TODO
-Future parsers:
-- /proc files
-- /sys files
-
-## Contributions
-Feel free to add/improve code or parsers! You can use the `jc/parsers/foo.py` parser as a template and submit your parser with a pull request.
-
-## Compatibility
-Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
-
-
-You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
-
-```
-$ cat lsof.out | jc --lsof -q
-```
-
-Tested on:
-- Centos 7.7
-- Ubuntu 18.4
-- OSX 10.11.6
-- OSX 10.14.6
-
-## Acknowledgments
-- `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
-- `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
-- `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
-- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
-- Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
