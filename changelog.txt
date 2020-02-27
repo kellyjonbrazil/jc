@@ -1,5 +1,8 @@
 jc changelog
 
+20200227 v1.7.5
+- Updated ls parser to support filenames with newline characters
+
 20200219 v1.7.4
 - Updated ls parser to support multiple directories, globbing, and -R (recursive)
 
