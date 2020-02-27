@@ -116,6 +116,9 @@ def process(proc_data):
         if 'tty' in entry and entry['tty'] == '~':
             entry['tty'] = None
 
+        if 'tty' in entry and entry['tty'] == 'system_boot':
+            entry['tty'] = 'system boot'
+
         if 'hostname' in entry and entry['hostname'] == '-':
             entry['hostname'] = None
 
