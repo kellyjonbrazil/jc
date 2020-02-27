@@ -13,7 +13,7 @@ import jc.utils
 
 
 class info():
-    version = '1.7.5'
+    version = '1.8.0'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -38,6 +38,7 @@ parsers = [
     'ini',
     'iptables',
     'jobs',
+    'last',
     'ls',
     'lsblk',
     'lsmod',
