@@ -40,6 +40,21 @@ ls -R /usr     > ls-R.out
 ls -alR /usr   > ls-alR.out
 ls /usr/*      > ls-glob.out
 
+cd /tmp/lstest
+touch 'a regular filename'
+touch $'\nthis file starts with one newline'
+touch $'\n\n\n\nthis file starts with four newlines'
+touch $'this file has\na newline inside'
+touch $'this file has\n\n\n\nfour contiguous newlines inside'
+touch $'this file\nhas\nsix\n\nnewlines\n\nwithin'
+touch $'\n\nthis file has\na combination\n\n\nof everything\n\n\n\n'
+cd /tmp
+ls -R > ~/utils/ls-R-newlines.out
+ls -lR > ~/utils/ls-lR-newlines.out
+cd lstest
+ls > ~/utils/ls-newlines.out
+ls -l > ~/utils/ls-l-newlines.out
+
 lsblk      > lsblk.out
 lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,PKNAME,HCTL,TRAN,REV,VENDOR > lsblk-allcols.out
 lsmod      > lsmod.out

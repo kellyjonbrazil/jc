@@ -73,6 +73,42 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-glob.out'), 'r') as f:
             self.osx_10_14_6_ls_glob = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-R-newlines.out'), 'r') as f:
+            self.centos_7_7_ls_R_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-R-newlines.out'), 'r') as f:
+            self.ubuntu_18_4_ls_R_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-R-newlines.out'), 'r') as f:
+            self.osx_10_14_6_ls_R_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-l-newlines.out'), 'r') as f:
+            self.centos_7_7_ls_l_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-newlines.out'), 'r') as f:
+            self.ubuntu_18_4_ls_l_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-l-newlines.out'), 'r') as f:
+            self.osx_10_14_6_ls_l_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-lR-newlines.out'), 'r') as f:
+            self.centos_7_7_ls_lR_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-lR-newlines.out'), 'r') as f:
+            self.ubuntu_18_4_ls_lR_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-newlines.out'), 'r') as f:
+            self.osx_10_14_6_ls_lR_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-newlines.out'), 'r') as f:
+            self.centos_7_7_ls_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-newlines.out'), 'r') as f:
+            self.ubuntu_18_4_ls_newlines = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-newlines.out'), 'r') as f:
+            self.osx_10_14_6_ls_newlines = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r') as f:
             self.centos_7_7_ls_json = json.loads(f.read())
@@ -136,6 +172,42 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-glob.json'), 'r') as f:
             self.osx_10_14_6_ls_glob_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-R-newlines.json'), 'r') as f:
+            self.centos_7_7_ls_R_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-R-newlines.json'), 'r') as f:
+            self.ubuntu_18_4_ls_R_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-R-newlines.json'), 'r') as f:
+            self.osx_10_14_6_ls_R_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-l-newlines.json'), 'r') as f:
+            self.centos_7_7_ls_l_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-newlines.json'), 'r') as f:
+            self.ubuntu_18_4_ls_l_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-l-newlines.json'), 'r') as f:
+            self.osx_10_14_6_ls_l_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-lR-newlines.json'), 'r') as f:
+            self.centos_7_7_ls_lR_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-lR-newlines.json'), 'r') as f:
+            self.ubuntu_18_4_ls_lR_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-newlines.json'), 'r') as f:
+            self.osx_10_14_6_ls_lR_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-newlines.json'), 'r') as f:
+            self.centos_7_7_ls_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-newlines.json'), 'r') as f:
+            self.ubuntu_18_4_ls_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-newlines.json'), 'r') as f:
+            self.osx_10_14_6_ls_newlines_json = json.loads(f.read())
 
     def test_ls_centos_7_7(self):
         """
@@ -262,6 +334,78 @@ class MyTests(unittest.TestCase):
         Test 'ls /usr/*' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_glob, quiet=True), self.osx_10_14_6_ls_glob_json)
+
+    def test_ls_R_newlines_centos_7_7(self):
+        """
+        Test 'ls -R' for filenames with newline characters on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_R_newlines, quiet=True), self.centos_7_7_ls_R_newlines_json)
+
+    def test_ls_R_newlines_ubuntu_18_4(self):
+        """
+        Test 'ls -R' for filenames with newline characters on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_R_newlines, quiet=True), self.ubuntu_18_4_ls_R_newlines_json)
+
+    def test_ls_R_newlines_osx_10_14_6(self):
+        """
+        Test 'ls -R' for filenames with newline characters on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_R_newlines, quiet=True), self.osx_10_14_6_ls_R_newlines_json)
+
+    def test_ls_l_newlines_centos_7_7(self):
+        """
+        Test 'ls -l' for filenames with newline characters on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_l_newlines, quiet=True), self.centos_7_7_ls_l_newlines_json)
+
+    def test_ls_l_newlines_ubuntu_18_4(self):
+        """
+        Test 'ls -l' for filenames with newline characters on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_l_newlines, quiet=True), self.ubuntu_18_4_ls_l_newlines_json)
+
+    def test_ls_l_newlines_osx_10_14_6(self):
+        """
+        Test 'ls -l' for filenames with newline characters on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_l_newlines, quiet=True), self.osx_10_14_6_ls_l_newlines_json)
+
+    def test_ls_lR_newlines_centos_7_7(self):
+        """
+        Test 'ls -lR' for filenames with newline characters on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_lR_newlines, quiet=True), self.centos_7_7_ls_lR_newlines_json)
+
+    def test_ls_lR_newlines_ubuntu_18_4(self):
+        """
+        Test 'ls -lR' for filenames with newline characters on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_lR_newlines, quiet=True), self.ubuntu_18_4_ls_lR_newlines_json)
+
+    def test_ls_lR_newlines_osx_10_14_6(self):
+        """
+        Test 'ls -lR' for filenames with newline characters on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_lR_newlines, quiet=True), self.osx_10_14_6_ls_lR_newlines_json)
+
+    def test_ls_newlines_centos_7_7(self):
+        """
+        Test 'ls' for filenames with newline characters on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.centos_7_7_ls_newlines, quiet=True), self.centos_7_7_ls_newlines_json)
+
+    def test_ls_newlines_ubuntu_18_4(self):
+        """
+        Test 'ls' for filenames with newline characters on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_newlines, quiet=True), self.ubuntu_18_4_ls_newlines_json)
+
+    def test_ls_newlines_osx_10_14_6(self):
+        """
+        Test 'ls' for filenames with newline characters on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_newlines, quiet=True), self.osx_10_14_6_ls_newlines_json)
 
 
 if __name__ == '__main__':

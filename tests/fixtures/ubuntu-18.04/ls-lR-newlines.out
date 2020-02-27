@@ -1,0 +1,42 @@
+.:
+total 16
+drwxrwxr-x 2 kbrazil kbrazil 4096 Feb 27 18:08 lstest
+drwx------ 3 root    root    4096 Feb 27 18:07 systemd-private-65c1089f1d4c4cf5bc50ca55478abfde-systemd-resolved.service-La9AqY
+drwx------ 3 root    root    4096 Feb 27 18:07 systemd-private-65c1089f1d4c4cf5bc50ca55478abfde-systemd-timesyncd.service-L7q4cJ
+drwx------ 2 root    root    4096 Feb 27 18:07 vmware-root_670-2722828838
+
+./lstest:
+total 0
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 a regular filename
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 
+
+this file has
+a combination
+
+
+of everything
+
+
+
+
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 this file has
+a newline inside
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 this file has
+
+
+
+four contiguous newlines inside
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 this file
+has
+six
+
+newlines
+
+within
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 
+
+
+
+this file starts with four newlines
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 
+this file starts with one newline
