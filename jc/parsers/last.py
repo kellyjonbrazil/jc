@@ -87,7 +87,7 @@ def parse(data, raw=False, quiet=False):
         for entry in cleandata:
             output_line = {}
 
-            if entry.startswith('wtmp begins '):
+            if entry.startswith('wtmp begins ') or entry.startswith('btmp begins '):
                 continue
 
             entry = entry.replace('system boot', 'system_boot')
@@ -103,7 +103,6 @@ def parse(data, raw=False, quiet=False):
             output_line['login'] = ' '.join(linedata[3:7])
 
             if len(linedata) > 8:
-                print(linedata)
                 output_line['logout'] = linedata[8]
 
             if len(linedata) > 9:
