@@ -1,12 +1,15 @@
 # jc.parsers.ls
 jc - JSON CLI output utility ls Parser
 
+Note: The -l option of ls should be used to correctly parse filenames that include newline characters.
+      Since ls does not encode newlines in filenames when outputting to a pipe it will cause jc to see
+      multiple files instead of a single file if -l is not used.
+
 Usage:
 
     specify --ls as the first argument if the piped input is coming from ls
 
     ls options supported:
-    - None
     - laR
     --time-style=full-iso
     - h       file sizes will be available in text form with -r but larger file sizes

@@ -1,0 +1,45 @@
+.:
+total 4
+drwxrwxr-x. 2 kbrazil kbrazil 4096 Feb 22 00:40 lstest
+drwx------. 3 root    root      17 Feb 13 16:44 systemd-private-016de60725a3426792b93fc9f120b8f0-chronyd.service-oZqq4u
+drwx------. 3 root    root      17 Feb 17 17:48 systemd-private-a30a5a178daa4042b42dfaf5ff9e5f68-chronyd.service-a1tpxv
+drwx------. 3 root    root      17 Feb 20 14:41 systemd-private-af69d7360f3e40cfa947358c0fb5a6f8-chronyd.service-T3MQ4j
+drwx------. 2 root    root       6 Feb 13 16:44 tmp.CvALl2jE6u
+drwx------. 2 root    root       6 Feb 20 14:41 tmp.e7AlxSxY5a
+drwx------. 2 root    root       6 Feb 17 17:48 tmp.uXm9yegjwj
+
+./lstest:
+total 0
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:12 a regular filename
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:17 
+
+this file has
+a combination
+
+
+of everything
+
+
+
+
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:14 this file has
+a newline inside
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:14 this file has
+
+
+
+four contiguous newlines inside
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:16 this file
+has
+six
+
+newlines
+
+within
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:40 
+
+
+
+this file starts with four newlines
+-rw-rw-r--. 1 kbrazil kbrazil 0 Feb 22 00:13 
+this file starts with one newline

@@ -1,11 +1,14 @@
 """jc - JSON CLI output utility ls Parser
 
+Note: The -l option of ls should be used to correctly parse filenames that include newline characters.
+      Since ls does not encode newlines in filenames when outputting to a pipe it will cause jc to see
+      multiple files instead of a single file if -l is not used.
+
 Usage:
 
     specify --ls as the first argument if the piped input is coming from ls
 
     ls options supported:
-    - None
     - laR
     --time-style=full-iso
     - h       file sizes will be available in text form with -r but larger file sizes
@@ -145,7 +148,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -215,6 +218,10 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
+    warned = False
+    parent = ''
+    next_is_parent = False
+    new_section = False
 
     linedata = data.splitlines()
 
@@ -222,9 +229,6 @@ def parse(data, raw=False, quiet=False):
     if linedata:
         if re.match('^total [0-9]+', linedata[0]):
             linedata.pop(0)
-
-    parent = ''
-    next_is_parent = False
 
     # Look for parent line if glob or -R is used
     if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
@@ -244,16 +248,28 @@ def parse(data, raw=False, quiet=False):
                 if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
                    and entry.endswith(':'):
                     parent = entry[:-1]
+                    new_section = True
+
+                    # fixup to remove trailing \n in previous entry
+                    raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
                     continue
 
                 if re.match('^total [0-9]+', entry):
+                    new_section = False
                     continue
 
-                if entry == '':
+                # fixup for filenames with newlines
+                if not new_section \
+                   and not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
+                    raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
                     continue
 
                 # split filenames and links
-                filename_field = parsed_line[8].split(' -> ')
+                if len(parsed_line) == 9:
+                    filename_field = parsed_line[8].split(' -> ')
+                else:
+                    # in case of filenames starting with a newline character
+                    filename_field = ['']
 
                 # create list of dictionaries
                 output_line['filename'] = filename_field[0]
@@ -279,10 +295,14 @@ def parse(data, raw=False, quiet=False):
                     next_is_parent = True
                     continue
 
-                if next_is_parent:
+                if next_is_parent and entry.endswith(':'):
                     parent = entry[:-1]
                     next_is_parent = False
                     continue
+
+                if not quiet and next_is_parent and not entry.endswith(':') and not warned:
+                    jc.utils.warning_message('Newline characters detected. Filenames probably corrupted. Use ls -l instead.')
+                    warned = True
 
                 output_line['filename'] = entry
 

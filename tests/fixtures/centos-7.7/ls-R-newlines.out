@@ -1,0 +1,43 @@
+.:
+lstest
+systemd-private-016de60725a3426792b93fc9f120b8f0-chronyd.service-oZqq4u
+systemd-private-a30a5a178daa4042b42dfaf5ff9e5f68-chronyd.service-a1tpxv
+systemd-private-af69d7360f3e40cfa947358c0fb5a6f8-chronyd.service-T3MQ4j
+tmp.CvALl2jE6u
+tmp.e7AlxSxY5a
+tmp.uXm9yegjwj
+
+./lstest:
+a regular filename
+
+
+this file has
+a combination
+
+
+of everything
+
+
+
+
+this file has
+a newline inside
+this file has
+
+
+
+four contiguous newlines inside
+this file
+has
+six
+
+newlines
+
+within
+
+
+
+
+this file starts with four newlines
+
+this file starts with one newline

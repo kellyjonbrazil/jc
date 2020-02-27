@@ -1,0 +1,40 @@
+.:
+lstest
+systemd-private-65c1089f1d4c4cf5bc50ca55478abfde-systemd-resolved.service-La9AqY
+systemd-private-65c1089f1d4c4cf5bc50ca55478abfde-systemd-timesyncd.service-L7q4cJ
+vmware-root_670-2722828838
+
+./lstest:
+a regular filename
+
+
+this file has
+a combination
+
+
+of everything
+
+
+
+
+this file has
+a newline inside
+this file has
+
+
+
+four contiguous newlines inside
+this file
+has
+six
+
+newlines
+
+within
+
+
+
+
+this file starts with four newlines
+
+this file starts with one newline

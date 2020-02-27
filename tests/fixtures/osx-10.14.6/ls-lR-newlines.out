@@ -1,0 +1,38 @@
+total 0
+drwxr-xr-x  9 kbrazil  staff  288 Feb 27 10:19 lstest
+
+./lstest:
+total 0
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 
+
+
+
+this file starts with four newlines
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 
+
+this file has
+a combination
+
+
+of everything
+
+
+
+
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 
+this file starts with one newline
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 a regular filename
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 this file
+has
+six
+
+newlines
+
+within
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 this file has
+
+
+
+four contiguous newlines inside
+-rw-r--r--  1 kbrazil  staff  0 Feb 27 10:19 this file has
+a newline inside

@@ -1,0 +1,34 @@
+total 0
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 a regular filename
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 
+
+this file has
+a combination
+
+
+of everything
+
+
+
+
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 this file has
+a newline inside
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 this file has
+
+
+
+four contiguous newlines inside
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 this file
+has
+six
+
+newlines
+
+within
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 
+
+
+
+this file starts with four newlines
+-rw-rw-r-- 1 kbrazil kbrazil 0 Feb 27 18:08 
+this file starts with one newline
