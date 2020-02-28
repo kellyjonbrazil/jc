@@ -110,9 +110,6 @@ def process(proc_data):
         ]
     """
     for entry in proc_data:
-        if 'user' in entry and entry['user'] == 'system_boot':
-            entry['user'] = 'system boot'
-
         if 'tty' in entry and entry['tty'] == '~':
             entry['tty'] = None
 
