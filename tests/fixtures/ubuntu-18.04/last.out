@@ -1,0 +1,16 @@
+kbrazil  ttyS0                         Fri Feb 28 23:03   still logged in
+reboot   system boot  4.15.0-88-generi Fri Feb 28 23:03   still running
+kbrazil  ttyS0                         Fri Feb 28 14:56 - down   (06:51)
+reboot   system boot  4.15.0-88-generi Fri Feb 28 14:55 - 21:47  (06:52)
+kbrazil  ttyS0                         Thu Feb 27 23:50 - down   (00:10)
+reboot   system boot  4.15.0-88-generi Thu Feb 27 23:49 - 00:00  (00:11)
+kbrazil  ttyS0                         Thu Feb 27 18:07 - down   (00:04)
+reboot   system boot  4.15.0-76-generi Thu Feb 27 18:07 - 18:12  (00:04)
+kbrazil  ttyS0                         Tue Feb 18 02:50 - down  (1+13:58)
+reboot   system boot  4.15.0-76-generi Tue Feb 18 02:50 - 16:48 (1+13:58)
+kbrazil  ttyS0                         Fri Feb 14 02:06 - 01:48 (3+23:41)
+reboot   system boot  4.15.0-76-generi Fri Feb 14 02:06 - 01:48 (3+23:41)
+kbrazil  ttyS0                         Thu Feb  6 01:05 - down  (1+14:43)
+reboot   system boot  4.15.0-76-generi Thu Feb  6 01:04 - 15:48 (1+14:43)
+
+wtmp begins Wed Feb  5 22:22:55 2020
