@@ -104,7 +104,7 @@ def process(proc_data):
 
         int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size', 'id_part_entry_number',
                     'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
-                    'logical_sector_size', 'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size'
+                    'logical_sector_size', 'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size',
                     'id_iolimit_logical_sector_size']
         for key in int_list:
             if key in entry:
