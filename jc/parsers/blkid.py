@@ -188,8 +188,8 @@ def parse(data, raw=False, quiet=False):
                 output_line['device'] = entries.pop(0)[:-1]
 
                 for entry in entries:
-                    key = entry.split('=')[0].lower()
-                    value = entry.split('=')[1]
+                    key = entry.split('=', maxsplit=1)[0].lower()
+                    value = entry.split('=', maxsplit=1)[1]
                     output_line[key] = value
 
                 raw_output.append(output_line)
@@ -199,8 +199,8 @@ def parse(data, raw=False, quiet=False):
             linedata = data.splitlines()
             output_line = {}
             for line in linedata:
-                key = line.split('=')[0].lower()
-                value = line.split('=')[1]
+                key = line.split('=', maxsplit=1)[0].lower()
+                value = line.split('=', maxsplit=1)[1]
                 output_line[key] = value
 
             raw_output.append(output_line)
