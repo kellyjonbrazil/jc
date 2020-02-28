@@ -95,8 +95,8 @@ def process(proc_data):
         ]
     """
     for entry in proc_data:
-        if 'devname' in proc_data:
-            proc_data['device'] = proc_data.pop('devname')
+        if 'devname' in entry:
+            entry['device'] = entry.pop('devname')
 
         int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size', 'id_part_entry_number',
                     'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
