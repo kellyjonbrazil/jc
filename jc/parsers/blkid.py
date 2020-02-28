@@ -10,8 +10,26 @@ Compatibility:
 
 Examples:
 
-    $ blkid | jc --blkid -p
-    []
+    $ sudo blkid -ip /dev/sda1 | jc --blkid -p -r
+    [
+      {
+        "devname": "/dev/sda1",
+        "uuid": "05d927bb-5875-49e3-ada1-7f46cb31c932",
+        "type": "xfs",
+        "usage": "filesystem",
+        "minimum_io_size": "512",
+        "physical_sector_size": "512",
+        "logical_sector_size": "512",
+        "part_entry_scheme": "dos",
+        "part_entry_type": "0x83",
+        "part_entry_flags": "0x80",
+        "part_entry_number": "1",
+        "part_entry_offset": "2048",
+        "part_entry_size": "2097152",
+        "part_entry_disk": "8:0"
+      }
+    ]
+
 
     $ blkid | jc --blkid -p -r
     []
@@ -70,11 +88,25 @@ def process(proc_data):
             "id_part_entry_offset": integer,
             "id_part_entry_size":   integer,
             "id_part_entry_disk":   string
+            "devname":              string,
+            "minimum_io_size":      integer,
+            "physical_sector_size": integer,
+            "logical_sector_size":  integer
           }
         ]
     """
+    for entry in proc_data:
+        int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size', 'id_part_entry_number',
+                    'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
+                    'logical_sector_size']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
-    # rebuild output for added semantic information
     return proc_data
 
 
