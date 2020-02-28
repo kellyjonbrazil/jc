@@ -85,6 +85,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Parsers
 - `--arp` enables the `arp` command parser
+- `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
 - `--df` enables the `df` command parser
@@ -100,6 +101,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--ini` enables the `INI` file parser
 - `--iptables` enables the `iptables` command parser
 - `--jobs` enables the `jobs` command parser
+- `--last` enables the `last` and `lastb` command parser
 - `--ls` enables the `ls` command parser
 - `--lsblk` enables the `lsblk` command parser
 - `--lsmod` enables the `lsmod` command parser
@@ -206,6 +208,53 @@ $ arp -a | jc --arp -p          # or:  jc -p arp -a
     "hwtype": "ether",
     "hwaddress": "00:50:56:f7:4a:fc",
     "iface": "ens33"
+  }
+]
+```
+### blkid
+```
+$ blkid | jc --blkid -p          # or:  jc -p blkid
+[
+  {
+    "device": "/dev/sda1",
+    "uuid": "05d927ab-5875-49e4-ada1-7f46cb32c932",
+    "type": "xfs"
+  },
+  {
+    "device": "/dev/sda2",
+    "uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+    "type": "LVM2_member"
+  },
+  {
+    "device": "/dev/mapper/centos-root",
+    "uuid": "07d718ff-950c-4e5b-98f0-42a1147c77d9",
+    "type": "xfs"
+  },
+  {
+    "device": "/dev/mapper/centos-swap",
+    "uuid": "615eb89a-bcbf-46fd-80e3-c483ff5c931f",
+    "type": "swap"
+  }
+]
+```
+```
+$ sudo blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  sudo jc -p blkid -o udev -ip /dev/sda2
+[
+  {
+    "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+    "id_fs_uuid_enc": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+    "id_fs_version": "LVM2\x20001",
+    "id_fs_type": "LVM2_member",
+    "id_fs_usage": "raid",
+    "id_iolimit_minimum_io_size": 512,
+    "id_iolimit_physical_sector_size": 512,
+    "id_iolimit_logical_sector_size": 512,
+    "id_part_entry_scheme": "dos",
+    "id_part_entry_type": "0x8e",
+    "id_part_entry_number": 2,
+    "id_part_entry_offset": 2099200,
+    "id_part_entry_size": 39843840,
+    "id_part_entry_disk": "8:0"
   }
 ]
 ```
@@ -944,6 +993,36 @@ $ jobs -l | jc --jobs -p          # or:  jc -p jobs
     "status": "Running",
     "command": "sleep 10112 &"
   }
+]
+```
+### last and lastb
+```
+$ last | jc --last -p          # or:  jc -p last
+[
+  {
+    "user": "joeuser",
+    "tty": "ttys002",
+    "hostname": null,
+    "login": "Thu Feb 27 14:31",
+    "logout": "still logged in"
+  },
+  {
+    "user": "joeuser",
+    "tty": "ttys003",
+    "hostname": null,
+    "login": "Thu Feb 27 10:38",
+    "logout": "10:38",
+    "duration": "00:00"
+  },
+  {
+    "user": "joeuser",
+    "tty": "ttys003",
+    "hostname": null,
+    "login": "Thu Feb 27 10:18",
+    "logout": "10:18",
+    "duration": "00:00"
+  },
+  ...
 ]
 ```
 ### ls
