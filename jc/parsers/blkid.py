@@ -74,6 +74,7 @@ Examples:
       }
     ]
 """
+import shlex
 import jc.utils
 
 
@@ -183,12 +184,12 @@ def parse(data, raw=False, quiet=False):
 
             for line in linedata:
                 output_line = {}
-                entries = line.split()
+                entries = shlex.split(line)
                 output_line['device'] = entries.pop(0)[:-1]
 
                 for entry in entries:
                     key = entry.split('=')[0].lower()
-                    value = entry.split('=')[1].replace('"', '')
+                    value = entry.split('=')[1]
                     output_line[key] = value
 
                 raw_output.append(output_line)
