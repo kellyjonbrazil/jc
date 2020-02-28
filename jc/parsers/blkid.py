@@ -87,14 +87,15 @@ def process(proc_data):
             "id_part_entry_number": integer,
             "id_part_entry_offset": integer,
             "id_part_entry_size":   integer,
-            "id_part_entry_disk":   string
-            "devname":              string,
+            "id_part_entry_disk":   string,
             "minimum_io_size":      integer,
             "physical_sector_size": integer,
             "logical_sector_size":  integer
           }
         ]
     """
+    proc_data['device'] = proc_data.pop('devname')
+
     for entry in proc_data:
         int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size', 'id_part_entry_number',
                     'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
