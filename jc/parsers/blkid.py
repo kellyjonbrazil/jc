@@ -199,11 +199,19 @@ def parse(data, raw=False, quiet=False):
             linedata = data.splitlines()
             output_line = {}
             for line in linedata:
+                if line == '':
+                    if output_line:
+                        raw_output.append(output_line)
+                        output_line = {}
+                        continue
+                    continue
+
                 key = line.split('=', maxsplit=1)[0].lower()
                 value = line.split('=', maxsplit=1)[1]
                 output_line[key] = value
 
-            raw_output.append(output_line)
+            if output_line:
+                raw_output.append(output_line)
 
     if raw:
         return raw_output
