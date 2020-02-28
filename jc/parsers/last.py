@@ -159,7 +159,7 @@ def parse(data, raw=False, quiet=False):
             entry = entry.replace('  still logged in', '- still_logged_in')
 
             linedata = entry.split()
-            if re.match('[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]', ' '.join(linedata[2:4])):
+            if re.match(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]', ' '.join(linedata[2:4])):
                 linedata.insert(2, '-')
 
             output_line['user'] = linedata[0]

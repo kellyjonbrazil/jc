@@ -227,11 +227,11 @@ def parse(data, raw=False, quiet=False):
 
     # Delete first line if it starts with 'total 1234'
     if linedata:
-        if re.match('^total [0-9]+', linedata[0]):
+        if re.match(r'total [0-9]+', linedata[0]):
             linedata.pop(0)
 
     # Look for parent line if glob or -R is used
-    if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
+    if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
        and linedata[0].endswith(':'):
         parent = linedata.pop(0)[:-1]
         # Pop following total line
@@ -239,13 +239,13 @@ def parse(data, raw=False, quiet=False):
 
     if linedata:
         # Check if -l was used to parse extra data
-        if re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
+        if re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
             for entry in linedata:
                 output_line = {}
 
                 parsed_line = entry.split(maxsplit=8)
 
-                if not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
+                if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
                    and entry.endswith(':'):
                     parent = entry[:-1]
                     new_section = True
@@ -254,13 +254,13 @@ def parse(data, raw=False, quiet=False):
                     raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
                     continue
 
-                if re.match('^total [0-9]+', entry):
+                if re.match(r'total [0-9]+', entry):
                     new_section = False
                     continue
 
                 # fixup for filenames with newlines
                 if not new_section \
-                   and not re.match('^[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
+                   and not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
                     raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
                     continue
 
