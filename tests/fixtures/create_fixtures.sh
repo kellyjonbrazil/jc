@@ -88,3 +88,9 @@ systemctl -a list-jobs > systemctl-jobs.out
 du /usr > du.out
 pip3 list > pip-list.out
 pip3 show wheel pip jc > pip-show.out
+
+blkid > blkid.out
+blkid /dev/sda2 > blkid-sda2.out
+sudo blkid -ip /dev/sda2 /dev/sda1 > blkid-ip-multi.out
+sudo blkid -o udev -ip /dev/sr0 > blkid-ip-udev.out
+sudo blkid -o udev -ip /dev/sda2 /dev/sda1 > blkid-ip-udev-multi.out

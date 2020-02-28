@@ -1,0 +1,4 @@
+/dev/sda1: UUID="05d927bb-5875-49e3-ada1-7f46cb31c932" TYPE="xfs" 
+/dev/sda2: UUID="3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM" TYPE="LVM2_member" 
+/dev/mapper/centos-root: UUID="07d718ef-950c-4e5b-98e0-42a1147b77d9" TYPE="xfs" 
+/dev/mapper/centos-swap: UUID="615eb89d-bcbf-46ad-80e3-c483ef5c931f" TYPE="swap" 
