@@ -10,6 +10,50 @@ Compatibility:
 
 Examples:
 
+    $ blkid | jc --blkid -p
+    [
+      {
+        "device": "/dev/sda1",
+        "uuid": "05d927ab-5875-49e4-ada1-7f46cb32c932",
+        "type": "xfs"
+      },
+      {
+        "device": "/dev/sda2",
+        "uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+        "type": "LVM2_member"
+      },
+      {
+        "device": "/dev/mapper/centos-root",
+        "uuid": "07d718ff-950c-4e5b-98f0-42a1147c77d9",
+        "type": "xfs"
+      },
+      {
+        "device": "/dev/mapper/centos-swap",
+        "uuid": "615eb89a-bcbf-46fd-80e3-c483ff5c931f",
+        "type": "swap"
+      }
+    ]
+
+    $ sudo blkid -o udev -ip /dev/sda2 | jc --blkid -p
+    [
+      {
+        "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+        "id_fs_uuid_enc": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+        "id_fs_version": "LVM2\\x20001",
+        "id_fs_type": "LVM2_member",
+        "id_fs_usage": "raid",
+        "id_iolimit_minimum_io_size": 512,
+        "id_iolimit_physical_sector_size": 512,
+        "id_iolimit_logical_sector_size": 512,
+        "id_part_entry_scheme": "dos",
+        "id_part_entry_type": "0x8e",
+        "id_part_entry_number": 2,
+        "id_part_entry_offset": 2099200,
+        "id_part_entry_size": 39843840,
+        "id_part_entry_disk": "8:0"
+      }
+    ]
+
     $ sudo blkid -ip /dev/sda1 | jc --blkid -p -r
     [
       {
@@ -29,10 +73,6 @@ Examples:
         "part_entry_disk": "8:0"
       }
     ]
-
-
-    $ blkid | jc --blkid -p -r
-    []
 """
 import jc.utils
 
