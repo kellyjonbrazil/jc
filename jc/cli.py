@@ -23,6 +23,7 @@ __version__ = info.version
 
 parsers = [
     'arp',
+    'blkid',
     'crontab',
     'crontab-u',
     'df',
