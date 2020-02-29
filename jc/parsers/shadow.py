@@ -10,11 +10,75 @@ Compatibility:
 
 Examples:
 
-    $ cat /etc/shadow | jc --shadow -p
-    
+    $ sudo cat /etc/shadow | jc --shadow -p
+    [
+      {
+        "username": "root",
+        "password": "*",
+        "last_changed": 18113,
+        "minimum": 0,
+        "maximum": 99999,
+        "warn": 7,
+        "inactive": null,
+        "expire": null
+      },
+      {
+        "username": "daemon",
+        "password": "*",
+        "last_changed": 18113,
+        "minimum": 0,
+        "maximum": 99999,
+        "warn": 7,
+        "inactive": null,
+        "expire": null
+      },
+      {
+        "username": "bin",
+        "password": "*",
+        "last_changed": 18113,
+        "minimum": 0,
+        "maximum": 99999,
+        "warn": 7,
+        "inactive": null,
+        "expire": null
+      },
+      ...
+    ]
 
-    $ cat /etc/shadow | jc --shadow -p -r
-    
+    $ sudo cat /etc/shadow | jc --shadow -p -r
+    [
+      {
+        "username": "root",
+        "password": "*",
+        "last_changed": "18113",
+        "minimum": "0",
+        "maximum": "99999",
+        "warn": "7",
+        "inactive": "",
+        "expire": ""
+      },
+      {
+        "username": "daemon",
+        "password": "*",
+        "last_changed": "18113",
+        "minimum": "0",
+        "maximum": "99999",
+        "warn": "7",
+        "inactive": "",
+        "expire": ""
+      },
+      {
+        "username": "bin",
+        "password": "*",
+        "last_changed": "18113",
+        "minimum": "0",
+        "maximum": "99999",
+        "warn": "7",
+        "inactive": "",
+        "expire": ""
+      },
+      ...
+    ]
 """
 import jc.utils
 
