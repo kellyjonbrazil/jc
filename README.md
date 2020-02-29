@@ -108,10 +108,12 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--lsof` enables the `lsof` command parser
 - `--mount` enables the `mount` command parser
 - `--netstat` enables the `netstat` command parser
+- `--passwd` enables the `/etc/passwd` file parser
 - `--pip-list` enables the `pip list` command parser
 - `--pip-show` enables the `pip show` command parser
 - `--ps` enables the `ps` command parser
 - `--route` enables the `route` command parser
+- `--shadow` enables the `/etc/shadow` file parser
 - `--ss` enables the `ss` command parser
 - `--stat` enables the `stat` command parser
 - `--systemctl` enables the `systemctl` command parser
@@ -1371,6 +1373,40 @@ $ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
   ...
 ]
 ```
+### /etc/passwd file
+```
+$ cat /etc/passwd | jc --passwd -p
+[
+  {
+    "username": "nobody",
+    "password": "*",
+    "uid": -2,
+    "gid": -2,
+    "comment": "Unprivileged User",
+    "home": "/var/empty",
+    "shell": "/usr/bin/false"
+  },
+  {
+    "username": "root",
+    "password": "*",
+    "uid": 0,
+    "gid": 0,
+    "comment": "System Administrator",
+    "home": "/var/root",
+    "shell": "/bin/sh"
+  },
+  {
+    "username": "daemon",
+    "password": "*",
+    "uid": 1,
+    "gid": 1,
+    "comment": "System Services",
+    "home": "/var/root",
+    "shell": "/usr/bin/false"
+  },
+  ...
+]
+```
 ### pip list
 ```
 $ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
@@ -1546,6 +1582,43 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
     "window": 0,
     "irtt": 0
   }
+]
+```
+### /etc/shadow file
+```
+$ sudo cat /etc/shadow | jc --shadow -p
+[
+  {
+    "username": "root",
+    "password": "*",
+    "last_changed": 18113,
+    "minimum": 0,
+    "maximum": 99999,
+    "warn": 7,
+    "inactive": null,
+    "expire": null
+  },
+  {
+    "username": "daemon",
+    "password": "*",
+    "last_changed": 18113,
+    "minimum": 0,
+    "maximum": 99999,
+    "warn": 7,
+    "inactive": null,
+    "expire": null
+  },
+  {
+    "username": "bin",
+    "password": "*",
+    "last_changed": 18113,
+    "minimum": 0,
+    "maximum": 99999,
+    "warn": 7,
+    "inactive": null,
+    "expire": null
+  },
+  ...
 ]
 ```
 ### ss
