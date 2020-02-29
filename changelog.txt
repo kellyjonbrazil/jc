@@ -3,6 +3,8 @@ jc changelog
 20200227 v1.8.0
 - Added blkid command parser
 - Added last and lastb command parser
+- Added /etc/passwd file parser
+- Added /etc/shadow file parser
 
 20200227 v1.7.5
 - Updated ls parser to support filenames with newline characters
