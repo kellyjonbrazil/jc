@@ -51,6 +51,7 @@ parsers = [
     'pip-show',
     'ps',
     'route',
+    'shadow',
     'ss',
     'stat',
     'systemctl',

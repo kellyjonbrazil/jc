@@ -33,6 +33,7 @@ pydocmd simple jc.parsers.pip_list+ > ../docs/parsers/pip_list.md
 pydocmd simple jc.parsers.pip_show+ > ../docs/parsers/pip_show.md
 pydocmd simple jc.parsers.ps+ > ../docs/parsers/ps.md
 pydocmd simple jc.parsers.route+ > ../docs/parsers/route.md
+pydocmd simple jc.parsers.shadow+ > ../docs/parsers/shadow.md
 pydocmd simple jc.parsers.ss+ > ../docs/parsers/ss.md
 pydocmd simple jc.parsers.stat+ > ../docs/parsers/stat.md
 pydocmd simple jc.parsers.systemctl+ > ../docs/parsers/systemctl.md
