@@ -1,5 +1,5 @@
 # jc.parsers.passwd
-jc - JSON CLI output utility /etc/passwd fuke Parser
+jc - JSON CLI output utility /etc/passwd file Parser
 
 Usage:
 
