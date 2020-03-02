@@ -8,6 +8,7 @@ pydocmd simple jc.parsers.arp+ > ../docs/parsers/arp.md
 pydocmd simple jc.parsers.blkid+ > ../docs/parsers/blkid.md
 pydocmd simple jc.parsers.crontab+ > ../docs/parsers/crontab.md
 pydocmd simple jc.parsers.crontab_u+ > ../docs/parsers/crontab_u.md
+pydocmd simple jc.parsers.csv+ > ../docs/parsers/csv.md
 pydocmd simple jc.parsers.df+ > ../docs/parsers/df.md
 pydocmd simple jc.parsers.dig+ > ../docs/parsers/dig.md
 pydocmd simple jc.parsers.du+ > ../docs/parsers/du.md

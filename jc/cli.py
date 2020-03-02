@@ -26,6 +26,7 @@ parsers = [
     'blkid',
     'crontab',
     'crontab-u',
+    'csv',
     'df',
     'dig',
     'du',
