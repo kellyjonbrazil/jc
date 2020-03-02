@@ -123,6 +123,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
+- `--who` enables the `who` command parser
 - `--xml` enables the `XML` file parser
 - `--yaml` enables the `YAML` file parser
 
@@ -1939,6 +1940,51 @@ $ w | jc --w -p          # or:  jc -p w
     "jcpu": "0.00s",
     "pcpu": "0.00s",
     "what": "-bash"
+  }
+]
+```
+### who
+```
+$ who -a | jc --who -p          # or:  jc -p who -a
+[
+  {
+    "event": "reboot",
+    "time": "Feb 7 23:31",
+    "pid": 1
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "?",
+    "tty": "console",
+    "time": "Feb 7 23:32",
+    "idle": "old",
+    "pid": 105
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "+",
+    "tty": "ttys000",
+    "time": "Feb 13 16:44",
+    "idle": ".",
+    "pid": 51217,
+    "comment": "term=0 exit=0"
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "+",
+    "tty": "ttys003",
+    "time": "Feb 28 08:59",
+    "idle": "01:36",
+    "pid": 41402
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "+",
+    "tty": "ttys004",
+    "time": "Mar 1 16:35",
+    "idle": ".",
+    "pid": 15679,
+    "from": "192.168.1.5"
   }
 ]
 ```
