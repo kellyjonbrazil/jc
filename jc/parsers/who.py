@@ -225,6 +225,15 @@ def parse(data, raw=False, quiet=False):
             if linedata[1] == 'run-level':
                 continue
 
+            # pts lines with no user information
+            if linedata[0].startswith('pts/'):
+                output_line['tty'] = linedata[0]
+                output_line['time'] = ' '.join(linedata[1:3])
+                output_line['pid'] = linedata[3]
+                output_line['comment'] = ' '.join(linedata[4:])
+                raw_output.append(output_line)
+                continue
+
             # user logins
             output_line['user'] = linedata.pop(0)
 
