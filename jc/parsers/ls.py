@@ -302,7 +302,7 @@ def parse(data, raw=False, quiet=False):
                     continue
 
                 if not quiet and next_is_parent and not entry.endswith(':') and not warned:
-                    jc.utils.warning_message('Newline characters detected. Filenames probably corrupted. Use ls -l instead.')
+                    jc.utils.warning_message('Newline characters detected. Filenames probably corrupted. Use ls -l or -b instead.')
                     warned = True
 
                 output_line['filename'] = entry
