@@ -88,6 +88,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
+- `--csv` enables the CSV file parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
 - `--du` enables the `du` command parser
@@ -407,6 +408,53 @@ $ cat /etc/crontab | jc --crontab-u -p
     }
   ]
 }
+```
+### CSV files
+```
+$ cat homes.csv 
+"Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
+142, 160, 28, 10, 5, 3,  60, 0.28,  3167
+175, 180, 18,  8, 4, 1,  12, 0.43,  4033
+129, 132, 13,  6, 3, 1,  41, 0.33,  1471
+...
+
+$ cat homes.csv | jc --csv -p
+[
+  {
+    "Sell": "142",
+    "List": "160",
+    "Living": "28",
+    "Rooms": "10",
+    "Beds": "5",
+    "Baths": "3",
+    "Age": "60",
+    "Acres": "0.28",
+    "Taxes": "3167"
+  },
+  {
+    "Sell": "175",
+    "List": "180",
+    "Living": "18",
+    "Rooms": "8",
+    "Beds": "4",
+    "Baths": "1",
+    "Age": "12",
+    "Acres": "0.43",
+    "Taxes": "4033"
+  },
+  {
+    "Sell": "129",
+    "List": "132",
+    "Living": "13",
+    "Rooms": "6",
+    "Beds": "3",
+    "Baths": "1",
+    "Age": "41",
+    "Acres": "0.33",
+    "Taxes": "1471"
+  },
+  ...
+]
 ```
 ### df
 ```
