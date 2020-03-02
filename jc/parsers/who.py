@@ -19,7 +19,7 @@ Examples:
       },
       {
         "user": "joeuser",
-        "writeable_tty": "?",
+        "writeable_tty": "-",
         "tty": "console",
         "time": "Feb 7 23:32",
         "idle": "old",
@@ -36,7 +36,7 @@ Examples:
       },
       {
         "user": "joeuser",
-        "writeable_tty": "+",
+        "writeable_tty": "?",
         "tty": "ttys003",
         "time": "Feb 28 08:59",
         "idle": "01:36",
@@ -62,7 +62,7 @@ Examples:
       },
       {
         "user": "joeuser",
-        "writeable_tty": "?",
+        "writeable_tty": "-",
         "tty": "console",
         "time": "Feb 7 23:32",
         "idle": "old",
@@ -79,7 +79,7 @@ Examples:
       },
       {
         "user": "joeuser",
-        "writeable_tty": "+",
+        "writeable_tty": "?",
         "tty": "ttys003",
         "time": "Feb 28 08:59",
         "idle": "01:36",
@@ -246,6 +246,7 @@ def parse(data, raw=False, quiet=False):
             # if just one more field, then it's the remote IP
             if len(linedata) == 1:
                 output_line['from'] = linedata[0].replace('(', '').replace(')', '')
+                raw_output.append(output_line)
                 continue
 
             # extended info: idle
