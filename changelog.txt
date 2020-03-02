@@ -4,7 +4,7 @@ jc changelog
 - Added blkid command parser
 - Added last and lastb command parser
 - Added who command parser
-- Added csv file parser
+- Added CSV file parser
 - Added /etc/passwd file parser
 - Added /etc/shadow file parser
 
