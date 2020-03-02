@@ -150,10 +150,6 @@ def helptext(message):
 
     Usage:  COMMAND | jc PARSER [OPTIONS]
 
-            or
-
-            COMMAND | jc [OPTIONS] PARSER
-
             or magic syntax:
 
             jc [OPTIONS] COMMAND
