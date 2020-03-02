@@ -149,6 +149,11 @@ def parse(data, raw=False, quiet=False):
                 output_line['time'] = ' '.join([linedata.pop(0),
                                                 linedata.pop(0)])
 
+            # if just one more field, then it's the remote IP
+            if len(linedata) == 1:
+                output_line['from'] = linedata[0].replace('(', '').replace(')', '')
+                continue
+
             # extended info: idle
             if len(linedata) > 0:
                 output_line['idle'] = linedata.pop(0)
@@ -157,8 +162,12 @@ def parse(data, raw=False, quiet=False):
             if len(linedata) > 0:
                 output_line['pid'] = linedata.pop(0)
 
-            # extended info: comment
-            if len(linedata) > 0:
+            # extended info is from
+            if len(linedata) > 0 and linedata[0].startswith('('):
+                output_line['from'] = linedata[0].replace('(', '').replace(')', '')
+
+            # else, extended info is comment
+            elif len(linedata) > 0:
                 output_line['comment'] = ' '.join(linedata)
 
             raw_output.append(output_line)
