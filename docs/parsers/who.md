@@ -5,6 +5,8 @@ Usage:
 
     specify --who as the first argument if the piped input is coming from who
 
+    accepts any of the following who options (or no options): -aTH
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
