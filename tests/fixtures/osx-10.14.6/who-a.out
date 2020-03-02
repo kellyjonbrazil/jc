@@ -1,0 +1,9 @@
+USER     LINE     WHEN         IDLE  	   PID	COMMENT
+reboot   ~        Feb  7 23:31   .   	     1
+kbrazil  console  Feb  7 23:32  old  	   105
+kbrazil  ttys000  Feb 13 16:44 00:02 	 51217	term=0 exit=0
+kbrazil  ttys001  Feb 11 21:25 00:02 	 81390
+kbrazil  ttys002  Mar  1 15:18   .   	  9574
+kbrazil  ttys003  Feb 28 08:59 01:06 	 41402
+kbrazil  ttys004  Mar  1 17:11   .   	 15679	term=0 exit=0
+   .       run-level 3

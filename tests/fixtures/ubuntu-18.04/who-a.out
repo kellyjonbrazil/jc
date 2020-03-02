@@ -1,0 +1,6 @@
+NAME       LINE         TIME             IDLE          PID COMMENT  EXIT
+           system boot  2020-03-02 02:52
+kbrazil  - ttyS0        2020-03-02 02:52   .          1983
+           run-level 5  2020-03-02 02:52
+LOGIN      tty1         2020-03-02 02:52              1199 id=tty1
+kbrazil  + pts/0        2020-03-02 02:54   .          2176 (192.168.71.1)
