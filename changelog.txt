@@ -3,6 +3,7 @@ jc changelog
 20200227 v1.8.0
 - Added blkid command parser
 - Added last and lastb command parser
+- Added who command parser
 - Added /etc/passwd file parser
 - Added /etc/shadow file parser
 

@@ -10,11 +10,91 @@ Compatibility:
 
 Examples:
 
-    $ who | jc --who -p
-    []
+    $ who -a | jc --who -p
+    [
+      {
+        "event": "reboot",
+        "time": "Feb 7 23:31",
+        "pid": 1
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "?",
+        "tty": "console",
+        "time": "Feb 7 23:32",
+        "idle": "old",
+        "pid": 105
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "+",
+        "tty": "ttys000",
+        "time": "Feb 13 16:44",
+        "idle": ".",
+        "pid": 51217,
+        "comment": "term=0 exit=0"
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "+",
+        "tty": "ttys003",
+        "time": "Feb 28 08:59",
+        "idle": "01:36",
+        "pid": 41402
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "+",
+        "tty": "ttys004",
+        "time": "Mar 1 16:35",
+        "idle": ".",
+        "pid": 15679,
+        "from": "192.168.1.5"
+      }
+    ]
 
-    $ who | jc --who -p -r
-    []
+    $ who -a | jc --who -p -r
+    [
+      {
+        "event": "reboot",
+        "time": "Feb 7 23:31",
+        "pid": "1"
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "?",
+        "tty": "console",
+        "time": "Feb 7 23:32",
+        "idle": "old",
+        "pid": "105"
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "+",
+        "tty": "ttys000",
+        "time": "Feb 13 16:44",
+        "idle": ".",
+        "pid": "51217",
+        "comment": "term=0 exit=0"
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "+",
+        "tty": "ttys003",
+        "time": "Feb 28 08:59",
+        "idle": "01:36",
+        "pid": "41402"
+      },
+      {
+        "user": "joeuser",
+        "writeable_tty": "+",
+        "tty": "ttys004",
+        "time": "Mar 1 16:35",
+        "idle": ".",
+        "pid": "15679",
+        "from": "192.168.1.5"
+      }
+    ]
 """
 import re
 import jc.utils
@@ -49,14 +129,28 @@ def process(proc_data):
 
         [
           {
-            "who":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "user":            string,
+            "event":           string,
+            "writeable_tty":   string,
+            "tty":             string,
+            "time":            string,
+            "idle":            string,
+            "pid":             integer,
+            "from":            string,
+            "comment":         string
           }
         ]
     """
+    for entry in proc_data:
+        int_list = ['pid']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
-    # rebuild output for added semantic information
     return proc_data
 
 
