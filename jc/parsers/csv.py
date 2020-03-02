@@ -3,7 +3,8 @@
 Usage:
 
     specify --csv as the first argument if the piped input is coming from a csv file.
-    the csv parser will attempt to automatically detect the delimter character.
+    the csv parser will attempt to automatically detect the delimiter character.
+    if the delimiter cannot be detected it will default to comma.
     the first row of the file must be a header row.
 
 Compatibility:
@@ -123,7 +124,12 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, cleandata))
 
     if cleandata:
-        dialect = csv.Sniffer().sniff(data[:1024])
+        dialect = None
+        try:
+            dialect = csv.Sniffer().sniff(data[:1024])
+        except Exception:
+            pass
+
         reader = csv.DictReader(cleandata, dialect=dialect)
 
         for row in reader:
