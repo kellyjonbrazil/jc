@@ -1948,12 +1948,12 @@ $ w | jc --w -p          # or:  jc -p w
 $ who | jc --who -p          # or:  jc -p who
 [
   {
-    "user": "kbrazil",
+    "user": "joeuser",
     "tty": "ttyS0",
     "time": "2020-03-02 02:52"
   },
   {
-    "user": "kbrazil",
+    "user": "joeuser",
     "tty": "pts/0",
     "time": "2020-03-02 05:15",
     "from": "192.168.71.1"
