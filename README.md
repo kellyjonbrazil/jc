@@ -1954,7 +1954,7 @@ $ who -a | jc --who -p          # or:  jc -p who -a
   },
   {
     "user": "joeuser",
-    "writeable_tty": "?",
+    "writeable_tty": "-",
     "tty": "console",
     "time": "Feb 7 23:32",
     "idle": "old",
@@ -1971,7 +1971,7 @@ $ who -a | jc --who -p          # or:  jc -p who -a
   },
   {
     "user": "joeuser",
-    "writeable_tty": "+",
+    "writeable_tty": "?",
     "tty": "ttys003",
     "time": "Feb 28 08:59",
     "idle": "01:36",
