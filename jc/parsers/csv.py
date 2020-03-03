@@ -13,7 +13,7 @@ Compatibility:
 
 Examples:
 
-    $ cat homes.csv 
+    $ cat homes.csv
     "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
     142, 160, 28, 10, 5, 3,  60, 0.28,  3167
     175, 180, 18,  8, 4, 1,  12, 0.43,  4033
@@ -64,7 +64,7 @@ import csv
 
 class info():
     version = '1.0'
-    description = 'csv file parser'
+    description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the python standard csv library'
