@@ -17,19 +17,19 @@ Examples:
         "group_name": "nobody",
         "password": "*",
         "gid": -2,
-        "group_list": []
+        "members": []
       },
       {
         "group_name": "nogroup",
         "password": "*",
         "gid": -1,
-        "group_list": []
+        "members": []
       },
       {
         "group_name": "wheel",
         "password": "*",
         "gid": 0,
-        "group_list": [
+        "members": [
           "root"
         ]
       },
@@ -37,7 +37,7 @@ Examples:
         "group_name": "certusers",
         "password": "*",
         "gid": 29,
-        "group_list": [
+        "members": [
           "root",
           "_jabber",
           "_postfix",
@@ -55,7 +55,7 @@ Examples:
         "group_name": "nobody",
         "password": "*",
         "gid": "-2",
-        "group_list": [
+        "members": [
           ""
         ]
       },
@@ -63,7 +63,7 @@ Examples:
         "group_name": "nogroup",
         "password": "*",
         "gid": "-1",
-        "group_list": [
+        "members": [
           ""
         ]
       },
@@ -71,7 +71,7 @@ Examples:
         "group_name": "wheel",
         "password": "*",
         "gid": "0",
-        "group_list": [
+        "members": [
           "root"
         ]
       },
@@ -79,7 +79,7 @@ Examples:
         "group_name": "certusers",
         "password": "*",
         "gid": "29",
-        "group_list": [
+        "members": [
           "root",
           "_jabber",
           "_postfix",
@@ -116,7 +116,7 @@ Returns:
         "group_name":    string,
         "password":      string,
         "gid":           integer,
-        "group_list": [
+        "members": [
                          string
         ]
       }

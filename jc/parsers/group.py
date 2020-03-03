@@ -16,19 +16,19 @@ Examples:
         "group_name": "nobody",
         "password": "*",
         "gid": -2,
-        "group_list": []
+        "members": []
       },
       {
         "group_name": "nogroup",
         "password": "*",
         "gid": -1,
-        "group_list": []
+        "members": []
       },
       {
         "group_name": "wheel",
         "password": "*",
         "gid": 0,
-        "group_list": [
+        "members": [
           "root"
         ]
       },
@@ -36,7 +36,7 @@ Examples:
         "group_name": "certusers",
         "password": "*",
         "gid": 29,
-        "group_list": [
+        "members": [
           "root",
           "_jabber",
           "_postfix",
@@ -54,7 +54,7 @@ Examples:
         "group_name": "nobody",
         "password": "*",
         "gid": "-2",
-        "group_list": [
+        "members": [
           ""
         ]
       },
@@ -62,7 +62,7 @@ Examples:
         "group_name": "nogroup",
         "password": "*",
         "gid": "-1",
-        "group_list": [
+        "members": [
           ""
         ]
       },
@@ -70,7 +70,7 @@ Examples:
         "group_name": "wheel",
         "password": "*",
         "gid": "0",
-        "group_list": [
+        "members": [
           "root"
         ]
       },
@@ -78,7 +78,7 @@ Examples:
         "group_name": "certusers",
         "password": "*",
         "gid": "29",
-        "group_list": [
+        "members": [
           "root",
           "_jabber",
           "_postfix",
@@ -124,7 +124,7 @@ def process(proc_data):
             "group_name":    string,
             "password":      string,
             "gid":           integer,
-            "group_list": [
+            "members": [
                              string
             ]
           }
@@ -140,8 +140,8 @@ def process(proc_data):
                 except (ValueError):
                     entry[key] = None
 
-        if entry['group_list'] == ['']:
-            entry['group_list'] = []
+        if entry['members'] == ['']:
+            entry['members'] = []
 
     return proc_data
 
@@ -180,7 +180,7 @@ def parse(data, raw=False, quiet=False):
             output_line['group_name'] = fields[0]
             output_line['password'] = fields[1]
             output_line['gid'] = fields[2]
-            output_line['group_list'] = fields[3].split(',')
+            output_line['members'] = fields[3].split(',')
 
             raw_output.append(output_line)
 
