@@ -7,6 +7,8 @@ jc changelog
 - Added CSV file parser
 - Added /etc/passwd file parser
 - Added /etc/shadow file parser
+- Added /etc/group file parser
+- Added /etc/gshadow file parser
 
 20200227 v1.7.5
 - Updated ls parser to support filenames with newline characters
