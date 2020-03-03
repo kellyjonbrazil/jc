@@ -15,6 +15,7 @@ pydocmd simple jc.parsers.du+ > ../docs/parsers/du.md
 pydocmd simple jc.parsers.env+ > ../docs/parsers/env.md
 pydocmd simple jc.parsers.free+ > ../docs/parsers/free.md
 pydocmd simple jc.parsers.fstab+ > ../docs/parsers/fstab.md
+pydocmd simple jc.parsers.group+ > ../docs/parsers/group.md
 pydocmd simple jc.parsers.history+ > ../docs/parsers/history.md
 pydocmd simple jc.parsers.hosts+ > ../docs/parsers/hosts.md
 pydocmd simple jc.parsers.id+ > ../docs/parsers/id.md

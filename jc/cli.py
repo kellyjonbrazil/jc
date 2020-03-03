@@ -33,6 +33,7 @@ parsers = [
     'env',
     'free',
     'fstab',
+    'group',
     'history',
     'hosts',
     'id',
