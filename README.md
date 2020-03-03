@@ -61,6 +61,8 @@ To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True`
 
 Schemas for each parser can be found in the [`docs/parsers`](https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers) folder. 
 
+Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
+
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
