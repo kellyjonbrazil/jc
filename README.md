@@ -91,6 +91,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--env` enables the `env` command parser
 - `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
+- `--group` enables the `/etc/group` file parser
+- `--gshadow` enables the `/etc/gshadow` file parser
 - `--history` enables the `history` command parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
@@ -740,6 +742,68 @@ $ cat /etc/fstab | jc --fstab -p
     "fs_freq": 0,
     "fs_passno": 0
   }
+]
+```
+### /etc/group file
+```
+$ cat /etc/group | jc --group -p
+[
+  {
+    "group_name": "nobody",
+    "password": "*",
+    "gid": -2,
+    "members": []
+  },
+  {
+    "group_name": "nogroup",
+    "password": "*",
+    "gid": -1,
+    "members": []
+  },
+  {
+    "group_name": "wheel",
+    "password": "*",
+    "gid": 0,
+    "members": [
+      "root"
+    ]
+  },
+  {
+    "group_name": "certusers",
+    "password": "*",
+    "gid": 29,
+    "members": [
+      "root",
+      "_jabber",
+      "_postfix",
+      "_cyrus",
+      "_calendar",
+      "_dovecot"
+    ]
+  },
+  ...
+]
+```
+### /etc/gshadow file
+```
+$ cat /etc/gshadow | jc --gshadow -p
+[
+  {
+    "group_name": "root",
+    "password": "*",
+    "administrators": [],
+    "members": []
+  },
+  {
+    "group_name": "adm",
+    "password": "*",
+    "administrators": [],
+    "members": [
+      "syslog",
+      "joeuser"
+    ]
+  },
+  ...
 ]
 ```
 ### history
