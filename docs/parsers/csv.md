@@ -4,7 +4,8 @@ jc - JSON CLI output utility csv Parser
 Usage:
 
     specify --csv as the first argument if the piped input is coming from a csv file.
-    the csv parser will attempt to automatically detect the delimter character.
+    the csv parser will attempt to automatically detect the delimiter character.
+    if the delimiter cannot be detected it will default to comma.
     the first row of the file must be a header row.
 
 Compatibility:
