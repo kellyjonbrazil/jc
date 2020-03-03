@@ -98,3 +98,6 @@ sudo blkid -o udev -ip /dev/sda2 /dev/sda1 > blkid-ip-udev-multi.out
 last > last.out
 last -w | cat > last-w.out
 sudo lastb > lastb.out
+
+cat /etc/group > group.out
+sudo cat /etc/gshadow > gshadow.out
