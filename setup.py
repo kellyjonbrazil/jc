@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='jc',
-    version='1.7.5',
+    version='1.8.0',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
     description='This tool serializes the output of popular command line tools and filetypes to structured JSON output.',

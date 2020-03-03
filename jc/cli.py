@@ -13,7 +13,7 @@ import jc.utils
 
 
 class info():
-    version = '1.7.5'
+    version = '1.8.0'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -23,14 +23,18 @@ __version__ = info.version
 
 parsers = [
     'arp',
+    'blkid',
     'crontab',
     'crontab-u',
+    'csv',
     'df',
     'dig',
     'du',
     'env',
     'free',
     'fstab',
+    'group',
+    'gshadow',
     'history',
     'hosts',
     'id',
@@ -38,16 +42,19 @@ parsers = [
     'ini',
     'iptables',
     'jobs',
+    'last',
     'ls',
     'lsblk',
     'lsmod',
     'lsof',
     'mount',
     'netstat',
+    'passwd',
     'pip-list',
     'pip-show',
     'ps',
     'route',
+    'shadow',
     'ss',
     'stat',
     'systemctl',
@@ -57,6 +64,7 @@ parsers = [
     'uname',
     'uptime',
     'w',
+    'who',
     'xml',
     'yaml'
 ]
@@ -144,10 +152,6 @@ def helptext(message):
     jc:     {message}
 
     Usage:  COMMAND | jc PARSER [OPTIONS]
-
-            or
-
-            COMMAND | jc [OPTIONS] PARSER
 
             or magic syntax:
 

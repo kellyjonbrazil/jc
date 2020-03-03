@@ -61,6 +61,8 @@ To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True`
 
 Schemas for each parser can be found in the [`docs/parsers`](https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers) folder. 
 
+Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
+
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
@@ -73,10 +75,6 @@ $ pip3 install --upgrade jc
 ``` 
 COMMAND | jc PARSER [OPTIONS]
 ```
-or
-```
-COMMAND | jc [OPTIONS] PARSER
-```
 Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given. (Note: command aliases are not supported)
 ```
 jc [OPTIONS] COMMAND
@@ -85,14 +83,18 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Parsers
 - `--arp` enables the `arp` command parser
+- `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
+- `--csv` enables the CSV file parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
 - `--du` enables the `du` command parser
 - `--env` enables the `env` command parser
 - `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
+- `--group` enables the `/etc/group` file parser
+- `--gshadow` enables the `/etc/gshadow` file parser
 - `--history` enables the `history` command parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
@@ -100,16 +102,19 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--ini` enables the `INI` file parser
 - `--iptables` enables the `iptables` command parser
 - `--jobs` enables the `jobs` command parser
+- `--last` enables the `last` and `lastb` command parser
 - `--ls` enables the `ls` command parser
 - `--lsblk` enables the `lsblk` command parser
 - `--lsmod` enables the `lsmod` command parser
 - `--lsof` enables the `lsof` command parser
 - `--mount` enables the `mount` command parser
 - `--netstat` enables the `netstat` command parser
+- `--passwd` enables the `/etc/passwd` file parser
 - `--pip-list` enables the `pip list` command parser
 - `--pip-show` enables the `pip show` command parser
 - `--ps` enables the `ps` command parser
 - `--route` enables the `route` command parser
+- `--shadow` enables the `/etc/shadow` file parser
 - `--ss` enables the `ss` command parser
 - `--stat` enables the `stat` command parser
 - `--systemctl` enables the `systemctl` command parser
@@ -119,6 +124,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
+- `--who` enables the `who` command parser
 - `--xml` enables the `XML` file parser
 - `--yaml` enables the `YAML` file parser
 
@@ -206,6 +212,53 @@ $ arp -a | jc --arp -p          # or:  jc -p arp -a
     "hwtype": "ether",
     "hwaddress": "00:50:56:f7:4a:fc",
     "iface": "ens33"
+  }
+]
+```
+### blkid
+```
+$ blkid | jc --blkid -p          # or:  jc -p blkid
+[
+  {
+    "device": "/dev/sda1",
+    "uuid": "05d927ab-5875-49e4-ada1-7f46cb32c932",
+    "type": "xfs"
+  },
+  {
+    "device": "/dev/sda2",
+    "uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+    "type": "LVM2_member"
+  },
+  {
+    "device": "/dev/mapper/centos-root",
+    "uuid": "07d718ff-950c-4e5b-98f0-42a1147c77d9",
+    "type": "xfs"
+  },
+  {
+    "device": "/dev/mapper/centos-swap",
+    "uuid": "615eb89a-bcbf-46fd-80e3-c483ff5c931f",
+    "type": "swap"
+  }
+]
+```
+```
+$ sudo blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  sudo jc -p blkid -o udev -ip /dev/sda2
+[
+  {
+    "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+    "id_fs_uuid_enc": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
+    "id_fs_version": "LVM2\x20001",
+    "id_fs_type": "LVM2_member",
+    "id_fs_usage": "raid",
+    "id_iolimit_minimum_io_size": 512,
+    "id_iolimit_physical_sector_size": 512,
+    "id_iolimit_logical_sector_size": 512,
+    "id_part_entry_scheme": "dos",
+    "id_part_entry_type": "0x8e",
+    "id_part_entry_number": 2,
+    "id_part_entry_offset": 2099200,
+    "id_part_entry_size": 39843840,
+    "id_part_entry_disk": "8:0"
   }
 ]
 ```
@@ -355,6 +408,53 @@ $ cat /etc/crontab | jc --crontab-u -p
     }
   ]
 }
+```
+### CSV files
+```
+$ cat homes.csv 
+"Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
+142, 160, 28, 10, 5, 3,  60, 0.28,  3167
+175, 180, 18,  8, 4, 1,  12, 0.43,  4033
+129, 132, 13,  6, 3, 1,  41, 0.33,  1471
+...
+
+$ cat homes.csv | jc --csv -p
+[
+  {
+    "Sell": "142",
+    "List": "160",
+    "Living": "28",
+    "Rooms": "10",
+    "Beds": "5",
+    "Baths": "3",
+    "Age": "60",
+    "Acres": "0.28",
+    "Taxes": "3167"
+  },
+  {
+    "Sell": "175",
+    "List": "180",
+    "Living": "18",
+    "Rooms": "8",
+    "Beds": "4",
+    "Baths": "1",
+    "Age": "12",
+    "Acres": "0.43",
+    "Taxes": "4033"
+  },
+  {
+    "Sell": "129",
+    "List": "132",
+    "Living": "13",
+    "Rooms": "6",
+    "Beds": "3",
+    "Baths": "1",
+    "Age": "41",
+    "Acres": "0.33",
+    "Taxes": "1471"
+  },
+  ...
+]
 ```
 ### df
 ```
@@ -644,6 +744,68 @@ $ cat /etc/fstab | jc --fstab -p
     "fs_freq": 0,
     "fs_passno": 0
   }
+]
+```
+### /etc/group file
+```
+$ cat /etc/group | jc --group -p
+[
+  {
+    "group_name": "nobody",
+    "password": "*",
+    "gid": -2,
+    "members": []
+  },
+  {
+    "group_name": "nogroup",
+    "password": "*",
+    "gid": -1,
+    "members": []
+  },
+  {
+    "group_name": "wheel",
+    "password": "*",
+    "gid": 0,
+    "members": [
+      "root"
+    ]
+  },
+  {
+    "group_name": "certusers",
+    "password": "*",
+    "gid": 29,
+    "members": [
+      "root",
+      "_jabber",
+      "_postfix",
+      "_cyrus",
+      "_calendar",
+      "_dovecot"
+    ]
+  },
+  ...
+]
+```
+### /etc/gshadow file
+```
+$ cat /etc/gshadow | jc --gshadow -p
+[
+  {
+    "group_name": "root",
+    "password": "*",
+    "administrators": [],
+    "members": []
+  },
+  {
+    "group_name": "adm",
+    "password": "*",
+    "administrators": [],
+    "members": [
+      "syslog",
+      "joeuser"
+    ]
+  },
+  ...
 ]
 ```
 ### history
@@ -944,6 +1106,36 @@ $ jobs -l | jc --jobs -p          # or:  jc -p jobs
     "status": "Running",
     "command": "sleep 10112 &"
   }
+]
+```
+### last and lastb
+```
+$ last | jc --last -p          # or:  jc -p last
+[
+  {
+    "user": "joeuser",
+    "tty": "ttys002",
+    "hostname": null,
+    "login": "Thu Feb 27 14:31",
+    "logout": "still logged in"
+  },
+  {
+    "user": "joeuser",
+    "tty": "ttys003",
+    "hostname": null,
+    "login": "Thu Feb 27 10:38",
+    "logout": "10:38",
+    "duration": "00:00"
+  },
+  {
+    "user": "joeuser",
+    "tty": "ttys003",
+    "hostname": null,
+    "login": "Thu Feb 27 10:18",
+    "logout": "10:18",
+    "duration": "00:00"
+  },
+  ...
 ]
 ```
 ### ls
@@ -1292,6 +1484,40 @@ $ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
   ...
 ]
 ```
+### /etc/passwd file
+```
+$ cat /etc/passwd | jc --passwd -p
+[
+  {
+    "username": "nobody",
+    "password": "*",
+    "uid": -2,
+    "gid": -2,
+    "comment": "Unprivileged User",
+    "home": "/var/empty",
+    "shell": "/usr/bin/false"
+  },
+  {
+    "username": "root",
+    "password": "*",
+    "uid": 0,
+    "gid": 0,
+    "comment": "System Administrator",
+    "home": "/var/root",
+    "shell": "/bin/sh"
+  },
+  {
+    "username": "daemon",
+    "password": "*",
+    "uid": 1,
+    "gid": 1,
+    "comment": "System Services",
+    "home": "/var/root",
+    "shell": "/usr/bin/false"
+  },
+  ...
+]
+```
 ### pip list
 ```
 $ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
@@ -1467,6 +1693,43 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
     "window": 0,
     "irtt": 0
   }
+]
+```
+### /etc/shadow file
+```
+$ sudo cat /etc/shadow | jc --shadow -p
+[
+  {
+    "username": "root",
+    "password": "*",
+    "last_changed": 18113,
+    "minimum": 0,
+    "maximum": 99999,
+    "warn": 7,
+    "inactive": null,
+    "expire": null
+  },
+  {
+    "username": "daemon",
+    "password": "*",
+    "last_changed": 18113,
+    "minimum": 0,
+    "maximum": 99999,
+    "warn": 7,
+    "inactive": null,
+    "expire": null
+  },
+  {
+    "username": "bin",
+    "password": "*",
+    "last_changed": 18113,
+    "minimum": 0,
+    "maximum": 99999,
+    "warn": 7,
+    "inactive": null,
+    "expire": null
+  },
+  ...
 ]
 ```
 ### ss
@@ -1787,6 +2050,67 @@ $ w | jc --w -p          # or:  jc -p w
     "jcpu": "0.00s",
     "pcpu": "0.00s",
     "what": "-bash"
+  }
+]
+```
+### who
+```
+$ who | jc --who -p          # or:  jc -p who
+[
+  {
+    "user": "joeuser",
+    "tty": "ttyS0",
+    "time": "2020-03-02 02:52"
+  },
+  {
+    "user": "joeuser",
+    "tty": "pts/0",
+    "time": "2020-03-02 05:15",
+    "from": "192.168.71.1"
+  }
+]
+```
+```
+$ who -a | jc --who -p          # or:  jc -p who -a
+[
+  {
+    "event": "reboot",
+    "time": "Feb 7 23:31",
+    "pid": 1
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "-",
+    "tty": "console",
+    "time": "Feb 7 23:32",
+    "idle": "old",
+    "pid": 105
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "+",
+    "tty": "ttys000",
+    "time": "Feb 13 16:44",
+    "idle": ".",
+    "pid": 51217,
+    "comment": "term=0 exit=0"
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "?",
+    "tty": "ttys003",
+    "time": "Feb 28 08:59",
+    "idle": "01:36",
+    "pid": 41402
+  },
+  {
+    "user": "joeuser",
+    "writeable_tty": "+",
+    "tty": "ttys004",
+    "time": "Mar 1 16:35",
+    "idle": ".",
+    "pid": 15679,
+    "from": "192.168.1.5"
   }
 ]
 ```
