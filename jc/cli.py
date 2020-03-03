@@ -34,6 +34,7 @@ parsers = [
     'free',
     'fstab',
     'group',
+    'gshadow',
     'history',
     'hosts',
     'id',
