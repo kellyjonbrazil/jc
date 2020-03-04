@@ -86,7 +86,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
-- `--csv` enables the CSV file parser
+- `--csv` enables the `CSV` file parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
 - `--du` enables the `du` command parser
