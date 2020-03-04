@@ -79,11 +79,21 @@ def process(proc_data):
     # rebuild output for added semantic information
     processed = []
     for k, v in proc_data.items():
-        proc_line = {
-            'line': int(k) if k.isdigit() else None,
-            'command': v,
-        }
+        proc_line = {}
+        proc_line['line'] = k
+        proc_line['command'] = v
         processed.append(proc_line)
+
+    for entry in processed:
+        int_list = ['line']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
     return processed
 
 
@@ -110,14 +120,17 @@ def parse(data, raw=False, quiet=False):
     # split lines and clear out any non-ascii chars
     linedata = data.encode('ascii', errors='ignore').decode().splitlines()
 
-    # Skip any blank lines
-    for entry in filter(None, linedata):
-        try:
-            parsed_line = entry.split(maxsplit=1)
-            raw_output[parsed_line[0]] = parsed_line[1]
-        except IndexError:
-            # need to catch indexerror in case there is weird input from prior commands
-            pass
+    # Clear any blank lines
+    cleandata = list(filter(None, linedata))
+
+    if cleandata:
+        for entry in cleandata:
+            try:
+                parsed_line = entry.split(maxsplit=1)
+                raw_output[parsed_line[0]] = parsed_line[1]
+            except IndexError:
+                # need to catch indexerror in case there is weird input from prior commands
+                pass
 
     if raw:
         return raw_output
