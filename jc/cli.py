@@ -209,6 +209,10 @@ def magic():
             else:
                 break
 
+    if len(args_given) == 0:
+        # This was a call to jc with just options and no commands.
+        return
+
     # find the command and parser
     command = ' '.join(args_given[0:2])
     for parser in parser_info:
