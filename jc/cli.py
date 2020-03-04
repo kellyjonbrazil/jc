@@ -187,7 +187,7 @@ def magic():
     """Parse with magic syntax: jc -p ls -al"""
     if len(sys.argv) <= 1 or sys.argv[1].startswith('--'):
         return
-    
+
     parser_info = about_jc()['parsers']
     # correctly parse escape characters and spaces with shlex
     args_given = " ".join(map(shlex.quote, sys.argv[1:])).split()
@@ -225,7 +225,7 @@ def magic():
                 pass
 
         # second pass for one word commands: e.g. 'ls'
-        elif args_given[0] in parser['magic_commands']
+        elif args_given[0] in parser['magic_commands']:
             try:
                 found_parser = parser['argument']
                 break
@@ -263,7 +263,7 @@ def main():
     debug = 'd' in options
     pretty = 'p' in options
     quiet = 'q' in options
-    raw = 'r' in raw
+    raw = 'r' in options
 
     if 'a' in options:
         json_out(about_jc(), pretty=pretty)
