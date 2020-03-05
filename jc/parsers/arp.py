@@ -196,12 +196,13 @@ def parse(data, raw=False, quiet=False):
         raw_output = []
         for line in cleandata:
             line = line.split()
-            output_line = {}
-            output_line['name'] = line[0]
-            output_line['address'] = line[1].lstrip('(').rstrip(')')
-            output_line['hwtype'] = line[4].lstrip('[').rstrip(']')
-            output_line['hwaddress'] = line[3]
-            output_line['iface'] = line[6]
+            output_line = {
+                'name': line[0],
+                'address': line[1].lstrip('(').rstrip(')'),
+                'hwtype': line[4].lstrip('[').rstrip(']'),
+                'hwaddress': line[3],
+                'iface': line[6],
+            }
             raw_output.append(output_line)
 
         if raw:
