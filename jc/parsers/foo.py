@@ -77,12 +77,8 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
-    cleandata = data.splitlines()
 
-    # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
-
-    if cleandata:
+    for line in filter(None, data.splitlines()):
         # parse the content
         pass
 
