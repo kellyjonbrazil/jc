@@ -44,10 +44,11 @@ import jc
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'history command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    details = 'Optimizations by https://github.com/philippeitis'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
