@@ -150,8 +150,7 @@ def process(proc_data):
         for key in int_list:
             if key in entry:
                 try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
+                    entry[key] = int(entry[key])
                 except (ValueError):
                     entry[key] = None
 
