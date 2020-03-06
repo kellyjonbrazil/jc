@@ -1,5 +1,9 @@
 jc changelog
 
+202003xx v1.x.x
+- Code optimizations by https://github.com/philippeitis
+- Github actions for CI testing on multiple platforms by https://github.com/philippeitis
+
 20200303 v1.8.0
 - Added blkid command parser
 - Added last and lastb command parser
