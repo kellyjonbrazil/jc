@@ -40,7 +40,7 @@ Examples:
       ...
     }
 """
-import jc
+import jc.utils
 
 
 class info():
