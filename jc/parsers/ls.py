@@ -259,6 +259,11 @@ def parse(data, raw=False, quiet=False):
                     new_section = False
                     continue
 
+                # fix for OSX - doesn't print 'total xx' line if empty directory
+                if new_section and entry == '':
+                    new_section = False
+                    continue
+
                 # fixup for filenames with newlines
                 if not new_section \
                    and not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
