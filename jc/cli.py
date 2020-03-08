@@ -188,7 +188,7 @@ def generate_magic_command(args):
     Returns a tuple with a boolean and a command, where the boolean signifies that
     the command is valid, and the command is either a command string or None.
     """
-    
+
     # Parse with magic syntax: jc -p ls -al
     if len(args) <= 1 or args[1].startswith('--'):
         return False, None
