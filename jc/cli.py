@@ -183,18 +183,18 @@ def json_out(data, pretty=False):
         print(json.dumps(data))
 
 
-def generate_magic_command():
+def generate_magic_command(args):
     """
     Returns a tuple with a boolean and a command, where the boolean signifies that
     the command is valid, and the command is either a command string or None.
     """
     
     # Parse with magic syntax: jc -p ls -al
-    if len(sys.argv) <= 1 or sys.argv[1].startswith('--'):
+    if len(args) <= 1 or args[1].startswith('--'):
         return False, None
 
     # correctly parse escape characters and spaces with shlex
-    args_given = " ".join(map(shlex.quote, sys.argv[1:])).split()
+    args_given = " ".join(map(shlex.quote, args[1:])).split()
     options = []
 
     # find the options
@@ -242,7 +242,7 @@ def generate_magic_command():
 
 
 def magic():
-    valid_command, run_command = generate_magic_command()
+    valid_command, run_command = generate_magic_command(sys.argv)
     if valid_command:
         os.system(run_command)
         exit()
