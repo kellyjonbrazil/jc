@@ -223,7 +223,6 @@ def magic():
         if command in parser['magic_commands']:
             try:
                 found_parser = parser['argument']
-                break
             # No command found - go to next loop (for cases like 'jc -a')
             except KeyError:
                 pass
@@ -232,7 +231,6 @@ def magic():
         elif args_given[0] in parser['magic_commands']:
             try:
                 found_parser = parser['argument']
-                break
             # No command found - use standard syntax (for cases like 'jc -a')
             except KeyError:
                 return
