@@ -1,5 +1,11 @@
 jc changelog
 
+20200308 v1.8.1
+- CLI and history parser optimizations by https://github.com/philippeitis
+- Refactored magic syntax function and added tests (https://github.com/philippeitis)
+- Github actions for CI testing on multiple platforms by https://github.com/philippeitis
+- Updated ls parser to fix parsing error in OSX with -lR when there are empty folders
+
 20200303 v1.8.0
 - Added blkid command parser
 - Added last and lastb command parser

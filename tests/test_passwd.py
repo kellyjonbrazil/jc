@@ -10,23 +10,23 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/passwd.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/passwd.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_passwd = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/passwd.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/passwd.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_passwd = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/passwd.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/passwd.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_passwd = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/passwd.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/passwd.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_passwd_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/passwd.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/passwd.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_passwd_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/passwd.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/passwd.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_passwd_json = json.loads(f.read())
 
     def test_passwd_centos_7_7(self):

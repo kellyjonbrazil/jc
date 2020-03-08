@@ -1,0 +1,2453 @@
+total 0
+drwxr-xr-x  18 kbrazil  staff  576 Jan  3 14:46 ModSecurity-envoy
+drwxr-xr-x   3 kbrazil  staff   96 Jan 28 09:00 clover
+drwxr-xr-x  10 kbrazil  staff  320 Dec 23 10:49 envoyonsteroid
+drwxr-xr-x  24 kbrazil  staff  768 Mar  5 08:28 jc
+drwxr-xr-x  18 kbrazil  staff  576 Mar  6 10:54 jtbl
+drwxr-xr-x  11 kbrazil  staff  352 Dec 10 08:08 microsim
+drwxr-xr-x  13 kbrazil  staff  416 Aug 29  2019 microtest
+drwxrwxrwx   8 kbrazil  staff  256 Aug  9  2019 trafficgen - work in progress
+drwxr-xr-x   8 kbrazil  staff  256 Aug 13  2019 utils
+
+./ModSecurity-envoy:
+total 40
+-rw-r--r--   1 kbrazil  staff   904 Jan  3 14:46 BUILD
+-rw-r--r--   1 kbrazil  staff  1068 Jan  3 14:46 LICENSE
+-rw-r--r--   1 kbrazil  staff  7098 Jan  3 14:46 README.md
+-rw-r--r--   1 kbrazil  staff   955 Jan  3 14:46 WORKSPACE
+drwxr-xr-x  11 kbrazil  staff   352 Jan  3 14:46 ci
+drwxr-xr-x   8 kbrazil  staff   256 Jan  3 14:46 conf
+drwxr-xr-x   2 kbrazil  staff    64 Jan  3 14:46 envoy
+drwxr-xr-x  14 kbrazil  staff   448 Jan  3 14:46 http-filter-modsecurity
+drwxr-xr-x   4 kbrazil  staff   128 Jan  3 14:46 modsecurity
+
+./ModSecurity-envoy/ci:
+total 64
+-rw-r--r--  1 kbrazil  staff  1088 Jan  3 14:46 Dockerfile-envoy-image
+-rw-r--r--  1 kbrazil  staff  1274 Jan  3 14:46 README.md
+-rw-r--r--  1 kbrazil  staff   703 Jan  3 14:46 WORKSPACE.filter.example
+drwxr-xr-x  6 kbrazil  staff   192 Jan  3 14:46 build_container
+-rwxr-xr-x  1 kbrazil  staff   653 Jan  3 14:46 do_ci.sh
+-rwxr-xr-x  1 kbrazil  staff   358 Jan  3 14:46 do_envoy_ci.sh
+-rwxr-xr-x  1 kbrazil  staff   325 Jan  3 14:46 docker-entrypoint.sh
+-rwxr-xr-x  1 kbrazil  staff   275 Jan  3 14:46 docker_build.sh
+-rwxr-xr-x  1 kbrazil  staff  1556 Jan  3 14:46 run_envoy_docker.sh
+
+./ModSecurity-envoy/ci/build_container:
+total 32
+-rw-r--r--  1 kbrazil  staff  285 Jan  3 14:46 Dockerfile-centos
+-rw-r--r--  1 kbrazil  staff  214 Jan  3 14:46 Dockerfile-ubuntu
+-rwxr-xr-x  1 kbrazil  staff  318 Jan  3 14:46 build_container_modsecurity_ubuntu.sh
+-rwxr-xr-x  1 kbrazil  staff  629 Jan  3 14:46 docker_build.sh
+
+./ModSecurity-envoy/conf:
+total 160
+-rw-r--r--  1 kbrazil  staff    495 Jan  3 14:46 envoy-modsecurity-example-lds.yaml
+-rw-r--r--  1 kbrazil  staff   1350 Jan  3 14:46 envoy-modsecurity-example.yaml
+-rw-r--r--  1 kbrazil  staff   1683 Jan  3 14:46 lds.yaml
+-rw-r--r--  1 kbrazil  staff    564 Jan  3 14:46 modsecurity.conf
+-rw-r--r--  1 kbrazil  staff  10211 Jan  3 14:46 modsecurity.v3.0.3.conf
+-rw-r--r--  1 kbrazil  staff  53146 Jan  3 14:46 unicode.mapping
+
+./ModSecurity-envoy/envoy:
+
+./ModSecurity-envoy/http-filter-modsecurity:
+total 136
+-rw-r--r--  1 kbrazil  staff   1518 Jan  3 14:46 BUILD
+-rw-r--r--  1 kbrazil  staff   2577 Jan  3 14:46 README.md
+-rw-r--r--  1 kbrazil  staff  17224 Jan  3 14:46 http_filter.cc
+-rw-r--r--  1 kbrazil  staff   4673 Jan  3 14:46 http_filter.h
+-rw-r--r--  1 kbrazil  staff   2420 Jan  3 14:46 http_filter.proto
+-rw-r--r--  1 kbrazil  staff   2673 Jan  3 14:46 http_filter_config.cc
+-rw-r--r--  1 kbrazil  staff   1717 Jan  3 14:46 http_filter_integration_test.cc
+-rw-r--r--  1 kbrazil  staff   2865 Jan  3 14:46 utility.cc
+-rw-r--r--  1 kbrazil  staff    401 Jan  3 14:46 utility.h
+-rw-r--r--  1 kbrazil  staff   2968 Jan  3 14:46 webhook_fetcher.cc
+-rw-r--r--  1 kbrazil  staff   2306 Jan  3 14:46 webhook_fetcher.h
+-rw-r--r--  1 kbrazil  staff   1139 Jan  3 14:46 well_known_names.h
+
+./ModSecurity-envoy/modsecurity:
+total 0
+lrwxr-xr-x  1 kbrazil  staff  25 Jan  3 14:46 include -> ../../ModSecurity/headers
+lrwxr-xr-x  1 kbrazil  staff  44 Jan  3 14:46 libmodsecurity.a -> ../../ModSecurity/src/.libs/libmodsecurity.a
+
+./clover:
+total 0
+drwxr-xr-x  20 kbrazil  staff  640 Jan 28 09:01 clover
+
+./clover/clover:
+total 80
+-rw-r--r--   1 kbrazil  staff   1165 Jan 28 09:01 INFO.yaml
+-rw-r--r--   1 kbrazil  staff    200 Jan 28 09:01 Pipfile
+-rw-r--r--   1 kbrazil  staff  11456 Jan 28 09:01 Pipfile.lock
+drwxr-xr-x   6 kbrazil  staff    192 Jan 28 09:01 ci
+drwxr-xr-x  17 kbrazil  staff    544 Jan 28 09:01 clover
+drwxr-xr-x   5 kbrazil  staff    160 Jan 28 09:01 docker
+drwxr-xr-x   8 kbrazil  staff    256 Jan 28 09:01 docs
+drwxr-xr-x   3 kbrazil  staff     96 Jan 28 09:01 download
+drwxr-xr-x   3 kbrazil  staff     96 Jan 28 09:01 edge
+-rw-r--r--   1 kbrazil  staff    301 Jan 28 09:01 requirements.txt
+drwxr-xr-x   4 kbrazil  staff    128 Jan 28 09:01 samples
+-rw-r--r--   1 kbrazil  staff    221 Jan 28 09:01 setup.cfg
+-rw-r--r--   1 kbrazil  staff   1030 Jan 28 09:01 setup.py
+-rw-r--r--   1 kbrazil  staff    481 Jan 28 09:01 tox.ini
+-rwxr-xr-x   1 kbrazil  staff   1131 Jan 28 09:01 xci-k8s-setup.sh
+
+./clover/clover/ci:
+total 32
+-rwxr-xr-x  1 kbrazil  staff  3148 Jan 28 09:01 deploy.sh
+-rwxr-xr-x  1 kbrazil  staff   671 Jan 28 09:01 sdc_setup.sh
+-rwxr-xr-x  1 kbrazil  staff   390 Jan 28 09:01 upload.sh
+-rwxr-xr-x  1 kbrazil  staff   335 Jan 28 09:01 verify.sh
+
+./clover/clover/clover:
+total 0
+-rw-r--r--   1 kbrazil  staff    0 Jan 28 09:01 __init__.py
+drwxr-xr-x   4 kbrazil  staff  128 Jan 28 09:01 cloverctl
+drwxr-xr-x  10 kbrazil  staff  320 Jan 28 09:01 clovisor
+drwxr-xr-x   9 kbrazil  staff  288 Jan 28 09:01 collector
+drwxr-xr-x   8 kbrazil  staff  256 Jan 28 09:01 controller
+drwxr-xr-x   4 kbrazil  staff  128 Jan 28 09:01 functest
+drwxr-xr-x   7 kbrazil  staff  224 Jan 28 09:01 logging
+drwxr-xr-x   5 kbrazil  staff  160 Jan 28 09:01 monitoring
+drwxr-xr-x   6 kbrazil  staff  192 Jan 28 09:01 orchestration
+drwxr-xr-x   5 kbrazil  staff  160 Jan 28 09:01 servicemesh
+drwxr-xr-x   6 kbrazil  staff  192 Jan 28 09:01 spark
+drwxr-xr-x   7 kbrazil  staff  224 Jan 28 09:01 spinnaker
+drwxr-xr-x   8 kbrazil  staff  256 Jan 28 09:01 test
+drwxr-xr-x   7 kbrazil  staff  224 Jan 28 09:01 tools
+drwxr-xr-x   6 kbrazil  staff  192 Jan 28 09:01 tracing
+
+./clover/clover/clover/cloverctl:
+total 8
+-rwxr-xr-x  1 kbrazil  staff  932 Jan 28 09:01 build.sh
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 src
+
+./clover/clover/clover/cloverctl/src:
+total 0
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 cloverctl
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 cloverinject
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 cloverkube
+
+./clover/clover/clover/cloverctl/src/cloverctl:
+total 8
+drwxr-xr-x  34 kbrazil  staff  1088 Jan 28 09:01 cmd
+-rw-r--r--   1 kbrazil  staff   358 Jan 28 09:01 main.go
+drwxr-xr-x  17 kbrazil  staff   544 Jan 28 09:01 yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/cmd:
+total 272
+-rw-r--r--  1 kbrazil  staff   608 Jan 28 09:01 clear.go
+-rw-r--r--  1 kbrazil  staff   925 Jan 28 09:01 clear_visibility.go
+-rw-r--r--  1 kbrazil  staff   629 Jan 28 09:01 create.go
+-rw-r--r--  1 kbrazil  staff  1572 Jan 28 09:01 create_docker_registry.go
+-rw-r--r--  1 kbrazil  staff  1522 Jan 28 09:01 create_idsrules.go
+-rw-r--r--  1 kbrazil  staff  2379 Jan 28 09:01 create_kubernetes.go
+-rw-r--r--  1 kbrazil  staff  7878 Jan 28 09:01 create_system.go
+-rw-r--r--  1 kbrazil  staff  1505 Jan 28 09:01 create_testplan.go
+-rw-r--r--  1 kbrazil  staff   626 Jan 28 09:01 delete.go
+-rw-r--r--  1 kbrazil  staff  1480 Jan 28 09:01 delete_docker_registry.go
+-rw-r--r--  1 kbrazil  staff  1457 Jan 28 09:01 delete_kubernetes.go
+-rw-r--r--  1 kbrazil  staff  5991 Jan 28 09:01 delete_system.go
+-rw-r--r--  1 kbrazil  staff   627 Jan 28 09:01 get.go
+-rw-r--r--  1 kbrazil  staff  1497 Jan 28 09:01 get_docker_registry.go
+-rw-r--r--  1 kbrazil  staff  1484 Jan 28 09:01 get_kubernetes.go
+-rw-r--r--  1 kbrazil  staff   622 Jan 28 09:01 get_services.go
+-rw-r--r--  1 kbrazil  staff  2057 Jan 28 09:01 get_testresult.go
+-rw-r--r--  1 kbrazil  staff  1694 Jan 28 09:01 get_visibility.go
+-rw-r--r--  1 kbrazil  staff   608 Jan 28 09:01 init.go
+-rw-r--r--  1 kbrazil  staff   943 Jan 28 09:01 init_visibility.go
+-rw-r--r--  1 kbrazil  staff  1136 Jan 28 09:01 provider.go
+-rw-r--r--  1 kbrazil  staff  3638 Jan 28 09:01 root.go
+-rw-r--r--  1 kbrazil  staff   637 Jan 28 09:01 set.go
+-rw-r--r--  1 kbrazil  staff  2007 Jan 28 09:01 set_nginx.go
+-rw-r--r--  1 kbrazil  staff  1556 Jan 28 09:01 set_visibility.go
+-rw-r--r--  1 kbrazil  staff   607 Jan 28 09:01 start.go
+-rw-r--r--  1 kbrazil  staff   938 Jan 28 09:01 start_ids.go
+-rw-r--r--  1 kbrazil  staff  1876 Jan 28 09:01 start_testplan.go
+-rw-r--r--  1 kbrazil  staff  1713 Jan 28 09:01 start_visibility.go
+-rw-r--r--  1 kbrazil  staff   634 Jan 28 09:01 stop.go
+-rw-r--r--  1 kbrazil  staff   933 Jan 28 09:01 stop_ids.go
+-rw-r--r--  1 kbrazil  staff   931 Jan 28 09:01 stop_visibility.go
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml:
+total 72
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 clovisor
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 collector
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 controller
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 datastore
+-rw-r--r--  1 kbrazil  staff  129 Jan 28 09:01 idsrule_icmp.yaml
+-rw-r--r--  1 kbrazil  staff  169 Jan 28 09:01 idsrule_scan.yaml
+-rw-r--r--  1 kbrazil  staff  124 Jan 28 09:01 idsrule_tcp.yaml
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 jmeter
+-rw-r--r--  1 kbrazil  staff  312 Jan 28 09:01 jmeter_testplan.yaml
+-rw-r--r--  1 kbrazil  staff  218 Jan 28 09:01 lbv1.yaml
+-rw-r--r--  1 kbrazil  staff  185 Jan 28 09:01 lbv2.yaml
+-rw-r--r--  1 kbrazil  staff  486 Jan 28 09:01 server.yaml
+-rw-r--r--  1 kbrazil  staff  424 Jan 28 09:01 set_visibility.yaml
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 spark
+-rw-r--r--  1 kbrazil  staff  110 Jan 28 09:01 start_visibility.yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml/clovisor:
+total 24
+-rw-r--r--  1 kbrazil  staff  377 Jan 28 09:01 clusterrolebinding.yaml
+-rw-r--r--  1 kbrazil  staff  560 Jan 28 09:01 daemonset.yaml
+-rw-r--r--  1 kbrazil  staff   89 Jan 28 09:01 serviceaccount.yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml/collector:
+total 16
+-rw-r--r--  1 kbrazil  staff  518 Jan 28 09:01 deployment.yaml
+-rw-r--r--  1 kbrazil  staff  350 Jan 28 09:01 service.yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml/controller:
+total 32
+-rw-r--r--  1 kbrazil  staff  525 Jan 28 09:01 deployment.yaml
+-rw-r--r--  1 kbrazil  staff  359 Jan 28 09:01 service_internal.yaml
+-rw-r--r--  1 kbrazil  staff  232 Jan 28 09:01 service_lb.yaml
+-rw-r--r--  1 kbrazil  staff  262 Jan 28 09:01 service_nodeport.yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml/datastore:
+total 32
+-rw-r--r--  1 kbrazil  staff   196 Jan 28 09:01 cassandra_service.yaml
+-rw-r--r--  1 kbrazil  staff  1265 Jan 28 09:01 cassandra_statefulset.yaml
+-rw-r--r--  1 kbrazil  staff   635 Jan 28 09:01 redis_pod.yaml
+-rw-r--r--  1 kbrazil  staff   115 Jan 28 09:01 redis_service.yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml/jmeter:
+total 32
+-rw-r--r--  1 kbrazil  staff  474 Jan 28 09:01 master_deployment.yaml
+-rw-r--r--  1 kbrazil  staff  287 Jan 28 09:01 master_service.yaml
+-rw-r--r--  1 kbrazil  staff  449 Jan 28 09:01 slave_deployment.yaml
+-rw-r--r--  1 kbrazil  staff  253 Jan 28 09:01 slave_service.yaml
+
+./clover/clover/clover/cloverctl/src/cloverctl/yaml/spark:
+total 32
+-rw-r--r--  1 kbrazil  staff  285 Jan 28 09:01 clusterrolebinding.yaml
+-rw-r--r--  1 kbrazil  staff  286 Jan 28 09:01 clusterrolebinding_spark.yaml
+-rw-r--r--  1 kbrazil  staff  328 Jan 28 09:01 deployment.yaml
+-rw-r--r--  1 kbrazil  staff   98 Jan 28 09:01 serviceaccount.yaml
+
+./clover/clover/clover/cloverctl/src/cloverinject:
+total 16
+-rw-r--r--  1 kbrazil  staff  4435 Jan 28 09:01 inject.go
+
+./clover/clover/clover/cloverctl/src/cloverkube:
+total 32
+-rw-r--r--  1 kbrazil  staff  15386 Jan 28 09:01 main.go
+
+./clover/clover/clover/clovisor:
+total 40
+-rw-r--r--   1 kbrazil  staff   487 Jan 28 09:01 Dockerfile
+drwxr-xr-x   3 kbrazil  staff    96 Jan 28 09:01 bin
+-rwxr-xr-x   1 kbrazil  staff   616 Jan 28 09:01 build-docker
+-rwxr-xr-x   1 kbrazil  staff  1499 Jan 28 09:01 build.sh
+-rw-r--r--   1 kbrazil  staff  1122 Jan 28 09:01 clovisor.yaml
+-rw-r--r--   1 kbrazil  staff  2187 Jan 28 09:01 clovisor_main.go
+drwxr-xr-x  10 kbrazil  staff   320 Jan 28 09:01 libclovisor
+drwxr-xr-x   3 kbrazil  staff    96 Jan 28 09:01 proto
+
+./clover/clover/clover/clovisor/bin:
+total 90664
+-rwxr-xr-x  1 kbrazil  staff  46419408 Jan 28 09:01 clovisor
+
+./clover/clover/clover/clovisor/libclovisor:
+total 128
+-rw-r--r--  1 kbrazil  staff  30287 Jan 28 09:01 clovisor_bcc.go
+-rw-r--r--  1 kbrazil  staff   6120 Jan 28 09:01 clovisor_cfg.go
+-rw-r--r--  1 kbrazil  staff  10727 Jan 28 09:01 clovisor_k8s.go
+drwxr-xr-x  4 kbrazil  staff    128 Jan 28 09:01 ebpf
+-rw-r--r--  1 kbrazil  staff   3655 Jan 28 09:01 jaeger-all-in-one-template.yml
+drwxr-xr-x  5 kbrazil  staff    160 Jan 28 09:01 libproto
+-rw-r--r--  1 kbrazil  staff    717 Jan 28 09:01 mongo.yaml
+-rw-r--r--  1 kbrazil  staff    885 Jan 28 09:01 redis.yaml
+
+./clover/clover/clover/clovisor/libclovisor/ebpf:
+total 40
+-rwxr-xr-x  1 kbrazil  staff  4352 Jan 28 09:01 node_interface.c
+-rwxr-xr-x  1 kbrazil  staff  8565 Jan 28 09:01 session_tracking.c
+
+./clover/clover/clover/clovisor/libclovisor/libproto:
+total 24
+-rwxr-xr-x  1 kbrazil  staff   361 Jan 28 09:01 build-plugin
+-rw-r--r--  1 kbrazil  staff  2896 Jan 28 09:01 clovisor_http.go
+-rw-r--r--  1 kbrazil  staff  3253 Jan 28 09:01 http_alt.go
+
+./clover/clover/clover/clovisor/proto:
+total 22936
+-rw-r--r--  1 kbrazil  staff  11742704 Jan 28 09:01 http.so
+
+./clover/clover/clover/collector:
+total 8
+-rw-r--r--  1 kbrazil  staff    0 Jan 28 09:01 __init__.py
+-rwxr-xr-x  1 kbrazil  staff  519 Jan 28 09:01 build.sh
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 db
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 docker
+drwxr-xr-x  9 kbrazil  staff  288 Jan 28 09:01 grpc
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 process
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 yaml
+
+./clover/clover/clover/collector/db:
+total 24
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  5618 Jan 28 09:01 cassops.py
+-rw-r--r--  1 kbrazil  staff  1892 Jan 28 09:01 redisops.py
+
+./clover/clover/clover/collector/docker:
+total 8
+-rw-r--r--  1 kbrazil  staff  589 Jan 28 09:01 Dockerfile
+
+./clover/clover/clover/collector/grpc:
+total 64
+-rw-r--r--  1 kbrazil  staff      0 Jan 28 09:01 __init__.py
+-rwxr-xr-x  1 kbrazil  staff    380 Jan 28 09:01 build_proto.sh
+-rw-r--r--  1 kbrazil  staff   1070 Jan 28 09:01 collector.proto
+-rw-r--r--  1 kbrazil  staff   3236 Jan 28 09:01 collector_client.py
+-rw-r--r--  1 kbrazil  staff  10872 Jan 28 09:01 collector_pb2.py
+-rw-r--r--  1 kbrazil  staff   3794 Jan 28 09:01 collector_pb2_grpc.py
+-rw-r--r--  1 kbrazil  staff   3424 Jan 28 09:01 collector_server.py
+
+./clover/clover/clover/collector/process:
+total 24
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  7035 Jan 28 09:01 collect.py
+-rwxr-xr-x  1 kbrazil  staff   334 Jan 28 09:01 grpc_process.sh
+
+./clover/clover/clover/collector/yaml:
+total 16
+-rw-r--r--  1 kbrazil  staff  1022 Jan 28 09:01 manifest.template
+-rw-r--r--  1 kbrazil  staff  2587 Jan 28 09:01 render_yaml.py
+
+./clover/clover/clover/controller:
+total 8
+-rw-r--r--  1 kbrazil  staff    0 Jan 28 09:01 __init__.py
+-rwxr-xr-x  1 kbrazil  staff  518 Jan 28 09:01 build.sh
+drwxr-xr-x  9 kbrazil  staff  288 Jan 28 09:01 control
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 docker
+drwxr-xr-x  7 kbrazil  staff  224 Jan 28 09:01 process
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 yaml
+
+./clover/clover/clover/controller/control:
+total 16
+-rw-r--r--   1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+drwxr-xr-x  10 kbrazil  staff   320 Jan 28 09:01 api
+-rw-r--r--   1 kbrazil  staff  1298 Jan 28 09:01 control.py
+drwxr-xr-x   4 kbrazil  staff   128 Jan 28 09:01 static
+drwxr-xr-x  11 kbrazil  staff   352 Jan 28 09:01 templates
+drwxr-xr-x   4 kbrazil  staff   128 Jan 28 09:01 views
+-rw-r--r--   1 kbrazil  staff    82 Jan 28 09:01 wsgi.py
+
+./clover/clover/clover/controller/control/api:
+total 88
+-rw-r--r--  1 kbrazil  staff   178 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  5047 Jan 28 09:01 collector.py
+-rw-r--r--  1 kbrazil  staff  1969 Jan 28 09:01 file_upload.py
+-rw-r--r--  1 kbrazil  staff  6070 Jan 28 09:01 halyard.py
+-rw-r--r--  1 kbrazil  staff  3643 Jan 28 09:01 jmeter.py
+-rw-r--r--  1 kbrazil  staff  2983 Jan 28 09:01 nginx.py
+-rw-r--r--  1 kbrazil  staff  3339 Jan 28 09:01 snort.py
+-rw-r--r--  1 kbrazil  staff  5504 Jan 28 09:01 visibility.py
+
+./clover/clover/clover/controller/control/static:
+total 0
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 css
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 js
+
+./clover/clover/clover/controller/control/static/css:
+total 392
+-rw-r--r--  1 kbrazil  staff     486 Jan 28 09:01 app.css
+-rw-r--r--  1 kbrazil  staff  155708 Jan 28 09:01 foundation.css
+-rw-r--r--  1 kbrazil  staff   36041 Jan 28 09:01 jquery-ui.css
+
+./clover/clover/clover/controller/control/static/js:
+total 520
+drwxr-xr-x  4 kbrazil  staff     128 Jan 28 09:01 foundation
+drwxr-xr-x  4 kbrazil  staff     128 Jan 28 09:01 graphing
+-rw-r--r--  1 kbrazil  staff  253668 Jan 28 09:01 jquery-ui.min.js
+-rw-r--r--  1 kbrazil  staff    8550 Jan 28 09:01 visibility.js
+
+./clover/clover/clover/controller/control/static/js/foundation:
+total 824
+-rw-r--r--  1 kbrazil  staff  148827 Jan 28 09:01 foundation.min.js
+-rw-r--r--  1 kbrazil  staff  268039 Jan 28 09:01 jquery.js
+
+./clover/clover/clover/controller/control/static/js/graphing:
+total 14848
+-rw-r--r--  1 kbrazil  staff  4783367 Jan 28 09:01 candela.min.js
+-rw-r--r--  1 kbrazil  staff  2814564 Jan 28 09:01 plotly-latest.min.js
+
+./clover/clover/clover/controller/control/templates:
+total 72
+-rw-r--r--  1 kbrazil  staff  1026 Jan 28 09:01 base.html
+-rw-r--r--  1 kbrazil  staff   884 Jan 28 09:01 header.html
+-rw-r--r--  1 kbrazil  staff  1002 Jan 28 09:01 http_details.html
+-rw-r--r--  1 kbrazil  staff   297 Jan 28 09:01 metric_requests.html
+-rw-r--r--  1 kbrazil  staff   640 Jan 28 09:01 request_counts.html
+-rw-r--r--  1 kbrazil  staff   730 Jan 28 09:01 rt_system_counts.html
+-rw-r--r--  1 kbrazil  staff  1165 Jan 28 09:01 tracing_names.html
+-rw-r--r--  1 kbrazil  staff  1663 Jan 28 09:01 visibility.html
+-rw-r--r--  1 kbrazil  staff  1480 Jan 28 09:01 visibility_controls.html
+
+./clover/clover/clover/controller/control/views:
+total 16
+-rw-r--r--  1 kbrazil  staff   178 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  3347 Jan 28 09:01 visibility.py
+
+./clover/clover/clover/controller/docker:
+total 8
+-rw-r--r--  1 kbrazil  staff  1506 Jan 28 09:01 Dockerfile
+
+./clover/clover/clover/controller/process:
+total 40
+-rw-r--r--  1 kbrazil  staff  178 Jan 28 09:01 __init__.py
+-rwxr-xr-x  1 kbrazil  staff  441 Jan 28 09:01 gunicorn_process.sh
+-rw-r--r--  1 kbrazil  staff  280 Jan 28 09:01 nginx.conf
+-rwxr-xr-x  1 kbrazil  staff  318 Jan 28 09:01 nginx_process.sh
+-rwxr-xr-x  1 kbrazil  staff  369 Jan 28 09:01 start_process.sh
+
+./clover/clover/clover/controller/yaml:
+total 16
+-rw-r--r--  1 kbrazil  staff   809 Jan 28 09:01 manifest.template
+-rw-r--r--  1 kbrazil  staff  2605 Jan 28 09:01 render_yaml.py
+
+./clover/clover/clover/functest:
+total 8
+-rw-r--r--  1 kbrazil  staff    0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  798 Jan 28 09:01 clover_k8s.py
+
+./clover/clover/clover/logging:
+total 24
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff   423 Jan 28 09:01 conftest.py
+-rw-r--r--  1 kbrazil  staff   959 Jan 28 09:01 es_test.py
+drwxr-xr-x  7 kbrazil  staff   224 Jan 28 09:01 install
+-rw-r--r--  1 kbrazil  staff  1897 Jan 28 09:01 validate.py
+
+./clover/clover/clover/logging/install:
+total 48
+-rw-r--r--  1 kbrazil  staff  3230 Jan 28 09:01 elasticsearch-statefulset-service.yaml
+-rw-r--r--  1 kbrazil  staff  2181 Jan 28 09:01 fluentd-daemonset-elasticsearch-rbac.yaml
+-rw-r--r--  1 kbrazil  staff  1030 Jan 28 09:01 fluentd-istio.yaml
+-rw-r--r--  1 kbrazil  staff  4298 Jan 28 09:01 logging-stack.yaml
+-rw-r--r--  1 kbrazil  staff   829 Jan 28 09:01 proxy-access-control-sidecar.yml
+
+./clover/clover/clover/monitoring:
+total 24
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  4716 Jan 28 09:01 monitoring.py
+-rw-r--r--  1 kbrazil  staff  2109 Jan 28 09:01 validate.py
+
+./clover/clover/clover/orchestration:
+total 48
+-rw-r--r--  1 kbrazil  staff   169 Jan 28 09:01 Pipfile
+-rw-r--r--  1 kbrazil  staff  8392 Jan 28 09:01 Pipfile.lock
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  5915 Jan 28 09:01 kube_client.py
+
+./clover/clover/clover/servicemesh:
+total 24
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  4878 Jan 28 09:01 route_rules.py
+-rw-r--r--  1 kbrazil  staff  1254 Jan 28 09:01 validate.py
+
+./clover/clover/clover/spark:
+total 8
+-rw-r--r--  1 kbrazil  staff  578 Jan 28 09:01 build.sbt
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 docker
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 src
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 yaml
+
+./clover/clover/clover/spark/docker:
+total 0
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 clover-spark
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 spark-submit
+
+./clover/clover/clover/spark/docker/clover-spark:
+total 16
+-rw-r--r--  1 kbrazil  staff  2306 Jan 28 09:01 Dockerfile
+-rwxr-xr-x  1 kbrazil  staff   604 Jan 28 09:01 build.sh
+
+./clover/clover/clover/spark/docker/spark-submit:
+total 32
+-rw-r--r--  1 kbrazil  staff   861 Jan 28 09:01 Dockerfile
+-rwxr-xr-x  1 kbrazil  staff   523 Jan 28 09:01 build.sh
+-rwxr-xr-x  1 kbrazil  staff  1138 Jan 28 09:01 runner.sh
+-rwxr-xr-x  1 kbrazil  staff  1034 Jan 28 09:01 runner_fast.sh
+
+./clover/clover/clover/spark/src:
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 main
+
+./clover/clover/clover/spark/src/main:
+total 0
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 scala
+
+./clover/clover/clover/spark/src/main/scala:
+total 32
+-rw-r--r--  1 kbrazil  staff  1758 Jan 28 09:01 CloverFast.scala
+-rw-r--r--  1 kbrazil  staff  8445 Jan 28 09:01 CloverSlow.scala
+
+./clover/clover/clover/spark/yaml:
+total 8
+-rw-r--r--  1 kbrazil  staff  1002 Jan 28 09:01 clover-spark.yaml
+
+./clover/clover/clover/spinnaker:
+total 24
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rwxr-xr-x  1 kbrazil  staff  4121 Jan 28 09:01 halyard.py
+-rw-r--r--  1 kbrazil  staff  1515 Jan 28 09:01 halyard_sample.py
+drwxr-xr-x  4 kbrazil  staff   128 Jan 28 09:01 install
+drwxr-xr-x  4 kbrazil  staff   128 Jan 28 09:01 lib
+
+./clover/clover/clover/spinnaker/install:
+total 32
+-rw-r--r--  1 kbrazil  staff   233 Jan 28 09:01 minio-pv.yml
+-rw-r--r--  1 kbrazil  staff  8953 Jan 28 09:01 quick-install-spinnaker.yml
+
+./clover/clover/clover/spinnaker/lib:
+total 16
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rwxr-xr-x  1 kbrazil  staff  4611 Jan 28 09:01 halyard_base.py
+
+./clover/clover/clover/test:
+total 40
+drwxr-xr-x  3 kbrazil  staff     96 Jan 28 09:01 app
+-rw-r--r--  1 kbrazil  staff  10659 Jan 28 09:01 fraser_a_b_test.py
+drwxr-xr-x  3 kbrazil  staff     96 Jan 28 09:01 istio
+drwxr-xr-x  3 kbrazil  staff     96 Jan 28 09:01 script
+-rw-r--r--  1 kbrazil  staff   5613 Jan 28 09:01 validate_success.py
+drwxr-xr-x  3 kbrazil  staff     96 Jan 28 09:01 yaml
+
+./clover/clover/clover/test/app:
+total 0
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 sdc
+
+./clover/clover/clover/test/app/sdc:
+total 24
+-rw-r--r--  1 kbrazil  staff  597 Jan 28 09:01 clover-server4.yaml
+-rw-r--r--  1 kbrazil  staff  597 Jan 28 09:01 clover-server5.yaml
+-rw-r--r--  1 kbrazil  staff  393 Jan 28 09:01 lb-v2.yaml
+
+./clover/clover/clover/test/istio:
+total 0
+drwxr-xr-x  7 kbrazil  staff  224 Jan 28 09:01 sdc
+
+./clover/clover/clover/test/istio/sdc:
+total 40
+-rw-r--r--  1 kbrazil  staff  243 Jan 28 09:01 clover-server4-delay.yaml
+-rw-r--r--  1 kbrazil  staff  243 Jan 28 09:01 clover-server5-delay.yaml
+-rw-r--r--  1 kbrazil  staff  236 Jan 28 09:01 route-rule-lb-50-v2.yaml
+-rw-r--r--  1 kbrazil  staff  176 Jan 28 09:01 route-rule-lb-v1.yaml
+-rw-r--r--  1 kbrazil  staff  176 Jan 28 09:01 route-rule-lb-v2.yaml
+
+./clover/clover/clover/test/script:
+total 8
+-rwxr-xr-x  1 kbrazil  staff  111 Jan 28 09:01 lb-test.sh
+
+./clover/clover/clover/test/yaml:
+total 8
+-rw-r--r--  1 kbrazil  staff  600 Jan 28 09:01 fraser_a_b_test.yaml
+
+./clover/clover/clover/tools:
+total 16
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  1572 Jan 28 09:01 clover_validate_rr.py
+drwxr-xr-x  8 kbrazil  staff   256 Jan 28 09:01 jmeter
+-rw-r--r--  1 kbrazil  staff  3725 Jan 28 09:01 validate_rr.py
+drwxr-xr-x  4 kbrazil  staff   128 Jan 28 09:01 yaml
+
+./clover/clover/clover/tools/jmeter:
+total 24
+-rwxr-xr-x  1 kbrazil  staff   530 Jan 28 09:01 build_master.sh
+-rwxr-xr-x  1 kbrazil  staff   528 Jan 28 09:01 build_slave.sh
+drwxr-xr-x  6 kbrazil  staff   192 Jan 28 09:01 jmeter-master
+drwxr-xr-x  3 kbrazil  staff    96 Jan 28 09:01 jmeter-slave
+-rw-r--r--  1 kbrazil  staff  2190 Jan 28 09:01 rmi_keystore.jks
+drwxr-xr-x  5 kbrazil  staff   160 Jan 28 09:01 yaml
+
+./clover/clover/clover/tools/jmeter/jmeter-master:
+total 8
+-rw-r--r--  1 kbrazil  staff  932 Jan 28 09:01 Dockerfile
+drwxr-xr-x  7 kbrazil  staff  224 Jan 28 09:01 grpc
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 process
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 tests
+
+./clover/clover/clover/tools/jmeter/jmeter-master/grpc:
+total 56
+-rwxr-xr-x  1 kbrazil  staff    377 Jan 28 09:01 build_proto.sh
+-rw-r--r--  1 kbrazil  staff   1001 Jan 28 09:01 jmeter.proto
+-rw-r--r--  1 kbrazil  staff  10989 Jan 28 09:01 jmeter_pb2.py
+-rw-r--r--  1 kbrazil  staff   2823 Jan 28 09:01 jmeter_pb2_grpc.py
+-rw-r--r--  1 kbrazil  staff   3854 Jan 28 09:01 jmeter_server.py
+
+./clover/clover/clover/tools/jmeter/jmeter-master/process:
+total 8
+-rwxr-xr-x  1 kbrazil  staff  331 Jan 28 09:01 grpc_process.sh
+
+./clover/clover/clover/tools/jmeter/jmeter-master/tests:
+total 16
+-rw-r--r--  1 kbrazil  staff  7234 Jan 28 09:01 jmx.template
+
+./clover/clover/clover/tools/jmeter/jmeter-slave:
+total 8
+-rw-r--r--  1 kbrazil  staff  736 Jan 28 09:01 Dockerfile
+
+./clover/clover/clover/tools/jmeter/yaml:
+total 24
+-rw-r--r--  1 kbrazil  staff   977 Jan 28 09:01 manifest.template
+-rw-r--r--  1 kbrazil  staff  2313 Jan 28 09:01 render_master.py
+-rw-r--r--  1 kbrazil  staff  2322 Jan 28 09:01 render_slave.py
+
+./clover/clover/clover/tools/yaml:
+total 16
+-rw-r--r--  1 kbrazil  staff  2506 Jan 28 09:01 cassandra.yaml
+-rw-r--r--  1 kbrazil  staff   754 Jan 28 09:01 redis.yaml
+
+./clover/clover/clover/tracing:
+total 32
+-rw-r--r--  1 kbrazil  staff     0 Jan 28 09:01 __init__.py
+-rw-r--r--  1 kbrazil  staff  7191 Jan 28 09:01 tracing.py
+-rw-r--r--  1 kbrazil  staff  1307 Jan 28 09:01 tracing_sample.py
+-rw-r--r--  1 kbrazil  staff  2648 Jan 28 09:01 validate.py
+
+./clover/clover/docker:
+total 24
+-rw-r--r--  1 kbrazil  staff  1005 Jan 28 09:01 Dockerfile
+-rwxr-xr-x  1 kbrazil  staff   579 Jan 28 09:01 build.sh
+-rwxr-xr-x  1 kbrazil  staff  1244 Jan 28 09:01 setup.sh
+
+./clover/clover/docs:
+total 32
+-rw-r--r--  1 kbrazil  staff   29 Jan 28 09:01 conf.py
+-rw-r--r--  1 kbrazil  staff   39 Jan 28 09:01 conf.yaml
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 development
+-rw-r--r--  1 kbrazil  staff  376 Jan 28 09:01 index.rst
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 release
+-rw-r--r--  1 kbrazil  staff   31 Jan 28 09:01 requirements.txt
+
+./clover/clover/docs/development:
+total 0
+drwxr-xr-x  8 kbrazil  staff  256 Jan 28 09:01 design
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 overview
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 requirements
+
+./clover/clover/docs/development/design:
+total 64
+-rw-r--r--  1 kbrazil  staff  8250 Jan 28 09:01 clovisor.rst
+-rw-r--r--  1 kbrazil  staff   352 Jan 28 09:01 index.rst
+-rw-r--r--  1 kbrazil  staff  5731 Jan 28 09:01 logging.rst
+-rw-r--r--  1 kbrazil  staff   841 Jan 28 09:01 monitoring.rst
+-rw-r--r--  1 kbrazil  staff  2139 Jan 28 09:01 tracing.rst
+
+./clover/clover/docs/development/overview:
+
+./clover/clover/docs/development/requirements:
+
+./clover/clover/docs/release:
+total 0
+drwxr-xr-x  13 kbrazil  staff  416 Jan 28 09:01 configguide
+drwxr-xr-x   5 kbrazil  staff  160 Jan 28 09:01 release-notes
+drwxr-xr-x   5 kbrazil  staff  160 Jan 28 09:01 userguide
+
+./clover/clover/docs/release/configguide:
+total 224
+-rw-r--r--   1 kbrazil  staff   3752 Jan 28 09:01 a_b_config_guide.rst
+-rw-r--r--   1 kbrazil  staff   6385 Jan 28 09:01 clovisor_config_guide.rst
+-rw-r--r--   1 kbrazil  staff   6870 Jan 28 09:01 controller_services_config_guide.rst
+drwxr-xr-x  18 kbrazil  staff    576 Jan 28 09:01 imgs
+-rw-r--r--   1 kbrazil  staff    521 Jan 28 09:01 index.rst
+-rw-r--r--   1 kbrazil  staff  12268 Jan 28 09:01 jmeter_config_guide.rst
+-rw-r--r--   1 kbrazil  staff  11479 Jan 28 09:01 modsecurity_config_guide.rst
+-rw-r--r--   1 kbrazil  staff  29174 Jan 28 09:01 sdc_config_guide.rst
+-rw-r--r--   1 kbrazil  staff  11613 Jan 28 09:01 spinnaker_config_guide.rst
+-rw-r--r--   1 kbrazil  staff  18350 Jan 28 09:01 visibility_config_guide.rst
+
+./clover/clover/docs/release/configguide/imgs:
+total 9800
+-rw-r--r--  1 kbrazil  staff  3985370 Jan 28 09:01 istio_gateway.png
+-rw-r--r--  1 kbrazil  staff    78367 Jan 28 09:01 jmeter_overview.png
+-rw-r--r--  1 kbrazil  staff   106854 Jan 28 09:01 sdc_sample.png
+-rw-r--r--  1 kbrazil  staff   226183 Jan 28 09:01 sdc_sample.xcf
+-rw-r--r--  1 kbrazil  staff    84913 Jan 28 09:01 sdc_tracing.png
+-rw-r--r--  1 kbrazil  staff    61742 Jan 28 09:01 spinnaker-bake.png
+-rw-r--r--  1 kbrazil  staff    62381 Jan 28 09:01 spinnaker-deploy.png
+-rw-r--r--  1 kbrazil  staff    37564 Jan 28 09:01 spinnaker-expected-artifacts.png
+-rw-r--r--  1 kbrazil  staff    17589 Jan 28 09:01 spinnaker-produces-artifact.png
+-rw-r--r--  1 kbrazil  staff    20104 Jan 28 09:01 spinnaker.png
+-rw-r--r--  1 kbrazil  staff    33626 Jan 28 09:01 visibility_discovered_active.png
+-rw-r--r--  1 kbrazil  staff    38887 Jan 28 09:01 visibility_distinct_counts.png
+-rw-r--r--  1 kbrazil  staff    27362 Jan 28 09:01 visibility_distinct_http.png
+-rw-r--r--  1 kbrazil  staff    96758 Jan 28 09:01 visibility_monitoring_metrics.png
+-rw-r--r--  1 kbrazil  staff    64705 Jan 28 09:01 visibility_overview.png
+-rw-r--r--  1 kbrazil  staff    40552 Jan 28 09:01 visibility_system_counts_response_times.png
+
+./clover/clover/docs/release/release-notes:
+total 16
+-rw-r--r--  1 kbrazil  staff   340 Jan 28 09:01 index.rst
+-rw-r--r--  1 kbrazil  staff  3279 Jan 28 09:01 release-notes.rst
+
+./clover/clover/docs/release/userguide:
+total 16
+-rw-r--r--  1 kbrazil  staff   292 Jan 28 09:01 index.rst
+-rw-r--r--  1 kbrazil  staff  1497 Jan 28 09:01 userguide.rst
+
+./clover/clover/download:
+total 19632
+-rw-r--r--  1 kbrazil  staff  10051204 Jan 28 09:01 cloverctl.tar.gz
+
+./clover/clover/edge:
+total 0
+drwxr-xr-x  10 kbrazil  staff  320 Jan 28 09:01 sample
+
+./clover/clover/edge/sample:
+total 160
+-rw-r--r--  1 kbrazil  staff  41699 Jan 28 09:01 Network.png
+-rw-r--r--  1 kbrazil  staff   3816 Jan 28 09:01 README.md
+-rw-r--r--  1 kbrazil  staff  19301 Jan 28 09:01 ansible.cfg
+-rw-r--r--  1 kbrazil  staff    194 Jan 28 09:01 clusterForm.yml
+-rw-r--r--  1 kbrazil  staff     64 Jan 28 09:01 clusterTear.yml
+-rw-r--r--  1 kbrazil  staff    183 Jan 28 09:01 hosts
+drwxr-xr-x  5 kbrazil  staff    160 Jan 28 09:01 live_stream_app
+drwxr-xr-x  6 kbrazil  staff    192 Jan 28 09:01 roles
+
+./clover/clover/edge/sample/live_stream_app:
+total 16
+-rw-r--r--  1 kbrazil  staff  3631 Jan 28 09:01 README.md
+-rw-r--r--  1 kbrazil  staff   951 Jan 28 09:01 deployment_uv4l.yml
+drwxr-xr-x  5 kbrazil  staff   160 Jan 28 09:01 docker
+
+./clover/clover/edge/sample/live_stream_app/docker:
+total 16
+-rw-r--r--  1 kbrazil  staff  599 Jan 28 09:01 Dockerfile
+-rw-r--r--  1 kbrazil  staff  500 Jan 28 09:01 build.sh
+drwxr-xr-x  3 kbrazil  staff   96 Jan 28 09:01 src
+
+./clover/clover/edge/sample/live_stream_app/docker/src:
+total 8
+-rw-r--r--  1 kbrazil  staff  356 Jan 28 09:01 uv4l_start.sh
+
+./clover/clover/edge/sample/roles:
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 clusterForm_common
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 clusterForm_master
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 clusterForm_slave(s)
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 clusterTear_common
+
+./clover/clover/edge/sample/roles/clusterForm_common:
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 tasks
+
+./clover/clover/edge/sample/roles/clusterForm_common/tasks:
+total 8
+-rw-r--r--  1 kbrazil  staff  3853 Jan 28 09:01 main.yml
+
+./clover/clover/edge/sample/roles/clusterForm_master:
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 tasks
+
+./clover/clover/edge/sample/roles/clusterForm_master/tasks:
+total 8
+-rw-r--r--  1 kbrazil  staff  1975 Jan 28 09:01 main.yml
+
+./clover/clover/edge/sample/roles/clusterForm_slave(s):
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 tasks
+
+./clover/clover/edge/sample/roles/clusterForm_slave(s)/tasks:
+total 8
+-rw-r--r--  1 kbrazil  staff  392 Jan 28 09:01 main.yml
+
+./clover/clover/edge/sample/roles/clusterTear_common:
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 tasks
+
+./clover/clover/edge/sample/roles/clusterTear_common/tasks:
+total 8
+-rw-r--r--  1 kbrazil  staff  548 Jan 28 09:01 main.yml
+
+./clover/clover/samples:
+total 0
+drwxr-xr-x  9 kbrazil  staff  288 Jan 28 09:01 scenarios
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 services
+
+./clover/clover/samples/scenarios:
+total 64
+-rwxr-xr-x  1 kbrazil  staff   942 Jan 28 09:01 clean.sh
+drwxr-xr-x  5 kbrazil  staff   160 Jan 28 09:01 clearwater_ims
+-rwxr-xr-x  1 kbrazil  staff   749 Jan 28 09:01 deploy.sh
+-rw-r--r--@ 1 kbrazil  staff   641 Jan 28 09:01 ingressgateway_ext_authz_filter.yaml
+-rw-r--r--@ 1 kbrazil  staff  1380 Jan 28 09:01 modsecurity_all_in_one.yaml
+-rw-r--r--  1 kbrazil  staff  7056 Jan 28 09:01 service_delivery_controller.yaml
+-rw-r--r--@ 1 kbrazil  staff  6975 Jan 28 09:01 service_delivery_controller_opnfv.yaml
+
+./clover/clover/samples/scenarios/clearwater_ims:
+total 0
+drwxr-xr-x   3 kbrazil  staff   96 Jan 28 09:01 clt-docker
+drwxr-xr-x   4 kbrazil  staff  128 Jan 28 09:01 scripts
+drwxr-xr-x  12 kbrazil  staff  384 Jan 28 09:01 yaml
+
+./clover/clover/samples/scenarios/clearwater_ims/clt-docker:
+total 8
+-rw-r--r--  1 kbrazil  staff  870 Jan 28 09:01 Dockerfile
+
+./clover/clover/samples/scenarios/clearwater_ims/scripts:
+total 16
+-rwxr-xr-x  1 kbrazil  staff   305 Jan 28 09:01 prov-numbers.sh
+-rwxr-xr-x  1 kbrazil  staff  1170 Jan 28 09:01 run-live-test.sh
+
+./clover/clover/samples/scenarios/clearwater_ims/yaml:
+total 80
+-rw-r--r--  1 kbrazil  staff   923 Jan 28 09:01 ellis-depl.yaml
+-rw-r--r--  1 kbrazil  staff   257 Jan 28 09:01 ellis-svc.yaml
+-rw-r--r--  1 kbrazil  staff   858 Jan 28 09:01 homer-depl.yaml
+-rw-r--r--  1 kbrazil  staff   189 Jan 28 09:01 homer-svc.yaml
+-rw-r--r--  1 kbrazil  staff  1436 Jan 28 09:01 homestead-depl.yaml
+-rw-r--r--  1 kbrazil  staff  1120 Jan 28 09:01 homestead-prov-depl.yaml
+-rw-r--r--  1 kbrazil  staff   225 Jan 28 09:01 homestead-prov-svc.yaml
+-rw-r--r--  1 kbrazil  staff   205 Jan 28 09:01 homestead-svc.yaml
+-rw-r--r--  1 kbrazil  staff  1260 Jan 28 09:01 ralf-depl.yaml
+-rw-r--r--  1 kbrazil  staff   187 Jan 28 09:01 ralf-svc.yaml
+
+./clover/clover/samples/services:
+total 0
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 modsecurity
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 nginx
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 snort_ids
+
+./clover/clover/samples/services/modsecurity:
+total 0
+drwxr-xr-x  8 kbrazil  staff  256 Jan 28 09:01 docker
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 yaml
+
+./clover/clover/samples/services/modsecurity/docker:
+total 48
+-rw-r--r--  1 kbrazil  staff  1302 Jan 28 09:01 Dockerfile
+-rw-r--r--  1 kbrazil  staff  7223 Jan 28 09:01 apache2.conf
+-rw-r--r--  1 kbrazil  staff   507 Jan 28 09:01 build.sh
+-rw-r--r--  1 kbrazil  staff  1079 Jan 28 09:01 docker-entrypoint.sh
+-rw-r--r--  1 kbrazil  staff    71 Jan 28 09:01 proxy.conf
+
+./clover/clover/samples/services/modsecurity/yaml:
+total 32
+-rw-r--r--  1 kbrazil  staff   818 Jan 28 09:01 manifest.template
+-rw-r--r--  1 kbrazil  staff   506 Jan 28 09:01 modsecurity-deployment.yaml
+-rw-r--r--  1 kbrazil  staff   255 Jan 28 09:01 modsecurity-service.yaml
+-rw-r--r--  1 kbrazil  staff  2200 Jan 28 09:01 render_yaml.py
+
+./clover/clover/samples/services/nginx:
+total 0
+drwxr-xr-x  8 kbrazil  staff  256 Jan 28 09:01 docker
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 yaml
+
+./clover/clover/samples/services/nginx/docker:
+total 24
+-rwxr-xr-x  1 kbrazil  staff  529 Jan 28 09:01 build_lb.sh
+-rwxr-xr-x  1 kbrazil  staff  536 Jan 28 09:01 build_proxy.sh
+-rwxr-xr-x  1 kbrazil  staff  537 Jan 28 09:01 build_server.sh
+drwxr-xr-x  9 kbrazil  staff  288 Jan 28 09:01 grpc
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 process
+drwxr-xr-x  5 kbrazil  staff  160 Jan 28 09:01 subservices
+
+./clover/clover/samples/services/nginx/docker/grpc:
+total 88
+-rwxr-xr-x  1 kbrazil  staff    376 Jan 28 09:01 build_proto.sh
+-rw-r--r--  1 kbrazil  staff   1260 Jan 28 09:01 nginx.proto
+-rw-r--r--  1 kbrazil  staff   3321 Jan 28 09:01 nginx_client.py
+-rw-r--r--  1 kbrazil  staff   8288 Jan 28 09:01 nginx_grpc_server.py
+-rw-r--r--  1 kbrazil  staff  14547 Jan 28 09:01 nginx_pb2.py
+-rw-r--r--  1 kbrazil  staff   3577 Jan 28 09:01 nginx_pb2_grpc.py
+drwxr-xr-x  6 kbrazil  staff    192 Jan 28 09:01 templates
+
+./clover/clover/samples/services/nginx/docker/grpc/templates:
+total 32
+-rw-r--r--  1 kbrazil  staff  1840 Jan 28 09:01 lb.template
+-rw-r--r--  1 kbrazil  staff  1895 Jan 28 09:01 proxy.template
+-rw-r--r--  1 kbrazil  staff  3771 Jan 28 09:01 server.template
+-rw-r--r--  1 kbrazil  staff   613 Jan 28 09:01 upload_form.template
+
+./clover/clover/samples/services/nginx/docker/process:
+total 16
+-rwxr-xr-x  1 kbrazil  staff  333 Jan 28 09:01 grpc_process.sh
+-rwxr-xr-x  1 kbrazil  staff  352 Jan 28 09:01 start_process.sh
+
+./clover/clover/samples/services/nginx/docker/subservices:
+total 0
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 lb
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 proxy
+drwxr-xr-x  3 kbrazil  staff  96 Jan 28 09:01 server
+
+./clover/clover/samples/services/nginx/docker/subservices/lb:
+total 8
+-rw-r--r--  1 kbrazil  staff  776 Jan 28 09:01 Dockerfile
+
+./clover/clover/samples/services/nginx/docker/subservices/proxy:
+total 8
+-rw-r--r--  1 kbrazil  staff  782 Jan 28 09:01 Dockerfile
+
+./clover/clover/samples/services/nginx/docker/subservices/server:
+total 8
+-rw-r--r--  1 kbrazil  staff  3517 Jan 28 09:01 Dockerfile
+
+./clover/clover/samples/services/nginx/yaml:
+total 16
+-rw-r--r--  1 kbrazil  staff   686 Jan 28 09:01 manifest.template
+-rw-r--r--  1 kbrazil  staff  2433 Jan 28 09:01 render_yaml.py
+
+./clover/clover/samples/services/snort_ids:
+total 0
+drwxr-xr-x  6 kbrazil  staff  192 Jan 28 09:01 docker
+drwxr-xr-x  4 kbrazil  staff  128 Jan 28 09:01 yaml
+
+./clover/clover/samples/services/snort_ids/docker:
+total 16
+-rw-r--r--   1 kbrazil  staff  2639 Jan 28 09:01 Dockerfile
+-rwxr-xr-x   1 kbrazil  staff   501 Jan 28 09:01 build.sh
+drwxr-xr-x  11 kbrazil  staff   352 Jan 28 09:01 grpc
+drwxr-xr-x   5 kbrazil  staff   160 Jan 28 09:01 process
+
+./clover/clover/samples/services/snort_ids/docker/grpc:
+total 112
+-rwxr-xr-x  1 kbrazil  staff    361 Jan 28 09:01 build_proto.sh
+-rw-r--r--  1 kbrazil  staff  12865 Jan 28 09:01 nginx_pb2.py
+-rw-r--r--  1 kbrazil  staff   3577 Jan 28 09:01 nginx_pb2_grpc.py
+-rw-r--r--  1 kbrazil  staff    806 Jan 28 09:01 snort.proto
+-rw-r--r--  1 kbrazil  staff   1768 Jan 28 09:01 snort_alerts.py
+-rw-r--r--  1 kbrazil  staff   3616 Jan 28 09:01 snort_client.py
+-rw-r--r--  1 kbrazil  staff   8487 Jan 28 09:01 snort_pb2.py
+-rw-r--r--  1 kbrazil  staff   2848 Jan 28 09:01 snort_pb2_grpc.py
+-rw-r--r--  1 kbrazil  staff   3451 Jan 28 09:01 snort_server.py
+
+./clover/clover/samples/services/snort_ids/docker/process:
+total 24
+-rwxr-xr-x  1 kbrazil  staff  421 Jan 28 09:01 alert_process.sh
+-rwxr-xr-x  1 kbrazil  staff  325 Jan 28 09:01 grpc_process.sh
+-rwxr-xr-x  1 kbrazil  staff  449 Jan 28 09:01 start_process.sh
+
+./clover/clover/samples/services/snort_ids/yaml:
+total 16
+-rw-r--r--  1 kbrazil  staff   869 Jan 28 09:01 manifest.template
+-rw-r--r--  1 kbrazil  staff  2341 Jan 28 09:01 render_yaml.py
+
+./envoyonsteroid:
+total 40
+-rw-r--r--@ 1 kbrazil  staff  2670 Dec 23 10:49 Dockerfile
+-rw-r--r--  1 kbrazil  staff  1064 Dec 23 10:49 LICENSE
+-rw-r--r--  1 kbrazil  staff    58 Dec 23 10:49 README.md
+-rw-r--r--@ 1 kbrazil  staff   882 Dec 23 10:49 docker-compose.yml
+-rw-r--r--  1 kbrazil  staff  1683 Dec 23 10:49 lds.yaml
+drwxr-xr-x  3 kbrazil  staff    96 Dec 23 10:49 root
+
+./envoyonsteroid/root:
+
+./jc:
+total 184
+-rwxrwxrwx   1 kbrazil  staff   1068 Oct 15 14:59 LICENSE.md
+-rw-r--r--@  1 kbrazil  staff     21 Feb  8 12:39 MANIFEST.in
+-rwxr-xr-x   1 kbrazil  staff  45946 Mar  4 08:30 README.md
+-rw-r--r--   1 kbrazil  staff     26 Dec  6 10:16 _config.yml
+drwxr-xr-x   4 kbrazil  staff    128 Oct 17 13:25 build
+-rwxrwxrwx   1 kbrazil  staff    127 Oct 15 14:55 build-package.sh
+-rw-r--r--   1 kbrazil  staff   3729 Mar  6 12:05 changelog.txt
+drwxr-xr-x   5 kbrazil  staff    160 Mar  3 13:52 dist
+-rwxr-xr-x   1 kbrazil  staff   2840 Mar  3 11:47 docgen.sh
+drwxr-xr-x   6 kbrazil  staff    192 Nov 17 12:00 docs
+-rwxr-xr-x   1 kbrazil  staff     46 Nov 17 12:00 install.sh
+drwxr-xr-x   9 kbrazil  staff    288 Mar  4 16:55 jc
+drwxr-xr-x   8 kbrazil  staff    256 Mar  3 13:52 jc.egg-info
+-rwxr-xr-x@  1 kbrazil  staff     31 Oct 17 14:59 pypi-upload.sh
+-rw-r--r--   1 kbrazil  staff     61 Mar  4 17:05 requirements.txt
+-rwxr-xr-x@  1 kbrazil  staff     36 Oct 31 08:07 runtests.sh
+-rwxr-xr-x   1 kbrazil  staff   1007 Mar  3 11:47 setup.py
+drwxr-xr-x  51 kbrazil  staff   1632 Mar  4 17:53 tests
+
+./jc/build:
+total 0
+drwxr-xr-x  2 kbrazil  staff   64 Mar  3 13:52 bdist.macosx-10.14-x86_64
+drwxr-xr-x  4 kbrazil  staff  128 Dec 17 12:15 lib
+
+./jc/build/bdist.macosx-10.14-x86_64:
+
+./jc/build/lib:
+total 0
+drwxr-xr-x   7 kbrazil  staff   224 Mar  3 13:52 jc
+drwxr-xr-x  49 kbrazil  staff  1568 Mar  3 13:52 tests
+
+./jc/build/lib/jc:
+total 48
+-rw-r--r--   1 kbrazil  staff  2538 Nov 17 12:00 __init__.py
+-rw-r--r--   1 kbrazil  staff  8721 Mar  3 11:47 cli.py
+-rw-r--r--   1 kbrazil  staff   981 Oct 16 17:28 jc.py
+drwxr-xr-x  50 kbrazil  staff  1600 Mar  3 13:52 parsers
+-rw-r--r--   1 kbrazil  staff  1471 Dec 17 12:12 utils.py
+
+./jc/build/lib/jc/parsers:
+total 616
+-rw-r--r--  1 kbrazil  staff      0 Nov  7 06:51 __init__.py
+-rw-r--r--  1 kbrazil  staff   5048 Feb 13 18:27 arp.py
+-rw-r--r--  1 kbrazil  staff   6906 Mar  3 11:47 blkid.py
+-rw-r--r--  1 kbrazil  staff   6756 Feb 13 18:27 crontab.py
+-rw-r--r--  1 kbrazil  staff   7055 Feb  8 12:42 crontab_u.py
+-rw-r--r--  1 kbrazil  staff   3193 Mar  3 11:47 csv.py
+-rw-r--r--  1 kbrazil  staff   5176 Feb 13 18:27 df.py
+-rw-r--r--  1 kbrazil  staff  15625 Feb 13 18:27 dig.py
+-rw-r--r--  1 kbrazil  staff   3751 Feb 13 18:27 du.py
+-rw-r--r--  1 kbrazil  staff   2782 Feb 13 18:27 env.py
+-rw-r--r--  1 kbrazil  staff   1880 Feb 13 18:27 foo.py
+-rw-r--r--  1 kbrazil  staff   3037 Feb 13 18:27 free.py
+-rw-r--r--  1 kbrazil  staff   4098 Feb 13 18:27 fstab.py
+-rw-r--r--  1 kbrazil  staff   3976 Mar  3 11:47 group.py
+-rw-r--r--  1 kbrazil  staff   3230 Mar  3 11:47 gshadow.py
+-rw-r--r--  1 kbrazil  staff   3090 Feb 13 22:09 history.py
+-rw-r--r--  1 kbrazil  staff   3258 Feb  5 17:00 hosts.py
+-rw-r--r--  1 kbrazil  staff   5595 Feb 13 18:27 id.py
+-rw-r--r--  1 kbrazil  staff   7611 Feb 13 18:27 ifconfig.py
+-rw-r--r--  1 kbrazil  staff   2418 Feb  5 17:00 ini.py
+-rw-r--r--  1 kbrazil  staff   7465 Feb 13 18:27 iptables.py
+-rw-r--r--  1 kbrazil  staff   4885 Feb 13 18:27 jobs.py
+-rw-r--r--  1 kbrazil  staff   4425 Mar  3 11:47 last.py
+-rw-r--r--  1 kbrazil  staff   8630 Mar  3 11:47 ls.py
+-rw-r--r--  1 kbrazil  staff   9105 Feb 13 18:27 lsblk.py
+-rw-r--r--  1 kbrazil  staff   3844 Feb 13 18:27 lsmod.py
+-rw-r--r--  1 kbrazil  staff   5434 Feb 13 18:27 lsof.py
+-rw-r--r--  1 kbrazil  staff   3729 Feb 13 18:27 mount.py
+-rw-r--r--  1 kbrazil  staff  16129 Feb 13 18:27 netstat.py
+-rw-r--r--  1 kbrazil  staff   4055 Mar  3 11:47 passwd.py
+-rw-r--r--  1 kbrazil  staff   2658 Feb 13 18:27 pip_list.py
+-rw-r--r--  1 kbrazil  staff   3444 Feb 13 18:27 pip_show.py
+-rw-r--r--  1 kbrazil  staff   6793 Feb 13 18:27 ps.py
+-rw-r--r--  1 kbrazil  staff   4085 Feb 13 18:27 route.py
+-rw-r--r--  1 kbrazil  staff   4306 Mar  3 11:47 shadow.py
+-rw-r--r--  1 kbrazil  staff  11491 Feb 13 18:27 ss.py
+-rw-r--r--  1 kbrazil  staff   8255 Feb 13 18:27 stat.py
+-rw-r--r--  1 kbrazil  staff   2940 Feb 13 18:27 systemctl.py
+-rw-r--r--  1 kbrazil  staff   3483 Feb 13 18:27 systemctl_lj.py
+-rw-r--r--  1 kbrazil  staff   2675 Feb 13 18:27 systemctl_ls.py
+-rw-r--r--  1 kbrazil  staff   2585 Feb 13 18:27 systemctl_luf.py
+-rw-r--r--  1 kbrazil  staff   3225 Feb 13 18:27 uname.py
+-rw-r--r--  1 kbrazil  staff   4041 Dec 17 12:12 universal.py
+-rw-r--r--  1 kbrazil  staff   3243 Feb 13 18:27 uptime.py
+-rw-r--r--  1 kbrazil  staff   4345 Feb 13 18:27 w.py
+-rw-r--r--  1 kbrazil  staff   7850 Mar  3 11:47 who.py
+-rw-r--r--  1 kbrazil  staff   2747 Feb  5 17:00 xml.py
+-rw-r--r--  1 kbrazil  staff   3045 Feb  5 17:00 yaml.py
+
+./jc/build/lib/tests:
+total 448
+-rw-r--r--  1 kbrazil  staff      0 Oct 31 08:07 __init__.py
+drwxr-xr-x  9 kbrazil  staff    288 Mar  3 13:52 fixtures
+-rw-r--r--  1 kbrazil  staff   4458 Dec 17 12:12 test_arp.py
+-rw-r--r--  1 kbrazil  staff   6230 Mar  3 11:47 test_blkid.py
+-rw-r--r--  1 kbrazil  staff    801 Feb  5 17:00 test_crontab.py
+-rw-r--r--  1 kbrazil  staff   1426 Feb  5 17:00 test_crontab_u.py
+-rw-r--r--  1 kbrazil  staff   5059 Mar  3 11:47 test_csv.py
+-rw-r--r--  1 kbrazil  staff   4381 Dec 17 12:12 test_df.py
+-rw-r--r--  1 kbrazil  staff   3440 Nov 17 12:00 test_dig.py
+-rw-r--r--  1 kbrazil  staff   2271 Dec 17 12:12 test_du.py
+-rw-r--r--  1 kbrazil  staff   1278 Nov 17 12:00 test_env.py
+-rw-r--r--  1 kbrazil  staff   2373 Nov 17 12:00 test_free.py
+-rw-r--r--  1 kbrazil  staff   1334 Nov 17 12:00 test_fstab.py
+-rw-r--r--  1 kbrazil  staff   1874 Mar  3 11:47 test_group.py
+-rw-r--r--  1 kbrazil  staff   1372 Mar  3 11:47 test_gshadow.py
+-rw-r--r--  1 kbrazil  staff   1354 Nov 17 12:00 test_history.py
+-rw-r--r--  1 kbrazil  staff   1334 Nov 17 12:00 test_hosts.py
+-rw-r--r--  1 kbrazil  staff   1257 Feb  5 17:00 test_id.py
+-rw-r--r--  1 kbrazil  staff   3629 Dec 17 12:12 test_ifconfig.py
+-rw-r--r--  1 kbrazil  staff   1332 Feb  5 17:00 test_ini.py
+-rw-r--r--  1 kbrazil  staff   7909 Nov 17 12:00 test_iptables.py
+-rw-r--r--  1 kbrazil  staff   1297 Nov 17 12:00 test_jobs.py
+-rw-r--r--  1 kbrazil  staff   3985 Mar  3 11:47 test_last.py
+-rw-r--r--  1 kbrazil  staff  18866 Feb 27 11:25 test_ls.py
+-rw-r--r--  1 kbrazil  staff   2940 Nov 17 12:00 test_lsblk.py
+-rw-r--r--  1 kbrazil  staff   1316 Nov 17 12:00 test_lsmod.py
+-rw-r--r--  1 kbrazil  staff   2419 Nov 17 12:00 test_lsof.py
+-rw-r--r--  1 kbrazil  staff   2392 Dec 17 12:12 test_mount.py
+-rw-r--r--  1 kbrazil  staff   6114 Nov 17 12:00 test_netstat.py
+-rw-r--r--  1 kbrazil  staff   1904 Mar  3 11:47 test_passwd.py
+-rw-r--r--  1 kbrazil  staff   3123 Dec 17 12:12 test_pip_list.py
+-rw-r--r--  1 kbrazil  staff   2493 Dec 17 12:12 test_pip_show.py
+-rw-r--r--  1 kbrazil  staff   4517 Dec 17 12:12 test_ps.py
+-rw-r--r--  1 kbrazil  staff   2426 Nov 17 12:00 test_route.py
+-rw-r--r--  1 kbrazil  staff   1353 Mar  3 11:47 test_shadow.py
+-rw-r--r--  1 kbrazil  staff   1373 Nov 17 12:00 test_ss.py
+-rw-r--r--  1 kbrazil  staff   1311 Nov 17 12:00 test_stat.py
+-rw-r--r--  1 kbrazil  staff   1398 Nov 17 12:00 test_systemctl.py
+-rw-r--r--  1 kbrazil  staff   1487 Nov 17 12:00 test_systemctl_lj.py
+-rw-r--r--  1 kbrazil  staff   1475 Nov 17 12:00 test_systemctl_ls.py
+-rw-r--r--  1 kbrazil  staff   1492 Nov 17 12:00 test_systemctl_luf.py
+-rw-r--r--  1 kbrazil  staff   2442 Dec 17 12:12 test_uname.py
+-rw-r--r--  1 kbrazil  staff   2419 Dec 17 12:12 test_uptime.py
+-rw-r--r--  1 kbrazil  staff   2226 Dec 17 12:12 test_w.py
+-rw-r--r--  1 kbrazil  staff   3383 Mar  3 11:47 test_who.py
+-rw-r--r--  1 kbrazil  staff   1357 Feb  5 17:00 test_xml.py
+-rw-r--r--  1 kbrazil  staff   1401 Feb  5 17:00 test_yaml.py
+
+./jc/build/lib/tests/fixtures:
+total 8
+drwxr-xr-x  153 kbrazil  staff  4896 Mar  3 13:52 centos-7.7
+-rw-r--r--    1 kbrazil  staff  3397 Mar  3 11:47 create_fixtures.sh
+drwxr-xr-x   34 kbrazil  staff  1088 Mar  3 13:52 generic
+drwxr-xr-x   41 kbrazil  staff  1312 Feb  8 12:42 osx-10.11.6
+drwxr-xr-x   71 kbrazil  staff  2272 Mar  3 13:52 osx-10.14.6
+drwxr-xr-x  153 kbrazil  staff  4896 Mar  3 13:52 ubuntu-18.04
+
+./jc/build/lib/tests/fixtures/centos-7.7:
+total 9720
+-rw-r--r--  1 kbrazil  staff     350 Nov 17 12:00 arp-a.json
+-rw-r--r--  1 kbrazil  staff     173 Oct 31 08:07 arp-a.out
+-rw-r--r--  1 kbrazil  staff     236 Nov 17 12:00 arp-v.json
+-rw-r--r--  1 kbrazil  staff     274 Oct 31 08:07 arp-v.out
+-rw-r--r--  1 kbrazil  staff     236 Nov 17 12:00 arp.json
+-rw-r--r--  1 kbrazil  staff     243 Oct 31 08:07 arp.out
+-rw-r--r--  1 kbrazil  staff     764 Mar  3 11:47 blkid-ip-multi.json
+-rw-r--r--  1 kbrazil  staff     618 Mar  3 11:47 blkid-ip-multi.out
+-rw-r--r--  1 kbrazil  staff     987 Mar  3 11:47 blkid-ip-udev-multi.json
+-rw-r--r--  1 kbrazil  staff     838 Mar  3 11:47 blkid-ip-udev-multi.out
+-rw-r--r--  1 kbrazil  staff     488 Mar  3 11:47 blkid-ip-udev.json
+-rw-r--r--  1 kbrazil  staff     413 Mar  3 11:47 blkid-ip-udev.out
+-rw-r--r--  1 kbrazil  staff      99 Mar  3 11:47 blkid-sda2.json
+-rw-r--r--  1 kbrazil  staff      77 Mar  3 11:47 blkid-sda2.out
+-rw-r--r--  1 kbrazil  staff     392 Mar  3 11:47 blkid.json
+-rw-r--r--  1 kbrazil  staff     307 Mar  3 11:47 blkid.out
+-rw-r--r--  1 kbrazil  staff     399 Feb  5 17:00 crontab-u.json
+-rw-r--r--  1 kbrazil  staff     163 Feb  5 17:00 crontab-u.out
+-rw-r--r--  1 kbrazil  staff    1940 Feb  5 17:00 crontab.json
+-rw-r--r--  1 kbrazil  staff    1564 Dec 17 12:12 crontab.out
+-rw-r--r--  1 kbrazil  staff     836 Nov 17 12:00 df-h.json
+-rw-r--r--  1 kbrazil  staff     444 Oct 31 08:07 df-h.out
+-rw-r--r--  1 kbrazil  staff     904 Dec 17 12:12 df.json
+-rw-r--r--  1 kbrazil  staff     524 Oct 31 08:07 df.out
+-rw-r--r--  1 kbrazil  staff     462 Nov 17 12:00 dig-aaaa.json
+-rw-r--r--  1 kbrazil  staff     556 Oct 31 08:07 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff     464 Nov 17 12:00 dig-x.json
+-rw-r--r--  1 kbrazil  staff     547 Oct 31 08:07 dig-x.out
+-rw-r--r--  1 kbrazil  staff    1005 Nov 17 12:00 dig.json
+-rw-r--r--  1 kbrazil  staff    1052 Oct 31 08:07 dig.out
+-rw-r--r--  1 kbrazil  staff  365319 Dec 17 12:12 du.json
+-rw-r--r--  1 kbrazil  staff  250940 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff    2932 Nov 17 12:00 env.json
+-rw-r--r--  1 kbrazil  staff    2331 Oct 31 08:07 env.out
+-rw-r--r--  1 kbrazil  staff     177 Nov 17 12:00 free-h.json
+-rw-r--r--  1 kbrazil  staff     204 Oct 31 08:07 free-h.out
+-rw-r--r--  1 kbrazil  staff     194 Nov 17 12:00 free.json
+-rw-r--r--  1 kbrazil  staff     204 Oct 31 08:07 free.out
+-rw-r--r--  1 kbrazil  staff     423 Nov 17 12:00 fstab.json
+-rw-r--r--  1 kbrazil  staff     488 Nov 17 12:00 fstab.out
+-rw-r--r--  1 kbrazil  staff    2701 Mar  3 11:47 group.json
+-rw-r--r--  1 kbrazil  staff     509 Mar  3 11:47 group.out
+-rw-r--r--  1 kbrazil  staff    3106 Mar  3 11:47 gshadow.json
+-rw-r--r--  1 kbrazil  staff     407 Mar  3 11:47 gshadow.out
+-rw-r--r--  1 kbrazil  staff   47552 Feb  5 17:00 history.json
+-rw-r--r--  1 kbrazil  staff   25967 Oct 31 08:07 history.out
+-rw-r--r--  1 kbrazil  staff     223 Nov 17 12:00 hosts.json
+-rw-r--r--  1 kbrazil  staff     193 Nov 17 12:00 hosts.out
+-rw-r--r--  1 kbrazil  staff     267 Feb  5 17:00 id.json
+-rw-r--r--  1 kbrazil  staff     129 Feb  5 17:00 id.out
+-rw-r--r--  1 kbrazil  staff    1598 Dec 17 12:12 ifconfig.json
+-rw-r--r--  1 kbrazil  staff    1259 Oct 31 08:07 ifconfig.out
+-rw-r--r--  1 kbrazil  staff    7469 Nov 17 12:00 iptables-filter-line-numbers.json
+-rw-r--r--  1 kbrazil  staff    6643 Nov 17 12:00 iptables-filter-line-numbers.out
+-rw-r--r--  1 kbrazil  staff   10625 Nov 17 12:00 iptables-filter-nv.json
+-rw-r--r--  1 kbrazil  staff    9064 Oct 31 08:07 iptables-filter-nv.out
+-rw-r--r--  1 kbrazil  staff    7749 Nov 17 12:00 iptables-filter.json
+-rw-r--r--  1 kbrazil  staff    6762 Oct 31 08:07 iptables-filter.out
+-rw-r--r--  1 kbrazil  staff    1938 Nov 17 12:00 iptables-mangle.json
+-rw-r--r--  1 kbrazil  staff    2399 Oct 31 08:07 iptables-mangle.out
+-rw-r--r--  1 kbrazil  staff    3211 Nov 17 12:00 iptables-nat.json
+-rw-r--r--  1 kbrazil  staff    3484 Oct 31 08:07 iptables-nat.out
+-rw-r--r--  1 kbrazil  staff    1386 Nov 17 12:00 iptables-raw.json
+-rw-r--r--  1 kbrazil  staff    1616 Oct 31 08:07 iptables-raw.out
+-rw-r--r--  1 kbrazil  staff     306 Nov 17 12:00 jobs.json
+-rw-r--r--  1 kbrazil  staff     164 Oct 31 08:07 jobs.out
+-rw-r--r--  1 kbrazil  staff    9189 Mar  3 11:47 last-w.json
+-rw-r--r--  1 kbrazil  staff    5452 Mar  3 11:47 last-w.out
+-rw-r--r--  1 kbrazil  staff    8934 Mar  3 11:47 last.json
+-rw-r--r--  1 kbrazil  staff    5197 Mar  3 11:47 last.out
+-rw-r--r--  1 kbrazil  staff     511 Mar  3 11:47 lastb.json
+-rw-r--r--  1 kbrazil  staff     346 Mar  3 11:47 lastb.out
+-rw-r--r--  1 kbrazil  staff    1281 Feb 27 11:25 ls-R-newlines.json
+-rw-r--r--  1 kbrazil  staff     542 Feb 27 11:25 ls-R-newlines.out
+-rw-r--r--  1 kbrazil  staff  315329 Feb 19 07:07 ls-R.json
+-rw-r--r--  1 kbrazil  staff   72565 Feb 19 07:07 ls-R.out
+-rw-r--r--  1 kbrazil  staff    2776 Nov 17 12:00 ls-al.json
+-rw-r--r--  1 kbrazil  staff    1070 Oct 31 08:07 ls-al.out
+-rw-r--r--  1 kbrazil  staff  773278 Feb 19 07:07 ls-alR.json
+-rw-r--r--  1 kbrazil  staff  281708 Feb 19 07:07 ls-alR.out
+-rw-r--r--  1 kbrazil  staff    2776 Nov 17 12:00 ls-alh.json
+-rw-r--r--  1 kbrazil  staff    1071 Oct 31 08:07 ls-alh.out
+-rw-r--r--  1 kbrazil  staff   97675 Feb 19 07:07 ls-glob.json
+-rw-r--r--  1 kbrazil  staff   22048 Feb 19 07:07 ls-glob.out
+-rw-r--r--  1 kbrazil  staff    1183 Feb 27 11:25 ls-l-newlines.json
+-rw-r--r--  1 kbrazil  staff     583 Feb 27 11:25 ls-l-newlines.out
+-rw-r--r--  1 kbrazil  staff    2576 Feb 27 11:25 ls-lR-newlines.json
+-rw-r--r--  1 kbrazil  staff    1209 Feb 27 11:25 ls-lR-newlines.out
+-rw-r--r--  1 kbrazil  staff     498 Feb 27 11:25 ls-newlines.json
+-rw-r--r--  1 kbrazil  staff     260 Feb 27 11:25 ls-newlines.out
+-rw-r--r--  1 kbrazil  staff     409 Nov 17 12:00 ls.json
+-rw-r--r--  1 kbrazil  staff      85 Oct 31 08:07 ls.out
+-rw-r--r--  1 kbrazil  staff    4102 Nov 17 12:00 lsblk-allcols.json
+-rw-r--r--  1 kbrazil  staff    2502 Nov 17 12:00 lsblk-allcols.out
+-rw-r--r--  1 kbrazil  staff     698 Nov 17 12:00 lsblk.json
+-rw-r--r--  1 kbrazil  staff     332 Oct 31 08:07 lsblk.out
+-rw-r--r--  1 kbrazil  staff    6655 Nov 17 12:00 lsmod.json
+-rw-r--r--  1 kbrazil  staff    4161 Oct 31 08:07 lsmod.out
+-rw-r--r--  1 kbrazil  staff  618317 Nov 17 12:00 lsof-sudo.json
+-rw-r--r--  1 kbrazil  staff  363073 Oct 31 08:07 lsof-sudo.out
+-rw-r--r--  1 kbrazil  staff  126050 Nov 17 12:00 lsof.json
+-rw-r--r--  1 kbrazil  staff   70567 Oct 31 08:07 lsof.out
+-rw-r--r--  1 kbrazil  staff    4848 Nov 17 12:00 mount.json
+-rw-r--r--  1 kbrazil  staff    2711 Oct 31 08:07 mount.out
+-rw-r--r--  1 kbrazil  staff    7020 Nov 17 12:00 netstat-l.json
+-rw-r--r--  1 kbrazil  staff    3499 Oct 31 08:07 netstat-l.out
+-rw-r--r--  1 kbrazil  staff   17621 Nov 17 12:00 netstat-p.json
+-rw-r--r--  1 kbrazil  staff   10407 Oct 31 08:07 netstat-p.out
+-rw-r--r--  1 kbrazil  staff   29188 Nov 17 12:00 netstat-sudo-aeep.json
+-rw-r--r--  1 kbrazil  staff   14986 Nov 17 12:00 netstat-sudo-aeep.out
+-rw-r--r--  1 kbrazil  staff    8734 Nov 17 12:00 netstat-sudo-lnp.json
+-rw-r--r--  1 kbrazil  staff    4402 Oct 31 08:07 netstat-sudo-lnp.out
+-rw-r--r--  1 kbrazil  staff   15637 Nov 17 12:00 netstat.json
+-rw-r--r--  1 kbrazil  staff    8068 Oct 31 08:07 netstat.out
+-rw-r--r--  1 kbrazil  staff    2747 Mar  3 11:47 passwd.json
+-rw-r--r--  1 kbrazil  staff     961 Mar  3 11:47 passwd.out
+-rw-r--r--  1 kbrazil  staff     905 Dec 17 12:12 pip-list.json
+-rw-r--r--  1 kbrazil  staff     616 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff    1129 Dec 17 12:12 pip-show.json
+-rw-r--r--  1 kbrazil  staff     974 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff   20936 Nov 17 12:00 ps-axu.json
+-rw-r--r--  1 kbrazil  staff    9932 Oct 31 08:07 ps-axu.out
+-rw-r--r--  1 kbrazil  staff   14630 Nov 17 12:00 ps-ef.json
+-rw-r--r--  1 kbrazil  staff    8168 Oct 31 08:07 ps-ef.out
+-rw-r--r--  1 kbrazil  staff     442 Nov 17 12:00 route-vn.json
+-rw-r--r--  1 kbrazil  staff     338 Oct 31 08:07 route-vn.out
+-rw-r--r--  1 kbrazil  staff     437 Nov 17 12:00 route.json
+-rw-r--r--  1 kbrazil  staff     338 Oct 31 08:07 route.out
+-rw-r--r--  1 kbrazil  staff    3206 Mar  3 11:47 shadow.json
+-rw-r--r--  1 kbrazil  staff     740 Mar  3 11:47 shadow.out
+-rw-r--r--  1 kbrazil  staff   29301 Nov 17 12:00 ss-sudo-a.json
+-rw-r--r--  1 kbrazil  staff   17945 Nov 17 12:00 ss-sudo-a.out
+-rw-r--r--  1 kbrazil  staff  322074 Nov 17 12:00 stat.json
+-rw-r--r--  1 kbrazil  staff  295777 Nov 17 12:00 stat.out
+-rw-r--r--  1 kbrazil  staff    1439 Nov 17 12:00 systemctl-ls.json
+-rw-r--r--  1 kbrazil  staff    1159 Nov 17 12:00 systemctl-ls.out
+-rw-r--r--  1 kbrazil  staff   14574 Nov 17 12:00 systemctl-luf.json
+-rw-r--r--  1 kbrazil  staff   13499 Nov 17 12:00 systemctl-luf.out
+-rw-r--r--  1 kbrazil  staff   31968 Nov 17 12:00 systemctl.json
+-rw-r--r--  1 kbrazil  staff   38560 Nov 17 12:00 systemctl.out
+-rw-r--r--  1 kbrazil  staff     276 Nov 17 12:00 uname-a.json
+-rw-r--r--  1 kbrazil  staff     122 Oct 31 08:07 uname-a.out
+-rw-r--r--  1 kbrazil  staff     103 Nov 17 12:00 uptime.json
+-rw-r--r--  1 kbrazil  staff      62 Oct 31 08:07 uptime.out
+-rw-r--r--  1 kbrazil  staff     287 Nov 17 12:00 w.json
+-rw-r--r--  1 kbrazil  staff     266 Oct 31 08:07 w.out
+-rw-r--r--  1 kbrazil  staff     549 Mar  3 11:47 who-a.json
+-rw-r--r--  1 kbrazil  staff     364 Mar  3 11:47 who-a.out
+-rw-r--r--  1 kbrazil  staff     155 Mar  3 11:47 who.json
+-rw-r--r--  1 kbrazil  staff      93 Mar  3 11:47 who.out
+
+./jc/build/lib/tests/fixtures/generic:
+total 3848
+-rw-r--r--  1 kbrazil  staff     849 Mar  3 11:47 csv-biostats.csv
+-rw-r--r--  1 kbrazil  staff    1566 Mar  3 11:47 csv-biostats.json
+-rw-r--r--  1 kbrazil  staff    8402 Mar  3 11:47 csv-cities.csv
+-rw-r--r--  1 kbrazil  staff   18398 Mar  3 11:47 csv-cities.json
+-rw-r--r--  1 kbrazil  staff    2391 Mar  3 11:47 csv-deniro.csv
+-rw-r--r--  1 kbrazil  staff    5146 Mar  3 11:47 csv-deniro.json
+-rw-r--r--  1 kbrazil  staff    1117 Mar  3 11:47 csv-example.csv
+-rw-r--r--  1 kbrazil  staff    1588 Mar  3 11:47 csv-example.json
+-rw-r--r--  1 kbrazil  staff  558246 Mar  3 11:47 csv-flyrna.json
+-rw-r--r--  1 kbrazil  staff  205281 Mar  3 11:47 csv-flyrna.tsv
+-rw-r--r--  1 kbrazil  staff  556670 Mar  3 11:47 csv-flyrna2.json
+-rw-r--r--  1 kbrazil  staff  203705 Mar  3 11:47 csv-flyrna2.tsv
+-rw-r--r--  1 kbrazil  staff     158 Mar  3 11:47 csv-homes-pipe.csv
+-rw-r--r--  1 kbrazil  staff     274 Mar  3 11:47 csv-homes-pipe.json
+-rw-r--r--  1 kbrazil  staff    2125 Mar  3 11:47 csv-homes.csv
+-rw-r--r--  1 kbrazil  staff    6798 Mar  3 11:47 csv-homes.json
+-rw-r--r--  1 kbrazil  staff   53816 Mar  3 11:47 csv-insurance.csv
+-rw-r--r--  1 kbrazil  staff  229722 Mar  3 11:47 csv-insurance.json
+-rw-r--r--  1 kbrazil  staff    4705 Feb  5 17:00 ini-iptelserver.ini
+-rw-r--r--  1 kbrazil  staff    1486 Feb  5 17:00 ini-iptelserver.json
+-rw-r--r--  1 kbrazil  staff     171 Feb  5 17:00 ini-test.ini
+-rw-r--r--  1 kbrazil  staff     270 Feb  5 17:00 ini-test.json
+-rw-r--r--  1 kbrazil  staff    4413 Mar  3 11:47 oscar_age_male.csv
+-rw-r--r--  1 kbrazil  staff    3294 Feb  5 17:00 xml-cd_catalog.json
+-rw-r--r--  1 kbrazil  staff    5077 Feb  5 17:00 xml-cd_catalog.xml
+-rw-r--r--  1 kbrazil  staff     811 Feb  5 17:00 xml-foodmenu.json
+-rw-r--r--  1 kbrazil  staff    1102 Feb  5 17:00 xml-foodmenu.xml
+-rw-r--r--  1 kbrazil  staff     333 Feb  5 17:00 yaml-istio-sc.json
+-rw-r--r--  1 kbrazil  staff     305 Feb  5 17:00 yaml-istio-sc.yaml
+-rw-r--r--  1 kbrazil  staff    3178 Feb  5 17:00 yaml-istio-sidecar.json
+-rw-r--r--  1 kbrazil  staff    3681 Feb  5 17:00 yaml-istio-sidecar.yaml
+
+./jc/build/lib/tests/fixtures/osx-10.11.6:
+total 1344
+-rw-r--r--  1 kbrazil  staff    1669 Dec 17 12:12 arp-a.json
+-rwxr-xr-x  1 kbrazil  staff    1036 Dec 17 12:12 arp-a.out
+-rw-r--r--  1 kbrazil  staff    1151 Dec 17 12:12 df-h.json
+-rwxr-xr-x  1 kbrazil  staff     908 Dec 17 12:12 df-h.out
+-rw-r--r--  1 kbrazil  staff    1196 Dec 17 12:12 df.json
+-rwxr-xr-x  1 kbrazil  staff     992 Dec 17 12:12 df.out
+-rw-r--r--  1 kbrazil  staff     439 Dec 17 12:12 dig-aaaa.json
+-rwxr-xr-x  1 kbrazil  staff     537 Dec 17 12:12 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff     442 Dec 17 12:12 dig-x.json
+-rwxr-xr-x  1 kbrazil  staff     529 Dec 17 12:12 dig-x.out
+-rw-r--r--  1 kbrazil  staff    1272 Dec 17 12:12 dig.json
+-rwxr-xr-x  1 kbrazil  staff    1188 Dec 17 12:12 dig.out
+-rw-r--r--  1 kbrazil  staff  221050 Dec 17 12:12 du.json
+-rwxr-xr-x  1 kbrazil  staff  166687 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff    3791 Dec 17 12:12 ifconfig.json
+-rwxr-xr-x  1 kbrazil  staff    1571 Dec 17 12:12 ifconfig.out
+-rw-r--r--  1 kbrazil  staff    3791 Dec 17 12:12 ifconfig2.json
+-rwxr-xr-x  1 kbrazil  staff    1571 Dec 17 12:12 ifconfig2.out
+-rw-r--r--  1 kbrazil  staff    4259 Dec 17 12:12 ls-al.json
+-rwxr-xr-x  1 kbrazil  staff    1851 Dec 17 12:12 ls-al.out
+-rw-r--r--  1 kbrazil  staff    4296 Dec 17 12:12 ls-alh.json
+-rwxr-xr-x  1 kbrazil  staff    1882 Dec 17 12:12 ls-alh.out
+-rw-r--r--  1 kbrazil  staff     533 Dec 17 12:12 ls.json
+-rwxr-xr-x  1 kbrazil  staff     175 Dec 17 12:12 ls.out
+-rw-r--r--  1 kbrazil  staff     224 Dec 17 12:12 pip-list.json
+-rwxr-xr-x  1 kbrazil  staff     168 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff    1028 Dec 17 12:12 pip-show.json
+-rwxr-xr-x  1 kbrazil  staff     867 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff   53632 Dec 17 12:12 ps-axu.json
+-rwxr-xr-x  1 kbrazil  staff   32255 Dec 17 12:12 ps-axu.out
+-rw-r--r--  1 kbrazil  staff   38291 Dec 17 12:12 ps-ef.json
+-rwxr-xr-x  1 kbrazil  staff   25921 Dec 17 12:12 ps-ef.out
+-rw-r--r--  1 kbrazil  staff     233 Dec 17 12:12 uname-a.json
+-rwxr-xr-x  1 kbrazil  staff     142 Dec 17 12:12 uname-a.out
+-rw-r--r--  1 kbrazil  staff     102 Dec 17 12:12 uptime.json
+-rwxr-xr-x  1 kbrazil  staff      57 Dec 17 12:12 uptime.out
+-rw-r--r--  1 kbrazil  staff     627 Dec 17 12:12 w.json
+-rwxr-xr-x  1 kbrazil  staff     458 Dec 17 12:12 w.out
+
+./jc/build/lib/tests/fixtures/osx-10.14.6:
+total 6272
+-rw-r--r--  1 kbrazil  staff    1541 Dec 17 12:12 arp-a.json
+-rw-r--r--  1 kbrazil  staff     968 Dec 17 12:12 arp-a.out
+-rw-r--r--  1 kbrazil  staff    1686 Dec 17 12:12 df-h.json
+-rw-r--r--  1 kbrazil  staff    1276 Dec 17 12:12 df-h.out
+-rw-r--r--  1 kbrazil  staff    1764 Dec 17 12:12 df.json
+-rw-r--r--  1 kbrazil  staff    1384 Dec 17 12:12 df.out
+-rw-r--r--  1 kbrazil  staff     438 Dec 17 12:12 dig-aaaa.json
+-rw-r--r--  1 kbrazil  staff     536 Dec 17 12:12 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff     442 Dec 17 12:12 dig-x.json
+-rw-r--r--  1 kbrazil  staff     529 Dec 17 12:12 dig-x.out
+-rw-r--r--  1 kbrazil  staff    1266 Dec 17 12:12 dig.json
+-rw-r--r--  1 kbrazil  staff    1182 Dec 17 12:12 dig.out
+-rw-r--r--  1 kbrazil  staff  296296 Dec 17 12:12 du.json
+-rw-r--r--  1 kbrazil  staff  222287 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff    9646 Mar  3 11:47 group.json
+-rw-r--r--  1 kbrazil  staff    2823 Mar  3 11:47 group.out
+-rw-r--r--  1 kbrazil  staff     759 Feb  5 17:00 id.json
+-rw-r--r--  1 kbrazil  staff     386 Feb  5 17:00 id.out
+-rw-r--r--  1 kbrazil  staff   10823 Dec 17 12:12 ifconfig.json
+-rwxr-xr-x  1 kbrazil  staff    3779 Dec 17 12:12 ifconfig.out
+-rw-r--r--  1 kbrazil  staff   11375 Dec 17 12:12 ifconfig2.json
+-rw-r--r--  1 kbrazil  staff    3979 Dec 17 12:12 ifconfig2.out
+-rw-r--r--  1 kbrazil  staff   45274 Mar  3 11:47 last.json
+-rw-r--r--  1 kbrazil  staff   25827 Mar  3 11:47 last.out
+-rw-r--r--  1 kbrazil  staff     852 Feb 27 11:25 ls-R-newlines.json
+-rw-r--r--  1 kbrazil  staff     278 Feb 27 11:25 ls-R-newlines.out
+-rw-r--r--  1 kbrazil  staff  469418 Feb 19 07:07 ls-R.json
+-rw-r--r--  1 kbrazil  staff  133787 Feb 19 07:07 ls-R.out
+-rw-r--r--  1 kbrazil  staff    4653 Dec 17 12:12 ls-al.json
+-rwxr-xr-x  1 kbrazil  staff    2111 Dec 17 12:12 ls-al.out
+-rw-r--r--  1 kbrazil  staff  959674 Feb 19 07:07 ls-alR.json
+-rw-r--r--  1 kbrazil  staff  364578 Feb 19 07:07 ls-alR.out
+-rw-r--r--  1 kbrazil  staff    4684 Dec 17 12:12 ls-alh.json
+-rwxr-xr-x  1 kbrazil  staff    2111 Dec 17 12:12 ls-alh.out
+-rw-r--r--  1 kbrazil  staff   91499 Feb 19 07:07 ls-glob.json
+-rw-r--r--  1 kbrazil  staff   19369 Feb 19 07:07 ls-glob.out
+-rw-r--r--  1 kbrazil  staff    1162 Feb 27 11:25 ls-l-newlines.json
+-rw-r--r--  1 kbrazil  staff     583 Feb 27 11:25 ls-l-newlines.out
+-rw-r--r--  1 kbrazil  staff    1450 Feb 27 11:25 ls-lR-newlines.json
+-rw-r--r--  1 kbrazil  staff     656 Feb 27 11:25 ls-lR-newlines.out
+-rw-r--r--  1 kbrazil  staff     498 Feb 27 11:25 ls-newlines.json
+-rw-r--r--  1 kbrazil  staff     260 Feb 27 11:25 ls-newlines.out
+-rw-r--r--  1 kbrazil  staff     585 Dec 17 12:12 ls.json
+-rwxr-xr-x  1 kbrazil  staff     193 Dec 17 12:12 ls.out
+-rw-r--r--  1 kbrazil  staff     672 Dec 17 12:12 mount.json
+-rw-r--r--  1 kbrazil  staff     349 Dec 17 12:12 mount.out
+-rw-r--r--  1 kbrazil  staff     841 Dec 17 12:12 mount2.json
+-rwxr-xr-x  1 kbrazil  staff     464 Dec 17 12:12 mount2.out
+-rw-r--r--  1 kbrazil  staff   14855 Mar  3 11:47 passwd.json
+-rw-r--r--  1 kbrazil  staff    6804 Mar  3 11:47 passwd.out
+-rw-r--r--  1 kbrazil  staff     224 Dec 17 12:12 pip-list.json
+-rwxr-xr-x  1 kbrazil  staff     168 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff    1067 Dec 17 12:12 pip-show.json
+-rwxr-xr-x  1 kbrazil  staff     910 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff   99173 Dec 17 12:12 ps-axu.json
+-rw-r--r--  1 kbrazil  staff   60107 Dec 17 12:12 ps-axu.out
+-rw-r--r--  1 kbrazil  staff   71162 Dec 17 12:12 ps-ef.json
+-rw-r--r--  1 kbrazil  staff   48758 Dec 17 12:12 ps-ef.out
+-rw-r--r--  1 kbrazil  staff     221 Dec 17 12:12 uname-a.json
+-rwxr-xr-x  1 kbrazil  staff     131 Dec 17 12:12 uname-a.out
+-rw-r--r--  1 kbrazil  staff     110 Dec 17 12:12 uptime.json
+-rwxr-xr-x  1 kbrazil  staff      65 Dec 17 12:12 uptime.out
+-rw-r--r--  1 kbrazil  staff     836 Dec 17 12:12 w.json
+-rwxr-xr-x  1 kbrazil  staff     570 Dec 17 12:12 w.out
+-rw-r--r--  1 kbrazil  staff     659 Mar  3 11:47 who-a.json
+-rw-r--r--  1 kbrazil  staff     419 Mar  3 11:47 who-a.out
+-rw-r--r--  1 kbrazil  staff     251 Mar  3 11:47 who.json
+-rw-r--r--  1 kbrazil  staff     128 Mar  3 11:47 who.out
+
+./jc/build/lib/tests/fixtures/ubuntu-18.04:
+total 12688
+-rw-r--r--  1 kbrazil  staff      351 Nov 17 12:00 arp-a.json
+-rw-r--r--  1 kbrazil  staff      174 Oct 31 08:07 arp-a.out
+-rw-r--r--  1 kbrazil  staff      237 Nov 17 12:00 arp-v.json
+-rw-r--r--  1 kbrazil  staff      274 Oct 31 08:07 arp-v.out
+-rw-r--r--  1 kbrazil  staff      237 Nov 17 12:00 arp.json
+-rw-r--r--  1 kbrazil  staff      243 Oct 31 08:07 arp.out
+-rw-r--r--  1 kbrazil  staff      818 Mar  3 11:47 blkid-ip-multi.json
+-rw-r--r--  1 kbrazil  staff      717 Mar  3 11:47 blkid-ip-multi.out
+-rw-r--r--  1 kbrazil  staff      962 Mar  3 11:47 blkid-ip-udev-multi.json
+-rw-r--r--  1 kbrazil  staff      832 Mar  3 11:47 blkid-ip-udev-multi.out
+-rw-r--r--  1 kbrazil  staff      547 Mar  3 11:47 blkid-ip-udev.json
+-rw-r--r--  1 kbrazil  staff      478 Mar  3 11:47 blkid-ip-udev.out
+-rw-r--r--  1 kbrazil  staff      142 Mar  3 11:47 blkid-sda2.json
+-rw-r--r--  1 kbrazil  staff      115 Mar  3 11:47 blkid-sda2.out
+-rw-r--r--  1 kbrazil  staff      986 Mar  3 11:47 blkid.json
+-rw-r--r--  1 kbrazil  staff      675 Mar  3 11:47 blkid.out
+-rw-r--r--  1 kbrazil  staff      939 Feb  5 17:00 crontab-u.json
+-rw-r--r--  1 kbrazil  staff      752 Feb  5 17:00 crontab-u.out
+-rw-r--r--  1 kbrazil  staff     2261 Nov 17 12:00 df-h.json
+-rw-r--r--  1 kbrazil  staff     1004 Oct 31 08:07 df-h.out
+-rw-r--r--  1 kbrazil  staff     2372 Dec 17 12:12 df.json
+-rw-r--r--  1 kbrazil  staff     1194 Oct 31 08:07 df.out
+-rw-r--r--  1 kbrazil  staff      458 Nov 17 12:00 dig-aaaa.json
+-rw-r--r--  1 kbrazil  staff      532 Oct 31 08:07 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff      460 Nov 17 12:00 dig-x.json
+-rw-r--r--  1 kbrazil  staff      523 Oct 31 08:07 dig-x.out
+-rw-r--r--  1 kbrazil  staff     1306 Nov 17 12:00 dig.json
+-rw-r--r--  1 kbrazil  staff     1156 Oct 31 08:07 dig.out
+-rw-r--r--  1 kbrazil  staff  1560353 Dec 17 12:12 du.json
+-rw-r--r--  1 kbrazil  staff  1136984 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff     2651 Nov 17 12:00 env.json
+-rw-r--r--  1 kbrazil  staff     2125 Oct 31 08:07 env.out
+-rw-r--r--  1 kbrazil  staff      177 Nov 17 12:00 free-h.json
+-rw-r--r--  1 kbrazil  staff      204 Oct 31 08:07 free-h.out
+-rw-r--r--  1 kbrazil  staff      195 Nov 17 12:00 free.json
+-rw-r--r--  1 kbrazil  staff      204 Oct 31 08:07 free.out
+-rw-r--r--  1 kbrazil  staff      268 Nov 17 12:00 fstab.json
+-rw-r--r--  1 kbrazil  staff      120 Nov 17 12:00 fstab.out
+-rw-r--r--  1 kbrazil  staff     3705 Mar  3 11:47 group.json
+-rw-r--r--  1 kbrazil  staff      721 Mar  3 11:47 group.out
+-rw-r--r--  1 kbrazil  staff     4279 Mar  3 11:47 gshadow.json
+-rw-r--r--  1 kbrazil  staff      606 Mar  3 11:47 gshadow.out
+-rw-r--r--  1 kbrazil  staff    22782 Feb  5 17:00 history.json
+-rw-r--r--  1 kbrazil  staff    12844 Oct 31 08:07 history.out
+-rw-r--r--  1 kbrazil  staff      365 Nov 17 12:00 hosts.json
+-rw-r--r--  1 kbrazil  staff      272 Nov 17 12:00 hosts.out
+-rw-r--r--  1 kbrazil  staff     1090 Dec 17 12:12 ifconfig.json
+-rw-r--r--  1 kbrazil  staff      894 Oct 31 08:07 ifconfig.out
+-rw-r--r--  1 kbrazil  staff      847 Nov 17 12:00 iptables-filter-line-numbers.json
+-rw-r--r--  1 kbrazil  staff     1025 Nov 17 12:00 iptables-filter-line-numbers.out
+-rw-r--r--  1 kbrazil  staff     2363 Nov 17 12:00 iptables-filter-nv.json
+-rw-r--r--  1 kbrazil  staff     2763 Oct 31 08:07 iptables-filter-nv.out
+-rw-r--r--  1 kbrazil  staff     1730 Nov 17 12:00 iptables-filter.json
+-rw-r--r--  1 kbrazil  staff     2035 Oct 31 08:07 iptables-filter.out
+-rw-r--r--  1 kbrazil  staff      141 Nov 17 12:00 iptables-mangle.json
+-rw-r--r--  1 kbrazil  staff      468 Oct 31 08:07 iptables-mangle.out
+-rw-r--r--  1 kbrazil  staff      106 Nov 17 12:00 iptables-nat.json
+-rw-r--r--  1 kbrazil  staff      375 Oct 31 08:07 iptables-nat.out
+-rw-r--r--  1 kbrazil  staff       39 Nov 17 12:00 iptables-raw.json
+-rw-r--r--  1 kbrazil  staff      187 Oct 31 08:07 iptables-raw.out
+-rw-r--r--  1 kbrazil  staff      306 Nov 17 12:00 jobs.json
+-rw-r--r--  1 kbrazil  staff      164 Oct 31 08:07 jobs.out
+-rw-r--r--  1 kbrazil  staff     1852 Mar  3 11:47 last-w.json
+-rw-r--r--  1 kbrazil  staff     1073 Mar  3 11:47 last-w.out
+-rw-r--r--  1 kbrazil  staff     1845 Mar  3 11:47 last.json
+-rw-r--r--  1 kbrazil  staff     1066 Mar  3 11:47 last.out
+-rw-r--r--  1 kbrazil  staff      125 Mar  3 11:47 lastb.json
+-rw-r--r--  1 kbrazil  staff      111 Mar  3 11:47 lastb.out
+-rw-r--r--  1 kbrazil  staff     1114 Feb 27 11:25 ls-R-newlines.json
+-rw-r--r--  1 kbrazil  staff      471 Feb 27 11:25 ls-R-newlines.out
+-rw-r--r--  1 kbrazil  staff   298654 Feb 19 07:07 ls-R.json
+-rw-r--r--  1 kbrazil  staff    62421 Feb 19 07:07 ls-R.out
+-rw-r--r--  1 kbrazil  staff     3950 Nov 17 12:00 ls-al.json
+-rw-r--r--  1 kbrazil  staff     1744 Oct 31 08:07 ls-al.out
+-rw-r--r--  1 kbrazil  staff   772252 Feb 19 07:07 ls-alR.json
+-rw-r--r--  1 kbrazil  staff   262651 Feb 19 07:07 ls-alR.out
+-rw-r--r--  1 kbrazil  staff     3942 Nov 17 12:00 ls-alh.json
+-rw-r--r--  1 kbrazil  staff     1567 Oct 31 08:07 ls-alh.out
+-rw-r--r--  1 kbrazil  staff    66907 Feb 19 07:07 ls-glob.json
+-rw-r--r--  1 kbrazil  staff    13721 Feb 19 07:07 ls-glob.out
+-rw-r--r--  1 kbrazil  staff     1176 Feb 27 11:25 ls-l-newlines.json
+-rw-r--r--  1 kbrazil  staff      576 Feb 27 11:25 ls-l-newlines.out
+-rw-r--r--  1 kbrazil  staff     2089 Feb 27 11:25 ls-lR-newlines.json
+-rw-r--r--  1 kbrazil  staff      984 Feb 27 11:25 ls-lR-newlines.out
+-rw-r--r--  1 kbrazil  staff      498 Feb 27 11:25 ls-newlines.json
+-rw-r--r--  1 kbrazil  staff      260 Feb 27 11:25 ls-newlines.out
+-rw-r--r--  1 kbrazil  staff      622 Nov 17 12:00 ls.json
+-rw-r--r--  1 kbrazil  staff      162 Oct 31 08:07 ls.out
+-rw-r--r--  1 kbrazil  staff    11397 Nov 17 12:00 lsblk-allcols.json
+-rw-r--r--  1 kbrazil  staff     7364 Nov 17 12:00 lsblk-allcols.out
+-rw-r--r--  1 kbrazil  staff     2114 Nov 17 12:00 lsblk.json
+-rw-r--r--  1 kbrazil  staff      812 Oct 31 08:07 lsblk.out
+-rw-r--r--  1 kbrazil  staff     6744 Nov 17 12:00 lsmod.json
+-rw-r--r--  1 kbrazil  staff     4251 Oct 31 08:07 lsmod.out
+-rw-r--r--  1 kbrazil  staff   526695 Nov 17 12:00 lsof-sudo.json
+-rw-r--r--  1 kbrazil  staff   342863 Oct 31 08:07 lsof-sudo.out
+-rw-r--r--  1 kbrazil  staff   194044 Nov 17 12:00 lsof.json
+-rw-r--r--  1 kbrazil  staff   132043 Oct 31 08:07 lsof.out
+-rw-r--r--  1 kbrazil  staff     6547 Nov 17 12:00 mount.json
+-rw-r--r--  1 kbrazil  staff     3708 Oct 31 08:07 mount.out
+-rw-r--r--  1 kbrazil  staff     5079 Nov 17 12:00 netstat-l.json
+-rw-r--r--  1 kbrazil  staff     2606 Oct 31 08:07 netstat-l.out
+-rw-r--r--  1 kbrazil  staff    14711 Nov 17 12:00 netstat-p.json
+-rw-r--r--  1 kbrazil  staff     8706 Oct 31 08:07 netstat-p.out
+-rw-r--r--  1 kbrazil  staff    22957 Nov 17 12:00 netstat-sudo-aeep.json
+-rw-r--r--  1 kbrazil  staff    12016 Nov 17 12:00 netstat-sudo-aeep.out
+-rw-r--r--  1 kbrazil  staff     6259 Nov 17 12:00 netstat-sudo-lnp.json
+-rw-r--r--  1 kbrazil  staff     3236 Oct 31 08:07 netstat-sudo-lnp.out
+-rw-r--r--  1 kbrazil  staff    12550 Nov 17 12:00 netstat.json
+-rw-r--r--  1 kbrazil  staff     6711 Oct 31 08:07 netstat.out
+-rw-r--r--  1 kbrazil  staff     4116 Mar  3 11:47 passwd.json
+-rw-r--r--  1 kbrazil  staff     1565 Mar  3 11:47 passwd.out
+-rw-r--r--  1 kbrazil  staff     2638 Dec 17 12:12 pip-list-legacy.json
+-rw-r--r--  1 kbrazil  staff     1041 Dec 17 12:12 pip-list-legacy.out
+-rw-r--r--  1 kbrazil  staff     2638 Dec 17 12:12 pip-list.json
+-rw-r--r--  1 kbrazil  staff     2360 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff      874 Dec 17 12:12 pip-show.json
+-rw-r--r--  1 kbrazil  staff      730 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff    31390 Nov 17 12:00 ps-axu.json
+-rw-r--r--  1 kbrazil  staff    14127 Oct 31 08:07 ps-axu.out
+-rw-r--r--  1 kbrazil  staff    21583 Nov 17 12:00 ps-ef.json
+-rw-r--r--  1 kbrazil  staff    11355 Oct 31 08:07 ps-ef.out
+-rw-r--r--  1 kbrazil  staff      447 Nov 17 12:00 route-vn.json
+-rw-r--r--  1 kbrazil  staff      336 Oct 31 08:07 route-vn.out
+-rw-r--r--  1 kbrazil  staff      439 Nov 17 12:00 route.json
+-rw-r--r--  1 kbrazil  staff      336 Oct 31 08:07 route.out
+-rw-r--r--  1 kbrazil  staff     4330 Mar  3 11:47 shadow.json
+-rw-r--r--  1 kbrazil  staff      939 Mar  3 11:47 shadow.out
+-rw-r--r--  1 kbrazil  staff    23277 Nov 17 12:00 ss-sudo-a.json
+-rw-r--r--  1 kbrazil  staff    25599 Nov 17 12:00 ss-sudo-a.out
+-rw-r--r--  1 kbrazil  staff    73147 Nov 17 12:00 stat.json
+-rw-r--r--  1 kbrazil  staff    60023 Nov 17 12:00 stat.out
+-rw-r--r--  1 kbrazil  staff      270 Nov 17 12:00 systemctl-lj.json
+-rw-r--r--  1 kbrazil  staff      244 Nov 17 12:00 systemctl-lj.out
+-rw-r--r--  1 kbrazil  staff     2431 Nov 17 12:00 systemctl-ls.json
+-rw-r--r--  1 kbrazil  staff     2072 Nov 17 12:00 systemctl-ls.out
+-rw-r--r--  1 kbrazil  staff    18756 Nov 17 12:00 systemctl-luf.json
+-rw-r--r--  1 kbrazil  staff    17734 Nov 17 12:00 systemctl-luf.out
+-rw-r--r--  1 kbrazil  staff    47895 Nov 17 12:00 systemctl.json
+-rw-r--r--  1 kbrazil  staff    76059 Nov 17 12:00 systemctl.out
+-rw-r--r--  1 kbrazil  staff      268 Nov 17 12:00 uname-a.json
+-rw-r--r--  1 kbrazil  staff      114 Oct 31 08:07 uname-a.out
+-rw-r--r--  1 kbrazil  staff      109 Nov 17 12:00 uptime.json
+-rw-r--r--  1 kbrazil  staff       70 Oct 31 08:07 uptime.out
+-rw-r--r--  1 kbrazil  staff      292 Nov 17 12:00 w.json
+-rw-r--r--  1 kbrazil  staff      274 Oct 31 08:07 w.out
+-rw-r--r--  1 kbrazil  staff      452 Mar  3 11:47 who-a.json
+-rw-r--r--  1 kbrazil  staff      355 Mar  3 11:47 who-a.out
+-rw-r--r--  1 kbrazil  staff      155 Mar  3 11:47 who.json
+-rw-r--r--  1 kbrazil  staff      140 Mar  3 11:47 who.out
+
+./jc/dist:
+total 6736
+-rw-r--r--  1 kbrazil  staff  1835119 Mar  3 13:52 jc-1.8.0-py3-none-any.whl
+-rw-r--r--  1 kbrazil  staff  1606987 Mar  3 13:52 jc-1.8.0.tar.gz
+
+./jc/docs:
+total 16
+drwxr-xr-x  48 kbrazil  staff  1536 Mar  3 11:47 parsers
+-rw-r--r--   1 kbrazil  staff  2523 Mar  3 10:54 readme.md
+-rw-r--r--   1 kbrazil  staff   918 Mar  3 10:54 utils.md
+
+./jc/docs/parsers:
+total 456
+-rw-r--r--  1 kbrazil  staff  2613 Mar  3 10:54 arp.md
+-rw-r--r--  1 kbrazil  staff  4263 Mar  3 11:47 blkid.md
+-rw-r--r--  1 kbrazil  staff  4075 Mar  3 10:54 crontab.md
+-rw-r--r--  1 kbrazil  staff  4286 Mar  3 10:54 crontab_u.md
+-rw-r--r--  1 kbrazil  staff  2175 Mar  3 11:47 csv.md
+-rw-r--r--  1 kbrazil  staff  2544 Mar  3 10:54 df.md
+-rw-r--r--  1 kbrazil  staff  9210 Mar  3 10:54 dig.md
+-rw-r--r--  1 kbrazil  staff  2591 Mar  3 10:54 du.md
+-rw-r--r--  1 kbrazil  staff  1709 Mar  3 10:54 env.md
+-rw-r--r--  1 kbrazil  staff  1799 Mar  3 10:54 free.md
+-rw-r--r--  1 kbrazil  staff  2389 Mar  3 10:54 fstab.md
+-rw-r--r--  1 kbrazil  staff  2485 Mar  3 11:47 group.md
+-rw-r--r--  1 kbrazil  staff  1902 Mar  3 11:47 gshadow.md
+-rw-r--r--  1 kbrazil  staff  1500 Mar  3 10:54 history.md
+-rw-r--r--  1 kbrazil  staff  1779 Mar  3 10:54 hosts.md
+-rw-r--r--  1 kbrazil  staff  2331 Mar  3 10:54 id.md
+-rw-r--r--  1 kbrazil  staff  5199 Mar  3 10:54 ifconfig.md
+-rw-r--r--  1 kbrazil  staff  1623 Mar  3 10:54 ini.md
+-rw-r--r--  1 kbrazil  staff  4501 Mar  3 10:54 iptables.md
+-rw-r--r--  1 kbrazil  staff  2326 Mar  3 10:54 jobs.md
+-rw-r--r--  1 kbrazil  staff  2261 Mar  3 11:47 last.md
+-rw-r--r--  1 kbrazil  staff  4290 Mar  3 11:47 ls.md
+-rw-r--r--  1 kbrazil  staff  7177 Mar  3 10:54 lsblk.md
+-rw-r--r--  1 kbrazil  staff  2723 Mar  3 10:54 lsmod.md
+-rw-r--r--  1 kbrazil  staff  2818 Mar  3 10:54 lsof.md
+-rw-r--r--  1 kbrazil  staff  1807 Mar  3 10:54 mount.md
+-rw-r--r--  1 kbrazil  staff  9469 Mar  3 10:54 netstat.md
+-rw-r--r--  1 kbrazil  staff  2506 Mar  3 11:47 passwd.md
+-rw-r--r--  1 kbrazil  staff  1309 Mar  3 10:54 pip_list.md
+-rw-r--r--  1 kbrazil  staff  2194 Mar  3 10:54 pip_show.md
+-rw-r--r--  1 kbrazil  staff  4860 Mar  3 10:54 ps.md
+-rw-r--r--  1 kbrazil  staff  3030 Mar  3 10:54 route.md
+-rw-r--r--  1 kbrazil  staff  2637 Mar  3 11:47 shadow.md
+-rw-r--r--  1 kbrazil  staff  7404 Mar  3 10:54 ss.md
+-rw-r--r--  1 kbrazil  staff  4013 Mar  3 10:54 stat.md
+-rw-r--r--  1 kbrazil  staff  1751 Mar  3 10:54 systemctl.md
+-rw-r--r--  1 kbrazil  staff  1951 Mar  3 10:54 systemctl_lj.md
+-rw-r--r--  1 kbrazil  staff  1473 Mar  3 10:54 systemctl_ls.md
+-rw-r--r--  1 kbrazil  staff  1316 Mar  3 10:54 systemctl_luf.md
+-rw-r--r--  1 kbrazil  staff  1530 Mar  3 10:54 uname.md
+-rw-r--r--  1 kbrazil  staff  1404 Mar  3 10:54 uptime.md
+-rw-r--r--  1 kbrazil  staff  2588 Mar  3 10:54 w.md
+-rw-r--r--  1 kbrazil  staff  3078 Mar  3 11:47 who.md
+-rw-r--r--  1 kbrazil  staff  2047 Mar  3 10:54 xml.md
+-rw-r--r--  1 kbrazil  staff  2257 Mar  3 10:54 yaml.md
+
+./jc/jc:
+total 32
+-rw-r--r--   1 kbrazil  staff  2538 Nov 17 12:00 __init__.py
+drwxr-xr-x   6 kbrazil  staff   192 Mar  4 17:20 __pycache__
+-rw-r--r--   1 kbrazil  staff  8192 Mar  4 16:55 cli.py
+drwxr-xr-x  52 kbrazil  staff  1664 Mar  4 17:05 parsers
+drwxr-xr-x   6 kbrazil  staff   192 Nov  7 13:56 parsers.old
+-rw-r--r--   1 kbrazil  staff  1471 Dec 17 12:12 utils.py
+
+./jc/jc/__pycache__:
+total 40
+-rw-r--r--  1 kbrazil  staff  2672 Nov 20 09:35 __init__.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  6279 Mar  4 17:20 cli.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  2115 Nov  6 21:27 jc.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  1740 Dec 17 15:04 utils.cpython-37.pyc
+
+./jc/jc/parsers:
+total 616
+-rw-r--r--@  1 kbrazil  staff      0 Nov  7 06:51 __init__.py
+drwxr-xr-x  50 kbrazil  staff   1600 Mar  6 12:09 __pycache__
+-rw-r--r--   1 kbrazil  staff   5016 Mar  4 17:05 arp.py
+-rw-r--r--   1 kbrazil  staff   6868 Mar  4 17:05 blkid.py
+-rw-r--r--   1 kbrazil  staff   6756 Feb 13 18:27 crontab.py
+-rw-r--r--   1 kbrazil  staff   7055 Feb  8 12:42 crontab_u.py
+-rw-r--r--   1 kbrazil  staff   3193 Mar  3 11:47 csv.py
+-rw-r--r--   1 kbrazil  staff   5176 Feb 13 18:27 df.py
+-rw-r--r--   1 kbrazil  staff  15625 Feb 13 18:27 dig.py
+-rw-r--r--   1 kbrazil  staff   3751 Feb 13 18:27 du.py
+-rw-r--r--   1 kbrazil  staff   2782 Feb 13 18:27 env.py
+-rw-r--r--   1 kbrazil  staff   1802 Mar  4 16:55 foo.py
+-rw-r--r--   1 kbrazil  staff   3037 Feb 13 18:27 free.py
+-rw-r--r--   1 kbrazil  staff   4098 Feb 13 18:27 fstab.py
+-rw-r--r--   1 kbrazil  staff   3976 Mar  3 11:47 group.py
+-rw-r--r--   1 kbrazil  staff   3230 Mar  3 11:47 gshadow.py
+-rw-r--r--   1 kbrazil  staff   2807 Mar  6 12:06 history.py
+-rw-r--r--   1 kbrazil  staff   3258 Feb  5 17:00 hosts.py
+-rw-r--r--   1 kbrazil  staff   5595 Feb 13 18:27 id.py
+-rw-r--r--   1 kbrazil  staff   7611 Feb 13 18:27 ifconfig.py
+-rw-r--r--   1 kbrazil  staff   2418 Feb  5 17:00 ini.py
+-rw-r--r--   1 kbrazil  staff   7465 Feb 13 18:27 iptables.py
+-rw-r--r--   1 kbrazil  staff   4885 Feb 13 18:27 jobs.py
+-rw-r--r--   1 kbrazil  staff   4425 Mar  3 11:47 last.py
+-rw-r--r--   1 kbrazil  staff   8630 Mar  3 11:47 ls.py
+-rw-r--r--   1 kbrazil  staff   9105 Feb 13 18:27 lsblk.py
+-rw-r--r--   1 kbrazil  staff   3844 Feb 13 18:27 lsmod.py
+-rw-r--r--   1 kbrazil  staff   5434 Feb 13 18:27 lsof.py
+-rw-r--r--   1 kbrazil  staff   3729 Feb 13 18:27 mount.py
+-rw-r--r--   1 kbrazil  staff  16129 Feb 13 18:27 netstat.py
+-rw-r--r--   1 kbrazil  staff   4055 Mar  3 11:47 passwd.py
+-rw-r--r--   1 kbrazil  staff   2658 Feb 13 18:27 pip_list.py
+-rw-r--r--   1 kbrazil  staff   3444 Feb 13 18:27 pip_show.py
+-rw-r--r--   1 kbrazil  staff   6793 Feb 13 18:27 ps.py
+-rw-r--r--   1 kbrazil  staff   4085 Feb 13 18:27 route.py
+-rw-r--r--   1 kbrazil  staff   4306 Mar  3 11:47 shadow.py
+-rw-r--r--   1 kbrazil  staff  11491 Feb 13 18:27 ss.py
+-rw-r--r--   1 kbrazil  staff   8255 Feb 13 18:27 stat.py
+-rw-r--r--   1 kbrazil  staff   2940 Feb 13 18:27 systemctl.py
+-rw-r--r--   1 kbrazil  staff   3483 Feb 13 18:27 systemctl_lj.py
+-rw-r--r--   1 kbrazil  staff   2675 Feb 13 18:27 systemctl_ls.py
+-rw-r--r--   1 kbrazil  staff   2585 Feb 13 18:27 systemctl_luf.py
+-rw-r--r--   1 kbrazil  staff   3225 Feb 13 18:27 uname.py
+-rw-r--r--   1 kbrazil  staff   4041 Dec 17 12:12 universal.py
+-rw-r--r--   1 kbrazil  staff   3243 Feb 13 18:27 uptime.py
+-rw-r--r--   1 kbrazil  staff   4345 Feb 13 18:27 w.py
+-rw-r--r--   1 kbrazil  staff   7850 Mar  3 11:47 who.py
+-rw-r--r--   1 kbrazil  staff   2747 Feb  5 17:00 xml.py
+-rw-r--r--   1 kbrazil  staff   3045 Feb  5 17:00 yaml.py
+
+./jc/jc/parsers/__pycache__:
+total 576
+-rw-r--r--  1 kbrazil  staff    131 Nov  7 07:07 __init__.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4280 Mar  4 17:05 arp.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6132 Mar  4 17:05 blkid.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6113 Feb 13 22:07 crontab.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6348 Feb  8 12:42 crontab_u.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3292 Mar  4 12:08 csv.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4234 Feb 13 22:07 df.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  13352 Feb 13 22:07 dig.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3750 Feb 13 22:07 du.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2834 Feb 13 22:07 env.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3088 Feb 13 22:07 free.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3779 Feb 13 22:07 fstab.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3785 Mar  4 12:08 group.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3108 Mar  4 12:08 gshadow.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2740 Mar  6 12:09 history.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3031 Feb  5 22:20 hosts.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4338 Feb 13 22:07 id.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   7471 Feb 13 22:07 ifconfig.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2733 Feb  5 22:20 ini.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6664 Feb 13 22:07 iptables.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4054 Feb 13 22:07 jobs.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4038 Mar  4 12:08 last.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6559 Mar  4 12:08 ls.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   8868 Feb 13 22:07 lsblk.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3899 Feb 13 22:07 lsmod.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4065 Feb 13 22:07 lsof.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3514 Feb 13 22:07 mount.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  13400 Feb 13 22:07 netstat.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3849 Mar  4 12:08 passwd.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2603 Feb 13 22:07 pip_list.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3425 Feb 13 22:07 pip_show.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6396 Feb 13 22:07 ps.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4207 Feb 13 22:07 route.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4055 Mar  4 12:08 shadow.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   9863 Feb 13 22:07 ss.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6408 Feb 13 22:07 stat.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2973 Feb 13 22:07 systemctl.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3381 Feb 13 22:07 systemctl_lj.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2638 Nov 15 19:07 systemctl_lm.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2715 Feb 13 22:07 systemctl_ls.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2600 Feb 13 22:07 systemctl_luf.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2856 Feb 13 22:07 uname.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3545 Dec 17 15:04 universal.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2946 Feb 13 22:07 uptime.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4162 Feb 13 22:07 w.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   5485 Mar  4 12:08 who.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2957 Feb  5 22:20 xml.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3269 Feb  5 22:20 yaml.cpython-37.pyc
+
+./jc/jc/parsers.old:
+total 56
+-rw-r--r--@ 1 kbrazil  staff  2247 Oct  4 15:20 ifconfig-old.py
+-rw-r--r--  1 kbrazil  staff  9359 Oct 18 19:02 netstat-fancy.py
+-rw-r--r--@ 1 kbrazil  staff  2714 Oct 16 23:03 netstat-orig.py
+-rw-r--r--  1 kbrazil  staff  4410 Nov  5 20:30 netstat-v1.1.1.py
+
+./jc/jc.egg-info:
+total 200
+-rw-r--r--  1 kbrazil  staff  64247 Mar  3 13:52 PKG-INFO
+-rw-r--r--  1 kbrazil  staff  19812 Mar  3 13:52 SOURCES.txt
+-rw-r--r--  1 kbrazil  staff      1 Mar  3 13:52 dependency_links.txt
+-rw-r--r--  1 kbrazil  staff     36 Mar  3 13:52 entry_points.txt
+-rw-r--r--  1 kbrazil  staff     61 Mar  3 13:52 requires.txt
+-rw-r--r--  1 kbrazil  staff      9 Mar  3 13:52 top_level.txt
+
+./jc/tests:
+total 464
+-rw-r--r--   1 kbrazil  staff      0 Oct 31 08:07 __init__.py
+drwxr-xr-x  48 kbrazil  staff   1536 Mar  4 19:46 __pycache__
+drwxr-xr-x   9 kbrazil  staff    288 Mar  3 11:47 fixtures
+-rw-r--r--   1 kbrazil  staff   4746 Mar  4 19:37 test_arp.py
+-rw-r--r--   1 kbrazil  staff   6590 Mar  4 19:37 test_blkid.py
+-rw-r--r--   1 kbrazil  staff    837 Mar  4 19:37 test_crontab.py
+-rw-r--r--   1 kbrazil  staff   1498 Mar  4 19:37 test_crontab_u.py
+-rw-r--r--   1 kbrazil  staff   5383 Mar  4 19:37 test_csv.py
+-rw-r--r--   1 kbrazil  staff   4669 Mar  4 19:37 test_df.py
+-rw-r--r--   1 kbrazil  staff   3656 Mar  4 19:38 test_dig.py
+-rw-r--r--   1 kbrazil  staff   2415 Mar  4 19:38 test_du.py
+-rw-r--r--   1 kbrazil  staff   1350 Mar  4 19:38 test_env.py
+-rw-r--r--   1 kbrazil  staff   2517 Mar  4 19:38 test_free.py
+-rw-r--r--   1 kbrazil  staff   1406 Mar  4 19:38 test_fstab.py
+-rw-r--r--   1 kbrazil  staff   1982 Mar  4 19:38 test_group.py
+-rw-r--r--   1 kbrazil  staff   1444 Mar  4 19:39 test_gshadow.py
+-rw-r--r--   1 kbrazil  staff   1426 Mar  4 19:39 test_history.py
+-rw-r--r--   1 kbrazil  staff   1406 Mar  4 19:39 test_hosts.py
+-rw-r--r--   1 kbrazil  staff   1329 Mar  4 19:39 test_id.py
+-rw-r--r--   1 kbrazil  staff   3845 Mar  4 19:39 test_ifconfig.py
+-rw-r--r--   1 kbrazil  staff   1404 Mar  4 19:39 test_ini.py
+-rw-r--r--   1 kbrazil  staff   8341 Mar  4 19:39 test_iptables.py
+-rw-r--r--   1 kbrazil  staff   1369 Mar  4 19:40 test_jobs.py
+-rw-r--r--   1 kbrazil  staff   4237 Mar  4 19:40 test_last.py
+-rw-r--r--   1 kbrazil  staff  20054 Mar  4 19:40 test_ls.py
+-rw-r--r--   1 kbrazil  staff   3084 Mar  4 19:29 test_lsblk.py
+-rw-r--r--   1 kbrazil  staff   1388 Mar  4 19:41 test_lsmod.py
+-rw-r--r--   1 kbrazil  staff   2563 Mar  4 19:41 test_lsof.py
+-rw-r--r--   1 kbrazil  staff   2536 Mar  4 19:41 test_mount.py
+-rw-r--r--   1 kbrazil  staff   6474 Mar  4 19:41 test_netstat.py
+-rw-r--r--   1 kbrazil  staff   2012 Mar  4 19:41 test_passwd.py
+-rw-r--r--   1 kbrazil  staff   3303 Mar  4 19:41 test_pip_list.py
+-rw-r--r--   1 kbrazil  staff   2637 Mar  4 19:33 test_pip_show.py
+-rw-r--r--   1 kbrazil  staff   4805 Mar  4 19:42 test_ps.py
+-rw-r--r--   1 kbrazil  staff   2570 Mar  4 19:42 test_route.py
+-rw-r--r--   1 kbrazil  staff   1425 Mar  4 19:42 test_shadow.py
+-rw-r--r--   1 kbrazil  staff   1445 Mar  4 19:42 test_ss.py
+-rw-r--r--   1 kbrazil  staff   1383 Mar  4 19:30 test_stat.py
+-rw-r--r--   1 kbrazil  staff   1470 Mar  4 19:33 test_systemctl.py
+-rw-r--r--   1 kbrazil  staff    907 Mar  4 19:44 test_systemctl_lj.py
+-rw-r--r--   1 kbrazil  staff   1547 Mar  4 19:45 test_systemctl_ls.py
+-rw-r--r--   1 kbrazil  staff   1564 Mar  4 19:45 test_systemctl_luf.py
+-rw-r--r--   1 kbrazil  staff   2586 Mar  4 19:45 test_uname.py
+-rw-r--r--   1 kbrazil  staff   2563 Mar  4 19:45 test_uptime.py
+-rw-r--r--   1 kbrazil  staff   2370 Mar  4 19:45 test_w.py
+-rw-r--r--   1 kbrazil  staff   3599 Mar  4 19:46 test_who.py
+-rw-r--r--   1 kbrazil  staff   1429 Mar  4 19:46 test_xml.py
+-rw-r--r--   1 kbrazil  staff   1473 Mar  4 19:46 test_yaml.py
+
+./jc/tests/__pycache__:
+total 464
+-rw-r--r--  1 kbrazil  staff    126 Nov  8 14:01 __init__.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4580 Mar  4 19:43 test_arp.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6192 Mar  4 19:43 test_blkid.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1185 Mar  4 19:43 test_crontab.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1762 Mar  4 19:43 test_crontab_u.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   5045 Mar  4 19:43 test_csv.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4520 Mar  4 19:43 test_df.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3632 Mar  4 19:43 test_dig.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2553 Mar  4 19:43 test_du.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1626 Mar  4 19:43 test_env.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2640 Mar  4 19:43 test_free.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1678 Mar  4 19:43 test_fstab.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2178 Mar  4 19:43 test_group.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1712 Mar  4 19:43 test_gshadow.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1694 Mar  4 19:43 test_history.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1678 Mar  4 19:43 test_hosts.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1607 Mar  4 19:43 test_id.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3783 Mar  4 19:43 test_ifconfig.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1654 Mar  4 19:43 test_ini.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   7690 Mar  4 19:43 test_iptables.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1643 Mar  4 19:43 test_jobs.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4137 Mar  4 19:43 test_last.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  17989 Mar  4 19:43 test_ls.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3195 Mar  4 19:43 test_lsblk.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1660 Mar  4 19:43 test_lsmod.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2680 Mar  4 19:43 test_lsof.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2655 Mar  4 19:43 test_mount.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   6060 Mar  4 19:43 test_netstat.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2204 Mar  4 19:43 test_passwd.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3316 Mar  4 19:43 test_pip_list.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2739 Mar  4 19:43 test_pip_show.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   4636 Mar  4 19:43 test_ps.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2685 Mar  4 19:43 test_route.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1695 Mar  4 19:43 test_shadow.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1709 Mar  4 19:43 test_ss.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1657 Mar  4 19:43 test_stat.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1734 Mar  4 19:43 test_systemctl.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1254 Mar  4 19:44 test_systemctl_lj.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1805 Mar  4 19:46 test_systemctl_ls.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1820 Mar  4 19:46 test_systemctl_luf.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2690 Mar  4 19:46 test_uname.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2677 Mar  4 19:46 test_uptime.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   2518 Mar  4 19:46 test_w.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   3582 Mar  4 19:46 test_who.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1676 Mar  4 19:46 test_xml.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff   1715 Mar  4 19:46 test_yaml.cpython-37.pyc
+
+./jc/tests/fixtures:
+total 8
+drwxr-xr-x  153 kbrazil  staff  4896 Mar  3 11:47 centos-7.7
+-rw-r--r--    1 kbrazil  staff  3397 Mar  3 11:47 create_fixtures.sh
+drwxr-xr-x   34 kbrazil  staff  1088 Mar  3 11:47 generic
+drwxr-xr-x   41 kbrazil  staff  1312 Dec 17 12:12 osx-10.11.6
+drwxr-xr-x   71 kbrazil  staff  2272 Mar  3 11:47 osx-10.14.6
+drwxr-xr-x  153 kbrazil  staff  4896 Mar  3 11:47 ubuntu-18.04
+
+./jc/tests/fixtures/centos-7.7:
+total 9720
+-rw-r--r--  1 kbrazil  staff     350 Nov 17 12:00 arp-a.json
+-rw-r--r--  1 kbrazil  staff     173 Oct 31 08:07 arp-a.out
+-rw-r--r--  1 kbrazil  staff     236 Nov 17 12:00 arp-v.json
+-rw-r--r--  1 kbrazil  staff     274 Oct 31 08:07 arp-v.out
+-rw-r--r--  1 kbrazil  staff     236 Nov 17 12:00 arp.json
+-rw-r--r--  1 kbrazil  staff     243 Oct 31 08:07 arp.out
+-rw-r--r--  1 kbrazil  staff     764 Mar  3 11:47 blkid-ip-multi.json
+-rw-r--r--  1 kbrazil  staff     618 Mar  3 11:47 blkid-ip-multi.out
+-rw-r--r--  1 kbrazil  staff     987 Mar  3 11:47 blkid-ip-udev-multi.json
+-rw-r--r--  1 kbrazil  staff     838 Mar  3 11:47 blkid-ip-udev-multi.out
+-rw-r--r--  1 kbrazil  staff     488 Mar  3 11:47 blkid-ip-udev.json
+-rw-r--r--  1 kbrazil  staff     413 Mar  3 11:47 blkid-ip-udev.out
+-rw-r--r--  1 kbrazil  staff      99 Mar  3 11:47 blkid-sda2.json
+-rw-r--r--  1 kbrazil  staff      77 Mar  3 11:47 blkid-sda2.out
+-rw-r--r--  1 kbrazil  staff     392 Mar  3 11:47 blkid.json
+-rw-r--r--  1 kbrazil  staff     307 Mar  3 11:47 blkid.out
+-rw-r--r--  1 kbrazil  staff     399 Feb  5 17:00 crontab-u.json
+-rw-r--r--  1 kbrazil  staff     163 Feb  5 17:00 crontab-u.out
+-rw-r--r--  1 kbrazil  staff    1940 Feb  5 17:00 crontab.json
+-rw-r--r--  1 kbrazil  staff    1564 Dec 17 12:12 crontab.out
+-rw-r--r--  1 kbrazil  staff     836 Nov 17 12:00 df-h.json
+-rw-r--r--  1 kbrazil  staff     444 Oct 31 08:07 df-h.out
+-rw-r--r--  1 kbrazil  staff     904 Dec 17 12:12 df.json
+-rw-r--r--  1 kbrazil  staff     524 Oct 31 08:07 df.out
+-rw-r--r--  1 kbrazil  staff     462 Nov 17 12:00 dig-aaaa.json
+-rw-r--r--  1 kbrazil  staff     556 Oct 31 08:07 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff     464 Nov 17 12:00 dig-x.json
+-rw-r--r--  1 kbrazil  staff     547 Oct 31 08:07 dig-x.out
+-rw-r--r--  1 kbrazil  staff    1005 Nov 17 12:00 dig.json
+-rw-r--r--  1 kbrazil  staff    1052 Oct 31 08:07 dig.out
+-rw-r--r--  1 kbrazil  staff  365319 Dec 17 12:12 du.json
+-rw-r--r--  1 kbrazil  staff  250940 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff    2932 Nov 17 12:00 env.json
+-rw-r--r--  1 kbrazil  staff    2331 Oct 31 08:07 env.out
+-rw-r--r--  1 kbrazil  staff     177 Nov 17 12:00 free-h.json
+-rw-r--r--  1 kbrazil  staff     204 Oct 31 08:07 free-h.out
+-rw-r--r--  1 kbrazil  staff     194 Nov 17 12:00 free.json
+-rw-r--r--  1 kbrazil  staff     204 Oct 31 08:07 free.out
+-rw-r--r--  1 kbrazil  staff     423 Nov 17 12:00 fstab.json
+-rw-r--r--  1 kbrazil  staff     488 Nov 17 12:00 fstab.out
+-rw-r--r--  1 kbrazil  staff    2701 Mar  3 11:47 group.json
+-rw-r--r--  1 kbrazil  staff     509 Mar  3 11:47 group.out
+-rw-r--r--  1 kbrazil  staff    3106 Mar  3 11:47 gshadow.json
+-rw-r--r--  1 kbrazil  staff     407 Mar  3 11:47 gshadow.out
+-rw-r--r--  1 kbrazil  staff   47552 Feb  5 17:00 history.json
+-rw-r--r--  1 kbrazil  staff   25967 Oct 31 08:07 history.out
+-rw-r--r--  1 kbrazil  staff     223 Nov 17 12:00 hosts.json
+-rw-r--r--  1 kbrazil  staff     193 Nov 17 12:00 hosts.out
+-rw-r--r--  1 kbrazil  staff     267 Feb  5 17:00 id.json
+-rw-r--r--  1 kbrazil  staff     129 Feb  5 17:00 id.out
+-rw-r--r--  1 kbrazil  staff    1598 Dec 17 12:12 ifconfig.json
+-rw-r--r--  1 kbrazil  staff    1259 Oct 31 08:07 ifconfig.out
+-rw-r--r--  1 kbrazil  staff    7469 Nov 17 12:00 iptables-filter-line-numbers.json
+-rw-r--r--  1 kbrazil  staff    6643 Nov 17 12:00 iptables-filter-line-numbers.out
+-rw-r--r--  1 kbrazil  staff   10625 Nov 17 12:00 iptables-filter-nv.json
+-rw-r--r--  1 kbrazil  staff    9064 Oct 31 08:07 iptables-filter-nv.out
+-rw-r--r--  1 kbrazil  staff    7749 Nov 17 12:00 iptables-filter.json
+-rw-r--r--  1 kbrazil  staff    6762 Oct 31 08:07 iptables-filter.out
+-rw-r--r--  1 kbrazil  staff    1938 Nov 17 12:00 iptables-mangle.json
+-rw-r--r--  1 kbrazil  staff    2399 Oct 31 08:07 iptables-mangle.out
+-rw-r--r--  1 kbrazil  staff    3211 Nov 17 12:00 iptables-nat.json
+-rw-r--r--  1 kbrazil  staff    3484 Oct 31 08:07 iptables-nat.out
+-rw-r--r--  1 kbrazil  staff    1386 Nov 17 12:00 iptables-raw.json
+-rw-r--r--  1 kbrazil  staff    1616 Oct 31 08:07 iptables-raw.out
+-rw-r--r--  1 kbrazil  staff     306 Nov 17 12:00 jobs.json
+-rw-r--r--  1 kbrazil  staff     164 Oct 31 08:07 jobs.out
+-rw-r--r--  1 kbrazil  staff    9189 Mar  3 11:47 last-w.json
+-rw-r--r--  1 kbrazil  staff    5452 Mar  3 11:47 last-w.out
+-rw-r--r--  1 kbrazil  staff    8934 Mar  3 11:47 last.json
+-rw-r--r--  1 kbrazil  staff    5197 Mar  3 11:47 last.out
+-rw-r--r--  1 kbrazil  staff     511 Mar  3 11:47 lastb.json
+-rw-r--r--  1 kbrazil  staff     346 Mar  3 11:47 lastb.out
+-rw-r--r--  1 kbrazil  staff    1281 Feb 27 11:25 ls-R-newlines.json
+-rw-r--r--  1 kbrazil  staff     542 Feb 27 11:25 ls-R-newlines.out
+-rw-r--r--  1 kbrazil  staff  315329 Feb 19 07:07 ls-R.json
+-rw-r--r--  1 kbrazil  staff   72565 Feb 19 07:07 ls-R.out
+-rw-r--r--  1 kbrazil  staff    2776 Nov 17 12:00 ls-al.json
+-rw-r--r--  1 kbrazil  staff    1070 Oct 31 08:07 ls-al.out
+-rw-r--r--  1 kbrazil  staff  773278 Feb 19 07:07 ls-alR.json
+-rw-r--r--  1 kbrazil  staff  281708 Feb 19 07:07 ls-alR.out
+-rw-r--r--  1 kbrazil  staff    2776 Nov 17 12:00 ls-alh.json
+-rw-r--r--  1 kbrazil  staff    1071 Oct 31 08:07 ls-alh.out
+-rw-r--r--  1 kbrazil  staff   97675 Feb 19 07:07 ls-glob.json
+-rw-r--r--  1 kbrazil  staff   22048 Feb 19 07:07 ls-glob.out
+-rw-r--r--  1 kbrazil  staff    1183 Feb 27 11:25 ls-l-newlines.json
+-rw-r--r--  1 kbrazil  staff     583 Feb 27 11:25 ls-l-newlines.out
+-rw-r--r--  1 kbrazil  staff    2576 Feb 27 11:25 ls-lR-newlines.json
+-rw-r--r--  1 kbrazil  staff    1209 Feb 27 11:25 ls-lR-newlines.out
+-rw-r--r--  1 kbrazil  staff     498 Feb 27 11:25 ls-newlines.json
+-rw-r--r--  1 kbrazil  staff     260 Feb 27 11:25 ls-newlines.out
+-rw-r--r--  1 kbrazil  staff     409 Nov 17 12:00 ls.json
+-rw-r--r--  1 kbrazil  staff      85 Oct 31 08:07 ls.out
+-rw-r--r--  1 kbrazil  staff    4102 Nov 17 12:00 lsblk-allcols.json
+-rw-r--r--  1 kbrazil  staff    2502 Nov 17 12:00 lsblk-allcols.out
+-rw-r--r--  1 kbrazil  staff     698 Nov 17 12:00 lsblk.json
+-rw-r--r--  1 kbrazil  staff     332 Oct 31 08:07 lsblk.out
+-rw-r--r--  1 kbrazil  staff    6655 Nov 17 12:00 lsmod.json
+-rw-r--r--  1 kbrazil  staff    4161 Oct 31 08:07 lsmod.out
+-rw-r--r--  1 kbrazil  staff  618317 Nov 17 12:00 lsof-sudo.json
+-rw-r--r--  1 kbrazil  staff  363073 Oct 31 08:07 lsof-sudo.out
+-rw-r--r--  1 kbrazil  staff  126050 Nov 17 12:00 lsof.json
+-rw-r--r--  1 kbrazil  staff   70567 Oct 31 08:07 lsof.out
+-rw-r--r--  1 kbrazil  staff    4848 Nov 17 12:00 mount.json
+-rw-r--r--  1 kbrazil  staff    2711 Oct 31 08:07 mount.out
+-rw-r--r--  1 kbrazil  staff    7020 Nov 17 12:00 netstat-l.json
+-rw-r--r--  1 kbrazil  staff    3499 Oct 31 08:07 netstat-l.out
+-rw-r--r--  1 kbrazil  staff   17621 Nov 17 12:00 netstat-p.json
+-rw-r--r--  1 kbrazil  staff   10407 Oct 31 08:07 netstat-p.out
+-rw-r--r--  1 kbrazil  staff   29188 Nov 17 12:00 netstat-sudo-aeep.json
+-rw-r--r--  1 kbrazil  staff   14986 Nov 17 12:00 netstat-sudo-aeep.out
+-rw-r--r--  1 kbrazil  staff    8734 Nov 17 12:00 netstat-sudo-lnp.json
+-rw-r--r--  1 kbrazil  staff    4402 Oct 31 08:07 netstat-sudo-lnp.out
+-rw-r--r--  1 kbrazil  staff   15637 Nov 17 12:00 netstat.json
+-rw-r--r--  1 kbrazil  staff    8068 Oct 31 08:07 netstat.out
+-rw-r--r--  1 kbrazil  staff    2747 Mar  3 11:47 passwd.json
+-rw-r--r--  1 kbrazil  staff     961 Mar  3 11:47 passwd.out
+-rw-r--r--  1 kbrazil  staff     905 Dec 17 12:12 pip-list.json
+-rw-r--r--  1 kbrazil  staff     616 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff    1129 Dec 17 12:12 pip-show.json
+-rw-r--r--  1 kbrazil  staff     974 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff   20936 Nov 17 12:00 ps-axu.json
+-rw-r--r--  1 kbrazil  staff    9932 Oct 31 08:07 ps-axu.out
+-rw-r--r--  1 kbrazil  staff   14630 Nov 17 12:00 ps-ef.json
+-rw-r--r--  1 kbrazil  staff    8168 Oct 31 08:07 ps-ef.out
+-rw-r--r--  1 kbrazil  staff     442 Nov 17 12:00 route-vn.json
+-rw-r--r--  1 kbrazil  staff     338 Oct 31 08:07 route-vn.out
+-rw-r--r--  1 kbrazil  staff     437 Nov 17 12:00 route.json
+-rw-r--r--  1 kbrazil  staff     338 Oct 31 08:07 route.out
+-rw-r--r--  1 kbrazil  staff    3206 Mar  3 11:47 shadow.json
+-rw-r--r--  1 kbrazil  staff     740 Mar  3 11:47 shadow.out
+-rw-r--r--  1 kbrazil  staff   29301 Nov 17 12:00 ss-sudo-a.json
+-rw-r--r--  1 kbrazil  staff   17945 Nov 17 12:00 ss-sudo-a.out
+-rw-r--r--  1 kbrazil  staff  322074 Nov 17 12:00 stat.json
+-rw-r--r--  1 kbrazil  staff  295777 Nov 17 12:00 stat.out
+-rw-r--r--  1 kbrazil  staff    1439 Nov 17 12:00 systemctl-ls.json
+-rw-r--r--  1 kbrazil  staff    1159 Nov 17 12:00 systemctl-ls.out
+-rw-r--r--  1 kbrazil  staff   14574 Nov 17 12:00 systemctl-luf.json
+-rw-r--r--  1 kbrazil  staff   13499 Nov 17 12:00 systemctl-luf.out
+-rw-r--r--  1 kbrazil  staff   31968 Nov 17 12:00 systemctl.json
+-rw-r--r--  1 kbrazil  staff   38560 Nov 17 12:00 systemctl.out
+-rw-r--r--  1 kbrazil  staff     276 Nov 17 12:00 uname-a.json
+-rw-r--r--  1 kbrazil  staff     122 Oct 31 08:07 uname-a.out
+-rw-r--r--  1 kbrazil  staff     103 Nov 17 12:00 uptime.json
+-rw-r--r--  1 kbrazil  staff      62 Oct 31 08:07 uptime.out
+-rw-r--r--  1 kbrazil  staff     287 Nov 17 12:00 w.json
+-rw-r--r--  1 kbrazil  staff     266 Oct 31 08:07 w.out
+-rw-r--r--  1 kbrazil  staff     549 Mar  3 11:47 who-a.json
+-rw-r--r--  1 kbrazil  staff     364 Mar  3 11:47 who-a.out
+-rw-r--r--  1 kbrazil  staff     155 Mar  3 11:47 who.json
+-rw-r--r--  1 kbrazil  staff      93 Mar  3 11:47 who.out
+
+./jc/tests/fixtures/generic:
+total 3848
+-rw-r--r--  1 kbrazil  staff     849 Mar  3 11:47 csv-biostats.csv
+-rw-r--r--  1 kbrazil  staff    1566 Mar  3 11:47 csv-biostats.json
+-rw-r--r--  1 kbrazil  staff    8402 Mar  3 11:47 csv-cities.csv
+-rw-r--r--  1 kbrazil  staff   18398 Mar  3 11:47 csv-cities.json
+-rw-r--r--  1 kbrazil  staff    2391 Mar  3 11:47 csv-deniro.csv
+-rw-r--r--  1 kbrazil  staff    5146 Mar  3 11:47 csv-deniro.json
+-rw-r--r--  1 kbrazil  staff    1117 Mar  3 11:47 csv-example.csv
+-rw-r--r--  1 kbrazil  staff    1588 Mar  3 11:47 csv-example.json
+-rw-r--r--  1 kbrazil  staff  558246 Mar  3 11:47 csv-flyrna.json
+-rw-r--r--  1 kbrazil  staff  205281 Mar  3 11:47 csv-flyrna.tsv
+-rw-r--r--  1 kbrazil  staff  556670 Mar  3 11:47 csv-flyrna2.json
+-rw-r--r--  1 kbrazil  staff  203705 Mar  3 11:47 csv-flyrna2.tsv
+-rw-r--r--  1 kbrazil  staff     158 Mar  3 11:47 csv-homes-pipe.csv
+-rw-r--r--  1 kbrazil  staff     274 Mar  3 11:47 csv-homes-pipe.json
+-rw-r--r--  1 kbrazil  staff    2125 Mar  3 11:47 csv-homes.csv
+-rw-r--r--  1 kbrazil  staff    6798 Mar  3 11:47 csv-homes.json
+-rw-r--r--  1 kbrazil  staff   53816 Mar  3 11:47 csv-insurance.csv
+-rw-r--r--  1 kbrazil  staff  229722 Mar  3 11:47 csv-insurance.json
+-rw-r--r--  1 kbrazil  staff    4705 Feb  5 17:00 ini-iptelserver.ini
+-rw-r--r--  1 kbrazil  staff    1486 Feb  5 17:00 ini-iptelserver.json
+-rw-r--r--  1 kbrazil  staff     171 Feb  5 17:00 ini-test.ini
+-rw-r--r--  1 kbrazil  staff     270 Feb  5 17:00 ini-test.json
+-rw-r--r--  1 kbrazil  staff    4413 Mar  3 11:47 oscar_age_male.csv
+-rw-r--r--  1 kbrazil  staff    3294 Feb  5 17:00 xml-cd_catalog.json
+-rw-r--r--  1 kbrazil  staff    5077 Feb  5 17:00 xml-cd_catalog.xml
+-rw-r--r--  1 kbrazil  staff     811 Feb  5 17:00 xml-foodmenu.json
+-rw-r--r--  1 kbrazil  staff    1102 Feb  5 17:00 xml-foodmenu.xml
+-rw-r--r--  1 kbrazil  staff     333 Feb  5 17:00 yaml-istio-sc.json
+-rw-r--r--  1 kbrazil  staff     305 Feb  5 17:00 yaml-istio-sc.yaml
+-rw-r--r--  1 kbrazil  staff    3178 Feb  5 17:00 yaml-istio-sidecar.json
+-rw-r--r--  1 kbrazil  staff    3681 Feb  5 17:00 yaml-istio-sidecar.yaml
+
+./jc/tests/fixtures/osx-10.11.6:
+total 1344
+-rw-r--r--  1 kbrazil  staff    1669 Dec 17 12:12 arp-a.json
+-rwxr-xr-x  1 kbrazil  staff    1036 Dec 17 12:12 arp-a.out
+-rw-r--r--  1 kbrazil  staff    1151 Dec 17 12:12 df-h.json
+-rwxr-xr-x  1 kbrazil  staff     908 Dec 17 12:12 df-h.out
+-rw-r--r--  1 kbrazil  staff    1196 Dec 17 12:12 df.json
+-rwxr-xr-x  1 kbrazil  staff     992 Dec 17 12:12 df.out
+-rw-r--r--  1 kbrazil  staff     439 Dec 17 12:12 dig-aaaa.json
+-rwxr-xr-x  1 kbrazil  staff     537 Dec 17 12:12 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff     442 Dec 17 12:12 dig-x.json
+-rwxr-xr-x  1 kbrazil  staff     529 Dec 17 12:12 dig-x.out
+-rw-r--r--  1 kbrazil  staff    1272 Dec 17 12:12 dig.json
+-rwxr-xr-x  1 kbrazil  staff    1188 Dec 17 12:12 dig.out
+-rw-r--r--  1 kbrazil  staff  221050 Dec 17 12:12 du.json
+-rwxr-xr-x  1 kbrazil  staff  166687 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff    3791 Dec 17 12:12 ifconfig.json
+-rwxr-xr-x  1 kbrazil  staff    1571 Dec 17 12:12 ifconfig.out
+-rw-r--r--  1 kbrazil  staff    3791 Dec 17 12:12 ifconfig2.json
+-rwxr-xr-x  1 kbrazil  staff    1571 Dec 17 12:12 ifconfig2.out
+-rw-r--r--  1 kbrazil  staff    4259 Dec 17 12:12 ls-al.json
+-rwxr-xr-x  1 kbrazil  staff    1851 Dec 17 12:12 ls-al.out
+-rw-r--r--  1 kbrazil  staff    4296 Dec 17 12:12 ls-alh.json
+-rwxr-xr-x  1 kbrazil  staff    1882 Dec 17 12:12 ls-alh.out
+-rw-r--r--  1 kbrazil  staff     533 Dec 17 12:12 ls.json
+-rwxr-xr-x  1 kbrazil  staff     175 Dec 17 12:12 ls.out
+-rw-r--r--  1 kbrazil  staff     224 Dec 17 12:12 pip-list.json
+-rwxr-xr-x  1 kbrazil  staff     168 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff    1028 Dec 17 12:12 pip-show.json
+-rwxr-xr-x  1 kbrazil  staff     867 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff   53632 Dec 17 12:12 ps-axu.json
+-rwxr-xr-x  1 kbrazil  staff   32255 Dec 17 12:12 ps-axu.out
+-rw-r--r--  1 kbrazil  staff   38291 Dec 17 12:12 ps-ef.json
+-rwxr-xr-x  1 kbrazil  staff   25921 Dec 17 12:12 ps-ef.out
+-rw-r--r--  1 kbrazil  staff     233 Dec 17 12:12 uname-a.json
+-rwxr-xr-x  1 kbrazil  staff     142 Dec 17 12:12 uname-a.out
+-rw-r--r--  1 kbrazil  staff     102 Dec 17 12:12 uptime.json
+-rwxr-xr-x  1 kbrazil  staff      57 Dec 17 12:12 uptime.out
+-rw-r--r--  1 kbrazil  staff     627 Dec 17 12:12 w.json
+-rwxr-xr-x  1 kbrazil  staff     458 Dec 17 12:12 w.out
+
+./jc/tests/fixtures/osx-10.14.6:
+total 6272
+-rw-r--r--  1 kbrazil  staff    1541 Dec 17 12:12 arp-a.json
+-rw-r--r--  1 kbrazil  staff     968 Dec 17 12:12 arp-a.out
+-rw-r--r--  1 kbrazil  staff    1686 Dec 17 12:12 df-h.json
+-rw-r--r--  1 kbrazil  staff    1276 Dec 17 12:12 df-h.out
+-rw-r--r--  1 kbrazil  staff    1764 Dec 17 12:12 df.json
+-rw-r--r--  1 kbrazil  staff    1384 Dec 17 12:12 df.out
+-rw-r--r--  1 kbrazil  staff     438 Dec 17 12:12 dig-aaaa.json
+-rw-r--r--  1 kbrazil  staff     536 Dec 17 12:12 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff     442 Dec 17 12:12 dig-x.json
+-rw-r--r--  1 kbrazil  staff     529 Dec 17 12:12 dig-x.out
+-rw-r--r--  1 kbrazil  staff    1266 Dec 17 12:12 dig.json
+-rw-r--r--  1 kbrazil  staff    1182 Dec 17 12:12 dig.out
+-rw-r--r--  1 kbrazil  staff  296296 Dec 17 12:12 du.json
+-rw-r--r--  1 kbrazil  staff  222287 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff    9646 Mar  3 11:47 group.json
+-rw-r--r--  1 kbrazil  staff    2823 Mar  3 11:47 group.out
+-rw-r--r--  1 kbrazil  staff     759 Feb  5 17:00 id.json
+-rw-r--r--  1 kbrazil  staff     386 Feb  5 17:00 id.out
+-rw-r--r--  1 kbrazil  staff   10823 Dec 17 12:12 ifconfig.json
+-rwxr-xr-x  1 kbrazil  staff    3779 Dec 17 12:12 ifconfig.out
+-rw-r--r--  1 kbrazil  staff   11375 Dec 17 12:12 ifconfig2.json
+-rw-r--r--  1 kbrazil  staff    3979 Dec 17 12:12 ifconfig2.out
+-rw-r--r--  1 kbrazil  staff   45274 Mar  3 11:47 last.json
+-rw-r--r--  1 kbrazil  staff   25827 Mar  3 11:47 last.out
+-rw-r--r--  1 kbrazil  staff     852 Feb 27 11:25 ls-R-newlines.json
+-rw-r--r--  1 kbrazil  staff     278 Feb 27 11:25 ls-R-newlines.out
+-rw-r--r--  1 kbrazil  staff  469418 Feb 19 07:07 ls-R.json
+-rw-r--r--  1 kbrazil  staff  133787 Feb 19 07:07 ls-R.out
+-rw-r--r--  1 kbrazil  staff    4653 Dec 17 12:12 ls-al.json
+-rwxr-xr-x  1 kbrazil  staff    2111 Dec 17 12:12 ls-al.out
+-rw-r--r--  1 kbrazil  staff  959674 Feb 19 07:07 ls-alR.json
+-rw-r--r--  1 kbrazil  staff  364578 Feb 19 07:07 ls-alR.out
+-rw-r--r--  1 kbrazil  staff    4684 Dec 17 12:12 ls-alh.json
+-rwxr-xr-x  1 kbrazil  staff    2111 Dec 17 12:12 ls-alh.out
+-rw-r--r--  1 kbrazil  staff   91499 Feb 19 07:07 ls-glob.json
+-rw-r--r--  1 kbrazil  staff   19369 Feb 19 07:07 ls-glob.out
+-rw-r--r--  1 kbrazil  staff    1162 Feb 27 11:25 ls-l-newlines.json
+-rw-r--r--  1 kbrazil  staff     583 Feb 27 11:25 ls-l-newlines.out
+-rw-r--r--  1 kbrazil  staff    1450 Feb 27 11:25 ls-lR-newlines.json
+-rw-r--r--  1 kbrazil  staff     656 Feb 27 11:25 ls-lR-newlines.out
+-rw-r--r--  1 kbrazil  staff     498 Feb 27 11:25 ls-newlines.json
+-rw-r--r--  1 kbrazil  staff     260 Feb 27 11:25 ls-newlines.out
+-rw-r--r--  1 kbrazil  staff     585 Dec 17 12:12 ls.json
+-rwxr-xr-x  1 kbrazil  staff     193 Dec 17 12:12 ls.out
+-rw-r--r--  1 kbrazil  staff     672 Dec 17 12:12 mount.json
+-rw-r--r--  1 kbrazil  staff     349 Dec 17 12:12 mount.out
+-rw-r--r--  1 kbrazil  staff     841 Dec 17 12:12 mount2.json
+-rwxr-xr-x  1 kbrazil  staff     464 Dec 17 12:12 mount2.out
+-rw-r--r--  1 kbrazil  staff   14855 Mar  3 11:47 passwd.json
+-rw-r--r--  1 kbrazil  staff    6804 Mar  3 11:47 passwd.out
+-rw-r--r--  1 kbrazil  staff     224 Dec 17 12:12 pip-list.json
+-rwxr-xr-x  1 kbrazil  staff     168 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff    1067 Dec 17 12:12 pip-show.json
+-rwxr-xr-x  1 kbrazil  staff     910 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff   99173 Dec 17 12:12 ps-axu.json
+-rw-r--r--  1 kbrazil  staff   60107 Dec 17 12:12 ps-axu.out
+-rw-r--r--  1 kbrazil  staff   71162 Dec 17 12:12 ps-ef.json
+-rw-r--r--  1 kbrazil  staff   48758 Dec 17 12:12 ps-ef.out
+-rw-r--r--  1 kbrazil  staff     221 Dec 17 12:12 uname-a.json
+-rwxr-xr-x  1 kbrazil  staff     131 Dec 17 12:12 uname-a.out
+-rw-r--r--  1 kbrazil  staff     110 Dec 17 12:12 uptime.json
+-rwxr-xr-x  1 kbrazil  staff      65 Dec 17 12:12 uptime.out
+-rw-r--r--  1 kbrazil  staff     836 Dec 17 12:12 w.json
+-rwxr-xr-x  1 kbrazil  staff     570 Dec 17 12:12 w.out
+-rw-r--r--  1 kbrazil  staff     659 Mar  3 11:47 who-a.json
+-rw-r--r--  1 kbrazil  staff     419 Mar  3 11:47 who-a.out
+-rw-r--r--  1 kbrazil  staff     251 Mar  3 11:47 who.json
+-rw-r--r--  1 kbrazil  staff     128 Mar  3 11:47 who.out
+
+./jc/tests/fixtures/ubuntu-18.04:
+total 12688
+-rw-r--r--  1 kbrazil  staff      351 Nov 17 12:00 arp-a.json
+-rw-r--r--  1 kbrazil  staff      174 Oct 31 08:07 arp-a.out
+-rw-r--r--  1 kbrazil  staff      237 Nov 17 12:00 arp-v.json
+-rw-r--r--  1 kbrazil  staff      274 Oct 31 08:07 arp-v.out
+-rw-r--r--  1 kbrazil  staff      237 Nov 17 12:00 arp.json
+-rw-r--r--  1 kbrazil  staff      243 Oct 31 08:07 arp.out
+-rw-r--r--  1 kbrazil  staff      818 Mar  3 11:47 blkid-ip-multi.json
+-rw-r--r--  1 kbrazil  staff      717 Mar  3 11:47 blkid-ip-multi.out
+-rw-r--r--  1 kbrazil  staff      962 Mar  3 11:47 blkid-ip-udev-multi.json
+-rw-r--r--  1 kbrazil  staff      832 Mar  3 11:47 blkid-ip-udev-multi.out
+-rw-r--r--  1 kbrazil  staff      547 Mar  3 11:47 blkid-ip-udev.json
+-rw-r--r--  1 kbrazil  staff      478 Mar  3 11:47 blkid-ip-udev.out
+-rw-r--r--  1 kbrazil  staff      142 Mar  3 11:47 blkid-sda2.json
+-rw-r--r--  1 kbrazil  staff      115 Mar  3 11:47 blkid-sda2.out
+-rw-r--r--  1 kbrazil  staff      986 Mar  3 11:47 blkid.json
+-rw-r--r--  1 kbrazil  staff      675 Mar  3 11:47 blkid.out
+-rw-r--r--  1 kbrazil  staff      939 Feb  5 17:00 crontab-u.json
+-rw-r--r--  1 kbrazil  staff      752 Feb  5 17:00 crontab-u.out
+-rw-r--r--  1 kbrazil  staff     2261 Nov 17 12:00 df-h.json
+-rw-r--r--  1 kbrazil  staff     1004 Oct 31 08:07 df-h.out
+-rw-r--r--  1 kbrazil  staff     2372 Dec 17 12:12 df.json
+-rw-r--r--  1 kbrazil  staff     1194 Oct 31 08:07 df.out
+-rw-r--r--  1 kbrazil  staff      458 Nov 17 12:00 dig-aaaa.json
+-rw-r--r--  1 kbrazil  staff      532 Oct 31 08:07 dig-aaaa.out
+-rw-r--r--  1 kbrazil  staff      460 Nov 17 12:00 dig-x.json
+-rw-r--r--  1 kbrazil  staff      523 Oct 31 08:07 dig-x.out
+-rw-r--r--  1 kbrazil  staff     1306 Nov 17 12:00 dig.json
+-rw-r--r--  1 kbrazil  staff     1156 Oct 31 08:07 dig.out
+-rw-r--r--  1 kbrazil  staff  1560353 Dec 17 12:12 du.json
+-rw-r--r--  1 kbrazil  staff  1136984 Dec 17 12:12 du.out
+-rw-r--r--  1 kbrazil  staff     2651 Nov 17 12:00 env.json
+-rw-r--r--  1 kbrazil  staff     2125 Oct 31 08:07 env.out
+-rw-r--r--  1 kbrazil  staff      177 Nov 17 12:00 free-h.json
+-rw-r--r--  1 kbrazil  staff      204 Oct 31 08:07 free-h.out
+-rw-r--r--  1 kbrazil  staff      195 Nov 17 12:00 free.json
+-rw-r--r--  1 kbrazil  staff      204 Oct 31 08:07 free.out
+-rw-r--r--  1 kbrazil  staff      268 Nov 17 12:00 fstab.json
+-rw-r--r--  1 kbrazil  staff      120 Nov 17 12:00 fstab.out
+-rw-r--r--  1 kbrazil  staff     3705 Mar  3 11:47 group.json
+-rw-r--r--  1 kbrazil  staff      721 Mar  3 11:47 group.out
+-rw-r--r--  1 kbrazil  staff     4279 Mar  3 11:47 gshadow.json
+-rw-r--r--  1 kbrazil  staff      606 Mar  3 11:47 gshadow.out
+-rw-r--r--  1 kbrazil  staff    22782 Feb  5 17:00 history.json
+-rw-r--r--  1 kbrazil  staff    12844 Oct 31 08:07 history.out
+-rw-r--r--  1 kbrazil  staff      365 Nov 17 12:00 hosts.json
+-rw-r--r--  1 kbrazil  staff      272 Nov 17 12:00 hosts.out
+-rw-r--r--  1 kbrazil  staff     1090 Dec 17 12:12 ifconfig.json
+-rw-r--r--  1 kbrazil  staff      894 Oct 31 08:07 ifconfig.out
+-rw-r--r--  1 kbrazil  staff      847 Nov 17 12:00 iptables-filter-line-numbers.json
+-rw-r--r--  1 kbrazil  staff     1025 Nov 17 12:00 iptables-filter-line-numbers.out
+-rw-r--r--  1 kbrazil  staff     2363 Nov 17 12:00 iptables-filter-nv.json
+-rw-r--r--  1 kbrazil  staff     2763 Oct 31 08:07 iptables-filter-nv.out
+-rw-r--r--  1 kbrazil  staff     1730 Nov 17 12:00 iptables-filter.json
+-rw-r--r--  1 kbrazil  staff     2035 Oct 31 08:07 iptables-filter.out
+-rw-r--r--  1 kbrazil  staff      141 Nov 17 12:00 iptables-mangle.json
+-rw-r--r--  1 kbrazil  staff      468 Oct 31 08:07 iptables-mangle.out
+-rw-r--r--  1 kbrazil  staff      106 Nov 17 12:00 iptables-nat.json
+-rw-r--r--  1 kbrazil  staff      375 Oct 31 08:07 iptables-nat.out
+-rw-r--r--  1 kbrazil  staff       39 Nov 17 12:00 iptables-raw.json
+-rw-r--r--  1 kbrazil  staff      187 Oct 31 08:07 iptables-raw.out
+-rw-r--r--  1 kbrazil  staff      306 Nov 17 12:00 jobs.json
+-rw-r--r--  1 kbrazil  staff      164 Oct 31 08:07 jobs.out
+-rw-r--r--  1 kbrazil  staff     1852 Mar  3 11:47 last-w.json
+-rw-r--r--  1 kbrazil  staff     1073 Mar  3 11:47 last-w.out
+-rw-r--r--  1 kbrazil  staff     1845 Mar  3 11:47 last.json
+-rw-r--r--  1 kbrazil  staff     1066 Mar  3 11:47 last.out
+-rw-r--r--  1 kbrazil  staff      125 Mar  3 11:47 lastb.json
+-rw-r--r--  1 kbrazil  staff      111 Mar  3 11:47 lastb.out
+-rw-r--r--  1 kbrazil  staff     1114 Feb 27 11:25 ls-R-newlines.json
+-rw-r--r--  1 kbrazil  staff      471 Feb 27 11:25 ls-R-newlines.out
+-rw-r--r--  1 kbrazil  staff   298654 Feb 19 07:07 ls-R.json
+-rw-r--r--  1 kbrazil  staff    62421 Feb 19 07:07 ls-R.out
+-rw-r--r--  1 kbrazil  staff     3950 Nov 17 12:00 ls-al.json
+-rw-r--r--  1 kbrazil  staff     1744 Oct 31 08:07 ls-al.out
+-rw-r--r--  1 kbrazil  staff   772252 Feb 19 07:07 ls-alR.json
+-rw-r--r--  1 kbrazil  staff   262651 Feb 19 07:07 ls-alR.out
+-rw-r--r--  1 kbrazil  staff     3942 Nov 17 12:00 ls-alh.json
+-rw-r--r--  1 kbrazil  staff     1567 Oct 31 08:07 ls-alh.out
+-rw-r--r--  1 kbrazil  staff    66907 Feb 19 07:07 ls-glob.json
+-rw-r--r--  1 kbrazil  staff    13721 Feb 19 07:07 ls-glob.out
+-rw-r--r--  1 kbrazil  staff     1176 Feb 27 11:25 ls-l-newlines.json
+-rw-r--r--  1 kbrazil  staff      576 Feb 27 11:25 ls-l-newlines.out
+-rw-r--r--  1 kbrazil  staff     2089 Feb 27 11:25 ls-lR-newlines.json
+-rw-r--r--  1 kbrazil  staff      984 Feb 27 11:25 ls-lR-newlines.out
+-rw-r--r--  1 kbrazil  staff      498 Feb 27 11:25 ls-newlines.json
+-rw-r--r--  1 kbrazil  staff      260 Feb 27 11:25 ls-newlines.out
+-rw-r--r--  1 kbrazil  staff      622 Nov 17 12:00 ls.json
+-rw-r--r--  1 kbrazil  staff      162 Oct 31 08:07 ls.out
+-rw-r--r--  1 kbrazil  staff    11397 Nov 17 12:00 lsblk-allcols.json
+-rw-r--r--  1 kbrazil  staff     7364 Nov 17 12:00 lsblk-allcols.out
+-rw-r--r--  1 kbrazil  staff     2114 Nov 17 12:00 lsblk.json
+-rw-r--r--  1 kbrazil  staff      812 Oct 31 08:07 lsblk.out
+-rw-r--r--  1 kbrazil  staff     6744 Nov 17 12:00 lsmod.json
+-rw-r--r--  1 kbrazil  staff     4251 Oct 31 08:07 lsmod.out
+-rw-r--r--  1 kbrazil  staff   526695 Nov 17 12:00 lsof-sudo.json
+-rw-r--r--  1 kbrazil  staff   342863 Oct 31 08:07 lsof-sudo.out
+-rw-r--r--  1 kbrazil  staff   194044 Nov 17 12:00 lsof.json
+-rw-r--r--  1 kbrazil  staff   132043 Oct 31 08:07 lsof.out
+-rw-r--r--  1 kbrazil  staff     6547 Nov 17 12:00 mount.json
+-rw-r--r--  1 kbrazil  staff     3708 Oct 31 08:07 mount.out
+-rw-r--r--  1 kbrazil  staff     5079 Nov 17 12:00 netstat-l.json
+-rw-r--r--  1 kbrazil  staff     2606 Oct 31 08:07 netstat-l.out
+-rw-r--r--  1 kbrazil  staff    14711 Nov 17 12:00 netstat-p.json
+-rw-r--r--  1 kbrazil  staff     8706 Oct 31 08:07 netstat-p.out
+-rw-r--r--  1 kbrazil  staff    22957 Nov 17 12:00 netstat-sudo-aeep.json
+-rw-r--r--  1 kbrazil  staff    12016 Nov 17 12:00 netstat-sudo-aeep.out
+-rw-r--r--  1 kbrazil  staff     6259 Nov 17 12:00 netstat-sudo-lnp.json
+-rw-r--r--  1 kbrazil  staff     3236 Oct 31 08:07 netstat-sudo-lnp.out
+-rw-r--r--  1 kbrazil  staff    12550 Nov 17 12:00 netstat.json
+-rw-r--r--  1 kbrazil  staff     6711 Oct 31 08:07 netstat.out
+-rw-r--r--  1 kbrazil  staff     4116 Mar  3 11:47 passwd.json
+-rw-r--r--  1 kbrazil  staff     1565 Mar  3 11:47 passwd.out
+-rw-r--r--  1 kbrazil  staff     2638 Dec 17 12:12 pip-list-legacy.json
+-rw-r--r--  1 kbrazil  staff     1041 Dec 17 12:12 pip-list-legacy.out
+-rw-r--r--  1 kbrazil  staff     2638 Dec 17 12:12 pip-list.json
+-rw-r--r--  1 kbrazil  staff     2360 Dec 17 12:12 pip-list.out
+-rw-r--r--  1 kbrazil  staff      874 Dec 17 12:12 pip-show.json
+-rw-r--r--  1 kbrazil  staff      730 Dec 17 12:12 pip-show.out
+-rw-r--r--  1 kbrazil  staff    31390 Nov 17 12:00 ps-axu.json
+-rw-r--r--  1 kbrazil  staff    14127 Oct 31 08:07 ps-axu.out
+-rw-r--r--  1 kbrazil  staff    21583 Nov 17 12:00 ps-ef.json
+-rw-r--r--  1 kbrazil  staff    11355 Oct 31 08:07 ps-ef.out
+-rw-r--r--  1 kbrazil  staff      447 Nov 17 12:00 route-vn.json
+-rw-r--r--  1 kbrazil  staff      336 Oct 31 08:07 route-vn.out
+-rw-r--r--  1 kbrazil  staff      439 Nov 17 12:00 route.json
+-rw-r--r--  1 kbrazil  staff      336 Oct 31 08:07 route.out
+-rw-r--r--  1 kbrazil  staff     4330 Mar  3 11:47 shadow.json
+-rw-r--r--  1 kbrazil  staff      939 Mar  3 11:47 shadow.out
+-rw-r--r--  1 kbrazil  staff    23277 Nov 17 12:00 ss-sudo-a.json
+-rw-r--r--  1 kbrazil  staff    25599 Nov 17 12:00 ss-sudo-a.out
+-rw-r--r--  1 kbrazil  staff    73147 Nov 17 12:00 stat.json
+-rw-r--r--  1 kbrazil  staff    60023 Nov 17 12:00 stat.out
+-rw-r--r--  1 kbrazil  staff      270 Nov 17 12:00 systemctl-lj.json
+-rw-r--r--  1 kbrazil  staff      244 Nov 17 12:00 systemctl-lj.out
+-rw-r--r--  1 kbrazil  staff     2431 Nov 17 12:00 systemctl-ls.json
+-rw-r--r--  1 kbrazil  staff     2072 Nov 17 12:00 systemctl-ls.out
+-rw-r--r--  1 kbrazil  staff    18756 Nov 17 12:00 systemctl-luf.json
+-rw-r--r--  1 kbrazil  staff    17734 Nov 17 12:00 systemctl-luf.out
+-rw-r--r--  1 kbrazil  staff    47895 Nov 17 12:00 systemctl.json
+-rw-r--r--  1 kbrazil  staff    76059 Nov 17 12:00 systemctl.out
+-rw-r--r--  1 kbrazil  staff      268 Nov 17 12:00 uname-a.json
+-rw-r--r--  1 kbrazil  staff      114 Oct 31 08:07 uname-a.out
+-rw-r--r--  1 kbrazil  staff      109 Nov 17 12:00 uptime.json
+-rw-r--r--  1 kbrazil  staff       70 Oct 31 08:07 uptime.out
+-rw-r--r--  1 kbrazil  staff      292 Nov 17 12:00 w.json
+-rw-r--r--  1 kbrazil  staff      274 Oct 31 08:07 w.out
+-rw-r--r--  1 kbrazil  staff      452 Mar  3 11:47 who-a.json
+-rw-r--r--  1 kbrazil  staff      355 Mar  3 11:47 who-a.out
+-rw-r--r--  1 kbrazil  staff      155 Mar  3 11:47 who.json
+-rw-r--r--  1 kbrazil  staff      140 Mar  3 11:47 who.out
+
+./jtbl:
+total 72
+-rw-r--r--  1 kbrazil  staff  1069 Mar  5 09:18 LICENSE
+-rw-r--r--  1 kbrazil  staff  7644 Mar  6 08:41 README.md
+-rw-r--r--  1 kbrazil  staff    26 Mar  5 16:16 _config.yml
+drwxr-xr-x  4 kbrazil  staff   128 Mar  5 11:45 build
+-rwxrwxrwx  1 kbrazil  staff   127 Oct 15 14:55 build-package.sh
+-rw-r--r--@ 1 kbrazil  staff    71 Mar  6 10:53 changelog.txt
+drwxr-xr-x  5 kbrazil  staff   160 Mar  6 10:54 dist
+-rwxr-xr-x  1 kbrazil  staff    46 Nov 17 12:00 install.sh
+drwxr-xr-x  5 kbrazil  staff   160 Mar  5 12:52 jtbl
+drwxr-xr-x  8 kbrazil  staff   256 Mar  6 10:54 jtbl.egg-info
+-rwxr-xr-x@ 1 kbrazil  staff    31 Oct 17 14:59 pypi-upload.sh
+-rwxr-xr-x  1 kbrazil  staff   910 Mar  6 10:47 setup.py
+drwxr-xr-x  4 kbrazil  staff   128 Mar  5 13:13 tests
+
+./jtbl/build:
+total 0
+drwxr-xr-x  2 kbrazil  staff  64 Mar  6 10:54 bdist.macosx-10.14-x86_64
+drwxr-xr-x  3 kbrazil  staff  96 Mar  5 11:45 lib
+
+./jtbl/build/bdist.macosx-10.14-x86_64:
+
+./jtbl/build/lib:
+total 0
+drwxr-xr-x  4 kbrazil  staff  128 Mar  6 10:54 jtbl
+
+./jtbl/build/lib/jtbl:
+total 8
+-rw-r--r--  1 kbrazil  staff     0 Mar  5 11:15 __init__.py
+-rw-r--r--  1 kbrazil  staff  1424 Mar  6 10:37 cli.py
+
+./jtbl/dist:
+total 32
+-rw-r--r--  1 kbrazil  staff  5544 Mar  6 10:54 jtbl-0.1.2-py3-none-any.whl
+-rw-r--r--  1 kbrazil  staff  4868 Mar  6 10:54 jtbl-0.1.2.tar.gz
+
+./jtbl/jtbl:
+total 8
+-rw-r--r--  1 kbrazil  staff     0 Mar  5 11:15 __init__.py
+drwxr-xr-x  4 kbrazil  staff   128 Mar  6 15:02 __pycache__
+-rwxr-xr-x@ 1 kbrazil  staff  1438 Mar  6 15:02 cli.py
+
+./jtbl/jtbl/__pycache__:
+total 16
+-rw-r--r--  1 kbrazil  staff  127 Mar  5 12:52 __init__.cpython-37.pyc
+-rw-r--r--  1 kbrazil  staff  988 Mar  6 15:02 cli.cpython-37.pyc
+
+./jtbl/jtbl.egg-info:
+total 64
+-rw-r--r--  1 kbrazil  staff  9569 Mar  6 10:54 PKG-INFO
+-rw-r--r--  1 kbrazil  staff   217 Mar  6 10:54 SOURCES.txt
+-rw-r--r--  1 kbrazil  staff     1 Mar  6 10:54 dependency_links.txt
+-rw-r--r--  1 kbrazil  staff    40 Mar  6 10:54 entry_points.txt
+-rw-r--r--  1 kbrazil  staff    16 Mar  6 10:54 requires.txt
+-rw-r--r--  1 kbrazil  staff     5 Mar  6 10:54 top_level.txt
+
+./jtbl/tests:
+total 0
+drwxr-xr-x  6 kbrazil  staff  192 Mar  6 10:41 fixtures
+
+./jtbl/tests/fixtures:
+total 24
+-rw-r--r--@ 1 kbrazil  staff   271 Mar  6 10:41 deepnest.json
+-rw-r--r--  1 kbrazil  staff  1575 Mar  5 15:42 ifconfig-jq.jsonl
+-rw-r--r--@ 1 kbrazil  staff   300 Mar  5 12:28 jsonlines.jsonl
+
+./microsim:
+total 40
+-rw-r--r--@ 1 kbrazil  staff   1069 Aug  9  2019 LICENSE
+-rw-r--r--  1 kbrazil  staff  11913 Oct  1 13:22 README.md
+-rw-r--r--  1 kbrazil  staff     26 Dec 10 08:08 _config.yml
+drwxr-xr-x  9 kbrazil  staff    288 Dec 10 08:02 k8s_deployments
+drwxr-xr-x  7 kbrazil  staff    224 Oct  1 13:22 microsimclient
+drwxr-xr-x  7 kbrazil  staff    224 Oct  1 13:22 microsimserver
+
+./microsim/k8s_deployments:
+total 48
+-rw-r--r--@  1 kbrazil  staff  7743 Aug 28  2019 README.md
+drwxr-xr-x  14 kbrazil  staff   448 Jan 28 13:52 blog
+-rw-r--r--@  1 kbrazil  staff  4111 Aug 29  2019 crashing_service.yaml
+drwxr-xr-x   6 kbrazil  staff   192 Aug 27  2019 images
+-rw-r--r--@  1 kbrazil  staff  4051 Aug 29  2019 monitoring.yaml
+-rw-r--r--@  1 kbrazil  staff  1947 Aug 29  2019 simple.yaml
+
+./microsim/k8s_deployments/blog:
+total 104
+-rw-r--r--@ 1 kbrazil  staff   585 Jan 24 14:29 istio-ingress.yaml
+-rw-r--r--@ 1 kbrazil  staff   358 Jan 24 14:28 istio-mtls-permissive.yaml
+-rw-r--r--@ 1 kbrazil  staff   539 Jan 24 14:28 istio-mtls-strict.yaml
+-rw-r--r--@ 1 kbrazil  staff   995 Jan 29 06:46 istio-rbac-policy-final.yaml
+-rw-r--r--@ 1 kbrazil  staff   456 Jan 24 14:29 istio-rbac-policy-test.yaml
+-rw-r--r--@ 1 kbrazil  staff   285 Jan 28 14:36 istio-sc.yaml
+-rw-r--r--@ 1 kbrazil  staff  3640 Jan 29 06:47 istio-sidecar.yaml
+-rw-r--r--@ 1 kbrazil  staff  1659 Dec 18 20:43 servicelayer-network-policy.yaml
+-rw-r--r--@ 1 kbrazil  staff  4195 Dec 18 16:02 servicelayer.yaml
+-rw-r--r--@ 1 kbrazil  staff   639 Jan  9 16:07 sidecar-network-policy.yaml
+-rw-r--r--@ 1 kbrazil  staff  2716 Jan  9 14:55 sidecar.yaml
+-rw-r--r--@ 1 kbrazil  staff  2072 Dec 10 06:23 simple.yaml
+
+./microsim/k8s_deployments/images:
+total 1464
+-rw-r--r--  1 kbrazil  staff   76552 Aug 27  2019 graphite-crashing.png
+-rw-r--r--@ 1 kbrazil  staff  476438 Aug 22  2019 graphite.png
+-rw-r--r--@ 1 kbrazil  staff   90461 Aug 22  2019 monitoring.png
+-rw-r--r--@ 1 kbrazil  staff   97333 Aug 18  2019 simple.png
+
+./microsim/microsimclient:
+total 104
+-rw-r--r--@ 1 kbrazil  staff    939 Aug 27  2019 Dockerfile
+-rw-r--r--  1 kbrazil  staff    827 Oct  1 13:22 changelog.txt
+-rwxr-xr-x@ 1 kbrazil  staff    263 Oct  1 12:09 dockerhub.sh
+-rw-r--r--  1 kbrazil  staff  18140 Oct  1 13:22 microsimclient.py
+-rw-r--r--@ 1 kbrazil  staff  18215 Sep 30 16:42 microsimclientmac.py
+
+./microsim/microsimserver:
+total 72
+-rw-r--r--  1 kbrazil  staff    528 Aug 27  2019 Dockerfile
+-rw-r--r--  1 kbrazil  staff    380 Oct  1 13:22 changelog.txt
+-rwxr-xr-x@ 1 kbrazil  staff    263 Oct  1 12:09 dockerhub.sh
+-rw-r--r--  1 kbrazil  staff  10538 Oct  1 13:22 microsimserver.py
+-rw-r--r--@ 1 kbrazil  staff  10688 Sep 30 16:47 microsimservermac.py
+
+./microtest:
+total 72
+-rw-r--r--@ 1 kbrazil  staff   229 Aug 29  2019 Dockerfile
+-rw-r--r--@ 1 kbrazil  staff  1069 Aug  9  2019 LICENSE
+-rw-r--r--@ 1 kbrazil  staff  1076 Aug 29  2019 README.md
+-rw-r--r--@ 1 kbrazil  staff   146 Aug 29  2019 changelog.txt
+-rwxr-xr-x@ 1 kbrazil  staff   233 Aug 29  2019 dockerhub.sh
+-rw-r--r--@ 1 kbrazil  staff   591 Aug 29  2019 microtest-k8s.yaml
+-rw-r--r--@ 1 kbrazil  staff  1274 Aug 29  2019 microtest.py
+-rwxr-xr-x@ 1 kbrazil  staff   428 Aug 29  2019 microtestclient.sh
+-rw-r--r--@ 1 kbrazil  staff  1343 Aug 29  2019 microtestmac.py
+
+./trafficgen - work in progress:
+total 48
+drwxrwxrwx  5 kbrazil  staff   160 Aug  5  2019 html
+-rwxrwxrwx@ 1 kbrazil  staff  3351 Aug  5  2019 trafficgen.sh
+-rwxrwxrwx@ 1 kbrazil  staff  3996 Aug  5  2019 trafficgen.test.sh
+-rwxrwxrwx@ 1 kbrazil  staff  5844 Aug  5  2019 trafficgen2.sh
+-rwxrwxrwx@ 1 kbrazil  staff  4430 Aug 13  2019 trafficgen3.sh
+
+./trafficgen - work in progress/html:
+total 136
+-rwxrwxrwx@ 1 kbrazil  staff    466 Dec 28  2016 passwd
+-rw-r--r--@ 1 kbrazil  staff  62063 Aug  5  2019 troll-face.jpg
+
+./utils:
+total 40
+-rw-r--r--@ 1 kbrazil  staff  1069 Aug  9  2019 LICENSE
+-rw-r--r--  1 kbrazil  staff  1464 Aug 14  2019 README.md
+-rw-r--r--@ 1 kbrazil  staff   354 Aug 14  2019 resizeterm.sh
+-rw-r--r--@ 1 kbrazil  staff   786 Aug 15  2019 vmserial.sh
+-rw-r--r--  1 kbrazil  staff   726 Aug  9  2019 wwwhostip.py

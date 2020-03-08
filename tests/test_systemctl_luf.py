@@ -10,17 +10,17 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-luf.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-luf.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_systemctl_luf = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-luf.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-luf.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_systemctl_luf = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-luf.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-luf.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_systemctl_luf_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-luf.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-luf.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_systemctl_luf_json = json.loads(f.read())
 
     def test_systemctl_luf_centos_7_7(self):

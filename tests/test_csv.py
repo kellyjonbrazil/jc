@@ -10,59 +10,59 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_biostats = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-cities.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-cities.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_cities = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-deniro.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-deniro.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_deniro = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-example.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-example.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_example = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna.tsv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna.tsv'), 'r', encoding='utf-8') as f:
             self.generic_csv_flyrna = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna2.tsv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna2.tsv'), 'r', encoding='utf-8') as f:
             self.generic_csv_flyrna2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes-pipe.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes-pipe.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_homes_pipe = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_homes = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_insurance = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_biostats_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-cities.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-cities.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_cities_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-deniro.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-deniro.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_deniro_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-example.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-example.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_example_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_flyrna_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna2.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-flyrna2.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_flyrna2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes-pipe.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes-pipe.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_homes_pipe_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_homes_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_insurance_json = json.loads(f.read())
 
     def test_csv_biostats(self):

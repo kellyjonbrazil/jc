@@ -10,17 +10,17 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_crontab_u = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_crontab_u = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_crontab_u_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_crontab_u_json = json.loads(f.read())
 
     def test_crontab_u_ubuntu_18_4(self):

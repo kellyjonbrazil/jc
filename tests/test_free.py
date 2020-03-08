@@ -10,29 +10,29 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_free = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_free = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free-h.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free-h.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_free_h = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free-h.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free-h.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_free_h = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_free_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_free_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free-h.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free-h.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_free_h_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free-h.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free-h.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_free_h_json = json.loads(f.read())
 
     def test_free_centos_7_7(self):

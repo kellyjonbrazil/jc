@@ -10,29 +10,29 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_mount = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/mount.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/mount.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_mount = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_mount = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_mount2 = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_mount_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/mount.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/mount.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_mount_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_mount_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_mount2_json = json.loads(f.read())
 
     def test_mount_centos_7_7(self):

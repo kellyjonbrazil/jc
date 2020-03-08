@@ -149,7 +149,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -256,6 +256,11 @@ def parse(data, raw=False, quiet=False):
                     continue
 
                 if re.match(r'total [0-9]+', entry):
+                    new_section = False
+                    continue
+
+                # fix for OSX - doesn't print 'total xx' line if empty directory
+                if new_section and entry == '':
                     new_section = False
                     continue
 

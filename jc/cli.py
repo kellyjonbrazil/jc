@@ -13,7 +13,7 @@ import jc.utils
 
 
 class info():
-    version = '1.8.0'
+    version = '1.8.1'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -183,68 +183,74 @@ def json_out(data, pretty=False):
         print(json.dumps(data))
 
 
-def magic():
-    """Parse with magic syntax: jc -p ls -al"""
-    if len(sys.argv) > 1 and not sys.argv[1].startswith('--'):
-        parser_info = about_jc()['parsers']
-        # correctly parse escape characters and spaces with shlex
-        args_given = " ".join(map(shlex.quote, sys.argv[1:])).split()
-        options = []
-        found_parser = None
+def generate_magic_command(args):
+    """
+    Returns a tuple with a boolean and a command, where the boolean signifies that
+    the command is valid, and the command is either a command string or None.
+    """
 
-        # find the options
-        if args_given[0].startswith('-'):
-            p = 0
-            for i, arg in list(enumerate(args_given)):
-                # parser found - use standard syntax
-                if arg.startswith('--'):
-                    return
-                # option found - populate option list
-                elif arg.startswith('-'):
-                    options.append(args_given.pop(i - p)[1:])
-                    p = p + 1
-                # command found if iterator didn't already stop - stop iterating
-                else:
-                    break
+    # Parse with magic syntax: jc -p ls -al
+    if len(args) <= 1 or args[1].startswith('--'):
+        return False, None
 
-        # find the command and parser
-        for parser in parser_info:
-            if 'magic_commands' in parser:
-                # first pass for two word commands: e.g. 'pip list'
-                for magic_command in parser['magic_commands']:
-                    try:
-                        if ' '.join(args_given[0:2]) == magic_command:
-                            found_parser = parser['argument']
-                            break
-                    # No command found - go to next loop (for cases like 'jc -a')
-                    except Exception:
-                        break
+    # correctly parse escape characters and spaces with shlex
+    args_given = " ".join(map(shlex.quote, args[1:])).split()
+    options = []
 
-                # second pass for one word commands: e.g. 'ls'
-                if not found_parser:
-                    for magic_command in parser['magic_commands']:
-                        try:
-                            if args_given[0] == magic_command:
-                                found_parser = parser['argument']
-                                break
-                        # No command found - use standard syntax (for cases like 'jc -a')
-                        except Exception:
-                            return
+    # find the options
+    popped = 0
+    for i, arg in enumerate(args_given):
+        # parser found - use standard syntax
+        if arg.startswith('--'):
+            return False, None
 
-        # construct a new command line using the standard syntax: COMMAND | jc --PARSER -OPTIONS
-        run_command = ' '.join(args_given)
-        if found_parser:
-            if options:
-                cmd_options = '-' + ''.join(options)
-            else:
-                cmd_options = ''
-            whole_command = ' '.join([run_command, '|', 'jc', found_parser, cmd_options])
+        # option found - populate option list
+        elif arg.startswith('-'):
+            options.append(args_given.pop(i - popped)[1:])
+            popped += 1
 
-            os.system(whole_command)
-            exit()
+        # command found if iterator didn't already stop - stop iterating
         else:
-            helptext(f'parser not found for "{run_command}"')
-            sys.exit(1)
+            break
+
+    # all options popped and no command found - for case like 'jc -a'
+    if len(args_given) == 0:
+        return False, None
+
+    magic_dict = {}
+    parser_info = about_jc()['parsers']
+
+    # Create a dictionary of magic_commands to their respective parsers.
+    for entry in parser_info:
+        # Update the dict with all of the magic commands for this parser, if they exist.
+        magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
+
+    # find the command and parser
+    one_word_command = args_given[0]
+    two_word_command = ' '.join(args_given[0:2])
+
+    # Try to get a parser for two_word_command, otherwise get one for one_word_command
+    found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
+
+    # construct a new command line using the standard syntax: COMMAND | jc --PARSER -OPTIONS
+    run_command = ' '.join(args_given)
+    if found_parser:
+        cmd_options = ('-' + ''.join(options)) if options else ''
+        return True, ' '.join([run_command, '|', 'jc', found_parser, cmd_options])
+    else:
+        return False, run_command
+
+
+def magic():
+    valid_command, run_command = generate_magic_command(sys.argv)
+    if valid_command:
+        os.system(run_command)
+        exit()
+    elif run_command is None:
+        return
+    else:
+        helptext(f'parser not found for "{run_command}"')
+        sys.exit(1)
 
 
 def main():
@@ -255,28 +261,16 @@ def main():
     magic()
 
     options = []
-    debug = False
-    pretty = False
-    quiet = False
-    raw = False
 
     # options
     for opt in sys.argv:
         if opt.startswith('-') and not opt.startswith('--'):
-            for flag in opt[1:]:
-                options.append(flag)
+            options.extend(opt[1:])
 
-    if 'd' in options:
-        debug = True
-
-    if 'p' in options:
-        pretty = True
-
-    if 'q' in options:
-        quiet = True
-
-    if 'r' in options:
-        raw = True
+    debug = 'd' in options
+    pretty = 'p' in options
+    quiet = 'q' in options
+    raw = 'r' in options
 
     if 'a' in options:
         json_out(about_jc(), pretty=pretty)
@@ -312,7 +306,8 @@ def main():
                     found = True
                     break
                 except Exception:
-                    jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
+                    jc.utils.error_message(
+                        f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     sys.exit(1)
 
     if not found:

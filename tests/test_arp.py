@@ -10,53 +10,53 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_arp = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-a.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-a.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-a.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-a.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_arp_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-v.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-v.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_v = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-v.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-v.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_arp_v = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/arp-a.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/arp-a.out'), 'r', encoding='utf-8') as f:
             self.osx_10_11_6_arp_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a.out'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_arp_a = f.read()
 
         # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_arp_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-a.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-a.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_a_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-a.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-a.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_arp_a_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-v.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp-v.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_v_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-v.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/arp-v.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_arp_v_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/arp-a.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/arp-a.json'), 'r', encoding='utf-8') as f:
             self.osx_10_11_6_arp_a_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a.json'), 'r') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_arp_a_json = json.loads(f.read())
 
     def test_arp_centos_7_7(self):
