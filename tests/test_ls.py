@@ -109,6 +109,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-newlines.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ls_newlines = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ls_lR_empty_folder = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ls_json = json.loads(f.read())
@@ -208,6 +211,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-newlines.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ls_newlines_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ls_lR_empty_folder_json = json.loads(f.read())
 
     def test_ls_centos_7_7(self):
         """
@@ -406,6 +412,12 @@ class MyTests(unittest.TestCase):
         Test 'ls' for filenames with newline characters on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_newlines, quiet=True), self.osx_10_14_6_ls_newlines_json)
+
+    def test_ls_lR_empty_folder_osx_10_14_6(self):
+        """
+        Test 'ls -lR' for empty directories on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_lR_empty_folder, quiet=True), self.osx_10_14_6_ls_lR_empty_folder_json)
 
 
 if __name__ == '__main__':
