@@ -228,7 +228,7 @@ def magic():
                 pass
 
         # second pass for one word commands: e.g. 'ls'
-        elif args_given[0] in parser['magic_commands']:
+        if not found_parser and args_given[0] in parser['magic_commands']:
             try:
                 found_parser = parser['argument']
             # No command found - use standard syntax (for cases like 'jc -a')
