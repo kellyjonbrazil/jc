@@ -183,29 +183,26 @@ def json_out(data, pretty=False):
         print(json.dumps(data))
 
 
-def magic():
-    """Parse with magic syntax: jc -p ls -al"""
-    if len(sys.argv) <= 1 or sys.argv[1].startswith('--'):
-        return
+def generate_magic_command(args):
+    """
+    Returns a tuple with a boolean and a command, where the boolean signifies that
+    the command is valid, and the command is either a command string or None.
+    """
 
-    magic_dict = {}
-    parser_info = about_jc()['parsers']
-
-    # Create a dictionary of magic_commands to their respective parsers.
-    for entry in parser_info:
-        # Update the dict with all of the magic commands for this parser, if they exist.
-        magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
+    # Parse with magic syntax: jc -p ls -al
+    if len(args) <= 1 or args[1].startswith('--'):
+        return False, None
 
     # correctly parse escape characters and spaces with shlex
-    args_given = " ".join(map(shlex.quote, sys.argv[1:])).split()
+    args_given = " ".join(map(shlex.quote, args[1:])).split()
     options = []
 
     # find the options
     popped = 0
-    for i, arg in list(enumerate(args_given)):
+    for i, arg in enumerate(args_given):
         # parser found - use standard syntax
         if arg.startswith('--'):
-            return
+            return False, None
 
         # option found - populate option list
         elif arg.startswith('-'):
@@ -218,7 +215,15 @@ def magic():
 
     # all options popped and no command found - for case like 'jc -a'
     if len(args_given) == 0:
-        return
+        return False, None
+
+    magic_dict = {}
+    parser_info = about_jc()['parsers']
+
+    # Create a dictionary of magic_commands to their respective parsers.
+    for entry in parser_info:
+        # Update the dict with all of the magic commands for this parser, if they exist.
+        magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
 
     # find the command and parser
     one_word_command = args_given[0]
@@ -230,11 +235,19 @@ def magic():
     # construct a new command line using the standard syntax: COMMAND | jc --PARSER -OPTIONS
     run_command = ' '.join(args_given)
     if found_parser:
-        cmd_options = '-' + ''.join(options) if options else ''
-        whole_command = ' '.join([run_command, '|', 'jc', found_parser, cmd_options])
-        os.system(whole_command)
-        exit()
+        cmd_options = ('-' + ''.join(options)) if options else ''
+        return True, ' '.join([run_command, '|', 'jc', found_parser, cmd_options])
+    else:
+        return False, run_command
 
+
+def magic():
+    valid_command, run_command = generate_magic_command(sys.argv)
+    if valid_command:
+        os.system(run_command)
+        exit()
+    elif run_command is None:
+        return
     else:
         helptext(f'parser not found for "{run_command}"')
         sys.exit(1)
@@ -293,7 +306,8 @@ def main():
                     found = True
                     break
                 except Exception:
-                    jc.utils.error_message(f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
+                    jc.utils.error_message(
+                        f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     sys.exit(1)
 
     if not found:
