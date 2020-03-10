@@ -49,6 +49,7 @@ parsers = [
     'lsof',
     'mount',
     'netstat',
+    'ntpq',
     'passwd',
     'pip-list',
     'pip-show',

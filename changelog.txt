@@ -1,5 +1,8 @@
 jc changelog
 
+20200xxxx vX.X.X
+- Added ntpq command parser
+
 20200308 v1.8.1
 - CLI and history parser optimizations by https://github.com/philippeitis
 - Refactored magic syntax function and added tests (https://github.com/philippeitis)
