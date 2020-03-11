@@ -184,10 +184,9 @@ import jc.parsers.universal
 
 class info():
     version = '1.0'
-    description = 'ntpq command parser'
+    description = 'ntpq -p command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']

@@ -109,6 +109,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--lsof` enables the `lsof` command parser
 - `--mount` enables the `mount` command parser
 - `--netstat` enables the `netstat` command parser
+- `--ntpq` enables the `ntpq -p` command parser
 - `--passwd` enables the `/etc/passwd` file parser
 - `--pip-list` enables the `pip list` command parser
 - `--pip-show` enables the `pip show` command parser
@@ -1482,6 +1483,38 @@ $ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
     "pid": 1
   },
   ...
+]
+```
+### ntpq
+```
+$ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
+[
+  {
+    "selection_state": null,
+    "remote": "44.190.6.254",
+    "refid": "127.67.113.92",
+    "st": 2,
+    "t": "u",
+    "when": 1,
+    "poll": 64,
+    "reach": 1,
+    "delay": 23.399,
+    "offset": -2.805,
+    "jitter": 2.131
+  },
+  {
+    "selection_state": null,
+    "remote": "mirror1.sjc02.s",
+    "refid": "216.218.254.202",
+    "st": 2,
+    "t": "u",
+    "when": 2,
+    "poll": 64,
+    "reach": 1,
+    "delay": 29.325,
+    "offset": 1.044,
+    "jitter": 4.069
+  }
 ]
 ```
 ### /etc/passwd file
