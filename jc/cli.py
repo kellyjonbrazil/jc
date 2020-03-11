@@ -23,6 +23,7 @@ __version__ = info.version
 
 parsers = [
     'airport',
+    'airport-s',
     'arp',
     'blkid',
     'crontab',

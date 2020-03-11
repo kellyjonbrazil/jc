@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility airport Parser
+"""jc - JSON CLI output utility airport -I Parser
 
 Usage:
 
-    specify --airport as the first argument if the piped input is coming from airport (OSX)
+    specify --airport as the first argument if the piped input is coming from airport -I (OSX)
 
     This program can be found at:
     /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
@@ -63,7 +63,6 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['darwin']
-    magic_commands = ['airport']
 
 
 __version__ = info.version

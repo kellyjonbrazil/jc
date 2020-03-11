@@ -82,7 +82,8 @@ jc [OPTIONS] COMMAND
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
 
 ### Parsers
-- `--airport` enables the `airport` command parser (OSX)
+- `--airport` enables the `airport -I` command parser (OSX)
+- `--airport-s` enables the `airport -s` command parser (OSX)
 - `--arp` enables the `arp` command parser
 - `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
@@ -165,9 +166,9 @@ Tested on:
 - Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
 
 ## Examples
-### airport
+### airport -I
 ```
-$ airport | jc --airport -p
+$ airport -I | jc --airport -p
 {
   "agrctlrssi": -66,
   "agrextrssi": 0,
@@ -185,6 +186,46 @@ $ airport | jc --airport -p
   "mcs": 0,
   "channel": "48,80"
 }
+```
+### airport -s
+```
+$ airport -s | jc --airport-s -p
+[
+  {
+    "ssid": "DIRECT-4A-HP OfficeJet 3830",
+    "bssid": "00:67:eb:2a:a7:3b",
+    "rssi": -90,
+    "channel": "6",
+    "ht": true,
+    "cc": "--",
+    "security": [
+      "WPA2(PSK/AES/AES)"
+    ]
+  },
+  {
+    "ssid": "Latitude38",
+    "bssid": "c0:ff:d5:d2:7a:f3",
+    "rssi": -85,
+    "channel": "11",
+    "ht": true,
+    "cc": "US",
+    "security": [
+      "WPA2(PSK/AES/AES)"
+    ]
+  },
+  {
+    "ssid": "xfinitywifi",
+    "bssid": "6e:e3:0e:b8:45:99",
+    "rssi": -83,
+    "channel": "11",
+    "ht": true,
+    "cc": "US",
+    "security": [
+      "NONE"
+    ]
+  },
+  ...
+]
 ```
 ### arp
 ```
