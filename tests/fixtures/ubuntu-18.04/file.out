@@ -1,0 +1,20 @@
+crayaml.yaml:        ASCII text
+git:                 directory
+ifconfig-ubuntu.out: ASCII text
+iptables-tests:      directory
+lastb.out:           ASCII text
+listjobs:            ASCII text
+ls-lR.out:           ASCII text
+ls-R.out:            ASCII text
+netstat-ae.out:      ASCII text
+netstat-aew.out:     ASCII text
+netstat-a.out:       ASCII text
+netstat-aw.out:      ASCII text
+resizeterm.sh:       Bourne-Again shell script, ASCII text executable
+snap:                directory
+ssout:               ASCII text
+sudofix:             ASCII text
+testfiles:           directory
+tmp:                 directory
+trafficgen.sh:       Bourne-Again shell script, ASCII text executable
+xmltest.xml:         XML 1.0 document, ASCII text
