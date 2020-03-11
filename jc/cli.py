@@ -62,6 +62,7 @@ parsers = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'timedatectl',
     'uname',
     'uptime',
     'w',

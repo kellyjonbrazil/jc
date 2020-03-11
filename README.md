@@ -122,6 +122,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
 - `--systemctl-luf` enables the `systemctl list-unit-files` command parser
+- `--timedatectl` enables the `timedatectl status` command parser
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
@@ -2023,6 +2024,20 @@ $ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p system
   },
   ...
 ]
+```
+### timedatectl status
+```
+$ timedatectl | jc --timedatectl -p
+{
+  "local_time": "Tue 2020-03-10 17:53:21 PDT",
+  "universal_time": "Wed 2020-03-11 00:53:21 UTC",
+  "rtc_time": "Wed 2020-03-11 00:53:21",
+  "time_zone": "America/Los_Angeles (PDT, -0700)",
+  "ntp_enabled": true,
+  "ntp_synchronized": true,
+  "rtc_in_local_tz": false,
+  "dst_active": true
+}
 ```
 ### uname -a
 ```
