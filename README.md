@@ -159,6 +159,7 @@ Tested on:
 - OSX 10.14.6
 
 ## Acknowledgments
+- CI automation and code optimizations from https://github.com/philippeitis
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
 - `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
 - `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
