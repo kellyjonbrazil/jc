@@ -10,6 +10,6 @@ lastAssocStatus: 0
     802.11 auth: open
       link auth: wpa2-psk
           BSSID: 3c:37:86:15:ad:f9
-           SSID: BrazzleDazzle
+           SSID: SnazzleDazzle
             MCS: 0
         channel: 48,80

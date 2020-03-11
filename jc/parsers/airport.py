@@ -12,12 +12,40 @@ Examples:
 
     $ airport | jc --airport -p
     {
-      
+      "agrctlrssi": -66,
+      "agrextrssi": 0,
+      "agrctlnoise": -90,
+      "agrextnoise": 0,
+      "state": "running",
+      "op_mode": "station",
+      "lasttxrate": 195,
+      "maxrate": 867,
+      "lastassocstatus": 0,
+      "802_11_auth": "open",
+      "link_auth": "wpa2-psk",
+      "bssid": "3c:37:86:15:ad:f9",
+      "ssid": "SnazzleDazzle",
+      "mcs": 0,
+      "channel": "48,80"
     }
 
     $ airport | jc --airport -p -r
     {
-      
+      "agrctlrssi": "-66",
+      "agrextrssi": "0",
+      "agrctlnoise": "-90",
+      "agrextnoise": "0",
+      "state": "running",
+      "op_mode": "station",
+      "lasttxrate": "195",
+      "maxrate": "867",
+      "lastassocstatus": "0",
+      "802_11_auth": "open",
+      "link_auth": "wpa2-psk",
+      "bssid": "3c:37:86:15:ad:f9",
+      "ssid": "SnazzleDazzle",
+      "mcs": "0",
+      "channel": "48,80"
     }
 """
 import jc.utils
@@ -51,20 +79,32 @@ def process(proc_data):
         Dictionary. Structured data with the following schema:
 
         {
-          
+          "agrctlrssi":        integer,
+          "agrextrssi":        integer,
+          "agrctlnoise":       integer,
+          "agrextnoise":       integer,
+          "state":             string,
+          "op_mode":           string,
+          "lasttxrate":        integer,
+          "maxrate":           integer,
+          "lastassocstatus":   integer,
+          "802_11_auth":       string,
+          "link_auth":         string,
+          "bssid":             string,
+          "ssid":              string,
+          "mcs":               integer,
+          "channel":           string
         }
     """
-    # boolean changes
-    '''
-    bool_list = ['ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
-                 'system_clock_synchronized', 'systemd-timesyncd.service_active']
+    # integer changes
+    int_list = ['agrctlrssi', 'agrextrssi', 'agrctlnoise', 'agrextnoise',
+                'lasttxrate', 'maxrate', 'lastassocstatus', 'mcs']
     for key in proc_data:
-        if key in bool_list:
+        if key in int_list:
             try:
-                proc_data[key] = True if proc_data[key] == 'yes' else False
+                proc_data[key] = int(proc_data[key])
             except (ValueError):
                 proc_data[key] = None
-    '''
 
     return proc_data
 
@@ -90,7 +130,7 @@ def parse(data, raw=False, quiet=False):
 
     for line in filter(None, data.splitlines()):
         linedata = line.split(':', maxsplit=1)
-        raw_output[linedata[0].strip().lower().replace(' ', '_')] = linedata[1].strip()
+        raw_output[linedata[0].strip().lower().replace(' ', '_').replace('.', '_')] = linedata[1].strip()
 
     if raw:
         return raw_output

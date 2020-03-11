@@ -82,6 +82,7 @@ jc [OPTIONS] COMMAND
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
 
 ### Parsers
+- `--airport` enables the `airport` command parser (OSX)
 - `--arp` enables the `arp` command parser
 - `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
@@ -164,6 +165,27 @@ Tested on:
 - Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
 
 ## Examples
+### airport
+```
+$ airport | jc --airport -p
+{
+  "agrctlrssi": -66,
+  "agrextrssi": 0,
+  "agrctlnoise": -90,
+  "agrextnoise": 0,
+  "state": "running",
+  "op_mode": "station",
+  "lasttxrate": 195,
+  "maxrate": 867,
+  "lastassocstatus": 0,
+  "802_11_auth": "open",
+  "link_auth": "wpa2-psk",
+  "bssid": "3c:37:86:15:ad:f9",
+  "ssid": "SnazzleDazzle",
+  "mcs": 0,
+  "channel": "48,80"
+}
+```
 ### arp
 ```
 $ arp | jc --arp -p          # or:  jc -p arp
