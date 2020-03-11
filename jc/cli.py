@@ -22,6 +22,7 @@ class info():
 __version__ = info.version
 
 parsers = [
+    'airport',
     'arp',
     'blkid',
     'crontab',

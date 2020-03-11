@@ -2,7 +2,8 @@ jc changelog
 
 20200xxxx vX.X.X
 - Added ntpq command parser
-- Added timedatectl status parser
+- Added timedatectl status command parser
+- Added airport command parser
 
 20200308 v1.8.1
 - CLI and history parser optimizations by https://github.com/philippeitis
