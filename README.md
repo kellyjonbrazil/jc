@@ -93,6 +93,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--dig` enables the `dig` command parser
 - `--du` enables the `du` command parser
 - `--env` enables the `env` command parser
+- `--file` enables the `file` command parser
 - `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
 - `--group` enables the `/etc/group` file parser
@@ -757,6 +758,41 @@ $ env | jc --env -p          # or:  jc -p env
   {
     "name": "HISTSIZE",
     "value": "1000"
+  },
+  ...
+]
+```
+### file
+```
+$ file * | jc --file -p
+[
+  {
+    "filename": "Applications",
+    "type": "directory"
+  },
+  {
+    "filename": "another file with spaces",
+    "type": "empty"
+  },
+  {
+    "filename": "argstest.py",
+    "type": "Python script text executable, ASCII text"
+  },
+  {
+    "filename": "blkid-p.out",
+    "type": "ASCII text"
+  },
+  {
+    "filename": "blkid-pi.out",
+    "type": "ASCII text, with very long lines"
+  },
+  {
+    "filename": "cd_catalog.xml",
+    "type": "XML 1.0 document text, ASCII text, with CRLF line terminators"
+  },
+  {
+    "filename": "centosserial.sh",
+    "type": "Bourne-Again shell script text executable, UTF-8 Unicode text"
   },
   ...
 ]

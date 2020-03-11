@@ -33,6 +33,7 @@ parsers = [
     'dig',
     'du',
     'env',
+    'file',
     'free',
     'fstab',
     'group',
