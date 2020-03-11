@@ -82,6 +82,8 @@ jc [OPTIONS] COMMAND
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
 
 ### Parsers
+- `--airport` enables the `airport -I` command parser (OSX)
+- `--airport-s` enables the `airport -s` command parser (OSX)
 - `--arp` enables the `arp` command parser
 - `--blkid` enables the `blkid` command parser
 - `--crontab` enables the `crontab` command and file parser
@@ -91,6 +93,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--dig` enables the `dig` command parser
 - `--du` enables the `du` command parser
 - `--env` enables the `env` command parser
+- `--file` enables the `file` command parser
 - `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
 - `--group` enables the `/etc/group` file parser
@@ -109,6 +112,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--lsof` enables the `lsof` command parser
 - `--mount` enables the `mount` command parser
 - `--netstat` enables the `netstat` command parser
+- `--ntpq` enables the `ntpq -p` command parser
 - `--passwd` enables the `/etc/passwd` file parser
 - `--pip-list` enables the `pip list` command parser
 - `--pip-show` enables the `pip show` command parser
@@ -121,6 +125,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
 - `--systemctl-luf` enables the `systemctl list-unit-files` command parser
+- `--timedatectl` enables the `timedatectl status` command parser
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
@@ -155,6 +160,7 @@ Tested on:
 - OSX 10.14.6
 
 ## Acknowledgments
+- CI automation and code optimizations from https://github.com/philippeitis
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
 - `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
 - `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
@@ -162,6 +168,67 @@ Tested on:
 - Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
 
 ## Examples
+### airport -I
+```
+$ airport -I | jc --airport -p
+{
+  "agrctlrssi": -66,
+  "agrextrssi": 0,
+  "agrctlnoise": -90,
+  "agrextnoise": 0,
+  "state": "running",
+  "op_mode": "station",
+  "lasttxrate": 195,
+  "maxrate": 867,
+  "lastassocstatus": 0,
+  "802_11_auth": "open",
+  "link_auth": "wpa2-psk",
+  "bssid": "3c:37:86:15:ad:f9",
+  "ssid": "SnazzleDazzle",
+  "mcs": 0,
+  "channel": "48,80"
+}
+```
+### airport -s
+```
+$ airport -s | jc --airport-s -p
+[
+  {
+    "ssid": "DIRECT-4A-HP OfficeJet 3830",
+    "bssid": "00:67:eb:2a:a7:3b",
+    "rssi": -90,
+    "channel": "6",
+    "ht": true,
+    "cc": "--",
+    "security": [
+      "WPA2(PSK/AES/AES)"
+    ]
+  },
+  {
+    "ssid": "Latitude38",
+    "bssid": "c0:ff:d5:d2:7a:f3",
+    "rssi": -85,
+    "channel": "11",
+    "ht": true,
+    "cc": "US",
+    "security": [
+      "WPA2(PSK/AES/AES)"
+    ]
+  },
+  {
+    "ssid": "xfinitywifi",
+    "bssid": "6e:e3:0e:b8:45:99",
+    "rssi": -83,
+    "channel": "11",
+    "ht": true,
+    "cc": "US",
+    "security": [
+      "NONE"
+    ]
+  },
+  ...
+]
+```
 ### arp
 ```
 $ arp | jc --arp -p          # or:  jc -p arp
@@ -691,6 +758,41 @@ $ env | jc --env -p          # or:  jc -p env
   {
     "name": "HISTSIZE",
     "value": "1000"
+  },
+  ...
+]
+```
+### file
+```
+$ file * | jc --file -p
+[
+  {
+    "filename": "Applications",
+    "type": "directory"
+  },
+  {
+    "filename": "another file with spaces",
+    "type": "empty"
+  },
+  {
+    "filename": "argstest.py",
+    "type": "Python script text executable, ASCII text"
+  },
+  {
+    "filename": "blkid-p.out",
+    "type": "ASCII text"
+  },
+  {
+    "filename": "blkid-pi.out",
+    "type": "ASCII text, with very long lines"
+  },
+  {
+    "filename": "cd_catalog.xml",
+    "type": "XML 1.0 document text, ASCII text, with CRLF line terminators"
+  },
+  {
+    "filename": "centosserial.sh",
+    "type": "Bourne-Again shell script text executable, UTF-8 Unicode text"
   },
   ...
 ]
@@ -1484,6 +1586,38 @@ $ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
   ...
 ]
 ```
+### ntpq
+```
+$ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
+[
+  {
+    "remote": "44.190.6.254",
+    "refid": "127.67.113.92",
+    "st": 2,
+    "t": "u",
+    "when": 1,
+    "poll": 64,
+    "reach": 1,
+    "delay": 23.399,
+    "offset": -2.805,
+    "jitter": 2.131,
+    "state": null
+  },
+  {
+    "remote": "mirror1.sjc02.s",
+    "refid": "216.218.254.202",
+    "st": 2,
+    "t": "u",
+    "when": 2,
+    "poll": 64,
+    "reach": 1,
+    "delay": 29.325,
+    "offset": 1.044,
+    "jitter": 4.069,
+    "state": null
+  }
+]
+```
 ### /etc/passwd file
 ```
 $ cat /etc/passwd | jc --passwd -p
@@ -1990,6 +2124,20 @@ $ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p system
   },
   ...
 ]
+```
+### timedatectl status
+```
+$ timedatectl | jc --timedatectl -p
+{
+  "local_time": "Tue 2020-03-10 17:53:21 PDT",
+  "universal_time": "Wed 2020-03-11 00:53:21 UTC",
+  "rtc_time": "Wed 2020-03-11 00:53:21",
+  "time_zone": "America/Los_Angeles (PDT, -0700)",
+  "ntp_enabled": true,
+  "ntp_synchronized": true,
+  "rtc_in_local_tz": false,
+  "dst_active": true
+}
 ```
 ### uname -a
 ```

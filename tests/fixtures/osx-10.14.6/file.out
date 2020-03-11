@@ -1,0 +1,53 @@
+Applications:               directory
+Desktop:                    directory
+Documents:                  directory
+Downloads:                  directory
+Library:                    directory
+Movies:                     directory
+Music:                      directory
+Pictures:                   directory
+Postman:                    directory
+Public:                     directory
+Virtual Machines.localized: directory
+another file with spaces:   empty
+ansible:                    directory
+api:                        directory
+argstest.py:                Python script text executable, ASCII text
+blkid-p.out:                ASCII text
+blkid-pi.out:               ASCII text, with very long lines
+blkid-ubuntu.out:           ASCII text
+blkid-udev-mult.out:        ASCII text
+blkid-udev.out:             ASCII text
+blkid.out:                  ASCII text
+cd_catalog.xml:             XML 1.0 document text, ASCII text, with CRLF line terminators
+centosserial.sh:            Bourne-Again shell script text executable, UTF-8 Unicode text
+coreosserial.sh:            Bourne-Again shell script text executable, UTF-8 Unicode text
+fazserial.sh:               Bourne-Again shell script text executable, UTF-8 Unicode text
+fgt1serial.sh:              Bourne-Again shell script text executable, UTF-8 Unicode text
+fgt2serial.sh:              Bourne-Again shell script text executable, UTF-8 Unicode text
+file with spaces:           empty
+fortiweb-docker.sh:         Bourne-Again shell script text executable, ASCII text
+ftmgr.sh:                   Bourne-Again shell script text executable, ASCII text
+git:                        directory
+google-cloud-sdk:           directory
+ifconfiglines.json:         ASCII text, with very long lines
+jc-jq-jp-ps-cpu.gif:        GIF image data, version 89a, 1572 x 1212
+jc-jq-jp-uptime-small.gif:  GIF image data, version 89a, 800 x 617
+jc-jq-jp-uptime.gif:        GIF image data, version 89a, 1572 x 1212
+jp:                         Mach-O 64-bit executable x86_64
+jp_1.1.12_osx_x86_64.zip:   Zip archive data, at least v2.0 to extract
+jupyter.sh:                 ASCII text
+kb.sh:                      Bourne-Again shell script text executable, ASCII text
+kbtesting.txt:              ASCII text
+kelly-aws.pem:              PEM RSA private key
+kellyargtest.py:            Python script text executable, ASCII text
+loadplot.sh:                Bourne-Again shell script text executable, ASCII text
+ls-R.out:                   UTF-8 Unicode text
+ls-lR-empty-folder.out:     ASCII text
+ls-lR.out:                  UTF-8 Unicode text
+myrecording:                data
+smcclient.jnlp:             XML 1.0 document text, ASCII text
+table.py:                   Python script text executable, ASCII text
+test.ini:                   ASCII text
+ubuntuserial.sh:            Bourne-Again shell script text executable, UTF-8 Unicode text
+utils:                      directory

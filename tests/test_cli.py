@@ -13,6 +13,9 @@ class MyTests(unittest.TestCase):
             'jc -p pip3 show jc': 'pip3 show jc | jc --pip-show -p',
             'jc -prd last': 'last | jc --last -prd',
             'jc -prd lastb': 'lastb | jc --last -prd',
+            'jc -p airport -I': 'airport -I | jc --airport -p',
+            'jc -p -r airport -I': 'airport -I | jc --airport -pr',
+            'jc -prd airport -I': 'airport -I | jc --airport -prd',
             'jc -p nonexistent command': 'nonexistent command',
             'jc -ap': None
         }

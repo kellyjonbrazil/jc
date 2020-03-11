@@ -1,0 +1,25 @@
+bin:                          directory
+digout:                       ASCII text
+file with spaces in the name: empty
+git:                          directory
+id-centos.out:                ASCII text
+ifcfg.json:                   ASCII text, with very long lines
+ifconfig.out:                 ASCII text
+iptables-tests:               directory
+journaljson:                  ASCII text, with very long lines
+jp:                           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, not stripped
+jp_1.1.12_linux_x86_64.zip:   Zip archive data, at least v2.0 to extract
+lastb.out:                    ASCII text
+lsblk-cols:                   UTF-8 Unicode text
+psfile.txt:                   ASCII text, with very long lines
+resizeterm.sh:                Bourne-Again shell script, ASCII text executable
+routeout:                     ASCII text
+ss-aeep.out:                  ASCII text
+ssout:                        ASCII text
+systemctl.out:                UTF-8 Unicode text
+testfiles:                    directory
+tmp:                          directory
+top.out:                      ASCII text, with escape sequences
+who-aH.out:                   ASCII text
+who.out:                      ASCII text
+whotext:                      ASCII text

@@ -13,7 +13,7 @@ import jc.utils
 
 
 class info():
-    version = '1.8.1'
+    version = '1.9.0'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -22,6 +22,8 @@ class info():
 __version__ = info.version
 
 parsers = [
+    'airport',
+    'airport-s',
     'arp',
     'blkid',
     'crontab',
@@ -31,6 +33,7 @@ parsers = [
     'dig',
     'du',
     'env',
+    'file',
     'free',
     'fstab',
     'group',
@@ -49,6 +52,7 @@ parsers = [
     'lsof',
     'mount',
     'netstat',
+    'ntpq',
     'passwd',
     'pip-list',
     'pip-show',
@@ -61,6 +65,7 @@ parsers = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'timedatectl',
     'uname',
     'uptime',
     'w',
@@ -194,20 +199,18 @@ def generate_magic_command(args):
         return False, None
 
     # correctly parse escape characters and spaces with shlex
-    args_given = " ".join(map(shlex.quote, args[1:])).split()
+    args_given = ' '.join(map(shlex.quote, args[1:])).split()
     options = []
 
     # find the options
-    popped = 0
-    for i, arg in enumerate(args_given):
+    for arg in list(args_given):
         # parser found - use standard syntax
         if arg.startswith('--'):
             return False, None
 
         # option found - populate option list
         elif arg.startswith('-'):
-            options.append(args_given.pop(i - popped)[1:])
-            popped += 1
+            options.extend(args_given.pop(0)[1:])
 
         # command found if iterator didn't already stop - stop iterating
         else:

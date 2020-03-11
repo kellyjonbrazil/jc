@@ -1,0 +1,15 @@
+                            SSID BSSID             RSSI CHANNEL HT CC SECURITY (auth/unicast/group)
+     DIRECT-4A-HP OfficeJet 3830 00:68:eb:2b:b7:3b -91  6       Y  -- WPA2(PSK/AES/AES) 
+                     xfinitywifi 6e:e3:0e:c1:74:df -87  36      Y  US NONE
+                         XFINITY 8e:e3:0e:c1:74:df -86  36      Y  US WPA2(802.1x/AES/AES) 
+                YouAreInfected-5 5c:e3:0e:c1:74:df -86  36      Y  US WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+                     xfinitywifi 6e:e3:0e:b8:55:8f -85  11      Y  US NONE
+                     xfinitywifi 6e:e3:0e:c1:74:de -79  6       Y  US NONE
+             ngHub_319451N814D6D 04:a1:51:56:5c:eb -77  11      Y  US WPA2(PSK/AES/AES) 
+                  YouAreInfected 5c:e3:0e:c1:74:de -76  6       Y  US WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+           YuanFamily_Extender2G a0:04:60:86:11:89 -76  11      Y  -- WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+                      YuanFamily 5c:e3:0e:b8:15:9f -73  11      Y  US WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+                   SnazzleDazzle 3c:37:86:15:fd:b5 -70  48      Y  US WPA2(PSK/AES/AES) 
+                   SnazzleDazzle 42:37:86:15:fd:b3 -62  3,+1    Y  US WPA2(PSK/AES/AES) 
+                   SnazzleDazzle 42:37:86:15:aa:f7 -54  3       Y  US WPA2(PSK/AES/AES) 
+                   SnazzleDazzle 3c:37:86:15:aa:f9 -64  48      Y  US WPA2(PSK/AES/AES) 

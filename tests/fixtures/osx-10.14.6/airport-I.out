@@ -1,0 +1,15 @@
+     agrCtlRSSI: -66
+     agrExtRSSI: 0
+    agrCtlNoise: -90
+    agrExtNoise: 0
+          state: running
+        op mode: station 
+     lastTxRate: 195
+        maxRate: 867
+lastAssocStatus: 0
+    802.11 auth: open
+      link auth: wpa2-psk
+          BSSID: 3c:37:86:15:ad:f9
+           SSID: SnazzleDazzle
+            MCS: 0
+        channel: 48,80
