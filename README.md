@@ -1591,7 +1591,6 @@ $ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
 $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
 [
   {
-    "state": null,
     "remote": "44.190.6.254",
     "refid": "127.67.113.92",
     "st": 2,
@@ -1601,10 +1600,10 @@ $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
     "reach": 1,
     "delay": 23.399,
     "offset": -2.805,
-    "jitter": 2.131
+    "jitter": 2.131,
+    "state": null
   },
   {
-    "state": null,
     "remote": "mirror1.sjc02.s",
     "refid": "216.218.254.202",
     "st": 2,
@@ -1614,7 +1613,8 @@ $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
     "reach": 1,
     "delay": 29.325,
     "offset": 1.044,
-    "jitter": 4.069
+    "jitter": 4.069,
+    "state": null
   }
 ]
 ```

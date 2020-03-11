@@ -13,7 +13,6 @@ Examples:
     $ ntpq -p | jc --ntpq -p
     [
       {
-        "state": null,
         "remote": "44.190.6.254",
         "refid": "127.67.113.92",
         "st": 2,
@@ -23,10 +22,10 @@ Examples:
         "reach": 1,
         "delay": 23.399,
         "offset": -2.805,
-        "jitter": 2.131
+        "jitter": 2.131,
+        "state": null
       },
       {
-        "state": null,
         "remote": "ntp.wdc1.us.lea",
         "refid": "130.133.1.10",
         "st": 2,
@@ -36,10 +35,10 @@ Examples:
         "reach": 1,
         "delay": 93.053,
         "offset": -0.807,
-        "jitter": 2.839
+        "jitter": 2.839,
+        "state": null
       },
       {
-        "state": null,
         "remote": "clock.team-cymr",
         "refid": "204.9.54.119",
         "st": 2,
@@ -49,10 +48,10 @@ Examples:
         "reach": 1,
         "delay": 70.337,
         "offset": -2.909,
-        "jitter": 2.6
+        "jitter": 2.6,
+        "state": null
       },
       {
-        "state": null,
         "remote": "mirror1.sjc02.s",
         "refid": "216.218.254.202",
         "st": 2,
@@ -62,14 +61,14 @@ Examples:
         "reach": 1,
         "delay": 29.325,
         "offset": 1.044,
-        "jitter": 4.069
+        "jitter": 4.069,
+        "state": null,
       }
     ]
 
     $ ntpq -pn| jc --ntpq -p
     [
       {
-        "state": "+",
         "remote": "44.190.6.254",
         "refid": "127.67.113.92",
         "st": 2,
@@ -79,10 +78,10 @@ Examples:
         "reach": 377,
         "delay": 22.69,
         "offset": -0.392,
-        "jitter": 2.085
+        "jitter": 2.085,
+        "state": "+"
       },
       {
-        "state": "-",
         "remote": "108.59.2.24",
         "refid": "130.133.1.10",
         "st": 2,
@@ -92,10 +91,10 @@ Examples:
         "reach": 377,
         "delay": 90.805,
         "offset": 2.84,
-        "jitter": 1.908
+        "jitter": 1.908,
+        "state": "-"
       },
       {
-        "state": "+",
         "remote": "38.229.71.1",
         "refid": "204.9.54.119",
         "st": 2,
@@ -105,10 +104,10 @@ Examples:
         "reach": 377,
         "delay": 68.699,
         "offset": -0.61,
-        "jitter": 2.576
+        "jitter": 2.576,
+        "state": "+"
       },
       {
-        "state": "*",
         "remote": "72.5.72.15",
         "refid": "216.218.254.202",
         "st": 2,
@@ -118,14 +117,15 @@ Examples:
         "reach": 377,
         "delay": 22.654,
         "offset": 0.231,
-        "jitter": 1.964
+        "jitter": 1.964,
+        "state": "*"
       }
     ]
 
     $ ntpq -pn| jc --ntpq -p -r
     [
       {
-        "state": "+",
+        "s": "+",
         "remote": "44.190.6.254",
         "refid": "127.67.113.92",
         "st": "2",
@@ -138,7 +138,7 @@ Examples:
         "jitter": "2.085"
       },
       {
-        "state": "-",
+        "s": "-",
         "remote": "108.59.2.24",
         "refid": "130.133.1.10",
         "st": "2",
@@ -151,7 +151,7 @@ Examples:
         "jitter": "1.908"
       },
       {
-        "state": "+",
+        "s": "+",
         "remote": "38.229.71.1",
         "refid": "204.9.54.119",
         "st": "2",
@@ -164,7 +164,7 @@ Examples:
         "jitter": "2.576"
       },
       {
-        "state": "*",
+        "s": "*",
         "remote": "72.5.72.15",
         "refid": "216.218.254.202",
         "st": "2",
@@ -227,8 +227,10 @@ def process(proc_data):
     """
     for entry in proc_data:
 
-        if entry['state'] == '~':
-            entry['state'] = None
+        if entry['s'] == '~':
+            entry['s'] = None
+
+        entry['state'] = entry.pop('s')
 
         int_list = ['st', 'when', 'poll', 'reach']
         for key in int_list:
@@ -269,18 +271,23 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     cleandata = data.splitlines()
-    cleandata[0] = 'state ' + cleandata[0]
+    cleandata[0] = 's ' + cleandata[0]
     cleandata[0] = cleandata[0].lower()
 
     # delete header delimiter
     del cleandata[1]
 
     # separate first character with a space for easier parsing
-    for i, line in enumerate(cleandata[1:]):
+    for i, line in list(enumerate(cleandata[1:])):
         if line[0] == ' ':
-            cleandata[i + 1] = '~ ' + line[1:]
+            # fixup for no-state
+            cleandata[i + 1] = '~  ' + line[1:]
         else:
-            cleandata[i + 1] = line[:1] + ' ' + line[1:]
+            # fixup - realign columns since we added the 's' column
+            cleandata[i + 1] = line[:1] + '  ' + line[1:]
+
+        # fixup for occaisional ip/hostname fields with a space
+        cleandata[i + 1] = cleandata[i + 1].replace(' (', '_(')
 
     raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
