@@ -3,7 +3,10 @@ jc - JSON CLI output utility airport Parser
 
 Usage:
 
-    specify --airport as the first argument if the piped input is coming from airport
+    specify --airport as the first argument if the piped input is coming from airport (OSX)
+
+    This program can be found at:
+    /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
 
 Compatibility:
 
@@ -11,7 +14,7 @@ Compatibility:
 
 Examples:
 
-    $ airport | jc --airport -p
+    $ airport -I | jc --airport -p
     {
       "agrctlrssi": -66,
       "agrextrssi": 0,
@@ -30,7 +33,7 @@ Examples:
       "channel": "48,80"
     }
 
-    $ airport | jc --airport -p -r
+    $ airport -I | jc --airport -p -r
     {
       "agrctlrssi": "-66",
       "agrextrssi": "0",
