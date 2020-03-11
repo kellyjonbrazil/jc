@@ -1491,7 +1491,7 @@ $ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
 $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
 [
   {
-    "selection_state": null,
+    "state": null,
     "remote": "44.190.6.254",
     "refid": "127.67.113.92",
     "st": 2,
@@ -1504,7 +1504,7 @@ $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
     "jitter": 2.131
   },
   {
-    "selection_state": null,
+    "state": null,
     "remote": "mirror1.sjc02.s",
     "refid": "216.218.254.202",
     "st": 2,

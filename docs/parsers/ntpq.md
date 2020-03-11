@@ -14,7 +14,7 @@ Examples:
     $ ntpq -p | jc --ntpq -p
     [
       {
-        "selection_state": null,
+        "state": null,
         "remote": "44.190.6.254",
         "refid": "127.67.113.92",
         "st": 2,
@@ -27,7 +27,7 @@ Examples:
         "jitter": 2.131
       },
       {
-        "selection_state": null,
+        "state": null,
         "remote": "ntp.wdc1.us.lea",
         "refid": "130.133.1.10",
         "st": 2,
@@ -40,7 +40,7 @@ Examples:
         "jitter": 2.839
       },
       {
-        "selection_state": null,
+        "state": null,
         "remote": "clock.team-cymr",
         "refid": "204.9.54.119",
         "st": 2,
@@ -53,7 +53,7 @@ Examples:
         "jitter": 2.6
       },
       {
-        "selection_state": null,
+        "state": null,
         "remote": "mirror1.sjc02.s",
         "refid": "216.218.254.202",
         "st": 2,
@@ -70,7 +70,7 @@ Examples:
     $ ntpq -pn| jc --ntpq -p
     [
       {
-        "selection_state": "+",
+        "state": "+",
         "remote": "44.190.6.254",
         "refid": "127.67.113.92",
         "st": 2,
@@ -83,7 +83,7 @@ Examples:
         "jitter": 2.085
       },
       {
-        "selection_state": "-",
+        "state": "-",
         "remote": "108.59.2.24",
         "refid": "130.133.1.10",
         "st": 2,
@@ -96,7 +96,7 @@ Examples:
         "jitter": 1.908
       },
       {
-        "selection_state": "+",
+        "state": "+",
         "remote": "38.229.71.1",
         "refid": "204.9.54.119",
         "st": 2,
@@ -109,7 +109,7 @@ Examples:
         "jitter": 2.576
       },
       {
-        "selection_state": "*",
+        "state": "*",
         "remote": "72.5.72.15",
         "refid": "216.218.254.202",
         "st": 2,
@@ -126,7 +126,7 @@ Examples:
     $ ntpq -pn| jc --ntpq -p -r
     [
       {
-        "selection_state": "+",
+        "state": "+",
         "remote": "44.190.6.254",
         "refid": "127.67.113.92",
         "st": "2",
@@ -139,7 +139,7 @@ Examples:
         "jitter": "2.085"
       },
       {
-        "selection_state": "-",
+        "state": "-",
         "remote": "108.59.2.24",
         "refid": "130.133.1.10",
         "st": "2",
@@ -152,7 +152,7 @@ Examples:
         "jitter": "1.908"
       },
       {
-        "selection_state": "+",
+        "state": "+",
         "remote": "38.229.71.1",
         "refid": "204.9.54.119",
         "st": "2",
@@ -165,7 +165,7 @@ Examples:
         "jitter": "2.576"
       },
       {
-        "selection_state": "*",
+        "state": "*",
         "remote": "72.5.72.15",
         "refid": "216.218.254.202",
         "st": "2",
@@ -201,7 +201,7 @@ Returns:
 
     [
       {
-        "selection_state":  string,        # space/~ converted to null
+        "state":            string,        # space/~ converted to null
         "remote":           string,
         "refid":            string,
         "st":               integer,
