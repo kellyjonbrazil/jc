@@ -65,18 +65,21 @@ def process(proc_data):
         Dictionary. Structured data with the following schema:
 
         {
-          "local_time":         string,
-          "universal_time":     string,
-          "rtc_time":           string,
-          "time_zone":          string,
-          "ntp_enabled":        boolean,
-          "ntp_synchronized":   boolean,
-          "rtc_in_local_tz":    boolean,
-          "dst_active":         boolean
+          "local_time":                        string,
+          "universal_time":                    string,
+          "rtc_time":                          string,
+          "time_zone":                         string,
+          "ntp_enabled":                       boolean,
+          "ntp_synchronized":                  boolean,
+          "system_clock_synchronized":         boolean,
+          "systemd-timesyncd.service_active":  boolean,
+          "rtc_in_local_tz":                   boolean,
+          "dst_active":                        boolean
         }
     """
     # boolean changes
-    bool_list = ['ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active']
+    bool_list = ['ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
+                 'system_clock_synchronized', 'systemd-timesyncd.service_active']
     for key in proc_data:
         if key in bool_list:
             try:

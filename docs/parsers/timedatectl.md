@@ -56,14 +56,16 @@ Returns:
     Dictionary. Structured data with the following schema:
 
     {
-      "local_time":         string,
-      "universal_time":     string,
-      "rtc_time":           string,
-      "time_zone":          string,
-      "ntp_enabled":        boolean,
-      "ntp_synchronized":   boolean,
-      "rtc_in_local_tz":    boolean,
-      "dst_active":         boolean
+      "local_time":                        string,
+      "universal_time":                    string,
+      "rtc_time":                          string,
+      "time_zone":                         string,
+      "ntp_enabled":                       boolean,
+      "ntp_synchronized":                  boolean,
+      "system_clock_synchronized":         boolean,
+      "systemd-timesyncd.service_active":  boolean,
+      "rtc_in_local_tz":                   boolean,
+      "dst_active":                        boolean
     }
 
 ## parse
