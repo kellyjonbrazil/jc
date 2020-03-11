@@ -63,6 +63,7 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['darwin']
+    magic_commands = ['airport -I']
 
 
 __version__ = info.version
