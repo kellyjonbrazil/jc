@@ -105,7 +105,7 @@ def parse(data, raw=False, quiet=False):
 
     warned = False
     for line in filter(None, data.splitlines()):
-        linedata = line.rsplit(':', maxsplit=1)
+        linedata = line.rsplit(': ', maxsplit=1)
 
         try:
             filename = linedata[0].strip()
