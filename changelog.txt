@@ -1,5 +1,8 @@
 jc changelog
 
+20200311 v1.9.1
+- Updated file command parser to make filename splitting more robust
+
 20200311 v1.9.0
 - Added ntpq command parser
 - Added timedatectl status command parser

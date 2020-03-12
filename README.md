@@ -170,7 +170,7 @@ Tested on:
 ## Examples
 ### airport -I
 ```
-$ airport -I | jc --airport -p
+$ airport -I | jc --airport -p          # or:  jc -p airport -I
 {
   "agrctlrssi": -66,
   "agrextrssi": 0,
@@ -191,7 +191,7 @@ $ airport -I | jc --airport -p
 ```
 ### airport -s
 ```
-$ airport -s | jc --airport-s -p
+$ airport -s | jc --airport-s -p          # or:  jc -p airport -s
 [
   {
     "ssid": "DIRECT-4A-HP OfficeJet 3830",
@@ -764,7 +764,7 @@ $ env | jc --env -p          # or:  jc -p env
 ```
 ### file
 ```
-$ file * | jc --file -p
+$ file * | jc --file -p          # or:  jc -p file *
 [
   {
     "filename": "Applications",
@@ -2127,7 +2127,7 @@ $ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p system
 ```
 ### timedatectl status
 ```
-$ timedatectl | jc --timedatectl -p
+$ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
 {
   "local_time": "Tue 2020-03-10 17:53:21 PDT",
   "universal_time": "Wed 2020-03-11 00:53:21 UTC",
