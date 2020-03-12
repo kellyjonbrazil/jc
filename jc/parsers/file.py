@@ -48,7 +48,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'file command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
