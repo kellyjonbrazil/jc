@@ -1,6 +1,9 @@
 jc changelog
 
-20200311 v1.9.1
+20200312 v1.9.2
+- Updated arp parser to fix OSX detection for some edge cases
+
+20200312 v1.9.1
 - Updated file command parser to make filename splitting more robust
 
 20200311 v1.9.0
