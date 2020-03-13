@@ -91,7 +91,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'arp command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -160,16 +160,17 @@ def parse(data, raw=False, quiet=False):
         cleandata.pop(-1)
 
     # detect if osx style was used
-    if cleandata[0].find(' ifscope ') != -1:
+    if cleandata[0][-1] == ']':
         raw_output = []
         for line in cleandata:
-            line = line.split()
-            output_line = {}
-            output_line['name'] = line[0]
-            output_line['address'] = line[1].lstrip('(').rstrip(')')
-            output_line['hwtype'] = line[-1].lstrip('[').rstrip(']')
-            output_line['hwaddress'] = line[3]
-            output_line['iface'] = line[5]
+            splitline = line.split()
+            output_line = {
+                'name': splitline[0],
+                'address': splitline[1].lstrip('(').rstrip(')'),
+                'hwtype': splitline[-1].lstrip('[').rstrip(']'),
+                'hwaddress': splitline[3],
+                'iface': splitline[5]
+            }
             raw_output.append(output_line)
 
         if raw:
