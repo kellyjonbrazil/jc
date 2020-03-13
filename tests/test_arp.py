@@ -34,6 +34,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_arp_a = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a2.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_arp_a2 = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_json = json.loads(f.read())
@@ -58,6 +61,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_arp_a_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/arp-a2.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_arp_a2_json = json.loads(f.read())
 
     def test_arp_centos_7_7(self):
         """
@@ -106,6 +112,12 @@ class MyTests(unittest.TestCase):
         Test 'arp -a' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.arp.parse(self.osx_10_14_6_arp_a, quiet=True), self.osx_10_14_6_arp_a_json)
+
+    def test_arp_a2_osx_10_14_6(self):
+        """
+        Test 'arp -a' with entries with no ifscope on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.arp.parse(self.osx_10_14_6_arp_a2, quiet=True), self.osx_10_14_6_arp_a2_json)
 
 
 if __name__ == '__main__':
