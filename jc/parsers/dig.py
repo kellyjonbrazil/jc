@@ -578,16 +578,16 @@ def parse(data, raw=False, quiet=False):
             output_entry.update({'axfr': axfr_list})
             continue
 
-        if line.find(';; ->>HEADER<<-') == 0:
+        if line.startswith(';; ->>HEADER<<-'):
             output_entry = {}
             output_entry.update(parse_header(line))
             continue
 
-        if line.find(';; flags:') == 0:
+        if line.startswith(';; flags:'):
             output_entry.update(parse_flags_line(line))
             continue
 
-        if line.find(';; QUESTION SECTION:') == 0:
+        if line.startswith(';; QUESTION SECTION:'):
             question = True
             authority = False
             answer = False
@@ -602,7 +602,7 @@ def parse(data, raw=False, quiet=False):
             axfr = False
             continue
 
-        if line.find(';; AUTHORITY SECTION:') == 0:
+        if line.startswith(';; AUTHORITY SECTION:'):
             question = False
             authority = True
             answer = False
@@ -615,7 +615,7 @@ def parse(data, raw=False, quiet=False):
             output_entry.update({'authority': authority_list})
             continue
 
-        if line.find(';; ANSWER SECTION:') == 0:
+        if line.startswith(';; ANSWER SECTION:'):
             question = False
             authority = False
             answer = True
@@ -630,22 +630,22 @@ def parse(data, raw=False, quiet=False):
 
         # footer consists of 4 lines
         # footer line 1
-        if line.find(';; Query time:') == 0:
+        if line.startswith(';; Query time:'):
             output_entry.update({'query_time': line.split(':')[1].lstrip()})
             continue
 
         # footer line 2
-        if line.find(';; SERVER:') == 0:
+        if line.startswith(';; SERVER:'):
             output_entry.update({'server': line.split(':')[1].lstrip()})
             continue
 
         # footer line 3
-        if line.find(';; WHEN:') == 0:
+        if line.startswith(';; WHEN:'):
             output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
             continue
 
         # footer line 4 (last line)
-        if line.find(';; MSG SIZE  rcvd:') == 0:
+        if line.startswith(';; MSG SIZE  rcvd:'):
             output_entry.update({'rcvd': line.split(':')[1].lstrip()})
 
             if output_entry:
