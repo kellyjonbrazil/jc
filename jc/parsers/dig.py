@@ -361,6 +361,15 @@ def process(proc_data):
             "answer_num":     integer,
             "authority_num":  integer,
             "additional_num": integer,
+            "axfr": [
+              {
+                "name":       string,
+                "class":      string,
+                "type":       string,
+                "ttl":        integer,
+                "data":       string
+              }
+            ],
             "question": {
               "name":         string,
               "class":        string,
@@ -388,6 +397,7 @@ def process(proc_data):
             "server":         string,
             "when":           string,
             "rcvd":           integer
+            "size":           string
           }
         ]
     """
