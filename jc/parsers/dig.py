@@ -324,7 +324,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'dig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -401,6 +401,14 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError):
                     entry[key] = None
+
+        if 'axfr' in entry:
+            for ax in entry['axfr']:
+                try:
+                    ttl_int = int(ax['ttl'])
+                    ax['ttl'] = ttl_int
+                except (ValueError):
+                    ax['ttl'] = None
 
         if 'answer' in entry:
             for ans in entry['answer']:
@@ -507,6 +515,24 @@ def parse_answer(answer):
             'ttl': answer_ttl,
             'data': answer_data}
 
+def parse_axfr(axfr):
+    #; <<>> DiG 9.11.14-3-Debian <<>> @81.4.108.41 axfr zonetransfer.me +nocookie
+    #; (1 server found)
+    #;; global options: +cmd
+    #zonetransfer.me. 7200 IN A 5.196.105.14
+    axfr = axfr.split(maxsplit=4)
+    axfr_name = axfr[0]
+    axfr_ttl = axfr[1]
+    axfr_class = axfr[2]
+    axfr_type = axfr[3]
+    axfr_data = axfr[4]
+
+    return {'name': axfr_name,
+            'ttl': axfr_ttl,
+            'class': axfr_class,
+            'type': axfr_type,
+            'data': axfr_data}
+
 
 def parse(data, raw=False, quiet=False):
     """
@@ -534,23 +560,38 @@ def parse(data, raw=False, quiet=False):
     question = False
     authority = False
     answer = False
+    axfr = False
 
     output_entry = {}
     for line in cleandata:
 
-        if line.find(';; ->>HEADER<<-') == 0:
+        if line.startswith('; <<>> ') and line.lower().find(' axfr ') != -1:
+            question = False
+            authority = False
+            answer = False
+            axfr = True
+            axfr_list = []
+            continue
+
+        if line.find(';') == -1 and axfr:
+            axfr_list.append(parse_axfr(line))
+            output_entry.update({'axfr': axfr_list})
+            continue
+
+        if line.startswith(';; ->>HEADER<<-'):
             output_entry = {}
             output_entry.update(parse_header(line))
             continue
 
-        if line.find(';; flags:') == 0:
+        if line.startswith(';; flags:'):
             output_entry.update(parse_flags_line(line))
             continue
 
-        if line.find(';; QUESTION SECTION:') == 0:
+        if line.startswith(';; QUESTION SECTION:'):
             question = True
             authority = False
             answer = False
+            axfr = False
             continue
 
         if question:
@@ -558,12 +599,14 @@ def parse(data, raw=False, quiet=False):
             question = False
             authority = False
             answer = False
+            axfr = False
             continue
 
-        if line.find(';; AUTHORITY SECTION:') == 0:
+        if line.startswith(';; AUTHORITY SECTION:'):
             question = False
             authority = True
             answer = False
+            axfr = False
             authority_list = []
             continue
 
@@ -572,10 +615,11 @@ def parse(data, raw=False, quiet=False):
             output_entry.update({'authority': authority_list})
             continue
 
-        if line.find(';; ANSWER SECTION:') == 0:
+        if line.startswith(';; ANSWER SECTION:'):
             question = False
             authority = False
             answer = True
+            axfr = False
             answer_list = []
             continue
 
@@ -586,23 +630,28 @@ def parse(data, raw=False, quiet=False):
 
         # footer consists of 4 lines
         # footer line 1
-        if line.find(';; Query time:') == 0:
+        if line.startswith(';; Query time:'):
             output_entry.update({'query_time': line.split(':')[1].lstrip()})
             continue
 
         # footer line 2
-        if line.find(';; SERVER:') == 0:
+        if line.startswith(';; SERVER:'):
             output_entry.update({'server': line.split(':')[1].lstrip()})
             continue
 
         # footer line 3
-        if line.find(';; WHEN:') == 0:
+        if line.startswith(';; WHEN:'):
             output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
             continue
 
         # footer line 4 (last line)
-        if line.find(';; MSG SIZE  rcvd:') == 0:
+        if line.startswith(';; MSG SIZE  rcvd:'):
             output_entry.update({'rcvd': line.split(':')[1].lstrip()})
+
+            if output_entry:
+                raw_output.append(output_entry)
+        elif line.startswith(';; XFR size:'):
+            output_entry.update({'size': line.split(':')[1].lstrip()})
 
             if output_entry:
                 raw_output.append(output_entry)
