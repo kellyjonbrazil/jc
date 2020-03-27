@@ -34,6 +34,24 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-axfr.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_dig_axfr = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_11_6_dig = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-x.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_11_6_dig_x = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-aaaa.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_11_6_dig_aaaa = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-x.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_x = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-aaaa.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_aaaa = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr = f.read()
 
@@ -61,6 +79,24 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-axfr.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_dig_axfr_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_11_6_dig_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-x.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_11_6_dig_x_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-aaaa.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_11_6_dig_aaaa_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-x.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_x_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-aaaa.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_aaaa_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr_json = json.loads(f.read())
@@ -112,6 +148,42 @@ class MyTests(unittest.TestCase):
         Test 'dig axfr' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.dig.parse(self.ubuntu_18_4_dig_axfr, quiet=True), self.ubuntu_18_4_dig_axfr_json)
+
+    def test_dig_osx_10_11_6(self):
+        """
+        Test 'dig' on OSX 10.11.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_11_6_dig, quiet=True), self.osx_10_11_6_dig_json)
+
+    def test_dig_x_osx_10_11_6(self):
+        """
+        Test 'dig -x' on OSX 10.11.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_11_6_dig_x, quiet=True), self.osx_10_11_6_dig_x_json)
+
+    def test_dig_aaaa_osx_10_11_6(self):
+        """
+        Test 'dig -aaaa' on OSX 10.11.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_11_6_dig_aaaa, quiet=True), self.osx_10_11_6_dig_aaaa_json)
+
+    def test_dig_osx_10_14_6(self):
+        """
+        Test 'dig' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_14_6_dig, quiet=True), self.osx_10_14_6_dig_json)
+
+    def test_dig_x_osx_10_14_6(self):
+        """
+        Test 'dig -x' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_14_6_dig_x, quiet=True), self.osx_10_14_6_dig_x_json)
+
+    def test_dig_aaaa_osx_10_14_6(self):
+        """
+        Test 'dig -aaaa' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_14_6_dig_aaaa, quiet=True), self.osx_10_14_6_dig_aaaa_json)
 
     def test_dig_axfr_osx_10_14_6(self):
         """
