@@ -1,4 +1,4 @@
-![Test code](https://github.com/kellyjonbrazil/jc/workflows/Test%20code/badge.svg?branch=master)
+![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 
 # JC
 JSON CLI output utility
