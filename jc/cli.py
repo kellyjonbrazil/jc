@@ -9,6 +9,11 @@ import importlib
 import textwrap
 import signal
 import json
+from pygments import highlight
+from pygments.style import Style
+from pygments.token import (Name, Number, String, Keyword)
+from pygments.lexers import JsonLexer
+from pygments.formatters import Terminal256Formatter
 import jc.utils
 
 
@@ -73,6 +78,28 @@ parsers = [
     'xml',
     'yaml'
 ]
+
+
+class JcStyle(Style):
+    BLUE = '#2c5dcd'
+    GREY = '#4d4d4d'
+    PURPLE = '#5918bb'
+    GREEN = '#00cc00'
+
+    styles = {
+        Name.Tag: 'bold {}'.format(BLUE),    # key names
+        Keyword: GREY,                       # true, false, null
+        Number: PURPLE,                      # int, float
+        String: GREEN                        # string
+    }
+
+
+def piped_output():
+    """returns False if stdout is a TTY. True if output is being piped to another program"""
+    if sys.stdout.isatty():
+        return False
+    else:
+        return True
 
 
 def ctrlc(signum, frame):
@@ -167,6 +194,7 @@ def helptext(message):
     Options:
             -a               about jc
             -d               debug - show trace messages
+            -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress warnings
             -r               raw JSON output
@@ -181,11 +209,17 @@ def helptext(message):
     print(textwrap.dedent(helptext_string), file=sys.stderr)
 
 
-def json_out(data, pretty=False):
-    if pretty:
-        print(json.dumps(data, indent=2))
+def json_out(data, pretty=False, mono=False, piped_out=False):
+    if not mono and not piped_out:
+        if pretty:
+            print(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        else:
+            print(highlight(json.dumps(data), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
     else:
-        print(json.dumps(data))
+        if pretty:
+            print(json.dumps(data, indent=2))
+        else:
+            print(json.dumps(data))
 
 
 def generate_magic_command(args):
@@ -271,12 +305,13 @@ def main():
             options.extend(opt[1:])
 
     debug = 'd' in options
+    mono = 'm' in options
     pretty = 'p' in options
     quiet = 'q' in options
     raw = 'r' in options
 
     if 'a' in options:
-        json_out(about_jc(), pretty=pretty)
+        json_out(about_jc(), pretty=pretty, mono=mono, piped_out=piped_output())
         exit()
 
     if sys.stdin.isatty():
@@ -317,7 +352,7 @@ def main():
         helptext('missing or incorrect arguments')
         sys.exit(1)
 
-    json_out(result, pretty=pretty)
+    json_out(result, pretty=pretty, mono=mono, piped_out=piped_output())
 
 
 if __name__ == '__main__':
