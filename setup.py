@@ -5,14 +5,15 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='jc',
-    version='1.9.3',
+    version='1.10.0',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
     description='This tool serializes the output of popular command line tools and filetypes to structured JSON output.',
     install_requires=[
         'ifconfig-parser>=0.0.5',
         'ruamel.yaml>=0.15.0',
-        'xmltodict>=0.12.0'
+        'xmltodict>=0.12.0',
+        'Pygments>=2.5.2'
     ],
     license='MIT',
     long_description=long_description,
