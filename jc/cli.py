@@ -82,13 +82,13 @@ parsers = [
 
 class JcStyle(Style):
     BLUE = '#2c5dcd'
-    GREY = '#4d4d4d'
+    GRAY = '#4d4d4d'
     PURPLE = '#5918bb'
     GREEN = '#00cc00'
 
     styles = {
         Name.Tag: 'bold {}'.format(BLUE),    # key names
-        Keyword: GREY,                       # true, false, null
+        Keyword: GRAY,                       # true, false, null
         Number: PURPLE,                      # int, float
         String: GREEN                        # string
     }
