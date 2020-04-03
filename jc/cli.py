@@ -87,10 +87,10 @@ class JcStyle(Style):
     GREEN = '#00cc00'
 
     styles = {
-        Name.Tag: 'bold {}'.format(BLUE),    # key names
-        Keyword: GRAY,                       # true, false, null
-        Number: PURPLE,                      # int, float
-        String: GREEN                        # string
+        Name.Tag: f'bold {BLUE}',    # key names
+        Keyword: GRAY,               # true, false, null
+        Number: PURPLE,              # int, float
+        String: GREEN                # string
     }
 
 
