@@ -138,6 +138,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues encountered
+- `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
