@@ -91,7 +91,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'arp command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -156,7 +156,7 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
 
     # remove final Entries row if -v was used
-    if cleandata[-1].find('Entries:') == 0:
+    if cleandata[-1].startswith('Entries:'):
         cleandata.pop(-1)
 
     # detect if osx style was used
@@ -179,7 +179,7 @@ def parse(data, raw=False, quiet=False):
             return process(raw_output)
 
     # detect if linux style was used
-    elif cleandata[0].find('Address') == 0:
+    elif cleandata[0].startswith('Address'):
 
         # fix header row to change Flags Mask to flags_mask
         cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
