@@ -324,7 +324,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'dig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -525,11 +525,12 @@ def parse_answer(answer):
             'ttl': answer_ttl,
             'data': answer_data}
 
+
 def parse_axfr(axfr):
-    #; <<>> DiG 9.11.14-3-Debian <<>> @81.4.108.41 axfr zonetransfer.me +nocookie
-    #; (1 server found)
-    #;; global options: +cmd
-    #zonetransfer.me. 7200 IN A 5.196.105.14
+    # ; <<>> DiG 9.11.14-3-Debian <<>> @81.4.108.41 axfr zonetransfer.me +nocookie
+    # ; (1 server found)
+    # ;; global options: +cmd
+    # zonetransfer.me. 7200 IN A 5.196.105.14
     axfr = axfr.split(maxsplit=4)
     axfr_name = axfr[0]
     axfr_ttl = axfr[1]
@@ -575,7 +576,7 @@ def parse(data, raw=False, quiet=False):
     output_entry = {}
     for line in cleandata:
 
-        if line.startswith('; <<>> ') and line.lower().find(' axfr ') != -1:
+        if line.startswith('; <<>> ') and ' axfr ' in line.lower():
             question = False
             authority = False
             answer = False
@@ -583,7 +584,7 @@ def parse(data, raw=False, quiet=False):
             axfr_list = []
             continue
 
-        if line.find(';') == -1 and axfr:
+        if ';' not in line and axfr:
             axfr_list.append(parse_axfr(line))
             output_entry.update({'axfr': axfr_list})
             continue
@@ -620,7 +621,7 @@ def parse(data, raw=False, quiet=False):
             authority_list = []
             continue
 
-        if line.find(';') == -1 and authority:
+        if ';' not in line and authority:
             authority_list.append(parse_authority(line))
             output_entry.update({'authority': authority_list})
             continue
@@ -633,7 +634,7 @@ def parse(data, raw=False, quiet=False):
             answer_list = []
             continue
 
-        if line.find(';') == -1 and answer:
+        if ';' not in line and answer:
             answer_list.append(parse_answer(line))
             output_entry.update({'answer': answer_list})
             continue
