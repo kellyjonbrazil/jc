@@ -146,7 +146,7 @@ from ifconfigparser import IfconfigParser
 
 
 class info():
-    version = '1.5'
+    version = '1.6'
     description = 'ifconfig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -220,7 +220,7 @@ def process(proc_data):
         # convert OSX-style subnet mask to dotted quad
         if 'ipv4_mask' in entry:
             try:
-                if entry['ipv4_mask'].find('0x') == 0:
+                if entry['ipv4_mask'].startswith('0x'):
                     new_mask = entry['ipv4_mask']
                     new_mask = new_mask.lstrip('0x')
                     new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
