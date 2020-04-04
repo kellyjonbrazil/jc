@@ -247,7 +247,7 @@ def parse(data, raw=False, quiet=False):
 
     for line in cleandata:
 
-        if line.find('Chain') == 0:
+        if line.startswith('Chain'):
             raw_output.append(chain)
             chain = {}
             headers = []
@@ -259,7 +259,7 @@ def parse(data, raw=False, quiet=False):
 
             continue
 
-        elif line.find('target') == 0 or line.find('pkts') == 1 or line.find('num') == 0:
+        elif line.startswith('target') or line.find('pkts') == 1 or line.startswith('num'):
             headers = []
             headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
             headers.append("options")
