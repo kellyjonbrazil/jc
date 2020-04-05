@@ -77,7 +77,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'jobs command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -176,11 +176,11 @@ def parse(data, raw=False, quiet=False):
                 parsed_line.insert(0, job_number)
 
             # check for + or - in first field
-            if parsed_line[0].find('+') != -1:
+            if '+' in parsed_line[0]:
                 job_history = 'current'
                 parsed_line[0] = parsed_line[0].rstrip('+')
 
-            if parsed_line[0].find('-') != -1:
+            if '-' in parsed_line[0]:
                 job_history = 'previous'
                 parsed_line[0] = parsed_line[0].rstrip('-')
 

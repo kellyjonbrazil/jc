@@ -40,7 +40,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'systemctl command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,7 +110,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('LOAD   = ') != -1:
+        if 'LOAD   = ' in entry:
             break
 
         else:

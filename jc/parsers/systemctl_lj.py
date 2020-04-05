@@ -59,7 +59,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'systemctl list-jobs command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -137,7 +137,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('No jobs running.') != -1 or entry.find('jobs listed.') != -1:
+        if 'No jobs running.' in entry or 'jobs listed.' in entry:
             break
 
         else:

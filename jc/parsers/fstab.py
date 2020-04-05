@@ -70,7 +70,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'fstab file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,7 +145,7 @@ def parse(data, raw=False, quiet=False):
         for line in cleandata:
             output_line = {}
             # ignore commented lines
-            if line.strip().find('#') == 0:
+            if line.strip().startswith('#'):
                 continue
 
             line_list = line.split(maxsplit=6)

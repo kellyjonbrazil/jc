@@ -1,5 +1,8 @@
 jc changelog
 
+20200402 v1.10.1
+- Code cleanup
+
 20200402 v1.10.0
 - Add color output by default when not piping data to another program
 - Add -m option for monochrome output

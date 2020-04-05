@@ -73,7 +73,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'df command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,7 +135,7 @@ def process(proc_data):
 
         # change any entry for key with '_blocks' in the name to int
         for k in entry:
-            if str(k).find('_blocks') != -1:
+            if '_blocks' in str(k):
                 try:
                     blocks_int = int(entry[k])
                     entry[k] = blocks_int

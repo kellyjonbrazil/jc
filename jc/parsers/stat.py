@@ -104,7 +104,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'stat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -208,7 +208,7 @@ def parse(data, raw=False, quiet=False):
                 output_line['file'] = line_list[1]
 
                 # populate link_to field if -> found
-                if output_line['file'].find(' -> ') != -1:
+                if ' -> ' in output_line['file']:
                     filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
                     link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
                     output_line['file'] = filename
@@ -229,7 +229,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # line #3
-            if line.find('Device:') == 0:
+            if line.startswith('Device:'):
                 line_list = line.split()
                 output_line['device'] = line_list[1]
                 output_line['inode'] = line_list[3]
@@ -237,7 +237,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # line #4
-            if line.find('Access: (') == 0:
+            if line.startswith('Access: ('):
                 line = line.replace('(', ' ').replace(')', ' ').replace('/', ' ')
                 line_list = line.split()
                 output_line['access'] = line_list[1]
@@ -249,19 +249,19 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # line #5
-            if line.find('Access: 2') == 0:
+            if line.startswith('Access: 2'):
                 line_list = line.split(maxsplit=1)
                 output_line['access_time'] = line_list[1]
                 continue
 
             # line #6
-            if line.find('Modify:') == 0:
+            if line.startswith('Modify:'):
                 line_list = line.split(maxsplit=1)
                 output_line['modify_time'] = line_list[1]
                 continue
 
             # line #7
-            if line.find('Change:') == 0:
+            if line.startswith('Change:'):
                 line_list = line.split(maxsplit=1)
                 output_line['change_time'] = line_list[1]
                 continue
