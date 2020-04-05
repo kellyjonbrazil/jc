@@ -31,7 +31,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'systemctl list-unit-files command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -99,7 +99,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     for entry in cleandata[1:]:
-        if entry.find('unit files listed.') != -1:
+        if 'unit files listed.' in entry:
             break
 
         else:
