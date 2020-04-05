@@ -313,7 +313,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -498,14 +498,14 @@ def parse_post(raw_data):
 
         if 'proto' in entry and 'kind' in entry:
             if entry['kind'] == 'network':
-                if entry['proto'].find('tcp') != -1:
+                if 'tcp' in entry['proto']:
                     entry['transport_protocol'] = 'tcp'
-                elif entry['proto'].find('udp') != -1:
+                elif 'udp' in entry['proto']:
                     entry['transport_protocol'] = 'udp'
                 else:
                     entry['transport_protocol'] = None
 
-                if entry['proto'].find('6') != -1:
+                if '6' in entry['proto']:
                     entry['network_protocol'] = 'ipv6'
                 else:
                     entry['network_protocol'] = 'ipv4'
@@ -542,19 +542,19 @@ def parse(data, raw=False, quiet=False):
 
     for line in cleandata:
 
-        if line.find('Active Internet') == 0:
+        if line.startswith('Active Internet'):
             network_list = []
             network = True
             socket = False
             continue
 
-        if line.find('Active UNIX') == 0:
+        if line.startswith('Active UNIX'):
             socket_list = []
             network = False
             socket = True
             continue
 
-        if line.find('Proto') == 0:
+        if line.startswith('Proto'):
             header_text = normalize_headers(line)
             headers = header_text.split()
             continue
