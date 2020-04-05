@@ -165,7 +165,7 @@ def parse(data, raw=False, quiet=False):
 
     if cleandata:
         # check for OSX output
-        if ' type ' in cleandata[0]:
+        if ' type ' not in cleandata[0]:
             raw_output = osx_parse(cleandata)
 
         else:
