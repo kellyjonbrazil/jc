@@ -32,7 +32,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'pip list command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -94,7 +94,7 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, linedata))
 
     # detect legacy output type
-    if cleandata[0].find(' (') != -1:
+    if ' (' in cleandata[0]:
         for row in cleandata:
             raw_output.append({'package': row.split(' (')[0],
                                'version': row.split(' (')[1].rstrip(')')})
@@ -103,7 +103,7 @@ def parse(data, raw=False, quiet=False):
     else:
         # clear separator line
         for i, line in reversed(list(enumerate(cleandata))):
-            if line.find('---') != -1:
+            if '---' in line:
                 cleandata.pop(i)
 
         cleandata[0] = cleandata[0].lower()
