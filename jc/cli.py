@@ -18,7 +18,7 @@ import jc.utils
 
 
 class info():
-    version = '1.10.2'
+    version = '1.10.3'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -288,6 +288,12 @@ def magic():
 def main():
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
+
+    # break on pipe error. need try/except for windows compatibility
+    try:
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    except AttributeError:
+        pass
 
     # try magic syntax first: e.g. jc -p ls -al
     magic()
