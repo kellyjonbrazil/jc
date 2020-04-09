@@ -18,7 +18,7 @@ import jc.utils
 
 
 class info():
-    version = '1.10.1'
+    version = '1.10.2'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -81,16 +81,11 @@ parsers = [
 
 
 class JcStyle(Style):
-    BLUE = '#2c5dcd'
-    GRAY = '#4d4d4d'
-    PURPLE = '#5918bb'
-    GREEN = '#00cc00'
-
     styles = {
-        Name.Tag: f'bold {BLUE}',    # key names
-        Keyword: GRAY,               # true, false, null
-        Number: PURPLE,              # int, float
-        String: GREEN                # string
+        Name.Tag: 'bold ansiblue',     # key names
+        Keyword: 'ansibrightblack',    # true, false, null
+        Number: 'ansimagenta',         # int, float
+        String: 'ansigreen'            # string
     }
 
 

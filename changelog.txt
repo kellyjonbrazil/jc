@@ -1,5 +1,8 @@
 jc changelog
 
+20200409 v1.10.2
+- Change colors to ansi and match jello colors
+
 20200402 v1.10.1
 - Code cleanup
 
