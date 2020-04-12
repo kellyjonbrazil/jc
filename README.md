@@ -145,9 +145,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
 
 ### Setting Custom Colors via Environment Variable
-You can specify custom colors via the `JC_COLORS` environment variable.
-
-The `JC_COLORS` environment variable takes four comma separated string values in the following format:
+You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
 ```
 JELLO_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 ```
