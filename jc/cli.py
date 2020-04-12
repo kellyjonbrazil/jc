@@ -89,6 +89,70 @@ class JcStyle(Style):
     }
 
 
+def set_env_colors(keyname_color, keyword_color, number_color, string_color):
+    """
+    This function does not return a value. It just updates the JcStyles.styles dictionary.
+
+    Grab custom colors from JELLO_COLORS environment variable.
+
+    JELLO_COLORS env variable takes 4 comma separated string values and should be in the format of:
+
+    JELLO_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
+
+    Where colors are: black, red, green, yellow, blue, magenta, cyan, gray, brightblack, brightred,
+                      brightgreen, brightyellow, brightblue, brightmagenta, brightcyan, white, default
+
+    Alternatively, numeric color codes can be used. For example: #ff0000 = red
+
+    Default colors:
+
+    JELLO_COLORS=blue,brightblack,magenta,green
+    or
+    JELLO_COLORS=default,default,default,default
+
+    """
+    env_colors = os.getenv('JELLO_COLORS')
+    input_error = False
+
+    if env_colors:
+        color_list = env_colors.split(',')
+    else:
+        input_error = True
+
+    if env_colors and len(color_list) != 4:
+        print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
+        input_error = True
+
+    if env_colors:
+        for color in color_list:
+            if color not in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'gray', 'brightblack', 'brightred',
+                             'brightgreen', 'brightyellow', 'brightblue', 'brightmagenta', 'brightcyan', 'white', 'default']:
+                print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
+                input_error = True
+
+    # if there is an issue with the env variable, just set all colors to default and move on
+    if input_error:
+        color_list = ['default', 'default', 'default', 'default']
+
+    # Try the color set in the JELLO_COLORS env variable first. If it is set to default, then fall back to default colors
+    class JcStyle(Style):
+        styles = {
+            Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else f'bold ansiblue'   # key names
+            Keyword: f'bold ansi{color_list[1]}' if not color_list[1] == 'default' else f'ansibrightblack'  # true, false, null
+            Number: f'bold ansi{color_list[2]}' if not color_list[2] == 'default' else f'magenta'           # numbers
+            String: f'bold ansi{color_list[3]}' if not color_list[3] == 'default' else f'green'             # strings
+        }
+
+    JelloTheme.colors = {
+        'key_name': color_map[color_list[0]] if not color_list[0] == 'default' else color_map[keyname_color] if keyname_color else color_map['blue'],
+        'keyword': color_map[color_list[1]] if not color_list[1] == 'default' else color_map[keyword_color] if keyword_color else color_map['brightblack'],
+        'number': color_map[color_list[2]] if not color_list[2] == 'default' else color_map[number_color] if number_color else color_map['magenta'],
+        'string': color_map[color_list[3]] if not color_list[3] == 'default' else color_map[string_color] if string_color else color_map['green'],
+        'array_id': color_map[color_list[4]] if not color_list[4] == 'default' else color_map[arrayid_color] if arrayid_color else color_map['red'],
+        'array_bracket': color_map[color_list[5]] if not color_list[5] == 'default' else color_map[arraybracket_color] if arraybracket_color else color_map['magenta']
+    }
+
+
 def piped_output():
     """returns False if stdout is a TTY. True if output is being piped to another program"""
     if sys.stdout.isatty():
