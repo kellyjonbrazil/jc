@@ -18,7 +18,7 @@ import jc.utils
 
 
 class info():
-    version = '1.10.3'
+    version = '1.10.4'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -80,12 +80,52 @@ parsers = [
 ]
 
 
-class JcStyle(Style):
-    styles = {
-        Name.Tag: 'bold ansiblue',     # key names
-        Keyword: 'ansibrightblack',    # true, false, null
-        Number: 'ansimagenta',         # int, float
-        String: 'ansigreen'            # string
+def set_env_colors():
+    """
+    Grab custom colors from JC_COLORS environment variable. JC_COLORS env variable takes 4 comma
+    separated string values and should be in the format of:
+
+    JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
+
+    Where colors are: black, red, green, yellow, blue, magenta, cyan, gray, brightblack, brightred,
+                      brightgreen, brightyellow, brightblue, brightmagenta, brightcyan, white, default
+
+    Default colors:
+
+    JC_COLORS=blue,brightblack,magenta,green
+    or
+    JC_COLORS=default,default,default,default
+
+    """
+    env_colors = os.getenv('JC_COLORS')
+    input_error = False
+
+    if env_colors:
+        color_list = env_colors.split(',')
+    else:
+        input_error = True
+
+    if env_colors and len(color_list) != 4:
+        print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
+        input_error = True
+
+    if env_colors:
+        for color in color_list:
+            if color not in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'gray', 'brightblack', 'brightred',
+                             'brightgreen', 'brightyellow', 'brightblue', 'brightmagenta', 'brightcyan', 'white', 'default']:
+                print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
+                input_error = True
+
+    # if there is an issue with the env variable, just set all colors to default and move on
+    if input_error:
+        color_list = ['default', 'default', 'default', 'default']
+
+    # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
+    return {
+        Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else f'bold ansiblue',   # key names
+        Keyword: f'ansi{color_list[1]}' if not color_list[1] == 'default' else f'ansibrightblack',  # true, false, null
+        Number: f'ansi{color_list[2]}' if not color_list[2] == 'default' else f'ansimagenta',       # numbers
+        String: f'ansi{color_list[3]}' if not color_list[3] == 'default' else f'ansigreen'          # strings
     }
 
 
@@ -205,6 +245,11 @@ def helptext(message):
 
 
 def json_out(data, pretty=False, mono=False, piped_out=False):
+     # set colors
+    class JcStyle(Style):
+        styles = set_env_colors()
+
+
     if not mono and not piped_out:
         if pretty:
             print(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])

@@ -144,6 +144,22 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-q` quiet mode. Suppresses warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as text and no additional sematic processing
 
+### Setting Custom Colors via Environment Variable
+You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
+```
+JELLO_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
+```
+Where colors are: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `gray`, `brightblack`, `brightred`, `brightgreen`, `brightyellow`, `brightblue`, `brightmagenta`, `brightcyan`, `white`, or  `default`
+
+For example, to set to the default colors:
+```
+JC_COLORS=blue,brightblack,magenta,green
+```
+or
+```
+JC_COLORS=default,default,default,default
+```
+
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
 
