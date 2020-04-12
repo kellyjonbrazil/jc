@@ -1,5 +1,8 @@
 jc changelog
 
+20200412 v1.10.4
+- Add color customization via JC_COLORS env variable
+
 20200409 v1.10.3
 - Fix break on pipe error
 
