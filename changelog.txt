@@ -1,5 +1,8 @@
 jc changelog
 
+20200414 v1.10.5
+- Minor change of using sys.exit(0) instead of exit()
+
 20200412 v1.10.4
 - Add color customization via JC_COLORS env variable
 
