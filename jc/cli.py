@@ -322,7 +322,7 @@ def magic():
     valid_command, run_command = generate_magic_command(sys.argv)
     if valid_command:
         os.system(run_command)
-        exit()
+        sys.exit(0)
     elif run_command is None:
         return
     else:
@@ -358,7 +358,7 @@ def main():
 
     if 'a' in options:
         json_out(about_jc(), pretty=pretty, mono=mono, piped_out=piped_output())
-        exit()
+        sys.exit(0)
 
     if sys.stdin.isatty():
         helptext('missing piped data')
