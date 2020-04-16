@@ -71,7 +71,7 @@ For more information on the motivations for this project, please see my [blog po
 ## Installation
 There are several ways to get `jc`. You can install via `pip`, `deb` or `rpm` packages, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
-### Pip (macOS, Linux, Windows)
+### Pip (macOS, linux, unix, Windows)
 ```
 $ pip3 install --upgrade jc
 ```
@@ -88,7 +88,7 @@ $ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/latest/jc.rpm
 $ sudo rpm -i jc.rpm
 ```
 
-### PKG (macOS)
+### brew (macOS)
 Coming Soon!
 
 ### Binaries
