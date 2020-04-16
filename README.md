@@ -69,9 +69,9 @@ Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip3`, `deb` or `rpm` packages, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`, `deb` or `rpm` packages, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
-### Pip3 (macOS, Linux, Windows)
+### Pip (macOS, Linux, Windows)
 ```
 $ pip3 install --upgrade jc
 ```
@@ -85,7 +85,7 @@ $ sudo dpkg -i jc.deb
 ### RPM (Fedora, RHEL, CentOS)
 ```
 $ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/latest/jc.rpm
-$ sudo rpm -i jc.deb
+$ sudo rpm -i jc.rpm
 ```
 
 ### PKG (macOS)
