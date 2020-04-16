@@ -69,9 +69,35 @@ Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
+There are several ways to get `jc`. You can install via `pip3`, `deb`, `rpm` package or by copying the binary for your architecture and running it anywhere in your filesystem.
+
+### Pip3 (macOS, Linux, Windows)
 ```
 $ pip3 install --upgrade jc
 ```
+
+### DEB (Debian, Ubuntu)
+```
+$ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/latest/jc.deb
+$ sudo dpkg -i jc.deb
+```
+
+### RPM (Fedora, RHEL, CentOS)
+```
+$ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/latest/jc.rpm
+$ sudo rpm -i jc.deb
+```
+
+### PKG (macOS)
+Coming Soon!
+
+### Binaries
+#### Linux
+```
+$ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/bin/linux/latest/jc
+```
+#### macOS
+Coming soon!
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
