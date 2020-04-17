@@ -76,28 +76,8 @@ There are several ways to get `jc`. You can install via `pip`, `deb` or `rpm` pa
 $ pip3 install --upgrade jc
 ```
 
-### DEB (Debian, Ubuntu)
-```
-$ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/latest/jc.deb
-$ sudo dpkg -i jc.deb
-```
-
-### RPM (Fedora, RHEL, CentOS)
-```
-$ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/latest/jc.rpm
-$ sudo rpm -i jc.rpm
-```
-
-### brew (macOS)
-Coming Soon!
-
-### Binaries
-#### Linux
-```
-$ curl -O https://jc-packages.s3-us-west-1.amazonaws.com/bin/linux/latest/jc
-```
-#### macOS
-Coming soon!
+### Packages and Binaries
+Please see https://kellyjonbrazil.github.io/jc-packaging/ for details
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
