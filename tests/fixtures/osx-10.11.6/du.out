@@ -911,13 +911,6 @@
 112	/usr/local/Homebrew/Library/Homebrew/rubocops/cask
 40	/usr/local/Homebrew/Library/Homebrew/rubocops/extend
 344	/usr/local/Homebrew/Library/Homebrew/rubocops
-288	/usr/local/Homebrew/Library/Homebrew/shims/linux/super
-288	/usr/local/Homebrew/Library/Homebrew/shims/linux
-344	/usr/local/Homebrew/Library/Homebrew/shims/mac/super
-344	/usr/local/Homebrew/Library/Homebrew/shims/mac
-16	/usr/local/Homebrew/Library/Homebrew/shims/scm
-280	/usr/local/Homebrew/Library/Homebrew/shims/super
-928	/usr/local/Homebrew/Library/Homebrew/shims
 24	/usr/local/Homebrew/Library/Homebrew/test/cask/artifact/shared_examples
 144	/usr/local/Homebrew/Library/Homebrew/test/cask/artifact
 24	/usr/local/Homebrew/Library/Homebrew/test/cask/cask_loader

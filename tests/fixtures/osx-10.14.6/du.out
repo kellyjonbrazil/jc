@@ -317,13 +317,6 @@
 32	/usr/local/Homebrew/Library/Homebrew/cli
 56	/usr/local/Homebrew/Library/Homebrew/manpages
 8	/usr/local/Homebrew/Library/Homebrew/version
-64	/usr/local/Homebrew/Library/Homebrew/shims/mac/super
-64	/usr/local/Homebrew/Library/Homebrew/shims/mac
-24	/usr/local/Homebrew/Library/Homebrew/shims/super
-8	/usr/local/Homebrew/Library/Homebrew/shims/linux/super
-8	/usr/local/Homebrew/Library/Homebrew/shims/linux
-8	/usr/local/Homebrew/Library/Homebrew/shims/scm
-104	/usr/local/Homebrew/Library/Homebrew/shims
 8	/usr/local/Homebrew/Library/Homebrew/debrew
 56	/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/10.8
 24	/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/10.6
