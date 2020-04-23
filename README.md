@@ -82,7 +82,7 @@ $ brew install jc
 ```
 
 ### Packages and Binaries
-Please see https://kellyjonbrazil.github.io/jc-packaging/ for details
+Please see https://kellyjonbrazil.github.io/jc-packaging/ for details.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
