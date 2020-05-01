@@ -18,7 +18,7 @@ import jc.utils
 
 
 class info():
-    version = '1.10.6'
+    version = '1.10.7'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

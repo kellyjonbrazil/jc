@@ -1,5 +1,8 @@
 jc changelog
 
+20200501 v1.10.7
+- Requirements modifications for Fedora RPM packaging requirements
+
 20200420 v1.10.6
 - Remove homebrew shim references from du osx tests
 
