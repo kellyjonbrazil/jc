@@ -147,6 +147,17 @@ Examples:
 info(self, /, *args, **kwargs)
 ```
 
+## IfconfigParser
+```python
+IfconfigParser(self, console_output)
+```
+
+## InterfaceNotFound
+```python
+InterfaceNotFound(self, /, *args, **kwargs)
+```
+
+
 ## process
 ```python
 process(proc_data)
