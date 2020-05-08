@@ -1,5 +1,9 @@
 jc changelog
 
+20200508 v1.10.8
+- Add license file to dist for Fedora RPM packaging requirements
+- Remove tests from package to keep from polluting the global site-packages
+
 20200501 v1.10.7
 - Requirements modifications for Fedora RPM packaging requirements
 
