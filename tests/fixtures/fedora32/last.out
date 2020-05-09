@@ -1,0 +1,8 @@
+kbrazil  pts/0        192.168.71.1     Fri May  1 15:25    gone - no logout
+kbrazil  tty1                          Fri May  1 15:24    gone - no logout
+reboot   system boot  5.6.6-300.fc32.x Fri May  1 15:24   still running
+kbrazil  pts/0        192.168.71.1     Thu Apr 30 15:27 - 15:22  (23:55)
+kbrazil  tty1                          Thu Apr 30 15:25 - down   (23:57)
+reboot   system boot  5.6.6-300.fc32.x Thu Apr 30 15:22 - 15:22 (1+00:00)
+
+wtmp begins Thu Apr 30 15:22:02 2020
