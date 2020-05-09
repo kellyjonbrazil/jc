@@ -40,6 +40,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-aeep.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_netstat_sudo_aeep = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_netstat = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_json = json.loads(f.read())
@@ -70,6 +73,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-aeep.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_netstat_sudo_aeep_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_netstat_json = json.loads(f.read())
 
     def test_netstat_centos_7_7(self):
         """
@@ -130,6 +136,12 @@ class MyTests(unittest.TestCase):
         Test 'sudo netstat -aeep' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_sudo_aeep, quiet=True), self.ubuntu_18_4_netstat_sudo_aeep_json)
+
+    def test_netstat_fedora32(self):
+        """
+        Test 'netstat' on Fedora32
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.fedora32_netstat, quiet=True), self.fedora32_netstat_json)
 
 
 if __name__ == '__main__':
