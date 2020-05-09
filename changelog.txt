@@ -1,5 +1,9 @@
 jc changelog
 
+20200509 v1.10.10
+- Fix ls parser issue where the first file was skipped for ls -R on some platforms
+- Update last parser to handle 'gone - no logout' condition
+
 20200508 v1.10.9
 - Add license info to vendorized ifconfig-parser class
 
