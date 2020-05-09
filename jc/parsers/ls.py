@@ -149,7 +149,7 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -235,8 +235,9 @@ def parse(data, raw=False, quiet=False):
     if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
        and linedata[0].endswith(':'):
         parent = linedata.pop(0)[:-1]
-        # Pop following total line
-        linedata.pop(0)
+        # Pop following total line if it exists
+        if re.match(r'total [0-9]+', linedata[0]):
+            linedata.pop(0)
 
     if linedata:
         # Check if -l was used to parse extra data

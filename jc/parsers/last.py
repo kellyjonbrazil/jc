@@ -72,7 +72,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'last and lastb command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,6 +122,9 @@ def process(proc_data):
         if 'logout' in entry and entry['logout'] == 'still_logged_in':
             entry['logout'] = 'still logged in'
 
+        if 'logout' in entry and entry['logout'] == 'gone_-_no_logout':
+            entry['logout'] = 'gone - no logout'
+
     return proc_data
 
 
@@ -157,6 +160,7 @@ def parse(data, raw=False, quiet=False):
 
             entry = entry.replace('system boot', 'system_boot')
             entry = entry.replace('  still logged in', '- still_logged_in')
+            entry = entry.replace('  gone - no logout', '- gone_-_no_logout')
 
             linedata = entry.split()
             if re.match(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]', ' '.join(linedata[2:4])):
