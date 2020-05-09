@@ -313,7 +313,7 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -536,6 +536,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
     network = False
     socket = False
+    bluetooth = False
     headers = ''
     network_list = []
     socket_list = []
@@ -546,12 +547,20 @@ def parse(data, raw=False, quiet=False):
             network_list = []
             network = True
             socket = False
+            bluetooth = False
             continue
 
         if line.startswith('Active UNIX'):
             socket_list = []
             network = False
             socket = True
+            bluetooth = False
+            continue
+
+        if line.startswith('Active Bluetooth'):
+            network = False
+            socket = False
+            bluetooth = True
             continue
 
         if line.startswith('Proto'):
@@ -565,6 +574,10 @@ def parse(data, raw=False, quiet=False):
 
         if socket:
             socket_list.append(parse_socket(header_text, headers, line))
+            continue
+
+        if bluetooth:
+            # maybe implement later if requested
             continue
 
     for item in [network_list, socket_list]:
