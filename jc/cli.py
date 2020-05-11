@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """jc - JSON CLI output utility
 JC cli module
 """
