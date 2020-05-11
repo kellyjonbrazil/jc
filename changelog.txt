@@ -1,5 +1,8 @@
 jc changelog
 
+20200511 v1.10.12
+- Remove shebang from jc/cli.py for Fedora packaging
+
 20200511 v1.10.11
 - Change file permissions for Fedora packaging
 
