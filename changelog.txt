@@ -1,5 +1,8 @@
 jc changelog
 
+20200511 v1.10.11
+- Change file permissions for Fedora packaging
+
 20200509 v1.10.10
 - Fix ls parser issue where the first file was skipped for ls -R on some platforms
 - Update last parser to handle 'gone - no logout' condition
