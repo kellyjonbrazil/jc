@@ -118,25 +118,7 @@ def parse(data, raw=False, quiet=False):
             continue
 
         # keys and values
-        if item_values and not value_list and not line.strip().endswith(':'):
-            item_header = False
-            item_values = True
-            value_list = False
-
-            if values:
-                item['values'][attribute] = values
-                values = []
-
-            if len(line.split(':', maxsplit=1)) == 2:
-                key = line.split(':', maxsplit=1)[0].strip().lower().replace(' ', '_')
-                val = line.split(':', maxsplit=1)[1].strip()
-                item['values'].update({key: val})
-            else:
-                pass
-            continue
-
-        # back to keys and values when inside multi-line key
-        if item_values and value_list and len(line.split(':', maxsplit=1)) == 2 and not line.strip().endswith(':'):
+        if item_values and len(line.split(':', maxsplit=1)) == 2 and not line.strip().endswith(':'):
             item_header = False
             item_values = True
             value_list = False
