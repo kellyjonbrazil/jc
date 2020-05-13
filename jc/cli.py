@@ -35,6 +35,7 @@ parsers = [
     'csv',
     'df',
     'dig',
+    'dmidecode',
     'du',
     'env',
     'file',
