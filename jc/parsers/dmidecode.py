@@ -180,8 +180,16 @@ def process(proc_data):
           }
         ]
     """
+    for entry in proc_data:
+        int_list = ['type', 'bytes']
+        for key in int_list:
+            if key in entry:
+                try:
+                    key_int = int(entry[key])
+                    entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
 
-    # rebuild output for added semantic information
     return proc_data
 
 
