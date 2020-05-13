@@ -93,6 +93,9 @@ def parse(data, raw=False, quiet=False):
             value_list = False
 
             if item:
+                if values:
+                    item['values'][attribute] = values
+                    values = []
                 raw_output.append(item)
 
             # Handle 0x0000, DMI type 0, 24 bytes
@@ -162,7 +165,7 @@ def parse(data, raw=False, quiet=False):
 
         # multi-line values
         if value_list:
-            values.append(line)
+            values.append(line.strip())
             continue
 
     if item:
