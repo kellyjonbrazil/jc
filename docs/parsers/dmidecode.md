@@ -5,6 +5,43 @@ Usage:
 
     specify --dmidecode as the first argument if the piped input is coming from dmidecode
 
+    Note: Because the output of dmidecode has some quirks, there may (rarely) be some missing data.
+          For example, with mixed single and multi-line items only the first item is output.
+
+          this:
+            Associated Memory Slots: 2
+                0x0006
+                0x0007
+
+          is converted to:
+            "associated_memory_slots": "2",
+
+          Very rarely there is an item with multiple sub-items and descriptions. These items will
+          become corrupted.
+
+          this:
+            Handle 0x019F, DMI type 10, 8 bytes
+            On Board Device 1 Information
+                    Type: Video
+                    Status: Disabled
+                    Description: VMware SVGA II
+            On Board Device 2 Information
+                    Type: Sound
+                    Status: Disabled
+                    Description: ES1371
+
+          is converted to:
+            {
+                "handle": "0x019F",
+                "type": 10,
+                "bytes": 8,
+                "description": "On Board Device 1 Information",
+                "values": {
+                  "type": "Sound",
+                  "status": "Disabled",
+                  "description": "ES1371"
+            }
+
 Compatibility:
 
     'linux'
