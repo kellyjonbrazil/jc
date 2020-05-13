@@ -11,10 +11,92 @@ Compatibility:
 Examples:
 
     $ dmidecode | jc --dmidecode -p
-    []
+    [
+      {
+        "handle": "0x0000",
+        "type": 0,
+        "bytes": 24,
+        "description": "BIOS Information",
+        "values": {
+          "vendor": "Phoenix Technologies LTD",
+          "version": "6.00",
+          "release_date": "04/13/2018",
+          "address": "0xEA490",
+          "runtime_size": "88944 bytes",
+          "rom_size": "64 kB",
+          "characteristics": [
+            "ISA is supported",
+            "PCI is supported",
+            "PC Card (PCMCIA) is supported",
+            "PNP is supported",
+            "APM is supported",
+            "BIOS is upgradeable",
+            "BIOS shadowing is allowed",
+            "ESCD support is available",
+            "Boot from CD is supported",
+            "Selectable boot is supported",
+            "EDD is supported",
+            "Print screen service is supported (int 5h)",
+            "8042 keyboard services are supported (int 9h)",
+            "Serial services are supported (int 14h)",
+            "Printer services are supported (int 17h)",
+            "CGA/mono video services are supported (int 10h)",
+            "ACPI is supported",
+            "Smart battery is supported",
+            "BIOS boot specification is supported",
+            "Function key-initiated network boot is supported",
+            "Targeted content distribution is supported"
+          ],
+          "bios_revision": "4.6",
+          "firmware_revision": "0.0"
+        }
+      },
+      ...
+    ]
 
     $ dmidecode | jc --dmidecode -p -r
-    []
+    [
+      {
+        "handle": "0x0000",
+        "type": "0",
+        "bytes": "24",
+        "description": "BIOS Information",
+        "values": {
+          "vendor": "Phoenix Technologies LTD",
+          "version": "6.00",
+          "release_date": "04/13/2018",
+          "address": "0xEA490",
+          "runtime_size": "88944 bytes",
+          "rom_size": "64 kB",
+          "characteristics": [
+            "ISA is supported",
+            "PCI is supported",
+            "PC Card (PCMCIA) is supported",
+            "PNP is supported",
+            "APM is supported",
+            "BIOS is upgradeable",
+            "BIOS shadowing is allowed",
+            "ESCD support is available",
+            "Boot from CD is supported",
+            "Selectable boot is supported",
+            "EDD is supported",
+            "Print screen service is supported (int 5h)",
+            "8042 keyboard services are supported (int 9h)",
+            "Serial services are supported (int 14h)",
+            "Printer services are supported (int 17h)",
+            "CGA/mono video services are supported (int 10h)",
+            "ACPI is supported",
+            "Smart battery is supported",
+            "BIOS boot specification is supported",
+            "Function key-initiated network boot is supported",
+            "Targeted content distribution is supported"
+          ],
+          "bios_revision": "4.6",
+          "firmware_revision": "0.0"
+        }
+      },
+      ...
+    ]
 """
 import jc.utils
 
@@ -48,9 +130,16 @@ def process(proc_data):
 
         [
           {
-            "dmidecode":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "handle":                      string,
+            "type":                        integer,
+            "bytes":                       integer,
+            "description":                 string,
+            "values": {
+              "lowercase_no_spaces_keys":  string,
+              "multiline_key_values": [
+                                           string,
+              ]
+            }
           }
         ]
     """
