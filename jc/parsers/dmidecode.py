@@ -136,7 +136,7 @@ def parse(data, raw=False, quiet=False):
             continue
 
         # back to keys and values when inside multi-line key
-        if item_values and value_list and len(line.split(':', maxsplit=1)) == 2:
+        if item_values and value_list and len(line.split(':', maxsplit=1)) == 2 and not line.strip().endswith(':'):
             item_header = False
             item_values = True
             value_list = False
