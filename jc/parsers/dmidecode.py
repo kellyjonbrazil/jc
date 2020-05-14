@@ -262,6 +262,12 @@ def parse(data, raw=False, quiet=False):
                 'description': line,
                 'values': {}
             }
+
+            key = None
+            val = None
+            attribute = None
+            values = []
+            key_data = []
             continue
 
         # keys and values
@@ -276,6 +282,9 @@ def parse(data, raw=False, quiet=False):
             if values:
                 item['values'][attribute] = values
                 values = []
+            if key_data:
+                item['values'][f'{key}_data'] = key_data
+                key_data = []
 
             key = line.split(':', maxsplit=1)[0].strip().lower().replace(' ', '_')
             val = line.split(':', maxsplit=1)[1].strip()
@@ -292,8 +301,10 @@ def parse(data, raw=False, quiet=False):
 
             if values:
                 item['values'][attribute] = values
+                values = []
             if key_data:
                 item['values'][f'{key}_data'] = key_data
+                key_data = []
 
             attribute = line[:-1].strip().lower().replace(' ', '_')
             values = []
