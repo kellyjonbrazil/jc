@@ -191,13 +191,13 @@ def parse(data, raw=False, quiet=False):
 
     # remove header rows
     for row in data.copy():
-        if not row.startswith('Handle '):
+        if row:
             data.pop(0)
         else:
             break
 
+    # main parsing loop
     for line in data:
-
         # new item
         if not line:
             item_header = True
