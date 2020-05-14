@@ -274,6 +274,7 @@ def parse(data, raw=False, quiet=False):
         if item_values \
            and len(line.split(':', maxsplit=1)) == 2 \
            and line.startswith('\t') \
+           and not line.startswith('\t\t') \
            and not line.strip().endswith(':'):
             item_header = False
             item_values = True
@@ -294,6 +295,7 @@ def parse(data, raw=False, quiet=False):
         # multi-line key
         if item_values \
            and line.startswith('\t') \
+           and not line.startswith('\t\t') \
            and line.strip().endswith(':'):
             item_header = False
             item_values = True
