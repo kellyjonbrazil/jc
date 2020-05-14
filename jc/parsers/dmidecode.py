@@ -4,43 +4,6 @@ Usage:
 
     specify --dmidecode as the first argument if the piped input is coming from dmidecode
 
-    Note: Because the output of dmidecode has some quirks, there may (rarely) be some missing data.
-          For example, with mixed single and multi-line items only the first item is output.
-
-          this:
-            Associated Memory Slots: 2
-                0x0006
-                0x0007
-
-          is converted to:
-            "associated_memory_slots": "2",
-
-          Very rarely there is an item with multiple sub-items and descriptions. These items will
-          become corrupted.
-
-          this:
-            Handle 0x019F, DMI type 10, 8 bytes
-            On Board Device 1 Information
-                    Type: Video
-                    Status: Disabled
-                    Description: VMware SVGA II
-            On Board Device 2 Information
-                    Type: Sound
-                    Status: Disabled
-                    Description: ES1371
-
-          is converted to:
-            {
-                "handle": "0x019F",
-                "type": 10,
-                "bytes": 8,
-                "description": "On Board Device 1 Information",
-                "values": {
-                  "type": "Sound",
-                  "status": "Disabled",
-                  "description": "ES1371"
-            }
-
 Compatibility:
 
     'linux'
@@ -213,15 +176,30 @@ def parse(data, raw=False, quiet=False):
     item_header = False
     item_values = False
     value_list = False
+
     item = None
+    header = None
+    key = None
+    val = None
     attribute = None
     values = None
+    key_data = None
+
     raw_output = []
 
-    for line in filter(None, data.replace('\t', '').splitlines()):
+    data = data.splitlines()
 
-        # header
-        if line.startswith('Handle ') and line.endswith('bytes'):
+    # remove header rows
+    for row in data.copy():
+        if not row.startswith('Handle '):
+            data.pop(0)
+        else:
+            break
+
+    for line in data:
+
+        # new item
+        if not line:
             item_header = True
             item_values = False
             value_list = False
@@ -229,8 +207,21 @@ def parse(data, raw=False, quiet=False):
             if item:
                 if values:
                     item['values'][attribute] = values
-                    values = []
+                if key_data:
+                    item['values'][f'{key}_data'] = key_data
                 raw_output.append(item)
+
+            item = {}
+            header = None
+            key = None
+            val = None
+            attribute = None
+            values = []
+            key_data = []
+            continue
+
+        # header
+        if line.startswith('Handle ') and line.endswith('bytes'):
 
             # Handle 0x0000, DMI type 0, 24 bytes
             header = line.replace(',', ' ').split()
@@ -251,8 +242,33 @@ def parse(data, raw=False, quiet=False):
             item['values'] = {}
             continue
 
+        # new item if multiple descriptions in handle
+        if not item_header and not line.startswith('\t'):
+            item_header = False
+            item_values = True
+            value_list = False
+
+            if item:
+                if values:
+                    item['values'][attribute] = values
+                if key_data:
+                    item['values'][f'{key}_data'] = key_data
+                raw_output.append(item)
+
+            item = {
+                'handle': header[1],
+                'type': header[4],
+                'bytes': header[5],
+                'description': line,
+                'values': {}
+            }
+            continue
+
         # keys and values
-        if item_values and len(line.split(':', maxsplit=1)) == 2 and not line.strip().endswith(':'):
+        if item_values \
+           and len(line.split(':', maxsplit=1)) == 2 \
+           and line.startswith('\t') \
+           and not line.strip().endswith(':'):
             item_header = False
             item_values = True
             value_list = False
@@ -267,21 +283,35 @@ def parse(data, raw=False, quiet=False):
             continue
 
         # multi-line key
-        if item_values and line.strip().endswith(':'):
+        if item_values \
+           and line.startswith('\t') \
+           and line.strip().endswith(':'):
             item_header = False
             item_values = True
             value_list = True
 
             if values:
                 item['values'][attribute] = values
+            if key_data:
+                item['values'][f'{key}_data'] = key_data
 
             attribute = line[:-1].strip().lower().replace(' ', '_')
             values = []
             continue
 
         # multi-line values
-        if value_list:
+        if value_list \
+           and line.startswith('\t\t'):
             values.append(line.strip())
+            continue
+
+        # data for hybrid multi-line objects
+        if item_values \
+           and not value_list \
+           and line.startswith('\t\t'):
+            if f'{key}_data' not in item['values']:
+                item['values'][f'{key}_data'] = []
+            key_data.append(line.strip())
             continue
 
     if item:
