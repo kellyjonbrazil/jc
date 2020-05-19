@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Examples:
 
@@ -310,16 +310,17 @@ Examples:
 """
 import string
 import jc.utils
+import jc.parsers.netstat_osx
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
+    compatible = ['linux', 'darwin']
     magic_commands = ['netstat']
 
 
@@ -532,59 +533,66 @@ def parse(data, raw=False, quiet=False):
 
     cleandata = data.splitlines()
     cleandata = list(filter(None, cleandata))
-
     raw_output = []
-    network = False
-    socket = False
-    bluetooth = False
-    headers = ''
-    network_list = []
-    socket_list = []
 
-    for line in cleandata:
+    # check for OSX vs Linux
+    # is this from OSX?
+    if cleandata[0] == 'Active Internet connections' or cleandata[0] == 'Active Internet connections (including servers)':
+        raw_output = jc.parsers.netstat_osx.parse(cleandata)
 
-        if line.startswith('Active Internet'):
-            network_list = []
-            network = True
-            socket = False
-            bluetooth = False
-            continue
+    # use linux parser
+    else:
+        network = False
+        socket = False
+        bluetooth = False
+        headers = ''
+        network_list = []
+        socket_list = []
 
-        if line.startswith('Active UNIX'):
-            socket_list = []
-            network = False
-            socket = True
-            bluetooth = False
-            continue
+        for line in cleandata:
 
-        if line.startswith('Active Bluetooth'):
-            network = False
-            socket = False
-            bluetooth = True
-            continue
+            if line.startswith('Active Internet'):
+                network_list = []
+                network = True
+                socket = False
+                bluetooth = False
+                continue
 
-        if line.startswith('Proto'):
-            header_text = normalize_headers(line)
-            headers = header_text.split()
-            continue
+            if line.startswith('Active UNIX'):
+                socket_list = []
+                network = False
+                socket = True
+                bluetooth = False
+                continue
 
-        if network:
-            network_list.append(parse_network(headers, line))
-            continue
+            if line.startswith('Active Bluetooth'):
+                network = False
+                socket = False
+                bluetooth = True
+                continue
 
-        if socket:
-            socket_list.append(parse_socket(header_text, headers, line))
-            continue
+            if line.startswith('Proto'):
+                header_text = normalize_headers(line)
+                headers = header_text.split()
+                continue
 
-        if bluetooth:
-            # maybe implement later if requested
-            continue
+            if network:
+                network_list.append(parse_network(headers, line))
+                continue
 
-    for item in [network_list, socket_list]:
-        for entry in item:
-            raw_output.append(entry)
+            if socket:
+                socket_list.append(parse_socket(header_text, headers, line))
+                continue
 
-    raw_output = parse_post(raw_output)
+            if bluetooth:
+                # maybe implement later if requested
+                continue
+
+        for item in [network_list, socket_list]:
+            for entry in item:
+                raw_output.append(entry)
+
+        raw_output = parse_post(raw_output)
 
     if raw:
         return raw_output
