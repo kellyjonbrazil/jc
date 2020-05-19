@@ -589,8 +589,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
         for item in [network_list, socket_list]:
-            for entry in item:
-                raw_output.append(entry)
+            raw_output.extend(item)
 
         raw_output = parse_post(raw_output)
 
