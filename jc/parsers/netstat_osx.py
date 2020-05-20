@@ -12,47 +12,21 @@ def normalize_headers(header):
     return header
 
 
-def parse_network(headers, entry):
+def parse_item(headers, entry, kind):
     entry = entry.split(maxsplit=len(headers) - 1)
 
-    # if len of line is one less than len of header, then insert None in field 5
-    if len(entry) == len(headers) - 1:
-        entry.insert(5, None)
+    #   TODO: Fix this area
+    # fixup udp records with no state field entry
+    if entry[0].startswith('udp'):
+        entry.insert(-1, None)
+    # if len(entry) == len(headers) - 1:
+    #     if len(headers) == 6:
+    #         entry.insert(5, None)
+    #     else:
+    #         entry.insert(7, None)
 
     output_line = dict(zip(headers, entry))
-    output_line['kind'] = 'network'
-
-    return output_line
-
-
-def parse_socket(headers, entry):
-    entry = entry.split(maxsplit=len(headers) - 1)
-    output_line = dict(zip(headers, entry))
-    output_line['kind'] = 'socket'
-
-    return output_line
-
-
-def parse_reg_kernel_control(headers, entry):
-    entry = entry.split(maxsplit=len(headers) - 1)
-    output_line = dict(zip(headers, entry))
-    output_line['kind'] = 'Registered kernel control module'
-
-    return output_line
-
-
-def parse_active_kernel_event(headers, entry):
-    entry = entry.split(maxsplit=len(headers) - 1)
-    output_line = dict(zip(headers, entry))
-    output_line['kind'] = 'Active kernel event socket'
-
-    return output_line
-
-
-def parse_active_kernel_control(headers, entry):
-    entry = entry.split(maxsplit=len(headers) - 1)
-    output_line = dict(zip(headers, entry))
-    output_line['kind'] = 'Active kernel control socket'
+    output_line['kind'] = kind
 
     return output_line
 
@@ -88,7 +62,7 @@ def parse_post(raw_data):
 
 def parse(cleandata):
     """
-    Main text parsing function
+    Main text parsing function for OSX netstat
 
     Parameters:
 
@@ -96,7 +70,7 @@ def parse(cleandata):
 
     Returns:
 
-        List of dictionaries. Raw or processed structured data.
+        List of dictionaries. Raw structured data.
     """
     raw_output = []
     network = False
@@ -105,17 +79,11 @@ def parse(cleandata):
     active_kernel_event = False
     active_kernel_control = False
     socket = False
-    headers = ''
-    network_list = []
-    socket_list = []
-    reg_kernel_control_list = []
-    active_kernel_event_list = []
-    active_kernel_control_list = []
+    headers = None
 
     for line in cleandata:
 
         if line.startswith('Active Internet'):
-            network_list = []
             network = True
             multipath = False
             socket = False
@@ -135,7 +103,6 @@ def parse(cleandata):
             continue
 
         if line.startswith('Active LOCAL (UNIX) domain sockets'):
-            socket_list = []
             network = False
             multipath = False
             socket = True
@@ -199,7 +166,7 @@ def parse(cleandata):
 
         # get items
         if network:
-            network_list.append(parse_network(headers, line))
+            raw_output.append(parse_item(headers, line, 'network'))
             continue
 
         if multipath:
@@ -207,22 +174,19 @@ def parse(cleandata):
             continue
 
         if socket:
-            socket_list.append(parse_socket(headers, line))
+            raw_output.append(parse_item(headers, line, 'socket'))
             continue
 
         if reg_kernel_control:
-            reg_kernel_control_list.append(parse_reg_kernel_control(headers, line))
+            raw_output.append(parse_item(headers, line, 'Registered kernel control module'))
             continue
 
         if active_kernel_event:
-            active_kernel_event_list.append(parse_active_kernel_event(headers, line))
+            raw_output.append(parse_item(headers, line, 'Active kernel event socket'))
             continue
 
         if active_kernel_control:
-            active_kernel_control_list.append(parse_active_kernel_control(headers, line))
+            raw_output.append(parse_item(headers, line, 'Active kernel control socket'))
             continue
-
-    for item in [network_list, socket_list, reg_kernel_control_list, active_kernel_event_list, active_kernel_control_list]:
-        raw_output.extend(item)
 
     return parse_post(raw_output)
