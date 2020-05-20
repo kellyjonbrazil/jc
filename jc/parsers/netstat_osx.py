@@ -92,8 +92,6 @@ def parse_post(raw_data):
                 else:
                     entry['network_protocol'] = 'ipv4'
 
-        # 
-
     return raw_data
 
 
