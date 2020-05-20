@@ -191,17 +191,17 @@ def parse(cleandata):
             headers = header_text.split()
             continue
 
-        if reg_kernel_control and line.startswith('id '):
+        if reg_kernel_control and (line.startswith('id ') or line.startswith('kctlref ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
             continue
 
-        if active_kernel_event and line.startswith('id '):
+        if active_kernel_event and (line.startswith('Proto ') or line.startswith('             pcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
             continue
 
-        if active_kernel_control and line.startswith('Proto '):
+        if active_kernel_control and (line.startswith('Proto ') or line.startswith('             pcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
             continue
