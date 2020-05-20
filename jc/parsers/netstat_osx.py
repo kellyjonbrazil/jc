@@ -1,6 +1,4 @@
 """jc - JSON CLI output utility OSX netstat Parser"""
-import string
-import jc.utils
 
 
 def normalize_headers(header):
@@ -8,6 +6,7 @@ def normalize_headers(header):
     header = header.replace('local address', 'local_address')
     header = header.replace('foreign address', 'foreign_address')
     header = header.replace('(state)', 'state')
+    header = header.replace('inode', 'osx_inode')
     header = header.replace('-', '_')
 
     return header
@@ -31,10 +30,6 @@ def parse_socket(headers, entry):
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
-
-    if len(entry) == len(headers) - 1:
-        entry.insert(5, None)
-
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'socket'
 
@@ -45,10 +40,6 @@ def parse_reg_kernel_control(headers, entry):
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
-
-    if len(entry) == len(headers) - 1:
-        entry.insert(5, None)
-
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'Registered kernel control module'
 
@@ -59,23 +50,16 @@ def parse_active_kernel_event(headers, entry):
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
-
-    if len(entry) == len(headers) - 1:
-        entry.insert(5, None)
-
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'Active kernel event socket'
 
     return output_line
 
+
 def parse_active_kernel_control(headers, entry):
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
-
-    if len(entry) == len(headers) - 1:
-        entry.insert(5, None)
-
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'Active kernel control socket'
 
@@ -83,40 +67,32 @@ def parse_active_kernel_control(headers, entry):
 
 
 def parse_post(raw_data):
-    # clean up trailing whitespace on each item in each entry
-    # flags --- = null
-    # program_name - = null
-    # split pid and program name and ip addresses and ports
     # create network and transport protocol fields
-
     for entry in raw_data:
         if 'local_address' in entry:
             if entry['local_address']:
-                ladd = entry['local_address'].rsplit(':', maxsplit=1)[0]
-                lport = entry['local_address'].rsplit(':', maxsplit=1)[1]
+                ladd = entry['local_address'].rsplit('.', maxsplit=1)[0]
+                lport = entry['local_address'].rsplit('.', maxsplit=1)[1]
                 entry['local_address'] = ladd
                 entry['local_port'] = lport
 
         if 'foreign_address' in entry:
             if entry['foreign_address']:
-                fadd = entry['foreign_address'].rsplit(':', maxsplit=1)[0]
-                fport = entry['foreign_address'].rsplit(':', maxsplit=1)[1]
+                fadd = entry['foreign_address'].rsplit('.', maxsplit=1)[0]
+                fport = entry['foreign_address'].rsplit('.', maxsplit=1)[1]
                 entry['foreign_address'] = fadd
                 entry['foreign_port'] = fport
 
         if 'proto' in entry and 'kind' in entry:
             if entry['kind'] == 'network':
-                if 'tcp' in entry['proto']:
-                    entry['transport_protocol'] = 'tcp'
-                elif 'udp' in entry['proto']:
-                    entry['transport_protocol'] = 'udp'
-                else:
-                    entry['transport_protocol'] = None
+                entry['transport_protocol'] = entry['proto'][:-1]
 
                 if '6' in entry['proto']:
                     entry['network_protocol'] = 'ipv6'
                 else:
                     entry['network_protocol'] = 'ipv4'
+
+        # 
 
     return raw_data
 
@@ -260,5 +236,4 @@ def parse(cleandata):
     for item in [network_list, socket_list, reg_kernel_control_list, active_kernel_event_list, active_kernel_control_list]:
         raw_output.extend(item)
 
-    return raw_output
-
+    return parse_post(raw_output)
