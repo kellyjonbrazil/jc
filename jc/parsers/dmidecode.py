@@ -10,7 +10,7 @@ Compatibility:
 
 Examples:
 
-    $ dmidecode | jc --dmidecode -p
+    # dmidecode | jc --dmidecode -p
     [
       {
         "handle": "0x0000",
@@ -54,7 +54,7 @@ Examples:
       ...
     ]
 
-    $ dmidecode | jc --dmidecode -p -r
+    # dmidecode | jc --dmidecode -p -r
     [
       {
         "handle": "0x0000",

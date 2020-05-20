@@ -4,9 +4,9 @@
 # JC
 JSON CLI output utility
 
-`jc` is used to JSONify the output of many standard linux cli tools and file types for easier parsing in scripts. See the [**Parsers**](#parsers) section for supported commands and file types.
+`jc` JSONifies the output of many standard linux CLI tools and file-types for easier parsing in scripts. See the [**Parsers**](#parsers) section for supported commands and file-types.
 
-This allows further command line processing of output with tools like `jq` simply by piping commands:
+This allows further command-line processing of output with tools like `jq` by piping commands:
 ```
 $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 {
@@ -76,6 +76,11 @@ There are several ways to get `jc`. You can install via `pip`, `brew`, DEB or RP
 $ pip3 install --upgrade jc
 ```
 
+### Zypper (openSUSE linux)
+```
+# zypper install jc
+```
+
 ### Brew (macOS)
 ```
 $ brew install jc
@@ -105,6 +110,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--csv` enables the `CSV` file parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
+- `--dmidecode` enables the `dmidecode` command parser
 - `--du` enables the `du` command parser
 - `--env` enables the `env` command parser
 - `--file` enables the `file` command parser
@@ -340,7 +346,7 @@ $ blkid | jc --blkid -p          # or:  jc -p blkid
 ]
 ```
 ```
-$ sudo blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  sudo jc -p blkid -o udev -ip /dev/sda2
+# blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev -ip /dev/sda2
 [
   {
     "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
@@ -733,6 +739,51 @@ $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
     "when": "Tue Nov 12 07:13:49 PST 2019",
     "rcvd": 78
   }
+]
+```
+### dmidecode
+```
+# dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode
+  {
+    "handle": "0x0000",
+    "type": 0,
+    "bytes": 24,
+    "description": "BIOS Information",
+    "values": {
+      "vendor": "Phoenix Technologies LTD",
+      "version": "6.00",
+      "release_date": "04/13/2018",
+      "address": "0xEA490",
+      "runtime_size": "88944 bytes",
+      "rom_size": "64 kB",
+      "characteristics": [
+        "ISA is supported",
+        "PCI is supported",
+        "PC Card (PCMCIA) is supported",
+        "PNP is supported",
+        "APM is supported",
+        "BIOS is upgradeable",
+        "BIOS shadowing is allowed",
+        "ESCD support is available",
+        "Boot from CD is supported",
+        "Selectable boot is supported",
+        "EDD is supported",
+        "Print screen service is supported (int 5h)",
+        "8042 keyboard services are supported (int 9h)",
+        "Serial services are supported (int 14h)",
+        "Printer services are supported (int 17h)",
+        "CGA/mono video services are supported (int 10h)",
+        "ACPI is supported",
+        "Smart battery is supported",
+        "BIOS boot specification is supported",
+        "Function key-initiated network boot is supported",
+        "Targeted content distribution is supported"
+      ],
+      "bios_revision": "4.6",
+      "firmware_revision": "0.0"
+    }
+  },
+  ...
 ]
 ```
 ### du
@@ -1150,7 +1201,7 @@ $ cat example.ini | jc --ini -p
 ```
 ### iptables
 ```
-$ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  sudo jc -p iptables --line-numbers -v -L -t nat
+# iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
 [
   {
     "chain": "PREROUTING",
@@ -1380,7 +1431,7 @@ $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 ```
 ### lsof
 ```
-$ sudo lsof | jc --lsof -p          # or:  sudo jc -p lsof
+# lsof | jc --lsof -p          # or:  jc -p lsof
 [
   {
     "command": "systemd",
@@ -1467,7 +1518,7 @@ $ mount | jc --mount -p          # or:  jc -p mount
 ```
 ### netstat
 ```
-$ sudo netstat -apee | jc --netstat -p          # or:  sudo jc -p netstat -apee
+# netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
 [
   {
     "proto": "tcp",
@@ -1862,7 +1913,7 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 ```
 ### /etc/shadow file
 ```
-$ sudo cat /etc/shadow | jc --shadow -p
+# cat /etc/shadow | jc --shadow -p
 [
   {
     "username": "root",
@@ -1899,7 +1950,7 @@ $ sudo cat /etc/shadow | jc --shadow -p
 ```
 ### ss
 ```
-$ sudo ss -a | jc --ss -p          # or:  sudo jc -p ss -a
+# ss -a | jc --ss -p          # or:  jc -p ss -a
 [
   {
     "netid": "nl",

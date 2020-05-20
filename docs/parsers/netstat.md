@@ -7,7 +7,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Examples:
 
@@ -352,7 +352,23 @@ Returns:
         "type":              string,
         "inode":             integer,
         "path":              string,
-        "kind":              string
+        "kind":              string,
+        "address":           string,
+        "osx_inode":         string,
+        "conn":              string,
+        "refs":              string,
+        "nextref":           string,
+        "name":              string,
+        "unit":              integer,
+        "vendor":            integer,
+        "class":             integer,
+        "subcla":            integer,
+        "osx_flags":         integer,
+        "pcbcount":          integer,
+        "rcvbuf":            integer,
+        "sndbuf":            integer,
+        "rxbytes":           integer,
+        "txbytes":           integer
       }
     ]
 
