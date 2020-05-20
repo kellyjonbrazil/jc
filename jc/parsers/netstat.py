@@ -430,7 +430,12 @@ def parse(data, raw=False, quiet=False):
 
     # check for OSX vs Linux
     # is this from OSX?
-    if cleandata[0] == 'Active Internet connections' or cleandata[0] == 'Active Internet connections (including servers)':
+    if cleandata[0] == 'Active Internet connections' \
+       or cleandata[0] == 'Active Internet connections (including servers)' \
+       or cleandata[0] == 'Active LOCAL (UNIX) domain sockets' \
+       or cleandata[0] == 'Registered kernel control modules' \
+       or cleandata[0] == 'Active kernel event sockets' \
+       or cleandata[0] == 'Active kernel control sockets':
         import jc.parsers.netstat_osx
         raw_output = jc.parsers.netstat_osx.parse(cleandata)
 
