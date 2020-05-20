@@ -419,7 +419,6 @@ def parse_network(headers, entry):
 
 
 def parse_socket(header_text, headers, entry):
-    output_line = {}
     # get the column # of first letter of "state"
     state_col = header_text.find('state')
     # get the program name column area
@@ -545,21 +544,17 @@ def parse(data, raw=False, quiet=False):
         network = False
         socket = False
         bluetooth = False
-        headers = ''
-        network_list = []
-        socket_list = []
+        headers = None
 
         for line in cleandata:
 
             if line.startswith('Active Internet'):
-                network_list = []
                 network = True
                 socket = False
                 bluetooth = False
                 continue
 
             if line.startswith('Active UNIX'):
-                socket_list = []
                 network = False
                 socket = True
                 bluetooth = False
@@ -577,19 +572,16 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if network:
-                network_list.append(parse_network(headers, line))
+                raw_output.append(parse_network(headers, line))
                 continue
 
             if socket:
-                socket_list.append(parse_socket(header_text, headers, line))
+                raw_output.append(parse_socket(header_text, headers, line))
                 continue
 
             if bluetooth:
-                # maybe implement later if requested
+                # not implemented
                 continue
-
-        for item in [network_list, socket_list]:
-            raw_output.extend(item)
 
         raw_output = parse_post(raw_output)
 

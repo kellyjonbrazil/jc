@@ -79,7 +79,6 @@ def parse(cleandata):
     active_kernel_event = False
     active_kernel_control = False
     socket = False
-    headers = None
 
     for line in cleandata:
 
@@ -93,7 +92,6 @@ def parse(cleandata):
             continue
 
         if line.startswith('Active Multipath Internet connections'):
-            # skip for now
             network = False
             multipath = True
             socket = False
@@ -170,7 +168,7 @@ def parse(cleandata):
             continue
 
         if multipath:
-            # skip for now
+            # not implemented
             continue
 
         if socket:
