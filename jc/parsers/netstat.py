@@ -359,13 +359,30 @@ def process(proc_data):
             "type":              string,
             "inode":             integer,
             "path":              string,
-            "kind":              string
+            "kind":              string,
+            "address":           string,
+            "osx_inode":         string,
+            "conn":              string,
+            "refs":              string,
+            "nextref":           string,
+            "name":              string,
+            "unit":              integer,
+            "vendor":            integer,
+            "class":             integer,
+            "subcla":            integer,
+            "osx_flags":         integer,
+            "pcbcount":          integer,
+            "rcvbuf":            integer,
+            "sndbuf":            integer,
+            "rxbytes":           integer,
+            "txbytes":           integer
           }
         ]
     """
     for entry in proc_data:
         # integer changes
-        int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode']
+        int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
+                    'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes']
         for key in int_list:
             if key in entry:
                 try:

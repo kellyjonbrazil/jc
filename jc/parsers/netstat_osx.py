@@ -7,6 +7,7 @@ def normalize_headers(header):
     header = header.replace('foreign address', 'foreign_address')
     header = header.replace('(state)', 'state')
     header = header.replace('inode', 'osx_inode')
+    header = header.replace('flags', 'osx_flags')
     header = header.replace('-', '_')
 
     return header
@@ -48,6 +49,8 @@ def parse_post(raw_data):
             if entry['kind'] == 'network':
                 if entry['proto'] == 'udp46':
                     entry['transport_protocol'] = entry['proto'][:-2]
+                elif entry['proto'].startswith('icm'):
+                    entry['transport_protocol'] = 'icmp'
                 else:
                     entry['transport_protocol'] = entry['proto'][:-1]
 
