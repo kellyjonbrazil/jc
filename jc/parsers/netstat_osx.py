@@ -13,10 +13,9 @@ def normalize_headers(header):
 
 
 def parse_network(headers, entry):
-    # Count words in header
-    # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
 
+    # if len of line is one less than len of header, then insert None in field 5
     if len(entry) == len(headers) - 1:
         entry.insert(5, None)
 
@@ -27,8 +26,6 @@ def parse_network(headers, entry):
 
 
 def parse_socket(headers, entry):
-    # Count words in header
-    # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'socket'
@@ -37,8 +34,6 @@ def parse_socket(headers, entry):
 
 
 def parse_reg_kernel_control(headers, entry):
-    # Count words in header
-    # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'Registered kernel control module'
@@ -47,8 +42,6 @@ def parse_reg_kernel_control(headers, entry):
 
 
 def parse_active_kernel_event(headers, entry):
-    # Count words in header
-    # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'Active kernel event socket'
@@ -57,8 +50,6 @@ def parse_active_kernel_event(headers, entry):
 
 
 def parse_active_kernel_control(headers, entry):
-    # Count words in header
-    # if len of line is one less than len of header, then insert None in field 5
     entry = entry.split(maxsplit=len(headers) - 1)
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'Active kernel control socket'
