@@ -15,15 +15,11 @@ def normalize_headers(header):
 def parse_item(headers, entry, kind):
     entry = entry.split(maxsplit=len(headers) - 1)
 
-    #   TODO: Fix this area
     # fixup udp records with no state field entry
-    if entry[0].startswith('udp'):
-        entry.insert(-1, None)
-    # if len(entry) == len(headers) - 1:
-    #     if len(headers) == 6:
-    #         entry.insert(5, None)
-    #     else:
-    #         entry.insert(7, None)
+    if kind == 'network' and entry[0].startswith('udp'):
+        entry.insert(5, None)
+    if kind == 'network' and 'socket' in headers and 'udp' in str(entry):
+        entry.insert(7, None)
 
     output_line = dict(zip(headers, entry))
     output_line['kind'] = kind
@@ -50,7 +46,10 @@ def parse_post(raw_data):
 
         if 'proto' in entry and 'kind' in entry:
             if entry['kind'] == 'network':
-                entry['transport_protocol'] = entry['proto'][:-1]
+                if entry['proto'] == 'udp46':
+                    entry['transport_protocol'] = entry['proto'][:-2]
+                else:
+                    entry['transport_protocol'] = entry['proto'][:-1]
 
                 if '6' in entry['proto']:
                     entry['network_protocol'] = 'ipv6'
