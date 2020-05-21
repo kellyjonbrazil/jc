@@ -43,6 +43,15 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.out'), 'r', encoding='utf-8') as f:
             self.fedora32_netstat = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat.out'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-An.out'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_An = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.out'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_Abn = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_json = json.loads(f.read())
@@ -76,6 +85,15 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.json'), 'r', encoding='utf-8') as f:
             self.fedora32_netstat_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat.json'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-An.json'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_An_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.json'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_Abn_json = json.loads(f.read())
 
     def test_netstat_centos_7_7(self):
         """
@@ -142,6 +160,24 @@ class MyTests(unittest.TestCase):
         Test 'netstat' on Fedora32
         """
         self.assertEqual(jc.parsers.netstat.parse(self.fedora32_netstat, quiet=True), self.fedora32_netstat_json)
+
+    def test_netstat_osx_16_4(self):
+        """
+        Test 'netstat' on OSX 16.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat, quiet=True), self.osx_14_6_netstat_json)
+
+    def test_netstat_An_osx_16_4(self):
+        """
+        Test 'netstat -An' on OSX 16.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_An, quiet=True), self.osx_14_6_netstat_An_json)
+
+    def test_netstat_Abn_osx_16_4(self):
+        """
+        Test 'netstat -Abn' on OSX 16.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_Abn, quiet=True), self.osx_14_6_netstat_Abn_json)
 
 
 if __name__ == '__main__':
