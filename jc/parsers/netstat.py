@@ -432,6 +432,7 @@ def parse(data, raw=False, quiet=False):
     # is this from OSX?
     if cleandata[0] == 'Active Internet connections' \
        or cleandata[0] == 'Active Internet connections (including servers)' \
+       or cleandata[0] == 'Active Multipath Internet connections' \
        or cleandata[0] == 'Active LOCAL (UNIX) domain sockets' \
        or cleandata[0] == 'Registered kernel control modules' \
        or cleandata[0] == 'Active kernel event sockets' \
