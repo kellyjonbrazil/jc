@@ -29,8 +29,13 @@ def parse_item(headers, entry, kind):
 
 
 def parse_post(raw_data):
-    # create network and transport protocol fields
     for entry in raw_data:
+        # fixup name field in Registered kernel control module
+        if 'name' in entry:
+            if entry['name']:
+                entry['name'] = entry['name'].strip()
+
+        # create network and transport protocol fields
         if 'local_address' in entry:
             if entry['local_address']:
                 ladd = entry['local_address'].rsplit('.', maxsplit=1)[0]

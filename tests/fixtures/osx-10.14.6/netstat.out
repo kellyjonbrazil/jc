@@ -1,58 +1,43 @@
 Active Internet connections
 Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)    
-tcp6       0      0  kbrazil-mac.attl.54901 g2600-1406-1400-.https ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54897 142.192.227.35.b.https ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54880 2620:1ec:21::14.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54864 151.101.188.133.https  ESTABLISHED
-tcp4      24      0  kbrazil-mac.attl.54863 lb-192-30-255-11.https CLOSE_WAIT 
-tcp4       0      0  kbrazil-mac.attl.54862 ec2-3-81-154-197.https CLOSE_WAIT 
-tcp4       0      0  kbrazil-mac.attl.54861 lb-140-82-113-26.https ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54860 151.101.188.133.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54859 151.101.188.133.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54858 151.101.188.133.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54857 151.101.188.133.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54856 151.101.188.133.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54855 151.101.188.133.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54854 151.101.188.133.https  ESTABLISHED
-tcp4      31      0  kbrazil-mac.attl.54853 ec2-3-81-154-197.https CLOSE_WAIT 
-tcp4       0      0  kbrazil-mac.attl.54852 151.101.188.133.https  ESTABLISHED
-tcp4      24      0  kbrazil-mac.attl.54851 lb-192-30-255-11.https CLOSE_WAIT 
-tcp4      24      0  kbrazil-mac.attl.54850 lb-192-30-255-11.https CLOSE_WAIT 
-tcp4       0      0  kbrazil-mac.attl.54837 52.114.128.7.https     ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54825 on-in-x6c.1e100..imaps ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54800 208.91.113.36.https    ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54782 lb-140-82-112-26.https ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54506 kellysblackipad..49231 ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54631 oc-in-x6d.1e100..imaps ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54506 kellys-iphone.at.53380 ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54542 2603:1030:b00::e.https ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54538 2620:1ec:21::14.https  ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54522 93.87.236.35.bc..sunpr ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54521 dfw25s34-in-x0e..https ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54520 family-room-5.at.49153 ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54519 bedroom.attlocal.49152 ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54506 kellys-mbp.attlo.55617 ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54517 52.114.148.56.https    ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.54511 fe80::aede:48ff:.49621 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.54508 fe80::aede:48ff:.49607 ESTABLISHED
-tcp6       0      0  kbrazil-mac.attl.54471 ok-in-xbc.1e100..5228  ESTABLISHED
-tcp4      31      0  kbrazil-mac.attl.54426 93.87.236.35.bc..sunpr CLOSE_WAIT 
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49795 ESTABLISHED
-tcp4       0      0  localhost.53755        localhost.53763        ESTABLISHED
-tcp4       0      0  localhost.53763        localhost.53755        ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.53599 255.21.155.104.b.dsf   ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49794 ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62979 40.77.18.167.https     ESTABLISHED
+tcp6       0      0  kbrazil-mac.attl.62978 2620:1ec:42::132.https ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62961 lb-140-82-114-25.https ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62951 52.114.128.7.https     ESTABLISHED
+tcp6       0      0  kbrazil-mac.attl.62900 on-in-x6d.1e100..imaps ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62894 208.91.113.36.https    ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62849 lb-140-82-112-25.https ESTABLISHED
+tcp4       0      0  localhost.62823        localhost.62835        ESTABLISHED
+tcp4       0      0  localhost.62835        localhost.62823        ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62733 m33sjmcs118.webe.https ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62703 m33sjmcs180.webe.https ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62697 ed1sjcb1402.webe.https ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62670 sj1-tsa.webex.co.https ESTABLISHED
+tcp4      31      0  kbrazil-mac.attl.62664 93.87.236.35.bc..sunpr CLOSE_WAIT 
+tcp6       0      0  kbrazil-mac.attl.62494 dfw28s05-in-x0e..https ESTABLISHED
+tcp6       0      0  kbrazil-mac.attl.62485 ob-in-x6d.1e100..imaps ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.62443 194.123.235.35.b.dsf   ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.61677 fe80::aede:48ff:.49617 ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.61582 52.114.148.57.https    ESTABLISHED
+tcp6       0      0  kbrazil-mac.attl.61581 ox-in-xbc.1e100..5228  ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.61343 kellys-iphone.at.53700 ESTABLISHED
+tcp6       0      0  kbrazil-mac.attl.61394 2603:1030:b00::e.https ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.61368 93.87.236.35.bc..sunpr ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.61357 family-room-5.at.49153 ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.61356 bedroom.attlocal.49152 ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.61343 kellys-mbp.attlo.56012 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.61347 fe80::aede:48ff:.49621 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.61346 fe80::aede:48ff:.49607 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49804 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49803 ESTABLISHED
+tcp4       0      0  kbrazil-mac.attl.60773 52.114.88.20.https     ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49802 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49801 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49800 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49799 ESTABLISHED
+tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49798 ESTABLISHED
 tcp4       0      0  kbrazil-mac.attl.52630 17.57.144.20.5223      ESTABLISHED
 tcp4       0      0  kbrazil-mac.attl.51797 mycloudex2ultra..afpov ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49793 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49604 fe80::aede:48ff:.49617 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49792 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49791 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49790 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49789 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49788 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49787 ESTABLISHED
-tcp6       0      0  fe80::aede:48ff:.49154 fe80::aede:48ff:.49786 ESTABLISHED
 tcp4       0      0  kbrazil-mac.attl.51642 194.123.235.35.b.dsf   CLOSE_WAIT 
 tcp4       0      0  kbrazil-mac.attl.51641 194.123.235.35.b.dsf   CLOSE_WAIT 
 tcp4       0      0  kbrazil-mac.attl.51640 194.123.235.35.b.dsf   CLOSE_WAIT 
@@ -60,7 +45,6 @@ tcp6       0      0  fe80::aede:48ff:.63836 fe80::aede:48ff:.49602 ESTABLISHED
 tcp6       0      0  fe80::aede:48ff:.59388 fe80::aede:48ff:.59602 ESTABLISHED
 tcp4       0      0  kbrazil-mac.attl.58795 96.45.36.31.https      ESTABLISHED
 tcp4       0      0  localhost.ldgateway    localhost.58704        CLOSE_WAIT 
-tcp4      31      0  kbrazil-mac.attl.53461 93.87.236.35.bc..sunpr CLOSE_WAIT 
 tcp6       0      0  fe80::aede:48ff:.59281 fe80::aede:48ff:.49602 ESTABLISHED
 tcp6       0      0  fe80::aede:48ff:.57652 fe80::aede:48ff:.49602 ESTABLISHED
 tcp6       0      0  fe80::aede:48ff:.51989 fe80::aede:48ff:.49602 ESTABLISHED
@@ -68,26 +52,34 @@ tcp6       0      0  fe80::aede:48ff:.49892 fe80::aede:48ff:.49620 ESTABLISHED
 tcp6       0      0  fe80::aede:48ff:.49798 fe80::aede:48ff:.49608 ESTABLISHED
 tcp6       0      0  fe80::aede:48ff:.49390 fe80::aede:48ff:.49613 ESTABLISHED
 tcp6       0      0  fe80::aede:48ff:.49157 fe80::aede:48ff:.49615 ESTABLISHED
-tcp4       0      0  kbrazil-mac.attl.54877 ussjc2-vip-bx-00.http  TIME_WAIT  
-tcp4       0      0  kbrazil-mac.attl.54888 ec2-52-9-68-189..http  TIME_WAIT  
-tcp4       0      0  kbrazil-mac.attl.54890 ec2-54-68-181-40.http  TIME_WAIT  
-tcp4       0      0  kbrazil-mac.attl.54871 199.119.186.166.https  TIME_WAIT  
-tcp4       0      0  kbrazil-mac.attl.54870 199.119.186.166.https  TIME_WAIT  
-udp4       0      0  *.56497                *.*                               
-udp4       0      0  *.64718                *.*                               
-udp6       0      0  kbrazil-mac.attl.52658 dfw25s34-in-x0e..https            
-udp4       0      0  *.51955                *.*                               
-udp4       0      0  *.57333                *.*                               
-udp6       0      0  kbrazil-mac.attl.56587 dfw28s05-in-x0a..https            
-udp4       0      0  *.58579                *.*                               
-udp4       0      0  *.53717                *.*                               
-udp4       0      0  *.53463                *.*                               
-udp4       0      0  *.65477                *.*                               
-udp4       0      0  *.54338                *.*                               
-udp4       0      0  *.xserveraid           *.*                               
-udp4       0      0  *.57390                *.*                               
-udp4       0      0  *.53677                *.*                               
+tcp6       0      0  kbrazil-mac.attl.62983 2600:9000:2202:9.https TIME_WAIT  
+udp4       0      0  kbrazil-mac.attl.63388 *.*                               
+udp4       0      0  *.61398                *.*                               
+udp4       0      0  *.53413                *.*                               
+udp4       0      0  *.59909                *.*                               
+udp4       0      0  *.53609                *.*                               
+udp4       0      0  *.54417                *.*                               
+udp4       0      0  *.62632                *.*                               
+udp4       0      0  kbrazil-mac.attl.54797 *.*                               
+udp6       0      0  kbrazil-mac.attl.56570 *.*                               
+udp4       0      0  kbrazil-mac.attl.56159 *.*                               
+udp6       0      0  kbrazil-mac.attl.58453 *.*                               
+udp4       0      0  kbrazil-mac.attl.58452 *.*                               
+udp6       0      0  kbrazil-mac.attl.55724 *.*                               
+udp4       0      0  kbrazil-mac.attl.55723 *.*                               
+udp6       0      0  kbrazil-mac.attl.58104 *.*                               
+udp4       0      0  kbrazil-mac.attl.58103 *.*                               
+udp6       0      0  kbrazil-mac.attl.62803 *.*                               
+udp4       0      0  kbrazil-mac.attl.62802 *.*                               
+udp6       0      0  kbrazil-mac.attl.51531 *.*                               
+udp4       0      0  kbrazil-mac.attl.51530 *.*                               
+udp6       0      0  kbrazil-mac.attl.53504 *.*                               
+udp4       0      0  kbrazil-mac.attl.53503 *.*                               
+udp6       0      0  kbrazil-mac.attl.56260 *.*                               
+udp4       0      0  *.60036                *.*                               
+udp4       0      0  *.54290                *.*                               
 udp4       0      0  *.mdns                 *.*                               
+udp4       0      0  *.xserveraid           *.*                               
 udp46      0      0  *.61224                *.*                               
 udp4       0      0  *.*                    *.*                               
 udp4       0      0  *.*                    *.*                               
@@ -170,52 +162,73 @@ Active Multipath Internet connections
 Proto/ID  Flags      Local Address          Foreign Address        (state)    
 Active LOCAL (UNIX) domain sockets
 Address          Type   Recv-Q Send-Q            Inode             Conn             Refs          Nextref Addr
-7fb03cb94a63d2c5 stream      1      0                0 7fb03cb94a63ce15                0                0
-7fb03cb94a63ce15 stream      0      0                0 7fb03cb94a63d2c5                0                0
-7fb03cb94a63cd4d stream      0      0                0 7fb03cb94a63b515                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb94a63b515 stream      0      0                0 7fb03cb94a63cd4d                0                0
-7fb03cb93ceaec7d stream      0      0                0 7fb03cb93ceb04b5                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb93ceb04b5 stream      0      0                0 7fb03cb93ceaec7d                0                0
-7fb03cb95130cc7d stream      0      0                0 7fb03cb95130da8d                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb95130da8d stream      0      0                0 7fb03cb95130cc7d                0                0
-7fb03cb95130eaf5 stream      0      0                0                0                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb95130cd45 stream      0      0                0 7fb03cb95130e89d                0                0 /var/run/mDNSResponder
-7fb03cb95130e89d stream      0      0                0 7fb03cb95130cd45                0                0
-7fb03cb95130e70d stream      0      0                0 7fb03cb95130e0cd                0                0
-7fb03cb95130e0cd stream      0      0                0 7fb03cb95130e70d                0                0
-7fb03cb95130de75 stream      0      0                0 7fb03cb95130f38d                0                0
-7fb03cb95130f38d stream      0      0                0 7fb03cb95130de75                0                0
-7fb03cb95130d9c5 stream      0      0                0                0                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb95130f135 stream      0      0                0                0                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb935b0051d stream      0      0                0                0                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
-7fb03cb937d38835 stream      0      0                0 7fb03cb937d389c5                0                0 /var/run/mDNSResponder
-7fb03cb937d389c5 stream      0      0                0 7fb03cb937d38835                0                0
-7fb03cb945d3b2c5 stream      0      0                0 7fb03cb945d396a5                0                0 /var/run/mDNSResponder
-7fb03cb945d396a5 stream      0      0                0 7fb03cb945d3b2c5                0                0
-7fb03cb945d3b5e5 stream      0      0                0 7fb03cb945d3a645                0                0 /var/run/mDNSResponder
-7fb03cb945d3a645 stream      0      0                0 7fb03cb945d3b5e5                0                0
-7fb03cb945d39835 stream      0      0                0 7fb03cb945d3ac85                0                0 /var/run/mDNSResponder
-7fb03cb945d3ac85 stream      0      0                0 7fb03cb945d39835                0                0
-7fb03cb945d3a89d stream      0      0                0 7fb03cb945d3b38d                0                0 /var/run/mDNSResponder
-7fb03cb945d3b38d stream      0      0                0 7fb03cb945d3a89d                0                0
-7fb03cb94a63aed5 stream      0      0                0 7fb03cb94a63cfa5                0                0 /var/run/mDNSResponder
-7fb03cb94a63cfa5 stream      0      0                0 7fb03cb94a63aed5                0                0
-7fb03cb94a63ae0d stream      0      0                0 7fb03cb94a63b5dd                0                0 /var/run/mDNSResponder
-7fb03cb94a63b5dd stream      0      0                0 7fb03cb94a63ae0d                0                0
-7fb03cb94a63cedd stream      0      0                0 7fb03cb94a63b44d                0                0 /var/run/mDNSResponder
-7fb03cb94a63b44d stream      0      0                0 7fb03cb94a63cedd                0                0
-7fb03cb94a63d06d stream      0      0                0 7fb03cb94a63b835                0                0 /var/run/fctservctl.sock
-7fb03cb94a63b835 stream      0      0                0 7fb03cb94a63d06d                0                0
-7fb03cb94a63d455 stream      0      0                0 7fb03cb94a63bb55                0                0 /var/run/fctservctl.sock
-7fb03cb94a63bb55 stream      0      0                0 7fb03cb94a63d455                0                0
-7fb03cb94a63d1fd stream      0      0                0 7fb03cb94a63b8fd                0                0 /var/run/mDNSResponder
-7fb03cb94a63b8fd stream      0      0                0 7fb03cb94a63d1fd                0                0
-7fb03cb94a63a7cd stream      0      0                0 7fb03cb94a63c70d                0                0 /var/run/fctservctl.sock
-7fb03cb94a63c70d stream      0      0                0 7fb03cb94a63a7cd                0                0
-7fb03cb94a63b2bd stream      0      0                0 7fb03cb94a63b385                0                0 /var/run/fctservctl.sock
-7fb03cb94a63b385 stream      0      0                0 7fb03cb94a63b2bd                0                0
-7fb03cb94a63d38d stream      0      0                0 7fb03cb94a63aa25                0                0 /var/run/mDNSResponder
-7fb03cb94a63aa25 stream      0      0                0 7fb03cb94a63d38d                0                0
+7fb03cb94a63a7cd stream      1      0                0 7fb03cb94a63cedd                0                0
+7fb03cb94a63cedd stream      0      0                0 7fb03cb94a63a7cd                0                0
+7fb03cb94a63b065 stream      0      0                0 7fb03cb94a63b2bd                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
+7fb03cb94a63b2bd stream      0      0                0 7fb03cb94a63b065                0                0
+7fb03cb95130cc7d stream      0      0                0 7fb03cb95130f38d                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
+7fb03cb95130f38d stream      0      0                0 7fb03cb95130cc7d                0                0
+7fb03cb937d38385 stream      0      0                0 7fb03cb937d3a135                0                0
+7fb03cb937d3a135 stream      0      0                0 7fb03cb937d38385                0                0
+7fb03cb937d3795d stream      0      0                0 7fb03cb937d38835                0                0 /var/run/mDNSResponder
+7fb03cb937d38835 stream      0      0                0 7fb03cb937d3795d                0                0
+7fb03cb937d38515 stream      0      0                0 7fb03cb937d39d4d                0                0 /var/run/fctservctl.sock
+7fb03cb937d39d4d stream      0      0                0 7fb03cb937d38515                0                0
+7fb03cb937d3812d stream      0      0                0 7fb03cb937d38e75                0                0 /var/run/fctservctl.sock
+7fb03cb937d38e75 stream      0      0                0 7fb03cb937d3812d                0                0
+7fb03cb93ceaebb5 stream      0      0                0 7fb03cb93ceaff3d                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
+7fb03cb93ceaff3d stream      0      0                0 7fb03cb93ceaebb5                0                0
+7fb03cb93ceb1135 stream      0      0                0                0                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
+7fb03cb935afe2bd stream      0      0                0 7fb03cb935b006ad                0                0 /var/run/mDNSResponder
+7fb03cb935b006ad stream      0      0                0 7fb03cb935afe2bd                0                0
+7fb03cb93501a7cd stream      0      0                0                0                0                0 /Users/kbrazil/Library/Containers/com.docker.docker/Data/docker.raw.sock
+7fb03cb94d74857d stream      0      0                0 7fb03cb94d747e75                0                0 /var/run/mDNSResponder
+7fb03cb94d747e75 stream      0      0                0 7fb03cb94d74857d                0                0
+7fb03cb94a63aaed stream      0      0                0 7fb03cb94a63b1f5                0                0
+7fb03cb94a63b1f5 stream      4      0                0 7fb03cb94a63aaed                0                0
+7fb03cb94a63cd4d stream      0      0                0 7fb03cb94a63a95d                0                0
+7fb03cb94a63a95d stream      4      0                0 7fb03cb94a63cd4d                0                0
+7fb03cb94a63ae0d stream      0      0                0 7fb03cb94a63b385                0                0
+7fb03cb94a63b385 stream      8      0                0 7fb03cb94a63ae0d                0                0
+7fb03cb94d7471f5 stream      0      0                0 7fb03cb94d748965                0                0
+7fb03cb94d748965 stream      0      0                0 7fb03cb94d7471f5                0                0
+7fb03cb94d747ce5 stream      0      0                0 7fb03cb94d746f9d                0                0
+7fb03cb94d746f9d stream      8      0                0 7fb03cb94d747ce5                0                0
+7fb03cb94d748edd stream      0      0                0 7fb03cb94d747a8d                0                0
+7fb03cb94d747a8d stream      8      0                0 7fb03cb94d748edd                0                0
+7fb03cb937d38b55 stream      0      0                0 7fb03cb937d39005                0                0
+7fb03cb937d39005 stream      8      0                0 7fb03cb937d38b55                0                0
+7fb03cb95130f2c5 stream      0      0                0 7fb03cb95130cd45                0                0 /var/run/mDNSResponder
+7fb03cb95130cd45 stream      0      0                0 7fb03cb95130f2c5                0                0
+7fb03cb95130de75 stream      0      0                0 7fb03cb95130eaf5                0                0 /var/run/fctservctl.sock
+7fb03cb95130eaf5 stream      0      0                0 7fb03cb95130de75                0                0
+7fb03cb95130e0cd stream      0      0                0 7fb03cb95130f135                0                0 /var/run/fctservctl.sock
+7fb03cb95130f135 stream      0      0                0 7fb03cb95130e0cd                0                0
+7fb03cb95130e70d stream      0      0                0 7fb03cb95130da8d                0                0 /var/run/fctservctl.sock
+7fb03cb95130da8d stream      0      0                0 7fb03cb95130e70d                0                0
+7fb03cb95130efa5 stream      0      0                0 7fb03cb95130e645                0                0 /var/run/fctservctl.sock
+7fb03cb95130e645 stream      0      0                0 7fb03cb95130efa5                0                0
+7fb03cb94d746d45 stream      0      0                0 7fb03cb94d74695d                0                0 /var/run/mDNSResponder
+7fb03cb94d74695d stream      0      0                0 7fb03cb94d746d45                0                0
+7fb03cb94d748fa5 stream      0      0                0 7fb03cb94d74825d                0                0 /var/run/mDNSResponder
+7fb03cb94d74825d stream      0      0                0 7fb03cb94d748fa5                0                0
+7fb03cb945d3ac85 stream      0      0                0 7fb03cb945d3a25d                0                0 /var/run/mDNSResponder
+7fb03cb945d3a25d stream      0      0                0 7fb03cb945d3ac85                0                0
+7fb03cb945d3a0cd stream      0      0                0 7fb03cb945d38aed                0                0 /var/run/mDNSResponder
+7fb03cb945d38aed stream      0      0                0 7fb03cb945d3a0cd                0                0
+7fb03cb945d3944d stream      0      0                0 7fb03cb945d3a965                0                0 /var/run/mDNSResponder
+7fb03cb945d3a965 stream      0      0                0 7fb03cb945d3944d                0                0
+7fb03cb94a63c70d stream      0      0                0 7fb03cb94a63b5dd                0                0 /var/run/mDNSResponder
+7fb03cb94a63b5dd stream      0      0                0 7fb03cb94a63c70d                0                0
+7fb03cb94a63d06d stream      0      0                0 7fb03cb94a63b44d                0                0 /var/run/mDNSResponder
+7fb03cb94a63b44d stream      0      0                0 7fb03cb94a63d06d                0                0
+7fb03cb95130f6ad stream      0      0                0 7fb03cb95130e89d                0                0 /var/run/mDNSResponder
+7fb03cb95130e89d stream      0      0                0 7fb03cb95130f6ad                0                0
+7fb03cb94a63d38d stream      0      0                0 7fb03cb94a63cbbd                0                0 /var/run/mDNSResponder
+7fb03cb94a63cbbd stream      0      0                0 7fb03cb94a63d38d                0                0
+7fb03cb94a63b9c5 stream      0      0                0 7fb03cb94a63ca2d                0                0 /tmp/olisne-WY4G9IZafUNsloCollectorServicePipe
+7fb03cb94a63ca2d stream      0      0                0 7fb03cb94a63b9c5                0                0
+7fb03cb94a63ad45 stream      0      0 7fb03cb938289085                0                0                0 /tmp/olisne-WY4G9IZafUNsloCollectorServicePipe
 7fb03cb95130c95d stream      0      0                0 7fb03cb95130d1f5                0                0 /var/run/mDNSResponder
 7fb03cb95130d1f5 stream      0      0                0 7fb03cb95130c95d                0                0
 7fb03cb945d38a25 stream      0      0                0 7fb03cb945d3a195                0                0 /var/run/mDNSResponder
@@ -368,15 +381,13 @@ Address          Type   Recv-Q Send-Q            Inode             Conn         
 7fb03cb94d748af5 stream      0      0                0 7fb03cb94d747835                0                0 /var/run/mDNSResponder
 7fb03cb94d747835 stream      0      0                0 7fb03cb94d748af5                0                0
 7fb03cb94d748a2d stream      0      0                0 7fb03cb94d74776d                0                0 /var/run/fctservctl.sock
-7fb03cb94d74776d stream    145      0                0 7fb03cb94d748a2d                0                0
+7fb03cb94d74776d stream    580      0                0 7fb03cb94d748a2d                0                0
 7fb03cb94d74889d stream      0      0                0 7fb03cb94d7478fd                0                0 /var/run/fctservctl.sock
 7fb03cb94d7478fd stream      0      0                0 7fb03cb94d74889d                0                0
 7fb03cb94d74870d stream      0      0                0 7fb03cb94d7487d5                0                0 /var/run/fctservctl.sock
 7fb03cb94d7487d5 stream      0      0                0 7fb03cb94d74870d                0                0
 7fb03cb94d748645 stream      0      0                0 7fb03cb94d7479c5                0                0 /var/run/fctservctl.sock
 7fb03cb94d7479c5 stream      0      0                0 7fb03cb94d748645                0                0
-7fb03cb94d747a8d stream      0      0                0 7fb03cb94d74857d                0                0 /tmp/olisne-WY4G9IZafUNsloCollectorServicePipe
-7fb03cb94d74857d stream      0      0                0 7fb03cb94d747a8d                0                0
 7fb03cb94d7484b5 stream      0      0                0 7fb03cb94d747b55                0                0 /var/run/fctservctl.sock
 7fb03cb94d747b55 stream      0      0                0 7fb03cb94d7484b5                0                0
 7fb03cb94d747c1d stream      0      0                0 7fb03cb94d748325                0                0 /var/run/fctservctl.sock
@@ -403,8 +414,6 @@ Address          Type   Recv-Q Send-Q            Inode             Conn         
 7fb03cb937d3a6ad stream      0      0                0 7fb03cb937d3a06d                0                0 /var/run/mDNSResponder
 7fb03cb937d3a06d stream      0      0                0 7fb03cb937d3a6ad                0                0
 7fb03cb945d387cd stream      0      0 7fb03cb94d0e4a35                0                0                0 /Users/kbrazil/Library/Application Support/Fortinet/FortiClient/credentialstore.sock
-7fb03cb937d3812d stream      0      0                0 7fb03cb937d3a2c5                0                0 /var/run/mDNSResponder
-7fb03cb937d3a2c5 stream      0      0                0 7fb03cb937d3812d                0                0
 7fb03cb945d395dd stream      0      0                0 7fb03cb945d39515                0                0 /var/run/mDNSResponder
 7fb03cb945d39515 stream      0      0                0 7fb03cb945d395dd                0                0
 7fb03cb945d39ce5 stream      0      0                0 7fb03cb945d39dad                0                0 /var/run/mDNSResponder
@@ -442,7 +451,6 @@ Address          Type   Recv-Q Send-Q            Inode             Conn         
 7fb03cb93ceb0325 stream      0      0 7fb03cb93ea5074d                0                0                0 /var/tmp/filesystemui.socket
 7fb03cb93ceafb55 stream      0      0 7fb03cb93ea1cd1d                0                0                0 /private/tmp/com.apple.launchd.WbUfpjQ9cD/Render
 7fb03cb93ceb00cd stream      0      0 7fb03cb93ea42275                0                0                0 /private/tmp/com.apple.launchd.WdCvj7HQdi/Listeners
-7fb03cb937d394b5 stream      0      0 7fb03cb938289085                0                0                0 /tmp/olisne-WY4G9IZafUNsloCollectorServicePipe
 7fb03cb93501a895 stream      0      0                0 7fb03cb93501d51d                0                0 /var/run/mDNSResponder
 7fb03cb93501d51d stream      0      0                0 7fb03cb93501a895                0                0
 7fb03cb93501aa25 stream      0      0                0 7fb03cb93501aaed                0                0 /var/run/mDNSResponder
@@ -478,10 +486,14 @@ Address          Type   Recv-Q Send-Q            Inode             Conn         
 7fb03cb93501be75 stream      0      0 7fb03cb935511d1d                0                0                0 /var/run/vpncontrol.sock
 7fb03cb93501bf3d stream      0      0 7fb03cb9354fd085                0                0                0 /var/rpc/ncalrpc/NETLOGON
 7fb03cb93501c005 stream      0      0 7fb03cb9354e58c5                0                0                0 /private/var/run/cupsd
-7fb03cb94a63b065 dgram       0      0                0 7fb03cb94a63b9c5 7fb03cb94a63b9c5                0
-7fb03cb94a63b9c5 dgram       0      0                0 7fb03cb94a63b065 7fb03cb94a63b065                0
-7fb03cb945d3afa5 dgram       0      0                0 7fb03cb93501c195                0 7fb03cb94a63ad45
-7fb03cb94a63ad45 dgram       0      0                0 7fb03cb93501c195                0 7fb03cb94a63af9d
+7fb03cb94a63c89d dgram       0      0                0 7fb03cb93501c195                0 7fb03cb94a63ce15
+7fb03cb94a63ce15 dgram       0      0                0 7fb03cb93501c195                0 7fb03cb95130e25d
+7fb03cb94a63b6a5 dgram       0      0                0 7fb03cb94a63b515 7fb03cb94a63b515                0
+7fb03cb94a63b515 dgram       0      0                0 7fb03cb94a63b6a5 7fb03cb94a63b6a5                0
+7fb03cb95130e25d dgram       0      0                0 7fb03cb93501c195                0 7fb03cb945d3afa5
+7fb03cb95130f455 dgram       0      0                0 7fb03cb95130d9c5 7fb03cb95130d9c5                0
+7fb03cb95130d9c5 dgram       0      0                0 7fb03cb95130f455 7fb03cb95130f455                0
+7fb03cb945d3afa5 dgram       0      0                0 7fb03cb93501c195                0 7fb03cb94a63af9d
 7fb03cb94a63af9d dgram       0      0                0 7fb03cb93501c195                0 7fb03cb93ceae7cd
 7fb03cb93ceae7cd dgram       0      0                0 7fb03cb93501c195                0 7fb03cb945d3b51d
 7fb03cb945d3b51d dgram       0      0                0 7fb03cb93501c195                0 7fb03cb945d3a3ed
@@ -574,7 +586,7 @@ Address          Type   Recv-Q Send-Q            Inode             Conn         
 7fb03cb93501b8fd dgram       0      0                0 7fb03cb93501ca2d 7fb03cb93501ca2d                0
 7fb03cb93501ca2d dgram       0      0                0 7fb03cb93501b8fd 7fb03cb93501b8fd                0
 7fb03cb93501c0cd dgram       0      0                0 7fb03cb93501c195                0                0
-7fb03cb93501c195 dgram       0      0 7fb03cb934ff43e5                0 7fb03cb945d3afa5                0 /private//var/run/syslog
+7fb03cb93501c195 dgram       0      0 7fb03cb934ff43e5                0 7fb03cb94a63c89d                0 /private//var/run/syslog
 Registered kernel control modules
 id       flags    pcbcount rcvbuf   sndbuf   name 
        1        9        0   131072   131072 com.apple.flow-divert 
@@ -584,7 +596,7 @@ id       flags    pcbcount rcvbuf   sndbuf   name
        5        1       12    65536    65536 com.apple.net.netagent 
        6        9        4   524288   524288 com.apple.net.utun_control 
        7        1        0    65536    65536 com.apple.net.ipsec_control 
-       8        0       74     8192     2048 com.apple.netsrc 
+       8        0       75     8192     2048 com.apple.netsrc 
        9       18        4     8192     2048 com.apple.network.statistics 
        a        5        0     8192     2048 com.apple.network.tcp_ccdebug 
        b        1        0     8192     2048 com.apple.network.advisory 
@@ -714,6 +726,7 @@ kctl       0      0     69      8 com.apple.netsrc
 kctl       0      0     70      8 com.apple.netsrc
 kctl       0      0     71      8 com.apple.netsrc
 kctl       0      0     72      8 com.apple.netsrc
+kctl       0      0     73      8 com.apple.netsrc
 kctl       0      0     74      8 com.apple.netsrc
 kctl       0      0     77      8 com.apple.netsrc
 kctl       0      0      1      9 com.apple.network.statistics
