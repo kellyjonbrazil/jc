@@ -3,5 +3,4 @@ __pycache__
 dist/
 build/
 *.egg-info/
-jc/parsers.old/
 .github/
