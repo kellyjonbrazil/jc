@@ -151,7 +151,7 @@ def process(proc_data):
             "modify_time":  string,    # - = null
             "change_time":  string,    # - = null
             "birth_time":   string,    # - = null
-            "device":       integer,
+            "osx_device":   integer,
             "rdev":         integer,
             "block_size":   integer,
             "osx_flags":    integer
@@ -159,7 +159,7 @@ def process(proc_data):
         ]
     """
     for entry in proc_data:
-        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'device', 'rdev', 'block_size', 'osx_flags']
+        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'osx_device', 'rdev', 'block_size', 'osx_flags']
         for key in int_list:
             if key in entry:
                 try:
@@ -287,6 +287,7 @@ def parse(data, raw=False, quiet=False):
             for line in cleandata:
                 value = shlex.split(line)
                 output_line = {
+                    'file': value[15],
                     'device': value[0],
                     'inode': value[1],
                     'flags': value[2],

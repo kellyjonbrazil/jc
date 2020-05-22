@@ -7,7 +7,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Examples:
 
@@ -141,7 +141,11 @@ Returns:
         "access_time":  string,    # - = null
         "modify_time":  string,    # - = null
         "change_time":  string,    # - = null
-        "birth_time":   string     # - = null
+        "birth_time":   string,    # - = null
+        "osx_device":   integer,
+        "rdev":         integer,
+        "block_size":   integer,
+        "osx_flags":    integer
       }
     ]
 
