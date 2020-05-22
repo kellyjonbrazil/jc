@@ -52,6 +52,13 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.out'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_Abn = f.read()
 
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-r.out'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_r = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.out'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_rnl = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_json = json.loads(f.read())
@@ -94,6 +101,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.json'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_Abn_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-r.json'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_r_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.json'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_rnl_json = json.loads(f.read())
 
     def test_netstat_centos_7_7(self):
         """
@@ -178,6 +191,18 @@ class MyTests(unittest.TestCase):
         Test 'netstat -Abn' on OSX 16.4
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_Abn, quiet=True), self.osx_14_6_netstat_Abn_json)
+
+    def test_netstat_r_osx_16_4(self):
+        """
+        Test 'netstat -r' on OSX 16.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_r, quiet=True), self.osx_14_6_netstat_r_json)
+
+    def test_netstat_rnl_osx_16_4(self):
+        """
+        Test 'netstat -rnl' on OSX 16.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_rnl, quiet=True), self.osx_14_6_netstat_rnl_json)
 
 
 if __name__ == '__main__':

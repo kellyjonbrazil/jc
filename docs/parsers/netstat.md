@@ -5,6 +5,11 @@ Usage:
 
     Specify --netstat as the first argument if the piped input is coming from netstat
 
+Caveats:
+
+    - Use of multiple 'l' options is not supported on OSX (e.g. 'netstat -rlll')
+    - Use of the 'A' option is not supported on OSX when using the 'r' option (e.g. netstat -rA)
+
 Compatibility:
 
     'linux', 'darwin'
@@ -368,7 +373,17 @@ Returns:
         "rcvbuf":            integer,
         "sndbuf":            integer,
         "rxbytes":           integer,
-        "txbytes":           integer
+        "txbytes":           integer,
+
+
+        "destination":       string,
+        "gateway":           string,
+        "route_flags":       string,
+        "route_refs":        integer,
+        "use":               integer,
+        "mtu":               integer,
+        "netif":             string,
+        "expire":            string
       }
     ]
 

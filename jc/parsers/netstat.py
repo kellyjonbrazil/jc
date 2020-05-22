@@ -4,6 +4,11 @@ Usage:
 
     Specify --netstat as the first argument if the piped input is coming from netstat
 
+Caveats:
+
+    - Use of multiple 'l' options is not supported on OSX (e.g. 'netstat -rlll')
+    - Use of the 'A' option is not supported on OSX when using the 'r' option (e.g. netstat -rA)
+
 Compatibility:
 
     'linux', 'darwin'
@@ -375,14 +380,25 @@ def process(proc_data):
             "rcvbuf":            integer,
             "sndbuf":            integer,
             "rxbytes":           integer,
-            "txbytes":           integer
+            "txbytes":           integer,
+
+
+            "destination":       string,
+            "gateway":           string,
+            "route_flags":       string,
+            "route_refs":        integer,
+            "use":               integer,
+            "mtu":               integer,
+            "netif":             string,
+            "expire":            string
           }
         ]
     """
     for entry in proc_data:
         # integer changes
         int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
-                    'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes']
+                    'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
+                    'route_refs', 'use', 'mtu']
         for key in int_list:
             if key in entry:
                 try:
@@ -436,7 +452,8 @@ def parse(data, raw=False, quiet=False):
        or cleandata[0] == 'Active LOCAL (UNIX) domain sockets' \
        or cleandata[0] == 'Registered kernel control modules' \
        or cleandata[0] == 'Active kernel event sockets' \
-       or cleandata[0] == 'Active kernel control sockets':
+       or cleandata[0] == 'Active kernel control sockets' \
+       or cleandata[0] == 'Routing tables':
         import jc.parsers.netstat_osx
         raw_output = jc.parsers.netstat_osx.parse(cleandata)
 

@@ -13,6 +13,15 @@ def normalize_headers(header):
     return header
 
 
+def normalize_route_headers(header):
+    header = header.lower()
+    header = header.replace('flags', 'route_flags')
+    header = header.replace('refs', 'route_refs')
+    header = header.replace('-', '_')
+
+    return header
+
+
 def parse_item(headers, entry, kind):
     entry = entry.split(maxsplit=len(headers) - 1)
 
@@ -82,10 +91,11 @@ def parse(cleandata):
     raw_output = []
     network = False
     multipath = False
+    socket = False
     reg_kernel_control = False
     active_kernel_event = False
     active_kernel_control = False
-    socket = False
+    routing_table = False
 
     for line in cleandata:
 
@@ -96,6 +106,7 @@ def parse(cleandata):
             reg_kernel_control = False
             active_kernel_event = False
             active_kernel_control = False
+            routing_table = False
             continue
 
         if line.startswith('Active Multipath Internet connections'):
@@ -105,6 +116,7 @@ def parse(cleandata):
             reg_kernel_control = False
             active_kernel_event = False
             active_kernel_control = False
+            routing_table = False
             continue
 
         if line.startswith('Active LOCAL (UNIX) domain sockets'):
@@ -114,6 +126,7 @@ def parse(cleandata):
             reg_kernel_control = False
             active_kernel_event = False
             active_kernel_control = False
+            routing_table = False
             continue
 
         if line.startswith('Registered kernel control modules'):
@@ -123,6 +136,7 @@ def parse(cleandata):
             reg_kernel_control = True
             active_kernel_event = False
             active_kernel_control = False
+            routing_table = False
             continue
 
         if line.startswith('Active kernel event sockets'):
@@ -132,6 +146,7 @@ def parse(cleandata):
             reg_kernel_control = False
             active_kernel_event = True
             active_kernel_control = False
+            routing_table = False
             continue
 
         if line.startswith('Active kernel control sockets'):
@@ -141,6 +156,17 @@ def parse(cleandata):
             reg_kernel_control = False
             active_kernel_event = False
             active_kernel_control = True
+            routing_table = False
+            continue
+
+        if line.startswith('Routing tables'):
+            network = False
+            multipath = False
+            socket = False
+            reg_kernel_control = False
+            active_kernel_event = False
+            active_kernel_control = False
+            routing_table = True
             continue
 
         # get headers
@@ -169,6 +195,11 @@ def parse(cleandata):
             headers = header_text.split()
             continue
 
+        if routing_table and line.startswith('Destination '):
+            header_text = normalize_route_headers(line)
+            headers = header_text.split()
+            continue
+
         # get items
         if network:
             raw_output.append(parse_item(headers, line, 'network'))
@@ -192,6 +223,10 @@ def parse(cleandata):
 
         if active_kernel_control:
             raw_output.append(parse_item(headers, line, 'Active kernel control socket'))
+            continue
+
+        if routing_table and not (line.startswith('Internet:') or line.startswith('Internet6:')):
+            raw_output.append(parse_item(headers, line, 'route'))
             continue
 
     return parse_post(raw_output)
