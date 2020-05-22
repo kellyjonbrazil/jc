@@ -125,7 +125,7 @@ Returns:
         "type":                        integer,
         "bytes":                       integer,
         "description":                 string,
-        "values": {
+        "values": {                               (null if empty)
           "lowercase_no_spaces_keys":  string,
           "multiline_key_values": [
                                        string,

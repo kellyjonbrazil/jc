@@ -134,7 +134,7 @@ def process(proc_data):
             "type":                        integer,
             "bytes":                       integer,
             "description":                 string,
-            "values": {
+            "values": {                               (null if empty)
               "lowercase_no_spaces_keys":  string,
               "multiline_key_values": [
                                            string,
@@ -152,6 +152,9 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError):
                     entry[key] = None
+
+        if not entry['values']:
+            entry['values'] = None
 
     return proc_data
 
