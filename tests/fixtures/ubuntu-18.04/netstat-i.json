@@ -1,0 +1,1 @@
+[{"iface": "ens33", "mtu": 1500, "rx_ok": 245, "rx_err": 0, "rx_drp": 0, "rx_ovr": 0, "tx_ok": 197, "tx_err": 0, "tx_drp": 0, "tx_ovr": 0, "flg": "BMRU", "kind": "interface"}, {"iface": "lo", "mtu": 65536, "rx_ok": 94, "rx_err": 0, "rx_drp": 0, "rx_ovr": 0, "tx_ok": 94, "tx_err": 0, "tx_drp": 0, "tx_ovr": 0, "flg": "LRU", "kind": "interface"}]

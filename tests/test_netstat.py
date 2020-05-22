@@ -81,6 +81,16 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.out'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_rnl = f.read()
 
+        # netstat -i
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_netstat_i = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-i.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_netstat_i = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.out'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_i = f.read()
+
         #
         # output
         #
@@ -152,6 +162,16 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.json'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_rnl_json = json.loads(f.read())
+
+        # netstat -i
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_netstat_i_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-i.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_netstat_i_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.json'), 'r', encoding='utf-8') as f:
+            self.osx_14_6_netstat_i_json = json.loads(f.read())
 
     def test_netstat_centos_7_7(self):
         """
@@ -284,6 +304,24 @@ class MyTests(unittest.TestCase):
         Test 'netstat -rnl' on OSX 16.4
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_rnl, quiet=True), self.osx_14_6_netstat_rnl_json)
+
+    def test_netstat_i_centos_7_7(self):
+        """
+        Test 'netstat -i' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.centos_7_7_netstat_i, quiet=True), self.centos_7_7_netstat_i_json)
+
+    def test_netstat_i_ubuntu_18_4(self):
+        """
+        Test 'netstat -i' on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_i, quiet=True), self.ubuntu_18_4_netstat_i_json)
+
+    def test_netstat_i_osx_16_4(self):
+        """
+        Test 'netstat -i' on OSX 16.4
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_i, quiet=True), self.osx_14_6_netstat_i_json)
 
 
 if __name__ == '__main__':

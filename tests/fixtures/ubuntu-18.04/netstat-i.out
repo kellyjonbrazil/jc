@@ -1,0 +1,4 @@
+Kernel Interface table
+Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
+ens33     1500      245      0      0 0           197      0      0      0 BMRU
+lo       65536       94      0      0 0            94      0      0      0 LRU
