@@ -23,6 +23,13 @@ def normalize_route_headers(header):
     return header
 
 
+def normalize_interface_headers(header):
+    header = header.lower()
+    header = header.replace('-', '_')
+
+    return header
+
+
 def parse_network(headers, entry):
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
@@ -75,6 +82,14 @@ def parse_route(headers, entry):
     entry = entry.split(maxsplit=len(headers) - 1)
     output_line = dict(zip(headers, entry))
     output_line['kind'] = 'route'
+
+    return output_line
+
+
+def parse_interface(headers, entry):
+    entry = entry.split(maxsplit=len(headers) - 1)
+    output_line = dict(zip(headers, entry))
+    output_line['kind'] = 'interface'
 
     return output_line
 
@@ -157,6 +172,7 @@ def parse(cleandata):
     socket = False
     bluetooth = False
     routing_table = False
+    interface_table = False
     headers = None
 
     for line in cleandata:
@@ -166,6 +182,7 @@ def parse(cleandata):
             socket = False
             bluetooth = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Active UNIX'):
@@ -173,6 +190,7 @@ def parse(cleandata):
             socket = True
             bluetooth = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Active Bluetooth'):
@@ -180,6 +198,7 @@ def parse(cleandata):
             socket = False
             bluetooth = True
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Kernel IP routing table'):
@@ -187,8 +206,18 @@ def parse(cleandata):
             socket = False
             bluetooth = False
             routing_table = True
+            interface_table = False
             continue
 
+        if line.startswith('Kernel Interface table'):
+            network = False
+            socket = False
+            bluetooth = False
+            routing_table = False
+            interface_table = True
+            continue
+
+        # get headers
         if line.startswith('Proto'):
             header_text = normalize_headers(line)
             headers = header_text.split()
@@ -199,6 +228,12 @@ def parse(cleandata):
             headers = header_text.split()
             continue
 
+        if line.startswith('Iface '):
+            header_text = normalize_interface_headers(line)
+            headers = header_text.split()
+            continue
+
+        # parse items
         if network:
             raw_output.append(parse_network(headers, line))
             continue
@@ -213,6 +248,10 @@ def parse(cleandata):
 
         if routing_table:
             raw_output.append(parse_route(headers, line))
+            continue
+
+        if interface_table:
+            raw_output.append(parse_interface(headers, line))
             continue
 
     return parse_post(raw_output)

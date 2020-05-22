@@ -203,6 +203,38 @@ Examples:
       }
     ]
 
+    $ netstat -i | jc --netstat -p
+    [
+      {
+        "iface": "ens33",
+        "mtu": 1500,
+        "rx_ok": 476,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 312,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "BMRU",
+        "kind": "interface"
+      },
+      {
+        "iface": "lo",
+        "mtu": 65536,
+        "rx_ok": 0,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 0,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "LRU",
+        "kind": "interface"
+      }
+    ]
+
 ## info
 ```python
 info(self, /, *args, **kwargs)
@@ -275,7 +307,23 @@ Returns:
         "window":            integer,
         "irtt":              integer,
         "iface":             string,
-        "metric":            integer
+        "metric":            integer,
+        "network":           string,
+        "address":           string,
+        "ipkts":             integer,    - = null
+        "ierrs":             integer,    - = null
+        "opkts":             integer,    - = null
+        "oerrs":             integer,    - = null
+        "coll":              integer,    - = null
+        "rx_ok":             integer,
+        "rx_err":            integer,
+        "rx_drp":            integer,
+        "rx_ovr":            integer,
+        "tx_ok":             integer,
+        "tx_err":            integer,
+        "tx_drp":            integer,
+        "tx_ovr":            integer,
+        "flg":               string
       }
     ]
 

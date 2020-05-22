@@ -203,7 +203,36 @@ Examples:
     ]
 
     $ netstat -i | jc --netstat -p
-
+    [
+      {
+        "iface": "ens33",
+        "mtu": 1500,
+        "rx_ok": 476,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 312,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "BMRU",
+        "kind": "interface"
+      },
+      {
+        "iface": "lo",
+        "mtu": 65536,
+        "rx_ok": 0,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 0,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "LRU",
+        "kind": "interface"
+      }
+    ]
 """
 
 
@@ -286,7 +315,6 @@ def process(proc_data):
             "irtt":              integer,
             "iface":             string,
             "metric":            integer,
-
             "network":           string,
             "address":           string,
             "ipkts":             integer,    - = null
@@ -294,6 +322,15 @@ def process(proc_data):
             "opkts":             integer,    - = null
             "oerrs":             integer,    - = null
             "coll":              integer,    - = null
+            "rx_ok":             integer,
+            "rx_err":            integer,
+            "rx_drp":            integer,
+            "rx_ovr":            integer,
+            "tx_ok":             integer,
+            "tx_err":            integer,
+            "tx_drp":            integer,
+            "tx_ovr":            integer,
+            "flg":               string
           }
         ]
     """
@@ -302,7 +339,8 @@ def process(proc_data):
         int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
                     'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
-                    'ierrs', 'opkts', 'oerrs', 'coll']
+                    'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
+                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr']
         for key in int_list:
             if key in entry:
                 try:
