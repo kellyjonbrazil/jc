@@ -16,7 +16,7 @@ Compatibility:
 
 Examples:
 
-    $ sudo netstat -apee | jc --netstat -p
+    # netstat -apee | jc --netstat -p
     [
       {
         "proto": "tcp",
@@ -166,152 +166,41 @@ Examples:
       ...
     ]
 
-    $ sudo netstat -apee | jc --netstat -p -r
+    $ netstat -r | jc --netstat -p
     [
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "0.0.0.0",
-        "state": "LISTEN",
-        "user": "systemd-resolve",
-        "inode": "26958",
-        "program_name": "systemd-resolve",
-        "kind": "network",
-        "pid": "887",
-        "local_port": "domain",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "default",
+        "gateway": "gateway",
+        "genmask": "0.0.0.0",
+        "route_flags": "UG",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "ens33",
+        "kind": "route"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "0.0.0.0",
-        "foreign_address": "0.0.0.0",
-        "state": "LISTEN",
-        "user": "root",
-        "inode": "30499",
-        "program_name": "sshd",
-        "kind": "network",
-        "pid": "1186",
-        "local_port": "ssh",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "172.17.0.0",
+        "gateway": "0.0.0.0",
+        "genmask": "255.255.0.0",
+        "route_flags": "U",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "docker0",
+        "kind": "route"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "localhost",
-        "state": "ESTABLISHED",
-        "user": "root",
-        "inode": "46829",
-        "program_name": "sshd: root",
-        "kind": "network",
-        "pid": "2242",
-        "local_port": "ssh",
-        "foreign_port": "52186",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "localhost",
-        "state": "ESTABLISHED",
-        "user": "root",
-        "inode": "46828",
-        "program_name": "ssh",
-        "kind": "network",
-        "pid": "2241",
-        "local_port": "52186",
-        "foreign_port": "ssh",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "tcp6",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "[::]",
-        "foreign_address": "[::]",
-        "state": "LISTEN",
-        "user": "root",
-        "inode": "30510",
-        "program_name": "sshd",
-        "kind": "network",
-        "pid": "1186",
-        "local_port": "ssh",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv6"
-      },
-      {
-        "proto": "udp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "0.0.0.0",
-        "state": null,
-        "user": "systemd-resolve",
-        "inode": "26957",
-        "program_name": "systemd-resolve",
-        "kind": "network",
-        "pid": "887",
-        "local_port": "domain",
-        "foreign_port": "*",
-        "transport_protocol": "udp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "raw6",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "[::]",
-        "foreign_address": "[::]",
-        "state": "7",
-        "user": "systemd-network",
-        "inode": "27001",
-        "program_name": "systemd-network",
-        "kind": "network",
-        "pid": "867",
-        "local_port": "ipv6-icmp",
-        "foreign_port": "*",
-        "transport_protocol": null,
-        "network_protocol": "ipv6"
-      },
-      {
-        "proto": "unix",
-        "refcnt": "2",
-        "flags": null,
-        "type": "DGRAM",
-        "state": null,
-        "inode": "33322",
-        "program_name": "systemd",
-        "path": "/run/user/1000/systemd/notify",
-        "kind": "socket",
-        "pid": " 1607"
-      },
-      {
-        "proto": "unix",
-        "refcnt": "2",
-        "flags": "ACC",
-        "type": "SEQPACKET",
-        "state": "LISTENING",
-        "inode": "20835",
-        "program_name": "init",
-        "path": "/run/udev/control",
-        "kind": "socket",
-        "pid": " 1"
-      },
-      ...
+        "destination": "192.168.71.0",
+        "gateway": "0.0.0.0",
+        "genmask": "255.255.255.0",
+        "route_flags": "U",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "ens33",
+        "kind": "route"
+      }
     ]
 
 ## info

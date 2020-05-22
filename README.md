@@ -1667,6 +1667,43 @@ $ mount | jc --mount -p          # or:  jc -p mount
   },
   ...
 ]
+
+$ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
+[
+  {
+    "destination": "default",
+    "gateway": "gateway",
+    "genmask": "0.0.0.0",
+    "route_flags": "UG",
+    "mss": 0,
+    "window": 0,
+    "irtt": 0,
+    "iface": "ens33",
+    "kind": "route"
+  },
+  {
+    "destination": "172.17.0.0",
+    "gateway": "0.0.0.0",
+    "genmask": "255.255.0.0",
+    "route_flags": "U",
+    "mss": 0,
+    "window": 0,
+    "irtt": 0,
+    "iface": "docker0",
+    "kind": "route"
+  },
+  {
+    "destination": "192.168.71.0",
+    "gateway": "0.0.0.0",
+    "genmask": "255.255.255.0",
+    "route_flags": "U",
+    "mss": 0,
+    "window": 0,
+    "irtt": 0,
+    "iface": "ens33",
+    "kind": "route"
+  }
+]
 ```
 ### ntpq
 ```
