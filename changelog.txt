@@ -1,6 +1,6 @@
 jc changelog
 
-202005xx v1.11.0
+20200522 v1.11.0
 - Add dmidecode command parser
 - Update stat command parser to add OSX support
 - Update netstat command parser to add OSX support
