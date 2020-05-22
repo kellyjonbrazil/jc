@@ -8,7 +8,7 @@ setuptools.setup(
     version='1.10.12',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
-    description='This tool serializes the output of popular command line tools and filetypes to structured JSON output.',
+    description='Converts the output of popular command-line tools and file-types to JSON.',
     install_requires=[
         'ruamel.yaml>=0.15.0',
         'xmltodict>=0.12.0',
