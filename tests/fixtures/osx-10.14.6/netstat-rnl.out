@@ -1,0 +1,96 @@
+Routing tables
+
+Internet:
+Destination        Gateway            Flags        Refs      Use    Mtu   Netif Expire
+default            192.168.1.254      UGSc           83       24   1500     en0       
+127                127.0.0.1          UCS             0        0  16384     lo0       
+127.0.0.1          127.0.0.1          UH             18  1266231  16384     lo0       
+169.254            link#10            UCS             1        0   1500     en0      !
+192.168.1          link#10            UCS            12        0   1500     en0      !
+192.168.1.64       e0:33:8e:68:38:d6  UHLWIi          2      470   1500     en0    753
+192.168.1.72       f0:18:98:3:d8:39   UHLWIi          1     8878   1500     en0   1105
+192.168.1.75       4c:56:9d:5f:b7:4c  UHLWIi          1      600   1500     en0    673
+192.168.1.80       0:90:a9:ed:e4:35   UHLWIi          1   265604   1500     en0    931
+192.168.1.88       c8:d0:83:cd:e3:2d  UHLWIi          1     4310   1500     en0    278
+192.168.1.89       d0:3:4b:3b:28:d5   UHLWIi          1     4588   1500     en0   1132
+192.168.1.186      50:32:37:d7:f5:9b  UHLWIi          1     6123   1500     en0   1181
+192.168.1.216      3c:37:86:15:ad:f7  UHLWI           0       16   1500     en0    565
+192.168.1.221/32   link#10            UCS             1        0   1500     en0      !
+192.168.1.221      a4:83:e7:2d:62:8f  UHLWI           0       36  16384     lo0       
+192.168.1.242      50:14:79:12:42:3e  UHLWI           0        0   1500     en0   1182
+192.168.1.251      14:60:cb:10:ec:17  UHLWI           0       54   1500     en0   1157
+192.168.1.253      3c:37:86:15:dd:b3  UHLWI           0     3300   1500     en0    839
+192.168.1.254/32   link#10            UCS             1        0   1500     en0      !
+192.168.1.254      fc:ae:34:a1:3a:80  UHLWIir        29    69464   1500     en0   1200
+192.168.1.255      ff:ff:ff:ff:ff:ff  UHLWbI          0        4   1500     en0      !
+192.168.71         link#20            UC              3        0   1500  vmnet8      !
+192.168.71.160     link#20            UHLWIi          1     1708   1500  vmnet8      !
+192.168.71.255     ff:ff:ff:ff:ff:ff  UHLWbI          0        4   1500  vmnet8      !
+192.168.101        link#19            UC              2        0   1500  vmnet1      !
+192.168.101.255    ff:ff:ff:ff:ff:ff  UHLWbI          0        4   1500  vmnet1      !
+224.0.0/4          link#10            UmCS            2        0   1500     en0      !
+224.0.0.251        1:0:5e:0:0:fb      UHmLWI          0      312   1500     en0       
+239.255.255.250    1:0:5e:7f:ff:fa    UHmLWI          0     9918   1500     en0       
+255.255.255.255/32 link#10            UCS             0        0   1500     en0      !
+
+Internet6:
+Destination                             Gateway                         Flags        Refs      Use    Mtu    Netif Expire
+default                                 fe80::feae:34ff:fea1:3a80%en0   UGc             7        0   1500      en0       
+default                                 fe80::%utun0                    UGcI            0        0   2000    utun0       
+default                                 fe80::%utun1                    UGcI            0        0   1380    utun1       
+default                                 fe80::%utun2                    UGcI            0        0   1380    utun2       
+default                                 fe80::%utun3                    UGcI            0        0   1380    utun3       
+::1                                     ::1                             UHL             1     4513  16384      lo0       
+2600:1700:bab0:d40::/64                 link#10                         UC              2        0   1500      en0       
+2600:1700:bab0:d40::1                   fc:ae:34:a1:3a:80               UHLWIi         12    68412   1500      en0       
+2600:1700:bab0:d40::39                  a4:83:e7:2d:62:8f               UHL             0        0  16384      lo0       
+2600:1700:bab0:d40:1874:4566:6499:f3d1  a4:83:e7:2d:62:8f               UHL             0        0  16384      lo0       
+2600:1700:bab0:d40:5894:f4c5:a982:26be  a4:83:e7:2d:62:8f               UHL             0        0  16384      lo0       
+2600:1700:bab0:d40:c9de:af8a:762c:422c  a4:83:e7:2d:62:8f               UHL             0        0  16384      lo0       
+2600:1700:bab0:d40:edd2:2cbf:f03a:d14f  a4:83:e7:2d:62:8f               UHL             0        0  16384      lo0       
+2600:1700:bab0:d40:f078:690e:f0ba:dfb   a4:83:e7:2d:62:8f               UHL             0        0  16384      lo0       
+fe80::%lo0/64                           fe80::1%lo0                     UcI             1        0  16384      lo0       
+fe80::1%lo0                             link#1                          UHLI            0        0  16384      lo0       
+fe80::%en5/64                           link#8                          UCI             2        0   1500      en5       
+fe80::aede:48ff:fe00:1122%en5           ac:de:48:0:11:22                UHLI            0        0  16384      lo0       
+fe80::aede:48ff:fe33:4455%en5           ac:de:48:33:44:55               UHLWIi         77      826   1500      en5       
+fe80::%en0/64                           link#10                         UCI            13        0   1500      en0       
+fe80::df:eea7:d8e0:237a%en0             14:60:cb:10:ec:17               UHLWI           0      293   1500      en0       
+fe80::472:ae33:7f74:8baf%en0            b4:18:d1:9d:bc:2d               UHLWI           0        2   1500      en0       
+fe80::c73:1ab9:79c2:c193%en0            4c:56:9d:5f:b7:4c               UHLWI           0     1597   1500      en0       
+fe80::ced:5f18:1d1e:2d6b%en0            14:60:cb:10:ec:17               UHLWI           0       14   1500      en0       
+fe80::cf9:ca6f:7d7a:50a2%en0            a4:83:e7:2d:62:8f               UHLI            0        0  16384      lo0       
+fe80::10f2:d51c:68e3:bfbb%en0           e0:33:8e:68:38:d6               UHLWI           0      656   1500      en0       
+fe80::1406:1bd5:a957:6df2%en0           50:32:37:d7:f5:9b               UHLWI           0     2100   1500      en0       
+fe80::1899:d8f6:dca5:207%en0            50:32:37:d7:f5:9b               UHLWI           0     4619   1500      en0       
+fe80::1c4d:12ea:5e57:24ad%en0           f0:18:98:3:d8:39                UHLWIi          1        8   1500      en0       
+fe80::1cff:a835:c99b:22c1%en0           d0:3:4b:3b:28:d5                UHLWI           0      477   1500      en0       
+fe80::4ad7:5ff:fef1:86e8%en0            48:d7:5:f1:86:e8                UHLWI           0      862   1500      en0       
+fe80::9eb6:54ff:fe5a:5a7c%en0           9c:b6:54:5a:5a:7c               UHLWI           0      322   1500      en0       
+fe80::feae:34ff:fea1:3a80%en0           fc:ae:34:a1:3a:80               UHLWIir         7    27100   1500      en0       
+fe80::%awdl0/64                         link#12                         UCI             1        0   1484    awdl0       
+fe80::b41f:b7ff:fe57:a54f%awdl0         b6:1f:b7:57:a5:4f               UHLI            1        0  16384      lo0       
+fe80::%utun0/64                         fe80::30fe:52f1:103c:c66c%utun0 UcI             2        0   2000    utun0       
+fe80::30fe:52f1:103c:c66c%utun0         link#18                         UHLI            1        0  16384      lo0       
+fe80::%utun1/64                         fe80::aaf6:1785:571a:57a9%utun1 UcI             2        0   1380    utun1       
+fe80::aaf6:1785:571a:57a9%utun1         link#21                         UHLI            0        0  16384      lo0       
+fe80::%utun2/64                         fe80::ce02:efdc:708:5411%utun2  UcI             2        0   1380    utun2       
+fe80::ce02:efdc:708:5411%utun2          link#22                         UHLI            0        0  16384      lo0       
+fe80::%utun3/64                         fe80::1188:a032:c478:4b13%utun3 UcI             2        0   1380    utun3       
+fe80::1188:a032:c478:4b13%utun3         link#23                         UHLI            0        0  16384      lo0       
+ff01::%lo0/32                           ::1                             UmCI            0        0  16384      lo0       
+ff01::%en5/32                           link#8                          UmCI            0        0   1500      en5       
+ff01::%en0/32                           link#10                         UmCI            0        0   1500      en0       
+ff01::%awdl0/32                         link#12                         UmCI            0        0   1484    awdl0       
+ff01::%utun0/32                         fe80::30fe:52f1:103c:c66c%utun0 UmCI            0        0   2000    utun0       
+ff01::%utun1/32                         fe80::aaf6:1785:571a:57a9%utun1 UmCI            0        0   1380    utun1       
+ff01::%utun2/32                         fe80::ce02:efdc:708:5411%utun2  UmCI            0        0   1380    utun2       
+ff01::%utun3/32                         fe80::1188:a032:c478:4b13%utun3 UmCI            0        0   1380    utun3       
+ff02::%lo0/32                           ::1                             UmCI            0        0  16384      lo0       
+ff02::%en5/32                           link#8                          UmCI            0        0   1500      en5       
+ff02::%en0/32                           link#10                         UmCI            0        0   1500      en0       
+ff02::%awdl0/32                         link#12                         UmCI            0        0   1484    awdl0       
+ff02::%utun0/32                         fe80::30fe:52f1:103c:c66c%utun0 UmCI            0        0   2000    utun0       
+ff02::%utun1/32                         fe80::aaf6:1785:571a:57a9%utun1 UmCI            0        0   1380    utun1       
+ff02::%utun2/32                         fe80::ce02:efdc:708:5411%utun2  UmCI            0        0   1380    utun2       
+ff02::%utun3/32                         fe80::1188:a032:c478:4b13%utun3 UmCI            0        0   1380    utun3       

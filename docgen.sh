@@ -13,6 +13,7 @@ pydocmd simple jc.parsers.crontab_u+ > ../docs/parsers/crontab_u.md
 pydocmd simple jc.parsers.csv+ > ../docs/parsers/csv.md
 pydocmd simple jc.parsers.df+ > ../docs/parsers/df.md
 pydocmd simple jc.parsers.dig+ > ../docs/parsers/dig.md
+pydocmd simple jc.parsers.dmidecode+ > ../docs/parsers/dmidecode.md
 pydocmd simple jc.parsers.du+ > ../docs/parsers/du.md
 pydocmd simple jc.parsers.env+ > ../docs/parsers/env.md
 pydocmd simple jc.parsers.file+ > ../docs/parsers/file.md

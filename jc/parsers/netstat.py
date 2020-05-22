@@ -4,13 +4,18 @@ Usage:
 
     Specify --netstat as the first argument if the piped input is coming from netstat
 
+Caveats:
+
+    - Use of multiple 'l' options is not supported on OSX (e.g. 'netstat -rlll')
+    - Use of the 'A' option is not supported on OSX when using the 'r' option (e.g. netstat -rA)
+
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Examples:
 
-    $ sudo netstat -apee | jc --netstat -p
+    # netstat -apee | jc --netstat -p
     [
       {
         "proto": "tcp",
@@ -160,166 +165,85 @@ Examples:
       ...
     ]
 
-    $ sudo netstat -apee | jc --netstat -p -r
+    $ netstat -r | jc --netstat -p
     [
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "0.0.0.0",
-        "state": "LISTEN",
-        "user": "systemd-resolve",
-        "inode": "26958",
-        "program_name": "systemd-resolve",
-        "kind": "network",
-        "pid": "887",
-        "local_port": "domain",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "default",
+        "gateway": "gateway",
+        "genmask": "0.0.0.0",
+        "route_flags": "UG",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "ens33",
+        "kind": "route"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "0.0.0.0",
-        "foreign_address": "0.0.0.0",
-        "state": "LISTEN",
-        "user": "root",
-        "inode": "30499",
-        "program_name": "sshd",
-        "kind": "network",
-        "pid": "1186",
-        "local_port": "ssh",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "172.17.0.0",
+        "gateway": "0.0.0.0",
+        "genmask": "255.255.0.0",
+        "route_flags": "U",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "docker0",
+        "kind": "route"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "localhost",
-        "state": "ESTABLISHED",
-        "user": "root",
-        "inode": "46829",
-        "program_name": "sshd: root",
-        "kind": "network",
-        "pid": "2242",
-        "local_port": "ssh",
-        "foreign_port": "52186",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "192.168.71.0",
+        "gateway": "0.0.0.0",
+        "genmask": "255.255.255.0",
+        "route_flags": "U",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "ens33",
+        "kind": "route"
+      }
+    ]
+
+    $ netstat -i | jc --netstat -p
+    [
+      {
+        "iface": "ens33",
+        "mtu": 1500,
+        "rx_ok": 476,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 312,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "BMRU",
+        "kind": "interface"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "localhost",
-        "state": "ESTABLISHED",
-        "user": "root",
-        "inode": "46828",
-        "program_name": "ssh",
-        "kind": "network",
-        "pid": "2241",
-        "local_port": "52186",
-        "foreign_port": "ssh",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "tcp6",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "[::]",
-        "foreign_address": "[::]",
-        "state": "LISTEN",
-        "user": "root",
-        "inode": "30510",
-        "program_name": "sshd",
-        "kind": "network",
-        "pid": "1186",
-        "local_port": "ssh",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv6"
-      },
-      {
-        "proto": "udp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "0.0.0.0",
-        "state": null,
-        "user": "systemd-resolve",
-        "inode": "26957",
-        "program_name": "systemd-resolve",
-        "kind": "network",
-        "pid": "887",
-        "local_port": "domain",
-        "foreign_port": "*",
-        "transport_protocol": "udp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "raw6",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "[::]",
-        "foreign_address": "[::]",
-        "state": "7",
-        "user": "systemd-network",
-        "inode": "27001",
-        "program_name": "systemd-network",
-        "kind": "network",
-        "pid": "867",
-        "local_port": "ipv6-icmp",
-        "foreign_port": "*",
-        "transport_protocol": null,
-        "network_protocol": "ipv6"
-      },
-      {
-        "proto": "unix",
-        "refcnt": "2",
-        "flags": null,
-        "type": "DGRAM",
-        "state": null,
-        "inode": "33322",
-        "program_name": "systemd",
-        "path": "/run/user/1000/systemd/notify",
-        "kind": "socket",
-        "pid": " 1607"
-      },
-      {
-        "proto": "unix",
-        "refcnt": "2",
-        "flags": "ACC",
-        "type": "SEQPACKET",
-        "state": "LISTENING",
-        "inode": "20835",
-        "program_name": "init",
-        "path": "/run/udev/control",
-        "kind": "socket",
-        "pid": " 1"
-      },
-      ...
+        "iface": "lo",
+        "mtu": 65536,
+        "rx_ok": 0,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 0,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "LRU",
+        "kind": "interface"
+      }
     ]
 """
-import string
-import jc.utils
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
+    compatible = ['linux', 'darwin']
     magic_commands = ['netstat']
 
 
@@ -361,13 +285,62 @@ def process(proc_data):
             "type":              string,
             "inode":             integer,
             "path":              string,
-            "kind":              string
+            "kind":              string,
+            "address":           string,
+            "osx_inode":         string,
+            "conn":              string,
+            "refs":              string,
+            "nextref":           string,
+            "name":              string,
+            "unit":              integer,
+            "vendor":            integer,
+            "class":             integer,
+            "subcla":            integer,
+            "osx_flags":         integer,
+            "pcbcount":          integer,
+            "rcvbuf":            integer,
+            "sndbuf":            integer,
+            "rxbytes":           integer,
+            "txbytes":           integer,
+            "destination":       string,
+            "gateway":           string,
+            "route_flags":       string,
+            "route_refs":        integer,
+            "use":               integer,
+            "mtu":               integer,
+            "expire":            string,
+            "genmask":           string,
+            "mss":               integer,
+            "window":            integer,
+            "irtt":              integer,
+            "iface":             string,
+            "metric":            integer,
+            "network":           string,
+            "address":           string,
+            "ipkts":             integer,    - = null
+            "ierrs":             integer,    - = null
+            "opkts":             integer,    - = null
+            "oerrs":             integer,    - = null
+            "coll":              integer,    - = null
+            "rx_ok":             integer,
+            "rx_err":            integer,
+            "rx_drp":            integer,
+            "rx_ovr":            integer,
+            "tx_ok":             integer,
+            "tx_err":            integer,
+            "tx_drp":            integer,
+            "tx_ovr":            integer,
+            "flg":               string
           }
         ]
     """
     for entry in proc_data:
         # integer changes
-        int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode']
+        int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
+                    'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
+                    'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
+                    'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
+                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr']
         for key in int_list:
             if key in entry:
                 try:
@@ -391,128 +364,6 @@ def process(proc_data):
     return proc_data
 
 
-def normalize_headers(header):
-    header = header.lower()
-    header = header.replace('local address', 'local_address')
-    header = header.replace('foreign address', 'foreign_address')
-    header = header.replace('pid/program name', 'program_name')
-    header = header.replace('security context', 'security_context')
-    header = header.replace('i-node', 'inode')
-    header = header.replace('-', '_')
-
-    return header
-
-
-def parse_network(headers, entry):
-    # Count words in header
-    # if len of line is one less than len of header, then insert None in field 5
-    entry = entry.split(maxsplit=len(headers) - 1)
-
-    if len(entry) == len(headers) - 1:
-        entry.insert(5, None)
-
-    output_line = dict(zip(headers, entry))
-    output_line['kind'] = 'network'
-
-    return output_line
-
-
-def parse_socket(header_text, headers, entry):
-    output_line = {}
-    # get the column # of first letter of "state"
-    state_col = header_text.find('state')
-    # get the program name column area
-    pn_start = header_text.find('program_name')
-    pn_end = header_text.find('path') - 1
-
-    # remove [ and ] from each line
-    entry = entry.replace('[ ]', '---')
-    entry = entry.replace('[', ' ').replace(']', ' ')
-
-    # find program_name column area and substitute spaces with \u2063 there
-    old_pn = entry[pn_start:pn_end]
-    new_pn = old_pn.replace(' ', '\u2063')
-    entry = entry.replace(old_pn, new_pn)
-
-    entry_list = entry.split(maxsplit=len(headers) - 1)
-    # check column # to see if state column is populated
-    if entry[state_col] in string.whitespace:
-        entry_list.insert(4, None)
-
-    output_line = dict(zip(headers, entry_list))
-    output_line['kind'] = 'socket'
-
-    # fix program_name field to turn \u2063 back to spaces
-    if 'program_name' in output_line:
-        if output_line['program_name']:
-            old_d_pn = output_line['program_name']
-            new_d_pn = old_d_pn.replace('\u2063', ' ')
-            output_line['program_name'] = new_d_pn
-
-    return output_line
-
-
-def parse_post(raw_data):
-    # clean up trailing whitespace on each item in each entry
-    # flags --- = null
-    # program_name - = null
-    # split pid and program name and ip addresses and ports
-    # create network and transport protocol fields
-
-    for entry in raw_data:
-        for item in entry:
-            try:
-                entry[item] = entry[item].rstrip()
-            except (AttributeError):
-                # skips trying to rstrip Null entries
-                pass
-
-        if 'flags' in entry:
-            if entry['flags'] == '---':
-                entry['flags'] = None
-
-        if 'program_name' in entry:
-            entry['program_name'] = entry['program_name'].strip()
-            if entry['program_name'] == '-':
-                entry['program_name'] = None
-
-            if entry['program_name']:
-                pid = entry['program_name'].split('/', maxsplit=1)[0]
-                name = entry['program_name'].split('/', maxsplit=1)[1]
-                entry['pid'] = pid
-                entry['program_name'] = name
-
-        if 'local_address' in entry:
-            if entry['local_address']:
-                ladd = entry['local_address'].rsplit(':', maxsplit=1)[0]
-                lport = entry['local_address'].rsplit(':', maxsplit=1)[1]
-                entry['local_address'] = ladd
-                entry['local_port'] = lport
-
-        if 'foreign_address' in entry:
-            if entry['foreign_address']:
-                fadd = entry['foreign_address'].rsplit(':', maxsplit=1)[0]
-                fport = entry['foreign_address'].rsplit(':', maxsplit=1)[1]
-                entry['foreign_address'] = fadd
-                entry['foreign_port'] = fport
-
-        if 'proto' in entry and 'kind' in entry:
-            if entry['kind'] == 'network':
-                if 'tcp' in entry['proto']:
-                    entry['transport_protocol'] = 'tcp'
-                elif 'udp' in entry['proto']:
-                    entry['transport_protocol'] = 'udp'
-                else:
-                    entry['transport_protocol'] = None
-
-                if '6' in entry['proto']:
-                    entry['network_protocol'] = 'ipv6'
-                else:
-                    entry['network_protocol'] = 'ipv4'
-
-    return raw_data
-
-
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -527,64 +378,32 @@ def parse(data, raw=False, quiet=False):
 
         List of dictionaries. Raw or processed structured data.
     """
+    import jc.utils
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
     cleandata = list(filter(None, cleandata))
-
     raw_output = []
-    network = False
-    socket = False
-    bluetooth = False
-    headers = ''
-    network_list = []
-    socket_list = []
 
-    for line in cleandata:
+    # check for OSX vs Linux
+    # is this from OSX?
+    if cleandata[0] == 'Active Internet connections' \
+       or cleandata[0] == 'Active Internet connections (including servers)' \
+       or cleandata[0] == 'Active Multipath Internet connections' \
+       or cleandata[0] == 'Active LOCAL (UNIX) domain sockets' \
+       or cleandata[0] == 'Registered kernel control modules' \
+       or cleandata[0] == 'Active kernel event sockets' \
+       or cleandata[0] == 'Active kernel control sockets' \
+       or cleandata[0] == 'Routing tables' \
+       or cleandata[0] == 'Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll':
+        import jc.parsers.netstat_osx
+        raw_output = jc.parsers.netstat_osx.parse(cleandata)
 
-        if line.startswith('Active Internet'):
-            network_list = []
-            network = True
-            socket = False
-            bluetooth = False
-            continue
-
-        if line.startswith('Active UNIX'):
-            socket_list = []
-            network = False
-            socket = True
-            bluetooth = False
-            continue
-
-        if line.startswith('Active Bluetooth'):
-            network = False
-            socket = False
-            bluetooth = True
-            continue
-
-        if line.startswith('Proto'):
-            header_text = normalize_headers(line)
-            headers = header_text.split()
-            continue
-
-        if network:
-            network_list.append(parse_network(headers, line))
-            continue
-
-        if socket:
-            socket_list.append(parse_socket(header_text, headers, line))
-            continue
-
-        if bluetooth:
-            # maybe implement later if requested
-            continue
-
-    for item in [network_list, socket_list]:
-        for entry in item:
-            raw_output.append(entry)
-
-    raw_output = parse_post(raw_output)
+    # use linux parser
+    else:
+        import jc.parsers.netstat_linux
+        raw_output = jc.parsers.netstat_linux.parse(cleandata)
 
     if raw:
         return raw_output

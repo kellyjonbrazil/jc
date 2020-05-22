@@ -1,5 +1,12 @@
 jc changelog
 
+20200522 v1.11.0
+- Add dmidecode command parser
+- Update stat command parser to add OSX support
+- Update netstat command parser to add OSX support
+- Update netstat command parser to add -r (route) functionality for linux and OSX
+- Update netstat command parser to add -i (interface) functionality for linux and OSX
+
 20200511 v1.10.12
 - Remove shebang from jc/cli.py for Fedora packaging
 

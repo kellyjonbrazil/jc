@@ -5,13 +5,18 @@ Usage:
 
     Specify --netstat as the first argument if the piped input is coming from netstat
 
+Caveats:
+
+    - Use of multiple 'l' options is not supported on OSX (e.g. 'netstat -rlll')
+    - Use of the 'A' option is not supported on OSX when using the 'r' option (e.g. netstat -rA)
+
 Compatibility:
 
-    'linux'
+    'linux', 'darwin'
 
 Examples:
 
-    $ sudo netstat -apee | jc --netstat -p
+    # netstat -apee | jc --netstat -p
     [
       {
         "proto": "tcp",
@@ -161,152 +166,73 @@ Examples:
       ...
     ]
 
-    $ sudo netstat -apee | jc --netstat -p -r
+    $ netstat -r | jc --netstat -p
     [
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "0.0.0.0",
-        "state": "LISTEN",
-        "user": "systemd-resolve",
-        "inode": "26958",
-        "program_name": "systemd-resolve",
-        "kind": "network",
-        "pid": "887",
-        "local_port": "domain",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "default",
+        "gateway": "gateway",
+        "genmask": "0.0.0.0",
+        "route_flags": "UG",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "ens33",
+        "kind": "route"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "0.0.0.0",
-        "foreign_address": "0.0.0.0",
-        "state": "LISTEN",
-        "user": "root",
-        "inode": "30499",
-        "program_name": "sshd",
-        "kind": "network",
-        "pid": "1186",
-        "local_port": "ssh",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "172.17.0.0",
+        "gateway": "0.0.0.0",
+        "genmask": "255.255.0.0",
+        "route_flags": "U",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "docker0",
+        "kind": "route"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "localhost",
-        "state": "ESTABLISHED",
-        "user": "root",
-        "inode": "46829",
-        "program_name": "sshd: root",
-        "kind": "network",
-        "pid": "2242",
-        "local_port": "ssh",
-        "foreign_port": "52186",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
+        "destination": "192.168.71.0",
+        "gateway": "0.0.0.0",
+        "genmask": "255.255.255.0",
+        "route_flags": "U",
+        "mss": 0,
+        "window": 0,
+        "irtt": 0,
+        "iface": "ens33",
+        "kind": "route"
+      }
+    ]
+
+    $ netstat -i | jc --netstat -p
+    [
+      {
+        "iface": "ens33",
+        "mtu": 1500,
+        "rx_ok": 476,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 312,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "BMRU",
+        "kind": "interface"
       },
       {
-        "proto": "tcp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "localhost",
-        "state": "ESTABLISHED",
-        "user": "root",
-        "inode": "46828",
-        "program_name": "ssh",
-        "kind": "network",
-        "pid": "2241",
-        "local_port": "52186",
-        "foreign_port": "ssh",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "tcp6",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "[::]",
-        "foreign_address": "[::]",
-        "state": "LISTEN",
-        "user": "root",
-        "inode": "30510",
-        "program_name": "sshd",
-        "kind": "network",
-        "pid": "1186",
-        "local_port": "ssh",
-        "foreign_port": "*",
-        "transport_protocol": "tcp",
-        "network_protocol": "ipv6"
-      },
-      {
-        "proto": "udp",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "localhost",
-        "foreign_address": "0.0.0.0",
-        "state": null,
-        "user": "systemd-resolve",
-        "inode": "26957",
-        "program_name": "systemd-resolve",
-        "kind": "network",
-        "pid": "887",
-        "local_port": "domain",
-        "foreign_port": "*",
-        "transport_protocol": "udp",
-        "network_protocol": "ipv4"
-      },
-      {
-        "proto": "raw6",
-        "recv_q": "0",
-        "send_q": "0",
-        "local_address": "[::]",
-        "foreign_address": "[::]",
-        "state": "7",
-        "user": "systemd-network",
-        "inode": "27001",
-        "program_name": "systemd-network",
-        "kind": "network",
-        "pid": "867",
-        "local_port": "ipv6-icmp",
-        "foreign_port": "*",
-        "transport_protocol": null,
-        "network_protocol": "ipv6"
-      },
-      {
-        "proto": "unix",
-        "refcnt": "2",
-        "flags": null,
-        "type": "DGRAM",
-        "state": null,
-        "inode": "33322",
-        "program_name": "systemd",
-        "path": "/run/user/1000/systemd/notify",
-        "kind": "socket",
-        "pid": " 1607"
-      },
-      {
-        "proto": "unix",
-        "refcnt": "2",
-        "flags": "ACC",
-        "type": "SEQPACKET",
-        "state": "LISTENING",
-        "inode": "20835",
-        "program_name": "init",
-        "path": "/run/udev/control",
-        "kind": "socket",
-        "pid": " 1"
-      },
-      ...
+        "iface": "lo",
+        "mtu": 65536,
+        "rx_ok": 0,
+        "rx_err": 0,
+        "rx_drp": 0,
+        "rx_ovr": 0,
+        "tx_ok": 0,
+        "tx_err": 0,
+        "tx_drp": 0,
+        "tx_ovr": 0,
+        "flg": "LRU",
+        "kind": "interface"
+      }
     ]
 
 ## info
@@ -352,7 +278,52 @@ Returns:
         "type":              string,
         "inode":             integer,
         "path":              string,
-        "kind":              string
+        "kind":              string,
+        "address":           string,
+        "osx_inode":         string,
+        "conn":              string,
+        "refs":              string,
+        "nextref":           string,
+        "name":              string,
+        "unit":              integer,
+        "vendor":            integer,
+        "class":             integer,
+        "subcla":            integer,
+        "osx_flags":         integer,
+        "pcbcount":          integer,
+        "rcvbuf":            integer,
+        "sndbuf":            integer,
+        "rxbytes":           integer,
+        "txbytes":           integer,
+        "destination":       string,
+        "gateway":           string,
+        "route_flags":       string,
+        "route_refs":        integer,
+        "use":               integer,
+        "mtu":               integer,
+        "expire":            string,
+        "genmask":           string,
+        "mss":               integer,
+        "window":            integer,
+        "irtt":              integer,
+        "iface":             string,
+        "metric":            integer,
+        "network":           string,
+        "address":           string,
+        "ipkts":             integer,    - = null
+        "ierrs":             integer,    - = null
+        "opkts":             integer,    - = null
+        "oerrs":             integer,    - = null
+        "coll":              integer,    - = null
+        "rx_ok":             integer,
+        "rx_err":            integer,
+        "rx_drp":            integer,
+        "rx_ovr":            integer,
+        "tx_ok":             integer,
+        "tx_err":            integer,
+        "tx_drp":            integer,
+        "tx_ovr":            integer,
+        "flg":               string
       }
     ]
 

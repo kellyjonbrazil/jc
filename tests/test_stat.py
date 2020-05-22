@@ -16,12 +16,18 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/stat.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_stat = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_stat = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/stat.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_stat_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/stat.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_stat_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_stat_json = json.loads(f.read())
 
     def test_stat_centos_7_7(self):
         """
@@ -34,6 +40,12 @@ class MyTests(unittest.TestCase):
         Test 'stat /bin/*' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.stat.parse(self.ubuntu_18_4_stat, quiet=True), self.ubuntu_18_4_stat_json)
+
+    def test_stat_osx_10_14_6(self):
+        """
+        Test 'stat /foo/*' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.stat.parse(self.osx_10_14_6_stat, quiet=True), self.osx_10_14_6_stat_json)
 
 
 if __name__ == '__main__':

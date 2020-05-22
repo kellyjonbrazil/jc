@@ -1,0 +1,93 @@
+Routing tables
+
+Internet:
+Destination        Gateway            Flags        Refs      Use   Netif Expire
+default            dsldevice.attlocal UGSc           85       24     en0       
+127                localhost          UCS             0        0     lo0       
+localhost          localhost          UH             20  1266183     lo0       
+169.254            link#10            UCS             1        0     en0      !
+192.168.1          link#10            UCS            11        0     en0      !
+kellys-iphone.attl e0:33:8e:68:38:d6  UHLWIi          2      466     en0    866
+kellys-mbp.attloca f0:18:98:3:d8:39   UHLWIi          2     8877     en0    187
+ipad.attlocal.net  4c:56:9d:5f:b7:4c  UHLWI           0      600     en0    786
+mycloudex2ultra.at 0:90:a9:ed:e4:35   UHLWIi          1   265596     en0   1044
+family-room-5.attl c8:d0:83:cd:e3:2d  UHLWIi          1     4308     en0    391
+bedroom.attlocal.n d0:3:4b:3b:28:d5   UHLWIi          1     4586     en0     36
+upstairs.attlocal. 50:32:37:d7:f5:9b  UHLWIi          1     6117     en0   1161
+rbr50.attlocal.net 3c:37:86:15:ad:f7  UHLWI           0       16     en0    678
+192.168.1.221/32   link#10            UCS             1        0     en0      !
+kbrazil-mac.attloc a4:83:e7:2d:62:8f  UHLWI           0       36     lo0       
+irobot-f5788f2e24e 50:14:79:12:42:3e  UHLWI           0        0     en0   1173
+victoriasiphone.at 14:60:cb:10:ec:17  UHLWI           0       54     en0     64
+rbs50.attlocal.net 3c:37:86:15:dd:b3  UHLWI           0     3300     en0    952
+192.168.1.254/32   link#10            UCS             1        0     en0      !
+dsldevice.attlocal fc:ae:34:a1:3a:80  UHLWIir        30    69452     en0   1180
+192.168.71         link#20            UC              2        0  vmnet8      !
+192.168.71.160     link#20            UHLWIi          1     1708  vmnet8      !
+192.168.101        link#19            UC              1        0  vmnet1      !
+224.0.0/4          link#10            UmCS            2        0     en0      !
+224.0.0.251        1:0:5e:0:0:fb      UHmLWI          0      312     en0       
+239.255.255.250    1:0:5e:7f:ff:fa    UHmLWI          0     9914     en0       
+255.255.255.255/32 link#10            UCS             0        0     en0      !
+
+Internet6:
+Destination        Gateway            Flags         Netif Expire
+default            fe80::feae:34ff:fe UGc             en0       
+default            fe80::%utun0       UGcI          utun0       
+default            fe80::%utun1       UGcI          utun1       
+default            fe80::%utun2       UGcI          utun2       
+default            fe80::%utun3       UGcI          utun3       
+localhost          localhost          UHL             lo0       
+2600:1700:bab0:d40 link#10            UC              en0       
+dsldevice6.attloca fc:ae:34:a1:3a:80  UHLWIi          en0       
+2600:1700:bab0:d40 a4:83:e7:2d:62:8f  UHL             lo0       
+2600:1700:bab0:d40 a4:83:e7:2d:62:8f  UHL             lo0       
+2600:1700:bab0:d40 a4:83:e7:2d:62:8f  UHL             lo0       
+kbrazil-mac.attloc a4:83:e7:2d:62:8f  UHL             lo0       
+kbrazil-mac.attloc a4:83:e7:2d:62:8f  UHL             lo0       
+kbrazil-mac.attloc a4:83:e7:2d:62:8f  UHL             lo0       
+fe80::%lo0         fe80::1%lo0        UcI             lo0       
+fe80::1%lo0        link#1             UHLI            lo0       
+fe80::%en5         link#8             UCI             en5       
+fe80::aede:48ff:fe ac:de:48:0:11:22   UHLI            lo0       
+fe80::aede:48ff:fe ac:de:48:33:44:55  UHLWIi          en5       
+fe80::%en0         link#10            UCI             en0       
+fe80::df:eea7:d8e0 14:60:cb:10:ec:17  UHLWI           en0       
+fe80::472:ae33:7f7 b4:18:d1:9d:bc:2d  UHLWI           en0       
+ipad.local         4c:56:9d:5f:b7:4c  UHLWI           en0       
+fe80::ced:5f18:1d1 14:60:cb:10:ec:17  UHLWI           en0       
+kbrazil-mac.local  a4:83:e7:2d:62:8f  UHLI            lo0       
+fe80::10f2:d51c:68 e0:33:8e:68:38:d6  UHLWI           en0       
+upstairs.local     50:32:37:d7:f5:9b  UHLWIi          en0       
+fe80::1899:d8f6:dc 50:32:37:d7:f5:9b  UHLWI           en0       
+kellys-macbook-pro f0:18:98:3:d8:39   UHLWI           en0       
+bedroom.local      d0:3:4b:3b:28:d5   UHLWI           en0       
+kellys-airport-exp 48:d7:5:f1:86:e8   UHLWI           en0       
+hp9cb654545bb9.loc 9c:b6:54:5a:5a:7c  UHLWI           en0       
+fe80::feae:34ff:fe fc:ae:34:a1:3a:80  UHLWIir         en0       
+fe80::%awdl0       link#12            UCI           awdl0       
+fe80::b41f:b7ff:fe b6:1f:b7:57:a5:4f  UHLI            lo0       
+fe80::%utun0       kbrazil-mac.local  UcI           utun0       
+kbrazil-mac.local  link#18            UHLI            lo0       
+fe80::%utun1       kbrazil-mac.local  UcI           utun1       
+kbrazil-mac.local  link#21            UHLI            lo0       
+fe80::%utun2       kbrazil-mac.local  UcI           utun2       
+kbrazil-mac.local  link#22            UHLI            lo0       
+fe80::%utun3       kbrazil-mac.local  UcI           utun3       
+kbrazil-mac.local  link#23            UHLI            lo0       
+ff01::%lo0         localhost          UmCI            lo0       
+ff01::%en5         link#8             UmCI            en5       
+ff01::%en0         link#10            UmCI            en0       
+ff01::%awdl0       link#12            UmCI          awdl0       
+ff01::%utun0       kbrazil-mac.local  UmCI          utun0       
+ff01::%utun1       kbrazil-mac.local  UmCI          utun1       
+ff01::%utun2       kbrazil-mac.local  UmCI          utun2       
+ff01::%utun3       kbrazil-mac.local  UmCI          utun3       
+ff02::%lo0         localhost          UmCI            lo0       
+ff02::%en5         link#8             UmCI            en5       
+ff02::%en0         link#10            UmCI            en0       
+ff02::%awdl0       link#12            UmCI          awdl0       
+ff02::%utun0       kbrazil-mac.local  UmCI          utun0       
+ff02::%utun1       kbrazil-mac.local  UmCI          utun1       
+ff02::%utun2       kbrazil-mac.local  UmCI          utun2       
+ff02::%utun3       kbrazil-mac.local  UmCI          utun3       
