@@ -14,6 +14,15 @@ def normalize_headers(header):
     return header
 
 
+def normalize_route_headers(header):
+    header = header.lower()
+    header = header.replace('flags', 'route_flags')
+    header = header.replace('ref', 'route_refs')
+    header = header.replace('-', '_')
+
+    return header
+
+
 def parse_network(headers, entry):
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
@@ -58,6 +67,14 @@ def parse_socket(header_text, headers, entry):
             old_d_pn = output_line['program_name']
             new_d_pn = old_d_pn.replace('\u2063', ' ')
             output_line['program_name'] = new_d_pn
+
+    return output_line
+
+
+def parse_route(headers, entry):
+    entry = entry.split(maxsplit=len(headers) - 1)
+    output_line = dict(zip(headers, entry))
+    output_line['kind'] = 'route'
 
     return output_line
 
@@ -139,6 +156,7 @@ def parse(cleandata):
     network = False
     socket = False
     bluetooth = False
+    routing_table = False
     headers = None
 
     for line in cleandata:
@@ -147,22 +165,37 @@ def parse(cleandata):
             network = True
             socket = False
             bluetooth = False
+            routing_table = False
             continue
 
         if line.startswith('Active UNIX'):
             network = False
             socket = True
             bluetooth = False
+            routing_table = False
             continue
 
         if line.startswith('Active Bluetooth'):
             network = False
             socket = False
             bluetooth = True
+            routing_table = False
+            continue
+
+        if line.startswith('Kernel IP routing table'):
+            network = False
+            socket = False
+            bluetooth = False
+            routing_table = True
             continue
 
         if line.startswith('Proto'):
             header_text = normalize_headers(line)
+            headers = header_text.split()
+            continue
+
+        if line.startswith('Destination '):
+            header_text = normalize_route_headers(line)
             headers = header_text.split()
             continue
 
@@ -176,6 +209,10 @@ def parse(cleandata):
 
         if bluetooth:
             # not implemented
+            continue
+
+        if routing_table:
+            raw_output.append(parse_route(headers, line))
             continue
 
     return parse_post(raw_output)

@@ -381,16 +381,19 @@ def process(proc_data):
             "sndbuf":            integer,
             "rxbytes":           integer,
             "txbytes":           integer,
-
-
             "destination":       string,
             "gateway":           string,
             "route_flags":       string,
             "route_refs":        integer,
             "use":               integer,
             "mtu":               integer,
-            "netif":             string,
-            "expire":            string
+            "expire":            string,
+            "genmask":           string,
+            "mss":               integer,
+            "window":            integer,
+            "irtt":              integer,
+            "iface":             string,
+            "metric":            integer
           }
         ]
     """
@@ -398,7 +401,7 @@ def process(proc_data):
         # integer changes
         int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
-                    'route_refs', 'use', 'mtu']
+                    'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric']
         for key in int_list:
             if key in entry:
                 try:

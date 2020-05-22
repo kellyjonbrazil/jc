@@ -17,6 +17,7 @@ def normalize_route_headers(header):
     header = header.lower()
     header = header.replace('flags', 'route_flags')
     header = header.replace('refs', 'route_refs')
+    header = header.replace('netif', 'iface')
     header = header.replace('-', '_')
 
     return header

@@ -374,16 +374,19 @@ Returns:
         "sndbuf":            integer,
         "rxbytes":           integer,
         "txbytes":           integer,
-
-
         "destination":       string,
         "gateway":           string,
         "route_flags":       string,
         "route_refs":        integer,
         "use":               integer,
         "mtu":               integer,
-        "netif":             string,
-        "expire":            string
+        "expire":            string,
+        "genmask":           string,
+        "mss":               integer,
+        "window":            integer,
+        "irtt":              integer,
+        "iface":             string,
+        "metric":            integer
       }
     ]
 
