@@ -201,6 +201,9 @@ Examples:
         "kind": "route"
       }
     ]
+
+    $ netstat -i | jc --netstat -p
+
 """
 
 
@@ -282,7 +285,15 @@ def process(proc_data):
             "window":            integer,
             "irtt":              integer,
             "iface":             string,
-            "metric":            integer
+            "metric":            integer,
+
+            "network":           string,
+            "address":           string,
+            "ipkts":             integer,    - = null
+            "ierrs":             integer,    - = null
+            "opkts":             integer,    - = null
+            "oerrs":             integer,    - = null
+            "coll":              integer,    - = null
           }
         ]
     """
@@ -290,7 +301,8 @@ def process(proc_data):
         # integer changes
         int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
-                    'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric']
+                    'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
+                    'ierrs', 'opkts', 'oerrs', 'coll']
         for key in int_list:
             if key in entry:
                 try:
@@ -345,7 +357,8 @@ def parse(data, raw=False, quiet=False):
        or cleandata[0] == 'Registered kernel control modules' \
        or cleandata[0] == 'Active kernel event sockets' \
        or cleandata[0] == 'Active kernel control sockets' \
-       or cleandata[0] == 'Routing tables':
+       or cleandata[0] == 'Routing tables' \
+       or cleandata[0] == 'Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll':
         import jc.parsers.netstat_osx
         raw_output = jc.parsers.netstat_osx.parse(cleandata)
 

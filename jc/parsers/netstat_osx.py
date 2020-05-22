@@ -23,6 +23,14 @@ def normalize_route_headers(header):
     return header
 
 
+def normalize_interface_headers(header):
+    header = header.lower()
+    header = header.replace('name', 'iface')
+    header = header.replace('-', '_')
+
+    return header
+
+
 def parse_item(headers, entry, kind):
     entry = entry.split(maxsplit=len(headers) - 1)
 
@@ -31,6 +39,10 @@ def parse_item(headers, entry, kind):
         entry.insert(5, None)
     if kind == 'network' and 'socket' in headers and 'udp' in str(entry):
         entry.insert(7, None)
+
+    # fixup interface records with no address field entry
+    if kind == 'interface' and len(entry) == 8:
+        entry.insert(3, None)
 
     output_line = dict(zip(headers, entry))
     output_line['kind'] = kind
@@ -97,6 +109,7 @@ def parse(cleandata):
     active_kernel_event = False
     active_kernel_control = False
     routing_table = False
+    interface_table = False
 
     for line in cleandata:
 
@@ -108,6 +121,7 @@ def parse(cleandata):
             active_kernel_event = False
             active_kernel_control = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Active Multipath Internet connections'):
@@ -118,6 +132,7 @@ def parse(cleandata):
             active_kernel_event = False
             active_kernel_control = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Active LOCAL (UNIX) domain sockets'):
@@ -128,6 +143,7 @@ def parse(cleandata):
             active_kernel_event = False
             active_kernel_control = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Registered kernel control modules'):
@@ -138,6 +154,7 @@ def parse(cleandata):
             active_kernel_event = False
             active_kernel_control = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Active kernel event sockets'):
@@ -148,6 +165,7 @@ def parse(cleandata):
             active_kernel_event = True
             active_kernel_control = False
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Active kernel control sockets'):
@@ -158,6 +176,7 @@ def parse(cleandata):
             active_kernel_event = False
             active_kernel_control = True
             routing_table = False
+            interface_table = False
             continue
 
         if line.startswith('Routing tables'):
@@ -168,7 +187,19 @@ def parse(cleandata):
             active_kernel_event = False
             active_kernel_control = False
             routing_table = True
+            interface_table = False
             continue
+
+        if line.startswith('Name  Mtu '):
+            network = False
+            multipath = False
+            socket = False
+            reg_kernel_control = False
+            active_kernel_event = False
+            active_kernel_control = False
+            routing_table = False
+            interface_table = True
+            # don't continue since there is no real header row for this table
 
         # get headers
         if network and (line.startswith('Socket ') or line.startswith('Proto ')):
@@ -201,6 +232,11 @@ def parse(cleandata):
             headers = header_text.split()
             continue
 
+        if interface_table and line.startswith('Name  Mtu '):
+            header_text = normalize_interface_headers(line)
+            headers = header_text.split()
+            continue
+
         # get items
         if network:
             raw_output.append(parse_item(headers, line, 'network'))
@@ -228,6 +264,10 @@ def parse(cleandata):
 
         if routing_table and not (line.startswith('Internet:') or line.startswith('Internet6:')):
             raw_output.append(parse_item(headers, line, 'route'))
+            continue
+
+        if interface_table:
+            raw_output.append(parse_item(headers, line, 'interface'))
             continue
 
     return parse_post(raw_output)

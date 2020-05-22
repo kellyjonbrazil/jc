@@ -1,0 +1,43 @@
+Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll
+lo0   16384 <Link#1>                       1580150     0  1580150     0     0
+lo0   16384 127           localhost        1580150     -  1580150     -     -
+lo0   16384 localhost   ::1                1580150     -  1580150     -     -
+lo0   16384 fe80::1%lo0 fe80:1::1          1580150     -  1580150     -     -
+gif0* 1280  <Link#2>                             0     0        0     0     0
+stf0* 1280  <Link#3>                             0     0        0     0     0
+VHC12 0     <Link#4>                             0     0        0     0     0
+XHC1* 0     <Link#5>                             0     0        0     0     0
+XHC0* 0     <Link#6>                             0     0        0     0     0
+XHC20 0     <Link#7>                             0     0        0     0     0
+en5   1500  <Link#8>    ac:de:48:00:11:22   140215     0   137522   721     0
+en5   1500  fe80::aede: fe80:8::aede:48ff   140215     -   137522     -     -
+ap1*  1500  <Link#9>    a6:83:e7:2d:62:8f        0     0        0     0     0
+en0   1500  <Link#10>   a4:83:e7:2d:62:8f 23300545     0 26448755   464     0
+en0   1500  kbrazil-mac fe80:a::cf9:ca6f: 23300545     - 26448755     -     -
+en0   1500  192.168.1     kbrazil-mac.att 23300545     - 26448755     -     -
+en0   1500  kbrazil-mac 2600:1700:bab0:d4 23300545     - 26448755     -     -
+en0   1500  kbrazil-mac 2600:1700:bab0:d4 23300545     - 26448755     -     -
+en0   1500  kbrazil-mac 2600:1700:bab0:d4 23300545     - 26448755     -     -
+en0   1500  kbrazil-mac 2600:1700:bab0:d4 23300545     - 26448755     -     -
+en0   1500  kbrazil-mac 2600:1700:bab0:d4 23300545     - 26448755     -     -
+en0   1500  kbrazil-mac 2600:1700:bab0:d4 23300545     - 26448755     -     -
+p2p0  2304  <Link#11>   06:83:e7:2d:62:8f        0     0        0     0     0
+awdl0 1484  <Link#12>   b6:1f:b7:57:a5:4f        0     0     5097     0     0
+awdl0 1484  fe80::b41f: fe80:c::b41f:b7ff        0     -     5097     -     -
+en1   1500  <Link#13>   ea:00:fd:08:57:01        0     0        0     0     0
+en2   1500  <Link#14>   ea:00:fd:08:57:00        0     0        0     0     0
+en3   1500  <Link#15>   ea:00:fd:08:57:05        0     0        0     0     0
+en4   1500  <Link#16>   ea:00:fd:08:57:04        0     0        0     0     0
+bridg 1500  <Link#17>   ea:00:fd:08:57:01        0     0        0     0     0
+utun0 2000  <Link#18>                            0     0      159     0     0
+utun0 2000  kbrazil-mac fe80:12::30fe:52f        0     -      159     -     -
+utun1 1380  <Link#21>                            0     0        2     0     0
+utun1 1380  kbrazil-mac fe80:15::aaf6:178        0     -        2     -     -
+utun2 1380  <Link#22>                            0     0        2     0     0
+utun2 1380  kbrazil-mac fe80:16::ce02:efd        0     -        2     -     -
+utun3 1380  <Link#23>                            0     0        2     0     0
+utun3 1380  kbrazil-mac fe80:17::1188:a03        0     -        2     -     -
+vmnet 1500  <Link#19>   00:50:56:c0:00:01        0     0        0     0     0
+vmnet 1500  192.168.101   192.168.101.1          0     -        0     -     -
+vmnet 1500  <Link#20>   00:50:56:c0:00:08     1853     0        0     0     0
+vmnet 1500  192.168.71    192.168.71.1        1853     -        0     -     -
