@@ -145,7 +145,7 @@ Returns:
         "osx_device":   integer,
         "rdev":         integer,
         "block_size":   integer,
-        "osx_flags":    integer
+        "osx_flags":    string
       }
     ]
 

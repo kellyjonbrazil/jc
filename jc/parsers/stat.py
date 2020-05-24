@@ -105,7 +105,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'stat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -154,12 +154,12 @@ def process(proc_data):
             "osx_device":   integer,
             "rdev":         integer,
             "block_size":   integer,
-            "osx_flags":    integer
+            "osx_flags":    string
           }
         ]
     """
     for entry in proc_data:
-        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'osx_device', 'rdev', 'block_size', 'osx_flags']
+        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'osx_device', 'rdev', 'block_size']
         for key in int_list:
             if key in entry:
                 try:

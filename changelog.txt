@@ -1,5 +1,8 @@
 jc changelog
 
+20200523 v1.11.1
+- Update stat command parser to change osx_flags field to string
+
 20200522 v1.11.0
 - Add dmidecode command parser
 - Update stat command parser to add OSX support
