@@ -66,7 +66,7 @@ Schemas for each parser can be found in the [`docs/parsers`](https://github.com/
 
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
-For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
+Why would anyone do this?! For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
 There are several ways to get `jc`. You can install via `pip`, `brew`, DEB or RPM packages, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
