@@ -744,6 +744,7 @@ $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ### dmidecode
 ```
 # dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode
+[
   {
     "handle": "0x0000",
     "type": 0,
