@@ -70,21 +70,28 @@ Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`, `brew`, DEB or RPM packages, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `zypper`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```
 $ pip3 install --upgrade jc
 ```
 
-### Zypper (openSUSE linux)
+### OS Package Repositories
+
+#### Zypper (openSUSE linux)
 ```
 # zypper install jc
 ```
 
-### Brew (macOS)
+#### Brew (macOS)
 ```
 $ brew install jc
+```
+
+#### Ports (FreeBSD)
+```
+# portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean
 ```
 
 ### Packages and Binaries
