@@ -84,7 +84,7 @@ $ pip3 install --upgrade jc
 # zypper install jc
 ```
 
-#### nix-env (NixOS linunx)
+#### nix-env (NixOS linux)
 ```
 nix-env -iA nixpkgs.jc
 ```
