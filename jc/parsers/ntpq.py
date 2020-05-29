@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'freebsd'
 
 Examples:
 
@@ -183,13 +183,13 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'ntpq -p command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
+    compatible = ['linux', 'freebsd']
     magic_commands = ['ntpq']
 
 

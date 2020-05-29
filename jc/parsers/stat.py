@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin'
+    'linux', 'darwin', 'freebsd'
 
 Examples:
 
@@ -105,13 +105,13 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'stat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['stat']
 
 

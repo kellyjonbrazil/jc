@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux'
+    'linux', 'freebsd'
 
 Examples:
 
@@ -70,13 +70,13 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'fstab file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux']
+    compatible = ['linux', 'freebsd']
 
 
 __version__ = info.version

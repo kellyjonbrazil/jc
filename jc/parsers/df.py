@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin'
+    'linux', 'darwin', 'freebsd'
 
 Examples:
 
@@ -73,13 +73,13 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'df command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['df']
 
 
