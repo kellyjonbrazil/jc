@@ -86,7 +86,7 @@ $ pip3 install --upgrade jc
 
 #### nix-env (NixOS linux)
 ```
-nix-env -iA nixpkgs.jc
+$ nix-env -iA nixpkgs.jc
 ```
 
 #### Brew (macOS)
