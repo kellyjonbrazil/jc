@@ -1,0 +1,24 @@
+Active Internet connections (including servers)
+Tcpcb            Proto Recv-Q Send-Q Local Address      Foreign Address    (state)    
+fffff80003df43d0 tcp4       0      0 192.168.71.1.ssh   192.168.71.1.56321 ESTABLISHED
+fffff80003df47a0 tcp4       0      0 localhost.smtp     *.*                LISTEN     
+fffff80003df4b70 tcp4       0      0 *.ssh              *.*                LISTEN     
+fffff80003df0000 tcp6       0      0 *.ssh              *.*                LISTEN     
+fffff80003ae81e8 udp4       0      0 *.syslog           *.*                
+fffff80003ae87a0 udp6       0      0 *.syslog           *.*                
+Active UNIX domain sockets
+Address          Type   Recv-Q Send-Q            Inode             Conn             Refs          Nextref Addr
+fffff80003ab6100 stream      0      0                0 fffff80003ab6200                0                0
+fffff80003ab6200 stream      0      0                0 fffff80003ab6100                0                0
+fffff80003ab6300 stream      0      0                0                0                0                0
+fffff80003ab6800 stream      0      0                0 fffff80003ab6900                0                0
+fffff80003ab6900 stream      0      0                0 fffff80003ab6800                0                0
+fffff80003abf000 stream      0      0 fffff80003c581e0                0                0                0 /var/run/devd.pipe
+fffff80003ac3e00 dgram       0      0                0 fffff80003ab6c00                0 fffff80003ab6400
+fffff80003ab6400 dgram       0      0                0 fffff80003ab6c00                0 fffff80003ab6000
+fffff80003ab6000 dgram       0      0                0 fffff80003ab6c00                0 fffff80003ab6600
+fffff80003ab6500 dgram       0      0                0 fffff80003ab6d00                0                0
+fffff80003ab6600 dgram       0      0                0 fffff80003ab6c00                0                0
+fffff80003ab6c00 dgram       0      0 fffff80003c59d20                0 fffff80003ac3e00                0 /var/run/logpriv
+fffff80003ab6d00 dgram       0      0 fffff80003c67000                0 fffff80003ab6500                0 /var/run/log
+fffff80003ab6e00 seqpac      0      0 fffff80003c58000                0                0                0 /var/run/devd.seqpacket.pipe
