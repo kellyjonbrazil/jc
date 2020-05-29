@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility OSX netstat Parser"""
+"""jc - JSON CLI output utility OSX and FreeBSD netstat Parser"""
 
 
 def normalize_headers(header):
@@ -85,6 +85,41 @@ def parse_post(raw_data):
                     entry['network_protocol'] = 'ipv6'
                 else:
                     entry['network_protocol'] = 'ipv4'
+
+        # add route_flags_pretty field
+        if 'route_flags' in entry:
+            flag_map = {
+                '1': 'PROTO1',
+                '2': 'PROTO2',
+                '3': 'PROTO3',
+                'B': 'BLACKHOLE',
+                'b': 'BROADCAST',
+                'C': 'CLONING',
+                'c': 'PRCLONING',
+                'D': 'DYNAMIC',
+                'G': 'GATEWAY',
+                'H': 'HOST',
+                'I': 'IFSCOPE',
+                'i': 'IFREF',
+                'L': 'LLINFO',
+                'M': 'MODIFIED',
+                'm': 'MULTICAST',
+                'R': 'REJECT',
+                'r': 'ROUTER',
+                'S': 'STATIC',
+                'U': 'UP',
+                'W': 'WASCLONED',
+                'X': 'XRESOLVE',
+                'Y': 'PROXY',
+            }
+
+            pretty_flags = []
+
+            for flag in entry['route_flags']:
+                if flag in flag_map:
+                    pretty_flags.append(flag_map[flag])
+
+            entry['route_flags_pretty'] = pretty_flags
 
     return raw_data
 

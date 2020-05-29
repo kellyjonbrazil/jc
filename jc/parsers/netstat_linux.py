@@ -152,6 +152,29 @@ def parse_post(raw_data):
                 else:
                     entry['network_protocol'] = 'ipv4'
 
+        # add route_flags_pretty
+        # Flag mapping from https://www.man7.org/linux/man-pages/man8/route.8.html
+        if 'route_flags' in entry:
+            flag_map = {
+                'U': 'UP',
+                'H': 'HOST',
+                'G': 'GATEWAY',
+                'R': 'REINSTATE',
+                'D': 'DYNAMIC',
+                'M': 'MODIFIED',
+                'A': 'ADDRCONF',
+                'C': 'CACHE',
+                '!': 'REJECT'
+            }
+
+            pretty_flags = []
+
+            for flag in entry['route_flags']:
+                if flag in flag_map:
+                    pretty_flags.append(flag_map[flag])
+
+            entry['route_flags_pretty'] = pretty_flags
+
     return raw_data
 
 
