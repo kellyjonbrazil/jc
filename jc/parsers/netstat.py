@@ -334,7 +334,9 @@ def process(proc_data):
             "tx_err":                 integer,
             "tx_drp":                 integer,
             "tx_ovr":                 integer,
-            "flg":                    string
+            "flg":                    string,
+            "ibytes":                 integer,
+            "obytes":                 integer
           }
         ]
     """
@@ -344,7 +346,7 @@ def process(proc_data):
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
                     'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
                     'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
-                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop']
+                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop', 'ibytes', 'obytes']
         for key in int_list:
             if key in entry:
                 try:
@@ -364,6 +366,11 @@ def process(proc_data):
                 entry['foreign_port_num'] = int(entry['foreign_port'])
             except (ValueError):
                 pass
+
+        # strip whitespace from beginning and end of all string values
+        for item in entry:
+            if isinstance(entry[item], str):
+                entry[item] = entry[item].strip()
 
     return proc_data
 
