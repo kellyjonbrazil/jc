@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility OSX and FreeBSD netstat Parser"""
+"""jc - JSON CLI output utility FreeBSD and OSX netstat Parser"""
 
 
 def normalize_headers(header):
@@ -6,8 +6,8 @@ def normalize_headers(header):
     header = header.replace('local address', 'local_address')
     header = header.replace('foreign address', 'foreign_address')
     header = header.replace('(state)', 'state')
-    header = header.replace('inode', 'osx_inode')
-    header = header.replace('flags', 'osx_flags')
+    header = header.replace('inode', 'unix_inode')
+    header = header.replace('flags', 'unix_flags')
     header = header.replace('-', '_')
 
     return header
@@ -170,7 +170,7 @@ def parse(cleandata):
             interface_table = False
             continue
 
-        if line.startswith('Active LOCAL (UNIX) domain sockets'):
+        if line.startswith('Active LOCAL (UNIX) domain sockets') or line.startswith('Active UNIX domain sockets'):
             network = False
             multipath = False
             socket = True
@@ -237,7 +237,7 @@ def parse(cleandata):
             # don't continue since there is no real header row for this table
 
         # get headers
-        if network and (line.startswith('Socket ') or line.startswith('Proto ')):
+        if network and (line.startswith('Socket ') or line.startswith('Proto ') or line.startswith('Tcpcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
             continue
