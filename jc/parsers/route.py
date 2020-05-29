@@ -101,7 +101,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'route command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,17 +128,20 @@ def process(proc_data):
 
         [
           {
-            "destination":  string,
-            "gateway":      string,
-            "genmask":      string,
-            "flags":        string,
-            "metric":       integer,
-            "ref":          integer,
-            "use":          integer,
-            "mss":          integer,
-            "window":       integer,
-            "irtt":         integer,
-            "iface":        string
+            "destination":     string,
+            "gateway":         string,
+            "genmask":         string,
+            "flags":           string,
+            "flags_pretty": [
+                               string,
+            ]
+            "metric":          integer,
+            "ref":             integer,
+            "use":             integer,
+            "mss":             integer,
+            "window":          integer,
+            "irtt":            integer,
+            "iface":           string
           }
         ]
     """
@@ -151,6 +154,29 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError):
                     entry[key] = None
+
+        # add flags_pretty
+        # Flag mapping from https://www.man7.org/linux/man-pages/man8/route.8.html
+        if 'flags' in entry:
+            flag_map = {
+                'U': 'UP',
+                'H': 'HOST',
+                'G': 'GATEWAY',
+                'R': 'REINSTATE',
+                'D': 'DYNAMIC',
+                'M': 'MODIFIED',
+                'A': 'ADDRCONF',
+                'C': 'CACHE',
+                '!': 'REJECT'
+            }
+
+            pretty_flags = []
+
+            for flag in entry['flags']:
+                if flag in flag_map:
+                    pretty_flags.append(flag_map[flag])
+
+            entry['flags_pretty'] = pretty_flags
 
     return proc_data
 
