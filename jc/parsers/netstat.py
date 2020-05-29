@@ -264,77 +264,77 @@ def process(proc_data):
 
         [
           {
-            "proto":               string,
-            "recv_q":              integer,
-            "send_q":              integer,
-            "transport_protocol"   string,
-            "network_protocol":    string,
-            "local_address":       string,
-            "local_port":          string,
-            "local_port_num":      integer,
-            "foreign_address":     string,
-            "foreign_port":        string,
-            "foreign_port_num":    integer,
-            "state":               string,
-            "program_name":        string,
-            "pid":                 integer,
-            "user":                string,
-            "security_context":    string,
-            "refcnt":              integer,
-            "flags":               string,
-            "type":                string,
-            "inode":               integer,
-            "path":                string,
-            "kind":                string,
-            "address":             string,
-            "osx_inode":           string,
-            "conn":                string,
-            "refs":                string,
-            "nextref":             string,
-            "name":                string,
-            "unit":                integer,
-            "vendor":              integer,
-            "class":               integer,
-            "subcla":              integer,
-            "osx_flags":           integer,
-            "pcbcount":            integer,
-            "rcvbuf":              integer,
-            "sndbuf":              integer,
-            "rxbytes":             integer,
-            "txbytes":             integer,
-            "destination":         string,
-            "gateway":             string,
-            "route_flags":         string,
+            "proto":                  string,
+            "recv_q":                 integer,
+            "send_q":                 integer,
+            "transport_protocol"      string,
+            "network_protocol":       string,
+            "local_address":          string,
+            "local_port":             string,
+            "local_port_num":         integer,
+            "foreign_address":        string,
+            "foreign_port":           string,
+            "foreign_port_num":       integer,
+            "state":                  string,
+            "program_name":           string,
+            "pid":                    integer,
+            "user":                   string,
+            "security_context":       string,
+            "refcnt":                 integer,
+            "flags":                  string,
+            "type":                   string,
+            "inode":                  integer,
+            "path":                   string,
+            "kind":                   string,
+            "address":                string,
+            "unix_inode":             string,
+            "conn":                   string,
+            "refs":                   string,
+            "nextref":                string,
+            "name":                   string,
+            "unit":                   integer,
+            "vendor":                 integer,
+            "class":                  integer,
+            "subcla":                 integer,
+            "unix_flags":             integer,
+            "pcbcount":               integer,
+            "rcvbuf":                 integer,
+            "sndbuf":                 integer,
+            "rxbytes":                integer,
+            "txbytes":                integer,
+            "destination":            string,
+            "gateway":                string,
+            "route_flags":            string,
             "route_flags_pretty": [
-                                   string,
+                                      string,
             ]
-            "route_refs":          integer,
-            "use":                 integer,
-            "mtu":                 integer,
-            "expire":              string,
-            "genmask":             string,
-            "mss":                 integer,
-            "window":              integer,
-            "irtt":                integer,
-            "iface":               string,
-            "metric":              integer,
-            "network":             string,
-            "address":             string,
-            "ipkts":               integer,    - = null
-            "ierrs":               integer,    - = null
-            "idrop":               integer,    - = null
-            "opkts":               integer,    - = null
-            "oerrs":               integer,    - = null
-            "coll":                integer,    - = null
-            "rx_ok":               integer,
-            "rx_err":              integer,
-            "rx_drp":              integer,
-            "rx_ovr":              integer,
-            "tx_ok":               integer,
-            "tx_err":              integer,
-            "tx_drp":              integer,
-            "tx_ovr":              integer,
-            "flg":                 string
+            "route_refs":             integer,
+            "use":                    integer,
+            "mtu":                    integer,
+            "expire":                 string,
+            "genmask":                string,
+            "mss":                    integer,
+            "window":                 integer,
+            "irtt":                   integer,
+            "iface":                  string,
+            "metric":                 integer,
+            "network":                string,
+            "address":                string,
+            "ipkts":                  integer,    - = null
+            "ierrs":                  integer,    - = null
+            "idrop":                  integer,    - = null
+            "opkts":                  integer,    - = null
+            "oerrs":                  integer,    - = null
+            "coll":                   integer,    - = null
+            "rx_ok":                  integer,
+            "rx_err":                 integer,
+            "rx_drp":                 integer,
+            "rx_ovr":                 integer,
+            "tx_ok":                  integer,
+            "tx_err":                 integer,
+            "tx_drp":                 integer,
+            "tx_ovr":                 integer,
+            "flg":                    string
           }
         ]
     """
@@ -403,8 +403,8 @@ def parse(data, raw=False, quiet=False):
        or cleandata[0].startswith('Name  '):
         # or cleandata[0] == 'Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll' \
 
-        import jc.parsers.netstat_osx
-        raw_output = jc.parsers.netstat_osx.parse(cleandata)
+        import jc.parsers.netstat_freebsd_osx
+        raw_output = jc.parsers.netstat_freebsd_osx.parse(cleandata)
 
     # use linux parser
     else:
