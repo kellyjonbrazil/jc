@@ -190,7 +190,7 @@ def parse(cleandata):
             interface_table = False
             continue
 
-        if line.startswith('Name  Mtu '):
+        if line.startswith('Name  '):
             network = False
             multipath = False
             socket = False
@@ -232,7 +232,7 @@ def parse(cleandata):
             headers = header_text.split()
             continue
 
-        if interface_table and line.startswith('Name  Mtu '):
+        if interface_table and line.startswith('Name  '):
             header_text = normalize_interface_headers(line)
             headers = header_text.split()
             continue

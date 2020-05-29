@@ -11,7 +11,7 @@ Caveats:
 
 Compatibility:
 
-    'linux', 'darwin'
+    'linux', 'darwin', 'freebsd'
 
 Examples:
 
@@ -237,13 +237,13 @@ Examples:
 
 
 class info():
-    version = '1.5'
+    version = '1.6'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['netstat']
 
 
@@ -319,6 +319,7 @@ def process(proc_data):
             "address":           string,
             "ipkts":             integer,    - = null
             "ierrs":             integer,    - = null
+            "idrop":             integer,    - = null
             "opkts":             integer,    - = null
             "oerrs":             integer,    - = null
             "coll":              integer,    - = null
@@ -340,7 +341,7 @@ def process(proc_data):
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
                     'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
                     'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
-                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr']
+                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop']
         for key in int_list:
             if key in entry:
                 try:
@@ -396,7 +397,9 @@ def parse(data, raw=False, quiet=False):
        or cleandata[0] == 'Active kernel event sockets' \
        or cleandata[0] == 'Active kernel control sockets' \
        or cleandata[0] == 'Routing tables' \
-       or cleandata[0] == 'Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll':
+       or cleandata[0].startswith('Name  '):
+        # or cleandata[0] == 'Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll' \
+
         import jc.parsers.netstat_osx
         raw_output = jc.parsers.netstat_osx.parse(cleandata)
 
