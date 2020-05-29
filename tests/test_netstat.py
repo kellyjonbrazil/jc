@@ -239,21 +239,21 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.fedora32_netstat, quiet=True), self.fedora32_netstat_json)
 
-    def test_netstat_osx_16_4(self):
+    def test_netstat_osx_14_6(self):
         """
-        Test 'netstat' on OSX 16.4
+        Test 'netstat' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat, quiet=True), self.osx_14_6_netstat_json)
 
-    def test_netstat_An_osx_16_4(self):
+    def test_netstat_An_osx_14_6(self):
         """
-        Test 'netstat -An' on OSX 16.4
+        Test 'netstat -An' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_An, quiet=True), self.osx_14_6_netstat_An_json)
 
-    def test_netstat_Abn_osx_16_4(self):
+    def test_netstat_Abn_osx_14_6(self):
         """
-        Test 'netstat -Abn' on OSX 16.4
+        Test 'netstat -Abn' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_Abn, quiet=True), self.osx_14_6_netstat_Abn_json)
 
@@ -293,15 +293,15 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_rnee, quiet=True), self.ubuntu_18_4_netstat_rnee_json)
 
-    def test_netstat_r_osx_16_4(self):
+    def test_netstat_r_osx_14_6(self):
         """
-        Test 'netstat -r' on OSX 16.4
+        Test 'netstat -r' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_r, quiet=True), self.osx_14_6_netstat_r_json)
 
-    def test_netstat_rnl_osx_16_4(self):
+    def test_netstat_rnl_osx_14_6(self):
         """
-        Test 'netstat -rnl' on OSX 16.4
+        Test 'netstat -rnl' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_rnl, quiet=True), self.osx_14_6_netstat_rnl_json)
 
@@ -317,9 +317,9 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_i, quiet=True), self.ubuntu_18_4_netstat_i_json)
 
-    def test_netstat_i_osx_16_4(self):
+    def test_netstat_i_osx_14_6(self):
         """
-        Test 'netstat -i' on OSX 16.4
+        Test 'netstat -i' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_i, quiet=True), self.osx_14_6_netstat_i_json)
 
