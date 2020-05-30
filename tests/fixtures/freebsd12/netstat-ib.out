@@ -1,0 +1,8 @@
+Name    Mtu Network       Address              Ipkts Ierrs Idrop     Ibytes    Opkts Oerrs     Obytes  Coll
+em0    1500 <Link#1>      00:0c:29:1a:4e:3b   372717     0     0  372538087   213821     0  198573339     0
+em0       - fe80::%em0/64 fe80::20c:29ff:fe        0     -     -          0        4     -        264     -
+em0       - 192.168.71.0/ 192.168.71.163       97396     -     -   68178099   175413     -  193957797     -
+lo0   16384 <Link#2>      lo0                     98     0     0      21024       98     0      21024     0
+lo0       - localhost     localhost               25     -     -       4829       25     -       4829     -
+lo0       - fe80::%lo0/64 fe80::1%lo0              0     -     -          0        0     -          0     -
+lo0       - your-net      localhost               73     -     -      16195       73     -      16195     -
