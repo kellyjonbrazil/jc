@@ -56,7 +56,14 @@ def compatibility(mod_name, compatible):
 
         no return, just prints output to STDERR
     """
-    if sys.platform not in compatible:
+    platform_found = False
+
+    for platform in compatible:
+        if platform.startswith(sys.platform):
+            platform_found = True
+            break
+
+    if not platform_found:
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
         warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
