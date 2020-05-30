@@ -37,8 +37,15 @@ def parse_item(headers, entry, kind):
     # fixup udp records with no state field entry
     if kind == 'network' and entry[0].startswith('udp'):
         entry.insert(5, None)
+
     if kind == 'network' and 'socket' in headers and 'udp' in str(entry):
         entry.insert(7, None)
+
+    # fixup -T output on FreeBSD
+    if kind == 'network' and '0_win' in headers and entry[0].startswith('udp'):
+        entry.insert(1, '')
+        entry.insert(1, '')
+        entry.insert(1, '')
 
     # fixup interface records with no address field entry
     if kind == 'interface' and len(entry) == 8:
@@ -120,6 +127,11 @@ def parse_post(raw_data):
                     pretty_flags.append(flag_map[flag])
 
             entry['route_flags_pretty'] = pretty_flags
+
+        # strip whitespace from beginning and end of all string values
+        for item in entry:
+            if isinstance(entry[item], str):
+                entry[item] = entry[item].strip()
 
     return raw_data
 
