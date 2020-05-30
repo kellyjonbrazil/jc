@@ -349,6 +349,9 @@ def process(proc_data):
             "s_bcnt":                 integer,
             "r_bmax":                 integer,
             "s_bmax":                 integer,
+            "rexmit":                 integer,
+            "ooorcv":                 integer,
+            "0_win":                  integer,
             "rexmt":                  float,
             "persist":                float,
             "keep":                   float,
@@ -366,7 +369,7 @@ def process(proc_data):
                     'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
                     'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop', 'ibytes', 'obytes', 'r_mbuf',
                     's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa', 'r_lowa', 's_lowa', 'r_bcnt',
-                    's_bcnt', 'r_bmax', 's_bmax']
+                    's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win']
         for key in int_list:
             if key in entry:
                 try:
@@ -396,11 +399,6 @@ def process(proc_data):
                 entry['foreign_port_num'] = int(entry['foreign_port'])
             except (ValueError):
                 pass
-
-        # strip whitespace from beginning and end of all string values
-        for item in entry:
-            if isinstance(entry[item], str):
-                entry[item] = entry[item].strip()
 
     return proc_data
 
