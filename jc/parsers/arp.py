@@ -58,6 +58,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:f0:98:26",
         "iface": "ens33"
+        "permanent": false,
+        "expires": 1182
       },
       {
         "name": "gateway",
@@ -65,6 +67,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:f7:4a:fc",
         "iface": "ens33"
+        "permanent": false,
+        "expires": 110
       }
     ]
 
@@ -76,6 +80,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:fe:7a:b4",
         "iface": "ens33"
+        "permanent": false,
+        "expires": "1182"
       },
       {
         "name": "_gateway",
@@ -83,6 +89,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:f7:4a:fc",
         "iface": "ens33"
+        "permanent": false,
+        "expires": "110"
       }
     ]
 """
@@ -91,7 +99,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'arp command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -123,7 +131,9 @@ def process(proc_data):
             "hwtype":     string,
             "hwaddress":  string,
             "flags_mask": string,
-            "iface":      string
+            "iface":      string,
+            "permanent":  boolean,
+            "expires":    integer
           }
         ]
     """
@@ -132,6 +142,14 @@ def process(proc_data):
     for entry in proc_data:
         if 'name' in entry and entry['name'] == '?':
             entry['name'] = None
+
+        int_list = ['expires']
+        for key in int_list:
+            if key in entry:
+                try:
+                    entry[key] = int(entry[key])
+                except (ValueError):
+                    entry[key] = None
 
     return proc_data
 
@@ -159,7 +177,7 @@ def parse(data, raw=False, quiet=False):
     if cleandata[-1].startswith('Entries:'):
         cleandata.pop(-1)
 
-    # detect if osx style was used
+    # detect if freebsd/osx style was used
     if cleandata[0][-1] == ']':
         raw_output = []
         for line in cleandata:
@@ -171,6 +189,15 @@ def parse(data, raw=False, quiet=False):
                 'hwaddress': splitline[3],
                 'iface': splitline[5]
             }
+
+            if 'permanent' in splitline:
+                output_line['permanent'] = True
+            else:
+                output_line['permanent'] = False
+
+            if 'expires' in splitline:
+                output_line['expires'] = splitline[-3]
+
             raw_output.append(output_line)
 
         if raw:

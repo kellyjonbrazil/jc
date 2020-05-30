@@ -7,6 +7,8 @@ jc changelog
 - Update netstat parser to change osx_flags field name to unix_flags
 - Update netstat parser to strip whitespace from state field
 - Update route parser to add flags_pretty field
+- Update arp parser to add permanent field (freebsd and osx)
+- Update arp parser to add expires field (freebsd)
 - Fix freebsd compatibility message for df, fstab, mount, ntpq, stat, and uname parsers
 - Fix compatibility message for platforms that include the version number at the end (e.g. freebsd12)
 

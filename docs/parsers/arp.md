@@ -59,6 +59,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:f0:98:26",
         "iface": "ens33"
+        "permanent": false,
+        "expires": 1182
       },
       {
         "name": "gateway",
@@ -66,6 +68,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:f7:4a:fc",
         "iface": "ens33"
+        "permanent": false,
+        "expires": 110
       }
     ]
 
@@ -77,6 +81,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:fe:7a:b4",
         "iface": "ens33"
+        "permanent": false,
+        "expires": "1182"
       },
       {
         "name": "_gateway",
@@ -84,6 +90,8 @@ Examples:
         "hwtype": "ether",
         "hwaddress": "00:50:56:f7:4a:fc",
         "iface": "ens33"
+        "permanent": false,
+        "expires": "110"
       }
     ]
 
@@ -114,7 +122,9 @@ Returns:
         "hwtype":     string,
         "hwaddress":  string,
         "flags_mask": string,
-        "iface":      string
+        "iface":      string,
+        "permanent":  boolean,
+        "expires":    integer
       }
     ]
 
