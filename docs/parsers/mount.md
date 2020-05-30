@@ -7,7 +7,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin'
+    'linux', 'darwin', 'freebsd'
 
 Example:
 
