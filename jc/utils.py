@@ -59,7 +59,7 @@ def compatibility(mod_name, compatible):
     platform_found = False
 
     for platform in compatible:
-        if platform.startswith(sys.platform):
+        if sys.platform.startswith(platform):
             platform_found = True
             break
 
