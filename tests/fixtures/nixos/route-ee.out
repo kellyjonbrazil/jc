@@ -1,0 +1,4 @@
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface    MSS   Window irtt
+default         _gateway        0.0.0.0         UG    202    0        0 ens33    0     0      0
+192.168.71.0    0.0.0.0         255.255.255.0   U     202    0        0 ens33    0     0      0

@@ -22,6 +22,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route-vn.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_route_vn = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.out'), 'r', encoding='utf-8') as f:
+            self.nixos_route_ee = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_route_json = json.loads(f.read())
@@ -34,6 +37,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route-vn.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_route_vn_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.json'), 'r', encoding='utf-8') as f:
+            self.nixos_route_ee_json = json.loads(f.read())
 
     def test_route_centos_7_7(self):
         """
@@ -58,6 +64,12 @@ class MyTests(unittest.TestCase):
         Test 'route -vn' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.route.parse(self.ubuntu_18_4_route_vn, quiet=True), self.ubuntu_18_4_route_vn_json)
+
+    def test_route_ee_nixos(self):
+        """
+        Test 'route -ee' on NixOS
+        """
+        self.assertEqual(jc.parsers.route.parse(self.nixos_route_ee, quiet=True), self.nixos_route_ee_json)
 
 
 if __name__ == '__main__':
