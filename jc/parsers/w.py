@@ -83,7 +83,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'w command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -173,6 +173,12 @@ def parse(data, raw=False, quiet=False):
 
             output_line = dict(zip(headers, temp_line))
             raw_output.append(output_line)
+
+    # strip whitespace from beginning and end of all string values
+    for row in raw_output:
+        for item in row:
+            if isinstance(row[item], str):
+                row[item] = row[item].strip()
 
     if raw:
         return raw_output
