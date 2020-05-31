@@ -15,69 +15,51 @@ Examples:
     [
       {
         "destination": "default",
-        "gateway": "gateway",
+        "gateway": "_gateway",
         "genmask": "0.0.0.0",
         "flags": "UG",
-        "metric": 100,
+        "metric": 202,
         "ref": 0,
         "use": 0,
         "iface": "ens33",
         "mss": 0,
         "window": 0,
-        "irtt": 0
-      },
-      {
-        "destination": "172.17.0.0",
-        "gateway": "0.0.0.0",
-        "genmask": "255.255.0.0",
-        "flags": "U",
-        "metric": 0,
-        "ref": 0,
-        "use": 0,
-        "iface": "docker",
-        "mss": 0,
-        "window": 0,
-        "irtt": 0
+        "irtt": 0,
+        "flags_pretty": [
+          "UP",
+          "GATEWAY"
+        ]
       },
       {
         "destination": "192.168.71.0",
         "gateway": "0.0.0.0",
         "genmask": "255.255.255.0",
         "flags": "U",
-        "metric": 100,
+        "metric": 202,
         "ref": 0,
         "use": 0,
         "iface": "ens33",
         "mss": 0,
         "window": 0,
-        "irtt": 0
+        "irtt": 0,
+        "flags_pretty": [
+          "UP"
+        ]
       }
     ]
+
 
     $ route -ee | jc --route -p -r
     [
       {
         "destination": "default",
-        "gateway": "gateway",
+        "gateway": "_gateway",
         "genmask": "0.0.0.0",
         "flags": "UG",
-        "metric": "100",
+        "metric": "202",
         "ref": "0",
         "use": "0",
         "iface": "ens33",
-        "mss": "0",
-        "window": "0",
-        "irtt": "0"
-      },
-      {
-        "destination": "172.17.0.0",
-        "gateway": "0.0.0.0",
-        "genmask": "255.255.0.0",
-        "flags": "U",
-        "metric": "0",
-        "ref": "0",
-        "use": "0",
-        "iface": "docker",
         "mss": "0",
         "window": "0",
         "irtt": "0"
@@ -87,7 +69,7 @@ Examples:
         "gateway": "0.0.0.0",
         "genmask": "255.255.255.0",
         "flags": "U",
-        "metric": "100",
+        "metric": "202",
         "ref": "0",
         "use": "0",
         "iface": "ens33",
@@ -96,6 +78,7 @@ Examples:
         "irtt": "0"
       }
     ]
+
 
 ## info
 ```python

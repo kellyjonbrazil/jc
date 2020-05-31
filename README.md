@@ -1699,7 +1699,11 @@ $ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
     "window": 0,
     "irtt": 0,
     "iface": "ens33",
-    "kind": "route"
+    "kind": "route",
+    "route_flags_pretty": [
+      "UP",
+      "GATEWAY"
+    ]
   },
   {
     "destination": "172.17.0.0",
@@ -1710,7 +1714,10 @@ $ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
     "window": 0,
     "irtt": 0,
     "iface": "docker0",
-    "kind": "route"
+    "kind": "route",
+    "route_flags_pretty": [
+      "UP"
+    ]
   },
   {
     "destination": "192.168.71.0",
@@ -1721,7 +1728,10 @@ $ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
     "window": 0,
     "irtt": 0,
     "iface": "ens33",
-    "kind": "route"
+    "kind": "route",
+    "route_flags_pretty": [
+      "UP"
+    ]
   }
 ]
 
@@ -1961,42 +1971,36 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 [
   {
     "destination": "default",
-    "gateway": "gateway",
+    "gateway": "_gateway",
     "genmask": "0.0.0.0",
     "flags": "UG",
-    "metric": 100,
+    "metric": 202,
     "ref": 0,
     "use": 0,
     "iface": "ens33",
     "mss": 0,
     "window": 0,
-    "irtt": 0
-  },
-  {
-    "destination": "172.17.0.0",
-    "gateway": "0.0.0.0",
-    "genmask": "255.255.0.0",
-    "flags": "U",
-    "metric": 0,
-    "ref": 0,
-    "use": 0,
-    "iface": "docker",
-    "mss": 0,
-    "window": 0,
-    "irtt": 0
+    "irtt": 0,
+    "flags_pretty": [
+      "UP",
+      "GATEWAY"
+    ]
   },
   {
     "destination": "192.168.71.0",
     "gateway": "0.0.0.0",
     "genmask": "255.255.255.0",
     "flags": "U",
-    "metric": 100,
+    "metric": 202,
     "ref": 0,
     "use": 0,
     "iface": "ens33",
     "mss": 0,
     "window": 0,
-    "irtt": 0
+    "irtt": 0,
+    "flags_pretty": [
+      "UP"
+    ]
   }
 ]
 ```

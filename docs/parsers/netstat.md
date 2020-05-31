@@ -177,7 +177,11 @@ Examples:
         "window": 0,
         "irtt": 0,
         "iface": "ens33",
-        "kind": "route"
+        "kind": "route",
+        "route_flags_pretty": [
+          "UP",
+          "GATEWAY"
+        ]
       },
       {
         "destination": "172.17.0.0",
@@ -188,7 +192,10 @@ Examples:
         "window": 0,
         "irtt": 0,
         "iface": "docker0",
-        "kind": "route"
+        "kind": "route",
+        "route_flags_pretty": [
+          "UP"
+        ]
       },
       {
         "destination": "192.168.71.0",
@@ -199,7 +206,10 @@ Examples:
         "window": 0,
         "irtt": 0,
         "iface": "ens33",
-        "kind": "route"
+        "kind": "route",
+        "route_flags_pretty": [
+          "UP"
+        ]
       }
     ]
 
