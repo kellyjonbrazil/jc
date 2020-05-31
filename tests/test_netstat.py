@@ -56,6 +56,24 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.out'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_Abn = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aa.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_Aa = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_an = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AanP.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_AanP = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AaT.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_AaT = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aax.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_Aax = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_aT = f.read()
+
         # netstat -r
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_r = f.read()
@@ -81,6 +99,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.out'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_rnl = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-r.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_r = f.read()
+
         # netstat -i
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_i = f.read()
@@ -90,6 +111,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.out'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_i = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-i.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_i = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_ib = f.read()
 
         #
         # output
@@ -138,6 +165,24 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.json'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_Abn_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aa.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_Aa_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AanP.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_AanP_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AaT.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_AaT_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aax.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_Aax_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_aT_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_an_json = json.loads(f.read())
+
         # netsat -r
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_r_json = json.loads(f.read())
@@ -163,6 +208,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.json'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_rnl_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-r.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_r_json = json.loads(f.read())
+
         # netstat -i
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_i_json = json.loads(f.read())
@@ -172,6 +220,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.json'), 'r', encoding='utf-8') as f:
             self.osx_14_6_netstat_i_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-i.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_i_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_netstat_ib_json = json.loads(f.read())
 
     def test_netstat_centos_7_7(self):
         """
@@ -239,23 +293,59 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.fedora32_netstat, quiet=True), self.fedora32_netstat_json)
 
-    def test_netstat_osx_16_4(self):
+    def test_netstat_osx_14_6(self):
         """
-        Test 'netstat' on OSX 16.4
+        Test 'netstat' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat, quiet=True), self.osx_14_6_netstat_json)
 
-    def test_netstat_An_osx_16_4(self):
+    def test_netstat_An_osx_14_6(self):
         """
-        Test 'netstat -An' on OSX 16.4
+        Test 'netstat -An' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_An, quiet=True), self.osx_14_6_netstat_An_json)
 
-    def test_netstat_Abn_osx_16_4(self):
+    def test_netstat_Abn_osx_14_6(self):
         """
-        Test 'netstat -Abn' on OSX 16.4
+        Test 'netstat -Abn' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_Abn, quiet=True), self.osx_14_6_netstat_Abn_json)
+
+    def test_netstat_Aa_freebsd12(self):
+        """
+        Test 'netstat -Aa' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_Aa, quiet=True), self.freebsd12_netstat_Aa_json)
+
+    def test_netstat_AanP_freebsd12(self):
+        """
+        Test 'netstat -AanP' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_AanP, quiet=True), self.freebsd12_netstat_AanP_json)
+
+    def test_netstat_AaT_freebsd12(self):
+        """
+        Test 'netstat -AaT' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_AaT, quiet=True), self.freebsd12_netstat_AaT_json)
+
+    def test_netstat_Aax_freebsd12(self):
+        """
+        Test 'netstat -Aax' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_Aax, quiet=True), self.freebsd12_netstat_Aax_json)
+
+    def test_netstat_aT_freebsd12(self):
+        """
+        Test 'netstat -aT' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_aT, quiet=True), self.freebsd12_netstat_aT_json)
+
+    def test_netstat_an_freebsd12(self):
+        """
+        Test 'netstat -an' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_an, quiet=True), self.freebsd12_netstat_an_json)
 
     def test_netstat_r_centos_7_7(self):
         """
@@ -293,17 +383,23 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_rnee, quiet=True), self.ubuntu_18_4_netstat_rnee_json)
 
-    def test_netstat_r_osx_16_4(self):
+    def test_netstat_r_osx_14_6(self):
         """
-        Test 'netstat -r' on OSX 16.4
+        Test 'netstat -r' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_r, quiet=True), self.osx_14_6_netstat_r_json)
 
-    def test_netstat_rnl_osx_16_4(self):
+    def test_netstat_rnl_osx_14_6(self):
         """
-        Test 'netstat -rnl' on OSX 16.4
+        Test 'netstat -rnl' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_rnl, quiet=True), self.osx_14_6_netstat_rnl_json)
+
+    def test_netstat_r_freebsd12(self):
+        """
+        Test 'netstat -r' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_r, quiet=True), self.freebsd12_netstat_r_json)
 
     def test_netstat_i_centos_7_7(self):
         """
@@ -317,11 +413,23 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_i, quiet=True), self.ubuntu_18_4_netstat_i_json)
 
-    def test_netstat_i_osx_16_4(self):
+    def test_netstat_i_osx_14_6(self):
         """
-        Test 'netstat -i' on OSX 16.4
+        Test 'netstat -i' on OSX 14.6
         """
         self.assertEqual(jc.parsers.netstat.parse(self.osx_14_6_netstat_i, quiet=True), self.osx_14_6_netstat_i_json)
+
+    def test_netstat_i_freebsd12(self):
+        """
+        Test 'netstat -i' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_i, quiet=True), self.freebsd12_netstat_i_json)
+
+    def test_netstat_ib_freebsd12(self):
+        """
+        Test 'netstat -ib' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_ib, quiet=True), self.freebsd12_netstat_ib_json)
 
 
 if __name__ == '__main__':

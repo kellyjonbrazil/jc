@@ -34,6 +34,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/last.out'), 'r', encoding='utf-8') as f:
             self.fedora32_last = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_last = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_last_json = json.loads(f.read())
@@ -58,6 +61,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/last.json'), 'r', encoding='utf-8') as f:
             self.fedora32_last_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_last_json = json.loads(f.read())
 
     def test_last_centos_7_7(self):
         """
@@ -106,6 +112,12 @@ class MyTests(unittest.TestCase):
         Test plain 'last' on Fedora32
         """
         self.assertEqual(jc.parsers.last.parse(self.fedora32_last, quiet=True), self.fedora32_last_json)
+
+    def test_last_freebsd12(self):
+        """
+        Test plain 'last' on FreeBSD12
+        """
+        self.assertEqual(jc.parsers.last.parse(self.freebsd12_last, quiet=True), self.freebsd12_last_json)
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ Caveats:
 
 Compatibility:
 
-    'linux', 'darwin'
+    'linux', 'darwin', 'freebsd'
 
 Examples:
 
@@ -237,13 +237,13 @@ Examples:
 
 
 class info():
-    version = '1.5'
+    version = '1.6'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['netstat']
 
 
@@ -264,73 +264,100 @@ def process(proc_data):
 
         [
           {
-            "proto":             string,
-            "recv_q":            integer,
-            "send_q":            integer,
-            "transport_protocol" string,
-            "network_protocol":  string,
-            "local_address":     string,
-            "local_port":        string,
-            "local_port_num":    integer,
-            "foreign_address":   string,
-            "foreign_port":      string,
-            "foreign_port_num":  integer,
-            "state":             string,
-            "program_name":      string,
-            "pid":               integer,
-            "user":              string,
-            "security_context":  string,
-            "refcnt":            integer,
-            "flags":             string,
-            "type":              string,
-            "inode":             integer,
-            "path":              string,
-            "kind":              string,
-            "address":           string,
-            "osx_inode":         string,
-            "conn":              string,
-            "refs":              string,
-            "nextref":           string,
-            "name":              string,
-            "unit":              integer,
-            "vendor":            integer,
-            "class":             integer,
-            "subcla":            integer,
-            "osx_flags":         integer,
-            "pcbcount":          integer,
-            "rcvbuf":            integer,
-            "sndbuf":            integer,
-            "rxbytes":           integer,
-            "txbytes":           integer,
-            "destination":       string,
-            "gateway":           string,
-            "route_flags":       string,
-            "route_refs":        integer,
-            "use":               integer,
-            "mtu":               integer,
-            "expire":            string,
-            "genmask":           string,
-            "mss":               integer,
-            "window":            integer,
-            "irtt":              integer,
-            "iface":             string,
-            "metric":            integer,
-            "network":           string,
-            "address":           string,
-            "ipkts":             integer,    - = null
-            "ierrs":             integer,    - = null
-            "opkts":             integer,    - = null
-            "oerrs":             integer,    - = null
-            "coll":              integer,    - = null
-            "rx_ok":             integer,
-            "rx_err":            integer,
-            "rx_drp":            integer,
-            "rx_ovr":            integer,
-            "tx_ok":             integer,
-            "tx_err":            integer,
-            "tx_drp":            integer,
-            "tx_ovr":            integer,
-            "flg":               string
+            "proto":                  string,
+            "recv_q":                 integer,
+            "send_q":                 integer,
+            "transport_protocol"      string,
+            "network_protocol":       string,
+            "local_address":          string,
+            "local_port":             string,
+            "local_port_num":         integer,
+            "foreign_address":        string,
+            "foreign_port":           string,
+            "foreign_port_num":       integer,
+            "state":                  string,
+            "program_name":           string,
+            "pid":                    integer,
+            "user":                   string,
+            "security_context":       string,
+            "refcnt":                 integer,
+            "flags":                  string,
+            "type":                   string,
+            "inode":                  integer,
+            "path":                   string,
+            "kind":                   string,
+            "address":                string,
+            "unix_inode":             string,
+            "conn":                   string,
+            "refs":                   string,
+            "nextref":                string,
+            "name":                   string,
+            "unit":                   integer,
+            "vendor":                 integer,
+            "class":                  integer,
+            "subcla":                 integer,
+            "unix_flags":             integer,
+            "pcbcount":               integer,
+            "rcvbuf":                 integer,
+            "sndbuf":                 integer,
+            "rxbytes":                integer,
+            "txbytes":                integer,
+            "destination":            string,
+            "gateway":                string,
+            "route_flags":            string,
+            "route_flags_pretty": [
+                                      string,
+            ]
+            "route_refs":             integer,
+            "use":                    integer,
+            "mtu":                    integer,
+            "expire":                 string,
+            "genmask":                string,
+            "mss":                    integer,
+            "window":                 integer,
+            "irtt":                   integer,
+            "iface":                  string,
+            "metric":                 integer,
+            "network":                string,
+            "address":                string,
+            "ipkts":                  integer,    - = null
+            "ierrs":                  integer,    - = null
+            "idrop":                  integer,    - = null
+            "opkts":                  integer,    - = null
+            "oerrs":                  integer,    - = null
+            "coll":                   integer,    - = null
+            "rx_ok":                  integer,
+            "rx_err":                 integer,
+            "rx_drp":                 integer,
+            "rx_ovr":                 integer,
+            "tx_ok":                  integer,
+            "tx_err":                 integer,
+            "tx_drp":                 integer,
+            "tx_ovr":                 integer,
+            "flg":                    string,
+            "ibytes":                 integer,
+            "obytes":                 integer,
+            "r_mbuf":                 integer,
+            "s_mbuf":                 integer,
+            "r_clus":                 integer,
+            "s_clus":                 integer,
+            "r_hiwa":                 integer,
+            "s_hiwa":                 integer,
+            "r_lowa":                 integer,
+            "s_lowa":                 integer,
+            "r_bcnt":                 integer,
+            "s_bcnt":                 integer,
+            "r_bmax":                 integer,
+            "s_bmax":                 integer,
+            "rexmit":                 integer,
+            "ooorcv":                 integer,
+            "0_win":                  integer,
+            "rexmt":                  float,
+            "persist":                float,
+            "keep":                   float,
+            "2msl":                   float,
+            "delack":                 float,
+            "rcvtime":                float,
           }
         ]
     """
@@ -340,12 +367,24 @@ def process(proc_data):
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
                     'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
                     'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
-                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr']
+                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop', 'ibytes', 'obytes', 'r_mbuf',
+                    's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa', 'r_lowa', 's_lowa', 'r_bcnt',
+                    's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win']
         for key in int_list:
             if key in entry:
                 try:
                     key_int = int(entry[key])
                     entry[key] = key_int
+                except (ValueError):
+                    entry[key] = None
+
+        # float changes
+        float_list = ['rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime']
+        for key in float_list:
+            if key in entry:
+                try:
+                    key_float = float(entry[key])
+                    entry[key] = key_float
                 except (ValueError):
                     entry[key] = None
 
@@ -386,8 +425,8 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, cleandata))
     raw_output = []
 
-    # check for OSX vs Linux
-    # is this from OSX?
+    # check for FreeBSD/OSX vs Linux
+    # is this from FreeBSD/OSX?
     if cleandata[0] == 'Active Internet connections' \
        or cleandata[0] == 'Active Internet connections (including servers)' \
        or cleandata[0] == 'Active Multipath Internet connections' \
@@ -396,9 +435,10 @@ def parse(data, raw=False, quiet=False):
        or cleandata[0] == 'Active kernel event sockets' \
        or cleandata[0] == 'Active kernel control sockets' \
        or cleandata[0] == 'Routing tables' \
-       or cleandata[0] == 'Name  Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll':
-        import jc.parsers.netstat_osx
-        raw_output = jc.parsers.netstat_osx.parse(cleandata)
+       or cleandata[0].startswith('Name  '):
+
+        import jc.parsers.netstat_freebsd_osx
+        raw_output = jc.parsers.netstat_freebsd_osx.parse(cleandata)
 
     # use linux parser
     else:

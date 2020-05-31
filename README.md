@@ -205,6 +205,8 @@ Tested on:
 - Fedora32
 - OSX 10.11.6
 - OSX 10.14.6
+- NixOS
+- FreeBSD12
 
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
@@ -314,21 +316,25 @@ $ arp -a | jc --arp -p          # or:  jc -p arp -a
     "address": "192.168.71.1",
     "hwtype": "ether",
     "hwaddress": "00:50:56:c0:00:08",
-    "iface": "ens33"
+    "iface": "ens33",
+    "permanent": true
   },
   {
     "name": null,
     "address": "192.168.71.254",
     "hwtype": "ether",
     "hwaddress": "00:50:56:fe:7a:b4",
-    "iface": "ens33"
+    "iface": "ens33",
+    "permanent": true
   },
   {
     "name": "_gateway",
     "address": "192.168.71.2",
     "hwtype": "ether",
     "hwaddress": "00:50:56:f7:4a:fc",
-    "iface": "ens33"
+    "iface": "ens33",
+    "permanent": false,
+    "expires": 110
   }
 ]
 ```

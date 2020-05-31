@@ -1,0 +1,5 @@
+ 23:50:09 up 10 min,  3 users,  load average: 0.00, 0.03, 0.01
+USER     TTY        LOGIN@   IDLE   JCPU   PCPU WHAT
+kbrazil  tty1      23:40    0.00s  0.18s  0.07s ssh localhost
+kbrazil  pts/0     23:43    1:37   0.05s  0.05s -bash
+kbrazil  pts/1     23:46    0.00s  0.02s  0.00s sshd: kbrazil [priv]                                                                         

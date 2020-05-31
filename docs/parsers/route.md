@@ -119,17 +119,20 @@ Returns:
 
     [
       {
-        "destination":  string,
-        "gateway":      string,
-        "genmask":      string,
-        "flags":        string,
-        "metric":       integer,
-        "ref":          integer,
-        "use":          integer,
-        "mss":          integer,
-        "window":       integer,
-        "irtt":         integer,
-        "iface":        string
+        "destination":     string,
+        "gateway":         string,
+        "genmask":         string,
+        "flags":           string,
+        "flags_pretty": [
+                           string,
+        ]
+        "metric":          integer,
+        "ref":             integer,
+        "use":             integer,
+        "mss":             integer,
+        "window":          integer,
+        "irtt":            integer,
+        "iface":           string
       }
     ]
 

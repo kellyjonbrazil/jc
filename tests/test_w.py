@@ -22,6 +22,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/w.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_w = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/w.out'), 'r', encoding='utf-8') as f:
+            self.nixos_w = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/w.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_w_json = json.loads(f.read())
@@ -30,10 +33,13 @@ class MyTests(unittest.TestCase):
             self.ubuntu_18_4_w_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/w.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_json = json.loads(f.read())
+            self.osx_10_11_6_w_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/w.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_json = json.loads(f.read())
+            self.osx_10_14_6_w_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/w.json'), 'r', encoding='utf-8') as f:
+            self.nixos_w_json = json.loads(f.read())
 
     def test_w_centos_7_7(self):
         """
@@ -51,13 +57,19 @@ class MyTests(unittest.TestCase):
         """
         Test 'w' on OSX 10.11.6
         """
-        self.assertEqual(jc.parsers.w.parse(self.osx_10_11_6_w, quiet=True), self.osx_10_11_6_json)
+        self.assertEqual(jc.parsers.w.parse(self.osx_10_11_6_w, quiet=True), self.osx_10_11_6_w_json)
 
     def test_w_osx_10_14_6(self):
         """
         Test 'w' on OSX 10.14.6
         """
-        self.assertEqual(jc.parsers.w.parse(self.osx_10_14_6_w, quiet=True), self.osx_10_14_6_json)
+        self.assertEqual(jc.parsers.w.parse(self.osx_10_14_6_w, quiet=True), self.osx_10_14_6_w_json)
+
+    def test_w_nixos(self):
+        """
+        Test 'w' on nixos
+        """
+        self.assertEqual(jc.parsers.w.parse(self.nixos_w, quiet=True), self.nixos_w_json)
 
 
 if __name__ == '__main__':

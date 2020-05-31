@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility OSX netstat Parser"""
+"""jc - JSON CLI output utility FreeBSD and OSX netstat Parser"""
 
 
 def normalize_headers(header):
@@ -6,8 +6,8 @@ def normalize_headers(header):
     header = header.replace('local address', 'local_address')
     header = header.replace('foreign address', 'foreign_address')
     header = header.replace('(state)', 'state')
-    header = header.replace('inode', 'osx_inode')
-    header = header.replace('flags', 'osx_flags')
+    header = header.replace('inode', 'unix_inode')
+    header = header.replace('flags', 'unix_flags')
     header = header.replace('-', '_')
 
     return header
@@ -37,8 +37,15 @@ def parse_item(headers, entry, kind):
     # fixup udp records with no state field entry
     if kind == 'network' and entry[0].startswith('udp'):
         entry.insert(5, None)
+
     if kind == 'network' and 'socket' in headers and 'udp' in str(entry):
         entry.insert(7, None)
+
+    # fixup -T output on FreeBSD
+    if kind == 'network' and '0_win' in headers and entry[0].startswith('udp'):
+        entry.insert(1, '')
+        entry.insert(1, '')
+        entry.insert(1, '')
 
     # fixup interface records with no address field entry
     if kind == 'interface' and len(entry) == 8:
@@ -85,6 +92,46 @@ def parse_post(raw_data):
                     entry['network_protocol'] = 'ipv6'
                 else:
                     entry['network_protocol'] = 'ipv4'
+
+        # add route_flags_pretty field
+        if 'route_flags' in entry:
+            flag_map = {
+                '1': 'PROTO1',
+                '2': 'PROTO2',
+                '3': 'PROTO3',
+                'B': 'BLACKHOLE',
+                'b': 'BROADCAST',
+                'C': 'CLONING',
+                'c': 'PRCLONING',
+                'D': 'DYNAMIC',
+                'G': 'GATEWAY',
+                'H': 'HOST',
+                'I': 'IFSCOPE',
+                'i': 'IFREF',
+                'L': 'LLINFO',
+                'M': 'MODIFIED',
+                'm': 'MULTICAST',
+                'R': 'REJECT',
+                'r': 'ROUTER',
+                'S': 'STATIC',
+                'U': 'UP',
+                'W': 'WASCLONED',
+                'X': 'XRESOLVE',
+                'Y': 'PROXY',
+            }
+
+            pretty_flags = []
+
+            for flag in entry['route_flags']:
+                if flag in flag_map:
+                    pretty_flags.append(flag_map[flag])
+
+            entry['route_flags_pretty'] = pretty_flags
+
+        # strip whitespace from beginning and end of all string values
+        for item in entry:
+            if isinstance(entry[item], str):
+                entry[item] = entry[item].strip()
 
     return raw_data
 
@@ -135,7 +182,7 @@ def parse(cleandata):
             interface_table = False
             continue
 
-        if line.startswith('Active LOCAL (UNIX) domain sockets'):
+        if line.startswith('Active LOCAL (UNIX) domain sockets') or line.startswith('Active UNIX domain sockets'):
             network = False
             multipath = False
             socket = True
@@ -190,7 +237,7 @@ def parse(cleandata):
             interface_table = False
             continue
 
-        if line.startswith('Name  Mtu '):
+        if line.startswith('Name  '):
             network = False
             multipath = False
             socket = False
@@ -202,7 +249,7 @@ def parse(cleandata):
             # don't continue since there is no real header row for this table
 
         # get headers
-        if network and (line.startswith('Socket ') or line.startswith('Proto ')):
+        if network and (line.startswith('Socket ') or line.startswith('Proto ') or line.startswith('Tcpcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
             continue
@@ -232,7 +279,7 @@ def parse(cleandata):
             headers = header_text.split()
             continue
 
-        if interface_table and line.startswith('Name  Mtu '):
+        if interface_table and line.startswith('Name  '):
             header_text = normalize_interface_headers(line)
             headers = header_text.split()
             continue

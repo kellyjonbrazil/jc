@@ -1,5 +1,21 @@
 jc changelog
 
+202006xx v1.11.2
+- Update netstat parser to add freebsd support
+- Update netstat parser to add route_flags_pretty field
+- Update netstat parser to change osx_inode field name to unix_inode
+- Update netstat parser to change osx_flags field name to unix_flags
+- Update netstat parser to strip whitespace from state field
+- Update route parser to add flags_pretty field
+- Update arp parser to add permanent field (freebsd and osx)
+- Update arp parser to add expires field (freebsd)
+- Update w parser to strip whitespace from what field
+- Update last parser to fix FreeBSD issues
+- Update stat parser to change osx_flags field name to unix_flags
+- Update stat parser to add osx_device field for freebsd and osx
+- Fix freebsd compatibility message for df, fstab, mount, ntpq, stat, and uname parsers
+- Fix compatibility message for platforms that include the version number at the end (e.g. freebsd12)
+
 20200523 v1.11.1
 - Update stat command parser to change osx_flags field to string
 

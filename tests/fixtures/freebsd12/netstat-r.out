@@ -1,0 +1,20 @@
+Routing tables
+
+Internet:
+Destination        Gateway            Flags     Netif Expire
+default            192.168.71.2       UGS         em0
+localhost          link#2             UH          lo0
+192.168.71.0/24    link#1             U           em0
+192.168.71.163     link#1             UHS         lo0
+
+Internet6:
+Destination        Gateway            Flags     Netif Expire
+::/96              localhost          UGRS        lo0
+localhost          link#2             UH          lo0
+::ffff:0.0.0.0/96  localhost          UGRS        lo0
+fe80::/10          localhost          UGRS        lo0
+fe80::%em0/64      link#1             U           em0
+fe80::20c:29ff:fe1 link#1             UHS         lo0
+fe80::%lo0/64      link#2             U           lo0
+fe80::1%lo0        link#2             UHS         lo0
+ff02::/16          localhost          UGRS        lo0

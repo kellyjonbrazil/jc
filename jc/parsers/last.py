@@ -72,7 +72,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'last and lastb command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,6 +110,9 @@ def process(proc_data):
         ]
     """
     for entry in proc_data:
+        if 'user' in entry and entry['user'] == 'boot_time':
+            entry['user'] = 'boot time'
+
         if 'tty' in entry and entry['tty'] == '~':
             entry['tty'] = None
 
@@ -155,16 +158,22 @@ def parse(data, raw=False, quiet=False):
         for entry in cleandata:
             output_line = {}
 
-            if entry.startswith('wtmp begins ') or entry.startswith('btmp begins '):
+            if entry.startswith('wtmp begins ') or entry.startswith('btmp begins ') or entry.startswith('utx.log begins '):
                 continue
 
             entry = entry.replace('system boot', 'system_boot')
+            entry = entry.replace('boot time', 'boot_time')
             entry = entry.replace('  still logged in', '- still_logged_in')
             entry = entry.replace('  gone - no logout', '- gone_-_no_logout')
 
             linedata = entry.split()
             if re.match(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]', ' '.join(linedata[2:4])):
                 linedata.insert(2, '-')
+
+            # freebsd fix
+            if linedata[0] == 'boot_time':
+                linedata.insert(1, '-')
+                linedata.insert(1, '~')
 
             output_line['user'] = linedata[0]
             output_line['tty'] = linedata[1]
