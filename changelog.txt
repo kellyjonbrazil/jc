@@ -10,6 +10,7 @@ jc changelog
 - Update arp parser to add permanent field (freebsd and osx)
 - Update arp parser to add expires field (freebsd)
 - Update w parser to strip whitespace from what field
+- Update last parser to fix FreeBSD issues
 - Fix freebsd compatibility message for df, fstab, mount, ntpq, stat, and uname parsers
 - Fix compatibility message for platforms that include the version number at the end (e.g. freebsd12)
 
