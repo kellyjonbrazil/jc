@@ -1,8 +1,11 @@
 """jc - JSON CLI output utility
 JC cli module
 """
+import appdirs
 import sys
 import os
+import os.path
+import re
 import shlex
 import importlib
 import textwrap
@@ -78,6 +81,20 @@ parsers = [
     'xml',
     'yaml'
 ]
+
+# List of custom or override parsers.
+# Allow any <user_data_dir>/jc/jcparsers/*.py
+local_parsers = []
+data_dir = appdirs.user_data_dir("jc", "jc")
+local_parsers_dir = os.path.join(data_dir, "jcparsers")
+if os.path.isdir(local_parsers_dir):
+    sys.path.append(data_dir)
+    for name in os.listdir(local_parsers_dir):
+        if re.match(r'\w+\.py', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
+            plugin_name = name[0:-3]
+            local_parsers.append(plugin_name)
+            if plugin_name not in parsers:
+                parsers.append(plugin_name)
 
 
 def set_env_colors():
@@ -159,8 +176,9 @@ def parser_mod_shortname(parser):
 
 def parser_module(parser):
     """import the module just in time and return the module object"""
-    importlib.import_module('jc.parsers.' + parser_mod_shortname(parser))
-    return getattr(jc.parsers, parser_mod_shortname(parser))
+    shortname = parser_mod_shortname(parser)
+    path = ('jcparsers.' if shortname in local_parsers else 'jc.parsers.')
+    return importlib.import_module(path + shortname)
 
 
 def parsers_text(indent=0, pad=0):
