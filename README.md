@@ -210,7 +210,7 @@ Tested on:
 
 
 ## Custom Parsers
-Custom local plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
+Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
 
 - Linux: `/home/*myname*/.local/jc/jcparsers`
 - macOS: `/Users/*myname*/Library/Application Support/jc/jcparsers`
