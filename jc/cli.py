@@ -140,10 +140,10 @@ def set_env_colors():
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
     return {
-        Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else f'bold ansiblue',   # key names
-        Keyword: f'ansi{color_list[1]}' if not color_list[1] == 'default' else f'ansibrightblack',  # true, false, null
-        Number: f'ansi{color_list[2]}' if not color_list[2] == 'default' else f'ansimagenta',       # numbers
-        String: f'ansi{color_list[3]}' if not color_list[3] == 'default' else f'ansigreen'          # strings
+        Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else 'bold ansiblue',   # key names
+        Keyword: f'ansi{color_list[1]}' if not color_list[1] == 'default' else 'ansibrightblack',       # true, false, null
+        Number: f'ansi{color_list[2]}' if not color_list[2] == 'default' else 'ansimagenta',            # numbers
+        String: f'ansi{color_list[3]}' if not color_list[3] == 'default' else 'ansigreen'               # strings
     }
 
 
@@ -264,7 +264,7 @@ def helptext(message):
 
 
 def json_out(data, pretty=False, mono=False, piped_out=False):
-     # set colors
+    # set colors
     class JcStyle(Style):
         styles = set_env_colors()
 
