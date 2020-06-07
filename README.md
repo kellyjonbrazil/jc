@@ -226,12 +226,12 @@ Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
 
 ## Acknowledgments
 - Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
-- CI automation and code optimizations from https://github.com/philippeitis
-- `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
-- `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
-- `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
-- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
-- Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
+- CI automation and code optimizations by [philippeitis](https://github.com/philippeitis)
+- [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module by KnightWhoSayNi
+- [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
+- [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van der Neut
+- Parsing [code](https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501) from Conor Heine adapted for some parsers
+- Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
 ## Examples
 ### airport -I
