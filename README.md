@@ -208,6 +208,13 @@ Tested on:
 - NixOS
 - FreeBSD12
 
+
+## Custom Parsers
+Custom local plugins may be placed in a "jc/jcparsers" folder in your local "App data directory" (For example, "/home/*myname*/.local/jc/jcparsers" on Linux, "/Users/*myname*/Library/Application Support/jc/jcparsers" on Mac OS X, or "C:\Users\*myname*\AppData\Local\jc\jc\jcparsers" on Windows.
+
+Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder. Local plugin file names must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+
+
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
 
