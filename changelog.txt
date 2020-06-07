@@ -1,5 +1,8 @@
 jc changelog
 
+20200xxxx v1.12.0
+- Add local parser plugin feature (contributed by Dean Serenevy)
+
 20200530 v1.11.2
 - Update netstat parser to add freebsd support
 - Update netstat parser to add route_flags_pretty field
