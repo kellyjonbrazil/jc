@@ -225,7 +225,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
 
 ## Acknowledgments
-- Local parser plugin feature contributed by https://github.com/duelafn
+- Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
 - CI automation and code optimizations from https://github.com/philippeitis
 - `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
 - `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
