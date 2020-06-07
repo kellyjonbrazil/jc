@@ -10,7 +10,6 @@ setuptools.setup(
     author_email='kellyjonbrazil@gmail.com',
     description='Converts the output of popular command-line tools and file-types to JSON.',
     install_requires=[
-        'appdirs>=1.4.0',
         'ruamel.yaml>=0.15.0',
         'xmltodict>=0.12.0',
         'Pygments>=2.4.2'

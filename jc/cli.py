@@ -1,7 +1,7 @@
 """jc - JSON CLI output utility
 JC cli module
 """
-import appdirs
+
 import sys
 import os
 import os.path
@@ -17,6 +17,7 @@ from pygments.token import (Name, Number, String, Keyword)
 from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
 import jc.utils
+import jc.appdirs as appdirs
 
 
 class info():
