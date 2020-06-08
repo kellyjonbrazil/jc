@@ -190,7 +190,7 @@ or
 JC_COLORS=default,default,default,default
 ```
 
-## Custom Parsers
+### Custom Parsers
 Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
 
 - Linux/unix: `$HOME/.local/share/jc/jcparsers`
