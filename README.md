@@ -190,6 +190,19 @@ or
 JC_COLORS=default,default,default,default
 ```
 
+## Custom Parsers
+Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
+
+- Linux/unix: `$HOME/.local/share/jc/jcparsers`
+- macOS: `$HOME/Library/Application Support/jc/jcparsers`
+- Windows: `C:\Users\<username>\AppData\Local\jc\jc\jcparsers`
+
+Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
+
+Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+
+> Note: The application data directory follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+
 ## Compatibility
 Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
@@ -207,19 +220,6 @@ Tested on:
 - OSX 10.14.6
 - NixOS
 - FreeBSD12
-
-
-## Custom Parsers
-Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
-
-- Linux: `/home/*myname*/.local/jc/jcparsers`
-- macOS: `/Users/*myname*/Library/Application Support/jc/jcparsers`
-- Windows: `C:\Users\*myname*\AppData\Local\jc\jc\jcparsers`
-
-Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
-
-Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
-
 
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
