@@ -190,6 +190,19 @@ or
 JC_COLORS=default,default,default,default
 ```
 
+### Custom Parsers
+Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
+
+- Linux/unix: `$HOME/.local/share/jc/jcparsers`
+- macOS: `$HOME/Library/Application Support/jc/jcparsers`
+- Windows: `$LOCALAPPDATA\jc\jc\jcparsers`
+
+Local parser plugins are standard python module files. Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
+
+Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+
+> Note: The application data directory follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+
 ## Compatibility
 Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
@@ -212,12 +225,13 @@ Tested on:
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
 
 ## Acknowledgments
-- CI automation and code optimizations from https://github.com/philippeitis
-- `ifconfig-parser` module from https://github.com/KnightWhoSayNi/ifconfig-parser
-- `xmltodict` module from https://github.com/martinblech/xmltodict by Martín Blech
-- `ruamel.yaml` library from https://pypi.org/project/ruamel.yaml by  Anthon van der Neut
-- Parsing code from Conor Heine at https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501 adapted for some parsers
-- Excellent constructive feedback from Ilya Sher (https://github.com/ilyash-b)
+- Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
+- CI automation and code optimizations by [philippeitis](https://github.com/philippeitis)
+- [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module by KnightWhoSayNi
+- [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
+- [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van der Neut
+- Parsing [code](https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501) from Conor Heine adapted for some parsers
+- Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
 ## Examples
 ### airport -I

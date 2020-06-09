@@ -1,8 +1,11 @@
 """jc - JSON CLI output utility
 JC cli module
 """
+
 import sys
 import os
+import os.path
+import re
 import shlex
 import importlib
 import textwrap
@@ -14,10 +17,11 @@ from pygments.token import (Name, Number, String, Keyword)
 from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
 import jc.utils
+import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.11.2'
+    version = '1.11.3'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -79,6 +83,20 @@ parsers = [
     'yaml'
 ]
 
+# List of custom or override parsers.
+# Allow any <user_data_dir>/jc/jcparsers/*.py
+local_parsers = []
+data_dir = appdirs.user_data_dir("jc", "jc")
+local_parsers_dir = os.path.join(data_dir, "jcparsers")
+if os.path.isdir(local_parsers_dir):
+    sys.path.append(data_dir)
+    for name in os.listdir(local_parsers_dir):
+        if re.match(r'\w+\.py', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
+            plugin_name = name[0:-3]
+            local_parsers.append(plugin_name)
+            if plugin_name not in parsers:
+                parsers.append(plugin_name)
+
 
 def set_env_colors():
     """
@@ -122,10 +140,10 @@ def set_env_colors():
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
     return {
-        Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else f'bold ansiblue',   # key names
-        Keyword: f'ansi{color_list[1]}' if not color_list[1] == 'default' else f'ansibrightblack',  # true, false, null
-        Number: f'ansi{color_list[2]}' if not color_list[2] == 'default' else f'ansimagenta',       # numbers
-        String: f'ansi{color_list[3]}' if not color_list[3] == 'default' else f'ansigreen'          # strings
+        Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else 'bold ansiblue',   # key names
+        Keyword: f'ansi{color_list[1]}' if not color_list[1] == 'default' else 'ansibrightblack',       # true, false, null
+        Number: f'ansi{color_list[2]}' if not color_list[2] == 'default' else 'ansimagenta',            # numbers
+        String: f'ansi{color_list[3]}' if not color_list[3] == 'default' else 'ansigreen'               # strings
     }
 
 
@@ -159,8 +177,9 @@ def parser_mod_shortname(parser):
 
 def parser_module(parser):
     """import the module just in time and return the module object"""
-    importlib.import_module('jc.parsers.' + parser_mod_shortname(parser))
-    return getattr(jc.parsers, parser_mod_shortname(parser))
+    shortname = parser_mod_shortname(parser)
+    path = ('jcparsers.' if shortname in local_parsers else 'jc.parsers.')
+    return importlib.import_module(path + shortname)
 
 
 def parsers_text(indent=0, pad=0):
@@ -245,7 +264,7 @@ def helptext(message):
 
 
 def json_out(data, pretty=False, mono=False, piped_out=False):
-     # set colors
+    # set colors
     class JcStyle(Style):
         styles = set_env_colors()
 
