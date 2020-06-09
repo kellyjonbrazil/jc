@@ -1,6 +1,6 @@
 jc changelog
 
-20200xxxx v1.12.0
+20200609 v1.11.3
 - Add local parser plugin feature (contributed by Dean Serenevy)
 
 20200530 v1.11.2
