@@ -70,7 +70,7 @@ Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `zypper`, `nix-env`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `nix-env`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```
@@ -78,13 +78,21 @@ $ pip3 install --upgrade jc
 ```
 
 ### OS Package Repositories
+#### Dnf (Fedora linux)
+```
+# dnf install jc
+```
+or
+```
+# dnf --enablerepo=updates-testing install jc
+```
 
 #### Zypper (openSUSE linux)
 ```
 # zypper install jc
 ```
 
-#### nix-env (NixOS linux)
+#### Nix-env (NixOS linux)
 ```
 $ nix-env -iA nixpkgs.jc
 ```
