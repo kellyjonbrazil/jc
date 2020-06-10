@@ -1,5 +1,8 @@
 jc changelog
 
+20200610 v1.11.4
+- Update ls parser to fix error on parsing an empty directory
+
 20200609 v1.11.3
 - Add local parser plugin feature (contributed by Dean Serenevy)
 

@@ -215,6 +215,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ls_lR_empty_folder_json = json.loads(f.read())
 
+    def test_ls_empty_dir(self):
+        """
+        Test plain 'ls' on an empty directory
+        """
+        self.assertEqual(jc.parsers.ls.parse('', quiet=True), [])
+
     def test_ls_centos_7_7(self):
         """
         Test plain 'ls /' on Centos 7.7

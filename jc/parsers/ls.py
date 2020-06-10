@@ -149,7 +149,7 @@ import jc.utils
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -226,20 +226,19 @@ def parse(data, raw=False, quiet=False):
 
     linedata = data.splitlines()
 
-    # Delete first line if it starts with 'total 1234'
     if linedata:
+        # Delete first line if it starts with 'total 1234'
         if re.match(r'total [0-9]+', linedata[0]):
             linedata.pop(0)
 
-    # Look for parent line if glob or -R is used
-    if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
-       and linedata[0].endswith(':'):
-        parent = linedata.pop(0)[:-1]
-        # Pop following total line if it exists
-        if re.match(r'total [0-9]+', linedata[0]):
-            linedata.pop(0)
+        # Look for parent line if glob or -R is used
+        if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
+           and linedata[0].endswith(':'):
+            parent = linedata.pop(0)[:-1]
+            # Pop following total line if it exists
+            if re.match(r'total [0-9]+', linedata[0]):
+                linedata.pop(0)
 
-    if linedata:
         # Check if -l was used to parse extra data
         if re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
             for entry in linedata:
