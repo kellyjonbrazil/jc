@@ -1,5 +1,9 @@
 jc changelog
 
+20200610 v1.11.5
+- Update airport_s parser to fix error on parsing empty data
+- Add tests to all parsers for no data condition
+
 20200610 v1.11.4
 - Update ls parser to fix error on parsing an empty directory
 
