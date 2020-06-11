@@ -47,6 +47,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ifconfig2.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ifconfig2_json = json.loads(f.read())
 
+    def test_ifconfig_nodata(self):
+        """
+        Test 'ifconfig' with no data
+        """
+        self.assertEqual(jc.parsers.ifconfig.parse('', quiet=True), [])
+
     def test_ifconfig_centos_7_7(self):
         """
         Test 'ifconfig' on Centos 7.7

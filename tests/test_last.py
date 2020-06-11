@@ -65,6 +65,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_last_json = json.loads(f.read())
 
+    def test_last_nodata(self):
+        """
+        Test plain 'last' with no data
+        """
+        self.assertEqual(jc.parsers.last.parse('', quiet=True), [])
+
     def test_last_centos_7_7(self):
         """
         Test plain 'last' on Centos 7.7

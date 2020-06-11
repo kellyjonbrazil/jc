@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/gshadow.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_gshadow_json = json.loads(f.read())
 
+    def test_gshadow_nodata(self):
+        """
+        Test 'cat /etc/gshadow' with no data
+        """
+        self.assertEqual(jc.parsers.gshadow.parse('', quiet=True), [])
+
     def test_gshadow_centos_7_7(self):
         """
         Test 'cat /etc/gshadow' on Centos 7.7

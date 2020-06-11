@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/jobs.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_jobs_json = json.loads(f.read())
 
+    def test_jobs_nodata(self):
+        """
+        Test 'jobs' with no data
+        """
+        self.assertEqual(jc.parsers.jobs.parse('', quiet=True), [])
+
     def test_jobs_centos_7_7(self):
         """
         Test 'jobs' on Centos 7.7

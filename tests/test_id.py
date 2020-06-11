@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/id.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_id_json = json.loads(f.read())
 
+    def test_id_nodata(self):
+        """
+        Test 'id' with no data
+        """
+        self.assertEqual(jc.parsers.id.parse('', quiet=True), {})
+
     def test_id_centos_7_7(self):
         """
         Test 'id' on Centos 7.7
