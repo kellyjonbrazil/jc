@@ -53,7 +53,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'free command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,14 +122,17 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
-    cleandata[0] = cleandata[0].lower()
-    cleandata[0] = cleandata[0].replace('buff/cache', 'buff_cache')
-    cleandata[0] = 'type ' + cleandata[0]
+    raw_output = []
 
-    raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+    if cleandata:
+        cleandata[0] = cleandata[0].lower()
+        cleandata[0] = cleandata[0].replace('buff/cache', 'buff_cache')
+        cleandata[0] = 'type ' + cleandata[0]
 
-    for entry in raw_output:
-        entry['type'] = entry['type'].rstrip(':')
+        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+
+        for entry in raw_output:
+            entry['type'] = entry['type'].rstrip(':')
 
     if raw:
         return raw_output
