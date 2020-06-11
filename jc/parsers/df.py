@@ -73,7 +73,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'df command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -184,14 +184,16 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
+    raw_output = []
 
-    # fix headers
-    cleandata[0] = cleandata[0].lower()
-    cleandata[0] = cleandata[0].replace('-', '_')
-    cleandata[0] = cleandata[0].replace('mounted on', 'mounted_on')
+    if len(cleandata) > 1:
+        # fix headers
+        cleandata[0] = cleandata[0].lower()
+        cleandata[0] = cleandata[0].replace('-', '_')
+        cleandata[0] = cleandata[0].replace('mounted on', 'mounted_on')
 
-    # parse the data
-    raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+        # parse the data
+        raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
 
     if raw:
         return raw_output
