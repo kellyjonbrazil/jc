@@ -4,6 +4,8 @@ jc changelog
 - Update airport_s parser to fix error on parsing empty data
 - Update arp parser to fix error on parsing empty data
 - Update blkid parser to fix error on parsing empty data
+- Update crontab parser to fix error on parsing empty data
+- Update crontab_u parser to fix error on parsing empty data
 - Add tests to all parsers for no data condition
 
 20200610 v1.11.4

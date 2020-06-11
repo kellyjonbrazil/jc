@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_crontab_u_json = json.loads(f.read())
 
+    def test_crontab_u_nodata(self):
+        """
+        Test 'crontab' with no data (has a user field)
+        """
+        self.assertEqual(jc.parsers.crontab_u.parse('', quiet=True), {})
+
     def test_crontab_u_ubuntu_18_4(self):
         """
         Test 'crontab' on Ubuntu 18.4 (has a user field)
