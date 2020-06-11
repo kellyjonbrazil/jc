@@ -71,6 +71,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_blkid_ip_udev_multi_json = json.loads(f.read())
 
+    def test_blkid_nodata(self):
+        """
+        Test 'blkid' with no data
+        """
+        self.assertEqual(jc.parsers.blkid.parse('', quiet=True), [])
+
     def test_blkid_centos_7_7(self):
         """
         Test 'blkid' on Centos 7.7

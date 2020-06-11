@@ -99,7 +99,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'arp command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -171,69 +171,65 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    cleandata = data.splitlines()
+    raw_output = []
+    cleandata = list(filter(None, data.splitlines()))
 
-    # remove final Entries row if -v was used
-    if cleandata[-1].startswith('Entries:'):
-        cleandata.pop(-1)
+    if cleandata:
 
-    # detect if freebsd/osx style was used
-    if cleandata[0][-1] == ']':
-        raw_output = []
-        for line in cleandata:
-            splitline = line.split()
-            output_line = {
-                'name': splitline[0],
-                'address': splitline[1].lstrip('(').rstrip(')'),
-                'hwtype': splitline[-1].lstrip('[').rstrip(']'),
-                'hwaddress': splitline[3],
-                'iface': splitline[5]
-            }
+        # remove final Entries row if -v was used
+        if cleandata[-1].startswith('Entries:'):
+            cleandata.pop(-1)
 
-            if 'permanent' in splitline:
-                output_line['permanent'] = True
+        # detect if freebsd/osx style was used
+        if cleandata[0][-1] == ']':
+            for line in cleandata:
+                splitline = line.split()
+                output_line = {
+                    'name': splitline[0],
+                    'address': splitline[1].lstrip('(').rstrip(')'),
+                    'hwtype': splitline[-1].lstrip('[').rstrip(']'),
+                    'hwaddress': splitline[3],
+                    'iface': splitline[5]
+                }
+
+                if 'permanent' in splitline:
+                    output_line['permanent'] = True
+                else:
+                    output_line['permanent'] = False
+
+                if 'expires' in splitline:
+                    output_line['expires'] = splitline[-3]
+
+                raw_output.append(output_line)
+
+            if raw:
+                return raw_output
             else:
-                output_line['permanent'] = False
+                return process(raw_output)
 
-            if 'expires' in splitline:
-                output_line['expires'] = splitline[-3]
+        # detect if linux style was used
+        elif cleandata[0].startswith('Address'):
 
-            raw_output.append(output_line)
+            # fix header row to change Flags Mask to flags_mask
+            cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
+            cleandata[0] = cleandata[0].lower()
 
-        if raw:
-            return raw_output
+            raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+
+        # otherwise, try bsd style
         else:
-            return process(raw_output)
+            for line in cleandata:
+                line = line.split()
+                output_line = {
+                    'name': line[0],
+                    'address': line[1].lstrip('(').rstrip(')'),
+                    'hwtype': line[4].lstrip('[').rstrip(']'),
+                    'hwaddress': line[3],
+                    'iface': line[6],
+                }
+                raw_output.append(output_line)
 
-    # detect if linux style was used
-    elif cleandata[0].startswith('Address'):
-
-        # fix header row to change Flags Mask to flags_mask
-        cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
-        cleandata[0] = cleandata[0].lower()
-
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
-
-        if raw:
-            return raw_output
-        else:
-            return process(raw_output)
-
-    # otherwise, try bsd style
+    if raw:
+        return raw_output
     else:
-        raw_output = []
-        for line in cleandata:
-            line = line.split()
-            output_line = {
-                'name': line[0],
-                'address': line[1].lstrip('(').rstrip(')'),
-                'hwtype': line[4].lstrip('[').rstrip(']'),
-                'hwaddress': line[3],
-                'iface': line[6],
-            }
-            raw_output.append(output_line)
-
-        if raw:
-            return raw_output
-        else:
-            return process(raw_output)
+        return process(raw_output)

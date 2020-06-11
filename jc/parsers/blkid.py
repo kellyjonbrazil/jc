@@ -79,7 +79,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'blkid command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -176,7 +176,7 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
 
-    if data:
+    if len(data) > 1:
         # if the first field is a device, use normal parsing:
         if data.split(maxsplit=1)[0][-1] == ':':
             linedata = data.splitlines()
