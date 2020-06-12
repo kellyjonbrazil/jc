@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/uname-a.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_uname_a_json = json.loads(f.read())
 
+    def test_uname_nodata(self):
+        """
+        Test 'uname -a' with no data
+        """
+        self.assertEqual(jc.parsers.uname.parse('', quiet=True), {})
+
     def test_uname_centos_7_7(self):
         """
         Test 'uname -a' on Centos 7.7

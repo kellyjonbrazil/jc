@@ -101,6 +101,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr_json = json.loads(f.read())
 
+    def test_dig_nodata(self):
+        """
+        Test 'dig' with no data
+        """
+        self.assertEqual(jc.parsers.dig.parse('', quiet=True), [])
+
     def test_dig_centos_7_7(self):
         """
         Test 'dig' on Centos 7.7

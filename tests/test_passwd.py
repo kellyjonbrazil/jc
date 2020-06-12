@@ -29,6 +29,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/passwd.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_passwd_json = json.loads(f.read())
 
+    def test_passwd_nodata(self):
+        """
+        Test 'cat /etc/passwd' with no data
+        """
+        self.assertEqual(jc.parsers.passwd.parse('', quiet=True), [])
+
     def test_passwd_centos_7_7(self):
         """
         Test 'cat /etc/passwd' on Centos 7.7

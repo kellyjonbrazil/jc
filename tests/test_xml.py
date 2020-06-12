@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-foodmenu.json'), 'r', encoding='utf-8') as f:
             self.generic_xml_foodmenu_json = json.loads(f.read())
 
+    def test_xml_nodata(self):
+        """
+        Test xml parser with no data
+        """
+        self.assertEqual(jc.parsers.xml.parse('', quiet=True), [])
+
     def test_xml_cd_catalog(self):
         """
         Test the cd catalog xml file

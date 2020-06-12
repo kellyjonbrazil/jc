@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_file2_json = json.loads(f.read())
 
+    def test_file_nodata(self):
+        """
+        Test 'file' with no data
+        """
+        self.assertEqual(jc.parsers.file.parse('', quiet=True), [])
+
     def test_file_centos_7_7(self):
         """
         Test 'file *' on Centos 7.7

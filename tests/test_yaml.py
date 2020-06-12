@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.json'), 'r', encoding='utf-8') as f:
             self.generic_yaml_istio_sidecar_json = json.loads(f.read())
 
+    def test_yaml_nodata(self):
+        """
+        Test the YAML parser with no data
+        """
+        self.assertEqual(jc.parsers.yaml.parse('', quiet=True), [])
+
     def test_yaml_istio_sc(self):
         """
         Test the Istio SC yaml file

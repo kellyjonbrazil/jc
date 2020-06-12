@@ -65,6 +65,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_insurance_json = json.loads(f.read())
 
+    def test_csv_nodata(self):
+        """
+        Test with no data
+        """
+        self.assertEqual(jc.parsers.csv.parse('', quiet=True), [])
+
     def test_csv_biostats(self):
         """
         Test 'biostats.csv' file

@@ -83,6 +83,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iptables-raw.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_iptables_raw_json = json.loads(f.read())
 
+    def test_iptables_nodata(self):
+        """
+        Test 'sudo iptables' with no data
+        """
+        self.assertEqual(jc.parsers.iptables.parse('', quiet=True), [])
+
     def test_iptables_filter_centos_7_7(self):
         """
         Test 'sudo iptables -L -t filter' on Centos 7.7

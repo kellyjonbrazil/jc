@@ -41,6 +41,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.json'), 'r', encoding='utf-8') as f:
             self.nixos_route_ee_json = json.loads(f.read())
 
+    def test_route_nodata(self):
+        """
+        Test 'route' with no data
+        """
+        self.assertEqual(jc.parsers.route.parse('', quiet=True), [])
+
     def test_route_centos_7_7(self):
         """
         Test 'route' on Centos 7.7

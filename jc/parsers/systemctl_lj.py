@@ -59,7 +59,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'systemctl list-jobs command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -125,25 +125,29 @@ def parse(data, raw=False, quiet=False):
     linedata = data.splitlines()
     # Clear any blank lines
     linedata = list(filter(None, linedata))
-    # clean up non-ascii characters, if any
-    cleandata = []
-    for entry in linedata:
-        cleandata.append(entry.encode('ascii', errors='ignore').decode())
-
-    header_text = cleandata[0]
-    header_text = header_text.lower()
-    header_list = header_text.split()
-
     raw_output = []
 
-    for entry in cleandata[1:]:
-        if 'No jobs running.' in entry or 'jobs listed.' in entry:
-            break
+    if linedata:
+        cleandata = []
 
-        else:
-            entry_list = entry.split(maxsplit=4)
-            output_line = dict(zip(header_list, entry_list))
-            raw_output.append(output_line)
+        # clean up non-ascii characters, if any
+        for entry in linedata:
+            cleandata.append(entry.encode('ascii', errors='ignore').decode())
+
+        header_text = cleandata[0]
+        header_text = header_text.lower()
+        header_list = header_text.split()
+
+        raw_output = []
+
+        for entry in cleandata[1:]:
+            if 'No jobs running.' in entry or 'jobs listed.' in entry:
+                break
+
+            else:
+                entry_list = entry.split(maxsplit=4)
+                output_line = dict(zip(header_list, entry_list))
+                raw_output.append(output_line)
 
     if raw:
         return raw_output

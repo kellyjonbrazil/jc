@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/history.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_history_json = json.loads(f.read())
 
+    def test_history_nodata(self):
+        """
+        Test 'history' with no data
+        """
+        self.assertEqual(jc.parsers.history.parse('', quiet=True), [])
+
     def test_history_centos_7_7(self):
         """
         Test 'history' on Centos 7.7

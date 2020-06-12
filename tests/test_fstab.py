@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/fstab.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_fstab_json = json.loads(f.read())
 
+    def test_fstab_nodata(self):
+        """
+        Test 'cat /etc/fstab' with no data
+        """
+        self.assertEqual(jc.parsers.fstab.parse('', quiet=True), [])
+
     def test_fstab_centos_7_7(self):
         """
         Test 'cat /etc/fstab' on Centos 7.7

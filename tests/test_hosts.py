@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/hosts.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_hosts_json = json.loads(f.read())
 
+    def test_hosts_nodata(self):
+        """
+        Test 'cat /etc/hosts' with no data
+        """
+        self.assertEqual(jc.parsers.hosts.parse('', quiet=True), [])
+
     def test_hosts_centos_7_7(self):
         """
         Test 'cat /etc/hosts' on Centos 7.7

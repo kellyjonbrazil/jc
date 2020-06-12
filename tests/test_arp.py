@@ -71,6 +71,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/arp-a.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_arp_a_json = json.loads(f.read())
 
+    def test_arp_nodata(self):
+        """
+        Test 'arp' with no data
+        """
+        self.assertEqual(jc.parsers.arp.parse('', quiet=True), [])
+
     def test_arp_centos_7_7(self):
         """
         Test 'arp' on Centos 7.7

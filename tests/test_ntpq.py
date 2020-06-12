@@ -47,6 +47,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ntpq-p.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_ntpq_p_json = json.loads(f.read())
 
+    def test_ntpq_p_nodata(self):
+        """
+        Test 'ntpq -p' with no data
+        """
+        self.assertEqual(jc.parsers.ntpq.parse('', quiet=True), [])
+
     def test_ntpq_p_centos_7_7(self):
         """
         Test 'ntpq -p' on Centos 7.7

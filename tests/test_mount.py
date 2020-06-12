@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_mount2_json = json.loads(f.read())
 
+    def test_mount_nodata(self):
+        """
+        Test 'mount' with no data
+        """
+        self.assertEqual(jc.parsers.mount.parse('', quiet=True), [])
+
     def test_mount_centos_7_7(self):
         """
         Test 'mount' on Centos 7.7

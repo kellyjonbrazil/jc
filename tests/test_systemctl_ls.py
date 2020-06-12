@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-ls.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_systemctl_ls_json = json.loads(f.read())
 
+    def test_systemctl_ls_nodata(self):
+        """
+        Test 'systemctl -a list-sockets' with no data
+        """
+        self.assertEqual(jc.parsers.systemctl_ls.parse('', quiet=True), [])
+
     def test_systemctl_ls_centos_7_7(self):
         """
         Test 'systemctl -a list-sockets' on Centos 7.7

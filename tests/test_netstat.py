@@ -227,6 +227,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_netstat_ib_json = json.loads(f.read())
 
+    def test_netstat_nodata(self):
+        """
+        Test 'netstat' with no data
+        """
+        self.assertEqual(jc.parsers.netstat.parse('', quiet=True), [])
+
     def test_netstat_centos_7_7(self):
         """
         Test 'netstat' on Centos 7.7

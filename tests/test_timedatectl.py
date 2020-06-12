@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/timedatectl.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_timedatectl_json = json.loads(f.read())
 
+    def test_timedatectl_nodata(self):
+        """
+        Test 'timedatectl' with no data
+        """
+        self.assertEqual(jc.parsers.timedatectl.parse('', quiet=True), {})
+
     def test_timedatectl_centos_7_7(self):
         """
         Test 'timedatectl' on Centos 7.7

@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_systemctl_json = json.loads(f.read())
 
+    def test_systemctl_nodata(self):
+        """
+        Test 'systemctl' with no data
+        """
+        self.assertEqual(jc.parsers.systemctl.parse('', quiet=True), [])
+
     def test_systemctl_centos_7_7(self):
         """
         Test 'systemctl -a' on Centos 7.7

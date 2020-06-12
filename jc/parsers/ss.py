@@ -251,7 +251,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'ss command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -308,17 +308,17 @@ def process(proc_data):
                 except (ValueError):
                     entry[key] = None
 
-    if 'local_port' in entry:
+        if 'local_port' in entry:
             try:
                 entry['local_port_num'] = int(entry['local_port'])
             except (ValueError):
                 pass
 
-    if 'peer_port' in entry:
-        try:
-            entry['peer_port_num'] = int(entry['peer_port'])
-        except (ValueError):
-            pass
+        if 'peer_port' in entry:
+            try:
+                entry['peer_port_num'] = int(entry['peer_port'])
+            except (ValueError):
+                pass
 
     return proc_data
 

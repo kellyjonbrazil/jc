@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_ss_sudo_a_json = json.loads(f.read())
 
+    def test_ss_nodata(self):
+        """
+        Test 'ss' with no data
+        """
+        self.assertEqual(jc.parsers.ss.parse('', quiet=True), [])
+
     def test_ss_sudo_a_centos_7_7(self):
         """
         Test 'sudo ss -a' on Centos 7.7

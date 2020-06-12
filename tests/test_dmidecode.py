@@ -29,6 +29,11 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/dmidecode.json'), 'r', encoding='utf-8') as f:
             self.fedora32_dmidecode_json = json.loads(f.read())
 
+    def test_dmidecode_nodata(self):
+        """
+        Test 'dmidecode' with no data
+        """
+        self.assertEqual(jc.parsers.dmidecode.parse('', quiet=True), [])
 
     def test_dmidecode_centos_7_7(self):
         """

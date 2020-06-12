@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/env.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_env_json = json.loads(f.read())
 
+    def test_env_nodata(self):
+        """
+        Test 'env' with no data
+        """
+        self.assertEqual(jc.parsers.env.parse('', quiet=True), [])
+
     def test_env_centos_7_7(self):
         """
         Test 'env' on Centos 7.7

@@ -56,7 +56,7 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'mount command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -162,6 +162,7 @@ def parse(data, raw=False, quiet=False):
 
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
+    raw_output = []
 
     if cleandata:
         # check for OSX output

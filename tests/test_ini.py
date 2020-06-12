@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-iptelserver.json'), 'r', encoding='utf-8') as f:
             self.generic_ini_iptelserver_json = json.loads(f.read())
 
+    def test_ini_nodata(self):
+        """
+        Test the test ini file with no data
+        """
+        self.assertEqual(jc.parsers.ini.parse('', quiet=True), {})
+
     def test_ini_test(self):
         """
         Test the test ini file

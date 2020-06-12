@@ -40,7 +40,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'systemctl command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -99,24 +99,27 @@ def parse(data, raw=False, quiet=False):
     linedata = data.splitlines()
     # Clear any blank lines
     linedata = list(filter(None, linedata))
-    # clean up non-ascii characters, if any
-    cleandata = []
-    for entry in linedata:
-        cleandata.append(entry.encode('ascii', errors='ignore').decode())
-
-    header_text = cleandata[0]
-    header_list = header_text.lower().split()
-
     raw_output = []
 
-    for entry in cleandata[1:]:
-        if 'LOAD   = ' in entry:
-            break
+    if linedata:
+        # clean up non-ascii characters, if any
+        cleandata = []
+        for entry in linedata:
+            cleandata.append(entry.encode('ascii', errors='ignore').decode())
 
-        else:
-            entry_list = entry.rstrip().split(maxsplit=4)
-            output_line = dict(zip(header_list, entry_list))
-            raw_output.append(output_line)
+        header_text = cleandata[0]
+        header_list = header_text.lower().split()
+
+        raw_output = []
+
+        for entry in cleandata[1:]:
+            if 'LOAD   = ' in entry:
+                break
+
+            else:
+                entry_list = entry.rstrip().split(maxsplit=4)
+                output_line = dict(zip(header_list, entry_list))
+                raw_output.append(output_line)
 
     if raw:
         return raw_output

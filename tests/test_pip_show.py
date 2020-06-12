@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/pip-show.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_pip_show_json = json.loads(f.read())
 
+    def test_pip_show_nodata(self):
+        """
+        Test 'pip show' with no data
+        """
+        self.assertEqual(jc.parsers.pip_show.parse('', quiet=True), [])
+
     def test_pip_show_centos_7_7(self):
         """
         Test 'pip show' on Centos 7.7

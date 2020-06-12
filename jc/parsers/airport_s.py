@@ -88,7 +88,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'airport -s command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -170,15 +170,17 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    cleandata = data.splitlines()
+    raw_output = []
+    cleandata = list(filter(None, data.splitlines()))
 
-    # fix headers
-    cleandata[0] = cleandata[0].lower()
-    cleandata[0] = cleandata[0].replace('-', '_')
-    cleandata[0] = cleandata[0].replace('security (auth/unicast/group)', 'security')
+    if cleandata:
+        # fix headers
+        cleandata[0] = cleandata[0].lower()
+        cleandata[0] = cleandata[0].replace('-', '_')
+        cleandata[0] = cleandata[0].replace('security (auth/unicast/group)', 'security')
 
-    # parse the data
-    raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+        # parse the data
+        raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
 
     if raw:
         return raw_output
