@@ -176,7 +176,7 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
 
-    if len(data) > 1:
+    if list(filter(None, data.splitlines())):
         # if the first field is a device, use normal parsing:
         if data.split(maxsplit=1)[0][-1] == ':':
             linedata = data.splitlines()
