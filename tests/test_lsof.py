@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsof-sudo.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_lsof_sudo_json = json.loads(f.read())
 
+    def test_lsof_nodata(self):
+        """
+        Test 'lsof' with no data
+        """
+        self.assertEqual(jc.parsers.lsof.parse('', quiet=True), [])
+
     def test_lsof_centos_7_7(self):
         """
         Test 'lsof' on Centos 7.7

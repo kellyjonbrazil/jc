@@ -41,6 +41,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/pip-list.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_pip_list_json = json.loads(f.read())
 
+    def test_pip_list_nodata(self):
+        """
+        Test 'pip_list' with no data
+        """
+        self.assertEqual(jc.parsers.pip_list.parse('', quiet=True), [])
+
     def test_pip_list_centos_7_7(self):
         """
         Test 'pip_list' on Centos 7.7

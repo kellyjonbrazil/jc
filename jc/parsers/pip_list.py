@@ -32,7 +32,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'pip list command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -93,23 +93,24 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
 
-    # detect legacy output type
-    if ' (' in cleandata[0]:
-        for row in cleandata:
-            raw_output.append({'package': row.split(' (')[0],
-                               'version': row.split(' (')[1].rstrip(')')})
+    if cleandata:
+        # detect legacy output type
+        if ' (' in cleandata[0]:
+            for row in cleandata:
+                raw_output.append({'package': row.split(' (')[0],
+                                   'version': row.split(' (')[1].rstrip(')')})
 
-    # otherwise normal table output
-    else:
-        # clear separator line
-        for i, line in reversed(list(enumerate(cleandata))):
-            if '---' in line:
-                cleandata.pop(i)
+        # otherwise normal table output
+        else:
+            # clear separator line
+            for i, line in reversed(list(enumerate(cleandata))):
+                if '---' in line:
+                    cleandata.pop(i)
 
-        cleandata[0] = cleandata[0].lower()
+            cleandata[0] = cleandata[0].lower()
 
-        if cleandata:
-            raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+            if cleandata:
+                raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output

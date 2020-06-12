@@ -183,7 +183,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'ntpq -p command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -268,28 +268,29 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
+    cleandata = data.splitlines()
     raw_output = []
 
-    cleandata = data.splitlines()
-    cleandata[0] = 's ' + cleandata[0]
-    cleandata[0] = cleandata[0].lower()
+    if list(filter(None, cleandata)):
+        cleandata[0] = 's ' + cleandata[0]
+        cleandata[0] = cleandata[0].lower()
 
-    # delete header delimiter
-    del cleandata[1]
+        # delete header delimiter
+        del cleandata[1]
 
-    # separate first character with a space for easier parsing
-    for i, line in list(enumerate(cleandata[1:])):
-        if line[0] == ' ':
-            # fixup for no-state
-            cleandata[i + 1] = '~  ' + line[1:]
-        else:
-            # fixup - realign columns since we added the 's' column
-            cleandata[i + 1] = line[:1] + '  ' + line[1:]
+        # separate first character with a space for easier parsing
+        for i, line in list(enumerate(cleandata[1:])):
+            if line[0] == ' ':
+                # fixup for no-state
+                cleandata[i + 1] = '~  ' + line[1:]
+            else:
+                # fixup - realign columns since we added the 's' column
+                cleandata[i + 1] = line[:1] + '  ' + line[1:]
 
-        # fixup for occaisional ip/hostname fields with a space
-        cleandata[i + 1] = cleandata[i + 1].replace(' (', '_(')
+            # fixup for occaisional ip/hostname fields with a space
+            cleandata[i + 1] = cleandata[i + 1].replace(' (', '_(')
 
-    raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output

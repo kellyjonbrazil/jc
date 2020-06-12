@@ -247,7 +247,7 @@ Examples:
 
 
 class info():
-    version = '1.6'
+    version = '1.7'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -435,25 +435,26 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, cleandata))
     raw_output = []
 
-    # check for FreeBSD/OSX vs Linux
-    # is this from FreeBSD/OSX?
-    if cleandata[0] == 'Active Internet connections' \
-       or cleandata[0] == 'Active Internet connections (including servers)' \
-       or cleandata[0] == 'Active Multipath Internet connections' \
-       or cleandata[0] == 'Active LOCAL (UNIX) domain sockets' \
-       or cleandata[0] == 'Registered kernel control modules' \
-       or cleandata[0] == 'Active kernel event sockets' \
-       or cleandata[0] == 'Active kernel control sockets' \
-       or cleandata[0] == 'Routing tables' \
-       or cleandata[0].startswith('Name  '):
+    if cleandata:
+        # check for FreeBSD/OSX vs Linux
+        # is this from FreeBSD/OSX?
+        if cleandata[0] == 'Active Internet connections' \
+           or cleandata[0] == 'Active Internet connections (including servers)' \
+           or cleandata[0] == 'Active Multipath Internet connections' \
+           or cleandata[0] == 'Active LOCAL (UNIX) domain sockets' \
+           or cleandata[0] == 'Registered kernel control modules' \
+           or cleandata[0] == 'Active kernel event sockets' \
+           or cleandata[0] == 'Active kernel control sockets' \
+           or cleandata[0] == 'Routing tables' \
+           or cleandata[0].startswith('Name  '):
 
-        import jc.parsers.netstat_freebsd_osx
-        raw_output = jc.parsers.netstat_freebsd_osx.parse(cleandata)
+            import jc.parsers.netstat_freebsd_osx
+            raw_output = jc.parsers.netstat_freebsd_osx.parse(cleandata)
 
-    # use linux parser
-    else:
-        import jc.parsers.netstat_linux
-        raw_output = jc.parsers.netstat_linux.parse(cleandata)
+        # use linux parser
+        else:
+            import jc.parsers.netstat_linux
+            raw_output = jc.parsers.netstat_linux.parse(cleandata)
 
     if raw:
         return raw_output

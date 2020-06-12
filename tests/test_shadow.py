@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/shadow.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_shadow_json = json.loads(f.read())
 
+    def test_shadow_nodata(self):
+        """
+        Test 'cat /etc/shadow' with no data
+        """
+        self.assertEqual(jc.parsers.shadow.parse('', quiet=True), [])
+
     def test_shadow_centos_7_7(self):
         """
         Test 'cat /etc/shadow' on Centos 7.7

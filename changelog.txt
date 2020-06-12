@@ -8,7 +8,15 @@ jc changelog
 - Update crontab_u parser to fix error on parsing empty data
 - Update df parser to fix error on parsing empty data
 - Update free parser to fix error on parsing empty data
+- Update lsblk parser to fix error on parsing empty data
+- Update lsmod parser to fix error on parsing empty data
+- Update mount parser to fix error on parsing empty data
+- Update netstat parser to fix error on parsing empty data
+- Update ntpq parser to fix error on parsing empty data
+- Update ps parser to fix error on parsing empty data
+- Update route parser to fix error on parsing empty data
 - Add tests to all parsers for no data condition
+- Update ss parser to fix integer fields
 
 20200610 v1.11.4
 - Update ls parser to fix error on parsing an empty directory

@@ -59,6 +59,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ps-axu.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ps_axu_json = json.loads(f.read())
 
+    def test_ps_nodata(self):
+        """
+        Test 'ps' with no data
+        """
+        self.assertEqual(jc.parsers.ps.parse('', quiet=True), [])
+
     def test_ps_ef_centos_7_7(self):
         """
         Test 'ps -ef' on Centos 7.7
