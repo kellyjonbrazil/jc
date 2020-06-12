@@ -74,7 +74,7 @@ There are several ways to get `jc`. You can install via `pip`; other OS package 
 
 ### Pip (macOS, linux, unix, Windows)
 ```
-$ pip3 install --upgrade jc
+$ pip3 install jc
 ```
 
 ### OS Package Repositories
