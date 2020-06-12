@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_stat_json = json.loads(f.read())
 
+    def test_stat_nodata(self):
+        """
+        Test 'stat' with no data
+        """
+        self.assertEqual(jc.parsers.stat.parse('', quiet=True), [])
+
     def test_stat_centos_7_7(self):
         """
         Test 'stat /bin/*' on Centos 7.7

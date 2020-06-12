@@ -17,6 +17,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-lj.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_systemctl_lj_json = json.loads(f.read())
 
+    def test_systemctl_lj_nodata(self):
+        """
+        Test 'systemctl -a list-jobs' with no data
+        """
+        self.assertEqual(jc.parsers.systemctl_lj.parse('', quiet=True), [])
+
     def test_systemctl_lj_ubuntu_18_4(self):
         """
         Test 'systemctl -a list-jobs' on Ubuntu 18.4
