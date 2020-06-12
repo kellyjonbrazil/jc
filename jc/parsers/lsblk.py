@@ -216,7 +216,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'lsblk command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -330,17 +330,20 @@ def parse(data, raw=False, quiet=False):
     linedata = data.splitlines()
     # Clear any blank lines
     cleandata = list(filter(None, linedata))
-    cleandata = data.splitlines()
+    raw_output = []
 
-    cleandata[0] = cleandata[0].lower()
-    cleandata[0] = cleandata[0].replace(':', '_')
-    cleandata[0] = cleandata[0].replace('-', '_')
+    if cleandata:
+        cleandata = data.splitlines()
 
-    raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+        cleandata[0] = cleandata[0].lower()
+        cleandata[0] = cleandata[0].replace(':', '_')
+        cleandata[0] = cleandata[0].replace('-', '_')
 
-    # clean up non-ascii characters, if any
-    for entry in raw_output:
-        entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
+        raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+
+        # clean up non-ascii characters, if any
+        for entry in raw_output:
+            entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
 
     if raw:
         return raw_output

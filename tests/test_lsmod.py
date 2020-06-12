@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsmod.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_lsmod_json = json.loads(f.read())
 
+    def test_lsmod_nodata(self):
+        """
+        Test 'lsmod' with no data
+        """
+        self.assertEqual(jc.parsers.lsmod.parse('', quiet=True), [])
+
     def test_lsmod_centos_7_7(self):
         """
         Test 'lsmod' on Centos 7.7

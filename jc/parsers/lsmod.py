@@ -107,7 +107,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'lsmod command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -175,13 +175,16 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
-    cleandata[0] = cleandata[0].lower()
+    raw_output = []
 
-    raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+    if list(filter(None, cleandata)):
+        cleandata[0] = cleandata[0].lower()
 
-    for mod in raw_output:
-        if 'by' in mod:
-            mod['by'] = mod['by'].split(',')
+        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+
+        for mod in raw_output:
+            if 'by' in mod:
+                mod['by'] = mod['by'].split(',')
 
     if raw:
         return raw_output

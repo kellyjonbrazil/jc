@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk-allcols.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_lsblk_allcols_json = json.loads(f.read())
 
+    def test_lsblk_nodata(self):
+        """
+        Test 'lsblk' with no data
+        """
+        self.assertEqual(jc.parsers.lsblk.parse('', quiet=True), [])
+
     def test_lsblk_centos_7_7(self):
         """
         Test 'lsblk' on Centos 7.7
