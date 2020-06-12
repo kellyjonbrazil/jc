@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/uptime.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_uptime_json = json.loads(f.read())
 
+    def test_uptime_nodata(self):
+        """
+        Test 'uptime' with no data
+        """
+        self.assertEqual(jc.parsers.uptime.parse('', quiet=True), {})
+
     def test_uptime_centos_7_7(self):
         """
         Test 'uptime' on Centos 7.7

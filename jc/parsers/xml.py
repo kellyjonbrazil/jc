@@ -59,7 +59,7 @@ import xmltodict
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -111,7 +111,9 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    if data:
+    raw_output = []
+
+    if list(filter(None, data.splitlines())):
         raw_output = xmltodict.parse(data)
 
     if raw:

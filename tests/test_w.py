@@ -41,6 +41,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/w.json'), 'r', encoding='utf-8') as f:
             self.nixos_w_json = json.loads(f.read())
 
+    def test_w_nodata(self):
+        """
+        Test 'w' with no data
+        """
+        self.assertEqual(jc.parsers.w.parse('', quiet=True), [])
+
     def test_w_centos_7_7(self):
         """
         Test 'w' on Centos 7.7

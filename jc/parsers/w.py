@@ -83,7 +83,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'w command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,36 +149,39 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()[1:]
-    header_text = cleandata[0].lower()
-    # fixup for 'from' column that can be blank
-    from_col = header_text.find('from')
-    # clean up 'login@' header
-    # even though @ in a key is valid json, it can make things difficult
-    header_text = header_text.replace('login@', 'login_at')
-    headers = [h for h in ' '.join(header_text.strip().split()).split() if h]
-
-    # parse lines
     raw_output = []
-    if cleandata:
-        for entry in cleandata[1:]:
-            output_line = {}
 
-            # normalize data by inserting Null for missing data
-            temp_line = entry.split(maxsplit=len(headers) - 1)
+    if list(filter(None, cleandata)):
+        header_text = cleandata[0].lower()
+        # fixup for 'from' column that can be blank
+        from_col = header_text.find('from')
+        # clean up 'login@' header
+        # even though @ in a key is valid json, it can make things difficult
+        header_text = header_text.replace('login@', 'login_at')
+        headers = [h for h in ' '.join(header_text.strip().split()).split() if h]
 
-            # fix from column, always at column 2
-            if 'from' in headers:
-                if entry[from_col] in string.whitespace:
-                    temp_line.insert(2, '-')
+        # parse lines
+        raw_output = []
+        if cleandata:
+            for entry in cleandata[1:]:
+                output_line = {}
 
-            output_line = dict(zip(headers, temp_line))
-            raw_output.append(output_line)
+                # normalize data by inserting Null for missing data
+                temp_line = entry.split(maxsplit=len(headers) - 1)
 
-    # strip whitespace from beginning and end of all string values
-    for row in raw_output:
-        for item in row:
-            if isinstance(row[item], str):
-                row[item] = row[item].strip()
+                # fix from column, always at column 2
+                if 'from' in headers:
+                    if entry[from_col] in string.whitespace:
+                        temp_line.insert(2, '-')
+
+                output_line = dict(zip(headers, temp_line))
+                raw_output.append(output_line)
+
+        # strip whitespace from beginning and end of all string values
+        for row in raw_output:
+            for item in row:
+                if isinstance(row[item], str):
+                    row[item] = row[item].strip()
 
     if raw:
         return raw_output

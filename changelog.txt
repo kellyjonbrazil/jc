@@ -17,6 +17,11 @@ jc changelog
 - Update route parser to fix error on parsing empty data
 - Update systemctl parser to fix error on parsing empty data
 - Update systemctl_lj parser to fix error on parsing empty data
+- Update systemctl_ls parser to fix error on parsing empty data
+- Update systemctl_luf parser to fix error on parsing empty data
+- Update uptime parser to fix error on parsing empty data
+- Update w parser to fix error on parsing empty data
+- Update xml parser to fix error on parsing empty data
 - Add tests to all parsers for no data condition
 - Update ss parser to fix integer fields
 

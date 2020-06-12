@@ -47,6 +47,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_who_a_json = json.loads(f.read())
 
+    def test_who_nodata(self):
+        """
+        Test 'who' with no data
+        """
+        self.assertEqual(jc.parsers.who.parse('', quiet=True), [])
+
     def test_who_centos_7_7(self):
         """
         Test 'who' on Centos 7.7

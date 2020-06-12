@@ -125,11 +125,12 @@ def parse(data, raw=False, quiet=False):
     linedata = data.splitlines()
     # Clear any blank lines
     linedata = list(filter(None, linedata))
-    # clean up non-ascii characters, if any
     raw_output = []
 
     if linedata:
         cleandata = []
+
+        # clean up non-ascii characters, if any
         for entry in linedata:
             cleandata.append(entry.encode('ascii', errors='ignore').decode())
 
