@@ -1,6 +1,6 @@
 jc changelog
 
-20200610 v1.11.5
+20200612 v1.11.5
 - Update airport_s parser to fix error on parsing empty data
 - Update arp parser to fix error on parsing empty data
 - Update blkid parser to fix error on parsing empty data
