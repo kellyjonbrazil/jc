@@ -186,7 +186,7 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
     raw_output = []
 
-    if len(cleandata) > 1:
+    if list(filter(None, cleandata)):
         # fix headers
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace('-', '_')
