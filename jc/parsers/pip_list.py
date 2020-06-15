@@ -32,7 +32,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'pip list command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -88,12 +88,11 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
 
-    linedata = data.splitlines()
-
     # Clear any blank lines
-    cleandata = list(filter(None, linedata))
+    cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         # detect legacy output type
         if ' (' in cleandata[0]:
             for row in cleandata:

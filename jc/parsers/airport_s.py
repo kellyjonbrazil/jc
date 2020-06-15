@@ -88,7 +88,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'airport -s command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -173,7 +173,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
     cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
         # fix headers
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace('-', '_')

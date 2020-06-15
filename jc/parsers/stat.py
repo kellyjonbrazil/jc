@@ -105,7 +105,7 @@ import jc.utils
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'stat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -197,12 +197,11 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
-    cleandata = data.splitlines()
 
     # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
 
         # linux output
         if cleandata[0].startswith('  File: '):

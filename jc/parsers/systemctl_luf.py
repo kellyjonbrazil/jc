@@ -31,7 +31,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'systemctl list-unit-files command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -84,12 +84,12 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    linedata = data.splitlines()
     # Clear any blank lines
-    linedata = list(filter(None, linedata))
+    linedata = list(filter(None, data.splitlines()))
     raw_output = []
 
-    if linedata:
+    if jc.utils.has_data(data):
+
         cleandata = []
         # clean up non-ascii characters, if any
         for entry in linedata:

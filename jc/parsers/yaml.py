@@ -71,7 +71,7 @@ from ruamel.yaml import YAML
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -126,10 +126,13 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
-    yaml = YAML(typ='safe')
 
-    for document in yaml.load_all(data):
-        raw_output.append(document)
+    if jc.utils.has_data(data):
+
+        yaml = YAML(typ='safe')
+
+        for document in yaml.load_all(data):
+            raw_output.append(document)
 
     if raw:
         return raw_output

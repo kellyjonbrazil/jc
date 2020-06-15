@@ -34,7 +34,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'uptime command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -109,7 +109,8 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
     cleandata = data.splitlines()
 
-    if list(filter(None, cleandata)):
+    if jc.utils.has_data(data):
+
         parsed_line = cleandata[0].split()
 
         # allow space for odd times

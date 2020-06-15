@@ -42,7 +42,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'pip show command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -107,12 +107,11 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
     package = {}
 
-    linedata = data.splitlines()
-
     # Clear any blank lines
-    cleandata = list(filter(None, linedata))
+    cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         for row in cleandata:
             if row.startswith('---'):
                 raw_output.append(package)

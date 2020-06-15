@@ -73,7 +73,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'df command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -186,7 +186,8 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
     raw_output = []
 
-    if list(filter(None, cleandata)):
+    if jc.utils.has_data(data):
+
         # fix headers
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace('-', '_')

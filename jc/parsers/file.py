@@ -48,7 +48,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'file command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -104,23 +104,26 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     warned = False
-    for line in filter(None, data.splitlines()):
-        linedata = line.rsplit(': ', maxsplit=1)
 
-        try:
-            filename = linedata[0].strip()
-            filetype = linedata[1].strip()
+    if jc.utils.has_data(data):
 
-            raw_output.append(
-                {
-                    'filename': filename,
-                    'type': filetype
-                }
-            )
-        except IndexError:
-            if not warned:
-                jc.utils.warning_message('Filenames with newline characters detected. Some filenames may be truncated.')
-                warned = True
+        for line in filter(None, data.splitlines()):
+            linedata = line.rsplit(': ', maxsplit=1)
+
+            try:
+                filename = linedata[0].strip()
+                filetype = linedata[1].strip()
+
+                raw_output.append(
+                    {
+                        'filename': filename,
+                        'type': filetype
+                    }
+                )
+            except IndexError:
+                if not warned:
+                    jc.utils.warning_message('Filenames with newline characters detected. Some filenames may be truncated.')
+                    warned = True
 
     if raw:
         return raw_output

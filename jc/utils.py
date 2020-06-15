@@ -67,3 +67,7 @@ def compatibility(mod_name, compatible):
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
         warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
+
+
+def has_data(data):
+    return True if data and not data.isspace() else False

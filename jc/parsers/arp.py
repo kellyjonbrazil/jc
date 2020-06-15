@@ -99,7 +99,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.5'
+    version = '1.6'
     description = 'arp command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -174,7 +174,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
     cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
 
         # remove final Entries row if -v was used
         if cleandata[-1].startswith('Entries:'):

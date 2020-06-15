@@ -216,7 +216,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'lsblk command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -327,12 +327,12 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    linedata = data.splitlines()
     # Clear any blank lines
-    cleandata = list(filter(None, linedata))
+    cleandata = list(filter(None, data.splitlines()))
     raw_output = []
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         cleandata = data.splitlines()
 
         cleandata[0] = cleandata[0].lower()

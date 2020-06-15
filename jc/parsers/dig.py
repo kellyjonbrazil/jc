@@ -324,7 +324,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'dig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -574,100 +574,103 @@ def parse(data, raw=False, quiet=False):
     axfr = False
 
     output_entry = {}
-    for line in cleandata:
 
-        if line.startswith('; <<>> ') and ' axfr ' in line.lower():
-            question = False
-            authority = False
-            answer = False
-            axfr = True
-            axfr_list = []
-            continue
+    if jc.utils.has_data(data):
+        for line in cleandata:
 
-        if ';' not in line and axfr:
-            axfr_list.append(parse_axfr(line))
-            output_entry.update({'axfr': axfr_list})
-            continue
+            if line.startswith('; <<>> ') and ' axfr ' in line.lower():
+                question = False
+                authority = False
+                answer = False
+                axfr = True
+                axfr_list = []
+                continue
 
-        if line.startswith(';; ->>HEADER<<-'):
-            output_entry = {}
-            output_entry.update(parse_header(line))
-            continue
+            if ';' not in line and axfr:
+                axfr_list.append(parse_axfr(line))
+                output_entry.update({'axfr': axfr_list})
+                continue
 
-        if line.startswith(';; flags:'):
-            output_entry.update(parse_flags_line(line))
-            continue
+            if line.startswith(';; ->>HEADER<<-'):
+                output_entry = {}
+                output_entry.update(parse_header(line))
+                continue
 
-        if line.startswith(';; QUESTION SECTION:'):
-            question = True
-            authority = False
-            answer = False
-            axfr = False
-            continue
+            if line.startswith(';; flags:'):
+                output_entry.update(parse_flags_line(line))
+                continue
 
-        if question:
-            output_entry['question'] = parse_question(line)
-            question = False
-            authority = False
-            answer = False
-            axfr = False
-            continue
+            if line.startswith(';; QUESTION SECTION:'):
+                question = True
+                authority = False
+                answer = False
+                axfr = False
+                continue
 
-        if line.startswith(';; AUTHORITY SECTION:'):
-            question = False
-            authority = True
-            answer = False
-            axfr = False
-            authority_list = []
-            continue
+            if question:
+                output_entry['question'] = parse_question(line)
+                question = False
+                authority = False
+                answer = False
+                axfr = False
+                continue
 
-        if ';' not in line and authority:
-            authority_list.append(parse_authority(line))
-            output_entry.update({'authority': authority_list})
-            continue
+            if line.startswith(';; AUTHORITY SECTION:'):
+                question = False
+                authority = True
+                answer = False
+                axfr = False
+                authority_list = []
+                continue
 
-        if line.startswith(';; ANSWER SECTION:'):
-            question = False
-            authority = False
-            answer = True
-            axfr = False
-            answer_list = []
-            continue
+            if ';' not in line and authority:
+                authority_list.append(parse_authority(line))
+                output_entry.update({'authority': authority_list})
+                continue
 
-        if ';' not in line and answer:
-            answer_list.append(parse_answer(line))
-            output_entry.update({'answer': answer_list})
-            continue
+            if line.startswith(';; ANSWER SECTION:'):
+                question = False
+                authority = False
+                answer = True
+                axfr = False
+                answer_list = []
+                continue
 
-        # footer consists of 4 lines
-        # footer line 1
-        if line.startswith(';; Query time:'):
-            output_entry.update({'query_time': line.split(':')[1].lstrip()})
-            continue
+            if ';' not in line and answer:
+                answer_list.append(parse_answer(line))
+                output_entry.update({'answer': answer_list})
+                continue
 
-        # footer line 2
-        if line.startswith(';; SERVER:'):
-            output_entry.update({'server': line.split(':')[1].lstrip()})
-            continue
+            # footer consists of 4 lines
+            # footer line 1
+            if line.startswith(';; Query time:'):
+                output_entry.update({'query_time': line.split(':')[1].lstrip()})
+                continue
 
-        # footer line 3
-        if line.startswith(';; WHEN:'):
-            output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
-            continue
+            # footer line 2
+            if line.startswith(';; SERVER:'):
+                output_entry.update({'server': line.split(':')[1].lstrip()})
+                continue
 
-        # footer line 4 (last line)
-        if line.startswith(';; MSG SIZE  rcvd:'):
-            output_entry.update({'rcvd': line.split(':')[1].lstrip()})
+            # footer line 3
+            if line.startswith(';; WHEN:'):
+                output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
+                continue
 
-            if output_entry:
-                raw_output.append(output_entry)
-        elif line.startswith(';; XFR size:'):
-            output_entry.update({'size': line.split(':')[1].lstrip()})
+            # footer line 4 (last line)
+            if line.startswith(';; MSG SIZE  rcvd:'):
+                output_entry.update({'rcvd': line.split(':')[1].lstrip()})
 
-            if output_entry:
-                raw_output.append(output_entry)
+                if output_entry:
+                    raw_output.append(output_entry)
+            elif line.startswith(';; XFR size:'):
+                output_entry.update({'size': line.split(':')[1].lstrip()})
 
-    raw_output = list(filter(None, raw_output))
+                if output_entry:
+                    raw_output.append(output_entry)
+
+        raw_output = list(filter(None, raw_output))
+
     if raw:
         return raw_output
     else:

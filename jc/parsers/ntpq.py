@@ -183,7 +183,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'ntpq -p command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -271,7 +271,8 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
     raw_output = []
 
-    if list(filter(None, cleandata)):
+    if jc.utils.has_data(data):
+
         cleandata[0] = 's ' + cleandata[0]
         cleandata[0] = cleandata[0].lower()
 

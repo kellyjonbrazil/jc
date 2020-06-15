@@ -147,7 +147,7 @@ import jc.utils
 
 
 class info():
-    version = '1.7'
+    version = '1.8'
     description = 'ifconfig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -475,14 +475,16 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
 
-    parsed = IfconfigParser(console_output=data)
-    interfaces = parsed.get_interfaces()
+    if jc.utils.has_data(data):
 
-    # convert ifconfigparser output to a dictionary
-    for iface in interfaces:
-        d = interfaces[iface]._asdict()
-        dct = dict(d)
-        raw_output.append(dct)
+        parsed = IfconfigParser(console_output=data)
+        interfaces = parsed.get_interfaces()
+
+        # convert ifconfigparser output to a dictionary
+        for iface in interfaces:
+            d = interfaces[iface]._asdict()
+            dct = dict(d)
+            raw_output.append(dct)
 
     if raw:
         return raw_output

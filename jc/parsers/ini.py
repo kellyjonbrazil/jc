@@ -47,7 +47,7 @@ import configparser
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -101,7 +101,8 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = {}
 
-    if data:
+    if jc.utils.has_data(data):
+
         ini = configparser.ConfigParser()
         ini.read_string(data)
         raw_output = {s: dict(ini.items(s)) for s in ini.sections()}

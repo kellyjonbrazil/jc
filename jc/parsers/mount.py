@@ -56,7 +56,7 @@ import jc.utils
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'mount command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -158,13 +158,12 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    linedata = data.splitlines()
-
     # Clear any blank lines
-    cleandata = list(filter(None, linedata))
+    cleandata = list(filter(None, data.splitlines()))
     raw_output = []
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         # check for OSX output
         if ' type ' not in cleandata[0]:
             raw_output = osx_parse(cleandata)

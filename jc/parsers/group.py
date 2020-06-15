@@ -94,7 +94,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = '/etc/group file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -169,7 +169,8 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, cleandata))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         for entry in cleandata:
             if entry.startswith('#'):
                 continue

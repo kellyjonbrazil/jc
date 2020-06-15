@@ -133,7 +133,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'crontab file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -226,7 +226,8 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, cleandata))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         # Clear any commented lines
         for i, line in reversed(list(enumerate(cleandata))):
             if line.strip().startswith('#'):

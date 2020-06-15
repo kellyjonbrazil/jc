@@ -134,7 +134,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'iptables command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -245,34 +245,36 @@ def parse(data, raw=False, quiet=False):
 
     cleandata = data.splitlines()
 
-    for line in cleandata:
+    if jc.utils.has_data(data):
 
-        if line.startswith('Chain'):
-            raw_output.append(chain)
-            chain = {}
-            headers = []
+        for line in cleandata:
 
-            parsed_line = line.split()
+            if line.startswith('Chain'):
+                raw_output.append(chain)
+                chain = {}
+                headers = []
 
-            chain['chain'] = parsed_line[1]
-            chain['rules'] = []
+                parsed_line = line.split()
 
-            continue
+                chain['chain'] = parsed_line[1]
+                chain['rules'] = []
 
-        elif line.startswith('target') or line.find('pkts') == 1 or line.startswith('num'):
-            headers = []
-            headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
-            headers.append("options")
+                continue
 
-            continue
+            elif line.startswith('target') or line.find('pkts') == 1 or line.startswith('num'):
+                headers = []
+                headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
+                headers.append("options")
 
-        else:
-            rule = line.split(maxsplit=len(headers) - 1)
-            temp_rule = dict(zip(headers, rule))
-            if temp_rule:
-                chain['rules'].append(temp_rule)
+                continue
 
-    raw_output = list(filter(None, raw_output))
+            else:
+                rule = line.split(maxsplit=len(headers) - 1)
+                temp_rule = dict(zip(headers, rule))
+                if temp_rule:
+                    chain['rules'].append(temp_rule)
+
+        raw_output = list(filter(None, raw_output))
 
     if raw:
         return raw_output

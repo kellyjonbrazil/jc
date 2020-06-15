@@ -247,7 +247,7 @@ Examples:
 
 
 class info():
-    version = '1.7'
+    version = '1.8'
     description = 'netstat command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -431,11 +431,11 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    cleandata = data.splitlines()
-    cleandata = list(filter(None, cleandata))
+    cleandata = list(filter(None, data.splitlines()))
     raw_output = []
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         # check for FreeBSD/OSX vs Linux
         # is this from FreeBSD/OSX?
         if cleandata[0] == 'Active Internet connections' \

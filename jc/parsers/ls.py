@@ -149,7 +149,7 @@ import jc.utils
 
 
 class info():
-    version = '1.5'
+    version = '1.6'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -226,7 +226,8 @@ def parse(data, raw=False, quiet=False):
 
     linedata = data.splitlines()
 
-    if linedata:
+    if jc.utils.has_data(data):
+
         # Delete first line if it starts with 'total 1234'
         if re.match(r'total [0-9]+', linedata[0]):
             linedata.pop(0)

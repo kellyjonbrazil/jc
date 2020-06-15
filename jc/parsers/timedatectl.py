@@ -38,7 +38,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'timedatectl status command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -109,12 +109,14 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = {}
 
-    for line in filter(None, data.splitlines()):
-        linedata = line.split(':', maxsplit=1)
-        raw_output[linedata[0].strip().lower().replace(' ', '_')] = linedata[1].strip()
+    if jc.utils.has_data(data):
 
-        if linedata[0].strip() == 'DST active':
-            break
+        for line in filter(None, data.splitlines()):
+            linedata = line.split(':', maxsplit=1)
+            raw_output[linedata[0].strip().lower().replace(' ', '_')] = linedata[1].strip()
+
+            if linedata[0].strip() == 'DST active':
+                break
 
     if raw:
         return raw_output

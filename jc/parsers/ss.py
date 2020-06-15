@@ -251,7 +251,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'ss command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -342,12 +342,12 @@ def parse(data, raw=False, quiet=False):
 
     contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
-    cleandata = data.splitlines()
 
     # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         header_text = cleandata[0].lower()
         header_text = header_text.replace('netidstate', 'netid state')
         header_text = header_text.replace('local address:port', 'local_address local_port')

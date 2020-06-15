@@ -30,7 +30,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'uname -a command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -88,9 +88,9 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = {}
-    split_line = data.split()
 
-    if len(split_line) > 1:
+    if jc.utils.has_data(data):
+
         # check for OSX output
         if data.startswith('Darwin'):
             parsed_line = data.split()

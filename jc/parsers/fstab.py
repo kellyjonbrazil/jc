@@ -70,7 +70,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'fstab file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -141,7 +141,8 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, cleandata))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         for line in cleandata:
             output_line = {}
             # ignore commented lines

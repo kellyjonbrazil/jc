@@ -72,7 +72,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'last and lastb command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,12 +149,12 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     raw_output = []
-    cleandata = data.splitlines()
 
     # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    cleandata = list(filter(None, data.splitlines()))
 
-    if cleandata:
+    if jc.utils.has_data(data):
+
         for entry in cleandata:
             output_line = {}
 

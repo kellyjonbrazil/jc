@@ -78,9 +78,11 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
 
-    for line in filter(None, data.splitlines()):
-        # parse the content
-        pass
+    if jc.utils.has_data(data):
+
+        for line in filter(None, data.splitlines()):
+            # parse the content
+            pass
 
     if raw:
         return raw_output
