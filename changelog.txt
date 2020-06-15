@@ -1,6 +1,6 @@
 jc changelog
 
-20200612 v1.11.6
+20200614 v1.11.6
 - Improve and standardize empty data check for all parsers
 
 20200612 v1.11.5
