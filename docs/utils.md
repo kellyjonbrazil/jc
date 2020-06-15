@@ -48,3 +48,18 @@ Returns:
 
     no return, just prints output to STDERR
 
+## has_data
+```python
+has_data(data)
+```
+
+Checks if the input contains data. If there are any non-whitespace characters then return True, else return False
+
+Parameters:
+
+    data:        (string) input to check whether it contains data
+
+Returns:
+
+    Boolean      True if input string (data) contains non-whitespace characters, otherwise False
+
