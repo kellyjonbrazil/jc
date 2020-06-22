@@ -274,6 +274,9 @@ def parse(data, raw=False, quiet=False):
                 if temp_rule:
                     chain['rules'].append(temp_rule)
 
+        if chain:
+            raw_output.append(chain)
+
     if raw:
         return raw_output
     else:
