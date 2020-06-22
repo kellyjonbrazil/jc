@@ -1,5 +1,8 @@
 jc changelog
 
+20200622 v1.11.7
+- Fix iptables parser issue which would not output the last chain
+
 20200614 v1.11.6
 - Improve and standardize empty data check for all parsers
 
