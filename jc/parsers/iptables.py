@@ -194,19 +194,19 @@ def process(proc_data):
             if 'bytes' in rule:
                 multiplier = 1
                 if rule['bytes'][-1] == 'K':
-                    multiplier = 1000
+                    multiplier = 10 ** 3
                     rule['bytes'] = rule['bytes'].rstrip('K')
                 elif rule['bytes'][-1] == 'M':
-                    multiplier = 1000000
+                    multiplier = 10 ** 6
                     rule['bytes'] = rule['bytes'].rstrip('M')
                 elif rule['bytes'][-1] == 'G':
-                    multiplier = 1000000000
+                    multiplier = 10 ** 9
                     rule['bytes'] = rule['bytes'].rstrip('G')
                 elif rule['bytes'][-1] == 'T':
-                    multiplier = 1000000000000
+                    multiplier = 10 ** 12
                     rule['bytes'] = rule['bytes'].rstrip('T')
                 elif rule['bytes'][-1] == 'P':
-                    multiplier = 1000000000000000
+                    multiplier = 10 ** 15
                     rule['bytes'] = rule['bytes'].rstrip('P')
 
                 try:
@@ -243,14 +243,14 @@ def parse(data, raw=False, quiet=False):
     chain = {}
     headers = []
 
-    cleandata = data.splitlines()
-
     if jc.utils.has_data(data):
 
-        for line in cleandata:
+        for line in list(filter(None, data.splitlines())):
 
             if line.startswith('Chain'):
-                raw_output.append(chain)
+                if chain:
+                    raw_output.append(chain)
+
                 chain = {}
                 headers = []
 
@@ -273,8 +273,6 @@ def parse(data, raw=False, quiet=False):
                 temp_rule = dict(zip(headers, rule))
                 if temp_rule:
                     chain['rules'].append(temp_rule)
-
-        raw_output = list(filter(None, raw_output))
 
     if raw:
         return raw_output
