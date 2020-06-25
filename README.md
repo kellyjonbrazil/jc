@@ -299,12 +299,11 @@ $ airport -s | jc --airport-s -p          # or:  jc -p airport -s
     "security": [
       "NONE"
     ]
-  },
-  ...
+  }
 ]
 ```
 ### arp
-```
+```json
 $ arp | jc --arp -p          # or:  jc -p arp
 [
   {
@@ -330,7 +329,7 @@ $ arp | jc --arp -p          # or:  jc -p arp
   }
 ]
 ```
-```
+```json
 $ arp -a | jc --arp -p          # or:  jc -p arp -a
 [
   {
@@ -361,7 +360,7 @@ $ arp -a | jc --arp -p          # or:  jc -p arp -a
 ]
 ```
 ### blkid
-```
+```json
 $ blkid | jc --blkid -p          # or:  jc -p blkid
 [
   {
@@ -386,7 +385,7 @@ $ blkid | jc --blkid -p          # or:  jc -p blkid
   }
 ]
 ```
-```
+```json
 # blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev -ip /dev/sda2
 [
   {
@@ -408,7 +407,7 @@ $ blkid | jc --blkid -p          # or:  jc -p blkid
 ]
 ```
 ### crontab
-```
+```json
 $ cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
 {
   "variables": [
@@ -479,7 +478,7 @@ $ cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
 }
 ```
 ### crontab-u (with user support)
-```
+```json
 $ cat /etc/crontab | jc --crontab-u -p
 {
   "variables": [
@@ -555,7 +554,7 @@ $ cat /etc/crontab | jc --crontab-u -p
 }
 ```
 ### CSV files
-```
+```json
 $ cat homes.csv 
 "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
 142, 160, 28, 10, 5, 3,  60, 0.28,  3167
@@ -597,12 +596,11 @@ $ cat homes.csv | jc --csv -p
     "Age": "41",
     "Acres": "0.33",
     "Taxes": "1471"
-  },
-  ...
+  }
 ]
 ```
 ### df
-```
+```json
 $ df | jc --df -p          # or:  jc -p df
 [
   {
@@ -620,12 +618,11 @@ $ df | jc --df -p          # or:  jc -p df
     "available": 1930664,
     "use_percent": 0,
     "mounted_on": "/dev/shm"
-  },
-  ...
+  }
 ]
 ```
 ### dig
-```
+```json
 $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com www.cnn.com @205.251.194.64
 [
   {
@@ -745,7 +742,7 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p di
   }
 ]
 ```
-```
+```json
 $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 [
   {
@@ -783,7 +780,7 @@ $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ]
 ```
 ### dmidecode
-```
+```json
 # dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode
 [
   {
@@ -824,12 +821,11 @@ $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
       "bios_revision": "4.6",
       "firmware_revision": "0.0"
     }
-  },
-  ...
+  }
 ]
 ```
 ### du
-```
+```json
 $ du /usr | jc --du -p          # or:  jc -p du /usr
 [
   {
@@ -855,12 +851,11 @@ $ du /usr | jc --du -p          # or:  jc -p du /usr
   {
     "size": 1008,
     "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
-  },
-  ...
+  }
 ]
 ```
 ### env
-```
+```json
 $ env | jc --env -p          # or:  jc -p env
 [
   {
@@ -882,12 +877,11 @@ $ env | jc --env -p          # or:  jc -p env
   {
     "name": "HISTSIZE",
     "value": "1000"
-  },
-  ...
+  }
 ]
 ```
 ### file
-```
+```json
 $ file * | jc --file -p          # or:  jc -p file *
 [
   {
@@ -917,12 +911,11 @@ $ file * | jc --file -p          # or:  jc -p file *
   {
     "filename": "centosserial.sh",
     "type": "Bourne-Again shell script text executable, UTF-8 Unicode text"
-  },
-  ...
+  }
 ]
 ```
 ### free
-```
+```json
 $ free | jc --free -p          # or:  jc -p free
 [
   {
@@ -943,7 +936,7 @@ $ free | jc --free -p          # or:  jc -p free
 ]
 ```
 ### /etc/fstab file
-```
+```json
 $ cat /etc/fstab | jc --fstab -p
 [
   {
@@ -973,7 +966,7 @@ $ cat /etc/fstab | jc --fstab -p
 ]
 ```
 ### /etc/group file
-```
+```json
 $ cat /etc/group | jc --group -p
 [
   {
@@ -1008,12 +1001,11 @@ $ cat /etc/group | jc --group -p
       "_calendar",
       "_dovecot"
     ]
-  },
-  ...
+  }
 ]
 ```
 ### /etc/gshadow file
-```
+```json
 $ cat /etc/gshadow | jc --gshadow -p
 [
   {
@@ -1030,12 +1022,11 @@ $ cat /etc/gshadow | jc --gshadow -p
       "syslog",
       "joeuser"
     ]
-  },
-  ...
+  }
 ]
 ```
 ### history
-```
+```json
 $ history | jc --history -p
 [
   {
@@ -1053,12 +1044,11 @@ $ history | jc --history -p
   {
     "line": 121,
     "command": "docker images"
-  },
-  ...
+  }
 ]
 ```
 ### /etc/hosts file
-```
+```json
 $ cat /etc/hosts | jc --hosts -p
 [
   {
@@ -1107,7 +1097,7 @@ $ cat /etc/hosts | jc --hosts -p
 ]
 ```
 ### id
-```
+```json
 $ id | jc --id -p          # or:  jc -p id
 {
   "uid": {
@@ -1137,7 +1127,7 @@ $ id | jc --id -p          # or:  jc -p id
 }
 ```
 ### ifconfig
-```
+```json
 $ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
 [
   {
@@ -1222,7 +1212,8 @@ User = hg
 [topsecret.server.com]
 Port = 50022
 ForwardX11 = no
-
+```
+```json
 $ cat example.ini | jc --ini -p
 {
   "bitbucket.org": {
@@ -1242,7 +1233,7 @@ $ cat example.ini | jc --ini -p
 }
 ```
 ### iptables
-```
+```json
 # iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
 [
   {
@@ -1298,12 +1289,11 @@ $ cat example.ini | jc --ini -p
         "options": "ADDRTYPE match dst-type LOCAL"
       }
     ]
-  },
-  ...
+  }
 ]
 ```
 ### jobs
-```
+```json
 $ jobs -l | jc --jobs -p          # or:  jc -p jobs
 [
   {
@@ -1335,7 +1325,7 @@ $ jobs -l | jc --jobs -p          # or:  jc -p jobs
 ]
 ```
 ### last and lastb
-```
+```json
 $ last | jc --last -p          # or:  jc -p last
 [
   {
@@ -1360,12 +1350,11 @@ $ last | jc --last -p          # or:  jc -p last
     "login": "Thu Feb 27 10:18",
     "logout": "10:18",
     "duration": "00:00"
-  },
-  ...
+  }
 ]
 ```
 ### ls
-```
+```json
 $ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
 [
   {
@@ -1395,12 +1384,11 @@ $ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
     "group": "root",
     "size": 33080,
     "date": "Aug 19 23:25"
-  },
-  ...
+  }
 ]
 ```
 ### lsblk
-```
+```json
 $ lsblk | jc --lsblk -p          # or:  jc -p lsblk
 [
   {
@@ -1420,15 +1408,13 @@ $ lsblk | jc --lsblk -p          # or:  jc -p lsblk
     "ro": false,
     "type": "part",
     "mountpoint": "/boot"
-  },
-  ...
+  }
 ]
 ```
 ### lsmod
-```
+```json
 $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 [
-  ...
   {
     "module": "nf_nat",
     "size": 26583,
@@ -1467,12 +1453,11 @@ $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
       "nf_conntrack_ipv4",
       "nf_conntrack_ipv6"
     ]
-  },
-  ...
+  }
 ]
 ```
 ### lsof
-```
+```json
 # lsof | jc --lsof -p          # or:  jc -p lsof
 [
   {
@@ -1510,12 +1495,11 @@ $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
     "size_off": 1624520,
     "node": 50360451,
     "name": "/usr/lib/systemd/systemd"
-  },
-  ...
+  }
 ]
 ```
 ### mount
-```
+```json
 $ mount | jc --mount -p          # or:  jc -p mount
 [
   {
@@ -1554,12 +1538,11 @@ $ mount | jc --mount -p          # or:  jc -p mount
       "nr_inodes=244375",
       "mode=755"
     ]
-  },
-  ...
+  }
 ]
 ```
 ### netstat
-```
+```json
 # netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
 [
   {
@@ -1706,8 +1689,7 @@ $ mount | jc --mount -p          # or:  jc -p mount
     "path": "/run/udev/control",
     "kind": "socket",
     "pid": 1
-  },
-  ...
+  }
 ]
 
 $ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
@@ -1790,7 +1772,7 @@ $ netstat -i | jc --netstat -p          # or:  jc -p netstat -i
 ]
 ```
 ### ntpq
-```
+```json
 $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
 [
   {
@@ -1822,7 +1804,7 @@ $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
 ]
 ```
 ### /etc/passwd file
-```
+```json
 $ cat /etc/passwd | jc --passwd -p
 [
   {
@@ -1851,12 +1833,11 @@ $ cat /etc/passwd | jc --passwd -p
     "comment": "System Services",
     "home": "/var/root",
     "shell": "/usr/bin/false"
-  },
-  ...
+  }
 ]
 ```
 ### pip list
-```
+```json
 $ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
 [
   {
@@ -1870,13 +1851,12 @@ $ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc 
   {
     "package": "asn1crypto",
     "version": "0.24.0"
-  },
-  ...
+  }
 ]
 
 ```
 ### pip show
-```
+```json
 $ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt wheel          # or:  jc -p pip3 show wrapt wheel
 [
   {
@@ -1906,7 +1886,7 @@ $ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt w
 ]
 ```
 ### ps
-```
+```json
 $ ps -ef | jc --ps -p          # or:  jc -p ps -ef
 [
   {
@@ -1938,11 +1918,10 @@ $ ps -ef | jc --ps -p          # or:  jc -p ps -ef
     "tty": null,
     "time": "00:00:00",
     "cmd": "[kworker/0:0H]"
-  },
-  ...
+  }
 ]
 ```
-```
+```json
 $ ps axu | jc --ps -p          # or:  jc -p ps axu
 [
   {
@@ -1983,12 +1962,11 @@ $ ps axu | jc --ps -p          # or:  jc -p ps axu
     "start": "Nov09",
     "time": "0:00",
     "command": "[kworker/0:0H]"
-  },
-  ...
+  }
 ]
 ```
 ### route
-```
+```json
 $ route -ee | jc --route -p          # or:  jc -p route -ee
 [
   {
@@ -2027,7 +2005,7 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 ]
 ```
 ### /etc/shadow file
-```
+```json
 # cat /etc/shadow | jc --shadow -p
 [
   {
@@ -2059,12 +2037,11 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
     "warn": 7,
     "inactive": null,
     "expire": null
-  },
-  ...
+  }
 ]
 ```
 ### ss
-```
+```json
 # ss -a | jc --ss -p          # or:  jc -p ss -a
 [
   {
@@ -2084,7 +2061,6 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
     "pid": 893,
     "channel": "rtnl:systemd-resolve"
   },
-  ...
   {
     "netid": "p_raw",
     "state": "UNCONN",
@@ -2114,7 +2090,6 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
     "peer_port": "0",
     "path": "/run/udev/control"
   },
-  ...
   {
     "netid": "icmp6",
     "state": "UNCONN",
@@ -2183,8 +2158,8 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 ]
 ```
 ### stat
-```
-$ stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
+```json
+$ stat /bin/ | jc --stat -p          # or:  jc -p stat /bin/
 [
   {
     "file": "/bin/bash",
@@ -2225,12 +2200,11 @@ $ stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
     "modify_time": "2018-03-12 23:04:27.000000000 +0000",
     "change_time": "2019-08-12 17:21:29.545944399 +0000",
     "birth_time": null
-  },
-  ...
+  }
 ]
 ```
 ### systemctl
-```
+```json
 $ systemctl -a | jc --systemctl -p          # or:  jc -p systemctl -a
 [
   {
@@ -2253,12 +2227,11 @@ $ systemctl -a | jc --systemctl -p          # or:  jc -p systemctl -a
     "active": "active",
     "sub": "plugged",
     "description": "VMware_Virtual_IDE_CDROM_Drive"
-  },
-  ...
+  }
 ]
 ```
 ### systemctl list-jobs
-```
+```json
 $ systemctl list-jobs | jc --systemctl-lj -p          # or:  jc -p systemctl list-jobs
 [
   {
@@ -2282,7 +2255,7 @@ $ systemctl list-jobs | jc --systemctl-lj -p          # or:  jc -p systemctl lis
 ]
 ```
 ### systemctl list-sockets
-```
+```json
 $ systemctl list-sockets | jc --systemctl-ls -p          # or:  jc -p systemctl list-sockets
 [
   {
@@ -2299,12 +2272,11 @@ $ systemctl list-sockets | jc --systemctl-ls -p          # or:  jc -p systemctl 
     "listen": "/run/dmeventd-client",
     "unit": "dm-event.socket",
     "activates": "dm-event.service"
-  },
-  ...
+  }
 ]
 ```
 ### systemctl list-unit-files
-```
+```json
 $ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemctl list-unit-files
 [
   {
@@ -2318,12 +2290,11 @@ $ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p system
   {
     "unit_file": "dev-mqueue.mount",
     "state": "static"
-  },
-  ...
+  }
 ]
 ```
 ### timedatectl status
-```
+```json
 $ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
 {
   "local_time": "Tue 2020-03-10 17:53:21 PDT",
@@ -2337,7 +2308,7 @@ $ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
 }
 ```
 ### uname -a
-```
+```json
 $ uname -a | jc --uname -p          # or:  jc -p uname -a
 {
   "kernel_name": "Linux",
@@ -2351,7 +2322,7 @@ $ uname -a | jc --uname -p          # or:  jc -p uname -a
 }
 ```
 ### uptime
-```
+```json
 $ uptime | jc --uptime -p          # or:  jc -p uptime
 {
   "time": "11:30:44",
@@ -2363,7 +2334,7 @@ $ uptime | jc --uptime -p          # or:  jc -p uptime
 }
 ```
 ### w
-```
+```json
 $ w | jc --w -p          # or:  jc -p w
 [
   {
@@ -2399,7 +2370,7 @@ $ w | jc --w -p          # or:  jc -p w
 ]
 ```
 ### who
-```
+```json
 $ who | jc --who -p          # or:  jc -p who
 [
   {
@@ -2414,8 +2385,7 @@ $ who | jc --who -p          # or:  jc -p who
     "from": "192.168.71.1"
   }
 ]
-```
-```
+
 $ who -a | jc --who -p          # or:  jc -p who -a
 [
   {
@@ -2481,7 +2451,8 @@ $ cat cd_catalog.xml
     <YEAR>1988</YEAR>
   </CD>
   ...
-
+```
+```json
 $ cat cd_catalog.xml | jc --xml -p
 {
   "CATALOG": {
@@ -2501,8 +2472,9 @@ $ cat cd_catalog.xml | jc --xml -p
         "COMPANY": "CBS Records",
         "PRICE": "9.90",
         "YEAR": "1988"
-      },
-  ...
+      }
+    ]
+  }
 }
 ```
 ### YAML files
@@ -2527,7 +2499,8 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
-
+```
+```json
 $ cat istio.yaml | jc --yaml -p
 [
   {
