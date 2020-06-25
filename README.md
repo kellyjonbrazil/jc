@@ -391,7 +391,7 @@ $ blkid | jc --blkid -p          # or:  jc -p blkid
   {
     "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
     "id_fs_uuid_enc": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
-    "id_fs_version": "LVM2\x20001",
+    "id_fs_version": "LVM220001",
     "id_fs_type": "LVM2_member",
     "id_fs_usage": "raid",
     "id_iolimit_minimum_io_size": 512,
