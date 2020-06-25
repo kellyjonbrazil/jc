@@ -554,14 +554,15 @@ $ cat /etc/crontab | jc --crontab-u -p
 }
 ```
 ### CSV files
-```json
+```
 $ cat homes.csv 
 "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
 142, 160, 28, 10, 5, 3,  60, 0.28,  3167
 175, 180, 18,  8, 4, 1,  12, 0.43,  4033
 129, 132, 13,  6, 3, 1,  41, 0.33,  1471
 ...
-
+```
+```json
 $ cat homes.csv | jc --csv -p
 [
   {
