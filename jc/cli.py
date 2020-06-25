@@ -21,7 +21,7 @@ import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.11.7'
+    version = '1.11.8'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -247,7 +247,7 @@ def helptext(message):
 {parsers_string}
     Options:
             -a               about jc
-            -d               debug - show trace messages
+            -d               debug - show traceback (-dd for verbose traceback)
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress warnings
@@ -264,12 +264,12 @@ def helptext(message):
 
 
 def json_out(data, pretty=False, mono=False, piped_out=False):
-    # set colors
-    class JcStyle(Style):
-        styles = set_env_colors()
-
 
     if not mono and not piped_out:
+        # set colors
+        class JcStyle(Style):
+            styles = set_env_colors()
+
         if pretty:
             print(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
         else:
@@ -370,6 +370,7 @@ def main():
             options.extend(opt[1:])
 
     debug = 'd' in options
+    verbose_debug = True if options.count('d') > 1 else False
     mono = 'm' in options
     pretty = 'p' in options
     quiet = 'q' in options
@@ -388,6 +389,10 @@ def main():
     found = False
 
     if debug:
+        if verbose_debug:
+            import cgitb
+            cgitb.enable(display=1, logdir=None, context=5, format="text")
+
         for arg in sys.argv:
             parser_name = parser_shortname(arg)
 

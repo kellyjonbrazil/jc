@@ -1,5 +1,8 @@
 jc changelog
 
+20200625 v1.11.8
+- Add verbose debug option using -dd argument
+
 20200622 v1.11.7
 - Fix iptables parser issue which would not output the last chain
 
