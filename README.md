@@ -7,7 +7,7 @@ JSON CLI output utility
 `jc` JSONifies the output of many CLI tools and file-types for easier parsing in scripts. See the [**Parsers**](#parsers) section for supported commands and file-types.
 
 This allows further command-line processing of output with tools like `jq` by piping commands:
-```
+```json
 $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 {
   "filename": "docker",
@@ -20,7 +20,7 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 }
 ```
 or using the alternative "magic" syntax:
-```
+```json
 $ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
 {
   "filename": "docker",
@@ -33,7 +33,7 @@ $ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
 }
 ```
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary, or list of dictionaries, instead of JSON:
-```
+```python
 >>> import jc.parsers.ls
 >>> 
 >>> data='''-rwxr-xr-x  1 root  wheel    23648 May  3 22:26 cat
@@ -73,38 +73,38 @@ For more information on the motivations for this project, please see my [blog po
 There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `nix-env`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
-```
-$ pip3 install jc
+```bash
+pip3 install jc
 ```
 
 ### OS Package Repositories
 #### Dnf (Fedora linux)
-```
-# dnf install jc
+```bash
+dnf install jc
 ```
 or
-```
-# dnf --enablerepo=updates-testing install jc
+```bash
+dnf --enablerepo=updates-testing install jc
 ```
 
 #### Zypper (openSUSE linux)
-```
-# zypper install jc
+```bash
+zypper install jc
 ```
 
 #### Nix-env (NixOS linux)
-```
-$ nix-env -iA nixpkgs.jc
+```bash
+nix-env -iA nixpkgs.jc
 ```
 
 #### Brew (macOS)
-```
-$ brew install jc
+```bash
+brew install jc
 ```
 
 #### Ports (FreeBSD)
-```
-# portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean
+```bash
+portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean
 ```
 
 ### Packages and Binaries
@@ -112,11 +112,11 @@ Please see https://kellyjonbrazil.github.io/jc-packaging/ for details.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
-``` 
+```bash
 COMMAND | jc PARSER [OPTIONS]
 ```
 Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given. (Note: command aliases are not supported)
-```
+```bash
 jc [OPTIONS] COMMAND
 ```
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
@@ -184,17 +184,17 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
-```
+```bash
 JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 ```
 Where colors are: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `gray`, `brightblack`, `brightred`, `brightgreen`, `brightyellow`, `brightblue`, `brightmagenta`, `brightcyan`, `white`, or  `default`
 
 For example, to set to the default colors:
-```
+```bash
 JC_COLORS=blue,brightblack,magenta,green
 ```
 or
-```
+```bash
 JC_COLORS=default,default,default,default
 ```
 
@@ -216,8 +216,8 @@ Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parse
 
 You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
-```
-$ cat lsof.out | jc --lsof -q
+```bash
+cat lsof.out | jc --lsof -q
 ```
 
 Tested on:
@@ -243,7 +243,7 @@ Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
 
 ## Examples
 ### airport -I
-```
+```json
 $ airport -I | jc --airport -p          # or:  jc -p airport -I
 {
   "agrctlrssi": -66,
@@ -264,7 +264,7 @@ $ airport -I | jc --airport -p          # or:  jc -p airport -I
 }
 ```
 ### airport -s
-```
+```json
 $ airport -s | jc --airport-s -p          # or:  jc -p airport -s
 [
   {
