@@ -70,8 +70,13 @@ Schemas for each parser can be found in the [`docs/parsers`](https://github.com/
 
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
-## Why Would Anyone Do This?!
+## Why Would Anyone Do This!?
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
+
+See also:
+- [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
+- [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-7)
+- [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
 
 ## Installation
 There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `nix-env`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
