@@ -7,8 +7,10 @@ JSON CLI output utility
 `jc` JSONifies the output of many CLI tools and file-types for easier parsing in scripts. See the [**Parsers**](#parsers) section for supported commands and file-types.
 
 This allows further command-line processing of output with tools like `jq` by piping commands:
+```bash
+ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
+```
 ```json
-$ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 {
   "filename": "docker",
   "flags": "-rwxr-xr-x",
@@ -20,8 +22,9 @@ $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 }
 ```
 or using the alternative "magic" syntax:
+```bash
+jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
 ```json
-$ jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
 {
   "filename": "docker",
   "flags": "-rwxr-xr-x",
@@ -243,8 +246,10 @@ Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
 
 ## Examples
 ### airport -I
+```bash
+airport -I | jc --airport -p          # or:  jc -p airport -I
+```
 ```json
-$ airport -I | jc --airport -p          # or:  jc -p airport -I
 {
   "agrctlrssi": -66,
   "agrextrssi": 0,
@@ -264,8 +269,10 @@ $ airport -I | jc --airport -p          # or:  jc -p airport -I
 }
 ```
 ### airport -s
+```bash
+airport -s | jc --airport-s -p          # or:  jc -p airport -s
+```
 ```json
-$ airport -s | jc --airport-s -p          # or:  jc -p airport -s
 [
   {
     "ssid": "DIRECT-4A-HP OfficeJet 3830",
@@ -303,8 +310,10 @@ $ airport -s | jc --airport-s -p          # or:  jc -p airport -s
 ]
 ```
 ### arp
+```bash
+arp | jc --arp -p          # or:  jc -p arp
+```
 ```json
-$ arp | jc --arp -p          # or:  jc -p arp
 [
   {
     "address": "gateway",
@@ -329,8 +338,10 @@ $ arp | jc --arp -p          # or:  jc -p arp
   }
 ]
 ```
+```bash
+arp -a | jc --arp -p          # or:  jc -p arp -a
+```
 ```json
-$ arp -a | jc --arp -p          # or:  jc -p arp -a
 [
   {
     "name": null,
@@ -360,8 +371,10 @@ $ arp -a | jc --arp -p          # or:  jc -p arp -a
 ]
 ```
 ### blkid
+```bash
+blkid | jc --blkid -p          # or:  jc -p blkid
+```
 ```json
-$ blkid | jc --blkid -p          # or:  jc -p blkid
 [
   {
     "device": "/dev/sda1",
@@ -385,8 +398,10 @@ $ blkid | jc --blkid -p          # or:  jc -p blkid
   }
 ]
 ```
+```bash
+blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev -ip /dev/sda2
+```
 ```json
-# blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev -ip /dev/sda2
 [
   {
     "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
@@ -407,8 +422,10 @@ $ blkid | jc --blkid -p          # or:  jc -p blkid
 ]
 ```
 ### crontab
+```bash
+cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
+```
 ```json
-$ cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
 {
   "variables": [
     {
@@ -478,8 +495,10 @@ $ cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
 }
 ```
 ### crontab-u (with user support)
+```bash
+cat /etc/crontab | jc --crontab-u -p
+```
 ```json
-$ cat /etc/crontab | jc --crontab-u -p
 {
   "variables": [
     {
@@ -554,16 +573,20 @@ $ cat /etc/crontab | jc --crontab-u -p
 }
 ```
 ### CSV files
+```bash
+cat homes.csv
 ```
-$ cat homes.csv 
+```
 "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
 142, 160, 28, 10, 5, 3,  60, 0.28,  3167
 175, 180, 18,  8, 4, 1,  12, 0.43,  4033
 129, 132, 13,  6, 3, 1,  41, 0.33,  1471
 ...
 ```
+```bash
+cat homes.csv | jc --csv -p
+```
 ```json
-$ cat homes.csv | jc --csv -p
 [
   {
     "Sell": "142",
@@ -601,8 +624,10 @@ $ cat homes.csv | jc --csv -p
 ]
 ```
 ### df
+```bash
+df | jc --df -p          # or:  jc -p df
+```
 ```json
-$ df | jc --df -p          # or:  jc -p df
 [
   {
     "filesystem": "devtmpfs",
@@ -623,8 +648,10 @@ $ df | jc --df -p          # or:  jc -p df
 ]
 ```
 ### dig
+```bash
+dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com www.cnn.com @205.251.194.64
+```
 ```json
-$ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com www.cnn.com @205.251.194.64
 [
   {
     "id": 5509,
@@ -743,8 +770,10 @@ $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p di
   }
 ]
 ```
+```bash
+dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
+```
 ```json
-$ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 [
   {
     "id": 50324,
@@ -781,8 +810,10 @@ $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ]
 ```
 ### dmidecode
+```bash
+dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode
+```
 ```json
-# dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode
 [
   {
     "handle": "0x0000",
@@ -826,8 +857,10 @@ $ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ]
 ```
 ### du
+```bash
+du /usr | jc --du -p          # or:  jc -p du /usr
+```
 ```json
-$ du /usr | jc --du -p          # or:  jc -p du /usr
 [
   {
     "size": 104608,
@@ -856,8 +889,10 @@ $ du /usr | jc --du -p          # or:  jc -p du /usr
 ]
 ```
 ### env
+```bash
+env | jc --env -p          # or:  jc -p env
+```
 ```json
-$ env | jc --env -p          # or:  jc -p env
 [
   {
     "name": "XDG_SESSION_ID",
@@ -882,8 +917,10 @@ $ env | jc --env -p          # or:  jc -p env
 ]
 ```
 ### file
+```bash
+file * | jc --file -p          # or:  jc -p file *
+```
 ```json
-$ file * | jc --file -p          # or:  jc -p file *
 [
   {
     "filename": "Applications",
@@ -916,8 +953,10 @@ $ file * | jc --file -p          # or:  jc -p file *
 ]
 ```
 ### free
+```bash
+free | jc --free -p          # or:  jc -p free
+```
 ```json
-$ free | jc --free -p          # or:  jc -p free
 [
   {
     "type": "Mem",
@@ -937,8 +976,10 @@ $ free | jc --free -p          # or:  jc -p free
 ]
 ```
 ### /etc/fstab file
+```bash
+cat /etc/fstab | jc --fstab -p
+```
 ```json
-$ cat /etc/fstab | jc --fstab -p
 [
   {
     "fs_spec": "/dev/mapper/centos-root",
@@ -967,8 +1008,10 @@ $ cat /etc/fstab | jc --fstab -p
 ]
 ```
 ### /etc/group file
+```bash
+cat /etc/group | jc --group -p
+```
 ```json
-$ cat /etc/group | jc --group -p
 [
   {
     "group_name": "nobody",
@@ -1006,8 +1049,10 @@ $ cat /etc/group | jc --group -p
 ]
 ```
 ### /etc/gshadow file
+```bash
+cat /etc/gshadow | jc --gshadow -p
+```
 ```json
-$ cat /etc/gshadow | jc --gshadow -p
 [
   {
     "group_name": "root",
@@ -1027,8 +1072,10 @@ $ cat /etc/gshadow | jc --gshadow -p
 ]
 ```
 ### history
+```bash
+history | jc --history -p
+```
 ```json
-$ history | jc --history -p
 [
   {
     "line": 118,
@@ -1049,8 +1096,10 @@ $ history | jc --history -p
 ]
 ```
 ### /etc/hosts file
+```bash
+cat /etc/hosts | jc --hosts -p
+```
 ```json
-$ cat /etc/hosts | jc --hosts -p
 [
   {
     "ip": "127.0.0.1",
@@ -1098,8 +1147,10 @@ $ cat /etc/hosts | jc --hosts -p
 ]
 ```
 ### id
+```bash
+id | jc --id -p          # or:  jc -p id
+```
 ```json
-$ id | jc --id -p          # or:  jc -p id
 {
   "uid": {
     "id": 1000,
@@ -1128,8 +1179,10 @@ $ id | jc --id -p          # or:  jc -p id
 }
 ```
 ### ifconfig
+```bash
+ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
+```
 ```json
-$ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
 [
   {
     "name": "ens33",
@@ -1199,8 +1252,10 @@ $ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
 ]
 ```
 ### INI files
+```bash
+cat example.ini
 ```
-$ cat example.ini
+```
 [DEFAULT]
 ServerAliveInterval = 45
 Compression = yes
@@ -1214,8 +1269,10 @@ User = hg
 Port = 50022
 ForwardX11 = no
 ```
+```bash
+cat example.ini | jc --ini -p
+```
 ```json
-$ cat example.ini | jc --ini -p
 {
   "bitbucket.org": {
     "serveraliveinterval": "45",
@@ -1234,8 +1291,10 @@ $ cat example.ini | jc --ini -p
 }
 ```
 ### iptables
+```bash
+iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
+```
 ```json
-# iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
 [
   {
     "chain": "PREROUTING",
@@ -1294,8 +1353,10 @@ $ cat example.ini | jc --ini -p
 ]
 ```
 ### jobs
+```bash
+jobs -l | jc --jobs -p          # or:  jc -p jobs
+```
 ```json
-$ jobs -l | jc --jobs -p          # or:  jc -p jobs
 [
   {
     "job_number": 1,
@@ -1326,8 +1387,10 @@ $ jobs -l | jc --jobs -p          # or:  jc -p jobs
 ]
 ```
 ### last and lastb
+```bash
+last | jc --last -p          # or:  jc -p last
+```
 ```json
-$ last | jc --last -p          # or:  jc -p last
 [
   {
     "user": "joeuser",
@@ -1355,8 +1418,10 @@ $ last | jc --last -p          # or:  jc -p last
 ]
 ```
 ### ls
-```json
+```bash
 $ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
+```
+```json
 [
   {
     "filename": "apropos",
@@ -1389,8 +1454,10 @@ $ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
 ]
 ```
 ### lsblk
+```bash
+lsblk | jc --lsblk -p          # or:  jc -p lsblk
+```
 ```json
-$ lsblk | jc --lsblk -p          # or:  jc -p lsblk
 [
   {
     "name": "sda",
@@ -1413,8 +1480,10 @@ $ lsblk | jc --lsblk -p          # or:  jc -p lsblk
 ]
 ```
 ### lsmod
+```bash
+lsmod | jc --lsmod -p          # or:  jc -p lsmod
+```
 ```json
-$ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 [
   {
     "module": "nf_nat",
@@ -1458,8 +1527,10 @@ $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 ]
 ```
 ### lsof
+```bash
+lsof | jc --lsof -p          # or:  jc -p lsof
+```
 ```json
-# lsof | jc --lsof -p          # or:  jc -p lsof
 [
   {
     "command": "systemd",
@@ -1500,8 +1571,10 @@ $ lsmod | jc --lsmod -p          # or:  jc -p lsmod
 ]
 ```
 ### mount
+```bash
+mount | jc --mount -p          # or:  jc -p mount
+```
 ```json
-$ mount | jc --mount -p          # or:  jc -p mount
 [
   {
     "filesystem": "sysfs",
@@ -1543,8 +1616,10 @@ $ mount | jc --mount -p          # or:  jc -p mount
 ]
 ```
 ### netstat
+```bash
+netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
+```
 ```json
-# netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
 [
   {
     "proto": "tcp",
@@ -1692,8 +1767,11 @@ $ mount | jc --mount -p          # or:  jc -p mount
     "pid": 1
   }
 ]
-
-$ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
+```
+```bash
+netstat -r | jc --netstat -p          # or:  jc -p netstat -r
+```
+```json
 [
   {
     "destination": "default",
@@ -1739,8 +1817,11 @@ $ netstat -r | jc --netstat -p          # or:  jc -p netstat -r
     ]
   }
 ]
-
-$ netstat -i | jc --netstat -p          # or:  jc -p netstat -i
+```
+```bash
+netstat -i | jc --netstat -p          # or:  jc -p netstat -i
+```
+```json
 [
   {
     "iface": "ens33",
@@ -1773,8 +1854,10 @@ $ netstat -i | jc --netstat -p          # or:  jc -p netstat -i
 ]
 ```
 ### ntpq
+```bash
+ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
+```
 ```json
-$ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
 [
   {
     "remote": "44.190.6.254",
@@ -1805,8 +1888,10 @@ $ ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p
 ]
 ```
 ### /etc/passwd file
+```bash
+cat /etc/passwd | jc --passwd -p
+```
 ```json
-$ cat /etc/passwd | jc --passwd -p
 [
   {
     "username": "nobody",
@@ -1838,8 +1923,10 @@ $ cat /etc/passwd | jc --passwd -p
 ]
 ```
 ### pip list
+```bash
+pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
+```
 ```json
-$ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
 [
   {
     "package": "ansible",
@@ -1857,8 +1944,10 @@ $ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc 
 
 ```
 ### pip show
+```bash
+pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt wheel          # or:  jc -p pip3 show wrapt wheel
+```
 ```json
-$ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt wheel          # or:  jc -p pip3 show wrapt wheel
 [
   {
     "name": "wrapt",
@@ -1887,8 +1976,10 @@ $ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt w
 ]
 ```
 ### ps
+```bash
+ps -ef | jc --ps -p          # or:  jc -p ps -ef
+```
 ```json
-$ ps -ef | jc --ps -p          # or:  jc -p ps -ef
 [
   {
     "uid": "root",
@@ -1922,8 +2013,10 @@ $ ps -ef | jc --ps -p          # or:  jc -p ps -ef
   }
 ]
 ```
+```bash
+ps axu | jc --ps -p          # or:  jc -p ps axu
+```
 ```json
-$ ps axu | jc --ps -p          # or:  jc -p ps axu
 [
   {
     "user": "root",
@@ -1967,8 +2060,10 @@ $ ps axu | jc --ps -p          # or:  jc -p ps axu
 ]
 ```
 ### route
+```bash
+route -ee | jc --route -p          # or:  jc -p route -ee
+```
 ```json
-$ route -ee | jc --route -p          # or:  jc -p route -ee
 [
   {
     "destination": "default",
@@ -2006,8 +2101,10 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 ]
 ```
 ### /etc/shadow file
+```bash
+cat /etc/shadow | jc --shadow -p
+```
 ```json
-# cat /etc/shadow | jc --shadow -p
 [
   {
     "username": "root",
@@ -2042,8 +2139,10 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 ]
 ```
 ### ss
+```bash
+ss -a | jc --ss -p          # or:  jc -p ss -a
+```
 ```json
-# ss -a | jc --ss -p          # or:  jc -p ss -a
 [
   {
     "netid": "nl",
@@ -2159,8 +2258,10 @@ $ route -ee | jc --route -p          # or:  jc -p route -ee
 ]
 ```
 ### stat
+```bash
+stat /bin/ | jc --stat -p          # or:  jc -p stat /bin/
+```
 ```json
-$ stat /bin/ | jc --stat -p          # or:  jc -p stat /bin/
 [
   {
     "file": "/bin/bash",
@@ -2205,8 +2306,10 @@ $ stat /bin/ | jc --stat -p          # or:  jc -p stat /bin/
 ]
 ```
 ### systemctl
+```bash
+systemctl -a | jc --systemctl -p          # or:  jc -p systemctl -a
+```
 ```json
-$ systemctl -a | jc --systemctl -p          # or:  jc -p systemctl -a
 [
   {
     "unit": "proc-sys-fs-binfmt_misc.automount",
@@ -2232,8 +2335,10 @@ $ systemctl -a | jc --systemctl -p          # or:  jc -p systemctl -a
 ]
 ```
 ### systemctl list-jobs
+```bash
+systemctl list-jobs | jc --systemctl-lj -p          # or:  jc -p systemctl list-jobs
+```
 ```json
-$ systemctl list-jobs | jc --systemctl-lj -p          # or:  jc -p systemctl list-jobs
 [
   {
     "job": 3543,
@@ -2256,8 +2361,10 @@ $ systemctl list-jobs | jc --systemctl-lj -p          # or:  jc -p systemctl lis
 ]
 ```
 ### systemctl list-sockets
+```bash
+systemctl list-sockets | jc --systemctl-ls -p          # or:  jc -p systemctl list-sockets
+```
 ```json
-$ systemctl list-sockets | jc --systemctl-ls -p          # or:  jc -p systemctl list-sockets
 [
   {
     "listen": "/dev/log",
@@ -2277,8 +2384,10 @@ $ systemctl list-sockets | jc --systemctl-ls -p          # or:  jc -p systemctl 
 ]
 ```
 ### systemctl list-unit-files
+```bash
+systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemctl list-unit-files
+```
 ```json
-$ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemctl list-unit-files
 [
   {
     "unit_file": "proc-sys-fs-binfmt_misc.automount",
@@ -2295,8 +2404,10 @@ $ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p system
 ]
 ```
 ### timedatectl status
+```bash
+timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
+```
 ```json
-$ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
 {
   "local_time": "Tue 2020-03-10 17:53:21 PDT",
   "universal_time": "Wed 2020-03-11 00:53:21 UTC",
@@ -2309,8 +2420,10 @@ $ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
 }
 ```
 ### uname -a
+```bash
+uname -a | jc --uname -p          # or:  jc -p uname -a
+```
 ```json
-$ uname -a | jc --uname -p          # or:  jc -p uname -a
 {
   "kernel_name": "Linux",
   "node_name": "user-ubuntu",
@@ -2323,8 +2436,10 @@ $ uname -a | jc --uname -p          # or:  jc -p uname -a
 }
 ```
 ### uptime
+```bash
+uptime | jc --uptime -p          # or:  jc -p uptime
+```
 ```json
-$ uptime | jc --uptime -p          # or:  jc -p uptime
 {
   "time": "11:30:44",
   "uptime": "1 day, 21:17",
@@ -2335,8 +2450,10 @@ $ uptime | jc --uptime -p          # or:  jc -p uptime
 }
 ```
 ### w
+```bash
+w | jc --w -p          # or:  jc -p w
+```
 ```json
-$ w | jc --w -p          # or:  jc -p w
 [
   {
     "user": "root",
@@ -2371,8 +2488,10 @@ $ w | jc --w -p          # or:  jc -p w
 ]
 ```
 ### who
+```bash
+who | jc --who -p          # or:  jc -p who
+```
 ```json
-$ who | jc --who -p          # or:  jc -p who
 [
   {
     "user": "joeuser",
@@ -2386,8 +2505,11 @@ $ who | jc --who -p          # or:  jc -p who
     "from": "192.168.71.1"
   }
 ]
-
-$ who -a | jc --who -p          # or:  jc -p who -a
+```
+```bash
+who -a | jc --who -p          # or:  jc -p who -a
+```
+```json
 [
   {
     "event": "reboot",
@@ -2431,8 +2553,10 @@ $ who -a | jc --who -p          # or:  jc -p who -a
 ]
 ```
 ### XML files
+```bash
+cat cd_catalog.xml
 ```
-$ cat cd_catalog.xml 
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
   <CD>
@@ -2453,8 +2577,10 @@ $ cat cd_catalog.xml
   </CD>
   ...
 ```
+```bash
+cat cd_catalog.xml | jc --xml -p
+```
 ```json
-$ cat cd_catalog.xml | jc --xml -p
 {
   "CATALOG": {
     "CD": [
@@ -2479,8 +2605,10 @@ $ cat cd_catalog.xml | jc --xml -p
 }
 ```
 ### YAML files
+```bash
+cat istio.yaml 
 ```
-$ cat istio.yaml 
+```yaml
 apiVersion: "authentication.istio.io/v1alpha1"
 kind: "Policy"
 metadata:
@@ -2501,8 +2629,10 @@ spec:
     tls:
       mode: ISTIO_MUTUAL
 ```
+```bash
+cat istio.yaml | jc --yaml -p
+```
 ```json
-$ cat istio.yaml | jc --yaml -p
 [
   {
     "apiVersion": "authentication.istio.io/v1alpha1",
