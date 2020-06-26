@@ -24,6 +24,7 @@ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
 or using the alternative "magic" syntax:
 ```bash
 jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
+```
 ```json
 {
   "filename": "docker",
