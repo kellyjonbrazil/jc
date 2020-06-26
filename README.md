@@ -2260,7 +2260,7 @@ ss -a | jc --ss -p          # or:  jc -p ss -a
 ```
 ### stat
 ```bash
-stat /bin/ | jc --stat -p          # or:  jc -p stat /bin/
+stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
 ```
 ```json
 [
