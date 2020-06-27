@@ -79,7 +79,7 @@ See also:
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `nix-env`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```bash
@@ -104,6 +104,11 @@ zypper install jc
 #### Nix-env (NixOS linux)
 ```bash
 nix-env -iA nixpkgs.jc
+```
+
+#### Guix (Guix System linux)
+```bash
+guix install jc
 ```
 
 #### Brew (macOS)
