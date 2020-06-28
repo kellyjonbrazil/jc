@@ -87,42 +87,17 @@ pip3 install jc
 ```
 
 ### OS Package Repositories
-#### Dnf (Fedora linux)
-```bash
-dnf install jc
-```
-or
-```bash
-dnf --enablerepo=updates-testing install jc
-```
 
-#### Zypper (openSUSE linux)
-```bash
-zypper install jc
-```
+| OS                    | Command                                                                       | 
+|-----------------------|-------------------------------------------------------------------------------|
+| Fedora linux          | `dnf install jc` or `dnf --enablerepo=updates-testing install jc`             |
+| openSUSE linux        | `zypper install jc`                                                           |
+| NixOS linux           | `nix-env -iA nixpkgs.jc`                                                      |
+| Guix System linux     | `guix install jc`                                                             |
+| MacOS                 | `brew install jc`                                                             |
+| FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 
-#### Nix-env (NixOS linux)
-```bash
-nix-env -iA nixpkgs.jc
-```
-
-#### Guix (Guix System linux)
-```bash
-guix install jc
-```
-
-#### Brew (macOS)
-```bash
-brew install jc
-```
-
-#### Ports (FreeBSD)
-```bash
-portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean
-```
-
-### Packages and Binaries
-Please see https://kellyjonbrazil.github.io/jc-packaging/ for details.
+> For more packages and binaries, see https://kellyjonbrazil.github.io/jc-packaging/.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
