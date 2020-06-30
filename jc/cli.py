@@ -399,12 +399,13 @@ def main():
                 break
 
             except Exception:
-                if verbose_debug:
-                    import cgitb
-                    cgitb.enable(display=1, logdir=None, context=5, format="text")
-
                 if debug:
+                    if verbose_debug:
+                        import cgitb
+                        cgitb.enable(display=1, logdir=None, context=5, format="text")
+
                     raise
+
                 else:
                     jc.utils.error_message(
                         f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
