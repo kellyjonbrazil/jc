@@ -387,32 +387,25 @@ def main():
 
     found = False
 
-    if debug:
-        if verbose_debug:
-            import cgitb
-            cgitb.enable(display=1, logdir=None, context=5, format="text")
+    for arg in sys.argv:
+        parser_name = parser_shortname(arg)
 
-        for arg in sys.argv:
-            parser_name = parser_shortname(arg)
-
-            if parser_name in parsers:
-                # load parser module just in time so we don't need to load all modules
-                parser = parser_module(arg)
+        if parser_name in parsers:
+            # load parser module just in time so we don't need to load all modules
+            parser = parser_module(arg)
+            try:
                 result = parser.parse(data, raw=raw, quiet=quiet)
                 found = True
                 break
-    else:
-        for arg in sys.argv:
-            parser_name = parser_shortname(arg)
 
-            if parser_name in parsers:
-                # load parser module just in time so we don't need to load all modules
-                parser = parser_module(arg)
-                try:
-                    result = parser.parse(data, raw=raw, quiet=quiet)
-                    found = True
-                    break
-                except Exception:
+            except Exception:
+                if verbose_debug:
+                    import cgitb
+                    cgitb.enable(display=1, logdir=None, context=5, format="text")
+
+                if debug:
+                    raise
+                else:
                     jc.utils.error_message(
                         f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d option.')
                     sys.exit(1)
