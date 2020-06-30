@@ -124,18 +124,17 @@ def set_env_colors():
         input_error = True
 
     if env_colors and len(color_list) != 4:
-        print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
         input_error = True
 
     if env_colors:
         for color in color_list:
             if color not in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'gray', 'brightblack', 'brightred',
                              'brightgreen', 'brightyellow', 'brightblue', 'brightmagenta', 'brightcyan', 'white', 'default']:
-                print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
                 input_error = True
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
+        print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
