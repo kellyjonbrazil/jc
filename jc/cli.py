@@ -408,7 +408,8 @@ def main():
 
                 else:
                     jc.utils.error_message(
-                        f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n         For details use the -d or -dd option.')
+                        f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
+                        '                 For details use the -d or -dd option.')
                     sys.exit(1)
 
     if not found:
