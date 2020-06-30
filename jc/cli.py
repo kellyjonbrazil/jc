@@ -86,8 +86,8 @@ parsers = [
 # List of custom or override parsers.
 # Allow any <user_data_dir>/jc/jcparsers/*.py
 local_parsers = []
-data_dir = appdirs.user_data_dir("jc", "jc")
-local_parsers_dir = os.path.join(data_dir, "jcparsers")
+data_dir = appdirs.user_data_dir('jc', 'jc')
+local_parsers_dir = os.path.join(data_dir, 'jcparsers')
 if os.path.isdir(local_parsers_dir):
     sys.path.append(data_dir)
     for name in os.listdir(local_parsers_dir):
