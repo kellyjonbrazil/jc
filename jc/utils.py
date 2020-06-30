@@ -66,7 +66,8 @@ def compatibility(mod_name, compatible):
     if not platform_found:
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
-        warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n         Compatible platforms: {compat_list}')
+        warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n'
+                        f'                   Compatible platforms: {compat_list}')
 
 
 def has_data(data):
