@@ -92,6 +92,7 @@ pip3 install jc
 |-----------------------|-------------------------------------------------------------------------------|
 | Fedora linux          | `dnf install jc`                                                              |
 | openSUSE linux        | `zypper install jc`                                                           |
+| Arch linux            | `pacman -S jc`                                                                |
 | NixOS linux           | `nix-env -iA nixpkgs.jc`                                                      |
 | Guix System linux     | `guix install jc`                                                             |
 | MacOS                 | `brew install jc`                                                             |
