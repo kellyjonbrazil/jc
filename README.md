@@ -90,7 +90,7 @@ pip3 install jc
 
 | OS                    | Command                                                                       | 
 |-----------------------|-------------------------------------------------------------------------------|
-| Fedora linux          | `dnf install jc` or `dnf --enablerepo=updates-testing install jc`             |
+| Fedora linux          | `dnf install jc`                                                              |
 | openSUSE linux        | `zypper install jc`                                                           |
 | NixOS linux           | `nix-env -iA nixpkgs.jc`                                                      |
 | Guix System linux     | `guix install jc`                                                             |
