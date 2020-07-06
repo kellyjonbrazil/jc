@@ -16,7 +16,6 @@ from pygments.style import Style
 from pygments.token import (Name, Number, String, Keyword)
 from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
-import jc.utils
 import jc.appdirs as appdirs
 
 
@@ -401,12 +400,13 @@ def main():
             except Exception:
                 if debug:
                     if verbose_debug:
-                        import cgitb
-                        cgitb.enable(display=1, logdir=None, context=5, format="text")
+                        import jc.tracebackplus
+                        jc.tracebackplus.enable(context=11)
 
                     raise
 
                 else:
+                    import jc.utils
                     jc.utils.error_message(
                         f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
                         '                 For details use the -d or -dd option.')
