@@ -20,7 +20,7 @@ import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.11.8'
+    version = '1.12.0'
     description = 'jc cli output JSON conversion tool'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -69,6 +69,7 @@ parsers = [
     'shadow',
     'ss',
     'stat',
+    'sysctl',
     'systemctl',
     'systemctl-lj',
     'systemctl-ls',
@@ -374,6 +375,10 @@ def main():
     quiet = 'q' in options
     raw = 'r' in options
 
+    if verbose_debug:
+        import jc.tracebackplus
+        jc.tracebackplus.enable(context=11)
+
     if 'a' in options:
         json_out(about_jc(), pretty=pretty, mono=mono, piped_out=piped_output())
         sys.exit(0)
@@ -399,10 +404,6 @@ def main():
 
             except Exception:
                 if debug:
-                    if verbose_debug:
-                        import jc.tracebackplus
-                        jc.tracebackplus.enable(context=11)
-
                     raise
 
                 else:
