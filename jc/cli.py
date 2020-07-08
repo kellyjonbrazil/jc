@@ -21,7 +21,7 @@ import jc.appdirs as appdirs
 
 class info():
     version = '1.12.0'
-    description = 'jc cli output JSON conversion tool'
+    description = 'JSON conversion tool for CLI output'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
@@ -259,7 +259,7 @@ def helptext(message):
 
             jc -p ls -al
     '''
-    print(textwrap.dedent(helptext_string), file=sys.stderr)
+    return textwrap.dedent(helptext_string)
 
 
 def json_out(data, pretty=False, mono=False, piped_out=False):
@@ -270,14 +270,14 @@ def json_out(data, pretty=False, mono=False, piped_out=False):
             styles = set_env_colors()
 
         if pretty:
-            print(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+            return str(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
         else:
-            print(highlight(json.dumps(data), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+            return str(highlight(json.dumps(data), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
     else:
         if pretty:
-            print(json.dumps(data, indent=2))
+            return json.dumps(data, indent=2)
         else:
-            print(json.dumps(data))
+            return json.dumps(data)
 
 
 def generate_magic_command(args):
@@ -344,7 +344,7 @@ def magic():
     elif run_command is None:
         return
     else:
-        helptext(f'parser not found for "{run_command}"')
+        print(helptext(f'parser not found for "{run_command}"'), file=sys.stderr)
         sys.exit(1)
 
 
@@ -380,11 +380,11 @@ def main():
         jc.tracebackplus.enable(context=11)
 
     if 'a' in options:
-        json_out(about_jc(), pretty=pretty, mono=mono, piped_out=piped_output())
+        print(json_out(about_jc(), pretty=pretty, mono=mono, piped_out=piped_output()))
         sys.exit(0)
 
     if sys.stdin.isatty():
-        helptext('missing piped data')
+        print(helptext('missing piped data'), file=sys.stderr)
         sys.exit(1)
 
     data = sys.stdin.read()
@@ -414,10 +414,10 @@ def main():
                     sys.exit(1)
 
     if not found:
-        helptext('missing or incorrect arguments')
+        print(helptext('missing or incorrect arguments'), file=sys.stderr)
         sys.exit(1)
 
-    json_out(result, pretty=pretty, mono=mono, piped_out=piped_output())
+    print(json_out(result, pretty=pretty, mono=mono, piped_out=piped_output()))
 
 
 if __name__ == '__main__':
