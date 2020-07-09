@@ -11,6 +11,7 @@ import importlib
 import textwrap
 import signal
 import json
+import pygments
 from pygments import highlight
 from pygments.style import Style
 from pygments.token import (Name, Number, String, Keyword)
@@ -98,6 +99,47 @@ if os.path.isdir(local_parsers_dir):
                 parsers.append(plugin_name)
 
 
+# We only support 2.3.0+, pygments changed color names in 2.4.0.
+# startswith is sufficient and avoids potential exceptions from split and int.
+if pygments.__version__.startswith("2.3."):
+    PYGMENT_COLOR = {
+        'black': '#ansiblack',
+        'red': '#ansidarkred',
+        'green': '#ansidarkgreen',
+        'yellow': '#ansibrown',
+        'blue': '#ansidarkblue',
+        'magenta': '#ansipurple',
+        'cyan': '#ansiteal',
+        'gray': '#ansilightgray',
+        'brightblack': '#ansidarkgray',
+        'brightred': '#ansired',
+        'brightgreen': '#ansigreen',
+        'brightyellow': '#ansiyellow',
+        'brightblue': '#ansiblue',
+        'brightmagenta': '#ansifuchsia',
+        'brightcyan': '#ansiturquoise',
+        'white': '#ansiwhite',
+    }
+else:
+    PYGMENT_COLOR = {
+        'black': 'ansiblack',
+        'red': 'ansired',
+        'green': 'ansigreen',
+        'yellow': 'ansiyellow',
+        'blue': 'ansiblue',
+        'magenta': 'ansimagenta',
+        'cyan': 'ansicyan',
+        'gray': 'ansigray',
+        'brightblack': 'ansibrightblack',
+        'brightred': 'ansibrightred',
+        'brightgreen': 'ansibrightgreen',
+        'brightyellow': 'ansibrightyellow',
+        'brightblue': 'ansibrightblue',
+        'brightmagenta': 'ansibrightmagenta',
+        'brightcyan': 'ansibrightcyan',
+        'white': 'ansiwhite',
+    }
+
 def set_env_colors():
     """
     Grab custom colors from JC_COLORS environment variable. JC_COLORS env variable takes 4 comma
@@ -127,8 +169,7 @@ def set_env_colors():
         input_error = True
 
     for color in color_list:
-        if color not in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'gray', 'brightblack', 'brightred',
-                         'brightgreen', 'brightyellow', 'brightblue', 'brightmagenta', 'brightcyan', 'white', 'default']:
+        if color != 'default' and color not in PYGMENT_COLOR:
             input_error = True
 
     # if there is an issue with the env variable, just set all colors to default and move on
@@ -138,10 +179,10 @@ def set_env_colors():
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
     return {
-        Name.Tag: f'bold ansi{color_list[0]}' if not color_list[0] == 'default' else 'bold ansiblue',   # key names
-        Keyword: f'ansi{color_list[1]}' if not color_list[1] == 'default' else 'ansibrightblack',       # true, false, null
-        Number: f'ansi{color_list[2]}' if not color_list[2] == 'default' else 'ansimagenta',            # numbers
-        String: f'ansi{color_list[3]}' if not color_list[3] == 'default' else 'ansigreen'               # strings
+        Name.Tag: f'bold {PYGMENT_COLOR[color_list[0]]}' if not color_list[0] == 'default' else 'bold ' + PYGMENT_COLOR['blue'],   # key names
+        Keyword: PYGMENT_COLOR[color_list[1]] if not color_list[1] == 'default' else PYGMENT_COLOR['brightblack'],       # true, false, null
+        Number: PYGMENT_COLOR[color_list[2]] if not color_list[2] == 'default' else PYGMENT_COLOR['magenta'],            # numbers
+        String: PYGMENT_COLOR[color_list[3]] if not color_list[3] == 'default' else PYGMENT_COLOR['green']               # strings
     }
 
 
