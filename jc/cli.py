@@ -115,22 +115,21 @@ def set_env_colors():
     JC_COLORS=default,default,default,default
 
     """
-    env_colors = os.getenv('JC_COLORS')
     input_error = False
+    env_colors = os.getenv('JC_COLORS')
 
     if env_colors:
         color_list = env_colors.split(',')
     else:
+        color_list = ['default', 'default', 'default', 'default']
+
+    if len(color_list) != 4:
         input_error = True
 
-    if env_colors and len(color_list) != 4:
-        input_error = True
-
-    if env_colors:
-        for color in color_list:
-            if color not in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'gray', 'brightblack', 'brightred',
-                             'brightgreen', 'brightyellow', 'brightblue', 'brightmagenta', 'brightcyan', 'white', 'default']:
-                input_error = True
+    for color in color_list:
+        if color not in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'gray', 'brightblack', 'brightred',
+                         'brightgreen', 'brightyellow', 'brightblue', 'brightmagenta', 'brightcyan', 'white', 'default']:
+            input_error = True
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
