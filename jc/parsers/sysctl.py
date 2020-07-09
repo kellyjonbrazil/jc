@@ -5,12 +5,12 @@ Usage:
     specify --sysctl as the first argument if the piped input is coming from sysctl -a
 
     Note: since sysctl output is not easily parsable only a very simple key/value object
-          will be output. An attempt is made to covert obvious integers. If no conversion
-          is desired, use the -r (raw) option in jc.
+          will be output. An attempt is made to covert obvious integers and floats. If no
+          conversion is desired, use the -r (raw) option.
 
 Compatibility:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    'linux', 'darwin', 'freebsd'
 
 Examples:
 
@@ -49,7 +49,7 @@ class info():
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['sysctl']
 
 
@@ -70,9 +70,9 @@ def process(proc_data):
 
         [
           {
-            "foo":     string/integer,
-            "bar":     string/integer,
-            "baz":     string/integer
+            "foo":     string/integer/float,
+            "bar":     string/integer/float,
+            "baz":     string/integer/float
           }
         ]
     """
