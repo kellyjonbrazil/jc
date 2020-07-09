@@ -143,6 +143,8 @@ else:
 
 def set_env_colors():
     """
+    Return a dictionary to be used in Pygments custom style class.
+
     Grab custom colors from JC_COLORS environment variable. JC_COLORS env variable takes 4 comma
     separated string values and should be in the format of:
 
@@ -188,7 +190,7 @@ def set_env_colors():
 
 
 def piped_output():
-    """Returns False if stdout is a TTY. True if output is being piped to another program"""
+    """Return False if stdout is a TTY. True if output is being piped to another program"""
     if sys.stdout.isatty():
         return False
     else:
@@ -201,17 +203,17 @@ def ctrlc(signum, frame):
 
 
 def parser_shortname(parser_argument):
-    """Short name of the parser with dashes and no -- prefix"""
+    """Return short name of the parser with dashes and no -- prefix"""
     return parser_argument[2:]
 
 
 def parser_argument(parser):
-    """Short name of the parser with dashes and with -- prefix"""
+    """Return short name of the parser with dashes and with -- prefix"""
     return f'--{parser}'
 
 
 def parser_mod_shortname(parser):
-    """Short name of the parser's module name (no -- prefix and dashes converted to underscores)"""
+    """Return short name of the parser's module name (no -- prefix and dashes converted to underscores)"""
     return parser.replace('--', '').replace('-', '_')
 
 
@@ -304,7 +306,7 @@ def helptext(message):
 
 
 def json_out(data, pretty=False, mono=False, piped_out=False):
-    """Returns a JSON formatted string. String may include color codes or be pretty printed."""
+    """Return a JSON formatted string. String may include color codes or be pretty printed."""
     if not mono and not piped_out:
         # set colors
         class JcStyle(Style):
@@ -323,7 +325,7 @@ def json_out(data, pretty=False, mono=False, piped_out=False):
 
 def generate_magic_command(args):
     """
-    Returns a tuple with a boolean and a command, where the boolean signifies that
+    Return a tuple with a boolean and a command, where the boolean signifies that
     the command is valid, and the command is either a command string or None.
     """
 
@@ -447,7 +449,6 @@ def main():
             except Exception:
                 if debug:
                     raise
-
                 else:
                     import jc.utils
                     jc.utils.error_message(
