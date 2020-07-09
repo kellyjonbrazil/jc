@@ -76,10 +76,14 @@ def process(proc_data):
           }
         ]
     """
-    for key, value in proc_data.items():
-        if value.isdigit():
-            value = int(value)
-            proc_data[key] = value
+    for key in proc_data:
+        try:
+            proc_data[key] = int(proc_data[key])
+        except (ValueError):
+            try:
+                proc_data[key] = float(proc_data[key])
+            except (ValueError):
+                pass
     return proc_data
 
 
