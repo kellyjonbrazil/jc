@@ -59,13 +59,11 @@ Returns:
 
     Dictionary. Structured data with the following schema:
 
-    [
-      {
-        "foo":     string/integer/float,
-        "bar":     string/integer/float,
-        "baz":     string/integer/float
-      }
-    ]
+    {
+      "foo":     string/integer/float,         # best guess based on value
+      "bar":     string/integer/float,
+      "baz":     string/integer/float
+    }
 
 ## parse
 ```python
