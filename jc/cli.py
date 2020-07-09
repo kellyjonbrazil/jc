@@ -17,7 +17,6 @@ from pygments.style import Style
 from pygments.token import (Name, Number, String, Keyword)
 from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
-from packaging import version
 import jc.appdirs as appdirs
 
 
@@ -100,7 +99,9 @@ if os.path.isdir(local_parsers_dir):
                 parsers.append(plugin_name)
 
 
-if version.parse(pygments.__version__) < version.parse("2.4.0"):
+# We only support 2.3.0+, pygments changed color names in 2.4.0.
+# startswith is sufficient and avoids potential exceptions from split and int.
+if pygments.__version__.startswith("2.3."):
     PYGMENT_COLOR = {
         'black': '#ansiblack',
         'red': '#ansidarkred',
