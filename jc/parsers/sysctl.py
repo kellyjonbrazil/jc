@@ -104,7 +104,6 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    tail = 0
     raw_output = {}
 
     if jc.utils.has_data(data):
@@ -121,14 +120,12 @@ def parse(data, raw=False, quiet=False):
             key = linedata[0]
             value = linedata[1].lstrip()
 
-            # syctl -a repeats some keys on linux. need to make new keys unique if
-            # they already exist so we don't lose data.
+            # syctl -a repeats some keys on linux. Append values from repeating keys
+            # to the previous key value
             if key in raw_output:
-                tail += 1
-                key = f'{key}_{tail}'
-                raw_output[key] = value
+                existing_value = raw_output[key]
+                raw_output[key] = existing_value + '\n' + value
             else:
-                tail = 0
                 raw_output[key] = value
 
     if raw:
