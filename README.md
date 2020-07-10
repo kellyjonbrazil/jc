@@ -152,6 +152,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--shadow` enables the `/etc/shadow` file parser
 - `--ss` enables the `ss` command parser
 - `--stat` enables the `stat` command parser
+- `--sysctl` enables the `sysctl -a` command parser
 - `--systemctl` enables the `systemctl` command parser
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
@@ -2291,6 +2292,22 @@ stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
     "birth_time": null
   }
 ]
+```
+### sysctl
+```bash
+sysctl -a | jc --sysctl -p          # or:  jc -p sysctl -a
+```
+```json
+$ sysctl | jc --sysctl -p
+{
+  "user.cs_path": "/usr/bin:/bin:/usr/sbin:/sbin",
+  "user.bc_base_max": 99,
+  "user.bc_dim_max": 2048,
+  "user.bc_scale_max": 99,
+  "user.bc_string_max": 1000,
+  "user.coll_weights_max": 2,
+  "user.expr_nest_max": 32
+}
 ```
 ### systemctl
 ```bash
