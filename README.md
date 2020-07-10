@@ -79,7 +79,7 @@ See also:
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB/RPM packages; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```bash
@@ -90,8 +90,9 @@ pip3 install jc
 
 | OS                    | Command                                                                       | 
 |-----------------------|-------------------------------------------------------------------------------|
-| Fedora linux          | `dnf install jc` or `dnf --enablerepo=updates-testing install jc`             |
+| Fedora linux          | `dnf install jc`                                                              |
 | openSUSE linux        | `zypper install jc`                                                           |
+| Arch linux            | `pacman -S jc`                                                                |
 | NixOS linux           | `nix-env -iA nixpkgs.jc`                                                      |
 | Guix System linux     | `guix install jc`                                                             |
 | MacOS                 | `brew install jc`                                                             |
@@ -151,6 +152,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--shadow` enables the `/etc/shadow` file parser
 - `--ss` enables the `ss` command parser
 - `--stat` enables the `stat` command parser
+- `--sysctl` enables the `sysctl -a` command parser
 - `--systemctl` enables the `systemctl` command parser
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
@@ -2290,6 +2292,21 @@ stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
     "birth_time": null
   }
 ]
+```
+### sysctl
+```bash
+sysctl -a | jc --sysctl -p          # or:  jc -p sysctl -a
+```
+```json
+{
+  "user.cs_path": "/usr/bin:/bin:/usr/sbin:/sbin",
+  "user.bc_base_max": 99,
+  "user.bc_dim_max": 2048,
+  "user.bc_scale_max": 99,
+  "user.bc_string_max": 1000,
+  "user.coll_weights_max": 2,
+  "user.expr_nest_max": 32
+}
 ```
 ### systemctl
 ```bash

@@ -44,6 +44,7 @@ pydocmd simple jc.parsers.route+ > ../docs/parsers/route.md
 pydocmd simple jc.parsers.shadow+ > ../docs/parsers/shadow.md
 pydocmd simple jc.parsers.ss+ > ../docs/parsers/ss.md
 pydocmd simple jc.parsers.stat+ > ../docs/parsers/stat.md
+pydocmd simple jc.parsers.sysctl+ > ../docs/parsers/sysctl.md
 pydocmd simple jc.parsers.systemctl+ > ../docs/parsers/systemctl.md
 pydocmd simple jc.parsers.systemctl_lj+ > ../docs/parsers/systemctl_lj.md
 pydocmd simple jc.parsers.systemctl_ls+ > ../docs/parsers/systemctl_ls.md
