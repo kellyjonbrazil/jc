@@ -6,7 +6,7 @@ Usage:
     specify --sysctl as the first argument if the piped input is coming from sysctl -a
 
     Note: since sysctl output is not easily parsable only a very simple key/value object
-          will be output. An attempt is made to covert obvious integers and floats. If no
+          will be output. An attempt is made to convert obvious integers and floats. If no
           conversion is desired, use the -r (raw) option.
 
 Compatibility:
