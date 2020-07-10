@@ -2298,7 +2298,6 @@ stat /bin/* | jc --stat -p          # or:  jc -p stat /bin/*
 sysctl -a | jc --sysctl -p          # or:  jc -p sysctl -a
 ```
 ```json
-$ sysctl | jc --sysctl -p
 {
   "user.cs_path": "/usr/bin:/bin:/usr/sbin:/sbin",
   "user.bc_base_max": 99,
