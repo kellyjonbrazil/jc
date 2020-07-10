@@ -176,3 +176,4 @@ class MyTests(unittest.TestCase):
 
     def test_cli_about_jc(self):
         self.assertEqual(jc.cli.about_jc()['name'], 'jc')
+        self.assertGreaterEqual(jc.cli.about_jc()['parser_count'], 50)
