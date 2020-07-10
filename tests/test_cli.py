@@ -140,7 +140,7 @@ class MyTests(unittest.TestCase):
         for test_dict, expected_json in zip(test_input, expected_output):
             self.assertEqual(jc.cli.json_out(test_dict), expected_json)
 
-    def test_cli_json_out_monoc(self):
+    def test_cli_json_out_mono(self):
         test_input = [
             None,
             {},
