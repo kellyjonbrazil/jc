@@ -113,7 +113,7 @@ def parse(data, raw=False, quiet=False):
         else:
             delim = ': '
 
-        for line in filter(None, data):
+        for line in data:
             linedata = line.split(delim, maxsplit=1)
 
             # bsd adds values to newlines, which need to be fixed up with this try/except block
