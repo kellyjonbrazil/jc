@@ -141,9 +141,9 @@ def parse(data, raw=False, quiet=False):
                     raw_output[key] = value
                     continue
 
-            # if there is an exception, then there was no delimiter in the line. In this case
-            # just append the data line as a value to the previous key.
-            except Exception:
+            # if there is an IndexError exception, then there was no delimiter in the line.
+            # In this case just append the data line as a value to the previous key.
+            except IndexError:
                 prior_key = [*raw_output.keys()][-1]
                 raw_output[prior_key] = raw_output[prior_key] + '\n' + line
                 continue
