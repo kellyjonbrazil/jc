@@ -111,20 +111,42 @@ def parse(data, raw=False, quiet=False):
         if ' = ' in data[0]:
             delim = ' = '
         else:
-            delim = ':'
+            delim = ': '
 
         for line in filter(None, data):
             linedata = line.split(delim, maxsplit=1)
-            key = linedata[0]
-            value = linedata[1].lstrip()
 
-            # syctl -a repeats some keys on linux. Append values from repeating keys
-            # to the previous key value
-            if key in raw_output:
-                existing_value = raw_output[key]
-                raw_output[key] = existing_value + '\n' + value
-            else:
-                raw_output[key] = value
+            # bsd adds values to newlines, which need to be fixed up with this try/except block
+            try:
+                key = linedata[0]
+                value = linedata[1]
+
+                # syctl -a repeats some keys on linux. Append values from repeating keys
+                # to the previous key value
+                if key in raw_output:
+                    existing_value = raw_output[key]
+                    raw_output[key] = existing_value + '\n' + value
+                    continue
+
+                # fix for weird multiline output in bsd
+                # if the key looks strange (has spaces or no dots) then it's probably a value field
+                # on a separate line. in this case, just append it to the previous key in the dictionary.
+                if '.' not in key or ' ' in key:
+                    previous_key = [*raw_output.keys()][-1]
+                    raw_output[previous_key] = raw_output[previous_key] + '\n' + line
+                    continue
+
+                # if the key looks normal then just add to the dictionary as normal
+                else:
+                    raw_output[key] = value
+                    continue
+
+            # if there is an exception, then there was no delimiter in the line. In this case
+            # just append the data line as a value to the previous key.
+            except Exception:
+                prior_key = [*raw_output.keys()][-1]
+                raw_output[prior_key] = raw_output[prior_key] + '\n' + line
+                continue
 
     if raw:
         return raw_output
