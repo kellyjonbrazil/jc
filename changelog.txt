@@ -1,7 +1,7 @@
 jc changelog
 
 20200710 v1.12.0
-- Add sysctl command parser tested on linus, macOS, and freebsd12
+- Add sysctl command parser tested on linux, macOS, and freebsd12
 - Update the cli code to allow older versions of the pygments library (2.3.0) for debian packaging
 - Code cleanup on the cli
 - Add tests for the cli
