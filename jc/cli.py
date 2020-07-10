@@ -141,7 +141,7 @@ else:
     }
 
 
-def set_env_colors():
+def set_env_colors(env_colors=None):
     """
     Return a dictionary to be used in Pygments custom style class.
 
@@ -161,7 +161,6 @@ def set_env_colors():
 
     """
     input_error = False
-    env_colors = os.getenv('JC_COLORS')
 
     if env_colors:
         color_list = env_colors.split(',')
@@ -305,12 +304,12 @@ def helptext(message):
     return textwrap.dedent(helptext_string)
 
 
-def json_out(data, pretty=False, mono=False, piped_out=False):
+def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
     """Return a JSON formatted string. String may include color codes or be pretty printed."""
     if not mono and not piped_out:
         # set colors
         class JcStyle(Style):
-            styles = set_env_colors()
+            styles = set_env_colors(env_colors)
 
         if pretty:
             return str(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
@@ -402,6 +401,8 @@ def main():
     except AttributeError:
         pass
 
+    jc_colors = os.getenv('JC_COLORS')
+
     # try magic syntax first: e.g. jc -p ls -al
     magic()
 
@@ -424,7 +425,7 @@ def main():
         jc.tracebackplus.enable(context=11)
 
     if 'a' in options:
-        print(json_out(about_jc(), pretty=pretty, mono=mono, piped_out=piped_output()))
+        print(json_out(about_jc(), pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
         sys.exit(0)
 
     if sys.stdin.isatty():
@@ -460,7 +461,7 @@ def main():
         print(helptext('missing or incorrect arguments'), file=sys.stderr)
         sys.exit(1)
 
-    print(json_out(result, pretty=pretty, mono=mono, piped_out=piped_output()))
+    print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
 
 
 if __name__ == '__main__':
