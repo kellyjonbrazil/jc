@@ -119,3 +119,23 @@ class MyTests(unittest.TestCase):
 
         for jc_colors, expected_colors in env.items():
             self.assertEqual(jc.cli.set_env_colors(jc_colors), expected_colors)
+
+    def test_cli_json_out(self):
+        test_input = [
+            None,
+            {},
+            [],
+            '',
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        ]
+
+        expected_output = [
+            '\x1b[90mnull\x1b[39m',
+            '{}',
+            '[]',
+            '\x1b[32m""\x1b[39m',
+            '{\x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m, \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m, \x1b[34;01m"key3"\x1b[39;00m: \x1b[90mnull\x1b[39m, \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m, \x1b[34;01m"key5"\x1b[39;00m: \x1b[90mtrue\x1b[39m}'
+        ]
+
+        for test_dict, expected_json in zip(test_input, expected_output):
+            self.assertEqual(jc.cli.json_out(test_dict), expected_json)
