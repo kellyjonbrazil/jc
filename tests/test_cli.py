@@ -129,13 +129,22 @@ class MyTests(unittest.TestCase):
             {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
         ]
 
-        expected_output = [
-            '\x1b[90mnull\x1b[39m',
-            '{}',
-            '[]',
-            '\x1b[32m""\x1b[39m',
-            '{\x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m, \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m, \x1b[34;01m"key3"\x1b[39;00m: \x1b[90mnull\x1b[39m, \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m, \x1b[34;01m"key5"\x1b[39;00m: \x1b[90mtrue\x1b[39m}'
-        ]
+        if pygments.__version__.startswith('2.3.'):
+            expected_output = [
+                '\x1b[30;01mnull\x1b[39;00m',
+                '{}',
+                '[]',
+                '\x1b[32m""\x1b[39m',
+                '{\x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m, \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m, \x1b[34;01m"key3"\x1b[39;00m: \x1b[30;01mnull\x1b[39;00m, \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m, \x1b[34;01m"key5"\x1b[39;00m: \x1b[30;01mtrue\x1b[39;00m}'
+            ]
+        else:
+            expected_output = [
+                '\x1b[90mnull\x1b[39m',
+                '{}',
+                '[]',
+                '\x1b[32m""\x1b[39m',
+                '{\x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m, \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m, \x1b[34;01m"key3"\x1b[39;00m: \x1b[90mnull\x1b[39m, \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m, \x1b[34;01m"key5"\x1b[39;00m: \x1b[90mtrue\x1b[39m}'
+            ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
             self.assertEqual(jc.cli.json_out(test_dict), expected_json)
@@ -166,10 +175,16 @@ class MyTests(unittest.TestCase):
             {"key1": [{"subkey1": "subvalue1"}, {"subkey2": [1, 2, 3]}], "key2": True}
         ]
 
-        expected_output = [
-            '{\n  \x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m,\n  \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m,\n  \x1b[34;01m"key3"\x1b[39;00m: \x1b[90mnull\x1b[39m,\n  \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m,\n  \x1b[34;01m"key5"\x1b[39;00m: \x1b[90mtrue\x1b[39m\n}',
-            '{\n  \x1b[34;01m"key1"\x1b[39;00m: [\n    {\n      \x1b[34;01m"subkey1"\x1b[39;00m: \x1b[32m"subvalue1"\x1b[39m\n    },\n    {\n      \x1b[34;01m"subkey2"\x1b[39;00m: [\n        \x1b[35m1\x1b[39m,\n        \x1b[35m2\x1b[39m,\n        \x1b[35m3\x1b[39m\n      ]\n    }\n  ],\n  \x1b[34;01m"key2"\x1b[39;00m: \x1b[90mtrue\x1b[39m\n}'
-        ]
+        if pygments.__version__.startswith('2.3.'):
+            expected_output = [
+                '{\n  \x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m,\n  \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m,\n  \x1b[34;01m"key3"\x1b[39;00m: \x1b[30;01mnull\x1b[39;00m,\n  \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m,\n  \x1b[34;01m"key5"\x1b[39;00m: \x1b[30;01mtrue\x1b[39;00m\n}',
+                '{\n  \x1b[34;01m"key1"\x1b[39;00m: [\n    {\n      \x1b[34;01m"subkey1"\x1b[39;00m: \x1b[32m"subvalue1"\x1b[39m\n    },\n    {\n      \x1b[34;01m"subkey2"\x1b[39;00m: [\n        \x1b[35m1\x1b[39m,\n        \x1b[35m2\x1b[39m,\n        \x1b[35m3\x1b[39m\n      ]\n    }\n  ],\n  \x1b[34;01m"key2"\x1b[39;00m: \x1b[30;01mtrue\x1b[39;00m\n}'
+            ]
+        else:
+            expected_output = [
+                '{\n  \x1b[34;01m"key1"\x1b[39;00m: \x1b[32m"value1"\x1b[39m,\n  \x1b[34;01m"key2"\x1b[39;00m: \x1b[35m2\x1b[39m,\n  \x1b[34;01m"key3"\x1b[39;00m: \x1b[90mnull\x1b[39m,\n  \x1b[34;01m"key4"\x1b[39;00m: \x1b[35m3.14\x1b[39m,\n  \x1b[34;01m"key5"\x1b[39;00m: \x1b[90mtrue\x1b[39m\n}',
+                '{\n  \x1b[34;01m"key1"\x1b[39;00m: [\n    {\n      \x1b[34;01m"subkey1"\x1b[39;00m: \x1b[32m"subvalue1"\x1b[39m\n    },\n    {\n      \x1b[34;01m"subkey2"\x1b[39;00m: [\n        \x1b[35m1\x1b[39m,\n        \x1b[35m2\x1b[39m,\n        \x1b[35m3\x1b[39m\n      ]\n    }\n  ],\n  \x1b[34;01m"key2"\x1b[39;00m: \x1b[90mtrue\x1b[39m\n}'
+            ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
             self.assertEqual(jc.cli.json_out(test_dict, pretty=True), expected_json)
