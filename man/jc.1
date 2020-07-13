@@ -1,0 +1,261 @@
+.TH jc 1 2020-07-12 1.12.1 "JSON CLI output utility"
+.SH NAME
+jc \- JSONifies the output of many CLI tools and file-types
+.SH SYNOPSIS
+COMMAND | jc PARSER [OPTIONS]
+
+        or magic syntax:
+
+        jc [OPTIONS] COMMAND
+.SH DESCRIPTION
+jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from STDIN and outputs a JSON representation of the previous command's output to STDOUT. Alternatively, the "magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: command aliases are not supported).
+
+.SH OPTIONS
+.B
+Parsers:
+.RS
+.TP
+.B
+\fB--airport\fP
+airport \fB-I\fP command parser
+.TP
+.B
+\fB--airport-s\fP
+airport \fB-s\fP command parser
+.TP
+.B
+\fB--arp\fP
+arp command parser
+.TP
+.B
+\fB--blkid\fP
+blkid command parser
+.TP
+.B
+\fB--crontab\fP
+crontab command and file parser
+.TP
+.B
+\fB--crontab-u\fP
+crontab file parser with user support
+.TP
+.B
+\fB--csv\fP
+CSV file parser
+.TP
+.B
+\fB--df\fP
+df command parser
+.TP
+.B
+\fB--dig\fP
+dig command parser
+.TP
+.B
+\fB--dmidecode\fP
+dmidecode command parser
+.TP
+.B
+\fB--du\fP
+du command parser
+.TP
+.B
+\fB--env\fP
+env command parser
+.TP
+.B
+\fB--file\fP
+file command parser
+.TP
+.B
+\fB--free\fP
+free command parser
+.TP
+.B
+\fB--fstab\fP
+fstab file parser
+.TP
+.B
+\fB--group\fP
+/etc/group file parser
+.TP
+.B
+\fB--gshadow\fP
+/etc/gshadow file parser
+.TP
+.B
+\fB--history\fP
+history command parser
+.TP
+.B
+\fB--hosts\fP
+/etc/hosts file parser
+.TP
+.B
+\fB--id\fP
+id command parser
+.TP
+.B
+\fB--ifconfig\fP
+ifconfig command parser
+.TP
+.B
+\fB--ini\fP
+INI file parser
+.TP
+.B
+\fB--iptables\fP
+iptables command parser
+.TP
+.B
+\fB--jobs\fP
+jobs command parser
+.TP
+.B
+\fB--last\fP
+last and lastb command parser
+.TP
+.B
+\fB--ls\fP
+ls command parser
+.TP
+.B
+\fB--lsblk\fP
+lsblk command parser
+.TP
+.B
+\fB--lsmod\fP
+lsmod command parser
+.TP
+.B
+\fB--lsof\fP
+lsof command parser
+.TP
+.B
+\fB--mount\fP
+mount command parser
+.TP
+.B
+\fB--netstat\fP
+netstat command parser
+.TP
+.B
+\fB--ntpq\fP
+ntpq \fB-p\fP command parser
+.TP
+.B
+\fB--passwd\fP
+/etc/passwd file parser
+.TP
+.B
+\fB--pip-list\fP
+pip list command parser
+.TP
+.B
+\fB--pip-show\fP
+pip show command parser
+.TP
+.B
+\fB--ps\fP
+ps command parser
+.TP
+.B
+\fB--route\fP
+route command parser
+.TP
+.B
+\fB--shadow\fP
+/etc/shadow file parser
+.TP
+.B
+\fB--ss\fP
+ss command parser
+.TP
+.B
+\fB--stat\fP
+stat command parser
+.TP
+.B
+\fB--sysctl\fP
+sysctl command parser
+.TP
+.B
+\fB--systemctl\fP
+systemctl command parser
+.TP
+.B
+\fB--systemctl-lj\fP
+systemctl list-jobs command parser
+.TP
+.B
+\fB--systemctl-ls\fP
+systemctl list-sockets command parser
+.TP
+.B
+\fB--systemctl-luf\fP
+systemctl list-unit-files command parser
+.TP
+.B
+\fB--timedatectl\fP
+timedatectl status command parser
+.TP
+.B
+\fB--uname\fP
+uname \fB-a\fP command parser
+.TP
+.B
+\fB--uptime\fP
+uptime command parser
+.TP
+.B
+\fB--w\fP
+w command parser
+.TP
+.B
+\fB--who\fP
+who command parser
+.TP
+.B
+\fB--xml\fP
+XML file parser
+.TP
+.B
+\fB--yaml\fP
+YAML file parser
+.RE
+.PP
+Options:
+.RS
+.TP
+.B
+\fB-a\fP
+about jc
+.TP
+.B
+\fB-d\fP
+debug - show traceback (\fB-dd\fP for verbose traceback)
+.TP
+.B
+\fB-m\fP
+monochrome output
+.TP
+.B
+\fB-p\fP
+pretty print output
+.TP
+.B
+\fB-q\fP
+quiet - suppress warnings
+.TP
+.B
+\fB-r\fP
+raw JSON output
+.RE
+.PP
+Example:
+ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
+.RS
+.PP
+or using the magic syntax:
+.PP
+jc \fB-p\fP ls \fB-al\fP
