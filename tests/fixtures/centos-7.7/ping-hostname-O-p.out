@@ -1,0 +1,26 @@
+PATTERN: 0xabcd
+PING turner-tls.map.fastly.net (151.101.129.67) 56(84) bytes of data.
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=1 ttl=59 time=24.4 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=2 ttl=59 time=23.3 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=3 ttl=59 time=32.6 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=4 ttl=59 time=32.6 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=5 ttl=59 time=26.9 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=6 ttl=59 time=24.1 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=7 ttl=59 time=24.6 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=8 ttl=59 time=33.9 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=9 ttl=59 time=32.7 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=10 ttl=59 time=31.2 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=11 ttl=59 time=25.7 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=12 ttl=59 time=33.8 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=13 ttl=59 time=23.7 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=14 ttl=59 time=23.9 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=15 ttl=59 time=33.6 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=16 ttl=59 time=24.5 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=17 ttl=59 time=30.1 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=18 ttl=59 time=24.1 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=19 ttl=59 time=32.2 ms
+64 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=20 ttl=59 time=31.0 ms
+
+--- turner-tls.map.fastly.net ping statistics ---
+20 packets transmitted, 20 received, 0% packet loss, time 19233ms
+rtt min/avg/max/mdev = 23.359/28.495/33.979/4.081 ms
