@@ -37,6 +37,7 @@ pydocmd simple jc.parsers.mount+ > ../docs/parsers/mount.md
 pydocmd simple jc.parsers.netstat+ > ../docs/parsers/netstat.md
 pydocmd simple jc.parsers.ntpq+ > ../docs/parsers/ntpq.md
 pydocmd simple jc.parsers.passwd+ > ../docs/parsers/passwd.md
+pydocmd simple jc.parsers.ping+ > ../docs/parsers/ping.md
 pydocmd simple jc.parsers.pip_list+ > ../docs/parsers/pip_list.md
 pydocmd simple jc.parsers.pip_show+ > ../docs/parsers/pip_show.md
 pydocmd simple jc.parsers.ps+ > ../docs/parsers/ps.md

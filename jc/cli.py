@@ -21,7 +21,7 @@ import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.12.1'
+    version = '1.13.0'
     description = 'JSON conversion tool for CLI output'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -63,6 +63,7 @@ parsers = [
     'netstat',
     'ntpq',
     'passwd',
+    'ping',
     'pip-list',
     'pip-show',
     'ps',
