@@ -1,0 +1,26 @@
+PATTERN: 0xabcd
+PING www.cnn.com(2a04:4e42:2e::323 (2a04:4e42:2e::323)) 56 data bytes
+[1595191452.255300] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=1 ttl=56 time=39.1 ms
+[1595191453.229184] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=2 ttl=56 time=47.9 ms
+[1595191454.229065] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=3 ttl=56 time=46.4 ms
+[1595191455.230571] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=4 ttl=56 time=45.1 ms
+[1595191456.233811] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=5 ttl=56 time=45.7 ms
+[1595191457.228052] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=6 ttl=56 time=38.9 ms
+[1595191458.228764] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=7 ttl=56 time=39.0 ms
+[1595191459.243633] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=8 ttl=56 time=51.4 ms
+[1595191460.243509] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=9 ttl=56 time=49.1 ms
+[1595191461.242713] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=10 ttl=56 time=46.6 ms
+[1595191462.246016] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=11 ttl=56 time=47.1 ms
+[1595191463.240552] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=12 ttl=56 time=38.6 ms
+[1595191464.248594] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=13 ttl=56 time=44.3 ms
+[1595191465.254128] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=14 ttl=56 time=48.8 ms
+[1595191466.253777] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=15 ttl=56 time=45.2 ms
+[1595191467.259039] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=16 ttl=56 time=47.3 ms
+[1595191468.252991] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=17 ttl=56 time=38.5 ms
+[1595191469.263167] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=18 ttl=56 time=47.0 ms
+[1595191470.264838] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=19 ttl=56 time=46.3 ms
+[1595191471.266951] 64 bytes from 2a04:4e42:2e::323 (2a04:4e42:2e::323): icmp_seq=20 ttl=56 time=45.4 ms
+
+--- www.cnn.com ping statistics ---
+20 packets transmitted, 20 received, 0% packet loss, time 19043ms
+rtt min/avg/max/mdev = 38.533/44.877/51.366/3.830 ms

@@ -1,0 +1,26 @@
+PATTERN: 0xabcd
+PING 2a04:4e42:600::323(2a04:4e42:600::323) 56 data bytes
+[1595191413.333769] 64 bytes from 2a04:4e42:600::323: icmp_seq=1 ttl=59 time=34.6 ms
+[1595191414.342973] 64 bytes from 2a04:4e42:600::323: icmp_seq=2 ttl=59 time=41.9 ms
+[1595191415.332214] 64 bytes from 2a04:4e42:600::323: icmp_seq=3 ttl=59 time=28.8 ms
+[1595191416.342603] 64 bytes from 2a04:4e42:600::323: icmp_seq=4 ttl=59 time=36.8 ms
+[1595191417.344996] 64 bytes from 2a04:4e42:600::323: icmp_seq=5 ttl=59 time=37.6 ms
+[1595191418.348619] 64 bytes from 2a04:4e42:600::323: icmp_seq=6 ttl=59 time=37.9 ms
+[1595191419.357154] 64 bytes from 2a04:4e42:600::323: icmp_seq=7 ttl=59 time=44.4 ms
+[1595191420.350087] 64 bytes from 2a04:4e42:600::323: icmp_seq=8 ttl=59 time=35.1 ms
+[1595191421.346691] 64 bytes from 2a04:4e42:600::323: icmp_seq=9 ttl=59 time=29.9 ms
+[1595191422.355843] 64 bytes from 2a04:4e42:600::323: icmp_seq=10 ttl=59 time=37.4 ms
+[1595191423.397934] 64 bytes from 2a04:4e42:600::323: icmp_seq=11 ttl=59 time=76.7 ms
+[1595191424.470798] 64 bytes from 2a04:4e42:600::323: icmp_seq=12 ttl=59 time=148 ms
+[1595191425.358652] 64 bytes from 2a04:4e42:600::323: icmp_seq=13 ttl=59 time=33.6 ms
+[1595191426.404587] 64 bytes from 2a04:4e42:600::323: icmp_seq=14 ttl=59 time=77.2 ms
+[1595191427.359785] 64 bytes from 2a04:4e42:600::323: icmp_seq=15 ttl=59 time=29.7 ms
+[1595191428.367539] 64 bytes from 2a04:4e42:600::323: icmp_seq=16 ttl=59 time=34.9 ms
+[1595191429.372551] 64 bytes from 2a04:4e42:600::323: icmp_seq=17 ttl=59 time=37.2 ms
+[1595191430.364571] 64 bytes from 2a04:4e42:600::323: icmp_seq=18 ttl=59 time=27.9 ms
+[1595191431.375232] 64 bytes from 2a04:4e42:600::323: icmp_seq=19 ttl=59 time=37.1 ms
+[1595191432.375802] 64 bytes from 2a04:4e42:600::323: icmp_seq=20 ttl=59 time=34.3 ms
+
+--- 2a04:4e42:600::323 ping statistics ---
+20 packets transmitted, 20 received, 0% packet loss, time 19042ms
+rtt min/avg/max/mdev = 27.880/45.072/148.380/27.078 ms

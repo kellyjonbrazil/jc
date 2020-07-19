@@ -1,0 +1,25 @@
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+[1595191373.643436] 64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.043 ms
+[1595191374.662543] 64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.083 ms
+[1595191375.685291] 64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.091 ms
+[1595191376.709678] 64 bytes from 127.0.0.1: icmp_seq=4 ttl=64 time=0.092 ms
+[1595191377.734105] 64 bytes from 127.0.0.1: icmp_seq=5 ttl=64 time=0.090 ms
+[1595191378.758107] 64 bytes from 127.0.0.1: icmp_seq=6 ttl=64 time=0.089 ms
+[1595191379.781215] 64 bytes from 127.0.0.1: icmp_seq=7 ttl=64 time=0.087 ms
+[1595191380.806010] 64 bytes from 127.0.0.1: icmp_seq=8 ttl=64 time=0.092 ms
+[1595191381.829806] 64 bytes from 127.0.0.1: icmp_seq=9 ttl=64 time=0.088 ms
+[1595191382.853166] 64 bytes from 127.0.0.1: icmp_seq=10 ttl=64 time=0.135 ms
+[1595191383.876966] 64 bytes from 127.0.0.1: icmp_seq=11 ttl=64 time=0.101 ms
+[1595191384.900636] 64 bytes from 127.0.0.1: icmp_seq=12 ttl=64 time=0.084 ms
+[1595191385.925055] 64 bytes from 127.0.0.1: icmp_seq=13 ttl=64 time=0.071 ms
+[1595191386.949860] 64 bytes from 127.0.0.1: icmp_seq=14 ttl=64 time=0.087 ms
+[1595191387.973041] 64 bytes from 127.0.0.1: icmp_seq=15 ttl=64 time=0.087 ms
+[1595191388.997049] 64 bytes from 127.0.0.1: icmp_seq=16 ttl=64 time=0.073 ms
+[1595191390.021265] 64 bytes from 127.0.0.1: icmp_seq=17 ttl=64 time=0.074 ms
+[1595191391.044904] 64 bytes from 127.0.0.1: icmp_seq=18 ttl=64 time=0.089 ms
+[1595191392.069285] 64 bytes from 127.0.0.1: icmp_seq=19 ttl=64 time=0.090 ms
+[1595191393.093307] 64 bytes from 127.0.0.1: icmp_seq=20 ttl=64 time=0.084 ms
+
+--- 127.0.0.1 ping statistics ---
+20 packets transmitted, 20 received, 0% packet loss, time 19450ms
+rtt min/avg/max/mdev = 0.043/0.086/0.135/0.016 ms
