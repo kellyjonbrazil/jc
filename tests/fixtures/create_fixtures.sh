@@ -102,6 +102,7 @@ sudo lastb > lastb.out
 cat /etc/group > group.out
 sudo cat /etc/gshadow > gshadow.out
 
+# linux:
 ping -4 www.cnn.com -c 20 -O > ping-hostname-O.out
 ping -4 www.cnn.com -c 20 -O -p abcd > ping-hostname-O-p.out
 ping -4 www.cnn.com -c 20 -O -D -p abcd -s 1400 > ping-hostname-O-D-p-s.out
@@ -112,4 +113,19 @@ ping6 2a04:4e42:600::323 -c 20 -O -D -p abcd > ping6-ip-O-D-p.out
 ping6 www.cnn.com -c 20 -O -D -p abcd -s 1400 > ping6-hostname-O-D-p-s.out
 ping6 www.cnn.com -c 20 -O -D -p abcd > ping6-hostname-O-D-p.out
 ping6 www.cnn.com -c 20 -O -p abcd > ping6-hostname-O-p.out
+
+# osx/bsd:
+ping -c 3 -s 40 127.0.0.1  > ping-ip-s.out
+ping -c 3 -s 40 localhost  > ping-hostname-s.out
+ping -c 3 -p ff 127.0.0.1  > ping-ip-p.out
+ping -c 3 127.0.0.1 > ping-ip.out
+ping -c 3 -p ff cnn.com  > ping-hostname-p.out
+ping -c 3 cnn.com > ping-hostname.out
+ping6 -c 3 -s 40 localhost  > ping6-hostname-s.out
+ping6 -c 3 -s 40 ::1  > ping6-ip-s.out
+ping6 -c 3 -p ff ::1  > ping6-ip-p.out
+ping6 -c 3 ::1  > ping6-ip.out
+ping6 -c 3 -p ff localhost  > ping6-hostname-p.out
+ping6 -c 3 localhost  > ping6-hostname.out
+
 
