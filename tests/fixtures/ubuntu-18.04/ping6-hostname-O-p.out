@@ -1,0 +1,26 @@
+PATTERN: 0xabcd
+PING www.cnn.com(2a04:4e42:2d::323 (2a04:4e42:2d::323)) 56 data bytes
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=1 ttl=59 time=25.4 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=2 ttl=59 time=27.6 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=3 ttl=59 time=26.5 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=4 ttl=59 time=34.4 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=5 ttl=59 time=27.5 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=6 ttl=59 time=34.5 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=7 ttl=59 time=26.6 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=8 ttl=59 time=35.3 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=9 ttl=59 time=26.8 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=10 ttl=59 time=33.1 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=11 ttl=59 time=33.5 ms
+no answer yet for icmp_seq=12
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=13 ttl=59 time=25.2 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=14 ttl=59 time=25.2 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=15 ttl=59 time=36.5 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=16 ttl=59 time=34.4 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=17 ttl=59 time=35.4 ms
+no answer yet for icmp_seq=18
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=19 ttl=59 time=151 ms
+64 bytes from 2a04:4e42:2d::323 (2a04:4e42:2d::323): icmp_seq=20 ttl=59 time=51.5 ms
+
+--- www.cnn.com ping statistics ---
+20 packets transmitted, 18 received, 10% packet loss, time 19081ms
+rtt min/avg/max/mdev = 25.229/38.451/151.911/28.221 ms

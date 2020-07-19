@@ -101,3 +101,15 @@ sudo lastb > lastb.out
 
 cat /etc/group > group.out
 sudo cat /etc/gshadow > gshadow.out
+
+ping -4 www.cnn.com -c 20 -O > ping-hostname-O.out
+ping -4 www.cnn.com -c 20 -O -p abcd > ping-hostname-O-p.out
+ping -4 www.cnn.com -c 20 -O -D -p abcd -s 1400 > ping-hostname-O-D-p-s.out
+ping 127.0.0.1 -c 20 -O > ping-ip-O.out
+ping 127.0.0.1 -c 20 -O -D > ping-ip-O-D.out
+ping6 2a04:4e42:600::323 -c 20 -O -p abcd > ping6-ip-O-p.out
+ping6 2a04:4e42:600::323 -c 20 -O -D -p abcd > ping6-ip-O-D-p.out
+ping6 www.cnn.com -c 20 -O -D -p abcd -s 1400 > ping6-hostname-O-D-p-s.out
+ping6 www.cnn.com -c 20 -O -D -p abcd > ping6-hostname-O-D-p.out
+ping6 www.cnn.com -c 20 -O -p abcd > ping6-hostname-O-p.out
+
