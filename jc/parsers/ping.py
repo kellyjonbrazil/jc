@@ -194,14 +194,22 @@ def linux_parse(data):
 def bsd_parse(data):
     raw_output = {}
     ping_responses = []
+    pattern = None
     footer = False
 
-    for line in filter(None, data.splitlines()):
+    linedata = data.splitlines()
+
+    # check for PATTERN
+    if linedata[0].startswith('PATTERN: '):
+        pattern = linedata.pop(0).split(': ')[1]
+
+    for line in filter(None, linedata):
         if line.startswith('PING '):
             raw_output.update(
                 {
                     'destination_ip': line.split()[2].lstrip('(').rstrip(':').rstrip(')'),
-                    'data_bytes': line.split()[3]
+                    'data_bytes': line.split()[3],
+                    'pattern': pattern
                 }
             )
             continue
@@ -212,7 +220,8 @@ def bsd_parse(data):
                 {
                     'source_ip': line.split()[4],
                     'destination_ip': line.split()[6],
-                    'data_bytes': line.split()[1]
+                    'data_bytes': line.split()[1],
+                    'pattern': pattern
                 }
             )
             continue
