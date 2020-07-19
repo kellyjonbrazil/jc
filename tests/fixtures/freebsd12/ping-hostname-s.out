@@ -1,0 +1,8 @@
+PING localhost (127.0.0.1): 40 data bytes
+48 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.022 ms
+48 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.038 ms
+48 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.030 ms
+
+--- localhost ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 0.022/0.030/0.038/0.006 ms
