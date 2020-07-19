@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'freebsd'
+    'linux', 'darwin', 'freebsd'
 
 Examples:
 
@@ -105,7 +105,7 @@ class info():
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['ping', 'ping6']
 
 
