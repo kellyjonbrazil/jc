@@ -4,6 +4,8 @@ Usage:
 
     specify --ping as the first argument if the piped input is coming from ping
 
+    Note:  Use the ping -c (count) option, otherwise data will not be piped to jc.
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
