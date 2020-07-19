@@ -45,18 +45,66 @@ def process(proc_data):
 
     Returns:
 
-        List of dictionaries. Structured data with the following schema:
+        Dictionary. Structured data with the following schema:
 
-        [
-          {
-            "ping":     string,
-            "bar":     boolean,
-            "baz":     integer
-          }
-        ]
+        {
+          "destination_ip":              string,
+          "data_bytes":                  integer,
+          "pattern":                     string,        (null if not set)
+          "destination":                 string,
+          "packets_transmitted":         integer,
+          "packets_received":            integer,
+          "packet_loss_percent":         float,
+          "round_trip_ms_min":           float,
+          "round_trip_ms_avg":           float,
+          "round_trip_ms_max":           float,
+          "round_trip_ms_stddev":        float,
+          "responses": [
+            {
+              "type":                    string,       ('reply' or 'timeout')
+              "timestamp":               float,
+              "bytes":                   integer,
+              "response_ip":             string,
+              "icmp_seq":                integer,
+              "ttl":                     integer,
+              "time_ms":                 float
+            }
+          ]
+        }
     """
+    int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl']
+    float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
+                  'round_trip_ms_stddev', 'timestamp', 'time_ms']
 
-    # rebuild output for added semantic information
+    for key in proc_data.keys():
+        for item in int_list:
+            if item == key:
+                try:
+                    proc_data[key] = int(proc_data[key])
+                except (ValueError):
+                    proc_data[key] = None
+
+        for item in float_list:
+            if item == key:
+                try:
+                    proc_data[key] = float(proc_data[key])
+                except (ValueError):
+                    proc_data[key] = None
+
+        if key == 'responses':
+            for entry in proc_data['responses']:
+                for k in entry.keys():
+                    if k in int_list:
+                        try:
+                            entry[k] = int(entry[k])
+                        except (ValueError):
+                            entry[k] = None
+                    if k in float_list:
+                        try:
+                            entry[k] = float(entry[k])
+                        except (ValueError):
+                            entry[k] = None
+
     return proc_data
 
 
@@ -313,7 +361,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        List of dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
