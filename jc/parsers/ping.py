@@ -6,7 +6,7 @@ Usage:
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    'linux', 'darwin', 'cygwin', 'freebsd'
 
 Examples:
 
@@ -28,7 +28,7 @@ class info():
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'cygwin', 'freebsd']
     magic_commands = ['ping', 'ping6']
 
 
@@ -146,7 +146,7 @@ def linux_parse(data):
                     isequence = 6
 
                 response = {
-                    'request_timeout': True,
+                    'type': 'timeout',
                     'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
                     'icmp_seq': line.replace('=', ' ').split()[isequence]
                 }
@@ -155,7 +155,7 @@ def linux_parse(data):
 
             # normal responses
             else:
-                hostname = True if '(' in line else False
+
                 line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
 
                 # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
@@ -175,7 +175,7 @@ def linux_parse(data):
                     bts, rip, iseq, t2l, tms = (bts + 1, rip + 1, iseq + 1, t2l + 1, tms + 1)
 
                 response = {
-                    'request_timeout': False,
+                    'type': 'reply',
                     'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
                     'bytes': line.split()[bts],
                     'response_ip': line.split()[rip].rstrip(':'),
@@ -253,7 +253,7 @@ def bsd_parse(data):
                 # request timeout
                 if line.startswith('Request timeout for '):
                     response = {
-                        'request_timeout': True,
+                        'type': 'timeout',
                         'icmp_seq': line.split()[4]
                     }
                     ping_responses.append(response)
@@ -263,7 +263,7 @@ def bsd_parse(data):
                 else:
                     line = line.replace(':', ' ').replace('=', ' ')
                     response = {
-                        'request_timeout': False,
+                        'type': 'reply',
                         'bytes': line.split()[0],
                         'response_ip': line.split()[3],
                         'icmp_seq': line.split()[5],
@@ -277,7 +277,7 @@ def bsd_parse(data):
             else:
                 line = line.replace(',', ' ').replace('=', ' ')
                 response = {
-                    'request_timeout': False,
+                    'type': 'reply',
                     'bytes': line.split()[0],
                     'response_ip': line.split()[3],
                     'icmp_seq': line.split()[5],
@@ -322,4 +322,3 @@ def parse(data, raw=False, quiet=False):
         return raw_output
     else:
         return process(raw_output)
-
