@@ -68,6 +68,32 @@ class MyTests(unittest.TestCase):
             self.ubuntu_18_4_ping6_hostname_O_D_p_s = f.read()
 
         # fedora
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_ip_O = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_ip_O_D = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_p = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_D_p_s = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_ip_O_p = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_ip_O_D_p = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_hostname_O_p = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_hostname_O_D_p_s = f.read()
 
         # freebsd
 
@@ -140,6 +166,34 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_ping6_hostname_O_D_p_s_json = json.loads(f.read())
+
+        # fedora
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_ip_O_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_ip_O_D_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_p_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_D_p_s_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_ip_O_p_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_ip_O_D_p_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_hostname_O_p_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_hostname_O_D_p_s_json = json.loads(f.read())
 
 
 
@@ -277,6 +331,60 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping6_hostname_O_D_p_s, quiet=True), self.ubuntu_18_4_ping6_hostname_O_D_p_s_json)
 
+    def test_ping_ip_O_fedora32(self):
+        """
+        Test 'ping <ip> -O' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_ip_O, quiet=True), self.centos_7_7_ping_ip_O_json)
+
+    def test_ping_ip_O_D_fedora32(self):
+        """
+        Test 'ping <ip> -O -D' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_ip_O_D, quiet=True), self.centos_7_7_ping_ip_O_D_json)
+
+    def test_ping_hostname_O_fedora32(self):
+        """
+        Test 'ping <hostname> -O' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_hostname_O, quiet=True), self.centos_7_7_ping_hostname_O_json)
+
+    def test_ping_hostname_O_p_fedora32(self):
+        """
+        Test 'ping <hostname> -O -p' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_hostname_O_p, quiet=True), self.centos_7_7_ping_hostname_O_p_json)
+
+    def test_ping_hostname_O_D_p_s_fedora32(self):
+        """
+        Test 'ping <hostname> -O -D -p -s' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_hostname_O_D_p_s, quiet=True), self.centos_7_7_ping_hostname_O_D_p_s_json)
+
+    def test_ping6_ip_O_p_fedora32(self):
+        """
+        Test 'ping6 <ip> -O -p' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_O_p, quiet=True), self.centos_7_7_ping6_ip_O_p_json)
+
+    def test_ping6_ip_O_D_p_fedora32(self):
+        """
+        Test 'ping6 <ip> -O -D -p' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_O_D_p, quiet=True), self.centos_7_7_ping6_ip_O_D_p_json)
+
+    def test_ping6_hostname_O_p_fedora32(self):
+        """
+        Test 'ping6 <hostname> -O -p' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_hostname_O_p, quiet=True), self.centos_7_7_ping6_hostname_O_p_json)
+
+    def test_ping6_hostname_O_D_p_s_fedora32(self):
+        """
+        Test 'ping6 <hostname> -O -D -p -s' on fedora32
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_hostname_O_D_p_s, quiet=True), self.centos_7_7_ping6_hostname_O_D_p_s_json)
+    
     # def test_ping_a_osx_10_14_6(self):
     #     """
     #     Test 'ping -a' on OSX 10.14.6
