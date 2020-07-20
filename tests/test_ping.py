@@ -132,21 +132,42 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip.out'), 'r', encoding='utf-8') as f:
             self.freebsd12_ping6_ip = f.read()
 
-
-
-
-
         # osx
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_hostname_p = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-s.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_hostname_s = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_hostname = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-p.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_p = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-s.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_s = f.read()
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-a2.out'), 'r', encoding='utf-8') as f:
-        #     self.osx_10_14_6_ping_a2 = f.read()
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip = f.read()
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-a.out'), 'r', encoding='utf-8') as f:
-        #     self.freebsd_ping_a = f.read()
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_hostname_p = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-s.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_hostname_s = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_hostname = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-p.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_p = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-s.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_s = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip = f.read()
 
         # output
 
@@ -271,26 +292,42 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_ping6_ip_json = json.loads(f.read())
 
+        # osx:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_hostname_p_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-s.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_hostname_s_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_hostname_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-p.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_p_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-s.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_s_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_hostname_p_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-s.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_hostname_s_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_hostname_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-a2.json'), 'r', encoding='utf-8') as f:
-        #     self.osx_10_14_6_ping_a2_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-p.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_p_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-a.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_a_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-s.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_s_json = json.loads(f.read())
 
-
-
-
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_json = json.loads(f.read())
 
     def test_ping_nodata(self):
         """
@@ -460,9 +497,6 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping6_hostname_O_D_p_s, quiet=True), self.fedora32_ping6_hostname_O_D_p_s_json)
 
-    
-
-
     def test_ping_hostname_p_freebsd12(self):
         """
         Test 'ping <hostname> -p' on freebsd12
@@ -534,18 +568,78 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip>' on freebsd12
         """
         self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_ip, quiet=True), self.freebsd12_ping6_ip_json)
-    
-    # def test_ping_a_osx_10_14_6(self):
-    #     """
-    #     Test 'ping -a' on OSX 10.14.6
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_a, quiet=True), self.osx_10_14_6_ping_a_json)
 
-    # def test_ping_a_freebsd12(self):
-    #     """
-    #     Test 'ping -a' on FreeBSD12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd_ping_a, quiet=True), self.freebsd12_ping_a_json)
+    def test_ping_hostname_p_osx_10_14_6(self):
+        """
+        Test 'ping <hostname> -p' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_hostname_p, quiet=True), self.osx_10_14_6_ping_hostname_p_json)
+
+    def test_ping_hostname_s_osx_10_14_6(self):
+        """
+        Test 'ping <hostname> -s' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_hostname_s, quiet=True), self.osx_10_14_6_ping_hostname_s_json)
+
+    def test_ping_ping_hostname_osx_10_14_6(self):
+        """
+        Test 'ping <hostname>' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_hostname, quiet=True), self.osx_10_14_6_ping_hostname_json)
+
+    def test_ping_ip_p_osx_10_14_6(self):
+        """
+        Test 'ping <ip> -p' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_p, quiet=True), self.osx_10_14_6_ping_ip_p_json)
+
+    def test_ping_ip_s_osx_10_14_6(self):
+        """
+        Test 'ping <ip> -s' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_s, quiet=True), self.osx_10_14_6_ping_ip_s_json)
+
+    def test_ping_ip_osx_10_14_6(self):
+        """
+        Test 'ping6 <ip>' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip, quiet=True), self.osx_10_14_6_ping_ip_json)
+
+    def test_ping6_hostname_p_osx_10_14_6(self):
+        """
+        Test 'ping6 <hostname> -p' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_hostname_p, quiet=True), self.osx_10_14_6_ping6_hostname_p_json)
+
+    def test_ping6_hostname_s_osx_10_14_6(self):
+        """
+        Test 'ping6 <hostname> -s' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_hostname_s, quiet=True), self.osx_10_14_6_ping6_hostname_s_json)
+
+    def test_ping6_hostname_osx_10_14_6(self):
+        """
+        Test 'ping6 <hostname>' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_hostname, quiet=True), self.osx_10_14_6_ping6_hostname_json)
+
+    def test_ping6_ip_p_osx_10_14_6(self):
+        """
+        Test 'ping6 <ip> -p' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip_p, quiet=True), self.osx_10_14_6_ping6_ip_p_json)
+
+    def test_ping6_ip_s_osx_10_14_6(self):
+        """
+        Test 'ping6 <ip> -s' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip_s, quiet=True), self.osx_10_14_6_ping6_ip_s_json)
+
+    def test_ping6_ip_osx_10_14_6(self):
+        """
+        Test 'ping6 <ip>' on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip, quiet=True), self.osx_10_14_6_ping6_ip_json)
 
 
 if __name__ == '__main__':
