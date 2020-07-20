@@ -160,14 +160,14 @@ def process(proc_data):
             if item == key:
                 try:
                     proc_data[key] = int(proc_data[key])
-                except (ValueError):
+                except (ValueError, TypeError):
                     proc_data[key] = None
 
         for item in float_list:
             if item == key:
                 try:
                     proc_data[key] = float(proc_data[key])
-                except (ValueError):
+                except (ValueError, TypeError):
                     proc_data[key] = None
 
         if key == 'responses':
@@ -176,12 +176,12 @@ def process(proc_data):
                     if k in int_list:
                         try:
                             entry[k] = int(entry[k])
-                        except (ValueError):
+                        except (ValueError, TypeError):
                             entry[k] = None
                     if k in float_list:
                         try:
                             entry[k] = float(entry[k])
-                        except (ValueError):
+                        except (ValueError, TypeError):
                             entry[k] = None
 
     return proc_data
