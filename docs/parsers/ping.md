@@ -125,19 +125,21 @@ Returns:
       "packets_transmitted":         integer,
       "packets_received":            integer,
       "packet_loss_percent":         float,
+      "duplicates":                  integer,
       "round_trip_ms_min":           float,
       "round_trip_ms_avg":           float,
       "round_trip_ms_max":           float,
       "round_trip_ms_stddev":        float,
       "responses": [
         {
-          "type":                    string,       ('reply' or 'timeout')
+          "type":                    string,        ('reply' or 'timeout')
           "timestamp":               float,
           "bytes":                   integer,
           "response_ip":             string,
           "icmp_seq":                integer,
           "ttl":                     integer,
-          "time_ms":                 float
+          "time_ms":                 float,
+          "duplicate":               boolean
         }
       ]
     }

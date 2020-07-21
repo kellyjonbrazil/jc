@@ -1,0 +1,20 @@
+PING 192.168.1.255 (192.168.1.255): 56 data bytes
+64 bytes from 192.168.1.221: icmp_seq=0 ttl=64 time=0.235 ms
+64 bytes from 192.168.1.88: icmp_seq=0 ttl=64 time=4.224 ms
+64 bytes from 192.168.1.89: icmp_seq=0 ttl=64 time=8.370 ms
+64 bytes from 192.168.1.72: icmp_seq=0 ttl=64 time=62.635 ms
+64 bytes from 192.168.1.246: icmp_seq=0 ttl=255 time=62.805 ms
+64 bytes from 192.168.1.78: icmp_seq=0 ttl=128 time=63.803 ms
+64 bytes from 192.168.1.251: icmp_seq=0 ttl=64 time=63.857 ms
+64 bytes from 192.168.1.217: icmp_seq=0 ttl=255 time=672.974 ms
+64 bytes from 192.168.1.186: icmp_seq=0 ttl=64 time=673.123 ms
+64 bytes from 192.168.1.75: icmp_seq=0 ttl=64 time=673.358 ms
+64 bytes from 192.168.1.221: icmp_seq=1 ttl=64 time=0.291 ms
+64 bytes from 192.168.1.78: icmp_seq=1 ttl=128 time=7.898 ms
+64 bytes from 192.168.1.88: icmp_seq=1 ttl=64 time=7.927 ms
+64 bytes from 192.168.1.89: icmp_seq=1 ttl=64 time=10.077 ms
+64 bytes from 192.168.1.250: icmp_seq=0 ttl=64 time=1084.262 ms
+
+--- 192.168.1.255 ping statistics ---
+2 packets transmitted, 2 packets received, +13 duplicates, 0.0% packet loss
+round-trip min/avg/max/stddev = 0.235/226.389/1084.262/344.729 ms

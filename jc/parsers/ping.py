@@ -135,24 +135,26 @@ def process(proc_data):
           "packets_transmitted":         integer,
           "packets_received":            integer,
           "packet_loss_percent":         float,
+          "duplicates":                  integer,
           "round_trip_ms_min":           float,
           "round_trip_ms_avg":           float,
           "round_trip_ms_max":           float,
           "round_trip_ms_stddev":        float,
           "responses": [
             {
-              "type":                    string,       ('reply' or 'timeout')
+              "type":                    string,        ('reply' or 'timeout')
               "timestamp":               float,
               "bytes":                   integer,
               "response_ip":             string,
               "icmp_seq":                integer,
               "ttl":                     integer,
-              "time_ms":                 float
+              "time_ms":                 float,
+              "duplicate":               boolean
             }
           ]
         }
     """
-    int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl']
+    int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl', 'duplicates']
     float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
                   'round_trip_ms_stddev', 'timestamp', 'time_ms']
 
@@ -200,6 +202,9 @@ def linux_parse(data):
     if linedata[0].startswith('PATTERN: '):
         pattern = linedata.pop(0).split(': ')[1]
 
+    while not linedata[0].startswith('PING '):
+        linedata.pop(0)
+
     ipv4 = True if 'bytes of data' in linedata[0] else False
 
     if ipv4 and linedata[0][5] not in string.digits:
@@ -239,15 +244,28 @@ def linux_parse(data):
 
         if footer:
             if 'packets transmitted' in line:
-                raw_output.update(
-                    {
-                        'packets_transmitted': line.split()[0],
-                        'packets_received': line.split()[3],
-                        'packet_loss_percent': line.split()[5].rstrip('%'),
-                        'time_ms': line.split()[9].replace('ms', '')
-                    }
-                )
-                continue
+                if ' duplicates,' in line:
+                    raw_output.update(
+                        {
+                            'packets_transmitted': line.split()[0],
+                            'packets_received': line.split()[3],
+                            'packet_loss_percent': line.split()[7].rstrip('%'),
+                            'duplicates': line.split()[5].lstrip('+'),
+                            'time_ms': line.split()[11].replace('ms', '')
+                        }
+                    )
+                    continue
+                else:
+                    raw_output.update(
+                        {
+                            'packets_transmitted': line.split()[0],
+                            'packets_received': line.split()[3],
+                            'packet_loss_percent': line.split()[5].rstrip('%'),
+                            'duplicates': '0',
+                            'time_ms': line.split()[9].replace('ms', '')
+                        }
+                    )
+                    continue
 
             else:
                 split_line = line.split(' = ')[1]
@@ -257,7 +275,7 @@ def linux_parse(data):
                         'round_trip_ms_min': split_line[0],
                         'round_trip_ms_avg': split_line[1],
                         'round_trip_ms_max': split_line[2],
-                        'round_trip_ms_stddev': split_line[3].replace(' ms', '')
+                        'round_trip_ms_stddev': split_line[3].split()[0]
                     }
                 )
 
@@ -309,8 +327,10 @@ def linux_parse(data):
                     'response_ip': line.split()[rip].rstrip(':'),
                     'icmp_seq': line.split()[iseq],
                     'ttl': line.split()[t2l],
-                    'time_ms': line.split()[tms]
+                    'time_ms': line.split()[tms],
+                    'duplicate': True if 'DUP!' in line else False
                 }
+
                 ping_responses.append(response)
                 continue
 
@@ -361,14 +381,26 @@ def bsd_parse(data):
 
         if footer:
             if 'packets transmitted' in line:
-                raw_output.update(
-                    {
-                        'packets_transmitted': line.split()[0],
-                        'packets_received': line.split()[3],
-                        'packet_loss_percent': line.split()[6].rstrip('%')
-                    }
-                )
-                continue
+                if ' duplicates,' in line:
+                    raw_output.update(
+                        {
+                            'packets_transmitted': line.split()[0],
+                            'packets_received': line.split()[3],
+                            'packet_loss_percent': line.split()[8].rstrip('%'),
+                            'duplicates': line.split()[6].lstrip('+'),
+                        }
+                    )
+                    continue
+                else:
+                    raw_output.update(
+                        {
+                            'packets_transmitted': line.split()[0],
+                            'packets_received': line.split()[3],
+                            'packet_loss_percent': line.split()[6].rstrip('%'),
+                            'duplicates': '0',
+                        }
+                    )
+                    continue
 
             else:
                 split_line = line.split(' = ')[1]
@@ -423,6 +455,13 @@ def bsd_parse(data):
                 }
                 ping_responses.append(response)
                 continue
+
+    # identify duplicates in responses
+    if ping_responses:
+        seq_list = []
+        for reply in ping_responses:
+            seq_list.append(reply['icmp_seq'])
+            reply['duplicate'] = True if seq_list.count(reply['icmp_seq']) > 1 else False
 
     raw_output['responses'] = ping_responses
 
