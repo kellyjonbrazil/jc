@@ -21,6 +21,7 @@ Examples:
       "packets_transmitted": 3,
       "packets_received": 3,
       "packet_loss_percent": 0.0,
+      "duplicates": 0,
       "round_trip_ms_min": 28.015,
       "round_trip_ms_avg": 32.848,
       "round_trip_ms_max": 39.376,
@@ -32,7 +33,8 @@ Examples:
           "response_ip": "151.101.1.67",
           "icmp_seq": 0,
           "ttl": 59,
-          "time_ms": 28.015
+          "time_ms": 28.015,
+          "duplicate": false
         },
         {
           "type": "reply",
@@ -40,7 +42,8 @@ Examples:
           "response_ip": "151.101.1.67",
           "icmp_seq": 1,
           "ttl": 59,
-          "time_ms": 39.376
+          "time_ms": 39.376,
+          "duplicate": false
         },
         {
           "type": "reply",
@@ -48,7 +51,8 @@ Examples:
           "response_ip": "151.101.1.67",
           "icmp_seq": 2,
           "ttl": 59,
-          "time_ms": 31.153
+          "time_ms": 31.153,
+          "duplicate": false
         }
       ]
     }
@@ -63,6 +67,7 @@ Examples:
       "packets_transmitted": "3",
       "packets_received": "3",
       "packet_loss_percent": "0.0",
+      "duplicates": "0",
       "round_trip_ms_min": "25.078",
       "round_trip_ms_avg": "29.543",
       "round_trip_ms_max": "32.553",
@@ -74,7 +79,8 @@ Examples:
           "response_ip": "151.101.129.67",
           "icmp_seq": "0",
           "ttl": "59",
-          "time_ms": "25.078"
+          "time_ms": "25.078",
+          "duplicate": false
         },
         {
           "type": "reply",
@@ -82,7 +88,8 @@ Examples:
           "response_ip": "151.101.129.67",
           "icmp_seq": "1",
           "ttl": "59",
-          "time_ms": "30.999"
+          "time_ms": "30.999",
+          "duplicate": false
         },
         {
           "type": "reply",
@@ -90,7 +97,8 @@ Examples:
           "response_ip": "151.101.129.67",
           "icmp_seq": "2",
           "ttl": "59",
-          "time_ms": "32.553"
+          "time_ms": "32.553",
+          "duplicate": false
         }
       ]
     }
