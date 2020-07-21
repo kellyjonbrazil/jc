@@ -127,6 +127,7 @@ def process(proc_data):
         Dictionary. Structured data with the following schema:
 
         {
+          "source_ip":                   string,
           "destination_ip":              string,
           "data_bytes":                  integer,
           "pattern":                     string,        (null if not set)
