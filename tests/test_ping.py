@@ -39,6 +39,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_hostname_O_D_p_s = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_dup = f.read()
+
         # ubuntu
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_ping_ip_O = f.read()
@@ -169,6 +172,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_ip = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_dup = f.read()
+
         # output
 
         # centos
@@ -198,6 +204,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_hostname_O_D_p_s_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-dup.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_dup_json = json.loads(f.read())
 
         # ubunutu
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.json'), 'r', encoding='utf-8') as f:
@@ -329,6 +338,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_ip_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_dup_json = json.loads(f.read())
+
     def test_ping_nodata(self):
         """
         Test 'ping' with no data
@@ -388,6 +400,12 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <hostname> -O -D -p -s' on Centos 7.7
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_hostname_O_D_p_s, quiet=True), self.centos_7_7_ping6_hostname_O_D_p_s_json)
+
+    def test_ping_ip_dup_centos_7_7(self):
+        """
+        Test 'ping <ip>' to broadcast IP to get duplicate replies on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_ip_dup, quiet=True), self.centos_7_7_ping_ip_dup_json)
 
     def test_ping_ip_O_ubuntu_18_4(self):
         """
@@ -640,6 +658,12 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip>' on osx 10.14.6
         """
         self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip, quiet=True), self.osx_10_14_6_ping6_ip_json)
+
+    def test_ping_ip_dup_osx_10_14_6(self):
+        """
+        Test 'ping <ip>' to broadcast IP to get duplicate replies on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_dup, quiet=True), self.osx_10_14_6_ping_ip_dup_json)
 
 
 if __name__ == '__main__':
