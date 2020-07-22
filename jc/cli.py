@@ -77,6 +77,7 @@ parsers = [
     'systemctl-ls',
     'systemctl-luf',
     'timedatectl',
+    'traceroute',
     'uname',
     'uptime',
     'w',
