@@ -1,0 +1,14 @@
+PING ff02::1%ens33(ff02::1%ens33) 56 data bytes
+64 bytes from fe80::c48:5896:526d:81ba%ens33: icmp_seq=1 ttl=64 time=0.245 ms
+64 bytes from fe80::feae:34ff:fea1:3a80%ens33: icmp_seq=1 ttl=64 time=3.65 ms (DUP!)
+64 bytes from fe80::c48:5896:526d:81ba%ens33: icmp_seq=2 ttl=64 time=0.329 ms
+64 bytes from fe80::feae:34ff:fea1:3a80%ens33: icmp_seq=2 ttl=64 time=11.7 ms (DUP!)
+64 bytes from fe80::c48:5896:526d:81ba%ens33: icmp_seq=3 ttl=64 time=0.592 ms
+64 bytes from fe80::feae:34ff:fea1:3a80%ens33: icmp_seq=3 ttl=64 time=12.3 ms (DUP!)
+64 bytes from fe80::c48:5896:526d:81ba%ens33: icmp_seq=4 ttl=64 time=0.510 ms
+64 bytes from fe80::feae:34ff:fea1:3a80%ens33: icmp_seq=4 ttl=64 time=12.5 ms (DUP!)
+64 bytes from fe80::c48:5896:526d:81ba%ens33: icmp_seq=5 ttl=64 time=0.538 ms
+
+--- ff02::1%ens33 ping statistics ---
+5 packets transmitted, 5 received, +4 duplicates, 0% packet loss, time 4017ms
+rtt min/avg/max/mdev = 0.245/4.726/12.568/5.395 ms
