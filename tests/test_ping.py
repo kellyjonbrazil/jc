@@ -178,6 +178,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip_dup = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_dup = f.read()
+
         # output
 
         # centos
@@ -346,6 +349,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip_dup_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_dup_json = json.loads(f.read())
 
     def test_ping_nodata(self):
         """
@@ -676,6 +682,12 @@ class MyTests(unittest.TestCase):
         Test 'ping <ip>' to broadcast IP to get duplicate replies on osx 10.14.6
         """
         self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_dup, quiet=True), self.osx_10_14_6_ping_ip_dup_json)
+
+    def test_ping6_ip_dup_osx_10_14_6(self):
+        """
+        Test 'ping6 <ip>' to broadcast IP to get duplicate replies on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip_dup, quiet=True), self.osx_10_14_6_ping6_ip_dup_json)
 
 
 if __name__ == '__main__':
