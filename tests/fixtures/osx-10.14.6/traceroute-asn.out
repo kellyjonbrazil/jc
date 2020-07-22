@@ -1,0 +1,5 @@
+traceroute to 8.8.8.8 (8.8.8.8), 4 hops max, 52 byte packets
+ 1  [AS198949] dsldevice (192.168.1.254)  6.070 ms  5.721 ms  5.269 ms
+ 2  [AS0] 76-220-24-1.lightspeed.sntcca.sbcglobal.net (76.220.24.1)  160.025 ms  178.690 ms  33.759 ms
+ 3  * * *
+ 4  [AS7018] 12.122.149.186 (12.122.149.186)  37.783 ms  23.782 ms  24.958 ms

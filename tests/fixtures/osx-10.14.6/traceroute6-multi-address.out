@@ -1,0 +1,8 @@
+traceroute6: Warning: turner-tls.map.fastly.net has multiple addresses; using 2a04:4e42:200::323
+traceroute6 to turner-tls.map.fastly.net (2a04:4e42:200::323) from 2600:1700:bab0:d40:985:f00a:98bd:f142, 5 hops max, 12 byte packets
+ 1  * * *
+ 2  2001:506:6000:11b:71:156:212:143  27.635 ms  20.383 ms  23.438 ms
+ 3  * * *
+ 4  2001:1890:ff:ff08:12:242:117:16  20.118 ms  20.327 ms  21.213 ms
+ 5  * * *
+

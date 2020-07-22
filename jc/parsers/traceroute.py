@@ -4,13 +4,16 @@ Usage:
 
     specify --traceroute as the first argument if the piped input is coming from traceroute
 
+    Note: on OSX and FreeBSD be sure to redirect STDERR to STDOUT since the header line is sent to STDERR
+          e.g. $ traceroute 8.8.8.8 2>&1 | jc --traceroute
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
 
 Examples:
 
-    $ traceroute | jc --traceroute -p
+    $ traceroute www.cnn.com 2>&1 | jc --traceroute -p
     []
 
     $ traceroute | jc --traceroute -p -r
@@ -211,9 +214,7 @@ class ParseError(Exception):
     pass
 
 
-
-
-
+########################################################################################
 
 def process(proc_data):
     """
@@ -261,6 +262,19 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
+        # remove any warning lines
+        new_data = []
+        for data_line in data.splitlines():
+            if 'traceroute: Warning: ' not in data_line and 'traceroute6: Warning: ' not in data_line:
+                new_data.append(data_line)
+            else:
+                continue
+        data = '\n'.join(new_data)
+
+        # check if header row exists, otherwise raise exception
+        if not data.splitlines()[0].startswith('traceroute to ') and not data.splitlines()[0].startswith('traceroute6 to '):
+            raise ParseError('Traceroute header line not found. Be sure to redirect STDERR to STDOUT on OSX/FreeBSD.')
+
         tr = loads(data)
         hops = tr.hops
         hops_list = []
@@ -268,18 +282,20 @@ def parse(data, raw=False, quiet=False):
         if hops:
             for hop in hops:
                 hop_obj = {}
-                hop_obj['id'] = hop.idx
+                hop_obj['hop'] = str(hop.idx)
                 probe_list = []
+
                 if hop.probes:
                     for probe in hop.probes:
                         probe_obj = {
                             'annotation': probe.annotation,
-                            'asn': probe.asn,
+                            'asn': None if probe.asn is None else str(probe.asn),
                             'ip': probe.ip,
                             'name': probe.name,
-                            'rtt': None if probe.rtt is None else float(probe.rtt)
+                            'rtt': None if probe.rtt is None else str(probe.rtt)
                         }
                         probe_list.append(probe_obj)
+
                 hop_obj['probes'] = probe_list
                 hops_list.append(hop_obj)
 
