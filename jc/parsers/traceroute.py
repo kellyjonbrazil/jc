@@ -205,10 +205,6 @@ def loads(data):
     return traceroute
 
 
-def load(data):
-    return loads(data.read())
-
-
 class ParseError(Exception):
     pass
 
