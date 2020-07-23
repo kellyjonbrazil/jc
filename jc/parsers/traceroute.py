@@ -45,9 +45,10 @@ Copyright (C) 2015 Luis Benitez
 Parses the output of a traceroute execution into an AST (Abstract Syntax Tree).
 """
 
-RE_HEADER = re.compile(r'(\S+)\s+\((?:(\d+\.\d+\.\d+\.\d+)|([0-9a-fA-F:]+))\)')
+RE_HEADER = re.compile(r'(\S+)\s+\((?:(\d+\.\d+\.\d+\.\d+|[0-9a-fA-F:]+))\)')
 
-RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((?:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([0-9a-fA-F:]+))\)+')
+RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((?:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+))\)+')
+RE_PROBE_BSD_IPV6 = re.compile(r'\b(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}\b')
 RE_PROBE_ANNOTATION = re.compile(r'^(!\w*)$')
 RE_PROBE_TIMEOUT = re.compile(r'^(\*)$')
 
@@ -174,9 +175,13 @@ def loads(data):
             probe_asn = None
 
         probe_name_ip_match = RE_PROBE_NAME_IP.search(hop_string)
+        probe_bsd_ipv6_match = RE_PROBE_BSD_IPV6.search(hop_string)
         if probe_name_ip_match:
             probe_name = probe_name_ip_match.group(1)
-            probe_ip = probe_name_ip_match.group(2) or probe_name_ip_match.group(3)
+            probe_ip = probe_name_ip_match.group(2)
+        elif probe_bsd_ipv6_match:
+            probe_name = None
+            probe_ip = probe_bsd_ipv6_match.group(0)
         else:
             probe_name = None
             probe_ip = None
