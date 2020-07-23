@@ -13,8 +13,67 @@ Compatibility:
 
 Examples:
 
-    $ traceroute www.cnn.com 2>&1 | jc --traceroute -p
-    []
+    $ traceroute www.cnn.com | jc --traceroute -p -r
+    {
+      "destination_ip": "173.207.22.152",
+      "destination_name": "http://google.es",
+      "hops": [
+        {
+          "hop": "1",
+          "probes": [
+            {
+              "annotation": null,
+              "asn": "1739",
+              "ip": "131.240.100.12",
+              "name": "131.240.100.12",
+              "rtt": "0.676"
+            },
+            {
+              "annotation": null,
+              "asn": "1739",
+              "ip": "131.240.100.12",
+              "name": "131.240.100.12",
+              "rtt": "0.763"
+            },
+            {
+              "annotation": null,
+              "asn": "1739",
+              "ip": "131.240.100.12",
+              "name": "131.240.100.12",
+              "rtt": "0.910"
+            }
+          ]
+        },
+        {
+          "hop": "2",
+          "probes": [
+            {
+              "annotation": null,
+              "asn": "1739",
+              "ip": "131.232.1.26",
+              "name": "http://tut1-fw-vlan558.av.tut.fi",
+              "rtt": "0.266"
+            },
+            {
+              "annotation": null,
+              "asn": "1739",
+              "ip": "131.232.1.26",
+              "name": "http://tut1-fw-vlan558.av.tut.fi",
+              "rtt": "0.404"
+            },
+            {
+              "annotation": null,
+              "asn": "1739",
+              "ip": "131.232.1.26",
+              "name": "http://tut1-fw-vlan558.av.tut.fi",
+              "rtt": "0.493"
+            }
+          ]
+        },
+        ...
+      ]
+    }
+
 
     $ traceroute | jc --traceroute -p -r
     []
@@ -79,7 +138,7 @@ class Hop(object):
     """
 
     def __init__(self, idx):
-        self.idx = idx  # Hop count, starting at 1
+        self.idx = idx  # Hop count, starting at 1 (usually)
         self.probes = []  # Series of Probe instances
 
     def add_probe(self, probe):
@@ -221,18 +280,62 @@ def process(proc_data):
 
     Returns:
 
-        List of dictionaries. Structured data with the following schema:
+        Dictionary. Structured data with the following schema:
 
-        [
-          {
-            "foo":     string,
-            "bar":     boolean,
-            "baz":     integer
-          }
-        ]
+        {
+          "destination_ip":         string,
+          "destination_name":       string,
+          "hops": [
+            {
+              "hop":                integer,
+              "probes": [
+                {
+                  "annotation":     string,
+                  "asn":            integer,
+                  "ip":             string,
+                  "name":           string,
+                  "rtt":            float
+                }
+              ]
+            }
+          ]
+        }
     """
+    int_list = ['hop', 'asn']
+    float_list = ['rtt']
 
-    # rebuild output for added semantic information
+    if proc_data['hops']:
+        for entry in proc_data['hops']:
+            for key in int_list:
+                if key in entry:
+                    try:
+                        entry[key] = int(entry[key])
+                    except (ValueError, TypeError):
+                        entry[key] = None
+
+            for key in float_list:
+                if key in entry:
+                    try:
+                        entry[key] = float(entry[key])
+                    except (ValueError, TypeError):
+                        entry[key] = None
+
+            if entry['probes']:
+                for item in entry['probes']:
+                    for key in int_list:
+                        if key in item:
+                            try:
+                                item[key] = int(item[key])
+                            except (ValueError, TypeError):
+                                item[key] = None
+
+                    for key in float_list:
+                        if key in item:
+                            try:
+                                item[key] = float(item[key])
+                            except (ValueError, TypeError):
+                                item[key] = None
+
     return proc_data
 
 
@@ -248,7 +351,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        List of dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
