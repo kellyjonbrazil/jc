@@ -189,7 +189,7 @@ def loads(data):
                 probe_rtt = None
             else:
                 message = "Expected probe RTT or *. Got: '{}'".format(probe_rtt_annotation[0])
-                raise Exception(message)
+                raise ParseError(message)
 
             probe_annotation = probe_rtt_annotation[2] or None
 
