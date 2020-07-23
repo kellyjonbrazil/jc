@@ -188,7 +188,7 @@ def loads(data):
             elif probe_rtt_annotation[1]:
                 probe_rtt = None
             else:
-                message = "Expected probe RTT or *. Got: '{}'".format(probe_rtt_annotation[0])
+                message = f"Expected probe RTT or *. Got: '{probe_rtt_annotation[0]}'"
                 raise ParseError(message)
 
             probe_annotation = probe_rtt_annotation[2] or None
