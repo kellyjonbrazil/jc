@@ -45,18 +45,19 @@ Copyright (C) 2015 Luis Benitez
 Parses the output of a traceroute execution into an AST (Abstract Syntax Tree).
 """
 
-RE_HEADER = re.compile(r'(\S+)\s+\((?:(\d+\.\d+\.\d+\.\d+|[0-9a-fA-F:]+))\)')
-
-RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((?:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+))\)+')
+# RE_HEADER = re.compile(r'(\S+)\s+\((?:(\d+\.\d+\.\d+\.\d+|[0-9a-fA-F:]+))\)')
+RE_HEADER = re.compile(r'(\S+)\s+\((\d+\.\d+\.\d+\.\d+|[0-9a-fA-F:]+)\)')
+# RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((?:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+))\)+')
+RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+)\)+')
 RE_PROBE_BSD_IPV6 = re.compile(r'\b(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}\b')
 RE_PROBE_ANNOTATION = re.compile(r'^(!\w*)$')
 RE_PROBE_TIMEOUT = re.compile(r'^(\*)$')
-
 RE_HOP_INDEX = re.compile(r'^\s*(\d+)\s+')
 RE_FIRST_HOP = re.compile(r'^\s*(\d+)\s+(.+)')
 RE_HOP = re.compile(r'^\s*(\d+)?\s+(.+)$')
 RE_PROBE_ASN = re.compile(r'\[AS(\d+)\]')
-RE_PROBE_RTT_ANNOTATION = re.compile(r'(?:(\d+(?:\.?\d+)?)\s+ms|(\s+\*\s+))\s*(!\S*)?')
+# RE_PROBE_RTT_ANNOTATION = re.compile(r'(?:(\d+(?:\.?\d+)?)\s+ms|(\s+\*\s+))\s*(!\S*)?')
+RE_PROBE_RTT_ANNOTATION = re.compile(r'\d+\.?\d+)?\s+ms|(\s+\*\s+)\s*(!\S*)?')
 
 
 class Traceroute(object):
