@@ -1,0 +1,16 @@
+traceroute to http://google.es  (173.207.22.152), 30 hops max, 60 byte packets
+ 1  131.240.100.12 (131.240.100.12) [AS1739]  0.676 ms !P 0.763 ms ! 0.910 ms !<500>
+ 2  http://tut1-fw-vlan558.av.tut.fi  (131.232.1.26) [AS1739]  0.266 ms  0.404 ms  0.493 ms
+ 3  http://surf-gw-vlan557.av.tut.fi  (131.232.1.20) [AS1739]  0.967 ms  0.961 ms  1.085 ms
+ 4  http://funet-tut6-rtr-xe-0-0-0.cc.tut.fi  (130.230.1.237) [AS1739]  1.096 ms  1.086 ms  1.049 ms
+ 5  http://hameenlinna2-et-0-0-0-1.ip.funet.fi  (86.50.255.220) [AS1741]  3.810 ms  3.845 ms  3.820 ms
+ 6  http://hameenlinna1-et-0-0-1-1.ip.funet.fi  (86.50.255.224) [AS1741]  29.055 ms  29.013 ms  28.977 ms
+ 7  http://espoo2-et-0-1-2-1.ip.funet.fi  (86.50.255.223) [AS1741]  3.468 ms  8.007 ms  7.890 ms
+ 8  http://espoo1-et-0-1-7-1.ip.funet.fi  (86.50.255.232) [AS1741]  13.498 ms  13.307 ms  13.399 ms
+ 9  http://fi-csc2.nordu.net  (109.105.102.168) [AS2603]  3.250 ms  3.268 ms  3.236 ms
+10  http://se-fre.nordu.net  (109.105.97.93) [AS2603]  9.418 ms  9.410 ms  9.369 ms
+11  http://se-kst2.nordu.net  (109.105.97.27) [AS2603]  9.617 ms  9.594 ms  9.603 ms
+12  http://as15169-10g-sk1.sthix.net  (192.121.80.47) [*]  10.010 ms 72.14.196.42 (72.14.196.42) [AS15169]  9.182 ms  44.983 ms
+13  108.170.254.49 (108.170.254.49) [AS15169]  10.852 ms 108.170.254.33 (108.170.254.33) [AS15169]  11.185 ms 108.170.254.49 (108.170.254.49) [AS15169]  10.876 ms
+14  209.85.242.11 (209.85.242.11) [AS15169]  10.192 ms  10.471 ms  10.502 ms
+15  http://arn11s03-in-f3.1e100.net  (172.217.21.163) [AS15169]  9.652 ms  9.664 ms  9.777 ms
