@@ -13,60 +13,34 @@ Compatibility:
 
 Examples:
 
-    $ traceroute www.cnn.com | jc --traceroute -p -r
+    $ traceroute google.com | jc --traceroute -p
     {
-      "destination_ip": "173.207.22.152",
-      "destination_name": "http://google.es",
+      "destination_ip": "216.58.194.46",
+      "destination_name": "google.com",
       "hops": [
         {
-          "hop": "1",
+          "hop": 1,
           "probes": [
             {
               "annotation": null,
-              "asn": "1739",
-              "ip": "131.240.100.12",
-              "name": "131.240.100.12",
-              "rtt": "0.676"
+              "asn": null,
+              "ip": "216.230.231.141",
+              "name": "216-230-231-141.static.houston.tx.oplink.net",
+              "rtt": 198.574
             },
             {
               "annotation": null,
-              "asn": "1739",
-              "ip": "131.240.100.12",
-              "name": "131.240.100.12",
-              "rtt": "0.763"
+              "asn": null,
+              "ip": "216.230.231.141",
+              "name": "216-230-231-141.static.houston.tx.oplink.net",
+              "rtt": null
             },
             {
               "annotation": null,
-              "asn": "1739",
-              "ip": "131.240.100.12",
-              "name": "131.240.100.12",
-              "rtt": "0.910"
-            }
-          ]
-        },
-        {
-          "hop": "2",
-          "probes": [
-            {
-              "annotation": null,
-              "asn": "1739",
-              "ip": "131.232.1.26",
-              "name": "http://tut1-fw-vlan558.av.tut.fi",
-              "rtt": "0.266"
-            },
-            {
-              "annotation": null,
-              "asn": "1739",
-              "ip": "131.232.1.26",
-              "name": "http://tut1-fw-vlan558.av.tut.fi",
-              "rtt": "0.404"
-            },
-            {
-              "annotation": null,
-              "asn": "1739",
-              "ip": "131.232.1.26",
-              "name": "http://tut1-fw-vlan558.av.tut.fi",
-              "rtt": "0.493"
+              "asn": null,
+              "ip": "216.230.231.141",
+              "name": "216-230-231-141.static.houston.tx.oplink.net",
+              "rtt": 198.65
             }
           ]
         },
@@ -74,9 +48,40 @@ Examples:
       ]
     }
 
-
-    $ traceroute | jc --traceroute -p -r
-    []
+    $ traceroute google.com  | jc --traceroute -p -r
+    {
+      "destination_ip": "216.58.194.46",
+      "destination_name": "google.com",
+      "hops": [
+        {
+          "hop": "1",
+          "probes": [
+            {
+              "annotation": null,
+              "asn": null,
+              "ip": "216.230.231.141",
+              "name": "216-230-231-141.static.houston.tx.oplink.net",
+              "rtt": "198.574"
+            },
+            {
+              "annotation": null,
+              "asn": null,
+              "ip": "216.230.231.141",
+              "name": "216-230-231-141.static.houston.tx.oplink.net",
+              "rtt": null
+            },
+            {
+              "annotation": null,
+              "asn": null,
+              "ip": "216.230.231.141",
+              "name": "216-230-231-141.static.houston.tx.oplink.net",
+              "rtt": "198.650"
+            }
+          ]
+        },
+        ...
+      ]
+    }
 """
 import re
 from decimal import Decimal
