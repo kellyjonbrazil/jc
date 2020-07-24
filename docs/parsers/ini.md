@@ -63,14 +63,14 @@ Parameters:
 
 Returns:
 
-    Dictionary representing an ini document:
+    Dictionary representing an ini or simple key/value pair document:
 
     {
       ini or key/value document converted to a dictionary - see configparser standard
       library documentation for more details.
 
       Note: Values starting and ending with quotation marks will have the marks removed.
-            If you would like to keep the quotation markes, use the -r or raw=True argument.
+            If you would like to keep the quotation marks, use the -r or raw=True argument.
     }
 
 ## parse
