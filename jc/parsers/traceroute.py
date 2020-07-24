@@ -331,7 +331,7 @@ def process(proc_data):
     int_list = ['hop', 'asn']
     float_list = ['rtt']
 
-    if proc_data['hops']:
+    if 'hops' in proc_data:
         for entry in proc_data['hops']:
             for key in int_list:
                 if key in entry:
@@ -347,7 +347,7 @@ def process(proc_data):
                     except (ValueError, TypeError):
                         entry[key] = None
 
-            if entry['probes']:
+            if 'probes' in entry:
                 for item in entry['probes']:
                     for key in int_list:
                         if key in item:
