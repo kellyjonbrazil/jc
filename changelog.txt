@@ -1,10 +1,16 @@
 jc changelog
 
+20200724 v1.13.0
+- Add ping and ping6 command parser tested on linux, macos, and freebsd
+- Add traceroute and traceroute6 command parser tested on linux, macos, and freebsd
+- Update ini parser to support files only containing key/value pairs
+
+
 20200711 v1.12.1
 - Fix tests when using older version of pygments library
 
 20200710 v1.12.0
-- Add sysctl command parser tested on linux, macOS, and freebsd12
+- Add sysctl command parser tested on linux, macOS, and freebsd
 - Update the cli code to allow older versions of the pygments library (2.3.0) for debian packaging
 - Code cleanup on the cli
 - Add tests for the cli
