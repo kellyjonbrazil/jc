@@ -133,7 +133,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
 - `--ifconfig` enables the `ifconfig` command parser
-- `--ini` enables the `INI` file parser
+- `--ini` enables the `INI` file parser. Also parses files/output containing simple key/value pairs
 - `--iptables` enables the `iptables` command parser
 - `--jobs` enables the `jobs` command parser
 - `--last` enables the `last` and `lastb` command parser
@@ -145,6 +145,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--netstat` enables the `netstat` command parser
 - `--ntpq` enables the `ntpq -p` command parser
 - `--passwd` enables the `/etc/passwd` file parser
+- `--ping` enables the `ping` and `ping6` command parser
 - `--pip-list` enables the `pip list` command parser
 - `--pip-show` enables the `pip show` command parser
 - `--ps` enables the `ps` command parser
@@ -158,6 +159,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
 - `--systemctl-luf` enables the `systemctl list-unit-files` command parser
 - `--timedatectl` enables the `timedatectl status` command parser
+- `--traceroute` enables the `traceroute` and `traceroute6` command parser
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
