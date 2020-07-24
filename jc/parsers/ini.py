@@ -87,13 +87,17 @@ def process(proc_data):
         # standard ini files with headers
         if isinstance(proc_data[heading], dict):
             for key, value in proc_data[heading].items():
-                if value.startswith('"') and value.endswith('"'):
+                if value is not None and value.startswith('"') and value.endswith('"'):
                     proc_data[heading][key] = value.lstrip('"').rstrip('"')
+                elif value is None:
+                    proc_data[heading][key] = ''
 
         # simple key/value files with no headers
         else:
-            if proc_data[heading].startswith('"') and proc_data[heading].endswith('"'):
+            if proc_data[heading] is not None and proc_data[heading].startswith('"') and proc_data[heading].endswith('"'):
                 proc_data[heading] = proc_data[heading].lstrip('"').rstrip('"')
+            elif proc_data[heading] is None:
+                proc_data[heading] = ''
 
     return proc_data
 
@@ -119,7 +123,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        ini = configparser.ConfigParser(allow_no_value=True)
+        ini = configparser.ConfigParser(allow_no_value=True, interpolation=None)
         try:
             ini.read_string(data)
             raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
