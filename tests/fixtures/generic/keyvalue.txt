@@ -1,0 +1,5 @@
+value1 = hello
+value2 = true
+no_value
+value4 = 3.14
+value5: 42
