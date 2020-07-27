@@ -1,8 +1,9 @@
 jc changelog
 
-20200724 v1.13.0
+202007xx v1.13.0
 - Add ping and ping6 command parser tested on linux, macos, and freebsd
 - Add traceroute and traceroute6 command parser tested on linux, macos, and freebsd
+- Add tracepath command parser tested on linux
 - Update ini parser to support files only containing key/value pairs
 - Update uname parser exception with a hint to use "uname -a"
 
