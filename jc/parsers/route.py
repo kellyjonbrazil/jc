@@ -183,12 +183,12 @@ def parse(data, raw=False, quiet=False):
 
     cleandata = data.splitlines()[1:]
 
-    # fixup header row for ipv6
-    cleandata[0] = cleandata[0].replace('Next Hop', 'Next_Hop')
-
     raw_output = []
 
     if jc.utils.has_data(data):
+
+        # fixup header row for ipv6
+        cleandata[0] = cleandata[0].replace(' Next Hop ', ' Next_Hop ').replace(' Flag ', ' Flags ').replace(' Met ', ' Metric ')
 
         cleandata[0] = cleandata[0].lower()
         raw_output = jc.parsers.universal.simple_table_parse(cleandata)
