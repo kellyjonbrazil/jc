@@ -232,6 +232,7 @@ Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
 - [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module by KnightWhoSayNi
 - [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
 - [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van der Neut
+- [`trparse`](https://github.com/lbenitez000/trparse) module by Luis Benitez
 - Parsing [code](https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501) from Conor Heine adapted for some parsers
 - Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
