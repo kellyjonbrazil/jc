@@ -108,8 +108,8 @@ import jc.utils
 class info():
     version = '1.0'
     description = 'tracepath command parser'
-    author = 'John Doe'
-    author_email = 'johndoe@gmail.com'
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
