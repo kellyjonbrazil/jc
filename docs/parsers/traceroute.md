@@ -101,20 +101,6 @@ Abstraction of a traceroute result.
 Hop(self, idx)
 ```
 
-Abstraction of a hop in a traceroute.
-
-## Probe
-```python
-Probe(self, name=None, ip=None, asn=None, rtt=None, annotation=None)
-```
-
-Abstraction of a probe in a traceroute.
-
-## loads
-```python
-loads(data)
-```
-Parser entry point. Parses the output of a traceroute execution
 ## process
 ```python
 process(proc_data)

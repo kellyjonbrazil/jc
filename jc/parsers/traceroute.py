@@ -160,10 +160,6 @@ class Traceroute(object):
 
 
 class Hop(object):
-    """
-    Abstraction of a hop in a traceroute.
-    """
-
     def __init__(self, idx):
         self.idx = idx  # Hop count, starting at 1 (usually)
         self.probes = []  # Series of Probe instances
@@ -191,10 +187,6 @@ class Hop(object):
 
 
 class Probe(object):
-    """
-    Abstraction of a probe in a traceroute.
-    """
-
     def __init__(self, name=None, ip=None, asn=None, rtt=None, annotation=None):
         self.name = name
         self.ip = ip
@@ -217,8 +209,6 @@ class Probe(object):
 
 
 def loads(data):
-    """Parser entry point. Parses the output of a traceroute execution"""
-
     lines = data.splitlines()
 
     # Get headers
