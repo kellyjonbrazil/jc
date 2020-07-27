@@ -384,7 +384,7 @@ def parse(data, raw=False, quiet=False):
 
         # check if header row exists, otherwise raise exception
         if not data.splitlines()[0].startswith('traceroute to ') and not data.splitlines()[0].startswith('traceroute6 to '):
-            raise ParseError('Traceroute header line not found. Be sure to redirect STDERR to STDOUT on OSX/FreeBSD.')
+            raise ParseError('Traceroute header line not found. Be sure to redirect STDERR to STDOUT on some operating systems.')
 
         tr = loads(data)
         hops = tr.hops
