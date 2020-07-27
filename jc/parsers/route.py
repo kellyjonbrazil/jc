@@ -182,6 +182,10 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()[1:]
+
+    # fixup header row for ipv6
+    cleandata[0].replace('Next Hop', 'Next_Hop')
+
     raw_output = []
 
     if jc.utils.has_data(data):
