@@ -2503,6 +2503,55 @@ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
   "dst_active": true
 }
 ```
+### tracepath
+```bash
+tracepath6 3ffe:2400:0:109::2 | jc --tracepath -p
+```
+```json
+{
+  "pmtu": 1480,
+  "forward_hops": 2,
+  "return_hops": 2,
+  "hops": [
+    {
+      "ttl": 1,
+      "guess": true,
+      "host": "[LOCALHOST]",
+      "reply_ms": null,
+      "pmtu": 1500,
+      "asymmetric_difference": null,
+      "reached": false
+    },
+    {
+      "ttl": 1,
+      "guess": false,
+      "host": "dust.inr.ac.ru",
+      "reply_ms": 0.411,
+      "pmtu": null,
+      "asymmetric_difference": null,
+      "reached": false
+    },
+    {
+      "ttl": 2,
+      "guess": false,
+      "host": "dust.inr.ac.ru",
+      "reply_ms": 0.39,
+      "pmtu": 1480,
+      "asymmetric_difference": 1,
+      "reached": false
+    },
+    {
+      "ttl": 2,
+      "guess": false,
+      "host": "3ffe:2400:0:109::2",
+      "reply_ms": 463.514,
+      "pmtu": null,
+      "asymmetric_difference": null,
+      "reached": true
+    }
+  ]
+}
+```
 ### traceroute
 ```bash
 traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m 3 8.8.8.8
