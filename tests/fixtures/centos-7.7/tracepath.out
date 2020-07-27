@@ -1,0 +1,34 @@
+ 1?: [LOCALHOST]                                         pmtu 1500
+ 1:  dsldevice.attlocal.net                                4.063ms 
+ 1:  dsldevice.attlocal.net                                6.368ms 
+ 2:  76-220-24-1.lightspeed.sntcca.sbcglobal.net          24.092ms 
+ 3:  no reply
+ 4:  12.242.117.16                                       161.527ms 
+ 5:  no reply
+ 6:  no reply
+ 3:  71.148.149.0                                        12000.559ms 
+ 3:  71.148.149.0                                        11967.523ms 
+ 3:  71.148.149.0                                        11829.634ms 
+10:  no reply
+11:  no reply
+12:  no reply
+13:  no reply
+14:  no reply
+15:  no reply
+16:  no reply
+17:  no reply
+18:  no reply
+19:  no reply
+20:  no reply
+21:  no reply
+22:  no reply
+23:  no reply
+24:  no reply
+25:  no reply
+26:  no reply
+27:  no reply
+28:  no reply
+29:  no reply
+30:  no reply
+     Too many hops: pmtu 1500
+     Resume: pmtu 1500
