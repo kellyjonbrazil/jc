@@ -93,7 +93,7 @@ class info():
     description = 'traceroute command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the tr library by Luis Benitez at https://github.com/lbenitez000/trparse'
+    details = 'Using the trparse library by Luis Benitez at https://github.com/lbenitez000/trparse'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
