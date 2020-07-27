@@ -34,6 +34,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_traceroute6 = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_traceroute = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute6.out'), 'r', encoding='utf-8') as f:
+            self.freebsd12_traceroute6 = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute1.out'), 'r', encoding='utf-8') as f:
             self.generic_traceroute1 = f.read()
 
@@ -79,6 +85,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_traceroute6_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_traceroute_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute6.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_traceroute6_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute1.json'), 'r', encoding='utf-8') as f:
             self.generic_traceroute1_json = json.loads(f.read())
@@ -157,6 +169,18 @@ class MyTests(unittest.TestCase):
         Test 'traceroute6' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.traceroute.parse(self.osx_10_14_6_traceroute6, quiet=True), self.osx_10_14_6_traceroute6_json)
+
+    def test_traceroute_freebsd12(self):
+        """
+        Test 'traceroute' on freebsd12
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.freebsd12_traceroute, quiet=True), self.freebsd12_traceroute_json)
+
+    def test_traceroute6_freebsd12(self):
+        """
+        Test 'traceroute6' on freebsd12
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.freebsd12_traceroute6, quiet=True), self.freebsd12_traceroute6_json)
 
     def test_traceroute1_generic(self):
         """
