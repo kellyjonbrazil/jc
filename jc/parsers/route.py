@@ -184,7 +184,7 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()[1:]
 
     # fixup header row for ipv6
-    cleandata[0].replace('Next Hop', 'Next_Hop')
+    cleandata[0] = cleandata[0].replace('Next Hop', 'Next_Hop')
 
     raw_output = []
 
