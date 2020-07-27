@@ -140,10 +140,6 @@ RE_PROBE_RTT_ANNOTATION = re.compile(r'(\d+\.?\d+)?\s+ms|(\s+\*\s+)\s*(!\S*)?')
 
 
 class Traceroute(object):
-    """
-    Abstraction of a traceroute result.
-    """
-
     def __init__(self, dest_name, dest_ip):
         self.dest_name = dest_name
         self.dest_ip = dest_ip

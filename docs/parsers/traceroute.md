@@ -89,13 +89,6 @@ Examples:
 info(self, /, *args, **kwargs)
 ```
 
-## Traceroute
-```python
-Traceroute(self, dest_name, dest_ip)
-```
-
-Abstraction of a traceroute result.
-
 ## Hop
 ```python
 Hop(self, idx)
