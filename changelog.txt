@@ -1,5 +1,8 @@
 jc changelog
 
+20200727 v1.13.1
+- Add route -6 tests
+
 20200727 v1.13.0
 - Add ping and ping6 command parser tested on linux, macos, and freebsd
 - Add traceroute and traceroute6 command parser tested on linux, macos, and freebsd

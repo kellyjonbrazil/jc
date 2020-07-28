@@ -1,0 +1,24 @@
+Kernel IPv6 routing table
+Destination                    Next Hop                   Flag Met Ref Use If
+::/96                          ::                         !n   1024 0      0 lo
+0.0.0.0/96                     ::                         !n   1024 0      0 lo
+2002:a00::/24                  ::                         !n   1024 0      0 lo
+2002:7f00::/24                 ::                         !n   1024 0      0 lo
+2002:a9fe::/32                 ::                         !n   1024 0      0 lo
+2002:ac10::/28                 ::                         !n   1024 0      0 lo
+2002:c0a8::/32                 ::                         !n   1024 0      0 lo
+2002:e000::/19                 ::                         !n   1024 0      0 lo
+2600:1700:bab0:d40::16/128     ::                         U    100 0      0 ens33
+2600:1700:bab0:d40::/64        ::                         U    100 1     45 ens33
+2600:1700:bab0:d40::/60        fe80::feae:34ff:fea1:3a80  UG   100 0      0 ens33
+3ffe:ffff::/32                 ::                         !n   1024 0      0 lo
+fe80::/64                      ::                         U    100 0      4 ens33
+::/0                           fe80::feae:34ff:fea1:3a80  UG   100 1      4 ens33
+::/0                           ::                         !n   -1  1     86 lo
+::1/128                        ::                         Un   0   2     30 lo
+2600:1700:bab0:d40::16/128     ::                         Un   0   2      4 lo
+2600:1700:bab0:d40:884b:cf32:dbd6:f640/128 ::                         Un   0   1      0 lo
+fe80::c1cb:715d:bc3e:b8a0/128  ::                         Un   0   2      8 lo
+ff00::/8                       ::                         U    256 1      4 ens33
+::/0                           ::                         !n   -1  1     86 lo
+

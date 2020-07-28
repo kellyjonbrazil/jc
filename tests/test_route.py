@@ -25,6 +25,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.out'), 'r', encoding='utf-8') as f:
             self.nixos_route_ee = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_route_6 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_route_6_n = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_route_json = json.loads(f.read())
@@ -40,6 +46,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.json'), 'r', encoding='utf-8') as f:
             self.nixos_route_ee_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_route_6_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_route_6_n_json = json.loads(f.read())
 
     def test_route_nodata(self):
         """
@@ -76,6 +88,18 @@ class MyTests(unittest.TestCase):
         Test 'route -ee' on NixOS
         """
         self.assertEqual(jc.parsers.route.parse(self.nixos_route_ee, quiet=True), self.nixos_route_ee_json)
+
+    def test_route_6_centos_7_7(self):
+        """
+        Test 'route -6' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.route.parse(self.centos_7_7_route_6, quiet=True), self.centos_7_7_route_6_json)
+
+    def test_route_6_n_centos_7_7(self):
+        """
+        Test 'route -6 -n' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.route.parse(self.centos_7_7_route_6_n, quiet=True), self.centos_7_7_route_6_n_json)
 
 
 if __name__ == '__main__':
