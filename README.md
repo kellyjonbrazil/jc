@@ -133,7 +133,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
 - `--ifconfig` enables the `ifconfig` command parser
-- `--ini` enables the `INI` file parser
+- `--ini` enables the `INI` file parser. Also parses files/output containing simple key/value pairs
 - `--iptables` enables the `iptables` command parser
 - `--jobs` enables the `jobs` command parser
 - `--last` enables the `last` and `lastb` command parser
@@ -145,6 +145,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--netstat` enables the `netstat` command parser
 - `--ntpq` enables the `ntpq -p` command parser
 - `--passwd` enables the `/etc/passwd` file parser
+- `--ping` enables the `ping` and `ping6` command parser
 - `--pip-list` enables the `pip list` command parser
 - `--pip-show` enables the `pip show` command parser
 - `--ps` enables the `ps` command parser
@@ -158,6 +159,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
 - `--systemctl-luf` enables the `systemctl list-unit-files` command parser
 - `--timedatectl` enables the `timedatectl status` command parser
+- `--tracepath` enables the `tracepath` and `tracepath6` command parser
+- `--traceroute` enables the `traceroute` and `traceroute6` command parser
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
@@ -229,6 +232,7 @@ Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
 - [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module by KnightWhoSayNi
 - [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
 - [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van der Neut
+- [`trparse`](https://github.com/lbenitez000/trparse) module by Luis Benitez
 - Parsing [code](https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501) from Conor Heine adapted for some parsers
 - Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
@@ -1239,7 +1243,7 @@ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
   }
 ]
 ```
-### INI files
+### INI and plain key/value pair files
 ```bash
 cat example.ini
 ```
@@ -1276,6 +1280,31 @@ cat example.ini | jc --ini -p
     "forwardx11": "no",
     "port": "50022"
   }
+}
+```
+```bash
+cat keyvalue.txt
+```
+```
+# this file contains key/value pairs
+name = John Doe
+address=555 California Drive
+age: 34
+; comments can include # or ;
+# delimiter can be = or :
+# quoted values have quotation marks stripped by default
+# but can be preserved with the -r argument
+occupation:"Engineer"
+```
+```bash
+cat keyvalue.txt | jc --ini -p
+```
+```json
+{
+  "name": "John Doe",
+  "address": "555 California Drive",
+  "age": "34",
+  "occupation": "Engineer"
 }
 ```
 ### iptables
@@ -1910,6 +1939,59 @@ cat /etc/passwd | jc --passwd -p
   }
 ]
 ```
+### ping
+```bash
+ping 8.8.8.8 -c 3 | jc --ping -p          # or:  jc -p ping 8.8.8.8 -c 3
+```
+```json
+{
+  "destination_ip": "8.8.8.8",
+  "data_bytes": 56,
+  "pattern": null,
+  "destination": "8.8.8.8",
+  "packets_transmitted": 3,
+  "packets_received": 3,
+  "packet_loss_percent": 0.0,
+  "duplicates": 0,
+  "time_ms": 2005.0,
+  "round_trip_ms_min": 23.835,
+  "round_trip_ms_avg": 30.46,
+  "round_trip_ms_max": 34.838,
+  "round_trip_ms_stddev": 4.766,
+  "responses": [
+    {
+      "type": "reply",
+      "timestamp": null,
+      "bytes": 64,
+      "response_ip": "8.8.8.8",
+      "icmp_seq": 1,
+      "ttl": 118,
+      "time_ms": 23.8,
+      "duplicate": false
+    },
+    {
+      "type": "reply",
+      "timestamp": null,
+      "bytes": 64,
+      "response_ip": "8.8.8.8",
+      "icmp_seq": 2,
+      "ttl": 118,
+      "time_ms": 34.8,
+      "duplicate": false
+    },
+    {
+      "type": "reply",
+      "timestamp": null,
+      "bytes": 64,
+      "response_ip": "8.8.8.8",
+      "icmp_seq": 3,
+      "ttl": 118,
+      "time_ms": 32.7,
+      "duplicate": false
+    }
+  ]
+}
+```
 ### pip list
 ```bash
 pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p pip3 list
@@ -1929,7 +2011,6 @@ pip list | jc --pip-list -p          # or:  jc -p pip list          # or:  jc -p
     "version": "0.24.0"
   }
 ]
-
 ```
 ### pip show
 ```bash
@@ -2420,6 +2501,131 @@ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
   "ntp_synchronized": true,
   "rtc_in_local_tz": false,
   "dst_active": true
+}
+```
+### tracepath
+```bash
+tracepath6 3ffe:2400:0:109::2 | jc --tracepath -p
+```
+```json
+{
+  "pmtu": 1480,
+  "forward_hops": 2,
+  "return_hops": 2,
+  "hops": [
+    {
+      "ttl": 1,
+      "guess": true,
+      "host": "[LOCALHOST]",
+      "reply_ms": null,
+      "pmtu": 1500,
+      "asymmetric_difference": null,
+      "reached": false
+    },
+    {
+      "ttl": 1,
+      "guess": false,
+      "host": "dust.inr.ac.ru",
+      "reply_ms": 0.411,
+      "pmtu": null,
+      "asymmetric_difference": null,
+      "reached": false
+    },
+    {
+      "ttl": 2,
+      "guess": false,
+      "host": "dust.inr.ac.ru",
+      "reply_ms": 0.39,
+      "pmtu": 1480,
+      "asymmetric_difference": 1,
+      "reached": false
+    },
+    {
+      "ttl": 2,
+      "guess": false,
+      "host": "3ffe:2400:0:109::2",
+      "reply_ms": 463.514,
+      "pmtu": null,
+      "asymmetric_difference": null,
+      "reached": true
+    }
+  ]
+}
+```
+### traceroute
+```bash
+traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m 3 8.8.8.8
+```
+```json
+{
+  "destination_ip": "8.8.8.8",
+  "destination_name": "8.8.8.8",
+  "hops": [
+    {
+      "hop": 1,
+      "probes": [
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": "192.168.1.254",
+          "name": "dsldevice.local.net",
+          "rtt": 6.616
+        },
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": "192.168.1.254",
+          "name": "dsldevice.local.net",
+          "rtt": 6.413
+        },
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": "192.168.1.254",
+          "name": "dsldevice.local.net",
+          "rtt": 6.308
+        }
+      ]
+    },
+    {
+      "hop": 2,
+      "probes": [
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": "76.220.24.1",
+          "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+          "rtt": 29.367
+        },
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": "76.220.24.1",
+          "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+          "rtt": 40.197
+        },
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": "76.220.24.1",
+          "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+          "rtt": 29.162
+        }
+      ]
+    },
+    {
+      "hop": 3,
+      "probes": [
+        {
+          "annotation": null,
+          "asn": null,
+          "ip": null,
+          "name": null,
+          "rtt": null
+        }
+      ]
+    }
+  ]
 }
 ```
 ### uname -a

@@ -1,0 +1,9 @@
+PATTERN: 0xff
+PING6(56=40+8+8 bytes) ::1 --> ::1
+16 bytes from ::1, icmp_seq=0 hlim=64 time=0.036 ms
+16 bytes from ::1, icmp_seq=1 hlim=64 time=0.051 ms
+16 bytes from ::1, icmp_seq=2 hlim=64 time=0.048 ms
+
+--- localhost ping6 statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/std-dev = 0.036/0.045/0.051/0.007 ms

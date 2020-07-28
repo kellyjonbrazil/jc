@@ -37,6 +37,7 @@ pydocmd simple jc.parsers.mount+ > ../docs/parsers/mount.md
 pydocmd simple jc.parsers.netstat+ > ../docs/parsers/netstat.md
 pydocmd simple jc.parsers.ntpq+ > ../docs/parsers/ntpq.md
 pydocmd simple jc.parsers.passwd+ > ../docs/parsers/passwd.md
+pydocmd simple jc.parsers.ping+ > ../docs/parsers/ping.md
 pydocmd simple jc.parsers.pip_list+ > ../docs/parsers/pip_list.md
 pydocmd simple jc.parsers.pip_show+ > ../docs/parsers/pip_show.md
 pydocmd simple jc.parsers.ps+ > ../docs/parsers/ps.md
@@ -50,6 +51,8 @@ pydocmd simple jc.parsers.systemctl_lj+ > ../docs/parsers/systemctl_lj.md
 pydocmd simple jc.parsers.systemctl_ls+ > ../docs/parsers/systemctl_ls.md
 pydocmd simple jc.parsers.systemctl_luf+ > ../docs/parsers/systemctl_luf.md
 pydocmd simple jc.parsers.timedatectl+ > ../docs/parsers/timedatectl.md
+pydocmd simple jc.parsers.tracepath+ > ../docs/parsers/tracepath.md
+pydocmd simple jc.parsers.traceroute+ > ../docs/parsers/traceroute.md
 pydocmd simple jc.parsers.uname+ > ../docs/parsers/uname.md
 pydocmd simple jc.parsers.uptime+ > ../docs/parsers/uptime.md
 pydocmd simple jc.parsers.w+ > ../docs/parsers/w.md

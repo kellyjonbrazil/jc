@@ -1,0 +1,26 @@
+PATTERN: 0xabcd
+PING turner-tls.map.fastly.net (151.101.129.67) 1400(1428) bytes of data.
+[1595191335.548399] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=1 ttl=59 time=46.1 ms
+[1595191336.134174] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=2 ttl=59 time=61.5 ms
+[1595191337.101575] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=3 ttl=59 time=26.3 ms
+[1595191338.108023] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=4 ttl=59 time=30.9 ms
+[1595191339.229213] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=5 ttl=59 time=149 ms
+[1595191340.114026] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=6 ttl=59 time=32.4 ms
+[1595191341.122628] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=7 ttl=59 time=37.9 ms
+[1595191342.110785] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=8 ttl=59 time=26.0 ms
+[1595191343.118652] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=9 ttl=59 time=32.3 ms
+[1595191344.130300] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=10 ttl=59 time=43.4 ms
+[1595191345.162284] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=11 ttl=59 time=71.9 ms
+[1595191346.123086] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=12 ttl=59 time=31.1 ms
+[1595191347.127689] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=13 ttl=59 time=33.6 ms
+[1595191348.142817] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=14 ttl=59 time=45.6 ms
+[1595191349.125383] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=15 ttl=59 time=25.9 ms
+[1595191350.136294] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=16 ttl=59 time=34.0 ms
+[1595191351.135889] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=17 ttl=59 time=31.2 ms
+[1595191352.134199] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=18 ttl=59 time=26.2 ms
+[1595191353.147391] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=19 ttl=59 time=38.5 ms
+[1595191354.150640] 1408 bytes from 151.101.129.67 (151.101.129.67): icmp_seq=20 ttl=59 time=39.5 ms
+
+--- turner-tls.map.fastly.net ping statistics ---
+20 packets transmitted, 20 received, 0% packet loss, time 19040ms
+rtt min/avg/max/mdev = 25.934/43.176/149.271/26.937 ms

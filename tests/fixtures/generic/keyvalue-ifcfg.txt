@@ -1,0 +1,19 @@
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="dhcp"
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="ens33"
+UUID="d92ece08-9e02-47d5-b2d2-92c80e155744"
+DEVICE="ens33"
+ONBOOT="yes"
+value_with_spaces: this value includes spaces
+value_with_quotes_inside = this value "has quotation marks" inside
+value_with_quotes_inside2 = "this value" has quotations at the beginning but not the end
+value_with_quotes_inside3 : this value has quotation marks "at the end"

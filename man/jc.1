@@ -1,4 +1,4 @@
-.TH jc 1 2020-07-12 1.12.1 "JSON CLI output utility"
+.TH jc 1 2020-07-12 1.13.0 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -101,7 +101,7 @@ ifconfig command parser
 .TP
 .B
 \fB--ini\fP
-INI file parser
+INI file parser. Also parses files/output containing simple key/value pairs
 .TP
 .B
 \fB--iptables\fP
@@ -146,6 +146,10 @@ ntpq \fB-p\fP command parser
 .B
 \fB--passwd\fP
 /etc/passwd file parser
+.TP
+.B
+\fB--ping\fP
+ping command parser
 .TP
 .B
 \fB--pip-list\fP
@@ -198,6 +202,14 @@ systemctl list-unit-files command parser
 .B
 \fB--timedatectl\fP
 timedatectl status command parser
+.TP
+.B
+\fB--tracepath\fP
+tracepath command parser
+.TP
+.B
+\fB--traceroute\fP
+traceroute command parser
 .TP
 .B
 \fB--uname\fP

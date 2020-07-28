@@ -1,0 +1,9 @@
+PATTERN: 0xff
+PING6(56=40+8+8 bytes) 2600:1700:bab0:d40:2595:8c97:ad16:749a --> 2a04:4e42:200::323
+16 bytes from 2a04:4e42:200::323, icmp_seq=0 hlim=59 time=32.992 ms
+16 bytes from 2a04:4e42:200::323, icmp_seq=1 hlim=59 time=34.757 ms
+16 bytes from 2a04:4e42:200::323, icmp_seq=2 hlim=59 time=36.070 ms
+
+--- cnn.com ping6 statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/std-dev = 32.992/34.606/36.070/1.261 ms

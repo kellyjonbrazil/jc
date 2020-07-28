@@ -1,0 +1,8 @@
+PING6(1448=40+8+1400 bytes) ::1 --> ::1
+1408 bytes from ::1, icmp_seq=0 hlim=64 time=0.093 ms
+1408 bytes from ::1, icmp_seq=1 hlim=64 time=0.161 ms
+1408 bytes from ::1, icmp_seq=2 hlim=64 time=0.152 ms
+
+--- ::1 ping6 statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/std-dev = 0.093/0.135/0.161/0.030 ms

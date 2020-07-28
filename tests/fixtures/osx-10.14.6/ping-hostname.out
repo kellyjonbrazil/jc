@@ -1,0 +1,8 @@
+PING cnn.com (151.101.1.67): 56 data bytes
+64 bytes from 151.101.1.67: icmp_seq=0 ttl=59 time=28.042 ms
+64 bytes from 151.101.1.67: icmp_seq=1 ttl=59 time=34.786 ms
+64 bytes from 151.101.1.67: icmp_seq=2 ttl=59 time=41.182 ms
+
+--- cnn.com ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 28.042/34.670/41.182/5.365 ms

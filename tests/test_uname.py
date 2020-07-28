@@ -22,6 +22,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/uname-a.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_uname_a = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/uname.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_uname = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/uname-a.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_uname_a_json = json.loads(f.read())
@@ -40,6 +43,12 @@ class MyTests(unittest.TestCase):
         Test 'uname -a' with no data
         """
         self.assertEqual(jc.parsers.uname.parse('', quiet=True), {})
+
+    def test_uname_no_a(self):
+        """
+        Test 'uname' without -a option. Should generate a ParseError exception
+        """
+        self.assertRaises(jc.parsers.uname.ParseError, jc.parsers.uname.parse, self.osx_10_14_6_uname)
 
     def test_uname_centos_7_7(self):
         """

@@ -1,0 +1,5 @@
+traceroute: Warning: cnn.com has multiple addresses; using 151.101.129.67
+traceroute to cnn.com (151.101.129.67), 64 hops max, 52 byte packets
+ 1  dsldevice (192.168.1.254)  4.478 ms  3.907 ms  4.849 ms
+ 2  76-220-24-1.lightspeed.sntcca.sbcglobal.net (76.220.24.1)  23.530 ms  26.518 ms  23.480 ms
+ 3  * *

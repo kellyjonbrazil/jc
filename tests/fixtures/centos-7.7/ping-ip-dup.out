@@ -1,0 +1,27 @@
+WARNING: pinging broadcast address
+PING 192.168.1.255 (192.168.1.255) 56(84) bytes of data.
+64 bytes from 192.168.1.221: icmp_seq=1 ttl=64 time=0.586 ms
+64 bytes from 192.168.1.88: icmp_seq=1 ttl=64 time=382 ms (DUP!)
+64 bytes from 192.168.1.78: icmp_seq=1 ttl=128 time=382 ms (DUP!)
+64 bytes from 192.168.1.217: icmp_seq=1 ttl=255 time=387 ms (DUP!)
+64 bytes from 192.168.1.186: icmp_seq=1 ttl=64 time=389 ms (DUP!)
+64 bytes from 192.168.1.89: icmp_seq=1 ttl=64 time=389 ms (DUP!)
+64 bytes from 192.168.1.75: icmp_seq=1 ttl=64 time=584 ms (DUP!)
+64 bytes from 192.168.1.221: icmp_seq=2 ttl=64 time=0.861 ms
+64 bytes from 192.168.1.78: icmp_seq=2 ttl=128 time=4.17 ms (DUP!)
+64 bytes from 192.168.1.88: icmp_seq=2 ttl=64 time=4.19 ms (DUP!)
+64 bytes from 192.168.1.89: icmp_seq=2 ttl=64 time=12.7 ms (DUP!)
+64 bytes from 192.168.1.81: icmp_seq=1 ttl=64 time=1029 ms (DUP!)
+64 bytes from 192.168.1.72: icmp_seq=1 ttl=64 time=1276 ms (DUP!)
+64 bytes from 192.168.1.251: icmp_seq=1 ttl=64 time=1276 ms (DUP!)
+64 bytes from 192.168.1.251: icmp_seq=2 ttl=64 time=262 ms (DUP!)
+64 bytes from 192.168.1.72: icmp_seq=2 ttl=64 time=263 ms (DUP!)
+64 bytes from 192.168.1.246: icmp_seq=2 ttl=255 time=263 ms (DUP!)
+64 bytes from 192.168.1.217: icmp_seq=2 ttl=255 time=919 ms (DUP!)
+64 bytes from 192.168.1.186: icmp_seq=2 ttl=64 time=919 ms (DUP!)
+64 bytes from 192.168.1.75: icmp_seq=2 ttl=64 time=919 ms (DUP!)
+64 bytes from 192.168.1.81: icmp_seq=2 ttl=64 time=919 ms (DUP!)
+
+--- 192.168.1.255 ping statistics ---
+2 packets transmitted, 2 received, +19 duplicates, 0% packet loss, time 1013ms
+rtt min/avg/max/mdev = 0.586/504.260/1276.448/417.208 ms, pipe 2

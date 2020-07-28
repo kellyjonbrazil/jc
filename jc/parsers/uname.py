@@ -30,7 +30,7 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'uname -a command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -41,6 +41,10 @@ class info():
 
 
 __version__ = info.version
+
+
+class ParseError(Exception):
+    pass
 
 
 def process(proc_data):
@@ -94,6 +98,10 @@ def parse(data, raw=False, quiet=False):
         # check for OSX output
         if data.startswith('Darwin'):
             parsed_line = data.split()
+
+            if len(parsed_line) < 5:
+                raise ParseError('Could not parse uname output. Make sure to use "uname -a".')
+
             raw_output['machine'] = parsed_line.pop(-1)
             raw_output['kernel_name'] = parsed_line.pop(0)
             raw_output['node_name'] = parsed_line.pop(0)
@@ -103,6 +111,10 @@ def parse(data, raw=False, quiet=False):
         # otherwise use linux parser
         else:
             parsed_line = data.split(maxsplit=3)
+
+            if len(parsed_line) < 3:
+                raise ParseError('Could not parse uname output. Make sure to use "uname -a".')
+
             raw_output['kernel_name'] = parsed_line.pop(0)
             raw_output['node_name'] = parsed_line.pop(0)
             raw_output['kernel_release'] = parsed_line.pop(0)

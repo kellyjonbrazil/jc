@@ -1,0 +1,9 @@
+PATTERN: 0xff
+PING cnn.com (151.101.1.67): 56 data bytes
+64 bytes from 151.101.1.67: icmp_seq=0 ttl=59 time=32.340 ms
+64 bytes from 151.101.1.67: icmp_seq=1 ttl=59 time=34.505 ms
+64 bytes from 151.101.1.67: icmp_seq=2 ttl=59 time=28.389 ms
+
+--- cnn.com ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 28.389/31.745/34.505/2.532 ms

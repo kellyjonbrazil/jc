@@ -1,0 +1,8 @@
+PING 127.0.0.1 (127.0.0.1): 40 data bytes
+48 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.024 ms
+48 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.036 ms
+48 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.036 ms
+
+--- 127.0.0.1 ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 0.024/0.032/0.036/0.006 ms

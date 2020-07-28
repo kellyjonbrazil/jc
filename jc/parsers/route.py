@@ -84,7 +84,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'route command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -182,9 +182,15 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()[1:]
+
     raw_output = []
 
     if jc.utils.has_data(data):
+
+        # fixup header row for ipv6
+        if ' Next Hop ' in cleandata[0]:
+            cleandata[0] = cleandata[0].replace(' If', ' Iface')
+        cleandata[0] = cleandata[0].replace(' Next Hop ', ' Next_Hop ').replace(' Flag ', ' Flags ').replace(' Met ', ' Metric ')
 
         cleandata[0] = cleandata[0].lower()
         raw_output = jc.parsers.universal.simple_table_parse(cleandata)

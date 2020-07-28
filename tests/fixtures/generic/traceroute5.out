@@ -1,0 +1,10 @@
+traceroute to 10xhostings.com (104.18.42.178), 30 hops max, 40 byte packets
+ 1  * * *
+ 2  Internal (Internal)  0.894 ms  0.890 ms  0.876 ms
+ 3  204.141.42.25 (204.141.42.25)  2.818 ms  2.825 ms  2.825 ms
+ 4  204.141.42.9 (204.141.42.9)  1.014 ms  1.017 ms  1.082 ms
+ 5  xe-0-0-46-2.a00.sttlwa01.us.bb.gin.ntt.net (128.241.1.145)  30.105 ms  30.125 ms  30.125 ms
+ 6  ae-9.r04.sttlwa01.us.bb.gin.ntt.net (129.250.5.117)  32.346 ms  31.946 ms  31.960 ms
+ 7  ae-0.a01.sttlwa01.us.bb.gin.ntt.net (129.250.5.86)  32.836 ms  32.749 ms  32.743 ms
+ 8  ae-0.cloudflare.sttlwa01.us.bb.gin.ntt.net (131.103.117.86)  44.601 ms  42.886 ms  42.874 ms
+ 9  104.18.42.178 (104.18.42.178)  29.614 ms  29.690 ms  30.461 ms

@@ -1,0 +1,8 @@
+PING6(128=40+8+80 bytes) 2600:1700:bab0:d40:2595:8c97:ad16:749a --> 2a04:4e42:600::323
+88 bytes from 2a04:4e42:600::323, icmp_seq=0 hlim=59 time=26.292 ms
+88 bytes from 2a04:4e42:600::323, icmp_seq=1 hlim=59 time=64.712 ms
+88 bytes from 2a04:4e42:600::323, icmp_seq=2 hlim=59 time=25.933 ms
+
+--- cnn.com ping6 statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/std-dev = 25.933/38.979/64.712/18.197 ms

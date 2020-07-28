@@ -1,0 +1,5 @@
+ 1?: [LOCALHOST]                              pmtu 1500
+ 1:  dust.inr.ac.ru                   0.411ms
+ 2:  dust.inr.ac.ru        asymm  1   0.390ms pmtu 1480
+ 2:  3ffe:2400:0:109::2               463.514ms reached
+     Resume: pmtu 1480 hops 2 back 2
