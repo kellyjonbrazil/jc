@@ -664,59 +664,6 @@ netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
     "network_protocol": "ipv4"
   },
   {
-    "proto": "tcp",
-    "recv_q": 0,
-    "send_q": 0,
-    "local_address": "0.0.0.0",
-    "foreign_address": "0.0.0.0",
-    "state": "LISTEN",
-    "user": "root",
-    "inode": 30499,
-    "program_name": "sshd",
-    "kind": "network",
-    "pid": 1186,
-    "local_port": "ssh",
-    "foreign_port": "*",
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4"
-  },
-  {
-    "proto": "tcp",
-    "recv_q": 0,
-    "send_q": 0,
-    "local_address": "localhost",
-    "foreign_address": "localhost",
-    "state": "ESTABLISHED",
-    "user": "root",
-    "inode": 46829,
-    "program_name": "sshd: root",
-    "kind": "network",
-    "pid": 2242,
-    "local_port": "ssh",
-    "foreign_port": "52186",
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "foreign_port_num": 52186
-  },
-  {
-    "proto": "tcp",
-    "recv_q": 0,
-    "send_q": 0,
-    "local_address": "localhost",
-    "foreign_address": "localhost",
-    "state": "ESTABLISHED",
-    "user": "root",
-    "inode": 46828,
-    "program_name": "ssh",
-    "kind": "network",
-    "pid": 2241,
-    "local_port": "52186",
-    "foreign_port": "ssh",
-    "transport_protocol": "tcp",
-    "network_protocol": "ipv4",
-    "local_port_num": 52186
-  },
-  {
     "proto": "tcp6",
     "recv_q": 0,
     "send_q": 0,
@@ -778,18 +725,6 @@ netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
     "path": "/run/user/1000/systemd/notify",
     "kind": "socket",
     "pid": 1607
-  },
-  {
-    "proto": "unix",
-    "refcnt": 2,
-    "flags": "ACC",
-    "type": "SEQPACKET",
-    "state": "LISTENING",
-    "inode": 20835,
-    "program_name": "init",
-    "path": "/run/udev/control",
-    "kind": "socket",
-    "pid": 1
   }
 ]
 ```
