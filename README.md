@@ -320,7 +320,7 @@ cat homes.csv | jc --csv -p
 ```
 ### dig
 ```bash
-dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com www.cnn.com @205.251.194.64
+dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205.251.194.64
 ```
 ```json
 [
@@ -334,7 +334,7 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
       "ra"
     ],
     "query_num": 1,
-    "answer_num": 4,
+    "answer_num": 1,
     "authority_num": 0,
     "additional_num": 1,
     "question": {
@@ -349,95 +349,12 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "type": "A",
         "ttl": 60,
         "data": "151.101.129.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": 60,
-        "data": "151.101.193.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": 60,
-        "data": "151.101.1.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": 60,
-        "data": "151.101.65.67"
       }
     ],
     "query_time": 28,
     "server": "2600",
     "when": "Tue Nov 12 07:13:03 PST 2019",
     "rcvd": 100
-  },
-  {
-    "id": 62696,
-    "opcode": "QUERY",
-    "status": "NOERROR",
-    "flags": [
-      "qr",
-      "aa",
-      "rd"
-    ],
-    "query_num": 1,
-    "answer_num": 1,
-    "authority_num": 4,
-    "additional_num": 1,
-    "question": {
-      "name": "www.cnn.com.",
-      "class": "IN",
-      "type": "A"
-    },
-    "answer": [
-      {
-        "name": "www.cnn.com.",
-        "class": "IN",
-        "type": "CNAME",
-        "ttl": 300,
-        "data": "turner-tls.map.fastly.net."
-      }
-    ],
-    "authority": [
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "NS",
-        "ttl": 3600,
-        "data": "ns-1086.awsdns-07.org."
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "NS",
-        "ttl": 3600,
-        "data": "ns-1630.awsdns-11.co.uk."
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "NS",
-        "ttl": 3600,
-        "data": "ns-47.awsdns-05.com."
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "NS",
-        "ttl": 3600,
-        "data": "ns-576.awsdns-08.net."
-      }
-    ],
-    "query_time": 29,
-    "server": "205.251.194.64#53(205.251.194.64)",
-    "when": "Tue Nov 12 07:13:03 PST 2019",
-    "rcvd": 212
   }
 ]
 ```
@@ -454,12 +371,6 @@ cat /etc/hosts | jc --hosts -p
     ]
   },
   {
-    "ip": "127.0.1.1",
-    "hostname": [
-      "root-ubuntu"
-    ]
-  },
-  {
     "ip": "::1",
     "hostname": [
       "ip6-localhost",
@@ -470,24 +381,6 @@ cat /etc/hosts | jc --hosts -p
     "ip": "fe00::0",
     "hostname": [
       "ip6-localnet"
-    ]
-  },
-  {
-    "ip": "ff00::0",
-    "hostname": [
-      "ip6-mcastprefix"
-    ]
-  },
-  {
-    "ip": "ff02::1",
-    "hostname": [
-      "ip6-allnodes"
-    ]
-  },
-  {
-    "ip": "ff02::2",
-    "hostname": [
-      "ip6-allrouters"
     ]
   }
 ]
@@ -524,38 +417,6 @@ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
     "rx_frame": 0,
     "tx_packets": 4502,
     "tx_bytes": 866622,
-    "tx_errors": 0,
-    "tx_dropped": 0,
-    "tx_overruns": 0,
-    "tx_carrier": 0,
-    "tx_collisions": 0,
-    "metric": null
-  },
-  {
-    "name": "lo",
-    "flags": 73,
-    "state": [
-      "UP",
-      "LOOPBACK",
-      "RUNNING"
-    ],
-    "mtu": 65536,
-    "ipv4_addr": "127.0.0.1",
-    "ipv4_mask": "255.0.0.0",
-    "ipv4_bcast": null,
-    "ipv6_addr": "::1",
-    "ipv6_mask": 128,
-    "ipv6_scope": "0x10",
-    "mac_addr": null,
-    "type": "Local Loopback",
-    "rx_packets": 73,
-    "rx_bytes": 6009,
-    "rx_errors": 0,
-    "rx_dropped": 0,
-    "rx_overruns": 0,
-    "rx_frame": 0,
-    "tx_packets": 73,
-    "tx_bytes": 6009,
     "tx_errors": 0,
     "tx_dropped": 0,
     "tx_overruns": 0,
@@ -735,15 +596,6 @@ cat /etc/passwd | jc --passwd -p
 ```json
 [
   {
-    "username": "nobody",
-    "password": "*",
-    "uid": -2,
-    "gid": -2,
-    "comment": "Unprivileged User",
-    "home": "/var/empty",
-    "shell": "/usr/bin/false"
-  },
-  {
     "username": "root",
     "password": "*",
     "uid": 0,
@@ -865,7 +717,7 @@ ps axu | jc --ps -p          # or:  jc -p ps axu
 ```
 ### traceroute
 ```bash
-traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m 3 8.8.8.8
+traceroute -m 2 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m 2 8.8.8.8
 ```
 ```json
 {
@@ -921,18 +773,6 @@ traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m
           "ip": "76.220.24.1",
           "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
           "rtt": 29.162
-        }
-      ]
-    },
-    {
-      "hop": 3,
-      "probes": [
-        {
-          "annotation": null,
-          "asn": null,
-          "ip": null,
-          "name": null,
-          "rtt": null
         }
       ]
     }
