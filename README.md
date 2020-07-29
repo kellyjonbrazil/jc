@@ -441,29 +441,6 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
   }
 ]
 ```
-### free
-```bash
-free | jc --free -p          # or:  jc -p free
-```
-```json
-[
-  {
-    "type": "Mem",
-    "total": 3861340,
-    "used": 220508,
-    "free": 3381972,
-    "shared": 11800,
-    "buff_cache": 258860,
-    "available": 3397784
-  },
-  {
-    "type": "Swap",
-    "total": 2097148,
-    "used": 0,
-    "free": 2097148
-  }
-]
-```
 ### /etc/hosts file
 ```bash
 cat /etc/hosts | jc --hosts -p
@@ -588,7 +565,7 @@ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
   }
 ]
 ```
-### INI and plain key/value pair files
+### INI files
 ```bash
 cat example.ini
 ```
@@ -625,31 +602,6 @@ cat example.ini | jc --ini -p
     "forwardx11": "no",
     "port": "50022"
   }
-}
-```
-```bash
-cat keyvalue.txt
-```
-```
-# this file contains key/value pairs
-name = John Doe
-address=555 California Drive
-age: 34
-; comments can include # or ;
-# delimiter can be = or :
-# quoted values have quotation marks stripped by default
-# but can be preserved with the -r argument
-occupation:"Engineer"
-```
-```bash
-cat keyvalue.txt | jc --ini -p
-```
-```json
-{
-  "name": "John Doe",
-  "address": "555 California Drive",
-  "age": "34",
-  "occupation": "Engineer"
 }
 ```
 ### ls
@@ -930,43 +882,6 @@ ping 8.8.8.8 -c 3 | jc --ping -p          # or:  jc -p ping 8.8.8.8 -c 3
 }
 ```
 ### ps
-```bash
-ps -ef | jc --ps -p          # or:  jc -p ps -ef
-```
-```json
-[
-  {
-    "uid": "root",
-    "pid": 1,
-    "ppid": 0,
-    "c": 0,
-    "stime": "Nov01",
-    "tty": null,
-    "time": "00:00:11",
-    "cmd": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
-  },
-  {
-    "uid": "root",
-    "pid": 2,
-    "ppid": 0,
-    "c": 0,
-    "stime": "Nov01",
-    "tty": null,
-    "time": "00:00:00",
-    "cmd": "[kthreadd]"
-  },
-  {
-    "uid": "root",
-    "pid": 4,
-    "ppid": 2,
-    "c": 0,
-    "stime": "Nov01",
-    "tty": null,
-    "time": "00:00:00",
-    "cmd": "[kworker/0:0H]"
-  }
-]
-```
 ```bash
 ps axu | jc --ps -p          # or:  jc -p ps axu
 ```
