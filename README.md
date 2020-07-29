@@ -441,45 +441,6 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
   }
 ]
 ```
-```bash
-dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
-```
-```json
-[
-  {
-    "id": 50324,
-    "opcode": "QUERY",
-    "status": "NOERROR",
-    "flags": [
-      "qr",
-      "rd",
-      "ra"
-    ],
-    "query_num": 1,
-    "answer_num": 1,
-    "authority_num": 0,
-    "additional_num": 1,
-    "question": {
-      "name": "1.1.1.1.in-addr.arpa.",
-      "class": "IN",
-      "type": "PTR"
-    },
-    "answer": [
-      {
-        "name": "1.1.1.1.in-addr.arpa.",
-        "class": "IN",
-        "type": "PTR",
-        "ttl": 1634,
-        "data": "one.one.one.one."
-      }
-    ],
-    "query_time": 36,
-    "server": "2600",
-    "when": "Tue Nov 12 07:13:49 PST 2019",
-    "rcvd": 78
-  }
-]
-```
 ### free
 ```bash
 free | jc --free -p          # or:  jc -p free
@@ -877,91 +838,6 @@ netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
     "path": "/run/udev/control",
     "kind": "socket",
     "pid": 1
-  }
-]
-```
-```bash
-netstat -r | jc --netstat -p          # or:  jc -p netstat -r
-```
-```json
-[
-  {
-    "destination": "default",
-    "gateway": "gateway",
-    "genmask": "0.0.0.0",
-    "route_flags": "UG",
-    "mss": 0,
-    "window": 0,
-    "irtt": 0,
-    "iface": "ens33",
-    "kind": "route",
-    "route_flags_pretty": [
-      "UP",
-      "GATEWAY"
-    ]
-  },
-  {
-    "destination": "172.17.0.0",
-    "gateway": "0.0.0.0",
-    "genmask": "255.255.0.0",
-    "route_flags": "U",
-    "mss": 0,
-    "window": 0,
-    "irtt": 0,
-    "iface": "docker0",
-    "kind": "route",
-    "route_flags_pretty": [
-      "UP"
-    ]
-  },
-  {
-    "destination": "192.168.71.0",
-    "gateway": "0.0.0.0",
-    "genmask": "255.255.255.0",
-    "route_flags": "U",
-    "mss": 0,
-    "window": 0,
-    "irtt": 0,
-    "iface": "ens33",
-    "kind": "route",
-    "route_flags_pretty": [
-      "UP"
-    ]
-  }
-]
-```
-```bash
-netstat -i | jc --netstat -p          # or:  jc -p netstat -i
-```
-```json
-[
-  {
-    "iface": "ens33",
-    "mtu": 1500,
-    "rx_ok": 476,
-    "rx_err": 0,
-    "rx_drp": 0,
-    "rx_ovr": 0,
-    "tx_ok": 312,
-    "tx_err": 0,
-    "tx_drp": 0,
-    "tx_ovr": 0,
-    "flg": "BMRU",
-    "kind": "interface"
-  },
-  {
-    "iface": "lo",
-    "mtu": 65536,
-    "rx_ok": 0,
-    "rx_err": 0,
-    "rx_drp": 0,
-    "rx_ovr": 0,
-    "tx_ok": 0,
-    "tx_err": 0,
-    "tx_drp": 0,
-    "tx_ovr": 0,
-    "flg": "LRU",
-    "kind": "interface"
   }
 ]
 ```
