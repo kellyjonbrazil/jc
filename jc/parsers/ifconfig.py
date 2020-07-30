@@ -372,8 +372,6 @@ class IfconfigParser(object):
 
 
 class InterfaceNotFound(Exception):
-    """
-    """
     pass
 
 
