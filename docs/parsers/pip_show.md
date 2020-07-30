@@ -1,3 +1,4 @@
+
 # jc.parsers.pip_show
 jc - JSON CLI output utility pip-show Parser
 
@@ -39,10 +40,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -73,6 +76,7 @@ Returns:
         "required_by":      string
       }
     ]
+
 
 
 ## parse

@@ -1,3 +1,4 @@
+
 # jc.parsers.airport
 jc - JSON CLI output utility airport -I Parser
 
@@ -52,10 +53,12 @@ Examples:
       "channel": "48,80"
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -89,6 +92,7 @@ Returns:
       "mcs":               integer,
       "channel":           string
     }
+
 
 ## parse
 ```python

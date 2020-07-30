@@ -1,3 +1,4 @@
+
 # jc.parsers.lsof
 jc - JSON CLI output utility lsof Parser
 
@@ -93,10 +94,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -127,6 +130,7 @@ Returns:
         "name":       string
       }
     ]
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.lsblk
 jc - JSON CLI output utility lsblk Parser
 
@@ -212,10 +213,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -276,6 +279,7 @@ Returns:
         "vendor":       string
       }
     ]
+
 
 ## parse
 ```python

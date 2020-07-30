@@ -1,3 +1,4 @@
+
 # jc.parsers.uptime
 jc - JSON CLI output utility uptime Parser
 
@@ -31,10 +32,12 @@ Example:
       "load_15m": "0.05"
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -59,6 +62,7 @@ Returns:
       "load_5m":  float,
       "load_15m": float
     }
+
 
 ## parse
 ```python

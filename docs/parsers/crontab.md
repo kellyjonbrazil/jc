@@ -1,3 +1,4 @@
+
 # jc.parsers.crontab
 jc - JSON CLI output utility crontab command and file Parser
 
@@ -128,10 +129,12 @@ Examples:
       ]
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -176,6 +179,7 @@ Returns:
         }
       ]
     }
+
 
 
 ## parse

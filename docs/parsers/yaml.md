@@ -1,3 +1,4 @@
+
 # jc.parsers.yaml
 jc - JSON CLI output utility YAML Parser
 
@@ -67,10 +68,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -93,6 +96,7 @@ Returns:
         See https://pypi.org/project/ruamel.yaml for details
       }
     ]
+
 
 ## parse
 ```python

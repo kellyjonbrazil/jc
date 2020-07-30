@@ -1,3 +1,4 @@
+
 # jc.parsers.free
 jc - JSON CLI output utility free Parser
 
@@ -49,10 +50,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -80,6 +83,7 @@ Returns:
         "available":    integer
       }
     ]
+
 
 ## parse
 ```python

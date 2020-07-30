@@ -1,3 +1,4 @@
+
 # jc.parsers.du
 jc - JSON CLI output utility du Parser
 
@@ -69,10 +70,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -95,6 +98,7 @@ Returns:
         "name":     string
       }
     ]
+
 
 ## parse
 ```python

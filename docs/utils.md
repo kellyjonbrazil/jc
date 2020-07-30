@@ -1,5 +1,7 @@
+
 # utils
 jc - JSON CLI output utility utils
+
 ## warning_message
 ```python
 warning_message(message)
@@ -15,6 +17,7 @@ Returns:
 
     no return, just prints output to STDERR
 
+
 ## error_message
 ```python
 error_message(message)
@@ -29,6 +32,7 @@ Parameters:
 Returns:
 
     no return, just prints output to STDERR
+
 
 ## compatibility
 ```python
@@ -47,6 +51,7 @@ Parameters:
 Returns:
 
     no return, just prints output to STDERR
+
 
 ## has_data
 ```python

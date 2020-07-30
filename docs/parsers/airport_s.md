@@ -1,3 +1,4 @@
+
 # jc.parsers.airport_s
 jc - JSON CLI output utility airport -s Parser
 
@@ -84,10 +85,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -116,6 +119,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

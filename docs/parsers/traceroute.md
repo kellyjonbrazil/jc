@@ -1,3 +1,4 @@
+
 # jc.parsers.traceroute
 jc - JSON CLI output utility traceroute Parser
 
@@ -84,15 +85,18 @@ Examples:
       ]
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## Hop
 ```python
-Hop(self, idx)
+Hop(idx)
 ```
+
 
 ## process
 ```python
@@ -127,6 +131,7 @@ Returns:
         }
       ]
     }
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.dmidecode
 jc - JSON CLI output utility dmidecode Parser
 
@@ -99,10 +100,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -133,6 +136,7 @@ Returns:
         }
       }
     ]
+
 
 ## parse
 ```python

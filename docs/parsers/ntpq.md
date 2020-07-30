@@ -1,3 +1,4 @@
+
 # jc.parsers.ntpq
 jc - JSON CLI output utility ntpq Parser
 
@@ -179,10 +180,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -214,6 +217,7 @@ Returns:
         "jitter":           float
       },
     ]
+
 
 
 ## parse

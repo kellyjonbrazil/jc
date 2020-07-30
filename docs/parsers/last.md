@@ -1,3 +1,4 @@
+
 # jc.parsers.last
 jc - JSON CLI output utility last Parser
 
@@ -68,10 +69,12 @@ Examples:
     ]
 
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -98,6 +101,7 @@ Returns:
         "duration":   string
       }
     ]
+
 
 ## parse
 ```python

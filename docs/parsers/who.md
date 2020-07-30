@@ -1,3 +1,4 @@
+
 # jc.parsers.who
 jc - JSON CLI output utility who Parser
 
@@ -99,10 +100,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -132,6 +135,7 @@ Returns:
         "comment":         string
       }
     ]
+
 
 ## parse
 ```python

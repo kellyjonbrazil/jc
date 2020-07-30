@@ -1,3 +1,4 @@
+
 # jc.parsers.timedatectl
 jc - JSON CLI output utility timedatectl Parser
 
@@ -35,10 +36,12 @@ Examples:
       "dst_active": "yes"
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -67,6 +70,7 @@ Returns:
       "rtc_in_local_tz":                   boolean,
       "dst_active":                        boolean
     }
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.id
 jc - JSON CLI output utility id Parser
 
@@ -67,10 +68,12 @@ Examples:
       }
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -113,6 +116,7 @@ Returns:
         "level":    string
       }
     }
+
 
 ## parse
 ```python

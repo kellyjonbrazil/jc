@@ -1,3 +1,4 @@
+
 # jc.parsers.history
 jc - JSON CLI output utility history Parser
 
@@ -41,10 +42,12 @@ Examples:
       ...
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -67,6 +70,7 @@ Returns:
         "command":  string
       }
     ]
+
 
 ## parse
 ```python

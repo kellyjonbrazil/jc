@@ -1,3 +1,4 @@
+
 # jc.parsers.ifconfig
 jc - JSON CLI output utility ifconfig Parser
 
@@ -142,19 +143,16 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## IfconfigParser
 ```python
-IfconfigParser(self, console_output)
-```
-
-## InterfaceNotFound
-```python
-InterfaceNotFound(self, /, *args, **kwargs)
+IfconfigParser(console_output)
 ```
 
 
@@ -205,6 +203,7 @@ Returns:
         "metric":           integer
       }
     ]
+
 
 ## parse
 ```python

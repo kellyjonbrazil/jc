@@ -1,3 +1,4 @@
+
 # jc.parsers.blkid
 jc - JSON CLI output utility blkid Parser
 
@@ -75,10 +76,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -128,6 +131,7 @@ Returns:
         "logical_sector_size":               integer
       }
     ]
+
 
 ## parse
 ```python

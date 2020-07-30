@@ -1,3 +1,4 @@
+
 # jc.parsers.xml
 jc - JSON CLI output utility XML Parser
 
@@ -55,10 +56,12 @@ Examples:
       ...
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -79,6 +82,7 @@ Returns:
       XML Document converted to a Dictionary
       See https://github.com/martinblech/xmltodict for details
     }
+
 
 ## parse
 ```python

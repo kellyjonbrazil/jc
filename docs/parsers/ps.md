@@ -1,3 +1,4 @@
+
 # jc.parsers.ps
 jc - JSON CLI output utility ps Parser
 
@@ -173,10 +174,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -214,6 +217,7 @@ Returns:
         "command":       string
       }
     ]
+
 
 ## parse
 ```python

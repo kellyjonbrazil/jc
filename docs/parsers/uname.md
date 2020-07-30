@@ -1,3 +1,4 @@
+
 # jc.parsers.uname
 jc - JSON CLI output utility uname Parser
 
@@ -27,10 +28,12 @@ Example:
       "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -57,6 +60,7 @@ Returns:
         "machine":            string,
         "kernel_version":     string
     }
+
 
 ## parse
 ```python

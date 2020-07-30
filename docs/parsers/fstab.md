@@ -1,3 +1,4 @@
+
 # jc.parsers.fstab
 jc - JSON CLI output utility fstab Parser
 
@@ -67,10 +68,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -97,6 +100,7 @@ Returns:
         "fs_passno":    integer
       }
     ]
+
 
 ## parse
 ```python

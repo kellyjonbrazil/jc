@@ -1,3 +1,4 @@
+
 # jc.parsers.netstat
 jc - JSON CLI output utility netstat Parser
 
@@ -245,10 +246,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -363,6 +366,7 @@ Returns:
         "rcvtime":                float,
       }
     ]
+
 
 ## parse
 ```python

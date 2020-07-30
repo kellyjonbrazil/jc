@@ -1,3 +1,4 @@
+
 # jc.parsers.gshadow
 jc - JSON CLI output utility /etc/gshadow file Parser
 
@@ -57,10 +58,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -89,6 +92,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.ls
 jc - JSON CLI output utility ls Parser
 
@@ -145,10 +146,12 @@ Examples:
       "date": "May 3 2019"
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -177,6 +180,7 @@ Returns:
         "date":     string
       }
     ]
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.stat
 jc - JSON CLI output utility stat Parser
 
@@ -101,10 +102,12 @@ Examples:
       ..
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -148,6 +151,7 @@ Returns:
         "unix_flags":   string
       }
     ]
+
 
 ## parse
 ```python
