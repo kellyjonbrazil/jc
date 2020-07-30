@@ -1,5 +1,8 @@
 jc changelog
 
+20200730 v1.13.2
+- Add key/value parser (wrapper for ini parser)
+
 20200727 v1.13.1
 - Add route -6 tests
 

@@ -1005,7 +1005,7 @@ ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
   }
 ]
 ```
-### INI and plain key/value pair files
+### INI files
 ```bash
 cat example.ini
 ```
@@ -1042,31 +1042,6 @@ cat example.ini | jc --ini -p
     "forwardx11": "no",
     "port": "50022"
   }
-}
-```
-```bash
-cat keyvalue.txt
-```
-```
-# this file contains key/value pairs
-name = John Doe
-address=555 California Drive
-age: 34
-; comments can include # or ;
-# delimiter can be = or :
-# quoted values have quotation marks stripped by default
-# but can be preserved with the -r argument
-occupation:"Engineer"
-```
-```bash
-cat keyvalue.txt | jc --ini -p
-```
-```json
-{
-  "name": "John Doe",
-  "address": "555 California Drive",
-  "age": "34",
-  "occupation": "Engineer"
 }
 ```
 ### iptables
@@ -1164,6 +1139,32 @@ jobs -l | jc --jobs -p          # or:  jc -p jobs
     "command": "sleep 10112 &"
   }
 ]
+```
+### Key/Value files
+```bash
+cat keyvalue.txt
+```
+```
+# this file contains key/value pairs
+name = John Doe
+address=555 California Drive
+age: 34
+; comments can include # or ;
+# delimiter can be = or :
+# quoted values have quotation marks stripped by default
+# but can be preserved with the -r argument
+occupation:"Engineer"
+```
+```bash
+cat keyvalue.txt | jc --ini -p
+```
+```json
+{
+  "name": "John Doe",
+  "address": "555 California Drive",
+  "age": "34",
+  "occupation": "Engineer"
+}
 ```
 ### last and lastb
 ```bash
