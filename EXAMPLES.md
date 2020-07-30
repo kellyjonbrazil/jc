@@ -1156,7 +1156,7 @@ age: 34
 occupation:"Engineer"
 ```
 ```bash
-cat keyvalue.txt | jc --ini -p
+cat keyvalue.txt | jc --kv -p
 ```
 ```json
 {
