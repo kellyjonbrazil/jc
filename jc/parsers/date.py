@@ -13,12 +13,14 @@ Examples:
     $ date | jc --date -p
     {
       "year": 2020,
-      "month": "Jul",
+      "month_num": 7,
       "day": 31,
+      "hour": 16,
+      "minute": 48,
+      "second": 11,
+      "month": "Jul",
       "weekday": "Fri",
-      "hour": 14,
-      "minute": 35,
-      "second": 55,
+      "weekday_num": 6,
       "timezone": "PDT"
     }
 
@@ -28,9 +30,9 @@ Examples:
       "month": "Jul",
       "day": "31",
       "weekday": "Fri",
-      "hour": "14",
-      "minute": "36",
-      "second": "14",
+      "hour": "16",
+      "minute": "50",
+      "second": "01",
       "timezone": "PDT"
     }
 """
@@ -65,25 +67,54 @@ def process(proc_data):
         Dictionary. Structured data with the following schema:
 
         {
-          "year":      integer,
-          "month":     string,
-          "day":       integer,
-          "weekday":   string,
-          "hour":      integer,
-          "minute":    integer,
-          "second":    integer,
-          "timezone":  string
+          "year":         integer,
+          "month_num":    integer,
+          "day":          integer,
+          "hour":         integer,
+          "minute":       integer,
+          "second":       integer,
+          "month":        string,
+          "weekday":      string,
+          "weekday_num":  integer,
+          "timezone":     string
         }
     """
+    month_map = {
+        "Jan": 1,
+        "Feb": 2,
+        "Mar": 3,
+        "Apr": 4,
+        "May": 5,
+        "Jun": 6,
+        "Jul": 7,
+        "Aug": 8,
+        "Sep": 9,
+        "Oct": 10,
+        "Nov": 11,
+        "Dec": 12
+    }
+
+    weekday_map = {
+        "Sun": 1,
+        "Mon": 2,
+        "Tue": 3,
+        "Wed": 4,
+        "Thu": 5,
+        "Fri": 6,
+        "Sat": 7
+    }
+
     if proc_data:
         return {
             "year": int(proc_data['year']),
-            "month": proc_data['month'],
+            'month_num': month_map[proc_data['month']],
             "day": int(proc_data['day']),
-            "weekday": proc_data['weekday'],
             "hour": int(proc_data['hour']),
             "minute": int(proc_data['minute']),
             "second": int(proc_data['second']),
+            "month": proc_data['month'],
+            "weekday": proc_data['weekday'],
+            "weekday_num": weekday_map[proc_data['weekday']],
             "timezone": proc_data['timezone']
         }
     else:
