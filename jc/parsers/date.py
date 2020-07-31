@@ -75,16 +75,19 @@ def process(proc_data):
           "timezone":  string
         }
     """
-    return {
-        "year": int(proc_data['year']),
-        "month": proc_data['month'],
-        "day": int(proc_data['day']),
-        "weekday": proc_data['weekday'],
-        "hour": int(proc_data['hour']),
-        "minute": int(proc_data['minute']),
-        "second": int(proc_data['second']),
-        "timezone": proc_data['timezone']
-    }
+    if proc_data:
+        return {
+            "year": int(proc_data['year']),
+            "month": proc_data['month'],
+            "day": int(proc_data['day']),
+            "weekday": proc_data['weekday'],
+            "hour": int(proc_data['hour']),
+            "minute": int(proc_data['minute']),
+            "second": int(proc_data['second']),
+            "timezone": proc_data['timezone']
+        }
+    else:
+        return {}
 
 
 def parse(data, raw=False, quiet=False):
