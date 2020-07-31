@@ -56,7 +56,7 @@ Parameters:
 
 Returns:
 
-    List of dictionaries. Structured data with the following schema:
+    Dictionary. Structured data with the following schema:
 
     {
       "year":      integer,
@@ -85,5 +85,5 @@ Parameters:
 
 Returns:
 
-    List of dictionaries. Raw or processed structured data.
+    Dictionary. Raw or processed structured data.
 
