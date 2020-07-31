@@ -2378,15 +2378,7 @@ traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m
     },
     {
       "hop": 3,
-      "probes": [
-        {
-          "annotation": null,
-          "asn": null,
-          "ip": null,
-          "name": null,
-          "rtt": null
-        }
-      ]
+      "probes": []
     }
   ]
 }
