@@ -136,7 +136,7 @@ RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0
 RE_PROBE_BSD_IPV6 = re.compile(r'\b(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}\b')
 RE_HOP = re.compile(r'^\s*(\d+)?\s+(.+)$')
 RE_PROBE_ASN = re.compile(r'\[AS(\d+)\]')
-RE_PROBE_RTT_ANNOTATION = re.compile(r'(\d+\.?\d+)?\s+ms|(\s+\*\s+)\s*(!\S*)?')
+RE_PROBE_RTT_ANNOTATION = re.compile(r'(?:(\d+(?:\.?\d+)?)\s+ms|(\s+\*\s+))\s*(!\S*)?')
 
 
 class Traceroute(object):
@@ -209,8 +209,10 @@ def loads(data):
 
     # Get headers
     match_dest = RE_HEADER.search(lines[0])
-    dest_name = match_dest.group(1)
-    dest_ip = match_dest.group(2)
+    dest_name, dest_ip = None, None
+    if match_dest:
+        dest_name = match_dest.group(1)
+        dest_ip = match_dest.group(2)
 
     # The Traceroute node is the root of the tree
     traceroute = Traceroute(dest_name, dest_ip)
@@ -272,7 +274,10 @@ def loads(data):
                 rtt=probe_rtt,
                 annotation=probe_annotation
             )
-            hop.add_probe(probe)
+
+            # only add probe if there is data
+            if any([probe_name, probe_ip, probe_asn, probe_rtt, probe_annotation]):
+                hop.add_probe(probe)
 
     return traceroute
 
@@ -380,11 +385,16 @@ def parse(data, raw=False, quiet=False):
                 new_data.append(data_line)
             else:
                 continue
-        data = '\n'.join(new_data)
 
-        # check if header row exists, otherwise raise exception
-        if not data.splitlines()[0].startswith('traceroute to ') and not data.splitlines()[0].startswith('traceroute6 to '):
-            raise ParseError('Traceroute header line not found. Be sure to redirect STDERR to STDOUT on some operating systems.')
+        # check if header row exists, otherwise add a dummy header
+        if not new_data[0].startswith('traceroute to ') and not new_data[0].startswith('traceroute6 to '):
+            new_data[:0] = ['traceroute to <<_>>  (<<_>>), 30 hops max, 60 byte packets']
+
+            # print warning to STDERR
+            if not quiet:
+                jc.utils.warning_message('No header row found. For destination info redirect STDERR to STDOUT')
+
+        data = '\n'.join(new_data)
 
         tr = loads(data)
         hops = tr.hops
