@@ -1,3 +1,4 @@
+
 # jc.parsers.dig
 jc - JSON CLI output utility dig Parser
 
@@ -321,10 +322,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -392,6 +395,7 @@ Returns:
         "size":           string
       }
     ]
+
 
 ## parse
 ```python

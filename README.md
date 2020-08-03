@@ -119,6 +119,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
 - `--csv` enables the `CSV` file parser
+- `--date` enables the `date` command parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
 - `--dmidecode` enables the `dmidecode` command parser
@@ -133,9 +134,10 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
 - `--ifconfig` enables the `ifconfig` command parser
-- `--ini` enables the `INI` file parser. Also parses files/output containing simple key/value pairs
+- `--ini` enables the `INI` file parser
 - `--iptables` enables the `iptables` command parser
 - `--jobs` enables the `jobs` command parser
+- `--kv` enables the `Key/Value` file parser
 - `--last` enables the `last` and `lastb` command parser
 - `--ls` enables the `ls` command parser
 - `--lsblk` enables the `lsblk` command parser

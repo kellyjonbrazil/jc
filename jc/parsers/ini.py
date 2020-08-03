@@ -49,8 +49,8 @@ import configparser
 
 
 class info():
-    version = '1.2'
-    description = 'INI file parser. Also parses files/output containing simple key/value pairs'
+    version = '1.3'
+    description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using configparser from the standard library'

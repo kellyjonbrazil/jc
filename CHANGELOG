@@ -1,5 +1,12 @@
 jc changelog
 
+20200803 v1.13.2
+- Add key/value file parser (wrapper for ini parser)
+- Add date command parser
+- Update traceroute parser to more gracefully handle missing header row
+- Update traceroute parser to handle annotations
+- Update traceroute parser to only return successful probes
+
 20200727 v1.13.1
 - Add route -6 tests
 

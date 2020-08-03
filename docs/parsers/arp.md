@@ -1,3 +1,4 @@
+
 # jc.parsers.arp
 jc - JSON CLI output utility arp Parser
 
@@ -95,10 +96,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -127,6 +130,7 @@ Returns:
         "expires":    integer
       }
     ]
+
 
 ## parse
 ```python

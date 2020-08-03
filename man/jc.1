@@ -1,4 +1,4 @@
-.TH jc 1 2020-07-12 1.13.0 "JSON CLI output utility"
+.TH jc 1 2020-07-31 1.13.2 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -42,6 +42,10 @@ crontab file parser with user support
 .B
 \fB--csv\fP
 CSV file parser
+.TP
+.B
+\fB--date\fP
+date command parser
 .TP
 .B
 \fB--df\fP
@@ -101,7 +105,7 @@ ifconfig command parser
 .TP
 .B
 \fB--ini\fP
-INI file parser. Also parses files/output containing simple key/value pairs
+INI file parser
 .TP
 .B
 \fB--iptables\fP
@@ -110,6 +114,10 @@ iptables command parser
 .B
 \fB--jobs\fP
 jobs command parser
+.TP
+.B
+\fB--kv\fP
+Key/Value file parser
 .TP
 .B
 \fB--last\fP

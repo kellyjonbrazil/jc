@@ -1,3 +1,4 @@
+
 # jc.parsers.mount
 jc - JSON CLI output utility mount Parser
 
@@ -53,10 +54,12 @@ Example:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -83,6 +86,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

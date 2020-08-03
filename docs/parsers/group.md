@@ -1,3 +1,4 @@
+
 # jc.parsers.group
 jc - JSON CLI output utility /etc/group file Parser
 
@@ -91,10 +92,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -121,6 +124,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

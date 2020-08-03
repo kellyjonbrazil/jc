@@ -1,3 +1,4 @@
+
 # jc.parsers.lsmod
 jc - JSON CLI output utility lsmod Parser
 
@@ -103,10 +104,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -133,6 +136,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

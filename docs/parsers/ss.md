@@ -1,3 +1,4 @@
+
 # jc.parsers.ss
 jc - JSON CLI output utility ss Parser
 
@@ -247,10 +248,12 @@ Examples:
         }
       ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -288,6 +291,7 @@ Returns:
     ]
 
     Information from https://www.cyberciti.biz/files/ss.html used to define field names
+
 
 ## parse
 ```python

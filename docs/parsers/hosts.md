@@ -1,3 +1,4 @@
+
 # jc.parsers.hosts
 jc - JSON CLI output utility hosts Parser
 
@@ -58,10 +59,12 @@ Examples:
       }
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -86,6 +89,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

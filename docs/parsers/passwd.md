@@ -1,3 +1,4 @@
+
 # jc.parsers.passwd
 jc - JSON CLI output utility /etc/passwd file Parser
 
@@ -75,10 +76,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -106,6 +109,7 @@ Returns:
         "shell":     string
       }
     ]
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.iptables
 jc - JSON CLI output utility ipables Parser
 
@@ -131,10 +132,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -171,6 +174,7 @@ Returns:
         ]
       }
     ]
+
 
 ## parse
 ```python

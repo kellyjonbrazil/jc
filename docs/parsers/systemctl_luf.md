@@ -1,3 +1,4 @@
+
 # jc.parsers.systemctl_luf
 jc - JSON CLI output utility systemctl-luf Parser
 
@@ -28,10 +29,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -54,6 +57,7 @@ Returns:
         "state":       string
       }
     ]
+
 
 ## parse
 ```python

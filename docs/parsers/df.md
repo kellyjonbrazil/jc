@@ -1,3 +1,4 @@
+
 # jc.parsers.df
 jc - JSON CLI output utility df Parser
 
@@ -69,10 +70,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -105,6 +108,7 @@ Returns:
         "mounted_on":        string
       }
     ]
+
 
 ## parse
 ```python

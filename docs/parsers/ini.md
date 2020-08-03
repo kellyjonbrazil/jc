@@ -1,3 +1,4 @@
+
 # jc.parsers.ini
 jc - JSON CLI output utility INI Parser
 
@@ -45,10 +46,12 @@ Examples:
       }
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -72,6 +75,7 @@ Returns:
       Note: Values starting and ending with quotation marks will have the marks removed.
             If you would like to keep the quotation marks, use the -r or raw=True argument.
     }
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.env
 jc - JSON CLI output utility env Parser
 
@@ -49,10 +50,12 @@ Examples:
       "_": "/usr/bin/env"
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -75,6 +78,7 @@ Returns:
         "value":    string
       }
     ]
+
 
 ## parse
 ```python

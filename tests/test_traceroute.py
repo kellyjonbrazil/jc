@@ -65,6 +65,9 @@ class MyTests(unittest.TestCase):
             self.generic_traceroute8 = f.read()
 
         # output
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_traceroute_no_header_json = json.loads(f.read())
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/traceroute.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_traceroute_json = json.loads(f.read())
 
@@ -124,9 +127,9 @@ class MyTests(unittest.TestCase):
 
     def test_traceroute_noheader(self):
         """
-        Test 'traceroute' with missing header row. Should generate a ParseError exception
+        Test 'traceroute' with missing header row
         """
-        self.assertRaises(jc.parsers.traceroute.ParseError, jc.parsers.traceroute.parse, self.osx_10_14_6_traceroute_noheader)
+        self.assertEqual(jc.parsers.traceroute.parse(self.osx_10_14_6_traceroute_noheader, quiet=True), self.osx_10_14_6_traceroute_no_header_json)
 
     def test_traceroute_centos_7_7(self):
         """

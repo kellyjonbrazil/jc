@@ -1,3 +1,4 @@
+
 # jc.parsers.csv
 jc - JSON CLI output utility csv Parser
 
@@ -59,10 +60,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -85,6 +88,7 @@ Returns:
         https://docs.python.org/3/library/csv.html
       }
     ]
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.route
 jc - JSON CLI output utility route Parser
 
@@ -80,10 +81,12 @@ Examples:
     ]
 
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -118,6 +121,7 @@ Returns:
         "iface":           string
       }
     ]
+
 
 ## parse
 ```python

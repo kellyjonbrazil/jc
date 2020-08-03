@@ -11,6 +11,7 @@ pydocmd simple jc.parsers.blkid+ > ../docs/parsers/blkid.md
 pydocmd simple jc.parsers.crontab+ > ../docs/parsers/crontab.md
 pydocmd simple jc.parsers.crontab_u+ > ../docs/parsers/crontab_u.md
 pydocmd simple jc.parsers.csv+ > ../docs/parsers/csv.md
+pydocmd simple jc.parsers.date+ > ../docs/parsers/date.md
 pydocmd simple jc.parsers.df+ > ../docs/parsers/df.md
 pydocmd simple jc.parsers.dig+ > ../docs/parsers/dig.md
 pydocmd simple jc.parsers.dmidecode+ > ../docs/parsers/dmidecode.md
@@ -28,6 +29,7 @@ pydocmd simple jc.parsers.ifconfig+ > ../docs/parsers/ifconfig.md
 pydocmd simple jc.parsers.ini+ > ../docs/parsers/ini.md
 pydocmd simple jc.parsers.iptables+ > ../docs/parsers/iptables.md
 pydocmd simple jc.parsers.jobs+ > ../docs/parsers/jobs.md
+pydocmd simple jc.parsers.kv+ > ../docs/parsers/kv.md
 pydocmd simple jc.parsers.last+ > ../docs/parsers/last.md
 pydocmd simple jc.parsers.ls+ > ../docs/parsers/ls.md
 pydocmd simple jc.parsers.lsblk+ > ../docs/parsers/lsblk.md

@@ -1,3 +1,4 @@
+
 # jc.parsers.tracepath
 jc - JSON CLI output utility tracepath Parser
 
@@ -102,10 +103,12 @@ Examples:
     }
 
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -138,6 +141,7 @@ Returns:
         }
       ]
     }
+
 
 ## parse
 ```python

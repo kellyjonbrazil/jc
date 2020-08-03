@@ -21,7 +21,7 @@ import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.13.1'
+    version = '1.13.2'
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -37,6 +37,7 @@ parsers = [
     'crontab',
     'crontab-u',
     'csv',
+    'date',
     'df',
     'dig',
     'dmidecode',
@@ -54,6 +55,7 @@ parsers = [
     'ini',
     'iptables',
     'jobs',
+    'kv',
     'last',
     'ls',
     'lsblk',

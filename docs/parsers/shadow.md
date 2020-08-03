@@ -1,3 +1,4 @@
+
 # jc.parsers.shadow
 jc - JSON CLI output utility /etc/shadow file Parser
 
@@ -81,10 +82,12 @@ Examples:
       ...
     ]
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -113,6 +116,7 @@ Returns:
         "expire":         integer
       }
     ]
+
 
 ## parse
 ```python

@@ -1,3 +1,4 @@
+
 # jc.parsers.sysctl
 jc - JSON CLI output utility sysctl -a Parser
 
@@ -39,10 +40,12 @@ Examples:
       ...
     }
 
+
 ## info
 ```python
-info(self, /, *args, **kwargs)
+info()
 ```
+
 
 ## process
 ```python
@@ -64,6 +67,7 @@ Returns:
       "bar":     string/integer/float,
       "baz":     string/integer/float
     }
+
 
 ## parse
 ```python
