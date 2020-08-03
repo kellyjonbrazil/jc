@@ -1,5 +1,6 @@
 #!/bin/bash
 # Generate docs.md
+# requires pydoc-markdown 2.1.0.post1
 
 cd jc
 pydocmd simple jc+ > ../docs/readme.md
