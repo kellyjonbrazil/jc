@@ -377,6 +377,24 @@ cat homes.csv | jc --csv -p
   }
 ]
 ```
+### date
+```bash
+date | jc --date -p          # or:  jc -p date
+```
+```json
+{
+  "year": 2020,
+  "month_num": 7,
+  "day": 31,
+  "hour": 16,
+  "minute": 48,
+  "second": 11,
+  "month": "Jul",
+  "weekday": "Fri",
+  "weekday_num": 6,
+  "timezone": "PDT"
+}
+```
 ### df
 ```bash
 df | jc --df -p          # or:  jc -p df

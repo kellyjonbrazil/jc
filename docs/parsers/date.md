@@ -15,12 +15,14 @@ Examples:
     $ date | jc --date -p
     {
       "year": 2020,
-      "month": "Jul",
+      "month_num": 7,
       "day": 31,
+      "hour": 16,
+      "minute": 48,
+      "second": 11,
+      "month": "Jul",
       "weekday": "Fri",
-      "hour": 14,
-      "minute": 35,
-      "second": 55,
+      "weekday_num": 6,
       "timezone": "PDT"
     }
 
@@ -30,9 +32,9 @@ Examples:
       "month": "Jul",
       "day": "31",
       "weekday": "Fri",
-      "hour": "14",
-      "minute": "36",
-      "second": "14",
+      "hour": "16",
+      "minute": "50",
+      "second": "01",
       "timezone": "PDT"
     }
 
@@ -59,14 +61,16 @@ Returns:
     Dictionary. Structured data with the following schema:
 
     {
-      "year":      integer,
-      "month":     string,
-      "day":       integer,
-      "weekday":   string,
-      "hour":      integer,
-      "minute":    integer,
-      "second":    integer,
-      "timezone":  string
+      "year":         integer,
+      "month_num":    integer,
+      "day":          integer,
+      "hour":         integer,
+      "minute":       integer,
+      "second":       integer,
+      "month":        string,
+      "weekday":      string,
+      "weekday_num":  integer,
+      "timezone":     string
     }
 
 

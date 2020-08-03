@@ -119,6 +119,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
 - `--csv` enables the `CSV` file parser
+- `--date` enables the `date` command parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
 - `--dmidecode` enables the `dmidecode` command parser
