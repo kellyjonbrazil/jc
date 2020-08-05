@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility /etc/shadow file Parser
+"""jc - JSON CLI output utility `/etc/shadow` file parser
 
 Usage (cli):
 
-    specify --shadow as the first argument if the piped input is coming from /etc/shadow
+    $ sudo cat /etc/shadow | jc --shadow
 
 Usage (module):
 

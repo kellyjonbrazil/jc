@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility /etc/passwd file Parser
+"""jc - JSON CLI output utility `/etc/passwd` file Parser
 
 Usage (cli):
 
-    specify --passwd as the first argument if the piped input is coming from /etc/passwd
+    $ cat /etc/passwd | jc --passwd
 
 Usage (module):
 

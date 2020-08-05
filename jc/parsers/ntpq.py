@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility ntpq Parser
+"""jc - JSON CLI output utility `ntpq -p` command output parser
 
 Usage (cli):
 
-    specify --ntpq as the first argument if the piped input is coming from ntpq -p
+    $ ntpq -p | jc --ntpq
+
+    or
+
+    $ jc ntpq -p
 
 Usage (module):
 

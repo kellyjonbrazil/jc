@@ -1,10 +1,14 @@
-"""jc - JSON CLI output utility jobs Parser
+"""jc - JSON CLI output utility `jobs` command output parser
+
+Also supports the `-l` option.
 
 Usage (cli):
 
-    specify --jobs as the first argument if the piped input is coming from jobs
+    $ jobs | jc --jobs
 
-    Also supports the -l option
+    or
+
+    $ jc jobs
 
 Usage (module):
 

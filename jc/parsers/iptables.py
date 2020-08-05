@@ -1,10 +1,14 @@
-"""jc - JSON CLI output utility ipables Parser
+"""jc - JSON CLI output utility `ipables` command output parser
+
+Supports `-vLn` and `--line-numbers` for all tables.
 
 Usage (cli):
 
-    Specify --iptables as the first argument if the piped input is coming from iptables
+    $ sudo iptables -L -t nat | jc --iptables
 
-    Supports -vLn and --line-numbers for all tables
+    or
+
+    $ jc iptables -L -t nat
 
 Usage (module):
 

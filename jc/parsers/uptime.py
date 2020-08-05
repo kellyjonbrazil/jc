@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility uptime Parser
+"""jc - JSON CLI output utility `uptime` command output parser
 
 Usage (cli):
 
-    specify --uptime as the first argument if the piped input is coming from uptime
+    $ uptime | jc --uptime
+
+    or
+
+    $ jc uptime
 
 Usage (module):
 

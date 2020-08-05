@@ -1,10 +1,14 @@
 
 # jc.parsers.timedatectl
-jc - JSON CLI output utility timedatectl Parser
+jc - JSON CLI output utility `timedatectl` command output parser
 
 Usage (cli):
 
-    specify --timedatectl as the first argument if the piped input is coming from timedatectl or timedatectl status
+    $ timedatectl | jc --timedatectl
+
+    or
+
+    $ jc timedatectl
 
 Usage (module):
 

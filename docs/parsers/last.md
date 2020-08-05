@@ -1,10 +1,14 @@
 
 # jc.parsers.last
-jc - JSON CLI output utility last Parser
+jc - JSON CLI output utility `last` and `lastb` command output parser
 
 Usage (cli):
 
-    specify --last as the first argument if the piped input is coming from last or lastb
+    $ last | jc --last
+
+    or
+
+    $ jc last
 
 Usage (module):
 

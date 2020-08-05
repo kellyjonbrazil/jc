@@ -1,10 +1,14 @@
 
 # jc.parsers.df
-jc - JSON CLI output utility df Parser
+jc - JSON CLI output utility `df` command output parser
 
 Usage (cli):
 
-    specify --df as the first argument if the piped input is coming from df
+    $ df | jc --df
+
+    or
+
+    $ jc df
 
 Usage (module):
 

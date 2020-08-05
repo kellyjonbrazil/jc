@@ -1,10 +1,14 @@
 
 # jc.parsers.pip_show
-jc - JSON CLI output utility pip-show Parser
+jc - JSON CLI output utility `pip-show` command output parser
 
 Usage (cli):
 
-    specify --pip-show as the first argument if the piped input is coming from pip show
+    $ pip show | jc --pip-show
+
+    or
+
+    $ jc pip show
 
 Usage (module):
 

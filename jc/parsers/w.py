@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility w Parser
+"""jc - JSON CLI output utility `w` command output parser
 
 Usage (cli):
 
-    specify --w as the first argument if the piped input is coming from w
+    $ w | jc --w
+
+    or
+
+    $ jc w
 
 Usage (module):
 

@@ -1,10 +1,10 @@
 
 # jc.parsers.group
-jc - JSON CLI output utility /etc/group file Parser
+jc - JSON CLI output utility `/etc/group` file parser
 
 Usage (cli):
 
-    specify --group as the first argument if the piped input is coming from /etc/group
+    $ cat /etc/group | jc --group
 
 Usage (module):
 

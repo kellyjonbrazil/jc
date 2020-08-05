@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility systemctl Parser
+"""jc - JSON CLI output utility `systemctl` command output parser
 
 Usage (cli):
 
-    specify --systemctl as the first argument if the piped input is coming from systemctl
+    $ systemctl | jc --systemctl
+
+    or
+
+    $ jc systemctl
 
 Usage (module):
 

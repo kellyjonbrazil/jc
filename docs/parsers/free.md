@@ -1,10 +1,14 @@
 
 # jc.parsers.free
-jc - JSON CLI output utility free Parser
+jc - JSON CLI output utility `free` command output parser
 
 Usage (cli):
 
-    specify --free as the first argument if the piped input is coming from free
+    $ free | jc --free
+
+    or
+
+    $ jc free
 
 Usage (module):
 

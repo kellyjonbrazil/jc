@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility lsof Parser
+"""jc - JSON CLI output utility `lsof` command output parser
 
 Usage (cli):
 
-    specify --lsof as the first argument if the piped input is coming from lsof
+    $ lsof | jc --lsof
+
+    or
+
+    $ jc lsof
 
 Usage (module):
 

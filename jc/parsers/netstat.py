@@ -1,18 +1,21 @@
-"""jc - JSON CLI output utility netstat Parser
+"""jc - JSON CLI output utility `netstat` command output parser
+
+Caveats:
+- Use of multiple `l` options is not supported on OSX (e.g. `netstat -rlll`)
+- Use of the `A` option is not supported on OSX when using the `r` option (e.g. `netstat -rA`)
 
 Usage (cli):
 
-    Specify --netstat as the first argument if the piped input is coming from netstat
+    $ netstat | jc --netstat
+
+    or
+
+    $ jc netstat
 
 Usage (module):
 
     import jc.parsers.netstat
     result = jc.parsers.netstat.parse(netstat_command_output)
-
-Caveats:
-
-    - Use of multiple 'l' options is not supported on OSX (e.g. 'netstat -rlll')
-    - Use of the 'A' option is not supported on OSX when using the 'r' option (e.g. netstat -rA)
 
 Compatibility:
 

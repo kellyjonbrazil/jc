@@ -1,10 +1,14 @@
 
 # jc.parsers.systemctl_ls
-jc - JSON CLI output utility systemctl-ls Parser
+jc - JSON CLI output utility `systemctl list-sockets` command output parser
 
 Usage (cli):
 
-    specify --systemctl-ls as the first argument if the piped input is coming from systemctl list-sockets
+    $ systemctl list-sockets | jc --systemctl-ls
+
+    or
+
+    $ jc systemctl list-sockets
 
 Usage (module):
 

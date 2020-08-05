@@ -1,10 +1,10 @@
 
 # jc.parsers.fstab
-jc - JSON CLI output utility fstab Parser
+jc - JSON CLI output utility `fstab` file parser
 
 Usage (cli):
 
-    specify --fstab as the first argument if the piped input is coming from a fstab file
+    $ cat /etc/fstab | jc --fstab
 
 Usage (module):
 

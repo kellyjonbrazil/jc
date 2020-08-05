@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility uname Parser
+"""jc - JSON CLI output utility `uname -a` command output parser
 
 Usage (cli):
 
-    specify --uname as the first argument if the piped input is coming from uname -a
+    $ uname -a | jc --uname
+
+    or
+
+    $ jc uname -a
 
 Usage (module):
 

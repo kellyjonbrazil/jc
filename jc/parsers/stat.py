@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility stat Parser
+"""jc - JSON CLI output utility `stat` command output parser
 
 Usage (cli):
 
-    specify --stat as the first argument if the piped input is coming from stat
+    $ stat * | jc --stat
+
+    or
+
+    $ jc stat *
 
 Usage (module):
 

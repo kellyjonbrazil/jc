@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility lsmod Parser
+"""jc - JSON CLI output utility `lsmod` command output parser
 
 Usage (cli):
 
-    specify --lsmod as the first argument if the piped input is coming from lsmod
+    $ lsmod | jc --lsmod
+
+    or
+
+    $ jc lsmod
 
 Usage (module):
 

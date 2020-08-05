@@ -1,12 +1,16 @@
 
 # jc.parsers.ifconfig
-jc - JSON CLI output utility ifconfig Parser
+jc - JSON CLI output utility `ifconfig` command output parser
+
+Note: No `ifconfig` options are supported.
 
 Usage (cli):
 
-    specify --ifconfig as the first argument if the piped input is coming from ifconfig
+    $ ifconfig | jc --ifconfig
 
-    no ifconfig options are supported.
+    or
+
+    $ jc ifconfig
 
 Usage (module):
 

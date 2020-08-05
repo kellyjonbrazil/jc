@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility pip-list Parser
+"""jc - JSON CLI output utility `pip-list` command output parser
 
 Usage (cli):
 
-    specify --pip-list as the first argument if the piped input is coming from pip list
+    $ pip list | jc --pip-list
+
+    or
+
+    $ jc pip list
 
 Usage (module):
 

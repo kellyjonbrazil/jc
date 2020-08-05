@@ -1,10 +1,14 @@
 
 # jc.parsers.ss
-jc - JSON CLI output utility ss Parser
+jc - JSON CLI output utility `ss` command output parser
 
 Usage (cli):
 
-    specify --ss as the first argument if the piped input is coming from ss
+    $ ss | jc --ss
+
+    or
+
+    $ jc ss
 
 Usage (module):
 

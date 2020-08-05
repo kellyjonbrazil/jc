@@ -1,12 +1,16 @@
-"""jc - JSON CLI output utility ps Parser
+"""jc - JSON CLI output utility `ps` command output parser
+
+`ps` options supported:
+- `ef`
+- `axu`
 
 Usage (cli):
 
-    specify --ps as the first argument if the piped input is coming from ps
+    $ ps | jc --ps
 
-    ps options supported:
-    - ef
-    - axu
+    or
+
+    $ jc ps
 
 Usage (module):
 

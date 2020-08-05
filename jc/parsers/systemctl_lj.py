@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility systemctl-lj Parser
+"""jc - JSON CLI output utility `systemctl list-jobs` command output parser
 
 Usage (cli):
 
-    specify --systemctl-lj as the first argument if the piped input is coming from systemctl list-jobs
+    $ systemctl list-jobs | jc --systemctl-lj
+
+    or
+
+    $ jc systemctl list-jobs
 
 Usage (module):
 

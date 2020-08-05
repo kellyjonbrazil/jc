@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility YAML Parser
+"""jc - JSON CLI output utility `YAML` file parser
 
 Usage (cli):
 
-    specify --yaml as the first argument if the piped input is coming from a YAML file
+  $ cat foo.yaml| jc --yaml
 
 Usage (module):
 

@@ -1,10 +1,14 @@
 
 # jc.parsers.dig
-jc - JSON CLI output utility dig Parser
+jc - JSON CLI output utility `dig` command output parser
 
 Usage (cli):
 
-    Specify --dig as the first argument if the piped input is coming from dig
+    $ dig example.com | jc --dig
+
+    or
+
+    $ jc dig example.com
 
 Usage (module):
 

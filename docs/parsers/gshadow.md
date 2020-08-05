@@ -1,10 +1,10 @@
 
 # jc.parsers.gshadow
-jc - JSON CLI output utility /etc/gshadow file Parser
+jc - JSON CLI output utility `/etc/gshadow` file parser
 
 Usage (cli):
 
-    specify --gshadow as the first argument if the piped input is coming from /etc/gshadow
+    $ cat /etc/gshadow | jc --gshadow
 
 Usage (module):
 

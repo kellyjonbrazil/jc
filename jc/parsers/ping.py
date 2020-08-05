@@ -1,10 +1,16 @@
-"""jc - JSON CLI output utility ping Parser
+"""jc - JSON CLI output utility `ping` command output parser
+
+Supports `ping` and `ping6` output.
 
 Usage (cli):
 
-    specify --ping as the first argument if the piped input is coming from ping
+    Note:  Use the ping `-c` (count) option, otherwise data will not be piped to `jc`.
+    
+    $ ping -c 3 1.2.3.4 | jc --ping
 
-    Note:  Use the ping -c (count) option, otherwise data will not be piped to jc.
+    or
+
+    $ jc ping -c 3 1.2.3.4
 
 Usage (module):
 

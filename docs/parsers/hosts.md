@@ -1,10 +1,10 @@
 
 # jc.parsers.hosts
-jc - JSON CLI output utility hosts Parser
+jc - JSON CLI output utility `/etc/hosts` file parser
 
 Usage (cli):
 
-    specify --hosts as the first argument if the piped input is coming from a hosts file
+    $ cat /etc/hosts | jc --hosts
 
 Usage (module):
 

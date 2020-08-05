@@ -1,10 +1,14 @@
-"""jc - JSON CLI output utility who Parser
+"""jc - JSON CLI output utility `who` command output parser
+
+Accepts any of the following who options (or no options): `-aTH`
 
 Usage (cli):
 
-    specify --who as the first argument if the piped input is coming from who
+    $ who | jc --who
 
-    accepts any of the following who options (or no options): -aTH
+    or
+
+    $ jc who
 
 Usage (module):
 

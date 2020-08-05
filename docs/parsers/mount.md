@@ -1,10 +1,14 @@
 
 # jc.parsers.mount
-jc - JSON CLI output utility mount Parser
+jc - JSON CLI output utility `mount` command output parser
 
 Usage (cli):
 
-    specify --mount as the first argument if the piped input is coming from mount
+    $ mount | jc --mount
+
+    or
+
+    $ jc mount
 
 Usage (module):
 

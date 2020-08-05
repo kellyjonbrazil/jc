@@ -1,8 +1,14 @@
-"""jc - JSON CLI output utility tracepath Parser
+"""jc - JSON CLI output utility `tracepath` command output parser
+
+Supports `tracepath` and `tracepath6` output.
 
 Usage (cli):
 
-    specify --tracepath as the first argument if the piped input is coming from tracepath
+    $ tracepath 1.2.3.4 | jc --tracepath
+
+    or
+
+    $ jc tracepath 1.2.3.4
 
 Usage (module):
 

@@ -1,10 +1,10 @@
 
 # jc.parsers.history
-jc - JSON CLI output utility history Parser
+jc - JSON CLI output utility `history` command output parser
 
 Usage (cli):
 
-    specify --history as the first argument if the piped input is coming from history
+    $ history | jc --history
 
 Usage (module):
 

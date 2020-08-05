@@ -1,8 +1,8 @@
-"""jc - JSON CLI output utility XML Parser
+"""jc - JSON CLI output utility `XML` file parser
 
 Usage (cli):
 
-    specify --xml as the first argument if the piped input is coming from an XML file
+    $ cat foo.xml| jc --xml
 
 Usage (module):
 

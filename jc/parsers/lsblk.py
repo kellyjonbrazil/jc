@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility lsblk Parser
+"""jc - JSON CLI output utility `lsblk` command output parser
 
 Usage (cli):
 
-    specify --lsblk as the first argument if the piped input is coming from lsblk
+    $ lsblk | jc --lsblk
+
+    or
+
+    $ jc lsblk
 
 Usage (module):
 

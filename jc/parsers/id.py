@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility id Parser
+"""jc - JSON CLI output utility `id` command output parser
 
 Usage (cli):
 
-    specify --id as the first argument if the piped input is coming from id
+    $ id | jc --id
+
+    or
+
+    $ jc id
 
 Usage (module):
 

@@ -1,10 +1,14 @@
 
 # jc.parsers.systemctl_luf
-jc - JSON CLI output utility systemctl-luf Parser
+jc - JSON CLI output utility `systemctl list-unit-files` command output parser
 
 Usage (cli):
 
-    specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-unit-files
+    $ systemctl list-unit-files | jc --systemctl-luf
+
+    or
+
+    $ jc systemctl list-unit-files
 
 Usage (module):
 

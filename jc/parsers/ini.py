@@ -1,10 +1,12 @@
-"""jc - JSON CLI output utility INI Parser
+"""jc - JSON CLI output utility `INI` file parser
+
+Parses standard `INI` files and files containing simple key/value pairs. Delimiter can be `=` or `:`. Missing values are supported. Comment prefix can be `#` or `;`. Comments must be on their own line.
+
+Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
-    Specify --ini as the first argument if the piped input is coming from an INI file or any
-    simple key/value pair file. Delimiter can be '=' or ':'. Missing values are supported.
-    Comment prefix can be '#' or ';'. Comments must be on their own line.
+    $ cat foo.ini | jc --ini
 
 Usage (module):
 
