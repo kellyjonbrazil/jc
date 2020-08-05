@@ -1,11 +1,14 @@
-"""jc - JSON CLI output utility airport -s Parser
+"""jc - JSON CLI output utility airport -s command parser
+
+The `airport` program can be found at `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport`.
 
 Usage (cli):
 
-    specify --airport as the first argument if the piped input is coming from airport -s (OSX)
+    $ airport -s | jc --airport-s
 
-    This program can be found at:
-    /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
+    or
+
+    $ jc airport -s
 
 Usage (module):
 
