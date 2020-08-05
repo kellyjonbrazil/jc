@@ -1,5 +1,8 @@
 jc changelog
 
+20200804 v1.13.3
+- Updae ping parser for Raspberry Pi compatibility
+
 20200803 v1.13.2
 - Add key/value file parser (wrapper for ini parser)
 - Add date command parser

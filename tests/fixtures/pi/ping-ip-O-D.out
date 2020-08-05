@@ -1,0 +1,10 @@
+PING 192.168.120.164 (192.168.120.164) 56(84) bytes of data.
+[1596585008.591169] no answer yet for icmp_seq=1
+[1596585009.631169] no answer yet for icmp_seq=2
+[1596585010.671173] no answer yet for icmp_seq=3
+[1596585011.711167] no answer yet for icmp_seq=4
+
+--- 192.168.120.164 ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4154ms
+
+

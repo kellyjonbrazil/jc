@@ -108,7 +108,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'ping command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -496,7 +496,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        if 'time' in data.splitlines()[-2]:
+        if 'time' in data.splitlines()[-2] or 'time' in data.splitlines()[-3]:
             raw_output = linux_parse(data)
         else:
             raw_output = bsd_parse(data)

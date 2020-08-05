@@ -181,6 +181,13 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_ip_dup = f.read()
 
+        # raspberry pi
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O.out'), 'r', encoding='utf-8') as f:
+            self.pi_ping_ip_O = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
+            self.pi_ping_ip_O_D = f.read()
+
         # output
 
         # centos
@@ -352,6 +359,13 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_ip_dup_json = json.loads(f.read())
+
+        # raspberry pi
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O.json'), 'r', encoding='utf-8') as f:
+            self.pi_ping_ip_O_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D.json'), 'r', encoding='utf-8') as f:
+            self.pi_ping_ip_O_D_json = json.loads(f.read())
 
     def test_ping_nodata(self):
         """
@@ -688,6 +702,18 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip>' to broadcast IP to get duplicate replies on osx 10.14.6
         """
         self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip_dup, quiet=True), self.osx_10_14_6_ping6_ip_dup_json)
+
+    def test_ping_ip_O_pi(self):
+        """
+        Test 'ping6 <ip> -O' on raspberry pi
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.pi_ping_ip_O, quiet=True), self.pi_ping_ip_O_json)
+
+    def test_ping_ip_O_D_pi(self):
+        """
+        Test 'ping6 <ip> -O -D' on raspberry pi
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.pi_ping_ip_O_D, quiet=True), self.pi_ping_ip_O_D_json)
 
 
 if __name__ == '__main__':
