@@ -1,5 +1,8 @@
 jc changelog
 
+20200805 v1.13.4
+- Updae crontab and crontab-u parsers to tighten up variable detection
+
 20200804 v1.13.3
 - Updae ping parser for Raspberry Pi compatibility
 

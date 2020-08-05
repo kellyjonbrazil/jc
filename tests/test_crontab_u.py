@@ -16,12 +16,18 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_crontab_u = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/crontab-u.out'), 'r', encoding='utf-8') as f:
+            self.debian10_crontab_u = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_crontab_u_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab-u.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_crontab_u_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/crontab-u.json'), 'r', encoding='utf-8') as f:
+            self.debian10_crontab_u_json = json.loads(f.read())
 
     def test_crontab_u_nodata(self):
         """
@@ -40,6 +46,12 @@ class MyTests(unittest.TestCase):
         Test 'crontab' on Centos 7.7 (has a user field)
         """
         self.assertEqual(jc.parsers.crontab_u.parse(self.centos_7_7_crontab_u, quiet=True), self.centos_7_7_crontab_u_json)
+
+    def test_crontab_u_debian10(self):
+        """
+        Test 'crontab' on Debian10 (has a user field)
+        """
+        self.assertEqual(jc.parsers.crontab_u.parse(self.debian10_crontab_u, quiet=True), self.debian10_crontab_u_json)
 
 
 if __name__ == '__main__':

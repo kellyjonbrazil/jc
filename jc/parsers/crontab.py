@@ -235,7 +235,7 @@ def parse(data, raw=False, quiet=False):
         # Pop any variable assignment lines
         cron_var = []
         for i, line in reversed(list(enumerate(cleandata))):
-            if '=' in line:
+            if '=' in line and not line.strip()[0].isdigit() and not line.strip()[0] == '@':
                 var_line = cleandata.pop(i)
                 var_name = var_line.split('=', maxsplit=1)[0].strip()
                 var_value = var_line.split('=', maxsplit=1)[1].strip()

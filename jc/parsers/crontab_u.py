@@ -133,7 +133,7 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.3'
+    version = '1.5'
     description = 'crontab file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -236,7 +236,7 @@ def parse(data, raw=False, quiet=False):
         # Pop any variable assignment lines
         cron_var = []
         for i, line in reversed(list(enumerate(cleandata))):
-            if '=' in line:
+            if '=' in line and not line.strip()[0].isdigit() and not line.strip()[0] == '@':
                 var_line = cleandata.pop(i)
                 var_name = var_line.split('=', maxsplit=1)[0].strip()
                 var_value = var_line.split('=', maxsplit=1)[1].strip()
