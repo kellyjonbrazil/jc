@@ -2,11 +2,16 @@
 # jc.parsers.ini
 jc - JSON CLI output utility INI Parser
 
-Usage:
+Usage (cli):
 
     Specify --ini as the first argument if the piped input is coming from an INI file or any
     simple key/value pair file. Delimiter can be '=' or ':'. Missing values are supported.
     Comment prefix can be '#' or ';'. Comments must be on their own line.
+
+Usage (module):
+
+    import jc.parsers.ini
+    result = jc.parsers.ini.parse(ini_file_output)
 
 Compatibility:
 

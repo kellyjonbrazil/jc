@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility systemctl-luf Parser
 
-Usage:
+Usage (cli):
 
     specify --systemctl-luf as the first argument if the piped input is coming from systemctl list-unit-files
+
+Usage (module):
+
+    import jc.parsers.systemctl_luf
+    result = jc.parsers.systemctl_luf.parse(systemctl_luf_command_output)
 
 Compatibility:
 

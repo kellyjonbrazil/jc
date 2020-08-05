@@ -2,12 +2,17 @@
 # jc.parsers.csv
 jc - JSON CLI output utility csv Parser
 
-Usage:
+Usage (cli):
 
     specify --csv as the first argument if the piped input is coming from a csv file.
     the csv parser will attempt to automatically detect the delimiter character.
     if the delimiter cannot be detected it will default to comma.
     the first row of the file must be a header row.
+
+Usage (module):
+
+    import jc.parsers.csv
+    result = jc.parsers.csv.parse(csv_output)
 
 Compatibility:
 

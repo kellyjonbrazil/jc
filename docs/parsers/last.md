@@ -2,9 +2,14 @@
 # jc.parsers.last
 jc - JSON CLI output utility last Parser
 
-Usage:
+Usage (cli):
 
     specify --last as the first argument if the piped input is coming from last or lastb
+
+Usage (module):
+
+    import jc.parsers.last
+    result = jc.parsers.last.parse(last_command_output)
 
 Compatibility:
 

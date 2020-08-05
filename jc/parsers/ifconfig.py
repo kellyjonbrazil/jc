@@ -1,10 +1,15 @@
 """jc - JSON CLI output utility ifconfig Parser
 
-Usage:
+Usage (cli):
 
     specify --ifconfig as the first argument if the piped input is coming from ifconfig
 
     no ifconfig options are supported.
+
+Usage (module):
+
+    import jc.parsers.ifconfig
+    result = jc.parsers.ifconfig.parse(ifconfig_command_output)
 
 Compatibility:
 

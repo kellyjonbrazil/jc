@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility /etc/gshadow file Parser
 
-Usage:
+Usage (cli):
 
     specify --gshadow as the first argument if the piped input is coming from /etc/gshadow
+
+Usage (module):
+
+    import jc.parsers.gshadow
+    result = jc.parsers.gshadow.parse(gshadow_file_output)
 
 Compatibility:
 

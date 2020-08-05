@@ -2,9 +2,14 @@
 # jc.parsers.netstat
 jc - JSON CLI output utility netstat Parser
 
-Usage:
+Usage (cli):
 
     Specify --netstat as the first argument if the piped input is coming from netstat
+
+Usage (module):
+
+    import jc.parsers.netstat
+    result = jc.parsers.netstat.parse(netstat_command_output)
 
 Caveats:
 

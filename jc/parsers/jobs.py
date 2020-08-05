@@ -1,10 +1,15 @@
 """jc - JSON CLI output utility jobs Parser
 
-Usage:
+Usage (cli):
 
     specify --jobs as the first argument if the piped input is coming from jobs
 
     Also supports the -l option
+
+Usage (module):
+
+    import jc.parsers.jobs
+    result = jc.parsers.jobs.parse(jobs_command_output)
 
 Compatibility:
 

@@ -2,11 +2,16 @@
 # jc.parsers.who
 jc - JSON CLI output utility who Parser
 
-Usage:
+Usage (cli):
 
     specify --who as the first argument if the piped input is coming from who
 
     accepts any of the following who options (or no options): -aTH
+
+Usage (module):
+
+    import jc.parsers.who
+    result = jc.parsers.who.parse(who_command_output)
 
 Compatibility:
 

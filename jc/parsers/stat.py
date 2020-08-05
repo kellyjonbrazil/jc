@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility stat Parser
 
-Usage:
+Usage (cli):
 
     specify --stat as the first argument if the piped input is coming from stat
+
+Usage (module):
+
+    import jc.parsers.stat
+    result = jc.parsers.stat.parse(stat_command_output)
 
 Compatibility:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility timedatectl Parser
 
-Usage:
+Usage (cli):
 
     specify --timedatectl as the first argument if the piped input is coming from timedatectl or timedatectl status
+
+Usage (module):
+
+    import jc.parsers.timedatectl
+    result = jc.parsers.timedatectl.parse(timedatectl_command_output)
 
 Compatibility:
 

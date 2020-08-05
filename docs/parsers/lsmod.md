@@ -2,9 +2,14 @@
 # jc.parsers.lsmod
 jc - JSON CLI output utility lsmod Parser
 
-Usage:
+Usage (cli):
 
     specify --lsmod as the first argument if the piped input is coming from lsmod
+
+Usage (module):
+
+    import jc.parsers.lsmod
+    result = jc.parsers.lsmod.parse(lsmod_command_output)
 
 Compatibility:
 

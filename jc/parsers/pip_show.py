@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility pip-show Parser
 
-Usage:
+Usage (cli):
 
     specify --pip-show as the first argument if the piped input is coming from pip show
+
+Usage (module):
+
+    import jc.parsers.pip_show
+    result = jc.parsers.pip_show.parse(pip_show_command_output)
 
 Compatibility:
 

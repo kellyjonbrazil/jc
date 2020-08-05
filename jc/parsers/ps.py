@@ -1,12 +1,17 @@
 """jc - JSON CLI output utility ps Parser
 
-Usage:
+Usage (cli):
 
     specify --ps as the first argument if the piped input is coming from ps
 
     ps options supported:
     - ef
     - axu
+
+Usage (module):
+
+    import jc.parsers.ps
+    result = jc.parsers.ps.parse(ps_command_output)
 
 Compatibility:
 

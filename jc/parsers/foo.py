@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility foo Parser
 
-Usage:
+Usage (cli):
 
     specify --foo as the first argument if the piped input is coming from foo
+
+Usage (module):
+
+    import jc.parsers.foo
+    result = jc.parsers.foo.parse(foo_command_output)
 
 Compatibility:
 

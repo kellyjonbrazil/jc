@@ -2,9 +2,14 @@
 # jc.parsers.shadow
 jc - JSON CLI output utility /etc/shadow file Parser
 
-Usage:
+Usage (cli):
 
     specify --shadow as the first argument if the piped input is coming from /etc/shadow
+
+Usage (module):
+
+    import jc.parsers.shadow
+    result = jc.parsers.shadow.parse(shadow_file_output)
 
 Compatibility:
 

@@ -2,9 +2,14 @@
 # jc.parsers.du
 jc - JSON CLI output utility du Parser
 
-Usage:
+Usage (cli):
 
     specify --du as the first argument if the piped input is coming from du
+
+Usage (module):
+
+    import jc.parsers.du
+    result = jc.parsers.du.parse(du_command_output)
 
 Compatibility:
 

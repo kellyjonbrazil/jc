@@ -2,9 +2,14 @@
 # jc.parsers.pip_list
 jc - JSON CLI output utility pip-list Parser
 
-Usage:
+Usage (cli):
 
     specify --pip-list as the first argument if the piped input is coming from pip list
+
+Usage (module):
+
+    import jc.parsers.pip_list
+    result = jc.parsers.pip_list.parse(pip_list_command_output)
 
 Compatibility:
 

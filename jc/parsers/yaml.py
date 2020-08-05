@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility YAML Parser
 
-Usage:
+Usage (cli):
 
     specify --yaml as the first argument if the piped input is coming from a YAML file
+
+Usage (module):
+
+    import jc.parsers.yaml
+    result = jc.parsers.yaml.parse(yaml_file_output)
 
 Compatibility:
 

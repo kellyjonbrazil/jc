@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility free Parser
 
-Usage:
+Usage (cli):
 
     specify --free as the first argument if the piped input is coming from free
+
+Usage (module):
+
+    import jc.parsers.free
+    result = jc.parsers.free.parse(free_command_output)
 
 Compatibility:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility ntpq Parser
 
-Usage:
+Usage (cli):
 
     specify --ntpq as the first argument if the piped input is coming from ntpq -p
+
+Usage (module):
+
+    import jc.parsers.ntpq
+    result = jc.parsers.ntpq.parse(ntpq_command_output)
 
 Compatibility:
 

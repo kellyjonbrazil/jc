@@ -2,9 +2,14 @@
 # jc.parsers.dmidecode
 jc - JSON CLI output utility dmidecode Parser
 
-Usage:
+Usage (cli):
 
     specify --dmidecode as the first argument if the piped input is coming from dmidecode
+
+Usage (module):
+
+    import jc.parsers.dmidecode
+    result = jc.parsers.dmidecode.parse(dmidecode_command_output)
 
 Compatibility:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility /etc/passwd file Parser
 
-Usage:
+Usage (cli):
 
     specify --passwd as the first argument if the piped input is coming from /etc/passwd
+
+Usage (module):
+
+    import jc.parsers.passwd
+    result = jc.parsers.passwd.parse(passwd_file_output)
 
 Compatibility:
 

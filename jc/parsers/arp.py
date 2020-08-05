@@ -1,12 +1,17 @@
 """jc - JSON CLI output utility arp Parser
 
-Usage:
+Usage (cli):
 
     specify --arp as the first argument if the piped input is coming from:
 
     arp
       or
     arp -a
+
+Usage (module):
+
+    import jc.parsers.arp
+    result = jc.parsers.arp.parse(arp_command_output)
 
 Compatibility:
 

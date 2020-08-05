@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility file command Parser
 
-Usage:
+Usage (cli):
 
     specify --file as the first argument if the piped input is coming from file.
+
+Usage (module):
+
+    import jc.parsers.file
+    result = jc.parsers.file.parse(file_command_output)
 
 Compatibility:
 

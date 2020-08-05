@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility systemctl-ls Parser
 
-Usage:
+Usage (cli):
 
     specify --systemctl-ls as the first argument if the piped input is coming from systemctl list-sockets
+
+Usage (module):
+
+    import jc.parsers.systemctl_ls
+    result = jc.parsers.systemctl_ls.parse(systemctl_ls_command_output)
 
 Compatibility:
 

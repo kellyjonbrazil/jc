@@ -2,12 +2,17 @@
 # jc.parsers.airport
 jc - JSON CLI output utility airport -I Parser
 
-Usage:
+Usage (cli):
 
     specify --airport as the first argument if the piped input is coming from airport -I (OSX)
 
     This program can be found at:
     /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport
+
+Usage (module):
+
+    import jc.parsers.airport
+    result = jc.parsers.airport.parse(airport_command_output)
 
 Compatibility:
 

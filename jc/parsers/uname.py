@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility uname Parser
 
-Usage:
+Usage (cli):
 
-    specify --uname as the first argument if the piped input is coming from uname
+    specify --uname as the first argument if the piped input is coming from uname -a
+
+Usage (module):
+
+    import jc.parsers.uname
+    result = jc.parsers.uname.parse(uname_command_output)
 
 Limitations:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility dig Parser
 
-Usage:
+Usage (cli):
 
     Specify --dig as the first argument if the piped input is coming from dig
+
+Usage (module):
+
+    import jc.parsers.dig
+    result = jc.parsers.dig.parse(dig_command_output)
 
 Compatibility:
 

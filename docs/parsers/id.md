@@ -2,9 +2,14 @@
 # jc.parsers.id
 jc - JSON CLI output utility id Parser
 
-Usage:
+Usage (cli):
 
     specify --id as the first argument if the piped input is coming from id
+
+Usage (module):
+
+    import jc.parsers.id
+    result = jc.parsers.id.parse(id_command_output)
 
 Compatibility:
 

@@ -2,11 +2,16 @@
 # jc.parsers.kv
 jc - JSON CLI output utility Key/Value File Parser
 
-Usage:
+Usage (cli):
 
     Specify --kv as the first argument if the piped input is coming from a simple
     key/value pair file. Delimiter can be '=' or ':'. Missing values are supported.
     Comment prefix can be '#' or ';'. Comments must be on their own line.
+
+Usage (module):
+
+    import jc.parsers.kv
+    result = jc.parsers.kv.parse(kv_file_output)
 
 Compatibility:
 

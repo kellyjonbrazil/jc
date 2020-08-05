@@ -1,10 +1,15 @@
 """jc - JSON CLI output utility ping Parser
 
-Usage:
+Usage (cli):
 
     specify --ping as the first argument if the piped input is coming from ping
 
     Note:  Use the ping -c (count) option, otherwise data will not be piped to jc.
+
+Usage (module):
+
+    import jc.parsers.ping
+    result = jc.parsers.ping.parse(ping_command_output)
 
 Compatibility:
 

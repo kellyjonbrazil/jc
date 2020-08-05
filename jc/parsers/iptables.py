@@ -1,10 +1,15 @@
 """jc - JSON CLI output utility ipables Parser
 
-Usage:
+Usage (cli):
 
     Specify --iptables as the first argument if the piped input is coming from iptables
 
     Supports -vLn and --line-numbers for all tables
+
+Usage (module):
+
+    import jc.parsers.iptables
+    result = jc.parsers.iptables.parse(iptables_command_output)
 
 Compatibility:
 

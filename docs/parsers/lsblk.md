@@ -2,9 +2,14 @@
 # jc.parsers.lsblk
 jc - JSON CLI output utility lsblk Parser
 
-Usage:
+Usage (cli):
 
     specify --lsblk as the first argument if the piped input is coming from lsblk
+
+Usage (module):
+
+    import jc.parsers.lsblk
+    result = jc.parsers.lsblk.parse(lsblk_command_output)
 
 Compatibility:
 

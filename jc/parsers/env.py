@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility env Parser
 
-Usage:
+Usage (cli):
 
     specify --env as the first argument if the piped input is coming from env
+
+Usage (module):
+
+    import jc.parsers.env
+    result = jc.parsers.env.parse(env_command_output)
 
 Compatibility:
 

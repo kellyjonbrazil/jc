@@ -2,13 +2,18 @@
 # jc.parsers.sysctl
 jc - JSON CLI output utility sysctl -a Parser
 
-Usage:
+Usage (cli):
 
     specify --sysctl as the first argument if the piped input is coming from sysctl -a
 
     Note: since sysctl output is not easily parsable only a very simple key/value object
           will be output. An attempt is made to convert obvious integers and floats. If no
           conversion is desired, use the -r (raw) option.
+
+Usage (module):
+
+    import jc.parsers.sysctl
+    result = jc.parsers.sysctl.parse(sysctl_command_output)
 
 Compatibility:
 

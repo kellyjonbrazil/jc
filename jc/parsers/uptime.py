@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility uptime Parser
 
-Usage:
+Usage (cli):
 
     specify --uptime as the first argument if the piped input is coming from uptime
+
+Usage (module):
+
+    import jc.parsers.uptime
+    result = jc.parsers.uptime.parse(uptime_command_output)
 
 Compatibility:
 

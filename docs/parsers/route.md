@@ -2,9 +2,14 @@
 # jc.parsers.route
 jc - JSON CLI output utility route Parser
 
-Usage:
+Usage (cli):
 
     specify --route as the first argument if the piped input is coming from route
+
+Usage (module):
+
+    import jc.parsers.route
+    result = jc.parsers.route.parse(route_command_output)
 
 Compatibility:
 

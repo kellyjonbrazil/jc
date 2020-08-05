@@ -6,7 +6,7 @@ Note: The -l or -b option of ls should be used to correctly parse filenames that
       Since ls does not encode newlines in filenames when outputting to a pipe it will cause jc to see
       multiple files instead of a single file if -l or -b is not used.
 
-Usage:
+Usage (cli):
 
     specify --ls as the first argument if the piped input is coming from ls
 
@@ -17,6 +17,11 @@ Usage:
                        -h  file sizes will be available in text form with -r but larger file sizes
                                with human readable suffixes will be converted to Null in default view
                                since the parser attempts to convert this field to an integer.
+
+Usage (module):
+
+    import jc.parsers.ls
+    result = jc.parsers.ls.parse(ls_command_output)
 
 Compatibility:
 

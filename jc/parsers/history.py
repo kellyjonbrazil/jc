@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility history Parser
 
-Usage:
+Usage (cli):
 
     specify --history as the first argument if the piped input is coming from history
+
+Usage (module):
+
+    import jc.parsers.history
+    result = jc.parsers.history.parse(history_command_output)
 
 Compatibility:
 

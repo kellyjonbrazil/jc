@@ -1,6 +1,6 @@
 """jc - JSON CLI output utility traceroute Parser
 
-Usage:
+Usage (cli):
 
     specify --traceroute as the first argument if the piped input is coming from traceroute
 
@@ -9,6 +9,11 @@ Usage:
           STDERR if the header row is not found.
 
           e.g. $ traceroute 8.8.8.8 2>&1 | jc --traceroute
+
+Usage (module):
+
+    import jc.parsers.traceroute
+    result = jc.parsers.traceroute.parse(traceroute_command_output)
 
 Compatibility:
 

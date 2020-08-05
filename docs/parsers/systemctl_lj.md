@@ -2,9 +2,14 @@
 # jc.parsers.systemctl_lj
 jc - JSON CLI output utility systemctl-lj Parser
 
-Usage:
+Usage (cli):
 
     specify --systemctl-lj as the first argument if the piped input is coming from systemctl list-jobs
+
+Usage (module):
+
+    import jc.parsers.systemctl_lj
+    result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
 
 Compatibility:
 

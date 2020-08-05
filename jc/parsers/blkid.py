@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility blkid Parser
 
-Usage:
+Usage (cli):
 
     specify --blkid as the first argument if the piped input is coming from blkid
+
+Usage (module):
+
+    import jc.parsers.blkid
+    result = jc.parsers.blkid.parse(blkid_command_output)
 
 Compatibility:
 

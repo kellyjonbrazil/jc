@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility lsof Parser
 
-Usage:
+Usage (cli):
 
     specify --lsof as the first argument if the piped input is coming from lsof
+
+Usage (module):
+
+    import jc.parsers.lsof
+    result = jc.parsers.lsof.parse(lsof_command_output)
 
 Compatibility:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility date Parser
 
-Usage:
+Usage (cli):
 
     specify --date as the first argument if the piped input is coming from date
+
+Usage (module):
+
+    import jc.parsers.date
+    result = jc.parsers.date.parse(date_command_output)
 
 Compatibility:
 

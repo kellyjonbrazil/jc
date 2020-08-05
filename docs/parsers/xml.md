@@ -2,9 +2,14 @@
 # jc.parsers.xml
 jc - JSON CLI output utility XML Parser
 
-Usage:
+Usage (cli):
 
     specify --xml as the first argument if the piped input is coming from an XML file
+
+Usage (module):
+
+    import jc.parsers.xml
+    result = jc.parsers.xml.parse(xml_file_output)
 
 Compatibility:
 

@@ -2,9 +2,14 @@
 # jc.parsers.w
 jc - JSON CLI output utility w Parser
 
-Usage:
+Usage (cli):
 
     specify --w as the first argument if the piped input is coming from w
+
+Usage (module):
+
+    import jc.parsers.w
+    result = jc.parsers.w.parse(w_command_output)
 
 Compatibility:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility df Parser
 
-Usage:
+Usage (cli):
 
     specify --df as the first argument if the piped input is coming from df
+
+Usage (module):
+
+    import jc.parsers.df
+    result = jc.parsers.df.parse(df_command_output)
 
 Compatibility:
 

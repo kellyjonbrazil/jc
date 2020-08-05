@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility tracepath Parser
 
-Usage:
+Usage (cli):
 
     specify --tracepath as the first argument if the piped input is coming from tracepath
+
+Usage (module):
+
+    import jc.parsers.tracepath
+    result = jc.parsers.tracepath.parse(tracepath_command_output)
 
 Compatibility:
 

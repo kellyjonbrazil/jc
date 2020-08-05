@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility ss Parser
 
-Usage:
+Usage (cli):
 
     specify --ss as the first argument if the piped input is coming from ss
+
+Usage (module):
+
+    import jc.parsers.ss
+    result = jc.parsers.ss.parse(ss_command_output)
 
 Limitations:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility mount Parser
 
-Usage:
+Usage (cli):
 
     specify --mount as the first argument if the piped input is coming from mount
+
+Usage (module):
+
+    import jc.parsers.mount
+    result = jc.parsers.mount.parse(mount_command_output)
 
 Compatibility:
 

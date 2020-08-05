@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility /etc/group file Parser
 
-Usage:
+Usage (cli):
 
     specify --group as the first argument if the piped input is coming from /etc/group
+
+Usage (module):
+
+    import jc.parsers.group
+    result = jc.parsers.group.parse(group_file_output)
 
 Compatibility:
 

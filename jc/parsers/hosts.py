@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility hosts Parser
 
-Usage:
+Usage (cli):
 
     specify --hosts as the first argument if the piped input is coming from a hosts file
+
+Usage (module):
+
+    import jc.parsers.hosts
+    result = jc.parsers.hosts.parse(hosts_file_output)
 
 Compatibility:
 

@@ -1,8 +1,13 @@
 """jc - JSON CLI output utility fstab Parser
 
-Usage:
+Usage (cli):
 
     specify --fstab as the first argument if the piped input is coming from a fstab file
+
+Usage (module):
+
+    import jc.parsers.fstab
+    result = jc.parsers.fstab.parse(fstab_command_output)
 
 Compatibility:
 

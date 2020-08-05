@@ -2,9 +2,14 @@
 # jc.parsers.crontab_u
 jc - JSON CLI output utility crontab file Parser
 
-Usage:
+Usage (cli):
 
     specify --crontab-u as the first argument if the piped input is coming from a crontab file with User specified
+
+Usage (module):
+
+    import jc.parsers.crontab_u
+    result = jc.parsers.crontab_u.parse(crontab_u_output)
 
 Compatibility:
 
