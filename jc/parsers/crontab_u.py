@@ -1,8 +1,10 @@
-"""jc - JSON CLI output utility crontab file Parser
+"""jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+
+This version of the `crontab -l` parser supports output that contains user information for processes.
 
 Usage (cli):
 
-    specify --crontab-u as the first argument if the piped input is coming from a crontab file with User specified
+    $ crontab -l | jc --crontab-u
 
 Usage (module):
 

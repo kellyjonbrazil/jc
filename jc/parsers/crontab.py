@@ -1,8 +1,14 @@
-"""jc - JSON CLI output utility crontab command and file Parser
+"""jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+
+Supports `crontab -l` command output and crontab files.
 
 Usage (cli):
 
-    specify --crontab as the first argument if the piped input is coming from crontab -l or a crontab file
+    $ crontab -l | jc --crontab
+
+    or
+
+    $ jc crontab -l
 
 Usage (module):
 

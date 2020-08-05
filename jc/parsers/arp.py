@@ -1,12 +1,14 @@
-"""jc - JSON CLI output utility arp Parser
+"""jc - JSON CLI output utility `arp` command output parser
+
+Supports `arp` and `arp -a` output.
 
 Usage (cli):
 
-    specify --arp as the first argument if the piped input is coming from:
+    $ arp | jc --arp
 
-    arp
-      or
-    arp -a
+    or
+
+    $ jc arp
 
 Usage (module):
 

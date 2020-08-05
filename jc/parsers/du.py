@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility du Parser
+"""jc - JSON CLI output utility `du` command output parser
 
 Usage (cli):
 
-    specify --du as the first argument if the piped input is coming from du
+    $ du | jc --du
+
+    or
+
+    $ jc du
 
 Usage (module):
 

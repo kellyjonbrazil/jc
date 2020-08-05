@@ -1,8 +1,14 @@
-"""jc - JSON CLI output utility foo Parser
+"""jc - JSON CLI output utility `foo` command output parser
+
+<<Short foo description and caveats>>
 
 Usage (cli):
 
-    specify --foo as the first argument if the piped input is coming from foo
+    $ foo | jc --foo
+
+    or
+
+    $ jc foo
 
 Usage (module):
 

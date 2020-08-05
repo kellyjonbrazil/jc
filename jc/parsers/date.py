@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility date Parser
+"""jc - JSON CLI output utility `date` command output parser
 
 Usage (cli):
 
-    specify --date as the first argument if the piped input is coming from date
+    $ date | jc --date
+
+    or
+
+    $ jc date
 
 Usage (module):
 

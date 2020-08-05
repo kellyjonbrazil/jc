@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility blkid Parser
+"""jc - JSON CLI output utility `blkid` command output parser
 
 Usage (cli):
 
-    specify --blkid as the first argument if the piped input is coming from blkid
+    $ blkid | jc --blkid
+
+    or
+
+    $ jc blkid
 
 Usage (module):
 

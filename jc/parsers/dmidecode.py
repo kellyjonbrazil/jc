@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility dmidecode Parser
+"""jc - JSON CLI output utility `dmidecode` command output parser
 
 Usage (cli):
 
-    specify --dmidecode as the first argument if the piped input is coming from dmidecode
+    $ dmidecode | jc --dmidecode
+
+    or
+
+    $ jc dmidecode
 
 Usage (module):
 

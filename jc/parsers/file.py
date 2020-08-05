@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility file command Parser
+"""jc - JSON CLI output utility `file` command output parser
 
 Usage (cli):
 
-    specify --file as the first argument if the piped input is coming from file.
+    $ file * | jc --file
+
+    or
+
+    $ jc file *
 
 Usage (module):
 

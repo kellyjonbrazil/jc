@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility env Parser
+"""jc - JSON CLI output utility `env` command output parser
 
 Usage (cli):
 
-    specify --env as the first argument if the piped input is coming from env
+    $ env | jc --env
+
+    or
+
+    $ jc env
 
 Usage (module):
 
