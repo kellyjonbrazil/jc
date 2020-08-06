@@ -4,7 +4,7 @@ jc - JSON CLI output utility `XML` file parser
 
 Usage (cli):
 
-    $ cat foo.xml| jc --xml
+    $ cat foo.xml | jc --xml
 
 Usage (module):
 
