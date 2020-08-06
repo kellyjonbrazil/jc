@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `env` command output parser
 
+This parser will output a list of dictionaries each containing `name` and `value` keys. If you would like a simple dictionary output, then use the `-r` command-line option or the `raw=True` argument in the `parse()` function.
+
 Usage (cli):
 
     $ env | jc --env
