@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `uname -a` command output parser
 
+Note: Must use `uname -a`
+
 Usage (cli):
 
     $ uname -a | jc --uname
@@ -12,10 +14,6 @@ Usage (module):
 
     import jc.parsers.uname
     result = jc.parsers.uname.parse(uname_command_output)
-
-Limitations:
-
-    must use 'uname -a'
 
 Compatibility:
 
