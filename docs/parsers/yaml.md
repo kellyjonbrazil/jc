@@ -4,7 +4,7 @@ jc - JSON CLI output utility `YAML` file parser
 
 Usage (cli):
 
-  $ cat foo.yaml| jc --yaml
+    $ cat foo.yaml| jc --yaml
 
 Usage (module):
 
