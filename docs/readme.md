@@ -6,6 +6,8 @@ JC - JSON CLI output utility
 
 This package serializes the output of many standard unix command line tools to JSON format.
 
+For documentation on each parser, see https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers.
+
 CLI Example:
 
     $ ls -l /usr/bin | jc --ls -p
