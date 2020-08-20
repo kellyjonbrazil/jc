@@ -100,6 +100,7 @@ pip3 install jc
 | Guix System linux     | `guix install jc`                                                             |
 | MacOS                 | `brew install jc`                                                             |
 | FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
+| Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
 
 > For more packages and binaries, see https://kellyjonbrazil.github.io/jc-packaging/.
 
