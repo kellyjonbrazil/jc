@@ -1,6 +1,8 @@
 ![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
+> JC is [now available](https://galaxy.ansible.com/community/general) as an Ansible filter in the `community.general` Collection! 
+
 # JC
 JSON CLI output utility
 
