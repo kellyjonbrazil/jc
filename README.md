@@ -2,6 +2,7 @@
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
 > Try the `jc` web demo at https://jc-web-demo.herokuapp.com/!
+
 > JC is [now available](https://galaxy.ansible.com/community/general) as an Ansible filter plugin in the `community.general` Collection!
 
 # JC
