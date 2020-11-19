@@ -94,7 +94,7 @@ pip3 install jc
 
 | OS                    | Command                                                                       | 
 |-----------------------|-------------------------------------------------------------------------------|
-| Debian linux          | `apt-get install jc`                                                          |
+| Debian/Ubuntu linux   | `apt-get install jc`                                                          |
 | Fedora linux          | `dnf install jc`                                                              |
 | openSUSE linux        | `zypper install jc`                                                           |
 | Arch linux            | `pacman -S jc`                                                                |
