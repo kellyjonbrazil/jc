@@ -2,6 +2,16 @@
 # jc.parsers.hashsum
 jc - JSON CLI output utility `hash sum` command output parser
 
+This parser works with the following hash calculation programs:
+- `md5`
+- `md5sum`
+- `shasum`
+- `sha1sum`
+- `sha224sum`
+- `sha256sum`
+- `sha384sum`
+- `sha512sum`
+
 Usage (cli):
 
     $ md5sum file.txt | jc --hashsum
