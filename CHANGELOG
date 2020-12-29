@@ -1,5 +1,9 @@
 jc changelog
 
+20201229 v1.14.0
+- Add hashsum parser tested on linux, macos
+- Add python 3.9 to github automation tests
+
 20200805 v1.13.4
 - Update crontab and crontab-u parsers to tighten up variable detection
 - Update ping parser to tighten linux/bsd detection
