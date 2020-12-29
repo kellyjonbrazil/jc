@@ -43,7 +43,7 @@ class MyTests(unittest.TestCase):
 
     def test_hashsum_nodata(self):
         """
-        Test 'hashsum' with no data
+        Test 'hashsum' parser with no data
         """
         self.assertEqual(jc.parsers.hashsum.parse('', quiet=True), [])
 
