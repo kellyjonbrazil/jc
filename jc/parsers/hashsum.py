@@ -2,7 +2,7 @@
 
 Usage (cli):
 
-    $ md5sum | jc --hashsum
+    $ md5sum file.txt | jc --hashsum
 
     or
 
@@ -19,8 +19,34 @@ Compatibility:
 
 Examples:
 
-    $ md5sum file.txt | jc --hashsum -p
-    []
+    $ md5sum * | jc --hashsum -p
+    [
+      {
+        "filename": "devtoolset-3-gcc-4.9.2-6.el7.x86_64.rpm",
+        "hash": "65fc958c1add637ec23c4b137aecf3d3"
+      },
+      {
+        "filename": "digout",
+        "hash": "5b9312ee5aff080927753c63a347707d"
+      },
+      {
+        "filename": "dmidecode.out",
+        "hash": "716fd11c2ac00db109281f7110b8fb9d"
+      },
+      {
+        "filename": "file with spaces in the name",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "filename": "id-centos.out",
+        "hash": "4295be239a14ad77ef3253103de976d2"
+      },
+      {
+        "filename": "ifcfg.json",
+        "hash": "01fda0d9ba9a75618b072e64ff512b43"
+      },
+      ...
+    ]
 """
 import jc.utils
 
@@ -54,14 +80,13 @@ def process(proc_data):
 
         [
           {
-            "md5sum":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "filename":     string,
+            "hash":         string,
           }
         ]
     """
 
-    # rebuild output for added semantic information
+    # no further processing for this parser
     return proc_data
 
 
@@ -89,14 +114,14 @@ def parse(data, raw=False, quiet=False):
         for line in filter(None, data.splitlines()):
             # check for legacy md5 command output
             if line.startswith('MD5 ('):
-                file_hash = line.split('=')[1].strip()
-                file_name = line.split('=')[0].strip()
+                file_hash = line.split('=', maxsplit=1)[1].strip()
+                file_name = line.split('=', maxsplit=1)[0].strip()
                 file_name = file_name[5:]
                 file_name = file_name[:-1]
             # standard md5sum and shasum command output
             else:
-                file_hash = line.split()[0]
-                file_name = line.split()[1]
+                file_hash = line.split(maxsplit=1)[0]
+                file_name = line.split(maxsplit=1)[1]
 
             item = {
                 'filename': file_name,
