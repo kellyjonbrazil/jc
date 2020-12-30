@@ -1,0 +1,4 @@
+hits	command
+   3	/usr/bin/sum
+   2	/usr/bin/cat
+   2	/usr/bin/cksum
