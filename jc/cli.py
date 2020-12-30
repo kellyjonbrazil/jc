@@ -298,7 +298,7 @@ def helptext(message):
             -d               debug - show traceback (-dd for verbose traceback)
             -m               monochrome output
             -p               pretty print output
-            -q               quiet - suppress warnings
+            -q               quiet - suppress parser warnings
             -r               raw JSON output
 
     Example:
