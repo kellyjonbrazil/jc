@@ -122,6 +122,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--airport-s` enables the `airport -s` command parser (OSX)
 - `--arp` enables the `arp` command parser
 - `--blkid` enables the `blkid` command parser
+- `--cksum` enables the `cksum` and `sum` command parser
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
 - `--csv` enables the `CSV` file parser
@@ -136,6 +137,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--fstab` enables the `/etc/fstab` file parser
 - `--group` enables the `/etc/group` file parser
 - `--gshadow` enables the `/etc/gshadow` file parser
+- `--hash` enables the `hash` command parser
+- `--hashsum` enables the `hashsum` command parser (`md5sum`, `shasum`, etc.)
 - `--history` enables the `history` command parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
