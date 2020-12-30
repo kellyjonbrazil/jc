@@ -48,7 +48,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'cksum command and file parser'
+    description = 'cksum command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Parses cksum and sum program output'
