@@ -175,6 +175,29 @@ blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev 
   }
 ]
 ```
+### cksum
+```bash
+cksum * | jc --cksum -p          # or:  jc -p cksum *
+```
+```json
+[
+  {
+    "filename": "__init__.py",
+    "checksum": 4294967295,
+    "blocks": 0
+  },
+  {
+    "filename": "airport.py",
+    "checksum": 2208551092,
+    "blocks": 3745
+  },
+  {
+    "filename": "airport_s.py",
+    "checksum": 1113817598,
+    "blocks": 4572
+  }
+]
+```
 ### crontab
 ```bash
 cat /etc/crontab | jc --crontab -p          # or:  jc -p crontab -l
@@ -840,6 +863,54 @@ cat /etc/gshadow | jc --gshadow -p
       "syslog",
       "joeuser"
     ]
+  }
+]
+```
+### hash
+```bash
+hash | jc --hash -p
+```
+```json
+[
+  {
+    "hits": 2,
+    "command": "/bin/cat"
+  },
+  {
+    "hits": 1,
+    "command": "/bin/ls"
+  }
+]
+```
+### hashsum
+```bash
+md5sum * | jc --hashsum -p           # or:  jc -p md5sum *
+```
+```json
+[
+  {
+    "filename": "devtoolset-3-gcc-4.9.2-6.el7.x86_64.rpm",
+    "hash": "65fc958c1add637ec23c4b137aecf3d3"
+  },
+  {
+    "filename": "digout",
+    "hash": "5b9312ee5aff080927753c63a347707d"
+  },
+  {
+    "filename": "dmidecode.out",
+    "hash": "716fd11c2ac00db109281f7110b8fb9d"
+  },
+  {
+    "filename": "file with spaces in the name",
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  {
+    "filename": "id-centos.out",
+    "hash": "4295be239a14ad77ef3253103de976d2"
+  },
+  {
+    "filename": "ifcfg.json",
+    "hash": "01fda0d9ba9a75618b072e64ff512b43"
   }
 ]
 ```

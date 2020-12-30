@@ -24,6 +24,7 @@ pydocmd simple jc.parsers.free+ > ../docs/parsers/free.md
 pydocmd simple jc.parsers.fstab+ > ../docs/parsers/fstab.md
 pydocmd simple jc.parsers.group+ > ../docs/parsers/group.md
 pydocmd simple jc.parsers.gshadow+ > ../docs/parsers/gshadow.md
+pydocmd simple jc.parsers.hash+ > ../docs/parsers/hash.md
 pydocmd simple jc.parsers.hashsum+ > ../docs/parsers/hashsum.md
 pydocmd simple jc.parsers.history+ > ../docs/parsers/history.md
 pydocmd simple jc.parsers.hosts+ > ../docs/parsers/hosts.md

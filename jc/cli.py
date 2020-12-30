@@ -49,6 +49,7 @@ parsers = [
     'fstab',
     'group',
     'gshadow',
+    'hash',
     'hashsum',
     'history',
     'hosts',
