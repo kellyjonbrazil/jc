@@ -5,6 +5,8 @@ jc changelog
 - Add hash parser tested on linux, macos
 - Add cksum parser tested on linux, macos
 - Add wc parser tested on linux, macos
+- Add printenv support under env parser
+- add vdir support under ls parser
 - Add python 3.9 to github automation tests
 
 20200805 v1.13.4
