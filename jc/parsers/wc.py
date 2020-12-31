@@ -50,11 +50,10 @@ class info():
     description = 'wc command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Parses wc and sum program output'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-    magic_commands = ['wc', 'sum']
+    magic_commands = ['wc']
 
 
 __version__ = info.version
