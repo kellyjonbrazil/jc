@@ -2540,6 +2540,32 @@ w | jc --w -p          # or:  jc -p w
   }
 ]
 ```
+### wc
+```bash
+wc * | jc --wc -p          # or:  jc -p wc *
+```
+```json
+[
+      {
+        "filename": "airport-I.json",
+        "lines": 1,
+        "words": 30,
+        "characters": 307
+      },
+      {
+        "filename": "airport-I.out",
+        "lines": 15,
+        "words": 33,
+        "characters": 348
+      },
+      {
+        "filename": "airport-s.json",
+        "lines": 1,
+        "words": 202,
+        "characters": 2152
+      }
+    ]
+```
 ### who
 ```bash
 who | jc --who -p          # or:  jc -p who

@@ -87,6 +87,7 @@ parsers = [
     'uname',
     'uptime',
     'w',
+    'wc',
     'who',
     'xml',
     'yaml'

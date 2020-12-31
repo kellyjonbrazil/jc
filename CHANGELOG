@@ -4,6 +4,7 @@ jc changelog
 - Add hashsum parser tested on linux, macos
 - Add hash parser tested on linux, macos
 - Add cksum parser tested on linux, macos
+- Add wc parser tested on linux, macos
 - Add python 3.9 to github automation tests
 
 20200805 v1.13.4

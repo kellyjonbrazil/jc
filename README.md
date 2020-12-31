@@ -175,6 +175,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
+- `--wc` enables the `wc` command parser
 - `--who` enables the `who` command parser
 - `--xml` enables the `XML` file parser
 - `--yaml` enables the `YAML` file parser
