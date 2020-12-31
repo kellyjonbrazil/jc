@@ -148,7 +148,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--jobs` enables the `jobs` command parser
 - `--kv` enables the `Key/Value` file parser
 - `--last` enables the `last` and `lastb` command parser
-- `--ls` enables the `ls` command parser
+- `--ls` enables the `ls` and `vdir` command parser
 - `--lsblk` enables the `lsblk` command parser
 - `--lsmod` enables the `lsmod` command parser
 - `--lsof` enables the `lsof` command parser
