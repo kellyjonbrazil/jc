@@ -131,7 +131,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--dig` enables the `dig` command parser
 - `--dmidecode` enables the `dmidecode` command parser
 - `--du` enables the `du` command parser
-- `--env` enables the `env` command parser
+- `--env` enables the `env` and `printenv` command parser
 - `--file` enables the `file` command parser
 - `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
