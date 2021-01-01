@@ -21,7 +21,7 @@ import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.13.4'
+    version = '1.14.0'
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -34,6 +34,7 @@ parsers = [
     'airport-s',
     'arp',
     'blkid',
+    'cksum',
     'crontab',
     'crontab-u',
     'csv',
@@ -48,6 +49,8 @@ parsers = [
     'fstab',
     'group',
     'gshadow',
+    'hash',
+    'hashsum',
     'history',
     'hosts',
     'id',
@@ -84,6 +87,7 @@ parsers = [
     'uname',
     'uptime',
     'w',
+    'wc',
     'who',
     'xml',
     'yaml'
@@ -296,7 +300,7 @@ def helptext(message):
             -d               debug - show traceback (-dd for verbose traceback)
             -m               monochrome output
             -p               pretty print output
-            -q               quiet - suppress warnings
+            -q               quiet - suppress parser warnings
             -r               raw JSON output
 
     Example:

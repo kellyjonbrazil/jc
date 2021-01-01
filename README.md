@@ -122,6 +122,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--airport-s` enables the `airport -s` command parser (OSX)
 - `--arp` enables the `arp` command parser
 - `--blkid` enables the `blkid` command parser
+- `--cksum` enables the `cksum` and `sum` command parser
 - `--crontab` enables the `crontab` command and file parser
 - `--crontab-u` enables the `crontab` file parser with user support
 - `--csv` enables the `CSV` file parser
@@ -130,12 +131,14 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--dig` enables the `dig` command parser
 - `--dmidecode` enables the `dmidecode` command parser
 - `--du` enables the `du` command parser
-- `--env` enables the `env` command parser
+- `--env` enables the `env` and `printenv` command parser
 - `--file` enables the `file` command parser
 - `--free` enables the `free` command parser
 - `--fstab` enables the `/etc/fstab` file parser
 - `--group` enables the `/etc/group` file parser
 - `--gshadow` enables the `/etc/gshadow` file parser
+- `--hash` enables the `hash` command parser
+- `--hashsum` enables the `hashsum` command parser (`md5sum`, `shasum`, etc.)
 - `--history` enables the `history` command parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
@@ -145,7 +148,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--jobs` enables the `jobs` command parser
 - `--kv` enables the `Key/Value` file parser
 - `--last` enables the `last` and `lastb` command parser
-- `--ls` enables the `ls` command parser
+- `--ls` enables the `ls` and `vdir` command parser
 - `--lsblk` enables the `lsblk` command parser
 - `--lsmod` enables the `lsmod` command parser
 - `--lsof` enables the `lsof` command parser
@@ -172,6 +175,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--uname` enables the `uname -a` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
+- `--wc` enables the `wc` command parser
 - `--who` enables the `who` command parser
 - `--xml` enables the `XML` file parser
 - `--yaml` enables the `YAML` file parser

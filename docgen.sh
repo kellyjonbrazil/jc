@@ -9,6 +9,7 @@ pydocmd simple jc.parsers.airport+ > ../docs/parsers/airport.md
 pydocmd simple jc.parsers.airport_s+ > ../docs/parsers/airport_s.md
 pydocmd simple jc.parsers.arp+ > ../docs/parsers/arp.md
 pydocmd simple jc.parsers.blkid+ > ../docs/parsers/blkid.md
+pydocmd simple jc.parsers.cksum+ > ../docs/parsers/cksum.md
 pydocmd simple jc.parsers.crontab+ > ../docs/parsers/crontab.md
 pydocmd simple jc.parsers.crontab_u+ > ../docs/parsers/crontab_u.md
 pydocmd simple jc.parsers.csv+ > ../docs/parsers/csv.md
@@ -23,6 +24,8 @@ pydocmd simple jc.parsers.free+ > ../docs/parsers/free.md
 pydocmd simple jc.parsers.fstab+ > ../docs/parsers/fstab.md
 pydocmd simple jc.parsers.group+ > ../docs/parsers/group.md
 pydocmd simple jc.parsers.gshadow+ > ../docs/parsers/gshadow.md
+pydocmd simple jc.parsers.hash+ > ../docs/parsers/hash.md
+pydocmd simple jc.parsers.hashsum+ > ../docs/parsers/hashsum.md
 pydocmd simple jc.parsers.history+ > ../docs/parsers/history.md
 pydocmd simple jc.parsers.hosts+ > ../docs/parsers/hosts.md
 pydocmd simple jc.parsers.id+ > ../docs/parsers/id.md
