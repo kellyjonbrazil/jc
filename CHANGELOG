@@ -1,6 +1,6 @@
 jc changelog
 
-20201229 v1.14.0
+20201231 v1.14.0
 - Add hashsum parser tested on linux, macos
 - Add hash parser tested on linux, macos
 - Add cksum parser tested on linux, macos
