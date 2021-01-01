@@ -62,6 +62,7 @@ pydocmd simple jc.parsers.traceroute+ > ../docs/parsers/traceroute.md
 pydocmd simple jc.parsers.uname+ > ../docs/parsers/uname.md
 pydocmd simple jc.parsers.uptime+ > ../docs/parsers/uptime.md
 pydocmd simple jc.parsers.w+ > ../docs/parsers/w.md
+pydocmd simple jc.parsers.wc+ > ../docs/parsers/wc.md
 pydocmd simple jc.parsers.who+ > ../docs/parsers/who.md
 pydocmd simple jc.parsers.xml+ > ../docs/parsers/xml.md
 pydocmd simple jc.parsers.yaml+ > ../docs/parsers/yaml.md
