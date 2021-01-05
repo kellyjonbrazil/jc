@@ -1,5 +1,11 @@
 """jc - JSON CLI output utility `last` and `lastb` command output parser
 
+Supports:
+- `last`
+- `last -F`
+- `lastb`
+- `lastb -F`
+
 Usage (cli):
 
     $ last | jc --last
@@ -81,7 +87,7 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'last and lastb command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -187,13 +193,25 @@ def parse(data, raw=False, quiet=False):
             output_line['user'] = linedata[0]
             output_line['tty'] = linedata[1]
             output_line['hostname'] = linedata[2]
-            output_line['login'] = ' '.join(linedata[3:7])
 
-            if len(linedata) > 8:
-                output_line['logout'] = linedata[8]
+            # last -F support
+            if re.match(r'\d\d:\d\d:\d\d \d\d\d\d', ' '.join(linedata[6:8])):
+                output_line['login'] = ' '.join(linedata[3:8])
 
-            if len(linedata) > 9:
-                output_line['duration'] = linedata[9].replace('(', '').replace(')', '')
+                if len(linedata) > 9:
+                    output_line['logout'] = ' '.join(linedata[9:14])
+
+                if len(linedata) > 14:
+                    output_line['duration'] = linedata[14].replace('(', '').replace(')', '')
+            
+            else:
+                output_line['login'] = ' '.join(linedata[3:7])
+
+                if len(linedata) > 8:
+                    output_line['logout'] = linedata[8]
+
+                if len(linedata) > 9:
+                    output_line['duration'] = linedata[9].replace('(', '').replace(')', '')
 
             raw_output.append(output_line)
 
