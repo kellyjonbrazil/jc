@@ -1,10 +1,6 @@
 """jc - JSON CLI output utility `last` and `lastb` command output parser
 
-Supports:
-- `last`
-- `last -F`
-- `lastb`
-- `lastb -F`
+Supports -w and -F options.
 
 Usage (cli):
 

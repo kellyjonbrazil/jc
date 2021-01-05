@@ -1,7 +1,6 @@
 jc changelog
 
-20210104 v1.14.1
-- Add wi scan parser
+20210105 v1.14.1
 - Update date parser for support Ubuntu 20.04
 - Update last parser for last -F support
 - Update man page

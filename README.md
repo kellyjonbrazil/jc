@@ -138,7 +138,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--group` enables the `/etc/group` file parser
 - `--gshadow` enables the `/etc/gshadow` file parser
 - `--hash` enables the `hash` command parser
-- `--hashsum` enables the `hashsum` command parser (`md5sum`, `shasum`, etc.)
+- `--hashsum` enables the `hashsum` command parser (`md5`, `md5sum`, `shasum`, `sha1sum`, `sha224sum`, `sha256sum`, `sha384sum`, `sha512sum`)
 - `--history` enables the `history` command parser
 - `--hosts` enables the `/etc/hosts` file parser
 - `--id` enables the `id` command parser
