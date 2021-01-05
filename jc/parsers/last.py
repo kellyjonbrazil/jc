@@ -203,7 +203,8 @@ def parse(data, raw=False, quiet=False):
 
                 if len(linedata) > 14:
                     output_line['duration'] = linedata[14].replace('(', '').replace(')', '')
-            
+
+            # normal last support
             else:
                 output_line['login'] = ' '.join(linedata[3:7])
 

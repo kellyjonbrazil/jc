@@ -37,6 +37,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.out'), 'r', encoding='utf-8') as f:
             self.freebsd12_last = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/last-F.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_4_last_F = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_last_json = json.loads(f.read())
@@ -64,6 +67,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_last_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/last-F.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_4_last_F_json = json.loads(f.read())
 
     def test_last_nodata(self):
         """
@@ -112,6 +118,12 @@ class MyTests(unittest.TestCase):
         Test 'last -w' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.last.parse(self.ubuntu_18_4_last_w, quiet=True), self.ubuntu_18_4_last_w_json)
+
+    def test_last_F_ubuntu_20_4(self):
+        """
+        Test 'last -F' on Ubuntu 20.4
+        """
+        self.assertEqual(jc.parsers.last.parse(self.ubuntu_20_4_last_F, quiet=True), self.ubuntu_20_4_last_F_json)
 
     def test_last_fedora32(self):
         """
