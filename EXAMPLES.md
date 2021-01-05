@@ -412,6 +412,7 @@ date | jc --date -p          # or:  jc -p date
   "hour": 16,
   "minute": 48,
   "second": 11,
+  "period": null,
   "month": "Jul",
   "weekday": "Fri",
   "weekday_num": 6,
