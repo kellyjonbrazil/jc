@@ -1,5 +1,11 @@
 jc changelog
 
+20210104 v1.14.1
+- Add wi scan parser
+- Update date parser for support Ubuntu 20.04
+- Update man page
+- Minor documentation updates
+
 20201231 v1.14.0
 - Add hashsum parser tested on linux, macos
 - Add hash parser tested on linux, macos
