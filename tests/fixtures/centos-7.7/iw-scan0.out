@@ -1,0 +1,36 @@
+BSS 00:19:a9:cd:c6:80 (on wlan0)
+    TSF: 2984923701 usec (0d, 00:49:44)
+    freq: 2412
+    beacon interval: 100
+    capability: ESS ShortPreamble ShortSlotTime (0x0421)
+    signal: -45.00 dBm
+    last seen: 429 ms ago
+    SSID: Cisco1240
+    Supported rates: 1.0* 2.0* 5.5* 6.0 9.0 11.0* 12.0 18.0 
+    DS Parameter set: channel 1
+    ERP: <no flags>
+    Extended supported rates: 24.0 36.0 48.0 54.0 
+    WMM:     * Parameter version 1
+         * u-APSD
+         * BE: CW 15-1023, AIFSN 3
+         * BK: CW 15-1023, AIFSN 7
+         * VI: CW 7-15, AIFSN 2, TXOP 3008 usec
+         * VO: CW 3-7, AIFSN 2, TXOP 1504 usec
+BSS d0:d0:fd:69:ca:70 (on wlan0)
+    TSF: 2968648942 usec (0d, 00:49:28)
+    freq: 2462
+    beacon interval: 102
+    capability: ESS ShortPreamble ShortSlotTime (0x0421)
+    signal: -70.00 dBm
+    last seen: 328 ms ago
+    SSID: Cisco1250
+    Supported rates: 1.0* 2.0* 5.5* 6.0 9.0 11.0* 12.0 18.0 
+    DS Parameter set: channel 11
+    ERP: <no flags>
+    Extended supported rates: 24.0 36.0 48.0 54.0 
+    WMM:     * Parameter version 1
+         * u-APSD
+         * BE: CW 15-1023, AIFSN 3
+         * BK: CW 15-1023, AIFSN 7
+         * VI: CW 7-15, AIFSN 2, TXOP 3008 usec
+         * VO: acm CW 3-7, AIFSN 2, TXOP 1504 usec
