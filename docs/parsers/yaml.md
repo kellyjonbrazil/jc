@@ -89,11 +89,11 @@ Final processing to conform to the schema.
 
 Parameters:
 
-    proc_data:   (dictionary) raw structured data to process
+    proc_data:   (List of Dictionaries) raw structured data to process
 
 Returns:
 
-    List of dictionaries. Each dictionary represents a YAML document:
+    List of Dictionaries. Each dictionary represents a YAML document:
 
     [
       {
@@ -118,5 +118,5 @@ Parameters:
 
 Returns:
 
-    List of dictionaries. Raw or processed structured data.
+    List of Dictionaries representing the YAML documents.
 

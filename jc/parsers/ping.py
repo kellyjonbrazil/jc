@@ -5,7 +5,7 @@ Supports `ping` and `ping6` output.
 Usage (cli):
 
     Note:  Use the ping `-c` (count) option, otherwise data will not be piped to `jc`.
-    
+
     $ ping -c 3 1.2.3.4 | jc --ping
 
     or
@@ -138,7 +138,7 @@ def process(proc_data):
 
     Parameters:
 
-        proc_data:   (dictionary) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
