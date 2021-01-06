@@ -109,6 +109,7 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
 
 
@@ -310,7 +311,7 @@ def parse(data, raw=False, quiet=False):
 
                 continue
 
-            if line.startswith('    '):
+            if re.match(r"^\s+.+", line):
                 # ignore problematic lines
                 if 'Maximum RX AMPDU length' in line:
                     continue
