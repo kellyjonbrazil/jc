@@ -32,6 +32,7 @@ pydocmd simple jc.parsers.id+ > ../docs/parsers/id.md
 pydocmd simple jc.parsers.ifconfig+ > ../docs/parsers/ifconfig.md
 pydocmd simple jc.parsers.ini+ > ../docs/parsers/ini.md
 pydocmd simple jc.parsers.iptables+ > ../docs/parsers/iptables.md
+pydocmd simple jc.parsers.iw_scan+ > ../docs/parsers/iw_scan.md
 pydocmd simple jc.parsers.jobs+ > ../docs/parsers/jobs.md
 pydocmd simple jc.parsers.kv+ > ../docs/parsers/kv.md
 pydocmd simple jc.parsers.last+ > ../docs/parsers/last.md
