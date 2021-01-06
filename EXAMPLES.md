@@ -1203,7 +1203,7 @@ iw dev wlan0 scan | jc --iw-scan -p          # or:  jc -p iw dev wlan0 scan
 ```json
 [
   {
-    "mac_address": "71:31:72:65:e1:a2",
+    "bssid": "71:31:72:65:e1:a2",
     "interface": "wlan0",
     "freq": 2462,
     "capability": "ESS Privacy ShortSlotTime (0x0411)",
