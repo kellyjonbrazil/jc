@@ -4,6 +4,7 @@ jc changelog
 - Add iw-scan parser tested on linux (beta)
 - Update date parser for Ubuntu 20.04 support
 - Update last parser for last -F support
+- Update last parser to add convenience fields and augment data for easier parsing
 - Update man page
 - Minor documentation updates
 
