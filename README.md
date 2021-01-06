@@ -229,7 +229,8 @@ cat lsof.out | jc --lsof -q
 
 Tested on:
 - Centos 7.7
-- Ubuntu 18.4
+- Ubuntu 18.04
+- Ubuntu 20.04
 - Fedora32
 - OSX 10.11.6
 - OSX 10.14.6
