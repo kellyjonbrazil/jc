@@ -180,5 +180,11 @@ reboot   system boot  3.10.0-957.el7.x86_64 Thu Aug 15 11:57:07 2019 - Thu Aug 1
 kbrazil  pts/0        192.168.71.1     Thu Aug 15 10:58:29 2019 - Thu Aug 15 11:56:42 2019  (00:58)    
 root     tty1                          Thu Aug 15 10:57:26 2019 - Thu Aug 15 11:56:42 2019  (00:59)    
 reboot   system boot  3.10.0-957.el7.x86_64 Thu Aug 15 10:57:06 2019 - Thu Aug 15 11:56:44 2019  (00:59)    
+reboot   system boot  3.10.0-1127.19.1 Tue Dec 29 08:53:03 2020 - Wed Jan  6 09:28:15 2021 (8+00:35)   
+user1234 pts/0        :0               Tue Dec 29 13:50:50 2020 - crash                     (-4:-57)   
+user1234 :0           :0               Tue Dec 29 13:49:58 2020 - crash                     (-4:-56)   
+user1234 pts/1        :pts/0:S.0       Mon Dec 28 17:24:33 2020 - Mon Dec 28 17:24:46 2020  (00:00)    
+user1234 pts/0        :0               Mon Dec 28 17:24:10 2020 - Mon Dec 28 17:25:01 2020  (00:00)    
+user1234 pts/2        fe80::fd8:7309:4 Mon Dec 28 12:43:33 2020 - Mon Dec 28 13:14:22 2020  (00:30) 
 
 wtmp begins Thu Aug 15 10:57:06 2019

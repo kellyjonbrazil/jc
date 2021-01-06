@@ -21,30 +21,36 @@ Compatibility:
 
 Examples:
 
-    $ last | jc --last -p
+    $ last -F | jc --last -p
     [
       {
         "user": "kbrazil",
         "tty": "ttys002",
         "hostname": null,
-        "login": "Thu Feb 27 14:31",
+        "login": "Mon Dec 28 17:24:10 2020",
         "logout": "still logged in"
       },
       {
         "user": "kbrazil",
         "tty": "ttys003",
         "hostname": null,
-        "login": "Thu Feb 27 10:38",
-        "logout": "10:38",
-        "duration": "00:00"
+        "login": "Mon Dec 28 17:24:10 2020",
+        "logout": "Mon Dec 28 17:25:01 2020",
+        "duration": "00:00",
+        "login_epoch": 1565891826,
+        "logout_epoch": 1565895404,
+        "duration_seconds": 3578
       },
       {
         "user": "kbrazil",
         "tty": "ttys003",
         "hostname": null,
-        "login": "Thu Feb 27 10:18",
-        "logout": "10:18",
-        "duration": "00:00"
+        "login": "Mon Dec 28 17:24:10 2020",
+        "logout": "Mon Dec 28 17:25:01 2020",
+        "duration": "00:00",
+        "login_epoch": 1565891826,
+        "logout_epoch": 1565895404,
+        "duration_seconds": 3578
       },
       ...
     ]
@@ -79,6 +85,7 @@ Examples:
 
 """
 import re
+from datetime import datetime
 import jc.utils
 
 
@@ -87,7 +94,7 @@ class info():
     description = 'last and lastb command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
+    details = 'Enhancements by https://github.com/zerolagtime'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
@@ -111,12 +118,15 @@ def process(proc_data):
 
         [
           {
-            "user":       string,
-            "tty":        string,
-            "hostname":   string,
-            "login":      string,
-            "logout":     string,
-            "duration":   string
+            "user":             string,
+            "tty":              string,
+            "hostname":         string,
+            "login":            string,
+            "logout":           string,
+            "duration":         string,
+            "login_epoch":      integer,   # available with last -F option
+            "logout_epoch":     integer,   # available with last -F option
+            "duration_seconds": integer    # available with last -F option
           }
         ]
     """
@@ -133,11 +143,28 @@ def process(proc_data):
         if 'hostname' in entry and entry['hostname'] == '-':
             entry['hostname'] = None
 
+        if 'hostname' in entry and entry['hostname'] is not None and entry['hostname'][0] == ":":
+            entry['hostname'] = f'CONSOLE{entry["hostname"]}'
+
         if 'logout' in entry and entry['logout'] == 'still_logged_in':
             entry['logout'] = 'still logged in'
 
         if 'logout' in entry and entry['logout'] == 'gone_-_no_logout':
             entry['logout'] = 'gone - no logout'
+
+        if 'login' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*',entry['login']):
+            entry['login_epoch'] = int(datetime.strptime(entry['login'], '%a %b %d %H:%M:%S %Y').strftime('%s'))
+
+        if 'logout' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*',entry['logout']):
+            entry['logout_epoch'] = int(datetime.strptime(entry['logout'], '%a %b %d %H:%M:%S %Y').strftime('%s'))
+
+        if 'login_epoch' in entry and 'logout_epoch' in entry:
+            entry['duration_seconds'] = int(entry['logout_epoch']) - int(entry['login_epoch'])
+
+        if 'duration' in entry and re.match(r'^\d+\+', entry['duration']):
+            m = re.match(r'^(?P<days>\d+)\+(?P<hours>\d\d):(?P<minutes>\d\d)', entry['duration'])
+            days, hours, minutes = m.groups()
+            entry['duration'] = f'{int(days)*24 + int(hours)}:{minutes}'
 
     return proc_data
 

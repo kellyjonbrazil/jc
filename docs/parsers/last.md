@@ -23,30 +23,36 @@ Compatibility:
 
 Examples:
 
-    $ last | jc --last -p
+    $ last -F | jc --last -p
     [
       {
         "user": "kbrazil",
         "tty": "ttys002",
         "hostname": null,
-        "login": "Thu Feb 27 14:31",
+        "login": "Mon Dec 28 17:24:10 2020",
         "logout": "still logged in"
       },
       {
         "user": "kbrazil",
         "tty": "ttys003",
         "hostname": null,
-        "login": "Thu Feb 27 10:38",
-        "logout": "10:38",
-        "duration": "00:00"
+        "login": "Mon Dec 28 17:24:10 2020",
+        "logout": "Mon Dec 28 17:25:01 2020",
+        "duration": "00:00",
+        "login_epoch": 1565891826,
+        "logout_epoch": 1565895404,
+        "duration_seconds": 3578
       },
       {
         "user": "kbrazil",
         "tty": "ttys003",
         "hostname": null,
-        "login": "Thu Feb 27 10:18",
-        "logout": "10:18",
-        "duration": "00:00"
+        "login": "Mon Dec 28 17:24:10 2020",
+        "logout": "Mon Dec 28 17:25:01 2020",
+        "duration": "00:00",
+        "login_epoch": 1565891826,
+        "logout_epoch": 1565895404,
+        "duration_seconds": 3578
       },
       ...
     ]
@@ -104,12 +110,15 @@ Returns:
 
     [
       {
-        "user":       string,
-        "tty":        string,
-        "hostname":   string,
-        "login":      string,
-        "logout":     string,
-        "duration":   string
+        "user":             string,
+        "tty":              string,
+        "hostname":         string,
+        "login":            string,
+        "logout":           string,
+        "duration":         string,
+        "login_epoch":      integer,   # available with last -F option
+        "logout_epoch":     integer,   # available with last -F option
+        "duration_seconds": integer    # available with last -F option
       }
     ]
 
