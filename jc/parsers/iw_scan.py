@@ -66,7 +66,29 @@ def process(proc_data):
         ]
     """
 
-    # rebuild output for added semantic information
+    # convert ints and floats for top-level keys
+    for item in proc_data:    
+        for key in item:
+            try:
+                item[key] = int(item[key])
+            except (Exception):
+                try:
+                    item[key] = float(item[key])
+                except (Exception):
+                    pass
+            # convert ints and floats for lists
+            if isinstance(item[key], list):
+                new_list = []
+                for list_item in item[key]:
+                    try:
+                        new_list.append(int(list_item)) 
+                    except (Exception):
+                        try:
+                            new_list.append(float(list_item)) 
+                        except (Exception):
+                            pass
+                item[key] = new_list
+
     return proc_data
 
 def post_parse(data):
@@ -83,6 +105,12 @@ def post_parse(data):
                 ssid[key] = ssid[key][1:].strip()
 
     for item in cleandata:
+        if 'country' in item:
+            country_split = item['country'].split()
+            item['country'] = country_split[0]
+            if len(country_split) > 1:
+                item['environment'] = country_split[2]
+
         if 'tsf' in item:
             item['tsf_usec'] = item['tsf'].split()[0]
             del item['tsf']
