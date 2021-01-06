@@ -1196,7 +1196,7 @@ iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p ip
   }
 ]
 ```
-### iw dev <device> scan
+### iw dev `device` scan
 ```bash
 iw dev wlan0 scan | jc --iw-scan -p          # or:  jc -p iw dev wlan0 scan
 ```
