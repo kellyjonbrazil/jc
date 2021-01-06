@@ -21,7 +21,7 @@ Compatibility:
 
 Examples:
 
-    $ iw-scan | jc --iw-scan -p
+    $ iw dev wlan0 scan | jc --iw-scan -p
     [
       {
         "mac_address": "71:31:72:65:e1:a2",
