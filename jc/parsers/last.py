@@ -194,10 +194,10 @@ def parse(data, raw=False, quiet=False):
             if re.match(r'\d\d:\d\d:\d\d \d\d\d\d', ' '.join(linedata[6:8])):
                 output_line['login'] = ' '.join(linedata[3:8])
 
-                if len(linedata) > 9 and linedata[9] != 'crash':
+                if len(linedata) > 9 and linedata[9] != 'crash' and linedata[9] != 'down':
                     output_line['logout'] = ' '.join(linedata[9:14])
 
-                if len(linedata) > 9 and linedata[9] == 'crash':
+                if len(linedata) > 9 and (linedata[9] == 'crash' or linedata[9] == 'down'):
                     output_line['logout'] = linedata[9]
                     # add more items to the list to line up duration
                     linedata.insert(10, '-')
