@@ -412,6 +412,7 @@ date | jc --date -p          # or:  jc -p date
   "hour": 16,
   "minute": 48,
   "second": 11,
+  "period": null,
   "month": "Jul",
   "weekday": "Fri",
   "weekday_num": 6,
@@ -1192,6 +1193,97 @@ iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p ip
         "options": "ADDRTYPE match dst-type LOCAL"
       }
     ]
+  }
+]
+```
+### iw dev `device` scan
+```bash
+iw dev wlan0 scan | jc --iw-scan -p          # or:  jc -p iw dev wlan0 scan
+```
+```json
+[
+  {
+    "bssid": "71:31:72:65:e1:a2",
+    "interface": "wlan0",
+    "freq": 2462,
+    "capability": "ESS Privacy ShortSlotTime (0x0411)",
+    "ssid": "WLAN-1234",
+    "supported_rates": [
+      1.0,
+      2.0,
+      5.5,
+      11.0,
+      18.0,
+      24.0,
+      36.0,
+      54.0
+    ],
+    "erp": "<no flags>",
+    "erp_d4.0": "<no flags>",
+    "rsn": "Version: 1",
+    "group_cipher": "CCMP",
+    "pairwise_ciphers": "CCMP",
+    "authentication_suites": "PSK",
+    "capabilities": "0x186c",
+    "extended_supported_rates": [
+      6.0,
+      9.0,
+      12.0,
+      48.0
+    ],
+    "ht_rx_mcs_rate_indexes_supported": "0-15",
+    "primary_channel": 11,
+    "secondary_channel_offset": "no secondary",
+    "rifs": 1,
+    "ht_protection": "no",
+    "non-gf_present": 1,
+    "obss_non-gf_present": 0,
+    "dual_beacon": 0,
+    "dual_cts_protection": 0,
+    "stbc_beacon": 0,
+    "l-sig_txop_prot": 0,
+    "pco_active": 0,
+    "pco_phase": 0,
+    "bss_width_channel_transition_delay_factor": 5,
+    "extended_capabilities": "HT Information Exchange Supported",
+    "wmm": "Parameter version 1",
+    "be": "CW 15-1023, AIFSN 3",
+    "bk": "CW 15-1023, AIFSN 7",
+    "vi": "CW 7-15, AIFSN 2, TXOP 3008 usec",
+    "vo": "CW 3-7, AIFSN 2, TXOP 1504 usec",
+    "wps": "Version: 1.0",
+    "wi-fi_protected_setup_state": "2 (Configured)",
+    "selected_registrar": "0x0",
+    "response_type": "3 (AP)",
+    "uuid": "00000000-0000-0003-0000-75317074f1a2",
+    "manufacturer": "Corporation",
+    "model": "VGV8539JW",
+    "model_number": "1.47.000",
+    "serial_number": "J144024542",
+    "primary_device_type": "6-0050f204-1",
+    "device_name": "Wireless Router(WFA)",
+    "config_methods": "Label, PBC",
+    "rf_bands": "0x3",
+    "tsf_usec": 212098649788,
+    "sta_channel_width_mhz": 20,
+    "passive_dwell_tus": 20,
+    "active_dwell_tus": 10,
+    "channel_width_trigger_scan_interval_s": 300,
+    "scan_passive_total_per_channel_tus": 200,
+    "scan_active_total_per_channel_tus": 20,
+    "beacon_interval_tus": 100,
+    "signal_dbm": -80.0,
+    "last_seen_ms": 11420,
+    "selected_rates": [
+      1.0,
+      2.0,
+      5.5,
+      11.0
+    ],
+    "obss_scan_activity_threshold_percent": 0.25,
+    "ds_parameter_set_channel": 11,
+    "max_amsdu_length_bytes": 7935,
+    "minimum_rx_ampdu_time_spacing_usec": 16
   }
 ]
 ```

@@ -1,4 +1,4 @@
-.TH jc 1 2020-07-31 1.13.2 "JSON CLI output utility"
+.TH jc 1 2021-01-05 1.14.1 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -30,6 +30,10 @@ arp command parser
 .B
 \fB--blkid\fP
 blkid command parser
+.TP
+.B
+\fB--cksum\fP
+cksum and sum command parser
 .TP
 .B
 \fB--crontab\fP
@@ -65,7 +69,7 @@ du command parser
 .TP
 .B
 \fB--env\fP
-env command parser
+env and printenv command parser
 .TP
 .B
 \fB--file\fP
@@ -112,6 +116,18 @@ INI file parser
 iptables command parser
 .TP
 .B
+\fB--iw-scan\fP
+iw dev <device> scan command parser
+.TP
+.B
+\fB--hash\fP
+hash BASH builtin command parser
+.TP
+.B
+\fB--hashsum\fP
+md5, md5sum, shasum, sha1sum, sha224sum, sha256sum, sha384sum, and sha512sum command parser
+.TP
+.B
 \fB--jobs\fP
 jobs command parser
 .TP
@@ -125,7 +141,7 @@ last and lastb command parser
 .TP
 .B
 \fB--ls\fP
-ls command parser
+ls and vdir command parser
 .TP
 .B
 \fB--lsblk\fP
@@ -230,6 +246,10 @@ uptime command parser
 .B
 \fB--w\fP
 w command parser
+.TP
+.B
+\fB--wc\fP
+wc command parser
 .TP
 .B
 \fB--who\fP

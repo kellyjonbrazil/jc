@@ -29,6 +29,7 @@ Examples:
       "hour": 16,
       "minute": 48,
       "second": 11,
+      "period": null,
       "month": "Jul",
       "weekday": "Fri",
       "weekday_num": 6,
@@ -63,7 +64,7 @@ Final processing to conform to the schema.
 
 Parameters:
 
-    proc_data:   (dictionary) raw structured data to process
+    proc_data:   (Dictionary) raw structured data to process
 
 Returns:
 
@@ -76,6 +77,7 @@ Returns:
       "hour":         integer,
       "minute":       integer,
       "second":       integer,
+      "period":       string,
       "month":        string,
       "weekday":      string,
       "weekday_num":  integer,

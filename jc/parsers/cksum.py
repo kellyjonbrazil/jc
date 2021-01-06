@@ -67,11 +67,11 @@ def process(proc_data):
 
     Parameters:
 
-        proc_data:   (dictionary) raw structured data to process
+        proc_data:   (List of Dictionaries) raw structured data to process
 
     Returns:
 
-        List of dictionaries. Structured data with the following schema:
+        List of Dictionaries. Structured data with the following schema:
 
         [
           {
@@ -105,7 +105,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        List of dictionaries. Raw or processed structured data.
+        List of Dictionaries. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)

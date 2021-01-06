@@ -27,6 +27,7 @@ Examples:
       "hour": 16,
       "minute": 48,
       "second": 11,
+      "period": null,
       "month": "Jul",
       "weekday": "Fri",
       "weekday_num": 6,
@@ -49,7 +50,7 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    version = '1.1'
     description = 'date command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -68,7 +69,7 @@ def process(proc_data):
 
     Parameters:
 
-        proc_data:   (dictionary) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
@@ -81,6 +82,7 @@ def process(proc_data):
           "hour":         integer,
           "minute":       integer,
           "second":       integer,
+          "period":       string,
           "month":        string,
           "weekday":      string,
           "weekday_num":  integer,
@@ -120,6 +122,7 @@ def process(proc_data):
             "hour": int(proc_data['hour']),
             "minute": int(proc_data['minute']),
             "second": int(proc_data['second']),
+            "period": proc_data['period'] if 'period' in proc_data else None,
             "month": proc_data['month'],
             "weekday": proc_data['weekday'],
             "weekday_num": weekday_map[proc_data['weekday']],
@@ -152,16 +155,31 @@ def parse(data, raw=False, quiet=False):
         data = data.replace(':', ' ')
         split_data = data.split()
 
-        raw_output = {
-            "year": split_data[7],
-            "month": split_data[1],
-            "day": split_data[2],
-            "weekday": split_data[0],
-            "hour": split_data[3],
-            "minute": split_data[4],
-            "second": split_data[5],
-            "timezone": split_data[6]
-        }
+        # date v8.32 uses a different format depending on locale, so need to support LANG=en_US.UTF-8
+        if len(split_data) == 9 and ('AM' in split_data or 'am' in split_data or 'PM' in split_data or 'pm' in split_data):
+            raw_output = {
+                "year": split_data[8],
+                "month": split_data[1],
+                "day": split_data[2],
+                "weekday": split_data[0],
+                "hour": split_data[3],
+                "minute": split_data[4],
+                "second": split_data[5],
+                "period": split_data[6],
+                "timezone": split_data[7]
+            }
+        else:
+            # standard LANG=C date output
+            raw_output = {
+                "year": split_data[7],
+                "month": split_data[1],
+                "day": split_data[2],
+                "weekday": split_data[0],
+                "hour": split_data[3],
+                "minute": split_data[4],
+                "second": split_data[5],
+                "timezone": split_data[6]
+            }
 
     if raw:
         return raw_output

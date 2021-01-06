@@ -2,6 +2,8 @@
 # jc.parsers.last
 jc - JSON CLI output utility `last` and `lastb` command output parser
 
+Supports -w and -F options.
+
 Usage (cli):
 
     $ last | jc --last
@@ -21,30 +23,36 @@ Compatibility:
 
 Examples:
 
-    $ last | jc --last -p
+    $ last -F | jc --last -p
     [
       {
         "user": "kbrazil",
         "tty": "ttys002",
         "hostname": null,
-        "login": "Thu Feb 27 14:31",
+        "login": "Mon Dec 28 17:24:10 2020",
         "logout": "still logged in"
       },
       {
         "user": "kbrazil",
         "tty": "ttys003",
         "hostname": null,
-        "login": "Thu Feb 27 10:38",
-        "logout": "10:38",
-        "duration": "00:00"
+        "login": "Mon Dec 28 17:24:10 2020",
+        "logout": "Mon Dec 28 17:25:01 2020",
+        "duration": "00:00",
+        "login_epoch": 1565891826,
+        "logout_epoch": 1565895404,
+        "duration_seconds": 3578
       },
       {
         "user": "kbrazil",
         "tty": "ttys003",
         "hostname": null,
-        "login": "Thu Feb 27 10:18",
-        "logout": "10:18",
-        "duration": "00:00"
+        "login": "Mon Dec 28 17:24:10 2020",
+        "logout": "Mon Dec 28 17:25:01 2020",
+        "duration": "00:00",
+        "login_epoch": 1565891826,
+        "logout_epoch": 1565895404,
+        "duration_seconds": 3578
       },
       ...
     ]
@@ -94,20 +102,23 @@ Final processing to conform to the schema.
 
 Parameters:
 
-    proc_data:   (dictionary) raw structured data to process
+    proc_data:   (List of Dictionaries) raw structured data to process
 
 Returns:
 
-    List of dictionaries. Structured data with the following schema:
+    List of Dictionaries. Structured data with the following schema:
 
     [
       {
-        "user":       string,
-        "tty":        string,
-        "hostname":   string,
-        "login":      string,
-        "logout":     string,
-        "duration":   string
+        "user":             string,
+        "tty":              string,
+        "hostname":         string,
+        "login":            string,
+        "logout":           string,
+        "duration":         string,
+        "login_epoch":      integer,   # available with last -F option
+        "logout_epoch":     integer,   # available with last -F option
+        "duration_seconds": integer    # available with last -F option
       }
     ]
 
@@ -127,5 +138,5 @@ Parameters:
 
 Returns:
 
-    List of dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 

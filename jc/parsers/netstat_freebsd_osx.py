@@ -146,7 +146,7 @@ def parse(cleandata):
 
     Returns:
 
-        List of dictionaries. Raw structured data.
+        List of Dictionaries. Raw structured data.
     """
     raw_output = []
     network = False

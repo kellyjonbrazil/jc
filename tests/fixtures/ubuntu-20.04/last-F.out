@@ -1,0 +1,7 @@
+kbrazil  pts/0        192.168.71.1     Tue Jan  5 20:03:51 2021   still logged in
+kbrazil  pts/0        192.168.71.1     Tue Jan  5 00:17:29 2021 - Tue Jan  5 20:03:47 2021  (19:46)
+kbrazil  tty1                          Tue Jan  5 00:08:46 2021   gone - no logout
+root     pts/0        developer-pc.exa Mon Mar 23 16:44:55 2020 - down                      (00:00)
+reboot   system boot  5.8.0-34-generic Tue Jan  5 00:08:28 2021   still running
+
+wtmp begins Tue Jan  5 00:08:28 2021

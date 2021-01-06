@@ -65,11 +65,11 @@ Final processing to conform to the schema.
 
 Parameters:
 
-    proc_data:   (dictionary) raw structured data to process
+    proc_data:   (Dictionary) raw structured data to process
 
 Returns:
 
-    List of dictionaries. Structured data with the following schema:
+    List of Dictionaries. Structured data with the following schema:
 
     [
       {
@@ -95,5 +95,5 @@ Parameters:
 Returns:
 
     Dictionary of raw structured data or
-    list of dictionaries of processed structured data
+    List of Dictionaries of processed structured data
 
