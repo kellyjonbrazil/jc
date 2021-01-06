@@ -118,7 +118,7 @@ class info():
     description = 'iw dev <device> scan command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
+    details = 'Enhancements by Philipp Schmitt (https://pschmitt.dev/)'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
@@ -306,7 +306,7 @@ def parse(data, raw=False, quiet=False):
                     section = {}
 
                 split_line = line.replace('(', ' ').replace(')', ' ').split()
-                section['mac_address'] = split_line[1]
+                section['bssid'] = split_line[1]
                 section['interface'] = split_line[3]
 
                 continue
@@ -318,7 +318,7 @@ def parse(data, raw=False, quiet=False):
 
                 split_line = line.split(':', maxsplit=1)
                 if len(split_line) == 2:
-                    split_line[0] = split_line[0].lower().replace('*', '').replace('(', '').replace(')', '').replace(',', '').strip().replace(' ', '_')
+                    split_line[0] = split_line[0].lower().replace('*', '').replace('(', '').replace(')', '').replace(',', '').replace('-', '_').strip().replace(' ', '_')
                     section[split_line[0]] = split_line[1].strip()
 
                 continue
