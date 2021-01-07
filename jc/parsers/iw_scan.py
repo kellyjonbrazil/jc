@@ -139,7 +139,7 @@ def process(proc_data):
     Returns:
 
         List of Dictionaries. Structured data with the following schema:
-        ]
+        [
           {
             "foo":     string/integer/float,         # best guess based on value
             "bar":     string/integer/float,
