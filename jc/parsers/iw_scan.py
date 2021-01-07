@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `iw DEV scan` command output parser
+"""jc - JSON CLI output utility `iw dev <device> scan` command output parser
 
 This parser is considered beta quality. Not all fields are parsed.
 
