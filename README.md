@@ -186,7 +186,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-d` debug mode. Prints trace messages if parsing issues encountered (use `-dd` for verbose debugging)
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
-- `-q` quiet mode. Suppresses warning messages
+- `-q` quiet mode. Suppresses parser warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as strings and no additional semantic processing
 
 ### Setting Custom Colors via Environment Variable
