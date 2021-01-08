@@ -111,7 +111,7 @@ pip3 install jc
 ```bash
 COMMAND | jc PARSER [OPTIONS]
 ```
-Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given. (Note: command aliases are not supported)
+Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given. (Note: command aliases and shell builtins are not supported)
 ```bash
 jc [OPTIONS] COMMAND
 ```
@@ -183,7 +183,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
-- `-d` debug mode. Prints trace messages if parsing issues encountered (use `-dd` for verbose debugging)
+- `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
