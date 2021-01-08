@@ -191,10 +191,10 @@ def set_env_colors(env_colors=None):
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
     return {
-        Name.Tag: f'bold {PYGMENT_COLOR[color_list[0]]}' if not color_list[0] == 'default' else f"bold {PYGMENT_COLOR['blue']}",   # key names
-        Keyword: PYGMENT_COLOR[color_list[1]] if not color_list[1] == 'default' else PYGMENT_COLOR['brightblack'],                 # true, false, null
-        Number: PYGMENT_COLOR[color_list[2]] if not color_list[2] == 'default' else PYGMENT_COLOR['magenta'],                      # numbers
-        String: PYGMENT_COLOR[color_list[3]] if not color_list[3] == 'default' else PYGMENT_COLOR['green']                         # strings
+        Name.Tag: f'bold {PYGMENT_COLOR[color_list[0]]}' if color_list[0] != 'default' else f"bold {PYGMENT_COLOR['blue']}",   # key names
+        Keyword: PYGMENT_COLOR[color_list[1]] if color_list[1] != 'default' else PYGMENT_COLOR['brightblack'],                 # true, false, null
+        Number: PYGMENT_COLOR[color_list[2]] if color_list[2] != 'default' else PYGMENT_COLOR['magenta'],                      # numbers
+        String: PYGMENT_COLOR[color_list[3]] if color_list[3] != 'default' else PYGMENT_COLOR['green']                         # strings
     }
 
 
