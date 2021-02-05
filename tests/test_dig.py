@@ -55,6 +55,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_answer_spaces = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_dig_json = json.loads(f.read())
@@ -100,6 +103,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_answer_spaces_json = json.loads(f.read())
 
     def test_dig_nodata(self):
         """
@@ -196,6 +202,12 @@ class MyTests(unittest.TestCase):
         Test 'dig axfr' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.dig.parse(self.osx_10_14_6_dig_axfr, quiet=True), self.osx_10_14_6_dig_axfr_json)
+
+    def test_dig_answer_spaces(self):
+        """
+        Test 'dig' with spaces in the answer data (e.g. TXT responses)
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_answer_spaces, quiet=True), self.generic_dig_answer_spaces_json)
 
 
 if __name__ == '__main__':

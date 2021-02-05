@@ -333,7 +333,7 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    version = '1.4'
     description = 'dig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -526,7 +526,11 @@ def parse_answer(answer):
     answer_class = answer[2]
     answer_type = answer[3]
     answer_ttl = answer[1]
-    answer_data = answer[4]
+    answer_data = ' '.join(answer[4:])
+
+    # remove surrounding quotation marks from answer_data if they exist
+    if answer_data.startswith('"') and answer_data.endswith('"'):
+        answer_data = answer_data[1:-1]
 
     return {'name': answer_name,
             'class': answer_class,

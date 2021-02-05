@@ -1,0 +1,23 @@
+
+; <<>> DiG 9.10.6 <<>> TXT x.y.z.w.bl.spamcop.net
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 26965
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;x.y.z.w.bl.spamcop.net.        IN  TXT
+
+;; AUTHORITY SECTION:
+bl.spamcop.net.     0   IN  SOA bl.spamcop.net. hostmaster.admin.spamcop.net. 1612535191 3600 1800 3600 0
+
+;; ANSWER SECTION:
+x.y.z.w.bl.spamcop.net. 2100 IN TXT "Blocked - see https://www.spamcop.net/bl.shtml?w.z.y.x"
+
+;; Query time: 297 msec
+;; SERVER: 192.168.1.254#53(192.168.1.254)
+;; WHEN: Fri Feb 05 06:28:58 PST 2021
+;; MSG SIZE  rcvd: 104
+

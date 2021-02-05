@@ -1,5 +1,8 @@
 jc changelog
 
+20210205 v1.14.2
+- Update dig parser to fix cases where there are spaces in the answer data (e.g. TXT records)
+
 20210106 v1.14.1
 - Add iw-scan parser tested on linux (beta)
 - Update date parser for Ubuntu 20.04 support
