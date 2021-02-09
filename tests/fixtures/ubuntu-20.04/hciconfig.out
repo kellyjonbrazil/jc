@@ -1,0 +1,17 @@
+hci0:   Type: Primary  Bus: USB
+    BD Address: 00:50:56:E7:46:1A  ACL MTU: 8192:128  SCO MTU: 64:128
+    UP RUNNING 
+    RX bytes:1307 acl:0 sco:0 events:51 errors:0
+    TX bytes:1200 acl:0 sco:0 commands:51 errors:0
+    Features: 0xff 0xff 0x8f 0xfe 0x83 0xe1 0x08 0x80
+    Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+    Link policy: RSWITCH HOLD SNIFF PARK 
+    Link mode: SLAVE ACCEPT 
+    Name: 'kbrazil-ubuntu'
+    Class: 0x000000
+    Service Classes: Unspecified
+    Device Class: Miscellaneous, 
+    HCI Version: 2.1 (0x4)  Revision: 0x100
+    LMP Version: 2.1 (0x4)  Subversion: 0x100
+    Manufacturer: not assigned (6502)
+
