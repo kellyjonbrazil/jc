@@ -391,7 +391,7 @@ def parse(data, raw=False, quiet=False):
 
             # start of a new device object
             # hci0:   Type: Primary  Bus: USB
-            if not line.startswith(' '):
+            if not line[0].isspace():
                 if device_object:
                     raw_output.append(device_object)
                     device_object = {}
@@ -406,7 +406,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # BD Address: 00:50:56:E7:46:1A  ACL MTU: 8192:128  SCO MTU: 64:128
-            if line.startswith(' ') and ' BD Address:' in line:
+            if line[0].isspace() and line.lstrip().startswith('BD Address:'):
                 line = line.split()
                 device_object['bd_address'] = line[2]
                 device_object['acl_mtu'] = line[5].split(':')[0]
@@ -423,7 +423,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # RX bytes:1307 acl:0 sco:0 events:51 errors:0
-            if line.startswith(' ') and ' RX bytes:' in line:
+            if line[0].isspace() and line.lstrip().startswith('RX bytes:'):
                 line = line.replace(':', ' ')
                 line = line.split()
                 device_object['rx_bytes'] = line[2]
@@ -435,7 +435,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # TX bytes:1200 acl:0 sco:0 commands:51 errors:0
-            if line.startswith(' ') and ' TX bytes:' in line:
+            if line[0].isspace() and line.lstrip().startswith('TX bytes:'):
                 line = line.replace(':', ' ')
                 line = line.split()
                 device_object['tx_bytes'] = line[2]
@@ -447,49 +447,49 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # Features: 0xff 0xff 0x8f 0xfe 0x83 0xe1 0x08 0x80
-            if line.startswith(' ') and line.lstrip().startswith('Features:'):
+            if line[0].isspace() and line.lstrip().startswith('Features:'):
                 device_object['features'] = line.split()[1:]
 
                 continue
 
             # Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
-            if line.startswith(' ') and line.lstrip().startswith('Packet type:'):
+            if line[0].isspace() and line.lstrip().startswith('Packet type:'):
                 device_object['packet_type'] = line.split()[2:]
 
                 continue
 
             # Link policy: RSWITCH HOLD SNIFF PARK
-            if line.startswith(' ') and line.lstrip().startswith('Link policy:'):
+            if line[0].isspace() and line.lstrip().startswith('Link policy:'):
                 device_object['link_policy'] = line.split()[2:]
 
                 continue
 
             # Link mode: SLAVE ACCEPT
-            if line.startswith(' ') and line.lstrip().startswith('Link mode:'):
+            if line[0].isspace() and line.lstrip().startswith('Link mode:'):
                 device_object['link_mode'] = line.split()[2:]
 
                 continue
 
             # Name: 'kbrazil-ubuntu'
-            if line.startswith(' ') and line.lstrip().startswith('Name:'):
+            if line[0].isspace() and line.lstrip().startswith('Name:'):
                 device_object['name'] = line.split(maxsplit=1)[1][1:-1]
 
                 continue
 
             # Class: 0x000000
-            if line.startswith(' ') and line.lstrip().startswith('Class:'):
+            if line[0].isspace() and line.lstrip().startswith('Class:'):
                 device_object['class'] = line.split(maxsplit=1)[1]
 
                 continue
 
             # Service Classes: Unspecified
-            if line.startswith(' ') and line.lstrip().startswith('Service Classes:'):
+            if line[0].isspace() and line.lstrip().startswith('Service Classes:'):
                 device_object['service_classes'] = line.split()[2:]
 
                 continue
 
             # Device Class: Miscellaneous,
-            if line.startswith(' ') and line.lstrip().startswith('Device Class:'):
+            if line[0].isspace() and line.lstrip().startswith('Device Class:'):
                 dev_class = line.split()[2]
                 if dev_class.endswith(','):
                     dev_class = dev_class[0:-1]
@@ -499,7 +499,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # HCI Version: 4.0 (0x6)  Revision: 0x22bb
-            if line.startswith(' ') and line.lstrip().startswith('HCI Version:'):
+            if line[0].isspace() and line.lstrip().startswith('HCI Version:'):
                 line = line.split()
                 device_object['hci_version'] = ' '.join(line[2:4])
                 device_object['hci_revision'] = line[5]
@@ -507,7 +507,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # LMP Version: 4.0 (0x6)  Subversion: 0x22bb
-            if line.startswith(' ') and line.lstrip().startswith('LMP Version:'):
+            if line[0].isspace() and line.lstrip().startswith('LMP Version:'):
                 line = line.split()
                 device_object['lmp_version'] = ' '.join(line[2:4])
                 device_object['lmp_subversion'] = line[5]
@@ -515,7 +515,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # Manufacturer: Cambridge Silicon Radio (10)
-            if line.startswith(' ') and line.lstrip().startswith('Manufacturer:'):
+            if line[0].isspace() and line.lstrip().startswith('Manufacturer:'):
                 device_object['manufacturer'] = line.split(maxsplit=1)[1]
 
                 continue
