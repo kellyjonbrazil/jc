@@ -1,5 +1,8 @@
 jc changelog
 
+20210209 v1.14.3
+- Add hciconfig parser tested on linux
+
 20210205 v1.14.2
 - Update dig parser to fix cases where there are spaces in the answer data (e.g. TXT records)
 
