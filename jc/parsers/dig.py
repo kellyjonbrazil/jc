@@ -333,7 +333,7 @@ import jc.utils
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'dig command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -521,12 +521,12 @@ def parse_authority(authority):
 
 def parse_answer(answer):
     # www.cnn.com.        5   IN  CNAME   turner-tls.map.fastly.net.
-    answer = answer.split()
+    answer = answer.split(maxsplit=4)
     answer_name = answer[0]
     answer_class = answer[2]
     answer_type = answer[3]
     answer_ttl = answer[1]
-    answer_data = ' '.join(answer[4:])
+    answer_data = answer[4]
 
     # remove surrounding quotation marks from answer_data if they exist
     if answer_data.startswith('"') and answer_data.endswith('"'):
