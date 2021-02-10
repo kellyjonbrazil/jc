@@ -1,4 +1,4 @@
-.TH jc 1 2021-01-05 1.14.1 "JSON CLI output utility"
+.TH jc 1 2021-01-05 1.14.3 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -92,6 +92,18 @@ fstab file parser
 /etc/gshadow file parser
 .TP
 .B
+\fB--hash\fP
+hash BASH builtin command parser
+.TP
+.B
+\fB--hashsum\fP
+md5, md5sum, shasum, sha1sum, sha224sum, sha256sum, sha384sum, and sha512sum command parser
+.TP
+.B
+\fB--hciconfig\fP
+hciconfig command parser
+.TP
+.B
 \fB--history\fP
 history command parser
 .TP
@@ -118,14 +130,6 @@ iptables command parser
 .B
 \fB--iw-scan\fP
 iw dev <device> scan command parser
-.TP
-.B
-\fB--hash\fP
-hash BASH builtin command parser
-.TP
-.B
-\fB--hashsum\fP
-md5, md5sum, shasum, sha1sum, sha224sum, sha256sum, sha384sum, and sha512sum command parser
 .TP
 .B
 \fB--jobs\fP

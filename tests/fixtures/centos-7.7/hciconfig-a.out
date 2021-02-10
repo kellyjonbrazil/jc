@@ -1,0 +1,10 @@
+hci0:   Type: Primary  Bus: USB
+    BD Address: 00:50:56:FE:FD:38  ACL MTU: 8192:128  SCO MTU: 64:128
+    DOWN 
+    RX bytes:503 acl:0 sco:0 events:22 errors:0
+    TX bytes:336 acl:0 sco:0 commands:22 errors:0
+    Features: 0xff 0xff 0x8f 0xfe 0x83 0xe1 0x08 0x80
+    Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+    Link policy: RSWITCH HOLD SNIFF PARK 
+    Link mode: SLAVE ACCEPT 
+
