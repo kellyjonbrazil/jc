@@ -388,7 +388,6 @@ def parse(data, raw=False, quiet=False):
 
         for line in filter(None, data.splitlines()):
             line_count += 1
-            # print(line)
 
             # start of a new device object
             # hci0:   Type: Primary  Bus: USB
