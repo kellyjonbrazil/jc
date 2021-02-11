@@ -117,7 +117,7 @@ jc [OPTIONS] COMMAND
 ```
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
 
-> Note: For best results set `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line: `$ LANG=C date | jc --date`, or by exporting to the environment before running commands: `$ export LANG=C`.
+> Note: For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line: `$ LANG=C date | jc --date`, or by exporting to the environment before running commands: `$ export LANG=C`.
 
 ### Parsers
 - `--airport` enables the `airport -I` command parser (OSX)
