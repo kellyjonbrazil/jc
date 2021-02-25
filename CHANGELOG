@@ -1,6 +1,6 @@
 jc changelog
 
-20212010 v1.14.3
+20210210 v1.14.3
 - Add hciconfig parser tested on linux
 - Update dig parser to simplify answer data logic
 
