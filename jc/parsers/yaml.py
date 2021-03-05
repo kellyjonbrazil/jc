@@ -135,7 +135,7 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         # monkey patch to disable plugins since we don't use them and in
-        # ruamel.yaml versions prior to 0.17.0 the use of __name__ in the
+        # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
         # plugin code is incompatible with the pyoxidizer packager
         YAML.official_plug_ins = lambda a: []
 
