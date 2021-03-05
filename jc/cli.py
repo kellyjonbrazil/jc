@@ -21,7 +21,7 @@ import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.14.3'
+    version = '1.14.4'
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
