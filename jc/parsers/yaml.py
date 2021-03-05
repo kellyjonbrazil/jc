@@ -76,7 +76,7 @@ from ruamel.yaml import YAML
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,6 +133,11 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
+
+        # monkey patch to disable plugins since we don't use them and in
+        # ruamel.yaml versions prior to 0.17.0 the use of __name__ in the
+        # plugin code is incompatible with the pyoxidizer packager
+        YAML.official_plug_ins = lambda a: []
 
         yaml = YAML(typ='safe')
 

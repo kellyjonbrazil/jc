@@ -1,5 +1,10 @@
 jc changelog
 
+20210305 v1.14.4
+- Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
+  Packages from PyPi and OS repositories are not affected. This fixes an issue that kept the YAML
+  parser from initializing.
+
 20210210 v1.14.3
 - Add hciconfig parser tested on linux
 - Update dig parser to simplify answer data logic
