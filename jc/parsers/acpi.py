@@ -20,10 +20,168 @@ Compatibility:
 Examples:
 
     $ acpi -V | jc --acpi -p
-    []
+    [
+      {
+        "type": "Battery",
+        "id": 0,
+        "state": "Charging",
+        "charge_percent": 71,
+        "until_charged": "00:29:20",
+        "design_capacity_mah": 2110,
+        "last_full_capacity": 2271,
+        "last_full_capacity_percent": 100
+      },
+      {
+        "type": "Adapter",
+        "id": 0,
+        "on-line": true
+      },
+      {
+        "type": "Thermal",
+        "id": 0,
+        "mode": "ok",
+        "temperature": 46.0,
+        "temperature_unit": "C",
+        "trip_points": [
+          {
+            "id": 0,
+            "switches_to_mode": "critical",
+            "temperature": 127.0,
+            "temperature_unit": "C"
+          },
+          {
+            "id": 1,
+            "switches_to_mode": "hot",
+            "temperature": 127.0,
+            "temperature_unit": "C"
+          }
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": 0,
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": 1,
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": 2,
+        "messages": [
+          "x86_pkg_temp no state information available"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": 3,
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": 4,
+        "messages": [
+          "intel_powerclamp no state information available"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": 5,
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      }
+    ]
 
     $ acpi -V | jc --acpi -p -r
-    []
+    [
+      {
+        "type": "Battery",
+        "id": "0",
+        "state": "Charging",
+        "charge_percent": "71",
+        "until_charged": "00:29:20",
+        "design_capacity_mah": "2110",
+        "last_full_capacity": "2271",
+        "last_full_capacity_percent": "100"
+      },
+      {
+        "type": "Adapter",
+        "id": "0",
+        "on-line": true
+      },
+      {
+        "type": "Thermal",
+        "id": "0",
+        "mode": "ok",
+        "temperature": "46.0",
+        "temperature_unit": "C",
+        "trip_points": [
+          {
+            "id": "0",
+            "switches_to_mode": "critical",
+            "temperature": "127.0",
+            "temperature_unit": "C"
+          },
+          {
+            "id": "1",
+            "switches_to_mode": "hot",
+            "temperature": "127.0",
+            "temperature_unit": "C"
+          }
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": "0",
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": "1",
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": "2",
+        "messages": [
+          "x86_pkg_temp no state information available"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": "3",
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": "4",
+        "messages": [
+          "intel_powerclamp no state information available"
+        ]
+      },
+      {
+        "type": "Cooling",
+        "id": "5",
+        "messages": [
+          "Processor 0 of 10"
+        ]
+      }
+    ]
 """
 import jc.utils
 
@@ -83,8 +241,44 @@ def process(proc_data):
           }
         ]
     """
+    # integers
+    int_list = ['id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity', 'last_full_capacity_percent']
+    float_list = ['temperature']
 
-    # rebuild output for added semantic information
+    for entry in proc_data:
+        for key in int_list:
+            if key in entry:
+                try:
+                    entry[key] = int(entry[key])
+                except (ValueError):
+                    entry[key] = None
+
+        if 'trip_points' in entry:
+            for tp in entry['trip_points']:
+                for key in int_list:
+                    if key in tp:
+                        try:
+                            tp[key] = int(tp[key])
+                        except (ValueError):
+                            tp[key] = None
+
+    for entry in proc_data:
+        for key in float_list:
+            if key in entry:
+                try:
+                    entry[key] = float(entry[key])
+                except (ValueError):
+                    entry[key] = None
+
+        if 'trip_points' in entry:
+            for tp in entry['trip_points']:
+                for key in float_list:
+                    if key in tp:
+                        try:
+                            tp[key] = float(tp[key])
+                        except (ValueError):
+                            tp[key] = None
+
     return proc_data
 
 
