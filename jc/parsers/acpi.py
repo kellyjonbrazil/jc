@@ -315,45 +315,14 @@ def parse(data, raw=False, quiet=False):
             obj_id = line.split()[1][:-1]
             line_state = obj_type + obj_id
 
-            if line.startswith('Battery'):
-                if line_state != last_line_state:
-                    if output_line:
-                        raw_output.append(output_line)
-                        last_line_state = line_state
+            if line_state != last_line_state:
+                if output_line:
+                    raw_output.append(output_line)
+                    last_line_state = line_state
 
-                    output_line = {}
-                    trip_points_list = []
-                    messages_list = []
-
-            if line.startswith('Adapter'):
-                if line_state != last_line_state:
-                    if output_line:
-                        raw_output.append(output_line)
-                        last_line_state = line_state
-
-                    output_line = {}
-                    trip_points_list = []
-                    messages_list = []
-
-            if line.startswith('Thermal'):
-                if line_state != last_line_state:
-                    if output_line:
-                        raw_output.append(output_line)
-                        last_line_state = line_state
-
-                    output_line = {}
-                    trip_points_list = []
-                    messages_list = []
-
-            if line.startswith('Cooling'):
-                if line_state != last_line_state:
-                    if output_line:
-                        raw_output.append(output_line)
-                        last_line_state = line_state
-
-                    output_line = {}
-                    trip_points_list = []
-                    messages_list = []
+                output_line = {}
+                trip_points_list = []
+                messages_list = []
 
             if obj_type == 'Battery':
                 output_line['type'] = obj_type
