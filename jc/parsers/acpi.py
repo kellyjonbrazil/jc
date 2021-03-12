@@ -109,49 +109,62 @@ def parse(data, raw=False, quiet=False):
     output_line = {}
     line_state = ''
     last_line_state = ''
+    obj_type = ''
+    obj_id = ''
+    trip_points_list = []
+    trip_points_dict = {}
+    messages_list = []
 
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
+            obj_type = line.split()[0]
+            obj_id = line.split()[1][:-1]
+            line_state = obj_type + obj_id
+
             if line.startswith('Battery'):
-                line_state = 'battery'
                 if line_state != last_line_state:
                     if output_line:
                         raw_output.append(output_line)
                         last_line_state = line_state
 
                     output_line = {}
+                    trip_points_list = []
+                    messages_list = []
 
             if line.startswith('Adapter'):
-                line_state = 'adapter'
                 if line_state != last_line_state:
                     if output_line:
                         raw_output.append(output_line)
                         last_line_state = line_state
 
                     output_line = {}
+                    trip_points_list = []
+                    messages_list = []
 
             if line.startswith('Thermal'):
-                line_state = 'thermal'
                 if line_state != last_line_state:
                     if output_line:
                         raw_output.append(output_line)
                         last_line_state = line_state
 
                     output_line = {}
+                    trip_points_list = []
+                    messages_list = []
 
             if line.startswith('Cooling'):
-                line_state = 'cooling'
                 if line_state != last_line_state:
                     if output_line:
                         raw_output.append(output_line)
                         last_line_state = line_state
 
                     output_line = {}
+                    trip_points_list = []
+                    messages_list = []
 
-            if line_state == 'battery':
-                output_line['type'] = 'battery'
-                output_line['id'] = line.split()[1][:-1]
+            if obj_type == 'Battery':
+                output_line['type'] = obj_type
+                output_line['id'] = obj_id
                 if 'Charging' in line:
                     output_line['state'] = line.split()[2][:-1]
                     output_line['charge_percent'] = line.split()[3][:-2]
@@ -169,18 +182,48 @@ def parse(data, raw=False, quiet=False):
                     if 'rate information unavailable' not in line:
                         output_line['charge_remaining'] = line.split()[4]
 
+                last_line_state = line_state
                 continue
 
-            if line_state == 'adapter':
+            if obj_type == 'Adapter':
+                output_line['type'] = obj_type
+                output_line['id'] = obj_id
+                if 'on-line' in line:
+                    output_line['on-line'] = True
+                else:
+                    output_line['on-line'] = False
+
+                last_line_state = line_state
                 continue
 
-            if line_state == 'thermal':
+            if obj_type == 'Thermal':
+                output_line['type'] = obj_type
+                output_line['id'] = obj_id
+                if 'trip point' not in line:
+                    output_line['mode'] = line.split()[2][:-1]
+                    output_line['temperature'] = line.split()[3]
+                    output_line['temperature_unit'] = line.split()[-1]
+                else:
+                    trip_points_dict = {
+                        "id": line.split()[4],
+                        "switches_to_mode": line.split()[8],
+                        "temperature": line.split()[11],
+                        "temperature_unit": line.split()[-1]
+                    }
+                    trip_points_list.append(trip_points_dict)
+                    output_line['trip_points'] = trip_points_list
+
+                last_line_state = line_state
                 continue
 
-            if line_state == 'cooling':
-                continue
+            if obj_type == 'Cooling':
+                output_line['type'] = obj_type
+                output_line['id'] = obj_id
+                messages_list.append(line.split(maxsplit=2)[2])
+                output_line['messages'] = messages_list
 
-            last_line_state = line_state
+                last_line_state = line_state
+                continue
 
     if output_line:
         raw_output.append(output_line)
