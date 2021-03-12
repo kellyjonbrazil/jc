@@ -318,7 +318,6 @@ def parse(data, raw=False, quiet=False):
             if line_state != last_line_state:
                 if output_line:
                     raw_output.append(output_line)
-                    last_line_state = line_state
 
                 output_line = {}
                 trip_points_list = []
