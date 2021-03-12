@@ -1,0 +1,13 @@
+Battery 0: Discharging, 98%, 01:43:14 remaining
+Battery 0: design capacity 4400 mAh, last full capacity 3013 mAh = 68%
+Battery 1: Discharging, 0%, rate information unavailable
+Adapter 0: off-line
+Thermal 0: ok, 60.5 degrees C
+Thermal 0: trip point 0 switches to mode critical at temperature 84.0 degrees C
+Cooling 0: Processor 0 of 3
+Cooling 1: intel_powerclamp no state information available
+Cooling 2: Processor 0 of 3
+Cooling 3: x86_pkg_temp no state information available
+Cooling 4: Processor 0 of 3
+Cooling 5: LCD 0 of 15
+Cooling 6: Processor 0 of 3
