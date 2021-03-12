@@ -358,22 +358,19 @@ def parse(data, raw=False, quiet=False):
             if obj_type == 'Battery':
                 output_line['type'] = obj_type
                 output_line['id'] = obj_id
-                if 'Charging' in line:
+                if 'Charging' in line or 'Discharging' in line or 'Full' in line:
                     output_line['state'] = line.split()[2][:-1]
-                    output_line['charge_percent'] = line.split()[3][:-2]
+                    output_line['charge_percent'] = line.split()[3].rstrip('%,')
                     if 'rate information unavailable' not in line:
-                        output_line['until_charged'] = line.split()[4]
+                        if 'Charging' in line:
+                            output_line['until_charged'] = line.split()[4]
+                        if 'Discharging' in line:
+                            output_line['charge_remaining'] = line.split()[4]
 
                 if 'design capacity' in line:
                     output_line['design_capacity_mah'] = line.split()[4]
                     output_line['last_full_capacity'] = line.split()[9]
                     output_line['last_full_capacity_percent'] = line.split()[-1][:-1]
-
-                if 'Discharging' in line:
-                    output_line['state'] = line.split()[2][:-1]
-                    output_line['charge_percent'] = line.split()[3][:-2]
-                    if 'rate information unavailable' not in line:
-                        output_line['charge_remaining'] = line.split()[4]
 
                 last_line_state = line_state
                 continue
