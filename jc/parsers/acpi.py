@@ -241,7 +241,6 @@ def process(proc_data):
           }
         ]
     """
-    # integers
     int_list = ['id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity', 'last_full_capacity_percent']
     float_list = ['temperature']
 
