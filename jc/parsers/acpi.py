@@ -340,9 +340,6 @@ def parse(data, raw=False, quiet=False):
                     output_line['last_full_capacity'] = line.split()[9]
                     output_line['last_full_capacity_percent'] = line.split()[-1][:-1]
 
-                last_line_state = line_state
-                continue
-
             if obj_type == 'Adapter':
                 output_line['type'] = obj_type
                 output_line['id'] = obj_id
@@ -350,9 +347,6 @@ def parse(data, raw=False, quiet=False):
                     output_line['on-line'] = True
                 else:
                     output_line['on-line'] = False
-
-                last_line_state = line_state
-                continue
 
             if obj_type == 'Thermal':
                 output_line['type'] = obj_type
@@ -371,17 +365,13 @@ def parse(data, raw=False, quiet=False):
                     trip_points_list.append(trip_points_dict)
                     output_line['trip_points'] = trip_points_list
 
-                last_line_state = line_state
-                continue
-
             if obj_type == 'Cooling':
                 output_line['type'] = obj_type
                 output_line['id'] = obj_id
                 messages_list.append(line.split(maxsplit=2)[2])
                 output_line['messages'] = messages_list
 
-                last_line_state = line_state
-                continue
+            last_line_state = line_state
 
     if output_line:
         raw_output.append(output_line)
