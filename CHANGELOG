@@ -1,5 +1,9 @@
 jc changelog
 
+20210316 v1.15.0
+- Add acpi parser tested on linux
+- Add upower parser tested on linux
+
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
   Packages from PyPi and OS repositories are not affected. This fixes an issue that kept the YAML
