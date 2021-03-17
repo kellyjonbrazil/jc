@@ -92,16 +92,12 @@ def parse(data, raw=False, quiet=False):
     device_name = None
     detail_obj = {}
     detail_key = ''
-    # last_detail_key = ''
 
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
             if line.startswith('Device:') or line.startswith('Daemon:'):
                 if device_obj:
-                    if detail_obj:
-                        device_obj[detail_key] = detail_obj
-
                     raw_output.append(device_obj)
                     device_obj = {}
 
@@ -122,42 +118,34 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # history detail lines
-            # if detail_key.startswith('history_'):
             if line.startswith('    ') and ':' not in line:
+                device_obj[detail_key] = 'history detail line'
                 continue
-            #     detail_obj['history_line'] = 'history detail line'
-            #     continue
 
             # general detail lines
             if line.startswith('    ') and ':' in line:
-                # since there could be multiple detail objects, reset the object key
-                # if detail_key != last_detail_key:
-                #     device_obj[last_detail_key] = detail_obj
-                #     last_detail_key = detail_key
-
-                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_')
+                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
                 val = line.split(':', maxsplit=1)[1].strip()
-                detail_obj[key] = val
+                device_obj[detail_key][key] = val
                 continue
 
-            # history lines are a special case of detail lines
+            # history detail lines are a special case of detail lines
             # set the history detail key
             if line.startswith('  ') and ':' in line and line.strip().split(':', maxsplit=1)[1] == '':
+                detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '').rstrip(':')
+                device_obj[detail_key] = {}
                 continue
-            #     detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')[:-1]
-            #     device_obj[detail_key] = {}
-            #     continue
 
             # top level lines
             if line.startswith('  ') and ':' in line:
-                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_')
+                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
                 val = line.split(':', maxsplit=1)[1].strip()
                 device_obj[key] = val
                 continue
 
-            # set the detail key
+            # set the general detail key
             if line.startswith('  ') and ':' not in line:
-                detail_key = line.strip().lower().replace('-', '_').replace(' ', '_')
+                detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
                 device_obj[detail_key] = {}
                 continue
 
