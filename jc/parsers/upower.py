@@ -194,9 +194,9 @@ def parse(data, raw=False, quiet=False):
                 device_obj[key] = val
                 continue
 
-            # set the general detail key
+            # set the general detail object
             if line.startswith('  ') and ':' not in line:
-                detail_type = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
+                detail_type = line.strip()
                 device_obj['detail'] = {
                     'type': detail_type
                 }
