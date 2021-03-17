@@ -1,0 +1,11 @@
+  native-path:          ACAD
+  power supply:         yes
+  updated:              Thu 11 Mar 2021 06:28:08 PM UTC (442049 seconds ago)
+  has history:          no
+  has statistics:       no
+  line-power
+    warning-level:       none
+    online:              yes
+    icon-name:          'ac-adapter-symbolic'
+
+

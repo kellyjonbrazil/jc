@@ -88,6 +88,7 @@ parsers = [
     'tracepath',
     'traceroute',
     'uname',
+    'upower',
     'uptime',
     'w',
     'wc',
