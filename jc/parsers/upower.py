@@ -92,6 +92,8 @@ def parse(data, raw=False, quiet=False):
     device_name = None
     detail_obj = {}
     detail_key = ''
+    history_list = []
+    history_list_obj = {}
 
     if jc.utils.has_data(data):
 
@@ -119,7 +121,14 @@ def parse(data, raw=False, quiet=False):
 
             # history detail lines
             if line.startswith('    ') and ':' not in line:
-                device_obj[detail_key] = 'history detail line'
+                line_list = line.strip().split()
+                history_list_obj = {
+                    'time': line_list[0],
+                    'percent_charged': line_list[1],
+                    'status': line_list[2]
+                }
+                history_list.append(history_list_obj)
+                device_obj[detail_key] = history_list
                 continue
 
             # general detail lines
@@ -134,6 +143,7 @@ def parse(data, raw=False, quiet=False):
             if line.startswith('  ') and ':' in line and line.strip().split(':', maxsplit=1)[1] == '':
                 detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '').rstrip(':')
                 device_obj[detail_key] = {}
+                history_list = []
                 continue
 
             # top level lines
