@@ -1,14 +1,12 @@
 """jc - JSON CLI output utility `upower` command output parser
 
-<<Short upower description and caveats>>
-
 Usage (cli):
 
-    $ upower | jc --upower
+    $ upower -d | jc --upower
 
     or
 
-    $ jc upower
+    $ jc upower -d
 
 Usage (module):
 
@@ -59,9 +57,51 @@ def process(proc_data):
 
         [
           {
-            "upower":     string,
-            "bar":     boolean,
-            "baz":     integer
+            "type":                 string,
+            "device_name":          string,
+            "native_path":          string,
+            "power_supply":         boolean,
+            "updated":              "Thu 11 Mar 2021 06:28:08 PM UTC (441975 seconds ago)",
+            "has_history":          boolean,
+            "has_statistics":       boolean,
+            "detail": {
+              "type":               string,
+              "warning_level":      string,        # null if none
+              "online":             boolean,
+              "icon_name":          string
+              "present":            boolean,
+              "rechargeable":       boolean,
+              "state":              string,
+              "energy":             "22.3998 Wh",
+              "energy_empty":       "0 Wh",
+              "energy_full":        "52.6473 Wh",
+              "energy_full_design": "62.16 Wh",
+              "energy_rate":        "31.6905 W",
+              "voltage":            "12.191 V",
+              "time_to_full":       "57.3 minutes",
+              "percentage":         "42.5469%",
+              "capacity":           "84.6964%",
+              "technology":         string
+            },
+            "history_charge": [
+              {
+                "time":             integer,
+                "percent_charged":  float,
+                "status":           string
+              }
+            ],
+            "history_rate":[
+              {
+                "time":             integer,
+                "percent_charged":  float,
+                "status":           string
+              }
+            ],
+            "daemon_version":       string,
+            "on_battery":           boolean,
+            "lid_is_closed":        boolean,
+            "lid_is_present":       boolean,
+            "critical_action":      string
           }
         ]
     """
@@ -90,8 +130,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
     device_obj = {}
     device_name = None
-    detail_obj = {}
-    detail_key = ''
+    history_key = ''
     history_list = []
     history_list_obj = {}
 
@@ -115,8 +154,6 @@ def parse(data, raw=False, quiet=False):
                         'type': 'Daemon'
                     }
 
-                detail_obj = {}
-                detail_key = ''
                 continue
 
             # history detail lines
@@ -128,21 +165,25 @@ def parse(data, raw=False, quiet=False):
                     'status': line_list[2]
                 }
                 history_list.append(history_list_obj)
-                device_obj[detail_key] = history_list
+                device_obj[history_key] = history_list
                 continue
 
             # general detail lines
             if line.startswith('    ') and ':' in line:
                 key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
                 val = line.split(':', maxsplit=1)[1].strip()
-                device_obj[detail_key][key] = val
+                device_obj['detail'][key] = val
                 continue
 
             # history detail lines are a special case of detail lines
             # set the history detail key
-            if line.startswith('  ') and ':' in line and line.strip().split(':', maxsplit=1)[1] == '':
-                detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '').rstrip(':')
-                device_obj[detail_key] = {}
+            if line.startswith('  History (charge):') or line.startswith('  History (rate):'):
+                if line.startswith('  History (charge):'):
+                    history_key = 'history_charge'
+                elif line.startswith('  History (rate):'):
+                    history_key = 'history_rate'
+
+                device_obj[history_key] = {}
                 history_list = []
                 continue
 
@@ -155,13 +196,13 @@ def parse(data, raw=False, quiet=False):
 
             # set the general detail key
             if line.startswith('  ') and ':' not in line:
-                detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
-                device_obj[detail_key] = {}
+                detail_type = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
+                device_obj['detail'] = {
+                    'type': detail_type
+                }
                 continue
 
     if device_obj:
-        if detail_obj:
-            device_obj[detail_key] = detail_obj
         raw_output.append(device_obj)
 
     if raw:
