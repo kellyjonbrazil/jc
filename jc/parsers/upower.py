@@ -121,14 +121,6 @@ def parse(data, raw=False, quiet=False):
                 detail_key = ''
                 continue
 
-            # history lines are a special case of detail lines
-            # set the history detail key
-            if line.startswith('  History ('):
-                continue
-            #     detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')[:-1]
-            #     device_obj[detail_key] = {}
-            #     continue
-
             # history detail lines
             # if detail_key.startswith('history_'):
             if line.startswith('    ') and ':' not in line:
@@ -148,12 +140,19 @@ def parse(data, raw=False, quiet=False):
                 detail_obj[key] = val
                 continue
 
+            # history lines are a special case of detail lines
+            # set the history detail key
+            if line.startswith('  ') and ':' in line and line.strip().split(':', maxsplit=1)[1] == '':
+                continue
+            #     detail_key = line.strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')[:-1]
+            #     device_obj[detail_key] = {}
+            #     continue
+
             # top level lines
             if line.startswith('  ') and ':' in line:
                 key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_')
                 val = line.split(':', maxsplit=1)[1].strip()
                 device_obj[key] = val
-
                 continue
 
             # set the detail key
