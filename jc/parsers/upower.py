@@ -25,6 +25,8 @@ Examples:
     $ upower | jc --upower -p -r
     []
 """
+import locale
+from datetime import datetime
 import jc.utils
 
 
@@ -57,56 +59,155 @@ def process(proc_data):
 
         [
           {
-            "type":                 string,
-            "device_name":          string,
-            "native_path":          string,
-            "power_supply":         boolean,
-            "updated":              "Thu 11 Mar 2021 06:28:08 PM UTC (441975 seconds ago)",
-            "has_history":          boolean,
-            "has_statistics":       boolean,
+            "type":                         string,
+            "device_name":                  string,
+            "native_path":                  string,
+            "power_supply":                 boolean,
+            "updated":                      string,
+            "updated_epoch":                integer,      # works best with C locale. null if conversion fails
+            "updated_seconds_ago":          integer,
+            "has_history":                  boolean,
+            "has_statistics":               boolean,
             "detail": {
-              "type":               string,
-              "warning_level":      string,        # null if none
-              "online":             boolean,
-              "icon_name":          string
-              "present":            boolean,
-              "rechargeable":       boolean,
-              "state":              string,
-              "energy":             "22.3998 Wh",
-              "energy_empty":       "0 Wh",
-              "energy_full":        "52.6473 Wh",
-              "energy_full_design": "62.16 Wh",
-              "energy_rate":        "31.6905 W",
-              "voltage":            "12.191 V",
-              "time_to_full":       "57.3 minutes",
-              "percentage":         "42.5469%",
-              "capacity":           "84.6964%",
-              "technology":         string
+              "type":                       string,
+              "warning_level":              string,        # null if none
+              "online":                     boolean,
+              "icon_name":                  string
+              "present":                    boolean,
+              "rechargeable":               boolean,
+              "state":                      string,
+              "energy":                     float,
+              "energy_unit":                string,
+              "energy_empty":               float,
+              "energy_empty_unit":          string,
+              "energy_full":                float,
+              "energy_full_unit":           string,
+              "energy_full_design":         float,
+              "energy_full_design_unit":    string,
+              "energy_rate":                float,
+              "energy_rate_unit":           string,
+              "voltage":                    float,
+              "voltage_unit":               string,
+              "time_to_full":               float,
+              "time_to_full_unit":          string,
+              "percentage":                 float,
+              "capacity":                   float,
+              "technology":                 string
             },
             "history_charge": [
               {
-                "time":             integer,
-                "percent_charged":  float,
-                "status":           string
+                "time":                     integer,
+                "percent_charged":          float,
+                "status":                   string
               }
             ],
             "history_rate":[
               {
-                "time":             integer,
-                "percent_charged":  float,
-                "status":           string
+                "time":                     integer,
+                "percent_charged":          float,
+                "status":                   string
               }
             ],
-            "daemon_version":       string,
-            "on_battery":           boolean,
-            "lid_is_closed":        boolean,
-            "lid_is_present":       boolean,
-            "critical_action":      string
+            "daemon_version":               string,
+            "on_battery":                   boolean,
+            "lid_is_closed":                boolean,
+            "lid_is_present":               boolean,
+            "critical_action":              string
           }
         ]
     """
+    for entry in proc_data:
+        # time conversions
+        if 'updated' in entry:
+            updated_list = entry['updated'].replace('(', '').replace(')', '').split()
+            entry['updated'] = ' '.join(updated_list[:-3])
 
-    # rebuild output for added semantic information
+            # try C locale. If that fails, try current locale. If that failes, give up
+            entry['updated_epoch'] = None
+            try:
+                entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').strftime('%s'))
+            except Exception:
+                try:
+                    locale.setlocale(locale.LC_TIME, '')
+                    entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').strftime('%s'))
+                except Exception:
+                    pass
+
+            entry['updated_seconds_ago'] = int(updated_list[-3])
+
+        # top level boolean conversions
+        bool_list = ['power_supply', 'has_history', 'has_statistics', 'on_battery', 'lid_is_closed', 'lid_is_present']
+        for key in entry:
+            if key in bool_list:
+                if entry[key].lower() == 'yes':
+                    entry[key] = True
+                else:
+                    entry[key] = False
+
+        # detail level boolean conversions
+        bool_list = ['online', 'present', 'rechargeable']
+        if 'detail' in entry:
+            for key in entry['detail']:
+                if key in bool_list:
+                    if entry['detail'][key].lower() == 'yes':
+                        entry['detail'][key] = True
+                    else:
+                        entry['detail'][key] = False
+
+        # detail level convert warning to null if value is none
+        if 'detail' in entry:
+            if 'warning_level' in entry['detail']:
+                if entry['detail']['warning_level'] == 'none':
+                    entry['detail']['warning_level'] = None
+
+        # detail level convert energy readings to float and add unit keys
+        if 'detail' in entry:
+            add_items = []
+            for key, value in entry['detail'].items():
+                if value and isinstance(value, str):
+                    if len(value.split()) == 2 and value.split()[0].replace('.', '').isnumeric():
+                        entry['detail'][key] = float(value.split()[0])
+                        add_items.append({
+                            key + '_unit': value.split()[1]
+                        })
+
+            if add_items:
+                for item in add_items:
+                    for key, value in item.items():
+                        entry['detail'][key] = value
+
+        # detail level fix percentages
+        if 'detail' in entry:
+            for key, value in entry['detail'].items():
+                if value and isinstance(value, str):
+                    if value[-1] == '%':
+                        entry['detail'][key] = float(value[:-1])
+
+        # history_charge and history_rate level convert floats and ints
+        histories = []
+
+        if 'history_charge' in entry:
+            histories.append('history_charge')
+        if 'history_rate' in entry:
+            histories.append('history_rate')
+
+        if histories:
+            for history_obj_list in histories:
+                new_history_list = []
+                for history_obj in entry[history_obj_list]:
+                    new_history_obj = {}
+                    for key, value in history_obj.items():
+                        if key == 'time':
+                            new_history_obj[key] = int(value)
+                        elif key == 'percent_charged':
+                            new_history_obj[key] = float(value)
+                        else:
+                            new_history_obj[key] = value
+
+                    new_history_list.append(new_history_obj)
+
+                entry[history_obj_list] = new_history_list
+
     return proc_data
 
 
