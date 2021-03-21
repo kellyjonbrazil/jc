@@ -72,7 +72,6 @@ Examples:
             "status": "charging"
           }
         ],
-        "updated_epoch": 1328841735,
         "updated_seconds_ago": 1
       }
     ]
@@ -126,8 +125,8 @@ Examples:
       }
     ]
 """
-import locale
-from datetime import datetime, timezone
+# import locale
+# from datetime import datetime, timezone
 import jc.utils
 
 
@@ -166,7 +165,6 @@ def process(proc_data):
             "native_path":                  string,
             "power_supply":                 boolean,
             "updated":                      string,
-            "updated_epoch":                integer,      # as UTC. Works best with C locale. null if conversion fails
             "updated_seconds_ago":          integer,
             "has_history":                  boolean,
             "has_statistics":               boolean,
@@ -223,25 +221,40 @@ def process(proc_data):
         if 'updated' in entry:
             updated_list = entry['updated'].replace('(', '').replace(')', '').split()
             entry['updated'] = ' '.join(updated_list[:-3])
-
-            # try C locale. If that fails, try current locale. If that fails, give up
-            entry['updated_epoch'] = None
-            try:
-                locale.setlocale(locale.LC_TIME, None)
-                entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').astimezone(tz=timezone.utc).strftime('%s'))
-            except Exception:
-                try:
-                    locale.setlocale(locale.LC_TIME, '')
-                    entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').astimezone(tz=timezone.utc).strftime('%s'))
-
-                except Exception:
-                    pass
-                finally:
-                    locale.setlocale(locale.LC_TIME, None)
-            finally:
-                locale.setlocale(locale.LC_TIME, None)
-
             entry['updated_seconds_ago'] = int(updated_list[-3])
+
+            # Removing attempted epoch conversions since, depending on locale, timezone info may not be present in output.
+            # May investigate if there is a way to reliably convert the datetime string to an epoch timestamp
+            # if the timezone is present in a future release.
+            #
+            # If we assume current OS timezone, that works for interactive use: upower -d | jc --upower
+            # 
+            # But, this wont necessarily convert timestamps correctly if converting text output sourced from another system:
+            # cat upower.out | jc --upower
+            #
+            # In this scenario, we don't always know what timezone was used on the source, so timestamp calculations will
+            # probably be wrong.
+            #
+            # try C locale. If that fails, try current locale. If that fails, give up
+            # entry['updated_epoch'] = None
+            # try:
+            #     locale.setlocale(locale.LC_TIME, None)
+            #     epoch_dt = datetime.strptime(entry['updated'], '%c').astimezone(tz=None)
+            #     entry['updated_epoch'] = int(epoch_dt.strftime('%s'))
+            #     entry['date_from_timestamp_local'] = datetime.fromtimestamp(entry['updated_epoch']).strftime('%c')
+            #     entry['updated_epoch_utc'] = int(epoch_dt.replace(tzinfo=timezone.utc).strftime('%s'))
+            #     entry['date_from_timestamp_utc'] = datetime.fromtimestamp(entry['updated_epoch_utc']).strftime('%c')
+            # except Exception:
+            #     try:
+            #         locale.setlocale(locale.LC_TIME, '')
+            #         entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').astimezone(tz=timezone.utc).strftime('%s'))
+
+            #     except Exception:
+            #         pass
+            #     finally:
+            #         locale.setlocale(locale.LC_TIME, None)
+            # finally:
+            #     locale.setlocale(locale.LC_TIME, None)
 
         # top level boolean conversions
         bool_list = ['power_supply', 'has_history', 'has_statistics', 'on_battery', 'lid_is_closed', 'lid_is_present']
