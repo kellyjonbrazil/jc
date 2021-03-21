@@ -157,7 +157,7 @@ Returns:
         "native_path":                  string,
         "power_supply":                 boolean,
         "updated":                      string,
-        "updated_epoch":                integer,      # works best with C locale. null if conversion fails
+        "updated_epoch":                integer,      # as UTC. Works best with C locale. null if conversion fails
         "updated_seconds_ago":          integer,
         "has_history":                  boolean,
         "has_statistics":               boolean,

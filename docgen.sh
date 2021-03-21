@@ -62,8 +62,8 @@ pydocmd simple jc.parsers.systemctl_luf+ > ../docs/parsers/systemctl_luf.md
 pydocmd simple jc.parsers.timedatectl+ > ../docs/parsers/timedatectl.md
 pydocmd simple jc.parsers.tracepath+ > ../docs/parsers/tracepath.md
 pydocmd simple jc.parsers.traceroute+ > ../docs/parsers/traceroute.md
-pydocmd simple jc.parsers.upower+ > ../docs/parsers/upower.md
 pydocmd simple jc.parsers.uname+ > ../docs/parsers/uname.md
+pydocmd simple jc.parsers.upower+ > ../docs/parsers/upower.md
 pydocmd simple jc.parsers.uptime+ > ../docs/parsers/uptime.md
 pydocmd simple jc.parsers.w+ > ../docs/parsers/w.md
 pydocmd simple jc.parsers.wc+ > ../docs/parsers/wc.md

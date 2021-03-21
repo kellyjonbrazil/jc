@@ -127,7 +127,7 @@ Examples:
     ]
 """
 import locale
-from datetime import datetime
+from datetime import datetime, timezone
 import jc.utils
 
 
@@ -141,6 +141,7 @@ class info():
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['upower']
+    timezone_support = True
 
 
 __version__ = info.version
@@ -165,7 +166,7 @@ def process(proc_data):
             "native_path":                  string,
             "power_supply":                 boolean,
             "updated":                      string,
-            "updated_epoch":                integer,      # works best with C locale. null if conversion fails
+            "updated_epoch":                integer,      # as UTC. Works best with C locale. null if conversion fails
             "updated_seconds_ago":          integer,
             "has_history":                  boolean,
             "has_statistics":               boolean,
@@ -226,13 +227,19 @@ def process(proc_data):
             # try C locale. If that fails, try current locale. If that fails, give up
             entry['updated_epoch'] = None
             try:
-                entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').strftime('%s'))
+                locale.setlocale(locale.LC_TIME, None)
+                entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').astimezone(tz=timezone.utc).strftime('%s'))
             except Exception:
                 try:
                     locale.setlocale(locale.LC_TIME, '')
-                    entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').strftime('%s'))
+                    entry['updated_epoch'] = int(datetime.strptime(entry['updated'], '%c').astimezone(tz=timezone.utc).strftime('%s'))
+
                 except Exception:
                     pass
+                finally:
+                    locale.setlocale(locale.LC_TIME, None)
+            finally:
+                locale.setlocale(locale.LC_TIME, None)
 
             entry['updated_seconds_ago'] = int(updated_list[-3])
 
