@@ -1,9 +1,11 @@
 import os
 import json
+import time
 import unittest
 import jc.parsers.date
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+time.tzset()
 
 
 class MyTests(unittest.TestCase):
