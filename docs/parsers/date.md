@@ -82,7 +82,7 @@ Returns:
       "hour":         integer,
       "minute":       integer,
       "second":       integer,
-      "period":       string,
+      "period":       string,        # 'AM' or 'PM'. null if 24-hour output
       "month":        string,
       "weekday":      string,
       "weekday_num":  integer,

@@ -88,7 +88,7 @@ def process(proc_data):
           "hour":         integer,
           "minute":       integer,
           "second":       integer,
-          "period":       string,
+          "period":       string,        # 'AM' or 'PM'. null if 24-hour output
           "month":        string,
           "weekday":      string,
           "weekday_num":  integer,
@@ -148,7 +148,7 @@ def process(proc_data):
             'hour': dt_hour,
             'minute': dt_minute,
             'second': dt_second,
-            'period': proc_data['period'] if 'period' in proc_data else None,
+            'period': proc_data['period'].upper() if 'period' in proc_data else None,
             'month': proc_data['month'],
             'weekday': proc_data['weekday'],
             'weekday_num': weekday_map[proc_data['weekday']],
