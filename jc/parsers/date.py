@@ -129,24 +129,25 @@ def process(proc_data):
         dt_year = int(proc_data['year'])
         dt_month = month_map[proc_data['month']]
         dt_day = int(proc_data['day'])
-
-        # fix for 12 vs. 24 hour output
-        if proc_data['period']:
-            if proc_data['period'].lower() == 'pm':
-                dt_hour = int(proc_data['hour']) + 12
-            else:
-                dt_hour = int(proc_data['hour'])
-
+        dt_hour = int(proc_data['hour'])
+        dt_hour_24 = int(proc_data['hour'])
         dt_minute = int(proc_data['minute'])
         dt_second = int(proc_data['second'])
 
-        epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour, minute=dt_minute, second=dt_second)
+        # fix for 12 vs. 24 hour output
+        if 'period' in proc_data:
+            if proc_data['period']:
+                if proc_data['period'].lower() == 'pm':
+                    dt_hour_24 = dt_hour + 12
+
+        epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour_24, minute=dt_minute, second=dt_second)
 
         date_obj = {
             'year': dt_year,
             'month_num': dt_month,
             'day': dt_day,
             'hour': dt_hour,
+            'hour_24': dt_hour_24,
             'minute': dt_minute,
             'second': dt_second,
             'period': proc_data['period'].upper() if 'period' in proc_data else None,
@@ -159,7 +160,7 @@ def process(proc_data):
 
         # create aware datetime object only if the timezone is UTC
         if proc_data['timezone'] == 'UTC':
-            utc_epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour, minute=dt_minute, second=dt_second, tzinfo=timezone.utc)
+            utc_epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour_24, minute=dt_minute, second=dt_second, tzinfo=timezone.utc)
             date_obj['epoch_utc'] = int(utc_epoch_dt.timestamp())
 
         return date_obj

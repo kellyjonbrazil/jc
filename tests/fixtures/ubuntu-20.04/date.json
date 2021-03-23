@@ -1,1 +1,1 @@
-{"year": 2021, "month_num": 1, "day": 5, "hour": 1, "minute": 2, "second": 4, "period": "AM", "month": "Jan", "weekday": "Tue", "weekday_num": 2, "timezone": "UTC", "epoch": 1609837324}
+{"year": 2021, "month_num": 1, "day": 5, "hour": 1, "hour_24": 1, "minute": 2, "second": 4, "period": "AM", "month": "Jan", "weekday": "Tue", "weekday_num": 2, "timezone": "UTC", "epoch": 1609837324, "epoch_utc": 1609808524}

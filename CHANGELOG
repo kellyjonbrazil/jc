@@ -5,6 +5,9 @@ jc changelog
 - Add upower parser tested on linux
 - Update date parser to make weekday numbering ISO 8601 compliant
 - Update date parser to add a calculated (naive) epoch timestamp
+- Update date parser to add a calculated timezone-aware epoch_utc timestamp if the date output is in UTC
+- Update date parser to always set the period value to uppercase AM or PM
+- Update date parser to add an hour_24 field to always express the hour in 24-hour format
 
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
