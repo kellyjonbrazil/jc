@@ -235,6 +235,7 @@ def process(proc_data):
             except Exception:
                 try:
                     locale.setlocale(locale.LC_TIME, '')
+                    epoch_dt = datetime.strptime(entry['updated'], '%c')
                     entry['updated_epoch'] = int(epoch_dt.strftime('%s'))
                 except Exception:
                     pass
