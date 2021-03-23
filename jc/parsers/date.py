@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility `date` command output parser
 
-Calculated epoch time field is naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `date` command output.
+The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -25,32 +26,32 @@ Examples:
     {
       "year": 2021,
       "month_num": 3,
-      "day": 22,
-      "hour": 20,
-      "minute": 47,
-      "second": 3,
+      "day": 23,
+      "hour": 17,
+      "minute": 41,
+      "second": 44,
       "period": null,
       "month": "Mar",
-      "weekday": "Mon",
-      "weekday_num": 1,
-      "timezone": "PDT",
-      "epoch": 1616471223
+      "weekday": "Tue",
+      "weekday_num": 2,
+      "timezone": "UTC",
+      "epoch": 1616546504,
+      "epoch_utc": 1616571704
     }
-
 
     $ date | jc --date -p -r
     {
       "year": "2021",
       "month": "Mar",
-      "day": "22",
-      "weekday": "Mon",
-      "hour": "20",
-      "minute": "48",
-      "second": "12",
-      "timezone": "PDT"
+      "day": "23",
+      "weekday": "Tue",
+      "hour": "17",
+      "minute": "41",
+      "second": "44",
+      "timezone": "UTC"
     }
 """
-from datetime import datetime
+from datetime import datetime, timezone
 import jc.utils
 
 
@@ -92,9 +93,11 @@ def process(proc_data):
           "weekday":      string,
           "weekday_num":  integer,
           "timezone":     string,
-          "epoch":        integer
+          "epoch":        integer,       # naive timestamp
+          "epoch_utc":    integer,       # timezone-aware timestamp. Only available if timezone field is UTC
         }
     """
+    # ISO 8601 month numberings
     month_map = {
         "Jan": 1,
         "Feb": 2,
@@ -110,6 +113,7 @@ def process(proc_data):
         "Dec": 12
     }
 
+    # ISO 8601 weekday numberings
     weekday_map = {
         "Mon": 1,
         "Tue": 2,
@@ -124,26 +128,41 @@ def process(proc_data):
         dt_year = int(proc_data['year'])
         dt_month = month_map[proc_data['month']]
         dt_day = int(proc_data['day'])
-        dt_hour = int(proc_data['hour'])
+
+        # fix for 12 vs. 24 hour output
+        if proc_data['period']:
+            if proc_data['period'].lower() == 'pm':
+                dt_hour = int(proc_data['hour']) + 12
+            else:
+                dt_hour = int(proc_data['hour'])
+
         dt_minute = int(proc_data['minute'])
         dt_second = int(proc_data['second'])
 
         epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour, minute=dt_minute, second=dt_second)
 
-        return {
-            "year": dt_year,
+        date_obj = {
+            'year': dt_year,
             'month_num': dt_month,
-            "day": dt_day,
-            "hour": dt_hour,
-            "minute": dt_minute,
-            "second": dt_second,
-            "period": proc_data['period'] if 'period' in proc_data else None,
-            "month": proc_data['month'],
-            "weekday": proc_data['weekday'],
-            "weekday_num": weekday_map[proc_data['weekday']],
-            "timezone": proc_data['timezone'],
-            "epoch": int(epoch_dt.strftime('%s'))
+            'day': dt_day,
+            'hour': dt_hour,
+            'minute': dt_minute,
+            'second': dt_second,
+            'period': proc_data['period'] if 'period' in proc_data else None,
+            'month': proc_data['month'],
+            'weekday': proc_data['weekday'],
+            'weekday_num': weekday_map[proc_data['weekday']],
+            'timezone': proc_data['timezone'],
+            'epoch': int(epoch_dt.timestamp())
         }
+
+        # create aware datetime object only if the timezone is UTC
+        if proc_data['timezone'] == 'UTC':
+            utc_epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour, minute=dt_minute, second=dt_second, tzinfo=timezone.utc)
+            date_obj['epoch_utc'] = int(utc_epoch_dt.timestamp())
+
+        return date_obj
+
     else:
         return {}
 

@@ -2,7 +2,8 @@
 # jc.parsers.date
 jc - JSON CLI output utility `date` command output parser
 
-Calculated epoch time field is naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `date` command output.
+The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -27,29 +28,29 @@ Examples:
     {
       "year": 2021,
       "month_num": 3,
-      "day": 22,
-      "hour": 20,
-      "minute": 47,
-      "second": 3,
+      "day": 23,
+      "hour": 17,
+      "minute": 41,
+      "second": 44,
       "period": null,
       "month": "Mar",
-      "weekday": "Mon",
-      "weekday_num": 1,
-      "timezone": "PDT",
-      "epoch": 1616471223
+      "weekday": "Tue",
+      "weekday_num": 2,
+      "timezone": "UTC",
+      "epoch": 1616546504,
+      "epoch_utc": 1616571704
     }
-
 
     $ date | jc --date -p -r
     {
       "year": "2021",
       "month": "Mar",
-      "day": "22",
-      "weekday": "Mon",
-      "hour": "20",
-      "minute": "48",
-      "second": "12",
-      "timezone": "PDT"
+      "day": "23",
+      "weekday": "Tue",
+      "hour": "17",
+      "minute": "41",
+      "second": "44",
+      "timezone": "UTC"
     }
 
 
@@ -86,7 +87,8 @@ Returns:
       "weekday":      string,
       "weekday_num":  integer,
       "timezone":     string,
-      "epoch":        integer
+      "epoch":        integer,       # naive timestamp
+      "epoch_utc":    integer,       # timezone-aware timestamp. Only available if timezone field is UTC
     }
 
 
