@@ -466,16 +466,18 @@ date | jc --date -p          # or:  jc -p date
 {
   "year": 2021,
   "month_num": 3,
-  "day": 22,
-  "hour": 20,
-  "minute": 54,
-  "second": 39,
-  "period": null,
+  "day": 23,
+  "hour": 8,
+  "hour_24": 20,
+  "minute": 45,
+  "second": 29,
+  "period": "PM",
   "month": "Mar",
-  "weekday": "Mon",
-  "weekday_num": 1,
-  "timezone": "PDT",
-  "epoch": 1616471679
+  "weekday": "Tue",
+  "weekday_num": 2,
+  "timezone": "UTC",
+  "epoch": 1616557529,
+  "epoch_utc": 1616532329
 }
 ```
 ### df

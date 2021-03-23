@@ -28,16 +28,17 @@ Examples:
       "year": 2021,
       "month_num": 3,
       "day": 23,
-      "hour": 17,
-      "minute": 41,
-      "second": 44,
-      "period": null,
+      "hour": 8,
+      "hour_24": 20,
+      "minute": 45,
+      "second": 29,
+      "period": "PM",
       "month": "Mar",
       "weekday": "Tue",
       "weekday_num": 2,
       "timezone": "UTC",
-      "epoch": 1616546504,
-      "epoch_utc": 1616571704
+      "epoch": 1616557529,
+      "epoch_utc": 1616532329
     }
 
     $ date | jc --date -p -r
@@ -46,9 +47,10 @@ Examples:
       "month": "Mar",
       "day": "23",
       "weekday": "Tue",
-      "hour": "17",
-      "minute": "41",
-      "second": "44",
+      "hour": "08",
+      "minute": "45",
+      "second": "29",
+      "period": "PM",
       "timezone": "UTC"
     }
 """
