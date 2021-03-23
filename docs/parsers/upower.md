@@ -2,6 +2,8 @@
 # jc.parsers.upower
 jc - JSON CLI output utility `upower` command output parser
 
+Calculated epoch time fields are naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `upower` command output.
+
 Usage (cli):
 
     $ upower -d | jc --upower
@@ -74,7 +76,6 @@ Examples:
             "status": "charging"
           }
         ],
-        "updated_epoch": 1328841735,
         "updated_seconds_ago": 1
       }
     ]
@@ -157,7 +158,7 @@ Returns:
         "native_path":                  string,
         "power_supply":                 boolean,
         "updated":                      string,
-        "updated_epoch":                integer,      # as UTC. Works best with C locale. null if conversion fails
+        "updated_epoch":                integer,       # works best with C locale. null if conversion fails
         "updated_seconds_ago":          integer,
         "has_history":                  boolean,
         "has_statistics":               boolean,
