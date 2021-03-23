@@ -23,7 +23,6 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_last_wF_json = json.loads(f.read())
 
-    
     def test_last_F_ubuntu_20_4(self):
         """
         Test 'last -F' on Ubuntu 20.4
