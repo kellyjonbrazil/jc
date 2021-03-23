@@ -2,6 +2,8 @@
 # jc.parsers.date
 jc - JSON CLI output utility `date` command output parser
 
+Calculated epoch time field is naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `date` command output.
+
 Usage (cli):
 
     $ date | jc --date
@@ -23,28 +25,30 @@ Examples:
 
     $ date | jc --date -p
     {
-      "year": 2020,
-      "month_num": 7,
-      "day": 31,
-      "hour": 16,
-      "minute": 48,
-      "second": 11,
+      "year": 2021,
+      "month_num": 3,
+      "day": 22,
+      "hour": 20,
+      "minute": 47,
+      "second": 3,
       "period": null,
-      "month": "Jul",
-      "weekday": "Fri",
-      "weekday_num": 6,
-      "timezone": "PDT"
+      "month": "Mar",
+      "weekday": "Mon",
+      "weekday_num": 1,
+      "timezone": "PDT",
+      "epoch": 1616471223
     }
+
 
     $ date | jc --date -p -r
     {
-      "year": "2020",
-      "month": "Jul",
-      "day": "31",
-      "weekday": "Fri",
-      "hour": "16",
-      "minute": "50",
-      "second": "01",
+      "year": "2021",
+      "month": "Mar",
+      "day": "22",
+      "weekday": "Mon",
+      "hour": "20",
+      "minute": "48",
+      "second": "12",
       "timezone": "PDT"
     }
 
@@ -81,7 +85,8 @@ Returns:
       "month":        string,
       "weekday":      string,
       "weekday_num":  integer,
-      "timezone":     string
+      "timezone":     string,
+      "epoch":        integer
     }
 
 

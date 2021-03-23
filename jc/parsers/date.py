@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `date` command output parser
 
+Calculated epoch time field is naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `date` command output.
+
 Usage (cli):
 
     $ date | jc --date
@@ -21,36 +23,39 @@ Examples:
 
     $ date | jc --date -p
     {
-      "year": 2020,
-      "month_num": 7,
-      "day": 31,
-      "hour": 16,
-      "minute": 48,
-      "second": 11,
+      "year": 2021,
+      "month_num": 3,
+      "day": 22,
+      "hour": 20,
+      "minute": 47,
+      "second": 3,
       "period": null,
-      "month": "Jul",
-      "weekday": "Fri",
-      "weekday_num": 6,
-      "timezone": "PDT"
+      "month": "Mar",
+      "weekday": "Mon",
+      "weekday_num": 1,
+      "timezone": "PDT",
+      "epoch": 1616471223
     }
+
 
     $ date | jc --date -p -r
     {
-      "year": "2020",
-      "month": "Jul",
-      "day": "31",
-      "weekday": "Fri",
-      "hour": "16",
-      "minute": "50",
-      "second": "01",
+      "year": "2021",
+      "month": "Mar",
+      "day": "22",
+      "weekday": "Mon",
+      "hour": "20",
+      "minute": "48",
+      "second": "12",
       "timezone": "PDT"
     }
 """
+from datetime import datetime
 import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'date command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -86,7 +91,8 @@ def process(proc_data):
           "month":        string,
           "weekday":      string,
           "weekday_num":  integer,
-          "timezone":     string
+          "timezone":     string,
+          "epoch":        integer
         }
     """
     month_map = {
@@ -105,28 +111,38 @@ def process(proc_data):
     }
 
     weekday_map = {
-        "Sun": 1,
-        "Mon": 2,
-        "Tue": 3,
-        "Wed": 4,
-        "Thu": 5,
-        "Fri": 6,
-        "Sat": 7
+        "Mon": 1,
+        "Tue": 2,
+        "Wed": 3,
+        "Thu": 4,
+        "Fri": 5,
+        "Sat": 6,
+        "Sun": 7
     }
 
     if proc_data:
+        dt_year = int(proc_data['year'])
+        dt_month = month_map[proc_data['month']]
+        dt_day = int(proc_data['day'])
+        dt_hour = int(proc_data['hour'])
+        dt_minute = int(proc_data['minute'])
+        dt_second = int(proc_data['second'])
+
+        epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour, minute=dt_minute, second=dt_second)
+
         return {
-            "year": int(proc_data['year']),
-            'month_num': month_map[proc_data['month']],
-            "day": int(proc_data['day']),
-            "hour": int(proc_data['hour']),
-            "minute": int(proc_data['minute']),
-            "second": int(proc_data['second']),
+            "year": dt_year,
+            'month_num': dt_month,
+            "day": dt_day,
+            "hour": dt_hour,
+            "minute": dt_minute,
+            "second": dt_second,
             "period": proc_data['period'] if 'period' in proc_data else None,
             "month": proc_data['month'],
             "weekday": proc_data['weekday'],
             "weekday_num": weekday_map[proc_data['weekday']],
-            "timezone": proc_data['timezone']
+            "timezone": proc_data['timezone'],
+            "epoch": int(epoch_dt.strftime('%s'))
         }
     else:
         return {}
