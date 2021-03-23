@@ -1,6 +1,6 @@
 """jc - JSON CLI output utility `upower` command output parser
 
-Calculated epoch time fields are naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `upower` command output.
+Calculated epoch time field is naive (i.e. based on the local time of the system the parser is run on) since there is no unambiguous timezone information in the `upower` command output.
 
 Usage (cli):
 
