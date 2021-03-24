@@ -114,8 +114,8 @@ def parse_datetime_to_timestamp(data):
                      If the conversion completely fails, None is returned instead of a Dictionary
     """
     utc_tz = False
-    epoch_dt = None
-    epoch_dt_utc = None
+    dt = None
+    dt_utc = None
     timestamp_naive = None
     timestamp_utc = None
     timestamp_obj = {}
@@ -124,25 +124,26 @@ def parse_datetime_to_timestamp(data):
     formats = [
         {'id': 1, 'format': '%c', 'locale': None},  # C locale format conversion: Tue Mar 23 16:12:11 2021
         {'id': 2, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
-        {'id': 3, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # date cli command in en_US.UTF-8 format: Wed Mar 24 06:16:19 PM UTC 2021
-        {'id': 4, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # date cli command in C locale format: Wed Mar 24 11:11:30 PDT 2021
-        {'id': 5, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
+        {'id': 3, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
+        {'id': 4, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # date cli command in en_US.UTF-8 format: Wed Mar 24 06:16:19 PM UTC 2021
+        {'id': 5, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # date cli command in C locale format: Wed Mar 24 11:11:30 PDT 2021
+        {'id': 6, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
     ]
 
     for fmt in formats:
         try:
             locale.setlocale(locale.LC_TIME, fmt['locale'])
-            epoch_dt = datetime.strptime(data, fmt['format'])
-            timestamp_naive = int(epoch_dt.replace(tzinfo=None).timestamp())
+            dt = datetime.strptime(data, fmt['format'])
+            timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
             timestamp_obj['format'] = fmt['id']
             locale.setlocale(locale.LC_TIME, None)
             break
         except Exception:
             continue
 
-    if epoch_dt and utc_tz:
-        epoch_dt_utc = epoch_dt.replace(tzinfo=timezone.utc)
-        timestamp_utc = int(epoch_dt_utc.timestamp())
+    if dt and utc_tz:
+        dt_utc = dt.replace(tzinfo=timezone.utc)
+        timestamp_utc = int(dt_utc.timestamp())
 
     if timestamp_naive:
         timestamp_obj['timestamp_naive'] = timestamp_naive
