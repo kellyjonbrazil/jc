@@ -100,8 +100,8 @@ def parse_datetime_to_timestamp(data):
         Dict/None    A Dictionary of the following format:
 
                      {
-                         "format":               integer,
-                         "timestamp_naive":      integer,
+                         "format":               integer,     # for debugging purposes
+                         "timestamp_naive":      integer,     # timestamp based on locally configured timezone
                          "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected
                      }
 
