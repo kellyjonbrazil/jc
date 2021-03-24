@@ -13,6 +13,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.out'), 'r', encoding='utf-8') as f:
             self.generic_date = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-before-midnight.out'), 'r', encoding='utf-8') as f:
+            self.generic_date_before_midnight = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-after-midnight.out'), 'r', encoding='utf-8') as f:
+            self.generic_date_after_midnight = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_20_04_date = f.read()
 
@@ -22,6 +28,12 @@ class MyTests(unittest.TestCase):
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.json'), 'r', encoding='utf-8') as f:
             self.generic_date_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-before-midnight.json'), 'r', encoding='utf-8') as f:
+            self.generic_date_before_midnight_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-after-midnight.json'), 'r', encoding='utf-8') as f:
+            self.generic_date_after_midnight_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_20_04_date_json = json.loads(f.read())
@@ -40,6 +52,18 @@ class MyTests(unittest.TestCase):
         Test 'date'
         """
         self.assertEqual(jc.parsers.date.parse(self.generic_date, quiet=True), self.generic_date_json)
+
+    def test_date_before_midnight(self):
+        """
+        Test 'date' 24-hour conversion just before midnight
+        """
+        self.assertEqual(jc.parsers.date.parse(self.generic_date_before_midnight, quiet=True), self.generic_date_before_midnight_json)
+
+    def test_date_after_midnight(self):
+        """
+        Test 'date' 24-hour conversion just after midnight
+        """
+        self.assertEqual(jc.parsers.date.parse(self.generic_date_after_midnight, quiet=True), self.generic_date_after_midnight_json)
 
     def test_date_am_ubuntu_20_04(self):
         """
