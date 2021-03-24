@@ -2767,6 +2767,69 @@ uname -a | jc --uname -p          # or:  jc -p uname -a
   "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
 }
 ```
+### upower
+```bash
+upower -i /org/freedesktop/UPower/devices/battery | jc --upower -p          # or jc -p upower -i /org/freedesktop/UPower/devices/battery
+```
+```json
+[
+  {
+    "native_path": "/sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/power_supply/BAT0",
+    "vendor": "NOTEBOOK",
+    "model": "BAT",
+    "serial": "0001",
+    "power_supply": true,
+    "updated": "Thu 11 Mar 2021 06:28:08 PM UTC",
+    "has_history": true,
+    "has_statistics": true,
+    "detail": {
+      "type": "battery",
+      "present": true,
+      "rechargeable": true,
+      "state": "charging",
+      "energy": 22.3998,
+      "energy_empty": 0.0,
+      "energy_full": 52.6473,
+      "energy_full_design": 62.16,
+      "energy_rate": 31.6905,
+      "voltage": 12.191,
+      "time_to_full": 57.3,
+      "percentage": 42.5469,
+      "capacity": 84.6964,
+      "technology": "lithium-ion",
+      "energy_unit": "Wh",
+      "energy_empty_unit": "Wh",
+      "energy_full_unit": "Wh",
+      "energy_full_design_unit": "Wh",
+      "energy_rate_unit": "W",
+      "voltage_unit": "V",
+      "time_to_full_unit": "minutes"
+    },
+    "history_charge": [
+      {
+        "time": 1328809335,
+        "percent_charged": 42.547,
+        "status": "charging"
+      },
+      {
+        "time": 1328809305,
+        "percent_charged": 42.02,
+        "status": "charging"
+      }
+    ],
+    "history_rate": [
+      {
+        "time": 1328809335,
+        "percent_charged": 31.691,
+        "status": "charging"
+      }
+    ],
+    "updated_seconds_ago": 441975,
+    "updated_epoch": 1615516088,
+    "updated_epoch_utc": 1615487288
+  }
+]
+```
 ### uptime
 ```bash
 uptime | jc --uptime -p          # or:  jc -p uptime

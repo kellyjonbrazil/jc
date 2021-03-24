@@ -31,7 +31,7 @@ Examples:
         "model": "BAT",
         "serial": "0001",
         "power_supply": true,
-        "updated": "Thu Feb 9 18:42:15 2012",
+        "updated": "Thu 11 Mar 2021 06:28:08 PM UTC",
         "has_history": true,
         "has_statistics": true,
         "detail": {
@@ -76,7 +76,9 @@ Examples:
             "status": "charging"
           }
         ],
-        "updated_seconds_ago": 1
+        "updated_seconds_ago": 441975,
+        "updated_epoch": 1615516088,
+        "updated_epoch_utc": 1615487288
       }
     ]
 
@@ -88,7 +90,7 @@ Examples:
         "model": "BAT",
         "serial": "0001",
         "power_supply": "yes",
-        "updated": "Thu Feb  9 18:42:15 2012 (1 seconds ago)",
+        "updated": "Thu 11 Mar 2021 06:28:08 PM UTC (441975 seconds ago)",
         "has_history": "yes",
         "has_statistics": "yes",
         "detail": {
