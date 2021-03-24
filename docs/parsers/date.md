@@ -2,7 +2,7 @@
 # jc.parsers.date
 jc - JSON CLI output utility `date` command output parser
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local time of the system the parser is run on)
 
 The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
 
@@ -82,7 +82,8 @@ Returns:
       "year":         integer,
       "month_num":    integer,
       "day":          integer,
-      "hour":         integer,
+      "hour":         integer,       # originally parsed hour
+      "hour_24":      integer,       # parsed hour converted to 24-hour value
       "minute":       integer,
       "second":       integer,
       "period":       string,        # 'AM' or 'PM'. null if 24-hour output
