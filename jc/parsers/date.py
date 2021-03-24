@@ -142,6 +142,11 @@ def process(proc_data):
             if proc_data['period']:
                 if proc_data['period'].lower() == 'pm':
                     dt_hour_24 = dt_hour + 12
+                    if dt_hour_24 > 23:
+                        dt_hour_24 = 12
+                if proc_data['period'].lower() == 'am':
+                    if dt_hour_24 == 12:
+                        dt_hour_24 = 0
 
         epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour_24, minute=dt_minute, second=dt_second)
 
