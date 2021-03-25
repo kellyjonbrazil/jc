@@ -69,7 +69,8 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
 > Note: Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on). 
-If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix to the key name. (e.g. `epoch_utc`) 
+>
+> If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) 
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
