@@ -42,6 +42,7 @@ parsers = [
     'date',
     'df',
     'dig',
+    'dir',
     'dmidecode',
     'du',
     'env',
