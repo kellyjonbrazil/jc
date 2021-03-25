@@ -87,12 +87,11 @@ Examples:
 
 """
 import re
-from datetime import datetime
 import jc.utils
 
 
 class info():
-    version = '1.4'
+    version = '1.5'
     description = 'last and lastb command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -126,8 +125,8 @@ def process(proc_data):
             "login":            string,
             "logout":           string,
             "duration":         string,
-            "login_epoch":      integer,   # available with last -F option
-            "logout_epoch":     integer,   # available with last -F option
+            "login_epoch":      integer,   # (naive) available with last -F option
+            "logout_epoch":     integer,   # (naive) available with last -F option
             "duration_seconds": integer    # available with last -F option
           }
         ]
