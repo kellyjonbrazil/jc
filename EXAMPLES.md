@@ -1541,32 +1541,36 @@ cat keyvalue.txt | jc --kv -p
 ```
 ### last and lastb
 ```bash
-last | jc --last -p          # or:  jc -p last
+last -F | jc --last -p          # or:  jc -p last -F
 ```
 ```json
 [
   {
-    "user": "joeuser",
-    "tty": "ttys002",
-    "hostname": null,
-    "login": "Thu Feb 27 14:31",
-    "logout": "still logged in"
+    "user": "kbrazil",
+    "tty": "pts/0",
+    "hostname": "kbrazil-mac.attlocal.net",
+    "login": "Tue Jan 5 14:29:24 2021",
+    "logout": "still logged in",
+    "login_epoch": 1609885764
   },
   {
-    "user": "joeuser",
-    "tty": "ttys003",
+    "user": "kbrazil",
+    "tty": "tty1",
     "hostname": null,
-    "login": "Thu Feb 27 10:38",
-    "logout": "10:38",
-    "duration": "00:00"
+    "login": "Tue Jan 5 14:28:41 2021",
+    "logout": "still logged in",
+    "login_epoch": 1609885721
   },
   {
-    "user": "joeuser",
-    "tty": "ttys003",
-    "hostname": null,
-    "login": "Thu Feb 27 10:18",
-    "logout": "10:18",
-    "duration": "00:00"
+    "user": "reboot",
+    "tty": "system boot",
+    "hostname": "3.10.0-1062.1.2.el7.x86_64",
+    "login": "Tue Jan 5 14:28:28 2021",
+    "logout": "Tue Jan 5 14:29:36 2021",
+    "duration": "00:01",
+    "login_epoch": 1609885708,
+    "logout_epoch": 1609885776,
+    "duration_seconds": 68
   }
 ]
 ```
