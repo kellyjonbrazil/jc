@@ -70,7 +70,7 @@ Two representations of the data are possible. The default representation uses a 
 
 > Note: Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on). 
 >
-> If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) 
+> If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
