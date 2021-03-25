@@ -465,19 +465,24 @@ date | jc --date -p          # or:  jc -p date
 ```json
 {
   "year": 2021,
-  "month_num": 3,
-  "day": 23,
-  "hour": 8,
-  "hour_24": 20,
-  "minute": 45,
-  "second": 29,
-  "period": "PM",
   "month": "Mar",
-  "weekday": "Tue",
-  "weekday_num": 2,
+  "month_num": 3,
+  "day": 25,
+  "weekday": "Thu",
+  "weekday_num": 4,
+  "hour": 2,
+  "hour_24": 2,
+  "minute": 2,
+  "second": 26,
+  "period": "AM",
   "timezone": "UTC",
-  "epoch": 1616557529,
-  "epoch_utc": 1616532329
+  "utc_offset": "+0000",
+  "day_of_year": 84,
+  "week_of_year": 12,
+  "iso": "2021-03-25T02:02:26+00:00",
+  "epoch": 1616662946,
+  "epoch_utc": 1616637746,
+  "timezone_aware": true
 }
 ```
 ### df
