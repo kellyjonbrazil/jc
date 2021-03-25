@@ -802,12 +802,19 @@ uptime | jc --uptime -p          # or:  jc -p uptime
 ```
 ```json
 {
-  "time": "11:30:44",
-  "uptime": "1 day, 21:17",
-  "users": 1,
-  "load_1m": 0.01,
-  "load_5m": 0.04,
-  "load_15m": 0.05
+  "time": "11:35",
+  "uptime": "3 days, 4:03",
+  "users": 5,
+  "load_1m": 1.88,
+  "load_5m": 2.0,
+  "load_15m": 1.94,
+  "time_hour": 11,
+  "time_minute": 35,
+  "time_second": null,
+  "uptime_days": 3,
+  "uptime_hours": 4,
+  "uptime_minutes": 3,
+  "uptime_total_seconds": 273780
 }
 ```
 ### XML files

@@ -5,11 +5,12 @@ jc changelog
 - Add upower parser tested on linux
 - Update date parser: complete rewrite (v2.0) providing many enhancements:
     - Mmake weekday numbering ISO 8601 compliant
-    - Add a calculated naive timestamp
-    - Add a calculated UTC timestamp (only if date output is in UTC)
+    - Add a calculated naive timestamp field
+    - Add a calculated UTC timestamp field (only if date output is in UTC)
     - Add several fields, including: hour_24, utc_offset, day_of_year, week_of_year, iso, and timezone_aware
-- Update uptime parser to provide datestamps
-- Update last parser to use the new date-time parsing function
+- Update uptime parser to add uptime_days, uptime_hours, uptime_minutes, uptime_total_seconds, time_hour,
+      time_minute, and time_second fields
+- Update last parser to use new timestamp function
 - Add -h option to display the help text. Piping errors no longer show the help text.
 
 20210305 v1.14.4
