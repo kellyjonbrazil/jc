@@ -8,3 +8,4 @@ echo
 
 python3 -m unittest tests.localtest_date -v
 python3 -m unittest tests.localtest_last -v
+python3 -m unittest tests.localtest_upower -v
