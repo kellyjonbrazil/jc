@@ -3,11 +3,13 @@ jc changelog
 20210316 v1.15.0
 - Add acpi parser tested on linux
 - Add upower parser tested on linux
-- Update date parser to make weekday numbering ISO 8601 compliant
-- Update date parser to add a calculated (naive) epoch timestamp
-- Update date parser to add a calculated timezone-aware epoch_utc timestamp if the date output is in UTC
-- Update date parser to always set the period value to uppercase AM or PM
-- Update date parser to add an hour_24 field to always express the hour in 24-hour format
+- Update date parser: complete rewrite (v2.0) providing many enhancements:
+    - Mmake weekday numbering ISO 8601 compliant
+    - Add a calculated naive timestamp
+    - Add a calculated UTC timestamp (only if date output is in UTC)
+    - Add several fields, including: hour_24, utc_offset, day_of_year, week_of_year, iso, and timezone_aware
+- Update uptime parser to provide datestamps
+- Add -h option to display the help text. Piping errors no longer show the help text.
 
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
