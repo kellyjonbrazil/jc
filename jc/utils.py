@@ -122,13 +122,13 @@ def parse_datetime_to_timestamp(data):
     utc_tz = True if 'UTC' in data else False
 
     formats = [
-        {'id': 1, 'format': '%c', 'locale': None},  # C locale format conversion: Tue Mar 23 16:12:11 2021
+        {'id': 1, 'format': '%c', 'locale': None},  # C locale format conversion, or date cli command in C locale with non-UTC tz: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
         {'id': 2, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
         {'id': 3, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
         {'id': 4, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
         {'id': 5, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
         {'id': 6, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # date cli command in en_US.UTF-8 format: Wed Mar 24 06:16:19 PM UTC 2021
-        {'id': 7, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # date cli command in C locale format: Wed Mar 24 11:11:30 PDT 2021
+        {'id': 7, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # date cli command in C locale format: Wed Mar 24 11:11:30 UTC 2021
         {'id': 8, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
     ]
 
