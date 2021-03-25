@@ -43,7 +43,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'uptime command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -69,14 +69,57 @@ def process(proc_data):
         Dictionary. Structured data with the following schema:
 
         {
-          "time":     string,
-          "uptime":   string,
-          "users":    integer,
-          "load_1m":  float,
-          "load_5m":  float,
-          "load_15m": float
+          "time":                   string,
+          "time_hour":              integer,
+          "time_minute":            integer,
+          "time_second":            integer,
+          "uptime":                 string,
+          "uptime_days":            integer,        # new
+          "uptime_hours":           integer,        # new
+          "uptime_minutes":         integer,        # new
+          "uptime_total_seconds":   integer,        # new
+          "users":                  integer,
+          "load_1m":                float,
+          "load_5m":                float,
+          "load_15m":               float
         }
     """
+    if 'time' in proc_data:
+        time_list = proc_data['time'].split(':')
+        proc_data['time_hour'] = int(time_list[0])
+        proc_data['time_minute'] = int(time_list[1])
+        if len(time_list) == 3:
+            proc_data['time_second'] = int(time_list[2])
+
+    # parse the uptime field
+    # 0 min
+    # 3 mins
+    # 3 days,  2:54
+    # 2 days, 19:32
+    # 1 day, 29 min
+    # 16:59
+    uptime_days = 0
+    uptime_hours = 0
+    uptime_minutes = 0
+    uptime_total_seconds = 0
+    if 'min' in proc_data['uptime']:
+        uptime_minutes = int(proc_data['uptime'].split()[-2])
+
+    if ':' in proc_data['uptime']:
+        uptime_hours = int(proc_data['uptime'].split()[-1].split(':')[-2])
+        uptime_minutes = int(proc_data['uptime'].split(':')[-1])
+
+    if 'day' in proc_data['uptime']:
+        uptime_days = int(proc_data['uptime'].split()[0])
+
+    proc_data['uptime_days'] = uptime_days
+    proc_data['uptime_hours'] = uptime_hours
+    proc_data['uptime_minutes'] = uptime_minutes
+
+    uptime_total_seconds = (uptime_days * 86400) + (uptime_hours * 3600) + (uptime_minutes * 60)
+    proc_data['uptime_total_seconds'] = uptime_total_seconds
+
+    # integer conversions
     int_list = ['users']
     for key in int_list:
         if key in proc_data:
@@ -86,6 +129,7 @@ def process(proc_data):
             except (ValueError):
                 proc_data[key] = None
 
+    # float conversions
     float_list = ['load_1m', 'load_5m', 'load_15m']
     for key in float_list:
         if key in proc_data:
@@ -119,25 +163,14 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
 
     if jc.utils.has_data(data):
+        time, _, *uptime, users, _, _, _, load_1m, load_5m, load_15m = cleandata[0].split()
 
-        parsed_line = cleandata[0].split()
-
-        # allow space for odd times
-        while len(parsed_line) < 20:
-            parsed_line.insert(2, ' ')
-
-        # find first part of time
-        for i, word in enumerate(parsed_line[2:]):
-            if word != ' ':
-                marker = i + 2
-                break
-
-        raw_output['time'] = parsed_line[0]
-        raw_output['uptime'] = ' '.join(parsed_line[marker:13]).lstrip().rstrip(',')
-        raw_output['users'] = parsed_line[13]
-        raw_output['load_1m'] = parsed_line[17].rstrip(',')
-        raw_output['load_5m'] = parsed_line[18].rstrip(',')
-        raw_output['load_15m'] = parsed_line[19]
+        raw_output['time'] = time
+        raw_output['uptime'] = ' '.join(uptime).rstrip(',')
+        raw_output['users'] = users
+        raw_output['load_1m'] = load_1m.rstrip(',')
+        raw_output['load_5m'] = load_5m.rstrip(',')
+        raw_output['load_15m'] = load_15m
 
     if raw:
         return raw_output
