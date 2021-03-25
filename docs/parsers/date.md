@@ -28,32 +28,24 @@ Examples:
     $ date | jc --date -p
     {
       "year": 2021,
+      "month": "Mar",
       "month_num": 3,
-      "day": 23,
-      "hour": 8,
-      "hour_24": 20,
-      "minute": 45,
-      "second": 29,
-      "period": "PM",
-      "month": "Mar",
-      "weekday": "Tue",
-      "weekday_num": 2,
+      "day": 25,
+      "weekday": "Thu",
+      "weekday_num": 4,
+      "hour": 2,
+      "hour_24": 2,
+      "minute": 2,
+      "second": 26,
+      "period": "AM",
       "timezone": "UTC",
-      "epoch": 1616557529,
-      "epoch_utc": 1616532329
-    }
-
-    $ date | jc --date -p -r
-    {
-      "year": "2021",
-      "month": "Mar",
-      "day": "23",
-      "weekday": "Tue",
-      "hour": "08",
-      "minute": "45",
-      "second": "29",
-      "period": "PM",
-      "timezone": "UTC"
+      "utc_offset": "+0000",
+      "day_of_year": 84,
+      "week_of_year": 12,
+      "iso": "2021-03-25T02:02:26+00:00",
+      "epoch": 1616662946,
+      "epoch_utc": 1616637746,
+      "timezone_aware": true
     }
 
 
@@ -77,22 +69,26 @@ Parameters:
 Returns:
 
     Dictionary. Structured data with the following schema:
-
     {
-      "year":         integer,
-      "month_num":    integer,
-      "day":          integer,
-      "hour":         integer,       # originally parsed hour
-      "hour_24":      integer,       # parsed hour converted to 24-hour value
-      "minute":       integer,
-      "second":       integer,
-      "period":       string,        # 'AM' or 'PM'. null if 24-hour output
-      "month":        string,
-      "weekday":      string,
-      "weekday_num":  integer,
-      "timezone":     string,
-      "epoch":        integer,       # naive timestamp
-      "epoch_utc":    integer,       # timezone-aware timestamp. Only available if timezone field is UTC
+      "year":               integer,
+      "month":              string,
+      "month_num":          integer,
+      "day":                integer,
+      "weekday":            string,
+      "weekday_num":        integer,
+      "hour":               integer,
+      "hour_24":            integer,
+      "minute":             integer,
+      "second":             integer,
+      "period":             string,
+      "timezone":           string,
+      "utc_offset":         string,       # null if timezone field is not UTC
+      "day_of_year":        integer,
+      "week_of_year":       integer,
+      "iso":                string,
+      "epoch":              integer,      # naive timestamp
+      "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
+      "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
     }
 
 

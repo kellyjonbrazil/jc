@@ -1,1 +1,1 @@
-{"year": 2020, "month_num": 8, "day": 3, "hour": 9, "hour_24": 9, "minute": 12, "second": 51, "period": null, "month": "Aug", "weekday": "Mon", "weekday_num": 1, "timezone": "PDT", "epoch": 1596471171}
+{"year": 2020, "month": "Aug", "month_num": 8, "day": 3, "weekday": "Mon", "weekday_num": 1, "hour": 9, "hour_24": 9, "minute": 12, "second": 51, "period": "AM", "timezone": "PDT", "utc_offset": null, "day_of_year": 216, "week_of_year": 31, "iso": "2020-08-03T09:12:51", "epoch": 1596471171, "epoch_utc": null, "timezone_aware": false}

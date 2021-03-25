@@ -1,1 +1,1 @@
-{"year": 2021, "month_num": 1, "day": 5, "hour": 1, "hour_24": 1, "minute": 2, "second": 4, "period": "AM", "month": "Jan", "weekday": "Tue", "weekday_num": 2, "timezone": "UTC", "epoch": 1609837324, "epoch_utc": 1609808524}
+{"year": 2021, "month": "Jan", "month_num": 1, "day": 5, "weekday": "Tue", "weekday_num": 2, "hour": 1, "hour_24": 1, "minute": 2, "second": 4, "period": "AM", "timezone": "UTC", "utc_offset": "+0000", "day_of_year": 5, "week_of_year": 1, "iso": "2021-01-05T01:02:04+00:00", "epoch": 1609837324, "epoch_utc": 1609808524, "timezone_aware": true}

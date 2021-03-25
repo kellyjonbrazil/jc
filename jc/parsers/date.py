@@ -26,32 +26,24 @@ Examples:
     $ date | jc --date -p
     {
       "year": 2021,
+      "month": "Mar",
       "month_num": 3,
-      "day": 23,
-      "hour": 8,
-      "hour_24": 20,
-      "minute": 45,
-      "second": 29,
-      "period": "PM",
-      "month": "Mar",
-      "weekday": "Tue",
-      "weekday_num": 2,
+      "day": 25,
+      "weekday": "Thu",
+      "weekday_num": 4,
+      "hour": 2,
+      "hour_24": 2,
+      "minute": 2,
+      "second": 26,
+      "period": "AM",
       "timezone": "UTC",
-      "epoch": 1616557529,
-      "epoch_utc": 1616532329
-    }
-
-    $ date | jc --date -p -r
-    {
-      "year": "2021",
-      "month": "Mar",
-      "day": "23",
-      "weekday": "Tue",
-      "hour": "08",
-      "minute": "45",
-      "second": "29",
-      "period": "PM",
-      "timezone": "UTC"
+      "utc_offset": "+0000",
+      "day_of_year": 84,
+      "week_of_year": 12,
+      "iso": "2021-03-25T02:02:26+00:00",
+      "epoch": 1616662946,
+      "epoch_utc": 1616637746,
+      "timezone_aware": true
     }
 """
 from datetime import datetime, timezone
@@ -59,7 +51,7 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    version = '2.0'
     description = 'date command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -83,98 +75,30 @@ def process(proc_data):
     Returns:
 
         Dictionary. Structured data with the following schema:
-
         {
-          "year":         integer,
-          "month_num":    integer,
-          "day":          integer,
-          "hour":         integer,       # originally parsed hour
-          "hour_24":      integer,       # parsed hour converted to 24-hour value
-          "minute":       integer,
-          "second":       integer,
-          "period":       string,        # 'AM' or 'PM'. null if 24-hour output
-          "month":        string,
-          "weekday":      string,
-          "weekday_num":  integer,
-          "timezone":     string,
-          "epoch":        integer,       # naive timestamp
-          "epoch_utc":    integer,       # timezone-aware timestamp. Only available if timezone field is UTC
+          "year":               integer,
+          "month":              string,
+          "month_num":          integer,
+          "day":                integer,
+          "weekday":            string,
+          "weekday_num":        integer,
+          "hour":               integer,
+          "hour_24":            integer,
+          "minute":             integer,
+          "second":             integer,
+          "period":             string,
+          "timezone":           string,
+          "utc_offset":         string,       # null if timezone field is not UTC
+          "day_of_year":        integer,
+          "week_of_year":       integer,
+          "iso":                string,
+          "epoch":              integer,      # naive timestamp
+          "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
+          "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
         }
     """
-    # ISO 8601 month numberings
-    month_map = {
-        "Jan": 1,
-        "Feb": 2,
-        "Mar": 3,
-        "Apr": 4,
-        "May": 5,
-        "Jun": 6,
-        "Jul": 7,
-        "Aug": 8,
-        "Sep": 9,
-        "Oct": 10,
-        "Nov": 11,
-        "Dec": 12
-    }
-
-    # ISO 8601 weekday numberings
-    weekday_map = {
-        "Mon": 1,
-        "Tue": 2,
-        "Wed": 3,
-        "Thu": 4,
-        "Fri": 5,
-        "Sat": 6,
-        "Sun": 7
-    }
-
-    if proc_data:
-        dt_year = int(proc_data['year'])
-        dt_month = month_map[proc_data['month']]
-        dt_day = int(proc_data['day'])
-        dt_hour = int(proc_data['hour'])
-        dt_hour_24 = int(proc_data['hour'])
-        dt_minute = int(proc_data['minute'])
-        dt_second = int(proc_data['second'])
-
-        # fix for 12 vs. 24 hour output
-        if 'period' in proc_data:
-            if proc_data['period']:
-                if proc_data['period'].lower() == 'pm':
-                    dt_hour_24 = dt_hour + 12
-                    if dt_hour_24 > 23:
-                        dt_hour_24 = 12
-                if proc_data['period'].lower() == 'am':
-                    if dt_hour_24 == 12:
-                        dt_hour_24 = 0
-
-        epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour_24, minute=dt_minute, second=dt_second)
-
-        date_obj = {
-            'year': dt_year,
-            'month_num': dt_month,
-            'day': dt_day,
-            'hour': dt_hour,
-            'hour_24': dt_hour_24,
-            'minute': dt_minute,
-            'second': dt_second,
-            'period': proc_data['period'].upper() if 'period' in proc_data else None,
-            'month': proc_data['month'],
-            'weekday': proc_data['weekday'],
-            'weekday_num': weekday_map[proc_data['weekday']],
-            'timezone': proc_data['timezone'],
-            'epoch': int(epoch_dt.timestamp())
-        }
-
-        # create aware datetime object only if the timezone is UTC
-        if proc_data['timezone'] == 'UTC':
-            utc_epoch_dt = datetime(dt_year, dt_month, dt_day, hour=dt_hour_24, minute=dt_minute, second=dt_second, tzinfo=timezone.utc)
-            date_obj['epoch_utc'] = int(utc_epoch_dt.timestamp())
-
-        return date_obj
-
-    else:
-        return {}
+    # no further processing
+    return proc_data
 
 
 def parse(data, raw=False, quiet=False):
@@ -197,34 +121,64 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-        data = data.replace(':', ' ')
-        split_data = data.split()
 
-        # date v8.32 uses a different format depending on locale, so need to support LANG=en_US.UTF-8
-        if len(split_data) == 9 and ('AM' in split_data or 'am' in split_data or 'PM' in split_data or 'pm' in split_data):
-            raw_output = {
-                "year": split_data[8],
-                "month": split_data[1],
-                "day": split_data[2],
-                "weekday": split_data[0],
-                "hour": split_data[3],
-                "minute": split_data[4],
-                "second": split_data[5],
-                "period": split_data[6],
-                "timezone": split_data[7]
-            }
-        else:
-            # standard LANG=C date output
-            raw_output = {
-                "year": split_data[7],
-                "month": split_data[1],
-                "day": split_data[2],
-                "weekday": split_data[0],
-                "hour": split_data[3],
-                "minute": split_data[4],
-                "second": split_data[5],
-                "timezone": split_data[6]
-            }
+        # find the timezone no matter where it is in the string
+        # from https://www.timeanddate.com/time/zones/
+        tz_abbr = ['A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT', 'AKST', 'ALMT',
+                   'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT', 'AWST', 'AZOST', 'AZOT',
+                   'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST', 'BTT', 'C', 'CAST', 'CAT', 'CCT',
+                   'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST', 'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST',
+                   'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT', 'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST',
+                   'EAT', 'ECT', 'EDT', 'EEST', 'EET', 'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST',
+                   'FKT', 'FNT', 'G', 'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT',
+                   'HOVST', 'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
+                   'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M', 'MAGST',
+                   'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT', 'MVT', 'MYT', 'N',
+                   'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST', 'NUT', 'NZDT', 'NZST', 'O',
+                   'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT', 'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT',
+                   'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT', 'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT',
+                   'SAMT', 'SAST', 'SBT', 'SCT', 'SGT', 'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT',
+                   'TLT', 'TMT', 'TOST', 'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET',
+                   'VLAST', 'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT', 'WGST',
+                   'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT', 'YEKST', 'YEKT', 'Z',
+                   'UTC']
+        tz = None
+        for term in data.split():
+            if term in tz_abbr:
+                tz = term
+
+        dt = None
+        dt_utc = None
+        timestamp = jc.utils.parse_datetime_to_timestamp(data)
+        if timestamp:
+            dt = datetime.fromtimestamp(timestamp['timestamp_naive'])
+            if timestamp['timestamp_utc']:
+                dt_utc = datetime.fromtimestamp(timestamp['timestamp_utc'], timezone.utc)
+
+        if dt_utc:
+            dt = dt_utc
+
+        raw_output = {
+            'year': dt.year,
+            'month': dt.strftime('%b'),
+            'month_num': dt.month,
+            'day': dt.day,
+            'weekday': dt.strftime('%a'),
+            'weekday_num': dt.isoweekday(),
+            'hour': int(dt.strftime('%I')),
+            'hour_24': dt.hour,
+            'minute': dt.minute,
+            'second': dt.second,
+            'period': dt.strftime('%p'),
+            'timezone': tz,
+            'utc_offset': dt.strftime('%z') or None,
+            'day_of_year': int(dt.strftime('%j')),
+            'week_of_year': int(dt.strftime('%W')),
+            'iso': dt.isoformat(),
+            'epoch': timestamp['timestamp_naive'],
+            'epoch_utc': timestamp['timestamp_utc'],
+            'timezone_aware': True if timestamp['timestamp_utc'] else False
+        }
 
     if raw:
         return raw_output
