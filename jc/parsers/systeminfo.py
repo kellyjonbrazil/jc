@@ -59,7 +59,7 @@ import jc.utils
 
 
 class info:
-    version = "1.0"
+    version = "0.5 (beta)"
     description = "Windows systeminfo command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
