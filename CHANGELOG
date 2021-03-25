@@ -9,6 +9,7 @@ jc changelog
     - Add a calculated UTC timestamp (only if date output is in UTC)
     - Add several fields, including: hour_24, utc_offset, day_of_year, week_of_year, iso, and timezone_aware
 - Update uptime parser to provide datestamps
+- Update last parser to use the new date-time parsing function
 - Add -h option to display the help text. Piping errors no longer show the help text.
 
 20210305 v1.14.4
