@@ -72,7 +72,7 @@ def process(proc_data):
           "time":                   string,
           "time_hour":              integer,
           "time_minute":            integer,
-          "time_second":            integer,
+          "time_second":            integer,        # null if not displayed
           "uptime":                 string,
           "uptime_days":            integer,        # new
           "uptime_hours":           integer,        # new
@@ -90,34 +90,38 @@ def process(proc_data):
         proc_data['time_minute'] = int(time_list[1])
         if len(time_list) == 3:
             proc_data['time_second'] = int(time_list[2])
+        else:
+            proc_data['time_second'] = None
 
-    # parse the uptime field
+    # parse the uptime field. Here are the variations:
     # 0 min
     # 3 mins
     # 3 days,  2:54
     # 2 days, 19:32
     # 1 day, 29 min
     # 16:59
-    uptime_days = 0
-    uptime_hours = 0
-    uptime_minutes = 0
-    uptime_total_seconds = 0
-    if 'min' in proc_data['uptime']:
-        uptime_minutes = int(proc_data['uptime'].split()[-2])
+    if 'uptime' in proc_data:
+        uptime_days = 0
+        uptime_hours = 0
+        uptime_minutes = 0
+        uptime_total_seconds = 0
 
-    if ':' in proc_data['uptime']:
-        uptime_hours = int(proc_data['uptime'].split()[-1].split(':')[-2])
-        uptime_minutes = int(proc_data['uptime'].split(':')[-1])
+        if 'min' in proc_data['uptime']:
+            uptime_minutes = int(proc_data['uptime'].split()[-2])
 
-    if 'day' in proc_data['uptime']:
-        uptime_days = int(proc_data['uptime'].split()[0])
+        if ':' in proc_data['uptime']:
+            uptime_hours = int(proc_data['uptime'].split()[-1].split(':')[-2])
+            uptime_minutes = int(proc_data['uptime'].split(':')[-1])
 
-    proc_data['uptime_days'] = uptime_days
-    proc_data['uptime_hours'] = uptime_hours
-    proc_data['uptime_minutes'] = uptime_minutes
+        if 'day' in proc_data['uptime']:
+            uptime_days = int(proc_data['uptime'].split()[0])
 
-    uptime_total_seconds = (uptime_days * 86400) + (uptime_hours * 3600) + (uptime_minutes * 60)
-    proc_data['uptime_total_seconds'] = uptime_total_seconds
+        proc_data['uptime_days'] = uptime_days
+        proc_data['uptime_hours'] = uptime_hours
+        proc_data['uptime_minutes'] = uptime_minutes
+
+        uptime_total_seconds = (uptime_days * 86400) + (uptime_hours * 3600) + (uptime_minutes * 60)
+        proc_data['uptime_total_seconds'] = uptime_total_seconds
 
     # integer conversions
     int_list = ['users']
