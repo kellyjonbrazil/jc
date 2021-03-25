@@ -154,11 +154,11 @@ def process(proc_data):
         if 'logout' in entry and entry['logout'] == 'gone_-_no_logout':
             entry['logout'] = 'gone - no logout'
 
-        if 'login' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*',entry['login']):
-            entry['login_epoch'] = int(datetime.strptime(entry['login'], '%a %b %d %H:%M:%S %Y').strftime('%s'))
+        if 'login' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*', entry['login']):
+            entry['login_epoch'] = jc.utils.parse_datetime_to_timestamp(entry['login'])['timestamp_naive']
 
-        if 'logout' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*',entry['logout']):
-            entry['logout_epoch'] = int(datetime.strptime(entry['logout'], '%a %b %d %H:%M:%S %Y').strftime('%s'))
+        if 'logout' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*', entry['logout']):
+            entry['logout_epoch'] = jc.utils.parse_datetime_to_timestamp(entry['logout'])['timestamp_naive']
 
         if 'login_epoch' in entry and 'logout_epoch' in entry:
             entry['duration_seconds'] = int(entry['logout_epoch']) - int(entry['login_epoch'])
