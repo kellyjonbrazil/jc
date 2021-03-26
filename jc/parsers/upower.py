@@ -231,11 +231,10 @@ def process(proc_data):
             entry['updated_epoch_utc'] = None
 
             timestamps = jc.utils.parse_datetime_to_timestamp(entry['updated'])
-            if timestamps:
-                if timestamps['timestamp_naive']:
-                    entry['updated_epoch'] = timestamps['timestamp_naive']
-                if timestamps['timestamp_utc']:
-                    entry['updated_epoch_utc'] = timestamps['timestamp_utc']
+            if timestamps['timestamp_naive']:
+                entry['updated_epoch'] = timestamps['timestamp_naive']
+            if timestamps['timestamp_utc']:
+                entry['updated_epoch_utc'] = timestamps['timestamp_utc']
 
         # top level boolean conversions
         bool_list = ['power_supply', 'has_history', 'has_statistics', 'on_battery', 'lid_is_closed', 'lid_is_present']
