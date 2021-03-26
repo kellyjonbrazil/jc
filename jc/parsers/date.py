@@ -141,7 +141,11 @@ def parse(data, raw=False, quiet=False):
                    'TLT', 'TMT', 'TOST', 'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET',
                    'VLAST', 'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT', 'WGST',
                    'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT', 'YEKST', 'YEKT', 'Z',
-                   'UTC']
+                   'UTC', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900', 'UTC-0800', 'UTC-0700', 'UTC-0600',
+                   'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230', 'UTC-0200', 'UTC-0100', 'UTC+0000', 'UTC-0000',
+                   'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430', 'UTC+0500', 'UTC+0530', 'UTC+0545',
+                   'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030',
+                   'UTC+1100', 'UTC+1200', 'UTC+1300', 'UTC+1345', 'UTC+1400']
         tz = None
         for term in data.split():
             if term in tz_abbr:
@@ -149,11 +153,12 @@ def parse(data, raw=False, quiet=False):
 
         dt = None
         dt_utc = None
+
         timestamp = jc.utils.parse_datetime_to_timestamp(data)
-        if timestamp:
+        if timestamp['timestamp_naive']:
             dt = datetime.fromtimestamp(timestamp['timestamp_naive'])
-            if timestamp['timestamp_utc']:
-                dt_utc = datetime.fromtimestamp(timestamp['timestamp_utc'], timezone.utc)
+        if timestamp['timestamp_utc']:
+            dt_utc = datetime.fromtimestamp(timestamp['timestamp_utc'], timezone.utc)
 
         if dt_utc:
             dt = dt_utc
