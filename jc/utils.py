@@ -187,6 +187,7 @@ def parse_datetime_to_timestamp(data):
             locale.setlocale(locale.LC_TIME, None)
             break
         except Exception:
+            locale.setlocale(locale.LC_TIME, None)
             continue
 
     if dt and utc_tz:
