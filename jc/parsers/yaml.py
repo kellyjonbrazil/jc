@@ -71,12 +71,18 @@ Examples:
       }
     ]
 """
+import sys
 import jc.utils
-from ruamel.yaml import YAML
+# check if yaml library is installed and fail gracefully if it is not
+try:
+    from ruamel.yaml import YAML
+except Exception:
+    jc.utils.error_message('The ruamel.yaml library is not installed.')
+    sys.exit(1)
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
