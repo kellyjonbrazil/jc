@@ -147,7 +147,7 @@ def parse(data, raw=False, quiet=False):
                    'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030',
                    'UTC+1100', 'UTC+1200', 'UTC+1300', 'UTC+1345', 'UTC+1400']
         tz = None
-        for term in data.split():
+        for term in data.replace('(', '').replace(')', '').split():
             if term in tz_abbr:
                 tz = term
 
