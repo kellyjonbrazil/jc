@@ -17,11 +17,12 @@ from pygments.style import Style
 from pygments.token import (Name, Number, String, Keyword)
 from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
+import jc
 import jc.appdirs as appdirs
 
 
 class info():
-    version = '1.15.0'
+    version = jc.__version__
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -284,12 +285,12 @@ def about_jc():
     }
 
 
-def helptext(message):
+def helptext():
     """Return the help text with the list of parsers"""
     parsers_string = parsers_text(indent=12, pad=17)
 
     helptext_string = f'''
-    jc:     {message}
+    jc converts the output of many commands to JSON for easier parsing in scripts.
 
     Usage:  COMMAND | jc PARSER [OPTIONS]
 
@@ -302,6 +303,7 @@ def helptext(message):
     Options:
             -a               about jc
             -d               debug - show traceback (-dd for verbose traceback)
+            -h               jc help
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
@@ -400,11 +402,13 @@ def magic():
     elif run_command is None:
         return
     else:
-        print(helptext(f'parser not found for "{run_command}"'), file=sys.stderr)
+        jc.utils.error_message(f'parser not found for "{run_command}"')
         sys.exit(1)
 
 
 def main():
+    import jc.utils
+
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -429,9 +433,14 @@ def main():
     debug = 'd' in options
     verbose_debug = True if options.count('d') > 1 else False
     mono = 'm' in options
+    help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
     raw = 'r' in options
+
+    if help_me:
+        print(helptext())
+        sys.exit(0)
 
     if verbose_debug:
         import jc.tracebackplus
@@ -442,7 +451,7 @@ def main():
         sys.exit(0)
 
     if sys.stdin.isatty():
-        print(helptext('missing piped data'), file=sys.stderr)
+        jc.utils.error_message('missing piped data')
         sys.exit(1)
 
     data = sys.stdin.read()
@@ -471,7 +480,7 @@ def main():
                     sys.exit(1)
 
     if not found:
-        print(helptext('missing or incorrect arguments'), file=sys.stderr)
+        jc.utils.error_message('missing or incorrect arguments')
         sys.exit(1)
 
     print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
