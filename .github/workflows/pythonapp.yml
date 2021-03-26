@@ -18,10 +18,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup timezone
-      uses: zcong1993/setup-timezone@v1.1.1
+    - name: "Set up timezone to America/Los_Angeles"
+      uses: actions/set-timezone-action@v1.1
       with:
-        timezone: America/Los_Angeles
+        timezoneLinux: "America/Los_Angeles"
+        timezoneMacos: "America/Los_Angeles"
+        timezoneWindows: "America/Los_Angeles"
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
