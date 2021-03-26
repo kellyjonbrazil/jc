@@ -149,7 +149,7 @@ def process(proc_data):
     """
 
     # convert ints and floats for top-level keys
-    for item in proc_data:    
+    for item in proc_data:
         for key in item:
             try:
                 item[key] = int(item[key])
@@ -163,21 +163,22 @@ def process(proc_data):
                 new_list = []
                 for list_item in item[key]:
                     try:
-                        new_list.append(int(list_item)) 
+                        new_list.append(int(list_item))
                     except (Exception):
                         try:
-                            new_list.append(float(list_item)) 
+                            new_list.append(float(list_item))
                         except (Exception):
                             pass
                 item[key] = new_list
 
     return proc_data
 
+
 def post_parse(data):
     # remove empty items
     cleandata = []
     for ssid in data:
-        ssid = { k : v for k, v in ssid.items() if v}
+        ssid = {k: v for k, v in ssid.items() if v}
         cleandata.append(ssid)
 
     # remove asterisks from begining of values
@@ -276,6 +277,7 @@ def post_parse(data):
             del item['vht_tx_highest_supported']
 
     return process(cleandata)
+
 
 def parse(data, raw=False, quiet=False):
     """
