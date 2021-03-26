@@ -12,6 +12,7 @@ jc changelog
       time_minute, and time_second fields
 - Update last parser to use new timestamp function
 - Add -h option to display the help text. Piping errors no longer show the help text.
+- Make all external python library requirements optional: pygments, ruamel.yaml, xmltodict
 
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
