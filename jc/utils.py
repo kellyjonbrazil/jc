@@ -93,25 +93,25 @@ def parse_datetime_to_timestamp(data):
 
     Parameters:
 
-        data:        (string) a string representation of a date-time in several supported formats
+        data:       (string) a string representation of a date-time in several supported formats
 
     Returns:
 
-        Dict/None    A Dictionary of the following format:
+        Dict/None   A Dictionary of the following format:
 
-                     {
-                         "format":               integer,     # for debugging purposes
-                         "timestamp_naive":      integer,     # timestamp based on locally configured timezone
-                         "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected
-                     }
+                    {
+                        "format":               integer,     # for debugging purposes
+                        "timestamp_naive":      integer,     # timestamp based on locally configured timezone
+                        "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected
+                    }
 
-                     The format integer denotes which date_time format conversion succeeded.
-                     The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
-                     The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
-                         in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
-                         is not found in the date-time string), then this field will be None.
+                    The format integer denotes which date_time format conversion succeeded.
+                    The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
+                    The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
+                        in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
+                        is not found in the date-time string), then this field will be None.
 
-                     If the conversion completely fails, None is returned instead of a Dictionary
+                    If the conversion completely fails, None is returned instead of a Dictionary
     """
     utc_tz = False
     dt = None
@@ -137,7 +137,7 @@ def parse_datetime_to_timestamp(data):
         {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
         {'id': 6000, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # en_US.UTF-8 format (found in date cli): Wed Mar 24 06:16:19 PM UTC 2021
         {'id': 7000, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # C locale format (found in date cli): Wed Mar 24 11:11:30 UTC 2021
-        # locale changes last
+        # attempt locale changes last
         {'id': 8000, 'format': '%a %d %b %Y %H:%M:%S %Z', 'locale': ''},  # current locale format (found in upower cli output): # mar. 23 mars 2021 23:12:11 UTC
         {'id': 8100, 'format': '%a %d %b %Y %H:%M:%S', 'locale': ''},  # current locale format with non-UTC tz (found in upower cli output): # mar. 23 mars 2021 19:12:11 EDT
         {'id': 8200, 'format': '%A %d %B %Y, %H:%M:%S UTC%z', 'locale': ''},  # fr_FR.utf8 locale format (found in date cli output): vendredi 26 mars 2021, 13:26:46 (UTC+0000)
