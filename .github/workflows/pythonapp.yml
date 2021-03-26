@@ -23,7 +23,7 @@ jobs:
       with:
         timezoneLinux: "America/Los_Angeles"
         timezoneMacos: "America/Los_Angeles"
-        timezoneWindows: "America/Los_Angeles"
+        timezoneWindows: "Pacific Standard Time"
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
