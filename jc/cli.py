@@ -11,14 +11,19 @@ import importlib
 import textwrap
 import signal
 import json
-import pygments
-from pygments import highlight
-from pygments.style import Style
-from pygments.token import (Name, Number, String, Keyword)
-from pygments.lexers import JsonLexer
-from pygments.formatters import Terminal256Formatter
 import jc
 import jc.appdirs as appdirs
+# make pygments import optional
+try:
+    import pygments
+    from pygments import highlight
+    from pygments.style import Style
+    from pygments.token import (Name, Number, String, Keyword)
+    from pygments.lexers import JsonLexer
+    from pygments.formatters import Terminal256Formatter
+    pygments_installed = True
+except Exception:
+    pygments_installed = False
 
 
 class info():
@@ -115,44 +120,45 @@ if os.path.isdir(local_parsers_dir):
 
 # We only support 2.3.0+, pygments changed color names in 2.4.0.
 # startswith is sufficient and avoids potential exceptions from split and int.
-if pygments.__version__.startswith('2.3.'):
-    PYGMENT_COLOR = {
-        'black': '#ansiblack',
-        'red': '#ansidarkred',
-        'green': '#ansidarkgreen',
-        'yellow': '#ansibrown',
-        'blue': '#ansidarkblue',
-        'magenta': '#ansipurple',
-        'cyan': '#ansiteal',
-        'gray': '#ansilightgray',
-        'brightblack': '#ansidarkgray',
-        'brightred': '#ansired',
-        'brightgreen': '#ansigreen',
-        'brightyellow': '#ansiyellow',
-        'brightblue': '#ansiblue',
-        'brightmagenta': '#ansifuchsia',
-        'brightcyan': '#ansiturquoise',
-        'white': '#ansiwhite',
-    }
-else:
-    PYGMENT_COLOR = {
-        'black': 'ansiblack',
-        'red': 'ansired',
-        'green': 'ansigreen',
-        'yellow': 'ansiyellow',
-        'blue': 'ansiblue',
-        'magenta': 'ansimagenta',
-        'cyan': 'ansicyan',
-        'gray': 'ansigray',
-        'brightblack': 'ansibrightblack',
-        'brightred': 'ansibrightred',
-        'brightgreen': 'ansibrightgreen',
-        'brightyellow': 'ansibrightyellow',
-        'brightblue': 'ansibrightblue',
-        'brightmagenta': 'ansibrightmagenta',
-        'brightcyan': 'ansibrightcyan',
-        'white': 'ansiwhite',
-    }
+if pygments_installed:
+    if pygments.__version__.startswith('2.3.'):
+        PYGMENT_COLOR = {
+            'black': '#ansiblack',
+            'red': '#ansidarkred',
+            'green': '#ansidarkgreen',
+            'yellow': '#ansibrown',
+            'blue': '#ansidarkblue',
+            'magenta': '#ansipurple',
+            'cyan': '#ansiteal',
+            'gray': '#ansilightgray',
+            'brightblack': '#ansidarkgray',
+            'brightred': '#ansired',
+            'brightgreen': '#ansigreen',
+            'brightyellow': '#ansiyellow',
+            'brightblue': '#ansiblue',
+            'brightmagenta': '#ansifuchsia',
+            'brightcyan': '#ansiturquoise',
+            'white': '#ansiwhite',
+        }
+    else:
+        PYGMENT_COLOR = {
+            'black': 'ansiblack',
+            'red': 'ansired',
+            'green': 'ansigreen',
+            'yellow': 'ansiyellow',
+            'blue': 'ansiblue',
+            'magenta': 'ansimagenta',
+            'cyan': 'ansicyan',
+            'gray': 'ansigray',
+            'brightblack': 'ansibrightblack',
+            'brightred': 'ansibrightred',
+            'brightgreen': 'ansibrightgreen',
+            'brightyellow': 'ansibrightyellow',
+            'brightblue': 'ansibrightblue',
+            'brightmagenta': 'ansibrightmagenta',
+            'brightcyan': 'ansibrightcyan',
+            'white': 'ansiwhite',
+        }
 
 
 def set_env_colors(env_colors=None):
@@ -437,6 +443,9 @@ def main():
     pretty = 'p' in options
     quiet = 'q' in options
     raw = 'r' in options
+
+    if not pygments_installed:
+        mono = True
 
     if help_me:
         print(helptext())
