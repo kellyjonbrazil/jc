@@ -26,4 +26,3 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in datetime_map.items():
             self.assertEqual(jc.utils.parse_datetime_to_timestamp(input_string), expected_output)
-
