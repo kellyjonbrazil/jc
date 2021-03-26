@@ -309,7 +309,7 @@ def helptext():
     Options:
             -a               about jc
             -d               debug - show traceback (-dd for verbose traceback)
-            -h               jc help
+            -h               help
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
