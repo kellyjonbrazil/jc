@@ -97,12 +97,12 @@ def parse_datetime_to_timestamp(data):
 
     Returns:
 
-        Dict/None   A Dictionary of the following format:
+        Dictionary  A Dictionary of the following format:
 
                     {
-                        "format":               integer,     # for debugging purposes
-                        "timestamp_naive":      integer,     # timestamp based on locally configured timezone
-                        "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected
+                        "format":               integer,     # for debugging purposes. None if conversion fails
+                        "timestamp_naive":      integer,     # timestamp based on locally configured timezone. None if conversion fails
+                        "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected. None if conversion fails
                     }
 
                     The format integer denotes which date_time format conversion succeeded.
@@ -111,14 +111,18 @@ def parse_datetime_to_timestamp(data):
                         in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
                         is not found in the date-time string), then this field will be None.
 
-                    If the conversion completely fails, None is returned instead of a Dictionary
+                    If the conversion completely fails, all fields will be None.
     """
     utc_tz = False
     dt = None
     dt_utc = None
     timestamp_naive = None
     timestamp_utc = None
-    timestamp_obj = {}
+    timestamp_obj = {
+        'format': None,
+        'timestamp_naive': None,
+        'timestamp_utc': None
+    }
     utc_tz = False
 
     if 'UTC' in data:
