@@ -59,12 +59,18 @@ Examples:
       ...
     }
 """
+import sys
 import jc.utils
-import xmltodict
+# check if xml library is installed and fail gracefully if it is not
+try:
+    import xmltodict
+except Exception:
+    jc.utils.error_message('The xmltodict library is not installed.')
+    sys.exit(1)
 
 
 class info():
-    version = '1.2'
+    version = '1.3'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
