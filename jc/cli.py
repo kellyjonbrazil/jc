@@ -329,12 +329,10 @@ def helptext():
 
 def versiontext():
     """Return the version text"""
-
     versiontext_string = f'''
     jc version {info.version}
     © 2019-2021 Kelly Brazil
     '''
-
     return textwrap.dedent(versiontext_string)
 
 
