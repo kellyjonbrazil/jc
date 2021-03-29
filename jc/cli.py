@@ -31,6 +31,7 @@ class info():
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    copyright = '© 2019-2021 Kelly Brazil'
 
 
 __version__ = info.version
@@ -286,6 +287,7 @@ def about_jc():
         'description': info.description,
         'author': info.author,
         'author_email': info.author_email,
+        'copyright': info.copyright,
         'parser_count': len(parser_list),
         'parsers': parser_list
     }
@@ -325,6 +327,17 @@ def helptext():
     return textwrap.dedent(helptext_string)
 
 
+def versiontext():
+    """Return the version text"""
+
+    versiontext_string = f'''
+    jc version {info.version}
+    © 2019-2021 Kelly Brazil
+    '''
+
+    return textwrap.dedent(versiontext_string)
+
+
 def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
     """Return a JSON formatted string. String may include color codes or be pretty printed."""
     if not mono and not piped_out:
@@ -333,14 +346,14 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
             styles = set_env_colors(env_colors)
 
         if pretty:
-            return str(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+            return str(highlight(json.dumps(data, indent=2, ensure_ascii=False), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
         else:
-            return str(highlight(json.dumps(data), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+            return str(highlight(json.dumps(data, ensure_ascii=False), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
     else:
         if pretty:
-            return json.dumps(data, indent=2)
+            return json.dumps(data, indent=2, ensure_ascii=False)
         else:
-            return json.dumps(data)
+            return json.dumps(data, ensure_ascii=False)
 
 
 def generate_magic_command(args):
@@ -436,6 +449,7 @@ def main():
         if opt.startswith('-') and not opt.startswith('--'):
             options.extend(opt[1:])
 
+    about = 'a' in options
     debug = 'd' in options
     verbose_debug = True if options.count('d') > 1 else False
     mono = 'm' in options
@@ -443,21 +457,26 @@ def main():
     pretty = 'p' in options
     quiet = 'q' in options
     raw = 'r' in options
+    version_info = 'v' in options
 
     if not pygments_installed:
         mono = True
+
+    if about:
+        print(json_out(about_jc(), pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+        sys.exit(0)
 
     if help_me:
         print(helptext())
         sys.exit(0)
 
+    if version_info:
+        print(versiontext())
+        sys.exit(0)
+
     if verbose_debug:
         import jc.tracebackplus
         jc.tracebackplus.enable(context=11)
-
-    if 'a' in options:
-        print(json_out(about_jc(), pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
-        sys.exit(0)
 
     if sys.stdin.isatty():
         jc.utils.error_message('missing piped data')
