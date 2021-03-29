@@ -209,4 +209,8 @@ def parse_datetime_to_timestamp(data):
         timestamp_obj['timestamp_naive'] = timestamp_naive
         timestamp_obj['timestamp_utc'] = timestamp_utc
 
+    print(normalized_datetime)
+    print(timestamp_obj)
+    print()
+
     return timestamp_obj
