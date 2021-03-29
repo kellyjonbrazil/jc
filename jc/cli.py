@@ -421,7 +421,7 @@ def magic():
     elif run_command is None:
         return
     else:
-        jc.utils.error_message(f'parser not found for "{run_command}"')
+        jc.utils.error_message(f'parser not found for "{run_command}". Use "jc -h" for help.')
         sys.exit(1)
 
 
