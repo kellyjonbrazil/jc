@@ -297,8 +297,8 @@ def helptext():
     """Return the help text with the list of parsers"""
     parsers_string = parsers_text(indent=12, pad=17)
 
-    helptext_string = f'''
-    jc converts the output of many commands to JSON for easier parsing in scripts.
+    helptext_string = f'''\
+    jc converts the output of many commands and file-types to JSON
 
     Usage:  COMMAND | jc PARSER [OPTIONS]
 
@@ -316,6 +316,7 @@ def helptext():
             -p               pretty print output
             -q               quiet - suppress parser warnings
             -r               raw JSON output
+            -v               version info
 
     Example:
             ls -al | jc --ls -p
@@ -329,10 +330,9 @@ def helptext():
 
 def versiontext():
     """Return the version text"""
-    versiontext_string = f'''
+    versiontext_string = f'''\
     jc version {info.version}
-    © 2019-2021 Kelly Brazil
-    '''
+    © 2019-2021 Kelly Brazil'''
     return textwrap.dedent(versiontext_string)
 
 
