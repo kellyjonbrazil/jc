@@ -4,7 +4,7 @@ jc changelog
 - Add acpi parser tested on linux
 - Add upower parser tested on linux
 - Update date parser: complete rewrite (v2.0) providing many enhancements:
-    - Mmake weekday numbering ISO 8601 compliant
+    - Make weekday numbering ISO 8601 compliant
     - Add a calculated naive timestamp field
     - Add a calculated UTC timestamp field (only if date output is in UTC)
     - Add several fields, including: hour_24, utc_offset, day_of_year, week_of_year, iso, and timezone_aware
