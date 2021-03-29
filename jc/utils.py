@@ -1,6 +1,6 @@
 """jc - JSON CLI output utility utils"""
-import textwrap
 import sys
+import re
 import locale
 from datetime import datetime, timezone
 
@@ -52,7 +52,7 @@ def compatibility(mod_name, compatible):
 
     Returns:
 
-        no return, just prints output to STDERR
+        None - just prints output to STDERR
     """
     platform_found = False
 
@@ -109,6 +109,7 @@ def parse_datetime_to_timestamp(data):
 
                     If the conversion completely fails, all fields will be None.
     """
+    normalized_datetime = ''
     utc_tz = False
     dt = None
     dt_utc = None
@@ -128,6 +129,8 @@ def parse_datetime_to_timestamp(data):
                 utc_tz = True
             else:
                 utc_tz = False
+    elif '+0000' in data or '-0000' in data:
+        utc_tz = True
 
     formats = [
         {'id': 1000, 'format': '%c', 'locale': None},  # C locale format conversion, or date cli command in C locale with non-UTC tz: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
@@ -137,6 +140,8 @@ def parse_datetime_to_timestamp(data):
         {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
         {'id': 6000, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # en_US.UTF-8 format (found in date cli): Wed Mar 24 06:16:19 PM UTC 2021
         {'id': 7000, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # C locale format (found in date cli): Wed Mar 24 11:11:30 UTC 2021
+        {'id': 7100, 'format': '%b %d %X %Y', 'locale': None},  # C locale format (found in stat cli output - osx): # Mar 29 11:49:05 2021
+        {'id': 7200, 'format': '%Y-%m-%d %X.%f %z', 'locale': None},  # C locale format (found in stat cli output - linux): 2019-08-13 18:13:43.555604315 -0400
         # attempt locale changes last
         {'id': 8000, 'format': '%a %d %b %Y %H:%M:%S %Z', 'locale': ''},  # current locale format (found in upower cli output): # mar. 23 mars 2021 23:12:11 UTC
         {'id': 8100, 'format': '%a %d %b %Y %H:%M:%S', 'locale': ''},  # current locale format with non-UTC tz (found in upower cli output): # mar. 23 mars 2021 19:12:11 EDT
@@ -178,6 +183,10 @@ def parse_datetime_to_timestamp(data):
             normalized_datetime_list.append(term)
 
     normalized_datetime = ' '.join(normalized_datetime_list)
+
+    # normalize further by converting any greater-than 6-digit subsecond to 6-digits
+    p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
+    normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
 
     for fmt in formats:
         try:

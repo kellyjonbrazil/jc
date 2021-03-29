@@ -15,7 +15,7 @@ Parameters:
 
 Returns:
 
-    no return, just prints output to STDERR
+    None - just prints output to STDERR
 
 
 ## error_message
@@ -31,7 +31,7 @@ Parameters:
 
 Returns:
 
-    no return, just prints output to STDERR
+    None - just prints output to STDERR
 
 
 ## compatibility
@@ -50,7 +50,7 @@ Parameters:
 
 Returns:
 
-    no return, just prints output to STDERR
+    None - just prints output to STDERR
 
 
 ## has_data
@@ -78,23 +78,23 @@ Input a date-time text string of several formats and convert to a naive or timez
 
 Parameters:
 
-    data:        (string) a string representation of a date-time in several supported formats
+    data:       (string) a string representation of a date-time in several supported formats
 
 Returns:
 
-    Dict/None    A Dictionary of the following format:
+    Dictionary  A Dictionary of the following format:
 
-                 {
-                     "format":               integer,     # for debugging purposes
-                     "timestamp_naive":      integer,     # timestamp based on locally configured timezone
-                     "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected
-                 }
+                {
+                    "format":               integer,     # for debugging purposes. None if conversion fails
+                    "timestamp_naive":      integer,     # timestamp based on locally configured timezone. None if conversion fails
+                    "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected. None if conversion fails
+                }
 
-                 The format integer denotes which date_time format conversion succeeded.
-                 The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
-                 The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
-                     in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
-                     is not found in the date-time string), then this field will be None.
+                The format integer denotes which date_time format conversion succeeded.
+                The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
+                The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
+                    in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
+                    is not found in the date-time string), then this field will be None.
 
-                 If the conversion completely fails, None is returned instead of a Dictionary
+                If the conversion completely fails, all fields will be None.
 

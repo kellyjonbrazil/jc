@@ -21,7 +21,13 @@ class MyTests(unittest.TestCase):
             # date cli command in en_US.UTF-8 format
             'Wed Mar 24 06:16:19 PM UTC 2021': {'format': 6000, 'timestamp_naive': 1616634979, 'timestamp_utc': 1616609779},
             # date cli command in C locale format
-            'Wed Mar 24 11:11:30 UTC 2021': {'format': 7000, 'timestamp_naive': 1616609490, 'timestamp_utc': 1616584290}
+            'Wed Mar 24 11:11:30 UTC 2021': {'format': 7000, 'timestamp_naive': 1616609490, 'timestamp_utc': 1616584290},
+            # C locale format (found in stat cli output - OSX)
+            'Mar 29 11:49:05 2021': {'format': 7100, 'timestamp_naive': 1617043745, 'timestamp_utc': None},
+            # C local format (found in stat cli output - linux) non-UTC tz
+            '2019-08-13 18:13:43.555604315 -0400': {'format': 7200, 'timestamp_naive': 1565745223, 'timestamp_utc': None},
+            # C local format (found in stat cli output - linux) UTC
+            '2019-08-13 18:13:43.555604315 -0000': {'format': 7200, 'timestamp_naive': 1565745223, 'timestamp_utc': 1565720023}
         }
 
         for input_string, expected_output in datetime_map.items():
