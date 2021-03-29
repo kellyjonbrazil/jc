@@ -15,13 +15,11 @@ def warning_message(message):
 
     Returns:
 
-        no return, just prints output to STDERR
+        None - just prints output to STDERR
     """
 
-    error_string = f'''
-    jc:  Warning - {message}
-    '''
-    print(textwrap.dedent(error_string), file=sys.stderr)
+    error_string = f'jc:  Warning - {message}'
+    print(error_string, file=sys.stderr)
 
 
 def error_message(message):
@@ -34,13 +32,11 @@ def error_message(message):
 
     Returns:
 
-        no return, just prints output to STDERR
+        None - just prints output to STDERR
     """
 
-    error_string = f'''
-    jc:  Error - {message}
-    '''
-    print(textwrap.dedent(error_string), file=sys.stderr)
+    error_string = f'jc:  Error - {message}'
+    print(error_string, file=sys.stderr)
 
 
 def compatibility(mod_name, compatible):

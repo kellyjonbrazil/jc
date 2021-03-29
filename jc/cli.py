@@ -197,7 +197,7 @@ def set_env_colors(env_colors=None):
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
-        print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
+        jc.utils.warning_message('could not parse JC_COLORS environment variable')
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
@@ -477,7 +477,7 @@ def main():
         jc.tracebackplus.enable(context=11)
 
     if sys.stdin.isatty():
-        jc.utils.error_message('missing piped data')
+        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
         sys.exit(1)
 
     data = sys.stdin.read()
@@ -502,11 +502,11 @@ def main():
                     import jc.utils
                     jc.utils.error_message(
                         f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
-                        '                 For details use the -d or -dd option.')
+                        '             For details use the -d or -dd option. Use "jc -h" for help.')
                     sys.exit(1)
 
     if not found:
-        jc.utils.error_message('missing or incorrect arguments')
+        jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
         sys.exit(1)
 
     print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
