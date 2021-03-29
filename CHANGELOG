@@ -15,6 +15,7 @@ jc changelog
 - Add -v option to display version information.
 - Make all external python library dependencies optional: pygments, ruamel.yaml, xmltodict
 - JSON output now supports unencoded unicode characters
+- JSON output is now more compact unless the -p (pretty) option is used
 
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
