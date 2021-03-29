@@ -141,29 +141,37 @@ def process(proc_data):
 
         [
           {
-            "file":         string,
-            "link_to"       string,
-            "size":         integer,
-            "blocks":       integer,
-            "io_blocks":    integer,
-            "type":         string,
-            "device":       string,
-            "inode":        integer,
-            "links":        integer,
-            "access":       string,
-            "flags":        string,
-            "uid":          integer,
-            "user":         string,
-            "gid":          integer,
-            "group":        string,
-            "access_time":  string,    # - = null
-            "modify_time":  string,    # - = null
-            "change_time":  string,    # - = null
-            "birth_time":   string,    # - = null
-            "unix_device":  integer,
-            "rdev":         integer,
-            "block_size":   integer,
-            "unix_flags":   string
+            "file":                     string,
+            "link_to"                   string,
+            "size":                     integer,
+            "blocks":                   integer,
+            "io_blocks":                integer,
+            "type":                     string,
+            "device":                   string,
+            "inode":                    integer,
+            "links":                    integer,
+            "access":                   string,
+            "flags":                    string,
+            "uid":                      integer,
+            "user":                     string,
+            "gid":                      integer,
+            "group":                    string,
+            "access_time":              string,    # - = null
+            "access_time_epoch":        integer,   # naive timestamp
+            "access_time_epoch_utc":    integer,   # timezone-aware timestamp
+            "modify_time":              string,    # - = null
+            "modify_time_epoch":        integer,   # naive timestamp
+            "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
+            "change_time":              string,    # - = null
+            "change_time_epoch":        integer,   # naive timestamp
+            "change_time_epoch_utc":    integer,   # timezone-aware timestamp
+            "birth_time":               string,    # - = null
+            "birth_time_epoch":         integer,   # naive timestamp
+            "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
+            "unix_device":              integer,
+            "rdev":                     integer,
+            "block_size":               integer,
+            "unix_flags":               string
           }
         ]
     """
@@ -177,13 +185,15 @@ def process(proc_data):
                 except (ValueError):
                     entry[key] = None
 
-    # turn - into null for time fields
+    # turn - into null for time fields and add calculated timestamp fields
     for entry in proc_data:
         null_list = ['access_time', 'modify_time', 'change_time', 'birth_time']
         for key in null_list:
             if key in entry:
                 if entry[key] == '-':
                     entry[key] = None
+                entry[key + '_epoch'] = jc.utils.parse_datetime_to_timestamp(entry[key])['timestamp_naive']
+                entry[key + '_epoch_utc'] = jc.utils.parse_datetime_to_timestamp(entry[key])['timestamp_utc']
 
     return proc_data
 

@@ -109,6 +109,7 @@ def parse_datetime_to_timestamp(data):
 
                     If the conversion completely fails, all fields will be None.
     """
+    data = data or ''
     normalized_datetime = ''
     utc_tz = False
     dt = None
