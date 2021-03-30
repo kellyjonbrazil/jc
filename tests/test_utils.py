@@ -27,7 +27,9 @@ class MyTests(unittest.TestCase):
             # C local format (found in stat cli output - linux) non-UTC tz
             '2019-08-13 18:13:43.555604315 -0400': {'format': 7200, 'timestamp_naive': 1565745223, 'timestamp_utc': None},
             # C local format (found in stat cli output - linux) UTC
-            '2019-08-13 18:13:43.555604315 -0000': {'format': 7200, 'timestamp_naive': 1565745223, 'timestamp_utc': 1565720023}
+            '2019-08-13 18:13:43.555604315 -0000': {'format': 7200, 'timestamp_naive': 1565745223, 'timestamp_utc': 1565720023},
+            # C locale format (found in timedatectl cli output)
+            'Wed 2020-03-11 00:53:21 UTC': {'format': 7300, 'timestamp_naive': 1583913201, 'timestamp_utc': 1583888001}
         }
 
         for input_string, expected_output in datetime_map.items():
