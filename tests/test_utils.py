@@ -10,6 +10,8 @@ class MyTests(unittest.TestCase):
             # C locale format conversion, or date cli command in C locale with non-UTC tz
             'Tue Mar 23 16:12:11 2021': {'format': 1000, 'timestamp_naive': 1616541131, 'timestamp_utc': None},
             'Tue Mar 23 16:12:11 IST 2021': {'format': 1000, 'timestamp_naive': 1616541131, 'timestamp_utc': None},
+            # en_US.UTF-8 local format (found in who cli output)
+            '2021-03-23 00:14': {'format': 1500, 'timestamp_naive': 1616483640, 'timestamp_utc': None},
             # en_US.UTF-8 local format (found in upower cli output)
             'Tue 23 Mar 2021 04:12:11 PM UTC': {'format': 2000, 'timestamp_naive': 1616541131, 'timestamp_utc': 1616515931},
             # en_US.UTF-8 local format with non-UTC tz (found in upower cli output)

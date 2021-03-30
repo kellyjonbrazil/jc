@@ -2950,13 +2950,15 @@ who | jc --who -p          # or:  jc -p who
   {
     "user": "joeuser",
     "tty": "ttyS0",
-    "time": "2020-03-02 02:52"
+    "time": "2020-03-02 02:52",
+    "epoch": 1583146320
   },
   {
     "user": "joeuser",
     "tty": "pts/0",
     "time": "2020-03-02 05:15",
-    "from": "192.168.71.1"
+    "from": "192.168.71.1",
+    "epoch": 1583154900
   }
 ]
 ```
@@ -2968,32 +2970,8 @@ who -a | jc --who -p          # or:  jc -p who -a
   {
     "event": "reboot",
     "time": "Feb 7 23:31",
-    "pid": 1
-  },
-  {
-    "user": "joeuser",
-    "writeable_tty": "-",
-    "tty": "console",
-    "time": "Feb 7 23:32",
-    "idle": "old",
-    "pid": 105
-  },
-  {
-    "user": "joeuser",
-    "writeable_tty": "+",
-    "tty": "ttys000",
-    "time": "Feb 13 16:44",
-    "idle": ".",
-    "pid": 51217,
-    "comment": "term=0 exit=0"
-  },
-  {
-    "user": "joeuser",
-    "writeable_tty": "?",
-    "tty": "ttys003",
-    "time": "Feb 28 08:59",
-    "idle": "01:36",
-    "pid": 41402
+    "pid": 1,
+    "epoch": null
   },
   {
     "user": "joeuser",
@@ -3002,7 +2980,8 @@ who -a | jc --who -p          # or:  jc -p who -a
     "time": "Mar 1 16:35",
     "idle": ".",
     "pid": 15679,
-    "from": "192.168.1.5"
+    "from": "192.168.1.5",
+    "epoch": null
   }
 ]
 ```

@@ -2,6 +2,8 @@
 
 Accepts any of the following who options (or no options): `-aTH`
 
+The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+
 Usage (cli):
 
     $ who | jc --who
@@ -26,7 +28,8 @@ Examples:
       {
         "event": "reboot",
         "time": "Feb 7 23:31",
-        "pid": 1
+        "pid": 1,
+        "epoch": null
       },
       {
         "user": "joeuser",
@@ -34,7 +37,8 @@ Examples:
         "tty": "console",
         "time": "Feb 7 23:32",
         "idle": "old",
-        "pid": 105
+        "pid": 105,
+        "epoch": null
       },
       {
         "user": "joeuser",
@@ -43,7 +47,8 @@ Examples:
         "time": "Feb 13 16:44",
         "idle": ".",
         "pid": 51217,
-        "comment": "term=0 exit=0"
+        "comment": "term=0 exit=0",
+        "epoch": null
       },
       {
         "user": "joeuser",
@@ -51,7 +56,8 @@ Examples:
         "tty": "ttys003",
         "time": "Feb 28 08:59",
         "idle": "01:36",
-        "pid": 41402
+        "pid": 41402,
+        "epoch": null
       },
       {
         "user": "joeuser",
@@ -60,7 +66,8 @@ Examples:
         "time": "Mar 1 16:35",
         "idle": ".",
         "pid": 15679,
-        "from": "192.168.1.5"
+        "from": "192.168.1.5",
+        "epoch": null
       }
     ]
 
@@ -112,7 +119,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'who command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,6 +152,7 @@ def process(proc_data):
             "writeable_tty":   string,
             "tty":             string,
             "time":            string,
+            "epoch":           integer,     # naive timestamp. null if time cannot be converted
             "idle":            string,
             "pid":             integer,
             "from":            string,
@@ -161,6 +169,9 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError):
                     entry[key] = None
+
+        if 'time' in entry:
+            entry['epoch'] = jc.utils.parse_datetime_to_timestamp(entry['time'])['timestamp_naive']
 
     return proc_data
 
