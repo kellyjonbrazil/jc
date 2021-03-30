@@ -13,7 +13,11 @@ acpi -V | jc --acpi -p          # or:  jc -p acpi -V
     "until_charged": "00:29:20",
     "design_capacity_mah": 2110,
     "last_full_capacity": 2271,
-    "last_full_capacity_percent": 100
+    "last_full_capacity_percent": 100,
+    "until_charged_hours": 0,
+    "until_charged_minutes": 29,
+    "until_charged_seconds": 20,
+    "until_charged_total_seconds": 1760
   },
   {
     "type": "Adapter",
@@ -51,6 +55,34 @@ acpi -V | jc --acpi -p          # or:  jc -p acpi -V
   {
     "type": "Cooling",
     "id": 1,
+    "messages": [
+      "Processor 0 of 10"
+    ]
+  },
+  {
+    "type": "Cooling",
+    "id": 2,
+    "messages": [
+      "x86_pkg_temp no state information available"
+    ]
+  },
+  {
+    "type": "Cooling",
+    "id": 3,
+    "messages": [
+      "Processor 0 of 10"
+    ]
+  },
+  {
+    "type": "Cooling",
+    "id": 4,
+    "messages": [
+      "intel_powerclamp no state information available"
+    ]
+  },
+  {
+    "type": "Cooling",
+    "id": 5,
     "messages": [
       "Processor 0 of 10"
     ]
