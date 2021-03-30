@@ -198,7 +198,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as strings and no additional semantic processing
-- `v` version information
+- `-v` version information
 
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
