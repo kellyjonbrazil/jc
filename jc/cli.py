@@ -31,6 +31,7 @@ class info():
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    website = 'https://github.com/kellyjonbrazil/jc'
     copyright = '© 2019-2021 Kelly Brazil'
 
 
@@ -287,6 +288,7 @@ def about_jc():
         'description': info.description,
         'author': info.author,
         'author_email': info.author_email,
+        'website': info.website,
         'copyright': info.copyright,
         'parser_count': len(parser_list),
         'parsers': parser_list
@@ -332,7 +334,8 @@ def versiontext():
     """Return the version text"""
     versiontext_string = f'''\
     jc version {info.version}
-    © 2019-2021 Kelly Brazil'''
+    {info.website}
+    {info.copyright}'''
     return textwrap.dedent(versiontext_string)
 
 
