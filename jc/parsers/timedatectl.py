@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `timedatectl` command output parser
 
+The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the universal_time field is available.
+
 Usage (cli):
 
     $ timedatectl | jc --timedatectl
@@ -28,7 +30,8 @@ Examples:
       "ntp_enabled": true,
       "ntp_synchronized": true,
       "rtc_in_local_tz": false,
-      "dst_active": true
+      "dst_active": true,
+      "epoch_utc": 1583888001
     }
 
     $ timedatectl | jc --timedatectl -p -r
@@ -47,7 +50,7 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    version = '1.2'
     description = 'timedatectl status command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -76,6 +79,7 @@ def process(proc_data):
         {
           "local_time":                        string,
           "universal_time":                    string,
+          "epoch_utc":                         integer,     # timezone-aware timestamp
           "rtc_time":                          string,
           "time_zone":                         string,
           "ntp_enabled":                       boolean,
@@ -95,6 +99,9 @@ def process(proc_data):
                 proc_data[key] = True if proc_data[key] == 'yes' else False
             except (ValueError):
                 proc_data[key] = None
+
+    if 'universal_time' in proc_data:
+        proc_data['epoch_utc'] = jc.utils.parse_datetime_to_timestamp(proc_data['universal_time'])['timestamp_utc']
 
     return proc_data
 

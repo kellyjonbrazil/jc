@@ -2656,7 +2656,8 @@ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
   "ntp_enabled": true,
   "ntp_synchronized": true,
   "rtc_in_local_tz": false,
-  "dst_active": true
+  "dst_active": true,
+  "epoch_utc": 1583888001
 }
 ```
 ### tracepath
