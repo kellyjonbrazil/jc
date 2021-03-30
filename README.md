@@ -124,6 +124,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 > Note: For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line: `$ LANG=C date | jc --date`, or by exporting to the environment before running commands: `$ export LANG=C`.
 
 ### Parsers
+- `--acpi` enables the `acpi` command parser
 - `--airport` enables the `airport -I` command parser (OSX)
 - `--airport-s` enables the `airport -s` command parser (OSX)
 - `--arp` enables the `arp` command parser
@@ -181,6 +182,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--tracepath` enables the `tracepath` and `tracepath6` command parser
 - `--traceroute` enables the `traceroute` and `traceroute6` command parser
 - `--uname` enables the `uname -a` command parser
+- `--upower` enables the `upower` command parser
 - `--uptime` enables the `uptime` command parser
 - `--w` enables the `w` command parser
 - `--wc` enables the `wc` command parser
@@ -196,6 +198,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
 - `-r` raw output. Provides a more literal JSON output with all values as strings and no additional semantic processing
+- `v` version information
 
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
