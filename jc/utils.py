@@ -134,8 +134,7 @@ def parse_datetime_to_timestamp(data):
         utc_tz = True
 
     formats = [
-        # {'id': 1000, 'format': '%c', 'locale': None},  # C locale format conversion, or date cli command in C locale with non-UTC tz: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
-        {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion
+        {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
         {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
         {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
         {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
@@ -209,9 +208,5 @@ def parse_datetime_to_timestamp(data):
     if timestamp_naive:
         timestamp_obj['timestamp_naive'] = timestamp_naive
         timestamp_obj['timestamp_utc'] = timestamp_utc
-
-    print(normalized_datetime)
-    print(timestamp_obj)
-    print()
 
     return timestamp_obj
