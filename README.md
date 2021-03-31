@@ -350,7 +350,7 @@ dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205
 ```json
 [
   {
-    "id": 5509,
+    "id": 52172,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -372,14 +372,16 @@ dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 60,
-        "data": "151.101.129.67"
+        "ttl": 27,
+        "data": "151.101.65.67"
       }
     ],
-    "query_time": 28,
+    "query_time": 38,
     "server": "2600",
-    "when": "Tue Nov 12 07:13:03 PST 2019",
-    "rcvd": 100
+    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "rcvd": 100,
+    "when_epoch": 1617160079,
+    "when_epoch_utc": null
   }
 ]
 ```

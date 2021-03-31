@@ -15,6 +15,7 @@ jc changelog
       change_time_epoch, change_time_epoch_utc, birth_time_epoch, birth_time_epoch_utc fields
 - Update timedatectl parser to add epoch_utc field
 - Update who parser to add epoch field
+- Update dig parser to add when_epoch and when_epoch_utc fields
 - Add -h option to display the help text. Piping errors no longer show the help text.
 - Add -v option to display version information.
 - Make all external python library dependencies optional: pygments, ruamel.yaml, xmltodict

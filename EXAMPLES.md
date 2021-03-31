@@ -548,7 +548,7 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
 ```json
 [
   {
-    "id": 5509,
+    "id": 52172,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -570,38 +570,40 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 60,
+        "ttl": 27,
+        "data": "151.101.65.67"
+      },
+      {
+        "name": "cnn.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 27,
         "data": "151.101.129.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 60,
-        "data": "151.101.193.67"
-      },
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": 60,
+        "ttl": 27,
         "data": "151.101.1.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 60,
-        "data": "151.101.65.67"
+        "ttl": 27,
+        "data": "151.101.193.67"
       }
     ],
-    "query_time": 28,
+    "query_time": 38,
     "server": "2600",
-    "when": "Tue Nov 12 07:13:03 PST 2019",
-    "rcvd": 100
+    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "rcvd": 100,
+    "when_epoch": 1617160079,
+    "when_epoch_utc": null
   },
   {
-    "id": 62696,
+    "id": 36292,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -657,10 +659,12 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "data": "ns-576.awsdns-08.net."
       }
     ],
-    "query_time": 29,
+    "query_time": 27,
     "server": "205.251.194.64#53(205.251.194.64)",
-    "when": "Tue Nov 12 07:13:03 PST 2019",
-    "rcvd": 212
+    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "rcvd": 212,
+    "when_epoch": 1617160079,
+    "when_epoch_utc": null
   }
 ]
 ```
@@ -670,7 +674,7 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ```json
 [
   {
-    "id": 50324,
+    "id": 22191,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -692,14 +696,16 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
         "name": "1.1.1.1.in-addr.arpa.",
         "class": "IN",
         "type": "PTR",
-        "ttl": 1634,
+        "ttl": 1800,
         "data": "one.one.one.one."
       }
     ],
-    "query_time": 36,
+    "query_time": 44,
     "server": "2600",
-    "when": "Tue Nov 12 07:13:49 PST 2019",
-    "rcvd": 78
+    "when": "Tue Mar 30 20:10:34 PDT 2021",
+    "rcvd": 78,
+    "when_epoch": 1617160234,
+    "when_epoch_utc": null
   }
 ]
 ```
