@@ -7,6 +7,10 @@ Options supported:
 
 Note: The `-l` or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-l` or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
 
+The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ ls | jc --ls
@@ -153,7 +157,7 @@ import jc.utils
 
 
 class info():
-    version = '1.6'
+    version = '1.7'
     description = 'ls command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -180,18 +184,19 @@ def process(proc_data):
 
         [
           {
-            "filename": string,
-            "flags":    string,
-            "links":    integer,
-            "parent":   string,
-            "owner":    string,
-            "group":    string,
-            "size":     integer,
-            "date":     string
+            "filename":     string,
+            "flags":        string,
+            "links":        integer,
+            "parent":       string,
+            "owner":        string,
+            "group":        string,
+            "size":         integer,
+            "date":         string,
+            "epoch":        integer,     # naive timestamp if date field exists and can be converted
+            "epoch_utc":    integer      # timezone aware timestamp if date field is in UTC and can be converted
           }
         ]
     """
-
     for entry in proc_data:
         int_list = ['links', 'size']
         for key in int_list:
@@ -201,6 +206,12 @@ def process(proc_data):
                     entry[key] = key_int
                 except (ValueError):
                     entry[key] = None
+
+        if 'date' in entry:
+            # to speed up processing only try to convert the date if it's not the default format
+            if not re.match(r'[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}', entry['date']):
+                entry['epoch'] = jc.utils.parse_datetime_to_timestamp(entry['date'])['timestamp_naive']
+                entry['epoch_utc'] = jc.utils.parse_datetime_to_timestamp(entry['date'])['timestamp_utc']
 
     return proc_data
 
