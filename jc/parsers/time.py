@@ -179,7 +179,7 @@ def process(proc_data):
         if key in proc_data:
             try:
                 proc_data[key] = int(proc_data[key])
-            except (ValueError):
+            except (ValueError, TypeError):
                 proc_data[key] = None
 
     float_list = ['real_time', 'user_time', 'system_time']
