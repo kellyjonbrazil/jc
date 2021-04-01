@@ -2713,7 +2713,7 @@ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemct
   "elapsed_time_hours": 0,
   "elapsed_time_minutes": 0,
   "elapsed_time_seconds": 2,
-  "elapsed_time_microseconds": 50,
+  "elapsed_time_centiseconds": 50,
   "elapsed_time_total_seconds": 2.5
 }
 ```

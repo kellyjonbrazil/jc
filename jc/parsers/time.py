@@ -49,7 +49,7 @@ Examples:
       "elapsed_time_hours": 0,
       "elapsed_time_minutes": 0,
       "elapsed_time_seconds": 2,
-      "elapsed_time_microseconds": 50,
+      "elapsed_time_centiseconds": 50,
       "elapsed_time_total_seconds": 2.5
     }
 
@@ -119,7 +119,7 @@ def process(proc_data):
           "elapsed_time_hours":                 integer,
           "elapsed_time_minutes":               integer,
           "elapsed_time_seconds":               integer,
-          "elapsed_time_microseconds":          integer,
+          "elapsed_time_centiseconds":          integer,
           "elapsed_time_total_microseconds":    float,
           "cpu_percent":                        integer,   # null if ?
           "average_shared_text_size":           integer,
@@ -153,7 +153,7 @@ def process(proc_data):
 
     if 'elapsed_time' in proc_data:
         proc_data['elapsed_time'] = proc_data['elapsed_time'].replace('.', ':')
-        *hours, minutes, seconds, microseconds = proc_data['elapsed_time'].split(':')
+        *hours, minutes, seconds, centiseconds = proc_data['elapsed_time'].split(':')
         proc_data['elapsed_time'] = proc_data['elapsed_time'][::-1].replace(':', '.', 1)[::-1]
         if hours:
             proc_data['elapsed_time_hours'] = int(hours[0])
@@ -161,11 +161,11 @@ def process(proc_data):
             proc_data['elapsed_time_hours'] = 0
         proc_data['elapsed_time_minutes'] = int(minutes)
         proc_data['elapsed_time_seconds'] = int(seconds)
-        proc_data['elapsed_time_microseconds'] = int(microseconds)
+        proc_data['elapsed_time_centiseconds'] = int(centiseconds)
         proc_data['elapsed_time_total_seconds'] = (proc_data['elapsed_time_hours'] * 3600) + \
                                                   (proc_data['elapsed_time_minutes'] * 60) + \
                                                   (proc_data['elapsed_time_seconds']) + \
-                                                  (proc_data['elapsed_time_microseconds'] / 100)
+                                                  (proc_data['elapsed_time_centiseconds'] / 100)
 
         int_list = ['elapsed_time_hours', 'elapsed_time_minutes', 'elapsed_time_seconds', 'elapsed_time_microseconds',
                     'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size', 'average_unshared_stack_size',

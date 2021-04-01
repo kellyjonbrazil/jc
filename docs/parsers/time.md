@@ -51,7 +51,7 @@ Examples:
       "elapsed_time_hours": 0,
       "elapsed_time_minutes": 0,
       "elapsed_time_seconds": 2,
-      "elapsed_time_microseconds": 50,
+      "elapsed_time_centiseconds": 50,
       "elapsed_time_total_seconds": 2.5
     }
 
@@ -114,7 +114,7 @@ Returns:
       "elapsed_time_hours":                 integer,
       "elapsed_time_minutes":               integer,
       "elapsed_time_seconds":               integer,
-      "elapsed_time_microseconds":          integer,
+      "elapsed_time_centiseconds":          integer,
       "elapsed_time_total_microseconds":    float,
       "cpu_percent":                        integer,   # null if ?
       "average_shared_text_size":           integer,
