@@ -101,7 +101,8 @@ def process(proc_data):
                 proc_data[key] = None
 
     if 'universal_time' in proc_data:
-        proc_data['epoch_utc'] = jc.utils.parse_datetime_to_timestamp(proc_data['universal_time'])['timestamp_utc']
+        ts = jc.utils.timestamp(proc_data['universal_time'])
+        proc_data['epoch_utc'] = ts.utc
 
     return proc_data
 
