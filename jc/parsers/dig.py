@@ -465,8 +465,9 @@ def process(proc_data):
                 entry['query_time'] = None
 
         if 'when' in entry:
-            entry['when_epoch'] = jc.utils.parse_datetime_to_timestamp(entry['when'])['timestamp_naive']
-            entry['when_epoch_utc'] = jc.utils.parse_datetime_to_timestamp(entry['when'])['timestamp_utc']
+            ts = jc.utils.timestamp(entry['when'])
+            entry['when_epoch'] = ts.naive
+            entry['when_epoch_utc'] = ts.utc
 
     return proc_data
 
