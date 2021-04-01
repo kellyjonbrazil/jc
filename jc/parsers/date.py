@@ -154,11 +154,11 @@ def parse(data, raw=False, quiet=False):
         dt = None
         dt_utc = None
 
-        timestamp = jc.utils.parse_datetime_to_timestamp(data)
-        if timestamp['timestamp_naive']:
-            dt = datetime.fromtimestamp(timestamp['timestamp_naive'])
-        if timestamp['timestamp_utc']:
-            dt_utc = datetime.fromtimestamp(timestamp['timestamp_utc'], timezone.utc)
+        timestamp = jc.utils.timestamp(data)
+        if timestamp.naive:
+            dt = datetime.fromtimestamp(timestamp.naive)
+        if timestamp.utc:
+            dt_utc = datetime.fromtimestamp(timestamp.utc, timezone.utc)
 
         if dt_utc:
             dt = dt_utc
@@ -180,9 +180,9 @@ def parse(data, raw=False, quiet=False):
             'day_of_year': int(dt.strftime('%j')),
             'week_of_year': int(dt.strftime('%W')),
             'iso': dt.isoformat(),
-            'epoch': timestamp['timestamp_naive'],
-            'epoch_utc': timestamp['timestamp_utc'],
-            'timezone_aware': True if timestamp['timestamp_utc'] else False
+            'epoch': timestamp.naive,
+            'epoch_utc': timestamp.utc,
+            'timezone_aware': True if timestamp.utc else False
         }
 
     if raw:
