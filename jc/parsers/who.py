@@ -171,7 +171,8 @@ def process(proc_data):
                     entry[key] = None
 
         if 'time' in entry:
-            entry['epoch'] = jc.utils.parse_datetime_to_timestamp(entry['time'])['timestamp_naive']
+            ts = jc.utils.timestamp(entry['time'])
+            entry['epoch'] = ts.naive
 
     return proc_data
 
