@@ -92,6 +92,7 @@ parsers = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'time',
     'timedatectl',
     'tracepath',
     'traceroute',

@@ -178,6 +178,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser
 - `--systemctl-luf` enables the `systemctl list-unit-files` command parser
+- `--time` enables the `/usr/bin/time` command parser
 - `--timedatectl` enables the `timedatectl status` command parser
 - `--tracepath` enables the `tracepath` and `tracepath6` command parser
 - `--traceroute` enables the `traceroute` and `traceroute6` command parser

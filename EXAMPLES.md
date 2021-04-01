@@ -2681,6 +2681,42 @@ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemct
   }
 ]
 ```
+### /usr/bin/time
+```bash
+/usr/bin/time --verbose -o timefile.out sleep 2.5; cat timefile.out | jc --time -p
+```
+```json
+{
+  "command_being_timed": "sleep 2.5",
+  "user_time": 0.0,
+  "system_time": 0.0,
+  "cpu_percent": 0,
+  "elapsed_time": "0:02.50",
+  "average_shared_text_size": 0,
+  "average_unshared_data_size": 0,
+  "average_stack_size": 0,
+  "average_total_size": 0,
+  "maximum_resident_set_size": 2084,
+  "average_resident_set_size": 0,
+  "major_pagefaults": 0,
+  "minor_pagefaults": 72,
+  "voluntary_context_switches": 2,
+  "involuntary_context_switches": 1,
+  "swaps": 0,
+  "block_input_operations": 0,
+  "block_output_operations": 0,
+  "messages_sent": 0,
+  "messages_received": 0,
+  "signals_delivered": 0,
+  "page_size": 4096,
+  "exit_status": 0,
+  "elapsed_time_hours": 0,
+  "elapsed_time_minutes": 0,
+  "elapsed_time_seconds": 2,
+  "elapsed_time_microseconds": 50,
+  "elapsed_time_total_seconds": 2.5
+}
+```
 ### timedatectl status
 ```bash
 timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
