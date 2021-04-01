@@ -115,7 +115,7 @@ Returns:
       "elapsed_time_minutes":               integer,
       "elapsed_time_seconds":               integer,
       "elapsed_time_centiseconds":          integer,
-      "elapsed_time_total_microseconds":    float,
+      "elapsed_time_total_seconds":         float,
       "cpu_percent":                        integer,   # null if ?
       "average_shared_text_size":           integer,
       "average_unshared_data_size":         integer,
