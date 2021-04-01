@@ -210,8 +210,9 @@ def process(proc_data):
         if 'date' in entry:
             # to speed up processing only try to convert the date if it's not the default format
             if not re.match(r'[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}', entry['date']):
-                entry['epoch'] = jc.utils.parse_datetime_to_timestamp(entry['date'])['timestamp_naive']
-                entry['epoch_utc'] = jc.utils.parse_datetime_to_timestamp(entry['date'])['timestamp_utc']
+                ts = jc.utils.timestamp(entry['date'])
+                entry['epoch'] = ts.naive
+                entry['epoch_utc'] = ts.utc
 
     return proc_data
 
