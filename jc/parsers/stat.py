@@ -212,8 +212,9 @@ def process(proc_data):
             if key in entry:
                 if entry[key] == '-':
                     entry[key] = None
-                entry[key + '_epoch'] = jc.utils.parse_datetime_to_timestamp(entry[key])['timestamp_naive']
-                entry[key + '_epoch_utc'] = jc.utils.parse_datetime_to_timestamp(entry[key])['timestamp_utc']
+                ts = jc.utils.timestamp(entry[key])
+                entry[key + '_epoch'] = ts.naive
+                entry[key + '_epoch_utc'] = ts.utc
 
     return proc_data
 
