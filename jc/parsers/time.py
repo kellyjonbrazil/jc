@@ -113,6 +113,7 @@ def process(proc_data):
                 https://man7.org/linux/man-pages/man1/time.1.html
 
         {
+          "real_time":                          float,
           "user_time":                          float,
           "system_time":                        float,
           "elapsed_time":                       string,
@@ -167,27 +168,27 @@ def process(proc_data):
                                                   (proc_data['elapsed_time_seconds']) + \
                                                   (proc_data['elapsed_time_centiseconds'] / 100)
 
-        int_list = ['elapsed_time_hours', 'elapsed_time_minutes', 'elapsed_time_seconds', 'elapsed_time_microseconds',
-                    'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size', 'average_unshared_stack_size',
-                    'average_shared_memory_size', 'maximum_resident_set_size', 'block_input_operations',
-                    'block_output_operations', 'major_pagefaults', 'minor_pagefaults', 'swaps', 'page_reclaims',
-                    'page_faults', 'messages_sent', 'messages_received', 'signals_received', 'voluntary_context_switches',
-                    'involuntary_context_switches', 'average_stack_size', 'average_total_size', 'average_resident_set_size',
-                    'signals_delivered', 'page_size', 'exit_status']
-        for key in int_list:
-            if key in proc_data:
-                try:
-                    proc_data[key] = int(proc_data[key])
-                except (ValueError):
-                    proc_data[key] = None
+    int_list = ['elapsed_time_hours', 'elapsed_time_minutes', 'elapsed_time_seconds', 'elapsed_time_microseconds',
+                'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size', 'average_unshared_stack_size',
+                'average_shared_memory_size', 'maximum_resident_set_size', 'block_input_operations',
+                'block_output_operations', 'major_pagefaults', 'minor_pagefaults', 'swaps', 'page_reclaims',
+                'page_faults', 'messages_sent', 'messages_received', 'signals_received', 'voluntary_context_switches',
+                'involuntary_context_switches', 'average_stack_size', 'average_total_size', 'average_resident_set_size',
+                'signals_delivered', 'page_size', 'exit_status']
+    for key in int_list:
+        if key in proc_data:
+            try:
+                proc_data[key] = int(proc_data[key])
+            except (ValueError):
+                proc_data[key] = None
 
-        float_list = ['user_time', 'system_time']
-        for key in float_list:
-            if key in proc_data:
-                try:
-                    proc_data[key] = float(proc_data[key])
-                except (ValueError):
-                    proc_data[key] = None
+    float_list = ['real_time', 'user_time', 'system_time']
+    for key in float_list:
+        if key in proc_data:
+            try:
+                proc_data[key] = float(proc_data[key])
+            except (ValueError):
+                proc_data[key] = None
 
     return proc_data
 

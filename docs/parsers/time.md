@@ -108,6 +108,7 @@ Returns:
             https://man7.org/linux/man-pages/man1/time.1.html
 
     {
+      "real_time":                          float,
       "user_time":                          float,
       "system_time":                        float,
       "elapsed_time":                       string,
