@@ -756,6 +756,60 @@ dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode
   }
 ]
 ```
+### dpkg -l
+```bash
+dpkg -l | jc --dpkg-l -p          # or:  jc -p dpkg -l
+```
+```json
+[
+  {
+    "codes": "ii",
+    "name": "accountsservice",
+    "version": "0.6.45-1ubuntu1.3",
+    "architecture": "amd64",
+    "description": "query and manipulate user account information",
+    "desired": "install",
+    "status": "installed"
+  },
+  {
+    "codes": "rc",
+    "name": "acl",
+    "version": "2.2.52-3build1",
+    "architecture": "amd64",
+    "description": "Access control list utilities",
+    "desired": "remove",
+    "status": "config-files"
+  },
+  {
+    "codes": "uWR",
+    "name": "acpi",
+    "version": "1.7-1.1",
+    "architecture": "amd64",
+    "description": "displays information on ACPI devices",
+    "desired": "unknown",
+    "status": "trigger await",
+    "error": "reinstall required"
+  },
+  {
+    "codes": "rh",
+    "name": "acpid",
+    "version": "1:2.0.28-1ubuntu1",
+    "architecture": "amd64",
+    "description": "Advanced Configuration and Power Interface event daemon",
+    "desired": "remove",
+    "status": "half installed"
+  },
+  {
+    "codes": "pn",
+    "name": "adduser",
+    "version": "3.116ubuntu1",
+    "architecture": "all",
+    "description": "add and remove users and groups",
+    "desired": "purge",
+    "status": "not installed"
+  }
+]
+```
 ### du
 ```bash
 du /usr | jc --du -p          # or:  jc -p du /usr
