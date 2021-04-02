@@ -51,6 +51,7 @@ parsers = [
     'df',
     'dig',
     'dmidecode',
+    'dpkg-l',
     'du',
     'env',
     'file',

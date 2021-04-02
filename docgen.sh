@@ -18,6 +18,7 @@ pydocmd simple jc.parsers.date+ > ../docs/parsers/date.md
 pydocmd simple jc.parsers.df+ > ../docs/parsers/df.md
 pydocmd simple jc.parsers.dig+ > ../docs/parsers/dig.md
 pydocmd simple jc.parsers.dmidecode+ > ../docs/parsers/dmidecode.md
+pydocmd simple jc.parsers.dpkg_l+ > ../docs/parsers/dpkg_l.md
 pydocmd simple jc.parsers.du+ > ../docs/parsers/du.md
 pydocmd simple jc.parsers.env+ > ../docs/parsers/env.md
 pydocmd simple jc.parsers.file+ > ../docs/parsers/file.md

@@ -4,6 +4,7 @@ jc changelog
 - Add acpi parser tested on linux
 - Add upower parser tested on linux
 - Add /usr/bin/time parser tested on linux and macOS
+- Add dpkg -l parser tested on linux
 - Update date parser: complete rewrite (v2.0) providing many enhancements:
     - Make weekday numbering ISO 8601 compliant
     - Add a calculated naive timestamp field
