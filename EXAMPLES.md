@@ -709,6 +709,51 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
   }
 ]
 ```
+### dir
+```bash
+dir | jc --dir -p          # or:  jc -p dir
+```
+```json
+
+[
+  {
+    "date": "03/24/2021",
+    "time": "03:15 PM",
+    "dir": true,
+    "size": null,
+    "filename": ".",
+    "parent": "C:\\Program Files\\Internet Explorer",
+    "epoch": 1616624100
+  },
+  {
+    "date": "03/24/2021",
+    "time": "03:15 PM",
+    "dir": true,
+    "size": null,
+    "filename": "..",
+    "parent": "C:\\Program Files\\Internet Explorer",
+    "epoch": 1616624100
+  },
+  {
+    "date": "12/07/2019",
+    "time": "02:49 AM",
+    "dir": true,
+    "size": null,
+    "filename": "en-US",
+    "parent": "C:\\Program Files\\Internet Explorer",
+    "epoch": 1575715740
+  },
+  {
+    "date": "12/07/2019",
+    "time": "02:09 AM",
+    "dir": false,
+    "size": 54784,
+    "filename": "ExtExport.exe",
+    "parent": "C:\\Program Files\\Internet Explorer",
+    "epoch": 1575713340
+  }
+]
+```
 ### dmidecode
 ```bash
 dmidecode | jc --dmidecode -p          # or:  jc -p dmidecode

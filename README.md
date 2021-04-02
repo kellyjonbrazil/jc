@@ -136,6 +136,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--date` enables the `date` command parser
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
+- `--dir` enables the `dir` command parser (Windows)
 - `--dmidecode` enables the `dmidecode` command parser
 - `--dpkg-l` enables the `dpkg -l` command parser
 - `--du` enables the `du` command parser
