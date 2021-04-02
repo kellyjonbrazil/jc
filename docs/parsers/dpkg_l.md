@@ -53,7 +53,7 @@ Examples:
         "description": "displays information on ACPI devices",
         "desired": "unknown",
         "status": "trigger await",
-        "err": "reinstall required"
+        "error": "reinstall required"
       },
       {
         "codes": "rh",
@@ -146,7 +146,7 @@ Returns:
         "description":      string,
         "desired":          string,
         "status":           string,
-        "err":              string
+        "error":              string
       }
     ]
 

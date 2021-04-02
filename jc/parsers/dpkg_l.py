@@ -51,7 +51,7 @@ Examples:
         "description": "displays information on ACPI devices",
         "desired": "unknown",
         "status": "trigger await",
-        "err": "reinstall required"
+        "error": "reinstall required"
       },
       {
         "codes": "rh",
@@ -153,7 +153,7 @@ def process(proc_data):
             "description":      string,
             "desired":          string,
             "status":           string,
-            "err":              string
+            "error":            string
           }
         ]
     """
@@ -197,7 +197,7 @@ def process(proc_data):
 
                 for key, value in err_map.items():
                     if err[0].lower() == key:
-                        entry['err'] = value
+                        entry['error'] = value
                         break
 
     return proc_data
