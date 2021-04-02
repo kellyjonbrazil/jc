@@ -6,13 +6,15 @@ Options supported:
 - `/C, /-C`
 - `/S`
 
+The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+
 Usage (cli):
 
-    $ dir | jc --dir -p -m
+    $ dir | jc --dir
 
     or
 
-    $ jc -p -m dir
+    $ jc dir
 
 Usage (module):
 
@@ -25,215 +27,83 @@ Compatibility:
 
 Examples:
 
-    $ dir | jc --dir -p -m
-    {
-      "C:\\Program Files\\Internet Explorer": [
-        {
-          "date": "03/24/2021",
-          "time": "03:15 PM",
-          "dir": true,
-          "size": null,
-          "filename": "."
-        },
-        {
-          "date": "03/24/2021",
-          "time": "03:15 PM",
-          "dir": true,
-          "size": null,
-          "filename": ".."
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:49 AM",
-          "dir": true,
-          "size": null,
-          "filename": "en-US"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 54784,
-          "filename": "ExtExport.exe"
-        },
-        {
-          "date": "03/24/2021",
-          "time": "03:15 PM",
-          "dir": false,
-          "size": 0,
-          "filename": "file name.txt"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 54784,
-          "filename": "hmmapi.dll"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 515072,
-          "filename": "iediagcmd.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 504832,
-          "filename": "ieinstal.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 224768,
-          "filename": "ielowutil.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 421888,
-          "filename": "IEShims.dll"
-        },
-        {
-          "date": "12/06/2019",
-          "time": "02:47 PM",
-          "dir": false,
-          "size": 819136,
-          "filename": "iexplore.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:14 AM",
-          "dir": true,
-          "size": null,
-          "filename": "images"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:14 AM",
-          "dir": true,
-          "size": null,
-          "filename": "SIGNUP"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": 48536,
-          "filename": "sqmapi.dll"
-        }
-      ]
-    }
+    $ dir | jc --dir -p
+    [
+      {
+        "date": "03/24/2021",
+        "time": "03:15 PM",
+        "dir": true,
+        "size": null,
+        "filename": ".",
+        "parent": "C:\\Program Files\\Internet Explorer",
+        "epoch": 1616624100
+      },
+      {
+        "date": "03/24/2021",
+        "time": "03:15 PM",
+        "dir": true,
+        "size": null,
+        "filename": "..",
+        "parent": "C:\\Program Files\\Internet Explorer",
+        "epoch": 1616624100
+      },
+      {
+        "date": "12/07/2019",
+        "time": "02:49 AM",
+        "dir": true,
+        "size": null,
+        "filename": "en-US",
+        "parent": "C:\\Program Files\\Internet Explorer",
+        "epoch": 1575715740
+      },
+      {
+        "date": "12/07/2019",
+        "time": "02:09 AM",
+        "dir": false,
+        "size": 54784,
+        "filename": "ExtExport.exe",
+        "parent": "C:\\Program Files\\Internet Explorer",
+        "epoch": 1575713340
+      },
+      ...
+    ]
 
-
-    $ dir | jc --dir -p -m -r
-    {
-      "C:\\Program Files\\Internet Explorer": [
-        {
-          "date": "03/24/2021",
-          "time": "03:15 PM",
-          "dir": true,
-          "size": null,
-          "filename": "."
-        },
-        {
-          "date": "03/24/2021",
-          "time": "03:15 PM",
-          "dir": true,
-          "size": null,
-          "filename": ".."
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:49 AM",
-          "dir": true,
-          "size": null,
-          "filename": "en-US"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "54,784",
-          "filename": "ExtExport.exe"
-        },
-        {
-          "date": "03/24/2021",
-          "time": "03:15 PM",
-          "dir": false,
-          "size": "0",
-          "filename": "file name.txt"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "54,784",
-          "filename": "hmmapi.dll"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "515,072",
-          "filename": "iediagcmd.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "504,832",
-          "filename": "ieinstal.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "224,768",
-          "filename": "ielowutil.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "421,888",
-          "filename": "IEShims.dll"
-        },
-        {
-          "date": "12/06/2019",
-          "time": "02:47 PM",
-          "dir": false,
-          "size": "819,136",
-          "filename": "iexplore.exe"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:14 AM",
-          "dir": true,
-          "size": null,
-          "filename": "images"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:14 AM",
-          "dir": true,
-          "size": null,
-          "filename": "SIGNUP"
-        },
-        {
-          "date": "12/07/2019",
-          "time": "02:09 AM",
-          "dir": false,
-          "size": "48,536",
-          "filename": "sqmapi.dll"
-        }
-      ]
-    }
-
+    $ dir | jc --dir -p -r
+    [
+      {
+        "date": "03/24/2021",
+        "time": "03:15 PM",
+        "dir": true,
+        "size": null,
+        "filename": ".",
+        "parent": "C:\\Program Files\\Internet Explorer"
+      },
+      {
+        "date": "03/24/2021",
+        "time": "03:15 PM",
+        "dir": true,
+        "size": null,
+        "filename": "..",
+        "parent": "C:\\Program Files\\Internet Explorer"
+      },
+      {
+        "date": "12/07/2019",
+        "time": "02:49 AM",
+        "dir": true,
+        "size": null,
+        "filename": "en-US",
+        "parent": "C:\\Program Files\\Internet Explorer"
+      },
+      {
+        "date": "12/07/2019",
+        "time": "02:09 AM",
+        "dir": false,
+        "size": "54,784",
+        "filename": "ExtExport.exe",
+        "parent": "C:\\Program Files\\Internet Explorer"
+      },
+      ...
+    ]
 """
 import re
 import jc.utils
@@ -264,30 +134,37 @@ def process(proc_data):
     Returns:
 
         List of Dictionaries. Structured data with the following schema:
-        {"parent_dir":
-          [
-            {
-              "date": string,
-              "time": string,
-              "dir": string,
-              "size": integer,
-              "filename: string
-            }
-          ]
-        }
-    """
 
-    for _, dir_list in proc_data.items():
-        for entry in dir_list:
-            int_list = ["size"]
-            for key in int_list:
-                if entry.get(key):
-                    try:
-                        key_int = int(entry[key].replace(",", ""))
-                    except ValueError:
-                        entry[key] = None
-                    else:
-                        entry[key] = key_int
+        [
+          {
+            "date":         string,
+            "time":         string,
+            "epoch":        integer,    # naive timestamp
+            "dir":          boolean,
+            "size":         integer,
+            "filename:      string,
+            "parent":       string
+          }
+        ]
+    """
+    for entry in proc_data:
+        # add timestamps
+        if 'date' in entry and 'time' in entry:
+            dt = entry['date'] + ' ' + entry['time']
+            timestamp = jc.utils.timestamp(dt)
+            entry['epoch'] = timestamp.naive
+
+        # add ints
+        int_list = ["size"]
+        for key in int_list:
+            if entry.get(key):
+                try:
+                    key_int = int(entry[key].replace(",", ""))
+                except ValueError:
+                    entry[key] = None
+                else:
+                    entry[key] = key_int
+
     return proc_data
 
 
@@ -304,12 +181,11 @@ def parse(data, raw=False, quiet=False):
     Returns:
 
         List of Dictionaries. Raw or processed structured data.
-
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    raw_output = {}
+    raw_output = []
 
     if jc.utils.has_data(data):
 
@@ -321,7 +197,6 @@ def parse(data, raw=False, quiet=False):
             if not re.match(r'^\d{2}/\d{2}/\d{4}', line):
                 continue
 
-            raw_output.setdefault(parent_dir, [])
             output_line = {}
             parsed_line = line.split()
             output_line["date"] = parsed_line[0]
@@ -334,7 +209,9 @@ def parse(data, raw=False, quiet=False):
                 output_line["size"] = parsed_line[3]
 
             output_line["filename"] = " ".join(parsed_line[4:])
-            raw_output[parent_dir].append(output_line)
+            output_line["parent"] = parent_dir
+
+            raw_output.append(output_line)
 
     if raw:
         return raw_output
