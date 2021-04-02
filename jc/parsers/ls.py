@@ -1,11 +1,11 @@
 """jc - JSON CLI output utility `ls` and `vdir` command output parser
 
 Options supported:
-- `lbaR`
+- `lbaR1`
 - `--time-style=full-iso`
 - `-h`: File sizes will be available in text form with `-r` but larger file sizes with human readable suffixes will be converted to `Null` in the default view since the parser attempts to convert this field to an integer.
 
-Note: The `-l` or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-l` or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
+Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-1`, `-l`, or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
 
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
