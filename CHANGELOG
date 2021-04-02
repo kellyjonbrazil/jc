@@ -22,6 +22,7 @@ jc changelog
 - Update ls parser to add epoch and epoch_utc fields
 - Add -h option to display the help text. Piping errors no longer show the help text.
 - Add -v option to display version information.
+- Add contributing information to project root
 - Make all external python library dependencies optional: pygments, ruamel.yaml, xmltodict
 - JSON output now supports unencoded unicode characters
 - JSON output is now more compact unless the -p (pretty) option is used
