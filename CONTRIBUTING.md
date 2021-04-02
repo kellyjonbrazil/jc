@@ -21,6 +21,46 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 6. Make sure your code lints.
 7. Issue that pull request!
 
+## Parser Schema Guidelines
+- Try to keep the schema as flat as possible - typically a list of flat dictionaries
+- Keys should be lowercase, contain no special characters, and spaces should be converted to underscores
+- Keys should be static, if possible. If they have to be dynamic, then they should not contain lists or dictionaries
+
+This will make it easier to use tools like `jq` without requiring escaping of special characters, encapsulating key names in [""], keeps paths predictable, and makes iterating and searching for values easier.
+
+**Examples**
+
+Bad:
+```
+{
+  "Interface 1": [
+    192.168.1.1,
+    172.16.1.1
+  ],
+  "Wifi Interface 1": [
+    10.1.1.1.
+  ]
+}
+```
+Good:
+```
+[
+  {
+    "interface": "Interface 1",
+    "ip_addresses": [
+      192.168.1.1,
+      172.16.1.1
+    ]
+  },
+  {
+    "interface": "Wifi Interface 1",
+    "ip_addresses": [
+      10.1.1.1
+    ]
+  }
+]
+```
+
 ## Any contributions you make will be under the MIT Software License
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
