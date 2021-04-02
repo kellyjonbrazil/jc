@@ -6,7 +6,6 @@ Options supported:
 - `/T timefield`
 - `/O sortorder`
 - `/C, /-C`
-- `/Q`
 
 Usage (cli):
 
@@ -249,21 +248,22 @@ Final processing to conform to the schema.
 
 Parameters:
 
-    proc_data:   (List of Dictionaries) raw structured data to process
+    proc_data:   (Dictionary of Lists) raw structured data to process
 
 Returns:
 
     List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "date": string,
-        "time": string,
-        "dir": string,
-        "size": integer,
-        "filename: string
-      }
-    ]
+    {"parent_dir":
+      [
+        {
+          "date": string,
+          "time": string,
+          "dir": string,
+          "size": integer,
+          "filename: string
+        }
+      ]
+    }
 
 
 ## parse

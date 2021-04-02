@@ -4,7 +4,6 @@ Options supported:
 - `/T timefield`
 - `/O sortorder`
 - `/C, /-C`
-- `/Q`
 
 Usage (cli):
 
@@ -255,33 +254,35 @@ def process(proc_data):
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary of Lists) raw structured data to process
 
     Returns:
 
         List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "date": string,
-            "time": string,
-            "dir": string,
-            "size": integer,
-            "filename: string
-          }
-        ]
+        {"parent_dir":
+          [
+            {
+              "date": string,
+              "time": string,
+              "dir": string,
+              "size": integer,
+              "filename: string
+            }
+          ]
+        }
     """
 
-    for entry in proc_data:
-        int_list = ["size"]
-        for key in int_list:
-            if entry.get(key):
-                try:
-                    key_int = int(entry[key].replace(",", ""))
-                except ValueError:
-                    entry[key] = None
-                else:
-                    entry[key] = key_int
+    for _, dir_list in proc_data.items():
+        for entry in dir_list:
+            int_list = ["size"]
+            for key in int_list:
+                if entry.get(key):
+                    try:
+                        key_int = int(entry[key].replace(",", ""))
+                    except ValueError:
+                        entry[key] = None
+                    else:
+                        entry[key] = key_int
     return proc_data
 
 
@@ -303,28 +304,32 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    raw_output = []
+    raw_output = {}
 
     if jc.utils.has_data(data):
 
         for line in data.splitlines():
-            # look for first line that starts with a date
+            if line.startswith(" Directory of"):
+                parent_dir = line.lstrip(" Directory of ")
+                continue
+            # skip lines that don't start with a date
             if not re.match(r'^\d{2}/\d{2}/\d{4}', line):
                 continue
 
+            raw_output.setdefault(parent_dir, [])
             output_line = {}
             parsed_line = line.split()
             output_line["date"] = parsed_line[0]
             output_line["time"] = " ".join(parsed_line[1:3])
-            output_line.setdefault("dir", None)
+            output_line.setdefault("dir", False)
             output_line.setdefault("size", None)
             if parsed_line[3] == "<DIR>":
-                output_line["dir"] = parsed_line[3]
+                output_line["dir"] = True
             else:
                 output_line["size"] = parsed_line[3]
 
             output_line["filename"] = " ".join(parsed_line[4:])
-            raw_output.append(output_line)
+            raw_output[parent_dir].append(output_line)
 
     if raw:
         return raw_output
