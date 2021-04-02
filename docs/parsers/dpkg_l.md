@@ -140,6 +140,7 @@ Returns:
 
     [
       {
+        "codes":            string,
         "name":             string,
         "version":          string,
         "architecture":     string,

@@ -147,6 +147,7 @@ def process(proc_data):
 
         [
           {
+            "codes":            string,
             "name":             string,
             "version":          string,
             "architecture":     string,
