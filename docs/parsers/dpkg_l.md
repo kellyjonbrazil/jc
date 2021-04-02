@@ -2,9 +2,9 @@
 # jc.parsers.dpkg_l
 jc - JSON CLI output utility `dpkg -l` command output parser
 
-Set the `COLUMN` environment variable to a large value to avoid field truncation. For example:
+Set the `COLUMNS` environment variable to a large value to avoid field truncation. For example:
 
-    $ COLUMN=500 dpkg -l | jc --dpkg-l
+    $ COLUMNS=500 dpkg -l | jc --dpkg-l
 
 Usage (cli):
 
@@ -146,7 +146,7 @@ Returns:
         "description":      string,
         "desired":          string,
         "status":           string,
-        "error":              string
+        "error":            string
       }
     ]
 
