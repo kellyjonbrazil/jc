@@ -250,6 +250,7 @@ Tested on:
 - OSX 10.14.6
 - NixOS
 - FreeBSD12
+- Windows 10
 
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
