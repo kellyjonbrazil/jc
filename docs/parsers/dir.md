@@ -6,6 +6,7 @@ Options supported:
 - `/T timefield`
 - `/O sortorder`
 - `/C, /-C`
+- `/S`
 
 Usage (cli):
 
