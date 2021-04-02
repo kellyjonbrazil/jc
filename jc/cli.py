@@ -50,6 +50,7 @@ parsers = [
     'date',
     'df',
     'dig',
+    'dir',
     'dmidecode',
     'dpkg-l',
     'du',
