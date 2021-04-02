@@ -41,6 +41,3 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 ## Use a Consistent Coding Style
 * 4 spaces for indentation rather than tabs
 * Use a Python linter that will enforce PEP 8 and other best practices
-
-## License
-By contributing, you agree that your contributions will be licensed under its MIT License.
