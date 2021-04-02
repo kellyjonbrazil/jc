@@ -137,6 +137,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--df` enables the `df` command parser
 - `--dig` enables the `dig` command parser
 - `--dmidecode` enables the `dmidecode` command parser
+- `--dpkg-l` enables the `dpkg -l` command parser
 - `--du` enables the `du` command parser
 - `--env` enables the `env` and `printenv` command parser
 - `--file` enables the `file` command parser
