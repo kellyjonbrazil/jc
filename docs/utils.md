@@ -69,32 +69,19 @@ Returns:
     Boolean      True if input string (data) contains non-whitespace characters, otherwise False
 
 
-## parse_datetime_to_timestamp
+## timestamp
 ```python
-parse_datetime_to_timestamp(data)
+timestamp(datetime_string)
 ```
 
 Input a date-time text string of several formats and convert to a naive or timezone-aware epoch timestamp in UTC
 
 Parameters:
+    datetime_string:    (str)   a string representation of a date-time in several supported formats
 
-    data:       (string) a string representation of a date-time in several supported formats
-
-Returns:
-
-    Dictionary  A Dictionary of the following format:
-
-                {
-                    "format":               integer,     # for debugging purposes. None if conversion fails
-                    "timestamp_naive":      integer,     # timestamp based on locally configured timezone. None if conversion fails
-                    "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected. None if conversion fails
-                }
-
-                The format integer denotes which date_time format conversion succeeded.
-                The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
-                The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
-                    in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
-                    is not found in the date-time string), then this field will be None.
-
-                If the conversion completely fails, all fields will be None.
+Attributes:
+    string              (str)   the input datetime string
+    format              (int)   the format rule that was used to decode the datetime string
+    naive               (int)   timestamp based on locally configured timezone. None if conversion fails
+    utc                 (int)   aware timestamp only if UTC timezone detected in datetime string. None if conversion fails
 
