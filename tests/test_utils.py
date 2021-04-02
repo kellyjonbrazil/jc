@@ -12,6 +12,8 @@ class MyTests(unittest.TestCase):
             'Tue Mar 23 16:12:11 IST 2021': {'string': 'Tue Mar 23 16:12:11 IST 2021', 'format': 1000, 'naive': 1616541131, 'utc': None},
             # en_US.UTF-8 local format (found in who cli output)
             '2021-03-23 00:14': {'string': '2021-03-23 00:14', 'format': 1500, 'naive': 1616483640, 'utc': None},
+            # Windows english format (found in dir cli output)
+            '12/07/2019 02:09 AM': {'string': '12/07/2019 02:09 AM', 'format': 1600, 'naive': 1575713340, 'utc': None},
             # en_US.UTF-8 local format (found in upower cli output)
             'Tue 23 Mar 2021 04:12:11 PM UTC': {'string': 'Tue 23 Mar 2021 04:12:11 PM UTC', 'format': 2000, 'naive': 1616541131, 'utc': 1616515931},
             # en_US.UTF-8 local format with non-UTC tz (found in upower cli output)
