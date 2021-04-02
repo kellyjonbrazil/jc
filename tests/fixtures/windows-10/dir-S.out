@@ -1,0 +1,47 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 246B-3B5A
+
+ Directory of C:\Program Files\Internet Explorer
+
+03/24/2021  03:15 PM    <DIR>          .
+03/24/2021  03:15 PM    <DIR>          ..
+12/07/2019  02:49 AM    <DIR>          en-US
+12/07/2019  02:09 AM            54,784 ExtExport.exe
+03/24/2021  03:15 PM                 0 file name.txt
+12/07/2019  02:09 AM            54,784 hmmapi.dll
+12/07/2019  02:09 AM           515,072 iediagcmd.exe
+12/07/2019  02:09 AM           504,832 ieinstal.exe
+12/07/2019  02:09 AM           224,768 ielowutil.exe
+12/07/2019  02:09 AM           421,888 IEShims.dll
+12/06/2019  02:47 PM           819,136 iexplore.exe
+12/07/2019  02:14 AM    <DIR>          images
+12/07/2019  02:14 AM    <DIR>          SIGNUP
+12/07/2019  02:09 AM            48,536 sqmapi.dll
+               9 File(s)      2,643,800 bytes
+
+ Directory of C:\Program Files\Internet Explorer\en-US
+
+12/07/2019  02:49 AM    <DIR>          .
+12/07/2019  02:49 AM    <DIR>          ..
+12/07/2019  02:48 AM             2,560 hmmapi.dll.mui
+12/07/2019  02:48 AM             2,560 ieinstal.exe.mui
+12/07/2019  02:48 AM             5,632 iexplore.exe.mui
+               3 File(s)         10,752 bytes
+
+ Directory of C:\Program Files\Internet Explorer\images
+
+12/07/2019  02:14 AM    <DIR>          .
+12/07/2019  02:14 AM    <DIR>          ..
+12/07/2019  02:09 AM             5,430 bing.ico
+               1 File(s)          5,430 bytes
+
+ Directory of C:\Program Files\Internet Explorer\SIGNUP
+
+12/07/2019  02:14 AM    <DIR>          .
+12/07/2019  02:14 AM    <DIR>          ..
+12/07/2019  02:12 AM               452 install.ins
+               1 File(s)            452 bytes
+
+     Total Files Listed:
+              14 File(s)      2,660,434 bytes
+              11 Dir(s)  33,300,922,368 bytes free

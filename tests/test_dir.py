@@ -57,6 +57,14 @@ class MyTests(unittest.TestCase):
                   'r', encoding='utf-8') as f:
             self.windows_10_dir_dirs_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.out'),
+                  'r', encoding='utf-8') as f:
+            self.windows_10_dir_S= f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.json'),
+                  'r', encoding='utf-8') as f:
+            self.windows_10_dir_S_json = json.loads(f.read())
+
     def test_dir_error(self):
         self.assertEqual(jc.parsers.dir.parse("Access is denied.", quiet=True), {})
 
@@ -90,6 +98,10 @@ class MyTests(unittest.TestCase):
     def test_dir_windows_10_dirs(self):
         self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir_dirs, quiet=True),
                          self.windows_10_dir_dirs_json)
+
+    def test_dir_windows_10_S(self):
+        self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir_S, quiet=True),
+                         self.windows_10_dir_S_json)
 
 
 if __name__ == '__main__':
