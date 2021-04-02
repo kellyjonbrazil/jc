@@ -17,10 +17,6 @@ class MyTests(unittest.TestCase):
                   'r', encoding='utf-8') as f:
             self.windows_10_dir_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-raw.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_raw_json = json.loads(f.read())
-
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-ODTC.out'),
                   'r', encoding='utf-8') as f:
             self.windows_10_dir_ODTC = f.read()
@@ -43,7 +39,7 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-files.out'),
                   'r', encoding='utf-8') as f:
-            self.windows_10_dir_files= f.read()
+            self.windows_10_dir_files = f.read()
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-files.json'),
                   'r', encoding='utf-8') as f:
@@ -51,7 +47,7 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-dirs.out'),
                   'r', encoding='utf-8') as f:
-            self.windows_10_dir_dirs= f.read()
+            self.windows_10_dir_dirs = f.read()
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-dirs.json'),
                   'r', encoding='utf-8') as f:
@@ -59,25 +55,21 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.out'),
                   'r', encoding='utf-8') as f:
-            self.windows_10_dir_S= f.read()
+            self.windows_10_dir_S = f.read()
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.json'),
                   'r', encoding='utf-8') as f:
             self.windows_10_dir_S_json = json.loads(f.read())
 
     def test_dir_error(self):
-        self.assertEqual(jc.parsers.dir.parse("Access is denied.", quiet=True), {})
+        self.assertEqual(jc.parsers.dir.parse("Access is denied.", quiet=True), [])
 
     def test_dir_empty(self):
-        self.assertEqual(jc.parsers.dir.parse("", quiet=True), {})
+        self.assertEqual(jc.parsers.dir.parse("", quiet=True), [])
 
     def test_dir_windows_10(self):
         self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir, quiet=True),
                          self.windows_10_dir_json)
-
-    def test_dir_windows_10_raw(self):
-        self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir, raw=True, quiet=True),
-                         self.windows_10_dir_raw_json)
 
     def test_dir_windows_10_ODTC(self):
         self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir_ODTC, quiet=True),
