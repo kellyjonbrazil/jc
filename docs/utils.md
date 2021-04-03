@@ -77,9 +77,11 @@ timestamp(datetime_string)
 Input a date-time text string of several formats and convert to a naive or timezone-aware epoch timestamp in UTC
 
 Parameters:
+
     datetime_string:    (str)   a string representation of a date-time in several supported formats
 
 Attributes:
+
     string              (str)   the input datetime string
     format              (int)   the format rule that was used to decode the datetime string
     naive               (int)   timestamp based on locally configured timezone. None if conversion fails
