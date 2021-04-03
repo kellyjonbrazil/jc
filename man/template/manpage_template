@@ -54,7 +54,7 @@ quiet - suppress warnings
 raw JSON output
 .RE
 .PP
-.SH Example:
+.SH EXAMPLE:
 ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
 
 
