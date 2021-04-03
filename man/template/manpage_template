@@ -1,0 +1,64 @@
+.TH jc 1 {{ today }} {{ jc.version}} "JSON CLI output utility"
+.SH NAME
+jc \- JSONifies the output of many CLI tools and file-types
+.SH SYNOPSIS
+COMMAND | jc PARSER [OPTIONS]
+
+        or magic syntax:
+
+        jc [OPTIONS] COMMAND
+.SH DESCRIPTION
+jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from STDIN and outputs a JSON representation of the previous command's output to STDOUT. Alternatively, the "magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: command aliases are not supported).
+
+.SH OPTIONS
+.B
+Parsers:
+.RS
+
+{% for parser in jc.parsers %}
+.TP
+.B
+\fB{{ parser.argument }}\fP
+{{ parser.description }}
+{% endfor %}
+
+.RE
+.PP
+.B
+Options:
+.RS
+
+.TP
+.B
+\fB-a\fP
+about jc
+.TP
+.B
+\fB-d\fP
+debug - show traceback (\fB-dd\fP for verbose traceback)
+.TP
+.B
+\fB-m\fP
+monochrome output
+.TP
+.B
+\fB-p\fP
+pretty print output
+.TP
+.B
+\fB-q\fP
+quiet - suppress warnings
+.TP
+.B
+\fB-r\fP
+raw JSON output
+.RE
+.PP
+.SH Example:
+ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
+
+
+or using the magic syntax:
+
+
+jc \fB-p\fP ls \fB-al\fP
