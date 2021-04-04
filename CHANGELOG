@@ -27,6 +27,7 @@ jc changelog
 - JSON output now supports unencoded unicode characters
 - JSON output is now more compact unless the -p (pretty) option is used
 - Developer scripts added and enhanced to automate documentation and man page creation
+- Enhanced man page
 
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
