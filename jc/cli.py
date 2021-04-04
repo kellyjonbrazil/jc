@@ -33,6 +33,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
     copyright = '© 2019-2021 Kelly Brazil'
+    license = 'MIT License'
 
 
 __version__ = info.version
@@ -293,6 +294,7 @@ def about_jc():
         'author_email': info.author_email,
         'website': info.website,
         'copyright': info.copyright,
+        'license': info.license,
         'parser_count': len(parser_list),
         'parsers': parser_list
     }
