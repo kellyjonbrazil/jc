@@ -125,8 +125,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Parsers
 - `--acpi` enables the `acpi` command parser
-- `--airport` enables the `airport -I` command parser (OSX)
-- `--airport-s` enables the `airport -s` command parser (OSX)
+- `--airport` enables the `airport -I` command parser (macOS)
+- `--airport-s` enables the `airport -s` command parser (macOS)
 - `--arp` enables the `arp` command parser
 - `--blkid` enables the `blkid` command parser
 - `--cksum` enables the `cksum` and `sum` command parser
@@ -235,7 +235,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 ## Compatibility
 Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
 ```bash
 cat lsof.out | jc --lsof -q
@@ -246,8 +246,8 @@ Tested on:
 - Ubuntu 18.04
 - Ubuntu 20.04
 - Fedora32
-- OSX 10.11.6
-- OSX 10.14.6
+- macOS 10.11.6
+- macOS 10.14.6
 - NixOS
 - FreeBSD12
 - Windows 10
