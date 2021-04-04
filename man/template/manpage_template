@@ -106,11 +106,11 @@ or using the magic syntax:
 jc \fB-p\fP ls \fB-al\fP
 
 .SH AUTHOR
-Kelly Brazil (kellyjonbrazil@gmail.com)
+{{ jc.author }} ({{ jc.author_email }})
 
-https://github.com/kellyjonbrazil/jc
+{{ jc.website }}
 
 .SH COPYRIGHT
-Copyright 2019-2021 Kelly Brazil
+Copyright (c) {{ jc.copyright[2:] }}
 
-Licensed under the MIT License
+License:  {{ jc.license }}
