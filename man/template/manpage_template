@@ -71,20 +71,24 @@ Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP,
 
 For example, to set to the default colors:
 
+.RS
 JC_COLORS=blue,brightblack,magenta,green
 
 or
 
 JC_COLORS=default,default,default,default
+.RE
 
 .SH CUSTOM PARSERS
 Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
 
+.RS
 - Linux/unix: \fB$HOME/.local/share/jc/jcparsers\fP
 
 - macOS: \fB$HOME/Library/Application Support/jc/jcparsers\fP
 
-- Windows: \fB$LOCALAPPDATA\jc\jc\jcparsers\fP
+- Windows: \fB$LOCALAPPDATA\\jc\\jc\\jcparsers\fP
+.RE
 
 Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
 
@@ -92,8 +96,6 @@ Local plugin filenames must be valid python module names, therefore must consist
 
 Note: The application data directory follows the XDG Base Directory Specification
 
-.RE
-.PP
 .SH EXAMPLE
 ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
 
@@ -102,3 +104,13 @@ or using the magic syntax:
 
 
 jc \fB-p\fP ls \fB-al\fP
+
+.SH AUTHOR
+Kelly Brazil (kellyjonbrazil@gmail.com)
+
+https://github.com/kellyjonbrazil/jc
+
+.SH COPYRIGHT
+Copyright 2019-2021 Kelly Brazil
+
+Licensed under the MIT License
