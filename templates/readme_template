@@ -124,75 +124,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 > Note: For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line: `$ LANG=C date | jc --date`, or by exporting to the environment before running commands: `$ export LANG=C`.
 
 ### Parsers
-
-- `--acpi` enables the acpi command parser
-- `--airport` enables the airport -I command parser
-- `--airport-s` enables the airport -s command parser
-- `--arp` enables the arp command parser
-- `--blkid` enables the blkid command parser
-- `--cksum` enables the cksum command parser
-- `--crontab` enables the crontab command and file parser
-- `--crontab-u` enables the crontab file parser with user support
-- `--csv` enables the CSV file parser
-- `--date` enables the date command parser
-- `--df` enables the df command parser
-- `--dig` enables the dig command parser
-- `--dir` enables the dir command parser
-- `--dmidecode` enables the dmidecode command parser
-- `--dpkg-l` enables the dpkg -l command parser
-- `--du` enables the du command parser
-- `--env` enables the env command parser
-- `--file` enables the file command parser
-- `--free` enables the free command parser
-- `--fstab` enables the fstab file parser
-- `--group` enables the /etc/group file parser
-- `--gshadow` enables the /etc/gshadow file parser
-- `--hash` enables the hash command parser
-- `--hashsum` enables the hashsum command parser (md5sum, shasum, etc.)
-- `--hciconfig` enables the hciconfig command parser
-- `--history` enables the history command parser
-- `--hosts` enables the /etc/hosts file parser
-- `--id` enables the id command parser
-- `--ifconfig` enables the ifconfig command parser
-- `--ini` enables the INI file parser
-- `--iptables` enables the iptables command parser
-- `--iw-scan` enables the iw dev <device> scan command parser
-- `--jobs` enables the jobs command parser
-- `--kv` enables the Key/Value file parser
-- `--last` enables the last and lastb command parser
-- `--ls` enables the ls command parser
-- `--lsblk` enables the lsblk command parser
-- `--lsmod` enables the lsmod command parser
-- `--lsof` enables the lsof command parser
-- `--mount` enables the mount command parser
-- `--netstat` enables the netstat command parser
-- `--ntpq` enables the ntpq -p command parser
-- `--passwd` enables the /etc/passwd file parser
-- `--ping` enables the ping command parser
-- `--pip-list` enables the pip list command parser
-- `--pip-show` enables the pip show command parser
-- `--ps` enables the ps command parser
-- `--route` enables the route command parser
-- `--shadow` enables the /etc/shadow file parser
-- `--ss` enables the ss command parser
-- `--stat` enables the stat command parser
-- `--sysctl` enables the sysctl command parser
-- `--systemctl` enables the systemctl command parser
-- `--systemctl-lj` enables the systemctl list-jobs command parser
-- `--systemctl-ls` enables the systemctl list-sockets command parser
-- `--systemctl-luf` enables the systemctl list-unit-files command parser
-- `--time` enables the /usr/bin/time command parser
-- `--timedatectl` enables the timedatectl status command parser
-- `--tracepath` enables the tracepath command parser
-- `--traceroute` enables the traceroute command parser
-- `--uname` enables the uname -a command parser
-- `--upower` enables the upower command parser
-- `--uptime` enables the uptime command parser
-- `--w` enables the w command parser
-- `--wc` enables the wc command parser
-- `--who` enables the who command parser
-- `--xml` enables the XML file parser
-- `--yaml` enables the YAML file parser
+{% for parser in jc.parsers %}
+- `{{ parser.argument }}` enables the {{ parser.description }}{% endfor %}
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
@@ -950,4 +883,4 @@ cat istio.yaml | jc --yaml -p
 ]
 ```
 
-© 2019-2021 Kelly Brazil
+{{ jc.copyright }}
