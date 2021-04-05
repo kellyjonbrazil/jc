@@ -34,7 +34,7 @@ Examples:
         "system_manufacturer": "VMware, Inc.",
         "system_model": "VMware7,1",
         "system_type": "x64-based PC",
-        "processors": "1 Processor(s) Installed.\n                           [01]: ...",
+        "processors": ["Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"],
         "bios_version": "VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020",
         "windows_directory": "C:\\Windows",
         "system_directory": "C:\\Windows\\system32",
@@ -50,7 +50,7 @@ Examples:
         "page_file_locations": "C:\\pagefile.sys",
         "domain": "TEST.local",
         "logon_server": "\\\\WIN-AA1A1A11AAA",
-        "hotfixs": "6 Hotfix(s) Installed.\n                           [01]: KB4578...",
+        "hotfixs": ["KB4578968", "KB4562830", "KB4570334", "KB4580325", "KB4586864", "KB4594440"],
         "network_cards": "1 NIC(s) Installed.\n                           [01]: Int...",
         "hyperv_requirements": "A hypervisor has been detected. Features required fo..."
     }
@@ -102,7 +102,7 @@ def process(proc_data):
                 "system_manufacturer": "string",
                 "system_model": "string",
                 "system_type": "string",
-                "processors": "string",
+                "processors": ["string"],
                 "bios_version": "string",
                 "windows_directory": "string",
                 "system_directory": "string",
@@ -118,7 +118,7 @@ def process(proc_data):
                 "page_file_locations": "string",
                 "domain": "string",
                 "logon_server": "string",
-                "hotfixs": "string",
+                "hotfixs": ["string"],
                 "network_cards": "string",
                 "hyperv_requirements": "string"
             }
