@@ -156,7 +156,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--ifconfig` enables the ifconfig command parser
 - `--ini` enables the INI file parser
 - `--iptables` enables the iptables command parser
-- `--iw-scan` enables the iw dev [device] scan command parser
+- `--iw-scan` enables the `iw dev [device] scan` command parser
 - `--jobs` enables the jobs command parser
 - `--kv` enables the Key/Value file parser
 - `--last` enables the last and lastb command parser

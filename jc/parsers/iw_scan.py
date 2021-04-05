@@ -115,7 +115,7 @@ import jc.utils
 
 class info():
     version = '0.5'
-    description = 'iw dev [device] scan command parser'
+    description = '`iw dev [device] scan` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Enhancements by Philipp Schmitt (https://pschmitt.dev/)'
