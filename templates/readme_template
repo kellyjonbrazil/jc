@@ -202,7 +202,7 @@ Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/bl
 - Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
 ## Examples
-Here are some examples of `jc` output. For more examples, see [EXAMPLES.md](https://github.com/kellyjonbrazil/jc/blob/master/EXAMPLES.md) or the [parser documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers).
+Here are some examples of `jc` output. For more examples, see [here](https://kellyjonbrazil.github.io/jc/EXAMPLES) or the parser documentation.
 ### arp
 ```bash
 arp | jc --arp -p          # or:  jc -p arp
