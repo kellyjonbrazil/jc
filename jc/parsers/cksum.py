@@ -48,10 +48,9 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'cksum command parser'
+    description = '`cksum` and `sum` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Parses cksum and sum program output'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']

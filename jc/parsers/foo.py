@@ -32,7 +32,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'foo command parser'
+    description = '`foo` command parser'
     author = 'John Doe'
     author_email = 'johndoe@gmail.com'
     # details = 'enter any other details here'

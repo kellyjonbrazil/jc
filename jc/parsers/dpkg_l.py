@@ -120,7 +120,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.0'
-    description = 'dpkg -l command parser'
+    description = '`dpkg -l` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'

@@ -52,7 +52,7 @@ import jc.utils
 
 class info():
     version = '1.3'
-    description = 'history command parser'
+    description = '`history` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Optimizations by https://github.com/philippeitis'

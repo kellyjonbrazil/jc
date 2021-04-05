@@ -51,7 +51,7 @@ import jc.utils
 
 class info():
     version = '1.3'
-    description = 'uptime command parser'
+    description = '`uptime` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

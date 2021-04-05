@@ -102,7 +102,7 @@ import jc.utils
 
 class info():
     version = '1.1'
-    description = 'traceroute command parser'
+    description = '`traceroute` and `traceroute6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the trparse library by Luis Benitez at https://github.com/lbenitez000/trparse'

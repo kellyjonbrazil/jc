@@ -69,7 +69,7 @@ import jc.utils
 
 class info():
     version = '1.3'
-    description = 'systemctl list-jobs command parser'
+    description = '`systemctl list-jobs` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

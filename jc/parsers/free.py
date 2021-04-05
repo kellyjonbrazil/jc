@@ -63,7 +63,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.2'
-    description = 'free command parser'
+    description = '`free` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

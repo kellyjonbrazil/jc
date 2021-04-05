@@ -51,7 +51,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = 'timedatectl status command parser'
+    description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'

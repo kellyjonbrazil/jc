@@ -118,7 +118,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'tracepath command parser'
+    description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

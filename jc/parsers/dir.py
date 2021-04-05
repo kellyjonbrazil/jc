@@ -111,7 +111,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'dir command parser'
+    description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
 

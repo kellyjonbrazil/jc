@@ -89,7 +89,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = 'blkid command parser'
+    description = '`blkid` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'

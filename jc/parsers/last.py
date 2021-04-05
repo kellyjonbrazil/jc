@@ -92,7 +92,7 @@ import jc.utils
 
 class info():
     version = '1.5'
-    description = 'last and lastb command parser'
+    description = '`last` and `lastb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Enhancements by https://github.com/zerolagtime'

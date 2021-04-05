@@ -157,7 +157,7 @@ import jc.utils
 
 class info():
     version = '1.8'
-    description = 'ifconfig command parser'
+    description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using ifconfig-parser from https://github.com/KnightWhoSayNi/ifconfig-parser'

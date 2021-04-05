@@ -87,7 +87,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = 'jobs command parser'
+    description = '`jobs` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

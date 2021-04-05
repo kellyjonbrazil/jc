@@ -256,7 +256,7 @@ Examples:
 
 class info():
     version = '1.8'
-    description = 'netstat command parser'
+    description = '`netstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

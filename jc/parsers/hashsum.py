@@ -63,7 +63,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'hashsum command parser (md5sum, shasum, etc.)'
+    description = 'hashsum command parser (`md5sum`, `shasum`, etc.)'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Parses MD5 and SHA hash program output'

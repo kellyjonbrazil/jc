@@ -52,7 +52,7 @@ import jc.utils
 
 class info():
     version = '2.0'
-    description = 'date command parser'
+    description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

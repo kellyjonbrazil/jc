@@ -158,7 +158,7 @@ import jc.utils
 
 class info():
     version = '1.7'
-    description = 'ls command parser'
+    description = '`ls` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

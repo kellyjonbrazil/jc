@@ -33,7 +33,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.0'
-    description = 'hash command parser'
+    description = '`hash` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
