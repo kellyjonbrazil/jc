@@ -125,74 +125,74 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Parsers
 
-- `--acpi` enables the `acpi` command parser
-- `--airport` enables the `airport -I` command parser
-- `--airport-s` enables the `airport -s` command parser
-- `--arp` enables the `arp` command parser
-- `--blkid` enables the `blkid` command parser
-- `--cksum` enables the `cksum` and `sum` command parser
-- `--crontab` enables the `crontab` command and file parser
-- `--crontab-u` enables the `crontab` file parser with user support
-- `--csv` enables the CSV file parser
-- `--date` enables the `date` command parser
-- `--df` enables the `df` command parser
-- `--dig` enables the `dig` command parser
-- `--dir` enables the `dir` command parser
-- `--dmidecode` enables the `dmidecode` command parser
-- `--dpkg-l` enables the `dpkg -l` command parser
-- `--du` enables the `du` command parser
-- `--env` enables the `env` command parser
-- `--file` enables the `file` command parser
-- `--free` enables the `free` command parser
-- `--fstab` enables the `/etc/fstab` file parser
-- `--group` enables the `/etc/group` file parser
-- `--gshadow` enables the `/etc/gshadow` file parser
-- `--hash` enables the `hash` command parser
-- `--hashsum` enables the hashsum command parser (`md5sum`, `shasum`, etc.)
-- `--hciconfig` enables the `hciconfig` command parser
-- `--history` enables the `history` command parser
-- `--hosts` enables the `/etc/hosts` file parser
-- `--id` enables the `id` command parser
-- `--ifconfig` enables the `ifconfig` command parser
-- `--ini` enables the INI file parser
-- `--iptables` enables the `iptables` command parser
-- `--iw-scan` enables the `iw dev [device] scan` command parser
-- `--jobs` enables the `jobs` command parser
-- `--kv` enables the Key/Value file parser
-- `--last` enables the `last` and `lastb` command parser
-- `--ls` enables the `ls` command parser
-- `--lsblk` enables the `lsblk` command parser
-- `--lsmod` enables the `lsmod` command parser
-- `--lsof` enables the `lsof` command parser
-- `--mount` enables the `mount` command parser
-- `--netstat` enables the `netstat` command parser
-- `--ntpq` enables the `ntpq -p` command parser
-- `--passwd` enables the `/etc/passwd` file parser
-- `--ping` enables the `ping` and `ping6` command parser
-- `--pip-list` enables the `pip list` command parser
-- `--pip-show` enables the `pip show` command parser
-- `--ps` enables the `ps` command parser
-- `--route` enables the `route` command parser
-- `--shadow` enables the `/etc/shadow` file parser
-- `--ss` enables the `ss` command parser
-- `--stat` enables the `stat` command parser
-- `--sysctl` enables the `sysctl` command parser
-- `--systemctl` enables the `systemctl` command parser
-- `--systemctl-lj` enables the `systemctl list-jobs` command parser
-- `--systemctl-ls` enables the `systemctl list-sockets` command parser
-- `--systemctl-luf` enables the `systemctl list-unit-files` command parser
-- `--time` enables the `/usr/bin/time` command parser
-- `--timedatectl` enables the `timedatectl status` command parser
-- `--tracepath` enables the `tracepath` and `tracepath6` command parser
-- `--traceroute` enables the `traceroute` and `traceroute6` command parser
-- `--uname` enables the `uname -a` command parser
-- `--upower` enables the `upower` command parser
-- `--uptime` enables the `uptime` command parser
-- `--w` enables the `w` command parser
-- `--wc` enables the `wc` command parser
-- `--who` enables the `who` command parser
-- `--xml` enables the XML file parser
-- `--yaml` enables the YAML file parser
+- `--acpi` enables the `acpi` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi))
+- `--airport` enables the `airport -I` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport))
+- `--airport-s` enables the `airport -s` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s))
+- `--arp` enables the `arp` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/arp))
+- `--blkid` enables the `blkid` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid))
+- `--cksum` enables the `cksum` and `sum` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum))
+- `--crontab` enables the `crontab` command and file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab))
+- `--crontab-u` enables the `crontab` file parser with user support ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u))
+- `--csv` enables the CSV file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/csv))
+- `--date` enables the `date` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/date))
+- `--df` enables the `df` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/df))
+- `--dig` enables the `dig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dig))
+- `--dir` enables the `dir` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dir))
+- `--dmidecode` enables the `dmidecode` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dmidecode))
+- `--dpkg-l` enables the `dpkg -l` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dpkg_l))
+- `--du` enables the `du` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/du))
+- `--env` enables the `env` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/env))
+- `--file` enables the `file` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/file))
+- `--free` enables the `free` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/free))
+- `--fstab` enables the `/etc/fstab` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab))
+- `--group` enables the `/etc/group` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/group))
+- `--gshadow` enables the `/etc/gshadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow))
+- `--hash` enables the `hash` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hash))
+- `--hashsum` enables the hashsum command parser (`md5sum`, `shasum`, etc.) ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hashsum))
+- `--hciconfig` enables the `hciconfig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hciconfig))
+- `--history` enables the `history` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/history))
+- `--hosts` enables the `/etc/hosts` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts))
+- `--id` enables the `id` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/id))
+- `--ifconfig` enables the `ifconfig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig))
+- `--ini` enables the INI file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ini))
+- `--iptables` enables the `iptables` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables))
+- `--iw-scan` enables the `iw dev [device] scan` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan))
+- `--jobs` enables the `jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs))
+- `--kv` enables the Key/Value file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/kv))
+- `--last` enables the `last` and `lastb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/last))
+- `--ls` enables the `ls` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ls))
+- `--lsblk` enables the `lsblk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk))
+- `--lsmod` enables the `lsmod` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod))
+- `--lsof` enables the `lsof` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof))
+- `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
+- `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
+- `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
+- `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
+- `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))
+- `--pip-list` enables the `pip list` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list))
+- `--pip-show` enables the `pip show` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show))
+- `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
+- `--route` enables the `route` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/route))
+- `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
+- `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))
+- `--stat` enables the `stat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/stat))
+- `--sysctl` enables the `sysctl` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl))
+- `--systemctl` enables the `systemctl` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl))
+- `--systemctl-lj` enables the `systemctl list-jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj))
+- `--systemctl-ls` enables the `systemctl list-sockets` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls))
+- `--systemctl-luf` enables the `systemctl list-unit-files` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_luf))
+- `--time` enables the `/usr/bin/time` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/time))
+- `--timedatectl` enables the `timedatectl status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl))
+- `--tracepath` enables the `tracepath` and `tracepath6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath))
+- `--traceroute` enables the `traceroute` and `traceroute6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute))
+- `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
+- `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
+- `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
+- `--w` enables the `w` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/w))
+- `--wc` enables the `wc` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/wc))
+- `--who` enables the `who` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/who))
+- `--xml` enables the XML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xml))
+- `--yaml` enables the YAML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml))
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
