@@ -13,7 +13,7 @@
     "system_manufacturer": "VMware, Inc.",
     "system_model": "VMware7,1",
     "system_type": "x64-based PC",
-    "processors": "1 Processor(s) Installed.\n                           [01]: Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz",
+    "processors": ["Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"],
     "bios_version": "VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020",
     "windows_directory": "C:\\Windows",
     "system_directory": "C:\\Windows\\system32",
@@ -29,7 +29,7 @@
     "page_file_locations": "C:\\pagefile.sys",
     "domain": "TEST.local",
     "logon_server": "\\\\WIN-AA1A1A11AAA",
-    "hotfixs": "6 Hotfix(s) Installed.\n                           [01]: KB4578968\n                           [02]: KB4562830\n                           [03]: KB4570334\n                           [04]: KB4580325\n                           [05]: KB4586864\n                           [06]: KB4594440",
+    "hotfixs": ["KB4578968", "KB4562830", "KB4570334", "KB4580325", "KB4586864", "KB4594440"],
     "network_cards": "1 NIC(s) Installed.\n                           [01]: Intel(R) 82574L Gigabit Network Connection\n                                 Connection Name: Ethernet0\n                                 DHCP Enabled:    Yes\n                                 DHCP Server:     192.168.133.250\n                                 IP address(es)\n                                 [01]: 192.168.133.3\n                                 [02]: fe80::192:eb64:1fcf:86eb",
     "hyperv_requirements": "A hypervisor has been detected. Features required for Hyper-V will not be displayed."
 }

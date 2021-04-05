@@ -146,7 +146,7 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    delim = ":" # k/v delimiter
+    delim = ":"  # k/v delimiter
     raw_data = {}  # intermediary output
 
     if jc.utils.has_data(data):
@@ -177,22 +177,54 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
     for k, v in raw_data.items():
         # lowercase and replace spaces with underscores
-        k = k.strip().lower().replace(' ', '_')
+        k = k.strip().lower().replace(" ", "_")
 
         # remove invalid key characters
-        for c in ';:!@#$%^&*()-':
-            k = k.replace(c, '')
+        for c in ";:!@#$%^&*()-":
+            k = k.replace(c, "")
 
         # since we split on start_value_pos, the delimiter
         # is still in the key field. Remove it.
         k = k.rstrip(delim)
 
-        raw_output[k] = v.strip()
+        if k in ["hotfixs", "processors"]:
+            raw_output[k] = parse_hotfixs_or_processors(v)
+        else:
+            raw_output[k] = v.strip()
 
     if raw:
         return raw_output
     else:
         return process(raw_output)
+
+
+def parse_hotfixs_or_processors(data):
+    """
+    Turns a list of return-delimited hotfixes or processors
+    with [x] as a prefix into an array of hotfixes
+
+    Note that if a high number of items exist, the list may cutoff
+    and this list may not contain all items installed on the system
+
+    IRL, this likely applies to hotfixes more than processors
+
+    Parameters:
+        data: (string) Input string
+    """
+    arr_output = []
+    for i, l in enumerate(data.splitlines()):
+        # skip line that says how many are installed
+        if i == 0:
+            continue
+        # we have to make sure this is a complete line
+        # as data could cutoff. Make sure the delimiter
+        # exists. Otherwise, skip it.
+        if ":" in l:
+            k, v = l.split(":")
+            # discard the number sequence
+            arr_output.append(v.strip())
+
+    return arr_output
 
 
 def get_value_pos(line, delim):
