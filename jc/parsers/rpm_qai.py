@@ -46,7 +46,7 @@ Examples:
         "vendor": "CentOS",
         "url": "http://www.gnu.org/software/make/",
         "summary": "A GNU tool which simplifies the build process for users",
-        "description": "A GNU tool for controlling the generation of executables and other non-source files of a program from the program's source files. Make allows users to build and install packages without any significant knowledge about the details of the build process. The details about how the program should be built are provided for make in the program's makefile.",
+        "description": "A GNU tool for controlling the generation of executables and other non-source...",
         "build_epoch": 1565311645,
         "build_epoch_utc": null
       },
@@ -68,7 +68,7 @@ Examples:
         "vendor": "CentOS",
         "url": "http://ftp.altlinux.org/pub/people/legion/kbd",
         "summary": "Legacy data for kbd package",
-        "description": "The kbd-legacy package contains original keymaps for kbd package. Please note that kbd-legacy is not helpful without kbd.",
+        "description": "The kbd-legacy package contains original keymaps for kbd package. Please note...",
         "build_epoch": 1540939200,
         "build_epoch_utc": null
       },
