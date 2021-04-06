@@ -26,8 +26,38 @@ Examples:
       {
         "login": "jdoe",
         "name": "John Doe",
+        "tty": "tty1",
+        "idle": "14d",
+        "login_time": "Mar 22 21:14",
+        "tty_writeable": false,
+        "idle_minutes": 0,
+        "idle_hours": 0,
+        "idle_days": 14,
+        "total_idle_minutes": 20160
+      },
+      {
+        "login": "jdoe",
+        "name": "John Doe",
+        "tty": "pts/0",
+        "idle": null,
+        "login_time": "Apr  5 15:33",
+        "details": "(192.168.1.22)",
+        "tty_writeable": true,
+        "idle_minutes": 0,
+        "idle_hours": 0,
+        "idle_days": 0,
+        "total_idle_minutes": 0
+      },
+      ...
+    ]
+
+    $ finger | jc --finger -p -r
+    [
+      {
+        "login": "jdoe",
+        "name": "John Doe",
         "tty": "*tty1",
-        "idle": "13d",
+        "idle": "14d",
         "login_time": "Mar 22 21:14"
       },
       {
@@ -37,7 +67,8 @@ Examples:
         "idle": null,
         "login_time": "Apr  5 15:33",
         "details": "(192.168.1.22)"
-      }
+      },
+      ...
     ]
 """
 import re
@@ -74,13 +105,17 @@ def process(proc_data):
 
         [
           {
-            "login":            string,
-            "name":             string,
-            "tty":              string,
-            "idle":             string,      # null if empty
-            "login_time":       string,
-            "details":          string,
-            "tty_writeable":    boolean
+            "login":                string,
+            "name":                 string,
+            "tty":                  string,
+            "idle":                 string,     # null if empty
+            "login_time":           string,
+            "details":              string,
+            "tty_writeable":        boolean,
+            "idle_minutes":         integer,
+            "idle_hours":           integer,
+            "idle_days":            integer,
+            "total_idle_minutes":   integer
           }
         ]
     """
@@ -92,8 +127,26 @@ def process(proc_data):
                 entry['tty_writeable'] = False
 
         if 'idle' in entry:
+            entry['idle_minutes'] = 0
+            entry['idle_hours'] = 0
+            entry['idle_days'] = 0
+
             if entry['idle'] == '-':
                 entry['idle'] = None
+
+            if entry['idle'] and entry['idle'].isnumeric():
+                entry['idle_minutes'] = int(entry['idle'])
+
+            if entry['idle'] and ':' in entry['idle']:
+                entry['idle_hours'] = int(entry['idle'].split(':')[0])
+                entry['idle_minutes'] = int(entry['idle'].split(':')[1])
+
+            if entry['idle'] and 'd' in entry['idle']:
+                entry['idle_days'] = int(entry['idle'].replace('d', ''))
+
+            entry['total_idle_minutes'] = (entry['idle_days'] * 1440) + \
+                                          (entry['idle_hours'] * 60) + \
+                                          entry['idle_minutes']
 
     return proc_data
 

@@ -960,9 +960,14 @@ finger | jc --finger -p          # or:  jc -p finger
   {
     "login": "jdoe",
     "name": "John Doe",
-    "tty": "*tty1",
-    "idle": "13d",
-    "login_time": "Mar 22 21:14"
+    "tty": "tty1",
+    "idle": "14d",
+    "login_time": "Mar 22 21:14",
+    "tty_writeable": false,
+    "idle_minutes": 0,
+    "idle_hours": 0,
+    "idle_days": 14,
+    "total_idle_minutes": 20160
   },
   {
     "login": "jdoe",
@@ -970,7 +975,12 @@ finger | jc --finger -p          # or:  jc -p finger
     "tty": "pts/0",
     "idle": null,
     "login_time": "Apr  5 15:33",
-    "details": "(192.168.1.22)"
+    "details": "(192.168.1.22)",
+    "tty_writeable": true,
+    "idle_minutes": 0,
+    "idle_hours": 0,
+    "idle_days": 0,
+    "total_idle_minutes": 0
   }
 ]
 ```
