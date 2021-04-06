@@ -174,6 +174,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--pip-show` enables the `pip show` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show))
 - `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
 - `--route` enables the `route` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/route))
+- `--rpm_qai` enables the `rpm -qai` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qai))
 - `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
 - `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))
 - `--stat` enables the `stat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/stat))
