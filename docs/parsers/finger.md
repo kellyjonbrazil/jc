@@ -2,8 +2,6 @@
 # jc.parsers.finger
 jc - JSON CLI output utility `finger` command output parser
 
-<<Short finger description and caveats>>
-
 Usage (cli):
 
     $ finger | jc --finger
@@ -66,19 +64,12 @@ Returns:
 
     [
       {
-        "login": "kbrazil",
-        "name": "Kelly Brazil",
-        "tty": "*tty1",
-        "idle": "13d",
-        "login_time": "Mar 22 21:14"
-      },
-      {
-        "login": "kbrazil",
-        "name": "Kelly Brazil",
-        "tty": "pts/0",
-        "idle": null,
-        "login_time": "Apr  5 15:33",
-        "details": "(192.168.1.221)"
+        "login":        string,
+        "name":         string,
+        "tty":          string,
+        "idle":         string,      # null if empty
+        "login_time":   string,
+        "details":      string
       }
     ]
 

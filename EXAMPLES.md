@@ -951,6 +951,29 @@ file * | jc --file -p          # or:  jc -p file *
   }
 ]
 ```
+### finger
+```bash
+finger | jc --finger -p          # or:  jc -p finger
+```
+```json
+[
+  {
+    "login": "jdoe",
+    "name": "John Doe",
+    "tty": "*tty1",
+    "idle": "13d",
+    "login_time": "Mar 22 21:14"
+  },
+  {
+    "login": "jdoe",
+    "name": "John Doe",
+    "tty": "pts/0",
+    "idle": null,
+    "login_time": "Apr  5 15:33",
+    "details": "(192.168.1.22)"
+  }
+]
+```
 ### free
 ```bash
 free | jc --free -p          # or:  jc -p free
