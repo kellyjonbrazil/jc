@@ -57,6 +57,7 @@ parsers = [
     'du',
     'env',
     'file',
+    'finger',
     'free',
     'fstab',
     'group',

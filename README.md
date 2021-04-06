@@ -143,6 +143,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--du` enables the `du` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/du))
 - `--env` enables the `env` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/env))
 - `--file` enables the `file` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/file))
+- `--finger` enables the `finger` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/finger))
 - `--free` enables the `free` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/free))
 - `--fstab` enables the `/etc/fstab` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab))
 - `--group` enables the `/etc/group` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/group))
