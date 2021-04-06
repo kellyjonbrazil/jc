@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `finger` command output parser
 
+Supports `-s` output option. Does not support the `-l` detail option.
+
 Usage (cli):
 
     $ finger | jc --finger
@@ -15,7 +17,7 @@ Usage (module):
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    'linux', 'darwin', 'cygwin', freebsd'
 
 Examples:
 
@@ -51,7 +53,7 @@ class info():
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'cygwin', 'freebsd']
     magic_commands = ['finger']
 
 
@@ -72,17 +74,27 @@ def process(proc_data):
 
         [
           {
-            "login":        string,
-            "name":         string,
-            "tty":          string,
-            "idle":         string,      # null if empty
-            "login_time":   string,
-            "details":      string
+            "login":            string,
+            "name":             string,
+            "tty":              string,
+            "idle":             string,      # null if empty
+            "login_time":       string,
+            "details":          string,
+            "tty_writeable":    boolean
           }
         ]
     """
+    for entry in proc_data:
+        if 'tty' in entry:
+            entry['tty_writeable'] = True
+            if '*' in entry['tty']:
+                entry['tty'] = entry['tty'].replace('*', '')
+                entry['tty_writeable'] = False
 
-    # rebuild output for added semantic information
+        if 'idle' in entry:
+            if entry['idle'] == '-':
+                entry['idle'] = None
+
     return proc_data
 
 
@@ -127,17 +139,18 @@ def parse(data, raw=False, quiet=False):
         raw_output =  jc.parsers.universal.sparse_table_parse(first_half)
 
         # use regex to get login datetime and 'other' data
-        pattern = re.compile(r'([A-Z][a-z]{2}\s+\d{1,2}\s+\d\d:\d\d)(\s+\S+)?')
+        pattern = re.compile(r'([A-Z][a-z]{2}\s+\d{1,2}\s+)(\d\d:\d\d|\d{4})(\s?.+)?$')
 
         # remove header row from list
         second_half.pop(0)
 
         for index, line in enumerate(second_half):
             dt = re.search(pattern, line)
-            if dt.group(1):
-                raw_output[index]['login_time'] = dt.group(1).strip()
-            if dt.group(2):
-                raw_output[index]['details'] = dt.group(2).strip()
+            if dt:
+                if dt.group(1) and dt.group(2):
+                    raw_output[index]['login_time'] = dt.group(1).strip() + ' ' + dt.group(2).strip()
+                if dt.group(3):
+                    raw_output[index]['details'] = dt.group(3).strip()
 
     if raw:
         return raw_output
