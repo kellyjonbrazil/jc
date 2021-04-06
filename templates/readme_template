@@ -134,7 +134,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
-- `-r` raw output. Provides a more literal JSON output, typically with strings values and no additional semantic processing
+- `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
 - `-v` version information
 
 ### Setting Custom Colors via Environment Variable
