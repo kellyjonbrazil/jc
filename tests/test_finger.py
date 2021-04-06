@@ -16,12 +16,18 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/finger.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_finger = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/finger.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_finger = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/finger.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_finger_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/finger.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_finger_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/finger.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_finger_json = json.loads(f.read())
 
 
     def test_finger_nodata(self):
@@ -41,6 +47,12 @@ class MyTests(unittest.TestCase):
         Test plain 'finger' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.finger.parse(self.ubuntu_18_4_finger, quiet=True), self.ubuntu_18_4_finger_json)
+
+    def test_finger_osx_10_14_6(self):
+        """
+        Test plain 'finger' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.finger.parse(self.osx_10_14_6_finger, quiet=True), self.osx_10_14_6_finger_json)
 
 
 if __name__ == '__main__':
