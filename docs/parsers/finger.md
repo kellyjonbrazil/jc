@@ -2,6 +2,8 @@
 # jc.parsers.finger
 jc - JSON CLI output utility `finger` command output parser
 
+Supports `-s` output option. Does not support the `-l` detail option.
+
 Usage (cli):
 
     $ finger | jc --finger
@@ -17,7 +19,7 @@ Usage (module):
 
 Compatibility:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    'linux', 'darwin', 'cygwin', freebsd'
 
 Examples:
 
@@ -64,12 +66,13 @@ Returns:
 
     [
       {
-        "login":        string,
-        "name":         string,
-        "tty":          string,
-        "idle":         string,      # null if empty
-        "login_time":   string,
-        "details":      string
+        "login":            string,
+        "name":             string,
+        "tty":              string,
+        "idle":             string,      # null if empty
+        "login_time":       string,
+        "details":          string,
+        "tty_writeable":    boolean
       }
     ]
 
