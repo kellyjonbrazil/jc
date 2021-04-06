@@ -148,6 +148,10 @@ def process(proc_data):
                                           (entry['idle_hours'] * 60) + \
                                           entry['idle_minutes']
 
+        if 'details' in entry:
+            if not entry['details']:
+                del entry['details']
+
     return proc_data
 
 
