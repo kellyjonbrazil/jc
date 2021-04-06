@@ -229,7 +229,8 @@ def parse(data, raw=False, quiet=False):
 
                 if this_entry != last_entry:
                     if entry_obj:
-                        entry_obj['description'] = ' '.join(description)
+                        if description:
+                            entry_obj['description'] = ' '.join(description)
                         raw_output.append(entry_obj)
                         entry_obj = {}
                         last_entry = this_entry
@@ -246,8 +247,10 @@ def parse(data, raw=False, quiet=False):
             if desc_entry:
                 description.append(line)
 
-        entry_obj['description'] = ' '.join(description)
-        raw_output.append(entry_obj)
+        if entry_obj:
+            if description:
+                entry_obj['description'] = ' '.join(description)
+            raw_output.append(entry_obj)
 
     if raw:
         return raw_output
