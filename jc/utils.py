@@ -121,19 +121,19 @@ class timestamp:
 
             Dictionary  A Dictionary of the following format:
 
-                        {
-                            "format":               integer,     # for debugging purposes. None if conversion fails
-                            "timestamp_naive":      integer,     # timestamp based on locally configured timezone. None if conversion fails
-                            "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected. None if conversion fails
-                        }
+                {
+                    "format":               integer,     # for debugging purposes. None if conversion fails
+                    "timestamp_naive":      integer,     # timestamp based on locally configured timezone. None if conversion fails
+                    "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected. None if conversion fails
+                }
 
-                        The format integer denotes which date_time format conversion succeeded.
-                        The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
-                        The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
-                            in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
-                            is not found in the date-time string), then this field will be None.
+                The format integer denotes which date_time format conversion succeeded.
+                The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
+                The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
+                    in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
+                    is not found in the date-time string), then this field will be None.
 
-                        If the conversion completely fails, all fields will be None.
+                If the conversion completely fails, all fields will be None.
         """
         data = self.string or ''
         normalized_datetime = ''
