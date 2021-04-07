@@ -714,7 +714,6 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 dir | jc --dir -p          # or:  jc -p dir
 ```
 ```json
-
 [
   {
     "date": "03/24/2021",
@@ -2479,7 +2478,7 @@ route -ee | jc --route -p          # or:  jc -p route -ee
   }
 ]
 ```
-### rpm -qai
+### rpm -qi
 ```bash
 rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
 ```
