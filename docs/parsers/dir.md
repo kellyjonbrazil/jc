@@ -12,11 +12,11 @@ The `epoch` calculated timestamp field is naive (i.e. based on the local time of
 
 Usage (cli):
 
-    $ dir | jc --dir
+    C:> dir | jc --dir
 
     or
 
-    $ jc dir
+    C:> jc dir
 
 Usage (module):
 
@@ -29,7 +29,7 @@ Compatibility:
 
 Examples:
 
-    $ dir | jc --dir -p
+    C:> dir | jc --dir -p
     [
       {
         "date": "03/24/2021",
@@ -70,7 +70,7 @@ Examples:
       ...
     ]
 
-    $ dir | jc --dir -p -r
+    C:> dir | jc --dir -p -r
     [
       {
         "date": "03/24/2021",
