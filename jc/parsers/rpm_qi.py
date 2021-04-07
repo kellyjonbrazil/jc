@@ -25,7 +25,7 @@ Compatibility:
 
 Examples:
 
-    $ rpm_qia | jc --rpm_qi -p
+    $ rpm -qia | jc --rpm_qi -p
     [
       {
         "name": "make",
