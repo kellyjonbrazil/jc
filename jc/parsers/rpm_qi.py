@@ -1,6 +1,6 @@
-"""jc - JSON CLI output utility `rpm -qai` command output parser
+"""jc - JSON CLI output utility `rpm -qi` command output parser
 
-Works with `rpm -qi [package]` or `rpm -qai`.
+Works with `rpm -qi [package]` or `rpm -qia`.
 
 The `build_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
@@ -8,16 +8,16 @@ The `build_epoch_utc` calculated timestamp field is timezone-aware and is only a
 
 Usage (cli):
 
-    $ rpm -qai | jc --rpm_qai
+    $ rpm -qia | jc --rpm_qi
 
     or
 
-    $ jc rpm -qai
+    $ jc rpm -qia
 
 Usage (module):
 
-    import jc.parsers.rpm_qai
-    result = jc.parsers.rpm_qai.parse(rpm_qai_command_output)
+    import jc.parsers.rpm_qi
+    result = jc.parsers.rpm_qi.parse(rpm_qi_command_output)
 
 Compatibility:
 
@@ -25,7 +25,7 @@ Compatibility:
 
 Examples:
 
-    $ rpm_qai | jc --rpm_qai -p
+    $ rpm_qia | jc --rpm_qi -p
     [
       {
         "name": "make",
@@ -75,7 +75,7 @@ Examples:
       ...
     ]
 
-    $ rpm -qai | jc --rpm_qai -p -r
+    $ rpm -qia | jc --rpm_qi -p -r
     [
       {
         "name": "make",
@@ -126,14 +126,14 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = '`rpm -qai` command parser'
+    description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
-    magic_commands = ['rpm -qai', 'rpm -qia', 'rpm -qi']
+    magic_commands = ['rpm -qi', 'rpm -qia', 'rpm -qai']
 
 
 __version__ = info.version

@@ -88,7 +88,7 @@ parsers = [
     'pip-show',
     'ps',
     'route',
-    'rpm_qai',
+    'rpm_qi',
     'shadow',
     'ss',
     'stat',
