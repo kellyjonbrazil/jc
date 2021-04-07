@@ -2481,7 +2481,7 @@ route -ee | jc --route -p          # or:  jc -p route -ee
 ```
 ### rpm -qai
 ```bash
-rpm_qai | jc --rpm_qai -p          # or:  jc -p rpm -qai
+rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
 ```
 ```json
 [
