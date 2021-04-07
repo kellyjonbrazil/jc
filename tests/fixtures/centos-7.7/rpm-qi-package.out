@@ -1,0 +1,26 @@
+Name        : make
+Epoch       : 1
+Version     : 3.82
+Release     : 24.el7
+Architecture: x86_64
+Install Date: Wed 16 Oct 2019 09:21:42 AM PDT
+Group       : Development/Tools
+Size        : 1160660
+License     : GPLv2+
+Signature   : RSA/SHA256, Thu 22 Aug 2019 02:34:59 PM PDT, Key ID 24c6a8a7f4a80eb5
+Source RPM  : make-3.82-24.el7.src.rpm
+Build Date  : Thu 08 Aug 2019 05:47:25 PM PDT
+Build Host  : x86-01.bsys.centos.org
+Relocations : (not relocatable)
+Packager    : CentOS BuildSystem <http://bugs.centos.org>
+Vendor      : CentOS
+URL         : http://www.gnu.org/software/make/
+Summary     : A GNU tool which simplifies the build process for users
+Description :
+A GNU tool for controlling the generation of executables and other
+non-source files of a program from the program's source files. Make
+allows users to build and install packages without any significant
+knowledge about the details of the build process. The details about
+how the program should be built are provided for make in the program's
+makefile.
+
