@@ -261,7 +261,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = 'ss command parser'
+    description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

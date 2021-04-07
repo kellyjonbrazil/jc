@@ -1,6 +1,8 @@
 """jc - JSON CLI output utility `last` and `lastb` command output parser
 
-Supports -w and -F options.
+Supports `-w` and `-F` options.
+
+Calculated epoch time fields are naive (i.e. based on the local time of the system the parser is run on) since there is no timezone information in the `last` command output.
 
 Usage (cli):
 
@@ -85,13 +87,12 @@ Examples:
 
 """
 import re
-from datetime import datetime
 import jc.utils
 
 
 class info():
-    version = '1.4'
-    description = 'last and lastb command parser'
+    version = '1.5'
+    description = '`last` and `lastb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Enhancements by https://github.com/zerolagtime'
@@ -124,8 +125,8 @@ def process(proc_data):
             "login":            string,
             "logout":           string,
             "duration":         string,
-            "login_epoch":      integer,   # available with last -F option
-            "logout_epoch":     integer,   # available with last -F option
+            "login_epoch":      integer,   # (naive) available with last -F option
+            "logout_epoch":     integer,   # (naive) available with last -F option
             "duration_seconds": integer    # available with last -F option
           }
         ]
@@ -152,11 +153,13 @@ def process(proc_data):
         if 'logout' in entry and entry['logout'] == 'gone_-_no_logout':
             entry['logout'] = 'gone - no logout'
 
-        if 'login' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*',entry['login']):
-            entry['login_epoch'] = int(datetime.strptime(entry['login'], '%a %b %d %H:%M:%S %Y').strftime('%s'))
+        if 'login' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*', entry['login']):
+            timestamp = jc.utils.timestamp(entry['login'])
+            entry['login_epoch'] = timestamp.naive
 
-        if 'logout' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*',entry['logout']):
-            entry['logout_epoch'] = int(datetime.strptime(entry['logout'], '%a %b %d %H:%M:%S %Y').strftime('%s'))
+        if 'logout' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*', entry['logout']):
+            timestamp = jc.utils.timestamp(entry['logout'])
+            entry['logout_epoch'] = timestamp.naive
 
         if 'login_epoch' in entry and 'logout_epoch' in entry:
             entry['duration_seconds'] = int(entry['logout_epoch']) - int(entry['login_epoch'])

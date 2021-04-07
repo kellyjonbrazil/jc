@@ -47,7 +47,7 @@ import jc.utils
 
 class info():
     version = '1.0'
-    description = 'wc command parser'
+    description = '`wc` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

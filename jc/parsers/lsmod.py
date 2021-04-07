@@ -117,7 +117,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.3'
-    description = 'lsmod command parser'
+    description = '`lsmod` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

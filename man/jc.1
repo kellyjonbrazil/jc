@@ -1,283 +1,391 @@
-.TH jc 1 2021-01-05 1.14.3 "JSON CLI output utility"
+.TH jc 1 2021-04-07 1.15.0 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
 COMMAND | jc PARSER [OPTIONS]
 
-        or magic syntax:
+or magic syntax:
 
-        jc [OPTIONS] COMMAND
+jc [OPTIONS] COMMAND
+
 .SH DESCRIPTION
-jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from STDIN and outputs a JSON representation of the previous command's output to STDOUT. Alternatively, the "magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: command aliases are not supported).
+jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: command aliases are not supported).
 
 .SH OPTIONS
 .B
 Parsers:
 .RS
+
+
+.TP
+.B
+\fB--acpi\fP
+`acpi` command parser
+
 .TP
 .B
 \fB--airport\fP
-airport \fB-I\fP command parser
+`airport -I` command parser
+
 .TP
 .B
 \fB--airport-s\fP
-airport \fB-s\fP command parser
+`airport -s` command parser
+
 .TP
 .B
 \fB--arp\fP
-arp command parser
+`arp` command parser
+
 .TP
 .B
 \fB--blkid\fP
-blkid command parser
+`blkid` command parser
+
 .TP
 .B
 \fB--cksum\fP
-cksum and sum command parser
+`cksum` and `sum` command parser
+
 .TP
 .B
 \fB--crontab\fP
-crontab command and file parser
+`crontab` command and file parser
+
 .TP
 .B
 \fB--crontab-u\fP
-crontab file parser with user support
+`crontab` file parser with user support
+
 .TP
 .B
 \fB--csv\fP
 CSV file parser
+
 .TP
 .B
 \fB--date\fP
-date command parser
+`date` command parser
+
 .TP
 .B
 \fB--df\fP
-df command parser
+`df` command parser
+
 .TP
 .B
 \fB--dig\fP
-dig command parser
+`dig` command parser
+
+.TP
+.B
+\fB--dir\fP
+`dir` command parser
+
 .TP
 .B
 \fB--dmidecode\fP
-dmidecode command parser
+`dmidecode` command parser
+
+.TP
+.B
+\fB--dpkg-l\fP
+`dpkg -l` command parser
+
 .TP
 .B
 \fB--du\fP
-du command parser
+`du` command parser
+
 .TP
 .B
 \fB--env\fP
-env and printenv command parser
+`env` command parser
+
 .TP
 .B
 \fB--file\fP
-file command parser
+`file` command parser
+
+.TP
+.B
+\fB--finger\fP
+`finger` command parser
+
 .TP
 .B
 \fB--free\fP
-free command parser
+`free` command parser
+
 .TP
 .B
 \fB--fstab\fP
-fstab file parser
+`/etc/fstab` file parser
+
 .TP
 .B
 \fB--group\fP
-/etc/group file parser
+`/etc/group` file parser
+
 .TP
 .B
 \fB--gshadow\fP
-/etc/gshadow file parser
+`/etc/gshadow` file parser
+
 .TP
 .B
 \fB--hash\fP
-hash BASH builtin command parser
+`hash` command parser
+
 .TP
 .B
 \fB--hashsum\fP
-md5, md5sum, shasum, sha1sum, sha224sum, sha256sum, sha384sum, and sha512sum command parser
+hashsum command parser (`md5sum`, `shasum`, etc.)
+
 .TP
 .B
 \fB--hciconfig\fP
-hciconfig command parser
+`hciconfig` command parser
+
 .TP
 .B
 \fB--history\fP
-history command parser
+`history` command parser
+
 .TP
 .B
 \fB--hosts\fP
-/etc/hosts file parser
+`/etc/hosts` file parser
+
 .TP
 .B
 \fB--id\fP
-id command parser
+`id` command parser
+
 .TP
 .B
 \fB--ifconfig\fP
-ifconfig command parser
+`ifconfig` command parser
+
 .TP
 .B
 \fB--ini\fP
 INI file parser
+
 .TP
 .B
 \fB--iptables\fP
-iptables command parser
+`iptables` command parser
+
 .TP
 .B
 \fB--iw-scan\fP
-iw dev <device> scan command parser
+`iw dev [device] scan` command parser
+
 .TP
 .B
 \fB--jobs\fP
-jobs command parser
+`jobs` command parser
+
 .TP
 .B
 \fB--kv\fP
 Key/Value file parser
+
 .TP
 .B
 \fB--last\fP
-last and lastb command parser
+`last` and `lastb` command parser
+
 .TP
 .B
 \fB--ls\fP
-ls and vdir command parser
+`ls` command parser
+
 .TP
 .B
 \fB--lsblk\fP
-lsblk command parser
+`lsblk` command parser
+
 .TP
 .B
 \fB--lsmod\fP
-lsmod command parser
+`lsmod` command parser
+
 .TP
 .B
 \fB--lsof\fP
-lsof command parser
+`lsof` command parser
+
 .TP
 .B
 \fB--mount\fP
-mount command parser
+`mount` command parser
+
 .TP
 .B
 \fB--netstat\fP
-netstat command parser
+`netstat` command parser
+
 .TP
 .B
 \fB--ntpq\fP
-ntpq \fB-p\fP command parser
+`ntpq -p` command parser
+
 .TP
 .B
 \fB--passwd\fP
-/etc/passwd file parser
+`/etc/passwd` file parser
+
 .TP
 .B
 \fB--ping\fP
-ping command parser
+`ping` and `ping6` command parser
+
 .TP
 .B
 \fB--pip-list\fP
-pip list command parser
+`pip list` command parser
+
 .TP
 .B
 \fB--pip-show\fP
-pip show command parser
+`pip show` command parser
+
 .TP
 .B
 \fB--ps\fP
-ps command parser
+`ps` command parser
+
 .TP
 .B
 \fB--route\fP
-route command parser
+`route` command parser
+
+.TP
+.B
+\fB--rpm_qi\fP
+`rpm -qi` command parser
+
 .TP
 .B
 \fB--shadow\fP
-/etc/shadow file parser
+`/etc/shadow` file parser
+
 .TP
 .B
 \fB--ss\fP
-ss command parser
+`ss` command parser
+
 .TP
 .B
 \fB--stat\fP
-stat command parser
+`stat` command parser
+
 .TP
 .B
 \fB--sysctl\fP
-sysctl command parser
+`sysctl` command parser
+
 .TP
 .B
 \fB--systemctl\fP
-systemctl command parser
+`systemctl` command parser
+
 .TP
 .B
 \fB--systemctl-lj\fP
-systemctl list-jobs command parser
+`systemctl list-jobs` command parser
+
 .TP
 .B
 \fB--systemctl-ls\fP
-systemctl list-sockets command parser
+`systemctl list-sockets` command parser
+
 .TP
 .B
 \fB--systemctl-luf\fP
-systemctl list-unit-files command parser
+`systemctl list-unit-files` command parser
+
+.TP
+.B
+\fB--time\fP
+`/usr/bin/time` command parser
+
 .TP
 .B
 \fB--timedatectl\fP
-timedatectl status command parser
+`timedatectl status` command parser
+
 .TP
 .B
 \fB--tracepath\fP
-tracepath command parser
+`tracepath` and `tracepath6` command parser
+
 .TP
 .B
 \fB--traceroute\fP
-traceroute command parser
+`traceroute` and `traceroute6` command parser
+
 .TP
 .B
 \fB--uname\fP
-uname \fB-a\fP command parser
+`uname -a` command parser
+
+.TP
+.B
+\fB--upower\fP
+`upower` command parser
+
 .TP
 .B
 \fB--uptime\fP
-uptime command parser
+`uptime` command parser
+
 .TP
 .B
 \fB--w\fP
-w command parser
+`w` command parser
+
 .TP
 .B
 \fB--wc\fP
-wc command parser
+`wc` command parser
+
 .TP
 .B
 \fB--who\fP
-who command parser
+`who` command parser
+
 .TP
 .B
 \fB--xml\fP
 XML file parser
+
 .TP
 .B
 \fB--yaml\fP
 YAML file parser
+
+
 .RE
 .PP
+.B
 Options:
 .RS
+
 .TP
 .B
 \fB-a\fP
-about jc
+about jc (JSON output)
 .TP
 .B
 \fB-d\fP
 debug - show traceback (\fB-dd\fP for verbose traceback)
+.TP
+.B
+\fB-h\fP
+help
 .TP
 .B
 \fB-m\fP
@@ -294,12 +402,60 @@ quiet - suppress warnings
 .B
 \fB-r\fP
 raw JSON output
-.RE
-.PP
-Example:
-ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
+.TP
+.B
+\fB-v\fP
+version information
+
+.SH ENVIRONMENT
+You can specify custom colors via the \fBJC_COLORS\fP environment variable. The \fBJC_COLORS\fP environment variable takes four comma separated string values in the following format:
+
+JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
+
+Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP, \fBmagenta\fP, \fBcyan\fP, \fBgray\fP, \fBbrightblack\fP, \fBbrightred\fP, \fBbrightgreen\fP, \fBbrightyellow\fP, \fBbrightblue\fP, \fBbrightmagenta\fP, \fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP
+
+For example, to set to the default colors:
+
 .RS
-.PP
+JC_COLORS=blue,brightblack,magenta,green
+
+or
+
+JC_COLORS=default,default,default,default
+.RE
+
+.SH CUSTOM PARSERS
+Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
+
+.RS
+- Linux/unix: \fB$HOME/.local/share/jc/jcparsers\fP
+
+- macOS: \fB$HOME/Library/Application Support/jc/jcparsers\fP
+
+- Windows: \fB$LOCALAPPDATA\\jc\\jc\\jcparsers\fP
+.RE
+
+Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
+
+Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+
+Note: The application data directory follows the XDG Base Directory Specification
+
+.SH EXAMPLE
+ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
+
+
 or using the magic syntax:
-.PP
+
+
 jc \fB-p\fP ls \fB-al\fP
+
+.SH AUTHOR
+Kelly Brazil (kellyjonbrazil@gmail.com)
+
+https://github.com/kellyjonbrazil/jc
+
+.SH COPYRIGHT
+Copyright (c) 2019-2021 Kelly Brazil
+
+License:  MIT License

@@ -1,5 +1,9 @@
 """jc - JSON CLI output utility `stat` command output parser
 
+The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+
+The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ stat * | jc --stat
@@ -39,7 +43,15 @@ Examples:
         "access_time": "2019-11-14 08:18:03.509681766 +0000",
         "modify_time": "2019-06-06 22:28:15.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.521945390 +0000",
-        "birth_time": null
+        "birth_time": null,
+        "access_time_epoch": 1573748283,
+        "access_time_epoch_utc": 1573719483,
+        "modify_time_epoch": 1559885295,
+        "modify_time_epoch_utc": 1559860095,
+        "change_time_epoch": 1565655689,
+        "change_time_epoch_utc": 1565630489,
+        "birth_time_epoch": null,
+        "birth_time_epoch_utc": null
       },
       {
         "file": "/bin/btrfs",
@@ -59,7 +71,15 @@ Examples:
         "access_time": "2019-11-14 08:18:28.990834276 +0000",
         "modify_time": "2018-03-12 23:04:27.000000000 +0000",
         "change_time": "2019-08-12 17:21:29.545944399 +0000",
-        "birth_time": null
+        "birth_time": null,
+        "access_time_epoch": 1573748308,
+        "access_time_epoch_utc": 1573719508,
+        "modify_time_epoch": 1520921067,
+        "modify_time_epoch_utc": 1520895867,
+        "change_time_epoch": 1565655689,
+        "change_time_epoch_utc": 1565630489,
+        "birth_time_epoch": null,
+        "birth_time_epoch_utc": null
       },
       ...
     ]
@@ -106,7 +126,7 @@ Examples:
         "change_time": "2019-08-12 17:21:29.545944399 +0000",
         "birth_time": null
       },
-      ..
+      ...
     ]
 """
 import shlex
@@ -114,8 +134,8 @@ import jc.utils
 
 
 class info():
-    version = '1.5'
-    description = 'stat command parser'
+    version = '1.6'
+    description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
@@ -141,29 +161,37 @@ def process(proc_data):
 
         [
           {
-            "file":         string,
-            "link_to"       string,
-            "size":         integer,
-            "blocks":       integer,
-            "io_blocks":    integer,
-            "type":         string,
-            "device":       string,
-            "inode":        integer,
-            "links":        integer,
-            "access":       string,
-            "flags":        string,
-            "uid":          integer,
-            "user":         string,
-            "gid":          integer,
-            "group":        string,
-            "access_time":  string,    # - = null
-            "modify_time":  string,    # - = null
-            "change_time":  string,    # - = null
-            "birth_time":   string,    # - = null
-            "unix_device":  integer,
-            "rdev":         integer,
-            "block_size":   integer,
-            "unix_flags":   string
+            "file":                     string,
+            "link_to"                   string,
+            "size":                     integer,
+            "blocks":                   integer,
+            "io_blocks":                integer,
+            "type":                     string,
+            "device":                   string,
+            "inode":                    integer,
+            "links":                    integer,
+            "access":                   string,
+            "flags":                    string,
+            "uid":                      integer,
+            "user":                     string,
+            "gid":                      integer,
+            "group":                    string,
+            "access_time":              string,    # - = null
+            "access_time_epoch":        integer,   # naive timestamp
+            "access_time_epoch_utc":    integer,   # timezone-aware timestamp
+            "modify_time":              string,    # - = null
+            "modify_time_epoch":        integer,   # naive timestamp
+            "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
+            "change_time":              string,    # - = null
+            "change_time_epoch":        integer,   # naive timestamp
+            "change_time_epoch_utc":    integer,   # timezone-aware timestamp
+            "birth_time":               string,    # - = null
+            "birth_time_epoch":         integer,   # naive timestamp
+            "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
+            "unix_device":              integer,
+            "rdev":                     integer,
+            "block_size":               integer,
+            "unix_flags":               string
           }
         ]
     """
@@ -177,13 +205,16 @@ def process(proc_data):
                 except (ValueError):
                     entry[key] = None
 
-    # turn - into null for time fields
+    # turn - into null for time fields and add calculated timestamp fields
     for entry in proc_data:
         null_list = ['access_time', 'modify_time', 'change_time', 'birth_time']
         for key in null_list:
             if key in entry:
                 if entry[key] == '-':
                     entry[key] = None
+                ts = jc.utils.timestamp(entry[key])
+                entry[key + '_epoch'] = ts.naive
+                entry[key + '_epoch_utc'] = ts.utc
 
     return proc_data
 

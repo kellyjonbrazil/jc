@@ -66,7 +66,7 @@ import jc.utils
 
 class info():
     version = '1.5'
-    description = 'mount command parser'
+    description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

@@ -83,7 +83,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.5'
-    description = 'df command parser'
+    description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

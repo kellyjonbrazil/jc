@@ -112,6 +112,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ls_lR_empty_folder = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ls_l_iso = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ls_json = json.loads(f.read())
@@ -214,6 +217,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ls_lR_empty_folder_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ls_l_iso_json = json.loads(f.read())
 
     def test_ls_empty_dir(self):
         """
@@ -424,6 +430,12 @@ class MyTests(unittest.TestCase):
         Test 'ls -lR' for empty directories on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_lR_empty_folder, quiet=True), self.osx_10_14_6_ls_lR_empty_folder_json)
+
+    def test_ls_l_iso_ubuntu_18_4(self):
+        """
+        Test 'ls -l --time-style=full-iso' for files with convertible dates on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_l_iso, quiet=True), self.ubuntu_18_4_ls_l_iso_json)
 
 
 if __name__ == '__main__':

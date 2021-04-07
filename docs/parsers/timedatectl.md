@@ -2,6 +2,8 @@
 # jc.parsers.timedatectl
 jc - JSON CLI output utility `timedatectl` command output parser
 
+The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the universal_time field is available.
+
 Usage (cli):
 
     $ timedatectl | jc --timedatectl
@@ -30,7 +32,8 @@ Examples:
       "ntp_enabled": true,
       "ntp_synchronized": true,
       "rtc_in_local_tz": false,
-      "dst_active": true
+      "dst_active": true,
+      "epoch_utc": 1583888001
     }
 
     $ timedatectl | jc --timedatectl -p -r
@@ -70,6 +73,7 @@ Returns:
     {
       "local_time":                        string,
       "universal_time":                    string,
+      "epoch_utc":                         integer,     # timezone-aware timestamp
       "rtc_time":                          string,
       "time_zone":                         string,
       "ntp_enabled":                       boolean,

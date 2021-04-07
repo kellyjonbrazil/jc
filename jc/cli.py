@@ -11,25 +11,35 @@ import importlib
 import textwrap
 import signal
 import json
-import pygments
-from pygments import highlight
-from pygments.style import Style
-from pygments.token import (Name, Number, String, Keyword)
-from pygments.lexers import JsonLexer
-from pygments.formatters import Terminal256Formatter
+import jc
 import jc.appdirs as appdirs
+# make pygments import optional
+try:
+    import pygments
+    from pygments import highlight
+    from pygments.style import Style
+    from pygments.token import (Name, Number, String, Keyword)
+    from pygments.lexers import JsonLexer
+    from pygments.formatters import Terminal256Formatter
+    pygments_installed = True
+except Exception:
+    pygments_installed = False
 
 
 class info():
-    version = '1.14.4'
+    version = jc.__version__
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    website = 'https://github.com/kellyjonbrazil/jc'
+    copyright = '© 2019-2021 Kelly Brazil'
+    license = 'MIT License'
 
 
 __version__ = info.version
 
 parsers = [
+    'acpi',
     'airport',
     'airport-s',
     'arp',
@@ -41,10 +51,13 @@ parsers = [
     'date',
     'df',
     'dig',
+    'dir',
     'dmidecode',
+    'dpkg-l',
     'du',
     'env',
     'file',
+    'finger',
     'free',
     'fstab',
     'group',
@@ -75,6 +88,7 @@ parsers = [
     'pip-show',
     'ps',
     'route',
+    'rpm_qi',
     'shadow',
     'ss',
     'stat',
@@ -83,10 +97,12 @@ parsers = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'time',
     'timedatectl',
     'tracepath',
     'traceroute',
     'uname',
+    'upower',
     'uptime',
     'w',
     'wc',
@@ -112,44 +128,45 @@ if os.path.isdir(local_parsers_dir):
 
 # We only support 2.3.0+, pygments changed color names in 2.4.0.
 # startswith is sufficient and avoids potential exceptions from split and int.
-if pygments.__version__.startswith('2.3.'):
-    PYGMENT_COLOR = {
-        'black': '#ansiblack',
-        'red': '#ansidarkred',
-        'green': '#ansidarkgreen',
-        'yellow': '#ansibrown',
-        'blue': '#ansidarkblue',
-        'magenta': '#ansipurple',
-        'cyan': '#ansiteal',
-        'gray': '#ansilightgray',
-        'brightblack': '#ansidarkgray',
-        'brightred': '#ansired',
-        'brightgreen': '#ansigreen',
-        'brightyellow': '#ansiyellow',
-        'brightblue': '#ansiblue',
-        'brightmagenta': '#ansifuchsia',
-        'brightcyan': '#ansiturquoise',
-        'white': '#ansiwhite',
-    }
-else:
-    PYGMENT_COLOR = {
-        'black': 'ansiblack',
-        'red': 'ansired',
-        'green': 'ansigreen',
-        'yellow': 'ansiyellow',
-        'blue': 'ansiblue',
-        'magenta': 'ansimagenta',
-        'cyan': 'ansicyan',
-        'gray': 'ansigray',
-        'brightblack': 'ansibrightblack',
-        'brightred': 'ansibrightred',
-        'brightgreen': 'ansibrightgreen',
-        'brightyellow': 'ansibrightyellow',
-        'brightblue': 'ansibrightblue',
-        'brightmagenta': 'ansibrightmagenta',
-        'brightcyan': 'ansibrightcyan',
-        'white': 'ansiwhite',
-    }
+if pygments_installed:
+    if pygments.__version__.startswith('2.3.'):
+        PYGMENT_COLOR = {
+            'black': '#ansiblack',
+            'red': '#ansidarkred',
+            'green': '#ansidarkgreen',
+            'yellow': '#ansibrown',
+            'blue': '#ansidarkblue',
+            'magenta': '#ansipurple',
+            'cyan': '#ansiteal',
+            'gray': '#ansilightgray',
+            'brightblack': '#ansidarkgray',
+            'brightred': '#ansired',
+            'brightgreen': '#ansigreen',
+            'brightyellow': '#ansiyellow',
+            'brightblue': '#ansiblue',
+            'brightmagenta': '#ansifuchsia',
+            'brightcyan': '#ansiturquoise',
+            'white': '#ansiwhite',
+        }
+    else:
+        PYGMENT_COLOR = {
+            'black': 'ansiblack',
+            'red': 'ansired',
+            'green': 'ansigreen',
+            'yellow': 'ansiyellow',
+            'blue': 'ansiblue',
+            'magenta': 'ansimagenta',
+            'cyan': 'ansicyan',
+            'gray': 'ansigray',
+            'brightblack': 'ansibrightblack',
+            'brightred': 'ansibrightred',
+            'brightgreen': 'ansibrightgreen',
+            'brightyellow': 'ansibrightyellow',
+            'brightblue': 'ansibrightblue',
+            'brightmagenta': 'ansibrightmagenta',
+            'brightcyan': 'ansibrightcyan',
+            'white': 'ansiwhite',
+        }
 
 
 def set_env_colors(env_colors=None):
@@ -187,7 +204,7 @@ def set_env_colors(env_colors=None):
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
-        print('jc:   Warning: could not parse JC_COLORS environment variable\n', file=sys.stderr)
+        jc.utils.warning_message('could not parse JC_COLORS environment variable')
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
@@ -277,17 +294,20 @@ def about_jc():
         'description': info.description,
         'author': info.author,
         'author_email': info.author_email,
+        'website': info.website,
+        'copyright': info.copyright,
+        'license': info.license,
         'parser_count': len(parser_list),
         'parsers': parser_list
     }
 
 
-def helptext(message):
+def helptext():
     """Return the help text with the list of parsers"""
     parsers_string = parsers_text(indent=12, pad=17)
 
-    helptext_string = f'''
-    jc:     {message}
+    helptext_string = f'''\
+    jc converts the output of many commands and file-types to JSON
 
     Usage:  COMMAND | jc PARSER [OPTIONS]
 
@@ -300,10 +320,12 @@ def helptext(message):
     Options:
             -a               about jc
             -d               debug - show traceback (-dd for verbose traceback)
+            -h               help
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
             -r               raw JSON output
+            -v               version info
 
     Example:
             ls -al | jc --ls -p
@@ -315,6 +337,15 @@ def helptext(message):
     return textwrap.dedent(helptext_string)
 
 
+def versiontext():
+    """Return the version text"""
+    versiontext_string = f'''\
+    jc version {info.version}
+    {info.website}
+    {info.copyright}'''
+    return textwrap.dedent(versiontext_string)
+
+
 def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
     """Return a JSON formatted string. String may include color codes or be pretty printed."""
     if not mono and not piped_out:
@@ -323,14 +354,16 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
             styles = set_env_colors(env_colors)
 
         if pretty:
-            return str(highlight(json.dumps(data, indent=2), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+            return str(highlight(json.dumps(data, indent=2, ensure_ascii=False),
+                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
         else:
-            return str(highlight(json.dumps(data), JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+            return str(highlight(json.dumps(data, separators=(',', ':'), ensure_ascii=False),
+                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
     else:
         if pretty:
-            return json.dumps(data, indent=2)
+            return json.dumps(data, indent=2, ensure_ascii=False)
         else:
-            return json.dumps(data)
+            return json.dumps(data, separators=(',', ':'), ensure_ascii=False)
 
 
 def generate_magic_command(args):
@@ -398,11 +431,13 @@ def magic():
     elif run_command is None:
         return
     else:
-        print(helptext(f'parser not found for "{run_command}"'), file=sys.stderr)
+        jc.utils.error_message(f'parser not found for "{run_command}". Use "jc -h" for help.')
         sys.exit(1)
 
 
 def main():
+    import jc.utils
+
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -424,23 +459,37 @@ def main():
         if opt.startswith('-') and not opt.startswith('--'):
             options.extend(opt[1:])
 
+    about = 'a' in options
     debug = 'd' in options
     verbose_debug = True if options.count('d') > 1 else False
     mono = 'm' in options
+    help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
     raw = 'r' in options
+    version_info = 'v' in options
+
+    if not pygments_installed:
+        mono = True
+
+    if about:
+        print(json_out(about_jc(), pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+        sys.exit(0)
+
+    if help_me:
+        print(helptext())
+        sys.exit(0)
+
+    if version_info:
+        print(versiontext())
+        sys.exit(0)
 
     if verbose_debug:
         import jc.tracebackplus
         jc.tracebackplus.enable(context=11)
 
-    if 'a' in options:
-        print(json_out(about_jc(), pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
-        sys.exit(0)
-
     if sys.stdin.isatty():
-        print(helptext('missing piped data'), file=sys.stderr)
+        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
         sys.exit(1)
 
     data = sys.stdin.read()
@@ -465,11 +514,11 @@ def main():
                     import jc.utils
                     jc.utils.error_message(
                         f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
-                        '                 For details use the -d or -dd option.')
+                        '             For details use the -d or -dd option. Use "jc -h" for help.')
                     sys.exit(1)
 
     if not found:
-        print(helptext('missing or incorrect arguments'), file=sys.stderr)
+        jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
         sys.exit(1)
 
     print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))

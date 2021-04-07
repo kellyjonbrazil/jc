@@ -1,0 +1,21 @@
+Battery 0: Charging, 71%, 00:29:20 until charged
+Battery 0: design capacity 2110 mAh, last full capacity 2271 mAh = 100%
+Battery 1: Discharging, 98%, 01:43:14 remaining
+Battery 1: design capacity 4400 mAh, last full capacity 3013 mAh = 68%
+Battery 2: Discharging, 0%, rate information unavailable
+Battery 3: Full, 100%
+Adapter 0: on-line
+Adapter 1: off-line
+Thermal 0: ok, 46.0 degrees C
+Thermal 0: trip point 0 switches to mode critical at temperature 127.0 degrees C
+Thermal 0: trip point 1 switches to mode hot at temperature 127.0 degrees C
+Thermal 1: ok, 55.0 degrees C
+Thermal 1: trip point 0 switches to mode critical at temperature 130.0 degrees C
+Thermal 1: trip point 1 switches to mode hot at temperature 100.0 degrees C
+Cooling 0: Processor 0 of 10
+Cooling 1: Processor 0 of 10
+Cooling 2: x86_pkg_temp no state information available
+Cooling 3: Processor 0 of 10
+Cooling 4: intel_powerclamp no state information available
+Cooling 4: another message
+Cooling 5: Processor 0 of 10

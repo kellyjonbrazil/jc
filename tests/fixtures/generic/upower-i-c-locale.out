@@ -1,0 +1,32 @@
+  native-path:          /sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/power_supply/BAT0
+  vendor:               NOTEBOOK
+  model:                BAT
+  serial:               0001
+  power supply:         yes
+  updated:              Thu Feb  9 18:42:15 2012 (1 seconds ago)
+  has history:          yes
+  has statistics:       yes
+  battery
+    present:             yes
+    rechargeable:        yes
+    state:               charging
+    energy:              22.3998 Wh
+    energy-empty:        0 Wh
+    energy-full:         52.6473 Wh
+    energy-full-design:  62.16 Wh
+    energy-rate:         31.6905 W
+    voltage:             12.191 V
+    time to full:        57.3 minutes
+    percentage:          42.5469%
+    capacity:            84.6964%
+    technology:          lithium-ion
+  History (charge):
+    1328809335  42.547  charging
+    1328809305  42.020  charging
+    1328809275  41.472  charging
+    1328809245  41.008  charging
+  History (rate):
+    1328809335  31.691  charging
+    1328809305  32.323  charging
+    1328809275  33.133  charging
+

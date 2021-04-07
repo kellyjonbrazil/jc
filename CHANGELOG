@@ -1,5 +1,36 @@
 jc changelog
 
+20210407 v1.15.0
+- Add acpi command parser tested on linux
+- Add upower command parser tested on linux
+- Add /usr/bin/time command parser tested on linux and macOS
+- Add dpkg -l command parser tested on linux
+- Add rpm -qai command parser tested on linux
+- Add finger command parser tested on linux and macOS
+- Add dir command parser tested on Windows 10
+- Update date parser: complete rewrite (v2.0) providing many enhancements:
+    - Make weekday numbering ISO 8601 compliant
+    - Add a calculated naive timestamp field
+    - Add a calculated UTC timestamp field (only if date output is in UTC)
+    - Add several fields, including: hour_24, utc_offset, day_of_year, week_of_year, iso, and timezone_aware
+- Update uptime parser to add uptime_days, uptime_hours, uptime_minutes, uptime_total_seconds, time_hour,
+      time_minute, and time_second fields
+- Update last parser to use new timestamp function
+- Update stat parser to add access_time_epoch, access_time_epoch_utc, modify_time_epoch, modify_time_epoch_utc,
+      change_time_epoch, change_time_epoch_utc, birth_time_epoch, birth_time_epoch_utc fields
+- Update timedatectl parser to add epoch_utc field
+- Update who parser to add epoch field
+- Update dig parser to add when_epoch and when_epoch_utc fields
+- Update ls parser to add epoch and epoch_utc fields
+- Add -h option to display the help text. Piping errors no longer show the help text.
+- Add -v option to display version information.
+- Add contributing information to project root
+- Make all external python library dependencies optional: pygments, ruamel.yaml, xmltodict
+- JSON output now supports unencoded unicode characters
+- JSON output is now more compact unless the -p (pretty) option is used
+- Developer scripts added and enhanced to automate documentation and man page creation
+- Enhanced man page
+
 20210305 v1.14.4
 - Packaging fix only for binaries and RPMs hosted on https://github.com/kellyjonbrazil/jc-packaging.
   Packages from PyPi and OS repositories are not affected. This fixes an issue that kept the YAML

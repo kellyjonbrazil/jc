@@ -44,7 +44,7 @@ CLI Example:
 Module Example:
 
     >>> import jc.parsers.ls
-    >>> 
+    >>>
     >>> data='''-rwxr-xr-x  1 root  wheel    23648 May  3 22:26 cat
     ... -rwxr-xr-x  1 root  wheel    30016 May  3 22:26 chmod
     ... -rwxr-xr-x  1 root  wheel    29024 May  3 22:26 cp
@@ -69,3 +69,4 @@ Module Example:
 """
 
 name = 'jc'
+__version__ = '1.15.0'

@@ -1,0 +1,883 @@
+total 502016
+-rwxr-xr-x 1 root   root        51384 2018-01-18 01:43:49.000000000 -0800 [
+-rwxr-xr-x 1 root   root        22696 2018-09-27 11:20:54.000000000 -0700 aa-enabled
+-rwxr-xr-x 1 root   root        22696 2018-09-27 11:20:54.000000000 -0700 aa-exec
+-rwxr-xr-x 1 root   root        23656 2018-01-14 19:20:21.000000000 -0800 acpi
+-rwxr-xr-x 1 root   root        14608 2017-04-27 21:28:10.000000000 -0700 acpi_listen
+-rwxr-xr-x 1 root   root         7415 2020-08-07 07:07:43.000000000 -0700 add-apt-repository
+-rwxr-xr-x 1 root   root        22608 2020-09-16 11:43:15.000000000 -0700 addpart
+lrwxrwxrwx 1 root   root           26 2021-02-12 00:45:35.000000000 -0800 addr2line -> x86_64-linux-gnu-addr2line
+-rwxr-xr-x 1 root   root         2558 2019-11-11 13:57:56.000000000 -0800 apport-bug
+-rwxr-xr-x 1 root   root        13367 2021-01-26 04:21:46.000000000 -0800 apport-cli
+lrwxrwxrwx 1 root   root           10 2021-01-26 04:21:46.000000000 -0800 apport-collect -> apport-bug
+-rwxr-xr-x 1 root   root         1849 2021-01-26 04:21:46.000000000 -0800 apport-unpack
+lrwxrwxrwx 1 root   root            6 2018-08-04 12:16:12.000000000 -0700 apropos -> whatis
+-rwxr-xr-x 1 root   root        14424 2020-12-07 03:13:36.000000000 -0800 apt
+lrwxrwxrwx 1 root   root           18 2020-08-07 07:07:43.000000000 -0700 apt-add-repository -> add-apt-repository
+-rwxr-xr-x 1 root   root        80032 2020-12-07 03:13:36.000000000 -0800 apt-cache
+-rwxr-xr-x 1 root   root        22688 2020-12-07 03:13:36.000000000 -0800 apt-cdrom
+-rwxr-xr-x 1 root   root        22616 2020-12-07 03:13:36.000000000 -0800 apt-config
+-rwxr-xr-x 1 root   root        22688 2020-12-07 03:13:36.000000000 -0800 apt-extracttemplates
+-rwxr-xr-x 1 root   root       239776 2020-12-07 03:13:36.000000000 -0800 apt-ftparchive
+-rwxr-xr-x 1 root   root        43168 2020-12-07 03:13:36.000000000 -0800 apt-get
+-rwxr-xr-x 1 root   root        27391 2020-12-07 03:13:36.000000000 -0800 apt-key
+-rwxr-xr-x 1 root   root        43168 2020-12-07 03:13:36.000000000 -0800 apt-mark
+-rwxr-xr-x 1 root   root        43096 2020-12-07 03:13:36.000000000 -0800 apt-sortpkgs
+lrwxrwxrwx 1 root   root           19 2021-02-12 00:45:35.000000000 -0800 ar -> x86_64-linux-gnu-ar
+-rwxr-xr-x 1 root   root        35032 2018-01-18 01:43:49.000000000 -0800 arch
+lrwxrwxrwx 1 root   root           19 2021-02-12 00:45:35.000000000 -0800 as -> x86_64-linux-gnu-as
+-rwsr-sr-x 1 daemon daemon      51464 2018-02-19 22:59:43.000000000 -0800 at
+lrwxrwxrwx 1 root   root            2 2018-02-19 22:59:43.000000000 -0800 atq -> at
+lrwxrwxrwx 1 root   root            2 2018-02-19 22:59:43.000000000 -0800 atrm -> at
+-rwxr-xr-x 1 root   root          402 2017-08-28 01:55:39.000000000 -0700 automat-visualize3
+lrwxrwxrwx 1 root   root           21 2019-08-05 12:22:59.000000000 -0700 awk -> /etc/alternatives/awk
+-rwxr-xr-x 1 root   root        55512 2018-01-18 01:43:49.000000000 -0800 b2sum
+-rwxr-xr-x 1 root   root        39096 2018-01-18 01:43:49.000000000 -0800 base32
+-rwxr-xr-x 1 root   root        39096 2018-01-18 01:43:49.000000000 -0800 base64
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 basename
+-rwxr-xr-x 1 root   root         7115 2019-06-06 15:28:15.000000000 -0700 bashbug
+-rwxr-xr-x 1 root   root          152 2018-02-19 22:59:43.000000000 -0800 batch
+-rwxr-xr-x 1 root   root        92872 2018-03-22 09:20:34.000000000 -0700 bc
+-rwxr-xr-x 1 root   root       196920 2020-03-23 05:26:28.000000000 -0700 bccmd
+-rwxr-xr-x 1 root   root        75848 2020-03-23 05:26:28.000000000 -0700 bluemoon
+-rwxr-xr-x 1 root   root       203272 2020-03-23 05:26:28.000000000 -0700 bluetoothctl
+-rwxr-xr-x 1 root   root        34952 2020-07-08 11:59:14.000000000 -0700 bootctl
+-rwxr-xr-x 1 root   root        10232 2018-01-17 03:27:24.000000000 -0800 bsd-from
+-rwxr-sr-x 1 root   tty         14328 2018-01-17 03:27:24.000000000 -0800 bsd-write
+-rwxr-xr-x 1 root   root        67656 2020-03-23 05:26:28.000000000 -0700 btattach
+-rwxr-xr-x 1 root   root       314136 2020-03-23 05:26:28.000000000 -0700 btmgmt
+-rwxr-xr-x 1 root   root       716792 2020-03-23 05:26:28.000000000 -0700 btmon
+-rwxr-xr-x 1 root   root        67672 2020-07-08 11:59:14.000000000 -0700 busctl
+-rwxr-xr-x 1 root   root         8264 2017-12-04 05:46:48.000000000 -0800 byobu
+-rwxr-xr-x 1 root   root          996 2017-12-04 05:46:48.000000000 -0800 byobu-config
+-rwxr-xr-x 1 root   root         4774 2017-12-04 05:46:48.000000000 -0800 byobu-ctrl-a
+-rwxr-xr-x 1 root   root         1295 2017-12-04 05:46:48.000000000 -0800 byobu-disable
+-rwxr-xr-x 1 root   root         1307 2017-12-04 05:46:48.000000000 -0800 byobu-disable-prompt
+-rwxr-xr-x 1 root   root         1182 2017-12-04 05:46:48.000000000 -0800 byobu-enable
+-rwxr-xr-x 1 root   root         1453 2017-12-04 05:46:48.000000000 -0800 byobu-enable-prompt
+-rwxr-xr-x 1 root   root         1260 2017-12-04 05:46:48.000000000 -0800 byobu-export
+-rwxr-xr-x 1 root   root         5963 2017-12-04 05:46:48.000000000 -0800 byobu-janitor
+-rwxr-xr-x 1 root   root         1506 2017-12-04 05:46:48.000000000 -0800 byobu-keybindings
+-rwxr-xr-x 1 root   root         3289 2017-12-04 05:46:48.000000000 -0800 byobu-launch
+-rwxr-xr-x 1 root   root         1910 2017-12-04 05:46:48.000000000 -0800 byobu-launcher
+-rwxr-xr-x 1 root   root         2459 2017-12-04 05:46:48.000000000 -0800 byobu-launcher-install
+-rwxr-xr-x 1 root   root         1561 2017-12-04 05:46:48.000000000 -0800 byobu-launcher-uninstall
+-rwxr-xr-x 1 root   root         3348 2017-12-04 05:46:48.000000000 -0800 byobu-layout
+-rwxr-xr-x 1 root   root         1156 2017-12-04 05:46:48.000000000 -0800 byobu-prompt
+-rwxr-xr-x 1 root   root         1410 2017-12-04 05:46:48.000000000 -0800 byobu-quiet
+-rwxr-xr-x 1 root   root         3298 2017-12-04 05:46:48.000000000 -0800 byobu-reconnect-sockets
+lrwxrwxrwx 1 root   root            5 2017-12-04 05:46:48.000000000 -0800 byobu-screen -> byobu
+-rwxr-xr-x 1 root   root         1452 2017-12-04 05:46:48.000000000 -0800 byobu-select-backend
+-rwxr-xr-x 1 root   root         6287 2017-12-04 05:46:48.000000000 -0800 byobu-select-profile
+-rwxr-xr-x 1 root   root         1012 2017-12-04 05:46:48.000000000 -0800 byobu-select-session
+-rwxr-xr-x 1 root   root         1599 2017-12-04 05:46:48.000000000 -0800 byobu-shell
+-rwxr-xr-x 1 root   root         1306 2017-12-04 05:46:48.000000000 -0800 byobu-silent
+-rwxr-xr-x 1 root   root         6015 2017-12-04 05:46:48.000000000 -0800 byobu-status
+-rwxr-xr-x 1 root   root         1207 2017-12-04 05:46:48.000000000 -0800 byobu-status-detail
+lrwxrwxrwx 1 root   root            5 2017-12-04 05:46:48.000000000 -0800 byobu-tmux -> byobu
+-rwxr-xr-x 1 root   root         4667 2017-12-04 05:46:48.000000000 -0800 byobu-ugraph
+-rwxr-xr-x 1 root   root        11996 2017-12-04 05:46:48.000000000 -0800 byobu-ulevel
+lrwxrwxrwx 1 root   root           21 2019-10-17 17:14:23.966483723 -0700 c++ -> /etc/alternatives/c++
+lrwxrwxrwx 1 root   root           21 2019-10-17 17:14:23.810468363 -0700 c89 -> /etc/alternatives/c89
+-rwxr-xr-x 1 root   root          428 2006-05-07 02:28:01.000000000 -0700 c89-gcc
+lrwxrwxrwx 1 root   root           21 2019-10-17 17:14:23.830470333 -0700 c99 -> /etc/alternatives/c99
+-rwxr-xr-x 1 root   root          454 2011-04-11 00:54:37.000000000 -0700 c99-gcc
+lrwxrwxrwx 1 root   root            4 2018-01-17 03:27:24.000000000 -0800 cal -> ncal
+-rwxr-xr-x 1 root   root         2844 2020-08-17 18:58:51.000000000 -0700 calc_tickadj
+-rwxr-xr-x 1 root   root        31208 2018-01-17 03:27:24.000000000 -0800 calendar
+lrwxrwxrwx 1 root   root            3 2018-05-23 01:08:27.000000000 -0700 captoinfo -> tic
+-rwxr-xr-x 1 root   root         3329 2020-06-04 10:25:26.000000000 -0700 catchsegv
+-rwxr-xr-x 1 root   root        39384 2018-08-04 12:16:12.000000000 -0700 catman
+-rwxr-xr-x 1 root   root          853 2016-07-15 05:06:12.000000000 -0700 cautious-launcher
+lrwxrwxrwx 1 root   root           20 2019-10-17 17:14:23.790466394 -0700 cc -> /etc/alternatives/cc
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 c++filt -> x86_64-linux-gnu-c++filt
+-rwxr-xr-x 1 root   root          380 2020-03-16 10:24:46.000000000 -0700 cftp3
+-rwxr-xr-x 1 root   root         1275 2016-01-25 09:58:07.000000000 -0800 cgroupfs-mount
+-rwxr-xr-x 1 root   root          620 2016-01-25 09:58:11.000000000 -0800 cgroupfs-umount
+lrwxrwxrwx 1 root   root           10 2019-08-05 12:24:25.000000000 -0700 chacl -> /bin/chacl
+-rwxr-sr-x 1 root   shadow      71816 2019-03-22 12:05:38.000000000 -0700 chage
+lrwxrwxrwx 1 root   root           11 2017-06-18 14:51:08.000000000 -0700 chardet3 -> chardetect3
+-rwxr-xr-x 1 root   root          389 2017-06-18 14:51:08.000000000 -0700 chardetect3
+-rwxr-xr-x 1 root   root        14336 2020-01-22 06:40:45.000000000 -0800 chattr
+-rwxr-xr-x 1 root   root        63672 2018-01-18 01:43:49.000000000 -0800 chcon
+-rwxr-xr-x 1 root   root         2771 2019-06-28 10:12:00.000000000 -0700 check-language-support
+-rwsr-xr-x 1 root   root        76496 2019-03-22 12:05:38.000000000 -0700 chfn
+-rwxr-xr-x 1 root   root        30800 2020-09-16 11:43:15.000000000 -0700 chrt
+-rwsr-xr-x 1 root   root        44528 2019-03-22 12:05:38.000000000 -0700 chsh
+-rwxr-xr-x 1 root   root        34960 2020-01-17 03:24:09.000000000 -0800 cifsiostat
+-rwxr-xr-x 1 root   root       144984 2020-03-23 05:26:28.000000000 -0700 ciptool
+-rwxr-xr-x 1 root   root       149838 2019-04-23 05:04:14.000000000 -0700 ckbcomp
+-rwxr-xr-x 1 root   root          386 2020-03-16 10:24:46.000000000 -0700 ckeygen3
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 cksum
+-rwxr-xr-x 1 root   root        10240 2018-05-23 01:08:27.000000000 -0700 clear
+-rwxr-xr-x 1 root   root        10312 2019-06-06 15:28:15.000000000 -0700 clear_console
+-rwxr-xr-x 1 root   root          390 2020-06-02 19:08:10.000000000 -0700 cloud-id
+-rwxr-xr-x 1 root   root          394 2020-06-02 19:08:10.000000000 -0700 cloud-init
+-rwxr-xr-x 1 root   root         2108 2020-06-02 08:24:29.000000000 -0700 cloud-init-per
+-rwxr-xr-x 1 root   root        47200 2017-08-04 14:20:16.000000000 -0700 cmp
+-rwxr-xr-x 1 root   root        14328 2018-01-22 05:49:48.000000000 -0800 codepage
+-rwxr-xr-x 1 root   root        10232 2018-01-17 03:27:24.000000000 -0800 col
+-rwxr-xr-x 1 root   root          963 2017-12-04 05:46:48.000000000 -0800 col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col2 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col3 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col4 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col5 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col6 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col7 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col8 -> col1
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 col9 -> col1
+-rwxr-xr-x 1 root   root        10240 2018-01-17 03:27:24.000000000 -0800 colcrt
+-rwxr-xr-x 1 root   root        10232 2018-01-17 03:27:24.000000000 -0800 colrm
+-rwxr-xr-x 1 root   root        14344 2018-01-17 03:27:24.000000000 -0800 column
+-rwxr-xr-x 1 root   root        39128 2018-01-18 01:43:49.000000000 -0800 comm
+lrwxrwxrwx 1 root   root           11 2016-07-15 05:06:12.000000000 -0700 compose -> run-mailcap
+-rwxr-xr-x 1 root   root          382 2020-03-16 10:24:46.000000000 -0700 conch3
+-rwxr-xr-x 1 root   root     46160136 2020-03-19 19:13:11.000000000 -0700 containerd
+-rwxr-xr-x 1 root   root      6082248 2020-03-19 19:13:11.000000000 -0700 containerd-shim
+-rwxr-xr-x 1 root   root      7498568 2020-03-19 19:13:11.000000000 -0700 containerd-shim-runc-v1
+-rwxr-xr-x 1 root   root      7502728 2020-03-19 19:13:11.000000000 -0700 containerd-shim-runc-v2
+-rwxr-xr-x 1 root   root     21048904 2020-03-19 19:13:11.000000000 -0700 containerd-stress
+-rwxr-xr-x 1 root   root        12835 2020-10-19 03:57:24.000000000 -0700 corelist
+-rwxr-xr-x 1 root   root         8156 2020-10-19 03:57:24.000000000 -0700 cpan
+-rwxr-xr-x 1 root   root         8177 2020-10-19 03:57:24.000000000 -0700 cpan5.26-x86_64-linux-gnu
+lrwxrwxrwx 1 root   root            5 2019-05-20 09:08:41.000000000 -0700 cpp -> cpp-7
+lrwxrwxrwx 1 root   root           22 2019-12-04 06:25:41.000000000 -0800 cpp-7 -> x86_64-linux-gnu-cpp-7
+-rwxr-xr-x 1 root   root         6332 2021-03-22 04:42:42.000000000 -0700 c_rehash
+-rwxr-sr-x 1 root   crontab     39352 2017-11-15 21:29:19.000000000 -0800 crontab
+-rwxr-xr-x 1 root   root        51416 2018-01-18 01:43:49.000000000 -0800 csplit
+-rwxr-xr-x 1 root   root          958 2017-12-04 05:46:48.000000000 -0800 ctail
+-rwxr-xr-x 1 root   root     22699016 2020-03-19 19:13:11.000000000 -0700 ctr
+lrwxrwxrwx 1 root   root            6 2020-07-15 08:16:31.000000000 -0700 ctstat -> lnstat
+-rwxr-xr-x 1 root   root       223304 2020-12-01 10:01:10.000000000 -0800 curl
+-rwxr-xr-x 1 root   root        43224 2018-01-18 01:43:49.000000000 -0800 cut
+-rwxr-xr-x 1 root   root        10224 2020-06-11 11:25:30.000000000 -0700 dbus-cleanup-sockets
+-rwxr-xr-x 1 root   root       236584 2020-06-11 11:25:30.000000000 -0700 dbus-daemon
+-rwxr-xr-x 1 root   root        22520 2020-06-11 11:25:30.000000000 -0700 dbus-monitor
+-rwxr-xr-x 1 root   root        10224 2020-06-11 11:25:30.000000000 -0700 dbus-run-session
+-rwxr-xr-x 1 root   root        26608 2020-06-11 11:25:30.000000000 -0700 dbus-send
+-rwxr-xr-x 1 root   root        14320 2020-06-11 11:25:30.000000000 -0700 dbus-update-activation-environment
+-rwxr-xr-x 1 root   root        10224 2020-06-11 11:25:30.000000000 -0700 dbus-uuidgen
+-rwxr-xr-x 1 root   root        10312 2018-01-22 05:49:48.000000000 -0800 deallocvt
+-rwxr-xr-x 1 root   root         2859 2019-05-06 09:30:30.000000000 -0700 debconf
+-rwxr-xr-x 1 root   root        11541 2019-05-06 09:30:30.000000000 -0700 debconf-apt-progress
+-rwxr-xr-x 1 root   root          608 2019-05-06 09:30:30.000000000 -0700 debconf-communicate
+-rwxr-xr-x 1 root   root         1719 2019-05-06 09:30:30.000000000 -0700 debconf-copydb
+-rwxr-xr-x 1 root   root          647 2019-05-06 09:30:30.000000000 -0700 debconf-escape
+-rwxr-xr-x 1 root   root         2935 2019-05-06 09:30:30.000000000 -0700 debconf-set-selections
+-rwxr-xr-x 1 root   root         1827 2019-05-06 09:30:30.000000000 -0700 debconf-show
+-rwxr-xr-x 1 root   root        20142 2017-10-25 08:38:42.000000000 -0700 deb-systemd-helper
+-rwxr-xr-x 1 root   root         4434 2017-10-25 08:38:42.000000000 -0700 deb-systemd-invoke
+-rwxr-xr-x 1 root   root        22608 2020-09-16 11:43:15.000000000 -0700 delpart
+-rwxr-xr-x 1 root   root        41840 2021-02-15 05:08:25.000000000 -0800 delv
+-rwxr-xr-x 1 root   root         2550 2018-04-01 19:16:46.000000000 -0700 dh_bash-completion
+lrwxrwxrwx 1 root   root           26 2018-03-26 12:42:23.000000000 -0700 dh_pypy -> ../share/dh-python/dh_pypy
+lrwxrwxrwx 1 root   root           29 2018-03-26 12:42:23.000000000 -0700 dh_python3 -> ../share/dh-python/dh_python3
+-rwxr-xr-x 1 root   root       145752 2017-08-04 14:20:16.000000000 -0700 diff
+-rwxr-xr-x 1 root   root        63704 2017-08-04 14:20:16.000000000 -0700 diff3
+-rwxr-xr-x 1 root   root       150024 2021-02-15 05:08:25.000000000 -0800 dig
+-rwxr-xr-x 1 root   root        47296 2018-01-18 01:43:49.000000000 -0800 dircolors
+-rwxr-xr-x 1 root   root       546360 2020-09-17 06:57:57.000000000 -0700 dirmngr
+-rwxr-xr-x 1 root   root       109320 2020-09-17 06:57:57.000000000 -0700 dirmngr-client
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 dirname
+-rwxr-xr-x 1 root   root     89213816 2020-10-14 09:52:50.000000000 -0700 docker
+-rwxr-xr-x 1 root   root    105111664 2020-10-14 09:52:50.000000000 -0700 dockerd
+-rwxr-xr-x 1 root   root       804408 2020-10-14 09:52:50.000000000 -0700 docker-init
+-rwxr-xr-x 1 root   root      2901395 2020-10-14 09:52:50.000000000 -0700 docker-proxy
+-rwxr-xr-x 1 root   root         9313 2020-07-09 15:58:12.000000000 -0700 do-release-upgrade
+-rwxr-xr-x 1 root   root       297472 2019-09-05 14:05:14.000000000 -0700 dpkg
+-rwxr-xr-x 1 root   root        12852 2019-09-05 14:05:14.000000000 -0700 dpkg-architecture
+-rwxr-xr-x 1 root   root         7565 2019-09-05 14:05:14.000000000 -0700 dpkg-buildflags
+-rwxr-xr-x 1 root   root        29796 2019-09-05 14:05:14.000000000 -0700 dpkg-buildpackage
+-rwxr-xr-x 1 root   root         7503 2019-09-05 14:05:14.000000000 -0700 dpkg-checkbuilddeps
+-rwxr-xr-x 1 root   root       153952 2019-09-05 14:05:14.000000000 -0700 dpkg-deb
+-rwxr-xr-x 1 root   root         2782 2019-09-05 14:05:14.000000000 -0700 dpkg-distaddfile
+-rwxr-xr-x 1 root   root       141728 2019-09-05 14:05:14.000000000 -0700 dpkg-divert
+-rwxr-xr-x 1 root   root        16775 2019-09-05 14:05:14.000000000 -0700 dpkg-genbuildinfo
+-rwxr-xr-x 1 root   root        17622 2019-09-05 14:05:14.000000000 -0700 dpkg-genchanges
+-rwxr-xr-x 1 root   root        14059 2019-09-05 14:05:14.000000000 -0700 dpkg-gencontrol
+-rwxr-xr-x 1 root   root        10629 2019-09-05 14:05:14.000000000 -0700 dpkg-gensymbols
+-rwxr-xr-x 1 root   root        19031 2019-09-05 14:05:14.000000000 -0700 dpkg-maintscript-helper
+-rwxr-xr-x 1 root   root         8590 2019-09-05 14:05:14.000000000 -0700 dpkg-mergechangelogs
+-rwxr-xr-x 1 root   root         6789 2019-09-05 14:05:14.000000000 -0700 dpkg-name
+-rwxr-xr-x 1 root   root         4435 2019-09-05 14:05:14.000000000 -0700 dpkg-parsechangelog
+-rwxr-xr-x 1 root   root       149912 2019-09-05 14:05:14.000000000 -0700 dpkg-query
+-rwxr-xr-x 1 root   root         8425 2019-09-05 14:05:14.000000000 -0700 dpkg-scanpackages
+-rwxr-xr-x 1 root   root         9167 2019-09-05 14:05:14.000000000 -0700 dpkg-scansources
+-rwxr-xr-x 1 root   root        31360 2019-09-05 14:05:14.000000000 -0700 dpkg-shlibdeps
+-rwxr-xr-x 1 root   root        23300 2019-09-05 14:05:14.000000000 -0700 dpkg-source
+-rwxr-xr-x 1 root   root       121176 2019-09-05 14:05:14.000000000 -0700 dpkg-split
+-rwxr-xr-x 1 root   root        71936 2019-09-05 14:05:14.000000000 -0700 dpkg-statoverride
+-rwxr-xr-x 1 root   root        67848 2019-09-05 14:05:14.000000000 -0700 dpkg-trigger
+-rwxr-xr-x 1 root   root         3262 2019-09-05 14:05:14.000000000 -0700 dpkg-vendor
+-rwxr-xr-x 1 root   root       100568 2018-01-18 01:43:49.000000000 -0800 du
+lrwxrwxrwx 1 root   root           13 2019-08-05 12:23:31.000000000 -0700 dumpkeys -> /bin/dumpkeys
+lrwxrwxrwx 1 root   root           20 2021-02-12 00:45:35.000000000 -0800 dwp -> x86_64-linux-gnu-dwp
+-rwxr-xr-x 1 root   root         2806 2018-03-09 10:37:20.000000000 -0800 eatmydata
+-rwxr-xr-x 1 root   root         7297 2018-04-13 06:07:55.000000000 -0700 ec2metadata
+lrwxrwxrwx 1 root   root           11 2016-07-15 05:06:12.000000000 -0700 edit -> run-mailcap
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:23:26.000000000 -0700 editor -> /etc/alternatives/editor
+-rwxr-xr-x 1 root   root        31424 2017-03-27 21:22:15.000000000 -0700 eject
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 elfedit -> x86_64-linux-gnu-elfedit
+-rwxr-xr-x 1 root   root        42153 2020-10-19 03:57:24.000000000 -0700 enc2xs
+-rwxr-xr-x 1 root   root         3066 2020-10-19 03:57:24.000000000 -0700 encguess
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 env
+-rwxr-xr-x 1 root   root        34896 2019-02-21 06:40:49.000000000 -0800 envsubst
+-rwxr-xr-x 1 root   root       197824 2018-02-09 18:09:07.000000000 -0800 eqn
+lrwxrwxrwx 1 root   root           20 2019-08-05 12:23:26.000000000 -0700 ex -> /etc/alternatives/ex
+-rwxr-xr-x 1 root   root        39128 2018-01-18 01:43:49.000000000 -0800 expand
+-rwxr-sr-x 1 root   shadow      22808 2019-03-22 12:05:38.000000000 -0700 expiry
+-rwxr-xr-x 1 root   root        47288 2018-01-18 01:43:49.000000000 -0800 expr
+-rwxr-xr-x 1 root   root        75992 2018-01-18 01:43:49.000000000 -0800 factor
+-rwxr-xr-x 1 root   root        18728 2019-03-22 12:05:38.000000000 -0700 faillog
+-rwxr-xr-x 1 root   root        26736 2018-01-08 08:05:31.000000000 -0800 faked-sysv
+-rwxr-xr-x 1 root   root        30824 2018-01-08 08:05:31.000000000 -0800 faked-tcp
+lrwxrwxrwx 1 root   root           26 2019-10-17 17:14:22.698358852 -0700 fakeroot -> /etc/alternatives/fakeroot
+-rwxr-xr-x 1 root   root         3851 2018-01-08 08:05:31.000000000 -0800 fakeroot-sysv
+-rwxr-xr-x 1 root   root         3846 2018-01-08 08:05:31.000000000 -0800 fakeroot-tcp
+-rwxr-xr-x 1 root   root        26704 2020-09-16 11:43:15.000000000 -0700 fallocate
+-rwxr-xr-x 1 root   root        22792 2020-05-12 06:31:09.000000000 -0700 file
+-rwxr-xr-x 1 root   root       238080 2017-11-05 09:16:48.000000000 -0800 find
+-rwxr-xr-x 1 root   root        30880 2020-09-16 11:43:15.000000000 -0700 flock
+-rwxr-xr-x 1 root   root        43192 2018-01-18 01:43:49.000000000 -0800 fmt
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 fold
+-rwxr-xr-x 1 root   root        18512 2019-08-09 08:37:27.000000000 -0700 free
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:24:25.000000000 -0700 from -> /etc/alternatives/from
+lrwxrwxrwx 1 root   root           21 2019-08-05 12:24:23.000000000 -0700 ftp -> /etc/alternatives/ftp
+lrwxrwxrwx 1 root   root            5 2019-05-20 09:08:41.000000000 -0700 g++ -> g++-7
+lrwxrwxrwx 1 root   root           22 2019-12-04 06:25:41.000000000 -0800 g++-7 -> x86_64-linux-gnu-g++-7
+-rwxr-xr-x 1 root   root       277248 2020-03-23 05:26:28.000000000 -0700 gatttool
+-rwxr-xr-x 1 root   root       658072 2018-02-10 21:02:41.000000000 -0800 gawk
+lrwxrwxrwx 1 root   root            5 2019-05-20 09:08:41.000000000 -0700 gcc -> gcc-7
+lrwxrwxrwx 1 root   root           22 2019-12-04 06:25:41.000000000 -0800 gcc-7 -> x86_64-linux-gnu-gcc-7
+lrwxrwxrwx 1 root   root            8 2019-05-20 09:08:41.000000000 -0700 gcc-ar -> gcc-ar-7
+lrwxrwxrwx 1 root   root           25 2019-12-04 06:25:41.000000000 -0800 gcc-ar-7 -> x86_64-linux-gnu-gcc-ar-7
+lrwxrwxrwx 1 root   root            8 2019-05-20 09:08:41.000000000 -0700 gcc-nm -> gcc-nm-7
+lrwxrwxrwx 1 root   root           25 2019-12-04 06:25:41.000000000 -0800 gcc-nm-7 -> x86_64-linux-gnu-gcc-nm-7
+lrwxrwxrwx 1 root   root           12 2019-05-20 09:08:41.000000000 -0700 gcc-ranlib -> gcc-ranlib-7
+lrwxrwxrwx 1 root   root           29 2019-12-04 06:25:41.000000000 -0800 gcc-ranlib-7 -> x86_64-linux-gnu-gcc-ranlib-7
+lrwxrwxrwx 1 root   root            6 2019-05-20 09:08:41.000000000 -0700 gcov -> gcov-7
+lrwxrwxrwx 1 root   root           23 2019-12-04 06:25:41.000000000 -0800 gcov-7 -> x86_64-linux-gnu-gcov-7
+lrwxrwxrwx 1 root   root           11 2019-05-20 09:08:41.000000000 -0700 gcov-dump -> gcov-dump-7
+lrwxrwxrwx 1 root   root           28 2019-12-04 06:25:41.000000000 -0800 gcov-dump-7 -> x86_64-linux-gnu-gcov-dump-7
+lrwxrwxrwx 1 root   root           11 2019-05-20 09:08:41.000000000 -0700 gcov-tool -> gcov-tool-7
+lrwxrwxrwx 1 root   root           28 2019-12-04 06:25:41.000000000 -0800 gcov-tool-7 -> x86_64-linux-gnu-gcov-tool-7
+-rwxr-xr-x 1 root   root        22752 2020-06-04 10:25:26.000000000 -0700 gencat
+lrwxrwxrwx 1 root   root            3 2018-02-09 18:09:07.000000000 -0800 geqn -> eqn
+-rwxr-xr-x 1 root   root        30856 2020-06-04 10:25:26.000000000 -0700 getconf
+-rwxr-xr-x 1 root   root        31224 2020-06-04 10:25:26.000000000 -0700 getent
+lrwxrwxrwx 1 root   root           12 2019-08-05 12:24:25.000000000 -0700 getfacl -> /bin/getfacl
+-rwxr-xr-x 1 root   root        10312 2018-01-22 05:49:48.000000000 -0800 getkeycodes
+-rwxr-xr-x 1 root   root        14408 2020-09-16 11:43:15.000000000 -0700 getopt
+-rwxr-xr-x 1 root   root        34896 2019-02-21 06:40:49.000000000 -0800 gettext
+-rwxr-xr-x 1 root   root         4629 2019-02-21 06:40:49.000000000 -0800 gettext.sh
+lrwxrwxrwx 1 root   root           12 2018-02-05 06:48:18.000000000 -0800 ginstall-info -> install-info
+-rwxr-xr-x 1 root   root      2351792 2021-03-04 05:02:54.000000000 -0800 git
+lrwxrwxrwx 1 root   root            3 2021-03-04 05:02:54.000000000 -0800 git-receive-pack -> git
+-rwxr-xr-x 1 root   root      1309008 2021-03-04 05:02:54.000000000 -0800 git-shell
+lrwxrwxrwx 1 root   root            3 2021-03-04 05:02:54.000000000 -0800 git-upload-archive -> git
+-rwxr-xr-x 1 root   root      1317120 2021-03-04 05:02:54.000000000 -0800 git-upload-pack
+lrwxrwxrwx 1 root   root           21 2021-02-12 00:45:35.000000000 -0800 gold -> x86_64-linux-gnu-gold
+-rwsr-xr-x 1 root   root        75824 2019-03-22 12:05:38.000000000 -0700 gpasswd
+-rwxr-xr-x 1 root   root      1021512 2020-09-17 06:57:57.000000000 -0700 gpg
+-rwxr-xr-x 1 root   root       402120 2020-09-17 06:57:57.000000000 -0700 gpg-agent
+-rwxr-xr-x 1 root   root       170312 2020-09-17 06:57:57.000000000 -0700 gpgconf
+-rwxr-xr-x 1 root   root       158568 2020-09-17 06:57:57.000000000 -0700 gpg-connect-agent
+-rwxr-xr-x 1 root   root        26696 2020-09-17 06:57:57.000000000 -0700 gpgparsemail
+-rwxr-xr-x 1 root   root       502880 2020-09-17 06:57:57.000000000 -0700 gpgsm
+-rwxr-xr-x 1 root   root        80336 2020-09-17 06:57:57.000000000 -0700 gpgsplit
+-rwxr-xr-x 1 root   root       437264 2020-09-17 06:57:57.000000000 -0700 gpgv
+-rwxr-xr-x 1 root   root       191504 2020-09-17 06:57:57.000000000 -0700 gpg-wks-server
+-rwxr-xr-x 1 root   root         3443 2020-09-17 06:57:57.000000000 -0700 gpg-zip
+lrwxrwxrwx 1 root   root            3 2018-02-09 18:09:07.000000000 -0800 gpic -> pic
+lrwxrwxrwx 1 root   root           22 2021-02-12 00:45:35.000000000 -0800 gprof -> x86_64-linux-gnu-gprof
+-rwxr-xr-x 1 root   root       107840 2018-02-09 18:09:07.000000000 -0800 groff
+-rwxr-xr-x 1 root   root         2780 2018-02-09 18:09:07.000000000 -0800 grog
+-rwxr-xr-x 1 root   root       169696 2018-02-09 18:09:07.000000000 -0800 grops
+-rwxr-xr-x 1 root   root       124256 2018-02-09 18:09:07.000000000 -0800 grotty
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 groups
+-rwxr-xr-x 1 root   root        21883 2018-04-13 06:07:55.000000000 -0700 growpart
+-rwxr-xr-x 1 root   root       245688 2020-07-30 18:49:49.000000000 -0700 grub-editenv
+-rwxr-xr-x 1 root   root       675624 2020-07-30 18:49:49.000000000 -0700 grub-file
+-rwxr-xr-x 1 root   root       808600 2020-07-30 18:49:49.000000000 -0700 grub-fstest
+-rwxr-xr-x 1 root   root       241432 2020-07-30 18:49:49.000000000 -0700 grub-glue-efi
+-rwxr-xr-x 1 root   root         1681 2020-07-30 18:49:49.000000000 -0700 grub-kbdcomp
+-rwxr-xr-x 1 root   root       221224 2020-07-30 18:49:49.000000000 -0700 grub-menulst2cfg
+-rwxr-xr-x 1 root   root       270680 2020-07-30 18:49:49.000000000 -0700 grub-mkfont
+-rwxr-xr-x 1 root   root       336728 2020-07-30 18:49:49.000000000 -0700 grub-mkimage
+-rwxr-xr-x 1 root   root       245848 2020-07-30 18:49:49.000000000 -0700 grub-mklayout
+-rwxr-xr-x 1 root   root       378280 2020-07-30 18:49:49.000000000 -0700 grub-mknetdir
+-rwxr-xr-x 1 root   root       249976 2020-07-30 18:49:49.000000000 -0700 grub-mkpasswd-pbkdf2
+-rwxr-xr-x 1 root   root       241144 2020-07-30 18:49:49.000000000 -0700 grub-mkrelpath
+-rwxr-xr-x 1 root   root       841960 2020-07-30 18:49:49.000000000 -0700 grub-mkrescue
+-rwxr-xr-x 1 root   root       460536 2020-07-30 18:49:49.000000000 -0700 grub-mkstandalone
+-rwxr-xr-x 1 root   root       622808 2020-07-30 18:49:49.000000000 -0700 grub-mount
+lrwxrwxrwx 1 root   root           34 2020-07-30 18:49:49.000000000 -0700 grub-ntldr-img -> ../lib/grub/i386-pc/grub-ntldr-img
+-rwxr-xr-x 1 root   root       692392 2020-07-30 18:49:49.000000000 -0700 grub-render-label
+-rwxr-xr-x 1 root   root       265848 2020-07-30 18:49:49.000000000 -0700 grub-script-check
+-rwxr-xr-x 1 root   root       639672 2020-07-30 18:49:49.000000000 -0700 grub-syslinux2cfg
+lrwxrwxrwx 1 root   root            3 2018-02-09 18:09:07.000000000 -0800 gtbl -> tbl
+-rwxr-xr-x 1 root   root        29224 2020-10-19 03:57:24.000000000 -0700 h2ph
+-rwxr-xr-x 1 root   root        60866 2020-10-19 03:57:24.000000000 -0700 h2xs
+-rwxr-xr-x 1 root   root       137144 2020-03-23 05:26:28.000000000 -0700 hciattach
+-rwxr-xr-x 1 root   root       147000 2020-03-23 05:26:28.000000000 -0700 hcitool
+lrwxrwxrwx 1 root   root            7 2018-01-17 03:27:24.000000000 -0800 hd -> hexdump
+-rwxr-xr-x 1 root   root        43224 2018-01-18 01:43:49.000000000 -0800 head
+-rwxr-xr-x 1 root   root         2514 2018-02-02 12:37:32.000000000 -0800 helpztags
+-rwxr-xr-x 1 root   root        14408 2020-03-23 05:26:28.000000000 -0700 hex2hcd
+-rwxr-xr-x 1 root   root        26728 2018-01-17 03:27:24.000000000 -0800 hexdump
+-rwxr-xr-x 1 root   root       129704 2021-02-15 05:08:25.000000000 -0800 host
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 hostid
+-rwxr-xr-x 1 root   root        18504 2020-07-08 11:59:14.000000000 -0700 hostnamectl
+-rwxr-xr-x 1 root   root       185016 2018-02-17 10:27:46.000000000 -0800 htop
+-rwxr-xr-x 1 root   root        10830 2020-06-03 11:41:50.000000000 -0700 hwe-support-status
+lrwxrwxrwx 1 root   root            7 2020-09-16 11:43:15.000000000 -0700 i386 -> setarch
+-rwxr-xr-x 1 root   root        63744 2020-06-04 10:25:26.000000000 -0700 iconv
+-rwxr-xr-x 1 root   root        43224 2018-01-18 01:43:49.000000000 -0800 id
+-rwxr-xr-x 1 root   root         3189 2018-02-10 21:02:41.000000000 -0800 igawk
+-rwxr-xr-x 1 root   root       251616 2018-02-05 06:48:18.000000000 -0800 info
+lrwxrwxrwx 1 root   root           29 2019-08-05 12:24:14.000000000 -0700 infobrowser -> /etc/alternatives/infobrowser
+-rwxr-xr-x 1 root   root        59464 2018-05-23 01:08:27.000000000 -0700 infocmp
+lrwxrwxrwx 1 root   root            3 2018-05-23 01:08:27.000000000 -0700 infotocap -> tic
+-rwxr-xr-x 1 root   root       145664 2018-01-18 01:43:49.000000000 -0800 install
+-rwxr-xr-x 1 root   root        44128 2018-02-05 06:48:18.000000000 -0800 install-info
+-rwxr-xr-x 1 root   root         4370 2020-10-19 03:57:24.000000000 -0700 instmodsh
+-rwxr-xr-x 1 root   root        26704 2020-09-16 11:43:15.000000000 -0700 ionice
+-rwxr-xr-x 1 root   root        55440 2020-01-17 03:24:09.000000000 -0800 iostat
+-rwxr-xr-x 1 root   root        26768 2020-09-16 11:43:15.000000000 -0700 ipcmk
+-rwxr-xr-x 1 root   root        26704 2020-09-16 11:43:15.000000000 -0700 ipcrm
+-rwxr-xr-x 1 root   root        51280 2020-09-16 11:43:15.000000000 -0700 ipcs
+lrwxrwxrwx 1 root   root           19 2017-11-11 18:52:05.000000000 -0800 iptables-xml -> /sbin/xtables-multi
+-rwxr-xr-x 1 root   root        10280 2017-12-30 10:15:02.000000000 -0800 ischroot
+lrwxrwxrwx 1 root   root           14 2020-05-10 18:27:31.000000000 -0700 iscsiadm -> /sbin/iscsiadm
+-rwxr-xr-x 1 root   root        47320 2018-01-18 01:43:49.000000000 -0800 join
+-rwxr-xr-x 1 root   root        22520 2017-01-29 20:41:39.000000000 -0800 jq
+lrwxrwxrwx 1 root   root           26 2019-08-05 12:24:22.000000000 -0700 jsondiff -> /etc/alternatives/jsondiff
+lrwxrwxrwx 1 root   root           27 2019-08-05 12:24:22.000000000 -0700 jsonpatch -> /etc/alternatives/jsonpatch
+lrwxrwxrwx 1 root   root           29 2019-08-05 12:24:16.000000000 -0700 jsonpointer -> /etc/alternatives/jsonpointer
+-rwxr-xr-x 1 root   root         3959 2020-10-19 03:57:24.000000000 -0700 json_pp
+lrwxrwxrwx 1 root   root           28 2019-08-05 12:24:20.000000000 -0700 jsonschema -> /etc/alternatives/jsonschema
+-rwxr-xr-x 1 root   root        14408 2018-01-22 05:49:48.000000000 -0800 kbdinfo
+-rwxr-xr-x 1 root   root       162496 2020-09-17 06:57:57.000000000 -0700 kbxutil
+lrwxrwxrwx 1 root   root            7 2014-01-15 14:40:51.000000000 -0800 keep-one-running -> run-one
+-rwxr-xr-x 1 root   root         4508 2018-01-28 07:58:17.000000000 -0800 kernel-install
+-rwxr-xr-x 1 root   root          385 2018-01-09 04:15:19.000000000 -0800 keyring
+-rwxr-xr-x 1 root   root        27768 2018-12-11 07:46:04.000000000 -0800 killall
+-rwxr-xr-x 1 root   root        98152 2020-03-23 05:26:28.000000000 -0700 l2ping
+-rwxr-xr-x 1 root   root       114792 2020-03-23 05:26:28.000000000 -0700 l2test
+-rwxr-xr-x 1 root   root          624 2020-02-20 09:35:22.000000000 -0800 landscape-sysinfo
+-rwxr-xr-x 1 root   root        43088 2020-09-16 11:43:15.000000000 -0700 last
+lrwxrwxrwx 1 root   root            4 2020-09-16 11:43:15.000000000 -0700 lastb -> last
+-rwxr-xr-x 1 root   root        18504 2019-03-22 12:05:38.000000000 -0700 lastlog
+-rwxr-xr-x 1 root   root         7786 2018-02-25 16:58:23.000000000 -0800 lcf
+lrwxrwxrwx 1 root   root           19 2021-02-12 00:45:35.000000000 -0800 ld -> x86_64-linux-gnu-ld
+lrwxrwxrwx 1 root   root           23 2021-02-12 00:45:35.000000000 -0800 ld.bfd -> x86_64-linux-gnu-ld.bfd
+-rwxr-xr-x 1 root   root         5422 2020-06-04 10:25:26.000000000 -0700 ldd
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 ld.gold -> x86_64-linux-gnu-ld.gold
+-rwxr-xr-x 1 root   root          433 2017-01-21 11:21:39.000000000 -0800 ld-musl-config
+lrwxrwxrwx 1 root   root            9 2019-08-05 12:23:23.000000000 -0700 less -> /bin/less
+lrwxrwxrwx 1 root   root           13 2019-08-05 12:23:23.000000000 -0700 lessecho -> /bin/lessecho
+lrwxrwxrwx 1 root   root           13 2019-08-05 12:23:23.000000000 -0700 lessfile -> /bin/lessfile
+lrwxrwxrwx 1 root   root           12 2019-08-05 12:23:23.000000000 -0700 lesskey -> /bin/lesskey
+lrwxrwxrwx 1 root   root           13 2019-08-05 12:23:23.000000000 -0700 lesspipe -> /bin/lesspipe
+-rwxr-xr-x 1 root   root        92744 2018-08-04 12:16:12.000000000 -0700 lexgrog
+lrwxrwxrwx 1 root   root           21 2020-07-27 14:56:20.488037770 -0700 lft -> /etc/alternatives/lft
+-rwxr-xr-x 1 root   root         2493 2016-08-29 08:45:51.000000000 -0700 lft.db
+-rwxr-xr-x 1 root   root        15775 2020-10-19 03:57:24.000000000 -0700 libnetcfg
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 link
+lrwxrwxrwx 1 root   root            7 2020-09-16 11:43:15.000000000 -0700 linux32 -> setarch
+lrwxrwxrwx 1 root   root            7 2020-09-16 11:43:15.000000000 -0700 linux64 -> setarch
+-rwxr-xr-x 1 root   root         1577 2017-01-21 07:43:27.000000000 -0800 linux-boot-prober
+-rwxr-xr-x 1 root   root         4090 2016-06-20 19:48:57.000000000 -0700 linux-check-removal
+-rwxr-xr-x 1 root   root         6320 2016-06-04 18:13:24.000000000 -0700 linux-update-symlinks
+-rwxr-xr-x 1 root   root         2696 2016-09-16 23:12:36.000000000 -0700 linux-version
+-rwxr-xr-x 1 root   root        22888 2020-07-15 08:16:31.000000000 -0700 lnstat
+lrwxrwxrwx 1 root   root           13 2019-08-05 12:23:31.000000000 -0700 loadkeys -> /bin/loadkeys
+-rwxr-xr-x 1 root   root        26760 2018-01-22 05:49:48.000000000 -0800 loadunimap
+-rwxr-xr-x 1 root   root        50592 2020-06-04 10:25:26.000000000 -0700 locale
+-rwxr-xr-x 1 root   root        10240 2020-08-05 01:14:19.000000000 -0700 locale-check
+-rwxr-xr-x 1 root   root        22600 2020-07-08 11:59:14.000000000 -0700 localectl
+-rwxr-xr-x 1 root   root       338744 2020-06-04 10:25:26.000000000 -0700 localedef
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:24:17.000000000 -0700 locate -> /etc/alternatives/locate
+-rwxr-xr-x 1 root   root        47792 2020-09-16 11:43:15.000000000 -0700 logger
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 logname
+-rwxr-xr-x 1 root   root        10472 2018-01-17 03:27:24.000000000 -0800 look
+-rwxr-xr-x 1 root   root         2885 2018-01-17 03:27:24.000000000 -0800 lorder
+-rwxr-xr-x 1 root   root        10240 2020-01-22 06:40:45.000000000 -0800 lsattr
+-rwxr-xr-x 1 root   root         3638 2017-08-07 14:55:07.000000000 -0700 lsb_release
+-rwxr-xr-x 1 root   root        71760 2020-09-16 11:43:15.000000000 -0700 lscpu
+-rwxr-xr-x 1 root   root       687056 2018-07-10 07:25:42.000000000 -0700 lshw
+-rwxr-xr-x 1 root   root          625 2019-10-07 03:53:35.000000000 -0700 lsinitramfs
+-rwxr-xr-x 1 root   root        71760 2020-09-16 11:43:15.000000000 -0700 lsipc
+-rwxr-xr-x 1 root   root        35232 2020-09-16 11:43:15.000000000 -0700 lslocks
+-rwxr-xr-x 1 root   root        63568 2020-09-16 11:43:15.000000000 -0700 lslogins
+-rwxr-xr-x 1 root   root        43088 2020-09-16 11:43:15.000000000 -0700 lsmem
+-rwxr-xr-x 1 root   root        38992 2020-09-16 11:43:15.000000000 -0700 lsns
+-rwxr-xr-x 1 root   root       163224 2015-10-28 09:57:56.000000000 -0700 lsof
+-rwxr-xr-x 1 root   root        81584 2019-02-10 10:25:12.000000000 -0800 lspci
+-rwxr-xr-x 1 root   root         1081 2017-08-28 03:22:54.000000000 -0700 lspgpot
+-rwxr-xr-x 1 root   root       117176 2017-04-21 13:59:17.000000000 -0700 lsusb
+-rwxr-xr-x 1 root   root       333016 2016-10-12 23:20:41.000000000 -0700 ltrace
+-rwxr-xr-x 1 root   root     10779792 2018-11-23 10:58:51.000000000 -0800 lxc
+-rwxr-xr-x 1 root   root        18504 2020-03-31 09:20:51.000000000 -0700 lxcfs
+-rwxr-xr-x 1 root   root          105 2018-11-23 10:58:51.000000000 -0800 lxd
+lrwxrwxrwx 1 root   root           23 2019-08-05 12:23:24.000000000 -0700 lzcat -> /etc/alternatives/lzcat
+lrwxrwxrwx 1 root   root           23 2019-08-05 12:23:24.000000000 -0700 lzcmp -> /etc/alternatives/lzcmp
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:23:24.000000000 -0700 lzdiff -> /etc/alternatives/lzdiff
+lrwxrwxrwx 1 root   root           25 2019-08-05 12:23:24.000000000 -0700 lzegrep -> /etc/alternatives/lzegrep
+lrwxrwxrwx 1 root   root           25 2019-08-05 12:23:24.000000000 -0700 lzfgrep -> /etc/alternatives/lzfgrep
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:23:24.000000000 -0700 lzgrep -> /etc/alternatives/lzgrep
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:23:24.000000000 -0700 lzless -> /etc/alternatives/lzless
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:23:24.000000000 -0700 lzma -> /etc/alternatives/lzma
+-rwxr-xr-x 1 root   root        10384 2017-06-28 09:39:19.000000000 -0700 lzmainfo
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:23:24.000000000 -0700 lzmore -> /etc/alternatives/lzmore
+-rwxr-xr-x 1 root   root       222792 2018-04-17 05:12:28.000000000 -0700 make
+-rwxr-xr-x 1 root   root         4905 2018-04-17 05:12:28.000000000 -0700 make-first-existing-target
+-rwxr-xr-x 1 root   root       107008 2018-08-04 12:16:12.000000000 -0700 man
+-rwxr-xr-x 1 root   root       129760 2018-08-04 12:16:12.000000000 -0700 mandb
+-rwxr-xr-x 1 root   root         1942 2017-12-04 05:46:48.000000000 -0800 manifest
+-rwxr-xr-x 1 root   root        31200 2018-08-04 12:16:12.000000000 -0700 manpath
+-rwxr-xr-x 1 root   root        22664 2018-01-22 05:49:48.000000000 -0800 mapscrn
+-rwxr-xr-x 1 root   root       125416 2018-04-03 05:34:18.000000000 -0700 mawk
+-rwxr-xr-x 1 root   root        30864 2020-09-16 11:43:15.000000000 -0700 mcookie
+-rwxr-xr-x 1 root   root        43224 2018-01-18 01:43:49.000000000 -0800 md5sum
+lrwxrwxrwx 1 root   root            6 2018-01-18 01:43:49.000000000 -0800 md5sum.textutils -> md5sum
+-rwxr-xr-x 1 root   root        43136 2021-02-15 05:08:25.000000000 -0800 mdig
+-rwxr-xr-x 1 root   root        10312 2020-09-16 11:43:15.000000000 -0700 mesg
+-rwxr-xr-x 1 root   root         2194 2017-11-30 15:42:42.000000000 -0800 migrate-pubring-from-classic-gpg
+-rwxr-xr-x 1 root   root        35098 2018-04-09 04:57:25.000000000 -0700 miniterm
+-rwxr-xr-x 1 root   root        63672 2018-01-18 01:43:49.000000000 -0800 mkfifo
+-rwxr-xr-x 1 root   root        16163 2018-01-22 05:49:48.000000000 -0800 mk_modmap
+-rwxr-xr-x 1 root   root       189432 2018-07-05 12:49:18.000000000 -0700 mksquashfs
+-rwxr-sr-x 1 root   mlocate     43088 2018-03-01 08:07:16.000000000 -0800 mlocate
+-rwxr-xr-x 1 root   root        51360 2020-01-17 03:24:09.000000000 -0800 mpstat
+-rwxr-xr-x 1 root   root        73664 2017-11-01 19:48:40.000000000 -0700 mtr
+-rwxr-xr-x 1 root   root         6496 2020-06-04 10:25:26.000000000 -0700 mtrace
+-rwxr-xr-x 1 root   root        26616 2017-11-01 19:48:40.000000000 -0700 mtr-packet
+-rwxr-xr-x 1 root   root          173 2018-02-25 09:54:30.000000000 -0800 musl-gcc
+lrwxrwxrwx 1 root   root           30 2018-02-25 09:54:30.000000000 -0800 musl-ldd -> /lib/x86_64-linux-musl/libc.so
+-rwxr-xr-x 1 root   root        26704 2020-09-16 11:43:15.000000000 -0700 namei
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:22:59.000000000 -0700 nawk -> /etc/alternatives/nawk
+-rwxr-xr-x 1 root   root        29480 2018-01-17 03:27:24.000000000 -0800 ncal
+-rwxr-xr-x 1 root   root       204760 2018-04-15 18:11:39.000000000 -0700 ncat
+-rwxr-xr-x 1 root   root          908 2018-02-09 18:09:07.000000000 -0800 neqn
+-rwxr-xr-x 1 root   root       101064 2016-12-06 07:23:57.000000000 -0800 netkit-ftp
+-rwxr-xr-x 1 root   root        18203 2018-10-15 05:12:24.000000000 -0700 networkd-dispatcher
+-rwsr-xr-x 1 root   root        37136 2019-03-22 12:05:38.000000000 -0700 newgidmap
+-rwsr-xr-x 1 root   root        40344 2019-03-22 12:05:38.000000000 -0700 newgrp
+-rwsr-xr-x 1 root   root        37136 2019-03-22 12:05:38.000000000 -0700 newuidmap
+lrwxrwxrwx 1 root   root            4 2017-12-04 05:46:48.000000000 -0800 NF -> col1
+-rwxr-xr-x 1 root   root        34896 2019-02-21 06:40:49.000000000 -0800 ngettext
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 nice
+-rwxr-xr-x 1 root   root        43288 2018-01-18 01:43:49.000000000 -0800 nl
+lrwxrwxrwx 1 root   root           19 2021-02-12 00:45:35.000000000 -0800 nm -> x86_64-linux-gnu-nm
+-rwxr-xr-x 1 root   root      2961432 2018-04-15 18:11:39.000000000 -0700 nmap
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 nohup
+-rwxr-xr-x 1 root   root       530776 2018-04-15 18:11:39.000000000 -0700 nping
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 nproc
+-rwxr-xr-x 1 root   root         3323 2018-02-09 18:09:07.000000000 -0800 nroff
+-rwxr-xr-x 1 root   root        31008 2020-09-16 11:43:15.000000000 -0700 nsenter
+-rwxr-xr-x 1 root   root       133640 2021-02-15 05:08:25.000000000 -0800 nslookup
+-rwxr-xr-x 1 root   root        26696 2020-07-15 08:16:31.000000000 -0700 nstat
+-rwxr-xr-x 1 root   root        67608 2021-02-15 05:08:25.000000000 -0800 nsupdate
+-rwxr-xr-x 1 root   root        47224 2019-03-21 14:33:01.000000000 -0700 ntfsdecrypt
+-rwxr-xr-x 1 root   root       145544 2020-08-17 18:58:51.000000000 -0700 ntpdc
+-rwxr-xr-x 1 root   root       188584 2020-08-17 18:58:51.000000000 -0700 ntpq
+-rwxr-xr-x 1 root   root         7980 2020-08-17 18:58:51.000000000 -0700 ntpsweep
+-rwxr-xr-x 1 root   root         3560 2020-08-17 18:58:51.000000000 -0700 ntptrace
+-rwxr-xr-x 1 root   root        63736 2018-01-18 01:43:49.000000000 -0800 numfmt
+-rwxr-xr-x 1 root   root       149640 2020-03-23 05:26:28.000000000 -0700 obexctl
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 objcopy -> x86_64-linux-gnu-objcopy
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 objdump -> x86_64-linux-gnu-objdump
+-rwxr-xr-x 1 root   root        67800 2018-01-18 01:43:49.000000000 -0800 od
+lrwxrwxrwx 1 root   root           17 2018-03-20 06:19:42.000000000 -0700 on_ac_power -> /sbin/on_ac_power
+-rwxr-xr-x 1 root   root       723944 2021-03-22 04:42:42.000000000 -0700 openssl
+-rwxr-xr-x 1 root   root         4551 2017-01-31 12:30:39.000000000 -0800 os-prober
+lrwxrwxrwx 1 root   root           23 2019-08-05 12:23:04.000000000 -0700 pager -> /etc/alternatives/pager
+-rwxr-xr-x 1 root   root        88144 2020-09-16 11:43:15.000000000 -0700 partx
+-rwsr-xr-x 1 root   root        59640 2019-03-22 12:05:38.000000000 -0700 passwd
+-rwxr-xr-x 1 root   root        35032 2018-01-18 01:43:49.000000000 -0800 paste
+-rwxr-xr-x 1 root   root        16642 2016-02-29 21:52:32.000000000 -0800 pastebinit
+-rwxr-xr-x 1 root   root       182648 2019-07-23 05:12:54.000000000 -0700 patch
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 pathchk
+lrwxrwxrwx 1 root   root            5 2018-04-15 08:38:02.000000000 -0700 pbget -> pbput
+-rwxr-xr-x 1 root   root         2569 2016-02-29 08:14:33.000000000 -0800 pbput
+lrwxrwxrwx 1 root   root            5 2018-04-15 08:38:02.000000000 -0700 pbputs -> pbput
+-rwxr-xr-x 1 root   root        14472 2019-02-10 10:25:12.000000000 -0800 pcimodules
+lrwxrwxrwx 1 root   root            6 2018-10-25 04:11:00.000000000 -0700 pdb3 -> pdb3.6
+lrwxrwxrwx 1 root   root           23 2021-01-26 07:33:00.000000000 -0800 pdb3.6 -> ../lib/python3.6/pdb.py
+-rwxr-xr-x 1 root   root        14328 2018-12-11 07:46:04.000000000 -0800 peekfd
+-rwxr-xr-x 2 root   root      2097720 2020-10-19 03:57:24.000000000 -0700 perl
+-rwxr-xr-x 2 root   root      2097720 2020-10-19 03:57:24.000000000 -0700 perl5.26.1
+-rwxr-xr-x 1 root   root        10216 2020-10-19 03:57:24.000000000 -0700 perl5.26-x86_64-linux-gnu
+-rwxr-xr-x 2 root   root        45853 2020-10-19 03:57:24.000000000 -0700 perlbug
+-rwxr-xr-x 1 root   root          125 2020-10-19 03:57:24.000000000 -0700 perldoc
+-rwxr-xr-x 1 root   root        10864 2020-10-19 03:57:24.000000000 -0700 perlivp
+-rwxr-xr-x 2 root   root        45853 2020-10-19 03:57:24.000000000 -0700 perlthanks
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:24:23.000000000 -0700 pftp -> /etc/alternatives/pftp
+-rwxr-xr-x 1 root   root        26712 2019-08-09 08:37:27.000000000 -0700 pgrep
+-rwxr-xr-x 1 root   root       208928 2018-02-09 18:09:07.000000000 -0800 pic
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:24:20.000000000 -0700 pico -> /etc/alternatives/pico
+-rwxr-xr-x 1 root   root         8357 2020-10-19 03:57:24.000000000 -0700 piconv
+-rwxr-xr-x 1 root   root        63648 2020-01-17 03:24:09.000000000 -0800 pidstat
+-rwxr-xr-x 2 root   root       116944 2017-12-27 11:41:06.000000000 -0800 pigz
+lrwxrwxrwx 1 root   root           26 2019-08-05 12:24:35.000000000 -0700 pinentry -> /etc/alternatives/pinentry
+-rwxr-xr-x 1 root   root        63992 2018-02-05 17:18:30.000000000 -0800 pinentry-curses
+-rwxr-xr-x 1 root   root        39128 2018-01-18 01:43:49.000000000 -0800 pinky
+-rwxr-xr-x 1 root   root          293 2020-10-22 07:40:50.000000000 -0700 pip3
+-rwxr-xr-x 1 root   root        14328 2019-03-27 06:57:02.000000000 -0700 pkaction
+-rwxr-xr-x 1 root   root        18504 2019-03-27 06:57:02.000000000 -0700 pkcheck
+-rwsr-xr-x 1 root   root        22520 2019-03-27 06:57:02.000000000 -0700 pkexec
+-rwxr-xr-x 2 root   root        51296 2017-04-21 13:54:08.000000000 -0700 pkg-config
+lrwxrwxrwx 1 root   root            5 2019-08-09 08:37:27.000000000 -0700 pkill -> pgrep
+-rwxr-xr-x 1 root   root        14328 2019-03-27 06:57:02.000000000 -0700 pkttyagent
+-rwxr-xr-x 1 root   root         4533 2020-10-19 03:57:24.000000000 -0700 pl2pm
+-rwxr-xr-x 1 root   root        18656 2020-06-04 10:25:26.000000000 -0700 pldd
+-rwxr-xr-x 1 root   root        30808 2019-08-09 08:37:27.000000000 -0700 pmap
+-rwxr-xr-x 1 root   root         4134 2020-10-19 03:57:24.000000000 -0700 pod2html
+-rwxr-xr-x 1 root   root        15079 2020-10-19 03:57:24.000000000 -0700 pod2man
+-rwxr-xr-x 1 root   root        10979 2020-10-19 03:57:24.000000000 -0700 pod2text
+-rwxr-xr-x 1 root   root         3948 2020-10-19 03:57:24.000000000 -0700 pod2usage
+-rwxr-xr-x 1 root   root         3658 2020-10-19 03:57:24.000000000 -0700 podchecker
+-rwxr-xr-x 1 root   root         2527 2020-10-19 03:57:24.000000000 -0700 podselect
+-rwxr-xr-x 1 root   root         8744 2018-05-29 13:13:20.000000000 -0700 pollinate
+-rwxr-xr-x 1 root   root        71960 2018-01-18 01:43:49.000000000 -0800 pr
+-rwxr-xr-x 1 root   root        47304 2018-02-09 18:09:07.000000000 -0800 preconv
+lrwxrwxrwx 1 root   root           11 2016-07-15 05:06:12.000000000 -0700 print -> run-mailcap
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 printenv
+-rwxr-xr-x 1 root   root        22528 2018-01-17 03:27:24.000000000 -0800 printerbanner
+-rwxr-xr-x 1 root   root        51384 2018-01-18 01:43:49.000000000 -0800 printf
+-rwxr-xr-x 1 root   root        35424 2020-09-16 11:43:15.000000000 -0700 prlimit
+-rwxr-xr-x 1 root   root        13588 2020-10-19 03:57:24.000000000 -0700 prove
+-rwxr-xr-x 1 root   root        18504 2018-12-11 07:46:04.000000000 -0800 prtstat
+lrwxrwxrwx 1 root   root            9 2018-01-22 05:49:48.000000000 -0800 psfaddtable -> psfxtable
+lrwxrwxrwx 1 root   root            9 2018-01-22 05:49:48.000000000 -0800 psfgettable -> psfxtable
+lrwxrwxrwx 1 root   root            9 2018-01-22 05:49:48.000000000 -0800 psfstriptable -> psfxtable
+-rwxr-xr-x 1 root   root        18424 2018-01-22 05:49:48.000000000 -0800 psfxtable
+-rwxr-xr-x 1 root   root        10232 2018-12-11 07:46:04.000000000 -0800 pslog
+-rwxr-xr-x 1 root   root        27592 2018-12-11 07:46:04.000000000 -0800 pstree
+lrwxrwxrwx 1 root   root            6 2018-12-11 07:46:04.000000000 -0800 pstree.x11 -> pstree
+-rwxr-xr-x 1 root   root         3549 2020-10-19 03:57:24.000000000 -0700 ptar
+-rwxr-xr-x 1 root   root         2628 2020-10-19 03:57:24.000000000 -0700 ptardiff
+-rwxr-xr-x 1 root   root         4392 2020-10-19 03:57:24.000000000 -0700 ptargrep
+-rwxr-xr-x 1 root   root        71928 2018-01-18 01:43:49.000000000 -0800 ptx
+-rwxr-xr-x 1 root   root         1149 2017-12-04 05:46:48.000000000 -0800 purge-old-kernels
+-rwxr-xr-x 1 root   root        10312 2019-08-09 08:37:27.000000000 -0700 pwdx
+-rwxr-xr-x 1 root   root         7812 2018-10-25 04:11:00.000000000 -0700 py3clean
+-rwxr-xr-x 1 root   root        12119 2018-10-25 04:11:00.000000000 -0700 py3compile
+lrwxrwxrwx 1 root   root           31 2018-10-25 04:11:00.000000000 -0700 py3versions -> ../share/python3/py3versions.py
+lrwxrwxrwx 1 root   root           26 2018-03-26 12:42:23.000000000 -0700 pybuild -> ../share/dh-python/pybuild
+lrwxrwxrwx 1 root   root            8 2018-10-25 04:11:00.000000000 -0700 pydoc3 -> pydoc3.6
+-rwxr-xr-x 1 root   root           79 2021-01-26 07:33:00.000000000 -0800 pydoc3.6
+lrwxrwxrwx 1 root   root           12 2018-10-25 04:11:00.000000000 -0700 pygettext3 -> pygettext3.6
+-rwxr-xr-x 1 root   root        21547 2021-01-26 07:33:00.000000000 -0800 pygettext3.6
+-rwxr-xr-x 1 root   root          392 2020-03-16 10:24:46.000000000 -0700 pyhtmlizer3
+-rwxr-xr-x 1 root   root          372 2017-09-25 12:23:43.000000000 -0700 pyjwt3
+lrwxrwxrwx 1 root   root            9 2018-10-25 04:11:00.000000000 -0700 python3 -> python3.6
+-rwxr-xr-x 2 root   root      4526456 2021-01-26 07:33:00.000000000 -0800 python3.6
+lrwxrwxrwx 1 root   root           33 2021-01-26 07:33:00.000000000 -0800 python3.6-config -> x86_64-linux-gnu-python3.6-config
+-rwxr-xr-x 2 root   root      4526456 2021-01-26 07:33:00.000000000 -0800 python3.6m
+lrwxrwxrwx 1 root   root           34 2021-01-26 07:33:00.000000000 -0800 python3.6m-config -> x86_64-linux-gnu-python3.6m-config
+lrwxrwxrwx 1 root   root           16 2018-10-25 04:11:00.000000000 -0700 python3-config -> python3.6-config
+-rwxr-xr-x 1 root   root         1018 2017-10-28 13:10:15.000000000 -0700 python3-jsondiff
+-rwxr-xr-x 1 root   root         3661 2017-10-28 13:10:15.000000000 -0700 python3-jsonpatch
+-rwxr-xr-x 1 root   root         1342 2016-05-01 16:14:11.000000000 -0700 python3-jsonpointer
+-rwxr-xr-x 1 root   root          398 2017-11-15 11:43:29.000000000 -0800 python3-jsonschema
+lrwxrwxrwx 1 root   root           10 2018-10-25 04:11:00.000000000 -0700 python3m -> python3.6m
+lrwxrwxrwx 1 root   root           17 2018-10-25 04:11:00.000000000 -0700 python3m-config -> python3.6m-config
+lrwxrwxrwx 1 root   root           23 2021-02-12 00:45:35.000000000 -0800 ranlib -> x86_64-linux-gnu-ranlib
+lrwxrwxrwx 1 root   root           21 2019-08-05 12:24:40.000000000 -0700 rcp -> /etc/alternatives/rcp
+-rwxr-xr-x 1 root   root       144840 2020-03-23 05:26:28.000000000 -0700 rctest
+-rwxr-xr-x 1 root   root        26696 2020-07-15 08:16:31.000000000 -0700 rdma
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 readelf -> x86_64-linux-gnu-readelf
+-rwxr-xr-x 1 root   root        47320 2018-01-18 01:43:49.000000000 -0800 realpath
+-rwxr-xr-x 1 root   root        14408 2020-09-16 11:43:15.000000000 -0700 rename.ul
+-rwxr-xr-x 1 root   root        14408 2020-09-16 11:43:15.000000000 -0700 renice
+lrwxrwxrwx 1 root   root            4 2018-05-23 01:08:27.000000000 -0700 reset -> tset
+-rwxr-xr-x 1 root   root        18568 2018-01-22 05:49:48.000000000 -0800 resizecons
+-rwxr-xr-x 1 root   root        38992 2020-09-16 11:43:15.000000000 -0700 resizepart
+-rwxr-xr-x 1 root   root        10312 2020-09-16 11:43:15.000000000 -0700 rev
+-rwxr-xr-x 1 root   root       107032 2020-03-23 05:26:28.000000000 -0700 rfcomm
+-rwxr-xr-x 1 root   root           30 2017-07-11 06:19:59.000000000 -0700 rgrep
+-rwxr-xr-x 1 root   root     87229416 2020-04-14 12:53:49.741997779 -0700 rjc
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:24:40.000000000 -0700 rlogin -> /etc/alternatives/rlogin
+-rwxr-xr-x 1 root   root          208 2020-07-15 08:16:31.000000000 -0700 routef
+-rwxr-xr-x 1 root   root         1656 2020-07-15 08:16:31.000000000 -0700 routel
+-rwxr-xr-x 1 root   root       100896 2020-06-04 10:25:26.000000000 -0700 rpcgen
+lrwxrwxrwx 1 root   root           21 2019-08-05 12:24:40.000000000 -0700 rsh -> /etc/alternatives/rsh
+-rwxr-xr-x 1 root   root       500024 2020-02-18 13:03:13.000000000 -0800 rsync
+lrwxrwxrwx 1 root   root            6 2020-07-15 08:16:31.000000000 -0700 rtstat -> lnstat
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 runcon
+-rwxr-xr-x 1 root   root        18161 2016-07-15 05:06:12.000000000 -0700 run-mailcap
+-rwxr-xr-x 1 root   root         3592 2014-01-15 14:24:04.000000000 -0800 run-one
+lrwxrwxrwx 1 root   root            7 2014-01-15 14:40:51.000000000 -0800 run-one-constantly -> run-one
+lrwxrwxrwx 1 root   root            7 2014-01-15 14:40:51.000000000 -0800 run-one-until-failure -> run-one
+lrwxrwxrwx 1 root   root            7 2014-01-15 14:40:51.000000000 -0800 run-one-until-success -> run-one
+lrwxrwxrwx 1 root   root            7 2014-01-15 14:40:51.000000000 -0800 run-this-one -> run-one
+lrwxrwxrwx 1 root   root           23 2019-08-05 12:23:26.000000000 -0700 rview -> /etc/alternatives/rview
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:24:27.000000000 -0700 rvim -> /etc/alternatives/rvim
+-rwxr-xr-x 1 root   root       313824 2020-01-17 03:24:09.000000000 -0800 sadf
+lrwxrwxrwx 1 root   root           21 2019-10-30 14:02:28.138438060 -0700 sar -> /etc/alternatives/sar
+-rwxr-xr-x 1 root   root       120720 2020-01-17 03:24:09.000000000 -0800 sar.sysstat
+-rwxr-xr-x 1 root   root        10469 2017-12-30 10:15:02.000000000 -0800 savelog
+-rwxr-xr-x 1 root   root       100496 2019-03-04 04:17:51.000000000 -0800 scp
+-rwxr-xr-x 1 root   root       465928 2021-02-23 09:46:52.000000000 -0800 screen
+-rwxr-xr-x 1 root   root        10232 2018-01-22 05:49:48.000000000 -0800 screendump
+-rwxr-xr-x 1 root   root        30792 2020-09-16 11:43:15.000000000 -0700 script
+-rwxr-xr-x 1 root   root        26704 2020-09-16 11:43:15.000000000 -0700 scriptreplay
+-rwxr-xr-x 1 root   root        51296 2017-08-04 14:20:16.000000000 -0700 sdiff
+-rwxr-xr-x 1 root   root       209848 2020-03-23 05:26:28.000000000 -0700 sdptool
+lrwxrwxrwx 1 root   root           11 2016-07-15 05:06:12.000000000 -0700 see -> run-mailcap
+-rwxr-xr-x 1 root   root         2442 2018-03-12 03:17:53.000000000 -0700 select-editor
+-rwxr-xr-x 1 root   root         1209 2018-03-12 03:17:53.000000000 -0700 sensible-browser
+-rwxr-xr-x 1 root   root         1109 2018-03-12 03:17:53.000000000 -0700 sensible-editor
+-rwxr-xr-x 1 root   root          433 2018-03-12 03:17:53.000000000 -0700 sensible-pager
+-rwxr-xr-x 1 root   root        47288 2018-01-18 01:43:49.000000000 -0800 seq
+-rwxr-xr-x 1 root   root        18784 2020-09-16 11:43:15.000000000 -0700 setarch
+lrwxrwxrwx 1 root   root           12 2019-08-05 12:24:25.000000000 -0700 setfacl -> /bin/setfacl
+-rwxr-xr-x 1 root   root        10312 2018-01-22 05:49:48.000000000 -0800 setkeycodes
+-rwxr-xr-x 1 root   root        14392 2018-01-22 05:49:48.000000000 -0800 setleds
+-rwxr-xr-x 1 root   root        10312 2018-01-22 05:49:48.000000000 -0800 setlogcons
+-rwxr-xr-x 1 root   root        10344 2018-01-22 05:49:48.000000000 -0800 setmetamode
+-rwxr-xr-x 1 root   root        26704 2019-02-10 10:25:12.000000000 -0800 setpci
+-rwxr-xr-x 1 root   root        10312 2020-09-16 11:43:15.000000000 -0700 setsid
+-rwxr-xr-x 1 root   root        43088 2020-09-16 11:43:15.000000000 -0700 setterm
+-rwxr-xr-x 1 root   root       153960 2019-03-04 04:17:51.000000000 -0800 sftp
+lrwxrwxrwx 1 root   root            6 2019-03-22 12:05:38.000000000 -0700 sg -> newgrp
+-rwxr-xr-x 1 root   root        47320 2018-01-18 01:43:49.000000000 -0800 sha1sum
+-rwxr-xr-x 1 root   root        55512 2018-01-18 01:43:49.000000000 -0800 sha224sum
+-rwxr-xr-x 1 root   root        55512 2018-01-18 01:43:49.000000000 -0800 sha256sum
+-rwxr-xr-x 1 root   root        59608 2018-01-18 01:43:49.000000000 -0800 sha384sum
+-rwxr-xr-x 1 root   root        59608 2018-01-18 01:43:49.000000000 -0800 sha512sum
+-rwxr-xr-x 1 root   root         9371 2020-10-19 03:57:24.000000000 -0700 shasum
+-rwxr-xr-x 1 root   root        18504 2018-01-22 05:49:48.000000000 -0800 showconsolefont
+-rwxr-xr-x 1 root   root        14408 2018-01-22 05:49:48.000000000 -0800 showkey
+-rwxr-xr-x 1 root   root        59608 2018-01-18 01:43:49.000000000 -0800 shred
+-rwxr-xr-x 1 root   root        55480 2018-01-18 01:43:49.000000000 -0800 shuf
+lrwxrwxrwx 1 root   root           21 2021-02-12 00:45:35.000000000 -0800 size -> x86_64-linux-gnu-size
+-rwxr-xr-x 1 root   root        26704 2019-08-09 08:37:27.000000000 -0700 skill
+-rwxr-xr-x 1 root   root        18512 2019-08-09 08:37:27.000000000 -0700 slabtop
+lrwxrwxrwx 1 root   root            3 2019-03-04 04:17:51.000000000 -0800 slogin -> ssh
+-rwxr-xr-x 1 root   root        34824 2018-04-03 05:43:49.000000000 -0700 slurm
+-rwxr-xr-x 1 root   root     19428040 2021-02-02 00:21:12.000000000 -0800 snap
+lrwxrwxrwx 1 root   root           20 2021-02-02 00:21:12.000000000 -0800 snapctl -> ../lib/snapd/snapctl
+-rwxr-xr-x 1 root   root        39048 2021-02-02 00:21:12.000000000 -0800 snapfuse
+lrwxrwxrwx 1 root   root            5 2019-08-09 08:37:27.000000000 -0700 snice -> skill
+-rwxr-xr-x 1 root   root       165384 2020-08-17 18:58:51.000000000 -0700 sntp
+-rwxr-xr-x 1 root   root        30920 2018-02-09 18:09:07.000000000 -0800 soelim
+-rwxr-xr-x 1 root   root       113120 2018-01-18 01:43:49.000000000 -0800 sort
+lrwxrwxrwx 1 root   root           28 2020-07-07 12:34:42.000000000 -0700 sosreport -> ../share/sosreport/sosreport
+-rwxr-xr-x 1 root   root         4308 2020-06-04 10:25:26.000000000 -0700 sotruss
+-rwxr-xr-x 1 root   root        19150 2020-10-19 03:57:24.000000000 -0700 splain
+-rwxr-xr-x 1 root   root        55936 2018-01-18 01:43:49.000000000 -0800 split
+-rwxr-xr-x 1 root   root        10232 2018-01-22 05:49:48.000000000 -0800 splitfont
+-rwxr-xr-x 1 root   root        26840 2020-06-04 10:25:26.000000000 -0700 sprof
+-rwxr-xr-x 1 root   root       727848 2019-03-04 04:17:51.000000000 -0800 ssh
+-rwxr-xr-x 1 root   root       346248 2019-03-04 04:17:51.000000000 -0800 ssh-add
+-rwxr-sr-x 1 root   ssh        362640 2019-03-04 04:17:51.000000000 -0800 ssh-agent
+-rwxr-xr-x 1 root   root         1456 2018-01-16 09:39:31.000000000 -0800 ssh-argv0
+-rwxr-xr-x 1 root   root        10658 2017-10-02 12:34:26.000000000 -0700 ssh-copy-id
+-rwxr-xr-x 1 root   root         1771 2018-05-16 16:40:43.000000000 -0700 ssh-import-id
+-rwxr-xr-x 1 root   root          782 2016-01-29 21:11:11.000000000 -0800 ssh-import-id-gh
+-rwxr-xr-x 1 root   root          782 2016-01-29 21:11:25.000000000 -0800 ssh-import-id-lp
+-rwxr-xr-x 1 root   root       420000 2019-03-04 04:17:51.000000000 -0800 ssh-keygen
+-rwxr-xr-x 1 root   root       420000 2019-03-04 04:17:51.000000000 -0800 ssh-keyscan
+-rwxr-xr-x 1 root   root        80088 2018-01-18 01:43:49.000000000 -0800 stat
+-rwxr-xr-x 1 root   root        47288 2018-01-18 01:43:49.000000000 -0800 stdbuf
+-rwxr-xr-x 1 root   root      1378552 2018-04-11 07:18:47.000000000 -0700 strace
+-rwxr-xr-x 1 root   root         2644 2018-02-13 15:00:00.000000000 -0800 strace-log-merge
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 strings -> x86_64-linux-gnu-strings
+lrwxrwxrwx 1 root   root           22 2021-02-12 00:45:35.000000000 -0800 strip -> x86_64-linux-gnu-strip
+-rwsr-xr-x 1 root   root       149080 2021-01-19 06:36:00.000000000 -0800 sudo
+lrwxrwxrwx 1 root   root            4 2021-01-19 06:36:00.000000000 -0800 sudoedit -> sudo
+-rwxr-xr-x 1 root   root        56128 2021-01-19 06:36:00.000000000 -0800 sudoreplay
+-rwxr-xr-x 1 root   root        39104 2018-01-18 01:43:49.000000000 -0800 sum
+-rwxr-xr-x 1 root   root       113384 2020-09-17 06:57:57.000000000 -0700 symcryptrun
+-rwxr-xr-x 1 root   root      1558792 2020-07-08 11:59:14.000000000 -0700 systemd-analyze
+-rwxr-xr-x 1 root   root        10312 2020-07-08 11:59:14.000000000 -0700 systemd-cat
+-rwxr-xr-x 1 root   root        14408 2020-07-08 11:59:14.000000000 -0700 systemd-cgls
+-rwxr-xr-x 1 root   root        30816 2020-07-08 11:59:14.000000000 -0700 systemd-cgtop
+-rwxr-xr-x 1 root   root        22600 2020-07-08 11:59:14.000000000 -0700 systemd-delta
+-rwxr-xr-x 1 root   root        10304 2020-07-08 11:59:14.000000000 -0700 systemd-detect-virt
+-rwxr-xr-x 1 root   root        43104 2020-07-08 11:59:14.000000000 -0700 systemd-mount
+-rwxr-xr-x 1 root   root        10304 2020-07-08 11:59:14.000000000 -0700 systemd-path
+-rwxr-xr-x 1 root   root        88136 2020-07-08 11:59:14.000000000 -0700 systemd-resolve
+-rwxr-xr-x 1 root   root        43080 2020-07-08 11:59:14.000000000 -0700 systemd-run
+-rwxr-xr-x 1 root   root        18504 2020-07-08 11:59:14.000000000 -0700 systemd-socket-activate
+-rwxr-xr-x 1 root   root        14408 2020-07-08 11:59:14.000000000 -0700 systemd-stdio-bridge
+lrwxrwxrwx 1 root   root           13 2020-07-08 11:59:14.000000000 -0700 systemd-umount -> systemd-mount
+-rwxr-xr-x 1 root   root        14328 2018-05-23 01:08:27.000000000 -0700 tabs
+-rwxr-xr-x 1 root   root        39096 2018-01-18 01:43:49.000000000 -0800 tac
+-rwxr-xr-x 1 root   root        67832 2018-01-18 01:43:49.000000000 -0800 tail
+-rwxr-xr-x 1 root   root        39056 2020-01-17 03:24:09.000000000 -0800 tapestat
+-rwxr-xr-x 1 root   root        30800 2020-09-16 11:43:15.000000000 -0700 taskset
+-rwxr-xr-x 1 root   root       129224 2018-02-09 18:09:07.000000000 -0800 tbl
+-rwxr-xr-x 1 root   root        35032 2018-01-18 01:43:49.000000000 -0800 tee
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:24:22.000000000 -0700 telnet -> /etc/alternatives/telnet
+-rwxr-xr-x 1 root   root       111024 2016-11-07 10:06:40.000000000 -0800 telnet.netkit
+-rwxr-xr-x 1 root   root        47288 2018-01-18 01:43:49.000000000 -0800 test
+-rwxr-xr-x 1 root   root        84080 2018-05-23 01:08:27.000000000 -0700 tic
+-rwxr-xr-x 1 root   root        14720 2017-04-21 13:57:03.000000000 -0700 time
+-rwxr-xr-x 1 root   root        22600 2020-07-08 11:59:14.000000000 -0700 timedatectl
+-rwxr-xr-x 1 root   root        39552 2018-01-18 01:43:49.000000000 -0800 timeout
+-rwxr-xr-x 1 root   root          386 2020-03-16 10:24:46.000000000 -0700 tkconch3
+-rwxr-xr-x 1 root   root        14424 2019-08-09 08:37:27.000000000 -0700 tload
+-rwxr-xr-x 1 root   root       577088 2019-07-04 12:45:07.000000000 -0700 tmux
+-rwxr-xr-x 1 root   root        14328 2018-05-23 01:08:27.000000000 -0700 toe
+-rwxr-xr-x 1 root   root       108304 2019-08-09 08:37:27.000000000 -0700 top
+lrwxrwxrwx 1 root   root           10 2019-08-05 12:23:03.000000000 -0700 touch -> /bin/touch
+-rwxr-xr-x 1 root   root        18456 2018-05-23 01:08:27.000000000 -0700 tput
+-rwxr-xr-x 1 root   root        47288 2018-01-18 01:43:49.000000000 -0800 tr
+-rwxr-xr-x 1 root   root        14344 2019-06-28 04:05:23.000000000 -0700 tracepath
+lrwxrwxrwx 1 root   root           28 2020-07-27 14:56:20.508049125 -0700 traceproto -> /etc/alternatives/traceproto
+-rwxr-xr-x 1 root   root         2885 2016-08-29 08:45:51.000000000 -0700 traceproto.db
+lrwxrwxrwx 1 root   root           28 2020-07-27 14:56:20.460021872 -0700 traceroute -> /etc/alternatives/traceroute
+lrwxrwxrwx 1 root   root           29 2019-08-05 12:24:21.000000000 -0700 traceroute6 -> /etc/alternatives/traceroute6
+lrwxrwxrwx 1 root   root           13 2016-08-29 08:45:51.000000000 -0700 traceroute6.db -> traceroute.db
+-rwsr-xr-x 1 root   root        18448 2019-06-28 04:05:23.000000000 -0700 traceroute6.iputils
+-rwxr-xr-x 1 root   root        68768 2016-08-29 08:45:51.000000000 -0700 traceroute.db
+-rwxr-xr-x 1 root   root         1618 2016-08-29 08:45:51.000000000 -0700 traceroute-nanog
+-rwxr-xr-x 1 root   root          382 2020-03-16 10:24:46.000000000 -0700 trial3
+-rwxr-xr-x 1 root   root       736608 2018-02-09 18:09:07.000000000 -0800 troff
+-rwxr-xr-x 1 root   root        39096 2018-01-18 01:43:49.000000000 -0800 truncate
+-rwxr-xr-x 1 root   root        22528 2018-05-23 01:08:27.000000000 -0700 tset
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 tsort
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 tty
+-rwxr-xr-x 1 root   root          382 2020-03-16 10:24:46.000000000 -0700 twist3
+-rwxr-xr-x 1 root   root          384 2020-03-16 10:24:46.000000000 -0700 twistd3
+-rwxr-xr-x 1 root   root        15397 2020-06-04 10:25:26.000000000 -0700 tzselect
+lrwxrwxrwx 1 root   root           16 2018-03-21 10:20:04.000000000 -0700 ua -> ubuntu-advantage
+-rwxr-xr-x 1 root   root         4596 2018-03-21 10:20:04.000000000 -0700 ubuntu-advantage
+lrwxrwxrwx 1 root   root           10 2021-01-26 04:21:46.000000000 -0800 ubuntu-bug -> apport-bug
+lrwxrwxrwx 1 root   root           25 2021-02-02 00:21:12.000000000 -0800 ubuntu-core-launcher -> ../lib/snapd/snap-confine
+-rwxr-xr-x 1 root   root         8033 2020-06-03 11:41:50.000000000 -0700 ubuntu-support-status
+-rwxr-xr-x 1 root   root        40685 2018-02-25 16:58:23.000000000 -0800 ucf
+-rwxr-xr-x 1 root   root        19367 2018-02-25 16:58:23.000000000 -0800 ucfq
+-rwxr-xr-x 1 root   root        10722 2018-02-25 16:58:23.000000000 -0800 ucfr
+-rwxr-xr-x 1 root   root        14344 2018-01-17 03:27:24.000000000 -0800 ul
+-rwxr-xr-x 1 root   root        84529 2020-02-17 03:37:03.000000000 -0800 unattended-upgrade
+lrwxrwxrwx 1 root   root           18 2020-02-17 03:37:03.000000000 -0800 unattended-upgrades -> unattended-upgrade
+-rwxr-xr-x 1 root   root        39128 2018-01-18 01:43:49.000000000 -0800 unexpand
+-rwxr-xr-x 1 root   root          530 2018-01-22 05:49:48.000000000 -0800 unicode_stop
+-rwxr-xr-x 1 root   root        43224 2018-01-18 01:43:49.000000000 -0800 uniq
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 unlink
+lrwxrwxrwx 1 root   root           24 2019-08-05 12:23:24.000000000 -0700 unlzma -> /etc/alternatives/unlzma
+-rwxr-xr-x 1 root   root         2859 2019-10-07 03:53:35.000000000 -0700 unmkinitramfs
+-rwxr-xr-x 2 root   root       116944 2017-12-27 11:41:06.000000000 -0800 unpigz
+-rwxr-xr-x 1 root   root        18712 2020-09-16 11:43:15.000000000 -0700 unshare
+-rwxr-xr-x 1 root   root        98008 2018-07-05 12:49:18.000000000 -0700 unsquashfs
+lrwxrwxrwx 1 root   root            2 2017-06-28 09:39:19.000000000 -0700 unxz -> xz
+-rwxr-xr-x 1 root   root        47112 2019-09-05 14:05:14.000000000 -0700 update-alternatives
+lrwxrwxrwx 1 root   root           26 2019-08-05 12:24:17.000000000 -0700 updatedb -> /etc/alternatives/updatedb
+-rwxr-xr-x 1 root   root        47184 2018-03-01 08:07:16.000000000 -0800 updatedb.mlocate
+-rwxr-xr-x 1 root   root        11635 2020-08-17 18:58:51.000000000 -0700 update-leap
+-rwxr-xr-x 1 root   root        51392 2017-10-10 13:56:05.000000000 -0700 update-mime-database
+-rwxr-xr-x 1 root   root        14328 2019-01-25 08:38:41.000000000 -0800 upower
+-rwxr-xr-x 1 root   root        10312 2019-08-09 08:37:27.000000000 -0700 uptime
+-rwxr-xr-x 1 root   root         4216 2017-04-21 13:59:17.000000000 -0700 usb-devices
+-rwxr-xr-x 1 root   root        22608 2017-04-21 13:59:17.000000000 -0700 usbhid-dump
+-rwxr-xr-x 1 root   root        35000 2018-01-18 01:43:49.000000000 -0800 users
+-rwxr-xr-x 1 root   root        22600 2020-09-16 11:43:15.000000000 -0700 utmpdump
+-rwxr-xr-x 1 root   root        14408 2020-09-16 11:43:15.000000000 -0700 uuidgen
+-rwxr-xr-x 1 root   root        34896 2020-09-16 11:43:15.000000000 -0700 uuidparse
+-rwxr-xr-x 1 root   root         6913 2018-04-13 06:07:55.000000000 -0700 vcs-run
+-rwxr-xr-x 1 root   root       129248 2020-03-25 03:33:50.000000000 -0700 VGAuthService
+lrwxrwxrwx 1 root   root           20 2019-08-05 12:23:26.000000000 -0700 vi -> /etc/alternatives/vi
+lrwxrwxrwx 1 root   root           22 2019-08-05 12:23:26.000000000 -0700 view -> /etc/alternatives/view
+-rwxr-xr-x 1 root   root         2640 2017-12-04 05:46:48.000000000 -0800 vigpg
+lrwxrwxrwx 1 root   root           21 2019-08-05 12:24:27.000000000 -0700 vim -> /etc/alternatives/vim
+-rwxr-xr-x 1 root   root      2675336 2020-10-13 08:49:09.000000000 -0700 vim.basic
+lrwxrwxrwx 1 root   root           25 2019-08-05 12:24:27.000000000 -0700 vimdiff -> /etc/alternatives/vimdiff
+-rwxr-xr-x 1 root   root      1108024 2020-10-13 08:49:09.000000000 -0700 vim.tiny
+-rwxr-xr-x 1 root   root         2099 2020-10-13 08:49:09.000000000 -0700 vimtutor
+-rwxr-xr-x 1 root   root        51696 2020-03-25 03:33:50.000000000 -0700 vmhgfs-fuse
+-rwxr-xr-x 1 root   root        34912 2019-08-09 08:37:27.000000000 -0700 vmstat
+-rwxr-xr-x 1 root   root        55552 2020-03-25 03:33:50.000000000 -0700 vmtoolsd
+-rwxr-xr-x 1 root   root        10312 2020-03-25 03:33:50.000000000 -0700 vmware-checkvm
+-rwxr-xr-x 1 root   root        10312 2020-03-25 03:33:50.000000000 -0700 vmware-hgfsclient
+-rwxr-xr-x 1 root   root        18424 2020-03-25 03:33:50.000000000 -0700 vmware-namespace-cmd
+-rwxr-xr-x 1 root   root        18424 2020-03-25 03:33:50.000000000 -0700 vmware-rpctool
+-rwxr-xr-x 1 root   root        39200 2020-03-25 03:33:50.000000000 -0700 vmware-toolbox-cmd
+-rwxr-xr-x 1 root   root        14328 2020-03-25 03:33:50.000000000 -0700 vmware-vgauth-cmd
+-rwxr-xr-x 1 root   root        18440 2020-03-25 03:33:50.000000000 -0700 vmware-vgauth-smoketest
+-rwxr-xr-x 1 root   root        18848 2020-03-25 03:33:50.000000000 -0700 vmware-vmblock-fuse
+-rwxr-xr-x 1 root   root        10312 2020-03-25 03:33:50.000000000 -0700 vmware-xferlogs
+-rwxr-xr-x 1 root   root        10232 2017-03-27 21:22:15.000000000 -0700 volname
+lrwxrwxrwx 1 root   root           19 2019-08-05 12:23:04.000000000 -0700 w -> /etc/alternatives/w
+-rwxr-sr-x 1 root   tty         30800 2020-09-16 11:43:15.000000000 -0700 wall
+-rwxr-xr-x 1 root   root        22952 2019-08-09 08:37:27.000000000 -0700 watch
+-rwxr-xr-x 1 root   root        14328 2020-09-17 06:57:57.000000000 -0700 watchgnupg
+-rwxr-xr-x 1 root   root        43200 2018-01-18 01:43:49.000000000 -0800 wc
+-rwxr-xr-x 1 root   root       499264 2019-04-08 11:51:50.000000000 -0700 wget
+-rwxr-xr-x 1 root   root        48104 2018-08-04 12:16:12.000000000 -0700 whatis
+-rwxr-xr-x 1 root   root        27144 2020-09-16 11:43:15.000000000 -0700 whereis
+lrwxrwxrwx 1 root   root           10 2019-08-05 12:23:03.000000000 -0700 which -> /bin/which
+-rwxr-xr-x 1 root   root        51416 2018-01-18 01:43:49.000000000 -0800 who
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 whoami
+-rwxr-xr-x 1 root   root         2107 2017-12-04 05:46:48.000000000 -0800 wifi-status
+-rwxr-xr-x 1 root   root        22536 2018-04-03 05:19:52.000000000 -0700 wmdocker
+-rwxr-xr-x 1 root   root        18504 2019-08-09 08:37:27.000000000 -0700 w.procps
+lrwxrwxrwx 1 root   root           23 2019-08-05 12:24:25.000000000 -0700 write -> /etc/alternatives/write
+lrwxrwxrwx 1 root   root            7 2020-09-16 11:43:15.000000000 -0700 x86_64 -> setarch
+-rwxr-xr-x 1 root   root        31280 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-addr2line
+-rwxr-xr-x 1 root   root        59640 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-ar
+-rwxr-xr-x 1 root   root       917488 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-as
+-rwxr-xr-x 1 root   root        26744 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-c++filt
+lrwxrwxrwx 1 root   root            5 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-cpp -> cpp-7
+-rwxr-xr-x 1 root   root      1047488 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-cpp-7
+-rwxr-xr-x 1 root   root      2886928 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-dwp
+-rwxr-xr-x 1 root   root        31184 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-elfedit
+lrwxrwxrwx 1 root   root            5 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-g++ -> g++-7
+-rwxr-xr-x 1 root   root      1047488 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-g++-7
+lrwxrwxrwx 1 root   root            5 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcc -> gcc-7
+-rwxr-xr-x 1 root   root      1047488 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcc-7
+lrwxrwxrwx 1 root   root            8 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcc-ar -> gcc-ar-7
+-rwxr-xr-x 1 root   root        31200 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcc-ar-7
+lrwxrwxrwx 1 root   root            8 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcc-nm -> gcc-nm-7
+-rwxr-xr-x 1 root   root        31200 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcc-nm-7
+lrwxrwxrwx 1 root   root           12 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcc-ranlib -> gcc-ranlib-7
+-rwxr-xr-x 1 root   root        31200 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcc-ranlib-7
+lrwxrwxrwx 1 root   root            6 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcov -> gcov-7
+-rwxr-xr-x 1 root   root       630880 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcov-7
+lrwxrwxrwx 1 root   root           11 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcov-dump -> gcov-dump-7
+-rwxr-xr-x 1 root   root       511928 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcov-dump-7
+lrwxrwxrwx 1 root   root           11 2019-05-20 09:08:41.000000000 -0700 x86_64-linux-gnu-gcov-tool -> gcov-tool-7
+-rwxr-xr-x 1 root   root       548856 2019-12-04 06:25:41.000000000 -0800 x86_64-linux-gnu-gcov-tool-7
+lrwxrwxrwx 1 root   root           24 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-gold -> x86_64-linux-gnu-ld.gold
+-rwxr-xr-x 1 root   root       102120 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-gprof
+lrwxrwxrwx 1 root   root           23 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-ld -> x86_64-linux-gnu-ld.bfd
+-rwxr-xr-x 1 root   root      1783496 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-ld.bfd
+-rwxr-xr-x 1 root   root      3111952 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-ld.gold
+-rwxr-xr-x 1 root   root        44312 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-nm
+-rwxr-xr-x 1 root   root       235720 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-objcopy
+-rwxr-xr-x 1 root   root       414256 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-objdump
+lrwxrwxrwx 1 root   root           34 2020-04-14 09:35:39.217683591 -0700 x86_64-linux-gnu-pkg-config -> /usr/share/pkg-config-crosswrapper
+lrwxrwxrwx 1 root   root           34 2021-01-26 07:33:00.000000000 -0800 x86_64-linux-gnu-python3.6-config -> x86_64-linux-gnu-python3.6m-config
+-rwxr-xr-x 1 root   root         3283 2021-01-26 07:33:00.000000000 -0800 x86_64-linux-gnu-python3.6m-config
+lrwxrwxrwx 1 root   root           33 2018-10-25 04:11:00.000000000 -0700 x86_64-linux-gnu-python3-config -> x86_64-linux-gnu-python3.6-config
+lrwxrwxrwx 1 root   root           34 2018-10-25 04:11:00.000000000 -0700 x86_64-linux-gnu-python3m-config -> x86_64-linux-gnu-python3.6m-config
+-rwxr-xr-x 1 root   root        59672 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-ranlib
+-rwxr-xr-x 1 root   root       596440 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-readelf
+-rwxr-xr-x 1 root   root        31024 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-size
+-rwxr-xr-x 1 root   root        31232 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-strings
+-rwxr-xr-x 1 root   root       235728 2021-02-12 00:45:35.000000000 -0800 x86_64-linux-gnu-strip
+-rwxr-xr-x 2 root   root        51296 2017-04-21 13:54:08.000000000 -0700 x86_64-pc-linux-gnu-pkg-config
+-rwxr-xr-x 1 root   root        71896 2017-11-05 09:16:48.000000000 -0800 xargs
+-rwxr-xr-x 1 root   root        52032 2017-11-21 11:47:37.000000000 -0800 xauth
+-rwxr-xr-x 1 root   root       153904 2016-12-05 18:04:51.000000000 -0800 xdelta3
+-rwxr-xr-x 1 root   root          234 2018-03-23 08:58:57.000000000 -0700 xdg-user-dir
+-rwxr-xr-x 1 root   root        18504 2018-03-23 08:58:57.000000000 -0700 xdg-user-dirs-update
+-rwxr-xr-x 1 root   root         5164 2020-10-19 03:57:24.000000000 -0700 xsubpp
+-rwxr-xr-x 1 root   root        18552 2020-10-13 08:49:09.000000000 -0700 xxd
+-rwxr-xr-x 1 root   root        76216 2017-06-28 09:39:19.000000000 -0700 xz
+lrwxrwxrwx 1 root   root            2 2017-06-28 09:39:19.000000000 -0700 xzcat -> xz
+lrwxrwxrwx 1 root   root            6 2017-06-28 09:39:19.000000000 -0700 xzcmp -> xzdiff
+-rwxr-xr-x 1 root   root         6632 2017-06-28 09:39:19.000000000 -0700 xzdiff
+lrwxrwxrwx 1 root   root            6 2017-06-28 09:39:19.000000000 -0700 xzegrep -> xzgrep
+lrwxrwxrwx 1 root   root            6 2017-06-28 09:39:19.000000000 -0700 xzfgrep -> xzgrep
+-rwxr-xr-x 1 root   root         5628 2017-06-28 09:39:19.000000000 -0700 xzgrep
+-rwxr-xr-x 1 root   root         1802 2017-06-28 09:39:19.000000000 -0700 xzless
+-rwxr-xr-x 1 root   root         2161 2017-06-28 09:39:19.000000000 -0700 xzmore
+-rwxr-xr-x 1 root   root        30904 2018-01-18 01:43:49.000000000 -0800 yes
+-rwxr-xr-x 1 root   root        18488 2020-06-04 10:25:26.000000000 -0700 zdump
+-rwxr-xr-x 1 root   root        48497 2020-10-19 03:57:24.000000000 -0700 zipdetails
+

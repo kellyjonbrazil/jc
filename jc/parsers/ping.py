@@ -120,7 +120,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = 'ping command parser'
+    description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

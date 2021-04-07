@@ -1,0 +1,116 @@
+.TH jc 1 {{ today }} {{ jc.version}} "JSON CLI output utility"
+.SH NAME
+jc \- JSONifies the output of many CLI tools and file-types
+.SH SYNOPSIS
+COMMAND | jc PARSER [OPTIONS]
+
+or magic syntax:
+
+jc [OPTIONS] COMMAND
+
+.SH DESCRIPTION
+jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: command aliases are not supported).
+
+.SH OPTIONS
+.B
+Parsers:
+.RS
+
+{% for parser in jc.parsers %}
+.TP
+.B
+\fB{{ parser.argument }}\fP
+{{ parser.description }}
+{% endfor %}
+
+.RE
+.PP
+.B
+Options:
+.RS
+
+.TP
+.B
+\fB-a\fP
+about jc (JSON output)
+.TP
+.B
+\fB-d\fP
+debug - show traceback (\fB-dd\fP for verbose traceback)
+.TP
+.B
+\fB-h\fP
+help
+.TP
+.B
+\fB-m\fP
+monochrome output
+.TP
+.B
+\fB-p\fP
+pretty print output
+.TP
+.B
+\fB-q\fP
+quiet - suppress warnings
+.TP
+.B
+\fB-r\fP
+raw JSON output
+.TP
+.B
+\fB-v\fP
+version information
+
+.SH ENVIRONMENT
+You can specify custom colors via the \fBJC_COLORS\fP environment variable. The \fBJC_COLORS\fP environment variable takes four comma separated string values in the following format:
+
+JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
+
+Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP, \fBmagenta\fP, \fBcyan\fP, \fBgray\fP, \fBbrightblack\fP, \fBbrightred\fP, \fBbrightgreen\fP, \fBbrightyellow\fP, \fBbrightblue\fP, \fBbrightmagenta\fP, \fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP
+
+For example, to set to the default colors:
+
+.RS
+JC_COLORS=blue,brightblack,magenta,green
+
+or
+
+JC_COLORS=default,default,default,default
+.RE
+
+.SH CUSTOM PARSERS
+Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
+
+.RS
+- Linux/unix: \fB$HOME/.local/share/jc/jcparsers\fP
+
+- macOS: \fB$HOME/Library/Application Support/jc/jcparsers\fP
+
+- Windows: \fB$LOCALAPPDATA\\jc\\jc\\jcparsers\fP
+.RE
+
+Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
+
+Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+
+Note: The application data directory follows the XDG Base Directory Specification
+
+.SH EXAMPLE
+ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
+
+
+or using the magic syntax:
+
+
+jc \fB-p\fP ls \fB-al\fP
+
+.SH AUTHOR
+{{ jc.author }} ({{ jc.author_email }})
+
+{{ jc.website }}
+
+.SH COPYRIGHT
+Copyright (c) {{ jc.copyright[2:] }}
+
+License:  {{ jc.license }}

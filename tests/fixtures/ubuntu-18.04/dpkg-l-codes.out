@@ -1,0 +1,21 @@
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                            Version              Architecture         Description
++++-===============================-====================-====================-===================================================================
+ii  accountsservice                 0.6.45-1ubuntu1.3    amd64                query and manipulate user account information
+rc  acl                             2.2.52-3build1       amd64                Access control list utilities
+uWR acpi                            1.7-1.1              amd64                displays information on ACPI devices
+rh  acpid                           1:2.0.28-1ubuntu1    amd64                Advanced Configuration and Power Interface event daemon
+pn  adduser                         3.116ubuntu1         all                  add and remove users and groups
+ii  amd64-microcode                 3.20191021.1+really3 amd64                Processor microcode firmware for AMD CPUs
+ii  apparmor                        2.12-4ubuntu5.1      amd64                user-space parser utility for AppArmor
+ii  apport                          2.20.9-0ubuntu7.23   all                  automatically generate crash reports for debugging
+ii  apport-symptoms                 0.20                 all                  symptom scripts for apport
+rc  linux-image-4.15.0-136-generic  4.15.0-136.140       amd64                Signed kernel image generic
+ii  linux-image-4.15.0-137-generic  4.15.0-137.141       amd64                Signed kernel image generic
+ii  linux-image-4.15.0-139-generic  4.15.0-139.143       amd64                Signed kernel image generic
+ii  linux-image-4.15.0-140-generic  4.15.0-140.144       amd64                Signed kernel image generic
+rc  linux-image-4.15.0-55-generic   4.15.0-55.60         amd64                Signed kernel image generic
+rc  linux-image-4.15.0-58-generic   4.15.0-58.64         amd64                Signed kernel image generic
+rc  linux-image-4.15.0-65-generic   4.15.0-65.74         amd64                Signed kernel image generic

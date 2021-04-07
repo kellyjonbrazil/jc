@@ -2,7 +2,7 @@
 # jc.parsers.iw_scan
 jc - JSON CLI output utility `iw dev <device> scan` command output parser
 
-This parser is considered beta quality. Not all fields are parsed.
+This parser is considered beta quality. Not all fields are parsed and there are not enough samples to test.
 
 Usage (cli):
 

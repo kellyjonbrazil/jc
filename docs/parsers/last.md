@@ -2,7 +2,9 @@
 # jc.parsers.last
 jc - JSON CLI output utility `last` and `lastb` command output parser
 
-Supports -w and -F options.
+Supports `-w` and `-F` options.
+
+Calculated epoch time fields are naive (i.e. based on the local time of the system the parser is run on) since there is no timezone information in the `last` command output.
 
 Usage (cli):
 
@@ -116,8 +118,8 @@ Returns:
         "login":            string,
         "logout":           string,
         "duration":         string,
-        "login_epoch":      integer,   # available with last -F option
-        "logout_epoch":     integer,   # available with last -F option
+        "login_epoch":      integer,   # (naive) available with last -F option
+        "logout_epoch":     integer,   # (naive) available with last -F option
         "duration_seconds": integer    # available with last -F option
       }
     ]

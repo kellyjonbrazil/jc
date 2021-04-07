@@ -2,6 +2,10 @@
 # jc.parsers.dig
 jc - JSON CLI output utility `dig` command output parser
 
+The `when_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+
+The `when_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ dig example.com | jc --dig
@@ -24,7 +28,7 @@ Examples:
     $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
     [
       {
-        "id": 34128,
+        "id": 52172,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -46,38 +50,40 @@ Examples:
             "name": "cnn.com.",
             "class": "IN",
             "type": "A",
-            "ttl": 60,
+            "ttl": 27,
             "data": "151.101.65.67"
           },
           {
             "name": "cnn.com.",
             "class": "IN",
             "type": "A",
-            "ttl": 60,
-            "data": "151.101.193.67"
+            "ttl": 27,
+            "data": "151.101.129.67"
           },
           {
             "name": "cnn.com.",
             "class": "IN",
             "type": "A",
-            "ttl": 60,
+            "ttl": 27,
             "data": "151.101.1.67"
           },
           {
             "name": "cnn.com.",
             "class": "IN",
             "type": "A",
-            "ttl": 60,
-            "data": "151.101.129.67"
+            "ttl": 27,
+            "data": "151.101.193.67"
           }
         ],
-        "query_time": 37,
+        "query_time": 38,
         "server": "2600",
-        "when": "Tue Nov 12 07:14:42 PST 2019",
-        "rcvd": 100
+        "when": "Tue Mar 30 20:07:59 PDT 2021",
+        "rcvd": 100,
+        "when_epoch": 1617160079,
+        "when_epoch_utc": null
       },
       {
-        "id": 15273,
+        "id": 36292,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -133,10 +139,12 @@ Examples:
             "data": "ns-576.awsdns-08.net."
           }
         ],
-        "query_time": 23,
+        "query_time": 27,
         "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Nov 12 07:14:42 PST 2019",
-        "rcvd": 212
+        "when": "Tue Mar 30 20:07:59 PDT 2021",
+        "rcvd": 212,
+        "when_epoch": 1617160079,
+        "when_epoch_utc": null
       }
     ]
 
@@ -262,7 +270,7 @@ Examples:
     $ dig -x 1.1.1.1 | jc --dig -p
     [
       {
-        "id": 34898,
+        "id": 22191,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -284,14 +292,16 @@ Examples:
             "name": "1.1.1.1.in-addr.arpa.",
             "class": "IN",
             "type": "PTR",
-            "ttl": 952,
+            "ttl": 1800,
             "data": "one.one.one.one."
           }
         ],
-        "query_time": 103,
+        "query_time": 44,
         "server": "2600",
-        "when": "Tue Nov 12 07:15:33 PST 2019",
-        "rcvd": 78
+        "when": "Tue Mar 30 20:10:34 PDT 2021",
+        "rcvd": 78,
+        "when_epoch": 1617160234,
+        "when_epoch_utc": null
       }
     ]
 
@@ -400,6 +410,8 @@ Returns:
         "query_time":     integer,   # in msec
         "server":         string,
         "when":           string,
+        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
+        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
         "rcvd":           integer
         "size":           string
       }

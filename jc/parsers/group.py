@@ -100,7 +100,7 @@ import jc.utils
 
 class info():
     version = '1.1'
-    description = '/etc/group file parser'
+    description = '`/etc/group` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     # details = 'enter any other details here'

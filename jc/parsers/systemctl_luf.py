@@ -41,7 +41,7 @@ import jc.utils
 
 class info():
     version = '1.3'
-    description = 'systemctl list-unit-files command parser'
+    description = '`systemctl list-unit-files` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

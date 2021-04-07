@@ -64,7 +64,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = 'env command parser'
+    description = '`env` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

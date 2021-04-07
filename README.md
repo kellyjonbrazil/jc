@@ -68,9 +68,13 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 ```
 Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
+> Note: Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on). 
+>
+> If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
+
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
-Schemas for each parser can be found in the [`docs/parsers`](https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers) folder. 
+Schemas for each parser can be found at the documentation link beside each parser below.
 
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
@@ -98,7 +102,7 @@ pip3 install jc
 | Fedora linux          | `dnf install jc`                                                              |
 | openSUSE linux        | `zypper install jc`                                                           |
 | Arch linux            | `pacman -S jc`                                                                |
-| NixOS linux           | `nix-env -iA nixpkgs.jc`                                                      |
+| NixOS linux           | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
 | Guix System linux     | `guix install jc`                                                             |
 | MacOS                 | `brew install jc`                                                             |
 | FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
@@ -120,77 +124,87 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 > Note: For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line: `$ LANG=C date | jc --date`, or by exporting to the environment before running commands: `$ export LANG=C`.
 
 ### Parsers
-- `--airport` enables the `airport -I` command parser (OSX)
-- `--airport-s` enables the `airport -s` command parser (OSX)
-- `--arp` enables the `arp` command parser
-- `--blkid` enables the `blkid` command parser
-- `--cksum` enables the `cksum` and `sum` command parser
-- `--crontab` enables the `crontab` command and file parser
-- `--crontab-u` enables the `crontab` file parser with user support
-- `--csv` enables the `CSV` file parser
-- `--date` enables the `date` command parser
-- `--df` enables the `df` command parser
-- `--dig` enables the `dig` command parser
-- `--dmidecode` enables the `dmidecode` command parser
-- `--du` enables the `du` command parser
-- `--env` enables the `env` and `printenv` command parser
-- `--file` enables the `file` command parser
-- `--free` enables the `free` command parser
-- `--fstab` enables the `/etc/fstab` file parser
-- `--group` enables the `/etc/group` file parser
-- `--gshadow` enables the `/etc/gshadow` file parser
-- `--hash` enables the `hash` command parser
-- `--hashsum` enables the `hashsum` command parser (`md5`, `md5sum`, `shasum`, `sha1sum`, `sha224sum`, `sha256sum`, `sha384sum`, `sha512sum`)
-- `--hciconfig` enables the `hciconfig` command parser
-- `--history` enables the `history` command parser
-- `--hosts` enables the `/etc/hosts` file parser
-- `--id` enables the `id` command parser
-- `--ifconfig` enables the `ifconfig` command parser
-- `--ini` enables the `INI` file parser
-- `--iptables` enables the `iptables` command parser
-- `--iw-scan` enables the `iw dev <device> scan` command parser (beta)
-- `--jobs` enables the `jobs` command parser
-- `--kv` enables the `Key/Value` file parser
-- `--last` enables the `last` and `lastb` command parser
-- `--ls` enables the `ls` and `vdir` command parser
-- `--lsblk` enables the `lsblk` command parser
-- `--lsmod` enables the `lsmod` command parser
-- `--lsof` enables the `lsof` command parser
-- `--mount` enables the `mount` command parser
-- `--netstat` enables the `netstat` command parser
-- `--ntpq` enables the `ntpq -p` command parser
-- `--passwd` enables the `/etc/passwd` file parser
-- `--ping` enables the `ping` and `ping6` command parser
-- `--pip-list` enables the `pip list` command parser
-- `--pip-show` enables the `pip show` command parser
-- `--ps` enables the `ps` command parser
-- `--route` enables the `route` command parser
-- `--shadow` enables the `/etc/shadow` file parser
-- `--ss` enables the `ss` command parser
-- `--stat` enables the `stat` command parser
-- `--sysctl` enables the `sysctl -a` command parser
-- `--systemctl` enables the `systemctl` command parser
-- `--systemctl-lj` enables the `systemctl list-jobs` command parser
-- `--systemctl-ls` enables the `systemctl list-sockets` command parser
-- `--systemctl-luf` enables the `systemctl list-unit-files` command parser
-- `--timedatectl` enables the `timedatectl status` command parser
-- `--tracepath` enables the `tracepath` and `tracepath6` command parser
-- `--traceroute` enables the `traceroute` and `traceroute6` command parser
-- `--uname` enables the `uname -a` command parser
-- `--uptime` enables the `uptime` command parser
-- `--w` enables the `w` command parser
-- `--wc` enables the `wc` command parser
-- `--who` enables the `who` command parser
-- `--xml` enables the `XML` file parser
-- `--yaml` enables the `YAML` file parser
+
+- `--acpi` enables the `acpi` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi))
+- `--airport` enables the `airport -I` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport))
+- `--airport-s` enables the `airport -s` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s))
+- `--arp` enables the `arp` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/arp))
+- `--blkid` enables the `blkid` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid))
+- `--cksum` enables the `cksum` and `sum` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum))
+- `--crontab` enables the `crontab` command and file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab))
+- `--crontab-u` enables the `crontab` file parser with user support ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u))
+- `--csv` enables the CSV file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/csv))
+- `--date` enables the `date` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/date))
+- `--df` enables the `df` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/df))
+- `--dig` enables the `dig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dig))
+- `--dir` enables the `dir` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dir))
+- `--dmidecode` enables the `dmidecode` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dmidecode))
+- `--dpkg-l` enables the `dpkg -l` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dpkg_l))
+- `--du` enables the `du` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/du))
+- `--env` enables the `env` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/env))
+- `--file` enables the `file` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/file))
+- `--finger` enables the `finger` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/finger))
+- `--free` enables the `free` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/free))
+- `--fstab` enables the `/etc/fstab` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab))
+- `--group` enables the `/etc/group` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/group))
+- `--gshadow` enables the `/etc/gshadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow))
+- `--hash` enables the `hash` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hash))
+- `--hashsum` enables the hashsum command parser (`md5sum`, `shasum`, etc.) ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hashsum))
+- `--hciconfig` enables the `hciconfig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hciconfig))
+- `--history` enables the `history` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/history))
+- `--hosts` enables the `/etc/hosts` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts))
+- `--id` enables the `id` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/id))
+- `--ifconfig` enables the `ifconfig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig))
+- `--ini` enables the INI file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ini))
+- `--iptables` enables the `iptables` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables))
+- `--iw-scan` enables the `iw dev [device] scan` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan))
+- `--jobs` enables the `jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs))
+- `--kv` enables the Key/Value file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/kv))
+- `--last` enables the `last` and `lastb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/last))
+- `--ls` enables the `ls` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ls))
+- `--lsblk` enables the `lsblk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk))
+- `--lsmod` enables the `lsmod` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod))
+- `--lsof` enables the `lsof` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof))
+- `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
+- `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
+- `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
+- `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
+- `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))
+- `--pip-list` enables the `pip list` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list))
+- `--pip-show` enables the `pip show` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show))
+- `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
+- `--route` enables the `route` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/route))
+- `--rpm_qi` enables the `rpm -qi` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi))
+- `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
+- `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))
+- `--stat` enables the `stat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/stat))
+- `--sysctl` enables the `sysctl` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl))
+- `--systemctl` enables the `systemctl` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl))
+- `--systemctl-lj` enables the `systemctl list-jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj))
+- `--systemctl-ls` enables the `systemctl list-sockets` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls))
+- `--systemctl-luf` enables the `systemctl list-unit-files` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_luf))
+- `--time` enables the `/usr/bin/time` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/time))
+- `--timedatectl` enables the `timedatectl status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl))
+- `--tracepath` enables the `tracepath` and `tracepath6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath))
+- `--traceroute` enables the `traceroute` and `traceroute6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute))
+- `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
+- `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
+- `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
+- `--w` enables the `w` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/w))
+- `--wc` enables the `wc` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/wc))
+- `--who` enables the `who` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/who))
+- `--xml` enables the XML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xml))
+- `--yaml` enables the YAML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml))
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
+- `-h` `jc` help
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
-- `-r` raw output. Provides a more literal JSON output with all values as strings and no additional semantic processing
+- `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
+- `-v` version information
 
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
@@ -224,7 +238,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 ## Compatibility
 Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an OSX laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
 ```bash
 cat lsof.out | jc --lsof -q
@@ -235,13 +249,16 @@ Tested on:
 - Ubuntu 18.04
 - Ubuntu 20.04
 - Fedora32
-- OSX 10.11.6
-- OSX 10.14.6
+- macOS 10.11.6
+- macOS 10.14.6
 - NixOS
 - FreeBSD12
+- Windows 10
 
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
+
+Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/blob/master/CONTRIBUTING.md) for more information.
 
 ## Acknowledgments
 - Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
@@ -254,7 +271,7 @@ Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
 - Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
 ## Examples
-Here are some examples of `jc` output. For more examples, see [EXAMPLES.md](https://github.com/kellyjonbrazil/jc/blob/master/EXAMPLES.md) or the [parser documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers).
+Here are some examples of `jc` output. For more examples, see [here](https://kellyjonbrazil.github.io/jc/EXAMPLES) or the parser documentation.
 ### arp
 ```bash
 arp | jc --arp -p          # or:  jc -p arp
@@ -342,7 +359,7 @@ dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205
 ```json
 [
   {
-    "id": 5509,
+    "id": 52172,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -364,14 +381,16 @@ dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 60,
-        "data": "151.101.129.67"
+        "ttl": 27,
+        "data": "151.101.65.67"
       }
     ],
-    "query_time": 28,
+    "query_time": 38,
     "server": "2600",
-    "when": "Tue Nov 12 07:13:03 PST 2019",
-    "rcvd": 100
+    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "rcvd": 100,
+    "when_epoch": 1617160079,
+    "when_epoch_utc": null
   }
 ]
 ```
@@ -802,12 +821,19 @@ uptime | jc --uptime -p          # or:  jc -p uptime
 ```
 ```json
 {
-  "time": "11:30:44",
-  "uptime": "1 day, 21:17",
-  "users": 1,
-  "load_1m": 0.01,
-  "load_5m": 0.04,
-  "load_15m": 0.05
+  "time": "11:35",
+  "uptime": "3 days, 4:03",
+  "users": 5,
+  "load_1m": 1.88,
+  "load_5m": 2.0,
+  "load_15m": 1.94,
+  "time_hour": 11,
+  "time_minute": 35,
+  "time_second": null,
+  "uptime_days": 3,
+  "uptime_hours": 4,
+  "uptime_minutes": 3,
+  "uptime_total_seconds": 273780
 }
 ```
 ### XML files
@@ -925,3 +951,5 @@ cat istio.yaml | jc --yaml -p
   }
 ]
 ```
+
+© 2019-2021 Kelly Brazil

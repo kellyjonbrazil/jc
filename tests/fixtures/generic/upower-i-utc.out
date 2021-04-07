@@ -1,0 +1,24 @@
+  native-path:          BAT0
+  vendor:               Samsung SDI
+  model:                DELL 7XFJJA2
+  serial:               4448
+  power supply:         yes
+  updated:              Tuesday 01 October 2019 12:50:41 PM UTC (101 seconds ago)
+  has history:          yes
+  has statistics:       yes
+  battery
+    present:             yes
+    rechargeable:        yes
+    state:               fully-charged
+    warning-level:       none
+    energy:              33.4443 Wh
+    energy-empty:        0 Wh
+    energy-full:         33.4443 Wh
+    energy-full-design:  48.84 Wh
+    energy-rate:         0.0111 W
+    voltage:             12.446 V
+    percentage:          100%
+    capacity:            68.4773%
+    technology:          lithium-ion
+    icon-name:          'battery-full-charged-symbolic'
+

@@ -94,7 +94,7 @@ import jc.parsers.universal
 
 class info():
     version = '1.4'
-    description = 'route command parser'
+    description = '`route` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 

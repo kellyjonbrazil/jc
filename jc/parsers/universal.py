@@ -22,7 +22,7 @@ def simple_table_parse(data):
 
     Returns:
 
-        dictionary   raw structured data
+        List of Dictionaries   raw structured data
     """
     headers = [h for h in ' '.join(data[0].strip().split()).split() if h]
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), data[1:])
@@ -52,7 +52,7 @@ def sparse_table_parse(data, delim='\u2063'):
 
     Returns:
 
-        dictionary   raw structured data
+        List of Dictionaries   raw structured data
     """
     output = []
     header_text = data.pop(0)

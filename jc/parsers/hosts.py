@@ -67,7 +67,7 @@ import jc.utils
 
 class info():
     version = '1.2'
-    description = '/etc/hosts file parser'
+    description = '`/etc/hosts` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
 
