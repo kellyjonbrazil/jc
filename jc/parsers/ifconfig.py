@@ -207,6 +207,7 @@ __version__ = info.version
 
 
 class IfconfigParser(object):
+    """ifconfig parser module written by threeheadedknight@protonmail.com"""
     # Author: threeheadedknight@protonmail.com
     # Date created: 30.06.2018 17:03
     # Python Version: 3.7

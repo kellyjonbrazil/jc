@@ -198,7 +198,7 @@ Provides parser metadata (version, author, etc.)
 ```python
 IfconfigParser(console_output)
 ```
-
+ifconfig parser module written by threeheadedknight@protonmail.com
 
 ## parse
 ```python
