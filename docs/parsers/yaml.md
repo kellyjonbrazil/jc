@@ -11,6 +11,18 @@ Usage (module):
     import jc.parsers.yaml
     result = jc.parsers.yaml.parse(yaml_file_output)
 
+Schema:
+
+    YAML Document converted to a Dictionary
+    See https://pypi.org/project/ruamel.yaml for details
+
+    [
+      {
+        "key1":     string/int/float/boolean/null/array/object,
+        "key2":     string/int/float/boolean/null/array/object
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -78,30 +90,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Each dictionary represents a YAML document:
-
-    [
-      {
-        YAML Document converted to a Dictionary
-        See https://pypi.org/project/ruamel.yaml for details
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

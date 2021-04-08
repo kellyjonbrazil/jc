@@ -19,6 +19,23 @@ Usage (module):
     import jc.parsers.who
     result = jc.parsers.who.parse(who_command_output)
 
+Schema:
+
+    [
+      {
+        "user":            string,
+        "event":           string,
+        "writeable_tty":   string,
+        "tty":             string,
+        "time":            string,
+        "epoch":           integer,     # naive timestamp. null if time cannot be converted
+        "idle":            string,
+        "pid":             integer,
+        "from":            string,
+        "comment":         string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -121,38 +138,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "user":            string,
-        "event":           string,
-        "writeable_tty":   string,
-        "tty":             string,
-        "time":            string,
-        "epoch":           integer,     # naive timestamp. null if time cannot be converted
-        "idle":            string,
-        "pid":             integer,
-        "from":            string,
-        "comment":         string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

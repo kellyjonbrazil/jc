@@ -17,6 +17,68 @@ Usage (module):
     import jc.parsers.upower
     result = jc.parsers.upower.parse(upower_command_output)
 
+Schema:
+
+    [
+      {
+        "type":                         string,
+        "device_name":                  string,
+        "native_path":                  string,
+        "power_supply":                 boolean,
+        "updated":                      string,
+        "updated_epoch":                integer,       # null if date-time conversion fails
+        "updated_epoch_utc":            integer,       # null if date-time conversion fails
+        "updated_seconds_ago":          integer,
+        "has_history":                  boolean,
+        "has_statistics":               boolean,
+        "detail": {
+          "type":                       string,
+          "warning_level":              string,        # null if none
+          "online":                     boolean,
+          "icon_name":                  string
+          "present":                    boolean,
+          "rechargeable":               boolean,
+          "state":                      string,
+          "energy":                     float,
+          "energy_unit":                string,
+          "energy_empty":               float,
+          "energy_empty_unit":          string,
+          "energy_full":                float,
+          "energy_full_unit":           string,
+          "energy_full_design":         float,
+          "energy_full_design_unit":    string,
+          "energy_rate":                float,
+          "energy_rate_unit":           string,
+          "voltage":                    float,
+          "voltage_unit":               string,
+          "time_to_full":               float,
+          "time_to_full_unit":          string,
+          "percentage":                 float,
+          "capacity":                   float,
+          "technology":                 string
+        },
+        "history_charge": [
+          {
+            "time":                     integer,
+            "percent_charged":          float,
+            "status":                   string
+          }
+        ],
+        "history_rate":[
+          {
+            "time":                     integer,
+            "percent_charged":          float,
+            "status":                   string
+          }
+        ],
+        "daemon_version":               string,
+        "on_battery":                   boolean,
+        "lid_is_closed":                boolean,
+        "lid_is_present":               boolean,
+        "critical_action":              string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -135,7 +197,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`upower` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,7 +212,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -159,67 +222,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "type":                         string,
-            "device_name":                  string,
-            "native_path":                  string,
-            "power_supply":                 boolean,
-            "updated":                      string,
-            "updated_epoch":                integer,       # null if date-time conversion fails
-            "updated_epoch_utc":            integer,       # null if date-time conversion fails
-            "updated_seconds_ago":          integer,
-            "has_history":                  boolean,
-            "has_statistics":               boolean,
-            "detail": {
-              "type":                       string,
-              "warning_level":              string,        # null if none
-              "online":                     boolean,
-              "icon_name":                  string
-              "present":                    boolean,
-              "rechargeable":               boolean,
-              "state":                      string,
-              "energy":                     float,
-              "energy_unit":                string,
-              "energy_empty":               float,
-              "energy_empty_unit":          string,
-              "energy_full":                float,
-              "energy_full_unit":           string,
-              "energy_full_design":         float,
-              "energy_full_design_unit":    string,
-              "energy_rate":                float,
-              "energy_rate_unit":           string,
-              "voltage":                    float,
-              "voltage_unit":               string,
-              "time_to_full":               float,
-              "time_to_full_unit":          string,
-              "percentage":                 float,
-              "capacity":                   float,
-              "technology":                 string
-            },
-            "history_charge": [
-              {
-                "time":                     integer,
-                "percent_charged":          float,
-                "status":                   string
-              }
-            ],
-            "history_rate":[
-              {
-                "time":                     integer,
-                "percent_charged":          float,
-                "status":                   string
-              }
-            ],
-            "daemon_version":               string,
-            "on_battery":                   boolean,
-            "lid_is_closed":                boolean,
-            "lid_is_present":               boolean,
-            "critical_action":              string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         # time conversions
@@ -414,4 +417,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

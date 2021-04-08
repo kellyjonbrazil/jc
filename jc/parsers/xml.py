@@ -9,6 +9,16 @@ Usage (module):
     import jc.parsers.xml
     result = jc.parsers.xml.parse(xml_file_output)
 
+Schema:
+
+    XML Document converted to a Dictionary
+    See https://github.com/martinblech/xmltodict for details
+
+    {
+      "key1":   string/object,
+      "key2":   string/object
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -70,7 +80,8 @@ except Exception:
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -83,7 +94,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -93,12 +104,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary representing an XML document:
-
-        {
-          XML Document converted to a Dictionary
-          See https://github.com/martinblech/xmltodict for details
-        }
+        Dictionary representing an XML document.
     """
 
     # No further processing
@@ -131,4 +137,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

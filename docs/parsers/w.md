@@ -15,6 +15,21 @@ Usage (module):
     import jc.parsers.w
     result = jc.parsers.w.parse(w_command_output)
 
+Schema:
+
+    [
+      {
+        "user":     string,     # '-'' = null
+        "tty":      string,     # '-'' = null
+        "from":     string,     # '-'' = null
+        "login_at": string,     # '-'' = null
+        "idle":     string,     # '-'' = null
+        "jcpu":     string,
+        "pcpu":     string,
+        "what":     string      # '-'' = null
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -94,36 +109,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "user":     string,     # '-'' = null
-        "tty":      string,     # '-'' = null
-        "from":     string,     # '-'' = null
-        "login_at": string,     # '-'' = null
-        "idle":     string,     # '-'' = null
-        "jcpu":     string,
-        "pcpu":     string,
-        "what":     string      # '-'' = null
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

@@ -11,6 +11,16 @@ Usage (module):
     import jc.parsers.xml
     result = jc.parsers.xml.parse(xml_file_output)
 
+Schema:
+
+    XML Document converted to a Dictionary
+    See https://github.com/martinblech/xmltodict for details
+
+    {
+      "key1":   string/object,
+      "key2":   string/object
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -66,28 +76,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary representing an XML document:
-
-    {
-      XML Document converted to a Dictionary
-      See https://github.com/martinblech/xmltodict for details
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

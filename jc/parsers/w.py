@@ -13,6 +13,21 @@ Usage (module):
     import jc.parsers.w
     result = jc.parsers.w.parse(w_command_output)
 
+Schema:
+
+    [
+      {
+        "user":     string,     # '-'' = null
+        "tty":      string,     # '-'' = null
+        "from":     string,     # '-'' = null
+        "login_at": string,     # '-'' = null
+        "idle":     string,     # '-'' = null
+        "jcpu":     string,
+        "pcpu":     string,
+        "what":     string      # '-'' = null
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -92,7 +107,8 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = '`w` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -105,7 +121,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -115,20 +131,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "user":     string,     # '-'' = null
-            "tty":      string,     # '-'' = null
-            "from":     string,     # '-'' = null
-            "login_at": string,     # '-'' = null
-            "idle":     string,     # '-'' = null
-            "jcpu":     string,
-            "pcpu":     string,
-            "what":     string      # '-'' = null
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         null_list = ['user', 'tty', 'from', 'login_at', 'idle', 'what']
@@ -196,4 +199,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

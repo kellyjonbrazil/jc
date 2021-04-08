@@ -15,6 +15,17 @@ Usage (module):
     import jc.parsers.wc
     result = jc.parsers.wc.parse(wc_command_output)
 
+Schema:
+
+    [
+      {
+        "filename":     string,
+        "lines":        integer,
+        "words":        integer,
+        "characters":   integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -49,32 +60,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "lines":        integer,
-        "words":        integer,
-        "characters":   integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

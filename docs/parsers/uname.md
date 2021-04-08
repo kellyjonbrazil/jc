@@ -17,6 +17,19 @@ Usage (module):
     import jc.parsers.uname
     result = jc.parsers.uname.parse(uname_command_output)
 
+Schema:
+
+    {
+        "kernel_name":        string,
+        "node_name":          string,
+        "kernel_release":     string,
+        "operating_system":   string,
+        "hardware_platform":  string,
+        "processor":          string,
+        "machine":            string,
+        "kernel_version":     string
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -40,34 +53,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-        "kernel_name":        string,
-        "node_name":          string,
-        "kernel_release":     string,
-        "operating_system":   string,
-        "hardware_platform":  string,
-        "processor":          string,
-        "machine":            string,
-        "kernel_version":     string
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
