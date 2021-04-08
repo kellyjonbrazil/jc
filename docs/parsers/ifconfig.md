@@ -194,12 +194,6 @@ info()
 ```
 Provides parser metadata (version, author, etc.)
 
-## IfconfigParser
-```python
-IfconfigParser(console_output)
-```
-ifconfig parser module written by threeheadedknight@protonmail.com
-
 ## parse
 ```python
 parse(data, raw=False, quiet=False)

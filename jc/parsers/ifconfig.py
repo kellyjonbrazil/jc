@@ -206,7 +206,7 @@ class info():
 __version__ = info.version
 
 
-class IfconfigParser(object):
+class _IfconfigParser(object):
     """ifconfig parser module written by threeheadedknight@protonmail.com"""
     # Author: threeheadedknight@protonmail.com
     # Date created: 30.06.2018 17:03
@@ -411,7 +411,7 @@ class IfconfigParser(object):
 
     @staticmethod
     def update_interface_details(interface):
-        for attr in IfconfigParser.attributes:
+        for attr in _IfconfigParser.attributes:
             if attr not in interface:
                 interface[attr] = None
         return namedtuple('Interface', interface.keys())(**interface)
@@ -488,7 +488,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        parsed = IfconfigParser(console_output=data)
+        parsed = _IfconfigParser(console_output=data)
         interfaces = parsed.get_interfaces()
 
         # convert ifconfigparser output to a dictionary
