@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # Genereate man page from jc metadata using jinja2 templates
 from datetime import date
+import os
+import gzip
+import shutil
 import jc.cli
 from jinja2 import Environment, FileSystemLoader
 
@@ -12,3 +15,9 @@ output = template.render(today=date.today(),
 
 with open('man/jc.1', 'w') as f:
     f.write(output)
+
+with open('man/jc.1', 'rb') as f_in:
+    with gzip.open('man/jc.1.gz', 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+os.remove('man/jc.1')
