@@ -21,6 +21,34 @@ Usage (module):
     import jc.parsers.rpm_qi
     result = jc.parsers.rpm_qi.parse(rpm_qi_command_output)
 
+Schema:
+
+    [
+      {
+        "name":             string,
+        "epoch":            integer,
+        "version":          string,
+        "release":          string,
+        "architecture":     string,
+        "install_date":     string,
+        "group":            string,
+        "size":             integer,
+        "license":          string,
+        "signature":        string,
+        "source_rpm":       string,
+        "build_date":       string,
+        "build_epoch":      integer,          # naive timestamp
+        "build_epoch_utc":  integer,          # Aware timestamp if timezone is UTC
+        "build_host":       string,
+        "relocations":      string,
+        "packager":         string,
+        "vendor":           string,
+        "url":              string,
+        "summary":          string,
+        "description":      string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -128,49 +156,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":             string,
-        "epoch":            integer,
-        "version":          string,
-        "release":          string,
-        "architecture":     string,
-        "install_date":     string,
-        "group":            string,
-        "size":             integer,
-        "license":          string,
-        "signature":        string,
-        "source_rpm":       string,
-        "build_date":       string,
-        "build_epoch":      integer,          # naive timestamp
-        "build_epoch_utc":  integer,          # Aware timestamp if timezone is UTC
-        "build_host":       string,
-        "relocations":      string,
-        "packager":         string,
-        "vendor":           string,
-        "url":              string,
-        "summary":          string,
-        "description":      string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

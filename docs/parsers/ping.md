@@ -19,6 +19,36 @@ Usage (module):
     import jc.parsers.ping
     result = jc.parsers.ping.parse(ping_command_output)
 
+Schema:
+
+    {
+      "source_ip":                   string,
+      "destination_ip":              string,
+      "data_bytes":                  integer,
+      "pattern":                     string,        # (null if not set)
+      "destination":                 string,
+      "packets_transmitted":         integer,
+      "packets_received":            integer,
+      "packet_loss_percent":         float,
+      "duplicates":                  integer,
+      "round_trip_ms_min":           float,
+      "round_trip_ms_avg":           float,
+      "round_trip_ms_max":           float,
+      "round_trip_ms_stddev":        float,
+      "responses": [
+        {
+          "type":                    string,        # ('reply' or 'timeout')
+          "timestamp":               float,
+          "bytes":                   integer,
+          "response_ip":             string,
+          "icmp_seq":                integer,
+          "ttl":                     integer,
+          "time_ms":                 float,
+          "duplicate":               boolean
+        }
+      ]
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -121,51 +151,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "source_ip":                   string,
-      "destination_ip":              string,
-      "data_bytes":                  integer,
-      "pattern":                     string,        (null if not set)
-      "destination":                 string,
-      "packets_transmitted":         integer,
-      "packets_received":            integer,
-      "packet_loss_percent":         float,
-      "duplicates":                  integer,
-      "round_trip_ms_min":           float,
-      "round_trip_ms_avg":           float,
-      "round_trip_ms_max":           float,
-      "round_trip_ms_stddev":        float,
-      "responses": [
-        {
-          "type":                    string,        ('reply' or 'timeout')
-          "timestamp":               float,
-          "bytes":                   integer,
-          "response_ip":             string,
-          "icmp_seq":                integer,
-          "ttl":                     integer,
-          "time_ms":                 float,
-          "duplicate":               boolean
-        }
-      ]
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

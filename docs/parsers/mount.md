@@ -15,6 +15,19 @@ Usage (module):
     import jc.parsers.mount
     result = jc.parsers.mount.parse(mount_command_output)
 
+Schema:
+
+    [
+      {
+        "filesystem":       string,
+        "mount_point":      string,
+        "type":             string,
+        "access": [
+                            string
+        ]
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -68,34 +81,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filesystem":   string,
-        "mount_point":  string,
-        "type":         string,
-        "access": [
-                        string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

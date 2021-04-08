@@ -15,6 +15,24 @@ Usage (module):
     import jc.parsers.ntpq
     result = jc.parsers.ntpq.parse(ntpq_command_output)
 
+Schema:
+
+    [
+      {
+        "state":            string,        # space/~ converted to null
+        "remote":           string,
+        "refid":            string,
+        "st":               integer,
+        "t":                string,
+        "when":             integer,       # - converted to null
+        "poll":             integer,
+        "reach":            integer,
+        "delay":            float,
+        "offset":           float,
+        "jitter":           float
+      },
+    ]
+
 Compatibility:
 
     'linux', 'freebsd'
@@ -194,40 +212,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "state":            string,        # space/~ converted to null
-        "remote":           string,
-        "refid":            string,
-        "st":               integer,
-        "t":                string,
-        "when":             integer,       # - converted to null
-        "poll":             integer,
-        "reach":            integer,
-        "delay":            float,
-        "offset":           float,
-        "jitter":           float
-      },
-    ]
-
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

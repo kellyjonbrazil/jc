@@ -17,6 +17,44 @@ Usage (module):
     import jc.parsers.stat
     result = jc.parsers.stat.parse(stat_command_output)
 
+Schema:
+
+    [
+      {
+        "file":                     string,
+        "link_to"                   string,
+        "size":                     integer,
+        "blocks":                   integer,
+        "io_blocks":                integer,
+        "type":                     string,
+        "device":                   string,
+        "inode":                    integer,
+        "links":                    integer,
+        "access":                   string,
+        "flags":                    string,
+        "uid":                      integer,
+        "user":                     string,
+        "gid":                      integer,
+        "group":                    string,
+        "access_time":              string,    # - = null
+        "access_time_epoch":        integer,   # naive timestamp
+        "access_time_epoch_utc":    integer,   # timezone-aware timestamp
+        "modify_time":              string,    # - = null
+        "modify_time_epoch":        integer,   # naive timestamp
+        "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
+        "change_time":              string,    # - = null
+        "change_time_epoch":        integer,   # naive timestamp
+        "change_time_epoch_utc":    integer,   # timezone-aware timestamp
+        "birth_time":               string,    # - = null
+        "birth_time_epoch":         integer,   # naive timestamp
+        "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
+        "unix_device":              integer,
+        "rdev":                     integer,
+        "block_size":               integer,
+        "unix_flags":               string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -134,7 +172,8 @@ import jc.utils
 
 
 class info():
-    version = '1.6'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.7'
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -147,7 +186,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -157,43 +196,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "file":                     string,
-            "link_to"                   string,
-            "size":                     integer,
-            "blocks":                   integer,
-            "io_blocks":                integer,
-            "type":                     string,
-            "device":                   string,
-            "inode":                    integer,
-            "links":                    integer,
-            "access":                   string,
-            "flags":                    string,
-            "uid":                      integer,
-            "user":                     string,
-            "gid":                      integer,
-            "group":                    string,
-            "access_time":              string,    # - = null
-            "access_time_epoch":        integer,   # naive timestamp
-            "access_time_epoch_utc":    integer,   # timezone-aware timestamp
-            "modify_time":              string,    # - = null
-            "modify_time_epoch":        integer,   # naive timestamp
-            "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
-            "change_time":              string,    # - = null
-            "change_time_epoch":        integer,   # naive timestamp
-            "change_time_epoch_utc":    integer,   # timezone-aware timestamp
-            "birth_time":               string,    # - = null
-            "birth_time_epoch":         integer,   # naive timestamp
-            "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
-            "unix_device":              integer,
-            "rdev":                     integer,
-            "block_size":               integer,
-            "unix_flags":               string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'unix_device', 'rdev', 'block_size']
@@ -349,4 +352,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

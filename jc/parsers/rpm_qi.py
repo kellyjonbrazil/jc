@@ -19,6 +19,34 @@ Usage (module):
     import jc.parsers.rpm_qi
     result = jc.parsers.rpm_qi.parse(rpm_qi_command_output)
 
+Schema:
+
+    [
+      {
+        "name":             string,
+        "epoch":            integer,
+        "version":          string,
+        "release":          string,
+        "architecture":     string,
+        "install_date":     string,
+        "group":            string,
+        "size":             integer,
+        "license":          string,
+        "signature":        string,
+        "source_rpm":       string,
+        "build_date":       string,
+        "build_epoch":      integer,          # naive timestamp
+        "build_epoch_utc":  integer,          # Aware timestamp if timezone is UTC
+        "build_host":       string,
+        "relocations":      string,
+        "packager":         string,
+        "vendor":           string,
+        "url":              string,
+        "summary":          string,
+        "description":      string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -125,7 +153,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -139,7 +168,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -149,33 +178,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "name":             string,
-            "epoch":            integer,
-            "version":          string,
-            "release":          string,
-            "architecture":     string,
-            "install_date":     string,
-            "group":            string,
-            "size":             integer,
-            "license":          string,
-            "signature":        string,
-            "source_rpm":       string,
-            "build_date":       string,
-            "build_epoch":      integer,          # naive timestamp
-            "build_epoch_utc":  integer,          # Aware timestamp if timezone is UTC
-            "build_host":       string,
-            "relocations":      string,
-            "packager":         string,
-            "vendor":           string,
-            "url":              string,
-            "summary":          string,
-            "description":      string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         
@@ -255,4 +258,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

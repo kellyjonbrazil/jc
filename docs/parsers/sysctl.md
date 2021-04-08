@@ -17,6 +17,14 @@ Usage (module):
     import jc.parsers.sysctl
     result = jc.parsers.sysctl.parse(sysctl_command_output)
 
+Schema:
+
+    {
+      "key1":     string/integer/float,         # best guess based on value
+      "key2":     string/integer/float,
+      "key3":     string/integer/float
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -52,29 +60,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "foo":     string/integer/float,         # best guess based on value
-      "bar":     string/integer/float,
-      "baz":     string/integer/float
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

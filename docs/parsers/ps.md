@@ -19,6 +19,30 @@ Usage (module):
     import jc.parsers.ps
     result = jc.parsers.ps.parse(ps_command_output)
 
+Schema:
+
+    [
+      {
+        "uid":           string,
+        "pid":           integer,
+        "ppid":          integer,
+        "c":             integer,
+        "stime":         string,
+        "tty":           string,    # ? or ?? = Null
+        "tt":            string,    # ?? = Null
+        "time":          string,
+        "cmd":           string,
+        "user":          string,
+        "cpu_percent":   float,
+        "mem_percent":   float,
+        "vsz":           integer,
+        "rss":           integer,
+        "stat":          string,
+        "start":         string,
+        "command":       string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -188,45 +212,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "uid":           string,
-        "pid":           integer,
-        "ppid":          integer,
-        "c":             integer,
-        "stime":         string,
-        "tty":           string,    # ? or ?? = Null
-        "tt":            string,    # ?? = Null
-        "time":          string,
-        "cmd":           string,
-        "user":          string,
-        "cpu_percent":   float,
-        "mem_percent":   float,
-        "vsz":           integer,
-        "rss":           integer,
-        "stat":          string,
-        "start":         string,
-        "command":       string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

@@ -15,6 +15,19 @@ Usage (module):
     import jc.parsers.lsmod
     result = jc.parsers.lsmod.parse(lsmod_command_output)
 
+Schema:
+
+    [
+      {
+        "module":     string,
+        "size":       integer,
+        "used":       integer,
+        "by": [
+                      string
+        ]
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -118,34 +131,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "module": string,
-        "size":   integer,
-        "used":   integer,
-        "by": [
-                  string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

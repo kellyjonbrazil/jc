@@ -21,6 +21,27 @@ Usage (module):
     import jc.parsers.traceroute
     result = jc.parsers.traceroute.parse(traceroute_command_output)
 
+Schema:
+
+    {
+      "destination_ip":         string,
+      "destination_name":       string,
+      "hops": [
+        {
+          "hop":                integer,
+          "probes": [
+            {
+              "annotation":     string,
+              "asn":            integer,
+              "ip":             string,
+              "name":           string,
+              "rtt":            float
+            }
+          ]
+        }
+      ]
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -102,48 +123,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## Hop
-```python
-Hop(idx)
-```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "destination_ip":         string,
-      "destination_name":       string,
-      "hops": [
-        {
-          "hop":                integer,
-          "probes": [
-            {
-              "annotation":     string,
-              "asn":            integer,
-              "ip":             string,
-              "name":           string,
-              "rtt":            float
-            }
-          ]
-        }
-      ]
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

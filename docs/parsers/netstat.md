@@ -19,6 +19,107 @@ Usage (module):
     import jc.parsers.netstat
     result = jc.parsers.netstat.parse(netstat_command_output)
 
+Schema:
+
+    [
+      {
+        "proto":                  string,
+        "recv_q":                 integer,
+        "send_q":                 integer,
+        "transport_protocol"      string,
+        "network_protocol":       string,
+        "local_address":          string,
+        "local_port":             string,
+        "local_port_num":         integer,
+        "foreign_address":        string,
+        "foreign_port":           string,
+        "foreign_port_num":       integer,
+        "state":                  string,
+        "program_name":           string,
+        "pid":                    integer,
+        "user":                   string,
+        "security_context":       string,
+        "refcnt":                 integer,
+        "flags":                  string,
+        "type":                   string,
+        "inode":                  integer,
+        "path":                   string,
+        "kind":                   string,
+        "address":                string,
+        "unix_inode":             string,
+        "conn":                   string,
+        "refs":                   string,
+        "nextref":                string,
+        "name":                   string,
+        "unit":                   integer,
+        "vendor":                 integer,
+        "class":                  integer,
+        "subcla":                 integer,
+        "unix_flags":             integer,
+        "pcbcount":               integer,
+        "rcvbuf":                 integer,
+        "sndbuf":                 integer,
+        "rxbytes":                integer,
+        "txbytes":                integer,
+        "destination":            string,
+        "gateway":                string,
+        "route_flags":            string,
+        "route_flags_pretty": [
+                                  string,
+        ]
+        "route_refs":             integer,
+        "use":                    integer,
+        "mtu":                    integer,
+        "expire":                 string,
+        "genmask":                string,
+        "mss":                    integer,
+        "window":                 integer,
+        "irtt":                   integer,
+        "iface":                  string,
+        "metric":                 integer,
+        "network":                string,
+        "address":                string,
+        "ipkts":                  integer,    # - = null
+        "ierrs":                  integer,    # - = null
+        "idrop":                  integer,    # - = null
+        "opkts":                  integer,    # - = null
+        "oerrs":                  integer,    # - = null
+        "coll":                   integer,    # - = null
+        "rx_ok":                  integer,
+        "rx_err":                 integer,
+        "rx_drp":                 integer,
+        "rx_ovr":                 integer,
+        "tx_ok":                  integer,
+        "tx_err":                 integer,
+        "tx_drp":                 integer,
+        "tx_ovr":                 integer,
+        "flg":                    string,
+        "ibytes":                 integer,
+        "obytes":                 integer,
+        "r_mbuf":                 integer,
+        "s_mbuf":                 integer,
+        "r_clus":                 integer,
+        "s_clus":                 integer,
+        "r_hiwa":                 integer,
+        "s_hiwa":                 integer,
+        "r_lowa":                 integer,
+        "s_lowa":                 integer,
+        "r_bcnt":                 integer,
+        "s_bcnt":                 integer,
+        "r_bmax":                 integer,
+        "s_bmax":                 integer,
+        "rexmit":                 integer,
+        "ooorcv":                 integer,
+        "0_win":                  integer,
+        "rexmt":                  float,
+        "persist":                float,
+        "keep":                   float,
+        "2msl":                   float,
+        "delack":                 float,
+        "rcvtime":                float,
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -259,122 +360,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "proto":                  string,
-        "recv_q":                 integer,
-        "send_q":                 integer,
-        "transport_protocol"      string,
-        "network_protocol":       string,
-        "local_address":          string,
-        "local_port":             string,
-        "local_port_num":         integer,
-        "foreign_address":        string,
-        "foreign_port":           string,
-        "foreign_port_num":       integer,
-        "state":                  string,
-        "program_name":           string,
-        "pid":                    integer,
-        "user":                   string,
-        "security_context":       string,
-        "refcnt":                 integer,
-        "flags":                  string,
-        "type":                   string,
-        "inode":                  integer,
-        "path":                   string,
-        "kind":                   string,
-        "address":                string,
-        "unix_inode":             string,
-        "conn":                   string,
-        "refs":                   string,
-        "nextref":                string,
-        "name":                   string,
-        "unit":                   integer,
-        "vendor":                 integer,
-        "class":                  integer,
-        "subcla":                 integer,
-        "unix_flags":             integer,
-        "pcbcount":               integer,
-        "rcvbuf":                 integer,
-        "sndbuf":                 integer,
-        "rxbytes":                integer,
-        "txbytes":                integer,
-        "destination":            string,
-        "gateway":                string,
-        "route_flags":            string,
-        "route_flags_pretty": [
-                                  string,
-        ]
-        "route_refs":             integer,
-        "use":                    integer,
-        "mtu":                    integer,
-        "expire":                 string,
-        "genmask":                string,
-        "mss":                    integer,
-        "window":                 integer,
-        "irtt":                   integer,
-        "iface":                  string,
-        "metric":                 integer,
-        "network":                string,
-        "address":                string,
-        "ipkts":                  integer,    - = null
-        "ierrs":                  integer,    - = null
-        "idrop":                  integer,    - = null
-        "opkts":                  integer,    - = null
-        "oerrs":                  integer,    - = null
-        "coll":                   integer,    - = null
-        "rx_ok":                  integer,
-        "rx_err":                 integer,
-        "rx_drp":                 integer,
-        "rx_ovr":                 integer,
-        "tx_ok":                  integer,
-        "tx_err":                 integer,
-        "tx_drp":                 integer,
-        "tx_ovr":                 integer,
-        "flg":                    string,
-        "ibytes":                 integer,
-        "obytes":                 integer,
-        "r_mbuf":                 integer,
-        "s_mbuf":                 integer,
-        "r_clus":                 integer,
-        "s_clus":                 integer,
-        "r_hiwa":                 integer,
-        "s_hiwa":                 integer,
-        "r_lowa":                 integer,
-        "s_lowa":                 integer,
-        "r_bcnt":                 integer,
-        "s_bcnt":                 integer,
-        "r_bmax":                 integer,
-        "s_bmax":                 integer,
-        "rexmit":                 integer,
-        "ooorcv":                 integer,
-        "0_win":                  integer,
-        "rexmt":                  float,
-        "persist":                float,
-        "keep":                   float,
-        "2msl":                   float,
-        "delack":                 float,
-        "rcvtime":                float,
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

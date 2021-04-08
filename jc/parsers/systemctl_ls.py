@@ -13,6 +13,16 @@ Usage (module):
     import jc.parsers.systemctl_ls
     result = jc.parsers.systemctl_ls.parse(systemctl_ls_command_output)
 
+Schema:
+
+    [
+      {
+        "listen":       string,
+        "unit":         string,
+        "activates":    string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -43,7 +53,8 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = '`systemctl list-sockets` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -56,7 +67,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -66,15 +77,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "listen":       string,
-            "unit":         string,
-            "activates":    string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     # nothing more to process
     return proc_data
@@ -125,4 +128,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

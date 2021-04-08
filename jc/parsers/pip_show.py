@@ -13,6 +13,23 @@ Usage (module):
     import jc.parsers.pip_show
     result = jc.parsers.pip_show.parse(pip_show_command_output)
 
+Schema:
+
+    [
+      {
+        "name":             string,
+        "version":          string,
+        "summary":          string,
+        "home_page":        string,
+        "author":           string,
+        "author_email":     string,
+        "license":          string,
+        "location":         string,
+        "requires":         string,
+        "required_by":      string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -51,7 +68,8 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.2'
     description = '`pip show` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -64,7 +82,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -74,23 +92,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "name":             string,
-            "version":          string,
-            "summary":          string,
-            "home_page":        string,
-            "author":           string,
-            "author_email":     string,
-            "license":          string,
-            "location":         string,
-            "requires":         string,
-            "required_by":      string
-          }
-        ]
-
+        List of Dictionaries. Structured data to conform to the schema.
     """
     # no further processing
     return proc_data
@@ -140,4 +142,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

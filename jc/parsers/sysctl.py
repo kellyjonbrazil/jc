@@ -15,6 +15,14 @@ Usage (module):
     import jc.parsers.sysctl
     result = jc.parsers.sysctl.parse(sysctl_command_output)
 
+Schema:
+
+    {
+      "key1":     string/integer/float,         # best guess based on value
+      "key2":     string/integer/float,
+      "key3":     string/integer/float
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -49,7 +57,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`sysctl` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -63,7 +72,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -73,13 +82,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "foo":     string/integer/float,         # best guess based on value
-          "bar":     string/integer/float,
-          "baz":     string/integer/float
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     for key in proc_data:
         try:
@@ -158,4 +161,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

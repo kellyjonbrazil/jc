@@ -15,6 +15,23 @@ Usage (module):
     import jc.parsers.lsof
     result = jc.parsers.lsof.parse(lsof_command_output)
 
+Schema:
+
+    [
+      {
+        "command":    string,
+        "pid":        integer,
+        "tid":        integer,
+        "user":       string,
+        "fd":         string,
+        "type":       string,
+        "device":     string,
+        "size_off":   integer,
+        "node":       integer,
+        "name":       string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -108,38 +125,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "command":    string,
-        "pid":        integer,
-        "tid":        integer,
-        "user":       string,
-        "fd":         string,
-        "type":       string,
-        "device":     string,
-        "size_off":   integer,
-        "node":       integer,
-        "name":       string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

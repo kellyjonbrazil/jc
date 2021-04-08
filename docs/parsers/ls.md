@@ -26,6 +26,23 @@ Usage (module):
     import jc.parsers.ls
     result = jc.parsers.ls.parse(ls_command_output)
 
+Schema:
+
+    [
+      {
+        "filename":     string,
+        "flags":        string,
+        "links":        integer,
+        "parent":       string,
+        "owner":        string,
+        "group":        string,
+        "size":         integer,
+        "date":         string,
+        "epoch":        integer,     # naive timestamp if date field exists and can be converted
+        "epoch_utc":    integer      # timezone aware timestamp if date field is in UTC and can be converted
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -159,38 +176,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "flags":        string,
-        "links":        integer,
-        "parent":       string,
-        "owner":        string,
-        "group":        string,
-        "size":         integer,
-        "date":         string,
-        "epoch":        integer,     # naive timestamp if date field exists and can be converted
-        "epoch_utc":    integer      # timezone aware timestamp if date field is in UTC and can be converted
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

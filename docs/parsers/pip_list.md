@@ -15,6 +15,16 @@ Usage (module):
     import jc.parsers.pip_list
     result = jc.parsers.pip_list.parse(pip_list_command_output)
 
+Schema:
+
+    [
+      {
+        "package":     string,
+        "version":     string,
+        "location":    string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -43,31 +53,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "package":     string,
-        "version":     string,
-        "location":    string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

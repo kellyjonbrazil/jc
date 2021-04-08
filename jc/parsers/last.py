@@ -17,6 +17,22 @@ Usage (module):
     import jc.parsers.last
     result = jc.parsers.last.parse(last_command_output)
 
+Schema:
+
+    [
+      {
+        "user":             string,
+        "tty":              string,
+        "hostname":         string,
+        "login":            string,
+        "logout":           string,
+        "duration":         string,
+        "login_epoch":      integer,   # (naive) available with last -F option
+        "logout_epoch":     integer,   # (naive) available with last -F option
+        "duration_seconds": integer    # available with last -F option
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'aix', 'freebsd'
@@ -91,7 +107,8 @@ import jc.utils
 
 
 class info():
-    version = '1.5'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.6'
     description = '`last` and `lastb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -105,7 +122,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -115,21 +132,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "user":             string,
-            "tty":              string,
-            "hostname":         string,
-            "login":            string,
-            "logout":           string,
-            "duration":         string,
-            "login_epoch":      integer,   # (naive) available with last -F option
-            "logout_epoch":     integer,   # (naive) available with last -F option
-            "duration_seconds": integer    # available with last -F option
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         if 'user' in entry and entry['user'] == 'boot_time':
@@ -253,4 +256,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

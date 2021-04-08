@@ -4,7 +4,6 @@ Supports files containing simple key/value pairs. Delimiter can be `=` or `:`. M
 
 Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
 
-
 Usage (cli):
 
     $ cat foo.txt | jc --kv
@@ -13,6 +12,15 @@ Usage (module):
 
     import jc.parsers.kv
     result = jc.parsers.kv.parse(kv_file_output)
+
+Schema:
+
+    key/value document converted to a dictionary - see configparser standard library documentation for more details.
+
+    {
+      "key1":       string,
+      "key2":       string
+    }
 
 Compatibility:
 
@@ -42,7 +50,8 @@ Examples:
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = 'Key/Value file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

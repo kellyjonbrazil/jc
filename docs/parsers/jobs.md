@@ -17,6 +17,18 @@ Usage (module):
     import jc.parsers.jobs
     result = jc.parsers.jobs.parse(jobs_command_output)
 
+Schema:
+
+    [
+      {
+        "job_number":   integer,
+        "pid":          integer,
+        "history":      string,
+        "status":       string,
+        "command":      string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -88,33 +100,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "job_number":   integer,
-        "pid":          integer,
-        "history":      string,
-        "status":       string,
-        "command":      string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

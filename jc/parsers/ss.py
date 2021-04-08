@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `ss` command output parser
 
+Extended information options like -e and -p are not supported and may cause parsing irregularities.
+
 Usage (cli):
 
     $ ss | jc --ss
@@ -13,9 +15,29 @@ Usage (module):
     import jc.parsers.ss
     result = jc.parsers.ss.parse(ss_command_output)
 
-Limitations:
+Schema:
 
-    Extended information options like -e and -p are not supported and may cause parsing irregularities
+    Information from https://www.cyberciti.biz/files/ss.html used to define field names
+
+    [
+      {
+        "netid":            string,
+        "state":            string,
+        "recv_q":           integer,
+        "send_q":           integer,
+        "local_address":    string,
+        "local_port":       string,
+        "local_port_num":   integer,
+        "peer_address":     string,
+        "peer_port":        string,
+        "peer_port_num":    integer,
+        "interface":        string,
+        "link_layer"        string,
+        "channel":          string,
+        "path":             string,
+        "pid":              integer
+      }
+    ]
 
 Compatibility:
 
@@ -260,7 +282,8 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.3'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -273,7 +296,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -283,29 +306,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "netid":            string,
-            "state":            string,
-            "recv_q":           integer,
-            "send_q":           integer,
-            "local_address":    string,
-            "local_port":       string,
-            "local_port_num":   integer,
-            "peer_address":     string,
-            "peer_port":        string,
-            "peer_port_num":    integer,
-            "interface":        string,
-            "link_layer"        string,
-            "channel":          string,
-            "path":             string,
-            "pid":              integer
-          }
-        ]
-
-        Information from https://www.cyberciti.biz/files/ss.html used to define field names
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         int_list = ['recv_q', 'send_q', 'pid']
@@ -419,4 +420,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

@@ -15,6 +15,22 @@ Usage (module):
     import jc.parsers.timedatectl
     result = jc.parsers.timedatectl.parse(timedatectl_command_output)
 
+Schema:
+
+    {
+      "local_time":                        string,
+      "universal_time":                    string,
+      "epoch_utc":                         integer,     # timezone-aware timestamp
+      "rtc_time":                          string,
+      "time_zone":                         string,
+      "ntp_enabled":                       boolean,
+      "ntp_synchronized":                  boolean,
+      "system_clock_synchronized":         boolean,
+      "systemd-timesyncd.service_active":  boolean,
+      "rtc_in_local_tz":                   boolean,
+      "dst_active":                        boolean
+    }
+
 Compatibility:
 
     'linux'
@@ -50,7 +66,8 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.3'
     description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -64,7 +81,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -74,21 +91,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "local_time":                        string,
-          "universal_time":                    string,
-          "epoch_utc":                         integer,     # timezone-aware timestamp
-          "rtc_time":                          string,
-          "time_zone":                         string,
-          "ntp_enabled":                       boolean,
-          "ntp_synchronized":                  boolean,
-          "system_clock_synchronized":         boolean,
-          "systemd-timesyncd.service_active":  boolean,
-          "rtc_in_local_tz":                   boolean,
-          "dst_active":                        boolean
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     # boolean changes
     bool_list = ['ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
@@ -138,4 +141,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

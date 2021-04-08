@@ -13,6 +13,19 @@ Usage (module):
     import jc.parsers.mount
     result = jc.parsers.mount.parse(mount_command_output)
 
+Schema:
+
+    [
+      {
+        "filesystem":       string,
+        "mount_point":      string,
+        "type":             string,
+        "access": [
+                            string
+        ]
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -65,7 +78,8 @@ import jc.utils
 
 
 class info():
-    version = '1.5'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.6'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -78,7 +92,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -88,24 +102,13 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "filesystem":   string,
-            "mount_point":  string,
-            "type":         string,
-            "access": [
-                            string
-            ]
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     # nothing to process
     return proc_data
 
 
-def osx_parse(data):
+def _osx_parse(data):
     output = []
 
     for entry in data:
@@ -130,7 +133,7 @@ def osx_parse(data):
     return output
 
 
-def linux_parse(data):
+def _linux_parse(data):
     output = []
 
     for entry in data:
@@ -175,12 +178,12 @@ def parse(data, raw=False, quiet=False):
 
         # check for OSX output
         if ' type ' not in cleandata[0]:
-            raw_output = osx_parse(cleandata)
+            raw_output = _osx_parse(cleandata)
 
         else:
-            raw_output = linux_parse(cleandata)
+            raw_output = _linux_parse(cleandata)
 
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

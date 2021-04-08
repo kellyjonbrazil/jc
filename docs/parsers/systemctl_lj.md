@@ -15,6 +15,17 @@ Usage (module):
     import jc.parsers.systemctl_lj
     result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
 
+Schema:
+
+    [
+      {
+        "job":      integer,
+        "unit":     string,
+        "type":     string,
+        "state":    string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -66,37 +77,11 @@ Examples:
     ]
 
 
-
 ## info
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "job":      integer,
-        "unit":     string,
-        "type":     string,
-        "state":    string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

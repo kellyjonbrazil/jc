@@ -17,6 +17,16 @@ Usage (module):
     import jc.parsers.iw-scan
     result = jc.parsers.iw-scan.parse(iw-scan_command_output)
 
+Schema:
+
+    [
+      {
+        "foo":     string/integer/float,         # best guess based on value
+        "bar":     string/integer/float,
+        "baz":     string/integer/float
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -116,30 +126,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-    [
-      {
-        "foo":     string/integer/float,         # best guess based on value
-        "bar":     string/integer/float,
-        "baz":     string/integer/float
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

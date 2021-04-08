@@ -19,6 +19,44 @@ Usage (module):
     import jc.parsers.stat
     result = jc.parsers.stat.parse(stat_command_output)
 
+Schema:
+
+    [
+      {
+        "file":                     string,
+        "link_to"                   string,
+        "size":                     integer,
+        "blocks":                   integer,
+        "io_blocks":                integer,
+        "type":                     string,
+        "device":                   string,
+        "inode":                    integer,
+        "links":                    integer,
+        "access":                   string,
+        "flags":                    string,
+        "uid":                      integer,
+        "user":                     string,
+        "gid":                      integer,
+        "group":                    string,
+        "access_time":              string,    # - = null
+        "access_time_epoch":        integer,   # naive timestamp
+        "access_time_epoch_utc":    integer,   # timezone-aware timestamp
+        "modify_time":              string,    # - = null
+        "modify_time_epoch":        integer,   # naive timestamp
+        "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
+        "change_time":              string,    # - = null
+        "change_time_epoch":        integer,   # naive timestamp
+        "change_time_epoch_utc":    integer,   # timezone-aware timestamp
+        "birth_time":               string,    # - = null
+        "birth_time_epoch":         integer,   # naive timestamp
+        "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
+        "unix_device":              integer,
+        "rdev":                     integer,
+        "block_size":               integer,
+        "unix_flags":               string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -136,59 +174,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "file":                     string,
-        "link_to"                   string,
-        "size":                     integer,
-        "blocks":                   integer,
-        "io_blocks":                integer,
-        "type":                     string,
-        "device":                   string,
-        "inode":                    integer,
-        "links":                    integer,
-        "access":                   string,
-        "flags":                    string,
-        "uid":                      integer,
-        "user":                     string,
-        "gid":                      integer,
-        "group":                    string,
-        "access_time":              string,    # - = null
-        "access_time_epoch":        integer,   # naive timestamp
-        "access_time_epoch_utc":    integer,   # timezone-aware timestamp
-        "modify_time":              string,    # - = null
-        "modify_time_epoch":        integer,   # naive timestamp
-        "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
-        "change_time":              string,    # - = null
-        "change_time_epoch":        integer,   # naive timestamp
-        "change_time_epoch_utc":    integer,   # timezone-aware timestamp
-        "birth_time":               string,    # - = null
-        "birth_time_epoch":         integer,   # naive timestamp
-        "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
-        "unix_device":              integer,
-        "rdev":                     integer,
-        "block_size":               integer,
-        "unix_flags":               string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
