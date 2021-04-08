@@ -398,8 +398,8 @@ def generate_magic_command(args):
         else:
             break
 
-    # if -h found in options, then bail out
-    if 'h' in options:
+    # if -h, -a, or -v found in options, then bail out
+    if 'h' in options or 'a' in options or 'v' in options:
         return False, None
 
     # all options popped and no command found - for case like 'jc -a'
