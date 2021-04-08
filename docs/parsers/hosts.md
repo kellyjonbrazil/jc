@@ -11,6 +11,17 @@ Usage (module):
     import jc.parsers.hosts
     result = jc.parsers.hosts.parse(hosts_file_output)
 
+Schema:
+
+    [
+      {
+        "ip":           string,
+        "hostname": [
+                        string
+        ]
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -69,32 +80,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "ip":           string,
-        "hostname": [
-                        string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

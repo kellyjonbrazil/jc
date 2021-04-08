@@ -15,6 +15,57 @@ Usage (module):
     import jc.parsers.hciconfig
     result = jc.parsers.hciconfig.parse(hciconfig_command_output)
 
+Schema:
+
+    [
+      {
+        "device":               string,
+        "type":                 string,
+        "bus":                  string,
+        "bd_address":           string,
+        "acl_mtu":              integer,
+        "acl_mtu_packets":      integer,
+        "sco_mtu":              integer,
+        "sco_mtu_packets":      integer,
+        "state": [
+                                string
+        ],
+        "rx_bytes":             integer,
+        "rx_acl":               integer,
+        "rx_sco":               integer,
+        "rx_events":            integer,
+        "rx_errors":            integer,
+        "tx_bytes":             integer,
+        "tx_acl":               integer,
+        "tx_sco":               integer,
+        "tx_commands":          integer,
+        "tx_errors":            integer,
+        "features": [
+                                string
+        ],
+        "packet_type": [
+                                string
+        ],
+        "link_policy": [
+                                string
+        ],
+        "link_mode": [
+                                string
+        ],
+        "name":                 string,
+        "class":                string,
+        "service_classes": [
+                                string       # 'Unspecified' is null
+        ],
+        "device_class":         string,
+        "hci_version":          string,
+        "hci_revision":         string,
+        "lmp_version":          string,
+        "lmp_subversion":       string,
+        "manufacturer":         string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -272,72 +323,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "device":               string,
-        "type":                 string,
-        "bus":                  string,
-        "bd_address":           string,
-        "acl_mtu":              integer,
-        "acl_mtu_packets":      integer,
-        "sco_mtu":              integer,
-        "sco_mtu_packets":      integer,
-        "state": [
-                                string
-        ],
-        "rx_bytes":             integer,
-        "rx_acl":               integer,
-        "rx_sco":               integer,
-        "rx_events":            integer,
-        "rx_errors":            integer,
-        "tx_bytes":             integer,
-        "tx_acl":               integer,
-        "tx_sco":               integer,
-        "tx_commands":          integer,
-        "tx_errors":            integer,
-        "features": [
-                                string
-        ],
-        "packet_type": [
-                                string
-        ],
-        "link_policy": [
-                                string
-        ],
-        "link_mode": [
-                                string
-        ],
-        "name":                 string,
-        "class":                string,
-        "service_classes": [
-                                string       # 'Unspecified' is null
-        ],
-        "device_class":         string,
-        "hci_version":          string,
-        "hci_revision":         string,
-        "lmp_version":          string,
-        "lmp_subversion":       string,
-        "manufacturer":         string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

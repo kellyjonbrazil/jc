@@ -19,6 +19,62 @@ Usage (module):
     import jc.parsers.dig
     result = jc.parsers.dig.parse(dig_command_output)
 
+Schema:
+
+    [
+      {
+        "id":             integer,
+        "opcode":         string,
+        "status":         string,
+        "flags": [
+                          string
+        ],
+        "query_num":      integer,
+        "answer_num":     integer,
+        "authority_num":  integer,
+        "additional_num": integer,
+        "axfr": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "question": {
+          "name":         string,
+          "class":        string,
+          "type":         string
+        },
+        "answer": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "authority": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "query_time":     integer,   # in msec
+        "server":         string,
+        "when":           string,
+        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
+        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
+        "rcvd":           integer
+        "size":           string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -346,77 +402,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "id":             integer,
-        "opcode":         string,
-        "status":         string,
-        "flags": [
-                          string
-        ],
-        "query_num":      integer,
-        "answer_num":     integer,
-        "authority_num":  integer,
-        "additional_num": integer,
-        "axfr": [
-          {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
-          }
-        ],
-        "question": {
-          "name":         string,
-          "class":        string,
-          "type":         string
-        },
-        "answer": [
-          {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
-          }
-        ],
-        "authority": [
-          {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
-          }
-        ],
-        "query_time":     integer,   # in msec
-        "server":         string,
-        "when":           string,
-        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
-        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
-        "rcvd":           integer
-        "size":           string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

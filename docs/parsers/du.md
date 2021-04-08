@@ -15,6 +15,15 @@ Usage (module):
     import jc.parsers.du
     result = jc.parsers.du.parse(du_command_output)
 
+Schema:
+
+    [
+      {
+        "size":     integer,
+        "name":     string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'aix', 'freebsd'
@@ -84,30 +93,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "size":     integer,
-        "name":     string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

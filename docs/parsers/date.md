@@ -19,6 +19,30 @@ Usage (module):
     import jc.parsers.date
     result = jc.parsers.date.parse(date_command_output)
 
+Schema:
+
+    {
+      "year":               integer,
+      "month":              string,
+      "month_num":          integer,
+      "day":                integer,
+      "weekday":            string,
+      "weekday_num":        integer,
+      "hour":               integer,
+      "hour_24":            integer,
+      "minute":             integer,
+      "second":             integer,
+      "period":             string,
+      "timezone":           string,
+      "utc_offset":         string,       # null if timezone field is not UTC
+      "day_of_year":        integer,
+      "week_of_year":       integer,
+      "iso":                string,
+      "epoch":              integer,      # naive timestamp
+      "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
+      "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -53,44 +77,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-    {
-      "year":               integer,
-      "month":              string,
-      "month_num":          integer,
-      "day":                integer,
-      "weekday":            string,
-      "weekday_num":        integer,
-      "hour":               integer,
-      "hour_24":            integer,
-      "minute":             integer,
-      "second":             integer,
-      "period":             string,
-      "timezone":           string,
-      "utc_offset":         string,       # null if timezone field is not UTC
-      "day_of_year":        integer,
-      "week_of_year":       integer,
-      "iso":                string,
-      "epoch":              integer,      # naive timestamp
-      "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
-      "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

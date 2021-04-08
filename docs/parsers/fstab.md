@@ -11,6 +11,19 @@ Usage (module):
     import jc.parsers.fstab
     result = jc.parsers.fstab.parse(fstab_command_output)
 
+Schema:
+
+    [
+      {
+        "fs_spec":      string,
+        "fs_file":      string,
+        "fs_vfstype":   string,
+        "fs_mntops":    string,
+        "fs_freq":      integer,
+        "fs_passno":    integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'freebsd'
@@ -78,34 +91,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "fs_spec":      string,
-        "fs_file":      string,
-        "fs_vfstype":   string,
-        "fs_mntops":    string,
-        "fs_freq":      integer,
-        "fs_passno":    integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

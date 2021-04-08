@@ -13,6 +13,15 @@ Usage (module):
     import jc.parsers.du
     result = jc.parsers.du.parse(du_command_output)
 
+Schema:
+
+    [
+      {
+        "size":     integer,
+        "name":     string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'aix', 'freebsd'
@@ -82,7 +91,8 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.2'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.3'
     description = '`du` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -96,7 +106,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -106,14 +116,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "size":     integer,
-            "name":     string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     int_list = ['size']
     for entry in proc_data:
@@ -158,4 +161,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

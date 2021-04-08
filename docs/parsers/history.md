@@ -13,6 +13,15 @@ Usage (module):
     import jc.parsers.history
     result = jc.parsers.history.parse(history_command_output)
 
+Schema:
+
+    [
+      {
+        "line":     integer,
+        "command":  string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -54,30 +63,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "line":     integer,
-        "command":  string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

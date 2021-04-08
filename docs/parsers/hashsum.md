@@ -25,6 +25,15 @@ Usage (module):
     import jc.parsers.hashsum
     result = jc.parsers.hashsum.parse(md5sum_command_output)
 
+Schema:
+
+    [
+      {
+        "filename":     string,
+        "hash":         string,
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -65,30 +74,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "hash":         string,
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

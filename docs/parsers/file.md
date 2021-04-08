@@ -15,6 +15,15 @@ Usage (module):
     import jc.parsers.file
     result = jc.parsers.file.parse(file_command_output)
 
+Schema:
+
+    [
+      {
+        "filename":   string,
+        "type   ":    string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'aix', 'freebsd', 'darwin'
@@ -59,30 +68,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":   string,
-        "type   ":    string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

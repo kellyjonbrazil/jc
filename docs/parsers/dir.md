@@ -23,6 +23,20 @@ Usage (module):
     import jc.parsers.dir
     result = jc.parsers.dir.parse(dir_command_output)
 
+Schema:
+
+    [
+      {
+        "date":         string,
+        "time":         string,
+        "epoch":        integer,    # naive timestamp
+        "dir":          boolean,
+        "size":         integer,
+        "filename:      string,
+        "parent":       string
+      }
+    ]
+
 Compatibility:
 
     'win32'
@@ -112,35 +126,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary of Lists) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "date":         string,
-        "time":         string,
-        "epoch":        integer,    # naive timestamp
-        "dir":          boolean,
-        "size":         integer,
-        "filename:      string,
-        "parent":       string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

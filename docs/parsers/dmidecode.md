@@ -15,6 +15,23 @@ Usage (module):
     import jc.parsers.dmidecode
     result = jc.parsers.dmidecode.parse(dmidecode_command_output)
 
+Schema:
+
+    [
+      {
+        "handle":                      string,
+        "type":                        integer,
+        "bytes":                       integer,
+        "description":                 string,
+        "values": {                               (null if empty)
+          "lowercase_no_spaces_keys":  string,
+          "multiline_key_values": [
+                                       string,
+          ]
+        }
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -114,38 +131,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "handle":                      string,
-        "type":                        integer,
-        "bytes":                       integer,
-        "description":                 string,
-        "values": {                               (null if empty)
-          "lowercase_no_spaces_keys":  string,
-          "multiline_key_values": [
-                                       string,
-          ]
-        }
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

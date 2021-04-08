@@ -11,6 +11,15 @@ Usage (module):
     import jc.parsers.hash
     result = jc.parsers.hash.parse(hash_command_output)
 
+Schema:
+
+    [
+      {
+        "command":       string,
+        "hits":          integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -34,30 +43,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "command":       string,
-        "hits":          integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

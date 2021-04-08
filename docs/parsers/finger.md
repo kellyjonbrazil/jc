@@ -17,6 +17,24 @@ Usage (module):
     import jc.parsers.finger
     result = jc.parsers.finger.parse(finger_command_output)
 
+Schema:
+
+    [
+      {
+        "login":                string,
+        "name":                 string,
+        "tty":                  string,
+        "idle":                 string,     # null if empty
+        "login_time":           string,
+        "details":              string,
+        "tty_writeable":        boolean,
+        "idle_minutes":         integer,
+        "idle_hours":           integer,
+        "idle_days":            integer,
+        "total_idle_minutes":   integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', freebsd'
@@ -78,39 +96,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "login":                string,
-        "name":                 string,
-        "tty":                  string,
-        "idle":                 string,     # null if empty
-        "login_time":           string,
-        "details":              string,
-        "tty_writeable":        boolean,
-        "idle_minutes":         integer,
-        "idle_hours":           integer,
-        "idle_days":            integer,
-        "total_idle_minutes":   integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

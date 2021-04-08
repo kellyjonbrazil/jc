@@ -11,6 +11,15 @@ Usage (module):
     import jc.parsers.history
     result = jc.parsers.history.parse(history_command_output)
 
+Schema:
+
+    [
+      {
+        "line":     integer,
+        "command":  string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -51,7 +60,8 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = '`history` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -64,7 +74,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -74,14 +84,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "line":     integer,
-            "command":  string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
 
     # rebuild output for added semantic information
@@ -132,4 +135,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

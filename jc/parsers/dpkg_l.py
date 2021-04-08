@@ -17,6 +17,21 @@ Usage (module):
     import jc.parsers.dpkg
     result = jc.parsers.dpkg.parse(dpkg_command_output)
 
+Schema:
+
+    [
+      {
+        "codes":            string,
+        "name":             string,
+        "version":          string,
+        "architecture":     string,
+        "description":      string,
+        "desired":          string,
+        "status":           string,
+        "error":            string
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -119,7 +134,8 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`dpkg -l` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,7 +149,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -143,20 +159,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "codes":            string,
-            "name":             string,
-            "version":          string,
-            "architecture":     string,
-            "description":      string,
-            "desired":          string,
-            "status":           string,
-            "error":            string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema:
     """
     for entry in proc_data:
         if 'codes' in entry:
@@ -245,4 +248,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

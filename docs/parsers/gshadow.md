@@ -11,6 +11,21 @@ Usage (module):
     import jc.parsers.gshadow
     result = jc.parsers.gshadow.parse(gshadow_file_output)
 
+Schema:
+
+    [
+      {
+        "group_name":       string,
+        "password":         string,
+        "administrators": [
+                            string
+        ],
+        "members": [
+                            string
+        ]
+      }
+    ]
+
 Compatibility:
 
     'linux', 'aix', 'freebsd'
@@ -68,36 +83,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "group_name":       string,
-        "password":         string,
-        "administrators": [
-                            string
-        ],
-        "members": [
-                            string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

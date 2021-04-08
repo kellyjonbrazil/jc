@@ -15,6 +15,20 @@ Usage (module):
     import jc.parsers.free
     result = jc.parsers.free.parse(free_command_output)
 
+Schema:
+
+    [
+      {
+        "type":         string,
+        "total":        integer,
+        "used":         integer,
+        "free":         integer,
+        "shared":       integer,
+        "buff_cache":   integer,
+        "available":    integer
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -64,35 +78,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "type":         string,
-        "total":        integer,
-        "used":         integer,
-        "free":         integer,
-        "shared":       integer,
-        "buff_cache":   integer,
-        "available":    integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

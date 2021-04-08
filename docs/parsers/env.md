@@ -17,6 +17,15 @@ Usage (module):
     import jc.parsers.env
     result = jc.parsers.env.parse(env_command_output)
 
+Schema:
+
+    [
+      {
+        "name":     string,
+        "value":    string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -66,30 +75,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":     string,
-        "value":    string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

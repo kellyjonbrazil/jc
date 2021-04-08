@@ -15,6 +15,25 @@ Usage (module):
     import jc.parsers.df
     result = jc.parsers.df.parse(df_command_output)
 
+Schema:
+
+    [
+      {
+        "filesystem":        string,
+        "size":              string,
+        "1k_blocks":         integer,
+        "512_blocks":        integer,
+        "used":              integer,
+        "available":         integer,
+        "capacity_percent":  integer,
+        "ifree":             integer,
+        "iused":             integer,
+        "use_percent":       integer,
+        "iused_percent":     integer,
+        "mounted_on":        string
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'freebsd'
@@ -84,40 +103,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filesystem":        string,
-        "size":              string,
-        "1k_blocks":         integer,
-        "512_blocks":        integer,
-        "used":              integer,
-        "available":         integer,
-        "capacity_percent":  integer,
-        "ifree":             integer,
-        "iused":             integer,
-        "use_percent":       integer,
-        "iused_percent":     integer,
-        "mounted_on":        string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

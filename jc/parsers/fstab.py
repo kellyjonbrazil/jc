@@ -9,6 +9,19 @@ Usage (module):
     import jc.parsers.fstab
     result = jc.parsers.fstab.parse(fstab_command_output)
 
+Schema:
+
+    [
+      {
+        "fs_spec":      string,
+        "fs_file":      string,
+        "fs_vfstype":   string,
+        "fs_mntops":    string,
+        "fs_freq":      integer,
+        "fs_passno":    integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'freebsd'
@@ -75,7 +88,8 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = '`/etc/fstab` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -87,7 +101,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -97,18 +111,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "fs_spec":      string,
-            "fs_file":      string,
-            "fs_vfstype":   string,
-            "fs_mntops":    string,
-            "fs_freq":      integer,
-            "fs_passno":    integer
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         int_list = ['fs_freq', 'fs_passno']
@@ -174,4 +177,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

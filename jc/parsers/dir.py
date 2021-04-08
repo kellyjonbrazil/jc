@@ -21,6 +21,20 @@ Usage (module):
     import jc.parsers.dir
     result = jc.parsers.dir.parse(dir_command_output)
 
+Schema:
+
+    [
+      {
+        "date":         string,
+        "time":         string,
+        "epoch":        integer,    # naive timestamp
+        "dir":          boolean,
+        "size":         integer,
+        "filename:      string,
+        "parent":       string
+      }
+    ]
+
 Compatibility:
 
     'win32'
@@ -110,7 +124,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
@@ -123,7 +138,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -133,19 +148,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "date":         string,
-            "time":         string,
-            "epoch":        integer,    # naive timestamp
-            "dir":          boolean,
-            "size":         integer,
-            "filename:      string,
-            "parent":       string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         # add timestamps
@@ -216,4 +219,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)
