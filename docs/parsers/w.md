@@ -19,14 +19,14 @@ Schema:
 
     [
       {
-        "user":     string,     # '-'' = null
-        "tty":      string,     # '-'' = null
-        "from":     string,     # '-'' = null
-        "login_at": string,     # '-'' = null
-        "idle":     string,     # '-'' = null
-        "jcpu":     string,
-        "pcpu":     string,
-        "what":     string      # '-'' = null
+        "user":         string,     # '-' = null
+        "tty":          string,     # '-' = null
+        "from":         string,     # '-' = null
+        "login_at":     string,     # '-' = null
+        "idle":         string,     # '-' = null
+        "jcpu":         string,
+        "pcpu":         string,
+        "what":         string      # '-' = null
       }
     ]
 
