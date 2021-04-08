@@ -320,7 +320,7 @@ def helptext():
     Options:
             -a               about jc
             -d               debug - show traceback (-dd for verbose traceback)
-            -h               help (use -h --parser_name for detailed parser info)
+            -h               help (use -h --parser_name for parser documentation)
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
@@ -334,9 +334,9 @@ def helptext():
 
             jc -p ls -al
 
-            For detailed parser information:
+            For parser documentation:
 
-            jc -h --arp
+            jc -h --ls
     '''
     return textwrap.dedent(helptext_string)
 

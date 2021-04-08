@@ -15,6 +15,45 @@ Usage (module):
     import jc.parsers.acpi
     result = jc.parsers.acpi.parse(acpi_command_output)
 
+Schema:
+
+    [
+      {
+        "type":                             string,
+        "id":                               integer,
+        "state":                            string,
+        "charge_percent":                   integer,
+        "until_charged":                    string,
+        "until_charged_hours":              integer,
+        "until_charged_minuts":             integer,
+        "until_charged_seconds":            integer,
+        "until_charged_total_seconds":      integer,
+        "charge_remaining":                 string,
+        "charge_remaining_hours":           integer,
+        "charge_remaining_minutes":         integer,
+        "charge_remaining_seconds":         integer,
+        "charge_remaining_total_seconds":   integer,
+        "design_capacity_mah":              integer,
+        "last_full_capacity":               integer,
+        "last_full_capacity_percent":       integer,
+        "on-line":                          boolean,
+        "mode":                             string,
+        "temperature":                      float,
+        "temperature_unit":                 string,
+        "trip_points": [
+          {
+            "id":                           integer,
+            "switches_to_mode":             string,
+            "temperature":                  float,
+            "temperature_unit":             string
+          }
+        ],
+        "messages": [
+                                            string
+        ]
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -194,60 +233,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "type":                             string,
-        "id":                               integer,
-        "state":                            string,
-        "charge_percent":                   integer,
-        "until_charged":                    string,
-        "until_charged_hours":              integer,
-        "until_charged_minuts":             integer,
-        "until_charged_seconds":            integer,
-        "until_charged_total_seconds":      integer,
-        "charge_remaining":                 string,
-        "charge_remaining_hours":           integer,
-        "charge_remaining_minutes":         integer,
-        "charge_remaining_seconds":         integer,
-        "charge_remaining_total_seconds":   integer,
-        "design_capacity_mah":              integer,
-        "last_full_capacity":               integer,
-        "last_full_capacity_percent":       integer,
-        "on-line":                          boolean,
-        "mode":                             string,
-        "temperature":                      float,
-        "temperature_unit":                 string,
-        "trip_points": [
-          {
-            "id":                           integer,
-            "switches_to_mode":             string,
-            "temperature":                  float,
-            "temperature_unit":             string
-          }
-        ],
-        "messages": [
-                                            string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

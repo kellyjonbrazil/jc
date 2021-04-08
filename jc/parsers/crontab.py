@@ -15,6 +15,37 @@ Usage (module):
     import jc.parsers.crontab
     result = jc.parsers.crontab.parse(crontab_output)
 
+Schema:
+
+    {
+      "variables": [
+        "name":               string,
+        "value":              string
+      ],
+      "schedule": [
+        {
+          "occurrence"        string,
+          "minute": [
+                              string
+          ],
+          "hour": [
+                              string
+          ],
+          "day_of_month": [
+                              string
+          ],
+          "month": [
+                              string
+          ],
+          "day_of_week": [
+                              string
+          ],
+          "occurrence":       string,
+          "command":          string
+        }
+      ]
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'aix', 'freebsd'
@@ -143,7 +174,8 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.4'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.5'
     description = '`crontab` command and file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -157,7 +189,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -167,37 +199,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "variables": [
-            "name":               string,
-            "value":              string
-          ],
-          "schedule": [
-            {
-              "occurrence"        string,
-              "minute": [
-                                  string
-              ],
-              "hour": [
-                                  string
-              ],
-              "day_of_month": [
-                                  string
-              ],
-              "month": [
-                                  string
-              ],
-              "day_of_week": [
-                                  string
-              ],
-              "occurrence":       string,
-              "command":          string
-            }
-          ]
-        }
-
+        Dictionary. Structured data to conform to the schema.
     """
     # put itmes in lists
     try:
@@ -280,4 +282,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

@@ -17,6 +17,26 @@ Usage (module):
     import jc.parsers.airport
     result = jc.parsers.airport.parse(airport_command_output)
 
+Schema:
+
+    {
+      "agrctlrssi":        integer,
+      "agrextrssi":        integer,
+      "agrctlnoise":       integer,
+      "agrextnoise":       integer,
+      "state":             string,
+      "op_mode":           string,
+      "lasttxrate":        integer,
+      "maxrate":           integer,
+      "lastassocstatus":   integer,
+      "802_11_auth":       string,
+      "link_auth":         string,
+      "bssid":             string,
+      "ssid":              string,
+      "mcs":               integer,
+      "channel":           string
+    }
+
 Compatibility:
 
     'darwin'
@@ -66,41 +86,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "agrctlrssi":        integer,
-      "agrextrssi":        integer,
-      "agrctlnoise":       integer,
-      "agrextnoise":       integer,
-      "state":             string,
-      "op_mode":           string,
-      "lasttxrate":        integer,
-      "maxrate":           integer,
-      "lastassocstatus":   integer,
-      "802_11_auth":       string,
-      "link_auth":         string,
-      "bssid":             string,
-      "ssid":              string,
-      "mcs":               integer,
-      "channel":           string
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

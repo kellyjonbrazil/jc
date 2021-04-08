@@ -15,6 +15,42 @@ Usage (module):
     import jc.parsers.blkid
     result = jc.parsers.blkid.parse(blkid_command_output)
 
+Schema:
+
+    [
+      {
+        "device":                            string,
+        "uuid":                              string,
+        "type":                              string,
+        "usage":                             string,
+        "part_entry_scheme":                 string,
+        "part_entry_type":                   string,
+        "part_entry_flags":                  string,
+        "part_entry_number":                 integer,
+        "part_entry_offset":                 integer,
+        "part_entry_size":                   integer,
+        "part_entry_disk":                   string,
+        "id_fs_uuid":                        string,
+        "id_fs_uuid_enc":                    string,
+        "id_fs_version":                     string,
+        "id_fs_type":                        string,
+        "id_fs_usage":                       string,
+        "id_part_entry_scheme":              string,
+        "id_part_entry_type":                string,
+        "id_part_entry_flags":               string,
+        "id_part_entry_number":              integer,
+        "id_part_entry_offset":              integer,
+        "id_part_entry_size":                integer,
+        "id_iolimit_minimum_io_size":        integer,
+        "id_iolimit_physical_sector_size":   integer,
+        "id_iolimit_logical_sector_size":    integer,
+        "id_part_entry_disk":                string,
+        "minimum_io_size":                   integer,
+        "physical_sector_size":              integer,
+        "logical_sector_size":               integer
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -90,57 +126,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "device":                            string,
-        "uuid":                              string,
-        "type":                              string,
-        "usage":                             string,
-        "part_entry_scheme":                 string,
-        "part_entry_type":                   string,
-        "part_entry_flags":                  string,
-        "part_entry_number":                 integer,
-        "part_entry_offset":                 integer,
-        "part_entry_size":                   integer,
-        "part_entry_disk":                   string,
-        "id_fs_uuid":                        string,
-        "id_fs_uuid_enc":                    string,
-        "id_fs_version":                     string,
-        "id_fs_type":                        string,
-        "id_fs_usage":                       string,
-        "id_part_entry_scheme":              string,
-        "id_part_entry_type":                string,
-        "id_part_entry_flags":               string,
-        "id_part_entry_number":              integer,
-        "id_part_entry_offset":              integer,
-        "id_part_entry_size":                integer,
-        "id_iolimit_minimum_io_size":        integer,
-        "id_iolimit_physical_sector_size":   integer,
-        "id_iolimit_logical_sector_size":    integer,
-        "id_part_entry_disk":                string,
-        "minimum_io_size":                   integer,
-        "physical_sector_size":              integer,
-        "logical_sector_size":               integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

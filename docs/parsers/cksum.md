@@ -19,6 +19,16 @@ Usage (module):
     import jc.parsers.cksum
     result = jc.parsers.cksum.parse(cksum_command_output)
 
+Schema:
+
+    [
+      {
+        "filename":     string,
+        "checksum":     integer,
+        "blocks":       integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
@@ -50,31 +60,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "checksum":     integer,
-        "blocks":       integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
