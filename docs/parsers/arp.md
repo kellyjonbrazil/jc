@@ -17,6 +17,21 @@ Usage (module):
     import jc.parsers.arp
     result = jc.parsers.arp.parse(arp_command_output)
 
+Schema:
+
+    [
+      {
+        "name":         string,
+        "address":      string,
+        "hwtype":       string,
+        "hwaddress":    string,
+        "flags_mask":   string,
+        "iface":        string,
+        "permanent":    boolean,
+        "expires":      integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'aix', 'freebsd', 'darwin'
@@ -108,36 +123,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":       string,
-        "address":    string,
-        "hwtype":     string,
-        "hwaddress":  string,
-        "flags_mask": string,
-        "iface":      string,
-        "permanent":  boolean,
-        "expires":    integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python

@@ -15,6 +15,21 @@ Usage (module):
     import jc.parsers.arp
     result = jc.parsers.arp.parse(arp_command_output)
 
+Schema:
+
+    [
+      {
+        "name":         string,
+        "address":      string,
+        "hwtype":       string,
+        "hwaddress":    string,
+        "flags_mask":   string,
+        "iface":        string,
+        "permanent":    boolean,
+        "expires":      integer
+      }
+    ]
+
 Compatibility:
 
     'linux', 'aix', 'freebsd', 'darwin'
@@ -106,7 +121,8 @@ import jc.parsers.universal
 
 
 class info():
-    version = '1.6'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.7'
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -119,7 +135,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -129,20 +145,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "name":       string,
-            "address":    string,
-            "hwtype":     string,
-            "hwaddress":  string,
-            "flags_mask": string,
-            "iface":      string,
-            "permanent":  boolean,
-            "expires":    integer
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema:
     """
 
     # in BSD style, change name to null if it is a question mark
@@ -212,7 +215,7 @@ def parse(data, raw=False, quiet=False):
             if raw:
                 return raw_output
             else:
-                return process(raw_output)
+                return _process(raw_output)
 
         # detect if linux style was used
         elif cleandata[0].startswith('Address'):
@@ -239,4 +242,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)
