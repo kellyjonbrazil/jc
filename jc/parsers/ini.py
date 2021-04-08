@@ -13,6 +13,19 @@ Usage (module):
     import jc.parsers.ini
     result = jc.parsers.ini.parse(ini_file_output)
 
+Schema:
+
+    ini or key/value document converted to a dictionary - see configparser standard
+          library documentation for more details.
+
+    Note: Values starting and ending with quotation marks will have the marks removed.
+          If you would like to keep the quotation marks, use the -r or raw=True argument.
+
+    {
+      "key1":       string,
+      "key2":       string
+    }
+
 Compatibility:
 
     'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
@@ -56,7 +69,8 @@ import configparser
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -69,7 +83,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -79,15 +93,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary representing an ini or simple key/value pair document:
-
-        {
-          ini or key/value document converted to a dictionary - see configparser standard
-          library documentation for more details.
-
-          Note: Values starting and ending with quotation marks will have the marks removed.
-                If you would like to keep the quotation marks, use the -r or raw=True argument.
-        }
+        Dictionary representing an ini or simple key/value pair document.
     """
     # remove quotation marks from beginning and end of values
     for heading in proc_data:
@@ -145,4 +151,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

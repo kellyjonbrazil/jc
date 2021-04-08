@@ -15,6 +15,16 @@ Usage (module):
     import jc.parsers.iw-scan
     result = jc.parsers.iw-scan.parse(iw-scan_command_output)
 
+Schema:
+
+    [
+      {
+        "foo":     string/integer/float,         # best guess based on value
+        "bar":     string/integer/float,
+        "baz":     string/integer/float
+      }
+    ]
+
 Compatibility:
 
     'linux'
@@ -114,7 +124,8 @@ import jc.utils
 
 
 class info():
-    version = '0.5'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '0.6'
     description = '`iw dev [device] scan` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,7 +139,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -138,14 +149,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-        [
-          {
-            "foo":     string/integer/float,         # best guess based on value
-            "bar":     string/integer/float,
-            "baz":     string/integer/float
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
 
     # convert ints and floats for top-level keys
@@ -174,7 +178,7 @@ def process(proc_data):
     return proc_data
 
 
-def post_parse(data):
+def _post_parse(data):
     # remove empty items
     cleandata = []
     for ssid in data:
@@ -276,7 +280,7 @@ def post_parse(data):
             item['vht_tx_highest_supported_mbps'] = item['vht_tx_highest_supported'].replace(' Mbps', '')
             del item['vht_tx_highest_supported']
 
-    return process(cleandata)
+    return _process(cleandata)
 
 
 def parse(data, raw=False, quiet=False):
@@ -331,4 +335,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return post_parse(raw_output)
+        return _post_parse(raw_output)
