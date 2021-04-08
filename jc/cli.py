@@ -320,7 +320,7 @@ def helptext():
     Options:
             -a               about jc
             -d               debug - show traceback (-dd for verbose traceback)
-            -h               help
+            -h               help (use -h --parser_name for detailed parser info)
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
@@ -333,6 +333,10 @@ def helptext():
             or using the magic syntax:
 
             jc -p ls -al
+
+            For detailed parser information:
+
+            jc -h --arp
     '''
     return textwrap.dedent(helptext_string)
 
@@ -394,6 +398,10 @@ def generate_magic_command(args):
         else:
             break
 
+    # if -h found in options, then bail out
+    if 'h' in options:
+        return False, None
+
     # all options popped and no command found - for case like 'jc -a'
     if len(args_given) == 0:
         return False, None
@@ -447,10 +455,10 @@ def main():
     except AttributeError:
         pass
 
-    jc_colors = os.getenv('JC_COLORS')
-
     # try magic syntax first: e.g. jc -p ls -al
     magic()
+
+    jc_colors = os.getenv('JC_COLORS')
 
     options = []
 
@@ -477,6 +485,18 @@ def main():
         sys.exit(0)
 
     if help_me:
+        # if no parser specified, print general help. If a parser is specified - e.g.:
+        # jc -h arp
+        # then print the parser-specific help page (doc string)
+        for arg in sys.argv:
+            parser_name = parser_shortname(arg)
+
+            if parser_name in parsers:
+                # load parser module just in time so we don't need to load all modules
+                parser = parser_module(arg)
+                print(parser.__doc__)
+                sys.exit(0)
+
         print(helptext())
         sys.exit(0)
 
