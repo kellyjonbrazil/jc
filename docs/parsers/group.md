@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.group
 jc - JSON CLI output utility `/etc/group` file parser
@@ -11,9 +12,18 @@ Usage (module):
     import jc.parsers.group
     result = jc.parsers.group.parse(group_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    [
+      {
+        "group_name":    string,
+        "password":      string,
+        "gid":           integer,
+        "members": [
+                         string
+        ]
+      }
+    ]
 
 Examples:
 
@@ -102,34 +112,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "group_name":    string,
-        "password":      string,
-        "gid":           integer,
-        "members": [
-                         string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -148,3 +131,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

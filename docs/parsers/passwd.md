@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.passwd
 jc - JSON CLI output utility `/etc/passwd` file Parser
@@ -11,9 +12,19 @@ Usage (module):
     import jc.parsers.passwd
     result = jc.parsers.passwd.parse(passwd_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    [
+      {
+        "username":     string,
+        "password":     string,
+        "uid":          integer,
+        "gid":          integer,
+        "comment":      string,
+        "home":         string,
+        "shell":        string
+      }
+    ]
 
 Examples:
 
@@ -86,35 +97,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "username":  string,
-        "password":  string,
-        "uid":       integer,
-        "gid":       integer,
-        "comment":   string,
-        "home":      string,
-        "shell":     string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -133,3 +116,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

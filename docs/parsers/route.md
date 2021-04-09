@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.route
 jc - JSON CLI output utility `route` command output parser
@@ -15,9 +16,26 @@ Usage (module):
     import jc.parsers.route
     result = jc.parsers.route.parse(route_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "destination":     string,
+        "gateway":         string,
+        "genmask":         string,
+        "flags":           string,
+        "flags_pretty": [
+                           string,
+        ]
+        "metric":          integer,
+        "ref":             integer,
+        "use":             integer,
+        "mss":             integer,
+        "window":          integer,
+        "irtt":            integer,
+        "iface":           string
+      }
+    ]
 
 Examples:
 
@@ -95,42 +113,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "destination":     string,
-        "gateway":         string,
-        "genmask":         string,
-        "flags":           string,
-        "flags_pretty": [
-                           string,
-        ]
-        "metric":          integer,
-        "ref":             integer,
-        "use":             integer,
-        "mss":             integer,
-        "window":          integer,
-        "irtt":            integer,
-        "iface":           string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -149,3 +132,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

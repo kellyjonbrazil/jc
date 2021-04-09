@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.wc
 jc - JSON CLI output utility `wc` command output parser
@@ -15,9 +16,16 @@ Usage (module):
     import jc.parsers.wc
     result = jc.parsers.wc.parse(wc_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "filename":     string,
+        "lines":        integer,
+        "words":        integer,
+        "characters":   integer
+      }
+    ]
 
 Examples:
 
@@ -49,32 +57,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "lines":        integer,
-        "words":        integer,
-        "characters":   integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -93,3 +76,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

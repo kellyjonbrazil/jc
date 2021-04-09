@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.cksum
 jc - JSON CLI output utility `cksum` command output parser
@@ -19,9 +20,15 @@ Usage (module):
     import jc.parsers.cksum
     result = jc.parsers.cksum.parse(cksum_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "filename":     string,
+        "checksum":     integer,
+        "blocks":       integer
+      }
+    ]
 
 Examples:
 
@@ -50,31 +57,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "checksum":     integer,
-        "blocks":       integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -93,3 +76,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

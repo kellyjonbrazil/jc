@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.time
 jc - JSON CLI output utility `/usr/bin/time` command output parser
@@ -17,9 +18,47 @@ Usage (module):
     import jc.parsers.time
     result = jc.parsers.time.parse(time_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage
+            https://man7.org/linux/man-pages/man1/time.1.html
+
+    {
+      "real_time":                          float,
+      "user_time":                          float,
+      "system_time":                        float,
+      "elapsed_time":                       string,
+      "elapsed_time_hours":                 integer,
+      "elapsed_time_minutes":               integer,
+      "elapsed_time_seconds":               integer,
+      "elapsed_time_centiseconds":          integer,
+      "elapsed_time_total_seconds":         float,
+      "cpu_percent":                        integer,   # null if ?
+      "average_shared_text_size":           integer,
+      "average_unshared_data_size":         integer,
+      "average_unshared_stack_size":        integer,
+      "average_shared_memory_size":         integer,
+      "maximum_resident_set_size":          integer,
+      "block_input_operations":             integer,   # aka File system inputs
+      "block_output_operations":            integer,   # aka File system outputs
+      "major_pagefaults":                   integer,
+      "minor_pagefaults":                   integer,
+      "swaps":                              integer,
+      "page_reclaims":                      integer,
+      "page_faults":                        integer,
+      "messages_sent":                      integer,
+      "messages_received":                  integer,
+      "signals_received":                   integer,
+      "voluntary_context_switches":         integer,
+      "involuntary_context_switches":       integer
+      "command_being_timed":                string,
+      "average_stack_size":                 integer,
+      "average_total_size":                 integer,
+      "average_resident_set_size":          integer,
+      "signals_delivered":                  integer,
+      "page_size":                          integer,
+      "exit_status":                        integer
+    }
 
 Examples:
 
@@ -87,63 +126,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage
-            https://man7.org/linux/man-pages/man1/time.1.html
-
-    {
-      "real_time":                          float,
-      "user_time":                          float,
-      "system_time":                        float,
-      "elapsed_time":                       string,
-      "elapsed_time_hours":                 integer,
-      "elapsed_time_minutes":               integer,
-      "elapsed_time_seconds":               integer,
-      "elapsed_time_centiseconds":          integer,
-      "elapsed_time_total_seconds":         float,
-      "cpu_percent":                        integer,   # null if ?
-      "average_shared_text_size":           integer,
-      "average_unshared_data_size":         integer,
-      "average_unshared_stack_size":        integer,
-      "average_shared_memory_size":         integer,
-      "maximum_resident_set_size":          integer,
-      "block_input_operations":             integer,   # aka File system inputs
-      "block_output_operations":            integer,   # aka File system outputs
-      "major_pagefaults":                   integer,
-      "minor_pagefaults":                   integer,
-      "swaps":                              integer,
-      "page_reclaims":                      integer,
-      "page_faults":                        integer,
-      "messages_sent":                      integer,
-      "messages_received":                  integer,
-      "signals_received":                   integer,
-      "voluntary_context_switches":         integer,
-      "involuntary_context_switches":       integer
-      "command_being_timed":                string,
-      "average_stack_size":                 integer,
-      "average_total_size":                 integer,
-      "average_resident_set_size":          integer,
-      "signals_delivered":                  integer,
-      "page_size":                          integer,
-      "exit_status":                        integer
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -162,3 +145,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

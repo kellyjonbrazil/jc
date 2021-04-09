@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.systemctl_lj
 jc - JSON CLI output utility `systemctl list-jobs` command output parser
@@ -15,9 +16,16 @@ Usage (module):
     import jc.parsers.systemctl_lj
     result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "job":      integer,
+        "unit":     string,
+        "type":     string,
+        "state":    string
+      }
+    ]
 
 Examples:
 
@@ -66,37 +74,11 @@ Examples:
     ]
 
 
-
 ## info
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "job":      integer,
-        "unit":     string,
-        "type":     string,
-        "state":    string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -115,3 +97,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

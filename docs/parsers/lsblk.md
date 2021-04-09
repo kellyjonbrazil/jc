@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.lsblk
 jc - JSON CLI output utility `lsblk` command output parser
@@ -15,9 +16,52 @@ Usage (module):
     import jc.parsers.lsblk
     result = jc.parsers.lsblk.parse(lsblk_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "name":         string,
+        "maj_min":      string,
+        "rm":           boolean,
+        "size":         string,
+        "ro":           boolean,
+        "type":         string,
+        "mountpoint":   string,
+        "kname":        string,
+        "fstype":       string,
+        "label":        string,
+        "uuid":         string,
+        "partlabel":    string,
+        "partuuid":     string,
+        "ra":           integer,
+        "model":        string,
+        "serial":       string,
+        "state":        string,
+        "owner":        string,
+        "group":        string,
+        "mode":         string,
+        "alignment":    integer,
+        "min_io":       integer,
+        "opt_io":       integer,
+        "phy_sec":      integer,
+        "log_sec":      integer,
+        "rota":         boolean,
+        "sched":        string,
+        "rq_size":      integer,
+        "disc_aln":     integer,
+        "disc_gran":    string,
+        "disc_max":     string,
+        "disc_zero":    boolean,
+        "wsame":        string,
+        "wwn":          string,
+        "rand":         boolean,
+        "pkname":       string,
+        "hctl":         string,
+        "tran":         string,
+        "rev":          string,
+        "vendor":       string
+      }
+    ]
 
 Examples:
 
@@ -227,68 +271,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":         string,
-        "maj_min":      string,
-        "rm":           boolean,
-        "size":         string,
-        "ro":           boolean,
-        "type":         string,
-        "mountpoint":   string,
-        "kname":        string,
-        "fstype":       string,
-        "label":        string,
-        "uuid":         string,
-        "partlabel":    string,
-        "partuuid":     string,
-        "ra":           integer,
-        "model":        string,
-        "serial":       string,
-        "state":        string,
-        "owner":        string,
-        "group":        string,
-        "mode":         string,
-        "alignment":    integer,
-        "min_io":       integer,
-        "opt_io":       integer,
-        "phy_sec":      integer,
-        "log_sec":      integer,
-        "rota":         boolean,
-        "sched":        string,
-        "rq_size":      integer,
-        "disc_aln":     integer,
-        "disc_gran":    string,
-        "disc_max":     string,
-        "disc_zero":    boolean,
-        "wsame":        string,
-        "wwn":          string,
-        "rand":         boolean,
-        "pkname":       string,
-        "hctl":         string,
-        "tran":         string,
-        "rev":          string,
-        "vendor":       string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -307,3 +290,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

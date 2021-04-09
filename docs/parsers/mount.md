@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.mount
 jc - JSON CLI output utility `mount` command output parser
@@ -15,9 +16,18 @@ Usage (module):
     import jc.parsers.mount
     result = jc.parsers.mount.parse(mount_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    [
+      {
+        "filesystem":       string,
+        "mount_point":      string,
+        "type":             string,
+        "access": [
+                            string
+        ]
+      }
+    ]
 
 Example:
 
@@ -68,34 +78,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filesystem":   string,
-        "mount_point":  string,
-        "type":         string,
-        "access": [
-                        string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -114,3 +97,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.uptime
 jc - JSON CLI output utility `uptime` command output parser
@@ -15,9 +16,23 @@ Usage (module):
     import jc.parsers.uptime
     result = jc.parsers.uptime.parse(uptime_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    {
+      "time":                   string,
+      "time_hour":              integer,
+      "time_minute":            integer,
+      "time_second":            integer,        # null if not displayed
+      "uptime":                 string,
+      "uptime_days":            integer,
+      "uptime_hours":           integer,
+      "uptime_minutes":         integer,
+      "uptime_total_seconds":   integer,
+      "users":                  integer,
+      "load_1m":                float,
+      "load_5m":                float,
+      "load_15m":               float
+    }
 
 Example:
 
@@ -53,39 +68,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "time":                   string,
-      "time_hour":              integer,
-      "time_minute":            integer,
-      "time_second":            integer,        # null if not displayed
-      "uptime":                 string,
-      "uptime_days":            integer,
-      "uptime_hours":           integer,
-      "uptime_minutes":         integer,
-      "uptime_total_seconds":   integer,
-      "users":                  integer,
-      "load_1m":                float,
-      "load_5m":                float,
-      "load_15m":               float
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -104,3 +87,7 @@ Returns:
 
     Dictionary. Raw or processed structured data
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.xml
 jc - JSON CLI output utility `XML` file parser
@@ -11,9 +12,15 @@ Usage (module):
     import jc.parsers.xml
     result = jc.parsers.xml.parse(xml_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    XML Document converted to a Dictionary
+    See https://github.com/martinblech/xmltodict for details
+
+    {
+      "key1":   string/object,
+      "key2":   string/object
+    }
 
 Examples:
 
@@ -66,28 +73,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary representing an XML document:
-
-    {
-      XML Document converted to a Dictionary
-      See https://github.com/martinblech/xmltodict for details
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -106,3 +92,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

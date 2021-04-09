@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.w
 jc - JSON CLI output utility `w` command output parser
@@ -15,9 +16,20 @@ Usage (module):
     import jc.parsers.w
     result = jc.parsers.w.parse(w_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "user":         string,     # '-' = null
+        "tty":          string,     # '-' = null
+        "from":         string,     # '-' = null
+        "login_at":     string,     # '-' = null
+        "idle":         string,     # '-' = null
+        "jcpu":         string,
+        "pcpu":         string,
+        "what":         string      # '-' = null
+      }
+    ]
 
 Examples:
 
@@ -94,36 +106,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "user":     string,     # '-'' = null
-        "tty":      string,     # '-'' = null
-        "from":     string,     # '-'' = null
-        "login_at": string,     # '-'' = null
-        "idle":     string,     # '-'' = null
-        "jcpu":     string,
-        "pcpu":     string,
-        "what":     string      # '-'' = null
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -142,3 +125,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

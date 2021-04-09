@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.timedatectl
 jc - JSON CLI output utility `timedatectl` command output parser
@@ -17,9 +18,21 @@ Usage (module):
     import jc.parsers.timedatectl
     result = jc.parsers.timedatectl.parse(timedatectl_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    {
+      "local_time":                        string,
+      "universal_time":                    string,
+      "epoch_utc":                         integer,     # timezone-aware timestamp
+      "rtc_time":                          string,
+      "time_zone":                         string,
+      "ntp_enabled":                       boolean,
+      "ntp_synchronized":                  boolean,
+      "system_clock_synchronized":         boolean,
+      "systemd-timesyncd.service_active":  boolean,
+      "rtc_in_local_tz":                   boolean,
+      "dst_active":                        boolean
+    }
 
 Examples:
 
@@ -53,37 +66,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "local_time":                        string,
-      "universal_time":                    string,
-      "epoch_utc":                         integer,     # timezone-aware timestamp
-      "rtc_time":                          string,
-      "time_zone":                         string,
-      "ntp_enabled":                       boolean,
-      "ntp_synchronized":                  boolean,
-      "system_clock_synchronized":         boolean,
-      "systemd-timesyncd.service_active":  boolean,
-      "rtc_in_local_tz":                   boolean,
-      "dst_active":                        boolean
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -102,3 +85,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

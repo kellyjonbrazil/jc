@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.dmidecode
 jc - JSON CLI output utility `dmidecode` command output parser
@@ -15,9 +16,22 @@ Usage (module):
     import jc.parsers.dmidecode
     result = jc.parsers.dmidecode.parse(dmidecode_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "handle":                      string,
+        "type":                        integer,
+        "bytes":                       integer,
+        "description":                 string,
+        "values": {                               (null if empty)
+          "lowercase_no_spaces_keys":  string,
+          "multiline_key_values": [
+                                       string,
+          ]
+        }
+      }
+    ]
 
 Examples:
 
@@ -114,38 +128,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "handle":                      string,
-        "type":                        integer,
-        "bytes":                       integer,
-        "description":                 string,
-        "values": {                               (null if empty)
-          "lowercase_no_spaces_keys":  string,
-          "multiline_key_values": [
-                                       string,
-          ]
-        }
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -164,3 +147,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.pip_show
 jc - JSON CLI output utility `pip-show` command output parser
@@ -15,9 +16,22 @@ Usage (module):
     import jc.parsers.pip_show
     result = jc.parsers.pip_show.parse(pip_show_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    [
+      {
+        "name":             string,
+        "version":          string,
+        "summary":          string,
+        "home_page":        string,
+        "author":           string,
+        "author_email":     string,
+        "license":          string,
+        "location":         string,
+        "requires":         string,
+        "required_by":      string
+      }
+    ]
 
 Examples:
 
@@ -54,39 +68,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":             string,
-        "version":          string,
-        "summary":          string,
-        "home_page":        string,
-        "author":           string,
-        "author_email":     string,
-        "license":          string,
-        "location":         string,
-        "requires":         string,
-        "required_by":      string
-      }
-    ]
-
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -105,3 +87,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

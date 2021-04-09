@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.fstab
 jc - JSON CLI output utility `fstab` file parser
@@ -11,9 +12,18 @@ Usage (module):
     import jc.parsers.fstab
     result = jc.parsers.fstab.parse(fstab_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'freebsd'
+    [
+      {
+        "fs_spec":      string,
+        "fs_file":      string,
+        "fs_vfstype":   string,
+        "fs_mntops":    string,
+        "fs_freq":      integer,
+        "fs_passno":    integer
+      }
+    ]
 
 Examples:
 
@@ -78,34 +88,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "fs_spec":      string,
-        "fs_file":      string,
-        "fs_vfstype":   string,
-        "fs_mntops":    string,
-        "fs_freq":      integer,
-        "fs_passno":    integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -124,3 +107,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

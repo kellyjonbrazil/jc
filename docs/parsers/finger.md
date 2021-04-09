@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.finger
 jc - JSON CLI output utility `finger` command output parser
@@ -17,9 +18,23 @@ Usage (module):
     import jc.parsers.finger
     result = jc.parsers.finger.parse(finger_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', freebsd'
+    [
+      {
+        "login":                string,
+        "name":                 string,
+        "tty":                  string,
+        "idle":                 string,     # null if empty
+        "login_time":           string,
+        "details":              string,
+        "tty_writeable":        boolean,
+        "idle_minutes":         integer,
+        "idle_hours":           integer,
+        "idle_days":            integer,
+        "total_idle_minutes":   integer
+      }
+    ]
 
 Examples:
 
@@ -78,39 +93,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "login":                string,
-        "name":                 string,
-        "tty":                  string,
-        "idle":                 string,     # null if empty
-        "login_time":           string,
-        "details":              string,
-        "tty_writeable":        boolean,
-        "idle_minutes":         integer,
-        "idle_hours":           integer,
-        "idle_days":            integer,
-        "total_idle_minutes":   integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -129,3 +112,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, freebsd
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

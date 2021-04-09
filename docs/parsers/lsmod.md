@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.lsmod
 jc - JSON CLI output utility `lsmod` command output parser
@@ -15,9 +16,18 @@ Usage (module):
     import jc.parsers.lsmod
     result = jc.parsers.lsmod.parse(lsmod_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "module":     string,
+        "size":       integer,
+        "used":       integer,
+        "by": [
+                      string
+        ]
+      }
+    ]
 
 Examples:
 
@@ -118,34 +128,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "module": string,
-        "size":   integer,
-        "used":   integer,
-        "by": [
-                  string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -164,3 +147,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

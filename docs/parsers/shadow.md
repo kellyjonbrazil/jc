@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.shadow
 jc - JSON CLI output utility `/etc/shadow` file parser
@@ -11,9 +12,20 @@ Usage (module):
     import jc.parsers.shadow
     result = jc.parsers.shadow.parse(shadow_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    [
+      {
+        "username":       string,
+        "password":       string,
+        "last_changed":   integer,
+        "minimum":        integer,
+        "maximum":        integer,
+        "warn":           integer,
+        "inactive":       integer,
+        "expire":         integer
+      }
+    ]
 
 Examples:
 
@@ -92,36 +104,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "username":       string,
-        "password":       string,
-        "last_changed":   integer,
-        "minimum":        integer,
-        "maximum":        integer,
-        "warn":           integer,
-        "inactive":       integer,
-        "expire":         integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -140,3 +123,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

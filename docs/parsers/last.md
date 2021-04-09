@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.last
 jc - JSON CLI output utility `last` and `lastb` command output parser
@@ -19,9 +20,21 @@ Usage (module):
     import jc.parsers.last
     result = jc.parsers.last.parse(last_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    [
+      {
+        "user":             string,
+        "tty":              string,
+        "hostname":         string,
+        "login":            string,
+        "logout":           string,
+        "duration":         string,
+        "login_epoch":      integer,   # (naive) available with last -F option
+        "logout_epoch":     integer,   # (naive) available with last -F option
+        "duration_seconds": integer    # available with last -F option
+      }
+    ]
 
 Examples:
 
@@ -93,37 +106,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "user":             string,
-        "tty":              string,
-        "hostname":         string,
-        "login":            string,
-        "logout":           string,
-        "duration":         string,
-        "login_epoch":      integer,   # (naive) available with last -F option
-        "logout_epoch":     integer,   # (naive) available with last -F option
-        "duration_seconds": integer    # available with last -F option
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -142,3 +125,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

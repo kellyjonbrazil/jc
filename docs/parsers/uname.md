@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.uname
 jc - JSON CLI output utility `uname -a` command output parser
@@ -17,9 +18,18 @@ Usage (module):
     import jc.parsers.uname
     result = jc.parsers.uname.parse(uname_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    {
+        "kernel_name":        string,
+        "node_name":          string,
+        "kernel_release":     string,
+        "operating_system":   string,
+        "hardware_platform":  string,
+        "processor":          string,
+        "machine":            string,
+        "kernel_version":     string
+    }
 
 Example:
 
@@ -40,34 +50,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-        "kernel_name":        string,
-        "node_name":          string,
-        "kernel_release":     string,
-        "operating_system":   string,
-        "hardware_platform":  string,
-        "processor":          string,
-        "machine":            string,
-        "kernel_version":     string
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -86,3 +69,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

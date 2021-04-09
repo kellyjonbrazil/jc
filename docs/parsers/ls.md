@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ls
 jc - JSON CLI output utility `ls` and `vdir` command output parser
@@ -26,9 +27,22 @@ Usage (module):
     import jc.parsers.ls
     result = jc.parsers.ls.parse(ls_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "filename":     string,
+        "flags":        string,
+        "links":        integer,
+        "parent":       string,
+        "owner":        string,
+        "group":        string,
+        "size":         integer,
+        "date":         string,
+        "epoch":        integer,     # naive timestamp if date field exists and can be converted
+        "epoch_utc":    integer      # timezone aware timestamp if date field is in UTC and can be converted
+      }
+    ]
 
 Examples:
 
@@ -39,12 +53,6 @@ Examples:
       },
       {
         "filename": "arch"
-      },
-      {
-        "filename": "awk"
-      },
-      {
-        "filename": "base64"
       },
       ...
     ]
@@ -70,15 +78,6 @@ Examples:
         "size": 62744,
         "date": "Aug 8 16:14"
       },
-      {
-        "filename": "arch",
-        "flags": "-rwxr-xr-x.",
-        "links": 1,
-        "owner": "root",
-        "group": "root",
-        "size": 33080,
-        "date": "Aug 19 23:25"
-      },
       ...
     ]
 
@@ -103,94 +102,15 @@ Examples:
         "size": "33080",
         "date": "Aug 19 23:25"
       },
-      {
-        "filename": "awk",
-        "link_to": "gawk",
-        "flags": "lrwxrwxrwx.",
-        "links": "1",
-        "owner": "root",
-        "group": "root",
-        "size": "4",
-        "date": "Aug 15 10:53"
-      },
-      {
-        "filename": "base64",
-        "flags": "-rwxr-xr-x.",
-        "links": "1",
-        "owner": "root",
-        "group": "root",
-        "size": "37360",
-        "date": "Aug 19 23:25"
-      },
-      {
-        "filename": "basename",
-        "flags": "-rwxr-xr-x.",
-        "links": "1",
-        "owner": "root",
-        "group": "root",
-        "size": "29032",
-        "date": "Aug 19 23:25"
-      },
-      {
-        "filename": "bash",
-        "flags": "-rwxr-xr-x.",
-        "links": "1",
-        "owner": "root",
-        "group": "root",
-        "size": "964600",
-        "date": "Aug 8 05:06"
-      },
       ...
     ]
-
-    $ ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
-    {
-      "filename": "emacs",
-      "flags": "-r-xr-xr-x",
-      "links": 1,
-      "owner": "root",
-      "group": "wheel",
-      "size": 117164432,
-      "date": "May 3 2019"
-    }
 
 
 ## info
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "filename":     string,
-        "flags":        string,
-        "links":        integer,
-        "parent":       string,
-        "owner":        string,
-        "group":        string,
-        "size":         integer,
-        "date":         string,
-        "epoch":        integer,     # naive timestamp if date field exists and can be converted
-        "epoch_utc":    integer      # timezone aware timestamp if date field is in UTC and can be converted
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -209,3 +129,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

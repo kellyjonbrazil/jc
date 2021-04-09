@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.who
 jc - JSON CLI output utility `who` command output parser
@@ -19,9 +20,22 @@ Usage (module):
     import jc.parsers.who
     result = jc.parsers.who.parse(who_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "user":            string,
+        "event":           string,
+        "writeable_tty":   string,
+        "tty":             string,
+        "time":            string,
+        "epoch":           integer,     # naive timestamp. null if time cannot be converted
+        "idle":            string,
+        "pid":             integer,
+        "from":            string,
+        "comment":         string
+      }
+    ]
 
 Examples:
 
@@ -121,38 +135,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "user":            string,
-        "event":           string,
-        "writeable_tty":   string,
-        "tty":             string,
-        "time":            string,
-        "epoch":           integer,     # naive timestamp. null if time cannot be converted
-        "idle":            string,
-        "pid":             integer,
-        "from":            string,
-        "comment":         string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -171,3 +154,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

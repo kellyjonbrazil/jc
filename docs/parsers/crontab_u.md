@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.crontab_u
 jc - JSON CLI output utility `crontab -l` command output and crontab file parser
@@ -13,9 +14,37 @@ Usage (module):
     import jc.parsers.crontab_u
     result = jc.parsers.crontab_u.parse(crontab_u_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    {
+      "variables": [
+        "name":               string,
+        "value":              string
+      ],
+      "schedule": [
+        {
+          "occurrence"        string,
+          "minute": [
+                              string
+          ],
+          "hour": [
+                              string
+          ],
+          "day_of_month": [
+                              string
+          ],
+          "month": [
+                              string
+          ],
+          "day_of_week": [
+                              string
+          ],
+          "occurrence":       string,
+          "user":             string,
+          "command":          string
+        }
+      ]
+    }
 
 Examples:
 
@@ -136,60 +165,11 @@ Examples:
     }
 
 
-
-
 ## info
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "variables": [
-        "name":               string,
-        "value":              string
-      ],
-      "schedule": [
-        {
-          "occurrence"        string,
-          "minute": [
-                              string
-          ],
-          "hour": [
-                              string
-          ],
-          "day_of_month": [
-                              string
-          ],
-          "month": [
-                              string
-          ],
-          "day_of_week": [
-                              string
-          ],
-          "occurrence":       string,
-          "user":             string,
-          "command":          string
-        }
-      ]
-    }
-
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -208,3 +188,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
