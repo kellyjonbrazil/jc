@@ -15,17 +15,17 @@ pydocmd simple utils+ > ../docs/utils.md
 parsers=()
 while read -r value
 do
-  parsers+=("$value")
+    parsers+=("$value")
 done < <(jc -a | jq -c '.parsers[]')
 
 # iterate over the bash array
 for parser in "${parsers[@]}"
 do
-    parser_name=$(echo -e "$parser" | jq -r '.name' )
-    compatible=$(echo -e "$parser" | jq -r '.compatible | join(", ")')
-    version=$(echo -e "$parser" | jq -r '.version')
-    author=$(echo -e "$parser" | jq -r '.author')
-    author_email=$(echo -e "$parser" | jq -r '.author_email')
+    parser_name=$(jq -r '.name' <<< "$parser")
+    compatible=$(jq -r '.compatible | join(", ")' <<< "$parser")
+    version=$(jq -r '.version' <<< "$parser")
+    author=$(jq -r '.author' <<< "$parser")
+    author_email=$(jq -r '.author_email' <<< "$parser")
 
     echo "Building docs for: ${parser_name}"
     echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
