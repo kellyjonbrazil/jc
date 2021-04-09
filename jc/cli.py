@@ -340,6 +340,27 @@ def helptext():
     '''
     return textwrap.dedent(helptext_string)
 
+def help_doc(options):
+    """
+    Returns the parser documentation if a parser is found in the arguments, otherwise
+    the general help text is returned.
+    """
+    for arg in options:
+        parser_name = parser_shortname(arg)
+
+        if parser_name in parsers:
+            # load parser module just in time so we don't need to load all modules
+            parser = parser_module(arg)
+            compatible = ', '.join(parser.info.compatible)
+            doc_text = f'''{parser.__doc__}
+Compatibility:  {compatible}
+
+Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})
+'''
+
+            return doc_text
+
+    return helptext()
 
 def versiontext():
     """Return the version text"""
@@ -485,19 +506,7 @@ def main():
         sys.exit(0)
 
     if help_me:
-        # if no parser specified, print general help. If a parser is specified - e.g.:
-        # jc -h arp
-        # then print the parser-specific help page (doc string)
-        for arg in sys.argv:
-            parser_name = parser_shortname(arg)
-
-            if parser_name in parsers:
-                # load parser module just in time so we don't need to load all modules
-                parser = parser_module(arg)
-                print(parser.__doc__)
-                sys.exit(0)
-
-        print(helptext())
+        print(help_doc(sys.argv))
         sys.exit(0)
 
     if version_info:
