@@ -19,7 +19,13 @@ class MyTests(unittest.TestCase):
             'jc -p -r airport -I': 'airport -I | jc --airport -pr',
             'jc -prd airport -I': 'airport -I | jc --airport -prd',
             'jc -p nonexistent command': 'nonexistent command',
-            'jc -ap': None
+            'jc -ap': None,
+            'jc -a arp -a': None,
+            'jc -v': None,
+            'jc -h': None,
+            'jc -h --arp': None,
+            'jc -h arp': None,
+            'jc -h arp -a': None
         }
 
         for command, expected_command in commands.items():
