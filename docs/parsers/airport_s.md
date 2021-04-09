@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.airport_s
 jc - JSON CLI output utility `airport -s` command output parser
@@ -146,3 +147,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  darwin
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

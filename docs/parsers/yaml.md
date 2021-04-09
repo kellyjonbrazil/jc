@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.yaml
 jc - JSON CLI output utility `YAML` file parser
@@ -109,3 +110,7 @@ Returns:
 
     List of Dictionaries representing the YAML documents.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

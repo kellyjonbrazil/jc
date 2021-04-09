@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.jobs
 jc - JSON CLI output utility `jobs` command output parser
@@ -119,3 +120,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

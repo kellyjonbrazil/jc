@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.arp
 jc - JSON CLI output utility `arp` command output parser
@@ -142,3 +143,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd, darwin
+
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

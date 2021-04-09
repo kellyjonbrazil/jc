@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.crontab
 jc - JSON CLI output utility `crontab -l` command output and crontab file parser
@@ -195,3 +196,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

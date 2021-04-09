@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.date
 jc - JSON CLI output utility `date` command output parser
@@ -96,3 +97,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 2.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.env
 jc - JSON CLI output utility `env` and `printenv` command output parser
@@ -95,3 +96,7 @@ Returns:
     Dictionary of raw structured data or
     List of Dictionaries of processed structured data
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

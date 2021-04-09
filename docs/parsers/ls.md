@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ls
 jc - JSON CLI output utility `ls` and `vdir` command output parser
@@ -195,3 +196,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

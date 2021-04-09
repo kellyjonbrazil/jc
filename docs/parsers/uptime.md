@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.uptime
 jc - JSON CLI output utility `uptime` command output parser
@@ -90,3 +91,7 @@ Returns:
 
     Dictionary. Raw or processed structured data
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

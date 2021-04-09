@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ifconfig
 jc - JSON CLI output utility `ifconfig` command output parser
@@ -211,3 +212,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd, darwin
+
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ini
 jc - JSON CLI output utility `INI` file parser
@@ -90,3 +91,7 @@ Returns:
 
     Dictionary representing the ini file
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.uname
 jc - JSON CLI output utility `uname -a` command output parser
@@ -72,3 +73,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

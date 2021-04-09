@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.lsblk
 jc - JSON CLI output utility `lsblk` command output parser
@@ -293,3 +294,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

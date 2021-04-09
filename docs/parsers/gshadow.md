@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.gshadow
 jc - JSON CLI output utility `/etc/gshadow` file parser
@@ -102,3 +103,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

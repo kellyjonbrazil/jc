@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.fstab
 jc - JSON CLI output utility `fstab` file parser
@@ -110,3 +111,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

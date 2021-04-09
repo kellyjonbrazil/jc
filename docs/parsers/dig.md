@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.dig
 jc - JSON CLI output utility `dig` command output parser
@@ -421,3 +422,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd, darwin
+
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

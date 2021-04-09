@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.group
 jc - JSON CLI output utility `/etc/group` file parser
@@ -134,3 +135,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ntpq
 jc - JSON CLI output utility `ntpq -p` command output parser
@@ -231,3 +232,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

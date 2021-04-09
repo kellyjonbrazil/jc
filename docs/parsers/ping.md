@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ping
 jc - JSON CLI output utility `ping` command output parser
@@ -170,3 +171,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

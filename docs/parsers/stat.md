@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.stat
 jc - JSON CLI output utility `stat` command output parser
@@ -193,3 +194,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

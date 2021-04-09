@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.timedatectl
 jc - JSON CLI output utility `timedatectl` command output parser
@@ -88,3 +89,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

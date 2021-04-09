@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.dpkg_l
 jc - JSON CLI output utility `dpkg -l` command output parser
@@ -155,3 +156,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.dir
 jc - JSON CLI output utility `dir` command output parser
@@ -145,3 +146,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  win32
+
+Version 1.1 by Rasheed Elsaleh (rasheed@rebelliondefense.com)

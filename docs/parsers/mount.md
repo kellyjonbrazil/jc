@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.mount
 jc - JSON CLI output utility `mount` command output parser
@@ -100,3 +101,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

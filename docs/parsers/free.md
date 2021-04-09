@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.free
 jc - JSON CLI output utility `free` command output parser
@@ -97,3 +98,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

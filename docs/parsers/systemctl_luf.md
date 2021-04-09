@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.systemctl_luf
 jc - JSON CLI output utility `systemctl list-unit-files` command output parser
@@ -71,3 +72,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

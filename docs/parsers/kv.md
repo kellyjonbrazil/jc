@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.kv
 jc - JSON CLI output utility `Key/Value` file parser
@@ -75,3 +76,7 @@ Returns:
 
     Dictionary representing the key/value file
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

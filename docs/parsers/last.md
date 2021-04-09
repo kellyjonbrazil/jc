@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.last
 jc - JSON CLI output utility `last` and `lastb` command output parser
@@ -128,3 +129,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
