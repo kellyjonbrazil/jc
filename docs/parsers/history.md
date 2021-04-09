@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.history
 jc - JSON CLI output utility `history` command output parser
@@ -13,9 +14,14 @@ Usage (module):
     import jc.parsers.history
     result = jc.parsers.history.parse(history_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "line":     integer,
+        "command":  string
+      }
+    ]
 
 Examples:
 
@@ -54,30 +60,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "line":     integer,
-        "command":  string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -97,3 +80,7 @@ Returns:
     Dictionary of raw structured data or
     List of Dictionaries of processed structured data
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

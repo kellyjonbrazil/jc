@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.du
 jc - JSON CLI output utility `du` command output parser
@@ -15,9 +16,14 @@ Usage (module):
     import jc.parsers.du
     result = jc.parsers.du.parse(du_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    [
+      {
+        "size":     integer,
+        "name":     string
+      }
+    ]
 
 Examples:
 
@@ -84,30 +90,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "size":     integer,
-        "name":     string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -126,3 +109,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

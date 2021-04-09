@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.csv
 jc - JSON CLI output utility `csv` file parser
@@ -13,9 +14,16 @@ Usage (module):
     import jc.parsers.csv
     result = jc.parsers.csv.parse(csv_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    csv file converted to a Dictionary: https://docs.python.org/3/library/csv.html
+
+    [
+      {
+        "column_name1":     string,
+        "column_name2":     string
+      }
+    ]
 
 Examples:
 
@@ -69,30 +77,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Each Dictionary represents a row in the csv file:
-
-    [
-      {
-        csv file converted to a Dictionary
-        https://docs.python.org/3/library/csv.html
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -111,3 +96,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

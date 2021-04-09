@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.tracepath
 jc - JSON CLI output utility `tracepath` command output parser
@@ -17,9 +18,24 @@ Usage (module):
     import jc.parsers.tracepath
     result = jc.parsers.tracepath.parse(tracepath_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    {
+      "pmtu":                       integer,
+      "forward_hops":               integer,
+      "return_hops":                integer,
+      "hops": [
+        {
+          "ttl":                    integer,
+          "guess":                  boolean,
+          "host":                   string,
+          "reply_ms":               float,
+          "pmtu":                   integer,
+          "asymmetric_difference":  integer,
+          "reached":                boolean
+        }
+      ]
+    }
 
 Examples:
 
@@ -114,45 +130,11 @@ Examples:
     }
 
 
-
 ## info
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "pmtu":                       integer,
-      "forward_hops":               integer,
-      "return_hops":                integer,
-      "hops": [
-        {
-          "ttl":                    integer,
-          "guess":                  boolean,
-          "host":                   string,
-          "reply_ms":               float,
-          "pmtu":                   integer,
-          "asymmetric_difference":  integer,
-          "reached":                boolean
-        }
-      ]
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -171,3 +153,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

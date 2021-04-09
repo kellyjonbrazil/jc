@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.iw_scan
 jc - JSON CLI output utility `iw dev <device> scan` command output parser
@@ -17,9 +18,15 @@ Usage (module):
     import jc.parsers.iw-scan
     result = jc.parsers.iw-scan.parse(iw-scan_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "foo":     string/integer/float,         # best guess based on value
+        "bar":     string/integer/float,
+        "baz":     string/integer/float
+      }
+    ]
 
 Examples:
 
@@ -116,30 +123,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-    [
-      {
-        "foo":     string/integer/float,         # best guess based on value
-        "bar":     string/integer/float,
-        "baz":     string/integer/float
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -158,3 +142,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 0.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

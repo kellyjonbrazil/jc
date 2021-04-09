@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.traceroute
 jc - JSON CLI output utility `traceroute` command output parser
@@ -21,9 +22,26 @@ Usage (module):
     import jc.parsers.traceroute
     result = jc.parsers.traceroute.parse(traceroute_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    {
+      "destination_ip":         string,
+      "destination_name":       string,
+      "hops": [
+        {
+          "hop":                integer,
+          "probes": [
+            {
+              "annotation":     string,
+              "asn":            integer,
+              "ip":             string,
+              "name":           string,
+              "rtt":            float
+            }
+          ]
+        }
+      ]
+    }
 
 Examples:
 
@@ -102,48 +120,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## Hop
-```python
-Hop(idx)
-```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "destination_ip":         string,
-      "destination_name":       string,
-      "hops": [
-        {
-          "hop":                integer,
-          "probes": [
-            {
-              "annotation":     string,
-              "asn":            integer,
-              "ip":             string,
-              "name":           string,
-              "rtt":            float
-            }
-          ]
-        }
-      ]
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -162,3 +139,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

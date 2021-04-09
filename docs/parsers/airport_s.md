@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.airport_s
 jc - JSON CLI output utility `airport -s` command output parser
@@ -16,10 +17,6 @@ Usage (module):
 
     import jc.parsers.airport_s
     result = jc.parsers.airport_s.parse(airport_s_command_output)
-
-Compatibility:
-
-    'darwin'
 
 Examples:
 
@@ -146,3 +143,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  darwin
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

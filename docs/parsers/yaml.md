@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.yaml
 jc - JSON CLI output utility `YAML` file parser
@@ -11,9 +12,17 @@ Usage (module):
     import jc.parsers.yaml
     result = jc.parsers.yaml.parse(yaml_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    YAML Document converted to a Dictionary
+    See https://pypi.org/project/ruamel.yaml for details
+
+    [
+      {
+        "key1":     string/int/float/boolean/null/array/object,
+        "key2":     string/int/float/boolean/null/array/object
+      }
+    ]
 
 Examples:
 
@@ -78,30 +87,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Each dictionary represents a YAML document:
-
-    [
-      {
-        YAML Document converted to a Dictionary
-        See https://pypi.org/project/ruamel.yaml for details
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -120,3 +106,7 @@ Returns:
 
     List of Dictionaries representing the YAML documents.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

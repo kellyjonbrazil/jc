@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.kv
 jc - JSON CLI output utility `Key/Value` file parser
@@ -5,7 +6,6 @@ jc - JSON CLI output utility `Key/Value` file parser
 Supports files containing simple key/value pairs. Delimiter can be `=` or `:`. Missing values are supported. Comment prefix can be `#` or `;`. Comments must be on their own line.
 
 Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
-
 
 Usage (cli):
 
@@ -16,9 +16,14 @@ Usage (module):
     import jc.parsers.kv
     result = jc.parsers.kv.parse(kv_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    key/value document converted to a dictionary - see configparser standard library documentation for more details.
+
+    {
+      "key1":       string,
+      "key2":       string
+    }
 
 Examples:
 
@@ -46,7 +51,7 @@ Examples:
 ```python
 info()
 ```
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -67,3 +72,7 @@ Returns:
 
     Dictionary representing the key/value file
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

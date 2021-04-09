@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.jobs
 jc - JSON CLI output utility `jobs` command output parser
@@ -17,9 +18,17 @@ Usage (module):
     import jc.parsers.jobs
     result = jc.parsers.jobs.parse(jobs_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "job_number":   integer,
+        "pid":          integer,
+        "history":      string,
+        "status":       string,
+        "command":      string
+      }
+    ]
 
 Example:
 
@@ -88,33 +97,7 @@ Example:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "job_number":   integer,
-        "pid":          integer,
-        "history":      string,
-        "status":       string,
-        "command":      string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -133,3 +116,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, aix, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.env
 jc - JSON CLI output utility `env` and `printenv` command output parser
@@ -17,9 +18,14 @@ Usage (module):
     import jc.parsers.env
     result = jc.parsers.env.parse(env_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    [
+      {
+        "name":     string,
+        "value":    string
+      }
+    ]
 
 Examples:
 
@@ -66,30 +72,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":     string,
-        "value":    string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -109,3 +92,7 @@ Returns:
     Dictionary of raw structured data or
     List of Dictionaries of processed structured data
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,6 +1,9 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ss
 jc - JSON CLI output utility `ss` command output parser
+
+Extended information options like -e and -p are not supported and may cause parsing irregularities.
 
 Usage (cli):
 
@@ -15,13 +18,29 @@ Usage (module):
     import jc.parsers.ss
     result = jc.parsers.ss.parse(ss_command_output)
 
-Limitations:
+Schema:
 
-    Extended information options like -e and -p are not supported and may cause parsing irregularities
+    Information from https://www.cyberciti.biz/files/ss.html used to define field names
 
-Compatibility:
-
-    'linux'
+    [
+      {
+        "netid":            string,
+        "state":            string,
+        "recv_q":           integer,
+        "send_q":           integer,
+        "local_address":    string,
+        "local_port":       string,
+        "local_port_num":   integer,
+        "peer_address":     string,
+        "peer_port":        string,
+        "peer_port_num":    integer,
+        "interface":        string,
+        "link_layer"        string,
+        "channel":          string,
+        "path":             string,
+        "pid":              integer
+      }
+    ]
 
 Examples:
 
@@ -262,45 +281,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "netid":            string,
-        "state":            string,
-        "recv_q":           integer,
-        "send_q":           integer,
-        "local_address":    string,
-        "local_port":       string,
-        "local_port_num":   integer,
-        "peer_address":     string,
-        "peer_port":        string,
-        "peer_port_num":    integer,
-        "interface":        string,
-        "link_layer"        string,
-        "channel":          string,
-        "path":             string,
-        "pid":              integer
-      }
-    ]
-
-    Information from https://www.cyberciti.biz/files/ss.html used to define field names
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -319,3 +300,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

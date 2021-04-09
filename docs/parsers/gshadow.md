@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.gshadow
 jc - JSON CLI output utility `/etc/gshadow` file parser
@@ -11,9 +12,20 @@ Usage (module):
     import jc.parsers.gshadow
     result = jc.parsers.gshadow.parse(gshadow_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'aix', 'freebsd'
+    [
+      {
+        "group_name":       string,
+        "password":         string,
+        "administrators": [
+                            string
+        ],
+        "members": [
+                            string
+        ]
+      }
+    ]
 
 Examples:
 
@@ -68,36 +80,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "group_name":       string,
-        "password":         string,
-        "administrators": [
-                            string
-        ],
-        "members": [
-                            string
-        ]
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -116,3 +99,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

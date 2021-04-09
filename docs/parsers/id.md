@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.id
 jc - JSON CLI output utility `id` command output parser
@@ -15,9 +16,34 @@ Usage (module):
     import jc.parsers.id
     result = jc.parsers.id.parse(id_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    {
+      "uid": {
+        "id":       integer,
+        "name":     string
+      },
+      "gid": {
+        "id":       integer,
+        "name":     string
+      },
+      "groups": [
+        {
+          "id":     integer,
+          "name":   string
+        },
+        {
+          "id":     integer,
+          "name":   string
+        }
+      ],
+      "context": {
+        "user":     string,
+        "role":     string,
+        "type":     string,
+        "level":    string
+      }
+    }
 
 Examples:
 
@@ -82,50 +108,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary. Structured data with the following schema:
-
-    {
-      "uid": {
-        "id":       integer,
-        "name":     string
-      },
-      "gid": {
-        "id":       integer,
-        "name":     string
-      },
-      "groups": [
-        {
-          "id":     integer,
-          "name":   string
-        },
-        {
-          "id":     integer,
-          "name":   string
-        }
-      ],
-      "context": {
-        "user":     string,
-        "role":     string,
-        "type":     string,
-        "level":    string
-      }
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -144,3 +127,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, darwin, aix, freebsd
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.arp
 jc - JSON CLI output utility `arp` command output parser
@@ -17,9 +18,20 @@ Usage (module):
     import jc.parsers.arp
     result = jc.parsers.arp.parse(arp_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'aix', 'freebsd', 'darwin'
+    [
+      {
+        "name":         string,
+        "address":      string,
+        "hwtype":       string,
+        "hwaddress":    string,
+        "flags_mask":   string,
+        "iface":        string,
+        "permanent":    boolean,
+        "expires":      integer
+      }
+    ]
 
 Examples:
 
@@ -108,36 +120,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":       string,
-        "address":    string,
-        "hwtype":     string,
-        "hwaddress":  string,
-        "flags_mask": string,
-        "iface":      string,
-        "permanent":  boolean,
-        "expires":    integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -156,3 +139,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd, darwin
+
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

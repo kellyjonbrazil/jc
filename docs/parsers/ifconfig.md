@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ifconfig
 jc - JSON CLI output utility `ifconfig` command output parser
@@ -17,9 +18,40 @@ Usage (module):
     import jc.parsers.ifconfig
     result = jc.parsers.ifconfig.parse(ifconfig_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'aix', 'freebsd', 'darwin'
+    [
+      {
+        "name":             string,
+        "flags":            integer,
+        "state": [
+                            string
+        ],
+        "mtu":              integer,
+        "ipv4_addr":        string,
+        "ipv4_mask":        string,
+        "ipv4_bcast":       string,
+        "ipv6_addr":        string,
+        "ipv6_mask":        integer,
+        "ipv6_scope":       string,
+        "mac_addr":         string,
+        "type":             string,
+        "rx_packets":       integer,
+        "rx_bytes":         integer,
+        "rx_errors":        integer,
+        "rx_dropped":       integer,
+        "rx_overruns":      integer,
+        "rx_frame":         integer,
+        "tx_packets":       integer,
+        "tx_bytes":         integer,
+        "tx_errors":        integer,
+        "tx_dropped":       integer,
+        "tx_overruns":      integer,
+        "tx_carrier":       integer,
+        "tx_collisions":    integer,
+        "metric":           integer
+      }
+    ]
 
 Examples:
 
@@ -157,62 +189,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## IfconfigParser
-```python
-IfconfigParser(console_output)
-```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "name":             string,
-        "flags":            integer,
-        "state": [
-                            string
-        ],
-        "mtu":              integer,
-        "ipv4_addr":        string,
-        "ipv4_mask":        string,
-        "ipv4_bcast":       string,
-        "ipv6_addr":        string,
-        "ipv6_mask":        integer,
-        "ipv6_scope":       string,
-        "mac_addr":         string,
-        "type":             string,
-        "rx_packets":       integer,
-        "rx_bytes":         integer,
-        "rx_errors":        integer,
-        "rx_dropped":       integer,
-        "rx_overruns":      integer,
-        "rx_frame":         integer,
-        "tx_packets":       integer,
-        "tx_bytes":         integer,
-        "tx_errors":        integer,
-        "tx_dropped":       integer,
-        "tx_overruns":      integer,
-        "tx_carrier":       integer,
-        "tx_collisions":    integer,
-        "metric":           integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -231,3 +208,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux, aix, freebsd, darwin
+
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

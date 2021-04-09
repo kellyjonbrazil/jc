@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.free
 jc - JSON CLI output utility `free` command output parser
@@ -15,9 +16,19 @@ Usage (module):
     import jc.parsers.free
     result = jc.parsers.free.parse(free_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "type":         string,
+        "total":        integer,
+        "used":         integer,
+        "free":         integer,
+        "shared":       integer,
+        "buff_cache":   integer,
+        "available":    integer
+      }
+    ]
 
 Examples:
 
@@ -64,35 +75,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "type":         string,
-        "total":        integer,
-        "used":         integer,
-        "free":         integer,
-        "shared":       integer,
-        "buff_cache":   integer,
-        "available":    integer
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -111,3 +94,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

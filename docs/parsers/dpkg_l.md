@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.dpkg_l
 jc - JSON CLI output utility `dpkg -l` command output parser
@@ -19,9 +20,20 @@ Usage (module):
     import jc.parsers.dpkg
     result = jc.parsers.dpkg.parse(dpkg_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "codes":            string,
+        "name":             string,
+        "version":          string,
+        "architecture":     string,
+        "description":      string,
+        "desired":          string,
+        "status":           string,
+        "error":            string
+      }
+    ]
 
 Examples:
 
@@ -121,36 +133,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (List of Dictionaries) raw structured data to process
-
-Returns:
-
-    List of Dictionaries. Structured data with the following schema:
-
-    [
-      {
-        "codes":            string,
-        "name":             string,
-        "version":          string,
-        "architecture":     string,
-        "description":      string,
-        "desired":          string,
-        "status":           string,
-        "error":            string
-      }
-    ]
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -169,3 +152,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+## Parser Information
+Compatibility:  linux
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

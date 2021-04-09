@@ -1,3 +1,4 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.ini
 jc - JSON CLI output utility `INI` file parser
@@ -15,9 +16,18 @@ Usage (module):
     import jc.parsers.ini
     result = jc.parsers.ini.parse(ini_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    ini or key/value document converted to a dictionary - see configparser standard
+          library documentation for more details.
+
+    Note: Values starting and ending with quotation marks will have the marks removed.
+          If you would like to keep the quotation marks, use the -r or raw=True argument.
+
+    {
+      "key1":       string,
+      "key2":       string
+    }
 
 Examples:
 
@@ -58,31 +68,7 @@ Examples:
 ```python
 info()
 ```
-
-
-## process
-```python
-process(proc_data)
-```
-
-Final processing to conform to the schema.
-
-Parameters:
-
-    proc_data:   (Dictionary) raw structured data to process
-
-Returns:
-
-    Dictionary representing an ini or simple key/value pair document:
-
-    {
-      ini or key/value document converted to a dictionary - see configparser standard
-      library documentation for more details.
-
-      Note: Values starting and ending with quotation marks will have the marks removed.
-            If you would like to keep the quotation marks, use the -r or raw=True argument.
-    }
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
@@ -101,3 +87,7 @@ Returns:
 
     Dictionary representing the ini file
 
+## Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
