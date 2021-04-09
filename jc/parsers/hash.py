@@ -18,10 +18,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Examples:
 
     $ hash | jc --hash -p

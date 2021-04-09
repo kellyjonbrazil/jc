@@ -27,10 +27,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
-
 Examples:
 
     $ env | jc --env -p

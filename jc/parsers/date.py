@@ -41,10 +41,6 @@ Schema:
       "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     $ date | jc --date -p

@@ -23,10 +23,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ systemctl list-sockets | jc --systemctl-ls -p

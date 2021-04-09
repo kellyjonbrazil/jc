@@ -25,10 +25,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
-
 Examples:
 
     $ foo | jc --foo -p

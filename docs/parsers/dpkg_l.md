@@ -35,10 +35,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ dpkg -l | jc --dpkg-l -p

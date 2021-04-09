@@ -27,10 +27,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ free | jc --free -p

@@ -31,10 +31,6 @@ Schema:
       "dst_active":                        boolean
     }
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ timedatectl | jc --timedatectl -p

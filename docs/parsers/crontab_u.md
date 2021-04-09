@@ -46,10 +46,6 @@ Schema:
       ]
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ cat /etc/crontab | jc --crontab-u -p

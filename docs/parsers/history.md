@@ -23,10 +23,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Examples:
 
     $ history | jc --history -p

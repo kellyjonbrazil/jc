@@ -31,10 +31,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Examples:
 
     $ w | jc --w -p

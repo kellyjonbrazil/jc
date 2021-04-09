@@ -33,10 +33,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'aix', 'freebsd', 'darwin'
-
 Examples:
 
     $ arp | jc --arp -p

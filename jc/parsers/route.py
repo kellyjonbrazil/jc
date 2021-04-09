@@ -34,10 +34,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ route -ee | jc --route -p

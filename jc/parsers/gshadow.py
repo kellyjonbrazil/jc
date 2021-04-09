@@ -24,10 +24,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'aix', 'freebsd'
-
 Examples:
 
     $ cat /etc/gshadow | jc --gshadow -p

@@ -30,10 +30,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Example:
 
     $ jobs -l | jc --jobs -p

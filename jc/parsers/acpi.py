@@ -52,10 +52,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ acpi -V | jc --acpi -p

@@ -22,10 +22,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'aix', 'freebsd', 'darwin'
-
 Examples:
 
     $ file * | jc --file -p

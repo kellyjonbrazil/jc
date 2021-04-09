@@ -25,10 +25,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ systemctl -a | jc --systemctl -p

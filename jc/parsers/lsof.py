@@ -30,10 +30,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ sudo lsof | jc --lsof -p

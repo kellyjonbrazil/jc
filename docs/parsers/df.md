@@ -35,10 +35,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     $ df | jc --df -p

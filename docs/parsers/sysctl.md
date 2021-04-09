@@ -26,10 +26,6 @@ Schema:
       "key3":     string/integer/float
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     $ sysctl -a | jc --sysctl -p

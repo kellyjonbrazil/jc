@@ -39,10 +39,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
       $ sudo ss -a | jc --ss -p

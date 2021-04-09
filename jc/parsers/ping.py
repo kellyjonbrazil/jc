@@ -47,10 +47,6 @@ Schema:
       ]
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     $ ping -c 3 -p ff cnn.com | jc --ping -p

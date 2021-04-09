@@ -30,10 +30,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Examples:
 
     $ cksum * | jc --cksum -p

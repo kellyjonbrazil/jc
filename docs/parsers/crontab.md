@@ -49,10 +49,6 @@ Schema:
       ]
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ crontab -l | jc --crontab -p

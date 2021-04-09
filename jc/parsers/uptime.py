@@ -31,10 +31,6 @@ Schema:
       "load_15m":               float
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Example:
 
     $ uptime | jc --uptime -p

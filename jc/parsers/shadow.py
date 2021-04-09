@@ -24,10 +24,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ sudo cat /etc/shadow | jc --shadow -p

@@ -22,10 +22,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ cat /etc/group | jc --group -p

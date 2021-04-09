@@ -82,10 +82,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ upower -i /org/freedesktop/UPower/devices/battery | jc --upower -p

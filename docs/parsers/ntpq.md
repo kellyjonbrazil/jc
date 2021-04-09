@@ -34,10 +34,6 @@ Schema:
       },
     ]
 
-Compatibility:
-
-    'linux', 'freebsd'
-
 Examples:
 
     $ ntpq -p | jc --ntpq -p

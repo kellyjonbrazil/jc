@@ -29,10 +29,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ lsmod | jc --lsmod -p

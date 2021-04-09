@@ -53,10 +53,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'aix', 'freebsd', 'darwin'
-
 Examples:
 
     $ ifconfig | jc --ifconfig -p

@@ -32,10 +32,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Examples:
 
     $ md5sum * | jc --hashsum -p

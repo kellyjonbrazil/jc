@@ -29,10 +29,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Example:
 
     $ mount | jc --mount -p

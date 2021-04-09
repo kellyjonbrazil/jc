@@ -29,10 +29,6 @@ Schema:
       "key2":       string
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
-
 Examples:
 
     $ cat example.ini

@@ -37,10 +37,6 @@ Schema:
       ]
     }
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ tracepath6 3ffe:2400:0:109::2 | jc --tracepath -p

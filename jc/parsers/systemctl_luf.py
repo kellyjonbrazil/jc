@@ -22,10 +22,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ systemctl list-unit-files | jc --systemctl-luf -p

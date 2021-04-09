@@ -50,10 +50,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ rpm -qia | jc --rpm_qi -p

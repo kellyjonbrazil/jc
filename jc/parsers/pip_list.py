@@ -23,10 +23,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
-
 Examples:
 
     $ pip list | jc --pip-list -p

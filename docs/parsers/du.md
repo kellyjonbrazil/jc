@@ -25,10 +25,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ du /usr | jc --du -p

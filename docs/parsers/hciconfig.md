@@ -67,10 +67,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ hciconfig -a | jc --hciconfig -p

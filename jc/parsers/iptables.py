@@ -38,10 +38,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ sudo iptables --line-numbers -v -L -t nat | jc --iptables -p

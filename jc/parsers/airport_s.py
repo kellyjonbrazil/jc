@@ -15,10 +15,6 @@ Usage (module):
     import jc.parsers.airport_s
     result = jc.parsers.airport_s.parse(airport_s_command_output)
 
-Compatibility:
-
-    'darwin'
-
 Examples:
 
     $ airport -s | jc --airport-s -p

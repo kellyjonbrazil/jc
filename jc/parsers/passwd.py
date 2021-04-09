@@ -23,10 +23,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ cat /etc/passwd | jc --passwd -p

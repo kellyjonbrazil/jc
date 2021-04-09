@@ -22,10 +22,6 @@ Schema:
       "key2":   string/object
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
-
 Examples:
 
     $ cat cd_catalog.xml

@@ -49,10 +49,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ blkid | jc --blkid -p

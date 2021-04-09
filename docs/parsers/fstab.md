@@ -25,10 +25,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'freebsd'
-
 Examples:
 
     $ cat /etc/fstab | jc --fstab -p

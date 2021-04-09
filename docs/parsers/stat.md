@@ -58,10 +58,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     $ stat /bin/* | jc --stat -p

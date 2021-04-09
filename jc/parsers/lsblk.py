@@ -60,10 +60,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ lsblk | jc --lsblk -p

@@ -25,10 +25,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ iw dev wlan0 scan | jc --iw-scan -p

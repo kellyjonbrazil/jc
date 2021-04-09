@@ -24,10 +24,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     $ systemctl list-jobs| jc --systemctl-lj -p

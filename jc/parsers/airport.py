@@ -35,10 +35,6 @@ Schema:
       "channel":           string
     }
 
-Compatibility:
-
-    'darwin'
-
 Examples:
 
     $ airport -I | jc --airport -p

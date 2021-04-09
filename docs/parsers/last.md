@@ -36,10 +36,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ last -F | jc --last -p

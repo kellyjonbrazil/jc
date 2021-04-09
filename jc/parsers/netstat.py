@@ -118,10 +118,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     # netstat -apee | jc --netstat -p

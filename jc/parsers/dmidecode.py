@@ -30,10 +30,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux'
-
 Examples:
 
     # dmidecode | jc --dmidecode -p

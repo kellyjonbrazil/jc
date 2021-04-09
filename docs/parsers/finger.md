@@ -36,10 +36,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', freebsd'
-
 Examples:
 
     $ finger | jc --finger -p

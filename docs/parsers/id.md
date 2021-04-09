@@ -45,10 +45,6 @@ Schema:
       }
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'aix', 'freebsd'
-
 Examples:
 
     $ id | jc --id -p

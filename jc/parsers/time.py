@@ -57,10 +57,6 @@ Schema:
       "exit_status":                        integer
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
-
 Examples:
 
     $ /usr/bin/time --verbose -o timefile.out sleep 2.5; cat timefile.out | jc --time -p

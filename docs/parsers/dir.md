@@ -38,10 +38,6 @@ Schema:
       }
     ]
 
-Compatibility:
-
-    'win32'
-
 Examples:
 
     C:> dir | jc --dir -p

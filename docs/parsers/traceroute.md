@@ -43,10 +43,6 @@ Schema:
       ]
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Examples:
 
     $ traceroute google.com | jc --traceroute -p

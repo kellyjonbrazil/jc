@@ -28,10 +28,6 @@ Schema:
         "kernel_version":     string
     }
 
-Compatibility:
-
-    'linux', 'darwin', 'freebsd'
-
 Example:
 
     $ uname -a | jc --uname -p
