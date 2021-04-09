@@ -21,7 +21,6 @@ done < <(jc -a | jq -c '.parsers[]')
 # iterate over the bash array
 for parser in "${parsers[@]}"
 do
-    # pydocmd simple jc.parsers.${parser}+ > ../docs/parsers/${parser}.md
     parser_name=$(echo -e "$parser" | jq -r '.name' )
     compatible=$(echo -e "$parser" | jq -r '.compatible | join(", ")')
     version=$(echo -e "$parser" | jq -r '.version')
