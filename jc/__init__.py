@@ -4,7 +4,7 @@
 
 This package serializes the output of many standard unix command line tools to JSON format.
 
-For documentation on each parser, see [docs/parsers](https://github.com/kellyjonbrazil/jc/tree/master/docs/parsers).
+For documentation on each parser, see the [documentation site](https://kellyjonbrazil.github.io/jc/).
 
 CLI Example:
 
