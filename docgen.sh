@@ -29,7 +29,8 @@ do
     author_email=$(echo -e "$parser" | jq -r '.author_email')
 
     echo "Building docs for: ${parser_name}"
-    pydocmd simple jc.parsers."${parser_name}"+ > ../docs/parsers/"${parser_name}".md
+    echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
+    pydocmd simple jc.parsers."${parser_name}"+ >> ../docs/parsers/"${parser_name}".md
     echo "## Parser Information" >> ../docs/parsers/"${parser_name}".md
     echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
     echo >> ../docs/parsers/"${parser_name}".md
