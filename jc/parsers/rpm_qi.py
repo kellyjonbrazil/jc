@@ -8,7 +8,7 @@ The `build_epoch_utc` calculated timestamp field is timezone-aware and is only a
 
 Usage (cli):
 
-    $ rpm -qia | jc --rpm_qi
+    $ rpm -qia | jc --rpm-qi
 
     or
 
@@ -49,7 +49,7 @@ Schema:
 
 Examples:
 
-    $ rpm -qia | jc --rpm_qi -p
+    $ rpm -qia | jc --rpm-qi -p
     [
       {
         "name": "make",
@@ -99,7 +99,7 @@ Examples:
       ...
     ]
 
-    $ rpm -qia | jc --rpm_qi -p -r
+    $ rpm -qia | jc --rpm-qi -p -r
     [
       {
         "name": "make",
