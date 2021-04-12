@@ -17,8 +17,8 @@ Usage (cli):
 
 Usage (module):
 
-    import jc.parsers.dpkg
-    result = jc.parsers.dpkg.parse(dpkg_command_output)
+    import jc.parsers.dpkg_l
+    result = jc.parsers.dpkg_l.parse(dpkg_command_output)
 
 Schema:
 
