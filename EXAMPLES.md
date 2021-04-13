@@ -2503,9 +2503,11 @@ rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
     "vendor": "CentOS",
     "url": "http://www.gnu.org/software/make/",
     "summary": "A GNU tool which simplifies the build process for users",
-    "description": "A GNU tool for controlling the generation of executables and other non-source...",
+    "description": "A GNU tool for controlling the generation of executables and other...",
     "build_epoch": 1565311645,
-    "build_epoch_utc": null
+    "build_epoch_utc": null,
+    "install_date_epoch": 1571242902,
+    "install_date_epoch_utc": null
   },
   {
     "name": "kbd-legacy",
@@ -2525,9 +2527,11 @@ rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
     "vendor": "CentOS",
     "url": "http://ftp.altlinux.org/pub/people/legion/kbd",
     "summary": "Legacy data for kbd package",
-    "description": "The kbd-legacy package contains original keymaps for kbd package. Please note...",
+    "description": "The kbd-legacy package contains original keymaps for kbd package...",
     "build_epoch": 1540939200,
-    "build_epoch_utc": null
+    "build_epoch_utc": null,
+    "install_date_epoch": 1565891588,
+    "install_date_epoch_utc": null
   }
 ]
 ```
