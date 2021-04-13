@@ -4,6 +4,7 @@ jc changelog
 - New feature to show parser documentation interactively with -h --parser_name
   for example: $ jc -h --arp
 - Add man page to pypi package for easier packaging in homebrew
+- Update rpm-qi parser to add two calculated timestamp fields: install_date_epoch and install_date_epoch_utc
 - Clean up documentation and autogenerate the Parser Information section from metadata
 
 20210407 v1.15.0
@@ -11,7 +12,7 @@ jc changelog
 - Add upower command parser tested on linux
 - Add /usr/bin/time command parser tested on linux and macOS
 - Add dpkg -l command parser tested on linux
-- Add rpm -qai command parser tested on linux
+- Add rpm -qi command parser tested on linux
 - Add finger command parser tested on linux and macOS
 - Add dir command parser tested on Windows 10
 - Update date parser: complete rewrite (v2.0) providing many enhancements:
