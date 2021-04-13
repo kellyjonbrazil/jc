@@ -13,9 +13,34 @@ Usage (module):
     import jc.parsers.id
     result = jc.parsers.id.parse(id_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'aix', 'freebsd'
+    {
+      "uid": {
+        "id":       integer,
+        "name":     string
+      },
+      "gid": {
+        "id":       integer,
+        "name":     string
+      },
+      "groups": [
+        {
+          "id":     integer,
+          "name":   string
+        },
+        {
+          "id":     integer,
+          "name":   string
+        }
+      ],
+      "context": {
+        "user":     string,
+        "role":     string,
+        "type":     string,
+        "level":    string
+      }
+    }
 
 Examples:
 
@@ -79,7 +104,8 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.2'
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -93,7 +119,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -103,34 +129,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "uid": {
-            "id":       integer,
-            "name":     string
-          },
-          "gid": {
-            "id":       integer,
-            "name":     string
-          },
-          "groups": [
-            {
-              "id":     integer,
-              "name":   string
-            },
-            {
-              "id":     integer,
-              "name":   string
-            }
-          ],
-          "context": {
-            "user":     string,
-            "role":     string,
-            "type":     string,
-            "level":    string
-          }
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     if 'uid' in proc_data:
         if 'id' in proc_data['uid']:
@@ -221,4 +220,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

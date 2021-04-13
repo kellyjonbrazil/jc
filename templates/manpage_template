@@ -40,7 +40,7 @@ debug - show traceback (\fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP
-help
+help - use `-h --parser_name` for parser documentation
 .TP
 .B
 \fB-m\fP
@@ -104,6 +104,12 @@ or using the magic syntax:
 
 
 jc \fB-p\fP ls \fB-al\fP
+
+
+For parser documentation:
+
+
+jc \fB-h\fP \fB--ls\fP
 
 .SH AUTHOR
 {{ jc.author }} ({{ jc.author_email }})

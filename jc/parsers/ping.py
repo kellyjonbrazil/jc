@@ -17,9 +17,35 @@ Usage (module):
     import jc.parsers.ping
     result = jc.parsers.ping.parse(ping_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    {
+      "source_ip":                   string,
+      "destination_ip":              string,
+      "data_bytes":                  integer,
+      "pattern":                     string,        # (null if not set)
+      "destination":                 string,
+      "packets_transmitted":         integer,
+      "packets_received":            integer,
+      "packet_loss_percent":         float,
+      "duplicates":                  integer,
+      "round_trip_ms_min":           float,
+      "round_trip_ms_avg":           float,
+      "round_trip_ms_max":           float,
+      "round_trip_ms_stddev":        float,
+      "responses": [
+        {
+          "type":                    string,        # ('reply' or 'timeout')
+          "timestamp":               float,
+          "bytes":                   integer,
+          "response_ip":             string,
+          "icmp_seq":                integer,
+          "ttl":                     integer,
+          "time_ms":                 float,
+          "duplicate":               boolean
+        }
+      ]
+    }
 
 Examples:
 
@@ -119,7 +145,8 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.3'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -132,7 +159,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -142,35 +169,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "source_ip":                   string,
-          "destination_ip":              string,
-          "data_bytes":                  integer,
-          "pattern":                     string,        (null if not set)
-          "destination":                 string,
-          "packets_transmitted":         integer,
-          "packets_received":            integer,
-          "packet_loss_percent":         float,
-          "duplicates":                  integer,
-          "round_trip_ms_min":           float,
-          "round_trip_ms_avg":           float,
-          "round_trip_ms_max":           float,
-          "round_trip_ms_stddev":        float,
-          "responses": [
-            {
-              "type":                    string,        ('reply' or 'timeout')
-              "timestamp":               float,
-              "bytes":                   integer,
-              "response_ip":             string,
-              "icmp_seq":                integer,
-              "ttl":                     integer,
-              "time_ms":                 float,
-              "duplicate":               boolean
-            }
-          ]
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl', 'duplicates']
     float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
@@ -208,7 +207,7 @@ def process(proc_data):
     return proc_data
 
 
-def linux_parse(data):
+def _linux_parse(data):
     raw_output = {}
     ping_responses = []
     pattern = None
@@ -357,7 +356,7 @@ def linux_parse(data):
     return raw_output
 
 
-def bsd_parse(data):
+def _bsd_parse(data):
     raw_output = {}
     ping_responses = []
     pattern = None
@@ -508,11 +507,11 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         if ' time ' in data.splitlines()[-2] or ' time ' in data.splitlines()[-3]:
-            raw_output = linux_parse(data)
+            raw_output = _linux_parse(data)
         else:
-            raw_output = bsd_parse(data)
+            raw_output = _bsd_parse(data)
 
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

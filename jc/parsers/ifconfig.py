@@ -15,9 +15,40 @@ Usage (module):
     import jc.parsers.ifconfig
     result = jc.parsers.ifconfig.parse(ifconfig_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'aix', 'freebsd', 'darwin'
+    [
+      {
+        "name":             string,
+        "flags":            integer,
+        "state": [
+                            string
+        ],
+        "mtu":              integer,
+        "ipv4_addr":        string,
+        "ipv4_mask":        string,
+        "ipv4_bcast":       string,
+        "ipv6_addr":        string,
+        "ipv6_mask":        integer,
+        "ipv6_scope":       string,
+        "mac_addr":         string,
+        "type":             string,
+        "rx_packets":       integer,
+        "rx_bytes":         integer,
+        "rx_errors":        integer,
+        "rx_dropped":       integer,
+        "rx_overruns":      integer,
+        "rx_frame":         integer,
+        "tx_packets":       integer,
+        "tx_bytes":         integer,
+        "tx_errors":        integer,
+        "tx_dropped":       integer,
+        "tx_overruns":      integer,
+        "tx_carrier":       integer,
+        "tx_collisions":    integer,
+        "metric":           integer
+      }
+    ]
 
 Examples:
 
@@ -156,7 +187,8 @@ import jc.utils
 
 
 class info():
-    version = '1.8'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.9'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -170,7 +202,8 @@ class info():
 __version__ = info.version
 
 
-class IfconfigParser(object):
+class _IfconfigParser(object):
+    """ifconfig parser module written by threeheadedknight@protonmail.com"""
     # Author: threeheadedknight@protonmail.com
     # Date created: 30.06.2018 17:03
     # Python Version: 3.7
@@ -374,7 +407,7 @@ class IfconfigParser(object):
 
     @staticmethod
     def update_interface_details(interface):
-        for attr in IfconfigParser.attributes:
+        for attr in _IfconfigParser.attributes:
             if attr not in interface:
                 interface[attr] = None
         return namedtuple('Interface', interface.keys())(**interface)
@@ -384,7 +417,7 @@ class InterfaceNotFound(Exception):
     pass
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -394,40 +427,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "name":             string,
-            "flags":            integer,
-            "state": [
-                                string
-            ],
-            "mtu":              integer,
-            "ipv4_addr":        string,
-            "ipv4_mask":        string,
-            "ipv4_bcast":       string,
-            "ipv6_addr":        string,
-            "ipv6_mask":        integer,
-            "ipv6_scope":       string,
-            "mac_addr":         string,
-            "type":             string,
-            "rx_packets":       integer,
-            "rx_bytes":         integer,
-            "rx_errors":        integer,
-            "rx_dropped":       integer,
-            "rx_overruns":      integer,
-            "rx_frame":         integer,
-            "tx_packets":       integer,
-            "tx_bytes":         integer,
-            "tx_errors":        integer,
-            "tx_dropped":       integer,
-            "tx_overruns":      integer,
-            "tx_carrier":       integer,
-            "tx_collisions":    integer,
-            "metric":           integer
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         int_list = ['flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped', 'rx_overruns',
@@ -484,7 +484,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        parsed = IfconfigParser(console_output=data)
+        parsed = _IfconfigParser(console_output=data)
         interfaces = parsed.get_interfaces()
 
         # convert ifconfigparser output to a dictionary
@@ -496,4 +496,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

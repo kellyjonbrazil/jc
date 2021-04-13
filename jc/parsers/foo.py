@@ -15,9 +15,15 @@ Usage (module):
     import jc.parsers.foo
     result = jc.parsers.foo.parse(foo_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    [
+      {
+        "foo":     string,
+        "bar":     boolean,
+        "baz":     integer
+      }
+    ]
 
 Examples:
 
@@ -31,6 +37,7 @@ import jc.utils
 
 
 class info():
+    """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
     description = '`foo` command parser'
     author = 'John Doe'
@@ -45,7 +52,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -55,15 +62,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "foo":     string,
-            "bar":     boolean,
-            "baz":     integer
-          }
-        ]
+        List of Dictionaries. Structured to conform to the schema.
     """
 
     # rebuild output for added semantic information
@@ -98,4 +97,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

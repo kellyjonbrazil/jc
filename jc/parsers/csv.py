@@ -11,9 +11,16 @@ Usage (module):
     import jc.parsers.csv
     result = jc.parsers.csv.parse(csv_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    csv file converted to a Dictionary: https://docs.python.org/3/library/csv.html
+
+    [
+      {
+        "column_name1":     string,
+        "column_name2":     string
+      }
+    ]
 
 Examples:
 
@@ -67,7 +74,8 @@ import csv
 
 
 class info():
-    version = '1.1'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.2'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -80,7 +88,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -90,14 +98,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Each Dictionary represents a row in the csv file:
-
-        [
-          {
-            csv file converted to a Dictionary
-            https://docs.python.org/3/library/csv.html
-          }
-        ]
+        List of Dictionaries. Each Dictionary represents a row in the csv file.
     """
 
     # No further processing
@@ -143,4 +144,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

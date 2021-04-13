@@ -17,9 +17,29 @@ Usage (module):
     import jc.parsers.date
     result = jc.parsers.date.parse(date_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    {
+      "year":               integer,
+      "month":              string,
+      "month_num":          integer,
+      "day":                integer,
+      "weekday":            string,
+      "weekday_num":        integer,
+      "hour":               integer,
+      "hour_24":            integer,
+      "minute":             integer,
+      "second":             integer,
+      "period":             string,
+      "timezone":           string,
+      "utc_offset":         string,       # null if timezone field is not UTC
+      "day_of_year":        integer,
+      "week_of_year":       integer,
+      "iso":                string,
+      "epoch":              integer,      # naive timestamp
+      "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
+      "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
+    }
 
 Examples:
 
@@ -51,7 +71,8 @@ import jc.utils
 
 
 class info():
-    version = '2.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '2.1'
     description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -64,7 +85,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -74,28 +95,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-        {
-          "year":               integer,
-          "month":              string,
-          "month_num":          integer,
-          "day":                integer,
-          "weekday":            string,
-          "weekday_num":        integer,
-          "hour":               integer,
-          "hour_24":            integer,
-          "minute":             integer,
-          "second":             integer,
-          "period":             string,
-          "timezone":           string,
-          "utc_offset":         string,       # null if timezone field is not UTC
-          "day_of_year":        integer,
-          "week_of_year":       integer,
-          "iso":                string,
-          "epoch":              integer,      # naive timestamp
-          "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
-          "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     # no further processing
     return proc_data
@@ -188,4 +188,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

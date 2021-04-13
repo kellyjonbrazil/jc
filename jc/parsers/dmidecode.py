@@ -13,9 +13,22 @@ Usage (module):
     import jc.parsers.dmidecode
     result = jc.parsers.dmidecode.parse(dmidecode_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "handle":                      string,
+        "type":                        integer,
+        "bytes":                       integer,
+        "description":                 string,
+        "values": {                               (null if empty)
+          "lowercase_no_spaces_keys":  string,
+          "multiline_key_values": [
+                                       string,
+          ]
+        }
+      }
+    ]
 
 Examples:
 
@@ -111,7 +124,8 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.2'
     description = '`dmidecode` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -125,7 +139,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -135,22 +149,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "handle":                      string,
-            "type":                        integer,
-            "bytes":                       integer,
-            "description":                 string,
-            "values": {                               (null if empty)
-              "lowercase_no_spaces_keys":  string,
-              "multiline_key_values": [
-                                           string,
-              ]
-            }
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         int_list = ['type', 'bytes']
@@ -347,4 +346,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

@@ -5,9 +5,9 @@ jc - JSON CLI output utility `rpm -qi` command output parser
 
 Works with `rpm -qi [package]` or `rpm -qia`.
 
-The `build_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `..._epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
 
-The `build_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `..._epoch_utc` calculated timestamp fields are timezone-aware and is only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -26,27 +26,29 @@ Schema:
 
     [
       {
-        "name":             string,
-        "epoch":            integer,
-        "version":          string,
-        "release":          string,
-        "architecture":     string,
-        "install_date":     string,
-        "group":            string,
-        "size":             integer,
-        "license":          string,
-        "signature":        string,
-        "source_rpm":       string,
-        "build_date":       string,
-        "build_epoch":      integer,          # naive timestamp
-        "build_epoch_utc":  integer,          # Aware timestamp if timezone is UTC
-        "build_host":       string,
-        "relocations":      string,
-        "packager":         string,
-        "vendor":           string,
-        "url":              string,
-        "summary":          string,
-        "description":      string
+        "name":                     string,
+        "epoch":                    integer,
+        "version":                  string,
+        "release":                  string,
+        "architecture":             string,
+        "install_date":             string,
+        "install_date_epoch":       integer,          # naive timestamp
+        "install_date_epoch_utc":   integer,          # Aware timestamp if timezone is UTC
+        "group":                    string,
+        "size":                     integer,
+        "license":                  string,
+        "signature":                string,
+        "source_rpm":               string,
+        "build_date":               string,
+        "build_epoch":              integer,          # naive timestamp
+        "build_epoch_utc":          integer,          # Aware timestamp if timezone is UTC
+        "build_host":               string,
+        "relocations":              string,
+        "packager":                 string,
+        "vendor":                   string,
+        "url":                      string,
+        "summary":                  string,
+        "description":              string
       }
     ]
 
@@ -73,9 +75,11 @@ Examples:
         "vendor": "CentOS",
         "url": "http://www.gnu.org/software/make/",
         "summary": "A GNU tool which simplifies the build process for users",
-        "description": "A GNU tool for controlling the generation of executables and other non-source...",
+        "description": "A GNU tool for controlling the generation of executables and other...",
         "build_epoch": 1565311645,
-        "build_epoch_utc": null
+        "build_epoch_utc": null,
+        "install_date_epoch": 1571242902,
+        "install_date_epoch_utc": null
       },
       {
         "name": "kbd-legacy",
@@ -95,9 +99,11 @@ Examples:
         "vendor": "CentOS",
         "url": "http://ftp.altlinux.org/pub/people/legion/kbd",
         "summary": "Legacy data for kbd package",
-        "description": "The kbd-legacy package contains original keymaps for kbd package. Please note...",
+        "description": "The kbd-legacy package contains original keymaps for kbd package...",
         "build_epoch": 1540939200,
-        "build_epoch_utc": null
+        "build_epoch_utc": null,
+        "install_date_epoch": 1565891588,
+        "install_date_epoch_utc": null
       },
       ...
     ]
@@ -175,4 +181,4 @@ Returns:
 ## Parser Information
 Compatibility:  linux
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -13,9 +13,44 @@ Usage (module):
     import jc.parsers.acpi
     result = jc.parsers.acpi.parse(acpi_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "type":                             string,
+        "id":                               integer,
+        "state":                            string,
+        "charge_percent":                   integer,
+        "until_charged":                    string,
+        "until_charged_hours":              integer,
+        "until_charged_minuts":             integer,
+        "until_charged_seconds":            integer,
+        "until_charged_total_seconds":      integer,
+        "charge_remaining":                 string,
+        "charge_remaining_hours":           integer,
+        "charge_remaining_minutes":         integer,
+        "charge_remaining_seconds":         integer,
+        "charge_remaining_total_seconds":   integer,
+        "design_capacity_mah":              integer,
+        "last_full_capacity":               integer,
+        "last_full_capacity_percent":       integer,
+        "on-line":                          boolean,
+        "mode":                             string,
+        "temperature":                      float,
+        "temperature_unit":                 string,
+        "trip_points": [
+          {
+            "id":                           integer,
+            "switches_to_mode":             string,
+            "temperature":                  float,
+            "temperature_unit":             string
+          }
+        ],
+        "messages": [
+                                            string
+        ]
+      }
+    ]
 
 Examples:
 
@@ -191,7 +226,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`acpi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -204,7 +240,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -214,44 +250,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "type":                             string,
-            "id":                               integer,
-            "state":                            string,
-            "charge_percent":                   integer,
-            "until_charged":                    string,
-            "until_charged_hours":              integer,
-            "until_charged_minuts":             integer,
-            "until_charged_seconds":            integer,
-            "until_charged_total_seconds":      integer,
-            "charge_remaining":                 string,
-            "charge_remaining_hours":           integer,
-            "charge_remaining_minutes":         integer,
-            "charge_remaining_seconds":         integer,
-            "charge_remaining_total_seconds":   integer,
-            "design_capacity_mah":              integer,
-            "last_full_capacity":               integer,
-            "last_full_capacity_percent":       integer,
-            "on-line":                          boolean,
-            "mode":                             string,
-            "temperature":                      float,
-            "temperature_unit":                 string,
-            "trip_points": [
-              {
-                "id":                           integer,
-                "switches_to_mode":             string,
-                "temperature":                  float,
-                "temperature_unit":             string
-              }
-            ],
-            "messages": [
-                                                string
-            ]
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     int_list = ['id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity', 'last_full_capacity_percent']
     float_list = ['temperature']
@@ -406,4 +405,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

@@ -9,9 +9,17 @@ Usage (module):
     import jc.parsers.yaml
     result = jc.parsers.yaml.parse(yaml_file_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    YAML Document converted to a Dictionary
+    See https://pypi.org/project/ruamel.yaml for details
+
+    [
+      {
+        "key1":     string/int/float/boolean/null/array/object,
+        "key2":     string/int/float/boolean/null/array/object
+      }
+    ]
 
 Examples:
 
@@ -82,7 +90,8 @@ except Exception:
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -95,7 +104,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -105,14 +114,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Each dictionary represents a YAML document:
-
-        [
-          {
-            YAML Document converted to a Dictionary
-            See https://pypi.org/project/ruamel.yaml for details
-          }
-        ]
+        List of Dictionaries. Each dictionary represents a YAML document.
     """
 
     # No further processing
@@ -153,4 +155,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

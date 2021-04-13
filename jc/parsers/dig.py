@@ -17,9 +17,61 @@ Usage (module):
     import jc.parsers.dig
     result = jc.parsers.dig.parse(dig_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd'
+    [
+      {
+        "id":             integer,
+        "opcode":         string,
+        "status":         string,
+        "flags": [
+                          string
+        ],
+        "query_num":      integer,
+        "answer_num":     integer,
+        "authority_num":  integer,
+        "additional_num": integer,
+        "axfr": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "question": {
+          "name":         string,
+          "class":        string,
+          "type":         string
+        },
+        "answer": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "authority": [
+          {
+            "name":       string,
+            "class":      string,
+            "type":       string,
+            "ttl":        integer,
+            "data":       string
+          }
+        ],
+        "query_time":     integer,   # in msec
+        "server":         string,
+        "when":           string,
+        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
+        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
+        "rcvd":           integer
+        "size":           string
+      }
+    ]
 
 Examples:
 
@@ -343,7 +395,8 @@ import jc.utils
 
 
 class info():
-    version = '1.6'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.7'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -356,7 +409,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -366,61 +419,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "id":             integer,
-            "opcode":         string,
-            "status":         string,
-            "flags": [
-                              string
-            ],
-            "query_num":      integer,
-            "answer_num":     integer,
-            "authority_num":  integer,
-            "additional_num": integer,
-            "axfr": [
-              {
-                "name":       string,
-                "class":      string,
-                "type":       string,
-                "ttl":        integer,
-                "data":       string
-              }
-            ],
-            "question": {
-              "name":         string,
-              "class":        string,
-              "type":         string
-            },
-            "answer": [
-              {
-                "name":       string,
-                "class":      string,
-                "type":       string,
-                "ttl":        integer,
-                "data":       string
-              }
-            ],
-            "authority": [
-              {
-                "name":       string,
-                "class":      string,
-                "type":       string,
-                "ttl":        integer,
-                "data":       string
-              }
-            ],
-            "query_time":     integer,   # in msec
-            "server":         string,
-            "when":           string,
-            "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
-            "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
-            "rcvd":           integer
-            "size":           string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
 
     for entry in proc_data:
@@ -472,7 +471,7 @@ def process(proc_data):
     return proc_data
 
 
-def parse_header(header):
+def _parse_header(header):
     # ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 6140
     header = header.split()
     opcode = header[3].rstrip(',')
@@ -484,7 +483,7 @@ def parse_header(header):
             'status': status}
 
 
-def parse_flags_line(flagsline):
+def _parse_flags_line(flagsline):
     # ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
     flagsline = flagsline.split(';')
     flags = flagsline.pop(0)
@@ -508,7 +507,7 @@ def parse_flags_line(flagsline):
             'additional_num': additional_num}
 
 
-def parse_question(question):
+def _parse_question(question):
     # ;www.cnn.com.           IN  A
     question = question.split()
     dns_name = question[0].lstrip(';')
@@ -520,7 +519,7 @@ def parse_question(question):
             'type': dns_type}
 
 
-def parse_authority(authority):
+def _parse_authority(authority):
     # cnn.com.      3600    IN  NS  ns-1086.awsdns-07.org.
     authority = authority.split()
     authority_name = authority[0]
@@ -536,7 +535,7 @@ def parse_authority(authority):
             'data': authority_data}
 
 
-def parse_answer(answer):
+def _parse_answer(answer):
     # www.cnn.com.        5   IN  CNAME   turner-tls.map.fastly.net.
     answer = answer.split(maxsplit=4)
     answer_name = answer[0]
@@ -556,7 +555,7 @@ def parse_answer(answer):
             'data': answer_data}
 
 
-def parse_axfr(axfr):
+def _parse_axfr(axfr):
     # ; <<>> DiG 9.11.14-3-Debian <<>> @81.4.108.41 axfr zonetransfer.me +nocookie
     # ; (1 server found)
     # ;; global options: +cmd
@@ -617,17 +616,17 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if ';' not in line and axfr:
-                axfr_list.append(parse_axfr(line))
+                axfr_list.append(_parse_axfr(line))
                 output_entry.update({'axfr': axfr_list})
                 continue
 
             if line.startswith(';; ->>HEADER<<-'):
                 output_entry = {}
-                output_entry.update(parse_header(line))
+                output_entry.update(_parse_header(line))
                 continue
 
             if line.startswith(';; flags:'):
-                output_entry.update(parse_flags_line(line))
+                output_entry.update(_parse_flags_line(line))
                 continue
 
             if line.startswith(';; QUESTION SECTION:'):
@@ -638,7 +637,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if question:
-                output_entry['question'] = parse_question(line)
+                output_entry['question'] = _parse_question(line)
                 question = False
                 authority = False
                 answer = False
@@ -654,7 +653,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if ';' not in line and authority:
-                authority_list.append(parse_authority(line))
+                authority_list.append(_parse_authority(line))
                 output_entry.update({'authority': authority_list})
                 continue
 
@@ -667,7 +666,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if ';' not in line and answer:
-                answer_list.append(parse_answer(line))
+                answer_list.append(_parse_answer(line))
                 output_entry.update({'answer': answer_list})
                 continue
 
@@ -704,4 +703,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

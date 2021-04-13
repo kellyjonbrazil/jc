@@ -15,9 +15,47 @@ Usage (module):
     import jc.parsers.time
     result = jc.parsers.time.parse(time_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage
+            https://man7.org/linux/man-pages/man1/time.1.html
+
+    {
+      "real_time":                          float,
+      "user_time":                          float,
+      "system_time":                        float,
+      "elapsed_time":                       string,
+      "elapsed_time_hours":                 integer,
+      "elapsed_time_minutes":               integer,
+      "elapsed_time_seconds":               integer,
+      "elapsed_time_centiseconds":          integer,
+      "elapsed_time_total_seconds":         float,
+      "cpu_percent":                        integer,   # null if ?
+      "average_shared_text_size":           integer,
+      "average_unshared_data_size":         integer,
+      "average_unshared_stack_size":        integer,
+      "average_shared_memory_size":         integer,
+      "maximum_resident_set_size":          integer,
+      "block_input_operations":             integer,   # aka File system inputs
+      "block_output_operations":            integer,   # aka File system outputs
+      "major_pagefaults":                   integer,
+      "minor_pagefaults":                   integer,
+      "swaps":                              integer,
+      "page_reclaims":                      integer,
+      "page_faults":                        integer,
+      "messages_sent":                      integer,
+      "messages_received":                  integer,
+      "signals_received":                   integer,
+      "voluntary_context_switches":         integer,
+      "involuntary_context_switches":       integer
+      "command_being_timed":                string,
+      "average_stack_size":                 integer,
+      "average_total_size":                 integer,
+      "average_resident_set_size":          integer,
+      "signals_delivered":                  integer,
+      "page_size":                          integer,
+      "exit_status":                        integer
+    }
 
 Examples:
 
@@ -84,7 +122,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`/usr/bin/time` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -97,7 +136,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -107,47 +146,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage
-                https://man7.org/linux/man-pages/man1/time.1.html
-
-        {
-          "real_time":                          float,
-          "user_time":                          float,
-          "system_time":                        float,
-          "elapsed_time":                       string,
-          "elapsed_time_hours":                 integer,
-          "elapsed_time_minutes":               integer,
-          "elapsed_time_seconds":               integer,
-          "elapsed_time_centiseconds":          integer,
-          "elapsed_time_total_seconds":         float,
-          "cpu_percent":                        integer,   # null if ?
-          "average_shared_text_size":           integer,
-          "average_unshared_data_size":         integer,
-          "average_unshared_stack_size":        integer,
-          "average_shared_memory_size":         integer,
-          "maximum_resident_set_size":          integer,
-          "block_input_operations":             integer,   # aka File system inputs
-          "block_output_operations":            integer,   # aka File system outputs
-          "major_pagefaults":                   integer,
-          "minor_pagefaults":                   integer,
-          "swaps":                              integer,
-          "page_reclaims":                      integer,
-          "page_faults":                        integer,
-          "messages_sent":                      integer,
-          "messages_received":                  integer,
-          "signals_received":                   integer,
-          "voluntary_context_switches":         integer,
-          "involuntary_context_switches":       integer
-          "command_being_timed":                string,
-          "average_stack_size":                 integer,
-          "average_total_size":                 integer,
-          "average_resident_set_size":          integer,
-          "signals_delivered":                  integer,
-          "page_size":                          integer,
-          "exit_status":                        integer
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     if 'command_being_timed' in proc_data:
         proc_data['command_being_timed'] = proc_data['command_being_timed'][1:-1]
@@ -330,4 +329,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

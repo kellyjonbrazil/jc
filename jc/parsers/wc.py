@@ -13,9 +13,16 @@ Usage (module):
     import jc.parsers.wc
     result = jc.parsers.wc.parse(wc_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "filename":     string,
+        "lines":        integer,
+        "words":        integer,
+        "characters":   integer
+      }
+    ]
 
 Examples:
 
@@ -46,7 +53,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`wc` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -59,7 +67,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -69,16 +77,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "filename":     string,
-            "lines":        integer,
-            "words":        integer,
-            "characters":   integer
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
 
     for entry in proc_data:
@@ -126,4 +125,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

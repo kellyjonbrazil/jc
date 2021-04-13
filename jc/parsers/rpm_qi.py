@@ -2,13 +2,13 @@
 
 Works with `rpm -qi [package]` or `rpm -qia`.
 
-The `build_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `..._epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
 
-The `build_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `..._epoch_utc` calculated timestamp fields are timezone-aware and is only available if the timezone field is UTC.
 
 Usage (cli):
 
-    $ rpm -qia | jc --rpm_qi
+    $ rpm -qia | jc --rpm-qi
 
     or
 
@@ -19,13 +19,39 @@ Usage (module):
     import jc.parsers.rpm_qi
     result = jc.parsers.rpm_qi.parse(rpm_qi_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "name":                     string,
+        "epoch":                    integer,
+        "version":                  string,
+        "release":                  string,
+        "architecture":             string,
+        "install_date":             string,
+        "install_date_epoch":       integer,          # naive timestamp
+        "install_date_epoch_utc":   integer,          # Aware timestamp if timezone is UTC
+        "group":                    string,
+        "size":                     integer,
+        "license":                  string,
+        "signature":                string,
+        "source_rpm":               string,
+        "build_date":               string,
+        "build_epoch":              integer,          # naive timestamp
+        "build_epoch_utc":          integer,          # Aware timestamp if timezone is UTC
+        "build_host":               string,
+        "relocations":              string,
+        "packager":                 string,
+        "vendor":                   string,
+        "url":                      string,
+        "summary":                  string,
+        "description":              string
+      }
+    ]
 
 Examples:
 
-    $ rpm -qia | jc --rpm_qi -p
+    $ rpm -qia | jc --rpm-qi -p
     [
       {
         "name": "make",
@@ -46,9 +72,11 @@ Examples:
         "vendor": "CentOS",
         "url": "http://www.gnu.org/software/make/",
         "summary": "A GNU tool which simplifies the build process for users",
-        "description": "A GNU tool for controlling the generation of executables and other non-source...",
+        "description": "A GNU tool for controlling the generation of executables and other...",
         "build_epoch": 1565311645,
-        "build_epoch_utc": null
+        "build_epoch_utc": null,
+        "install_date_epoch": 1571242902,
+        "install_date_epoch_utc": null
       },
       {
         "name": "kbd-legacy",
@@ -68,14 +96,16 @@ Examples:
         "vendor": "CentOS",
         "url": "http://ftp.altlinux.org/pub/people/legion/kbd",
         "summary": "Legacy data for kbd package",
-        "description": "The kbd-legacy package contains original keymaps for kbd package. Please note...",
+        "description": "The kbd-legacy package contains original keymaps for kbd package...",
         "build_epoch": 1540939200,
-        "build_epoch_utc": null
+        "build_epoch_utc": null,
+        "install_date_epoch": 1565891588,
+        "install_date_epoch_utc": null
       },
       ...
     ]
 
-    $ rpm -qia | jc --rpm_qi -p -r
+    $ rpm -qia | jc --rpm-qi -p -r
     [
       {
         "name": "make",
@@ -125,7 +155,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.2'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -139,7 +170,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -149,33 +180,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "name":             string,
-            "epoch":            integer,
-            "version":          string,
-            "release":          string,
-            "architecture":     string,
-            "install_date":     string,
-            "group":            string,
-            "size":             integer,
-            "license":          string,
-            "signature":        string,
-            "source_rpm":       string,
-            "build_date":       string,
-            "build_epoch":      integer,          # naive timestamp
-            "build_epoch_utc":  integer,          # Aware timestamp if timezone is UTC
-            "build_host":       string,
-            "relocations":      string,
-            "packager":         string,
-            "vendor":           string,
-            "url":              string,
-            "summary":          string,
-            "description":      string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         
@@ -191,6 +196,11 @@ def process(proc_data):
             timestamp = jc.utils.timestamp(entry['build_date'])
             entry['build_epoch'] = timestamp.naive
             entry['build_epoch_utc'] = timestamp.utc
+
+        if 'install_date' in entry:
+            timestamp = jc.utils.timestamp(entry['install_date'])
+            entry['install_date_epoch'] = timestamp.naive
+            entry['install_date_epoch_utc'] = timestamp.utc
 
     return proc_data
 
@@ -255,4 +265,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

@@ -13,9 +13,41 @@ Usage (module):
     import jc.parsers.blkid
     result = jc.parsers.blkid.parse(blkid_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "device":                            string,
+        "uuid":                              string,
+        "type":                              string,
+        "usage":                             string,
+        "part_entry_scheme":                 string,
+        "part_entry_type":                   string,
+        "part_entry_flags":                  string,
+        "part_entry_number":                 integer,
+        "part_entry_offset":                 integer,
+        "part_entry_size":                   integer,
+        "part_entry_disk":                   string,
+        "id_fs_uuid":                        string,
+        "id_fs_uuid_enc":                    string,
+        "id_fs_version":                     string,
+        "id_fs_type":                        string,
+        "id_fs_usage":                       string,
+        "id_part_entry_scheme":              string,
+        "id_part_entry_type":                string,
+        "id_part_entry_flags":               string,
+        "id_part_entry_number":              integer,
+        "id_part_entry_offset":              integer,
+        "id_part_entry_size":                integer,
+        "id_iolimit_minimum_io_size":        integer,
+        "id_iolimit_physical_sector_size":   integer,
+        "id_iolimit_logical_sector_size":    integer,
+        "id_part_entry_disk":                string,
+        "minimum_io_size":                   integer,
+        "physical_sector_size":              integer,
+        "logical_sector_size":               integer
+      }
+    ]
 
 Examples:
 
@@ -88,7 +120,8 @@ import jc.utils
 
 
 class info():
-    version = '1.2'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.3'
     description = '`blkid` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -102,7 +135,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -112,41 +145,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "device":                            string,
-            "uuid":                              string,
-            "type":                              string,
-            "usage":                             string,
-            "part_entry_scheme":                 string,
-            "part_entry_type":                   string,
-            "part_entry_flags":                  string,
-            "part_entry_number":                 integer,
-            "part_entry_offset":                 integer,
-            "part_entry_size":                   integer,
-            "part_entry_disk":                   string,
-            "id_fs_uuid":                        string,
-            "id_fs_uuid_enc":                    string,
-            "id_fs_version":                     string,
-            "id_fs_type":                        string,
-            "id_fs_usage":                       string,
-            "id_part_entry_scheme":              string,
-            "id_part_entry_type":                string,
-            "id_part_entry_flags":               string,
-            "id_part_entry_number":              integer,
-            "id_part_entry_offset":              integer,
-            "id_part_entry_size":                integer,
-            "id_iolimit_minimum_io_size":        integer,
-            "id_iolimit_physical_sector_size":   integer,
-            "id_iolimit_logical_sector_size":    integer,
-            "id_part_entry_disk":                string,
-            "minimum_io_size":                   integer,
-            "physical_sector_size":              integer,
-            "logical_sector_size":               integer
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
         if 'devname' in entry:
@@ -225,4 +224,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

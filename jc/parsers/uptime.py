@@ -13,9 +13,23 @@ Usage (module):
     import jc.parsers.uptime
     result = jc.parsers.uptime.parse(uptime_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    {
+      "time":                   string,
+      "time_hour":              integer,
+      "time_minute":            integer,
+      "time_second":            integer,        # null if not displayed
+      "uptime":                 string,
+      "uptime_days":            integer,
+      "uptime_hours":           integer,
+      "uptime_minutes":         integer,
+      "uptime_total_seconds":   integer,
+      "users":                  integer,
+      "load_1m":                float,
+      "load_5m":                float,
+      "load_15m":               float
+    }
 
 Example:
 
@@ -50,7 +64,8 @@ import jc.utils
 
 
 class info():
-    version = '1.3'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.4'
     description = '`uptime` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -63,7 +78,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -73,23 +88,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "time":                   string,
-          "time_hour":              integer,
-          "time_minute":            integer,
-          "time_second":            integer,        # null if not displayed
-          "uptime":                 string,
-          "uptime_days":            integer,
-          "uptime_hours":           integer,
-          "uptime_minutes":         integer,
-          "uptime_total_seconds":   integer,
-          "users":                  integer,
-          "load_1m":                float,
-          "load_5m":                float,
-          "load_15m":               float
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     if 'time' in proc_data:
         time_list = proc_data['time'].split(':')
@@ -186,4 +185,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

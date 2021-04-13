@@ -15,9 +15,18 @@ Usage (module):
     import jc.parsers.uname
     result = jc.parsers.uname.parse(uname_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    {
+        "kernel_name":        string,
+        "node_name":          string,
+        "kernel_release":     string,
+        "operating_system":   string,
+        "hardware_platform":  string,
+        "processor":          string,
+        "machine":            string,
+        "kernel_version":     string
+    }
 
 Example:
 
@@ -37,7 +46,8 @@ import jc.utils
 
 
 class info():
-    version = '1.4'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.5'
     description = '`uname -a` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -54,7 +64,7 @@ class ParseError(Exception):
     pass
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -64,18 +74,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-            "kernel_name":        string,
-            "node_name":          string,
-            "kernel_release":     string,
-            "operating_system":   string,
-            "hardware_platform":  string,
-            "processor":          string,
-            "machine":            string,
-            "kernel_version":     string
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     # nothing to process
     return proc_data
@@ -138,4 +137,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

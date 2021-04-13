@@ -13,9 +13,56 @@ Usage (module):
     import jc.parsers.hciconfig
     result = jc.parsers.hciconfig.parse(hciconfig_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    [
+      {
+        "device":               string,
+        "type":                 string,
+        "bus":                  string,
+        "bd_address":           string,
+        "acl_mtu":              integer,
+        "acl_mtu_packets":      integer,
+        "sco_mtu":              integer,
+        "sco_mtu_packets":      integer,
+        "state": [
+                                string
+        ],
+        "rx_bytes":             integer,
+        "rx_acl":               integer,
+        "rx_sco":               integer,
+        "rx_events":            integer,
+        "rx_errors":            integer,
+        "tx_bytes":             integer,
+        "tx_acl":               integer,
+        "tx_sco":               integer,
+        "tx_commands":          integer,
+        "tx_errors":            integer,
+        "features": [
+                                string
+        ],
+        "packet_type": [
+                                string
+        ],
+        "link_policy": [
+                                string
+        ],
+        "link_mode": [
+                                string
+        ],
+        "name":                 string,
+        "class":                string,
+        "service_classes": [
+                                string       # 'Unspecified' is null
+        ],
+        "device_class":         string,
+        "hci_version":          string,
+        "hci_revision":         string,
+        "lmp_version":          string,
+        "lmp_subversion":       string,
+        "manufacturer":         string
+      }
+    ]
 
 Examples:
 
@@ -269,7 +316,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`hciconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -283,7 +331,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -293,56 +341,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "device":               string,
-            "type":                 string,
-            "bus":                  string,
-            "bd_address":           string,
-            "acl_mtu":              integer,
-            "acl_mtu_packets":      integer,
-            "sco_mtu":              integer,
-            "sco_mtu_packets":      integer,
-            "state": [
-                                    string
-            ],
-            "rx_bytes":             integer,
-            "rx_acl":               integer,
-            "rx_sco":               integer,
-            "rx_events":            integer,
-            "rx_errors":            integer,
-            "tx_bytes":             integer,
-            "tx_acl":               integer,
-            "tx_sco":               integer,
-            "tx_commands":          integer,
-            "tx_errors":            integer,
-            "features": [
-                                    string
-            ],
-            "packet_type": [
-                                    string
-            ],
-            "link_policy": [
-                                    string
-            ],
-            "link_mode": [
-                                    string
-            ],
-            "name":                 string,
-            "class":                string,
-            "service_classes": [
-                                    string       # 'Unspecified' is null
-            ],
-            "device_class":         string,
-            "hci_version":          string,
-            "hci_revision":         string,
-            "lmp_version":          string,
-            "lmp_subversion":       string,
-            "manufacturer":         string
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
 
     for entry in proc_data:
@@ -526,4 +525,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

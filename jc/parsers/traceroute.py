@@ -19,9 +19,26 @@ Usage (module):
     import jc.parsers.traceroute
     result = jc.parsers.traceroute.parse(traceroute_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'freebsd'
+    {
+      "destination_ip":         string,
+      "destination_name":       string,
+      "hops": [
+        {
+          "hop":                integer,
+          "probes": [
+            {
+              "annotation":     string,
+              "asn":            integer,
+              "ip":             string,
+              "name":           string,
+              "rtt":            float
+            }
+          ]
+        }
+      ]
+    }
 
 Examples:
 
@@ -101,7 +118,8 @@ import jc.utils
 
 
 class info():
-    version = '1.1'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.2'
     description = '`traceroute` and `traceroute6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -151,7 +169,7 @@ RE_PROBE_ASN = re.compile(r'\[AS(\d+)\]')
 RE_PROBE_RTT_ANNOTATION = re.compile(r'(?:(\d+(?:\.?\d+)?)\s+ms|(\s+\*\s+))\s*(!\S*)?')
 
 
-class Traceroute(object):
+class _Traceroute(object):
     def __init__(self, dest_name, dest_ip):
         self.dest_name = dest_name
         self.dest_ip = dest_ip
@@ -167,7 +185,7 @@ class Traceroute(object):
         return text
 
 
-class Hop(object):
+class _Hop(object):
     def __init__(self, idx):
         self.idx = idx  # Hop count, starting at 1 (usually)
         self.probes = []  # Series of Probe instances
@@ -194,7 +212,7 @@ class Hop(object):
         return text
 
 
-class Probe(object):
+class _Probe(object):
     def __init__(self, name=None, ip=None, asn=None, rtt=None, annotation=None):
         self.name = name
         self.ip = ip
@@ -216,7 +234,7 @@ class Probe(object):
         return text
 
 
-def loads(data):
+def _loads(data):
     lines = data.splitlines()
 
     # Get headers
@@ -227,7 +245,7 @@ def loads(data):
         dest_ip = match_dest.group(2)
 
     # The Traceroute node is the root of the tree
-    traceroute = Traceroute(dest_name, dest_ip)
+    traceroute = _Traceroute(dest_name, dest_ip)
 
     # Parse the remaining lines, they should be only hops/probes
     for line in lines[1:]:
@@ -243,7 +261,7 @@ def loads(data):
             hop_index = None
 
         if hop_index is not None:
-            hop = Hop(hop_index)
+            hop = _Hop(hop_index)
             traceroute.add_hop(hop)
 
         hop_string = hop_match.group(2)
@@ -279,7 +297,7 @@ def loads(data):
 
             probe_annotation = probe_rtt_annotation[2] or None
 
-            probe = Probe(
+            probe = _Probe(
                 name=probe_name,
                 ip=probe_ip,
                 asn=probe_asn,
@@ -300,7 +318,7 @@ class ParseError(Exception):
 
 ########################################################################################
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -310,26 +328,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "destination_ip":         string,
-          "destination_name":       string,
-          "hops": [
-            {
-              "hop":                integer,
-              "probes": [
-                {
-                  "annotation":     string,
-                  "asn":            integer,
-                  "ip":             string,
-                  "name":           string,
-                  "rtt":            float
-                }
-              ]
-            }
-          ]
-        }
+        Dictionary. Structured to conform to the schema.
     """
     int_list = ['hop', 'asn']
     float_list = ['rtt']
@@ -408,7 +407,7 @@ def parse(data, raw=False, quiet=False):
 
         data = '\n'.join(new_data)
 
-        tr = loads(data)
+        tr = _loads(data)
         hops = tr.hops
         hops_list = []
 
@@ -441,4 +440,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

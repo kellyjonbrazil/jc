@@ -15,9 +15,24 @@ Usage (module):
     import jc.parsers.tracepath
     result = jc.parsers.tracepath.parse(tracepath_command_output)
 
-Compatibility:
+Schema:
 
-    'linux'
+    {
+      "pmtu":                       integer,
+      "forward_hops":               integer,
+      "return_hops":                integer,
+      "hops": [
+        {
+          "ttl":                    integer,
+          "guess":                  boolean,
+          "host":                   string,
+          "reply_ms":               float,
+          "pmtu":                   integer,
+          "asymmetric_difference":  integer,
+          "reached":                boolean
+        }
+      ]
+    }
 
 Examples:
 
@@ -110,14 +125,14 @@ Examples:
         }
       ]
     }
-
 """
 import re
 import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -130,7 +145,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -140,24 +155,7 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Structured data with the following schema:
-
-        {
-          "pmtu":                       integer,
-          "forward_hops":               integer,
-          "return_hops":                integer,
-          "hops": [
-            {
-              "ttl":                    integer,
-              "guess":                  boolean,
-              "host":                   string,
-              "reply_ms":               float,
-              "pmtu":                   integer,
-              "asymmetric_difference":  integer,
-              "reached":                boolean
-            }
-          ]
-        }
+        Dictionary. Structured data to conform to the schema.
     """
     int_list = ['pmtu', 'forward_hops', 'return_hops', 'ttl', 'asymmetric_difference']
     float_list = ['reply_ms']
@@ -259,4 +257,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)

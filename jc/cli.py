@@ -320,7 +320,7 @@ def helptext():
     Options:
             -a               about jc
             -d               debug - show traceback (-dd for verbose traceback)
-            -h               help
+            -h               help (use -h --parser_name for parser documentation)
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
@@ -333,9 +333,34 @@ def helptext():
             or using the magic syntax:
 
             jc -p ls -al
+
+            For parser documentation:
+
+            jc -h --ls
     '''
     return textwrap.dedent(helptext_string)
 
+def help_doc(options):
+    """
+    Returns the parser documentation if a parser is found in the arguments, otherwise
+    the general help text is returned.
+    """
+    for arg in options:
+        parser_name = parser_shortname(arg)
+
+        if parser_name in parsers:
+            # load parser module just in time so we don't need to load all modules
+            parser = parser_module(arg)
+            compatible = ', '.join(parser.info.compatible)
+            doc_text = f'''{parser.__doc__}
+Compatibility:  {compatible}
+
+Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})
+'''
+
+            return doc_text
+
+    return helptext()
 
 def versiontext():
     """Return the version text"""
@@ -394,6 +419,10 @@ def generate_magic_command(args):
         else:
             break
 
+    # if -h, -a, or -v found in options, then bail out
+    if 'h' in options or 'a' in options or 'v' in options:
+        return False, None
+
     # all options popped and no command found - for case like 'jc -a'
     if len(args_given) == 0:
         return False, None
@@ -447,10 +476,10 @@ def main():
     except AttributeError:
         pass
 
-    jc_colors = os.getenv('JC_COLORS')
-
     # try magic syntax first: e.g. jc -p ls -al
     magic()
+
+    jc_colors = os.getenv('JC_COLORS')
 
     options = []
 
@@ -477,7 +506,7 @@ def main():
         sys.exit(0)
 
     if help_me:
-        print(helptext())
+        print(help_doc(sys.argv))
         sys.exit(0)
 
     if version_info:

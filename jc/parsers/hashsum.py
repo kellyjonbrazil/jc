@@ -23,9 +23,14 @@ Usage (module):
     import jc.parsers.hashsum
     result = jc.parsers.hashsum.parse(md5sum_command_output)
 
-Compatibility:
+Schema:
 
-    'linux', 'darwin', 'cygwin', 'aix', 'freebsd'
+    [
+      {
+        "filename":     string,
+        "hash":         string,
+      }
+    ]
 
 Examples:
 
@@ -62,7 +67,8 @@ import jc.utils
 
 
 class info():
-    version = '1.0'
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.1'
     description = 'hashsum command parser (`md5sum`, `shasum`, etc.)'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -76,7 +82,7 @@ class info():
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -86,14 +92,7 @@ def process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured data with the following schema:
-
-        [
-          {
-            "filename":     string,
-            "hash":         string,
-          }
-        ]
+        List of Dictionaries. Structured data to conform to the schema.
     """
 
     # no further processing for this parser
@@ -142,4 +141,4 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)
