@@ -1,11 +1,10 @@
 jc changelog
 
-20210409 v1.15.1
+20210413 v1.15.1
 - New feature to show parser documentation interactively with -h --parser_name
   for example: $ jc -h --arp
 - Add man page to pypi package for easier packaging in homebrew
 - Clean up documentation and autogenerate the Parser Information section from metadata
-- Add Systeminfo parser tested on Windows 10
 
 20210407 v1.15.0
 - Add acpi command parser tested on linux
