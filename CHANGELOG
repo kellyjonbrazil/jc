@@ -1,5 +1,8 @@
 jc changelog
 
+20210415 v1.15.2
+- Add systeminfo parser tested on Windows
+
 20210413 v1.15.1
 - New feature to show parser documentation interactively with -h --parser_name
   for example: $ jc -h --arp
