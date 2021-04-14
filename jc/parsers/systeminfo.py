@@ -1,7 +1,6 @@
 """jc - JSON CLI output utility `systeminfo` command output parser
 
-Parses Windows "systeminfo" command. Multiline values such as
-hotfixes or network cards are unparsed.
+Parses Windows "systeminfo" command.
 
 Usage (cli):
 
@@ -169,8 +168,11 @@ def process(proc_data):
 
     Returns:
 
-        Dictionary. Some keys are optional. Example: a non-virtualized server will an empty
-        "hyperv_requirements" object. Structured data with the following schema:
+        Dictionary. Some keys are optional. Example: a system without hyper-v capabilities
+        will not have a 'hyperv_requirements' key, and a system already running hyper-v
+        will have an empty "hyperv_requirements" object.
+
+        Structured data with the following schema:
 
         {
             "host_name": "string",
