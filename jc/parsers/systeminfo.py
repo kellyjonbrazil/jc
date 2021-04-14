@@ -42,11 +42,11 @@ Examples:
         "system_locale": "en-us;English (United States)",
         "input_locale": "en-us;English (United States)",
         "time_zone": "(UTC-08:00) Pacific Time (US & Canada)",
-        "total_physical_memory": "2,047 MB",
-        "available_physical_memory": "1,417 MB",
-        "virtual_memory_max_size": "2,687 MB",
-        "virtual_memory_available": "1,482 MB",
-        "virtual_memory_in_use": "1,205 MB",
+        "total_physical_memory_mb": "2,047 MB",
+        "available_physical_memory_mb": "1,417 MB",
+        "virtual_memory_max_size_mb": "2,687 MB",
+        "virtual_memory_available_mb": "1,482 MB",
+        "virtual_memory_in_use_mb": "1,205 MB",
         "page_file_locations": "C:\\pagefile.sys",
         "domain": "TEST.local",
         "logon_server": "\\\\WIN-AA1A1A11AAA",
@@ -103,11 +103,11 @@ Examples:
         "system_locale": "en-us;English (United States)",
         "input_locale": "en-us;English (United States)",
         "time_zone": "(UTC-08:00) Pacific Time (US & Canada)",
-        "total_physical_memory": 2047,
-        "available_physical_memory": 1417,
-        "virtual_memory_max_size": 2687,
-        "virtual_memory_available": 1482,
-        "virtual_memory_in_use": 1205",
+        "total_physical_memory_mb": 2047,
+        "available_physical_memory_mb": 1417,
+        "virtual_memory_max_size_mb": 2687,
+        "virtual_memory_available_mb": 1482,
+        "virtual_memory_in_use_mb": 1205",
         "page_file_locations": "C:\\pagefile.sys",
         "domain": "TEST.local",
         "logon_server": "\\\\WIN-AA1A1A11AAA",
@@ -195,11 +195,11 @@ def process(proc_data):
             "system_locale": "string",
             "input_locale": "string",
             "time_zone": "string",
-            "total_physical_memory": "string",
-            "available_physical_memory": integer,
-            "virtual_memory_max_size": integer,
-            "virtual_memory_available": integer,
-            "virtual_memory_in_use": integer,
+            "total_physical_memory_mb": "string",
+            "available_physical_memory_mb": integer,
+            "virtual_memory_max_size_mb": integer,
+            "virtual_memory_available_mb": integer,
+            "virtual_memory_in_use_mb": integer,
             "page_file_locations": "string",
             "domain": "string",
             "logon_server": "string",
@@ -230,11 +230,11 @@ def process(proc_data):
         )
 
     int_list = [
-        "total_physical_memory",
-        "available_physical_memory",
-        "virtual_memory_max_size",
-        "virtual_memory_available",
-        "virtual_memory_in_use",
+        "total_physical_memory_mb",
+        "available_physical_memory_mb",
+        "virtual_memory_max_size_mb",
+        "virtual_memory_available_mb",
+        "virtual_memory_in_use_mb",
     ]
     for key in int_list:
         proc_data[key] = convert_to_int(proc_data.get(key))
@@ -326,6 +326,14 @@ def parse(data, raw=False, quiet=False):
             raw_output[k] = parse_network_cards(v)
         elif k in ["hyperv_requirements"]:
             raw_output[k] = parse_hyperv_requirements(v)
+        elif k in [
+            "total_physical_memory",
+            "available_physical_memory",
+            "virtual_memory_max_size",
+            "virtual_memory_available",
+            "virtual_memory_in_use"
+        ]:
+            raw_output[k + "_mb"] = v.strip()
         else:
             raw_output[k] = v.strip()
 
