@@ -1,7 +1,5 @@
 """jc - JSON CLI output utility `systeminfo` command output parser
 
-Parses Windows "systeminfo" command.
-
 Usage (cli):
 
     $ systeminfo | jc --systeminfo
@@ -10,10 +8,6 @@ Usage (module):
 
     import jc.parsers.systeminfo
     result = jc.parsers.systeminfo.parse(systeminfo_command_output)
-
-Compatibility:
-
-    'win32'
 
 Examples:
 
@@ -144,8 +138,8 @@ import jc.utils
 
 
 class info:
-    version = "0.5 (beta)"
-    description = "Windows systeminfo command parser"
+    version = "1.0"
+    description = "`systeminfo` command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
     # details = 'enter any other details here'
@@ -158,7 +152,7 @@ class info:
 __version__ = info.version
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -227,7 +221,7 @@ def process(proc_data):
 
     # rebuild output for added semantic information
     for i, nic in enumerate(proc_data["network_cards"]):
-        proc_data["network_cards"][i]["dhcp_enabled"] = convert_to_boolean(
+        proc_data["network_cards"][i]["dhcp_enabled"] = _convert_to_boolean(
             nic["dhcp_enabled"]
         )
 
@@ -239,7 +233,7 @@ def process(proc_data):
         "virtual_memory_in_use_mb",
     ]
     for key in int_list:
-        proc_data[key] = convert_to_int(proc_data.get(key))
+        proc_data[key] = _convert_to_int(proc_data.get(key))
 
     dt_list = ["original_install_date", "system_boot_time"]
     for key in dt_list:
@@ -262,7 +256,7 @@ def process(proc_data):
     if hyperv_key in proc_data:
         for key in hyperv_subkey_list:
             if key in proc_data[hyperv_key]:
-                proc_data[hyperv_key][key] = convert_to_boolean(
+                proc_data[hyperv_key][key] = _convert_to_boolean(
                     proc_data[hyperv_key][key]
                 )
 
@@ -295,7 +289,7 @@ def parse(data, raw=False, quiet=False):
 
         # find the character position of the value in the k/v pair of the first line
         # all subsequent lines of data use the same character position
-        start_value_pos = get_value_pos(lines[0], delim)
+        start_value_pos = _get_value_pos(lines[0], delim)
 
         last_key = None
         for line in lines:
@@ -316,18 +310,18 @@ def parse(data, raw=False, quiet=False):
     # clean up keys; strip values
     raw_output = {}
     for k, v in raw_data.items():
-        k = transform_key(k)
+        k = _transform_key(k)
 
         # since we split on start_value_pos, the delimiter
         # is still in the key field. Remove it.
         k = k.rstrip(delim)
 
         if k in ["hotfixs", "processors"]:
-            raw_output[k] = parse_hotfixs_or_processors(v)
+            raw_output[k] = _parse_hotfixs_or_processors(v)
         elif k in ["network_cards"]:
-            raw_output[k] = parse_network_cards(v)
+            raw_output[k] = _parse_network_cards(v)
         elif k in ["hyperv_requirements"]:
-            raw_output[k] = parse_hyperv_requirements(v)
+            raw_output[k] = _parse_hyperv_requirements(v)
         elif k in [
             "total_physical_memory",
             "available_physical_memory",
@@ -342,10 +336,10 @@ def parse(data, raw=False, quiet=False):
     if raw:
         return raw_output
     else:
-        return process(raw_output)
+        return _process(raw_output)
 
 
-def parse_hotfixs_or_processors(data):
+def _parse_hotfixs_or_processors(data):
     """
     Turns a list of return-delimited hotfixes or processors
     with [x] as a prefix into an array of hotfixes
@@ -374,7 +368,7 @@ def parse_hotfixs_or_processors(data):
     return arr_output
 
 
-def parse_hyperv_requirements(data):
+def _parse_hyperv_requirements(data):
     """
     Turns a list of key/value settings for hyperv
     into an object
@@ -387,12 +381,12 @@ def parse_hyperv_requirements(data):
         if ":" in l:
             k, v = l.split(":")
             # discard the number sequence
-            output[transform_key(k)] = v.strip()
+            output[_transform_key(k)] = v.strip()
 
     return output
 
 
-def parse_network_cards(data):
+def _parse_network_cards(data):
     """
     Turns a list of network_cards into an array of objects
 
@@ -424,13 +418,13 @@ def parse_network_cards(data):
         elif m:
             if cur_nic:
                 arr_output.append(cur_nic)
-            cur_nic = default_nic()
+            cur_nic = _default_nic()
             cur_nic["name"] = m.group(2).strip()
             nic_value_pos = cur_value_pos
             is_ip = False
         elif delim in line:
             k, v = line.split(delim)
-            k = transform_key(k)
+            k = _transform_key(k)
             cur_nic[k] = v.strip()
 
     if cur_nic:
@@ -439,7 +433,7 @@ def parse_network_cards(data):
     return arr_output
 
 
-def convert_to_boolean(value):
+def _convert_to_boolean(value):
     """
     Converts string input to boolean assuming "Yes/No" inputs
 
@@ -449,7 +443,7 @@ def convert_to_boolean(value):
     return value == "Yes"
 
 
-def convert_to_int(value):
+def _convert_to_int(value):
     """
     Converts string input to integer by stripping all non-numeric characters
 
@@ -463,7 +457,7 @@ def convert_to_int(value):
     return value
 
 
-def default_nic():
+def _default_nic():
     """
     Returns a default network card object
     """
@@ -477,7 +471,7 @@ def default_nic():
     }
 
 
-def get_value_pos(line, delim):
+def _get_value_pos(line, delim):
     """
     Finds the first non-whitespace character after the delimiter
 
@@ -492,7 +486,7 @@ def get_value_pos(line, delim):
     return len(line) - len(fields[1].lstrip())
 
 
-def transform_key(key):
+def _transform_key(key):
     """
     Converts a given key to a valid json key that plays nice with jq
 
