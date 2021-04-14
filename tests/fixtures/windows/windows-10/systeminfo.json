@@ -8,12 +8,14 @@
     "registered_owner": "User",
     "registered_organization": "",
     "product_id": "00111-12345-00001-AA111",
-    "original_install_date": "2/16/2021, 11:20:27 AM",
-    "system_boot_time": "3/19/2021, 9:25:03 AM",
+    "original_install_date": 1613496027,
+    "system_boot_time": 1616163903,
     "system_manufacturer": "VMware, Inc.",
     "system_model": "VMware7,1",
     "system_type": "x64-based PC",
-    "processors": ["Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"],
+    "processors": [
+        "Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"
+    ],
     "bios_version": "VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020",
     "windows_directory": "C:\\Windows",
     "system_directory": "C:\\Windows\\system32",
@@ -21,15 +23,34 @@
     "system_locale": "en-us;English (United States)",
     "input_locale": "en-us;English (United States)",
     "time_zone": "(UTC-08:00) Pacific Time (US & Canada)",
-    "total_physical_memory": "2,047 MB",
-    "available_physical_memory": "1,417 MB",
-    "virtual_memory_max_size": "2,687 MB",
-    "virtual_memory_available": "1,482 MB",
-    "virtual_memory_in_use": "1,205 MB",
+    "total_physical_memory": 2047,
+    "available_physical_memory": 1417,
+    "virtual_memory_max_size": 2687,
+    "virtual_memory_available": 1482,
+    "virtual_memory_in_use": 1205,
     "page_file_locations": "C:\\pagefile.sys",
     "domain": "TEST.local",
     "logon_server": "\\\\WIN-AA1A1A11AAA",
-    "hotfixs": ["KB4578968", "KB4562830", "KB4570334", "KB4580325", "KB4586864", "KB4594440"],
-    "network_cards": "1 NIC(s) Installed.\n                           [01]: Intel(R) 82574L Gigabit Network Connection\n                                 Connection Name: Ethernet0\n                                 DHCP Enabled:    Yes\n                                 DHCP Server:     192.168.133.250\n                                 IP address(es)\n                                 [01]: 192.168.133.3\n                                 [02]: fe80::192:eb64:1fcf:86eb",
-    "hyperv_requirements": "A hypervisor has been detected. Features required for Hyper-V will not be displayed."
+    "hotfixs": [
+        "KB4578968",
+        "KB4562830",
+        "KB4570334",
+        "KB4580325",
+        "KB4586864",
+        "KB4594440"
+    ],
+    "network_cards": [
+        {
+            "name": "Intel(R) 82574L Gigabit Network Connection",
+            "connection_name": "Ethernet0",
+            "status": "",
+            "dhcp_enabled": true,
+            "dhcp_server": "192.168.133.250",
+            "ip_addresses": [
+                "192.168.133.3",
+                "fe80::192:eb64:1fcf:86eb"
+            ]
+        }
+    ],
+    "hyperv_requirements": {}
 }

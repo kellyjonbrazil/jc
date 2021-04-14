@@ -1,0 +1,45 @@
+
+Host Name:                 WIN-1A1A1AA11AA
+OS Name:                   Microsoft Windows Server 2012 R2 Standard
+OS Version:                6.3.9600 N/A Build 9600
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Server
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Windows User
+Registered Organization:   
+Product ID:                11111-11111-11111-AA111
+Original Install Date:     12/13/2018, 1:15:48 AM
+System Boot Time:          3/28/2021, 2:34:44 PM
+System Manufacturer:       Microsoft Corporation
+System Model:              Virtual Machine
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz
+BIOS Version:              Microsoft Corporation Hyper-V UEFI Release v3.0, 3/2/2018
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume2
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC+03:00) Kuwait, Riyadh
+Total Physical Memory:     3,555 MB
+Available Physical Memory: 771 MB
+Virtual Memory: Max Size:  5,731 MB
+Virtual Memory: Available: 2,751 MB
+Virtual Memory: In Use:    2,980 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    WORKGROUP
+Logon Server:              \\WIN-1A1A1AA11AA
+Hotfix(s):                 5 Hotfix(s) Installed.
+                           [01]: KB2919355
+                           [02]: KB2975061
+                           [03]: KB2999226
+                           [04]: KB3151864
+                           [05]: KB4054566
+Network Card(s):           1 NIC(s) Installed.
+                           [01]: Microsoft Hyper-V Network Adapter
+                                 Connection Name: Ethernet 2
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 172.16.32.10
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.

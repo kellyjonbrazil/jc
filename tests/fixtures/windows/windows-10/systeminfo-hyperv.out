@@ -1,0 +1,79 @@
+
+Host Name:                 TESTLAPTOP
+OS Name:                   Microsoft Windows 10 Enterprise
+OS Version:                10.0.17134 N/A Build 17134
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Member Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Test, Inc.
+Registered Organization:   Test, Inc.
+Product ID:                11111-11111-11111-AA111
+Original Install Date:     3/26/2019, 3:51:30 PM
+System Boot Time:          3/30/2021, 6:13:59 AM
+System Manufacturer:       Dell Inc.
+System Model:              Precision 5530
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz
+BIOS Version:              Dell Inc. 1.16.2, 4/21/2020
+Windows Directory:         C:\WINDOWS
+System Directory:          C:\WINDOWS\system32
+Boot Device:               \Device\HarddiskVolume2
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC-06:00) Central Time (US & Canada)
+Total Physical Memory:     32,503 MB
+Available Physical Memory: 19,743 MB
+Virtual Memory: Max Size:  37,367 MB
+Virtual Memory: Available: 22,266 MB
+Virtual Memory: In Use:    15,101 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    test.com
+Logon Server:              \\TESTDC01
+Hotfix(s):                 11 Hotfix(s) Installed.
+                           [01]: KB2693643
+                           [02]: KB4601054
+                           [03]: KB4230204
+                           [04]: KB4346084
+                           [05]: KB4485449
+                           [06]: KB4486153
+                           [07]: KB4509094
+                           [08]: KB4535680
+                           [09]: KB4580325
+                           [10]: KB4580398
+                           [11]: KB4534293
+Network Card(s):           6 NIC(s) Installed.
+                           [01]: Intel(R) Wireless-AC 9260 160MHz
+                                 Connection Name: Wi-Fi
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     192.168.2.1
+                                 IP address(es)
+                                 [01]: 192.168.2.219
+                           [02]: Bluetooth Device (Personal Area Network)
+                                 Connection Name: Bluetooth Network Connection
+                                 Status:          Media disconnected
+                           [03]: Microsoft KM-TEST Loopback Adapter
+                                 Connection Name: Npcap Loopback Adapter
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     255.255.255.255
+                                 IP address(es)
+                                 [01]: 169.254.161.245
+                           [04]: Cisco AnyConnect Secure Mobility Client Virtual Miniport Adapter for Windows x64
+                                 Connection Name: Ethernet 5
+                                 Status:          Hardware not present
+                           [05]: Hyper-V Virtual Ethernet Adapter
+                                 Connection Name: vEthernet (InternalVM)
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 172.16.32.1
+                           [06]: Hyper-V Virtual Ethernet Adapter
+                                 Connection Name: vEthernet (Default Switch) 2
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     255.255.255.255
+                                 IP address(es)
+                                 [01]: 172.26.251.65
+Hyper-V Requirements:      VM Monitor Mode Extensions: Yes
+                           Virtualization Enabled In Firmware: Yes
+                           Second Level Address Translation: No
+                           Data Execution Prevention Available: Yes
+

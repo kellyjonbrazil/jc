@@ -18,7 +18,7 @@ Compatibility:
 
 Examples:
 
-    $ systeminfo | jc --systeminfo -p
+    $ systeminfo | jc --systeminfo -p -r
     {
         "host_name": "DESKTOP-WIN01",
         "os_name": "Microsoft Windows 10 Enterprise",
@@ -50,11 +50,97 @@ Examples:
         "page_file_locations": "C:\\pagefile.sys",
         "domain": "TEST.local",
         "logon_server": "\\\\WIN-AA1A1A11AAA",
-        "hotfixs": ["KB4578968", "KB4562830", "KB4570334", "KB4580325", "KB4586864", "KB4594440"],
-        "network_cards": "1 NIC(s) Installed.\n                           [01]: Int...",
-        "hyperv_requirements": "A hypervisor has been detected. Features required fo..."
+        "hotfixs": [
+            "KB4578968",
+            "KB4562830",
+            "KB4570334",
+            "KB4580325",
+            "KB4586864",
+            "KB4594440"
+        ],
+        "network_cards": [
+            {
+                "name": "Intel(R) 82574L Gigabit Network Connection",
+                "connection_name": "Ethernet0",
+                "status": "",
+                "dhcp_enabled": "Yes",
+                "dhcp_server": "192.168.133.250",
+                "ip_addresses": [
+                    "192.168.133.3",
+                    "fe80::192:eb64:1fcf:86eb"
+                ]
+            }
+        ],
+        "hyperv_requirements": {
+            "vm_monitor_mode_extensions": "Yes",
+            "virtualization_enabled_in_firmware": "Yes",
+            "second_level_address_translation": "No",
+            "data_execution_prevention_available": "Yes"
+        }
+    }
+
+    $ systeminfo | jc --systeminfo -p
+    {
+        "host_name": "DESKTOP-WIN01",
+        "os_name": "Microsoft Windows 10 Enterprise",
+        "os_version": "10.0.19042 N/A Build 19042",
+        "os_manufacturer": "Microsoft Corporation",
+        "os_configuration": "Member Workstation",
+        "os_build_type": "Multiprocessor Free",
+        "registered_owner": "User",
+        "registered_organization": "",
+        "product_id": "00111-12345-00001-AA111",
+        "original_install_date": 1613496027,
+        "system_boot_time": 1616163903,
+        "system_manufacturer": "VMware, Inc.",
+        "system_model": "VMware7,1",
+        "system_type": "x64-based PC",
+        "processors": ["Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"],
+        "bios_version": "VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020",
+        "windows_directory": "C:\\Windows",
+        "system_directory": "C:\\Windows\\system32",
+        "boot_device": "\\Device\\HarddiskVolume1",
+        "system_locale": "en-us;English (United States)",
+        "input_locale": "en-us;English (United States)",
+        "time_zone": "(UTC-08:00) Pacific Time (US & Canada)",
+        "total_physical_memory": 2047,
+        "available_physical_memory": 1417,
+        "virtual_memory_max_size": 2687,
+        "virtual_memory_available": 1482,
+        "virtual_memory_in_use": 1205",
+        "page_file_locations": "C:\\pagefile.sys",
+        "domain": "TEST.local",
+        "logon_server": "\\\\WIN-AA1A1A11AAA",
+        "hotfixs": [
+            "KB4578968",
+            "KB4562830",
+            "KB4570334",
+            "KB4580325",
+            "KB4586864",
+            "KB4594440"
+        ],
+        "network_cards": [
+            {
+                "name": "Intel(R) 82574L Gigabit Network Connection",
+                "connection_name": "Ethernet0",
+                "status": "",
+                "dhcp_enabled": true,
+                "dhcp_server": "192.168.133.250",
+                "ip_addresses": [
+                    "192.168.133.3",
+                    "fe80::192:eb64:1fcf:86eb"
+                ]
+            }
+        ],
+        "hyperv_requirements": {
+            "vm_monitor_mode_extensions": "Yes",
+            "virtualization_enabled_in_firmware": "Yes",
+            "second_level_address_translation": "No",
+            "data_execution_prevention_available": "Yes"
+        }
     }
 """
+import re
 import jc.utils
 
 
@@ -79,53 +165,105 @@ def process(proc_data):
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
-        List of Dictionaries. Some keys are optional. Example: a non-virtualized server will not have
-        the "hyperv_requirements" key. Structured data with the following schema:
+        Dictionary. Some keys are optional. Example: a non-virtualized server will an empty
+        "hyperv_requirements" object. Structured data with the following schema:
 
-        [
-            {
-                "host_name": "string",
-                "os_name": "string",
-                "os_version": "string",
-                "os_manufacturer": "string",
-                "os_configuration": "string",
-                "os_build_type": "string",
-                "registered_owner": "string",
-                "registered_organization": "string",
-                "product_id": "string",
-                "original_install_date": "string",
-                "system_boot_time": "string",
-                "system_manufacturer": "string",
-                "system_model": "string",
-                "system_type": "string",
-                "processors": ["string"],
-                "bios_version": "string",
-                "windows_directory": "string",
-                "system_directory": "string",
-                "boot_device": "string",
-                "system_locale": "string",
-                "input_locale": "string",
-                "time_zone": "string",
-                "total_physical_memory": "string",
-                "available_physical_memory": "string",
-                "virtual_memory_max_size": "string",
-                "virtual_memory_available": "string",
-                "virtual_memory_in_use": "string",
-                "page_file_locations": "string",
-                "domain": "string",
-                "logon_server": "string",
-                "hotfixs": ["string"],
-                "network_cards": "string",
-                "hyperv_requirements": "string"
+        {
+            "host_name": "string",
+            "os_name": "string",
+            "os_version": "string",
+            "os_manufacturer": "string",
+            "os_configuration": "string",
+            "os_build_type": "string",
+            "registered_owner": "string",
+            "registered_organization": "string",
+            "product_id": "string",
+            "original_install_date": integer, # naive timestamp
+            "system_boot_time": integer, # naive timestamp
+            "system_manufacturer": "string",
+            "system_model": "string",
+            "system_type": "string",
+            "processors": ["string"],
+            "bios_version": "string",
+            "windows_directory": "string",
+            "system_directory": "string",
+            "boot_device": "string",
+            "system_locale": "string",
+            "input_locale": "string",
+            "time_zone": "string",
+            "total_physical_memory": "string",
+            "available_physical_memory": integer,
+            "virtual_memory_max_size": integer,
+            "virtual_memory_available": integer,
+            "virtual_memory_in_use": integer,
+            "page_file_locations": "string",
+            "domain": "string",
+            "logon_server": "string",
+            "hotfixs": ["string"],
+            "network_cards": [
+                {
+                    "name": "string",
+                    "connection_name": "string",
+                    "status": "string",
+                    "dhcp_enabled": boolean,
+                    "dhcp_server": "string",
+                    "ip_addresses": ["string"]
+                }
+            ],
+            "hyperv_requirements": {
+                "vm_monitor_mode_extensions": boolean,
+                "virtualization_enabled_in_firmware": boolean,
+                "second_level_address_translation": boolean,
+                "data_execution_prevention_available": boolean
             }
-        ]
+        }
     """
 
     # rebuild output for added semantic information
+    for i, nic in enumerate(proc_data["network_cards"]):
+        proc_data["network_cards"][i]["dhcp_enabled"] = convert_to_boolean(
+            nic["dhcp_enabled"]
+        )
+
+    int_list = [
+        "total_physical_memory",
+        "available_physical_memory",
+        "virtual_memory_max_size",
+        "virtual_memory_available",
+        "virtual_memory_in_use",
+    ]
+    for key in int_list:
+        proc_data[key] = convert_to_int(proc_data.get(key))
+
+    dt_list = ["original_install_date", "system_boot_time"]
+    for key in dt_list:
+        tz = proc_data.get("time_zone", "")
+        if tz:
+            # convert
+            # from: (UTC-08:00) Pacific Time (US & Canada)
+            # to: (UTC-0800)
+            tz_fields = tz.split(" ")
+            tz = " " + tz_fields[0].replace(":", "")
+        proc_data[key] = jc.utils.timestamp(f"{proc_data.get(key)}{tz}").naive
+
+    hyperv_key = "hyperv_requirements"
+    hyperv_subkey_list = [
+        "vm_monitor_mode_extensions",
+        "virtualization_enabled_in_firmware",
+        "second_level_address_translation",
+        "data_execution_prevention_available",
+    ]
+    if hyperv_key in proc_data:
+        for key in hyperv_subkey_list:
+            if key in proc_data[hyperv_key]:
+                proc_data[hyperv_key][key] = convert_to_boolean(
+                    proc_data[hyperv_key][key]
+                )
+
     return proc_data
 
 
@@ -176,12 +314,7 @@ def parse(data, raw=False, quiet=False):
     # clean up keys; strip values
     raw_output = {}
     for k, v in raw_data.items():
-        # lowercase and replace spaces with underscores
-        k = k.strip().lower().replace(" ", "_")
-
-        # remove invalid key characters
-        for c in ";:!@#$%^&*()-":
-            k = k.replace(c, "")
+        k = transform_key(k)
 
         # since we split on start_value_pos, the delimiter
         # is still in the key field. Remove it.
@@ -189,6 +322,10 @@ def parse(data, raw=False, quiet=False):
 
         if k in ["hotfixs", "processors"]:
             raw_output[k] = parse_hotfixs_or_processors(v)
+        elif k in ["network_cards"]:
+            raw_output[k] = parse_network_cards(v)
+        elif k in ["hyperv_requirements"]:
+            raw_output[k] = parse_hyperv_requirements(v)
         else:
             raw_output[k] = v.strip()
 
@@ -227,9 +364,113 @@ def parse_hotfixs_or_processors(data):
     return arr_output
 
 
+def parse_hyperv_requirements(data):
+    """
+    Turns a list of key/value settings for hyperv
+    into an object
+
+    Parameters:
+        data: (string) Input string
+    """
+    output = {}
+    for i, l in enumerate(data.splitlines()):
+        if ":" in l:
+            k, v = l.split(":")
+            # discard the number sequence
+            output[transform_key(k)] = v.strip()
+
+    return output
+
+
+def parse_network_cards(data):
+    """
+    Turns a list of network_cards into an array of objects
+
+    Parameters:
+        data: (string) Input string
+    """
+    delim = ":"
+    arr_output = []
+    cur_nic = None
+    is_ip = False
+    nic_value_pos = 0
+
+    for i, line in enumerate(data.splitlines()):
+        # skip first line
+        if i == 0:
+            continue
+
+        if "IP address(es)" in line:
+            is_ip = True
+            continue
+
+        cur_value_pos = len(line) - len(line.lstrip())
+
+        line = line.strip()
+
+        m = re.match(r"\[(\d+)\]" + delim + "(.+)", line)
+        if m and is_ip and cur_value_pos > nic_value_pos:
+            cur_nic["ip_addresses"].append(m.group(2).strip())
+        elif m:
+            if cur_nic:
+                arr_output.append(cur_nic)
+            cur_nic = default_nic()
+            cur_nic["name"] = m.group(2).strip()
+            nic_value_pos = cur_value_pos
+            is_ip = False
+        elif delim in line:
+            k, v = line.split(delim)
+            k = transform_key(k)
+            cur_nic[k] = v.strip()
+
+    if cur_nic:
+        arr_output.append(cur_nic)
+
+    return arr_output
+
+
+def convert_to_boolean(value):
+    """
+    Converts string input to boolean assuming "Yes/No" inputs
+
+    Parameters:
+        value: (string) Input value
+    """
+    return value == "Yes"
+
+
+def convert_to_int(value):
+    """
+    Converts string input to integer by stripping all non-numeric characters
+
+    Parameters:
+        value: (string) Input value
+    """
+    try:
+        value = int(re.sub("[^0-9]", "", value))
+    except ValueError:
+        pass
+    return value
+
+
+def default_nic():
+    """
+    Returns a default network card object
+    """
+    return {
+        "name": "",
+        "connection_name": "",
+        "status": "",
+        "dhcp_enabled": "No",
+        "dhcp_server": "",
+        "ip_addresses": [],
+    }
+
+
 def get_value_pos(line, delim):
     """
     Finds the first non-whitespace character after the delimiter
+
     Parameters:
         line: (string) Input string
         delim: (string) The data delimiter
@@ -239,3 +480,19 @@ def get_value_pos(line, delim):
         raise Exception(f"Expected a '{delim}' delimited field. Actual: {line}")
 
     return len(line) - len(fields[1].lstrip())
+
+
+def transform_key(key):
+    """
+    Converts a given key to a valid json key that plays nice with jq
+
+    Parameters:
+        key: (string) Input value
+    """
+    # lowercase and replace spaces with underscores
+    key = key.strip().lower().replace(" ", "_")
+
+    # remove invalid key characters
+    for c in ";:!@#$%^&*()-":
+        key = key.replace(c, "")
+    return key
