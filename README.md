@@ -183,6 +183,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj))
 - `--systemctl-ls` enables the `systemctl list-sockets` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls))
 - `--systemctl-luf` enables the `systemctl list-unit-files` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_luf))
+- `--systeminfo` enables the `systeminfo` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo))
 - `--time` enables the `/usr/bin/time` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/time))
 - `--timedatectl` enables the `timedatectl status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl))
 - `--tracepath` enables the `tracepath` and `tracepath6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath))

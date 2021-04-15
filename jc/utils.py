@@ -65,7 +65,7 @@ def compatibility(mod_name, compatible):
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
         warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n'
-                        f'                   Compatible platforms: {compat_list}')
+                        f'               Compatible platforms: {compat_list}')
 
 
 def has_data(data):
@@ -163,6 +163,8 @@ class timestamp:
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1500, 'format': '%Y-%m-%d %H:%M', 'locale': None},  # en_US.UTF-8 local format (found in who cli output): 2021-03-23 00:14
             {'id': 1600, 'format': '%m/%d/%Y %I:%M %p', 'locale': None},  # Windows english format (found in dir cli output): 12/07/2019 02:09 AM
+            {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
+            {'id': 1710, 'format': '%m/%d/%Y, %I:%M:%S %p UTC%z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC+0000)
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
@@ -177,7 +179,6 @@ class timestamp:
             {'id': 8100, 'format': '%a %d %b %Y %H:%M:%S', 'locale': ''},  # current locale format with non-UTC tz (found in upower cli output): # mar. 23 mars 2021 19:12:11 EDT
             {'id': 8200, 'format': '%A %d %B %Y, %H:%M:%S UTC%z', 'locale': ''},  # fr_FR.utf8 locale format (found in date cli output): vendredi 26 mars 2021, 13:26:46 (UTC+0000)
             {'id': 8300, 'format': '%A %d %B %Y, %H:%M:%S', 'locale': ''},  # fr_FR.utf8 locale format with non-UTC tz (found in date cli output): vendredi 26 mars 2021, 13:26:46 (UTC-0400)
-            {'id': 8400, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': ''},  # Windows english format (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
             {'id': 9000, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
         ]
 

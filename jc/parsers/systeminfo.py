@@ -1,5 +1,11 @@
 """jc - JSON CLI output utility `systeminfo` command output parser
 
+Blank or missing elements are set to `null`.
+
+The `original_install_date_epoch` and `system_boot_time_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+
+The `original_install_date_epoch_utc` and `system_boot_time_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ systeminfo | jc --systeminfo
@@ -9,128 +15,188 @@ Usage (module):
     import jc.parsers.systeminfo
     result = jc.parsers.systeminfo.parse(systeminfo_command_output)
 
-Examples:
+Schema:
 
-    $ systeminfo | jc --systeminfo -p -r
     {
-        "host_name": "DESKTOP-WIN01",
-        "os_name": "Microsoft Windows 10 Enterprise",
-        "os_version": "10.0.19042 N/A Build 19042",
-        "os_manufacturer": "Microsoft Corporation",
-        "os_configuration": "Member Workstation",
-        "os_build_type": "Multiprocessor Free",
-        "registered_owner": "User",
-        "registered_organization": "",
-        "product_id": "00111-12345-00001-AA111",
-        "original_install_date": "2/16/2021, 11:20:27 AM",
-        "system_boot_time": "3/19/2021, 9:25:03 AM",
-        "system_manufacturer": "VMware, Inc.",
-        "system_model": "VMware7,1",
-        "system_type": "x64-based PC",
-        "processors": ["Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"],
-        "bios_version": "VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020",
-        "windows_directory": "C:\\Windows",
-        "system_directory": "C:\\Windows\\system32",
-        "boot_device": "\\Device\\HarddiskVolume1",
-        "system_locale": "en-us;English (United States)",
-        "input_locale": "en-us;English (United States)",
-        "time_zone": "(UTC-08:00) Pacific Time (US & Canada)",
-        "total_physical_memory_mb": "2,047 MB",
-        "available_physical_memory_mb": "1,417 MB",
-        "virtual_memory_max_size_mb": "2,687 MB",
-        "virtual_memory_available_mb": "1,482 MB",
-        "virtual_memory_in_use_mb": "1,205 MB",
-        "page_file_locations": "C:\\pagefile.sys",
-        "domain": "TEST.local",
-        "logon_server": "\\\\WIN-AA1A1A11AAA",
-        "hotfixs": [
-            "KB4578968",
-            "KB4562830",
-            "KB4570334",
-            "KB4580325",
-            "KB4586864",
-            "KB4594440"
-        ],
-        "network_cards": [
-            {
-                "name": "Intel(R) 82574L Gigabit Network Connection",
-                "connection_name": "Ethernet0",
-                "status": "",
-                "dhcp_enabled": "Yes",
-                "dhcp_server": "192.168.133.250",
-                "ip_addresses": [
-                    "192.168.133.3",
-                    "fe80::192:eb64:1fcf:86eb"
-                ]
-            }
-        ],
-        "hyperv_requirements": {
-            "vm_monitor_mode_extensions": "Yes",
-            "virtualization_enabled_in_firmware": "Yes",
-            "second_level_address_translation": "No",
-            "data_execution_prevention_available": "Yes"
+      "host_name":                                  string,
+      "os_name":                                    string,
+      "os_version":                                 string,
+      "os_manufacturer":                            string,
+      "os_configuration":                           string,
+      "os_build_type":                              string,
+      "registered_owner":                           string,
+      "registered_organization":                    string,
+      "product_id":                                 string,
+      "original_install_date":                      string,
+      "original_install_date_epoch":                integer,     # naive timestamp
+      "original_install_date_epoch_utc":            integer,     # timezone-aware timestamp
+      "system_boot_time":                           string,
+      "system_boot_time_epoch":                     integer,     # naive timestamp
+      "system_boot_time_epoch_utc":                 integer,     # timezone-aware timestamp
+      "system_manufacturer":                        string,
+      "system_model":                               string,
+      "system_type":                                string,
+      "processors": [
+                                                    string
+      ],
+      "bios_version":                               string,
+      "windows_directory":                          string,
+      "system_directory":                           string,
+      "boot_device":                                string,
+      "system_locale":                              string,
+      "input_locale":                               string,
+      "time_zone":                                  string,
+      "total_physical_memory_mb":                   string,
+      "available_physical_memory_mb":               integer,
+      "virtual_memory_max_size_mb":                 integer,
+      "virtual_memory_available_mb":                integer,
+      "virtual_memory_in_use_mb":                   integer,
+      "page_file_locations":                        string,
+      "domain":                                     string,
+      "logon_server":                               string,
+      "hotfixs": [
+                                                    string
+      ],
+      "network_cards": [
+        {
+          "name":                                   string,
+          "connection_name":                        string,
+          "status":                                 string,
+          "dhcp_enabled":                           boolean,
+          "dhcp_server":                            string,
+          "ip_addresses": [
+                                                    string
+          ]
         }
+      ],
+      "hyperv_requirements": {
+        "vm_monitor_mode_extensions":               boolean,
+        "virtualization_enabled_in_firmware":       boolean,
+        "second_level_address_translation":         boolean,
+        "data_execution_prevention_available":      boolean
+      }
     }
+
+Examples:
 
     $ systeminfo | jc --systeminfo -p
     {
-        "host_name": "DESKTOP-WIN01",
-        "os_name": "Microsoft Windows 10 Enterprise",
-        "os_version": "10.0.19042 N/A Build 19042",
-        "os_manufacturer": "Microsoft Corporation",
-        "os_configuration": "Member Workstation",
-        "os_build_type": "Multiprocessor Free",
-        "registered_owner": "User",
-        "registered_organization": "",
-        "product_id": "00111-12345-00001-AA111",
-        "original_install_date": 1613496027,
-        "system_boot_time": 1616163903,
-        "system_manufacturer": "VMware, Inc.",
-        "system_model": "VMware7,1",
-        "system_type": "x64-based PC",
-        "processors": ["Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz"],
-        "bios_version": "VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020",
-        "windows_directory": "C:\\Windows",
-        "system_directory": "C:\\Windows\\system32",
-        "boot_device": "\\Device\\HarddiskVolume1",
-        "system_locale": "en-us;English (United States)",
-        "input_locale": "en-us;English (United States)",
-        "time_zone": "(UTC-08:00) Pacific Time (US & Canada)",
-        "total_physical_memory_mb": 2047,
-        "available_physical_memory_mb": 1417,
-        "virtual_memory_max_size_mb": 2687,
-        "virtual_memory_available_mb": 1482,
-        "virtual_memory_in_use_mb": 1205",
-        "page_file_locations": "C:\\pagefile.sys",
-        "domain": "TEST.local",
-        "logon_server": "\\\\WIN-AA1A1A11AAA",
-        "hotfixs": [
-            "KB4578968",
-            "KB4562830",
-            "KB4570334",
-            "KB4580325",
-            "KB4586864",
-            "KB4594440"
-        ],
-        "network_cards": [
-            {
-                "name": "Intel(R) 82574L Gigabit Network Connection",
-                "connection_name": "Ethernet0",
-                "status": "",
-                "dhcp_enabled": true,
-                "dhcp_server": "192.168.133.250",
-                "ip_addresses": [
-                    "192.168.133.3",
-                    "fe80::192:eb64:1fcf:86eb"
-                ]
-            }
-        ],
-        "hyperv_requirements": {
-            "vm_monitor_mode_extensions": "Yes",
-            "virtualization_enabled_in_firmware": "Yes",
-            "second_level_address_translation": "No",
-            "data_execution_prevention_available": "Yes"
+      "host_name": "TESTLAPTOP",
+      "os_name": "Microsoft Windows 10 Enterprise",
+      "os_version": "10.0.17134 N/A Build 17134",
+      "os_manufacturer": "Microsoft Corporation",
+      "os_configuration": "Member Workstation",
+      "os_build_type": "Multiprocessor Free",
+      "registered_owner": "Test, Inc.",
+      "registered_organization": "Test, Inc.",
+      "product_id": "11111-11111-11111-AA111",
+      "original_install_date": "3/26/2019, 3:51:30 PM",
+      "system_boot_time": "3/30/2021, 6:13:59 AM",
+      "system_manufacturer": "Dell Inc.",
+      "system_model": "Precision 5530",
+      "system_type": "x64-based PC",
+      "processors": [
+        "Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz"
+      ],
+      "bios_version": "Dell Inc. 1.16.2, 4/21/2020",
+      "windows_directory": "C:\\WINDOWS",
+      "system_directory": "C:\\WINDOWS\\system32",
+      "boot_device": "\\Device\\HarddiskVolume2",
+      "system_locale": "en-us;English (United States)",
+      "input_locale": "en-us;English (United States)",
+      "time_zone": "(UTC+00:00) UTC",
+      "total_physical_memory_mb": 32503,
+      "available_physical_memory_mb": 19743,
+      "virtual_memory_max_size_mb": 37367,
+      "virtual_memory_available_mb": 22266,
+      "virtual_memory_in_use_mb": 15101,
+      "page_file_locations": "C:\\pagefile.sys",
+      "domain": "test.com",
+      "logon_server": "\\\\TESTDC01",
+      "hotfixs": [
+        "KB2693643",
+        "KB4601054"
+      ],
+      "network_cards": [
+        {
+          "name": "Intel(R) Wireless-AC 9260 160MHz",
+          "connection_name": "Wi-Fi",
+          "status": null,
+          "dhcp_enabled": true,
+          "dhcp_server": "192.168.2.1",
+          "ip_addresses": [
+            "192.168.2.219"
+          ]
         }
+      ],
+      "hyperv_requirements": {
+        "vm_monitor_mode_extensions": true,
+        "virtualization_enabled_in_firmware": true,
+        "second_level_address_translation": false,
+        "data_execution_prevention_available": true
+      },
+      "original_install_date_epoch": 1553640690,
+      "original_install_date_epoch_utc": 1553615490,
+      "system_boot_time_epoch": 1617110039,
+      "system_boot_time_epoch_utc": 1617084839
+    }
+
+    $ systeminfo | jc --systeminfo -p -r
+    {
+      "host_name": "TESTLAPTOP",
+      "os_name": "Microsoft Windows 10 Enterprise",
+      "os_version": "10.0.17134 N/A Build 17134",
+      "os_manufacturer": "Microsoft Corporation",
+      "os_configuration": "Member Workstation",
+      "os_build_type": "Multiprocessor Free",
+      "registered_owner": "Test, Inc.",
+      "registered_organization": "Test, Inc.",
+      "product_id": "11111-11111-11111-AA111",
+      "original_install_date": "3/26/2019, 3:51:30 PM",
+      "system_boot_time": "3/30/2021, 6:13:59 AM",
+      "system_manufacturer": "Dell Inc.",
+      "system_model": "Precision 5530",
+      "system_type": "x64-based PC",
+      "processors": [
+        "Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz"
+      ],
+      "bios_version": "Dell Inc. 1.16.2, 4/21/2020",
+      "windows_directory": "C:\\WINDOWS",
+      "system_directory": "C:\\WINDOWS\\system32",
+      "boot_device": "\\Device\\HarddiskVolume2",
+      "system_locale": "en-us;English (United States)",
+      "input_locale": "en-us;English (United States)",
+      "time_zone": "(UTC+00:00) UTC",
+      "total_physical_memory_mb": "32,503 MB",
+      "available_physical_memory_mb": "19,743 MB",
+      "virtual_memory_max_size_mb": "37,367 MB",
+      "virtual_memory_available_mb": "22,266 MB",
+      "virtual_memory_in_use_mb": "15,101 MB",
+      "page_file_locations": "C:\\pagefile.sys",
+      "domain": "test.com",
+      "logon_server": "\\\\TESTDC01",
+      "hotfixs": [
+        "KB2693643",
+        "KB4601054"
+      ],
+      "network_cards": [
+        {
+          "name": "Intel(R) Wireless-AC 9260 160MHz",
+          "connection_name": "Wi-Fi",
+          "status": "",
+          "dhcp_enabled": "Yes",
+          "dhcp_server": "192.168.2.1",
+          "ip_addresses": [
+            "192.168.2.219"
+          ]
+        }
+      ],
+      "hyperv_requirements": {
+        "vm_monitor_mode_extensions": "Yes",
+        "virtualization_enabled_in_firmware": "Yes",
+        "second_level_address_translation": "No",
+        "data_execution_prevention_available": "Yes"
+      }
     }
 """
 import re
@@ -166,64 +232,22 @@ def _process(proc_data):
         will not have a 'hyperv_requirements' key, and a system already running hyper-v
         will have an empty "hyperv_requirements" object.
 
-        Structured data with the following schema:
-
-        {
-            "host_name": "string",
-            "os_name": "string",
-            "os_version": "string",
-            "os_manufacturer": "string",
-            "os_configuration": "string",
-            "os_build_type": "string",
-            "registered_owner": "string",
-            "registered_organization": "string",
-            "product_id": "string",
-            "original_install_date": integer, # naive timestamp
-            "system_boot_time": integer, # naive timestamp
-            "system_manufacturer": "string",
-            "system_model": "string",
-            "system_type": "string",
-            "processors": ["string"],
-            "bios_version": "string",
-            "windows_directory": "string",
-            "system_directory": "string",
-            "boot_device": "string",
-            "system_locale": "string",
-            "input_locale": "string",
-            "time_zone": "string",
-            "total_physical_memory_mb": "string",
-            "available_physical_memory_mb": integer,
-            "virtual_memory_max_size_mb": integer,
-            "virtual_memory_available_mb": integer,
-            "virtual_memory_in_use_mb": integer,
-            "page_file_locations": "string",
-            "domain": "string",
-            "logon_server": "string",
-            "hotfixs": ["string"],
-            "network_cards": [
-                {
-                    "name": "string",
-                    "connection_name": "string",
-                    "status": "string",
-                    "dhcp_enabled": boolean,
-                    "dhcp_server": "string",
-                    "ip_addresses": ["string"]
-                }
-            ],
-            "hyperv_requirements": {
-                "vm_monitor_mode_extensions": boolean,
-                "virtualization_enabled_in_firmware": boolean,
-                "second_level_address_translation": boolean,
-                "data_execution_prevention_available": boolean
-            }
-        }
+        Structured data to conform to the schema.
     """
+    # convert empty strings to None/null
+    for item in proc_data:
+        if isinstance(proc_data[item], str) and not proc_data[item]:
+            proc_data[item] = None
 
-    # rebuild output for added semantic information
     for i, nic in enumerate(proc_data["network_cards"]):
         proc_data["network_cards"][i]["dhcp_enabled"] = _convert_to_boolean(
             nic["dhcp_enabled"]
         )
+
+        # convert empty strings to None/null
+        for item in nic:
+            if isinstance(nic[item], str) and not nic[item]:
+                proc_data["network_cards"][i][item] = None
 
     int_list = [
         "total_physical_memory_mb",
@@ -242,9 +266,10 @@ def _process(proc_data):
             # convert
             # from: (UTC-08:00) Pacific Time (US & Canada)
             # to: (UTC-0800)
-            tz_fields = tz.split(" ")
+            tz_fields = tz.split()
             tz = " " + tz_fields[0].replace(":", "")
-        proc_data[key] = jc.utils.timestamp(f"{proc_data.get(key)}{tz}").naive
+        proc_data[key + '_epoch'] = jc.utils.timestamp(f"{proc_data.get(key)}{tz}").naive
+        proc_data[key + '_epoch_utc'] = jc.utils.timestamp(f"{proc_data.get(key)}{tz}").utc
 
     hyperv_key = "hyperv_requirements"
     hyperv_subkey_list = [
