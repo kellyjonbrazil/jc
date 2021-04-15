@@ -207,7 +207,7 @@ Examples:
 ```python
 info()
 ```
-
+Provides parser metadata (version, author, etc.)
 
 ## parse
 ```python
