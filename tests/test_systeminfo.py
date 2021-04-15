@@ -11,6 +11,7 @@ class MyTests(unittest.TestCase):
         "tests/fixtures/windows/windows-7/systeminfo",
         "tests/fixtures/windows/windows-10/systeminfo",
         "tests/fixtures/windows/windows-10/systeminfo-hyperv",
+        "tests/fixtures/windows/windows-10/systeminfo-hyperv-utc",
         "tests/fixtures/windows/windows-2012r2/systeminfo",
     ]
 
