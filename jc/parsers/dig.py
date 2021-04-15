@@ -396,7 +396,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -678,7 +678,7 @@ def parse(data, raw=False, quiet=False):
 
             # footer line 2
             if line.startswith(';; SERVER:'):
-                output_entry.update({'server': line.split(':')[1].lstrip()})
+                output_entry.update({'server': line.split(':', maxsplit=1)[1].lstrip()})
                 continue
 
             # footer line 3
