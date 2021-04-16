@@ -76,246 +76,10 @@ Schema:
 Examples:
 
     $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
-    [
-      {
-        "id": 52172,
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "rd",
-          "ra"
-        ],
-        "query_num": 1,
-        "answer_num": 4,
-        "authority_num": 0,
-        "additional_num": 1,
-        "question": {
-          "name": "cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.65.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.129.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.1.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.193.67"
-          }
-        ],
-        "query_time": 38,
-        "server": "2600",
-        "when": "Tue Mar 30 20:07:59 PDT 2021",
-        "rcvd": 100,
-        "when_epoch": 1617160079,
-        "when_epoch_utc": null
-      },
-      {
-        "id": 36292,
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "aa",
-          "rd"
-        ],
-        "query_num": 1,
-        "answer_num": 1,
-        "authority_num": 4,
-        "additional_num": 1,
-        "question": {
-          "name": "www.cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "www.cnn.com.",
-            "class": "IN",
-            "type": "CNAME",
-            "ttl": 300,
-            "data": "turner-tls.map.fastly.net."
-          }
-        ],
-        "authority": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-1086.awsdns-07.org."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-1630.awsdns-11.co.uk."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-47.awsdns-05.com."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-576.awsdns-08.net."
-          }
-        ],
-        "query_time": 27,
-        "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Mar 30 20:07:59 PDT 2021",
-        "rcvd": 212,
-        "when_epoch": 1617160079,
-        "when_epoch_utc": null
-      }
-    ]
+    
 
     $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p -r
-    [
-      {
-        "id": "23843",
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "rd",
-          "ra"
-        ],
-        "query_num": "1",
-        "answer_num": "4",
-        "authority_num": "0",
-        "additional_num": "1",
-        "question": {
-          "name": "cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.193.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.1.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.65.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.129.67"
-          }
-        ],
-        "query_time": "24 msec",
-        "server": "192.168.1.254#53(192.168.1.254)",
-        "when": "Tue Nov 12 07:16:19 PST 2019",
-        "rcvd": "100"
-      },
-      {
-        "id": "8266",
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "aa",
-          "rd"
-        ],
-        "query_num": "1",
-        "answer_num": "1",
-        "authority_num": "4",
-        "additional_num": "1",
-        "question": {
-          "name": "www.cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "www.cnn.com.",
-            "class": "IN",
-            "type": "CNAME",
-            "ttl": "300",
-            "data": "turner-tls.map.fastly.net."
-          }
-        ],
-        "authority": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-1086.awsdns-07.org."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-1630.awsdns-11.co.uk."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-47.awsdns-05.com."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-576.awsdns-08.net."
-          }
-        ],
-        "query_time": "26 msec",
-        "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Nov 12 07:16:19 PST 2019",
-        "rcvd": "212"
-      }
-    ]
+    
 
     $ dig -x 1.1.1.1 | jc --dig -p
     [
@@ -507,6 +271,13 @@ def _parse_flags_line(flagsline):
             'additional_num': additional_num}
 
 
+def _parse_opt_pseudosection(optline):
+    # ;; OPT PSEUDOSECTION:
+    # ; EDNS: version: 0, flags:; udp: 4096
+    # ; COOKIE: 1cbc06703eaef210
+    return {}
+
+
 def _parse_question(question):
     # ;www.cnn.com.           IN  A
     question = question.split()
@@ -597,75 +368,70 @@ def parse(data, raw=False, quiet=False):
     # remove blank lines
     cleandata = list(filter(None, cleandata))
 
-    question = False
-    authority = False
-    answer = False
-    axfr = False
-
+    # section can be: header, flags, question, authority, answer, xfr, additional, opt_pseudosection, footer
+    section = ''
     output_entry = {}
 
     if jc.utils.has_data(data):
         for line in cleandata:
 
+            # identify sections
+
             if line.startswith('; <<>> ') and ' axfr ' in line.lower():
-                question = False
-                authority = False
-                answer = False
-                axfr = True
+                section = 'axfr'
                 axfr_list = []
                 continue
 
-            if ';' not in line and axfr:
-                axfr_list.append(_parse_axfr(line))
-                output_entry.update({'axfr': axfr_list})
-                continue
-
             if line.startswith(';; ->>HEADER<<-'):
+                section = 'header'
                 output_entry = {}
                 output_entry.update(_parse_header(line))
                 continue
 
             if line.startswith(';; flags:'):
+                section = 'flags'
                 output_entry.update(_parse_flags_line(line))
                 continue
 
-            if line.startswith(';; QUESTION SECTION:'):
-                question = True
-                authority = False
-                answer = False
-                axfr = False
-                continue
+            # if line.startswith(';; OPT PSEUDOSECTION:'):
+            #     section = 'opt_pseudosection'
+            #     continue
 
-            if question:
-                output_entry['question'] = _parse_question(line)
-                question = False
-                authority = False
-                answer = False
-                axfr = False
+            if line.startswith(';; QUESTION SECTION:'):
+                section = 'question'
                 continue
 
             if line.startswith(';; AUTHORITY SECTION:'):
-                question = False
-                authority = True
-                answer = False
-                axfr = False
+                section = 'authority'
                 authority_list = []
                 continue
 
-            if ';' not in line and authority:
+            if line.startswith(';; ANSWER SECTION:'):
+                section = 'answer'
+                answer_list = []
+                continue
+
+            # parse sections
+
+            if not line.startswith(';') and section == 'axfr':
+                axfr_list.append(_parse_axfr(line))
+                output_entry.update({'axfr': axfr_list})
+                continue
+
+            # if section == 'opt_pseudosection':
+            #     # output_entry.update(_parse_opt_pseudosection(line))
+            #     continue
+
+            if section == 'question':
+                output_entry['question'] = _parse_question(line)
+                continue
+
+            if not line.startswith(';') and section == 'authority':
                 authority_list.append(_parse_authority(line))
                 output_entry.update({'authority': authority_list})
                 continue
 
-            if line.startswith(';; ANSWER SECTION:'):
-                question = False
-                authority = False
-                answer = True
-                axfr = False
-                answer_list = []
-                continue
-
-            if ';' not in line and answer:
+            if not line.startswith(';') and section == 'answer':
                 answer_list.append(_parse_answer(line))
                 output_entry.update({'answer': answer_list})
                 continue
@@ -673,6 +439,7 @@ def parse(data, raw=False, quiet=False):
             # footer consists of 4 lines
             # footer line 1
             if line.startswith(';; Query time:'):
+                section = 'footer'
                 output_entry.update({'query_time': line.split(':')[1].lstrip()})
                 continue
 
@@ -688,11 +455,13 @@ def parse(data, raw=False, quiet=False):
 
             # footer line 4 (last line)
             if line.startswith(';; MSG SIZE  rcvd:'):
+                section = ''
                 output_entry.update({'rcvd': line.split(':')[1].lstrip()})
 
                 if output_entry:
                     raw_output.append(output_entry)
             elif line.startswith(';; XFR size:'):
+                section = ''
                 output_entry.update({'size': line.split(':')[1].lstrip()})
 
                 if output_entry:

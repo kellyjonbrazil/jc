@@ -2,6 +2,10 @@ jc changelog
 
 20210415 v1.15.2
 - Add systeminfo parser tested on Windows
+- Update dig parser to fix an issue with IPv6 addresses in the server field
+- Update dig parser to fix an issue when axfr entries contain a semicolon
+- Update dig parser to add support for Additional Section and Opt Pseudosection
+- Use dig parser as the main example in readme, documentation, and man page
 
 20210413 v1.15.1
 - New feature to show parser documentation interactively with -h --parser_name
