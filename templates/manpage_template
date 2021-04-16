@@ -40,7 +40,7 @@ debug - show traceback (\fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP
-help - use `-h --parser_name` for parser documentation
+help (\fB-h --parser_name\fP for parser documentation)
 .TP
 .B
 \fB-m\fP
@@ -96,21 +96,21 @@ Local plugin filenames must be valid python module names, therefore must consist
 
 Note: The application data directory follows the XDG Base Directory Specification
 
-.SH EXAMPLE
-ls \fB-al\fP | jc \fB--ls\fP \fB-p\fP
+.SH EXAMPLES
+Standard Syntax:
+.RS
+$ dig www.google.com | jc \fB--dig\fP \fB-p\fP
+.RE
 
-
-or using the magic syntax:
-
-
-jc \fB-p\fP ls \fB-al\fP
-
+Magic Syntax:
+.RS
+$ jc \fB-p\fP dig www.google.com
+.RE
 
 For parser documentation:
-
-
-jc \fB-h\fP \fB--ls\fP
-
+.RS
+$ jc \fB-h\fP \fB--dig\fP
+.RE
 .SH AUTHOR
 {{ jc.author }} ({{ jc.author_email }})
 
