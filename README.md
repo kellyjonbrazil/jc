@@ -347,48 +347,6 @@ cat homes.csv | jc --csv -p
   }
 ]
 ```
-### dig
-```bash
-dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205.251.194.64
-```
-```json
-[
-  {
-    "id": 52172,
-    "opcode": "QUERY",
-    "status": "NOERROR",
-    "flags": [
-      "qr",
-      "rd",
-      "ra"
-    ],
-    "query_num": 1,
-    "answer_num": 1,
-    "authority_num": 0,
-    "additional_num": 1,
-    "question": {
-      "name": "cnn.com.",
-      "class": "IN",
-      "type": "A"
-    },
-    "answer": [
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": 27,
-        "data": "151.101.65.67"
-      }
-    ],
-    "query_time": 38,
-    "server": "2600",
-    "when": "Tue Mar 30 20:07:59 PDT 2021",
-    "rcvd": 100,
-    "when_epoch": 1617160079,
-    "when_epoch_utc": null
-  }
-]
-```
 ### /etc/hosts file
 ```bash
 cat /etc/hosts | jc --hosts -p
