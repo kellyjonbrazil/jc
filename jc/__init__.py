@@ -8,64 +8,81 @@ For documentation on each parser, see the [documentation site](https://kellyjonb
 
 CLI Example:
 
-    $ ls -l /usr/bin | jc --ls -p
+    $ dig example.com | jc --dig -p
     [
       {
-        "filename": "apropos",
-        "link_to": "whatis",
-        "flags": "lrwxrwxrwx.",
-        "links": 1,
-        "owner": "root",
-        "group": "root",
-        "size": 6,
-        "date": "Aug 15 10:53"
-      },
-      {
-        "filename": "ar",
-        "flags": "-rwxr-xr-x.",
-        "links": 1,
-        "owner": "root",
-        "group": "root",
-        "size": 62744,
-        "date": "Aug 8 16:14"
-      },
-      {
-        "filename": "arch",
-        "flags": "-rwxr-xr-x.",
-        "links": 1,
-        "owner": "root",
-        "group": "root",
-        "size": 33080,
-        "date": "Aug 19 23:25"
-      },
-      ...
+        "id": 2951,
+        "opcode": "QUERY",
+        "status": "NOERROR",
+        "flags": [
+          "qr",
+          "rd",
+          "ra"
+        ],
+        "query_num": 1,
+        "answer_num": 1,
+        "authority_num": 0,
+        "additional_num": 1,
+        "opt_pseudosection": {
+          "edns": {
+            "version": 0,
+            "flags": [],
+            "udp": 4096
+          }
+        },
+        "question": {
+          "name": "example.com.",
+          "class": "IN",
+          "type": "A"
+        },
+        "answer": [
+          {
+            "name": "example.com.",
+            "class": "IN",
+            "type": "A",
+            "ttl": 39302,
+            "data": "93.184.216.34"
+          }
+        ],
+        "query_time": 49,
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Fri Apr 16 16:05:10 PDT 2021",
+        "rcvd": 56,
+        "when_epoch": 1618614310,
+        "when_epoch_utc": null
+      }
     ]
 
 Module Example:
 
-    >>> import jc.parsers.ls
+    >>> import jc.parsers.dig
     >>>
-    >>> data='''-rwxr-xr-x  1 root  wheel    23648 May  3 22:26 cat
-    ... -rwxr-xr-x  1 root  wheel    30016 May  3 22:26 chmod
-    ... -rwxr-xr-x  1 root  wheel    29024 May  3 22:26 cp
-    ... -rwxr-xr-x  1 root  wheel   375824 May  3 22:26 csh
-    ... -rwxr-xr-x  1 root  wheel    28608 May  3 22:26 date
-    ... -rwxr-xr-x  1 root  wheel    32000 May  3 22:26 dd
-    ... -rwxr-xr-x  1 root  wheel    23392 May  3 22:26 df
-    ... -rwxr-xr-x  1 root  wheel    18128 May  3 22:26 echo'''
+    >>> data = '''; <<>> DiG 9.10.6 <<>> example.com
+    ... ;; global options: +cmd
+    ... ;; Got answer:
+    ... ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 64612
+    ... ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+    ... 
+    ... ;; OPT PSEUDOSECTION:
+    ... ; EDNS: version: 0, flags:; udp: 4096
+    ... ;; QUESTION SECTION:
+    ... ;example.com.           IN  A
+    ... 
+    ... ;; ANSWER SECTION:
+    ... example.com.        29658   IN  A   93.184.216.34
+    ... 
+    ... ;; Query time: 52 msec
+    ... ;; SERVER: 2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)
+    ... ;; WHEN: Fri Apr 16 16:13:00 PDT 2021
+    ... ;; MSG SIZE  rcvd: 56'''
     >>>
-    >>> jc.parsers.ls.parse(data)
-    [{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 23648,
-    'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root',
-    'group': 'wheel', 'size': 30016, 'date': 'May 3 22:26'}, {'filename': 'cp', 'flags': '-rwxr-xr-x',
-    'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 29024, 'date': 'May 3 22:26'}, {'filename': 'csh',
-    'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 375824, 'date': 'May 3
-    22:26'}, {'filename': 'date', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel',
-    'size': 28608, 'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner':
-    'root', 'group': 'wheel', 'size': 32000, 'date': 'May 3 22:26'}, {'filename': 'df', 'flags':
-    '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 23392, 'date': 'May 3 22:26'},
-    {'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 18128,
-    'date': 'May 3 22:26'}]
+    >>> jc.parsers.dig.parse(data)
+    [{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd', 'ra'], 'query_num': 1, 'answer_num':
+    1, 'authority_num': 0, 'additional_num': 1, 'opt_pseudosection': {'edns': {'version': 0, 'flags': [], 'udp':
+    4096}}, 'question': {'name': 'example.com.', 'class': 'IN', 'type': 'A'}, 'answer': [{'name': 'example.com.',
+    'class': 'IN', 'type': 'A', 'ttl': 29658, 'data': '93.184.216.34'}], 'query_time': 52, 'server':
+    '2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
+    'when_epoch': 1618614780, 'when_epoch_utc': None}]
 """
 
 name = 'jc'
