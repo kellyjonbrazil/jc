@@ -24,64 +24,83 @@ Schema:
 
     [
       {
-        "id":             integer,
-        "opcode":         string,
-        "status":         string,
+        "id":                   integer,
+        "opcode":               string,
+        "status":               string,
         "flags": [
-                          string
+                                string
         ],
-        "query_num":      integer,
-        "answer_num":     integer,
-        "authority_num":  integer,
-        "additional_num": integer,
+        "query_num":            integer,
+        "answer_num":           integer,
+        "authority_num":        integer,
+        "additional_num":       integer,
         "axfr": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
+        "opt_pseudosection": {
+            "edns": {
+                "version":      integer,
+                "flags": [
+                                string
+                ],
+                "udp":          integer
+            },
+            "cookie":           string
+        },
         "question": {
-          "name":         string,
-          "class":        string,
-          "type":         string
+          "name":               string,
+          "class":              string,
+          "type":               string
         },
         "answer": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
+          }
+        ],
+        "additional": [
+          {
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
         "authority": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
-        "query_time":     integer,   # in msec
-        "server":         string,
-        "when":           string,
-        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
-        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
-        "rcvd":           integer
-        "size":           string
+        "query_time":           integer,   # in msec
+        "server":               string,
+        "when":                 string,
+        "when_epoch":           integer,   # naive timestamp if when field is parsable, else null
+        "when_epoch_utc":       integer,   # timezone aware timestamp availabe for UTC, else null
+        "rcvd":                 integer
+        "size":                 string
       }
     ]
 
 Examples:
 
-    $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
+    $ dig example.com | jc --dig -p
     [
       {
-        "id": 52172,
+        "id": 2951,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -90,113 +109,35 @@ Examples:
           "ra"
         ],
         "query_num": 1,
-        "answer_num": 4,
+        "answer_num": 1,
         "authority_num": 0,
         "additional_num": 1,
+        "opt_pseudosection": {
+          "edns": {
+            "version": 0,
+            "flags": [],
+            "udp": 4096
+          }
+        },
         "question": {
-          "name": "cnn.com.",
+          "name": "example.com.",
           "class": "IN",
           "type": "A"
         },
         "answer": [
           {
-            "name": "cnn.com.",
+            "name": "example.com.",
             "class": "IN",
             "type": "A",
-            "ttl": 27,
-            "data": "151.101.65.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.129.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.1.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.193.67"
+            "ttl": 39302,
+            "data": "93.184.216.34"
           }
         ],
-        "query_time": 38,
-        "server": "2600",
-        "when": "Tue Mar 30 20:07:59 PDT 2021",
-        "rcvd": 100,
-        "when_epoch": 1617160079,
-        "when_epoch_utc": null
-      },
-      {
-        "id": 36292,
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "aa",
-          "rd"
-        ],
-        "query_num": 1,
-        "answer_num": 1,
-        "authority_num": 4,
-        "additional_num": 1,
-        "question": {
-          "name": "www.cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "www.cnn.com.",
-            "class": "IN",
-            "type": "CNAME",
-            "ttl": 300,
-            "data": "turner-tls.map.fastly.net."
-          }
-        ],
-        "authority": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-1086.awsdns-07.org."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-1630.awsdns-11.co.uk."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-47.awsdns-05.com."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-576.awsdns-08.net."
-          }
-        ],
-        "query_time": 27,
-        "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Mar 30 20:07:59 PDT 2021",
-        "rcvd": 212,
-        "when_epoch": 1617160079,
+        "query_time": 49,
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Fri Apr 16 16:05:10 PDT 2021",
+        "rcvd": 56,
+        "when_epoch": 1618614310,
         "when_epoch_utc": null
       }
     ]
@@ -204,7 +145,7 @@ Examples:
     $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p -r
     [
       {
-        "id": "23843",
+        "id": "46052",
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -213,110 +154,34 @@ Examples:
           "ra"
         ],
         "query_num": "1",
-        "answer_num": "4",
+        "answer_num": "1",
         "authority_num": "0",
         "additional_num": "1",
+        "opt_pseudosection": {
+          "edns": {
+            "version": "0",
+            "flags": [],
+            "udp": "4096"
+          }
+        },
         "question": {
-          "name": "cnn.com.",
+          "name": "example.com.",
           "class": "IN",
           "type": "A"
         },
         "answer": [
           {
-            "name": "cnn.com.",
+            "name": "example.com.",
             "class": "IN",
             "type": "A",
-            "ttl": "30",
-            "data": "151.101.193.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.1.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.65.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.129.67"
+            "ttl": "40426",
+            "data": "93.184.216.34"
           }
         ],
-        "query_time": "24 msec",
-        "server": "192.168.1.254#53(192.168.1.254)",
-        "when": "Tue Nov 12 07:16:19 PST 2019",
-        "rcvd": "100"
-      },
-      {
-        "id": "8266",
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "aa",
-          "rd"
-        ],
-        "query_num": "1",
-        "answer_num": "1",
-        "authority_num": "4",
-        "additional_num": "1",
-        "question": {
-          "name": "www.cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "www.cnn.com.",
-            "class": "IN",
-            "type": "CNAME",
-            "ttl": "300",
-            "data": "turner-tls.map.fastly.net."
-          }
-        ],
-        "authority": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-1086.awsdns-07.org."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-1630.awsdns-11.co.uk."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-47.awsdns-05.com."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-576.awsdns-08.net."
-          }
-        ],
-        "query_time": "26 msec",
-        "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Nov 12 07:16:19 PST 2019",
-        "rcvd": "212"
+        "query_time": "48 msec",
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Fri Apr 16 16:06:12 PDT 2021",
+        "rcvd": "56"
       }
     ]
 
@@ -421,4 +286,4 @@ Returns:
 ## Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
