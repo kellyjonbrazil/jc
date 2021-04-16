@@ -1,0 +1,32 @@
+; <<>> DiG 9.11.3-1ubuntu1.1-Ubuntu <<>> google.com NS @a.gtld-servers.net
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 12149
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 4, ADDITIONAL: 9
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;google.com.            IN  NS
+
+;; AUTHORITY SECTION:
+google.com.     172800  IN  NS  ns2.google.com.
+google.com.     172800  IN  NS  ns1.google.com.
+google.com.     172800  IN  NS  ns3.google.com.
+google.com.     172800  IN  NS  ns4.google.com.
+
+;; ADDITIONAL SECTION:
+ns2.google.com.     172800  IN  AAAA    2001:4860:4802:34::a
+ns2.google.com.     172800  IN  A   216.239.34.10
+ns1.google.com.     172800  IN  AAAA    2001:4860:4802:32::a
+ns1.google.com.     172800  IN  A   216.239.32.10
+ns3.google.com.     172800  IN  AAAA    2001:4860:4802:36::a
+ns3.google.com.     172800  IN  A   216.239.36.10
+ns4.google.com.     172800  IN  AAAA    2001:4860:4802:38::a
+ns4.google.com.     172800  IN  A   216.239.38.10
+
+;; Query time: 68 msec
+;; SERVER: 192.5.6.30#53(192.5.6.30)
+;; WHEN: Mon Sep 03 19:23:20 EST 2018
+;; MSG SIZE  rcvd: 287

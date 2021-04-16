@@ -58,6 +58,25 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.out'), 'r', encoding='utf-8') as f:
             self.generic_dig_answer_spaces = f.read()
 
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_additional = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional2.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_additional2 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional3.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_additional3 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_edns = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns2.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_edns2 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.out'), 'r', encoding='utf-8') as f:
+            self.generic_dig_edns3 = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_dig_json = json.loads(f.read())
@@ -106,6 +125,25 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.json'), 'r', encoding='utf-8') as f:
             self.generic_dig_answer_spaces_json = json.loads(f.read())
+
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_additional_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional2.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_additional2_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional3.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_additional3_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_edns_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns2.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_edns2_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.json'), 'r', encoding='utf-8') as f:
+            self.generic_dig_edns3_json = json.loads(f.read())
 
     def test_dig_nodata(self):
         """
@@ -208,6 +246,42 @@ class MyTests(unittest.TestCase):
         Test 'dig' with spaces in the answer data (e.g. TXT responses)
         """
         self.assertEqual(jc.parsers.dig.parse(self.generic_dig_answer_spaces, quiet=True), self.generic_dig_answer_spaces_json)
+
+    def test_dig_additional(self):
+        """
+        Test 'dig' with additional section
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_additional, quiet=True), self.generic_dig_additional_json)
+
+    def test_dig_additional2(self):
+        """
+        Test 'dig' with additional section
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_additional2, quiet=True), self.generic_dig_additional2_json)
+
+    def test_dig_additional3(self):
+        """
+        Test 'dig' with additional section
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_additional3, quiet=True), self.generic_dig_additional3_json)
+
+    def test_dig_edns(self):
+        """
+        Test 'dig' with edns info
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_edns, quiet=True), self.generic_dig_edns_json)
+
+    def test_dig_edns2(self):
+        """
+        Test 'dig' with edns info
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_edns2, quiet=True), self.generic_dig_edns2_json)
+
+    def test_dig_edns3(self):
+        """
+        Test 'dig' with edns info
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_edns3, quiet=True), self.generic_dig_edns3_json)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,34 @@
+; <<>> DiG 9.11.3-1ubuntu1.1-Ubuntu <<>> ultradns.com NS @a.gtld-servers.net
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54105
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 10, ADDITIONAL: 5
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;ultradns.com.          IN  NS
+
+;; AUTHORITY SECTION:
+ultradns.com.       172800  IN  NS  pdns196.ultradns.com.
+ultradns.com.       172800  IN  NS  pdns196.ultradns.net.
+ultradns.com.       172800  IN  NS  pdns196.ultradns.org.
+ultradns.com.       172800  IN  NS  pdns196.ultradns.info.
+ultradns.com.       172800  IN  NS  pdns196.ultradns.biz.
+ultradns.com.       172800  IN  NS  pdns196.ultradns.co.uk.
+ultradns.com.       172800  IN  NS  ari.alpha.aridns.net.au.
+ultradns.com.       172800  IN  NS  ari.beta.aridns.net.au.
+ultradns.com.       172800  IN  NS  ari.gamma.aridns.net.au.
+ultradns.com.       172800  IN  NS  ari.delta.aridns.net.au.
+
+;; ADDITIONAL SECTION:
+pdns196.ultradns.com.   172800  IN  A   156.154.64.196
+pdns196.ultradns.com.   172800  IN  AAAA    2001:502:f3ff::e8
+pdns196.ultradns.net.   172800  IN  A   156.154.65.196
+pdns196.ultradns.net.   172800  IN  AAAA    2610:a1:1014::e8
+
+;; Query time: 72 msec
+;; SERVER: 192.5.6.30#53(192.5.6.30)
+;; WHEN: Mon Sep 03 19:25:24 EST 2018
+;; MSG SIZE  rcvd: 432

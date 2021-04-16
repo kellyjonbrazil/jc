@@ -1,0 +1,34 @@
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @8.8.8.8 metebalci.com +qr +dnssec
+; (1 server found)
+;; global options: +cmd
+;; Sending:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 37727
+;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 4096
+; COOKIE: a263795b817be1b1
+;; QUESTION SECTION:
+;metebalci.com.			IN	A
+
+;; QUERY SIZE: 54
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 37727
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 512
+;; QUESTION SECTION:
+;metebalci.com.			IN	A
+
+;; ANSWER SECTION:
+metebalci.com.		299	IN	A	151.101.1.195
+metebalci.com.		299	IN	A	151.101.65.195
+metebalci.com.		299	IN	RRSIG	A 8 2 300 20181227144044 20181205144044 59764 metebalci.com. z6FupNLEU/8OcB3rNMkVqVaan05Xu89T8hV6+IC7LGjWPtrD+TlNJd8D cGeq8xJLR8b1Q+gBK0QSxpGvk89GaCTjNtMGHLBBdgpyV4syFv2BNzK7 iAJhA8QJ6i5xVFJdzMSsn3WvQvN1W71sirt8+56r1nQ47aVkBSLJoZKP lgw=
+
+;; Query time: 41 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Fri Dec 07 14:09:43 CET 2018
+;; MSG SIZE  rcvd: 247
+

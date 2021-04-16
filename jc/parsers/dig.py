@@ -21,55 +21,74 @@ Schema:
 
     [
       {
-        "id":             integer,
-        "opcode":         string,
-        "status":         string,
+        "id":                   integer,
+        "opcode":               string,
+        "status":               string,
         "flags": [
-                          string
+                                string
         ],
-        "query_num":      integer,
-        "answer_num":     integer,
-        "authority_num":  integer,
-        "additional_num": integer,
+        "query_num":            integer,
+        "answer_num":           integer,
+        "authority_num":        integer,
+        "additional_num":       integer,
         "axfr": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
+        "opt_pseudosection": {
+            "edns": {
+                "version":      integer,
+                "flags": [
+                                string
+                ],
+                "udp":          integer
+            },
+            "cookie":           string
+        },
         "question": {
-          "name":         string,
-          "class":        string,
-          "type":         string
+          "name":               string,
+          "class":              string,
+          "type":               string
         },
         "answer": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
+          }
+        ],
+        "additional": [
+          {
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
         "authority": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
-        "query_time":     integer,   # in msec
-        "server":         string,
-        "when":           string,
-        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
-        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
-        "rcvd":           integer
-        "size":           string
+        "query_time":           integer,   # in msec
+        "server":               string,
+        "when":                 string,
+        "when_epoch":           integer,   # naive timestamp if when field is parsable, else null
+        "when_epoch_utc":       integer,   # timezone aware timestamp availabe for UTC, else null
+        "rcvd":                 integer
+        "size":                 string
       }
     ]
 
@@ -160,7 +179,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '2.0'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -224,6 +243,14 @@ def _process(proc_data):
                     ans['ttl'] = ttl_int
                 except (ValueError):
                     ans['ttl'] = None
+
+        if 'additional' in entry:
+            for add in entry['additional']:
+                try:
+                    ttl_int = int(add['ttl'])
+                    add['ttl'] = ttl_int
+                except (ValueError):
+                    add['ttl'] = None
 
         if 'authority' in entry:
             for auth in entry['authority']:
@@ -319,22 +346,6 @@ def _parse_question(question):
     return {'name': dns_name,
             'class': dns_class,
             'type': dns_type}
-
-
-def _parse_authority(authority):
-    # cnn.com.      3600    IN  NS  ns-1086.awsdns-07.org.
-    authority = authority.split()
-    authority_name = authority[0]
-    authority_class = authority[2]
-    authority_type = authority[3]
-    authority_ttl = authority[1]
-    authority_data = authority[4]
-
-    return {'name': authority_name,
-            'class': authority_class,
-            'type': authority_type,
-            'ttl': authority_ttl,
-            'data': authority_data}
 
 
 def _parse_answer(answer):
@@ -442,6 +453,11 @@ def parse(data, raw=False, quiet=False):
                 answer_list = []
                 continue
 
+            if line.startswith(';; ADDITIONAL SECTION:'):
+                section = 'additional'
+                additional_list = []
+                continue
+
             # parse sections
 
             if not line.startswith(';') and section == 'axfr':
@@ -460,13 +476,18 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if not line.startswith(';') and section == 'authority':
-                authority_list.append(_parse_authority(line))
+                authority_list.append(_parse_answer(line))
                 output_entry.update({'authority': authority_list})
                 continue
 
             if not line.startswith(';') and section == 'answer':
                 answer_list.append(_parse_answer(line))
                 output_entry.update({'answer': answer_list})
+                continue
+
+            if not line.startswith(';') and section == 'additional':
+                additional_list.append(_parse_answer(line))
+                output_entry.update({'additional': additional_list})
                 continue
 
             # footer consists of 4 lines
