@@ -548,7 +548,7 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
 ```json
 [
   {
-    "id": 52172,
+    "id": 10267,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -560,6 +560,13 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
     "answer_num": 4,
     "authority_num": 0,
     "additional_num": 1,
+    "opt_pseudosection": {
+      "edns": {
+        "version": 0,
+        "flags": [],
+        "udp": 4096
+      }
+    },
     "question": {
       "name": "cnn.com.",
       "class": "IN",
@@ -570,40 +577,40 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.65.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.129.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.1.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.193.67"
       }
     ],
-    "query_time": 38,
-    "server": "2600",
-    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "query_time": 51,
+    "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+    "when": "Fri Apr 16 16:24:32 PDT 2021",
     "rcvd": 100,
-    "when_epoch": 1617160079,
+    "when_epoch": 1618615472,
     "when_epoch_utc": null
   },
   {
-    "id": 36292,
+    "id": 56207,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -615,6 +622,13 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
     "answer_num": 1,
     "authority_num": 4,
     "additional_num": 1,
+    "opt_pseudosection": {
+      "edns": {
+        "version": 0,
+        "flags": [],
+        "udp": 4096
+      }
+    },
     "question": {
       "name": "www.cnn.com.",
       "class": "IN",
@@ -659,11 +673,11 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "data": "ns-576.awsdns-08.net."
       }
     ],
-    "query_time": 27,
+    "query_time": 22,
     "server": "205.251.194.64#53(205.251.194.64)",
-    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "when": "Fri Apr 16 16:24:32 PDT 2021",
     "rcvd": 212,
-    "when_epoch": 1617160079,
+    "when_epoch": 1618615472,
     "when_epoch_utc": null
   }
 ]
@@ -674,7 +688,7 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ```json
 [
   {
-    "id": 22191,
+    "id": 57656,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -686,6 +700,13 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
     "answer_num": 1,
     "authority_num": 0,
     "additional_num": 1,
+    "opt_pseudosection": {
+      "edns": {
+        "version": 0,
+        "flags": [],
+        "udp": 4096
+      }
+    },
     "question": {
       "name": "1.1.1.1.in-addr.arpa.",
       "class": "IN",
@@ -696,15 +717,15 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
         "name": "1.1.1.1.in-addr.arpa.",
         "class": "IN",
         "type": "PTR",
-        "ttl": 1800,
+        "ttl": 1639,
         "data": "one.one.one.one."
       }
     ],
-    "query_time": 44,
-    "server": "2600",
-    "when": "Tue Mar 30 20:10:34 PDT 2021",
+    "query_time": 47,
+    "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+    "when": "Fri Apr 16 16:25:21 PDT 2021",
     "rcvd": 78,
-    "when_epoch": 1617160234,
+    "when_epoch": 1618615521,
     "when_epoch_utc": null
   }
 ]
