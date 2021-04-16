@@ -185,7 +185,6 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-
     for entry in proc_data:
         int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd']
         for key in int_list:
@@ -203,6 +202,20 @@ def _process(proc_data):
                     ax['ttl'] = ttl_int
                 except (ValueError):
                     ax['ttl'] = None
+
+        if 'opt_pseudosection' in entry:
+            if 'edns' in entry['opt_pseudosection']:
+                if 'version' in entry['opt_pseudosection']['edns']:
+                    try:
+                        entry['opt_pseudosection']['edns']['version'] = int(entry['opt_pseudosection']['edns']['version'])
+                    except (ValueError):
+                        entry['opt_pseudosection']['edns']['version'] = None
+
+                if 'udp' in entry['opt_pseudosection']['edns']:
+                    try:
+                        entry['opt_pseudosection']['edns']['udp'] = int(entry['opt_pseudosection']['edns']['udp'])
+                    except (ValueError):
+                        entry['opt_pseudosection']['edns']['udp'] = None
 
         if 'answer' in entry:
             for ans in entry['answer']:
@@ -275,7 +288,25 @@ def _parse_opt_pseudosection(optline):
     # ;; OPT PSEUDOSECTION:
     # ; EDNS: version: 0, flags:; udp: 4096
     # ; COOKIE: 1cbc06703eaef210
-    return {}
+    if optline.startswith('; EDNS:'):
+        optline_list = optline.replace(',', ' ').split(';')
+        optline_first = optline_list[1]
+        optline_rest = optline_list[2]
+        _, _, ver, _, *flags = optline_first.split()
+        udp = optline_rest.split()[-1]
+
+        return {
+            'edns': {
+                'version': ver,
+                'flags': flags,
+                'udp': udp
+            }
+        }
+
+    elif optline.startswith('; COOKIE:'):
+        return {
+            'cookie': optline.split()[2]
+        }
 
 
 def _parse_question(question):
@@ -393,9 +424,9 @@ def parse(data, raw=False, quiet=False):
                 output_entry.update(_parse_flags_line(line))
                 continue
 
-            # if line.startswith(';; OPT PSEUDOSECTION:'):
-            #     section = 'opt_pseudosection'
-            #     continue
+            if line.startswith(';; OPT PSEUDOSECTION:'):
+                section = 'opt_pseudosection'
+                continue
 
             if line.startswith(';; QUESTION SECTION:'):
                 section = 'question'
@@ -418,9 +449,11 @@ def parse(data, raw=False, quiet=False):
                 output_entry.update({'axfr': axfr_list})
                 continue
 
-            # if section == 'opt_pseudosection':
-            #     # output_entry.update(_parse_opt_pseudosection(line))
-            #     continue
+            if section == 'opt_pseudosection':
+                if 'opt_pseudosection' not in output_entry:
+                    output_entry['opt_pseudosection'] = {}
+                output_entry['opt_pseudosection'].update(_parse_opt_pseudosection(line))
+                continue
 
             if section == 'question':
                 output_entry['question'] = _parse_question(line)
@@ -460,6 +493,7 @@ def parse(data, raw=False, quiet=False):
 
                 if output_entry:
                     raw_output.append(output_entry)
+
             elif line.startswith(';; XFR size:'):
                 section = ''
                 output_entry.update({'size': line.split(':')[1].lstrip()})
