@@ -688,7 +688,7 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ```json
 [
   {
-    "id": 57656,
+    "id": 20785,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -717,15 +717,15 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
         "name": "1.1.1.1.in-addr.arpa.",
         "class": "IN",
         "type": "PTR",
-        "ttl": 1639,
+        "ttl": 1800,
         "data": "one.one.one.one."
       }
     ],
-    "query_time": 47,
+    "query_time": 40,
     "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
-    "when": "Fri Apr 16 16:25:21 PDT 2021",
+    "when": "Sat Apr 17 14:50:50 PDT 2021",
     "rcvd": 78,
-    "when_epoch": 1618615521,
+    "when_epoch": 1618696250,
     "when_epoch_utc": null
   }
 ]

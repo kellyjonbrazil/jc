@@ -1,6 +1,6 @@
 jc changelog
 
-20210415 v1.15.2
+20210416 v1.15.2
 - Add systeminfo parser tested on Windows
 - Update dig parser to fix an issue with IPv6 addresses in the server field
 - Update dig parser to fix an issue when axfr entries contain a semicolon

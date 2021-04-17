@@ -185,7 +185,7 @@ Examples:
     $ dig -x 1.1.1.1 | jc --dig -p
     [
       {
-        "id": 22191,
+        "id": 20785,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -197,6 +197,13 @@ Examples:
         "answer_num": 1,
         "authority_num": 0,
         "additional_num": 1,
+        "opt_pseudosection": {
+          "edns": {
+            "version": 0,
+            "flags": [],
+            "udp": 4096
+          }
+        },
         "question": {
           "name": "1.1.1.1.in-addr.arpa.",
           "class": "IN",
@@ -211,11 +218,11 @@ Examples:
             "data": "one.one.one.one."
           }
         ],
-        "query_time": 44,
-        "server": "2600",
-        "when": "Tue Mar 30 20:10:34 PDT 2021",
+        "query_time": 40,
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Sat Apr 17 14:50:50 PDT 2021",
         "rcvd": 78,
-        "when_epoch": 1617160234,
+        "when_epoch": 1618696250,
         "when_epoch_utc": null
       }
     ]
@@ -223,7 +230,7 @@ Examples:
     $ dig -x 1.1.1.1 | jc --dig -p -r
     [
       {
-        "id": "50986",
+        "id": "32644",
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -235,6 +242,13 @@ Examples:
         "answer_num": "1",
         "authority_num": "0",
         "additional_num": "1",
+        "opt_pseudosection": {
+          "edns": {
+            "version": "0",
+            "flags": [],
+            "udp": "4096"
+          }
+        },
         "question": {
           "name": "1.1.1.1.in-addr.arpa.",
           "class": "IN",
@@ -249,9 +263,9 @@ Examples:
             "data": "one.one.one.one."
           }
         ],
-        "query_time": "38 msec",
-        "server": "2600",
-        "when": "Tue Nov 12 07:17:19 PST 2019",
+        "query_time": "52 msec",
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Sat Apr 17 14:51:46 PDT 2021",
         "rcvd": "78"
       }
     ]
