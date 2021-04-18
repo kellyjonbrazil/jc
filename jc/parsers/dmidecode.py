@@ -153,8 +153,8 @@ def _process(proc_data):
     """
     for entry in proc_data:
         int_list = ['type', 'bytes']
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
         if not entry['values']:

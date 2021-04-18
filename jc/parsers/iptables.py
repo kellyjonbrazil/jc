@@ -191,8 +191,8 @@ def _process(proc_data):
     for entry in proc_data:
         for rule in entry['rules']:
             int_list = ['num', 'pkts']
-            for key in int_list:
-                if key in rule:
+            for key in rule:
+                if key in int_list:
                     rule[key] = jc.utils.convert_to_int(rule[key])
 
             if 'bytes' in rule:

@@ -380,7 +380,7 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        # integer changes
+        # integer and float conversions
         int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
                     'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
                     'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
@@ -388,10 +388,14 @@ def _process(proc_data):
                     'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop', 'ibytes', 'obytes', 'r_mbuf',
                     's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa', 'r_lowa', 's_lowa', 'r_bcnt',
                     's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win']
-        for key in int_list:
-            if key in entry:
+        float_list = ['rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime']
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+            if key in float_list:
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
+        # add number keys
         if 'local_port' in entry:
             local_num = jc.utils.convert_to_int(entry['local_port'])
             if local_num:
@@ -401,12 +405,6 @@ def _process(proc_data):
             foreign_num = jc.utils.convert_to_int(entry['foreign_port'])
             if foreign_num:
                 entry['foreign_port_num'] = foreign_num
-
-        # float changes
-        float_list = ['rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime']
-        for key in float_list:
-            if key in entry:
-                entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
 

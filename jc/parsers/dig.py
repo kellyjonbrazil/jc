@@ -304,8 +304,8 @@ def _process(proc_data):
     for entry in proc_data:
         int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd',
                     'query_size', 'query_time']
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'axfr' in entry:

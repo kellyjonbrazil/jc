@@ -240,13 +240,11 @@ def _process(proc_data):
         entry['state'] = entry.pop('s')
 
         int_list = ['st', 'when', 'poll', 'reach']
-        for key in int_list:
-            if key in entry:
-                entry[key] = jc.utils.convert_to_int(entry[key])
-
         float_list = ['delay', 'offset', 'jitter']
-        for key in float_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
+            if key in float_list:
                 entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data

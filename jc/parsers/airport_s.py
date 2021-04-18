@@ -137,15 +137,12 @@ def _process(proc_data):
     """
     for entry in proc_data:
 
-        # integers
+        # convert integers and booleans
         int_list = ['rssi']
-        for key in int_list:
-            if key in entry:
-                entry[key] = jc.utils.convert_to_int(entry[key])
-
-        # booleans
         bool_list = ['ht']
         for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
             if key in bool_list:
                 entry[key] = jc.utils.convert_to_bool(entry[key])
 

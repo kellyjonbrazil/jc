@@ -295,16 +295,13 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        # boolean changes
+        # boolean and integer changes
         bool_list = ['rm', 'ro', 'rota', 'disc_zero', 'rand']
-        for key in bool_list:
-            if key in entry:
-                entry[key] = jc.utils.convert_to_bool(entry[key])
-
-        # integer changes
         int_list = ['ra', 'alignment', 'min_io', 'opt_io', 'phy_sec', 'log_sec', 'rq_size', 'disc_aln']
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in bool_list:
+                entry[key] = jc.utils.convert_to_bool(entry[key])
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data

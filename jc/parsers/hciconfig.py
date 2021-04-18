@@ -348,8 +348,8 @@ def _process(proc_data):
 
         int_list = ['acl_mtu', 'acl_mtu_packets', 'sco_mtu', 'sco_mtu_packets', 'rx_bytes', 'rx_acl', 'rx_sco',
                     'rx_events', 'rx_errors', 'tx_bytes', 'tx_acl', 'tx_sco', 'tx_commands', 'tx_errors']
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'service_classes' in entry and len(entry['service_classes']) == 1 and 'Unspecified' in entry['service_classes']:

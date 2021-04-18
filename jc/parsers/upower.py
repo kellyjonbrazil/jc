@@ -194,7 +194,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`upower` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -225,7 +225,7 @@ def _process(proc_data):
         if 'updated' in entry:
             updated_list = entry['updated'].replace('(', '').replace(')', '').split()
             entry['updated'] = ' '.join(updated_list[:-3])
-            entry['updated_seconds_ago'] = int(updated_list[-3])
+            entry['updated_seconds_ago'] = jc.utils.convert_to_int(updated_list[-3])
 
             if entry['updated']:
                 ts = jc.utils.timestamp(entry['updated'])
@@ -236,20 +236,14 @@ def _process(proc_data):
         bool_list = ['power_supply', 'has_history', 'has_statistics', 'on_battery', 'lid_is_closed', 'lid_is_present']
         for key in entry:
             if key in bool_list:
-                if entry[key].lower() == 'yes':
-                    entry[key] = True
-                else:
-                    entry[key] = False
+                entry[key] = jc.utils.convert_to_bool(entry[key])
 
         # detail level boolean conversions
         bool_list = ['online', 'present', 'rechargeable']
         if 'detail' in entry:
             for key in entry['detail']:
                 if key in bool_list:
-                    if entry['detail'][key].lower() == 'yes':
-                        entry['detail'][key] = True
-                    else:
-                        entry['detail'][key] = False
+                    entry['detail'][key] = jc.utils.convert_to_bool(entry['detail'][key])
 
         # detail level convert warning to null if value is none
         if 'detail' in entry:
@@ -262,8 +256,8 @@ def _process(proc_data):
             add_items = []
             for key, value in entry['detail'].items():
                 if value and isinstance(value, str):
-                    if len(value.split()) == 2 and value.split()[0].replace('.', '').isnumeric():
-                        entry['detail'][key] = float(value.split()[0])
+                    if len(value.split()) == 2:
+                        entry['detail'][key] = jc.utils.convert_to_float(value.split()[0])
                         add_items.append({
                             key + '_unit': value.split()[1]
                         })
@@ -278,7 +272,7 @@ def _process(proc_data):
             for key, value in entry['detail'].items():
                 if value and isinstance(value, str):
                     if value[-1] == '%':
-                        entry['detail'][key] = float(value[:-1])
+                        entry['detail'][key] = jc.utils.convert_to_float(value)
 
         # detail level fix quoted values
         if 'detail' in entry:
@@ -302,9 +296,9 @@ def _process(proc_data):
                     new_history_obj = {}
                     for key, value in history_obj.items():
                         if key == 'time':
-                            new_history_obj[key] = int(value)
+                            new_history_obj[key] = jc.utils.convert_to_int(value)
                         elif key == 'percent_charged':
-                            new_history_obj[key] = float(value)
+                            new_history_obj[key] = jc.utils.convert_to_float(value)
                         else:
                             new_history_obj[key] = value
 

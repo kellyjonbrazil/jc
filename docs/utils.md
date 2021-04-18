@@ -78,7 +78,7 @@ Converts string input to integer by stripping all non-numeric characters
 
 Parameters:
 
-    value:          (string) Input value
+    value:          (string/integer/float) Input value
 
 Returns:
 

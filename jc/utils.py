@@ -89,21 +89,26 @@ def convert_to_int(value):
 
     Parameters:
 
-        value:          (string) Input value
+        value:          (string/integer/float) Input value
 
     Returns:
 
         integer/None    Integer if successful conversion, otherwise None
     """
-    try:
-        value = int(re.sub(r'[^0-9\-\.]', '', value))
-    except (ValueError, TypeError):
+    if isinstance(value, str):
         try:
-            value = round(convert_to_float(value))
-        except (ValueError, TypeError):
-            return None
+            return int(re.sub(r'[^0-9\-\.]', '', value))
+        except ValueError:
+            try:
+                return round(convert_to_float(value))
+            except (ValueError, TypeError):
+                return None
 
-    return value
+    elif isinstance(value, (int, float)):
+        return int(value)
+
+    else:
+        return None
 
 
 def convert_to_float(value):
@@ -118,12 +123,17 @@ def convert_to_float(value):
 
         float/None      Float if successful conversion, otherwise None
     """
-    try:
-        value = float(re.sub(r'[^0-9\-\.]', '', value))
-    except (ValueError, TypeError):
-        return None
+    if isinstance(value, str):
+        try:
+            return float(re.sub(r'[^0-9\-\.]', '', value))
+        except (ValueError, TypeError):
+            return None
 
-    return value
+    elif isinstance(value, (int, float)):
+        return float(value)
+
+    else:
+        return None
 
 
 def convert_to_bool(value):

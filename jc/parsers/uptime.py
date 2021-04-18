@@ -65,7 +65,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`uptime` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -92,10 +92,10 @@ def _process(proc_data):
     """
     if 'time' in proc_data:
         time_list = proc_data['time'].split(':')
-        proc_data['time_hour'] = int(time_list[0])
-        proc_data['time_minute'] = int(time_list[1])
+        proc_data['time_hour'] = jc.utils.convert_to_int(time_list[0])
+        proc_data['time_minute'] = jc.utils.convert_to_int(time_list[1])
         if len(time_list) == 3:
-            proc_data['time_second'] = int(time_list[2])
+            proc_data['time_second'] = jc.utils.convert_to_int(time_list[2])
         else:
             proc_data['time_second'] = None
 
@@ -113,14 +113,14 @@ def _process(proc_data):
         uptime_total_seconds = 0
 
         if 'min' in proc_data['uptime']:
-            uptime_minutes = int(proc_data['uptime'].split()[-2])
+            uptime_minutes = jc.utils.convert_to_int(proc_data['uptime'].split()[-2])
 
         if ':' in proc_data['uptime']:
-            uptime_hours = int(proc_data['uptime'].split()[-1].split(':')[-2])
-            uptime_minutes = int(proc_data['uptime'].split(':')[-1])
+            uptime_hours = jc.utils.convert_to_int(proc_data['uptime'].split()[-1].split(':')[-2])
+            uptime_minutes = jc.utils.convert_to_int(proc_data['uptime'].split(':')[-1])
 
         if 'day' in proc_data['uptime']:
-            uptime_days = int(proc_data['uptime'].split()[0])
+            uptime_days = jc.utils.convert_to_int(proc_data['uptime'].split()[0])
 
         proc_data['uptime_days'] = uptime_days
         proc_data['uptime_hours'] = uptime_hours
@@ -129,25 +129,14 @@ def _process(proc_data):
         uptime_total_seconds = (uptime_days * 86400) + (uptime_hours * 3600) + (uptime_minutes * 60)
         proc_data['uptime_total_seconds'] = uptime_total_seconds
 
-    # integer conversions
+    # integer and float conversions
     int_list = ['users']
-    for key in int_list:
-        if key in proc_data:
-            try:
-                key_int = int(proc_data[key])
-                proc_data[key] = key_int
-            except (ValueError):
-                proc_data[key] = None
-
-    # float conversions
     float_list = ['load_1m', 'load_5m', 'load_15m']
-    for key in float_list:
-        if key in proc_data:
-            try:
-                key_float = float(proc_data[key])
-                proc_data[key] = key_float
-            except (ValueError):
-                proc_data[key] = None
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     return proc_data
 

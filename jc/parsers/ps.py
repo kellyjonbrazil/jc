@@ -241,16 +241,13 @@ def _process(proc_data):
         if '%mem' in entry:
             entry['mem_percent'] = entry.pop('%mem')
 
-        # change to int
+        # convert ints and floats
         int_list = ['pid', 'ppid', 'c', 'vsz', 'rss']
-        for key in int_list:
-            if key in entry:
-                entry[key] = jc.utils.convert_to_int(entry[key])
-
-        # change to float
         float_list = ['cpu_percent', 'mem_percent']
-        for key in float_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
+            if key in float_list:
                 entry[key] = jc.utils.convert_to_float(entry[key])
 
         # clean up other fields

@@ -131,8 +131,8 @@ def _process(proc_data):
     """
     for entry in proc_data:
         null_list = ['user', 'tty', 'from', 'login_at', 'idle', 'what']
-        for key in null_list:
-            if key in entry:
+        for key in entry:
+            if key in null_list:
                 if entry[key] == '-':
                     entry[key] = None
 

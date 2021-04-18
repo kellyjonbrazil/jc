@@ -256,25 +256,18 @@ def _process(proc_data):
     float_list = ['temperature']
 
     for entry in proc_data:
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
-
-        if 'trip_points' in entry:
-            for tp in entry['trip_points']:
-                for key in int_list:
-                    if key in tp:
-                        tp[key] = jc.utils.convert_to_int(tp[key])
-
-    for entry in proc_data:
-        for key in float_list:
-            if key in entry:
+            if key in float_list:
                 entry[key] = jc.utils.convert_to_float(entry[key])
 
         if 'trip_points' in entry:
             for tp in entry['trip_points']:
-                for key in float_list:
-                    if key in tp:
+                for key in tp:
+                    if key in int_list:
+                        tp[key] = jc.utils.convert_to_int(tp[key])
+                    if key in float_list:
                         tp[key] = jc.utils.convert_to_float(tp[key])
 
     for entry in proc_data:

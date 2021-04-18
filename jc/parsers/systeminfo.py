@@ -241,7 +241,7 @@ def _process(proc_data):
             proc_data[item] = None
 
     for i, nic in enumerate(proc_data["network_cards"]):
-        proc_data["network_cards"][i]["dhcp_enabled"] = _convert_to_boolean(
+        proc_data["network_cards"][i]["dhcp_enabled"] = jc.utils.convert_to_bool(
             nic["dhcp_enabled"]
         )
 
@@ -258,7 +258,7 @@ def _process(proc_data):
         "virtual_memory_in_use_mb",
     ]
     for key in int_list:
-        proc_data[key] = _convert_to_int(proc_data.get(key))
+        proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
     dt_list = ["original_install_date", "system_boot_time"]
     for key in dt_list:
@@ -282,7 +282,7 @@ def _process(proc_data):
     if hyperv_key in proc_data:
         for key in hyperv_subkey_list:
             if key in proc_data[hyperv_key]:
-                proc_data[hyperv_key][key] = _convert_to_boolean(
+                proc_data[hyperv_key][key] = jc.utils.convert_to_bool(
                     proc_data[hyperv_key][key]
                 )
 

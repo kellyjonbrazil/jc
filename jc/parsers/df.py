@@ -158,8 +158,8 @@ def _process(proc_data):
 
         # change used, available, use_percent, capacity_percent, ifree, iused, iused_percent to int
         int_list = ['used', 'available', 'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent']
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data

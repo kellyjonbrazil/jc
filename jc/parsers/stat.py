@@ -197,8 +197,8 @@ def _process(proc_data):
     for entry in proc_data:
         int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'unix_device',
                     'rdev', 'block_size']
-        for key in int_list:
-            if key in entry:
+        for key in entry:
+            if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
     # turn - into null for time fields and add calculated timestamp fields
