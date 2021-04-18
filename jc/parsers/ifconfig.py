@@ -264,7 +264,7 @@ class _IfconfigParser(object):
         :return:
         """
         for attr in kwargs.keys():
-            if attr not in IfconfigParser.attributes:
+            if attr not in _IfconfigParser.attributes:
                 raise ValueError("Attribute [{}] not supported.".format(attr))
 
         filtered_interfaces = []
