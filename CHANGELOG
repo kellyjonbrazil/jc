@@ -5,6 +5,7 @@ jc changelog
 - Update dig parser to fix an issue with IPv6 addresses in the server field
 - Update dig parser to fix an issue when axfr entries contain a semicolon
 - Update dig parser to add support for Additional Section and Opt Pseudosection
+- Update dig parser to add query_size field
 - Use dig parser as the main example in readme, documentation, and man page
 
 20210413 v1.15.1
