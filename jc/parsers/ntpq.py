@@ -207,7 +207,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`ntpq -p` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -242,18 +242,12 @@ def _process(proc_data):
         int_list = ['st', 'when', 'poll', 'reach']
         for key in int_list:
             if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         float_list = ['delay', 'offset', 'jitter']
         for key in float_list:
             if key in entry:
-                try:
-                    entry[key] = float(entry[key])
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
 

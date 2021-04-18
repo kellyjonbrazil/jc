@@ -207,7 +207,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`ps` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -245,22 +245,15 @@ def _process(proc_data):
         int_list = ['pid', 'ppid', 'c', 'vsz', 'rss']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         # change to float
         float_list = ['cpu_percent', 'mem_percent']
         for key in float_list:
             if key in entry:
-                try:
-                    key_float = float(entry[key])
-                    entry[key] = key_float
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
+        # clean up other fields
         if 'tty' in entry:
             if entry['tty'] == '?' or entry['tty'] == '??':
                 entry['tty'] = None

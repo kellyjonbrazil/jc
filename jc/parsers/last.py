@@ -104,7 +104,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`last` and `lastb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -161,7 +161,7 @@ def _process(proc_data):
             entry['logout_epoch'] = timestamp.naive
 
         if 'login_epoch' in entry and 'logout_epoch' in entry:
-            entry['duration_seconds'] = int(entry['logout_epoch']) - int(entry['login_epoch'])
+            entry['duration_seconds'] = entry['logout_epoch'] - entry['login_epoch']
 
         if 'duration' in entry and re.match(r'^\d+\+', entry['duration']):
             m = re.match(r'^(?P<days>\d+)\+(?P<hours>\d\d):(?P<minutes>\d\d)', entry['duration'])

@@ -349,11 +349,12 @@ Examples:
       }
     ]
 """
+import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`netstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -389,33 +390,23 @@ def _process(proc_data):
                     's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
+
+        if 'local_port' in entry:
+            local_num = jc.utils.convert_to_int(entry['local_port'])
+            if local_num:
+                entry['local_port_num'] = local_num
+
+        if 'foreign_port' in entry:
+            foreign_num = jc.utils.convert_to_int(entry['foreign_port'])
+            if foreign_num:
+                entry['foreign_port_num'] = foreign_num
 
         # float changes
         float_list = ['rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime']
         for key in float_list:
             if key in entry:
-                try:
-                    key_float = float(entry[key])
-                    entry[key] = key_float
-                except (ValueError):
-                    entry[key] = None
-
-        if 'local_port' in entry:
-            try:
-                entry['local_port_num'] = int(entry['local_port'])
-            except (ValueError):
-                pass
-
-        if 'foreign_port' in entry:
-            try:
-                entry['foreign_port_num'] = int(entry['foreign_port'])
-            except (ValueError):
-                pass
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
 

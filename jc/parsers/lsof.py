@@ -120,7 +120,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`lsof` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -146,15 +146,11 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        # integer changes
         int_list = ['pid', 'tid', 'size_off', 'node']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError, TypeError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
+
     return proc_data
 
 

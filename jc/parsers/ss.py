@@ -279,7 +279,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -308,23 +308,17 @@ def _process(proc_data):
         int_list = ['recv_q', 'send_q', 'pid']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'local_port' in entry:
-            try:
-                entry['local_port_num'] = int(entry['local_port'])
-            except (ValueError):
-                pass
+            local_num = jc.utils.convert_to_int(entry['local_port'])
+            if local_num is not None and local_num >= 0:
+                entry['local_port_num'] = local_num
 
         if 'peer_port' in entry:
-            try:
-                entry['peer_port_num'] = int(entry['peer_port'])
-            except (ValueError):
-                pass
+            peer_num = jc.utils.convert_to_int(entry['peer_port'])
+            if peer_num is not None and peer_num >= 0:
+                entry['peer_port_num'] = peer_num
 
     return proc_data
 

@@ -111,7 +111,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`route` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -140,11 +140,7 @@ def _process(proc_data):
         int_list = ['metric', 'ref', 'use', 'mss', 'window', 'irtt']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         # add flags_pretty
         # Flag mapping from https://www.man7.org/linux/man-pages/man8/route.8.html

@@ -146,7 +146,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -175,34 +175,20 @@ def _process(proc_data):
     float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
                   'round_trip_ms_stddev', 'timestamp', 'time_ms']
 
-    for key in proc_data.keys():
-        for item in int_list:
-            if item == key:
-                try:
-                    proc_data[key] = int(proc_data[key])
-                except (ValueError, TypeError):
-                    proc_data[key] = None
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
-        for item in float_list:
-            if item == key:
-                try:
-                    proc_data[key] = float(proc_data[key])
-                except (ValueError, TypeError):
-                    proc_data[key] = None
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
         if key == 'responses':
             for entry in proc_data['responses']:
-                for k in entry.keys():
+                for k in entry:
                     if k in int_list:
-                        try:
-                            entry[k] = int(entry[k])
-                        except (ValueError, TypeError):
-                            entry[k] = None
+                        entry[k] = jc.utils.convert_to_int(entry[k])
                     if k in float_list:
-                        try:
-                            entry[k] = float(entry[k])
-                        except (ValueError, TypeError):
-                            entry[k] = None
+                        entry[k] = jc.utils.convert_to_float(entry[k])
 
     return proc_data
 

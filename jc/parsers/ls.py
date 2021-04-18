@@ -3,7 +3,6 @@
 Options supported:
 - `lbaR1`
 - `--time-style=full-iso`
-- `-h`: File sizes will be available in text form with `-r` but larger file sizes with human readable suffixes will be converted to `Null` in the default view since the parser attempts to convert this field to an integer.
 
 Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-1`, `-l`, or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
 
@@ -108,7 +107,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`ls` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -137,11 +136,7 @@ def _process(proc_data):
         int_list = ['links', 'size']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'date' in entry:
             # to speed up processing only try to convert the date if it's not the default format
