@@ -85,6 +85,7 @@ Schema:
             "data":             string
           }
         ],
+        "query_size":           integer,
         "query_time":           integer,   # in msec
         "server":               string,
         "when":                 string,

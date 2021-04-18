@@ -82,6 +82,7 @@ Schema:
             "data":             string
           }
         ],
+        "query_size":           integer,
         "query_time":           integer,   # in msec
         "server":               string,
         "when":                 string,
@@ -301,7 +302,7 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd']
+        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd', 'query_size']
         for key in int_list:
             if key in entry:
                 try:
@@ -483,6 +484,28 @@ def _parse_axfr(axfr):
             'data': axfr_data}
 
 
+def _parse_footer(footer):
+    # footer consists of 4 lines
+    # footer line 1
+    if footer.startswith(';; Query time:'):
+        return {'query_time': footer.split(':')[1].lstrip()}
+
+    # footer line 2
+    if footer.startswith(';; SERVER:'):
+        return {'server': footer.split(':', maxsplit=1)[1].lstrip()}
+
+    # footer line 3
+    if footer.startswith(';; WHEN:'):
+        return {'when': footer.split(':', maxsplit=1)[1].lstrip()}
+
+    # footer line 4 (last line)
+    if footer.startswith(';; MSG SIZE  rcvd:'):
+        return {'rcvd': footer.split(':')[1].lstrip()}
+
+    elif footer.startswith(';; XFR size:'):
+        return {'size': footer.split(':')[1].lstrip()}
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -506,7 +529,7 @@ def parse(data, raw=False, quiet=False):
     # remove blank lines
     cleandata = list(filter(None, cleandata))
 
-    # section can be: header, flags, question, authority, answer, xfr, additional, opt_pseudosection, footer
+    # section can be: header, flags, question, authority, answer, axfr, additional, opt_pseudosection, footer
     section = ''
     output_entry = {}
 
@@ -514,6 +537,9 @@ def parse(data, raw=False, quiet=False):
         for line in cleandata:
 
             # identify sections
+            if line.startswith(';; Got answer:'):
+                section = ''
+                continue
 
             if line.startswith('; <<>> ') and ' axfr ' in line.lower():
                 section = 'axfr'
@@ -522,6 +548,8 @@ def parse(data, raw=False, quiet=False):
 
             if line.startswith(';; ->>HEADER<<-'):
                 section = 'header'
+                if output_entry:
+                    raw_output.append(output_entry)
                 output_entry = {}
                 output_entry.update(_parse_header(line))
                 continue
@@ -554,7 +582,16 @@ def parse(data, raw=False, quiet=False):
                 additional_list = []
                 continue
 
+            if line.startswith(';; Query time:'):
+                section = 'footer'
+                output_entry.update(_parse_footer(line))
+                continue
+
             # parse sections
+
+            if line.startswith(';; QUERY SIZE:'):
+                output_entry.update({'query_size': line.split(': ', maxsplit=1)[1]})
+                continue
 
             if not line.startswith(';') and section == 'axfr':
                 axfr_list.append(_parse_axfr(line))
@@ -586,37 +623,12 @@ def parse(data, raw=False, quiet=False):
                 output_entry.update({'additional': additional_list})
                 continue
 
-            # footer consists of 4 lines
-            # footer line 1
-            if line.startswith(';; Query time:'):
-                section = 'footer'
-                output_entry.update({'query_time': line.split(':')[1].lstrip()})
+            if section == 'footer':
+                output_entry.update(_parse_footer(line))
                 continue
 
-            # footer line 2
-            if line.startswith(';; SERVER:'):
-                output_entry.update({'server': line.split(':', maxsplit=1)[1].lstrip()})
-                continue
-
-            # footer line 3
-            if line.startswith(';; WHEN:'):
-                output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
-                continue
-
-            # footer line 4 (last line)
-            if line.startswith(';; MSG SIZE  rcvd:'):
-                section = ''
-                output_entry.update({'rcvd': line.split(':')[1].lstrip()})
-
-                if output_entry:
-                    raw_output.append(output_entry)
-
-            elif line.startswith(';; XFR size:'):
-                section = ''
-                output_entry.update({'size': line.split(':')[1].lstrip()})
-
-                if output_entry:
-                    raw_output.append(output_entry)
+        if output_entry:
+            raw_output.append(output_entry)
 
         raw_output = list(filter(None, raw_output))
 
