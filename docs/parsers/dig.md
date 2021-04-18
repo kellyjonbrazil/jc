@@ -44,14 +44,14 @@ Schema:
           }
         ],
         "opt_pseudosection": {
-            "edns": {
-                "version":      integer,
-                "flags": [
+          "edns": {
+            "version":          integer,
+            "flags": [
                                 string
-                ],
-                "udp":          integer
-            },
-            "cookie":           string
+            ],
+            "udp":              integer
+          },
+          "cookie":             string
         },
         "question": {
           "name":               string,
