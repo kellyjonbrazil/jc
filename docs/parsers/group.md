@@ -134,4 +134,4 @@ Returns:
 ## Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

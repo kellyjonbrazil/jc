@@ -85,7 +85,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`/etc/fstab` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -113,11 +113,7 @@ def _process(proc_data):
         int_list = ['fs_freq', 'fs_passno']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

@@ -302,67 +302,35 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd', 'query_size']
+        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd',
+                    'query_size', 'query_time']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'axfr' in entry:
             for ax in entry['axfr']:
-                try:
-                    ttl_int = int(ax['ttl'])
-                    ax['ttl'] = ttl_int
-                except (ValueError):
-                    ax['ttl'] = None
+                ax['ttl'] = jc.utils.convert_to_int(ax['ttl'])
 
         if 'opt_pseudosection' in entry:
             if 'edns' in entry['opt_pseudosection']:
                 if 'version' in entry['opt_pseudosection']['edns']:
-                    try:
-                        entry['opt_pseudosection']['edns']['version'] = int(entry['opt_pseudosection']['edns']['version'])
-                    except (ValueError):
-                        entry['opt_pseudosection']['edns']['version'] = None
+                    entry['opt_pseudosection']['edns']['version'] = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['version'])
 
                 if 'udp' in entry['opt_pseudosection']['edns']:
-                    try:
-                        entry['opt_pseudosection']['edns']['udp'] = int(entry['opt_pseudosection']['edns']['udp'])
-                    except (ValueError):
-                        entry['opt_pseudosection']['edns']['udp'] = None
+                    entry['opt_pseudosection']['edns']['udp'] = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['udp'])
 
         if 'answer' in entry:
             for ans in entry['answer']:
-                try:
-                    ttl_int = int(ans['ttl'])
-                    ans['ttl'] = ttl_int
-                except (ValueError):
-                    ans['ttl'] = None
+                ans['ttl'] = jc.utils.convert_to_int(ans['ttl'])
 
         if 'additional' in entry:
             for add in entry['additional']:
-                try:
-                    ttl_int = int(add['ttl'])
-                    add['ttl'] = ttl_int
-                except (ValueError):
-                    add['ttl'] = None
+                add['ttl'] = jc.utils.convert_to_int(add['ttl'])
 
         if 'authority' in entry:
             for auth in entry['authority']:
-                try:
-                    ttl_int = int(auth['ttl'])
-                    auth['ttl'] = ttl_int
-                except (ValueError):
-                    auth['ttl'] = None
-
-        if 'query_time' in entry:
-            try:
-                qt_int = int(entry['query_time'].split()[0])
-                entry['query_time'] = qt_int
-            except (ValueError):
-                entry['query_time'] = None
+                auth['ttl'] = jc.utils.convert_to_int(auth['ttl'])
 
         if 'when' in entry:
             ts = jc.utils.timestamp(entry['when'])

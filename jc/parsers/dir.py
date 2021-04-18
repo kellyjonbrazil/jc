@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
@@ -156,13 +156,8 @@ def _process(proc_data):
         # add ints
         int_list = ["size"]
         for key in int_list:
-            if entry.get(key):
-                try:
-                    key_int = int(entry[key].replace(",", ""))
-                except ValueError:
-                    entry[key] = None
-                else:
-                    entry[key] = key_int
+            if key in entry:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

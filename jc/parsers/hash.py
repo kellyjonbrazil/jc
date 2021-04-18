@@ -38,7 +38,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`hash` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -63,15 +63,10 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        # change to int
         int_list = ['hits']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

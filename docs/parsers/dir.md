@@ -145,4 +145,4 @@ Returns:
 ## Parser Information
 Compatibility:  win32
 
-Version 1.1 by Rasheed Elsaleh (rasheed@rebelliondefense.com)
+Version 1.2 by Rasheed Elsaleh (rasheed@rebelliondefense.com)

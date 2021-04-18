@@ -188,7 +188,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -398,7 +398,8 @@ class _IfconfigParser(object):
                 if match:
                     details = match.groupdict()
                     for k, v in details.items():
-                        if isinstance(v, str): details[k] = v.strip()
+                        if isinstance(v, str):
+                            details[k] = v.strip()
                     _interface.update(details)
             if _interface is not None:
                 available_interfaces[_interface['name']] = self.update_interface_details(_interface)
@@ -435,11 +436,7 @@ def _process(proc_data):
                     'tx_collisions', 'metric']
         for key in int_list:
             if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError, TypeError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         # convert OSX-style subnet mask to dotted quad
         if 'ipv4_mask' in entry:

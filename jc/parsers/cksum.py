@@ -54,7 +54,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`cksum` and `sum` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -84,10 +84,8 @@ def _process(proc_data):
         int_list = ['checksum', 'blocks']
         for key in int_list:
             if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
+
     return proc_data
 
 

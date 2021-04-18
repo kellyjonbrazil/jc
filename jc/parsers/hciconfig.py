@@ -317,7 +317,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`hciconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -346,15 +346,11 @@ def _process(proc_data):
 
     for entry in proc_data:
 
-        # integers
         int_list = ['acl_mtu', 'acl_mtu_packets', 'sco_mtu', 'sco_mtu_packets', 'rx_bytes', 'rx_acl', 'rx_sco',
                     'rx_events', 'rx_errors', 'tx_bytes', 'tx_acl', 'tx_sco', 'tx_commands', 'tx_errors']
         for key in int_list:
             if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'service_classes' in entry and len(entry['service_classes']) == 1 and 'Unspecified' in entry['service_classes']:
             entry['service_classes'] = None

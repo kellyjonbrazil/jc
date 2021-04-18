@@ -152,10 +152,7 @@ def _process(proc_data):
         int_list = ['expires']
         for key in int_list:
             if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

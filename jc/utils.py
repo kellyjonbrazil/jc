@@ -92,14 +92,74 @@ def convert_to_int(value):
         value:          (string) Input value
 
     Returns:
+
         integer/None    Integer if successful conversion, otherwise None
     """
     try:
-        value = int(re.sub('[^0-9]', '', value))
+        value = int(re.sub(r'[^0-9\-\.]', '', value))
+    except (ValueError, TypeError):
+        try:
+            value = round(convert_to_float(value))
+        except (ValueError, TypeError):
+            return None
+
+    return value
+
+
+def convert_to_float(value):
+    """
+    Converts string input to float by stripping all non-numeric characters
+
+    Parameters:
+
+        value:          (string) Input value
+
+    Returns:
+
+        float/None      Float if successful conversion, otherwise None
+    """
+    try:
+        value = float(re.sub(r'[^0-9\-\.]', '', value))
     except (ValueError, TypeError):
         return None
 
     return value
+
+
+def convert_to_bool(value):
+    """
+    Converts string, integer, or float input to boolean by checking for 'truthy' values
+
+    Parameters:
+
+        value:          (string/integer/float) Input value
+
+    Returns:
+
+        True/False      False unless a 'truthy' number or string is found ('y', 'yes', 'true', '1', 1, -1, etc.)
+    """
+    # if number, then bool it
+    # if string, try to convert to float
+    #   if float converts, then bool the result
+    #   if float does not convert then look for truthy string and bool True
+    #   else False
+    truthy = ['y', 'yes', 'true']
+
+    if isinstance(value, (int, float)):
+        return bool(value)
+
+    if isinstance(value, str):
+        try:
+            test_value = convert_to_float(value)
+            if test_value is not None:
+                return bool(test_value)
+        except Exception:
+            pass
+
+        if value:
+            return True if value.lower() in truthy else False
+
+    return False
 
 
 class timestamp:
