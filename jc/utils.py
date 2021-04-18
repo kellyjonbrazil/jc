@@ -83,6 +83,25 @@ def has_data(data):
     return True if data and not data.isspace() else False
 
 
+def convert_to_int(value):
+    """
+    Converts string input to integer by stripping all non-numeric characters
+
+    Parameters:
+
+        value:          (string) Input value
+
+    Returns:
+        integer/None    Integer if successful conversion, otherwise None
+    """
+    try:
+        value = int(re.sub('[^0-9]', '', value))
+    except (ValueError, TypeError):
+        return None
+
+    return value
+
+
 class timestamp:
     """
     Input a date-time text string of several formats and convert to a naive or timezone-aware epoch timestamp in UTC
