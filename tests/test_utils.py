@@ -3,8 +3,8 @@ import jc.utils
 
 
 class MyTests(unittest.TestCase):
-    def test_utils_timestamp(self):
 
+    def test_utils_timestamp(self):
         # naive timestamps created in PDT
         datetime_map = {
             # C locale format conversion, or date cli command in C locale with non-UTC tz
@@ -44,3 +44,90 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in datetime_map.items():
             self.assertEqual(jc.utils.timestamp(input_string).__dict__, expected_output)
+
+    def test_convert_to_int(self):
+        io_map = {
+            None: None,
+            True: 1,
+            False: 0,
+            '': None,
+            '0': 0,
+            '1': 1,
+            '-1': -1,
+            '0.0': 0,
+            '0.1': 0,
+            '0.6': 0,
+            '-0.1': 0,
+            '-0.6': 0,
+            0: 0,
+            1: 1,
+            -1: -1,
+            0.0: 0,
+            0.1: 0,
+            0.6: 0,
+            -0.1: 0,
+            -0.6: 0
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_to_int(input_string), expected_output)
+
+    def test_convert_to_float(self):
+        io_map = {
+            None: None,
+            True: 1.0,
+            False: 0.0,
+            '': None,
+            '0': 0.0,
+            '1': 1.0,
+            '-1': -1.0,
+            '0.0': 0.0,
+            '0.1': 0.1,
+            '0.6': 0.6,
+            '-0.1': -0.1,
+            '-0.6': -0.6,
+            0: 0.0,
+            1: 1.0,
+            -1: -1.0,
+            0.0: 0.0,
+            0.1: 0.1,
+            0.6: 0.6,
+            -0.1: -0.1,
+            -0.6: -0.6
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_to_float(input_string), expected_output)
+
+    def test_convert_to_bool(self):
+        io_map = {
+            None: False,
+            True: True,
+            False: False,
+            '': False,
+            '0': False,
+            '1': True,
+            '-1': True,
+            '0.0': False,
+            '0.1': True,
+            '-0.1': True,
+            'true': True,
+            'True': True,
+            'false': False,
+            'False': False,
+            'Y': True,
+            'y': True,
+            'Yes': True,
+            'n': False,
+            'N': False,
+            'No': False,
+            0: False,
+            1: True,
+            -1: True,
+            0.0: False,
+            0.1: True,
+            -0.1: True,
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_to_bool(input_string), expected_output)

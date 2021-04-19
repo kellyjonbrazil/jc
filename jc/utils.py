@@ -100,7 +100,7 @@ def convert_to_int(value):
             return int(re.sub(r'[^0-9\-\.]', '', value))
         except ValueError:
             try:
-                return round(convert_to_float(value))
+                return int(convert_to_float(value))
             except (ValueError, TypeError):
                 return None
 
