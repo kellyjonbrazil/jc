@@ -94,7 +94,6 @@ Examples:
       ]
     }
 
-
     $ ping -c 3 -p ff cnn.com | jc --ping -p -r
     {
       "destination_ip": "151.101.129.67",
