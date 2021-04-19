@@ -123,7 +123,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/usr/bin/time` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -156,38 +156,30 @@ def _process(proc_data):
         *hours, minutes, seconds, centiseconds = proc_data['elapsed_time'].split(':')
         proc_data['elapsed_time'] = proc_data['elapsed_time'][::-1].replace(':', '.', 1)[::-1]
         if hours:
-            proc_data['elapsed_time_hours'] = int(hours[0])
+            proc_data['elapsed_time_hours'] = jc.utils.convert_to_int(hours[0])
         else:
             proc_data['elapsed_time_hours'] = 0
-        proc_data['elapsed_time_minutes'] = int(minutes)
-        proc_data['elapsed_time_seconds'] = int(seconds)
-        proc_data['elapsed_time_centiseconds'] = int(centiseconds)
+        proc_data['elapsed_time_minutes'] = jc.utils.convert_to_int(minutes)
+        proc_data['elapsed_time_seconds'] = jc.utils.convert_to_int(seconds)
+        proc_data['elapsed_time_centiseconds'] = jc.utils.convert_to_int(centiseconds)
         proc_data['elapsed_time_total_seconds'] = (proc_data['elapsed_time_hours'] * 3600) + \
                                                   (proc_data['elapsed_time_minutes'] * 60) + \
                                                   (proc_data['elapsed_time_seconds']) + \
                                                   (proc_data['elapsed_time_centiseconds'] / 100)
 
-    int_list = ['elapsed_time_hours', 'elapsed_time_minutes', 'elapsed_time_seconds', 'elapsed_time_microseconds',
-                'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size', 'average_unshared_stack_size',
+    # convert ints and floats
+    int_list = ['cpu_percent', 'average_shared_text_size', 'average_unshared_data_size', 'average_unshared_stack_size',
                 'average_shared_memory_size', 'maximum_resident_set_size', 'block_input_operations',
                 'block_output_operations', 'major_pagefaults', 'minor_pagefaults', 'swaps', 'page_reclaims',
                 'page_faults', 'messages_sent', 'messages_received', 'signals_received', 'voluntary_context_switches',
                 'involuntary_context_switches', 'average_stack_size', 'average_total_size', 'average_resident_set_size',
                 'signals_delivered', 'page_size', 'exit_status']
-    for key in int_list:
-        if key in proc_data:
-            try:
-                proc_data[key] = int(proc_data[key])
-            except (ValueError, TypeError):
-                proc_data[key] = None
-
     float_list = ['real_time', 'user_time', 'system_time']
-    for key in float_list:
-        if key in proc_data:
-            try:
-                proc_data[key] = float(proc_data[key])
-            except (ValueError):
-                proc_data[key] = None
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     return proc_data
 

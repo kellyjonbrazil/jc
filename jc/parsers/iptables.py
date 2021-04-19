@@ -163,7 +163,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -191,13 +191,9 @@ def _process(proc_data):
     for entry in proc_data:
         for rule in entry['rules']:
             int_list = ['num', 'pkts']
-            for key in int_list:
-                if key in rule:
-                    try:
-                        key_int = int(rule[key])
-                        rule[key] = key_int
-                    except (ValueError):
-                        rule[key] = None
+            for key in rule:
+                if key in int_list:
+                    rule[key] = jc.utils.convert_to_int(rule[key])
 
             if 'bytes' in rule:
                 multiplier = 1
@@ -218,7 +214,7 @@ def _process(proc_data):
                     rule['bytes'] = rule['bytes'].rstrip('P')
 
                 try:
-                    bytes_int = int(rule['bytes'])
+                    bytes_int = jc.utils.convert_to_int(rule['bytes'])
                     rule['bytes'] = bytes_int * multiplier
                 except (ValueError):
                     rule['bytes'] = None

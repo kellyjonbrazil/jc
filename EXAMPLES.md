@@ -548,7 +548,7 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
 ```json
 [
   {
-    "id": 52172,
+    "id": 10267,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -560,6 +560,13 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
     "answer_num": 4,
     "authority_num": 0,
     "additional_num": 1,
+    "opt_pseudosection": {
+      "edns": {
+        "version": 0,
+        "flags": [],
+        "udp": 4096
+      }
+    },
     "question": {
       "name": "cnn.com.",
       "class": "IN",
@@ -570,40 +577,40 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.65.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.129.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.1.67"
       },
       {
         "name": "cnn.com.",
         "class": "IN",
         "type": "A",
-        "ttl": 27,
+        "ttl": 17,
         "data": "151.101.193.67"
       }
     ],
-    "query_time": 38,
-    "server": "2600",
-    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "query_time": 51,
+    "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+    "when": "Fri Apr 16 16:24:32 PDT 2021",
     "rcvd": 100,
-    "when_epoch": 1617160079,
+    "when_epoch": 1618615472,
     "when_epoch_utc": null
   },
   {
-    "id": 36292,
+    "id": 56207,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -615,6 +622,13 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
     "answer_num": 1,
     "authority_num": 4,
     "additional_num": 1,
+    "opt_pseudosection": {
+      "edns": {
+        "version": 0,
+        "flags": [],
+        "udp": 4096
+      }
+    },
     "question": {
       "name": "www.cnn.com.",
       "class": "IN",
@@ -659,11 +673,11 @@ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig 
         "data": "ns-576.awsdns-08.net."
       }
     ],
-    "query_time": 27,
+    "query_time": 22,
     "server": "205.251.194.64#53(205.251.194.64)",
-    "when": "Tue Mar 30 20:07:59 PDT 2021",
+    "when": "Fri Apr 16 16:24:32 PDT 2021",
     "rcvd": 212,
-    "when_epoch": 1617160079,
+    "when_epoch": 1618615472,
     "when_epoch_utc": null
   }
 ]
@@ -674,7 +688,7 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ```json
 [
   {
-    "id": 22191,
+    "id": 20785,
     "opcode": "QUERY",
     "status": "NOERROR",
     "flags": [
@@ -686,6 +700,13 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
     "answer_num": 1,
     "authority_num": 0,
     "additional_num": 1,
+    "opt_pseudosection": {
+      "edns": {
+        "version": 0,
+        "flags": [],
+        "udp": 4096
+      }
+    },
     "question": {
       "name": "1.1.1.1.in-addr.arpa.",
       "class": "IN",
@@ -700,11 +721,11 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
         "data": "one.one.one.one."
       }
     ],
-    "query_time": 44,
-    "server": "2600",
-    "when": "Tue Mar 30 20:10:34 PDT 2021",
+    "query_time": 40,
+    "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+    "when": "Sat Apr 17 14:50:50 PDT 2021",
     "rcvd": 78,
-    "when_epoch": 1617160234,
+    "when_epoch": 1618696250,
     "when_epoch_utc": null
   }
 ]
@@ -2868,6 +2889,72 @@ systemctl list-unit-files | jc --systemctl-luf -p          # or:  jc -p systemct
     "state": "static"
   }
 ]
+```
+### systeminfo
+```bash
+systeminfo | jc --systeminfo -p          # or:  jc -p systeminfo
+```
+```json
+{
+  "host_name": "TESTLAPTOP",
+  "os_name": "Microsoft Windows 10 Enterprise",
+  "os_version": "10.0.17134 N/A Build 17134",
+  "os_manufacturer": "Microsoft Corporation",
+  "os_configuration": "Member Workstation",
+  "os_build_type": "Multiprocessor Free",
+  "registered_owner": "Test, Inc.",
+  "registered_organization": "Test, Inc.",
+  "product_id": "11111-11111-11111-AA111",
+  "original_install_date": "3/26/2019, 3:51:30 PM",
+  "system_boot_time": "3/30/2021, 6:13:59 AM",
+  "system_manufacturer": "Dell Inc.",
+  "system_model": "Precision 5530",
+  "system_type": "x64-based PC",
+  "processors": [
+    "Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz"
+  ],
+  "bios_version": "Dell Inc. 1.16.2, 4/21/2020",
+  "windows_directory": "C:\\WINDOWS",
+  "system_directory": "C:\\WINDOWS\\system32",
+  "boot_device": "\\Device\\HarddiskVolume2",
+  "system_locale": "en-us;English (United States)",
+  "input_locale": "en-us;English (United States)",
+  "time_zone": "(UTC+00:00) UTC",
+  "total_physical_memory_mb": 32503,
+  "available_physical_memory_mb": 19743,
+  "virtual_memory_max_size_mb": 37367,
+  "virtual_memory_available_mb": 22266,
+  "virtual_memory_in_use_mb": 15101,
+  "page_file_locations": "C:\\pagefile.sys",
+  "domain": "test.com",
+  "logon_server": "\\\\TESTDC01",
+  "hotfixs": [
+    "KB2693643",
+    "KB4601054"
+  ],
+  "network_cards": [
+    {
+      "name": "Intel(R) Wireless-AC 9260 160MHz",
+      "connection_name": "Wi-Fi",
+      "status": null,
+      "dhcp_enabled": true,
+      "dhcp_server": "192.168.2.1",
+      "ip_addresses": [
+        "192.168.2.219"
+      ]
+    }
+  ],
+  "hyperv_requirements": {
+    "vm_monitor_mode_extensions": true,
+    "virtualization_enabled_in_firmware": true,
+    "second_level_address_translation": false,
+    "data_execution_prevention_available": true
+  },
+  "original_install_date_epoch": 1553640690,
+  "original_install_date_epoch_utc": 1553615490,
+  "system_boot_time_epoch": 1617110039,
+  "system_boot_time_epoch_utc": 1617084839
+}
 ```
 ### /usr/bin/time
 ```bash

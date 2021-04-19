@@ -97,6 +97,7 @@ parsers = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'systeminfo',
     'time',
     'timedatectl',
     'tracepath',
@@ -319,26 +320,26 @@ def helptext():
 {parsers_string}
     Options:
             -a               about jc
-            -d               debug - show traceback (-dd for verbose traceback)
-            -h               help (use -h --parser_name for parser documentation)
+            -d               debug (-dd for verbose debug)
+            -h               help (-h --parser_name for parser documentation)
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
             -r               raw JSON output
             -v               version info
 
-    Example:
-            ls -al | jc --ls -p
+    Examples:
+            Standard Syntax:
+                $ dig www.google.com | jc --dig -p
 
-            or using the magic syntax:
+            Magic Syntax:
+                $ jc -p dig www.google.com
 
-            jc -p ls -al
-
-            For parser documentation:
-
-            jc -h --ls
+            Parser Documentation:
+                $ jc -h --dig
     '''
     return textwrap.dedent(helptext_string)
+
 
 def help_doc(options):
     """
@@ -361,6 +362,7 @@ Version {parser.info.version} by {parser.info.author} ({parser.info.author_email
             return doc_text
 
     return helptext()
+
 
 def versiontext():
     """Return the version text"""

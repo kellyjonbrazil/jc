@@ -109,7 +109,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`airport -s` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -137,23 +137,14 @@ def _process(proc_data):
     """
     for entry in proc_data:
 
-        # integers
+        # convert integers and booleans
         int_list = ['rssi']
-        for key in int_list:
-            if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
-
-        # booleans
         bool_list = ['ht']
         for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
             if key in bool_list:
-                try:
-                    entry[key] = True if entry[key] == 'Y' else False
-                except (ValueError):
-                    entry[key] = None
+                entry[key] = jc.utils.convert_to_bool(entry[key])
 
         if 'security' in entry:
             entry['security'] = entry['security'].split()

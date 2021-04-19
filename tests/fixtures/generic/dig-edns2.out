@@ -1,0 +1,38 @@
+
+; <<>> DiG 9.10.6 <<>> @8.8.8.8 metebalci.com google.com +dnssec
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 8794
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;metebalci.com.			IN	A
+
+;; ANSWER SECTION:
+metebalci.com.		59	IN	A	104.198.14.52
+
+;; Query time: 53 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Fri Apr 16 14:19:58 PDT 2021
+;; MSG SIZE  rcvd: 58
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39319
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 512
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		82	IN	A	216.58.194.206
+
+;; Query time: 32 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Fri Apr 16 14:19:58 PDT 2021
+;; MSG SIZE  rcvd: 55
+

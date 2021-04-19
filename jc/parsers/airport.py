@@ -80,7 +80,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`airport -I` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -111,10 +111,7 @@ def _process(proc_data):
                 'lasttxrate', 'maxrate', 'lastassocstatus', 'mcs']
     for key in proc_data:
         if key in int_list:
-            try:
-                proc_data[key] = int(proc_data[key])
-            except (ValueError):
-                proc_data[key] = None
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
     return proc_data
 

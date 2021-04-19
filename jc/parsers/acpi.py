@@ -227,7 +227,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`acpi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -256,38 +256,19 @@ def _process(proc_data):
     float_list = ['temperature']
 
     for entry in proc_data:
-        for key in int_list:
-            if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
+            if key in float_list:
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
         if 'trip_points' in entry:
             for tp in entry['trip_points']:
-                for key in int_list:
-                    if key in tp:
-                        try:
-                            tp[key] = int(tp[key])
-                        except (ValueError):
-                            tp[key] = None
-
-    for entry in proc_data:
-        for key in float_list:
-            if key in entry:
-                try:
-                    entry[key] = float(entry[key])
-                except (ValueError):
-                    entry[key] = None
-
-        if 'trip_points' in entry:
-            for tp in entry['trip_points']:
-                for key in float_list:
-                    if key in tp:
-                        try:
-                            tp[key] = float(tp[key])
-                        except (ValueError):
-                            tp[key] = None
+                for key in tp:
+                    if key in int_list:
+                        tp[key] = jc.utils.convert_to_int(tp[key])
+                    if key in float_list:
+                        tp[key] = jc.utils.convert_to_float(tp[key])
 
     for entry in proc_data:
         if 'until_charged' in entry:

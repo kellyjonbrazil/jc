@@ -63,7 +63,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -89,15 +89,11 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    # boolean changes
     bool_list = ['ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
                  'system_clock_synchronized', 'systemd-timesyncd.service_active']
     for key in proc_data:
         if key in bool_list:
-            try:
-                proc_data[key] = True if proc_data[key] == 'yes' else False
-            except (ValueError):
-                proc_data[key] = None
+            proc_data[key] = jc.utils.convert_to_bool(proc_data[key])
 
     if 'universal_time' in proc_data:
         ts = jc.utils.timestamp(proc_data['universal_time'])

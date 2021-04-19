@@ -101,7 +101,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`/etc/shadow` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,13 +128,9 @@ def _process(proc_data):
     """
     for entry in proc_data:
         int_list = ['last_changed', 'minimum', 'maximum', 'warn', 'inactive', 'expire']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

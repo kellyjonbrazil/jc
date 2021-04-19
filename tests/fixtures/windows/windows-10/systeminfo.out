@@ -1,0 +1,48 @@
+Host Name:                 DESKTOP-WIN01
+OS Name:                   Microsoft Windows 10 Enterprise
+OS Version:                10.0.19042 N/A Build 19042
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Member Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          User
+Registered Organization:
+Product ID:                00111-12345-00001-AA111
+Original Install Date:     2/16/2021, 11:20:27 AM
+System Boot Time:          3/19/2021, 9:25:03 AM
+System Manufacturer:       VMware, Inc.
+System Model:              VMware7,1
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 158 Stepping 13 GenuineIntel ~2400 Mhz
+BIOS Version:              VMware, Inc. VMW71.00V.11111111.B64.2008100111, 8/10/2020
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume1
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC-08:00) Pacific Time (US & Canada)
+Total Physical Memory:     2,047 MB
+Available Physical Memory: 1,417 MB
+Virtual Memory: Max Size:  2,687 MB
+Virtual Memory: Available: 1,482 MB
+Virtual Memory: In Use:    1,205 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    TEST.local
+Logon Server:              \\WIN-AA1A1A11AAA
+Hotfix(s):                 6 Hotfix(s) Installed.
+                           [01]: KB4578968
+                           [02]: KB4562830
+                           [03]: KB4570334
+                           [04]: KB4580325
+                           [05]: KB4586864
+                           [06]: KB4594440
+Network Card(s):           1 NIC(s) Installed.
+                           [01]: Intel(R) 82574L Gigabit Network Connection
+                                 Connection Name: Ethernet0
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     192.168.133.250
+                                 IP address(es)
+                                 [01]: 192.168.133.3
+                                 [02]: fe80::192:eb64:1fcf:86eb
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+

@@ -69,6 +69,54 @@ Returns:
     Boolean      True if input string (data) contains non-whitespace characters, otherwise False
 
 
+## convert_to_int
+```python
+convert_to_int(value)
+```
+
+Converts string input to integer by stripping all non-numeric characters
+
+Parameters:
+
+    value:          (string/integer/float) Input value
+
+Returns:
+
+    integer/None    Integer if successful conversion, otherwise None
+
+
+## convert_to_float
+```python
+convert_to_float(value)
+```
+
+Converts string input to float by stripping all non-numeric characters
+
+Parameters:
+
+    value:          (string) Input value
+
+Returns:
+
+    float/None      Float if successful conversion, otherwise None
+
+
+## convert_to_bool
+```python
+convert_to_bool(value)
+```
+
+Converts string, integer, or float input to boolean by checking for 'truthy' values
+
+Parameters:
+
+    value:          (string/integer/float) Input value
+
+Returns:
+
+    True/False      False unless a 'truthy' number or string is found ('y', 'yes', 'true', '1', 1, -1, etc.)
+
+
 ## timestamp
 ```python
 timestamp(datetime_string)

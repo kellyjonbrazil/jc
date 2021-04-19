@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`blkid` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -155,12 +155,9 @@ def _process(proc_data):
                     'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
                     'logical_sector_size', 'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size',
                     'id_iolimit_logical_sector_size']
-        for key in int_list:
-            if key in entry:
-                try:
-                    entry[key] = int(entry[key])
-                except (ValueError):
-                    entry[key] = None
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

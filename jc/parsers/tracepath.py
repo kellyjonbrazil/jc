@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -157,39 +157,23 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
+    # convert ints and floats
     int_list = ['pmtu', 'forward_hops', 'return_hops', 'ttl', 'asymmetric_difference']
     float_list = ['reply_ms']
-
-    for key, value in proc_data.items():
-        for item in int_list:
-            if key in int_list:
-                try:
-                    proc_data[key] = int(proc_data[key])
-                except (ValueError, TypeError):
-                    proc_data[key] = None
-
-        for item in int_list:
-            if key in float_list:
-                try:
-                    proc_data[key] = float(proc_data[key])
-                except (ValueError, TypeError):
-                    proc_data[key] = None
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     if 'hops' in proc_data:
         for entry in proc_data['hops']:
-            for key in int_list:
-                if key in entry:
-                    try:
-                        entry[key] = int(entry[key])
-                    except (ValueError, TypeError):
-                        entry[key] = None
+            for key in entry:
+                if key in int_list:
+                    entry[key] = jc.utils.convert_to_int(entry[key])
 
-            for key in float_list:
-                if key in entry:
-                    try:
-                        entry[key] = float(entry[key])
-                    except (ValueError, TypeError):
-                        entry[key] = None
+                if key in float_list:
+                    entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
 

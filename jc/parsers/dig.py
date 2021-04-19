@@ -21,64 +21,84 @@ Schema:
 
     [
       {
-        "id":             integer,
-        "opcode":         string,
-        "status":         string,
+        "id":                   integer,
+        "opcode":               string,
+        "status":               string,
         "flags": [
-                          string
+                                string
         ],
-        "query_num":      integer,
-        "answer_num":     integer,
-        "authority_num":  integer,
-        "additional_num": integer,
+        "query_num":            integer,
+        "answer_num":           integer,
+        "authority_num":        integer,
+        "additional_num":       integer,
         "axfr": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
+        "opt_pseudosection": {
+          "edns": {
+            "version":          integer,
+            "flags": [
+                                string
+            ],
+            "udp":              integer
+          },
+          "cookie":             string
+        },
         "question": {
-          "name":         string,
-          "class":        string,
-          "type":         string
+          "name":               string,
+          "class":              string,
+          "type":               string
         },
         "answer": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
+          }
+        ],
+        "additional": [
+          {
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
         "authority": [
           {
-            "name":       string,
-            "class":      string,
-            "type":       string,
-            "ttl":        integer,
-            "data":       string
+            "name":             string,
+            "class":            string,
+            "type":             string,
+            "ttl":              integer,
+            "data":             string
           }
         ],
-        "query_time":     integer,   # in msec
-        "server":         string,
-        "when":           string,
-        "when_epoch":     integer,   # naive timestamp if when field is parsable, else null
-        "when_epoch_utc": integer,   # timezone aware timestamp availabe for UTC, else null
-        "rcvd":           integer
-        "size":           string
+        "query_size":           integer,
+        "query_time":           integer,   # in msec
+        "server":               string,
+        "when":                 string,
+        "when_epoch":           integer,   # naive timestamp if when field is parsable, else null
+        "when_epoch_utc":       integer,   # timezone aware timestamp availabe for UTC, else null
+        "rcvd":                 integer
+        "size":                 string
       }
     ]
 
 Examples:
 
-    $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p
+    $ dig example.com | jc --dig -p
     [
       {
-        "id": 52172,
+        "id": 2951,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -87,113 +107,35 @@ Examples:
           "ra"
         ],
         "query_num": 1,
-        "answer_num": 4,
+        "answer_num": 1,
         "authority_num": 0,
         "additional_num": 1,
+        "opt_pseudosection": {
+          "edns": {
+            "version": 0,
+            "flags": [],
+            "udp": 4096
+          }
+        },
         "question": {
-          "name": "cnn.com.",
+          "name": "example.com.",
           "class": "IN",
           "type": "A"
         },
         "answer": [
           {
-            "name": "cnn.com.",
+            "name": "example.com.",
             "class": "IN",
             "type": "A",
-            "ttl": 27,
-            "data": "151.101.65.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.129.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.1.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": 27,
-            "data": "151.101.193.67"
+            "ttl": 39302,
+            "data": "93.184.216.34"
           }
         ],
-        "query_time": 38,
-        "server": "2600",
-        "when": "Tue Mar 30 20:07:59 PDT 2021",
-        "rcvd": 100,
-        "when_epoch": 1617160079,
-        "when_epoch_utc": null
-      },
-      {
-        "id": 36292,
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "aa",
-          "rd"
-        ],
-        "query_num": 1,
-        "answer_num": 1,
-        "authority_num": 4,
-        "additional_num": 1,
-        "question": {
-          "name": "www.cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "www.cnn.com.",
-            "class": "IN",
-            "type": "CNAME",
-            "ttl": 300,
-            "data": "turner-tls.map.fastly.net."
-          }
-        ],
-        "authority": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-1086.awsdns-07.org."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-1630.awsdns-11.co.uk."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-47.awsdns-05.com."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": 3600,
-            "data": "ns-576.awsdns-08.net."
-          }
-        ],
-        "query_time": 27,
-        "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Mar 30 20:07:59 PDT 2021",
-        "rcvd": 212,
-        "when_epoch": 1617160079,
+        "query_time": 49,
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Fri Apr 16 16:05:10 PDT 2021",
+        "rcvd": 56,
+        "when_epoch": 1618614310,
         "when_epoch_utc": null
       }
     ]
@@ -201,7 +143,7 @@ Examples:
     $ dig cnn.com www.cnn.com @205.251.194.64 | jc --dig -p -r
     [
       {
-        "id": "23843",
+        "id": "46052",
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -210,117 +152,41 @@ Examples:
           "ra"
         ],
         "query_num": "1",
-        "answer_num": "4",
+        "answer_num": "1",
         "authority_num": "0",
         "additional_num": "1",
+        "opt_pseudosection": {
+          "edns": {
+            "version": "0",
+            "flags": [],
+            "udp": "4096"
+          }
+        },
         "question": {
-          "name": "cnn.com.",
+          "name": "example.com.",
           "class": "IN",
           "type": "A"
         },
         "answer": [
           {
-            "name": "cnn.com.",
+            "name": "example.com.",
             "class": "IN",
             "type": "A",
-            "ttl": "30",
-            "data": "151.101.193.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.1.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.65.67"
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "A",
-            "ttl": "30",
-            "data": "151.101.129.67"
+            "ttl": "40426",
+            "data": "93.184.216.34"
           }
         ],
-        "query_time": "24 msec",
-        "server": "192.168.1.254#53(192.168.1.254)",
-        "when": "Tue Nov 12 07:16:19 PST 2019",
-        "rcvd": "100"
-      },
-      {
-        "id": "8266",
-        "opcode": "QUERY",
-        "status": "NOERROR",
-        "flags": [
-          "qr",
-          "aa",
-          "rd"
-        ],
-        "query_num": "1",
-        "answer_num": "1",
-        "authority_num": "4",
-        "additional_num": "1",
-        "question": {
-          "name": "www.cnn.com.",
-          "class": "IN",
-          "type": "A"
-        },
-        "answer": [
-          {
-            "name": "www.cnn.com.",
-            "class": "IN",
-            "type": "CNAME",
-            "ttl": "300",
-            "data": "turner-tls.map.fastly.net."
-          }
-        ],
-        "authority": [
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-1086.awsdns-07.org."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-1630.awsdns-11.co.uk."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-47.awsdns-05.com."
-          },
-          {
-            "name": "cnn.com.",
-            "class": "IN",
-            "type": "NS",
-            "ttl": "3600",
-            "data": "ns-576.awsdns-08.net."
-          }
-        ],
-        "query_time": "26 msec",
-        "server": "205.251.194.64#53(205.251.194.64)",
-        "when": "Tue Nov 12 07:16:19 PST 2019",
-        "rcvd": "212"
+        "query_time": "48 msec",
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Fri Apr 16 16:06:12 PDT 2021",
+        "rcvd": "56"
       }
     ]
 
     $ dig -x 1.1.1.1 | jc --dig -p
     [
       {
-        "id": 22191,
+        "id": 20785,
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -332,6 +198,13 @@ Examples:
         "answer_num": 1,
         "authority_num": 0,
         "additional_num": 1,
+        "opt_pseudosection": {
+          "edns": {
+            "version": 0,
+            "flags": [],
+            "udp": 4096
+          }
+        },
         "question": {
           "name": "1.1.1.1.in-addr.arpa.",
           "class": "IN",
@@ -346,11 +219,11 @@ Examples:
             "data": "one.one.one.one."
           }
         ],
-        "query_time": 44,
-        "server": "2600",
-        "when": "Tue Mar 30 20:10:34 PDT 2021",
+        "query_time": 40,
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Sat Apr 17 14:50:50 PDT 2021",
         "rcvd": 78,
-        "when_epoch": 1617160234,
+        "when_epoch": 1618696250,
         "when_epoch_utc": null
       }
     ]
@@ -358,7 +231,7 @@ Examples:
     $ dig -x 1.1.1.1 | jc --dig -p -r
     [
       {
-        "id": "50986",
+        "id": "32644",
         "opcode": "QUERY",
         "status": "NOERROR",
         "flags": [
@@ -370,6 +243,13 @@ Examples:
         "answer_num": "1",
         "authority_num": "0",
         "additional_num": "1",
+        "opt_pseudosection": {
+          "edns": {
+            "version": "0",
+            "flags": [],
+            "udp": "4096"
+          }
+        },
         "question": {
           "name": "1.1.1.1.in-addr.arpa.",
           "class": "IN",
@@ -384,9 +264,9 @@ Examples:
             "data": "one.one.one.one."
           }
         ],
-        "query_time": "38 msec",
-        "server": "2600",
-        "when": "Tue Nov 12 07:17:19 PST 2019",
+        "query_time": "52 msec",
+        "server": "2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+        "when": "Sat Apr 17 14:51:46 PDT 2021",
         "rcvd": "78"
       }
     ]
@@ -396,7 +276,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '2.0'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -421,47 +301,36 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-
     for entry in proc_data:
-        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd',
+                    'query_size', 'query_time']
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'axfr' in entry:
             for ax in entry['axfr']:
-                try:
-                    ttl_int = int(ax['ttl'])
-                    ax['ttl'] = ttl_int
-                except (ValueError):
-                    ax['ttl'] = None
+                ax['ttl'] = jc.utils.convert_to_int(ax['ttl'])
+
+        if 'opt_pseudosection' in entry:
+            if 'edns' in entry['opt_pseudosection']:
+                if 'version' in entry['opt_pseudosection']['edns']:
+                    entry['opt_pseudosection']['edns']['version'] = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['version'])
+
+                if 'udp' in entry['opt_pseudosection']['edns']:
+                    entry['opt_pseudosection']['edns']['udp'] = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['udp'])
 
         if 'answer' in entry:
             for ans in entry['answer']:
-                try:
-                    ttl_int = int(ans['ttl'])
-                    ans['ttl'] = ttl_int
-                except (ValueError):
-                    ans['ttl'] = None
+                ans['ttl'] = jc.utils.convert_to_int(ans['ttl'])
+
+        if 'additional' in entry:
+            for add in entry['additional']:
+                add['ttl'] = jc.utils.convert_to_int(add['ttl'])
 
         if 'authority' in entry:
             for auth in entry['authority']:
-                try:
-                    ttl_int = int(auth['ttl'])
-                    auth['ttl'] = ttl_int
-                except (ValueError):
-                    auth['ttl'] = None
-
-        if 'query_time' in entry:
-            try:
-                qt_int = int(entry['query_time'].split()[0])
-                entry['query_time'] = qt_int
-            except (ValueError):
-                entry['query_time'] = None
+                auth['ttl'] = jc.utils.convert_to_int(auth['ttl'])
 
         if 'when' in entry:
             ts = jc.utils.timestamp(entry['when'])
@@ -507,6 +376,31 @@ def _parse_flags_line(flagsline):
             'additional_num': additional_num}
 
 
+def _parse_opt_pseudosection(optline):
+    # ;; OPT PSEUDOSECTION:
+    # ; EDNS: version: 0, flags:; udp: 4096
+    # ; COOKIE: 1cbc06703eaef210
+    if optline.startswith('; EDNS:'):
+        optline_list = optline.replace(',', ' ').split(';')
+        optline_first = optline_list[1]
+        optline_rest = optline_list[2]
+        _, _, ver, _, *flags = optline_first.split()
+        udp = optline_rest.split()[-1]
+
+        return {
+            'edns': {
+                'version': ver,
+                'flags': flags,
+                'udp': udp
+            }
+        }
+
+    elif optline.startswith('; COOKIE:'):
+        return {
+            'cookie': optline.split()[2]
+        }
+
+
 def _parse_question(question):
     # ;www.cnn.com.           IN  A
     question = question.split()
@@ -517,22 +411,6 @@ def _parse_question(question):
     return {'name': dns_name,
             'class': dns_class,
             'type': dns_type}
-
-
-def _parse_authority(authority):
-    # cnn.com.      3600    IN  NS  ns-1086.awsdns-07.org.
-    authority = authority.split()
-    authority_name = authority[0]
-    authority_class = authority[2]
-    authority_type = authority[3]
-    authority_ttl = authority[1]
-    authority_data = authority[4]
-
-    return {'name': authority_name,
-            'class': authority_class,
-            'type': authority_type,
-            'ttl': authority_ttl,
-            'data': authority_data}
 
 
 def _parse_answer(answer):
@@ -574,6 +452,28 @@ def _parse_axfr(axfr):
             'data': axfr_data}
 
 
+def _parse_footer(footer):
+    # footer consists of 4 lines
+    # footer line 1
+    if footer.startswith(';; Query time:'):
+        return {'query_time': footer.split(':')[1].lstrip()}
+
+    # footer line 2
+    if footer.startswith(';; SERVER:'):
+        return {'server': footer.split(':', maxsplit=1)[1].lstrip()}
+
+    # footer line 3
+    if footer.startswith(';; WHEN:'):
+        return {'when': footer.split(':', maxsplit=1)[1].lstrip()}
+
+    # footer line 4 (last line)
+    if footer.startswith(';; MSG SIZE  rcvd:'):
+        return {'rcvd': footer.split(':')[1].lstrip()}
+
+    elif footer.startswith(';; XFR size:'):
+        return {'size': footer.split(':')[1].lstrip()}
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -597,106 +497,106 @@ def parse(data, raw=False, quiet=False):
     # remove blank lines
     cleandata = list(filter(None, cleandata))
 
-    question = False
-    authority = False
-    answer = False
-    axfr = False
-
+    # section can be: header, flags, question, authority, answer, axfr, additional, opt_pseudosection, footer
+    section = ''
     output_entry = {}
 
     if jc.utils.has_data(data):
         for line in cleandata:
 
+            # identify sections
+            if line.startswith(';; Got answer:'):
+                section = ''
+                continue
+
             if line.startswith('; <<>> ') and ' axfr ' in line.lower():
-                question = False
-                authority = False
-                answer = False
-                axfr = True
+                section = 'axfr'
                 axfr_list = []
                 continue
 
-            if ';' not in line and axfr:
-                axfr_list.append(_parse_axfr(line))
-                output_entry.update({'axfr': axfr_list})
-                continue
-
             if line.startswith(';; ->>HEADER<<-'):
+                section = 'header'
+                if output_entry:
+                    raw_output.append(output_entry)
                 output_entry = {}
                 output_entry.update(_parse_header(line))
                 continue
 
             if line.startswith(';; flags:'):
+                section = 'flags'
                 output_entry.update(_parse_flags_line(line))
                 continue
 
-            if line.startswith(';; QUESTION SECTION:'):
-                question = True
-                authority = False
-                answer = False
-                axfr = False
+            if line.startswith(';; OPT PSEUDOSECTION:'):
+                section = 'opt_pseudosection'
                 continue
 
-            if question:
-                output_entry['question'] = _parse_question(line)
-                question = False
-                authority = False
-                answer = False
-                axfr = False
+            if line.startswith(';; QUESTION SECTION:'):
+                section = 'question'
                 continue
 
             if line.startswith(';; AUTHORITY SECTION:'):
-                question = False
-                authority = True
-                answer = False
-                axfr = False
+                section = 'authority'
                 authority_list = []
                 continue
 
-            if ';' not in line and authority:
-                authority_list.append(_parse_authority(line))
-                output_entry.update({'authority': authority_list})
-                continue
-
             if line.startswith(';; ANSWER SECTION:'):
-                question = False
-                authority = False
-                answer = True
-                axfr = False
+                section = 'answer'
                 answer_list = []
                 continue
 
-            if ';' not in line and answer:
+            if line.startswith(';; ADDITIONAL SECTION:'):
+                section = 'additional'
+                additional_list = []
+                continue
+
+            if line.startswith(';; Query time:'):
+                section = 'footer'
+                output_entry.update(_parse_footer(line))
+                continue
+
+            # parse sections
+
+            if line.startswith(';; QUERY SIZE:'):
+                output_entry.update({'query_size': line.split(': ', maxsplit=1)[1]})
+                continue
+
+            if not line.startswith(';') and section == 'axfr':
+                axfr_list.append(_parse_axfr(line))
+                output_entry.update({'axfr': axfr_list})
+                continue
+
+            if section == 'opt_pseudosection':
+                if 'opt_pseudosection' not in output_entry:
+                    output_entry['opt_pseudosection'] = {}
+                output_entry['opt_pseudosection'].update(_parse_opt_pseudosection(line))
+                continue
+
+            if section == 'question':
+                output_entry['question'] = _parse_question(line)
+                continue
+
+            if not line.startswith(';') and section == 'authority':
+                authority_list.append(_parse_answer(line))
+                output_entry.update({'authority': authority_list})
+                continue
+
+            if not line.startswith(';') and section == 'answer':
                 answer_list.append(_parse_answer(line))
                 output_entry.update({'answer': answer_list})
                 continue
 
-            # footer consists of 4 lines
-            # footer line 1
-            if line.startswith(';; Query time:'):
-                output_entry.update({'query_time': line.split(':')[1].lstrip()})
+            if not line.startswith(';') and section == 'additional':
+                additional_list.append(_parse_answer(line))
+                output_entry.update({'additional': additional_list})
                 continue
 
-            # footer line 2
-            if line.startswith(';; SERVER:'):
-                output_entry.update({'server': line.split(':')[1].lstrip()})
+            if section == 'footer':
+                output_entry.update(_parse_footer(line))
                 continue
 
-            # footer line 3
-            if line.startswith(';; WHEN:'):
-                output_entry.update({'when': line.split(':', maxsplit=1)[1].lstrip()})
-                continue
-
-            # footer line 4 (last line)
-            if line.startswith(';; MSG SIZE  rcvd:'):
-                output_entry.update({'rcvd': line.split(':')[1].lstrip()})
-
-                if output_entry:
-                    raw_output.append(output_entry)
-            elif line.startswith(';; XFR size:'):
-                output_entry.update({'size': line.split(':')[1].lstrip()})
-
-                if output_entry:
-                    raw_output.append(output_entry)
+        if output_entry:
+            raw_output.append(output_entry)
 
         raw_output = list(filter(None, raw_output))
 

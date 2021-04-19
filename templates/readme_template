@@ -9,62 +9,56 @@
 JSON CLI output utility
 
 `jc` JSONifies the output of many CLI tools and file-types for easier parsing in scripts. See the [**Parsers**](#parsers) section for supported commands and file-types.
-
-This allows further command-line processing of output with tools like `jq` by piping commands:
 ```bash
-ls -l /usr/bin | jc --ls | jq '.[] | select(.size > 50000000)'
+dig example.com | jc --dig
 ```
 ```json
-{
-  "filename": "docker",
-  "flags": "-rwxr-xr-x",
-  "links": 1,
-  "owner": "root",
-  "group": "root",
-  "size": 68677120,
-  "date": "Aug 14 19:41"
-}
+[{"id":38052,"opcode":"QUERY","status":"NOERROR","flags":["qr","rd","ra"],"query_num":1,"answer_num":1,
+"authority_num":0,"additional_num":1,"opt_pseudosection":{"edns":{"version":0,"flags":[],"udp":4096}},"question":
+{"name":"example.com.","class":"IN","type":"A"},"answer":[{"name":"example.com.","class":"IN","type":"A","ttl":
+39049,"data":"93.184.216.34"}],"query_time":49,"server":"2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)","when":
+"Fri Apr 16 16:09:00 PDT 2021","rcvd":56,"when_epoch":1618614540,"when_epoch_utc":null}]
+```
+This allows further command-line processing of output with tools like `jq` by piping commands:
+```bash
+$ dig example.com | jc --dig | jq -r '.[].answer[].data'
+93.184.216.34
 ```
 or using the alternative "magic" syntax:
 ```bash
-jc ls -l /usr/bin | jq '.[] | select(.size > 50000000)'
-```
-```json
-{
-  "filename": "docker",
-  "flags": "-rwxr-xr-x",
-  "links": 1,
-  "owner": "root",
-  "group": "root",
-  "size": 68677120,
-  "date": "Aug 14 19:41"
-}
+$ jc dig example.com | jq -r '.[].answer[].data'
+93.184.216.34
 ```
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary, or list of dictionaries, instead of JSON:
 ```python
->>> import jc.parsers.ls
+>>> import jc.parsers.dig
 >>> 
->>> data='''-rwxr-xr-x  1 root  wheel    23648 May  3 22:26 cat
-... -rwxr-xr-x  1 root  wheel    30016 May  3 22:26 chmod
-... -rwxr-xr-x  1 root  wheel    29024 May  3 22:26 cp
-... -rwxr-xr-x  1 root  wheel   375824 May  3 22:26 csh
-... -rwxr-xr-x  1 root  wheel    28608 May  3 22:26 date
-... -rwxr-xr-x  1 root  wheel    32000 May  3 22:26 dd
-... -rwxr-xr-x  1 root  wheel    23392 May  3 22:26 df
-... -rwxr-xr-x  1 root  wheel    18128 May  3 22:26 echo'''
+>>> data = '''; <<>> DiG 9.10.6 <<>> example.com
+... ;; global options: +cmd
+... ;; Got answer:
+... ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 64612
+... ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+... 
+... ;; OPT PSEUDOSECTION:
+... ; EDNS: version: 0, flags:; udp: 4096
+... ;; QUESTION SECTION:
+... ;example.com.           IN  A
+... 
+... ;; ANSWER SECTION:
+... example.com.        29658   IN  A   93.184.216.34
+... 
+... ;; Query time: 52 msec
+... ;; SERVER: 2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)
+... ;; WHEN: Fri Apr 16 16:13:00 PDT 2021
+... ;; MSG SIZE  rcvd: 56'''
 >>>
->>> jc.parsers.ls.parse(data)
-[{'filename': 'cat', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 23648,
-'date': 'May 3 22:26'}, {'filename': 'chmod', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root',
-'group': 'wheel', 'size': 30016, 'date': 'May 3 22:26'}, {'filename': 'cp', 'flags': '-rwxr-xr-x',
-'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 29024, 'date': 'May 3 22:26'}, {'filename': 'csh',
-'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 375824, 'date': 'May 3
-22:26'}, {'filename': 'date', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel',
-'size': 28608, 'date': 'May 3 22:26'}, {'filename': 'dd', 'flags': '-rwxr-xr-x', 'links': 1, 'owner':
-'root', 'group': 'wheel', 'size': 32000, 'date': 'May 3 22:26'}, {'filename': 'df', 'flags':
-'-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 23392, 'date': 'May 3 22:26'},
-{'filename': 'echo', 'flags': '-rwxr-xr-x', 'links': 1, 'owner': 'root', 'group': 'wheel', 'size': 18128,
-'date': 'May 3 22:26'}]
+>>> jc.parsers.dig.parse(data)
+[{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd', 'ra'], 'query_num': 1, 'answer_num':
+1, 'authority_num': 0, 'additional_num': 1, 'opt_pseudosection': {'edns': {'version': 0, 'flags': [], 'udp':
+4096}}, 'question': {'name': 'example.com.', 'class': 'IN', 'type': 'A'}, 'answer': [{'name': 'example.com.',
+'class': 'IN', 'type': 'A', 'ttl': 29658, 'data': '93.184.216.34'}], 'query_time': 52, 'server':
+'2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
+'when_epoch': 1618614780, 'when_epoch_utc': None}]
 ```
 Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
@@ -280,48 +274,6 @@ cat homes.csv | jc --csv -p
     "Age": "41",
     "Acres": "0.33",
     "Taxes": "1471"
-  }
-]
-```
-### dig
-```bash
-dig cnn.com @205.251.194.64 | jc --dig -p          # or:  jc -p dig cnn.com @205.251.194.64
-```
-```json
-[
-  {
-    "id": 52172,
-    "opcode": "QUERY",
-    "status": "NOERROR",
-    "flags": [
-      "qr",
-      "rd",
-      "ra"
-    ],
-    "query_num": 1,
-    "answer_num": 1,
-    "authority_num": 0,
-    "additional_num": 1,
-    "question": {
-      "name": "cnn.com.",
-      "class": "IN",
-      "type": "A"
-    },
-    "answer": [
-      {
-        "name": "cnn.com.",
-        "class": "IN",
-        "type": "A",
-        "ttl": 27,
-        "data": "151.101.65.67"
-      }
-    ],
-    "query_time": 38,
-    "server": "2600",
-    "when": "Tue Mar 30 20:07:59 PDT 2021",
-    "rcvd": 100,
-    "when_epoch": 1617160079,
-    "when_epoch_utc": null
   }
 ]
 ```

@@ -105,7 +105,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,25 +133,16 @@ def _process(proc_data):
     """
     if 'uid' in proc_data:
         if 'id' in proc_data['uid']:
-            try:
-                proc_data['uid']['id'] = int(proc_data['uid']['id'])
-            except (ValueError):
-                proc_data['uid']['id'] = None
+            proc_data['uid']['id'] = jc.utils.convert_to_int(proc_data['uid']['id'])
 
     if 'gid' in proc_data:
         if 'id' in proc_data['gid']:
-            try:
-                proc_data['gid']['id'] = int(proc_data['gid']['id'])
-            except (ValueError):
-                proc_data['gid']['id'] = None
+            proc_data['gid']['id'] = jc.utils.convert_to_int(proc_data['gid']['id'])
 
     if 'groups' in proc_data:
         for group in proc_data['groups']:
             if 'id' in group:
-                try:
-                    group['id'] = int(group['id'])
-                except (ValueError):
-                    group['id'] = None
+                group['id'] = jc.utils.convert_to_int(group['id'])
 
     return proc_data
 

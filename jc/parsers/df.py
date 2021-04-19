@@ -98,7 +98,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,11 +144,7 @@ def _process(proc_data):
         # change any entry for key with '_blocks' in the name to int
         for k in entry:
             if '_blocks' in str(k):
-                try:
-                    blocks_int = int(entry[k])
-                    entry[k] = blocks_int
-                except (ValueError):
-                    entry[k] = None
+                entry[k] = jc.utils.convert_to_int(entry[k])
 
         # remove percent sign from 'use_percent', 'capacity_percent', and 'iused_percent'
         if 'use_percent' in entry:
@@ -162,13 +158,9 @@ def _process(proc_data):
 
         # change used, available, use_percent, capacity_percent, ifree, iused, iused_percent to int
         int_list = ['used', 'available', 'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent']
-        for key in int_list:
-            if key in entry:
-                try:
-                    key_int = int(entry[key])
-                    entry[key] = key_int
-                except (ValueError):
-                    entry[key] = None
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 

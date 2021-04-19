@@ -65,7 +65,7 @@ def compatibility(mod_name, compatible):
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
         warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n'
-                        f'                   Compatible platforms: {compat_list}')
+                        f'               Compatible platforms: {compat_list}')
 
 
 def has_data(data):
@@ -81,6 +81,95 @@ def has_data(data):
         Boolean      True if input string (data) contains non-whitespace characters, otherwise False
     """
     return True if data and not data.isspace() else False
+
+
+def convert_to_int(value):
+    """
+    Converts string input to integer by stripping all non-numeric characters
+
+    Parameters:
+
+        value:          (string/integer/float) Input value
+
+    Returns:
+
+        integer/None    Integer if successful conversion, otherwise None
+    """
+    if isinstance(value, str):
+        try:
+            return int(re.sub(r'[^0-9\-\.]', '', value))
+        except ValueError:
+            try:
+                return int(convert_to_float(value))
+            except (ValueError, TypeError):
+                return None
+
+    elif isinstance(value, (int, float)):
+        return int(value)
+
+    else:
+        return None
+
+
+def convert_to_float(value):
+    """
+    Converts string input to float by stripping all non-numeric characters
+
+    Parameters:
+
+        value:          (string) Input value
+
+    Returns:
+
+        float/None      Float if successful conversion, otherwise None
+    """
+    if isinstance(value, str):
+        try:
+            return float(re.sub(r'[^0-9\-\.]', '', value))
+        except (ValueError, TypeError):
+            return None
+
+    elif isinstance(value, (int, float)):
+        return float(value)
+
+    else:
+        return None
+
+
+def convert_to_bool(value):
+    """
+    Converts string, integer, or float input to boolean by checking for 'truthy' values
+
+    Parameters:
+
+        value:          (string/integer/float) Input value
+
+    Returns:
+
+        True/False      False unless a 'truthy' number or string is found ('y', 'yes', 'true', '1', 1, -1, etc.)
+    """
+    # if number, then bool it
+    # if string, try to convert to float
+    #   if float converts, then bool the result
+    #   if float does not convert then look for truthy string and bool True
+    #   else False
+    truthy = ['y', 'yes', 'true']
+
+    if isinstance(value, (int, float)):
+        return bool(value)
+
+    if isinstance(value, str):
+        try:
+            test_value = convert_to_float(value)
+            if test_value is not None:
+                return bool(test_value)
+        except Exception:
+            pass
+
+        if value:
+            return True if value.lower() in truthy else False
+
+    return False
 
 
 class timestamp:
@@ -163,6 +252,8 @@ class timestamp:
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1500, 'format': '%Y-%m-%d %H:%M', 'locale': None},  # en_US.UTF-8 local format (found in who cli output): 2021-03-23 00:14
             {'id': 1600, 'format': '%m/%d/%Y %I:%M %p', 'locale': None},  # Windows english format (found in dir cli output): 12/07/2019 02:09 AM
+            {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
+            {'id': 1710, 'format': '%m/%d/%Y, %I:%M:%S %p UTC%z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC+0000)
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
