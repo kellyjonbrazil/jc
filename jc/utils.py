@@ -85,7 +85,7 @@ def has_data(data):
 
 def convert_to_int(value):
     """
-    Converts string input to integer by stripping all non-numeric characters
+    Converts string and float input to int. Strips all non-numeric characters from strings.
 
     Parameters:
 
@@ -96,11 +96,12 @@ def convert_to_int(value):
         integer/None    Integer if successful conversion, otherwise None
     """
     if isinstance(value, str):
+        str_val = re.sub(r'[^0-9\-\.]', '', value)
         try:
-            return int(re.sub(r'[^0-9\-\.]', '', value))
-        except ValueError:
+            return int(str_val)
+        except (ValueError, TypeError):
             try:
-                return int(convert_to_float(value))
+                return int(float(str_val))
             except (ValueError, TypeError):
                 return None
 
@@ -113,7 +114,7 @@ def convert_to_int(value):
 
 def convert_to_float(value):
     """
-    Converts string input to float by stripping all non-numeric characters
+    Converts string and int input to float. Strips all non-numeric characters from strings.
 
     Parameters:
 
