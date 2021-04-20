@@ -102,6 +102,7 @@ parsers = [
     'timedatectl',
     'tracepath',
     'traceroute',
+    'ufw',
     'uname',
     'upower',
     'uptime',
