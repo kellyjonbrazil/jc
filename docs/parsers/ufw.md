@@ -43,7 +43,8 @@ Schema:
           "from_transport":         string,     # null if from_service is set
           "from_start_port":        integer,    # null if from_service is set
           "from_end_port":          integer,    # null if from_service is set
-          "from_service":           string      # null if any above are set
+          "from_service":           string,     # null if any above are set
+          "comment":                string      # null if no comment
         }
       ]
     }
@@ -70,6 +71,7 @@ Examples:
           "to_service": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -90,6 +92,7 @@ Examples:
           "to_service": null,
           "to_ip": "::",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -110,6 +113,7 @@ Examples:
           "to_end_port": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -130,6 +134,7 @@ Examples:
           "to_start_port": 0,
           "to_end_port": 65535,
           "to_service": null,
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -150,6 +155,7 @@ Examples:
           "to_start_port": 0,
           "to_end_port": 65535,
           "to_service": null,
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -181,6 +187,7 @@ Examples:
           "to_service": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -201,6 +208,7 @@ Examples:
           "to_service": null,
           "to_ip": "::",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -221,6 +229,7 @@ Examples:
           "to_end_port": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -241,6 +250,7 @@ Examples:
           "to_start_port": "0",
           "to_end_port": "65535",
           "to_service": null,
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -261,6 +271,7 @@ Examples:
           "to_start_port": "0",
           "to_end_port": "65535",
           "to_service": null,
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",

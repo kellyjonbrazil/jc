@@ -40,7 +40,8 @@ Schema:
           "from_transport":         string,     # null if from_service is set
           "from_start_port":        integer,    # null if from_service is set
           "from_end_port":          integer,    # null if from_service is set
-          "from_service":           string      # null if any above are set
+          "from_service":           string,     # null if any above are set
+          "comment":                string      # null if no comment
         }
       ]
     }
@@ -67,6 +68,7 @@ Examples:
           "to_service": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -87,6 +89,7 @@ Examples:
           "to_service": null,
           "to_ip": "::",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -107,6 +110,7 @@ Examples:
           "to_end_port": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -127,6 +131,7 @@ Examples:
           "to_start_port": 0,
           "to_end_port": 65535,
           "to_service": null,
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -147,6 +152,7 @@ Examples:
           "to_start_port": 0,
           "to_end_port": 65535,
           "to_service": null,
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -178,6 +184,7 @@ Examples:
           "to_service": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -198,6 +205,7 @@ Examples:
           "to_service": null,
           "to_ip": "::",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -218,6 +226,7 @@ Examples:
           "to_end_port": null,
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -238,6 +247,7 @@ Examples:
           "to_start_port": "0",
           "to_end_port": "65535",
           "to_service": null,
+          "comment": null,
           "from_ip": "::",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -258,6 +268,7 @@ Examples:
           "to_start_port": "0",
           "to_end_port": "65535",
           "to_service": null,
+          "comment": null,
           "from_ip": "0.0.0.0",
           "from_ip_prefix": "0",
           "from_interface": "any",
@@ -328,6 +339,16 @@ def _parse_to_from(linedata, direction, rule_obj=None):
             linedata = re.sub(RE_LINE_NUM, '', linedata)
         else:
             rule_obj['index'] = None
+
+    # pull out comments, if they exist
+    if direction == 'from':
+        RE_COMMENT = re.compile(r'#.+$')
+        comment_match = re.search(RE_COMMENT, linedata)
+        if comment_match:
+            rule_obj['comment'] = comment_match.group(0).lstrip('#').strip()
+            linedata = re.sub(RE_COMMENT, '', linedata)
+        else:
+            rule_obj['comment'] = None
 
     # pull (v6)
     RE_V6 = re.compile(r'\(v6\)')
@@ -481,7 +502,7 @@ def parse(data, raw=False, quiet=False):
                 # Split on action. Left of Action is 'to', right of Action is 'from'
                 rule_obj = {}
 
-                splitline = re.split(r'(ALLOW IN|ALLOW OUT|DENY IN|DENY OUT|ALLOW|DENY)', line)
+                splitline = re.split(r'(ALLOW IN|ALLOW OUT|ALLOW FWD|DENY IN|DENY OUT|DENY FWD|LIMIT IN|LIMIT OUT|LIMIT FWD|REJECT IN|REJECT OUT|REJECT FWD|ALLOW|DENY|LIMIT|REJECT)', line)
                 to_line = splitline[0]
                 action_line = splitline[1]
                 action_list = action_line.split()
