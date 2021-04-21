@@ -43,7 +43,7 @@ Schema:
           "from_transport":         string,     # null if from_service is set
           "from_start_port":        integer,    # null if from_service is set
           "from_end_port":          integer,    # null if from_service is set
-          "from_service":           string,     # null if any above are set
+          "from_service":           string      # null if any above are set
         }
       ]
     }
