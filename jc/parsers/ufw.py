@@ -138,7 +138,7 @@ Examples:
           "action_direction": "IN",
           "index": 5,
           "network_protocol": "ipv4",
-          "to_interface": "en0               ",
+          "to_interface": "en0",
           "to_ip": "10.10.10.10",
           "to_subnet": 32,
           "to_transport": "any",
@@ -247,7 +247,7 @@ Examples:
           "action_direction": "IN",
           "index": "5",
           "network_protocol": "ipv4",
-          "to_interface": "en0               ",
+          "to_interface": "en0",
           "to_ip": "10.10.10.10",
           "to_subnet": "32",
           "to_transport": "any",
@@ -346,7 +346,7 @@ def _parse_to_from(linedata, direction, rule_obj=None):
     linedata_list = linedata.split(' on ', maxsplit=1)
 
     if len(linedata_list) > 1:
-        rule_obj[direction + '_interface'] = linedata_list[1]
+        rule_obj[direction + '_interface'] = linedata_list[1].strip()
         linedata = linedata_list[0]
     else:
         rule_obj[direction + '_interface'] = 'any'
