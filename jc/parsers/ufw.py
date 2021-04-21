@@ -17,13 +17,35 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "ufw":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+    {
+      "status":                     string,
+      "logging":                    string,
+      "logging_level":              string,
+      "default":                    string,
+      "new_profiles":               string,
+      "rules": [
+        {
+          "action":                 string,
+          "action_direction":       string,     # null if blank
+          "index":                  string,     # null if blank
+          "network_protocol":       string,
+          "to_ip":                  string,
+          "to_subnet":              integer,
+          "to_interface":           string,
+          "to_transport":           string,
+          "to_start_port":          integer,    # null if to_service is set
+          "to_end_port":            integer,    # null if to_service is set
+          "to_service":             string,     # null if start/end ports above set
+          "from_ip":                string,
+          "from_subnet":            integer,
+          "from_interface":         string,
+          "from_transport":         string,
+          "from_start_port":        integer,    # null if from_service is set
+          "from_end_port":          integer,    # null if from_service is set
+          "from_service":           string,     # null if start/end ports above set
+        }
+      ]
+    }
 
 Examples:
 
@@ -145,18 +167,36 @@ def _parse_to_from(linedata, direction, rule_obj=None):
 
     # find the numeric port(s)
     linedata_list = linedata.split(':', maxsplit=1)
-    if len(linedata_list) == 2 and linedata_list[1].isnumeric():
-        rule_obj[direction + '_start_port'] = linedata_list[0]
-        rule_obj[direction + '_end_port'] = linedata_list[1]
+    if len(linedata_list) == 2 and linedata_list[1].strip().isnumeric():
+        rule_obj[direction + '_start_port'] = linedata_list[0].strip()
+        rule_obj[direction + '_end_port'] = linedata_list[1].strip()
         linedata = ''
-    elif len(linedata_list) == 1 and linedata_list[0].isnumeric():
-        rule_obj[direction + '_start_port'] = linedata_list[0]
-        rule_obj[direction + '_end_port'] = linedata_list[0]
+    elif len(linedata_list) == 1 and linedata_list[0].strip().isnumeric():
+        rule_obj[direction + '_start_port'] = linedata_list[0].strip()
+        rule_obj[direction + '_end_port'] = linedata_list[0].strip()
         linedata = ''
 
     # only thing left should be the service name.
     if linedata.strip():
         rule_obj[direction + '_service'] = linedata.strip()
+        rule_obj[direction + '_start_port'] = None
+        rule_obj[direction + '_end_port'] = None
+
+    # check if to/from IP addresses exist. If not, set to 0.0.0.0/0 or ::/0
+    if direction + '_ip' not in rule_obj:
+        if rule_obj.get('network_protocol') == 'ipv6':
+            rule_obj[direction + '_ip'] = '::'
+            rule_obj[direction + '_subnet'] = '0'
+        elif rule_obj.get('network_protocol') == 'ipv4':
+            rule_obj[direction + '_ip'] = '0.0.0.0'
+            rule_obj[direction + '_subnet'] = '0'
+
+    # finally ensure service or ports exist. If not, set default values
+    if not rule_obj.get(direction + '_service'):
+        if not rule_obj.get(direction + '_start_port'):
+            rule_obj[direction + '_start_port'] = '0'
+            rule_obj[direction + '_end_port'] = '65535'
+            rule_obj[direction + '_service'] = None
 
     return rule_obj
 
@@ -192,7 +232,12 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if line.startswith('Logging: '):
-                raw_output['logging'] = line.split(': ', maxsplit=1)[1]
+                log_line = line.split(': ', maxsplit=1)
+                log_line = log_line[1]
+                log_line = log_line.split()
+                raw_output['logging'] = log_line[0]
+                if len(log_line) == 2:
+                    raw_output['logging_level'] = log_line[1].replace('(', '').replace(')', '').strip()
                 continue
 
             if line.startswith('Default: '):
