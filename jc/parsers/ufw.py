@@ -40,7 +40,7 @@ Schema:
           "from_transport":         string,     # null if from_service is set
           "from_start_port":        integer,    # null if from_service is set
           "from_end_port":          integer,    # null if from_service is set
-          "from_service":           string,     # null if any above are set
+          "from_service":           string      # null if any above are set
         }
       ]
     }
@@ -304,10 +304,12 @@ def _process(proc_data):
     """
     int_list = ['index', 'to_subnet', 'to_start_port', 'to_end_port', 'from_subnet',
                 'from_start_port', 'from_end_port']
-    for i, item in enumerate(proc_data['rules']):
-        for key in item:
-            if key in int_list:
-                proc_data['rules'][i][key] = jc.utils.convert_to_int(proc_data['rules'][i][key])
+
+    if 'rules' in proc_data:
+        for i, item in enumerate(proc_data['rules']):
+            for key in item:
+                if key in int_list:
+                    proc_data['rules'][i][key] = jc.utils.convert_to_int(proc_data['rules'][i][key])
 
     return proc_data
 
