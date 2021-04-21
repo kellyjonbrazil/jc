@@ -27,7 +27,7 @@ Schema:
         {
           "action":                 string,
           "action_direction":       string,     # null if blank
-          "index":                  string,     # null if blank
+          "index":                  integer,    # null if blank
           "network_protocol":       string,
           "to_ip":                  string,
           "to_subnet":              integer,
@@ -88,9 +88,12 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
+    int_list = ['index', 'to_subnet', 'to_start_port', 'to_end_port', 'from_subnet',
+                'from_start_port', 'from_end_port']
+    for i, item in enumerate(proc_data['rules']):
+        for key in item:
+            if key in int_list:
+                proc_data['rules'][i][key] = jc.utils.convert_to_int(proc_data['rules'][i][key])
 
     return proc_data
 
