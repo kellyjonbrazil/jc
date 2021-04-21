@@ -3126,6 +3126,121 @@ traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m
   ]
 }
 ```
+### ufw status
+```bash
+ufw status verbose numbered | jc --ufw -p
+```
+```json
+{
+  "status": "active",
+  "logging": "on",
+  "logging_level": "low",
+  "default": "deny (incoming), allow (outgoing), deny (routed)",
+  "new_profiles": "skip",
+  "rules": [
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": 1,
+      "network_protocol": "ipv4",
+      "to_interface": "any",
+      "to_transport": "tcp",
+      "to_start_port": 22,
+      "to_end_port": 22,
+      "to_service": null,
+      "to_ip": "0.0.0.0",
+      "to_ip_prefix": "0",
+      "from_ip": "0.0.0.0",
+      "from_ip_prefix": "0",
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_start_port": 0,
+      "from_end_port": 65535,
+      "from_service": null
+    },
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": 2,
+      "network_protocol": "ipv6",
+      "to_interface": "any",
+      "to_transport": "tcp",
+      "to_start_port": 22,
+      "to_end_port": 22,
+      "to_service": null,
+      "to_ip": "::",
+      "to_ip_prefix": "0",
+      "from_ip": "::",
+      "from_ip_prefix": "0",
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_start_port": 0,
+      "from_end_port": 65535,
+      "from_service": null
+    },
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": 3,
+      "network_protocol": "ipv4",
+      "to_interface": "any",
+      "to_transport": null,
+      "to_service": "Apache Full",
+      "to_start_port": null,
+      "to_end_port": null,
+      "to_ip": "0.0.0.0",
+      "to_ip_prefix": "0",
+      "from_ip": "0.0.0.0",
+      "from_ip_prefix": "0",
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_start_port": 0,
+      "from_end_port": 65535,
+      "from_service": null
+    },
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": 4,
+      "network_protocol": "ipv6",
+      "to_interface": "any",
+      "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
+      "to_ip_prefix": "128",
+      "to_transport": "any",
+      "to_start_port": 0,
+      "to_end_port": 65535,
+      "to_service": null,
+      "from_ip": "::",
+      "from_ip_prefix": "0",
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_start_port": 0,
+      "from_end_port": 65535,
+      "from_service": null
+    },
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": 5,
+      "network_protocol": "ipv4",
+      "to_interface": "en0",
+      "to_ip": "10.10.10.10",
+      "to_ip_prefix": "32",
+      "to_transport": "any",
+      "to_start_port": 0,
+      "to_end_port": 65535,
+      "to_service": null,
+      "from_ip": "0.0.0.0",
+      "from_ip_prefix": "0",
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_start_port": 0,
+      "from_end_port": 65535,
+      "from_service": null
+    }
+  ]
+}
+```
 ### uname -a
 ```bash
 uname -a | jc --uname -p          # or:  jc -p uname -a
