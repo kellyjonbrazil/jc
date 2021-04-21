@@ -380,13 +380,15 @@ def _parse_to_from(linedata, direction, rule_obj=None):
 
     # find the numeric port(s)
     linedata_list = linedata.split(':', maxsplit=1)
-    if len(linedata_list) == 2 and linedata_list[1].strip().isnumeric():
+    if len(linedata_list) == 2 and linedata_list[0].strip().isnumeric():
         rule_obj[direction + '_start_port'] = linedata_list[0].strip()
         rule_obj[direction + '_end_port'] = linedata_list[1].strip()
+        rule_obj[direction + '_service'] = None
         linedata = ''
     elif len(linedata_list) == 1 and linedata_list[0].strip().isnumeric():
         rule_obj[direction + '_start_port'] = linedata_list[0].strip()
         rule_obj[direction + '_end_port'] = linedata_list[0].strip()
+        rule_obj[direction + '_service'] = None
         linedata = ''
 
     # only thing left should be the service name.
