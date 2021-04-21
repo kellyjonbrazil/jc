@@ -102,7 +102,7 @@ pip3 install jc
 | FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
 
-> For more packages and binaries, see https://kellyjonbrazil.github.io/jc-packaging/.
+> For more packages and binaries, see the [jc packaging](https://kellyjonbrazil.github.io/jc-packaging/) site.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
@@ -182,6 +182,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--timedatectl` enables the `timedatectl status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl))
 - `--tracepath` enables the `tracepath` and `tracepath6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath))
 - `--traceroute` enables the `traceroute` and `traceroute6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute))
+- `--ufw` enables the `ufw status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw))
 - `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
 - `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
 - `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
