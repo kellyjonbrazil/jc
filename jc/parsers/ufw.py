@@ -30,17 +30,17 @@ Schema:
           "to_ip":                  string,
           "to_subnet":              integer,
           "to_interface":           string,
-          "to_transport":           string,
+          "to_transport":           string,     # null if to_service is set
           "to_start_port":          integer,    # null if to_service is set
           "to_end_port":            integer,    # null if to_service is set
-          "to_service":             string,     # null if start/end ports above set
+          "to_service":             string,     # null if any above are set
           "from_ip":                string,
           "from_subnet":            integer,
           "from_interface":         string,
-          "from_transport":         string,
+          "from_transport":         string,     # null if from_service is set
           "from_start_port":        integer,    # null if from_service is set
           "from_end_port":          integer,    # null if from_service is set
-          "from_service":           string,     # null if start/end ports above set
+          "from_service":           string,     # null if any above are set
         }
       ]
     }
@@ -394,6 +394,7 @@ def _parse_to_from(linedata, direction, rule_obj=None):
         rule_obj[direction + '_service'] = linedata.strip()
         rule_obj[direction + '_start_port'] = None
         rule_obj[direction + '_end_port'] = None
+        rule_obj[direction + '_transport'] = None
 
     # check if to/from IP addresses exist. If not, set to 0.0.0.0/0 or ::/0
     if direction + '_ip' not in rule_obj:
