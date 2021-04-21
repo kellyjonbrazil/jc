@@ -28,14 +28,14 @@ Schema:
           "index":                  integer,    # null if blank
           "network_protocol":       string,
           "to_ip":                  string,
-          "to_subnet":              integer,
+          "to_ip_prefix":           integer,
           "to_interface":           string,
           "to_transport":           string,     # null if to_service is set
           "to_start_port":          integer,    # null if to_service is set
           "to_end_port":            integer,    # null if to_service is set
           "to_service":             string,     # null if any above are set
           "from_ip":                string,
-          "from_subnet":            integer,
+          "from_ip_prefix":         integer,
           "from_interface":         string,
           "from_transport":         string,     # null if from_service is set
           "from_start_port":        integer,    # null if from_service is set
@@ -65,9 +65,9 @@ Examples:
           "to_start_port": 22,
           "to_end_port": 22,
           "to_ip": "0.0.0.0",
-          "to_subnet": 0,
+          "to_ip_prefix": "0",
           "from_ip": "0.0.0.0",
-          "from_subnet": 0,
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": 0,
@@ -84,9 +84,9 @@ Examples:
           "to_start_port": 22,
           "to_end_port": 22,
           "to_ip": "::",
-          "to_subnet": 0,
+          "to_ip_prefix": "0",
           "from_ip": "::",
-          "from_subnet": 0,
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": 0,
@@ -99,14 +99,14 @@ Examples:
           "index": 3,
           "network_protocol": "ipv4",
           "to_interface": "any",
-          "to_transport": "any",
+          "to_transport": null,
           "to_service": "Apache Full",
           "to_start_port": null,
           "to_end_port": null,
           "to_ip": "0.0.0.0",
-          "to_subnet": 0,
+          "to_ip_prefix": "0",
           "from_ip": "0.0.0.0",
-          "from_subnet": 0,
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": 0,
@@ -120,13 +120,13 @@ Examples:
           "network_protocol": "ipv6",
           "to_interface": "any",
           "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-          "to_subnet": 128,
+          "to_ip_prefix": "128",
           "to_transport": "any",
           "to_start_port": 0,
           "to_end_port": 65535,
           "to_service": null,
           "from_ip": "::",
-          "from_subnet": 0,
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": 0,
@@ -140,13 +140,13 @@ Examples:
           "network_protocol": "ipv4",
           "to_interface": "en0",
           "to_ip": "10.10.10.10",
-          "to_subnet": 32,
+          "to_ip_prefix": "32",
           "to_transport": "any",
           "to_start_port": 0,
           "to_end_port": 65535,
           "to_service": null,
           "from_ip": "0.0.0.0",
-          "from_subnet": 0,
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": 0,
@@ -174,9 +174,9 @@ Examples:
           "to_start_port": "22",
           "to_end_port": "22",
           "to_ip": "0.0.0.0",
-          "to_subnet": "0",
+          "to_ip_prefix": "0",
           "from_ip": "0.0.0.0",
-          "from_subnet": "0",
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": "0",
@@ -193,9 +193,9 @@ Examples:
           "to_start_port": "22",
           "to_end_port": "22",
           "to_ip": "::",
-          "to_subnet": "0",
+          "to_ip_prefix": "0",
           "from_ip": "::",
-          "from_subnet": "0",
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": "0",
@@ -208,14 +208,14 @@ Examples:
           "index": "3",
           "network_protocol": "ipv4",
           "to_interface": "any",
-          "to_transport": "any",
+          "to_transport": null,
           "to_service": "Apache Full",
           "to_start_port": null,
           "to_end_port": null,
           "to_ip": "0.0.0.0",
-          "to_subnet": "0",
+          "to_ip_prefix": "0",
           "from_ip": "0.0.0.0",
-          "from_subnet": "0",
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": "0",
@@ -229,13 +229,13 @@ Examples:
           "network_protocol": "ipv6",
           "to_interface": "any",
           "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-          "to_subnet": "128",
+          "to_ip_prefix": "128",
           "to_transport": "any",
           "to_start_port": "0",
           "to_end_port": "65535",
           "to_service": null,
           "from_ip": "::",
-          "from_subnet": "0",
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": "0",
@@ -249,13 +249,13 @@ Examples:
           "network_protocol": "ipv4",
           "to_interface": "en0",
           "to_ip": "10.10.10.10",
-          "to_subnet": "32",
+          "to_ip_prefix": "32",
           "to_transport": "any",
           "to_start_port": "0",
           "to_end_port": "65535",
           "to_service": null,
           "from_ip": "0.0.0.0",
-          "from_subnet": "0",
+          "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
           "from_start_port": "0",
@@ -336,10 +336,10 @@ def _parse_to_from(linedata, direction, rule_obj=None):
     if 'Anywhere' in linedata:
         if rule_obj.get('network_protocol') == 'ipv6':
             rule_obj[direction + '_ip'] = '::'
-            rule_obj[direction + '_subnet'] = '0'
+            rule_obj[direction + '_ip_prefix'] = '0'
         elif rule_obj.get('network_protocol') == 'ipv4':
             rule_obj[direction + '_ip'] = '0.0.0.0'
-            rule_obj[direction + '_subnet'] = '0'
+            rule_obj[direction + '_ip_prefix'] = '0'
         linedata = linedata.replace('Anywhere', '')
 
     # pull out interface (after 'on')
@@ -367,7 +367,7 @@ def _parse_to_from(linedata, direction, rule_obj=None):
 
     if valid_ip:
         rule_obj[direction + '_ip'] = str(valid_ip.ip)
-        rule_obj[direction + '_subnet'] = str(valid_ip.with_prefixlen.split('/')[1])
+        rule_obj[direction + '_ip_prefix'] = str(valid_ip.with_prefixlen.split('/')[1])
         linedata = ' '.join(new_linedata_list)
 
     # pull out anything ending in 'udp', 'tcp'. strip on '/' for ports
@@ -400,10 +400,10 @@ def _parse_to_from(linedata, direction, rule_obj=None):
     if direction + '_ip' not in rule_obj:
         if rule_obj.get('network_protocol') == 'ipv6':
             rule_obj[direction + '_ip'] = '::'
-            rule_obj[direction + '_subnet'] = '0'
+            rule_obj[direction + '_ip_prefix'] = '0'
         elif rule_obj.get('network_protocol') == 'ipv4':
             rule_obj[direction + '_ip'] = '0.0.0.0'
-            rule_obj[direction + '_subnet'] = '0'
+            rule_obj[direction + '_ip_prefix'] = '0'
 
     # finally ensure service or ports exist. If not, set default values
     if not rule_obj.get(direction + '_service'):
