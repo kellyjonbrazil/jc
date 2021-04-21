@@ -2,6 +2,7 @@ jc changelog
 
 20210420 v1.15.3
 - Add ufw status command parser tested on linux
+- Fix deb package name to conform to standard
 
 20210418 v1.15.2
 - Add systeminfo parser tested on Windows
