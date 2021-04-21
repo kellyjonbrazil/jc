@@ -1,6 +1,4 @@
-"""jc - JSON CLI output utility `ufw` command output parser
-
-<<Short ufw description and caveats>>
+"""jc - JSON CLI output utility `ufw status` command output parser
 
 Usage (cli):
 
@@ -49,11 +47,223 @@ Schema:
 
 Examples:
 
-    $ ufw status verbose | jc --ufw -p
-    []
+    $ ufw status verbose numbered | jc --ufw -p
+    {
+      "status": "active",
+      "logging": "on",
+      "logging_level": "low",
+      "default": "deny (incoming), allow (outgoing), deny (routed)",
+      "new_profiles": "skip",
+      "rules": [
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": 1,
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "tcp",
+          "to_start_port": 22,
+          "to_end_port": 22,
+          "to_ip": "0.0.0.0",
+          "to_subnet": 0,
+          "from_ip": "0.0.0.0",
+          "from_subnet": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": 0,
+          "from_end_port": 65535,
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": 2,
+          "network_protocol": "ipv6",
+          "to_interface": "any",
+          "to_transport": "tcp",
+          "to_start_port": 22,
+          "to_end_port": 22,
+          "to_ip": "::",
+          "to_subnet": 0,
+          "from_ip": "::",
+          "from_subnet": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": 0,
+          "from_end_port": 65535,
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": 3,
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "any",
+          "to_service": "Apache Full",
+          "to_start_port": null,
+          "to_end_port": null,
+          "to_ip": "0.0.0.0",
+          "to_subnet": 0,
+          "from_ip": "0.0.0.0",
+          "from_subnet": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": 0,
+          "from_end_port": 65535,
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": 4,
+          "network_protocol": "ipv6",
+          "to_interface": "any",
+          "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
+          "to_subnet": 128,
+          "to_transport": "any",
+          "to_start_port": 0,
+          "to_end_port": 65535,
+          "to_service": null,
+          "from_ip": "::",
+          "from_subnet": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": 0,
+          "from_end_port": 65535,
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": 5,
+          "network_protocol": "ipv4",
+          "to_interface": "en0               ",
+          "to_ip": "10.10.10.10",
+          "to_subnet": 32,
+          "to_transport": "any",
+          "to_start_port": 0,
+          "to_end_port": 65535,
+          "to_service": null,
+          "from_ip": "0.0.0.0",
+          "from_subnet": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": 0,
+          "from_end_port": 65535,
+          "from_service": null
+        }
+      ]
+    }
 
-    $ ufw status verbose | jc --ufw -p -r
-    []
+    $ ufw status verbose numbered | jc --ufw -p -r
+    {
+      "status": "active",
+      "logging": "on",
+      "logging_level": "low",
+      "default": "deny (incoming), allow (outgoing), deny (routed)",
+      "new_profiles": "skip",
+      "rules": [
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": "1",
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "tcp",
+          "to_start_port": "22",
+          "to_end_port": "22",
+          "to_ip": "0.0.0.0",
+          "to_subnet": "0",
+          "from_ip": "0.0.0.0",
+          "from_subnet": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": "0",
+          "from_end_port": "65535",
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": "2",
+          "network_protocol": "ipv6",
+          "to_interface": "any",
+          "to_transport": "tcp",
+          "to_start_port": "22",
+          "to_end_port": "22",
+          "to_ip": "::",
+          "to_subnet": "0",
+          "from_ip": "::",
+          "from_subnet": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": "0",
+          "from_end_port": "65535",
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": "3",
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "any",
+          "to_service": "Apache Full",
+          "to_start_port": null,
+          "to_end_port": null,
+          "to_ip": "0.0.0.0",
+          "to_subnet": "0",
+          "from_ip": "0.0.0.0",
+          "from_subnet": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": "0",
+          "from_end_port": "65535",
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": "4",
+          "network_protocol": "ipv6",
+          "to_interface": "any",
+          "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
+          "to_subnet": "128",
+          "to_transport": "any",
+          "to_start_port": "0",
+          "to_end_port": "65535",
+          "to_service": null,
+          "from_ip": "::",
+          "from_subnet": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": "0",
+          "from_end_port": "65535",
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": "5",
+          "network_protocol": "ipv4",
+          "to_interface": "en0               ",
+          "to_ip": "10.10.10.10",
+          "to_subnet": "32",
+          "to_transport": "any",
+          "to_start_port": "0",
+          "to_end_port": "65535",
+          "to_service": null,
+          "from_ip": "0.0.0.0",
+          "from_subnet": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_start_port": "0",
+          "from_end_port": "65535",
+          "from_service": null
+        }
+      ]
+    }
 """
 import jc.utils
 import re
@@ -86,7 +296,7 @@ def _process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Structured to conform to the schema.
+        Dictionary. Structured to conform to the schema.
     """
     int_list = ['index', 'to_subnet', 'to_start_port', 'to_end_port', 'from_subnet',
                 'from_start_port', 'from_end_port']
@@ -216,7 +426,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
