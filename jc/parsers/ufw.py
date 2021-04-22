@@ -313,7 +313,7 @@ def _process(proc_data):
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = ['index', 'to_subnet', 'to_start_port', 'to_end_port', 'from_subnet',
+    int_list = ['index', 'to_ip_prefix', 'to_start_port', 'to_end_port', 'from_ip_prefix',
                 'from_start_port', 'from_end_port']
 
     if 'rules' in proc_data:
@@ -397,8 +397,8 @@ def _parse_to_from(linedata, direction, rule_obj=None):
         rule_obj[direction + '_ip_prefix'] = str(valid_ip.with_prefixlen.split('/')[1])
         linedata = ' '.join(new_linedata_list)
 
-    # pull out anything ending in 'udp', 'tcp'. strip on '/' for ports
-    linedata_list = linedata.split('/', maxsplit=1)
+    # pull tcp/udp transport and strip on '/' for ports
+    linedata_list = linedata.rsplit('/', maxsplit=1)
     if len(linedata_list) > 1:
         rule_obj[direction + '_transport'] = linedata_list[1].strip()
         linedata = linedata_list[0]
@@ -423,7 +423,9 @@ def _parse_to_from(linedata, direction, rule_obj=None):
         rule_obj[direction + '_service'] = linedata.strip()
         rule_obj[direction + '_start_port'] = None
         rule_obj[direction + '_end_port'] = None
-        rule_obj[direction + '_transport'] = None
+        # if service name is really a list of ports, don't reset the _transport field to null
+        if ',' not in rule_obj[direction + '_service']:
+            rule_obj[direction + '_transport'] = None
 
     # check if to/from IP addresses exist. If not, set to 0.0.0.0/0 or ::/0
     if direction + '_ip' not in rule_obj:

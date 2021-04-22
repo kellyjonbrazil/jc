@@ -1,0 +1,11 @@
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22                         ALLOW IN    Anywhere                  
+[ 2] 80,443/tcp                 ALLOW IN    Anywhere                  
+[ 3] 80 on eth0                 ALLOW IN    Anywhere                   # test
+[ 4] 22 (v6)                    ALLOW IN    Anywhere (v6)             
+[ 5] 80,443/tcp (v6)            ALLOW IN    Anywhere (v6)             
+[ 6] 80 (v6) on eth0            ALLOW IN    Anywhere (v6)              # test
+
