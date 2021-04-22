@@ -103,6 +103,7 @@ parsers = [
     'tracepath',
     'traceroute',
     'ufw',
+    'ufw-appinfo',
     'uname',
     'upower',
     'uptime',
