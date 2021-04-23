@@ -139,7 +139,8 @@ def _process(proc_data):
                     new_port_ranges.append(port_range_obj)
                     state = 'findstart'
 
-        proc_data['normalized_' + protocol + '_ranges'] = new_port_ranges
+        if new_port_ranges:
+            proc_data['normalized_' + protocol + '_ranges'] = new_port_ranges
 
     return proc_data
 
@@ -147,7 +148,7 @@ def _process(proc_data):
 def _parse_port_list(data, port_list=None):
     """return a list of integers"""
     # 1,2,3,4,5,6,7,8,9,10,9,30,80:90,8080:8090
-    # overlapping and repeated port numbers are allowed, so use a set to correct
+    # overlapping and repeated port numbers are allowed
 
     if port_list is None:
         port_list = []
@@ -162,7 +163,7 @@ def _parse_port_list(data, port_list=None):
 def _parse_port_range(data, range_list=None):
     """return a list of dictionaries"""
     # 1,2,3,4,5,6,7,8,9,10,9,30,80:90,8080:8090
-    # overlapping ports are allowed
+    # overlapping port ranges are allowed
 
     if range_list is None:
         range_list = []
@@ -226,7 +227,7 @@ def parse(data, raw=False, quiet=False):
                 raw_output['description'] = line.split(': ')[1]
                 continue
 
-            if line.startswith('Ports:'):
+            if line.startswith('Port'):
                 ports = True
                 continue
 
@@ -234,11 +235,22 @@ def parse(data, raw=False, quiet=False):
                 line_list = line.rsplit('/', maxsplit=1)
                 if len(line_list) == 2:
                     if line_list[1] == 'tcp':
-                        raw_output['tcp_list'] = _parse_port_list(line_list[0])
-                        raw_output['tcp_ranges'] = _parse_port_range(line_list[0])
+                        prot_list = _parse_port_list(line_list[0])
+                        if prot_list:
+                            raw_output['tcp_list'] = prot_list
+
+                        prot_range = _parse_port_range(line_list[0])
+                        if prot_range:
+                            raw_output['tcp_ranges'] = prot_range
+
                     elif line_list[1] == 'udp':
-                        raw_output['udp_list'] = _parse_port_list(line_list[0])
-                        raw_output['udp_ranges'] = _parse_port_range(line_list[0])
+                        prot_list = _parse_port_list(line_list[0])
+                        if prot_list:
+                            raw_output['udp_list'] = prot_list
+
+                        prot_range = _parse_port_range(line_list[0])
+                        if prot_range:
+                            raw_output['udp_ranges'] = prot_range
 
                 # 'any' case
                 else:
