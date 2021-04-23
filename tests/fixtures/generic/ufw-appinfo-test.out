@@ -1,0 +1,9 @@
+Profile: TEST
+Title: My test app
+Description: a longer description of the test app here.
+
+Ports:
+  1,2,3,4,5,6,7,8,9,10,9,8,7,30,80:90,8080:8090/tcp
+  50:51,40:60/udp
+  53
+

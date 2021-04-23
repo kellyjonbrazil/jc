@@ -1,0 +1,9 @@
+Profile: MSN
+Title: MSN Chat
+Description: MSN chat protocol (with file transfer and voice)
+
+Ports:
+  1863
+  6891:6900/tcp
+  6901
+
