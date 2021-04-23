@@ -49,7 +49,7 @@ Schema:
         }
       ],
       "normalized_udp_list": [
-                                  integer
+                                  integers      # duplicates and overlapping are removed
       ],
       "normalized_udp_ranges": [
         {
