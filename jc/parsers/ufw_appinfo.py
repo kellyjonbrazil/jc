@@ -121,7 +121,8 @@ def _process(proc_data):
             for item in proc_data[protocol + '_ranges']:
                 port_set.update(range(item['start'], item['end'] + 1))
 
-        proc_data['normalized_' + protocol + '_list'] = sorted(set([p for p in proc_data[protocol + '_list'] if p not in port_set]))
+        if protocol + '_list' in proc_data:
+            proc_data['normalized_' + protocol + '_list'] = sorted(set([p for p in proc_data[protocol + '_list'] if p not in port_set]))
 
         new_port_ranges = []
         state = 'findstart'                 # 'findstart' or 'findend'
