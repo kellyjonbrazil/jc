@@ -48,7 +48,7 @@ Schema:
 
 Examples:
 
-    $ ufw status verbose numbered | jc --ufw -p
+    $ ufw status verbose | jc --ufw -p
     {
       "status": "active",
       "logging": "on",
@@ -59,7 +59,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": 1,
+          "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -80,7 +80,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": 2,
+          "index": null,
           "network_protocol": "ipv6",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -101,7 +101,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": 3,
+          "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": null,
@@ -122,7 +122,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": 4,
+          "index": null,
           "network_protocol": "ipv6",
           "to_interface": "any",
           "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
@@ -143,7 +143,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": 5,
+          "index": null,
           "network_protocol": "ipv4",
           "to_interface": "en0",
           "to_ip": "10.10.10.10",
@@ -164,7 +164,7 @@ Examples:
       ]
     }
 
-    $ ufw status verbose numbered | jc --ufw -p -r
+    $ ufw status verbose | jc --ufw -p -r
     {
       "status": "active",
       "logging": "on",
@@ -175,7 +175,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": "1",
+          "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -196,7 +196,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": "2",
+          "index": null,
           "network_protocol": "ipv6",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -217,7 +217,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": "3",
+          "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": null,
@@ -238,7 +238,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": "4",
+          "index": null,
           "network_protocol": "ipv6",
           "to_interface": "any",
           "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
@@ -259,7 +259,7 @@ Examples:
         {
           "action": "ALLOW",
           "action_direction": "IN",
-          "index": "5",
+          "index": null,
           "network_protocol": "ipv4",
           "to_interface": "en0",
           "to_ip": "10.10.10.10",
@@ -291,9 +291,6 @@ class info():
     description = '`ufw status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['ufw status']
 
