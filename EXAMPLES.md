@@ -3128,7 +3128,7 @@ traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m
 ```
 ### ufw status
 ```bash
-ufw status verbose numbered | jc --ufw -p
+ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
 ```
 ```json
 {
@@ -3141,7 +3141,7 @@ ufw status verbose numbered | jc --ufw -p
     {
       "action": "ALLOW",
       "action_direction": "IN",
-      "index": 1,
+      "index": null,
       "network_protocol": "ipv4",
       "to_interface": "any",
       "to_transport": "tcp",
@@ -3162,7 +3162,7 @@ ufw status verbose numbered | jc --ufw -p
     {
       "action": "ALLOW",
       "action_direction": "IN",
-      "index": 2,
+      "index": null,
       "network_protocol": "ipv6",
       "to_interface": "any",
       "to_transport": "tcp",
@@ -3183,7 +3183,7 @@ ufw status verbose numbered | jc --ufw -p
     {
       "action": "ALLOW",
       "action_direction": "IN",
-      "index": 3,
+      "index": null,
       "network_protocol": "ipv4",
       "to_interface": "any",
       "to_transport": null,
@@ -3204,7 +3204,7 @@ ufw status verbose numbered | jc --ufw -p
     {
       "action": "ALLOW",
       "action_direction": "IN",
-      "index": 4,
+      "index": null,
       "network_protocol": "ipv6",
       "to_interface": "any",
       "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
@@ -3225,7 +3225,7 @@ ufw status verbose numbered | jc --ufw -p
     {
       "action": "ALLOW",
       "action_direction": "IN",
-      "index": 5,
+      "index": null,
       "network_protocol": "ipv4",
       "to_interface": "en0",
       "to_ip": "10.10.10.10",
