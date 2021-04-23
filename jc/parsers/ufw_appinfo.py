@@ -127,7 +127,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
-    magic_commands = ['ufw-appinfo']
+    magic_commands = ['ufw app']
 
 
 __version__ = info.version
@@ -172,7 +172,9 @@ def _process(proc_data):
                 port_set.update(range(item['start'], item['end'] + 1))
 
         if protocol + '_list' in proc_data:
-            proc_data['normalized_' + protocol + '_list'] = sorted(set([p for p in proc_data[protocol + '_list'] if p not in port_set]))
+            new_port_list = sorted(set([p for p in proc_data[protocol + '_list'] if p not in port_set]))
+            if new_port_list:
+                proc_data['normalized_' + protocol + '_list'] = new_port_list
 
         new_port_ranges = []
         state = 'findstart'                 # 'findstart' or 'findend'
