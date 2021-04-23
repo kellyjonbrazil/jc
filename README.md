@@ -183,6 +183,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--tracepath` enables the `tracepath` and `tracepath6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath))
 - `--traceroute` enables the `traceroute` and `traceroute6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute))
 - `--ufw` enables the `ufw status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw))
+- `--ufw-appinfo` enables the `ufw app info [application]` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo))
 - `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
 - `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
 - `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))

@@ -64,11 +64,61 @@ Schema:
 
 Examples:
 
-    $ ufw app info OpenSSH | jc --ufw-appinfo -p
-    []
+    $ ufw app info MSN | jc --ufw-appinfo -p
+    {
+      "profile": "MSN",
+      "title": "MSN Chat",
+      "description": "MSN chat protocol (with file transfer and voice)",
+      "tcp_list": [
+        1863,
+        6901
+      ],
+      "udp_list": [
+        1863,
+        6901
+      ],
+      "tcp_ranges": [
+        {
+          "start": 6891,
+          "end": 6900
+        }
+      ],
+      "normalized_tcp_list": [
+        1863,
+        6901
+      ],
+      "normalized_tcp_ranges": [
+        {
+          "start": 6891,
+          "end": 6900
+        }
+      ],
+      "normalized_udp_list": [
+        1863,
+        6901
+      ]
+    }
 
-    $ ufw app info OpenSSH | jc --ufw-appinfo -p -r
-    []
+    $ ufw app info MSN | jc --ufw-appinfo -p -r
+    {
+      "profile": "MSN",
+      "title": "MSN Chat",
+      "description": "MSN chat protocol (with file transfer and voice)",
+      "tcp_list": [
+        "1863",
+        "6901"
+      ],
+      "udp_list": [
+        "1863",
+        "6901"
+      ],
+      "tcp_ranges": [
+        {
+          "start": "6891",
+          "end": "6900"
+        }
+      ]
+    }
 
 
 ## info

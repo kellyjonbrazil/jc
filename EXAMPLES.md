@@ -3246,6 +3246,45 @@ ufw status verbose numbered | jc --ufw -p
   ]
 }
 ```
+### ufw app info [application]
+```bash
+ufw app info MSN | jc --ufw-appinfo -p          # or:  jc -p ufw app info MSN
+```
+```json
+{
+  "profile": "MSN",
+  "title": "MSN Chat",
+  "description": "MSN chat protocol (with file transfer and voice)",
+  "tcp_list": [
+    1863,
+    6901
+  ],
+  "udp_list": [
+    1863,
+    6901
+  ],
+  "tcp_ranges": [
+    {
+      "start": 6891,
+      "end": 6900
+    }
+  ],
+  "normalized_tcp_list": [
+    1863,
+    6901
+  ],
+  "normalized_tcp_ranges": [
+    {
+      "start": 6891,
+      "end": 6900
+    }
+  ],
+  "normalized_udp_list": [
+    1863,
+    6901
+  ]
+}
+```
 ### uname -a
 ```bash
 uname -a | jc --uname -p          # or:  jc -p uname -a

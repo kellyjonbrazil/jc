@@ -61,11 +61,61 @@ Schema:
 
 Examples:
 
-    $ ufw app info OpenSSH | jc --ufw-appinfo -p
-    []
+    $ ufw app info MSN | jc --ufw-appinfo -p
+    {
+      "profile": "MSN",
+      "title": "MSN Chat",
+      "description": "MSN chat protocol (with file transfer and voice)",
+      "tcp_list": [
+        1863,
+        6901
+      ],
+      "udp_list": [
+        1863,
+        6901
+      ],
+      "tcp_ranges": [
+        {
+          "start": 6891,
+          "end": 6900
+        }
+      ],
+      "normalized_tcp_list": [
+        1863,
+        6901
+      ],
+      "normalized_tcp_ranges": [
+        {
+          "start": 6891,
+          "end": 6900
+        }
+      ],
+      "normalized_udp_list": [
+        1863,
+        6901
+      ]
+    }
 
-    $ ufw app info OpenSSH | jc --ufw-appinfo -p -r
-    []
+    $ ufw app info MSN | jc --ufw-appinfo -p -r
+    {
+      "profile": "MSN",
+      "title": "MSN Chat",
+      "description": "MSN chat protocol (with file transfer and voice)",
+      "tcp_list": [
+        "1863",
+        "6901"
+      ],
+      "udp_list": [
+        "1863",
+        "6901"
+      ],
+      "tcp_ranges": [
+        {
+          "start": "6891",
+          "end": "6900"
+        }
+      ]
+    }
 """
 import jc.utils
 
@@ -146,7 +196,7 @@ def _process(proc_data):
 
 
 def _parse_port_list(data, port_list=None):
-    """return a list of integers"""
+    """return a list of port strings"""
     # 1,2,3,4,5,6,7,8,9,10,9,30,80:90,8080:8090
     # overlapping and repeated port numbers are allowed
 
@@ -235,22 +285,22 @@ def parse(data, raw=False, quiet=False):
                 line_list = line.rsplit('/', maxsplit=1)
                 if len(line_list) == 2:
                     if line_list[1] == 'tcp':
-                        prot_list = _parse_port_list(line_list[0])
-                        if prot_list:
-                            raw_output['tcp_list'] = prot_list
+                        tcp_prot_list = _parse_port_list(line_list[0])
+                        if tcp_prot_list:
+                            raw_output['tcp_list'] = tcp_prot_list
 
-                        prot_range = _parse_port_range(line_list[0])
-                        if prot_range:
-                            raw_output['tcp_ranges'] = prot_range
+                        tcp_prot_range = _parse_port_range(line_list[0])
+                        if tcp_prot_range:
+                            raw_output['tcp_ranges'] = tcp_prot_range
 
                     elif line_list[1] == 'udp':
-                        prot_list = _parse_port_list(line_list[0])
-                        if prot_list:
-                            raw_output['udp_list'] = prot_list
+                        udp_prot_list = _parse_port_list(line_list[0])
+                        if udp_prot_list:
+                            raw_output['udp_list'] = udp_prot_list
 
-                        prot_range = _parse_port_range(line_list[0])
-                        if prot_range:
-                            raw_output['udp_ranges'] = prot_range
+                        udp_prot_range = _parse_port_range(line_list[0])
+                        if udp_prot_range:
+                            raw_output['udp_ranges'] = udp_prot_range
 
                 # 'any' case
                 else:
@@ -271,10 +321,21 @@ def parse(data, raw=False, quiet=False):
                     if 'udp_ranges' in raw_output:
                         u_range = raw_output['udp_ranges']
 
-                    raw_output['tcp_list'] = _parse_port_list(line, t_list)
-                    raw_output['tcp_ranges'] = _parse_port_range(line, t_range)
-                    raw_output['udp_list'] = _parse_port_list(line, u_list)
-                    raw_output['udp_ranges'] = _parse_port_range(line, u_range)
+                    t_p_list = _parse_port_list(line, t_list)
+                    if t_p_list:
+                        raw_output['tcp_list'] = t_p_list
+
+                    t_r_list = _parse_port_range(line, t_range)
+                    if t_r_list:
+                        raw_output['tcp_ranges'] = t_r_list
+
+                    u_p_list = _parse_port_list(line, u_list)
+                    if u_p_list:
+                        raw_output['udp_list'] = u_p_list
+
+                    u_r_list = _parse_port_range(line, u_range)
+                    if u_r_list:
+                        raw_output['udp_ranges'] = u_r_list
 
         raw_output.update(raw_output)
 
