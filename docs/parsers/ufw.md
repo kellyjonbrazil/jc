@@ -3,6 +3,8 @@
 # jc.parsers.ufw
 jc - JSON CLI output utility `ufw status` command output parser
 
+Note: a list of ports will be parsed to the `to_service` or `from_service` field as a comma-separated string.
+
 Usage (cli):
 
     $ ufw status | jc --ufw
