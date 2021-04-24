@@ -1,0 +1,18 @@
+Status: active
+     To                         Action      From
+     --                         ------      ----
+[ 1] 224.0.0.251 mDNS           ALLOW IN    Anywhere                  
+[ 2] Anywhere                   ALLOW IN    123.123.123.123               
+[ 3] 25                         ALLOW IN    Anywhere                  
+[ 4] 80                         ALLOW IN    Anywhere                  
+[ 5] 443                        ALLOW IN    Anywhere                  
+[ 6] 465                        ALLOW IN    Anywhere                  
+[ 7] 993                        ALLOW IN    Anywhere                  
+[ 8] 995                        ALLOW IN    Anywhere                  
+[ 9] ff02::fb mDNS              ALLOW IN    Anywhere (v6)             
+[10] 25 (v6)                    ALLOW IN    Anywhere (v6)             
+[11] 80 (v6)                    ALLOW IN    Anywhere (v6)             
+[12] 443 (v6)                   ALLOW IN    Anywhere (v6)             
+[13] 465 (v6)                   ALLOW IN    Anywhere (v6)             
+[14] 993 (v6)                   ALLOW IN    Anywhere (v6)             
+[15] 995 (v6)                   ALLOW IN    Anywhere (v6)

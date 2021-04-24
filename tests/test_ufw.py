@@ -22,6 +22,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered.out'), 'r', encoding='utf-8') as f:
             self.generic_ufw_numbered = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered2.out'), 'r', encoding='utf-8') as f:
+            self.generic_ufw_numbered2 = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.out'), 'r', encoding='utf-8') as f:
             self.generic_ufw_inactive = f.read()
 
@@ -37,6 +40,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered.json'), 'r', encoding='utf-8') as f:
             self.generic_ufw_numbered_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered2.json'), 'r', encoding='utf-8') as f:
+            self.generic_ufw_numbered2_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.json'), 'r', encoding='utf-8') as f:
             self.generic_ufw_inactive_json = json.loads(f.read())
@@ -70,6 +76,12 @@ class MyTests(unittest.TestCase):
         Test 'ufw status verbose numbered' sample
         """
         self.assertEqual(jc.parsers.ufw.parse(self.generic_ufw_numbered, quiet=True), self.generic_ufw_numbered_json)
+
+    def test_ufw_generic_verbose_numbered2(self):
+        """
+        Test 'ufw status verbose numbered' sample
+        """
+        self.assertEqual(jc.parsers.ufw.parse(self.generic_ufw_numbered2, quiet=True), self.generic_ufw_numbered2_json)
 
     def test_ufw_generic_inactive(self):
         """
