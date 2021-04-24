@@ -17,7 +17,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 2. Fork the repo and create your branch from `dev`, if available, otherwise `master`.
 3. If you've added code that should be tested, add tests. All new parsers should have several sample outputs and tests.
 4. Documentation is auto-generated from docstrings, so ensure they are clear and accurate.
-5. Ensure the test suite passes. (Note: "America/Los_Angeles" timezone should be configured on the test system)
+5. Ensure the test suite passes. (Note: "**America/Los_Angeles**" timezone should be configured on the test system)
 6. Make sure your code lints.
 7. Issue that pull request!
 
