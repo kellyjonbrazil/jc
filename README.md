@@ -242,7 +242,7 @@ $ export LANG=C
 
 Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on).
 
-If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc`P suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
+If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
 
 ## Compatibility
 Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
