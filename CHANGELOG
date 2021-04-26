@@ -1,6 +1,6 @@
 jc changelog
 
-20210425 v1.15.3
+20210426 v1.15.3
 - Add ufw status command parser tested on linux
 - Add ufw-appinfo command parser tested on linux
 - Fix deb package name to conform to standard
