@@ -156,6 +156,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 
 ### Caveats
 **Locale:**
+
 For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line:
 ```
 $ LANG=C date | jc --date
@@ -166,6 +167,7 @@ $ export LANG=C
 ```
 
 **Timezones:**
+
 Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on).
 
 If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc`P suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
