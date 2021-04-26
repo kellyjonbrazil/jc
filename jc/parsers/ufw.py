@@ -1,7 +1,5 @@
 """jc - JSON CLI output utility `ufw status` command output parser
 
-Note: a list of ports will be parsed to the `to_service` or `from_service` field as a comma-separated string.
-
 Usage (cli):
 
     $ ufw status | jc --ufw
@@ -32,17 +30,31 @@ Schema:
           "to_ip":                  string,
           "to_ip_prefix":           integer,
           "to_interface":           string,
-          "to_transport":           string,     # null if to_service is set and not a list of ports
-          "to_start_port":          integer,    # null if to_service is set and not a list of ports
-          "to_end_port":            integer,    # null if to_service is set and not a list of ports
-          "to_service":             string,     # null if any above are set (can also be a list of ports)
+          "to_transport":           string,
+          "to_ports": [
+                                    integer
+          ],
+          "to_port_ranges": [
+            {
+              "start":              integer,
+              "end":                integer
+            }
+          ],
+          "to_service":             string,     # null if any to ports or port_ranges are set
           "from_ip":                string,
           "from_ip_prefix":         integer,
           "from_interface":         string,
-          "from_transport":         string,     # null if to_service is set and not a list of ports
-          "from_start_port":        integer,    # null if to_service is set and not a list of ports
-          "from_end_port":          integer,    # null if to_service is set and not a list of ports
-          "from_service":           string,     # null if any above are set (can also be a list of ports)
+          "from_transport":         string,
+          "from_ports": [
+                                    integer
+          ],
+          "from_port_ranges": [
+            {
+              "start":              integer,
+              "end":                integer
+            }
+          ],
+          "from_service":           string,     # null if any from ports or port_ranges are set
           "comment":                string      # null if no comment
         }
       ]
@@ -51,236 +63,10 @@ Schema:
 Examples:
 
     $ ufw status verbose | jc --ufw -p
-    {
-      "status": "active",
-      "logging": "on",
-      "logging_level": "low",
-      "default": "deny (incoming), allow (outgoing), deny (routed)",
-      "new_profiles": "skip",
-      "rules": [
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": 22,
-          "to_end_port": 22,
-          "to_service": null,
-          "to_ip": "0.0.0.0",
-          "to_ip_prefix": 0,
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": 22,
-          "to_end_port": 22,
-          "to_service": null,
-          "to_ip": "::",
-          "to_ip_prefix": 0,
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "any",
-          "to_transport": null,
-          "to_service": "Apache Full",
-          "to_start_port": null,
-          "to_end_port": null,
-          "to_ip": "0.0.0.0",
-          "to_ip_prefix": 0,
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-          "to_ip_prefix": 128,
-          "to_transport": "any",
-          "to_start_port": 0,
-          "to_end_port": 65535,
-          "to_service": null,
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "en0",
-          "to_ip": "10.10.10.10",
-          "to_ip_prefix": 32,
-          "to_transport": "any",
-          "to_start_port": 0,
-          "to_end_port": 65535,
-          "to_service": null,
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        }
-      ]
-    }
+    
 
     $ ufw status verbose | jc --ufw -p -r
-    {
-      "status": "active",
-      "logging": "on",
-      "logging_level": "low",
-      "default": "deny (incoming), allow (outgoing), deny (routed)",
-      "new_profiles": "skip",
-      "rules": [
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": "22",
-          "to_end_port": "22",
-          "to_service": null,
-          "to_ip": "0.0.0.0",
-          "to_ip_prefix": "0",
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": "22",
-          "to_end_port": "22",
-          "to_service": null,
-          "to_ip": "::",
-          "to_ip_prefix": "0",
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "any",
-          "to_transport": null,
-          "to_service": "Apache Full",
-          "to_start_port": null,
-          "to_end_port": null,
-          "to_ip": "0.0.0.0",
-          "to_ip_prefix": "0",
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-          "to_ip_prefix": "128",
-          "to_transport": "any",
-          "to_start_port": "0",
-          "to_end_port": "65535",
-          "to_service": null,
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "en0",
-          "to_ip": "10.10.10.10",
-          "to_ip_prefix": "32",
-          "to_transport": "any",
-          "to_start_port": "0",
-          "to_end_port": "65535",
-          "to_service": null,
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        }
-      ]
-    }
+    
 """
 import jc.utils
 import re
@@ -312,14 +98,22 @@ def _process(proc_data):
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = ['index', 'to_ip_prefix', 'to_start_port', 'to_end_port', 'from_ip_prefix',
-                'from_start_port', 'from_end_port']
+    int_list = ['index', 'to_ip_prefix', 'from_ip_prefix']
 
     if 'rules' in proc_data:
         for i, item in enumerate(proc_data['rules']):
             for key in item:
                 if key in int_list:
                     proc_data['rules'][i][key] = jc.utils.convert_to_int(proc_data['rules'][i][key])
+
+                if key in ['to_ports', 'from_ports']:
+                    for i2, item2 in enumerate(proc_data['rules'][i][key]):
+                        proc_data['rules'][i][key][i2] = jc.utils.convert_to_int(item2)
+
+                if key in ['to_port_ranges', 'from_port_ranges']:
+                    for i2, item2 in enumerate(proc_data['rules'][i][key]):
+                        proc_data['rules'][i][key][i2]['start'] = jc.utils.convert_to_int(proc_data['rules'][i][key][i2]['start'])
+                        proc_data['rules'][i][key][i2]['end'] = jc.utils.convert_to_int(proc_data['rules'][i][key][i2]['end'])
 
     return proc_data
 
@@ -377,6 +171,15 @@ def _parse_to_from(linedata, direction, rule_obj=None):
     else:
         rule_obj[direction + '_interface'] = 'any'
 
+    # pull tcp/udp/etc. transport - strip on '/'
+    linedata_list = linedata.rsplit('/', maxsplit=1)
+    if len(linedata_list) > 1:
+        if linedata_list[1].strip() in ['tcp', 'udp', 'ah', 'esp', 'gre', 'ipv6', 'igmp']:
+            rule_obj[direction + '_transport'] = linedata_list[1].strip()
+            linedata = linedata_list[0]
+    else:
+        rule_obj[direction + '_transport'] = 'any'
+
     # pull out ipv4 or ipv6 addresses
     linedata_list = linedata.split()
     new_linedata_list = []
@@ -396,35 +199,36 @@ def _parse_to_from(linedata, direction, rule_obj=None):
         rule_obj[direction + '_ip_prefix'] = str(valid_ip.with_prefixlen.split('/')[1])
         linedata = ' '.join(new_linedata_list)
 
-    # pull tcp/udp transport and strip on '/' for ports
-    linedata_list = linedata.rsplit('/', maxsplit=1)
-    if len(linedata_list) > 1:
-        rule_obj[direction + '_transport'] = linedata_list[1].strip()
-        linedata = linedata_list[0]
-    else:
-        rule_obj[direction + '_transport'] = 'any'
-
     # find the numeric port(s)
-    linedata_list = linedata.split(':', maxsplit=1)
-    if len(linedata_list) == 2 and linedata_list[0].strip().isnumeric():
-        rule_obj[direction + '_start_port'] = linedata_list[0].strip()
-        rule_obj[direction + '_end_port'] = linedata_list[1].strip()
+    linedata_list = linedata.split(',')
+    port_list = []
+    port_ranges = []
+    for item in linedata_list:
+        if item.strip().isnumeric():
+            port_list.append(item.strip())
+        elif ':' in item:
+            p_range = item.strip().split(':', maxsplit=1)
+            port_ranges.append(
+                {
+                    "start": p_range[0],
+                    "end": p_range[1]
+                }
+            )
+
+    if port_list or port_ranges:
         rule_obj[direction + '_service'] = None
         linedata = ''
-    elif len(linedata_list) == 1 and linedata_list[0].strip().isnumeric():
-        rule_obj[direction + '_start_port'] = linedata_list[0].strip()
-        rule_obj[direction + '_end_port'] = linedata_list[0].strip()
-        rule_obj[direction + '_service'] = None
-        linedata = ''
+
+    if port_list:
+        rule_obj[direction + '_ports'] = port_list
+
+    if port_ranges:
+        rule_obj[direction + '_port_ranges'] = port_ranges
 
     # only thing left should be the service name.
     if linedata.strip():
         rule_obj[direction + '_service'] = linedata.strip()
-        rule_obj[direction + '_start_port'] = None
-        rule_obj[direction + '_end_port'] = None
-        # if service name is really a list of ports, don't reset the _transport field to null
-        if ',' not in rule_obj[direction + '_service']:
-            rule_obj[direction + '_transport'] = None
+        rule_obj[direction + '_transport'] = None
 
     # check if to/from IP addresses exist. If not, set to 0.0.0.0/0 or ::/0
     if direction + '_ip' not in rule_obj:
@@ -435,12 +239,25 @@ def _parse_to_from(linedata, direction, rule_obj=None):
             rule_obj[direction + '_ip'] = '0.0.0.0'
             rule_obj[direction + '_ip_prefix'] = '0'
 
-    # finally ensure service or ports exist. If not, set default values
-    if not rule_obj.get(direction + '_service'):
-        if not rule_obj.get(direction + '_start_port'):
-            rule_obj[direction + '_start_port'] = '0'
-            rule_obj[direction + '_end_port'] = '65535'
-            rule_obj[direction + '_service'] = None
+    # finally set default ports if no ports exist and there should be some
+    set_default = False
+    if direction + '_transport' in rule_obj:
+        if rule_obj[direction + '_transport'] in ['tcp', 'udp', 'any']:
+            if not port_list and not port_ranges:
+                set_default = True
+
+    else:
+        rule_obj[direction + '_transport'] = 'any'
+        set_default = True
+
+    if set_default:
+        rule_obj[direction + '_port_ranges'] = [
+            {
+                'start': '0',
+                'end': '65535'
+            }
+        ]
+        rule_obj[direction + '_service'] = None
 
     return rule_obj
 
