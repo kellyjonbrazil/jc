@@ -1,0 +1,51 @@
+Profile: MSN
+Title: MSN Chat
+Description: MSN chat protocol (with file transfer and voice)
+
+Ports:
+  1863
+  6891:6900/tcp
+  6901
+
+--
+
+Profile: OpenSSH
+Title: Secure shell server, an rshd replacement
+Description: OpenSSH is a free implementation of the Secure Shell protocol.
+
+Port:
+  22/tcp
+
+--
+
+Profile: TEST
+Title: My test app
+Description: a longer description of the test app here.
+
+Ports:
+  1,2,3,4,5,6,7,8,9,10,30,80:90,8080:8090/tcp
+  50:51/udp
+  53
+
+--
+
+Profile: TEST2
+Title: My test app2
+Description: a longer description of the test app here.
+
+Ports:
+  any/tcp
+  50:51/udp
+  53
+
+--
+
+Profile: TEST3
+Title: My test app3
+Description: test overlapping ports
+
+Ports:
+  80,83,80,70:90/tcp
+  50:51/udp
+  53
+

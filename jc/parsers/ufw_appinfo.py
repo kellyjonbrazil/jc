@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `ufw app info [application]` command output parser
 
+Supports individual apps via `ufw app info [application]` and all apps list via `ufw app info all`.
+
 Because `ufw` application definitions allow overlapping ports and port ranges, this parser preserves that behavior, but also provides `normalized` lists and ranges that remove duplicate ports and merge overlapping ranges.
 
 Usage (cli):
@@ -17,105 +19,111 @@ Usage (module):
 
 Schema:
 
-    {
-      "profile":                  string,
-      "title":                    string,
-      "description":              string,
-      "tcp_list": [
-                                  integer
-      ],
-      "tcp_ranges": [
-        {
-          "start":                integer,      # 'any' is converted to start/end: 0/65535
-          "end":                  integer
-        }
-      ],
-      "udp_list": [
-                                  integer
-      ],
-      "udp_ranges": [
-        {
-          "start":                integer,      # 'any' is converted to start/end: 0/65535
-          "end":                  integer
-        }
-      ],
-      "normalized_tcp_list": [
-                                  integers      # duplicates and overlapping are removed
-      ],
-      "normalized_tcp_ranges": [
-        {
-          "start":                integer,      # 'any' is converted to start/end: 0/65535
-          "end":                  integers      # overlapping are merged
-        }
-      ],
-      "normalized_udp_list": [
-                                  integers      # duplicates and overlapping are removed
-      ],
-      "normalized_udp_ranges": [
-        {
-          "start":                integer,      # 'any' is converted to start/end: 0/65535
-          "end":                  integers      # overlapping are merged
-        }
-      ]
-    }
+    [
+      {
+        "profile":                  string,
+        "title":                    string,
+        "description":              string,
+        "tcp_list": [
+                                    integer
+        ],
+        "tcp_ranges": [
+          {
+            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "end":                  integer
+          }
+        ],
+        "udp_list": [
+                                    integer
+        ],
+        "udp_ranges": [
+          {
+            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "end":                  integer
+          }
+        ],
+        "normalized_tcp_list": [
+                                    integers      # duplicates and overlapping are removed
+        ],
+        "normalized_tcp_ranges": [
+          {
+            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "end":                  integers      # overlapping are merged
+          }
+        ],
+        "normalized_udp_list": [
+                                    integers      # duplicates and overlapping are removed
+        ],
+        "normalized_udp_ranges": [
+          {
+            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "end":                  integers      # overlapping are merged
+          }
+        ]
+      }
+    ]
 
 Examples:
 
     $ ufw app info MSN | jc --ufw-appinfo -p
-    {
-      "profile": "MSN",
-      "title": "MSN Chat",
-      "description": "MSN chat protocol (with file transfer and voice)",
-      "tcp_list": [
-        1863,
-        6901
-      ],
-      "udp_list": [
-        1863,
-        6901
-      ],
-      "tcp_ranges": [
-        {
-          "start": 6891,
-          "end": 6900
-        }
-      ],
-      "normalized_tcp_list": [
-        1863,
-        6901
-      ],
-      "normalized_tcp_ranges": [
-        {
-          "start": 6891,
-          "end": 6900
-        }
-      ],
-      "normalized_udp_list": [
-        1863,
-        6901
-      ]
-    }
+    [
+      {
+        "profile": "MSN",
+        "title": "MSN Chat",
+        "description": "MSN chat protocol (with file transfer and voice)",
+        "tcp_list": [
+          1863,
+          6901
+        ],
+        "udp_list": [
+          1863,
+          6901
+        ],
+        "tcp_ranges": [
+          {
+            "start": 6891,
+            "end": 6900
+          }
+        ],
+        "normalized_tcp_list": [
+          1863,
+          6901
+        ],
+        "normalized_tcp_ranges": [
+          {
+            "start": 6891,
+            "end": 6900
+          }
+        ],
+        "normalized_udp_list": [
+          1863,
+          6901
+        ]
+      }
+    ]
 
     $ ufw app info MSN | jc --ufw-appinfo -p -r
-    {
-      "profile": "MSN",
-      "title": "MSN Chat",
-      "description": "MSN chat protocol (with file transfer and voice)",
-      "tcp_list": [
-        "1863",
-        "6901"
-      ],
-      "udp_list": [
-        "1863",
-        "6901"
-      ],
-      "tcp_ranges": [
-        {
-          "start": "6891",
-          "end": "6900"
-        }
-      ]
-    }
+    [
+      {
+        "profile": "MSN",
+        "title": "MSN Chat",
+        "description": "MSN chat protocol (with file transfer and voice)",
+        "tcp_list": [
+          "1863",
+          "6901"
+        ],
+        "udp_list": [
+          "1863",
+          "6901"
+        ],
+        "tcp_ranges": [
+          {
+            "start": "6891",
+            "end": "6900"
+          }
+        ]
+      }
+    ]
 """
 import jc.utils
 
@@ -143,56 +151,57 @@ def _process(proc_data):
 
     Returns:
 
-        Dictionary. Structured to conform to the schema.
+        List of Dictionaries. Structured to conform to the schema.
     """
-    # convert to ints
-    int_list = ['start', 'end']
+    for profile in proc_data:
+        # convert to ints
+        int_list = ['start', 'end']
 
-    if 'tcp_list' in proc_data:
-        proc_data['tcp_list'] = [int(p) for p in proc_data['tcp_list']]
+        if 'tcp_list' in profile:
+            profile['tcp_list'] = [int(p) for p in profile['tcp_list']]
 
-    if 'udp_list' in proc_data:
-        proc_data['udp_list'] = [int(p) for p in proc_data['udp_list']]
+        if 'udp_list' in profile:
+            profile['udp_list'] = [int(p) for p in profile['udp_list']]
 
-    for protocol in ['tcp', 'udp']:
-        if protocol + '_ranges' in proc_data:
-            for i, item in enumerate(proc_data[protocol + '_ranges']):
-                for key in item:
-                    if key in int_list:
-                        proc_data[protocol + '_ranges'][i][key] = int(proc_data[protocol + '_ranges'][i][key])
+        for protocol in ['tcp', 'udp']:
+            if protocol + '_ranges' in profile:
+                for i, item in enumerate(profile[protocol + '_ranges']):
+                    for key in item:
+                        if key in int_list:
+                            profile[protocol + '_ranges'][i][key] = int(profile[protocol + '_ranges'][i][key])
 
-    # create normalized port lists and port ranges (remove duplicates and merge ranges)
-    # dump ranges into a set of 0 - 65535
-    # if items in the port list are in the set, then remove them
-    # iterate through the set to find gaps and create new ranges based on them
-    for protocol in ['tcp', 'udp']:
-        port_set = set()
-        if protocol + '_ranges' in proc_data:
-            for item in proc_data[protocol + '_ranges']:
-                port_set.update(range(item['start'], item['end'] + 1))
+        # create normalized port lists and port ranges (remove duplicates and merge ranges)
+        # dump ranges into a set of 0 - 65535
+        # if items in the port list are in the set, then remove them
+        # iterate through the set to find gaps and create new ranges based on them
+        for protocol in ['tcp', 'udp']:
+            port_set = set()
+            if protocol + '_ranges' in profile:
+                for item in profile[protocol + '_ranges']:
+                    port_set.update(range(item['start'], item['end'] + 1))
 
-        if protocol + '_list' in proc_data:
-            new_port_list = sorted(set([p for p in proc_data[protocol + '_list'] if p not in port_set]))
-            if new_port_list:
-                proc_data['normalized_' + protocol + '_list'] = new_port_list
+            if protocol + '_list' in profile:
+                new_port_list = sorted(set([p for p in profile[protocol + '_list'] if p not in port_set]))
+                if new_port_list:
+                    profile['normalized_' + protocol + '_list'] = new_port_list
 
-        new_port_ranges = []
-        state = 'findstart'                 # 'findstart' or 'findend'
-        for port in range(0, 65535 + 2):
-            if state == 'findstart':
-                port_range_obj = {}
-                if port in port_set:
-                    port_range_obj['start'] = port
-                    state = 'findend'
-                    continue
-            if state == 'findend':
-                if port not in port_set:
-                    port_range_obj['end'] = port - 1
-                    new_port_ranges.append(port_range_obj)
-                    state = 'findstart'
+            new_port_ranges = []
+            state = 'findstart'                 # 'findstart' or 'findend'
+            for port in range(0, 65535 + 2):
+                if state == 'findstart':
+                    port_range_obj = {}
+                    if port in port_set:
+                        port_range_obj['start'] = port
+                        state = 'findend'
+                        continue
+                if state == 'findend':
+                    if port not in port_set:
+                        port_range_obj['end'] = port - 1
+                        new_port_ranges.append(port_range_obj)
+                        state = 'findstart'
 
-        if new_port_ranges:
-            proc_data['normalized_' + protocol + '_ranges'] = new_port_ranges
+            if new_port_ranges:
+                profile['normalized_' + protocol + '_ranges'] = new_port_ranges
 
     return proc_data
 
@@ -254,12 +263,13 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary. Raw or processed structured data.
+        List of Dictionaries. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    raw_output = {}
+    raw_output = []
+    item_obj = {}
 
     if jc.utils.has_data(data):
 
@@ -267,16 +277,22 @@ def parse(data, raw=False, quiet=False):
 
         for line in filter(None, data.splitlines()):
 
+            if line.startswith('--'):
+                if item_obj:
+                    raw_output.append(item_obj)
+                item_obj = {}
+                continue
+
             if line.startswith('Profile:'):
-                raw_output['profile'] = line.split(': ')[1]
+                item_obj['profile'] = line.split(': ')[1]
                 continue
 
             if line.startswith('Title:'):
-                raw_output['title'] = line.split(': ')[1]
+                item_obj['title'] = line.split(': ')[1]
                 continue
 
             if line.startswith('Description:'):
-                raw_output['description'] = line.split(': ')[1]
+                item_obj['description'] = line.split(': ')[1]
                 continue
 
             if line.startswith('Port'):
@@ -289,20 +305,20 @@ def parse(data, raw=False, quiet=False):
                     if line_list[1] == 'tcp':
                         tcp_prot_list = _parse_port_list(line_list[0])
                         if tcp_prot_list:
-                            raw_output['tcp_list'] = tcp_prot_list
+                            item_obj['tcp_list'] = tcp_prot_list
 
                         tcp_prot_range = _parse_port_range(line_list[0])
                         if tcp_prot_range:
-                            raw_output['tcp_ranges'] = tcp_prot_range
+                            item_obj['tcp_ranges'] = tcp_prot_range
 
                     elif line_list[1] == 'udp':
                         udp_prot_list = _parse_port_list(line_list[0])
                         if udp_prot_list:
-                            raw_output['udp_list'] = udp_prot_list
+                            item_obj['udp_list'] = udp_prot_list
 
                         udp_prot_range = _parse_port_range(line_list[0])
                         if udp_prot_range:
-                            raw_output['udp_ranges'] = udp_prot_range
+                            item_obj['udp_ranges'] = udp_prot_range
 
                 # 'any' case
                 else:
@@ -311,35 +327,36 @@ def parse(data, raw=False, quiet=False):
                     u_list = []
                     u_range = []
 
-                    if 'tcp_list' in raw_output:
-                        t_list = raw_output['tcp_list']
+                    if 'tcp_list' in item_obj:
+                        t_list = item_obj['tcp_list']
 
-                    if 'tcp_ranges' in raw_output:
-                        t_range = raw_output['tcp_ranges']
+                    if 'tcp_ranges' in item_obj:
+                        t_range = item_obj['tcp_ranges']
 
-                    if 'udp_list' in raw_output:
-                        u_list = raw_output['udp_list']
+                    if 'udp_list' in item_obj:
+                        u_list = item_obj['udp_list']
 
-                    if 'udp_ranges' in raw_output:
-                        u_range = raw_output['udp_ranges']
+                    if 'udp_ranges' in item_obj:
+                        u_range = item_obj['udp_ranges']
 
                     t_p_list = _parse_port_list(line, t_list)
                     if t_p_list:
-                        raw_output['tcp_list'] = t_p_list
+                        item_obj['tcp_list'] = t_p_list
 
                     t_r_list = _parse_port_range(line, t_range)
                     if t_r_list:
-                        raw_output['tcp_ranges'] = t_r_list
+                        item_obj['tcp_ranges'] = t_r_list
 
                     u_p_list = _parse_port_list(line, u_list)
                     if u_p_list:
-                        raw_output['udp_list'] = u_p_list
+                        item_obj['udp_list'] = u_p_list
 
                     u_r_list = _parse_port_range(line, u_range)
                     if u_r_list:
-                        raw_output['udp_ranges'] = u_r_list
+                        item_obj['udp_ranges'] = u_r_list
 
-        raw_output.update(raw_output)
+    if item_obj:
+        raw_output.append(item_obj)
 
     if raw:
         return raw_output

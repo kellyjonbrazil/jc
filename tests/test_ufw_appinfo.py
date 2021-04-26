@@ -10,6 +10,9 @@ class MyTests(unittest.TestCase):
 
     def setUp(self):
         # input
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_04_ufw_appinfo_all = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test.out'), 'r', encoding='utf-8') as f:
             self.generic_ufw_appinfo_test = f.read()
 
@@ -23,6 +26,9 @@ class MyTests(unittest.TestCase):
             self.generic_ufw_appinfo_msn = f.read()
 
         # output
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_04_ufw_appinfo_all_json = json.loads(f.read())
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test.json'), 'r', encoding='utf-8') as f:
             self.generic_ufw_appinfo_test_json = json.loads(f.read())
 
@@ -39,7 +45,13 @@ class MyTests(unittest.TestCase):
         """
         Test 'ufw_appinfo' with no data
         """
-        self.assertEqual(jc.parsers.ufw_appinfo.parse('', quiet=True), {})
+        self.assertEqual(jc.parsers.ufw_appinfo.parse('', quiet=True), [])
+
+    def test_ufw_appinfo_ubuntu_18_04_all(self):
+        """
+        Test 'ufw app info all' on Ubuntu 18.04
+        """
+        self.assertEqual(jc.parsers.ufw_appinfo.parse(self.ubuntu_18_04_ufw_appinfo_all, quiet=True), self.ubuntu_18_04_ufw_appinfo_all_json)
 
     def test_ufw_appinfo_generic_test(self):
         """
