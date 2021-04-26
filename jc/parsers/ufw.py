@@ -301,6 +301,8 @@ def _parse_to_from(linedata, direction, rule_obj=None):
         if linedata_list[1].strip() in ['tcp', 'udp', 'ah', 'esp', 'gre', 'ipv6', 'igmp']:
             rule_obj[direction + '_transport'] = linedata_list[1].strip()
             linedata = linedata_list[0]
+        else:
+            rule_obj[direction + '_transport'] = 'any'
     else:
         rule_obj[direction + '_transport'] = 'any'
 
@@ -364,24 +366,16 @@ def _parse_to_from(linedata, direction, rule_obj=None):
             rule_obj[direction + '_ip_prefix'] = '0'
 
     # finally set default ports if no ports exist and there should be some
-    set_default = False
     if direction + '_transport' in rule_obj:
         if rule_obj[direction + '_transport'] in ['tcp', 'udp', 'any']:
             if not port_list and not port_ranges:
-                set_default = True
-
-    else:
-        rule_obj[direction + '_transport'] = 'any'
-        set_default = True
-
-    if set_default:
-        rule_obj[direction + '_port_ranges'] = [
-            {
-                'start': '0',
-                'end': '65535'
-            }
-        ]
-        rule_obj[direction + '_service'] = None
+                rule_obj[direction + '_port_ranges'] = [
+                    {
+                        'start': '0',
+                        'end': '65535'
+                    }
+                ]
+                rule_obj[direction + '_service'] = None
 
     return rule_obj
 
