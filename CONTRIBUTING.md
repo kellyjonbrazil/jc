@@ -17,7 +17,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 2. Fork the repo and create your branch from `dev`, if available, otherwise `master`.
 3. If you've added code that should be tested, add tests. All new parsers should have several sample outputs and tests.
 4. Documentation is auto-generated from docstrings, so ensure they are clear and accurate.
-5. Ensure the test suite passes.
+5. Ensure the test suite passes. (Note: "**America/Los_Angeles**" timezone should be configured on the test system)
 6. Make sure your code lints.
 7. Issue that pull request!
 
@@ -60,6 +60,11 @@ Good:
   }
 ]
 ```
+
+## Tests
+It is essential to have good command output sample coverage and tests to keep the `jc` parser quality high.
+
+Many parsers include calculated timestamp fields using the `jc.utils.timestamp` class. Naive timestamps created with this class should be generated on a system configured with the "**America/Los_Angeles**" timezone on linux/macOS/unix and "**Pacific Standard Time**" timezone on Windows for tests to pass on the Github Actions CI tests. This timezone should be configured on your local system before running the tests locally, as well.
 
 ## Any contributions you make will be under the MIT Software License
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.

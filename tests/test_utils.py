@@ -45,7 +45,7 @@ class MyTests(unittest.TestCase):
         for input_string, expected_output in datetime_map.items():
             self.assertEqual(jc.utils.timestamp(input_string).__dict__, expected_output)
 
-    def test_convert_to_int(self):
+    def test_utils_convert_to_int(self):
         io_map = {
             None: None,
             True: 1,
@@ -72,7 +72,7 @@ class MyTests(unittest.TestCase):
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_to_int(input_string), expected_output)
 
-    def test_convert_to_float(self):
+    def test_utils_convert_to_float(self):
         io_map = {
             None: None,
             True: 1.0,
@@ -99,7 +99,7 @@ class MyTests(unittest.TestCase):
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_to_float(input_string), expected_output)
 
-    def test_convert_to_bool(self):
+    def test_utils_convert_to_bool(self):
         io_map = {
             None: False,
             True: True,

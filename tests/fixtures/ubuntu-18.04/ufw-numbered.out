@@ -1,0 +1,19 @@
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22                         ALLOW IN    Anywhere                  
+[ 2] 80,443/tcp                 ALLOW IN    Anywhere                  
+[ 3] 80 on eth0                 ALLOW IN    Anywhere                   # test
+[ 4] 10.0.0.1/ipv6              ALLOW IN    10.4.0.0/16/ipv6          
+[ 5] 10.0.0.1/esp               ALLOW IN    Anywhere                  
+[ 6] 10.0.0.1/esp               ALLOW IN    10.4.0.0/16/esp           
+[ 7] 10.0.0.1/ah                ALLOW IN    Anywhere                  
+[ 8] 10.0.0.1/ah                ALLOW IN    10.4.0.0/16/ah            
+[ 9] 100:200,300:400/tcp        ALLOW IN    Anywhere                  
+[10] 1,2,100:200,300:400/udp    ALLOW IN    Anywhere                  
+[11] 22 (v6)                    ALLOW IN    Anywhere (v6)             
+[12] 80,443/tcp (v6)            ALLOW IN    Anywhere (v6)             
+[13] 80 (v6) on eth0            ALLOW IN    Anywhere (v6)              # test
+[14] 100:200,300:400/tcp (v6)   ALLOW IN    Anywhere (v6)             
+[15] 1,2,100:200,300:400/udp (v6) ALLOW IN    Anywhere (v6)             

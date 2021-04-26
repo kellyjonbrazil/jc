@@ -62,12 +62,12 @@ Module Example:
     ... ;; Got answer:
     ... ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 64612
     ... ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
-    ... 
+    ...
     ... ;; OPT PSEUDOSECTION:
     ... ; EDNS: version: 0, flags:; udp: 4096
     ... ;; QUESTION SECTION:
     ... ;example.com.           IN  A
-    ... 
+    ...
     ... ;; ANSWER SECTION:
     ... example.com.        29658   IN  A   93.184.216.34
     ... 
@@ -86,4 +86,4 @@ Module Example:
 """
 
 name = 'jc'
-__version__ = '1.15.2'
+__version__ = '1.15.3'

@@ -74,7 +74,7 @@ Returns:
 convert_to_int(value)
 ```
 
-Converts string input to integer by stripping all non-numeric characters
+Converts string and float input to int. Strips all non-numeric characters from strings.
 
 Parameters:
 
@@ -90,7 +90,7 @@ Returns:
 convert_to_float(value)
 ```
 
-Converts string input to float by stripping all non-numeric characters
+Converts string and int input to float. Strips all non-numeric characters from strings.
 
 Parameters:
 

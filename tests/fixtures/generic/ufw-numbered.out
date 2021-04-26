@@ -1,0 +1,23 @@
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), deny (routed)
+New profiles: skip
+ 
+To                         Action      From
+--                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+[ 2] 22/tcp (v6)                ALLOW OUT    Anywhere (v6)
+[ 3] 443/tcp                    DENY    192.168.0.1
+[ 4] 443/udp                    DENY OUT    192.168.0.7 8080:8081
+[ 5] 22/tcp                     ALLOW   192.168.0.0/24
+[ 6] 22/udp                     ALLOW   192.168.0.0/24 8080:8081 on en0
+[ 7] 22/tcp (v6)                ALLOW IN    2405:204:7449:49fc:f09a:6f4a:bc93:1955/64 on en1
+[ 8] 80                         ALLOW IN    Anywhere
+[ 9] 8080 (v6)                  ALLOW IN    Anywhere (v6)
+[10] Apache Full                ALLOW IN    Anywhere
+[11] Apache Full (v6)           ALLOW IN    Anywhere (v6)
+[12] OpenSSH  (v6)              DENY IN        Anywhere (v6)
+[13] 10.10.10.10 8080 on enp34s0 ALLOW       127.0.0.1 8000
+[14] 50200:50300/tcp (v6)       ALLOW        Anywhere (v6)
+[15] Anywhere (v6)              ALLOW IN      2405:204:7449:49fc:f09a:6f4a:bc93:1955
+

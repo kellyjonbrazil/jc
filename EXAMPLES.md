@@ -3126,6 +3126,115 @@ traceroute -m 3 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m
   ]
 }
 ```
+### ufw status
+```bash
+ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
+```
+```json
+{
+  "status": "active",
+  "logging": "on",
+  "logging_level": "low",
+  "default": "deny (incoming), allow (outgoing), disabled (routed)",
+  "new_profiles": "skip",
+  "rules": [
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": null,
+      "network_protocol": "ipv4",
+      "to_interface": "any",
+      "to_transport": "any",
+      "to_service": null,
+      "to_ports": [
+        22
+      ],
+      "to_ip": "0.0.0.0",
+      "to_ip_prefix": 0,
+      "comment": null,
+      "from_ip": "0.0.0.0",
+      "from_ip_prefix": 0,
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_port_ranges": [
+        {
+          "start": 0,
+          "end": 65535
+        }
+      ],
+      "from_service": null
+    },
+    {
+      "action": "ALLOW",
+      "action_direction": "IN",
+      "index": null,
+      "network_protocol": "ipv4",
+      "to_interface": "any",
+      "to_transport": "tcp",
+      "to_service": null,
+      "to_ports": [
+        80,
+        443
+      ],
+      "to_ip": "0.0.0.0",
+      "to_ip_prefix": 0,
+      "comment": null,
+      "from_ip": "0.0.0.0",
+      "from_ip_prefix": 0,
+      "from_interface": "any",
+      "from_transport": "any",
+      "from_port_ranges": [
+        {
+          "start": 0,
+          "end": 65535
+        }
+      ],
+      "from_service": null
+    }
+  ]
+}
+```
+### ufw app info [application]
+```bash
+ufw app info MSN | jc --ufw-appinfo -p          # or:  jc -p ufw app info MSN
+```
+```json
+[
+  {
+    "profile": "MSN",
+    "title": "MSN Chat",
+    "description": "MSN chat protocol (with file transfer and voice)",
+    "tcp_list": [
+      1863,
+      6901
+    ],
+    "udp_list": [
+      1863,
+      6901
+    ],
+    "tcp_ranges": [
+      {
+        "start": 6891,
+        "end": 6900
+      }
+    ],
+    "normalized_tcp_list": [
+      1863,
+      6901
+    ],
+    "normalized_tcp_ranges": [
+      {
+        "start": 6891,
+        "end": 6900
+      }
+    ],
+    "normalized_udp_list": [
+      1863,
+      6901
+    ]
+  }
+]
+```
 ### uname -a
 ```bash
 uname -a | jc --uname -p          # or:  jc -p uname -a

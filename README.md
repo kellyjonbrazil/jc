@@ -62,10 +62,6 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 ```
 Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
-> Note: Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on). 
->
-> If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
-
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
 Schemas for each parser can be found at the documentation link beside each parser below.
@@ -102,7 +98,7 @@ pip3 install jc
 | FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
 
-> For more packages and binaries, see https://kellyjonbrazil.github.io/jc-packaging/.
+> For more packages and binaries, see the [jc packaging](https://kellyjonbrazil.github.io/jc-packaging/) site.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
@@ -114,8 +110,6 @@ Alternatively, the "magic" syntax can be used by prepending `jc` to the command 
 jc [OPTIONS] COMMAND
 ```
 The JSON output can be compact (default) or pretty formatted with the `-p` option.
-
-> Note: For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line: `$ LANG=C date | jc --date`, or by exporting to the environment before running commands: `$ export LANG=C`.
 
 ### Parsers
 
@@ -182,6 +176,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--timedatectl` enables the `timedatectl status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl))
 - `--tracepath` enables the `tracepath` and `tracepath6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath))
 - `--traceroute` enables the `traceroute` and `traceroute6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute))
+- `--ufw` enables the `ufw status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw))
+- `--ufw-appinfo` enables the `ufw app info [application]` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo))
 - `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
 - `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
 - `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
@@ -229,6 +225,24 @@ Local parser plugins are standard python module files. Use the [`jc/parsers/foo.
 Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
 
 > Note: The application data directory follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+
+### Caveats
+**Locale:**
+
+For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line:
+```
+$ LANG=C date | jc --date
+```
+or by exporting to the environment before running commands:
+```
+$ export LANG=C
+```
+
+**Timezones:**
+
+Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on).
+
+If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc`P suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
 
 ## Compatibility
 Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
