@@ -3,8 +3,6 @@
 # jc.parsers.ufw
 jc - JSON CLI output utility `ufw status` command output parser
 
-Note: a list of ports will be parsed to the `to_service` or `from_service` field as a comma-separated string.
-
 Usage (cli):
 
     $ ufw status | jc --ufw
@@ -35,17 +33,31 @@ Schema:
           "to_ip":                  string,
           "to_ip_prefix":           integer,
           "to_interface":           string,
-          "to_transport":           string,     # null if to_service is set and not a list of ports
-          "to_start_port":          integer,    # null if to_service is set and not a list of ports
-          "to_end_port":            integer,    # null if to_service is set and not a list of ports
-          "to_service":             string,     # null if any above are set (can also be a list of ports)
+          "to_transport":           string,
+          "to_ports": [
+                                    integer
+          ],
+          "to_port_ranges": [
+            {
+              "start":              integer,
+              "end":                integer
+            }
+          ],
+          "to_service":             string,     # null if any to ports or port_ranges are set
           "from_ip":                string,
           "from_ip_prefix":         integer,
           "from_interface":         string,
-          "from_transport":         string,     # null if to_service is set and not a list of ports
-          "from_start_port":        integer,    # null if to_service is set and not a list of ports
-          "from_end_port":          integer,    # null if to_service is set and not a list of ports
-          "from_service":           string,     # null if any above are set (can also be a list of ports)
+          "from_transport":         string,
+          "from_ports": [
+                                    integer
+          ],
+          "from_port_ranges": [
+            {
+              "start":              integer,
+              "end":                integer
+            }
+          ],
+          "from_service":           string,     # null if any from ports or port_ranges are set
           "comment":                string      # null if no comment
         }
       ]
@@ -58,7 +70,7 @@ Examples:
       "status": "active",
       "logging": "on",
       "logging_level": "low",
-      "default": "deny (incoming), allow (outgoing), deny (routed)",
+      "default": "deny (incoming), allow (outgoing), disabled (routed)",
       "new_profiles": "skip",
       "rules": [
         {
@@ -67,10 +79,11 @@ Examples:
           "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": 22,
-          "to_end_port": 22,
+          "to_transport": "any",
           "to_service": null,
+          "to_ports": [
+            22
+          ],
           "to_ip": "0.0.0.0",
           "to_ip_prefix": 0,
           "comment": null,
@@ -78,29 +91,12 @@ Examples:
           "from_ip_prefix": 0,
           "from_interface": "any",
           "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": 22,
-          "to_end_port": 22,
-          "to_service": null,
-          "to_ip": "::",
-          "to_ip_prefix": 0,
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
+          "from_port_ranges": [
+            {
+              "start": 0,
+              "end": 65535
+            }
+          ],
           "from_service": null
         },
         {
@@ -109,10 +105,12 @@ Examples:
           "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
-          "to_transport": null,
-          "to_service": "Apache Full",
-          "to_start_port": null,
-          "to_end_port": null,
+          "to_transport": "tcp",
+          "to_service": null,
+          "to_ports": [
+            80,
+            443
+          ],
           "to_ip": "0.0.0.0",
           "to_ip_prefix": 0,
           "comment": null,
@@ -120,52 +118,15 @@ Examples:
           "from_ip_prefix": 0,
           "from_interface": "any",
           "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
+          "from_port_ranges": [
+            {
+              "start": 0,
+              "end": 65535
+            }
+          ],
           "from_service": null
         },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-          "to_ip_prefix": 128,
-          "to_transport": "any",
-          "to_start_port": 0,
-          "to_end_port": 65535,
-          "to_service": null,
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "en0",
-          "to_ip": "10.10.10.10",
-          "to_ip_prefix": 32,
-          "to_transport": "any",
-          "to_start_port": 0,
-          "to_end_port": 65535,
-          "to_service": null,
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": 0,
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": 0,
-          "from_end_port": 65535,
-          "from_service": null
-        }
+        ...
       ]
     }
 
@@ -174,7 +135,7 @@ Examples:
       "status": "active",
       "logging": "on",
       "logging_level": "low",
-      "default": "deny (incoming), allow (outgoing), deny (routed)",
+      "default": "deny (incoming), allow (outgoing), disabled (routed)",
       "new_profiles": "skip",
       "rules": [
         {
@@ -183,10 +144,11 @@ Examples:
           "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": "22",
-          "to_end_port": "22",
+          "to_transport": "any",
           "to_service": null,
+          "to_ports": [
+            "22"
+          ],
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
           "comment": null,
@@ -194,29 +156,12 @@ Examples:
           "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_transport": "tcp",
-          "to_start_port": "22",
-          "to_end_port": "22",
-          "to_service": null,
-          "to_ip": "::",
-          "to_ip_prefix": "0",
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
+          "from_port_ranges": [
+            {
+              "start": "0",
+              "end": "65535"
+            }
+          ],
           "from_service": null
         },
         {
@@ -225,10 +170,12 @@ Examples:
           "index": null,
           "network_protocol": "ipv4",
           "to_interface": "any",
-          "to_transport": null,
-          "to_service": "Apache Full",
-          "to_start_port": null,
-          "to_end_port": null,
+          "to_transport": "tcp",
+          "to_service": null,
+          "to_ports": [
+            "80",
+            "443"
+          ],
           "to_ip": "0.0.0.0",
           "to_ip_prefix": "0",
           "comment": null,
@@ -236,52 +183,15 @@ Examples:
           "from_ip_prefix": "0",
           "from_interface": "any",
           "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
+          "from_port_ranges": [
+            {
+              "start": "0",
+              "end": "65535"
+            }
+          ],
           "from_service": null
         },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv6",
-          "to_interface": "any",
-          "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-          "to_ip_prefix": "128",
-          "to_transport": "any",
-          "to_start_port": "0",
-          "to_end_port": "65535",
-          "to_service": null,
-          "comment": null,
-          "from_ip": "::",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        },
-        {
-          "action": "ALLOW",
-          "action_direction": "IN",
-          "index": null,
-          "network_protocol": "ipv4",
-          "to_interface": "en0",
-          "to_ip": "10.10.10.10",
-          "to_ip_prefix": "32",
-          "to_transport": "any",
-          "to_start_port": "0",
-          "to_end_port": "65535",
-          "to_service": null,
-          "comment": null,
-          "from_ip": "0.0.0.0",
-          "from_ip_prefix": "0",
-          "from_interface": "any",
-          "from_transport": "any",
-          "from_start_port": "0",
-          "from_end_port": "65535",
-          "from_service": null
-        }
+        ...
       ]
     }
 

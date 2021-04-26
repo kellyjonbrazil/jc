@@ -63,10 +63,134 @@ Schema:
 Examples:
 
     $ ufw status verbose | jc --ufw -p
-    
+    {
+      "status": "active",
+      "logging": "on",
+      "logging_level": "low",
+      "default": "deny (incoming), allow (outgoing), disabled (routed)",
+      "new_profiles": "skip",
+      "rules": [
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": null,
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "any",
+          "to_service": null,
+          "to_ports": [
+            22
+          ],
+          "to_ip": "0.0.0.0",
+          "to_ip_prefix": 0,
+          "comment": null,
+          "from_ip": "0.0.0.0",
+          "from_ip_prefix": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_port_ranges": [
+            {
+              "start": 0,
+              "end": 65535
+            }
+          ],
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": null,
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "tcp",
+          "to_service": null,
+          "to_ports": [
+            80,
+            443
+          ],
+          "to_ip": "0.0.0.0",
+          "to_ip_prefix": 0,
+          "comment": null,
+          "from_ip": "0.0.0.0",
+          "from_ip_prefix": 0,
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_port_ranges": [
+            {
+              "start": 0,
+              "end": 65535
+            }
+          ],
+          "from_service": null
+        },
+        ...
+      ]
+    }
 
     $ ufw status verbose | jc --ufw -p -r
-    
+    {
+      "status": "active",
+      "logging": "on",
+      "logging_level": "low",
+      "default": "deny (incoming), allow (outgoing), disabled (routed)",
+      "new_profiles": "skip",
+      "rules": [
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": null,
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "any",
+          "to_service": null,
+          "to_ports": [
+            "22"
+          ],
+          "to_ip": "0.0.0.0",
+          "to_ip_prefix": "0",
+          "comment": null,
+          "from_ip": "0.0.0.0",
+          "from_ip_prefix": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_port_ranges": [
+            {
+              "start": "0",
+              "end": "65535"
+            }
+          ],
+          "from_service": null
+        },
+        {
+          "action": "ALLOW",
+          "action_direction": "IN",
+          "index": null,
+          "network_protocol": "ipv4",
+          "to_interface": "any",
+          "to_transport": "tcp",
+          "to_service": null,
+          "to_ports": [
+            "80",
+            "443"
+          ],
+          "to_ip": "0.0.0.0",
+          "to_ip_prefix": "0",
+          "comment": null,
+          "from_ip": "0.0.0.0",
+          "from_ip_prefix": "0",
+          "from_interface": "any",
+          "from_transport": "any",
+          "from_port_ranges": [
+            {
+              "start": "0",
+              "end": "65535"
+            }
+          ],
+          "from_service": null
+        },
+        ...
+      ]
+    }
 """
 import jc.utils
 import re

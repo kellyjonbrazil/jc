@@ -3135,7 +3135,7 @@ ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
   "status": "active",
   "logging": "on",
   "logging_level": "low",
-  "default": "deny (incoming), allow (outgoing), deny (routed)",
+  "default": "deny (incoming), allow (outgoing), disabled (routed)",
   "new_profiles": "skip",
   "rules": [
     {
@@ -3144,10 +3144,11 @@ ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
       "index": null,
       "network_protocol": "ipv4",
       "to_interface": "any",
-      "to_transport": "tcp",
-      "to_start_port": 22,
-      "to_end_port": 22,
+      "to_transport": "any",
       "to_service": null,
+      "to_ports": [
+        22
+      ],
       "to_ip": "0.0.0.0",
       "to_ip_prefix": 0,
       "comment": null,
@@ -3155,29 +3156,12 @@ ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
       "from_ip_prefix": 0,
       "from_interface": "any",
       "from_transport": "any",
-      "from_start_port": 0,
-      "from_end_port": 65535,
-      "from_service": null
-    },
-    {
-      "action": "ALLOW",
-      "action_direction": "IN",
-      "index": null,
-      "network_protocol": "ipv6",
-      "to_interface": "any",
-      "to_transport": "tcp",
-      "to_start_port": 22,
-      "to_end_port": 22,
-      "to_service": null,
-      "to_ip": "::",
-      "to_ip_prefix": 0,
-      "comment": null,
-      "from_ip": "::",
-      "from_ip_prefix": 0,
-      "from_interface": "any",
-      "from_transport": "any",
-      "from_start_port": 0,
-      "from_end_port": 65535,
+      "from_port_ranges": [
+        {
+          "start": 0,
+          "end": 65535
+        }
+      ],
       "from_service": null
     },
     {
@@ -3186,10 +3170,12 @@ ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
       "index": null,
       "network_protocol": "ipv4",
       "to_interface": "any",
-      "to_transport": null,
-      "to_service": "Apache Full",
-      "to_start_port": null,
-      "to_end_port": null,
+      "to_transport": "tcp",
+      "to_service": null,
+      "to_ports": [
+        80,
+        443
+      ],
       "to_ip": "0.0.0.0",
       "to_ip_prefix": 0,
       "comment": null,
@@ -3197,50 +3183,12 @@ ufw status verbose  | jc --ufw -p          # or jc -p ufw status verbose
       "from_ip_prefix": 0,
       "from_interface": "any",
       "from_transport": "any",
-      "from_start_port": 0,
-      "from_end_port": 65535,
-      "from_service": null
-    },
-    {
-      "action": "ALLOW",
-      "action_direction": "IN",
-      "index": null,
-      "network_protocol": "ipv6",
-      "to_interface": "any",
-      "to_ip": "2405:204:7449:49fc:f09a:6f4a:bc93:1955",
-      "to_ip_prefix": 128,
-      "to_transport": "any",
-      "to_start_port": 0,
-      "to_end_port": 65535,
-      "to_service": null,
-      "comment": null,
-      "from_ip": "::",
-      "from_ip_prefix": 0,
-      "from_interface": "any",
-      "from_transport": "any",
-      "from_start_port": 0,
-      "from_end_port": 65535,
-      "from_service": null
-    },
-    {
-      "action": "ALLOW",
-      "action_direction": "IN",
-      "index": null,
-      "network_protocol": "ipv4",
-      "to_interface": "en0",
-      "to_ip": "10.10.10.10",
-      "to_ip_prefix": 32,
-      "to_transport": "any",
-      "to_start_port": 0,
-      "to_end_port": 65535,
-      "to_service": null,
-      "comment": null,
-      "from_ip": "0.0.0.0",
-      "from_ip_prefix": 0,
-      "from_interface": "any",
-      "from_transport": "any",
-      "from_start_port": 0,
-      "from_end_port": 65535,
+      "from_port_ranges": [
+        {
+          "start": 0,
+          "end": 65535
+        }
+      ],
       "from_service": null
     }
   ]
