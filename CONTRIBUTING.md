@@ -30,7 +30,7 @@ This will make it easier to use tools like `jq` without requiring escaping of sp
 
 **Examples**
 
-Bad: 
+Bad:
 ```
 {
   "Interface 1": [
