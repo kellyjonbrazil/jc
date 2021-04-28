@@ -224,7 +224,7 @@ Custom local parser plugins may be placed in a `jc/jcparsers` folder in your loc
 
 Local parser plugins are standard python module files. Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
-Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default parsers.
 
 > Note: The application data directory follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 
@@ -247,7 +247,7 @@ Some parsers have calculated epoch timestamp fields added to the output. Unless 
 If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
 
 ## Compatibility
-Some parsers like `ls`, `ps`, `dig`, etc. will work on any platform. Other parsers that are platform-specific will generate a warning message if they are used on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
+Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other parsers that convert platform-specific output will generate a warning message if they are run on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
 You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
@@ -269,7 +269,7 @@ Tested on:
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
 
-Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/blob/master/CONTRIBUTING.md) for more information.
+Please see the [Contributing Guidelines](https://kellyjonbrazil.github.io/jc/CONTRIBUTING.md) for more information.
 
 ## Acknowledgments
 - Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
