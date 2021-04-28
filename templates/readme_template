@@ -68,6 +68,8 @@ Schemas for each parser can be found at the documentation link beside each parse
 
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
+For Bash use case examples, see my blog post on [Practical JSON at the Command Line](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/).
+
 ## Why Would Anyone Do This!?
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
