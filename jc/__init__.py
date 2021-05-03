@@ -70,7 +70,7 @@ Module Example:
     ...
     ... ;; ANSWER SECTION:
     ... example.com.        29658   IN  A   93.184.216.34
-    ... 
+    ...
     ... ;; Query time: 52 msec
     ... ;; SERVER: 2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)
     ... ;; WHEN: Fri Apr 16 16:13:00 PDT 2021
@@ -86,4 +86,4 @@ Module Example:
 """
 
 name = 'jc'
-__version__ = '1.15.3'
+__version__ = '1.15.4'
