@@ -157,6 +157,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_unreachable = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_hostname_p = f.read()
 
@@ -335,6 +338,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_unreachable_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_hostname_p_json = json.loads(f.read())
@@ -651,9 +657,15 @@ class MyTests(unittest.TestCase):
 
     def test_ping_ip_osx_10_14_6(self):
         """
-        Test 'ping6 <ip>' on osx 10.14.6
+        Test 'ping <ip>' on osx 10.14.6
         """
         self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip, quiet=True), self.osx_10_14_6_ping_ip_json)
+
+    def test_ping_ip_unreachable_osx_10_14_6(self):
+        """
+        Test 'ping <ip>' with host unreachable error on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_unreachable, quiet=True), self.osx_10_14_6_ping_ip_unreachable_json)
 
     def test_ping6_hostname_p_osx_10_14_6(self):
         """

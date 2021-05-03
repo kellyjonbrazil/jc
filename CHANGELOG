@@ -1,5 +1,8 @@
 jc changelog
 
+20210510 v1.15.4
+- Update ping parser to support error responses in OSX and BSD
+
 20210426 v1.15.3
 - Add ufw status command parser tested on linux
 - Add ufw-appinfo command parser tested on linux

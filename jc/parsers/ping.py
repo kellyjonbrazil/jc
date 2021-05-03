@@ -157,7 +157,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -496,10 +496,15 @@ def _bsd_parse(data):
                 err = _error_type(line)
                 if err:
                     response = {
-                        'type': err,
-                        'bytes': line.split()[0],
-                        'response_ip': line.split()[4].strip(':').strip('(').strip(')'),
+                        'type': err
                     }
+
+                    try:
+                        response['bytes'] = line.split()[0]
+                        response['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+                    except Exception:
+                        pass
+
                     ping_error = True
                     continue
 
@@ -508,24 +513,31 @@ def _bsd_parse(data):
                         continue
                     else:
                         error_line = line.split()
-                        response.update(
-                            {
-                                'vr': int(error_line[0], 16),
-                                'hl': int(error_line[1], 16),
-                                'tos': int(error_line[2], 16),
-                                'len': int(error_line[3], 16),
-                                'id': int(error_line[4], 16),
-                                'flg': int(error_line[5], 16),
-                                'off': int(error_line[6], 16),
-                                'ttl': int(error_line[7], 16),
-                                'pro': int(error_line[8], 16),
-                                'cks': int(error_line[9], 16),
-                                'src': error_line[10],
-                                'dst': error_line[11],
-                            }
-                        )
-                        ping_responses.append(response)
-                        error_line = False
+
+                        try:
+                            response.update(
+                                {
+                                    'vr': int(error_line[0], 16),   # convert from hex to decimal
+                                    'hl': int(error_line[1], 16),
+                                    'tos': int(error_line[2], 16),
+                                    'len': int(error_line[3], 16),
+                                    'id': int(error_line[4], 16),
+                                    'flg': int(error_line[5], 16),
+                                    'off': int(error_line[6], 16),
+                                    'ttl': int(error_line[7], 16),
+                                    'pro': int(error_line[8], 16),
+                                    'cks': int(error_line[9], 16),
+                                    'src': error_line[10],
+                                    'dst': error_line[11],
+                                }
+                            )
+                        except Exception:
+                            pass
+
+                        if response:
+                            ping_responses.append(response)
+
+                        ping_error = False
                         continue
 
                 # normal response
