@@ -38,14 +38,25 @@ Schema:
       "round_trip_ms_stddev":        float,
       "responses": [
         {
-          "type":                    string,        # ('reply' or 'timeout')
+          "type":                    string,        # 'reply', 'timeout', etc. See type_map for all options
           "timestamp":               float,
           "bytes":                   integer,
           "response_ip":             string,
           "icmp_seq":                integer,
           "ttl":                     integer,
           "time_ms":                 float,
-          "duplicate":               boolean
+          "duplicate":               boolean,
+          "vr":                      integer,       # hex value converted to decimal
+          "hl":                      integer,       # hex value converted to decimal
+          "tos":                     integer,       # hex value converted to decimal
+          "len":                     integer,       # hex value converted to decimal
+          "id":                      integer,       # hex value converted to decimal
+          "flg":                     integer,       # hex value converted to decimal
+          "off":                     integer,       # hex value converted to decimal
+          "pro":                     integer,       # hex value converted to decimal
+          "cks":                     ingeger,       # hex value converted to decimal
+          "src":                     string,
+          "dst":                     string
         }
       ]
     }
@@ -169,4 +180,4 @@ Returns:
 ## Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
