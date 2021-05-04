@@ -38,7 +38,7 @@ Schema:
       "round_trip_ms_stddev":        float,
       "responses": [
         {
-          "type":                    string,        # 'reply', 'timeout', etc. See type_map for all options
+          "type":                    string,        # 'reply', 'timeout', 'unparsable_line', etc. See `_error_type.type_map` for all options
           "timestamp":               float,
           "bytes":                   integer,
           "response_ip":             string,
