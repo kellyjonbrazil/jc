@@ -64,11 +64,9 @@ Two representations of the data are possible. The default representation uses a 
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 
-Schemas for each parser can be found at the documentation link beside each parser below.
+Schemas for each parser can be found at the documentation link beside each [**Parser**](#parsers) below.
 
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
-
-For Bash use case examples, see my blog post on [Practical JSON at the Command Line](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/).
 
 ## Why Would Anyone Do This!?
 For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
@@ -77,6 +75,12 @@ See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
 - [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-7)
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
+
+### Use Cases
+- [Bash Scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
+- [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
+- [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/parsing-command-output-in-saltstack-with-jc/)
+- [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
 
 ## Installation
 There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `apt-get`, `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB/RPM packaged binaries; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
