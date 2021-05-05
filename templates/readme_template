@@ -69,7 +69,7 @@ Schemas for each parser can be found at the documentation link beside each [**Pa
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
 ## Why Would Anyone Do This!?
-For more information on the motivations for this project, please see my [blog post](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
+For more information on the motivations for this project, please see my blog post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
 
 See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
@@ -77,7 +77,7 @@ See also:
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
 
 Use Cases:
-- [Bash Scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
+- [Bash scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
 - [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 - [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/parsing-command-output-in-saltstack-with-jc/)
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
