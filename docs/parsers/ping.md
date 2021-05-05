@@ -39,6 +39,7 @@ Schema:
       "responses": [
         {
           "type":                    string,        # 'reply', 'timeout', 'unparsable_line', etc. See `_error_type.type_map` for all options
+          "unparsed_line":           string,        # only if an 'unparsable_line' type
           "timestamp":               float,
           "bytes":                   integer,
           "response_ip":             string,
