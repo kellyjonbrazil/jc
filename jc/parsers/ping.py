@@ -364,7 +364,7 @@ def _linux_parse(data):
                 continue
 
             # normal responses
-            else:
+            elif ' bytes from ' in line:
                 try:
                     line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
 
@@ -547,9 +547,10 @@ def _bsd_parse(data):
                         continue
 
                 # normal response
-                else:
+                elif ' bytes from ' in line:
                     try:
                         line = line.replace(':', ' ').replace('=', ' ')
+
                         response = {
                             'type': 'reply',
                             'bytes': line.split()[0],
@@ -568,7 +569,7 @@ def _bsd_parse(data):
                     continue
 
             # ipv6 lines
-            else:
+            elif ' bytes from ' in line:
                 try:
                     line = line.replace(',', ' ').replace('=', ' ')
                     response = {
