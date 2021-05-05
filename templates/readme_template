@@ -76,7 +76,7 @@ See also:
 - [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-7)
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
 
-### Use Cases
+Use Cases:
 - [Bash Scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
 - [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 - [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/parsing-command-output-in-saltstack-with-jc/)
