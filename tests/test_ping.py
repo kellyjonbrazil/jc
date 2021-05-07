@@ -45,6 +45,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_dup = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_O_unparsedlines = f.read()
+
         # ubuntu
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_ping_ip_O = f.read()
@@ -229,6 +232,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_dup_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_O_unparsedlines_json = json.loads(f.read())
 
         # ubunutu
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.json'), 'r', encoding='utf-8') as f:
@@ -450,6 +456,12 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip>' to broadcast IP to get duplicate replies on Centos 7.7
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_dup, quiet=True), self.centos_7_7_ping6_ip_dup_json)
+
+    def test_ping_ip_O_unparsedlines_centos_7_7(self):
+        """
+        Test 'ping <ip> -O' on Centos 7.7 with unparsable lines and error messages
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_ip_O_unparsedlines, quiet=True), self.centos_7_7_ping_ip_O_unparsedlines_json)
 
     def test_ping_ip_O_ubuntu_18_4(self):
         """
