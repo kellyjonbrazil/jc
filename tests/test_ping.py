@@ -30,11 +30,8 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_p = f.read()
 
-
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-unparsable.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_p_unparsable = f.read()
-
-
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_D_p = f.read()
@@ -227,11 +224,8 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_p_json = json.loads(f.read())
 
-
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-unparsable.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_p_unparsable_json = json.loads(f.read())
-
-
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_D_p_json = json.loads(f.read())
@@ -445,15 +439,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_O_p, quiet=True), self.centos_7_7_ping6_ip_O_p_json)
 
-
     def test_ping6_ip_O_p_unparsable_centos_7_7(self):
         """
         Test 'ping6 <ip> -O -p' with unparsable lines on Centos 7.7
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_O_p_unparsable, quiet=True), self.centos_7_7_ping6_ip_O_p_unparsable_json)
-        
-
-
 
     def test_ping6_ip_O_D_p_centos_7_7(self):
         """
