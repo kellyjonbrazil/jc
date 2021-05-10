@@ -1,6 +1,8 @@
 """jc - JSON CLI output utility `dig` command output parser
 
-The `+noall +answer` options are supported in cases where only the answer information is desired.
+Options supported:
+- `+noall +answer` options are supported in cases where only the answer information is desired.
+- `+axfr` option is supported on its own
 
 The `when_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
