@@ -3,6 +3,7 @@ jc changelog
 20210510 v1.15.4
 - Update ping parser to support error responses in OSX and BSD
 - Update ping parser to be more resillient against parsing errors for unknown error types
+- Update dig parser to support `+noall +answer` use case
 
 20210426 v1.15.3
 - Add ufw status command parser tested on linux
