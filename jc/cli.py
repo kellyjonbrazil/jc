@@ -227,10 +227,7 @@ def set_env_colors(env_colors=None):
 
 def piped_output():
     """Return False if stdout is a TTY. True if output is being piped to another program"""
-    if sys.stdout.isatty():
-        return False
-    else:
-        return True
+    return False if sys.stdout.isatty() else True
 
 
 def ctrlc(signum, frame):
