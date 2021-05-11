@@ -430,9 +430,6 @@ def magic_parser(args):
         else:
             break
 
-    # reset sys.argv since we are now done with it
-    sys.argv = []
-
     # if -h, -a, or -v found in options, then bail out
     if 'h' in options or 'a' in options or 'v' in options:
         return False, None, None, []
@@ -510,10 +507,11 @@ def main():
     options = []
     options.extend(magic_options)
 
-    # note that sys.argv will be an empty list after magic_parser finds the magic syntax is used
-    for opt in sys.argv:
-        if opt.startswith('-') and not opt.startswith('--'):
-            options.extend(opt[1:])
+    # only find options if magic_parser did not find a command
+    if not valid_command:
+        for opt in sys.argv:
+            if opt.startswith('-') and not opt.startswith('--'):
+                options.extend(opt[1:])
 
     about = 'a' in options
     debug = 'd' in options
