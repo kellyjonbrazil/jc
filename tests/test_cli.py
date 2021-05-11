@@ -5,31 +5,31 @@ import jc.cli
 
 
 class MyTests(unittest.TestCase):
-    def test_cli_generate_magic_command(self):
+    def test_cli_magic_parser(self):
         commands = {
-            'jc -p systemctl list-sockets': 'systemctl list-sockets | jc --systemctl-ls -p',
-            'jc -p systemctl list-unit-files': 'systemctl list-unit-files | jc --systemctl-luf -p',
-            'jc -p pip list': 'pip list | jc --pip-list -p',
-            'jc -p pip3 list': 'pip3 list | jc --pip-list -p',
-            'jc -p pip show jc': 'pip show jc | jc --pip-show -p',
-            'jc -p pip3 show jc': 'pip3 show jc | jc --pip-show -p',
-            'jc -prd last': 'last | jc --last -prd',
-            'jc -prd lastb': 'lastb | jc --last -prd',
-            'jc -p airport -I': 'airport -I | jc --airport -p',
-            'jc -p -r airport -I': 'airport -I | jc --airport -pr',
-            'jc -prd airport -I': 'airport -I | jc --airport -prd',
-            'jc -p nonexistent command': 'nonexistent command',
-            'jc -ap': None,
-            'jc -a arp -a': None,
-            'jc -v': None,
-            'jc -h': None,
-            'jc -h --arp': None,
-            'jc -h arp': None,
-            'jc -h arp -a': None
+            'jc -p systemctl list-sockets': (True, ['systemctl', 'list-sockets'], '--systemctl-ls', ['p']),
+            'jc -p systemctl list-unit-files': (True, ['systemctl', 'list-unit-files'], '--systemctl-luf', ['p']),
+            'jc -p pip list': (True, ['pip', 'list'], '--pip-list', ['p']),
+            'jc -p pip3 list': (True, ['pip3', 'list'], '--pip-list', ['p']),
+            'jc -p pip show jc': (True, ['pip', 'show', 'jc'], '--pip-show', ['p']),
+            'jc -p pip3 show jc': (True, ['pip3', 'show', 'jc'], '--pip-show', ['p']),
+            'jc -prd last': (True, ['last'], '--last', ['p', 'r', 'd']),
+            'jc -prdd lastb': (True, ['lastb'], '--last', ['p', 'r', 'd', 'd']),
+            'jc -p airport -I': (True, ['airport', '-I'], '--airport', ['p']),
+            'jc -p -r airport -I': (True, ['airport', '-I'], '--airport', ['p', 'r']),
+            'jc -prd airport -I': (True, ['airport', '-I'], '--airport', ['p', 'r', 'd']),
+            'jc -p nonexistent command': (False, ['nonexistent', 'command'], None, ['p']),
+            'jc -ap': (False, None, None, []),
+            'jc -a arp -a': (False, None, None, []),
+            'jc -v': (False, None, None, []),
+            'jc -h': (False, None, None, []),
+            'jc -h --arp': (False, None, None, []),
+            'jc -h arp': (False, None, None, []),
+            'jc -h arp -a': (False, None, None, [])
         }
 
         for command, expected_command in commands.items():
-            self.assertEqual(jc.cli.generate_magic_command(command.split(' '))[1], expected_command)
+            self.assertEqual(jc.cli.magic_parser(command.split(' ')), expected_command)
 
     def test_cli_set_env_colors(self):
         if pygments.__version__.startswith('2.3.'):
