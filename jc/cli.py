@@ -495,7 +495,7 @@ def main():
     if valid_command:
         magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
         if magic_stderr:
-            print(magic_stderr, file=sys.stderr)
+            print(magic_stderr[:-1], file=sys.stderr)
     elif run_command is None:
         pass
     else:
