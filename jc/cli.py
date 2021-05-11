@@ -453,12 +453,11 @@ def magic_parser(args):
     # try to get a parser for two_word_command, otherwise get one for one_word_command
     found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
-    run_command = args_given
     return (
-        True if found_parser else False,
-        run_command,
-        found_parser,
-        options
+        True if found_parser else False,    # was a suitable parser found?
+        args_given,                         # run_command
+        found_parser,                       # the parser selected
+        options                             # jc options to preserve
     )
 
 
