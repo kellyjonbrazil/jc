@@ -406,9 +406,6 @@ def magic_parser(args):
         run_command     (list)  list of the user's command to run. None if no command.
         jc_parser       (str)   parser to use for this user's command.
         jc_options      (list)  list of jc options
-
-    Side-effect:
-        This function will reset sys.argv to an empty list
     """
 
     # Parse with magic syntax: jc -p ls -al
