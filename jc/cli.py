@@ -14,6 +14,9 @@ import subprocess
 import json
 import jc
 import jc.appdirs as appdirs
+import jc.utils
+import jc.tracebackplus
+
 # make pygments import optional
 try:
     import pygments
@@ -475,8 +478,6 @@ def run_user_command(command):
 
 
 def main():
-    import jc.utils
-
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -539,7 +540,6 @@ def main():
         sys.exit(0)
 
     if verbose_debug:
-        import jc.tracebackplus
         jc.tracebackplus.enable(context=11)
 
     if sys.stdin.isatty() and magic_stdout is None:
@@ -575,7 +575,6 @@ def main():
         if debug:
             raise
         else:
-            import jc.utils
             jc.utils.error_message(
                 f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
