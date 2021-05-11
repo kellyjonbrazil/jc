@@ -118,6 +118,9 @@ parsers = [
     'yaml'
 ]
 
+JC_ERROR_EXIT = 100
+
+
 # List of custom or override parsers.
 # Allow any <user_data_dir>/jc/jcparsers/*.py
 local_parsers = []
@@ -190,10 +193,9 @@ def set_env_colors(env_colors=None):
 
     Default colors:
 
-    JC_COLORS=blue,brightblack,magenta,green
+        JC_COLORS=blue,brightblack,magenta,green
     or
-    JC_COLORS=default,default,default,default
-
+        JC_COLORS=default,default,default,default
     """
     input_error = False
 
@@ -233,7 +235,7 @@ def piped_output():
 
 def ctrlc(signum, frame):
     """Exit with error on SIGINT"""
-    sys.exit(1)
+    sys.exit(JC_ERROR_EXIT)
 
 
 def parser_shortname(parser_argument):
@@ -473,7 +475,14 @@ def run_user_command(command):
     )
 
 
+def combined_exit_code(program_exit=0, jc_exit=0):
+    return program_exit + jc_exit
+
+
 def main():
+    magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    magic_options = []
+
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -484,7 +493,6 @@ def main():
         pass
 
     # try magic syntax first: e.g. jc -p ls -al
-    magic_stdout, magic_stderr, magic_exit_code, magic_options = None, None, None, []
     valid_command, run_command, magic_found_parser, magic_options = magic_parser(sys.argv)
     if valid_command:
         magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
@@ -495,7 +503,7 @@ def main():
     else:
         run_command_str = ' '.join(run_command)
         jc.utils.error_message(f'parser not found for "{run_command_str}". Use "jc -h" for help.')
-        sys.exit(1)
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # set colors
     jc_colors = os.getenv('JC_COLORS')
@@ -540,7 +548,7 @@ def main():
 
     if sys.stdin.isatty() and magic_stdout is None:
         jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
-        sys.exit(magic_exit_code + 1 if magic_exit_code else 1)
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     data = magic_stdout or sys.stdin.read()
 
@@ -561,7 +569,7 @@ def main():
 
         if not found:
             jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
-            sys.exit(1)
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # parse the data
     try:
@@ -574,11 +582,11 @@ def main():
             jc.utils.error_message(
                 f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
-            sys.exit(magic_exit_code or 1)
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # output the json
     print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
-    sys.exit(magic_exit_code or 0)
+    sys.exit(combined_exit_code(magic_exit_code, 0))
 
 
 if __name__ == '__main__':
