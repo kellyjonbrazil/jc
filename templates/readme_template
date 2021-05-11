@@ -132,13 +132,16 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-v` version information
 
 ### Exit Codes
-Any fatal errors within `jc` will generate an exit code of `100`, otherwise the exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`), `jc` will store the exit code of the program being parsed and add it to the `jc` exit code. This way it is easier to tell if an error was from the parsed program or `jc`.
+Any fatal errors within `jc` will generate an exit code of `100`, otherwise the exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`), `jc` will store the exit code of the program being parsed and add it to the `jc` exit code. This way it is easier to determine if an error was from the parsed program or `jc`.
 
 Consider the following examples using `ifconfig`:
-- `ifconfig` exit code = `0`, `jc` exit code = `0`, combined exit code = `0` (no errors)
-- `ifconfig` exit code = `1`, `jc` exit code = `0`, combined exit code = `1` (error in `ifconfig`)
-- `ifconfig` exit code = `0`, `jc` exit code = `100`, combined exit code = `100` (error in `jc`)
-- `ifconfig` exit code = `1`, `jc` exit code = `100`, combined exit code = `101` (error in both `ifconfig` and `jc`)
+| `ifconfig` exit code | `jc` exit code | Combined exit code | Interpretation                     | 
+|----------------------|----------------|--------------------|------------------------------------|
+| `0`                  | `0`            | `0`                | No errors                          |
+| `1`                  | `0`            | `1`                | Error in  `ifconfig`               |
+| `0`                  | `100`          | `100`              | Error in  `jc`                     |
+| `1`                  | `100`          | `101`              | Error in  both `ifconfig` and `jc` |
+
 
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
