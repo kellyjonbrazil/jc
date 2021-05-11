@@ -476,7 +476,10 @@ def run_user_command(command):
 
 
 def combined_exit_code(program_exit=0, jc_exit=0):
-    return program_exit + jc_exit
+    exit_code = program_exit + jc_exit
+    if exit_code > 255:
+        exit_code = 255
+    return exit_code
 
 
 def main():
