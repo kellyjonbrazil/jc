@@ -481,9 +481,6 @@ def combined_exit_code(program_exit=0, jc_exit=0):
 
 
 def main():
-    magic_stdout, magic_stderr, magic_exit_code = None, None, 0
-    magic_options = []
-
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -494,6 +491,8 @@ def main():
         pass
 
     # try magic syntax first: e.g. jc -p ls -al
+    magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    magic_options = []
     valid_command, run_command, magic_found_parser, magic_options = magic_parser(sys.argv)
     if valid_command:
         magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
