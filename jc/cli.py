@@ -491,20 +491,9 @@ def main():
     except AttributeError:
         pass
 
-    # try magic syntax first: e.g. jc -p ls -al
-    magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    # parse magic syntax first: e.g. jc -p ls -al
     magic_options = []
     valid_command, run_command, magic_found_parser, magic_options = magic_parser(sys.argv)
-    if valid_command:
-        magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
-        if magic_stderr:
-            print(magic_stderr[:-1], file=sys.stderr)
-    elif run_command is None:
-        pass
-    else:
-        run_command_str = ' '.join(run_command)
-        jc.utils.error_message(f'parser not found for "{run_command_str}". Use "jc -h" for help.')
-        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # set colors
     jc_colors = os.getenv('JC_COLORS')
@@ -513,7 +502,7 @@ def main():
     options = []
     options.extend(magic_options)
 
-    # only find options if magic_parser did not find a command
+    # find options if magic_parser did not find a command
     if not valid_command:
         for opt in sys.argv:
             if opt.startswith('-') and not opt.startswith('--'):
@@ -528,6 +517,9 @@ def main():
     quiet = 'q' in options
     raw = 'r' in options
     version_info = 'v' in options
+
+    if verbose_debug:
+        jc.tracebackplus.enable(context=11)
 
     if not pygments_installed:
         mono = True
@@ -544,8 +536,36 @@ def main():
         print(versiontext())
         sys.exit(0)
 
-    if verbose_debug:
-        jc.tracebackplus.enable(context=11)
+    # if magic syntax used, try to run the command and error if it's not found, etc.
+    magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    run_command_str = ' '.join(run_command)
+
+    if valid_command:
+        try:
+            magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
+            if magic_stderr:
+                print(magic_stderr[:-1], file=sys.stderr)
+
+        except FileNotFoundError:
+            if debug:
+                raise
+            else:
+                jc.utils.error_message(f'"{run_command_str}" command could not be found. For details use the -d or -dd option.')
+                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        except Exception:
+            if debug:
+                raise
+            else:
+                jc.utils.error_message(f'"{run_command_str}" command could not be run. For details use the -d or -dd option.')
+                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    elif run_command is None:
+        pass
+
+    else:
+        jc.utils.error_message(f'parser not found for "{run_command_str}". Use "jc -h" for help.')
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     if sys.stdin.isatty() and magic_stdout is None:
         jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
@@ -587,8 +607,16 @@ def main():
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # output the json
-    print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
-    sys.exit(combined_exit_code(magic_exit_code, 0))
+    try:
+        print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+        sys.exit(combined_exit_code(magic_exit_code, 0))
+
+    except Exception:
+        if debug:
+            raise
+        else:
+            jc.utils.error_message('There was an issue generating the JSON output. For details use the -d or -dd option.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 
 if __name__ == '__main__':
