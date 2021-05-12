@@ -538,10 +538,10 @@ def main():
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
-
-    if valid_command:
+    if run_command:
         run_command_str = ' '.join(run_command)
 
+    if valid_command:
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
