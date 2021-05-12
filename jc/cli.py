@@ -556,6 +556,7 @@ def main():
     # find the correct parser
     if magic_found_parser:
         parser = parser_module(magic_found_parser)
+        parser_name = parser_shortname(magic_found_parser)
 
     else:
         found = False
