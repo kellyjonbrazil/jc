@@ -400,14 +400,15 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
 
 def magic_parser(args):
     """
+    Parse command arguments for magic syntax: jc -p ls -al
+
     Return a tuple:
         valid_command   (bool)  is this a valid command? (exists in magic dict)
         run_command     (list)  list of the user's command to run. None if no command.
         jc_parser       (str)   parser to use for this user's command.
         jc_options      (list)  list of jc options
     """
-
-    # Parse with magic syntax: jc -p ls -al
+    # bail immediately if there are no args or a parser is defined
     if len(args) <= 1 or args[1].startswith('--'):
         return False, None, None, []
 
@@ -433,7 +434,7 @@ def magic_parser(args):
     if 'h' in options or 'a' in options or 'v' in options:
         return False, None, None, []
 
-    # all options popped and no command found - for case like 'jc -a'
+    # all options popped and no command found - for case like 'jc -x'
     if len(args_given) == 0:
         return False, None, None, []
 
