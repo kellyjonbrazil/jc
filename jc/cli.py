@@ -561,18 +561,12 @@ def main():
                 jc.utils.error_message(f'"{run_command_str}" command could not be run. For details use the -d or -dd option.')
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    elif run_command is None:
-        pass
+    # elif run_command is None:
+    #     pass
 
-    else:
+    elif run_command is not None:
         jc.utils.error_message(f'parser not found for "{run_command_str}". Use "jc -h" for help.')
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    if sys.stdin.isatty() and magic_stdout is None:
-        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
-        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    data = magic_stdout or sys.stdin.read()
 
     # find the correct parser
     if magic_found_parser:
@@ -595,6 +589,12 @@ def main():
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # parse the data
+    if sys.stdin.isatty() and magic_stdout is None:
+        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    data = magic_stdout or sys.stdin.read()
+
     try:
         result = parser.parse(data, raw=raw, quiet=quiet)
 
