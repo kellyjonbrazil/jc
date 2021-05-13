@@ -576,7 +576,6 @@ def main():
             parser_name = parser_shortname(arg)
 
             if parser_name in parsers:
-                # load parser module just in time so we don't need to load all modules
                 parser = parser_module(arg)
                 found = True
                 break
