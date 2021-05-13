@@ -585,11 +585,16 @@ def main():
             jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    # parse the data
-    if sys.stdin.isatty() and magic_stdout is None:
+    # check for input errors (pipe vs magic)
+    if not sys.stdin.isatty() and magic_stdout:
+        jc.utils.error_message('Piped data and Magic syntax used simultaneously. Use "jc -h" for help.')
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    elif sys.stdin.isatty() and magic_stdout is None:
         jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
+    # parse the data
     data = magic_stdout or sys.stdin.read()
 
     try:
@@ -613,7 +618,9 @@ def main():
         if debug:
             raise
         else:
-            jc.utils.error_message('There was an issue generating the JSON output. For details use the -d or -dd option.')
+            jc.utils.error_message(
+                'There was an issue generating the JSON output.\n'
+                '             For details use the -d or -dd option.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 
