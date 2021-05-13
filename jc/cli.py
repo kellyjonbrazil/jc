@@ -213,7 +213,7 @@ def set_env_colors(env_colors=None):
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
-        jc.utils.warning_message('could not parse JC_COLORS environment variable')
+        jc.utils.warning_message('Could not parse JC_COLORS environment variable')
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
@@ -562,7 +562,7 @@ def main():
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif run_command is not None:
-        jc.utils.error_message(f'parser not found for "{run_command_str}". Use "jc -h" for help.')
+        jc.utils.error_message(f'Parser not found for "{run_command_str}". Use "jc -h" for help.')
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # find the correct parser
