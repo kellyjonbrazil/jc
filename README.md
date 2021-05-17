@@ -207,6 +207,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`), `jc` will store the exit code of the program being parsed and add it to the `jc` exit code. This way it is easier to determine if an error was from the parsed program or `jc`.
 
 Consider the following examples using `ifconfig`:
+
 | `ifconfig` exit code | `jc` exit code | Combined exit code | Interpretation                     | 
 |----------------------|----------------|--------------------|------------------------------------|
 | `0`                  | `0`            | `0`                | No errors                          |
