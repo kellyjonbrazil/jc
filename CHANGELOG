@@ -1,9 +1,12 @@
 jc changelog
 
-20210511 v1.15.4
+20210517 v1.15.4
 - Update ping parser to support error responses in OSX and BSD
 - Update ping parser to be more resillient against parsing errors for unknown error types
 - Update dig parser to support `+noall +answer` use case
+- Update dig parser compatibility to all platforms
+- Fix colors in Windows terminals (cmd.exe and PowerShell)
+- Add Windows time format for systeminfo output
 - JC no longer swallows exit codes when using the "magic" syntax. See the Exit Codes section of the README and man page for details
 
 20210426 v1.15.3
