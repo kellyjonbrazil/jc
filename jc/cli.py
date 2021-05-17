@@ -491,6 +491,9 @@ def main():
     except AttributeError:
         pass
 
+    # enable colors for Windows cmd.exe terminal
+    os.system('')
+
     # parse magic syntax first: e.g. jc -p ls -al
     magic_options = []
     valid_command, run_command, magic_found_parser, magic_options = magic_parser(sys.argv)
@@ -562,7 +565,7 @@ def main():
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif run_command is not None:
-        jc.utils.error_message(f'Parser not found for "{run_command_str}". Use "jc -h" for help.')
+        jc.utils.error_message(f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.')
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # find the correct parser
