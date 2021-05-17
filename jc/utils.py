@@ -239,6 +239,9 @@ class timestamp:
         }
         utc_tz = False
 
+        # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
+        data = data.replace('Coordinated Universal Time', 'UTC')
+
         if 'UTC' in data:
             utc_tz = True
             if 'UTC+' in data or 'UTC-' in data:
