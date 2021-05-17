@@ -381,22 +381,22 @@ def versiontext():
 def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
     """Return a JSON formatted string. String may include color codes or be pretty printed."""
     separators = (',', ':')
+    indent = None
+
+    if pretty:
+        separators = None
+        indent = 2
+
     if not mono and not piped_out:
         # set colors
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        if pretty:
-            return str(highlight(json.dumps(data, indent=2, ensure_ascii=False),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
-        else:
-            return str(highlight(json.dumps(data, separators=separators, ensure_ascii=False),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        return str(highlight(json.dumps(data, indent=indent, separators=separators, ensure_ascii=False),
+                             JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+
     else:
-        if pretty:
-            return json.dumps(data, indent=2, ensure_ascii=False)
-        else:
-            return json.dumps(data, separators=separators, ensure_ascii=False)
+        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
 
 
 def magic_parser(args):
