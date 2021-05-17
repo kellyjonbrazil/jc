@@ -9,15 +9,13 @@ Options supported:
 - `/C, /-C`
 - `/S`
 
+The "Magic" syntax is not supported since the `dir` command is a shell builtin.
+
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
 Usage (cli):
 
     C:> dir | jc --dir
-
-    or
-
-    C:> jc dir
 
 Usage (module):
 
@@ -145,4 +143,4 @@ Returns:
 ## Parser Information
 Compatibility:  win32
 
-Version 1.2 by Rasheed Elsaleh (rasheed@rebelliondefense.com)
+Version 1.3 by Rasheed Elsaleh (rasheed@rebelliondefense.com)
