@@ -322,7 +322,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'aix', 'freebsd', 'darwin']
+    compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
     magic_commands = ['dig']
 
 
