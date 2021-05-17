@@ -492,7 +492,8 @@ def main():
         pass
 
     # enable colors for Windows cmd.exe terminal
-    os.system('')
+    if sys.platform.startswith('win32'):
+        os.system('')
 
     # parse magic syntax first: e.g. jc -p ls -al
     magic_options = []
