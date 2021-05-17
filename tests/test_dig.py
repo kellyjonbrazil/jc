@@ -55,9 +55,11 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-noall-answer.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_noall_answer = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.out'), 'r', encoding='utf-8') as f:
             self.generic_dig_answer_spaces = f.read()
-
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.out'), 'r', encoding='utf-8') as f:
             self.generic_dig_additional = f.read()
@@ -123,9 +125,11 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_dig_axfr_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-noall-answer.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_dig_noall_answer_json = json.loads(f.read())
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.json'), 'r', encoding='utf-8') as f:
             self.generic_dig_answer_spaces_json = json.loads(f.read())
-
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.json'), 'r', encoding='utf-8') as f:
             self.generic_dig_additional_json = json.loads(f.read())
@@ -240,6 +244,12 @@ class MyTests(unittest.TestCase):
         Test 'dig axfr' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.dig.parse(self.osx_10_14_6_dig_axfr, quiet=True), self.osx_10_14_6_dig_axfr_json)
+
+    def test_dig_noall_answer_osx_10_14_6(self):
+        """
+        Test 'dig +noall +answer' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.osx_10_14_6_dig_noall_answer, quiet=True), self.osx_10_14_6_dig_noall_answer_json)
 
     def test_dig_answer_spaces(self):
         """

@@ -131,6 +131,18 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
 - `-v` version information
 
+### Exit Codes
+Any fatal errors within `jc` will generate an exit code of `100`, otherwise the exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`), `jc` will store the exit code of the program being parsed and add it to the `jc` exit code. This way it is easier to determine if an error was from the parsed program or `jc`.
+
+Consider the following examples using `ifconfig`:
+| `ifconfig` exit code | `jc` exit code | Combined exit code | Interpretation                     | 
+|----------------------|----------------|--------------------|------------------------------------|
+| `0`                  | `0`            | `0`                | No errors                          |
+| `1`                  | `0`            | `1`                | Error in  `ifconfig`               |
+| `0`                  | `100`          | `100`              | Error in  `jc`                     |
+| `1`                  | `100`          | `101`              | Error in  both `ifconfig` and `jc` |
+
+
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
 ```bash

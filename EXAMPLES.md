@@ -732,7 +732,7 @@ dig -x 1.1.1.1 | jc --dig -p          # or:  jc -p dig -x 1.1.1.1
 ```
 ### dir
 ```bash
-dir | jc --dir -p          # or:  jc -p dir
+dir | jc --dir -p
 ```
 ```json
 [
@@ -1671,7 +1671,7 @@ iw dev wlan0 scan | jc --iw-scan -p          # or:  jc -p iw dev wlan0 scan
 ```
 ### jobs
 ```bash
-jobs -l | jc --jobs -p          # or:  jc -p jobs
+jobs -l | jc --jobs -p
 ```
 ```json
 [

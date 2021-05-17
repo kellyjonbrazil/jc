@@ -3,6 +3,10 @@
 # jc.parsers.dig
 jc - JSON CLI output utility `dig` command output parser
 
+Options supported:
+- `+noall +answer` options are supported in cases where only the answer information is desired.
+- `+axfr` option is supported on its own
+
 The `when_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
 The `when_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
@@ -274,6 +278,42 @@ Examples:
       }
     ]
 
+    $ dig +noall +answer cnn.com | jc --dig -p
+    [
+      {
+        "answer": [
+          {
+            "name": "cnn.com.",
+            "class": "IN",
+            "type": "A",
+            "ttl": 60,
+            "data": "151.101.193.67"
+          },
+          {
+            "name": "cnn.com.",
+            "class": "IN",
+            "type": "A",
+            "ttl": 60,
+            "data": "151.101.65.67"
+          },
+          {
+            "name": "cnn.com.",
+            "class": "IN",
+            "type": "A",
+            "ttl": 60,
+            "data": "151.101.1.67"
+          },
+          {
+            "name": "cnn.com.",
+            "class": "IN",
+            "type": "A",
+            "ttl": 60,
+            "data": "151.101.129.67"
+          }
+        ]
+      }
+    ]
+
 
 ## info
 ```python
@@ -299,6 +339,6 @@ Returns:
     List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
-Compatibility:  linux, aix, freebsd, darwin
+Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
-Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

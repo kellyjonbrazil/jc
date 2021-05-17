@@ -6,15 +6,13 @@ Options supported:
 - `/C, /-C`
 - `/S`
 
+The "Magic" syntax is not supported since the `dir` command is a shell builtin.
+
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
 Usage (cli):
 
     C:> dir | jc --dir
-
-    or
-
-    C:> jc dir
 
 Usage (module):
 
@@ -121,14 +119,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
 
     # compatible options: win32
     compatible = ['win32']
-    magic_commands = ['dir']
 
 
 __version__ = info.version

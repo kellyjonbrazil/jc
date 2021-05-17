@@ -1,0 +1,35 @@
+PING 192.168.1.220 (192.168.1.220): 56 data bytes
+Request timeout for icmp_seq 0
+Request timeout for icmp_seq 1
+92 bytes from fgt1.attlocal.net (192.168.1.220): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 567b   0 0000  3f  01 a024 192.168.1.221  192.168.1.220 
+
+92 bytes from fgt1.attlocal.net (192.168.1.220): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 2e6f   0 0000  3f  01 c830 192.168.1.221  192.168.1.220 
+
+92 bytes from fgt1.attlocal.net (192.168.1.220): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 a1ed   0 0000  3f  01 54b2 192.168.1.221  192.168.1.220 
+
+Request timeout for icmp_seq 2
+Request timeout for icmp_seq 3
+Request timeout for icmp_seq 4
+92 bytes from fgt1.attlocal.net (192.168.1.220): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 9ee2   0 0000  3f  01 57bd 192.168.1.221  192.168.1.220 
+
+92 bytes from fgt1.attlocal.net (192.168.1.220): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 793b   0 0000  3f  01 7d64 192.168.1.221  192.168.1.220 
+
+92 bytes from fgt1.attlocal.net (192.168.1.220): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 d120   0 0000  3f  01 257f 192.168.1.221  192.168.1.220 
+
+Request timeout for icmp_seq 5
+Request timeout for icmp_seq 6
+
+--- 192.168.1.220 ping statistics ---
+8 packets transmitted, 0 packets received, 100.0% packet loss

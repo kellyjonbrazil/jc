@@ -2,13 +2,11 @@
 
 Also supports the `-l` option.
 
+The "Magic" syntax is not supported since the `jobs` command is a shell builtin.
+
 Usage (cli):
 
     $ jobs | jc --jobs
-
-    or
-
-    $ jc jobs
 
 Usage (module):
 

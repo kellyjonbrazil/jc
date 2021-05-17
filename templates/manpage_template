@@ -62,6 +62,21 @@ raw JSON output
 \fB-v\fP
 version information
 
+.SH EXIT CODES
+Any fatal errors within jc will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "magic" syntax (e.g. \fBjc ifconfig eth0\fP), jc will store the exit code of the program being parsed and add it to the  jc exit code. This way it is easier to determine if an error was from the parsed program or jc.
+
+Consider the following examples using `ifconfig`:
+
+.RS
+ifconfig exit code = \fB0\fP, jc exit code = \fB0\fP, combined exit code = \fB0\fP (no errors)
+
+ifconfig exit code = \fB1\fP, jc exit code = \fB0\fP, combined exit code = \fB1\fP (error in ifconfig)
+
+ifconfig exit code = \fB0\fP, jc exit code = \fB100\fP, combined exit code = \fB100\fP (error in jc)
+
+ifconfig exit code = \fB1\fP, jc exit code = \fB100\fP, combined exit code = \fB101\fP (error in both ifconfig and jc)
+.RE
+
 .SH ENVIRONMENT
 You can specify custom colors via the \fBJC_COLORS\fP environment variable. The \fBJC_COLORS\fP environment variable takes four comma separated string values in the following format:
 

@@ -43,6 +43,7 @@ Example:
     }
 """
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -58,10 +59,6 @@ class info():
 
 
 __version__ = info.version
-
-
-class ParseError(Exception):
-    pass
 
 
 def _process(proc_data):

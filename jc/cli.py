@@ -10,9 +10,13 @@ import shlex
 import importlib
 import textwrap
 import signal
+import subprocess
 import json
 import jc
 import jc.appdirs as appdirs
+import jc.utils
+import jc.tracebackplus
+
 # make pygments import optional
 try:
     import pygments
@@ -114,6 +118,9 @@ parsers = [
     'yaml'
 ]
 
+JC_ERROR_EXIT = 100
+
+
 # List of custom or override parsers.
 # Allow any <user_data_dir>/jc/jcparsers/*.py
 local_parsers = []
@@ -186,10 +193,9 @@ def set_env_colors(env_colors=None):
 
     Default colors:
 
-    JC_COLORS=blue,brightblack,magenta,green
+        JC_COLORS=blue,brightblack,magenta,green
     or
-    JC_COLORS=default,default,default,default
-
+        JC_COLORS=default,default,default,default
     """
     input_error = False
 
@@ -207,7 +213,7 @@ def set_env_colors(env_colors=None):
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
-        jc.utils.warning_message('could not parse JC_COLORS environment variable')
+        jc.utils.warning_message('Could not parse JC_COLORS environment variable')
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
@@ -221,15 +227,12 @@ def set_env_colors(env_colors=None):
 
 def piped_output():
     """Return False if stdout is a TTY. True if output is being piped to another program"""
-    if sys.stdout.isatty():
-        return False
-    else:
-        return True
+    return False if sys.stdout.isatty() else True
 
 
 def ctrlc(signum, frame):
     """Exit with error on SIGINT"""
-    sys.exit(1)
+    sys.exit(JC_ERROR_EXIT)
 
 
 def parser_shortname(parser_argument):
@@ -377,33 +380,38 @@ def versiontext():
 
 def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
     """Return a JSON formatted string. String may include color codes or be pretty printed."""
+    separators = (',', ':')
+    indent = None
+
+    if pretty:
+        separators = None
+        indent = 2
+
     if not mono and not piped_out:
         # set colors
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        if pretty:
-            return str(highlight(json.dumps(data, indent=2, ensure_ascii=False),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
-        else:
-            return str(highlight(json.dumps(data, separators=(',', ':'), ensure_ascii=False),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        return str(highlight(json.dumps(data, indent=indent, separators=separators, ensure_ascii=False),
+                             JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+
     else:
-        if pretty:
-            return json.dumps(data, indent=2, ensure_ascii=False)
-        else:
-            return json.dumps(data, separators=(',', ':'), ensure_ascii=False)
+        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
 
 
-def generate_magic_command(args):
+def magic_parser(args):
     """
-    Return a tuple with a boolean and a command, where the boolean signifies that
-    the command is valid, and the command is either a command string or None.
-    """
+    Parse command arguments for magic syntax: jc -p ls -al
 
-    # Parse with magic syntax: jc -p ls -al
+    Return a tuple:
+        valid_command   (bool)  is this a valid command? (exists in magic dict)
+        run_command     (list)  list of the user's command to run. None if no command.
+        jc_parser       (str)   parser to use for this user's command.
+        jc_options      (list)  list of jc options
+    """
+    # bail immediately if there are no args or a parser is defined
     if len(args) <= 1 or args[1].startswith('--'):
-        return False, None
+        return False, None, None, []
 
     # correctly parse escape characters and spaces with shlex
     args_given = ' '.join(map(shlex.quote, args[1:])).split()
@@ -413,7 +421,7 @@ def generate_magic_command(args):
     for arg in list(args_given):
         # parser found - use standard syntax
         if arg.startswith('--'):
-            return False, None
+            return False, None, None, []
 
         # option found - populate option list
         elif arg.startswith('-'):
@@ -425,11 +433,11 @@ def generate_magic_command(args):
 
     # if -h, -a, or -v found in options, then bail out
     if 'h' in options or 'a' in options or 'v' in options:
-        return False, None
+        return False, None, None, []
 
-    # all options popped and no command found - for case like 'jc -a'
+    # all options popped and no command found - for case like 'jc -x'
     if len(args_given) == 0:
-        return False, None
+        return False, None, None, []
 
     magic_dict = {}
     parser_info = about_jc()['parsers']
@@ -446,31 +454,34 @@ def generate_magic_command(args):
     # try to get a parser for two_word_command, otherwise get one for one_word_command
     found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
-    # construct a new command line using the standard syntax: COMMAND | jc --PARSER -OPTIONS
-    run_command = ' '.join(args_given)
-    if found_parser:
-        cmd_options = ('-' + ''.join(options)) if options else ''
-        return True, ' '.join([run_command, '|', 'jc', found_parser, cmd_options])
-    else:
-        return False, run_command
+    return (
+        True if found_parser else False,    # was a suitable parser found?
+        args_given,                         # run_command
+        found_parser,                       # the parser selected
+        options                             # jc options to preserve
+    )
 
 
-def magic():
-    """Runs the command generated by generate_magic_command() to support magic syntax"""
-    valid_command, run_command = generate_magic_command(sys.argv)
-    if valid_command:
-        os.system(run_command)
-        sys.exit(0)
-    elif run_command is None:
-        return
-    else:
-        jc.utils.error_message(f'parser not found for "{run_command}". Use "jc -h" for help.')
-        sys.exit(1)
+def run_user_command(command):
+    """Use subprocess to run the user's command. Returns the STDOUT, STDERR, and the Exit Code as a tuple."""
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+    stdout, stderr = proc.communicate()
+
+    return (
+        stdout or '\n',
+        stderr,
+        proc.returncode
+    )
+
+
+def combined_exit_code(program_exit=0, jc_exit=0):
+    exit_code = program_exit + jc_exit
+    if exit_code > 255:
+        exit_code = 255
+    return exit_code
 
 
 def main():
-    import jc.utils
-
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
 
@@ -480,17 +491,26 @@ def main():
     except AttributeError:
         pass
 
-    # try magic syntax first: e.g. jc -p ls -al
-    magic()
+    # enable colors for Windows cmd.exe terminal
+    if sys.platform.startswith('win32'):
+        os.system('')
 
+    # parse magic syntax first: e.g. jc -p ls -al
+    magic_options = []
+    valid_command, run_command, magic_found_parser, magic_options = magic_parser(sys.argv)
+
+    # set colors
     jc_colors = os.getenv('JC_COLORS')
 
+    # set options
     options = []
+    options.extend(magic_options)
 
-    # options
-    for opt in sys.argv:
-        if opt.startswith('-') and not opt.startswith('--'):
-            options.extend(opt[1:])
+    # find options if magic_parser did not find a command
+    if not valid_command:
+        for opt in sys.argv:
+            if opt.startswith('-') and not opt.startswith('--'):
+                options.extend(opt[1:])
 
     about = 'a' in options
     debug = 'd' in options
@@ -501,6 +521,9 @@ def main():
     quiet = 'q' in options
     raw = 'r' in options
     version_info = 'v' in options
+
+    if verbose_debug:
+        jc.tracebackplus.enable(context=11)
 
     if not pygments_installed:
         mono = True
@@ -517,44 +540,91 @@ def main():
         print(versiontext())
         sys.exit(0)
 
-    if verbose_debug:
-        import jc.tracebackplus
-        jc.tracebackplus.enable(context=11)
+    # if magic syntax used, try to run the command and error if it's not found, etc.
+    magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    if run_command:
+        run_command_str = ' '.join(run_command)
 
-    if sys.stdin.isatty():
-        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
-        sys.exit(1)
+    if valid_command:
+        try:
+            magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
+            if magic_stderr:
+                print(magic_stderr[:-1], file=sys.stderr)
 
-    data = sys.stdin.read()
+        except FileNotFoundError:
+            if debug:
+                raise
+            else:
+                jc.utils.error_message(f'"{run_command_str}" command could not be found. For details use the -d or -dd option.')
+                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    found = False
+        except Exception:
+            if debug:
+                raise
+            else:
+                jc.utils.error_message(f'"{run_command_str}" command could not be run. For details use the -d or -dd option.')
+                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    for arg in sys.argv:
-        parser_name = parser_shortname(arg)
+    elif run_command is not None:
+        jc.utils.error_message(f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.')
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-        if parser_name in parsers:
-            # load parser module just in time so we don't need to load all modules
-            parser = parser_module(arg)
-            try:
-                result = parser.parse(data, raw=raw, quiet=quiet)
+    # find the correct parser
+    if magic_found_parser:
+        parser = parser_module(magic_found_parser)
+        parser_name = parser_shortname(magic_found_parser)
+
+    else:
+        found = False
+        for arg in sys.argv:
+            parser_name = parser_shortname(arg)
+
+            if parser_name in parsers:
+                parser = parser_module(arg)
                 found = True
                 break
 
-            except Exception:
-                if debug:
-                    raise
-                else:
-                    import jc.utils
-                    jc.utils.error_message(
-                        f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
-                        '             For details use the -d or -dd option. Use "jc -h" for help.')
-                    sys.exit(1)
+        if not found:
+            jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    if not found:
-        jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
-        sys.exit(1)
+    # check for input errors (pipe vs magic)
+    if not sys.stdin.isatty() and magic_stdout:
+        jc.utils.error_message('Piped data and Magic syntax used simultaneously. Use "jc -h" for help.')
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+    elif sys.stdin.isatty() and magic_stdout is None:
+        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    # parse the data
+    data = magic_stdout or sys.stdin.read()
+
+    try:
+        result = parser.parse(data, raw=raw, quiet=quiet)
+
+    except Exception:
+        if debug:
+            raise
+        else:
+            jc.utils.error_message(
+                f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
+                '             For details use the -d or -dd option. Use "jc -h" for help.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    # output the json
+    try:
+        print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+        sys.exit(combined_exit_code(magic_exit_code, 0))
+
+    except Exception:
+        if debug:
+            raise
+        else:
+            jc.utils.error_message(
+                'There was an issue generating the JSON output.\n'
+                '             For details use the -d or -dd option.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 
 if __name__ == '__main__':

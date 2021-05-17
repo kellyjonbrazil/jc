@@ -30,6 +30,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_p = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-unparsable.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping6_ip_O_p_unparsable = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_D_p = f.read()
 
@@ -44,6 +47,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_dup = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_O_unparsedlines = f.read()
 
         # ubuntu
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
@@ -157,6 +163,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_unreachable = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unknown-errors.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_unknown_errors = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_hostname_p = f.read()
 
@@ -174,6 +186,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_ip = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-unparsable.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_unparsable = f.read()
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip_dup = f.read()
@@ -209,6 +224,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_p_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-unparsable.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping6_ip_O_p_unparsable_json = json.loads(f.read())
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_O_D_p_json = json.loads(f.read())
 
@@ -223,6 +241,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_dup_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_O_unparsedlines_json = json.loads(f.read())
 
         # ubunutu
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.json'), 'r', encoding='utf-8') as f:
@@ -336,6 +357,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_unreachable_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unknown-errors.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping_ip_unknown_errors_json = json.loads(f.read())
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_hostname_p_json = json.loads(f.read())
 
@@ -353,6 +380,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping6_ip_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-unparsable.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_ping6_ip_unparsable_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_ping_ip_dup_json = json.loads(f.read())
@@ -409,6 +439,12 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_O_p, quiet=True), self.centos_7_7_ping6_ip_O_p_json)
 
+    def test_ping6_ip_O_p_unparsable_centos_7_7(self):
+        """
+        Test 'ping6 <ip> -O -p' with unparsable lines on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_O_p_unparsable, quiet=True), self.centos_7_7_ping6_ip_O_p_unparsable_json)
+
     def test_ping6_ip_O_D_p_centos_7_7(self):
         """
         Test 'ping6 <ip> -O -D -p' on Centos 7.7
@@ -438,6 +474,12 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip>' to broadcast IP to get duplicate replies on Centos 7.7
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping6_ip_dup, quiet=True), self.centos_7_7_ping6_ip_dup_json)
+
+    def test_ping_ip_O_unparsedlines_centos_7_7(self):
+        """
+        Test 'ping <ip> -O' on Centos 7.7 with unparsable lines and error messages
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_ip_O_unparsedlines, quiet=True), self.centos_7_7_ping_ip_O_unparsedlines_json)
 
     def test_ping_ip_O_ubuntu_18_4(self):
         """
@@ -651,9 +693,21 @@ class MyTests(unittest.TestCase):
 
     def test_ping_ip_osx_10_14_6(self):
         """
-        Test 'ping6 <ip>' on osx 10.14.6
+        Test 'ping <ip>' on osx 10.14.6
         """
         self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip, quiet=True), self.osx_10_14_6_ping_ip_json)
+
+    def test_ping_ip_unreachable_osx_10_14_6(self):
+        """
+        Test 'ping <ip>' with host unreachable error on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_unreachable, quiet=True), self.osx_10_14_6_ping_ip_unreachable_json)
+
+    def test_ping_ip_unknown_errors_osx_10_14_6(self):
+        """
+        Test 'ping <ip>' with unknown/unparsable errors on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping_ip_unknown_errors, quiet=True), self.osx_10_14_6_ping_ip_unknown_errors_json)
 
     def test_ping6_hostname_p_osx_10_14_6(self):
         """
@@ -690,6 +744,12 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip>' on osx 10.14.6
         """
         self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip, quiet=True), self.osx_10_14_6_ping6_ip_json)
+
+    def test_ping6_ip_unparsable_osx_10_14_6(self):
+        """
+        Test 'ping6 <ip>' with unparsable lines on osx 10.14.6
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.osx_10_14_6_ping6_ip_unparsable, quiet=True), self.osx_10_14_6_ping6_ip_unparsable_json)
 
     def test_ping_ip_dup_osx_10_14_6(self):
         """
