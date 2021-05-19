@@ -65,19 +65,13 @@ Examples:
       ...
     }
 """
-import sys
 import jc.utils
-# check if xml library is installed and fail gracefully if it is not
-try:
-    import xmltodict
-except Exception:
-    jc.utils.error_message('The xmltodict library is not installed.')
-    sys.exit(1)
+from jc.exceptions import LibraryNotInstalled
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -121,6 +115,12 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
+    # check if xml library is installed and fail gracefully if it is not
+    try:
+        import xmltodict
+    except Exception:
+        raise LibraryNotInstalled('The xmltodict library is not installed.')
+
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
