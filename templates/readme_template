@@ -194,10 +194,15 @@ If a UTC timezone can be detected in the text of the command output, the timesta
 ## Compatibility
 Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other parsers that convert platform-specific output will generate a warning message if they are run on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS or Windows laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
+macOS:
 ```bash
 cat lsof.out | jc --lsof -q
+```
+or Windows:
+```bash
+type lsof.out | jc --lsof -q
 ```
 
 Tested on:
@@ -210,6 +215,8 @@ Tested on:
 - NixOS
 - FreeBSD12
 - Windows 10
+- Windows 2016 Server
+- Windows 2019 Server
 
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.
