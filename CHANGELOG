@@ -2,6 +2,7 @@ jc changelog
 
 20210520 v1.15.5
 - Fix issue where help and about information would not display if a 3rd party parser library was missing. (e.g. xmltodict)
+- Add more error message detail to the user when encountering ParseError and LibraryNotFound exceptions
 
 20210517 v1.15.4
 - Update ping parser to support error responses in OSX and BSD
