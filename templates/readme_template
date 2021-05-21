@@ -83,7 +83,7 @@ Use Cases:
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `apt-get`, `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB/RPM packaged binaries; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `apt-get`, `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB, RPM, and MSI packaged binaries for linux and Windows; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```bash
