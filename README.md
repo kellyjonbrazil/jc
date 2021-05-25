@@ -248,7 +248,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 ### Caveats
 **Locale:**
 
-For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line:
+For best results set the `LANG` locale environment variable to `C` or `en_US.UTF-8`. For example, either by setting directly on the command-line:
 ```
 $ LANG=C date | jc --date
 ```

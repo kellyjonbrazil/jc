@@ -112,7 +112,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 Note: The application data directory follows the XDG Base Directory Specification
 
 .SH CAVEATS
-\fBLocale:\fP For best results set the \fBLANG\fP locale environment variable to \fBC\fP. For example, either by setting directly on the command-line:
+\fBLocale:\fP For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
 
 \fB$ LANG=C date | jc --date\fP
 
