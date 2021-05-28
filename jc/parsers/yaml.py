@@ -79,19 +79,13 @@ Examples:
       }
     ]
 """
-import sys
 import jc.utils
-# check if yaml library is installed and fail gracefully if it is not
-try:
-    from ruamel.yaml import YAML
-except Exception:
-    jc.utils.error_message('The ruamel.yaml library is not installed.')
-    sys.exit(1)
+from jc.exceptions import LibraryNotInstalled
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,6 +129,12 @@ def parse(data, raw=False, quiet=False):
 
         List of Dictionaries representing the YAML documents.
     """
+    # check if yaml library is installed and fail gracefully if it is not
+    try:
+        from ruamel.yaml import YAML
+    except Exception:
+        raise LibraryNotInstalled('The ruamel.yaml library is not installed.')
+
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 

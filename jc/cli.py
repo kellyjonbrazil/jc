@@ -16,6 +16,7 @@ import jc
 import jc.appdirs as appdirs
 import jc.utils
 import jc.tracebackplus
+from jc.exceptions import LibraryNotInstalled, ParseError
 
 # make pygments import optional
 try:
@@ -602,6 +603,16 @@ def main():
 
     try:
         result = parser.parse(data, raw=raw, quiet=quiet)
+
+    except (ParseError, LibraryNotInstalled) as e:
+        if debug:
+            raise
+        else:
+            jc.utils.error_message(
+                f'Parser issue with {parser_name}:\n'
+                f'             {e}\n'
+                '             For details use the -d or -dd option. Use "jc -h" for help.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except Exception:
         if debug:

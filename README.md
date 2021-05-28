@@ -83,7 +83,7 @@ Use Cases:
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `apt-get`, `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB/RPM packaged binaries; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `apt-get`, `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB, RPM, and MSI packaged binaries for linux and Windows; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```bash
@@ -248,7 +248,7 @@ Local plugin filenames must be valid python module names, therefore must consist
 ### Caveats
 **Locale:**
 
-For best results set the `LANG` locale environment variable to `C`. For example, either by setting directly on the command-line:
+For best results set the `LANG` locale environment variable to `C` or `en_US.UTF-8`. For example, either by setting directly on the command-line:
 ```
 $ LANG=C date | jc --date
 ```
@@ -266,10 +266,15 @@ If a UTC timezone can be detected in the text of the command output, the timesta
 ## Compatibility
 Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other parsers that convert platform-specific output will generate a warning message if they are run on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS or Windows laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
 
+macOS:
 ```bash
 cat lsof.out | jc --lsof -q
+```
+or Windows:
+```bash
+type lsof.out | jc --lsof -q
 ```
 
 Tested on:
@@ -282,6 +287,8 @@ Tested on:
 - NixOS
 - FreeBSD12
 - Windows 10
+- Windows 2016 Server
+- Windows 2019 Server
 
 ## Contributions
 Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and submit your parser with a pull request.

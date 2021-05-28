@@ -3,3 +3,7 @@
 
 class ParseError(Exception):
     pass
+
+
+class LibraryNotInstalled(Exception):
+    pass
