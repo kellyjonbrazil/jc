@@ -19,7 +19,7 @@ dig example.com | jc --dig
 39049,"data":"93.184.216.34"}],"query_time":49,"server":"2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)","when":
 "Fri Apr 16 16:09:00 PDT 2021","rcvd":56,"when_epoch":1618614540,"when_epoch_utc":null}]
 ```
-This allows further command-line processing of output with tools like `jq` by piping commands:
+This allows further command-line processing of output with tools like `jq` or [`jello`](https://github.com/kellyjonbrazil/jello) by piping commands:
 ```bash
 $ dig example.com | jc --dig | jq -r '.[].answer[].data'
 93.184.216.34
