@@ -63,8 +63,8 @@ Examples:
             "device": "/dev/sda1",
             "boot": true,
             "start": 0,
-            "end": null,
-            "cyls": null,
+            "end": 130,
+            "cyls": 131,
             "blocks": 1048576,
             "id": "83",
             "system": "Linux"
@@ -73,8 +73,8 @@ Examples:
             "device": "/dev/sda2",
             "boot": false,
             "start": 130,
-            "end": null,
-            "cyls": null,
+            "end": 2610,
+            "cyls": 2481,
             "blocks": 19921920,
             "id": "8e",
             "system": "Linux LVM"
