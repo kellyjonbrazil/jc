@@ -1,0 +1,21 @@
+
+Disk /dev/sda: 2610 cylinders, 255 heads, 63 sectors/track
+Units: cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0
+
+   Device Boot Start     End   #cyls    #blocks   Id  System
+/dev/sda1   *      0+    130-    131-   1048576   83  Linux
+/dev/sda2        130+   2610-   2481-  19921920   8e  Linux LVM
+/dev/sda3          0       -       0          0    0  Empty
+/dev/sda4          0       -       0          0    0  Empty
+
+Disk /dev/mapper/centos-root: 2218 cylinders, 255 heads, 63 sectors/track
+
+Disk /dev/mapper/centos-swap: 261 cylinders, 255 heads, 63 sectors/track
+Units: cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0
+
+   Device Boot Start     End   #cyls    #blocks   Id  System
+/dev/sda1   *      0+    130-    131-   1048576   83  Linux
+/dev/sda2        130+   2610-   2481-  19921920   8e  Linux LVM
+/dev/sda3          0       -       0          0    0  Empty
+/dev/sda4          0       -       0          0    0  Empty
+

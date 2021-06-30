@@ -5,4 +5,3 @@ unit: sectors
 /dev/sda2 : start=  2099200, size= 39843840, Id=8e
 /dev/sda3 : start=        0, size=        0, Id= 0
 /dev/sda4 : start=        0, size=        0, Id= 0
-

@@ -1,0 +1,1 @@
+[{"disk":"/dev/sda","units":"sectors","partitions":[{"device":"/dev/sda1","start":2048,"size":2097152,"id":"83","boot":true},{"device":"/dev/sda2","start":2099200,"size":39843840,"id":"8e","boot":false},{"device":"/dev/sda3","start":0,"size":0,"id":"0","boot":false},{"device":"/dev/sda4","start":0,"size":0,"id":"0","boot":false}]}]
