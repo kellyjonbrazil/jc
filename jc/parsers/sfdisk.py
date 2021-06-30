@@ -50,7 +50,7 @@ Schema:
 
 Examples:
 
-    $ sfdisk -l | jc --sfdisk -p
+    # sfdisk -l | jc --sfdisk -p
     [
       {
         "disk": "/dev/sda",
@@ -115,7 +115,7 @@ Examples:
       }
     ]
 
-    $ sfdisk | jc --sfdisk -p -r
+    # sfdisk | jc --sfdisk -p -r
     [
       {
         "disk": "/dev/sda",
