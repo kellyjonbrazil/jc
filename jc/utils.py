@@ -154,7 +154,7 @@ def convert_to_bool(value):
     #   if float converts, then bool the result
     #   if float does not convert then look for truthy string and bool True
     #   else False
-    truthy = ['y', 'yes', 'true']
+    truthy = ['y', 'yes', 'true', '*']
 
     if isinstance(value, (int, float)):
         return bool(value)

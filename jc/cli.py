@@ -94,6 +94,7 @@ parsers = [
     'ps',
     'route',
     'rpm-qi',
+    'sfdisk',
     'shadow',
     'ss',
     'stat',

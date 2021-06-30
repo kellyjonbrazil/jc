@@ -1,5 +1,8 @@
 jc changelog
 
+20210630 v1.15.7
+- Add sfdisk command parser tested on linux
+
 20210628 v1.15.6
 - Fix issue to only load local plugin parsers that have filenames that end in .py 
 
