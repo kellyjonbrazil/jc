@@ -19,7 +19,7 @@ dig example.com | jc --dig
 39049,"data":"93.184.216.34"}],"query_time":49,"server":"2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)","when":
 "Fri Apr 16 16:09:00 PDT 2021","rcvd":56,"when_epoch":1618614540,"when_epoch_utc":null}]
 ```
-This allows further command-line processing of output with tools like `jq` by piping commands:
+This allows further command-line processing of output with tools like `jq` or [`jello`](https://github.com/kellyjonbrazil/jello) by piping commands:
 ```bash
 $ dig example.com | jc --dig | jq -r '.[].answer[].data'
 93.184.216.34
@@ -60,7 +60,7 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 '2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
 'when_epoch': 1618614780, 'when_epoch_utc': None}]
 ```
-Two representations of the data are possible. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
+Two representations of the data are available. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
 

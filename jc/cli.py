@@ -130,7 +130,7 @@ local_parsers_dir = os.path.join(data_dir, 'jcparsers')
 if os.path.isdir(local_parsers_dir):
     sys.path.append(data_dir)
     for name in os.listdir(local_parsers_dir):
-        if re.match(r'\w+\.py', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
+        if re.match(r'\w+\.py$', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
             plugin_name = name[0:-3]
             local_parsers.append(plugin_name)
             if plugin_name not in parsers:

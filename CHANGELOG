@@ -1,5 +1,8 @@
 jc changelog
 
+20210628 v1.15.6
+- Fix issue to only load local plugin parsers that have filenames that end in .py 
+
 20210520 v1.15.5
 - Fix issue where help and about information would not display if a 3rd party parser library was missing. (e.g. xmltodict)
 - Add more error message detail when encountering ParseError and LibraryNotFound exceptions
