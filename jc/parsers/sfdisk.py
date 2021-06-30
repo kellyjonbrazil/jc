@@ -216,13 +216,13 @@ def _process(proc_data):
     for entry in proc_data:
         for key in entry:
             if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
+                entry[key] = jc.utils.convert_to_int(entry[key].replace('-', ''))
 
         if 'partitions' in entry:
             for tp in entry['partitions']:
                 for key in tp:
                     if key in int_list:
-                        tp[key] = jc.utils.convert_to_int(tp[key])
+                        tp[key] = jc.utils.convert_to_int(tp[key].replace('-', ''))
                     if key in bool_list:
                         tp[key] = jc.utils.convert_to_bool(tp[key])
 
