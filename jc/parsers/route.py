@@ -73,7 +73,6 @@ Examples:
       }
     ]
 
-
     $ route -ee | jc --route -p -r
     [
       {
@@ -103,7 +102,6 @@ Examples:
         "irtt": "0"
       }
     ]
-
 """
 import jc.utils
 import jc.parsers.universal
