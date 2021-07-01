@@ -25,7 +25,7 @@ Schema:
         "genmask":         string,
         "flags":           string,
         "flags_pretty": [
-                           string,
+                           string
         ]
         "metric":          integer,
         "ref":             integer,
