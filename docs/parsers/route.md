@@ -76,7 +76,6 @@ Examples:
       }
     ]
 
-
     $ route -ee | jc --route -p -r
     [
       {
@@ -106,7 +105,6 @@ Examples:
         "irtt": "0"
       }
     ]
-
 
 
 ## info
