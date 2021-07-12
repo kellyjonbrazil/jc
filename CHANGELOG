@@ -1,5 +1,8 @@
 jc changelog
 
+202107xx v1.16.0 (in progress)
+- Include CHANGELOG in source distribution
+
 20210707 v1.15.7
 - Add sfdisk command parser tested on linux
 - Update unit test files to change the timezone when needed (POSIX only)
