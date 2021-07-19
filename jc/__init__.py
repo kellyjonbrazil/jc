@@ -86,4 +86,4 @@ Module Example:
 """
 
 name = 'jc'
-__version__ = '1.15.7'
+__version__ = '1.16.0'

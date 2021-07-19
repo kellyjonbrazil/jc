@@ -1,6 +1,16 @@
 jc changelog
 
 202107xx v1.16.0 (in progress)
+- Note to Package Maintainers:
+    TLDR: `/man/jc.1.gz` and `/jc/man/jc.1.gz` are deprecated and only `/man/jc.1` should be used.
+    
+    The Man page in the PyPi source packages will be moving from `/jc/man/jc.1.gz` to `/man/jc.1`
+    in version 1.17.0. For now the Man pages will be available in both locations, but be aware that
+    the Man page at `/jc/man/jc.1.gz` is now considered deprecated.
+
+    Also, starting in v1.17.0, the Man page will no longer be compressed in the source package,
+    therefore `/man/jc.1.gz` should also be considered deprecated and will no longer be available
+    after v1.17.0. Please use `/man/jc.1` and compress downstream if you would like.
 - Include CHANGELOG in source distribution
 
 20210707 v1.15.7
