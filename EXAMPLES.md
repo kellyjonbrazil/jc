@@ -2556,6 +2556,75 @@ rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
   }
 ]
 ```
+### sfdisk
+```bash
+sfdisk -l | jc --sfdisk -p          # or jc -p sfdisk
+```
+```json
+[
+  {
+    "disk": "/dev/sda",
+    "cylinders": 2610,
+    "heads": 255,
+    "sectors_per_track": 63,
+    "units": "cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0",
+    "partitions": [
+      {
+        "device": "/dev/sda1",
+        "boot": true,
+        "start": 0,
+        "end": 130,
+        "cyls": 131,
+        "blocks": 1048576,
+        "id": "83",
+        "system": "Linux"
+      },
+      {
+        "device": "/dev/sda2",
+        "boot": false,
+        "start": 130,
+        "end": 2610,
+        "cyls": 2481,
+        "blocks": 19921920,
+        "id": "8e",
+        "system": "Linux LVM"
+      },
+      {
+        "device": "/dev/sda3",
+        "boot": false,
+        "start": 0,
+        "end": null,
+        "cyls": 0,
+        "blocks": 0,
+        "id": "0",
+        "system": "Empty"
+      },
+      {
+        "device": "/dev/sda4",
+        "boot": false,
+        "start": 0,
+        "end": null,
+        "cyls": 0,
+        "blocks": 0,
+        "id": "0",
+        "system": "Empty"
+      }
+    ]
+  },
+  {
+    "disk": "/dev/mapper/centos-root",
+    "cylinders": 2218,
+    "heads": 255,
+    "sectors_per_track": 63
+  },
+  {
+    "disk": "/dev/mapper/centos-swap",
+    "cylinders": 261,
+    "heads": 255,
+    "sectors_per_track": 63
+  }
+]
+```
 ### /etc/shadow file
 ```bash
 cat /etc/shadow | jc --shadow -p
