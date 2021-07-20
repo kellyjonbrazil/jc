@@ -22,7 +22,7 @@ Schema:
         "genmask":         string,
         "flags":           string,
         "flags_pretty": [
-                           string,
+                           string
         ]
         "metric":          integer,
         "ref":             integer,
@@ -73,7 +73,6 @@ Examples:
       }
     ]
 
-
     $ route -ee | jc --route -p -r
     [
       {
@@ -103,7 +102,6 @@ Examples:
         "irtt": "0"
       }
     ]
-
 """
 import jc.utils
 import jc.parsers.universal

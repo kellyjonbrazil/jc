@@ -169,6 +169,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
 - `--route` enables the `route` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/route))
 - `--rpm-qi` enables the `rpm -qi` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi))
+- `--sfdisk` enables the `sfdisk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk))
 - `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
 - `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))
 - `--stat` enables the `stat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/stat))

@@ -22,4 +22,4 @@ with open('man/jc.1', 'rb') as f_in:
 
 shutil.copyfile('man/jc.1.gz', 'jc/man/jc.1.gz')
 
-os.remove('man/jc.1')
+# os.remove('man/jc.1')

@@ -1,0 +1,14 @@
+
+Disk /dev/sda: 2610 cylinders, 255 heads, 63 sectors/track
+Units: 1MiB = 1024*1024 bytes, blocks of 1024 bytes, counting from 0
+
+   Device Boot Start   End    MiB    #blocks   Id  System
+/dev/sda1   *     1   1024   1024    1048576   83  Linux
+/dev/sda2      1025  20479  19455   19921920   8e  Linux LVM
+/dev/sda3         0      -      0          0    0  Empty
+/dev/sda4         0      -      0          0    0  Empty
+
+Disk /dev/mapper/centos-root: 2218 cylinders, 255 heads, 63 sectors/track
+
+Disk /dev/mapper/centos-swap: 261 cylinders, 255 heads, 63 sectors/track
+

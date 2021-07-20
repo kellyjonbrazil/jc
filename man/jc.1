@@ -1,0 +1,515 @@
+.TH jc 1 2021-07-20 1.16.0 "JSON CLI output utility"
+.SH NAME
+jc \- JSONifies the output of many CLI tools and file-types
+.SH SYNOPSIS
+COMMAND | jc PARSER [OPTIONS]
+
+or "Magic" syntax:
+
+jc [OPTIONS] COMMAND
+
+.SH DESCRIPTION
+jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
+
+.SH OPTIONS
+.B
+Parsers:
+.RS
+
+
+.TP
+.B
+\fB--acpi\fP
+`acpi` command parser
+
+.TP
+.B
+\fB--airport\fP
+`airport -I` command parser
+
+.TP
+.B
+\fB--airport-s\fP
+`airport -s` command parser
+
+.TP
+.B
+\fB--arp\fP
+`arp` command parser
+
+.TP
+.B
+\fB--blkid\fP
+`blkid` command parser
+
+.TP
+.B
+\fB--cksum\fP
+`cksum` and `sum` command parser
+
+.TP
+.B
+\fB--crontab\fP
+`crontab` command and file parser
+
+.TP
+.B
+\fB--crontab-u\fP
+`crontab` file parser with user support
+
+.TP
+.B
+\fB--csv\fP
+CSV file parser
+
+.TP
+.B
+\fB--date\fP
+`date` command parser
+
+.TP
+.B
+\fB--df\fP
+`df` command parser
+
+.TP
+.B
+\fB--dig\fP
+`dig` command parser
+
+.TP
+.B
+\fB--dir\fP
+`dir` command parser
+
+.TP
+.B
+\fB--dmidecode\fP
+`dmidecode` command parser
+
+.TP
+.B
+\fB--dpkg-l\fP
+`dpkg -l` command parser
+
+.TP
+.B
+\fB--du\fP
+`du` command parser
+
+.TP
+.B
+\fB--env\fP
+`env` command parser
+
+.TP
+.B
+\fB--file\fP
+`file` command parser
+
+.TP
+.B
+\fB--finger\fP
+`finger` command parser
+
+.TP
+.B
+\fB--free\fP
+`free` command parser
+
+.TP
+.B
+\fB--fstab\fP
+`/etc/fstab` file parser
+
+.TP
+.B
+\fB--group\fP
+`/etc/group` file parser
+
+.TP
+.B
+\fB--gshadow\fP
+`/etc/gshadow` file parser
+
+.TP
+.B
+\fB--hash\fP
+`hash` command parser
+
+.TP
+.B
+\fB--hashsum\fP
+hashsum command parser (`md5sum`, `shasum`, etc.)
+
+.TP
+.B
+\fB--hciconfig\fP
+`hciconfig` command parser
+
+.TP
+.B
+\fB--history\fP
+`history` command parser
+
+.TP
+.B
+\fB--hosts\fP
+`/etc/hosts` file parser
+
+.TP
+.B
+\fB--id\fP
+`id` command parser
+
+.TP
+.B
+\fB--ifconfig\fP
+`ifconfig` command parser
+
+.TP
+.B
+\fB--ini\fP
+INI file parser
+
+.TP
+.B
+\fB--iptables\fP
+`iptables` command parser
+
+.TP
+.B
+\fB--iw-scan\fP
+`iw dev [device] scan` command parser
+
+.TP
+.B
+\fB--jobs\fP
+`jobs` command parser
+
+.TP
+.B
+\fB--kv\fP
+Key/Value file parser
+
+.TP
+.B
+\fB--last\fP
+`last` and `lastb` command parser
+
+.TP
+.B
+\fB--ls\fP
+`ls` command parser
+
+.TP
+.B
+\fB--lsblk\fP
+`lsblk` command parser
+
+.TP
+.B
+\fB--lsmod\fP
+`lsmod` command parser
+
+.TP
+.B
+\fB--lsof\fP
+`lsof` command parser
+
+.TP
+.B
+\fB--mount\fP
+`mount` command parser
+
+.TP
+.B
+\fB--netstat\fP
+`netstat` command parser
+
+.TP
+.B
+\fB--ntpq\fP
+`ntpq -p` command parser
+
+.TP
+.B
+\fB--passwd\fP
+`/etc/passwd` file parser
+
+.TP
+.B
+\fB--ping\fP
+`ping` and `ping6` command parser
+
+.TP
+.B
+\fB--pip-list\fP
+`pip list` command parser
+
+.TP
+.B
+\fB--pip-show\fP
+`pip show` command parser
+
+.TP
+.B
+\fB--ps\fP
+`ps` command parser
+
+.TP
+.B
+\fB--route\fP
+`route` command parser
+
+.TP
+.B
+\fB--rpm-qi\fP
+`rpm -qi` command parser
+
+.TP
+.B
+\fB--sfdisk\fP
+`sfdisk` command parser
+
+.TP
+.B
+\fB--shadow\fP
+`/etc/shadow` file parser
+
+.TP
+.B
+\fB--ss\fP
+`ss` command parser
+
+.TP
+.B
+\fB--stat\fP
+`stat` command parser
+
+.TP
+.B
+\fB--sysctl\fP
+`sysctl` command parser
+
+.TP
+.B
+\fB--systemctl\fP
+`systemctl` command parser
+
+.TP
+.B
+\fB--systemctl-lj\fP
+`systemctl list-jobs` command parser
+
+.TP
+.B
+\fB--systemctl-ls\fP
+`systemctl list-sockets` command parser
+
+.TP
+.B
+\fB--systemctl-luf\fP
+`systemctl list-unit-files` command parser
+
+.TP
+.B
+\fB--systeminfo\fP
+`systeminfo` command parser
+
+.TP
+.B
+\fB--time\fP
+`/usr/bin/time` command parser
+
+.TP
+.B
+\fB--timedatectl\fP
+`timedatectl status` command parser
+
+.TP
+.B
+\fB--tracepath\fP
+`tracepath` and `tracepath6` command parser
+
+.TP
+.B
+\fB--traceroute\fP
+`traceroute` and `traceroute6` command parser
+
+.TP
+.B
+\fB--ufw\fP
+`ufw status` command parser
+
+.TP
+.B
+\fB--ufw-appinfo\fP
+`ufw app info [application]` command parser
+
+.TP
+.B
+\fB--uname\fP
+`uname -a` command parser
+
+.TP
+.B
+\fB--upower\fP
+`upower` command parser
+
+.TP
+.B
+\fB--uptime\fP
+`uptime` command parser
+
+.TP
+.B
+\fB--w\fP
+`w` command parser
+
+.TP
+.B
+\fB--wc\fP
+`wc` command parser
+
+.TP
+.B
+\fB--who\fP
+`who` command parser
+
+.TP
+.B
+\fB--xml\fP
+XML file parser
+
+.TP
+.B
+\fB--yaml\fP
+YAML file parser
+
+
+.RE
+.PP
+.B
+Options:
+.RS
+
+.TP
+.B
+\fB-a\fP
+about jc (JSON output)
+.TP
+.B
+\fB-d\fP
+debug - show traceback (\fB-dd\fP for verbose traceback)
+.TP
+.B
+\fB-h\fP
+help (\fB-h --parser_name\fP for parser documentation)
+.TP
+.B
+\fB-m\fP
+monochrome output
+.TP
+.B
+\fB-p\fP
+pretty print output
+.TP
+.B
+\fB-q\fP
+quiet - suppress warnings
+.TP
+.B
+\fB-r\fP
+raw JSON output
+.TP
+.B
+\fB-v\fP
+version information
+
+.SH EXIT CODES
+Any fatal errors within jc will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), jc will store the exit code of the program being parsed and add it to the  jc exit code. This way it is easier to determine if an error was from the parsed program or jc.
+
+Consider the following examples using `ifconfig`:
+
+.RS
+ifconfig exit code = \fB0\fP, jc exit code = \fB0\fP, combined exit code = \fB0\fP (no errors)
+
+ifconfig exit code = \fB1\fP, jc exit code = \fB0\fP, combined exit code = \fB1\fP (error in ifconfig)
+
+ifconfig exit code = \fB0\fP, jc exit code = \fB100\fP, combined exit code = \fB100\fP (error in jc)
+
+ifconfig exit code = \fB1\fP, jc exit code = \fB100\fP, combined exit code = \fB101\fP (error in both ifconfig and jc)
+.RE
+
+.SH ENVIRONMENT
+You can specify custom colors via the \fBJC_COLORS\fP environment variable. The \fBJC_COLORS\fP environment variable takes four comma separated string values in the following format:
+
+JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
+
+Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP, \fBmagenta\fP, \fBcyan\fP, \fBgray\fP, \fBbrightblack\fP, \fBbrightred\fP, \fBbrightgreen\fP, \fBbrightyellow\fP, \fBbrightblue\fP, \fBbrightmagenta\fP, \fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP
+
+For example, to set to the default colors:
+
+.RS
+JC_COLORS=blue,brightblack,magenta,green
+
+or
+
+JC_COLORS=default,default,default,default
+.RE
+
+.SH CUSTOM PARSERS
+Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
+
+.RS
+- Linux/unix: \fB$HOME/.local/share/jc/jcparsers\fP
+
+- macOS: \fB$HOME/Library/Application Support/jc/jcparsers\fP
+
+- Windows: \fB$LOCALAPPDATA\\jc\\jc\\jcparsers\fP
+.RE
+
+Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
+
+Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+
+Note: The application data directory follows the XDG Base Directory Specification
+
+.SH CAVEATS
+\fBLocale:\fP For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
+
+\fB$ LANG=C date | jc --date\fP
+
+or by exporting to the environment before running commands:
+
+\fB$ export LANG=C\fP
+
+\fBTimezones:\fP Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
+
+If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a \fB_utc\fP suffix on the key name. (e.g. \fBepoch_utc\fP) No other timezones are supported for aware timestamps.
+
+.SH EXAMPLES
+Standard Syntax:
+.RS
+$ dig www.google.com | jc \fB--dig\fP \fB-p\fP
+.RE
+
+Magic Syntax:
+.RS
+$ jc \fB-p\fP dig www.google.com
+.RE
+
+For parser documentation:
+.RS
+$ jc \fB-h\fP \fB--dig\fP
+.RE
+.SH AUTHOR
+Kelly Brazil (kellyjonbrazil@gmail.com)
+
+https://github.com/kellyjonbrazil/jc
+
+.SH COPYRIGHT
+Copyright (c) 2019-2021 Kelly Brazil
+
+License:  MIT License
