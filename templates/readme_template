@@ -1,7 +1,7 @@
 ![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
-> Try the new `jc` [web demo](https://jc-web-demo.herokuapp.com/)!
+> Try the `jc` [web demo](https://jc-web-demo.herokuapp.com/)
 
 > JC is [now available](https://galaxy.ansible.com/community/general) as an Ansible filter plugin in the `community.general` collection! See this [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/) for an example.
 
@@ -83,7 +83,7 @@ Use Cases:
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`; other OS package repositories like `apt-get`, `dnf`, `zypper`, `pacman`, `nix-env`, `guix`, `brew`, or `portsnap`; via DEB, RPM, and MSI packaged binaries for linux and Windows; or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`, OS package repositories, via DEB/RPM/MSI packaged binaries for linux and Windows, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```bash
