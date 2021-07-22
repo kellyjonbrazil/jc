@@ -38,7 +38,7 @@ Examples:
     # but can be preserved with the -r argument
     occupation:"Engineer"
 
-    $ cat keyvalue.txt | jc --ini -p
+    $ cat keyvalue.txt | jc --kv -p
     {
       "name": "John Doe",
       "address": "555 California Drive",
