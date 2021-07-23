@@ -100,7 +100,7 @@ pip3 install jc
 | Arch linux            | `pacman -S jc`                                                                |
 | NixOS linux           | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
 | Guix System linux     | `guix install jc`                                                             |
-| MacOS                 | `brew install jc`                                                             |
+| macOS                 | `brew install jc`                                                             |
 | FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
 
