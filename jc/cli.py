@@ -466,7 +466,11 @@ def magic_parser(args):
 
 def run_user_command(command):
     """Use subprocess to run the user's command. Returns the STDOUT, STDERR, and the Exit Code as a tuple."""
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+    proc = subprocess.Popen(command,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            close_fds=False,
+                            universal_newlines=True)
     stdout, stderr = proc.communicate()
 
     return (
@@ -558,6 +562,13 @@ def main():
                 raise
             else:
                 jc.utils.error_message(f'"{run_command_str}" command could not be found. For details use the -d or -dd option.')
+                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        except OSError:
+            if debug:
+                raise
+            else:
+                jc.utils.error_message(f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.')
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:
