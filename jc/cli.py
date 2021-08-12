@@ -469,7 +469,7 @@ def run_user_command(command):
     proc = subprocess.Popen(command,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
-                            close_fds=False,
+                            close_fds=False,            # Allows inheriting file descriptors. Useful for process substitution
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
 
