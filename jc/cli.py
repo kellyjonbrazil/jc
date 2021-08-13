@@ -551,7 +551,7 @@ def main():
         try:
             run_command_str = shlex.join(run_command)      # python 3.8+
         except AttributeError:
-            run_command_str = join(run_command)            # older python versions
+            run_command_str = ' '.join(run_command)        # older python versions
 
     if valid_command:
         try:
