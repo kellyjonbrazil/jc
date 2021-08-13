@@ -9,6 +9,7 @@ import re
 import importlib
 import textwrap
 import signal
+import shlex
 import subprocess
 import json
 import jc
@@ -547,7 +548,7 @@ def main():
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
     if run_command:
-        run_command_str = ' '.join(run_command)
+        run_command_str = shlex.join(run_command)
 
     if valid_command:
         try:
