@@ -6,7 +6,6 @@ import sys
 import os
 import os.path
 import re
-import shlex
 import importlib
 import textwrap
 import signal
@@ -415,8 +414,7 @@ def magic_parser(args):
     if len(args) <= 1 or args[1].startswith('--'):
         return False, None, None, []
 
-    # correctly parse escape characters and spaces with shlex
-    args_given = ' '.join(map(shlex.quote, args[1:])).split()
+    args_given = args[1:]
     options = []
 
     # find the options
