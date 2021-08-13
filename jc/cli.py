@@ -548,7 +548,10 @@ def main():
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
     if run_command:
-        run_command_str = shlex.join(run_command)
+        try:
+            run_command_str = shlex.join(run_command)      # python 3.8+
+        except AttributeError:
+            run_command_str = join(run_command)            # older python versions
 
     if valid_command:
         try:
