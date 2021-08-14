@@ -360,11 +360,10 @@ def help_doc(options):
             # load parser module just in time so we don't need to load all modules
             parser = parser_module(arg)
             compatible = ', '.join(parser.info.compatible)
-            doc_text = f'''{parser.__doc__}
-Compatibility:  {compatible}
-
-Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})
-'''
+            doc_text = \
+                f'{parser.__doc__}\n'\
+                f'Compatibility:  {compatible}\n\n'\
+                f'Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})\n'
 
             return doc_text
 
