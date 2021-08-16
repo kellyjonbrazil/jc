@@ -6,10 +6,10 @@ import sys
 import os
 import os.path
 import re
-import shlex
 import importlib
 import textwrap
 import signal
+import shlex
 import subprocess
 import json
 import jc
@@ -360,11 +360,10 @@ def help_doc(options):
             # load parser module just in time so we don't need to load all modules
             parser = parser_module(arg)
             compatible = ', '.join(parser.info.compatible)
-            doc_text = f'''{parser.__doc__}
-Compatibility:  {compatible}
-
-Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})
-'''
+            doc_text = \
+                f'{parser.__doc__}\n'\
+                f'Compatibility:  {compatible}\n\n'\
+                f'Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})\n'
 
             return doc_text
 
@@ -415,8 +414,7 @@ def magic_parser(args):
     if len(args) <= 1 or args[1].startswith('--'):
         return False, None, None, []
 
-    # correctly parse escape characters and spaces with shlex
-    args_given = ' '.join(map(shlex.quote, args[1:])).split()
+    args_given = args[1:]
     options = []
 
     # find the options
@@ -466,7 +464,11 @@ def magic_parser(args):
 
 def run_user_command(command):
     """Use subprocess to run the user's command. Returns the STDOUT, STDERR, and the Exit Code as a tuple."""
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+    proc = subprocess.Popen(command,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            close_fds=False,            # Allows inheriting file descriptors. Useful for process substitution
+                            universal_newlines=True)
     stdout, stderr = proc.communicate()
 
     return (
@@ -545,7 +547,10 @@ def main():
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
     if run_command:
-        run_command_str = ' '.join(run_command)
+        try:
+            run_command_str = shlex.join(run_command)      # python 3.8+
+        except AttributeError:
+            run_command_str = ' '.join(run_command)        # older python versions
 
     if valid_command:
         try:
@@ -558,6 +563,13 @@ def main():
                 raise
             else:
                 jc.utils.error_message(f'"{run_command_str}" command could not be found. For details use the -d or -dd option.')
+                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        except OSError:
+            if debug:
+                raise
+            else:
+                jc.utils.error_message(f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.')
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:

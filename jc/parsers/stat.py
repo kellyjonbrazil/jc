@@ -169,7 +169,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -322,7 +322,7 @@ def parse(data, raw=False, quiet=False):
             for line in cleandata:
                 value = shlex.split(line)
                 output_line = {
-                    'file': value[15],
+                    'file': ' '.join(value[15:]),
                     'unix_device': value[0],
                     'inode': value[1],
                     'flags': value[2],

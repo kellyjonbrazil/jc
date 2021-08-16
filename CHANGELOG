@@ -1,5 +1,11 @@
 jc changelog
 
+20210813 v1.16.1
+- Note to Package Maintainers: please see note at 20210720 v1.16.0
+- Fix issue with process substitution with the magic syntax
+- Fix issue with globs not including filenames with spaces with magic syntax
+- Fix stat parser to properly handle filenames with spaces on macOS/BSD
+
 20210720 v1.16.0
 - Note to Package Maintainers:
     TL;DR: `/man/jc.1.gz` and `/jc/man/jc.1.gz` are deprecated and only `/man/jc.1` should be used.

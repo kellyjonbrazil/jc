@@ -26,6 +26,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_stat = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat-filename-with-spaces.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_stat_filename_with_spaces = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.out'), 'r', encoding='utf-8') as f:
             self.freebsd12_stat = f.read()
 
@@ -38,6 +41,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_stat_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat-filename-with-spaces.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_stat_filename_with_spaces_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_stat_json = json.loads(f.read())
@@ -65,6 +71,12 @@ class MyTests(unittest.TestCase):
         Test 'stat /foo/*' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.stat.parse(self.osx_10_14_6_stat, quiet=True), self.osx_10_14_6_stat_json)
+
+    def test_stat_filename_with_spaces_osx_10_14_6(self):
+        """
+        Test 'stat' filename with spaces on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.stat.parse(self.osx_10_14_6_stat_filename_with_spaces, quiet=True), self.osx_10_14_6_stat_filename_with_spaces_json)
 
     def test_stat_freebsd12(self):
         """
