@@ -21,6 +21,7 @@ jc changelog
 - Fix Man page location in source packages
 - Add sfdisk command parser tested on linux
 - Update unit test files to change the timezone when needed (POSIX only)
+- Binaries and DEB/RPM/MSI packages now include Python 3.9.5 interpreter
 
 20210628 v1.15.6
 - Fix issue to only load local plugin parsers that have filenames that end in .py 

@@ -2558,7 +2558,7 @@ rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
 ```
 ### sfdisk
 ```bash
-sfdisk -l | jc --sfdisk -p          # or jc -p sfdisk
+sfdisk -l | jc --sfdisk -p          # or jc -p sfdisk -l
 ```
 ```json
 [
