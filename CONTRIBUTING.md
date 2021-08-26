@@ -15,11 +15,12 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 
 1. Open an issue to discuss the new feature, bug fix, or parser before opening a pull request. For new parsers, it is important to agree upon a schema before developing the parser.
 2. Fork the repo and create your branch from `dev`, if available, otherwise `master`.
-3. If you've added code that should be tested, add tests. All new parsers should have several sample outputs and tests.
-4. Documentation is auto-generated from docstrings, so ensure they are clear and accurate.
-5. Ensure the test suite passes. (Note: "**America/Los_Angeles**" timezone should be configured on the test system)
-6. Make sure your code lints.
-7. Issue that pull request!
+3. Use the `jc/parsers/foo.py` parser as a [template](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) to get started.
+4. If you've added code that should be tested, add tests. All new parsers should have several sample outputs and tests.
+5. Documentation is auto-generated from docstrings, so ensure they are clear and accurate.
+6. Ensure the test suite passes. (Note: "**America/Los_Angeles**" timezone should be configured on the test system)
+7. Make sure your code lints.
+8. Issue that pull request!
 
 ## Parser Schema Guidelines
 - Try to keep the schema as flat as possible - typically a list of flat dictionaries
