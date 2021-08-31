@@ -391,8 +391,6 @@ def parse(data, raw=False, quiet=False):
         # get final partitions if there are any left over
         if section == 'partitions' and option != 'd' and partitions:
             item['partitions'] = jc.parsers.universal.sparse_table_parse(partitions)
-            section = ''
-            partitions = []
 
         if item:
             raw_output.append(item)
