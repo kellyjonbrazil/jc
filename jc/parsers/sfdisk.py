@@ -50,7 +50,7 @@ Schema:
             "boot":                 boolean,
             "start":                integer,
             "end":                  integer,
-            "size":                 integer,
+            "size":                 string,    # Note: will be integer when using deprecated -d sfdisk option
             "cyls":                 integer,
             "mib":                  integer,
             "blocks":               integer,
@@ -224,7 +224,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = ['cylinders', 'heads', 'sectors_per_track', 'start', 'end', 'size', 'cyls', 'mib',
+    int_list = ['cylinders', 'heads', 'sectors_per_track', 'start', 'end', 'cyls', 'mib',
                 'blocks', 'sectors', 'bytes', 'logical_sector_size', 'physical_sector_size',
                 'min_io_size', 'optimal_io_size', 'free_bytes', 'free_sectors']
     bool_list = ['boot']
@@ -237,6 +237,12 @@ def _process(proc_data):
         if 'partitions' in entry:
             for p in entry['partitions']:
                 for key in p:
+                    # legacy conversion for -d option
+                    if key == 'size':
+                        if p[key].isnumeric():
+                            p[key] = jc.utils.convert_to_int(p[key])
+
+                    # normal conversions
                     if key in int_list:
                         p[key] = jc.utils.convert_to_int(p[key].replace('-', ''))
                     if key in bool_list:
@@ -373,7 +379,7 @@ def parse(data, raw=False, quiet=False):
                     continue
 
                 # partition lines
-                if 'Device' in line and 'Boot' in line and 'Start' in line and 'End' in line:
+                if 'Start' in line and 'End' in line and ('Sectors' in line or 'Device' in line):
                     section = 'partitions'
                     partitions.append(line.lower().replace('#', ' '))
                     continue
