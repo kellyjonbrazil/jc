@@ -2,11 +2,12 @@
 
 Supports the following `sfdisk` options:
 - `-l`
-- `-d`
-- `-uM`
-- `-uC`
-- `-uS`
-- `-uB`
+- `-F`
+- `-d`   (deprecated - only for older versions of util-linux)
+- `-uM`  (deprecated - only for older versions of util-linux)
+- `-uC`  (deprecated - only for older versions of util-linux)
+- `-uS`  (deprecated - only for older versions of util-linux)
+- `-uB`  (deprecated - only for older versions of util-linux)
 
 Usage (cli):
 
@@ -25,24 +26,38 @@ Schema:
 
     [
       {
-        "disk":                 string,
-        "cylinders":            integer,
-        "heads":                integer,
-        "sectors_per_track":    integer,
-        "units":                string,
+        "disk":                     string,
+        "disk_size":                string,
+        "free_disk_size":           string,
+        "bytes":                    integer,
+        "free_bytes":               integer,
+        "sectors":                  integer,
+        "free_sectors":             integer,
+        "cylinders":                integer,
+        "heads":                    integer,
+        "sectors_per_track":        integer,
+        "units":                    string,
+        "logical_sector_size":      integer,
+        "physical_sector_size":     integer,
+        "min_io_size":              integer,
+        "optimal_io_size":          integer,
+        "disk_label_type":          string,
+        "disk_identifier":          string,
+        "disk_model":               string,
         "partitions": [
           {
-            "device":           string,
-            "boot":             boolean,
-            "start":            integer,
-            "end":              integer,
-            "size":             integer,
-            "cyls":             integer,
-            "mib":              integer,
-            "blocks":           integer,
-            "sectors":          integer,
-            "id":               string,
-            "system":           string
+            "device":               string,
+            "boot":                 boolean,
+            "start":                integer,
+            "end":                  integer,
+            "size":                 integer,
+            "cyls":                 integer,
+            "mib":                  integer,
+            "blocks":               integer,
+            "sectors":              integer,
+            "id":                   string,
+            "system":               string,
+            "type":                 string
           }
         ]
       }
@@ -186,7 +201,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`sfdisk` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -210,7 +225,8 @@ def _process(proc_data):
         List of Dictionaries. Structured to conform to the schema.
     """
     int_list = ['cylinders', 'heads', 'sectors_per_track', 'start', 'end', 'size', 'cyls', 'mib',
-                'blocks', 'sectors']
+                'blocks', 'sectors', 'bytes', 'logical_sector_size', 'physical_sector_size',
+                'min_io_size', 'optimal_io_size', 'free_bytes', 'free_sectors']
     bool_list = ['boot']
 
     for entry in proc_data:
@@ -255,6 +271,8 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in data.splitlines():
+
+            # deprecated - only for older versions of util-linux
             if line.startswith('# partition table of'):
                 if item:
                     raw_output.append(item)
@@ -265,6 +283,7 @@ def parse(data, raw=False, quiet=False):
                 item['disk'] = line.split()[4]
                 continue
 
+            # deprecated - only for older versions of util-linux
             if option == 'd':
                 if line.startswith('unit: '):
                     item['units'] = line.split()[1]
@@ -284,21 +303,73 @@ def parse(data, raw=False, quiet=False):
                     continue
 
             else:
-                if line.startswith('Disk '):
+                # older versions of util-linux
+                # Disk /dev/sda: 2610 cylinders, 255 heads, 63 sectors/track
+                if line.startswith('Disk ') and 'sectors/track' in line:
                     if item:
                         raw_output.append(item)
 
                     item = {}
                     partitions = []
                     line = line.replace(':', '').replace(',', '')
-                    item['disk'] = line.split()[1]
-                    item['cylinders'] = line.split()[2]
-                    item['heads'] = line.split()[4]
-                    item['sectors_per_track'] = line.split()[6]
+                    fields = line.split()
+                    item['disk'] = fields[1]
+                    item['cylinders'] = fields[2]
+                    item['heads'] = fields[4]
+                    item['sectors_per_track'] = fields[6]
+                    continue
+
+                # util-linux v2.32.0+ (?)
+                # Disk /dev/sda: 20 GiB, 21474836480 bytes, 41943040 sectors
+                if line.startswith('Disk ') and line.endswith('sectors'):
+                    if item:
+                        raw_output.append(item)
+
+                    item = {}
+                    partitions = []
+                    line = line.replace(':', '').replace(',', '')
+                    fields = line.split()
+                    item['disk'] = fields[1]
+                    item['disk_size'] = ' '.join(fields[2:4])
+                    item['bytes'] = fields[4]
+                    item['sectors'] = fields[6]
+                    continue
+
+                if line.startswith('Disk model: '):
+                    item['disk_model'] = line.split(':', maxsplit=1)[1].strip()
+                    continue
+
+                if line.startswith('Sector size (logical/physical)'):
+                    fields = line.split()
+                    item['logical_sector_size'] = fields[3]
+                    item['physical_sector_size'] = fields[6]
+                    continue
+
+                if line.startswith('I/O size (minimum/optimal)'):
+                    fields = line.split()
+                    item['min_io_size'] = fields[3]
+                    item['optimal_io_size'] = fields[6]
+                    continue
+
+                if line.startswith('Disklabel type'):
+                    item['disk_label_type'] = line.split(':', maxsplit=1)[1].strip()
+                    continue
+
+                if line.startswith('Disk identifier'):
+                    item['disk_identifier'] = line.split(':', maxsplit=1)[1].strip()
                     continue
 
                 if line.startswith('Units: '):
                     item['units'] = line.split(':')[1].strip()
+                    continue
+
+                if line.startswith('Unpartitioned space'):
+                    line = line.replace(':', '').replace(',', '')
+                    fields = line.split()
+                    item['disk'] = fields[2]
+                    item['free_disk_size'] = ' '.join(fields[3:5])
+                    item['free_bytes'] = fields[5]
+                    item['free_sectors'] = fields[7]
                     continue
 
                 if 'Device' in line and 'Boot' in line and 'Start' in line and 'End' in line:
