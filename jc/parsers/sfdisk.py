@@ -271,7 +271,6 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in data.splitlines():
-
             # deprecated - only for older versions of util-linux
             if line.startswith('# partition table of'):
                 if item:
@@ -363,6 +362,7 @@ def parse(data, raw=False, quiet=False):
                     item['units'] = line.split(':')[1].strip()
                     continue
 
+                # sfdisk -F
                 if line.startswith('Unpartitioned space'):
                     line = line.replace(':', '').replace(',', '')
                     fields = line.split()
@@ -372,6 +372,7 @@ def parse(data, raw=False, quiet=False):
                     item['free_sectors'] = fields[7]
                     continue
 
+                # partition lines
                 if 'Device' in line and 'Boot' in line and 'Start' in line and 'End' in line:
                     section = 'partitions'
                     partitions.append(line.lower().replace('#', ' '))
@@ -386,6 +387,12 @@ def parse(data, raw=False, quiet=False):
                     section = ''
                     partitions = []
                     continue
+
+        # get final partitions if there are any left over
+        if section == 'partitions' and option != 'd' and partitions:
+            item['partitions'] = jc.parsers.universal.sparse_table_parse(partitions)
+            section = ''
+            partitions = []
 
         if item:
             raw_output.append(item)
