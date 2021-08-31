@@ -53,7 +53,7 @@ Schema:
             "boot":                 boolean,
             "start":                integer,
             "end":                  integer,
-            "size":                 integer,
+            "size":                 string,    # Note: will be integer when using deprecated -d sfdisk option
             "cyls":                 integer,
             "mib":                  integer,
             "blocks":               integer,
