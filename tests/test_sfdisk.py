@@ -31,6 +31,28 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luS.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_sfdisk_luS = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-l.out'), 'r', encoding='utf-8') as f:
+            self.centos_8_sfdisk_l = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-F.out'), 'r', encoding='utf-8') as f:
+            self.centos_8_sfdisk_F = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l.out'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_l = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l2.out'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_l2 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l3.out'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_l3 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F.out'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_F = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F2.out'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_F2 = f.read()
+
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_sfdisk_l_json = json.loads(f.read())
@@ -52,6 +74,28 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luS.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_sfdisk_luS_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-l.json'), 'r', encoding='utf-8') as f:
+            self.centos_8_sfdisk_l_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-F.json'), 'r', encoding='utf-8') as f:
+            self.centos_8_sfdisk_F_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l.json'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_l_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l2.json'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_l2_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l3.json'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_l3_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F.json'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_F_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F2.json'), 'r', encoding='utf-8') as f:
+            self.debian_10_sfdisk_F2_json = json.loads(f.read())
+
 
     def test_sfdisk_nodata(self):
         """
@@ -100,6 +144,48 @@ class MyTests(unittest.TestCase):
         Test 'sfdisk -luS' on Centos 7.7
         """
         self.assertEqual(jc.parsers.sfdisk.parse(self.centos_7_7_sfdisk_luS, quiet=True), self.centos_7_7_sfdisk_luS_json)
+
+    def test_sfdisk_l_centos_8(self):
+        """
+        Test 'sfdisk -l' on Centos 8
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.centos_8_sfdisk_l, quiet=True), self.centos_8_sfdisk_l_json)
+
+    def test_sfdisk_F_centos_8(self):
+        """
+        Test 'sfdisk -F' on Centos 8
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.centos_8_sfdisk_F, quiet=True), self.centos_8_sfdisk_F_json)
+
+    def test_sfdisk_l_debian_10(self):
+        """
+        Test 'sfdisk -l' on Debian 10
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.debian_10_sfdisk_l, quiet=True), self.debian_10_sfdisk_l_json)
+
+    def test_sfdisk_l2_debian_10(self):
+        """
+        Test 'sfdisk -l' on Debian 10 (second example)
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.debian_10_sfdisk_l2, quiet=True), self.debian_10_sfdisk_l2_json)
+
+    def test_sfdisk_l3_debian_10(self):
+        """
+        Test 'sfdisk -l' on Debian 10 (third example)
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.debian_10_sfdisk_l3, quiet=True), self.debian_10_sfdisk_l3_json)
+
+    def test_sfdisk_F_debian10(self):
+        """
+        Test 'sfdisk -F' on Debian 10
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.debian_10_sfdisk_F, quiet=True), self.debian_10_sfdisk_F_json)
+
+    def test_sfdisk_F2_debian10(self):
+        """
+        Test 'sfdisk -F' on Debian 10 (second example)
+        """
+        self.assertEqual(jc.parsers.sfdisk.parse(self.debian_10_sfdisk_F2, quiet=True), self.debian_10_sfdisk_F2_json)
 
 
 if __name__ == '__main__':

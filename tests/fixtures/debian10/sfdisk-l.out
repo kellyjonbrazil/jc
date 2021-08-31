@@ -1,0 +1,12 @@
+Disk /dev/sda: 20 GiB, 21474836480 bytes, 41943040 sectors
+Disk model: VMware Virtual S
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x3719ef0f
+
+Device     Boot    Start      End  Sectors  Size Id Type
+/dev/sda1  *        2048 39942143 39940096   19G 83 Linux
+/dev/sda2       39944190 41940991  1996802  975M  5 Extended
+/dev/sda5       39944192 41940991  1996800  975M 82 Linux swap / Solaris

@@ -1,0 +1,1 @@
+[{"disk":"/dev/sdc","free_disk_size":"1 GiB","free_bytes":1073741824,"free_sectors":2097152,"units":"sectors of 1 * 512 = 512 bytes","logical_sector_size":512,"physical_sector_size":512,"partitions":[{"start":4194304,"end":6291455,"sectors":2097152,"size":"1G"}]}]

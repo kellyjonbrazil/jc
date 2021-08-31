@@ -1,0 +1,13 @@
+Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
+Disk model: NT-256          
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 50DEF501-A333-48D1-B1FC-C2F1CCFD5715
+
+Device         Start       End   Sectors   Size Type
+/dev/sda1       2048    526335    524288   256M Linux root (x86)
+/dev/sda2     526336 138545151 138018816  65.8G Linux root (x86)
+/dev/sda3  483684352 500117503  16433152   7.9G Linux swap
+/dev/sda4  138545152 483684351 345139200 164.6G Linux filesystem
