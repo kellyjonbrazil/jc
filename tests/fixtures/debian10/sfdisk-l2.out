@@ -1,0 +1,15 @@
+Disk /dev/sda: 32 GiB, 34359738368 bytes, 67108864 sectors
+Disk model: QEMU HARDDISK   
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x4f1ce2bf
+
+Device     Boot    Start      End  Sectors  Size Id Type
+/dev/sda1  *        2048 13260799 13258752  6.3G 83 Linux
+/dev/sda2       13262846 67106815 53843970 25.7G  5 Extended
+/dev/sda5       13262848 18331647  5068800  2.4G 83 Linux
+/dev/sda6       18333696 20332543  1998848  976M 82 Linux swap / Solaris
+/dev/sda7       20334592 21352447  1017856  497M 83 Linux
+/dev/sda8       21354496 67106815 45752320 21.8G 83 Linux

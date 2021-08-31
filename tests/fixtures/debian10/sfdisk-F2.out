@@ -1,0 +1,6 @@
+Unpartitioned space /dev/sdc: 1 GiB, 1073741824 bytes, 2097152 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+  Start     End Sectors Size
+4194304 6291455 2097152   1G
