@@ -5,11 +5,12 @@ jc - JSON CLI output utility `sfdisk` command output parser
 
 Supports the following `sfdisk` options:
 - `-l`
-- `-d`
-- `-uM`
-- `-uC`
-- `-uS`
-- `-uB`
+- `-F`
+- `-d`   (deprecated - only for older versions of util-linux)
+- `-uM`  (deprecated - only for older versions of util-linux)
+- `-uC`  (deprecated - only for older versions of util-linux)
+- `-uS`  (deprecated - only for older versions of util-linux)
+- `-uB`  (deprecated - only for older versions of util-linux)
 
 Usage (cli):
 
@@ -28,24 +29,38 @@ Schema:
 
     [
       {
-        "disk":                 string,
-        "cylinders":            integer,
-        "heads":                integer,
-        "sectors_per_track":    integer,
-        "units":                string,
+        "disk":                     string,
+        "disk_size":                string,
+        "free_disk_size":           string,
+        "bytes":                    integer,
+        "free_bytes":               integer,
+        "sectors":                  integer,
+        "free_sectors":             integer,
+        "cylinders":                integer,
+        "heads":                    integer,
+        "sectors_per_track":        integer,
+        "units":                    string,
+        "logical_sector_size":      integer,
+        "physical_sector_size":     integer,
+        "min_io_size":              integer,
+        "optimal_io_size":          integer,
+        "disk_label_type":          string,
+        "disk_identifier":          string,
+        "disk_model":               string,
         "partitions": [
           {
-            "device":           string,
-            "boot":             boolean,
-            "start":            integer,
-            "end":              integer,
-            "size":             integer,
-            "cyls":             integer,
-            "mib":              integer,
-            "blocks":           integer,
-            "sectors":          integer,
-            "id":               string,
-            "system":           string
+            "device":               string,
+            "boot":                 boolean,
+            "start":                integer,
+            "end":                  integer,
+            "size":                 integer,
+            "cyls":                 integer,
+            "mib":                  integer,
+            "blocks":               integer,
+            "sectors":              integer,
+            "id":                   string,
+            "system":               string,
+            "type":                 string
           }
         ]
       }
@@ -210,4 +225,4 @@ Returns:
 ## Parser Information
 Compatibility:  linux
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
