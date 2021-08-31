@@ -130,7 +130,7 @@ Examples:
       }
     ]
 
-    # sfdisk | jc --sfdisk -p -r
+    # sfdisk -l | jc --sfdisk -p -r
     [
       {
         "disk": "/dev/sda",
