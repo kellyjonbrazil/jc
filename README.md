@@ -123,6 +123,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--airport` enables the `airport -I` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport))
 - `--airport-s` enables the `airport -s` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s))
 - `--arp` enables the `arp` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/arp))
+- `--ascii` enables the ASCII table parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ascii))
 - `--blkid` enables the `blkid` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid))
 - `--cksum` enables the `cksum` and `sum` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum))
 - `--crontab` enables the `crontab` command and file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab))
