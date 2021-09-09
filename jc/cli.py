@@ -48,6 +48,7 @@ parsers = [
     'airport',
     'airport-s',
     'arp',
+    'ascii',
     'blkid',
     'cksum',
     'crontab',
