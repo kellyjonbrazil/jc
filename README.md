@@ -141,6 +141,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--kv` enables the Key/Value file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/kv))
 - `--last` enables the `last` and `lastb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/last))
 - `--ls` enables the `ls` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ls))
+- `--ls-s` enables the `ls` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s))
 - `--lsblk` enables the `lsblk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk))
 - `--lsmod` enables the `lsmod` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod))
 - `--lsof` enables the `lsof` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof))
