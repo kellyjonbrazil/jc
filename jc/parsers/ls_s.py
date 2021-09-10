@@ -24,16 +24,16 @@ Usage (module):
 Schema:
 
     {
-      "filename":     string,
-      "flags":        string,
-      "links":        integer,
-      "parent":       string,      # not yet implemented
-      "owner":        string,
-      "group":        string,
-      "size":         integer,
-      "date":         string,
-      "epoch":        integer,     # naive timestamp if date field exists and can be converted
-      "epoch_utc":    integer,     # timezone aware timestamp if date field is in UTC and can be converted
+      "filename":       string,
+      "flags":          string,
+      "links":          integer,
+      "parent":         string,      # not yet implemented
+      "owner":          string,
+      "group":          string,
+      "size":           integer,
+      "date":           string,
+      "epoch":          integer,     # naive timestamp if date field exists and can be converted
+      "epoch_utc":      integer,     # timezone aware timestamp if date field is in UTC and can be converted
       "_meta":
         {
           "success":    booean,    # true if successfully parsed, false if error
