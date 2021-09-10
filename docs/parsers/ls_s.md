@@ -39,9 +39,9 @@ Schema:
       "epoch_utc":      integer,     # timezone aware timestamp if date field is in UTC and can be converted
       "_meta":
         {
-          "success":    booean,    # true if successfully parsed, false if error
-          "error_msg":  string,    # exists if "success" is false
-          "line":       string     # exists if "success" is false
+          "success":    booean,      # true if successfully parsed, false if error
+          "error_msg":  string,      # exists if "success" is false
+          "line":       string       # exists if "success" is false
         }
     }
 
