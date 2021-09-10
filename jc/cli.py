@@ -81,6 +81,7 @@ parsers = [
     'kv',
     'last',
     'ls',
+    'ls-s',
     'lsblk',
     'lsmod',
     'lsof',
@@ -612,10 +613,26 @@ def main():
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # parse the data
-    data = magic_stdout or sys.stdin.read()
-
     try:
-        result = parser.parse(data, raw=raw, quiet=quiet)
+        # differentiate between regular and streaming parsers
+
+        # streaming
+        if getattr(parser.info, 'streaming', None):
+            result = parser.parse(sys.stdin, raw=raw, quiet=quiet)
+            for line in result:
+                print(json_out(line,
+                               pretty=pretty,
+                               env_colors=jc_colors,
+                               mono=mono,
+                               piped_out=piped_output()),
+                      flush=True)
+
+            sys.exit(combined_exit_code(magic_exit_code, 0))
+
+        # regular
+        else:
+            data = magic_stdout or sys.stdin.read()
+            result = parser.parse(data, raw=raw, quiet=quiet)
 
     except (ParseError, LibraryNotInstalled) as e:
         if debug:
