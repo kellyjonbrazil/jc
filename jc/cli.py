@@ -612,7 +612,7 @@ def main():
         jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    # parse the data
+    # parse and print to stdout
     try:
         # differentiate between regular and streaming parsers
 
@@ -624,8 +624,7 @@ def main():
                                pretty=pretty,
                                env_colors=jc_colors,
                                mono=mono,
-                               piped_out=piped_output()),
-                      flush=True)
+                               piped_out=piped_output()))
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -633,6 +632,13 @@ def main():
         else:
             data = magic_stdout or sys.stdin.read()
             result = parser.parse(data, raw=raw, quiet=quiet)
+            print(json_out(result,
+                           pretty=pretty,
+                           env_colors=jc_colors,
+                           mono=mono,
+                           piped_out=piped_output()))
+
+        sys.exit(combined_exit_code(magic_exit_code, 0))
 
     except (ParseError, LibraryNotInstalled) as e:
         if debug:
@@ -644,6 +650,15 @@ def main():
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
+    except json.JSONDecodeError:
+        if debug:
+            raise
+        else:
+            jc.utils.error_message(
+                'There was an issue generating the JSON output.\n'
+                '             For details use the -d or -dd option.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
     except Exception:
         if debug:
             raise
@@ -651,20 +666,6 @@ def main():
             jc.utils.error_message(
                 f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
-            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    # output the json
-    try:
-        print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
-        sys.exit(combined_exit_code(magic_exit_code, 0))
-
-    except Exception:
-        if debug:
-            raise
-        else:
-            jc.utils.error_message(
-                'There was an issue generating the JSON output.\n'
-                '             For details use the -d or -dd option.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 
