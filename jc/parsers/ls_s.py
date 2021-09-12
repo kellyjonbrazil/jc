@@ -171,7 +171,7 @@ def parse(data, raw=False, quiet=False):
 
             # Only support -l option 
             if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
-                raise ParseError(f'Unparsable line: {line[0:60]}')
+                raise ParseError(f'Unparsable line: {line.rstrip()[0:60]}')
 
             # split filenames and links
             if len(parsed_line) == 9:
