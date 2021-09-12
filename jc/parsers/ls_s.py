@@ -70,7 +70,6 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-    # magic_commands = ['ls', 'vdir']
     streaming = True
 
 
@@ -172,7 +171,7 @@ def parse(data, raw=False, quiet=False):
 
             # Only support -l option 
             if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
-                raise ParseError
+                raise ParseError(f'Unparsable line: {line[0:60]}')
 
             # split filenames and links
             if len(parsed_line) == 9:
@@ -204,11 +203,14 @@ def parse(data, raw=False, quiet=False):
                 yield _process(output_line)
             
         except Exception:
-            yield {
-                '_meta':
-                    {
-                        'success': False,
-                        'error': 'error parsing line',
-                        'line': line.strip()
-                    }
-            }
+            if not quiet:
+                raise
+            else:
+                yield {
+                    '_meta':
+                        {
+                            'success': False,
+                            'error': 'error parsing line',
+                            'line': line.strip()
+                        }
+                }
