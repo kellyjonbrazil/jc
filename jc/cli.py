@@ -663,8 +663,13 @@ def main():
         if debug:
             raise
         else:
+            streaming_msg = ''
+            if getattr(parser.info, 'streaming', None):
+                streaming_msg = '             Try the quiet option (-q) to ignore errors.\n'
+
             jc.utils.error_message(
                 f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
+                f'{streaming_msg}'
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
