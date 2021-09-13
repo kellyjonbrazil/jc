@@ -1,8 +1,8 @@
 """jc - JSON CLI output utility `ls` and `vdir` command output streaming parser
 
-This streaming parser requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` or `-B` option on `ls`.
+This streaming parser requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` option on `ls`.
 
-The `jc` `-q` option can be used to ignore parsing errors. (e.g. filenames with newline characters, but `-b` or `-B` was not used)
+The `jc` `-q` option can be used to ignore parsing errors. (e.g. filenames with newline characters, but `-b` was not used)
 
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
@@ -79,11 +79,11 @@ def _process(proc_data):
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
-        List of Dictionaries. Structured data to conform to the schema.
+        Dictionary. Structured data to conform to the schema.
     """
     int_list = ['links', 'size']
     for key in proc_data:
@@ -102,17 +102,17 @@ def _process(proc_data):
 
 def parse(data, raw=False, quiet=False):
     """
-    Main text parsing function
+    Main text parsing generator function. Produces an iterable object.
 
     Parameters:
 
         data:        (string)  line-based text data to parse
         raw:         (boolean) output preprocessed JSON if True
-        quiet:       (boolean) suppress warning messages if True
+        quiet:       (boolean) suppress warning messages and ignore parsing errors if True
 
-    Returns:
+    Yields:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
@@ -164,8 +164,6 @@ def parse(data, raw=False, quiet=False):
 
             if quiet:
                 output_line['_meta'] = {'success': True}
-
-            last_object = output_line
             
             if raw:
                 yield output_line
@@ -174,7 +172,7 @@ def parse(data, raw=False, quiet=False):
             
         except Exception as e:
             if not quiet:
-                e.args = (str(e) + '... Try the quiet option (-q) to ignore errors.',)
+                e.args = (str(e) + '... Use the quiet option (-q) to ignore errors.',)
                 raise e
             else:
                 yield {
