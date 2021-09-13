@@ -34,7 +34,7 @@ Schema:
       "date":           string,
       "epoch":          integer,     # naive timestamp if date field exists and can be converted
       "epoch_utc":      integer,     # timezone aware timestamp if date field is in UTC and can be converted
-      "_meta":
+      "_meta":                       # This object only exists if using -q or quiet=True
         {
           "success":    booean,      # true if successfully parsed, false if error
           "error_msg":  string,      # exists if "success" is false
@@ -195,16 +195,19 @@ def parse(data, raw=False, quiet=False):
             output_line['group'] = parsed_line[3]
             output_line['size'] = parsed_line[4]
             output_line['date'] = ' '.join(parsed_line[5:8])
-            output_line['_meta'] = {'success': True}
+
+            if quiet:
+                output_line['_meta'] = {'success': True}
 
             if raw:
                 yield output_line
             else:
                 yield _process(output_line)
             
-        except Exception:
+        except Exception as e:
             if not quiet:
-                raise
+                e.args = (str(e) + '... Try the quiet option (-q) to ignore errors.',)
+                raise e
             else:
                 yield {
                     '_meta':
