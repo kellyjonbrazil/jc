@@ -27,7 +27,7 @@ Schema:
       "filename":       string,
       "flags":          string,
       "links":          integer,
-      "parent":         string,      # not yet implemented
+      "parent":         string,
       "owner":          string,
       "group":          string,
       "size":           integer,
@@ -120,47 +120,45 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    warned = False
     parent = ''
-    next_is_parent = False
     new_section = False
+    # last_object = {}
 
     for line in data:
         try:
 
-            # Delete first line if it starts with 'total 1234'
-            # if re.match(r'total [0-9]+', linedata[0]):
-            #     linedata.pop(0)
-
-            # Look for parent line if glob or -R is used
-            # if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
-            #    and linedata[0].endswith(':'):
-            #     parent = linedata.pop(0)[:-1]
-            #     # Pop following total line if it exists
-            #     if re.match(r'total [0-9]+', linedata[0]):
-            #         linedata.pop(0)
-
-            parsed_line = line.strip().split(maxsplit=8)
-            output_line = {}
-
-            if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line) \
-               and line.endswith(':'):
-                parent = line[:-1]
-                new_section = True
-
-                # no support for filenames with newline chars in streaming parser
-                # fixup to remove trailing \n in previous entry
-                # raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
-                # continue
-
+            # skip line if it starts with 'total 1234'
             if re.match(r'total [0-9]+', line):
                 new_section = False
                 continue
 
             # fix for OSX - doesn't print 'total xx' line if empty directory
-            if new_section and line == '':
+            if new_section and line.strip() == '':
                 new_section = False
                 continue
+
+            if not new_section and line.strip() == '':
+                continue
+
+            # Look for parent line if glob or -R is used
+            if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line) \
+               and line.strip().endswith(':'):
+                parent = line.strip()[:-1]
+                continue
+
+            parsed_line = line.strip().split(maxsplit=8)
+            output_line = {}
+
+            # no support for filenames with newline chars in streaming parser
+            # if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line) \
+            #    and line.endswith(':'):
+            #     parent = line[:-1]
+            #     new_section = True
+
+                # no support for filenames with newline chars in streaming parser
+                # fixup to remove trailing \n in previous entry
+                # raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
+                # continue
 
             # no support for filenames with newline chars in streaming parser
             # fixup for filenames with newlines
@@ -170,8 +168,8 @@ def parse(data, raw=False, quiet=False):
             #     continue
 
             # Only support -l option 
-            if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
-                raise ParseError(f'Unparsable line: {line.rstrip()[0:60]}')
+            # if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
+            #     raise ParseError(f'Unparsable line: {line.rstrip()[0:60]}')
 
             # split filenames and links
             if len(parsed_line) == 9:
@@ -180,7 +178,7 @@ def parse(data, raw=False, quiet=False):
                 # in case of filenames starting with a newline character
                 filename_field = ['']
 
-            # create list of dictionaries
+            # create output object
             output_line['filename'] = filename_field[0]
 
             if len(filename_field) > 1:
@@ -199,6 +197,8 @@ def parse(data, raw=False, quiet=False):
             if quiet:
                 output_line['_meta'] = {'success': True}
 
+            last_object = output_line
+            
             if raw:
                 yield output_line
             else:
