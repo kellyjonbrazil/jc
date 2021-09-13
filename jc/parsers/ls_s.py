@@ -2,6 +2,8 @@
 
 This streaming parser requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` or `-B` option on `ls`.
 
+The `jc` `-q` option can be used to ignore parsing errors. (e.g. filenames with newline characters, but `-b` or `-B` was not used)
+
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
 The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
