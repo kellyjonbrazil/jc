@@ -1,10 +1,6 @@
 """jc - JSON CLI output utility `ls` and `vdir` command output streaming parser
 
-Options supported:
-- `lbaR1`
-- `--time-style=full-iso`
-
-Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-1`, `-l`, or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
+This streaming parser requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` or `-B` option on `ls`.
 
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
@@ -45,20 +41,19 @@ Schema:
 Examples:
 
     $ ls -l /usr/bin | jc --ls-s
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","group":"wheel","size":925,"date":"Feb 22 2019","_meta":{"success":true}}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":1,"owner":"root","group":"wheel","size":74,"date":"May 4 2019","_meta":{"success":true}}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,"owner":"root","group":"wheel","size":55152,"date":"May 3 2019","_meta":{"success":true}}
+    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","group":"wheel","size":925,"date":"Feb 22 2019"}
+    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":1,"owner":"root","group":"wheel","size":74,"date":"May 4 2019"}
+    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,"owner":"root","group":"wheel","size":55152,"date":"May 3 2019"}
     ...
 
     $ ls -l /usr/bin | jc --ls-s -r
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"root","group":"wheel","size":"925","date":"Feb 22 2019","_meta":{"success":true}}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"74","date":"May 4 2019","_meta":{"success":true}}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"55152","date":"May 3 2019","_meta":{"success":true}}
+    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"root","group":"wheel","size":"925","date":"Feb 22 2019"}
+    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"74","date":"May 4 2019"}
+    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"55152","date":"May 3 2019"}
     ...
 """
 import re
 import jc.utils
-from jc.exceptions import ParseError
 
 
 class info():
@@ -121,23 +116,16 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     parent = ''
-    new_section = False
-    # last_object = {}
 
     for line in data:
         try:
 
             # skip line if it starts with 'total 1234'
             if re.match(r'total [0-9]+', line):
-                new_section = False
                 continue
 
-            # fix for OSX - doesn't print 'total xx' line if empty directory
-            if new_section and line.strip() == '':
-                new_section = False
-                continue
-
-            if not new_section and line.strip() == '':
+            # skip blank lines
+            if line.strip() == '':
                 continue
 
             # Look for parent line if glob or -R is used
@@ -148,28 +136,6 @@ def parse(data, raw=False, quiet=False):
 
             parsed_line = line.strip().split(maxsplit=8)
             output_line = {}
-
-            # no support for filenames with newline chars in streaming parser
-            # if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line) \
-            #    and line.endswith(':'):
-            #     parent = line[:-1]
-            #     new_section = True
-
-                # no support for filenames with newline chars in streaming parser
-                # fixup to remove trailing \n in previous entry
-                # raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
-                # continue
-
-            # no support for filenames with newline chars in streaming parser
-            # fixup for filenames with newlines
-            # if not new_section \
-            #    and not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
-            #     raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
-            #     continue
-
-            # Only support -l option 
-            # if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
-            #     raise ParseError(f'Unparsable line: {line.rstrip()[0:60]}')
 
             # split filenames and links
             if len(parsed_line) == 9:
