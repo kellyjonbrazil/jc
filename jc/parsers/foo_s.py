@@ -98,15 +98,4 @@ def parse(data, raw=False, quiet=False):
                 yield _process(output_line)
             
         except Exception as e:
-            if not quiet:
-                e.args = (str(e) + '... Use the quiet option (-q) to ignore errors.',)
-                raise e
-            else:
-                yield {
-                    '_meta':
-                        {
-                            'success': False,
-                            'error': 'error parsing line',
-                            'line': line.strip()
-                        }
-                }
+            yield jc.utils.stream_error(e, quiet, line)
