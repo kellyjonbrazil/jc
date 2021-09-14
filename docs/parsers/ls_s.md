@@ -3,11 +3,9 @@
 # jc.parsers.ls_s
 jc - JSON CLI output utility `ls` and `vdir` command output streaming parser
 
-Options supported:
-- `lbaR1`
-- `--time-style=full-iso`
+This streaming parser requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` option on `ls`.
 
-Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-1`, `-l`, or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
+The `jc` `-q` option can be used to ignore parsing errors. (e.g. filenames with newline characters, but `-b` was not used)
 
 The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
 
@@ -30,14 +28,14 @@ Schema:
       "filename":       string,
       "flags":          string,
       "links":          integer,
-      "parent":         string,      # not yet implemented
+      "parent":         string,
       "owner":          string,
       "group":          string,
       "size":           integer,
       "date":           string,
       "epoch":          integer,     # naive timestamp if date field exists and can be converted
       "epoch_utc":      integer,     # timezone aware timestamp if date field is in UTC and can be converted
-      "_meta":
+      "_meta":                       # This object only exists if using -q or quiet=True
         {
           "success":    booean,      # true if successfully parsed, false if error
           "error_msg":  string,      # exists if "success" is false
@@ -48,15 +46,15 @@ Schema:
 Examples:
 
     $ ls -l /usr/bin | jc --ls-s
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","group":"wheel","size":925,"date":"Feb 22 2019","_meta":{"success":true}}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":1,"owner":"root","group":"wheel","size":74,"date":"May 4 2019","_meta":{"success":true}}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,"owner":"root","group":"wheel","size":55152,"date":"May 3 2019","_meta":{"success":true}}
+    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","group":"wheel","size":925,"date":"Feb 22 2019"}
+    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":1,"owner":"root","group":"wheel","size":74,"date":"May 4 2019"}
+    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,"owner":"root","group":"wheel","size":55152,"date":"May 3 2019"}
     ...
 
     $ ls -l /usr/bin | jc --ls-s -r
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"root","group":"wheel","size":"925","date":"Feb 22 2019","_meta":{"success":true}}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"74","date":"May 4 2019","_meta":{"success":true}}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"55152","date":"May 3 2019","_meta":{"success":true}}
+    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"root","group":"wheel","size":"925","date":"Feb 22 2019"}
+    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"74","date":"May 4 2019"}
+    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"55152","date":"May 3 2019"}
     ...
 
 
@@ -71,19 +69,19 @@ Provides parser metadata (version, author, etc.)
 parse(data, raw=False, quiet=False)
 ```
 
-Main text parsing function
+Main text parsing generator function. Produces an iterable object.
 
 Parameters:
 
     data:        (string)  line-based text data to parse
     raw:         (boolean) output preprocessed JSON if True
-    quiet:       (boolean) suppress warning messages if True
+    quiet:       (boolean) suppress warning messages and ignore parsing errors if True
 
-Returns:
+Yields:
 
-    List of Dictionaries. Raw or processed structured data.
+    Dictionary. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 0.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
