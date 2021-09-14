@@ -86,12 +86,13 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
+    pattern = None
+    footer = False
+
     for line in data:
         try:
             output_line = {}
-            ping_responses = []
-            pattern = None
-            footer = False
+            # ping_responses = []
 
             # check for PATTERN
             if line.startswith('PATTERN: '):
@@ -183,14 +184,13 @@ def parse(data, raw=False, quiet=False):
                         timestamp = True
                         isequence = 6
 
-                    response = {
+                    output_line = {
                         'type': 'timeout',
+                        'pattern': pattern or None,
                         'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
                         'icmp_seq': line.replace('=', ' ').split()[isequence]
                     }
-                    
-                    output_line.update(response)
-                    
+                                        
                     if quiet:
                         output_line['_meta'] = {'success': True}
                     
@@ -203,42 +203,36 @@ def parse(data, raw=False, quiet=False):
 
                 # normal responses
                 elif ' bytes from ' in line:
-                    try:
-                        line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
+                    
+                    line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
 
-                        # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
-                        if ipv4 and not hostname:
-                            bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
-                        elif ipv4 and hostname:
-                            bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
-                        elif not ipv4 and not hostname:
-                            bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
-                        elif not ipv4 and hostname:
-                            bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
+                    # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
+                    if ipv4 and not hostname:
+                        bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
+                    elif ipv4 and hostname:
+                        bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
+                    elif not ipv4 and not hostname:
+                        bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
+                    elif not ipv4 and hostname:
+                        bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
 
-                        # if timestamp option is specified, then shift everything right by one
-                        timestamp = False
-                        if line[0] == '[':
-                            timestamp = True
-                            bts, rip, iseq, t2l, tms = (bts + 1, rip + 1, iseq + 1, t2l + 1, tms + 1)
+                    # if timestamp option is specified, then shift everything right by one
+                    timestamp = False
+                    if line[0] == '[':
+                        timestamp = True
+                        bts, rip, iseq, t2l, tms = (bts + 1, rip + 1, iseq + 1, t2l + 1, tms + 1)
 
-                        response = {
-                            'type': 'reply',
-                            'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-                            'bytes': line.split()[bts],
-                            'response_ip': line.split()[rip].rstrip(':'),
-                            'icmp_seq': line.split()[iseq],
-                            'ttl': line.split()[t2l],
-                            'time_ms': line.split()[tms],
-                            'duplicate': True if 'DUP!' in line else False
-                        }
-                    except Exception:
-                        response = {
-                            'type': 'unparsable_line',
-                            'unparsed_line': line
-                        }
-
-                    output_line.update(response)
+                    output_line = {
+                        'type': 'reply',
+                        'pattern': pattern or None,
+                        'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
+                        'bytes': line.split()[bts],
+                        'response_ip': line.split()[rip].rstrip(':'),
+                        'icmp_seq': line.split()[iseq],
+                        'ttl': line.split()[t2l],
+                        'time_ms': line.split()[tms],
+                        'duplicate': True if 'DUP!' in line else False
+                    }
 
                     if quiet:
                         output_line['_meta'] = {'success': True}
