@@ -331,6 +331,7 @@ def helptext():
             -a               about jc
             -d               debug (-dd for verbose debug)
             -h               help (-h --parser_name for parser documentation)
+            -l               line buffer output
             -m               monochrome output
             -p               pretty print output
             -q               quiet - suppress parser warnings
@@ -521,6 +522,7 @@ def main():
     about = 'a' in options
     debug = 'd' in options
     verbose_debug = True if options.count('d') > 1 else False
+    linebuf = 'l' in options
     mono = 'm' in options
     help_me = 'h' in options
     pretty = 'p' in options
@@ -626,7 +628,7 @@ def main():
                                env_colors=jc_colors,
                                mono=mono,
                                piped_out=piped_output()),
-                      flush=True)  # unbuffers between piped commands
+                      flush=linebuf)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -638,7 +640,8 @@ def main():
                            pretty=pretty,
                            env_colors=jc_colors,
                            mono=mono,
-                           piped_out=piped_output()))
+                           piped_out=piped_output()),
+                  flush=linebuf)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
 

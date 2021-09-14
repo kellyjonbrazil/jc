@@ -43,6 +43,10 @@ debug - show traceback (\fB-dd\fP for verbose traceback)
 help (\fB-h --parser_name\fP for parser documentation)
 .TP
 .B
+\fB-l\fP
+line buffer output
+.TP
+.B
 \fB-m\fP
 monochrome output
 .TP

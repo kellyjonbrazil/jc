@@ -150,6 +150,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
 - `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
 - `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))
+- `--ping-s` enables the `ping` and `ping6` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s))
 - `--pip-list` enables the `pip list` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list))
 - `--pip-show` enables the `pip show` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show))
 - `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
@@ -183,7 +184,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
-- `-h` `jc` help. Use `jc -h --parser_name` for parser documentation
+- `-h` help. Use `jc -h --parser_name` for parser documentation
+- `-l` line buffer output
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages

@@ -1,4 +1,4 @@
-.TH jc 1 2021-09-10 1.17.0 "JSON CLI output utility"
+.TH jc 1 2021-09-13 1.17.0 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -249,6 +249,11 @@ Key/Value file parser
 
 .TP
 .B
+\fB--ping-s\fP
+`ping` and `ping6` command streaming parser
+
+.TP
+.B
 \fB--pip-list\fP
 `pip list` command parser
 
@@ -411,6 +416,10 @@ debug - show traceback (\fB-dd\fP for verbose traceback)
 .B
 \fB-h\fP
 help (\fB-h --parser_name\fP for parser documentation)
+.TP
+.B
+\fB-l\fP
+line buffer output
 .TP
 .B
 \fB-m\fP
