@@ -90,6 +90,7 @@ parsers = [
     'ntpq',
     'passwd',
     'ping',
+    'ping-s',
     'pip-list',
     'pip-show',
     'ps',
@@ -665,7 +666,7 @@ def main():
         else:
             streaming_msg = ''
             if getattr(parser.info, 'streaming', None):
-                streaming_msg = '             Try the quiet option (-q) to ignore errors.\n'
+                streaming_msg = '             Use the -q option to ignore streaming parser errors.\n'
 
             jc.utils.error_message(
                 f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
