@@ -176,7 +176,7 @@ def convert_to_bool(value):
 def stream_error(e, quiet, line):
     """reraise the stream exception with annotation or print an error _meta field if quiet=True"""
     if not quiet:
-        e.args = (str(e) + '... Use the quiet option (-q) to ignore errors.',)
+        e.args = (str(e) + '... Use the quiet option (-q) to ignore streaming parser errors.',)
         raise e
     else:
         return {
