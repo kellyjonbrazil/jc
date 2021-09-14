@@ -625,7 +625,8 @@ def main():
                                pretty=pretty,
                                env_colors=jc_colors,
                                mono=mono,
-                               piped_out=piped_output()))
+                               piped_out=piped_output()),
+                      flush=True)  # unbuffers between piped commands
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
