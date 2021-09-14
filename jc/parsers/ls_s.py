@@ -56,11 +56,12 @@ Examples:
 """
 import re
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '0.5'
     description = '`ls` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -136,6 +137,9 @@ def parse(data, raw=False, quiet=False):
                 parent = line.strip()[:-1]
                 continue
 
+            if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
+                raise ParseError(f'Unable to parse line: {line.strip()}')
+
             parsed_line = line.strip().split(maxsplit=8)
             output_line = {}
 
@@ -171,15 +175,4 @@ def parse(data, raw=False, quiet=False):
                 yield _process(output_line)
             
         except Exception as e:
-            if not quiet:
-                e.args = (str(e) + '... Use the quiet option (-q) to ignore errors.',)
-                raise e
-            else:
-                yield {
-                    '_meta':
-                        {
-                            'success': False,
-                            'error': 'error parsing line',
-                            'line': line.strip()
-                        }
-                }
+            yield jc.utils.stream_error(e, quiet, line)
