@@ -16,12 +16,32 @@ Usage (module):
 Schema:
 
     {
-      "ping":            string,
-      "_meta":                       # This object only exists if using -q or quiet=True
+      "type":                        string,        # 'reply', 'timeout', 'summary'
+      "source_ip":                   string,
+      "destination_ip":              string,
+      "data_bytes":                  integer,
+      "pattern":                     string,        # (null if not set)
+      "destination":                 string,
+      "timestamp":                   float,
+      "bytes":                       integer,
+      "response_ip":                 string,
+      "icmp_seq":                    integer,
+      "ttl":                         integer,
+      "time_ms":                     float,
+      "duplicate":                   boolean,
+      "packets_transmitted":         integer,
+      "packets_received":            integer,
+      "packet_loss_percent":         float,
+      "duplicates":                  integer,
+      "round_trip_ms_min":           float,
+      "round_trip_ms_avg":           float,
+      "round_trip_ms_max":           float,
+      "round_trip_ms_stddev":        float,
+      "_meta":                                     # This object only exists if using -q or quiet=True
         {
-          "success":    booean,      # true if successfully parsed, false if error
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
+          "success":                 booean,       # true if successfully parsed, false if error
+          "error":                   string,       # exists if "success" is false
+          "line":                    string        # exists if "success" is false
         }
     }
 
@@ -67,7 +87,17 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    # process the data
+    int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl',
+                'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks']
+    float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
+                  'round_trip_ms_stddev', 'timestamp', 'time_ms']
+
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     return proc_data
 
@@ -89,13 +119,19 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
+    destination_ip = None
+    data_bytes = None
     pattern = None
     footer = False
+    packets_transmitted = None
+    packets_received = None
+    packet_loss_percent = None
+    time_ms = None
+    duplicates = None
 
     for line in data:
         try:
             output_line = {}
-            # ping_responses = []
 
             # check for PATTERN
             if line.startswith('PATTERN: '):
@@ -124,13 +160,9 @@ def parse(data, raw=False, quiet=False):
                     dst_ip, dta_byts = (3, 4)
 
                 line = line.replace('(', ' ').replace(')', ' ')
-                output_line.update(
-                    {
-                        'destination_ip': line.split()[dst_ip].lstrip('(').rstrip(')'),
-                        'data_bytes': line.split()[dta_byts],
-                        'pattern': pattern
-                    }
-                )
+                destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
+                data_bytes = line.split()[dta_byts]
+
                 continue
 
             if line.startswith('---'):
@@ -141,39 +173,44 @@ def parse(data, raw=False, quiet=False):
             if footer:
                 if 'packets transmitted' in line:
                     if ' duplicates,' in line:
-                        output_line.update(
-                            {
-                                'packets_transmitted': line.split()[0],
-                                'packets_received': line.split()[3],
-                                'packet_loss_percent': line.split()[7].rstrip('%'),
-                                'duplicates': line.split()[5].lstrip('+'),
-                                'time_ms': line.split()[11].replace('ms', '')
-                            }
-                        )
+                        packets_transmitted = line.split()[0]
+                        packets_received = line.split()[3]
+                        packet_loss_percent = line.split()[7].rstrip('%')
+                        duplicates = line.split()[5].lstrip('+')
+                        time_ms = line.split()[11].replace('ms', '')
+
                         continue
+
                     else:
-                        output_line.update(
-                            {
-                                'packets_transmitted': line.split()[0],
-                                'packets_received': line.split()[3],
-                                'packet_loss_percent': line.split()[5].rstrip('%'),
-                                'duplicates': '0',
-                                'time_ms': line.split()[9].replace('ms', '')
-                            }
-                        )
+                        packets_transmitted = line.split()[0]
+                        packets_received = line.split()[3]
+                        packet_loss_percent = line.split()[5].rstrip('%')
+                        duplicates = '0'
+                        time_ms = line.split()[9].replace('ms', '')
+                        
                         continue
 
                 else:
                     split_line = line.split(' = ')[1]
                     split_line = split_line.split('/')
-                    output_line.update(
-                        {
-                            'round_trip_ms_min': split_line[0],
-                            'round_trip_ms_avg': split_line[1],
-                            'round_trip_ms_max': split_line[2],
-                            'round_trip_ms_stddev': split_line[3].split()[0]
-                        }
-                    )
+                    output_line = {
+                        'type': 'summary',
+                        'destination_ip': destination_ip or None,
+                        'data_bytes': data_bytes or None,
+                        'pattern': pattern or None,
+                        'packets_transmitted': packets_transmitted or None,
+                        'packets_received': packets_received or None,
+                        'packet_loss_percent': packet_loss_percent or None,
+                        'duplicates': duplicates or None,
+                        'time_ms': time_ms or None,
+                        'round_trip_ms_min': split_line[0],
+                        'round_trip_ms_avg': split_line[1],
+                        'round_trip_ms_max': split_line[2],
+                        'round_trip_ms_stddev': split_line[3].split()[0]
+                    }
+
+                    yield stream_success(output_line, quiet) if raw else stream_success(_process(output_line), quiet)
+                    continue
 
             # ping response lines
             else:
@@ -189,6 +226,8 @@ def parse(data, raw=False, quiet=False):
 
                     output_line = {
                         'type': 'timeout',
+                        'destination_ip': destination_ip or None,
+                        'data_bytes': data_bytes or None,
                         'pattern': pattern or None,
                         'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
                         'icmp_seq': line.replace('=', ' ').split()[isequence]
@@ -220,6 +259,8 @@ def parse(data, raw=False, quiet=False):
 
                     output_line = {
                         'type': 'reply',
+                        'destination_ip': destination_ip or None,
+                        'data_bytes': data_bytes or None,
                         'pattern': pattern or None,
                         'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
                         'bytes': line.split()[bts],
