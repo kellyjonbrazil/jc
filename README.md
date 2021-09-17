@@ -222,13 +222,13 @@ JC_COLORS=default,default,default,default
 ```
 
 ### Streaming Parsers
-Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data quicker. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that immediately start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data quicker. Streaming parsers have slightly different behavior than standard parsers as outlined below.
 
 > Note: Streaming parsers cannot be used with the "magic" syntax
 
 **Ignoring Errors**
 
-When using streaming parsers you may want to ignore parsing errors since these may be used in a long-lived processing pipeline and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or `quiet=True` argument to the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
+When using streaming parsers you may want to ignore parsing errors since these may be used in a long-lived processing pipeline and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or the `quiet=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
 
 Successfully parsed line with `-q` option:
 ```
