@@ -56,6 +56,7 @@ Examples:
 """
 import re
 import jc.utils
+from jc.utils import stream_success, stream_error
 from jc.exceptions import ParseError
 
 
@@ -166,10 +167,7 @@ def parse(data, raw=False, quiet=False):
             output_line['size'] = parsed_line[4]
             output_line['date'] = ' '.join(parsed_line[5:8])
 
-            if quiet:
-                output_line.update(jc.utils.stream_success)
-
-            yield output_line if raw else _process(output_line)
+            yield stream_success(output_line, quiet) if raw else stream_success(_process(output_line), quiet)
             
         except Exception as e:
-            yield jc.utils.stream_error(e, quiet, line)
+            yield stream_error(e, quiet, line)

@@ -35,6 +35,7 @@ Examples:
 """
 import string
 import jc.utils
+from jc.utils import stream_success, stream_error
 
 
 class info():
@@ -191,11 +192,7 @@ def parse(data, raw=False, quiet=False):
                         'icmp_seq': line.replace('=', ' ').split()[isequence]
                     }
                                         
-                    if quiet:
-                        output_line.update(jc.utils.stream_success)
-
-                    yield output_line if raw else _process(output_line)
-                    
+                    yield stream_success(output_line, quiet) if raw else stream_success(_process(output_line), quiet)
                     continue
 
                 # normal responses
@@ -231,10 +228,7 @@ def parse(data, raw=False, quiet=False):
                         'duplicate': True if 'DUP!' in line else False
                     }
 
-                    if quiet:
-                        output_line.update(jc.utils.stream_success)
-
-                    yield output_line if raw else _process(output_line)
+                    yield stream_success(output_line, quiet) if raw else stream_success(_process(output_line), quiet)
             
         except Exception as e:
-            yield jc.utils.stream_error(e, quiet, line)
+            yield stream_error(e, quiet, line)

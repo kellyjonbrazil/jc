@@ -34,6 +34,7 @@ Examples:
     ...
 """
 import jc.utils
+from jc.utils import stream_success, stream_error
 
 
 class info():
@@ -95,10 +96,7 @@ def parse(data, raw=False, quiet=False):
             # parse the input here
             #
 
-            if quiet:
-                output_line.update(jc.utils.stream_success)
-
-            yield output_line if raw else _process(output_line)
+            yield stream_success(output_line, quiet) if raw else stream_success(_process(output_line), quiet)
             
         except Exception as e:
-            yield jc.utils.stream_error(e, quiet, line)
+            yield stream_error(e, quiet, line)

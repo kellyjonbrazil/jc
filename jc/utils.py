@@ -173,12 +173,17 @@ def convert_to_bool(value):
     return False
 
 
-stream_success = {
-    '_meta':
-        {
-            'success': True
-        }
-}
+def stream_success(output_line, quiet):
+    if quiet:
+        output_line.update(
+            {
+                '_meta':
+                    {
+                        'success': True
+                    }
+            }
+        )
+    return output_line
 
 
 def stream_error(e, quiet, line):
