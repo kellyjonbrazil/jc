@@ -196,7 +196,7 @@ def stream_error(e, quiet, line):
             '_meta':
                 {
                     'success': False,
-                    'error': 'error parsing line',
+                    'error': f'{e}',
                     'line': line.strip()
                 }
         }

@@ -139,7 +139,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
-                raise ParseError(f'Unable to parse line: {line.strip()[:40]}')
+                raise ParseError(f'Not ls -l data')
 
             parsed_line = line.strip().split(maxsplit=8)
             output_line = {}
