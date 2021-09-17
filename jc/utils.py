@@ -174,15 +174,10 @@ def convert_to_bool(value):
 
 
 def stream_success(output_line, quiet):
+    """add _meta object to output line if -q (quiet) option is used"""
     if quiet:
-        output_line.update(
-            {
-                '_meta':
-                    {
-                        'success': True
-                    }
-            }
-        )
+        output_line.update({'_meta': {'success': True}})
+
     return output_line
 
 
