@@ -147,7 +147,7 @@ JC_COLORS=default,default,default,default
 ```
 
 ### Streaming Parsers
-Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data quicker. Streaming parsers have slightly different behavior than standard parsers as outlined below.
 
 > Note: Streaming parsers cannot be used with the "magic" syntax
 
