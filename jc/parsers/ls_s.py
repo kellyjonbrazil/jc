@@ -35,7 +35,7 @@ Schema:
       "_meta":                       # This object only exists if using -q or quiet=True
         {
           "success":    booean,      # true if successfully parsed, false if error
-          "error_msg":  string,      # exists if "success" is false
+          "error":      string,      # exists if "success" is false
           "line":       string       # exists if "success" is false
         }
     }
