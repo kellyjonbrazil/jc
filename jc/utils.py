@@ -173,6 +173,14 @@ def convert_to_bool(value):
     return False
 
 
+stream_success = {
+    '_meta':
+        {
+            'success': True
+        }
+}
+
+
 def stream_error(e, quiet, line):
     """reraise the stream exception with annotation or print an error _meta field if quiet=True"""
     if not quiet:
