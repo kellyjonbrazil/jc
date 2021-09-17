@@ -146,6 +146,48 @@ or
 JC_COLORS=default,default,default,default
 ```
 
+### Streaming Parsers
+Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+
+**Ignoring Errors**
+When using streaming parsers you may want to ignore parsing errors since these may be used in a long-lived processing pipeline and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or `quiet=True` argument to the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
+
+Successfully parsed line with `-q` option:
+```
+{
+  "command_data": "data",
+  "_meta": {
+    "success": true
+  }
+}
+```
+Unsuccessfully parsed line with `-q` option:
+```
+{
+  "_meta": {
+    "success": false,
+    "error": "error parsing line",
+    "line": "original line data"
+  }
+}
+```
+
+**Unbuffering Output**
+Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. `ping`):
+```
+$ ping 1.1.1.1 | jc --ping-s | jq
+<slow output>
+```
+This is because the OS engages the 4KB buffer between `jc` and `jq` in this example. To display the data on the terminal in realtime, you can disable the buffer with the `-u` (unbuffer) cli option:
+```
+$ ping 1.1.1.1 | jc --ping-s -u | jq
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"128","time_ms":"24.6","duplicate":false}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"128","time_ms":"26.8","duplicate":false}
+...
+```
+> Note: Unbuffered output can be slower for faster data streams.
+
+
 ### Custom Parsers
 Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
 
