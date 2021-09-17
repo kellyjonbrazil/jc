@@ -192,12 +192,9 @@ def parse(data, raw=False, quiet=False):
                     }
                                         
                     if quiet:
-                        output_line['_meta'] = {'success': True}
-                    
-                    if raw:
-                        yield output_line
-                    else:
-                        yield _process(output_line)
+                        output_line.update(jc.utils.stream_success)
+
+                    yield output_line if raw else _process(output_line)
                     
                     continue
 
@@ -235,12 +232,9 @@ def parse(data, raw=False, quiet=False):
                     }
 
                     if quiet:
-                        output_line['_meta'] = {'success': True}
-                    
-                    if raw:
-                        yield output_line
-                    else:
-                        yield _process(output_line)
+                        output_line.update(jc.utils.stream_success)
+
+                    yield output_line if raw else _process(output_line)
             
         except Exception as e:
             yield jc.utils.stream_error(e, quiet, line)
