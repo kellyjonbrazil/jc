@@ -60,6 +60,8 @@ See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
 - [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-7)
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
+- [Hacker News discussion](https://news.ycombinator.com/item?id=28266193)
+- [Reddit discussion](https://www.reddit.com/r/programming/comments/pa4cbb/bringing_the_unix_philosophy_to_the_21st_century/)
 
 Use Cases:
 - [Bash scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
