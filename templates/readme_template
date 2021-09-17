@@ -153,7 +153,7 @@ Most parsers load all of the data from STDIN, parse it, then output the entire J
 
 **Ignoring Errors**
 
-When using streaming parsers you may want to ignore parsing errors since these may be used in a long-lived processing pipeline and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or the `quiet=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
+You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or the `quiet=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
 
 Successfully parsed line with `-q` option:
 ```
