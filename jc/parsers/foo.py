@@ -65,6 +65,7 @@ def _process(proc_data):
         List of Dictionaries. Structured to conform to the schema.
     """
 
+    # process the data here
     # rebuild output for added semantic information
     # use helper functions in jc.utils for int, float, bool conversions and timestamps
 
@@ -93,10 +94,9 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
-            # parse the content
+            #
+            # parse the content here
+            #
             pass
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
