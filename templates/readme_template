@@ -110,11 +110,11 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
 - `-h` help. Use `jc -h --parser_name` for parser documentation
-- `-l` line buffer output
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
 - `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
+- `-u` unbuffer output
 - `-v` version information
 
 ### Exit Codes

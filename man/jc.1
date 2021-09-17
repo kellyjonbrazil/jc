@@ -1,4 +1,4 @@
-.TH jc 1 2021-09-13 1.17.0 "JSON CLI output utility"
+.TH jc 1 2021-09-16 1.17.0 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -418,10 +418,6 @@ debug - show traceback (\fB-dd\fP for verbose traceback)
 help (\fB-h --parser_name\fP for parser documentation)
 .TP
 .B
-\fB-l\fP
-line buffer output
-.TP
-.B
 \fB-m\fP
 monochrome output
 .TP
@@ -436,6 +432,10 @@ quiet - suppress warnings
 .B
 \fB-r\fP
 raw JSON output
+.TP
+.B
+\fB-u\fP
+unbuffer output (useful for slow streaming data with streaming parsers)
 .TP
 .B
 \fB-v\fP
