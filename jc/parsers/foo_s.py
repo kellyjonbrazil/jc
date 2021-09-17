@@ -65,6 +65,8 @@ def _process(proc_data):
     """
     #
     # process the data here
+    # rebuild output for added semantic information
+    # use helper functions in jc.utils for int, float, bool conversions and timestamps
     #
 
     return proc_data
