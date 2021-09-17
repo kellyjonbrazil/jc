@@ -19,11 +19,11 @@ Schema:
       "type":                        string,        # 'reply', 'timeout', 'summary'
       "source_ip":                   string,
       "destination_ip":              string,
-      "data_bytes":                  integer,
+      "sent_bytes":                  integer,
       "pattern":                     string,        # (null if not set)
       "destination":                 string,
       "timestamp":                   float,
-      "bytes":                       integer,
+      "response_bytes":              integer,
       "response_ip":                 string,
       "icmp_seq":                    integer,
       "ttl":                         integer,
@@ -87,7 +87,7 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl',
+    int_list = ['sent_bytes', 'packets_transmitted', 'packets_received', 'response_bytes', 'icmp_seq', 'ttl',
                 'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks']
     float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
                   'round_trip_ms_stddev', 'timestamp', 'time_ms']
@@ -120,7 +120,7 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     destination_ip = None
-    data_bytes = None
+    sent_bytes = None
     pattern = None
     footer = False
     packets_transmitted = None
@@ -161,7 +161,7 @@ def parse(data, raw=False, quiet=False):
 
                 line = line.replace('(', ' ').replace(')', ' ')
                 destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
-                data_bytes = line.split()[dta_byts]
+                sent_bytes = line.split()[dta_byts]
 
                 continue
 
@@ -195,7 +195,7 @@ def parse(data, raw=False, quiet=False):
                     output_line = {
                         'type': 'summary',
                         'destination_ip': destination_ip or None,
-                        'data_bytes': data_bytes or None,
+                        'sent_bytes': sent_bytes or None,
                         'pattern': pattern or None,
                         'packets_transmitted': packets_transmitted or None,
                         'packets_received': packets_received or None,
@@ -226,7 +226,7 @@ def parse(data, raw=False, quiet=False):
                     output_line = {
                         'type': 'timeout',
                         'destination_ip': destination_ip or None,
-                        'data_bytes': data_bytes or None,
+                        'sent_bytes': sent_bytes or None,
                         'pattern': pattern or None,
                         'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
                         'icmp_seq': line.replace('=', ' ').split()[isequence]
@@ -259,10 +259,10 @@ def parse(data, raw=False, quiet=False):
                     output_line = {
                         'type': 'reply',
                         'destination_ip': destination_ip or None,
-                        'data_bytes': data_bytes or None,
+                        'sent_bytes': sent_bytes or None,
                         'pattern': pattern or None,
                         'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-                        'bytes': line.split()[bts],
+                        'response_bytes': line.split()[bts],
                         'response_ip': line.split()[rip].rstrip(':'),
                         'icmp_seq': line.split()[iseq],
                         'ttl': line.split()[t2l],
