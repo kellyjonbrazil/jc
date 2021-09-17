@@ -167,7 +167,6 @@ def parse(data, raw=False, quiet=False):
 
             if line.startswith('---'):
                 footer = True
-                # raw_output['destination'] = line.split()[1]
                 continue
 
             if footer:
