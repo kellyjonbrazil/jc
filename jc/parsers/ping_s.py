@@ -16,7 +16,7 @@ Usage (module):
 Schema:
 
     {
-      "type":                        string,        # 'reply', 'timeout', 'summary'
+      "type":                        string,        # 'reply', 'timeout', 'summary', etc. See `_error_type.type_map` for all options.
       "source_ip":                   string,
       "destination_ip":              string,
       "sent_bytes":                  integer,
