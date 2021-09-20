@@ -2,7 +2,7 @@
 
 Usage (cli):
 
-    $ ping | jc --ping_s
+    $ ping | jc --ping-s
 
 Usage (module):
 
@@ -47,12 +47,16 @@ Schema:
 
 Examples:
 
-    $ ping | jc --ping-s
-    {example output}
+    $ ping 1.1.1.1 | jc --ping-s
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"pattern":null,"response_bytes":64,"response_ip":"1.1.1.1","icmp_seq":0,"ttl":56,"time_ms":23.703}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"pattern":null,"response_bytes":64,"response_ip":"1.1.1.1","icmp_seq":1,"ttl":56,"time_ms":22.862}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"pattern":null,"response_bytes":64,"response_ip":"1.1.1.1","icmp_seq":2,"ttl":56,"time_ms":22.82}
     ...
 
-    $ ping | jc --ping-s -r
-    {example output}
+    $ ping 1.1.1.1 | jc --ping-s -r
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","pattern":null,"response_bytes":"64","response_ip":"1.1.1.1","icmp_seq":"0","ttl":"56","time_ms":"23.054"}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","pattern":null,"response_bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"56","time_ms":"24.739"}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","pattern":null,"response_bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"56","time_ms":"23.232"}
     ...
 """
 import string
@@ -494,6 +498,9 @@ def parse(data, raw=False, quiet=False):
 
             elif s.os_detected and s.bsd:
                 output_line = _bsd_parse(line, s)
+
+            else:
+                raise ParseError('Could not detect ping OS')
 
             # yield the output line if it has data
             if output_line:
