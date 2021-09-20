@@ -118,7 +118,6 @@ class state:
     packet_loss_percent = None
     time_ms = None
     duplicates = None
-    ping_error = None
 
 
 def _ipv6_in(line):
@@ -493,7 +492,7 @@ def parse(data, raw=False, quiet=False):
             if s.os_detected and s.linux:
                 output_line = _linux_parse(line, s)
 
-            if s.os_detected and s.bsd:
+            elif s.os_detected and s.bsd:
                 output_line = _bsd_parse(line, s)
 
             # yield the output line if it has data
