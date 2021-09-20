@@ -62,6 +62,7 @@ Examples:
 import string
 import ipaddress
 import jc.utils
+from jc.exceptions import ParseError
 from jc.utils import stream_success, stream_error
 
 
@@ -480,15 +481,15 @@ def parse(data, raw=False, quiet=False):
                 s.os_detected = True
                 s.linux = True
 
-            if not s.os_detected and '-->' in line:
+            elif not s.os_detected and '-->' in line:
                 s.os_detected = True
                 s.bsd = True
 
-            if not s.os_detected and _ipv6_in(line) and line.strip().endswith('data bytes'):
+            elif not s.os_detected and _ipv6_in(line) and line.strip().endswith('data bytes'):
                 s.os_detected = True
                 s.linux = True
 
-            if not s.os_detected:
+            elif not s.os_detected and not _ipv6_in(line) and line.strip().endswith('data bytes'):
                 s.os_detected = True
                 s.bsd = True
 
