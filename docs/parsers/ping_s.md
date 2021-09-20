@@ -69,12 +69,6 @@ info()
 ```
 Provides parser metadata (version, author, etc.)
 
-## state
-```python
-state()
-```
-
-
 ## parse
 ```python
 parse(data, raw=False, quiet=False)

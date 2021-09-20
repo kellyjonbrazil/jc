@@ -108,7 +108,7 @@ def _process(proc_data):
     return proc_data
 
 
-class state:
+class _state:
     os_detected = None
     linux = None
     bsd = None
@@ -461,7 +461,7 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
-    s = state()
+    s = _state()
 
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
