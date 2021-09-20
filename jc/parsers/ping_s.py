@@ -1,8 +1,12 @@
 """jc - JSON CLI output utility `ping` command output streaming parser
 
+Supports `ping` and `ping6` output.
+
 Usage (cli):
 
     $ ping | jc --ping-s
+
+> Note: When piping `jc` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/streaming#streaming-parsers) for more information.
 
 Usage (module):
 
@@ -10,8 +14,6 @@ Usage (module):
     result = jc.parsers.ping_s.parse(ping_command_output)    # result is an iterable object
     for item in result:
         # do something
-
-> Note: When piping `jc` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/streaming#streaming-parsers) for more information.
 
 Schema:
 
