@@ -80,8 +80,8 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
-        raw:         (boolean) output preprocessed JSON if True
-        quiet:       (boolean) suppress warning messages and ignore parsing exceptions if True
+        raw:         (boolean)   output preprocessed JSON if True
+        quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
 
     Yields:
 
