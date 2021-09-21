@@ -18,7 +18,7 @@ Usage (cli):
 Usage (module):
 
     import jc.parsers.ls_s
-    result = jc.parsers.ls_s.parse(ls_command_output)    # result is an iterable object
+    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())    # result is an iterable object
     for item in result:
         # do something
 
@@ -73,9 +73,9 @@ Main text parsing generator function. Produces an iterable object.
 
 Parameters:
 
-    data:        (string)  line-based text data to parse
-    raw:         (boolean) output preprocessed JSON if True
-    quiet:       (boolean) suppress warning messages and ignore parsing errors if True
+    data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
+    raw:         (boolean)   output preprocessed JSON if True
+    quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
 
 Yields:
 

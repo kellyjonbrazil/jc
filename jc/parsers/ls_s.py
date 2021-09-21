@@ -15,7 +15,7 @@ Usage (cli):
 Usage (module):
 
     import jc.parsers.ls_s
-    result = jc.parsers.ls_s.parse(ls_command_output)    # result is an iterable object
+    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())    # result is an iterable object
     for item in result:
         # do something
 
@@ -108,9 +108,9 @@ def parse(data, raw=False, quiet=False):
 
     Parameters:
 
-        data:        (string)  line-based text data to parse
-        raw:         (boolean) output preprocessed JSON if True
-        quiet:       (boolean) suppress warning messages and ignore parsing errors if True
+        data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
+        raw:         (boolean)   output preprocessed JSON if True
+        quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
 
     Yields:
 
@@ -139,7 +139,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line):
-                raise ParseError(f'Not ls -l data')
+                raise ParseError('Not ls -l data')
 
             parsed_line = line.strip().split(maxsplit=8)
             output_line = {}

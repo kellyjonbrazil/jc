@@ -6,12 +6,12 @@ Usage (cli):
 
     $ ping | jc --ping-s
 
-> Note: When piping `jc` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/streaming#streaming-parsers) for more information.
+> Note: When piping `jc` converted ping output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/streaming#streaming-parsers) for more information.
 
 Usage (module):
 
     import jc.parsers.ping_s
-    result = jc.parsers.ping_s.parse(ping_command_output)    # result is an iterable object
+    result = jc.parsers.ping_s.parse(ping_command_output.splitlines())    # result is an iterable object
     for item in result:
         # do something
 
@@ -76,7 +76,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd']
     streaming = True
 
 
@@ -455,9 +455,9 @@ def parse(data, raw=False, quiet=False):
 
     Parameters:
 
-        data:        (string)  line-based text data to parse
-        raw:         (boolean) output preprocessed JSON if True
-        quiet:       (boolean) suppress warning messages and ignore parsing errors if True
+        data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
+        raw:         (boolean)   output preprocessed JSON if True
+        quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
 
     Yields:
 

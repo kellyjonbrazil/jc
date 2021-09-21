@@ -7,7 +7,7 @@ Usage (cli):
 Usage (module):
 
     import jc.parsers.foo_s
-    result = jc.parsers.foo_s.parse(foo_command_output)    # result is an iterable object
+    result = jc.parsers.foo_s.parse(foo_command_output.splitlines())    # result is an iterable object
     for item in result:
         # do something
 
@@ -79,9 +79,9 @@ def parse(data, raw=False, quiet=False):
 
     Parameters:
 
-        data:        (string)  line-based text data to parse
+        data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
         raw:         (boolean) output preprocessed JSON if True
-        quiet:       (boolean) suppress warning messages and ignore parsing errors if True
+        quiet:       (boolean) suppress warning messages and ignore parsing exceptions if True
 
     Yields:
 

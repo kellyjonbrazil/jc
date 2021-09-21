@@ -9,12 +9,12 @@ Usage (cli):
 
     $ ping | jc --ping-s
 
-> Note: When piping `jc` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/streaming#streaming-parsers) for more information.
+> Note: When piping `jc` converted ping output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/streaming#streaming-parsers) for more information.
 
 Usage (module):
 
     import jc.parsers.ping_s
-    result = jc.parsers.ping_s.parse(ping_command_output)    # result is an iterable object
+    result = jc.parsers.ping_s.parse(ping_command_output.splitlines())    # result is an iterable object
     for item in result:
         # do something
 
@@ -80,15 +80,15 @@ Main text parsing generator function. Produces an iterable object.
 
 Parameters:
 
-    data:        (string)  line-based text data to parse
-    raw:         (boolean) output preprocessed JSON if True
-    quiet:       (boolean) suppress warning messages and ignore parsing errors if True
+    data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
+    raw:         (boolean)   output preprocessed JSON if True
+    quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
 
 Yields:
 
     Dictionary. Raw or processed structured data.
 
 ## Parser Information
-Compatibility:  linux, darwin, cygwin, aix, freebsd
+Compatibility:  linux, darwin, freebsd
 
 Version 0.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
