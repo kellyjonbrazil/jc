@@ -108,7 +108,7 @@ def parse(data, raw=False, quiet=False):
 
     Parameters:
 
-        data:        (iterable)  line-based text data to parse (e.g. str.splitlines())
+        data:        (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
         raw:         (boolean)   output preprocessed JSON if True
         quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
 
