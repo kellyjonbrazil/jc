@@ -473,6 +473,14 @@ def parse(data, raw=False, quiet=False):
         output_line = {}
 
         try:
+            # skip blank lines
+            if line.strip() == '':
+                continue
+
+            # skip warning lines
+            if line.startswith('WARNING: '):
+                continue
+
             # check for PATTERN
             if line.startswith('PATTERN: '):
                 s.pattern = line.strip().split(': ')[1]
