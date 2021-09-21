@@ -76,7 +76,7 @@ Provides parser metadata (version, author, etc.)
 parse(data, raw=False, quiet=False)
 ```
 
-Main text parsing generator function. Produces an iterable object.
+Main text parsing generator function. Returns an iterator object.
 
 Parameters:
 
@@ -87,6 +87,10 @@ Parameters:
 Yields:
 
     Dictionary. Raw or processed structured data.
+
+Returns:
+
+    Iterator object
 
 ## Parser Information
 Compatibility:  linux, darwin, freebsd

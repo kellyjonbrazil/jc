@@ -75,7 +75,7 @@ def _process(proc_data):
 
 def parse(data, raw=False, quiet=False):
     """
-    Main text parsing generator function. Produces an iterable object.
+    Main text parsing generator function. Returns an iterator object.
 
     Parameters:
 
@@ -86,6 +86,10 @@ def parse(data, raw=False, quiet=False):
     Yields:
 
         Dictionary. Raw or processed structured data.
+
+    Returns:
+
+        Iterator object
     """
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)

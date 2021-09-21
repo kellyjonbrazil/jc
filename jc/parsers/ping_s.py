@@ -451,7 +451,7 @@ def _linux_parse(line, s):
 
 def parse(data, raw=False, quiet=False):
     """
-    Main text parsing generator function. Produces an iterable object.
+    Main text parsing generator function. Returns an iterator object.
 
     Parameters:
 
@@ -462,6 +462,10 @@ def parse(data, raw=False, quiet=False):
     Yields:
 
         Dictionary. Raw or processed structured data.
+
+    Returns:
+
+        Iterator object
     """
     s = _state()
 
