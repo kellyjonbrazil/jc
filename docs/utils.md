@@ -117,6 +117,18 @@ Returns:
     True/False      False unless a 'truthy' number or string is found ('y', 'yes', 'true', '1', 1, -1, etc.)
 
 
+## stream_success
+```python
+stream_success(output_line, quiet)
+```
+add _meta object to output line if -q (quiet) option is used
+
+## stream_error
+```python
+stream_error(e, quiet, line)
+```
+reraise the stream exception with annotation or print an error _meta field if quiet=True
+
 ## timestamp
 ```python
 timestamp(datetime_string)

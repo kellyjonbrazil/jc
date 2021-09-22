@@ -60,6 +60,8 @@ See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
 - [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-7)
 - [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
+- [Hacker News discussion](https://news.ycombinator.com/item?id=28266193)
+- [Reddit discussion](https://www.reddit.com/r/programming/comments/pa4cbb/bringing_the_unix_philosophy_to_the_21st_century/)
 
 Use Cases:
 - [Bash scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
@@ -141,6 +143,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--kv` enables the Key/Value file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/kv))
 - `--last` enables the `last` and `lastb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/last))
 - `--ls` enables the `ls` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ls))
+- `--ls-s` enables the `ls` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s))
 - `--lsblk` enables the `lsblk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk))
 - `--lsmod` enables the `lsmod` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod))
 - `--lsof` enables the `lsof` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof))
@@ -149,6 +152,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
 - `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
 - `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))
+- `--ping-s` enables the `ping` and `ping6` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s))
 - `--pip-list` enables the `pip list` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list))
 - `--pip-show` enables the `pip show` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show))
 - `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
@@ -182,11 +186,12 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
-- `-h` `jc` help. Use `jc -h --parser_name` for parser documentation
+- `-h` help. Use `jc -h --parser_name` for parser documentation
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
 - `-q` quiet mode. Suppresses parser warning messages
 - `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
+- `-u` unbuffer output
 - `-v` version information
 
 ### Exit Codes
@@ -217,6 +222,51 @@ or
 ```bash
 JC_COLORS=default,default,default,default
 ```
+
+### Streaming Parsers
+Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that immediately start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+
+> Note: Streaming parsers cannot be used with the "magic" syntax
+
+**Ignoring Errors**
+
+You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or the `quiet=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
+
+Successfully parsed line with `-q` option:
+```
+{
+  "command_data": "data",
+  "_meta": {
+    "success": true
+  }
+}
+```
+Unsuccessfully parsed line with `-q` option:
+```
+{
+  "_meta": {
+    "success": false,
+    "error": "error parsing line",
+    "line": "original line data"
+  }
+}
+```
+
+**Unbuffering Output**
+
+Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. `ping`):
+```
+$ ping 1.1.1.1 | jc --ping-s | jq
+<slow output>
+```
+This is because the OS engages the 4KB buffer between `jc` and `jq` in this example. To display the data on the terminal in realtime, you can disable the buffer with the `-u` (unbuffer) cli option:
+```
+$ ping 1.1.1.1 | jc --ping-s -u | jq
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"128","time_ms":"24.6","duplicate":false}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"128","time_ms":"26.8","duplicate":false}
+...
+```
+> Note: Unbuffered output can be slower for faster data streams.
 
 ### Custom Parsers
 Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:

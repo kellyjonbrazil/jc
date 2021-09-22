@@ -81,6 +81,7 @@ parsers = [
     'kv',
     'last',
     'ls',
+    'ls-s',
     'lsblk',
     'lsmod',
     'lsof',
@@ -89,6 +90,7 @@ parsers = [
     'ntpq',
     'passwd',
     'ping',
+    'ping-s',
     'pip-list',
     'pip-show',
     'ps',
@@ -333,6 +335,7 @@ def helptext():
             -p               pretty print output
             -q               quiet - suppress parser warnings
             -r               raw JSON output
+            -u               unbuffer output
             -v               version info
 
     Examples:
@@ -524,6 +527,7 @@ def main():
     pretty = 'p' in options
     quiet = 'q' in options
     raw = 'r' in options
+    unbuffer = 'u' in options
     version_info = 'v' in options
 
     if verbose_debug:
@@ -611,11 +615,35 @@ def main():
         jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    # parse the data
-    data = magic_stdout or sys.stdin.read()
-
+    # parse and print to stdout
     try:
-        result = parser.parse(data, raw=raw, quiet=quiet)
+        # differentiate between regular and streaming parsers
+
+        # streaming
+        if getattr(parser.info, 'streaming', None):
+            result = parser.parse(sys.stdin, raw=raw, quiet=quiet)
+            for line in result:
+                print(json_out(line,
+                               pretty=pretty,
+                               env_colors=jc_colors,
+                               mono=mono,
+                               piped_out=piped_output()),
+                      flush=unbuffer)
+
+            sys.exit(combined_exit_code(magic_exit_code, 0))
+
+        # regular
+        else:
+            data = magic_stdout or sys.stdin.read()
+            result = parser.parse(data, raw=raw, quiet=quiet)
+            print(json_out(result,
+                           pretty=pretty,
+                           env_colors=jc_colors,
+                           mono=mono,
+                           piped_out=piped_output()),
+                  flush=unbuffer)
+
+        sys.exit(combined_exit_code(magic_exit_code, 0))
 
     except (ParseError, LibraryNotInstalled) as e:
         if debug:
@@ -627,27 +655,27 @@ def main():
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    except Exception:
-        if debug:
-            raise
-        else:
-            jc.utils.error_message(
-                f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
-                '             For details use the -d or -dd option. Use "jc -h" for help.')
-            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    # output the json
-    try:
-        print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
-        sys.exit(combined_exit_code(magic_exit_code, 0))
-
-    except Exception:
+    except json.JSONDecodeError:
         if debug:
             raise
         else:
             jc.utils.error_message(
                 'There was an issue generating the JSON output.\n'
                 '             For details use the -d or -dd option.')
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    except Exception:
+        if debug:
+            raise
+        else:
+            streaming_msg = ''
+            if getattr(parser.info, 'streaming', None):
+                streaming_msg = '             Use the -q option to ignore streaming parser errors.\n'
+
+            jc.utils.error_message(
+                f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
+                f'{streaming_msg}'
+                '             For details use the -d or -dd option. Use "jc -h" for help.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 

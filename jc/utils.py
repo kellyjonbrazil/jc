@@ -173,6 +173,30 @@ def convert_to_bool(value):
     return False
 
 
+def stream_success(output_line, quiet):
+    """add _meta object to output line if -q (quiet) option is used"""
+    if quiet:
+        output_line.update({'_meta': {'success': True}})
+
+    return output_line
+
+
+def stream_error(e, quiet, line):
+    """reraise the stream exception with annotation or print an error _meta field if quiet=True"""
+    if not quiet:
+        e.args = (str(e) + '... Use the quiet option (-q) to ignore streaming parser errors.',)
+        raise e
+    else:
+        return {
+            '_meta':
+                {
+                    'success': False,
+                    'error': f'{e}',
+                    'line': line.strip()
+                }
+        }
+
+
 class timestamp:
     """
     Input a date-time text string of several formats and convert to a naive or timezone-aware epoch timestamp in UTC
