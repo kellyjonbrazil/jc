@@ -247,101 +247,98 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping6_ip_dup_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.json'), 'r', encoding='utf-8') as f:
-        #     self.centos_7_7_ping_ip_O_unparsedlines_json = json.loads(f.read())
-
         # ubunutu
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping_ip_O_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping_ip_O_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-D.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping_ip_O_D_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping_ip_O_D_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping_hostname_O_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping_hostname_O_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-p.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping_hostname_O_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping_hostname_O_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping_hostname_O_D_p_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-p.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping6_ip_O_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping6_ip_O_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-D-p.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping6_ip_O_D_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-p.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping6_hostname_O_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping6_hostname_O_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_ping6_hostname_O_D_p_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
         # fedora
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping_ip_O_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_ip_O_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping_ip_O_D_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_ip_O_D_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping_hostname_O_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping_hostname_O_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping_hostname_O_D_p_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping6_ip_O_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_ip_O_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping6_ip_O_D_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping6_hostname_O_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_hostname_O_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s.json'), 'r', encoding='utf-8') as f:
-        #     self.fedora32_ping6_hostname_O_D_p_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
         # freebsd
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-p.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_hostname_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping_hostname_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-s.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_hostname_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping_hostname_s_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_hostname_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping_hostname_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-p.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_ip_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping_ip_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-s.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_ip_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping_ip_s_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping_ip_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping_ip_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-p.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping6_hostname_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping6_hostname_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-s.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping6_hostname_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping6_hostname_s_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping6_hostname_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping6_hostname_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-p.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping6_ip_p_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping6_ip_p_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-s.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping6_ip_s_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping6_ip_s_streaming_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip.json'), 'r', encoding='utf-8') as f:
-        #     self.freebsd12_ping6_ip_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-streaming.json'), 'r', encoding='utf-8') as f:
+            self.freebsd12_ping6_ip_streaming_json = json.loads(f.read())
 
         # osx:
         # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p.json'), 'r', encoding='utf-8') as f:
@@ -504,185 +501,185 @@ class MyTests(unittest.TestCase):
         with self.assertRaises(IndexError):
             list(g)
 
-    # def test_ping_ip_O_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping <ip> -O' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping_ip_O, quiet=True), self.ubuntu_18_4_ping_ip_O_json)
+    def test_ping_ip_O_ubuntu_18_4(self):
+        """
+        Test 'ping <ip> -O' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_ip_O.splitlines())), self.ubuntu_18_4_ping_ip_O_streaming_json)
 
-    # def test_ping_ip_O_D_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping <ip> -O -D' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping_ip_O_D, quiet=True), self.ubuntu_18_4_ping_ip_O_D_json)
+    def test_ping_ip_O_D_ubuntu_18_4(self):
+        """
+        Test 'ping <ip> -O -D' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_ip_O_D.splitlines())), self.ubuntu_18_4_ping_ip_O_D_streaming_json)
 
-    # def test_ping_hostname_O_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping <hostname> -O' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping_hostname_O, quiet=True), self.ubuntu_18_4_ping_hostname_O_json)
+    def test_ping_hostname_O_ubuntu_18_4(self):
+        """
+        Test 'ping <hostname> -O' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O.splitlines())), self.ubuntu_18_4_ping_hostname_O_streaming_json)
 
-    # def test_ping_hostname_O_p_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping <hostname> -O -p' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping_hostname_O_p, quiet=True), self.ubuntu_18_4_ping_hostname_O_p_json)
+    def test_ping_hostname_O_p_ubuntu_18_4(self):
+        """
+        Test 'ping <hostname> -O -p' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O_p.splitlines())), self.ubuntu_18_4_ping_hostname_O_p_streaming_json)
 
-    # def test_ping_hostname_O_D_p_s_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping <hostname> -O -D -p -s' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping_hostname_O_D_p_s, quiet=True), self.ubuntu_18_4_ping_hostname_O_D_p_s_json)
+    def test_ping_hostname_O_D_p_s_ubuntu_18_4(self):
+        """
+        Test 'ping <hostname> -O -D -p -s' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O_D_p_s.splitlines())), self.ubuntu_18_4_ping_hostname_O_D_p_s_streaming_json)
 
-    # def test_ping6_ip_O_p_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping6 <ip> -O -p' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping6_ip_O_p, quiet=True), self.ubuntu_18_4_ping6_ip_O_p_json)
+    def test_ping6_ip_O_p_ubuntu_18_4(self):
+        """
+        Test 'ping6 <ip> -O -p' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_ip_O_p.splitlines())), self.ubuntu_18_4_ping6_ip_O_p_streaming_json)
 
-    # def test_ping6_ip_O_D_p_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping6 <ip> -O -D -p' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping6_ip_O_D_p, quiet=True), self.ubuntu_18_4_ping6_ip_O_D_p_json)
+    def test_ping6_ip_O_D_p_ubuntu_18_4(self):
+        """
+        Test 'ping6 <ip> -O -D -p' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_ip_O_D_p.splitlines())), self.ubuntu_18_4_ping6_ip_O_D_p_streaming_json)
 
-    # def test_ping6_hostname_O_p_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping6 <hostname> -O -p' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping6_hostname_O_p, quiet=True), self.ubuntu_18_4_ping6_hostname_O_p_json)
+    def test_ping6_hostname_O_p_ubuntu_18_4(self):
+        """
+        Test 'ping6 <hostname> -O -p' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_p.splitlines())), self.ubuntu_18_4_ping6_hostname_O_p_streaming_json)
 
-    # def test_ping6_hostname_O_D_p_s_ubuntu_18_4(self):
-    #     """
-    #     Test 'ping6 <hostname> -O -D -p -s' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.ubuntu_18_4_ping6_hostname_O_D_p_s, quiet=True), self.ubuntu_18_4_ping6_hostname_O_D_p_s_json)
+    def test_ping6_hostname_O_D_p_s_ubuntu_18_4(self):
+        """
+        Test 'ping6 <hostname> -O -D -p -s' on Ubuntu 18.4
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_D_p_s.splitlines())), self.ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json)
 
-    # def test_ping_ip_O_fedora32(self):
-    #     """
-    #     Test 'ping <ip> -O' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping_ip_O, quiet=True), self.fedora32_ping_ip_O_json)
+    def test_ping_ip_O_fedora32(self):
+        """
+        Test 'ping <ip> -O' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_ip_O.splitlines())), self.fedora32_ping_ip_O_streaming_json)
 
-    # def test_ping_ip_O_D_fedora32(self):
-    #     """
-    #     Test 'ping <ip> -O -D' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping_ip_O_D, quiet=True), self.fedora32_ping_ip_O_D_json)
+    def test_ping_ip_O_D_fedora32(self):
+        """
+        Test 'ping <ip> -O -D' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_ip_O_D.splitlines())), self.fedora32_ping_ip_O_D_streaming_json)
 
-    # def test_ping_hostname_O_fedora32(self):
-    #     """
-    #     Test 'ping <hostname> -O' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping_hostname_O, quiet=True), self.fedora32_ping_hostname_O_json)
+    def test_ping_hostname_O_fedora32(self):
+        """
+        Test 'ping <hostname> -O' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O.splitlines())), self.fedora32_ping_hostname_O_streaming_json)
 
-    # def test_ping_hostname_O_p_fedora32(self):
-    #     """
-    #     Test 'ping <hostname> -O -p' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping_hostname_O_p, quiet=True), self.fedora32_ping_hostname_O_p_json)
+    def test_ping_hostname_O_p_fedora32(self):
+        """
+        Test 'ping <hostname> -O -p' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O_p.splitlines())), self.fedora32_ping_hostname_O_p_streaming_json)
 
-    # def test_ping_hostname_O_D_p_s_fedora32(self):
-    #     """
-    #     Test 'ping <hostname> -O -D -p -s' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping_hostname_O_D_p_s, quiet=True), self.fedora32_ping_hostname_O_D_p_s_json)
+    def test_ping_hostname_O_D_p_s_fedora32(self):
+        """
+        Test 'ping <hostname> -O -D -p -s' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O_D_p_s.splitlines())), self.fedora32_ping_hostname_O_D_p_s_streaming_json)
 
-    # def test_ping6_ip_O_p_fedora32(self):
-    #     """
-    #     Test 'ping6 <ip> -O -p' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping6_ip_O_p, quiet=True), self.fedora32_ping6_ip_O_p_json)
+    def test_ping6_ip_O_p_fedora32(self):
+        """
+        Test 'ping6 <ip> -O -p' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_ip_O_p.splitlines())), self.fedora32_ping6_ip_O_p_streaming_json)
 
-    # def test_ping6_ip_O_D_p_fedora32(self):
-    #     """
-    #     Test 'ping6 <ip> -O -D -p' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping6_ip_O_D_p, quiet=True), self.fedora32_ping6_ip_O_D_p_json)
+    def test_ping6_ip_O_D_p_fedora32(self):
+        """
+        Test 'ping6 <ip> -O -D -p' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_ip_O_D_p.splitlines())), self.fedora32_ping6_ip_O_D_p_streaming_json)
 
-    # def test_ping6_hostname_O_p_fedora32(self):
-    #     """
-    #     Test 'ping6 <hostname> -O -p' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping6_hostname_O_p, quiet=True), self.fedora32_ping6_hostname_O_p_json)
+    def test_ping6_hostname_O_p_fedora32(self):
+        """
+        Test 'ping6 <hostname> -O -p' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_hostname_O_p.splitlines())), self.fedora32_ping6_hostname_O_p_streaming_json)
 
-    # def test_ping6_hostname_O_D_p_s_fedora32(self):
-    #     """
-    #     Test 'ping6 <hostname> -O -D -p -s' on fedora32
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.fedora32_ping6_hostname_O_D_p_s, quiet=True), self.fedora32_ping6_hostname_O_D_p_s_json)
+    def test_ping6_hostname_O_D_p_s_fedora32(self):
+        """
+        Test 'ping6 <hostname> -O -D -p -s' on fedora32
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_hostname_O_D_p_s.splitlines())), self.fedora32_ping6_hostname_O_D_p_s_streaming_json)
 
-    # def test_ping_hostname_p_freebsd12(self):
-    #     """
-    #     Test 'ping <hostname> -p' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping_hostname_p, quiet=True), self.freebsd12_ping_hostname_p_json)
+    def test_ping_hostname_p_freebsd12(self):
+        """
+        Test 'ping <hostname> -p' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname_p.splitlines())), self.freebsd12_ping_hostname_p_streaming_json)
 
-    # def test_ping_hostname_s_freebsd12(self):
-    #     """
-    #     Test 'ping <hostname> -s' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping_hostname_s, quiet=True), self.freebsd12_ping_hostname_s_json)
+    def test_ping_hostname_s_freebsd12(self):
+        """
+        Test 'ping <hostname> -s' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname_s.splitlines())), self.freebsd12_ping_hostname_s_streaming_json)
 
-    # def test_ping_ping_hostname_freebsd12(self):
-    #     """
-    #     Test 'ping <hostname>' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping_hostname, quiet=True), self.freebsd12_ping_hostname_json)
+    def test_ping_ping_hostname_freebsd12(self):
+        """
+        Test 'ping <hostname>' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname.splitlines())), self.freebsd12_ping_hostname_streaming_json)
 
-    # def test_ping_ip_p_freebsd12(self):
-    #     """
-    #     Test 'ping <ip> -p' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping_ip_p, quiet=True), self.freebsd12_ping_ip_p_json)
+    def test_ping_ip_p_freebsd12(self):
+        """
+        Test 'ping <ip> -p' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip_p.splitlines())), self.freebsd12_ping_ip_p_streaming_json)
 
-    # def test_ping_ip_s_freebsd12(self):
-    #     """
-    #     Test 'ping <ip> -s' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping_ip_s, quiet=True), self.freebsd12_ping_ip_s_json)
+    def test_ping_ip_s_freebsd12(self):
+        """
+        Test 'ping <ip> -s' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip_s.splitlines())), self.freebsd12_ping_ip_s_streaming_json)
 
-    # def test_ping_ip_freebsd12(self):
-    #     """
-    #     Test 'ping6 <ip>' on freebsd127
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping_ip, quiet=True), self.freebsd12_ping_ip_json)
+    def test_ping_ip_freebsd12(self):
+        """
+        Test 'ping6 <ip>' on freebsd127
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip.splitlines())), self.freebsd12_ping_ip_streaming_json)
 
-    # def test_ping6_hostname_p_freebsd12(self):
-    #     """
-    #     Test 'ping6 <hostname> -p' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_hostname_p, quiet=True), self.freebsd12_ping6_hostname_p_json)
+    def test_ping6_hostname_p_freebsd12(self):
+        """
+        Test 'ping6 <hostname> -p' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname_p.splitlines())), self.freebsd12_ping6_hostname_p_streaming_json)
 
-    # def test_ping6_hostname_s_freebsd12(self):
-    #     """
-    #     Test 'ping6 <hostname> -s' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_hostname_s, quiet=True), self.freebsd12_ping6_hostname_s_json)
+    def test_ping6_hostname_s_freebsd12(self):
+        """
+        Test 'ping6 <hostname> -s' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname_s.splitlines())), self.freebsd12_ping6_hostname_s_streaming_json)
 
-    # def test_ping6_hostname_freebsd12(self):
-    #     """
-    #     Test 'ping6 <hostname>' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_hostname, quiet=True), self.freebsd12_ping6_hostname_json)
+    def test_ping6_hostname_freebsd12(self):
+        """
+        Test 'ping6 <hostname>' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname.splitlines())), self.freebsd12_ping6_hostname_streaming_json)
 
-    # def test_ping6_ip_p_freebsd12(self):
-    #     """
-    #     Test 'ping6 <ip> -p' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_ip_p, quiet=True), self.freebsd12_ping6_ip_p_json)
+    def test_ping6_ip_p_freebsd12(self):
+        """
+        Test 'ping6 <ip> -p' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip_p.splitlines())), self.freebsd12_ping6_ip_p_streaming_json)
 
-    # def test_ping6_ip_s_freebsd12(self):
-    #     """
-    #     Test 'ping6 <ip> -s' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_ip_s, quiet=True), self.freebsd12_ping6_ip_s_json)
+    def test_ping6_ip_s_freebsd12(self):
+        """
+        Test 'ping6 <ip> -s' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip_s.splitlines())), self.freebsd12_ping6_ip_s_streaming_json)
 
-    # def test_ping6_ip_freebsd12(self):
-    #     """
-    #     Test 'ping6 <ip>' on freebsd12
-    #     """
-    #     self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_ip, quiet=True), self.freebsd12_ping6_ip_json)
+    def test_ping6_ip_freebsd12(self):
+        """
+        Test 'ping6 <ip>' on freebsd12
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip.splitlines())), self.freebsd12_ping6_ip_streaming_json)
 
     # def test_ping_hostname_p_osx_10_14_6(self):
     #     """
