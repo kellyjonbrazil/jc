@@ -1,6 +1,6 @@
 """jc - JSON CLI output utility `vmstat` command output parser
 
-<<Short vmstat description and caveats>>
+Options supported: `-a`, `-w`, `-d`, `-t`
 
 Usage (cli):
 
@@ -19,19 +19,98 @@ Schema:
 
     [
       {
-        "vmstat":     string,
-        "bar":     boolean,
-        "baz":     integer
+        'runnable_procs':                    integer,
+        'uninterruptible_sleeping_procs':    integer,
+        'virtual_mem_used':                  integer,
+        'free_mem':                          integer,
+        'buffer_mem':                        integer,
+        'cache_mem':                         integer,
+        'inactive_mem':                      integer,
+        'active_mem':                        integer,
+        'swap_in':                           integer,
+        'swap_out':                          integer,
+        'blocks_in':                         integer,
+        'blocks_out':                        integer,
+        'interrupts':                        integer,
+        'context_switches':                  integer,
+        'user_time':                         integer,
+        'system_time':                       integer,
+        'idle_time':                         integer,
+        'io_wait_time':                      integer,
+        'stolen_time':                       integer,
+        'disk':                              string,
+        'total_reads':                       integer,
+        'merged_reads':                      integer,
+        'sectors_read':                      integer,
+        'reading_ms':                        integer,
+        'total_writes':                      integer,
+        'merged_writes':                     integer,
+        'sectors_written':                   integer,
+        'writing_ms':                        integer,
+        'current_io':                        integer,
+        'io_seconds':                        integer,
+        'timestamp':                         string,
+        'timezone':                          string,
+        'epoch':                             integer,     # naive timestamp if -t flag is used
+        'epoch_utc':                         integer      # aware timestamp if -t flag is used and UTC TZ
       }
     ]
 
 Examples:
 
     $ vmstat | jc --vmstat -p
-    []
+    [
+      {
+        "runnable_procs": 2,
+        "uninterruptible_sleeping_procs": 0,
+        "virtual_mem_used": 0,
+        "free_mem": 2794468,
+        "buffer_mem": 2108,
+        "cache_mem": 741208,
+        "inactive_mem": null,
+        "active_mem": null,
+        "swap_in": 0,
+        "swap_out": 0,
+        "blocks_in": 1,
+        "blocks_out": 3,
+        "interrupts": 29,
+        "context_switches": 57,
+        "user_time": 0,
+        "system_time": 0,
+        "idle_time": 99,
+        "io_wait_time": 0,
+        "stolen_time": 0,
+        "timestamp": null,
+        "timezone": null
+      }
+    ]
 
     $ vmstat | jc --vmstat -p -r
-    []
+    [
+      {
+        "runnable_procs": "2",
+        "uninterruptible_sleeping_procs": "0",
+        "virtual_mem_used": "0",
+        "free_mem": "2794468",
+        "buffer_mem": "2108",
+        "cache_mem": "741208",
+        "inactive_mem": null,
+        "active_mem": null,
+        "swap_in": "0",
+        "swap_out": "0",
+        "blocks_in": "1",
+        "blocks_out": "3",
+        "interrupts": "29",
+        "context_switches": "57",
+        "user_time": "0",
+        "system_time": "0",
+        "idle_time": "99",
+        "io_wait_time": "0",
+        "stolen_time": "0",
+        "timestamp": null,
+        "timezone": null
+      }
+    ]
 """
 import jc.utils
 
@@ -65,12 +144,23 @@ def _process(proc_data):
         List of Dictionaries. Structured to conform to the schema.
     """
 
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
+    int_list = ['runnable_procs', 'uninterruptible_sleeping_procs', 'virtual_mem_used', 'free_mem', 'buffer_mem',
+                'cache_mem', 'inactive_mem', 'active_mem', 'swap_in', 'swap_out', 'blocks_in', 'blocks_out',
+                'interrupts', 'context_switches', 'user_time', 'system_time', 'idle_time', 'io_wait_time',
+                'stolen_time', 'total_reads', 'merged_reads', 'sectors_read', 'reading_ms', 'total_writes',
+                'merged_writes', 'sectors_written', 'writing_ms', 'current_io', 'io_seconds']
 
-    # add epoch and epoch_utc when timestamp field is not null
+    for entry in proc_data:
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
+        if entry['timestamp']:
+            ts = jc.utils.timestamp(f'{entry["timestamp"]} {entry["timezone"]}')
+            print(ts)
+            entry['epoch'] = ts.naive
+            entry['epoch_utc'] = ts.utc
+    
     return proc_data
 
 
@@ -154,7 +244,8 @@ def parse(data, raw=False, quiet=False):
                     'idle_time': line_list[14],
                     'io_wait_time': line_list[15],
                     'stolen_time': line_list[16],
-                    'timestamp': line_list[17] if tstamp else None
+                    'timestamp': line_list[17] if tstamp else None,
+                    'timezone': tz or None
                 }
 
                 raw_output.append(output_line)
@@ -174,7 +265,8 @@ def parse(data, raw=False, quiet=False):
                     'writing_ms': line_list[8],
                     'current_io': line_list[9],
                     'io_seconds': line_list[10],
-                    'timestamp': line_list[11] if tstamp else None
+                    'timestamp': line_list[11] if tstamp else None,
+                    'timezone': tz or None
                 }
 
                 raw_output.append(output_line)
