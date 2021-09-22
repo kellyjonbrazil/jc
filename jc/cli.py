@@ -115,6 +115,8 @@ parsers = [
     'uname',
     'upower',
     'uptime',
+    'vmstat',
+    'vmstat_s',
     'w',
     'wc',
     'who',
