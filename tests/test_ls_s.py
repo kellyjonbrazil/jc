@@ -13,8 +13,10 @@ if not sys.platform.startswith('win32'):
     os.environ['TZ'] = 'America/Los_Angeles'
     time.tzset()
 
+
 # To create streaming output use:
 # $ cat ls-al.out | jc --ls-s | jello -c > ls-al-streaming.json
+
 
 class MyTests(unittest.TestCase):
 
