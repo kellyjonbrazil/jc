@@ -157,7 +157,6 @@ def _process(proc_data):
 
         if entry['timestamp']:
             ts = jc.utils.timestamp(f'{entry["timestamp"]} {entry["timezone"]}')
-            print(ts)
             entry['epoch'] = ts.naive
             entry['epoch_utc'] = ts.utc
     
