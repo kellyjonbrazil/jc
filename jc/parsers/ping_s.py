@@ -258,6 +258,7 @@ def _bsd_parse(line, s):
 
                 try:
                     output_line['bytes'] = line.split()[0]
+                    output_line['destination_ip'] = s.destination_ip
                     output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
                 except Exception:
                     pass
