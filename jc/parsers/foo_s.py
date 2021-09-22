@@ -1,8 +1,10 @@
 """jc - JSON CLI output utility `foo` command output streaming parser
 
+<<Short foo description and caveats>>
+
 Usage (cli):
 
-    $ foo | jc --foo_s
+    $ foo | jc --foo-s
 
 Usage (module):
 
