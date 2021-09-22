@@ -177,6 +177,8 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
 - `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
 - `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
+- `--vmstat` enables the `vmstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat))
+- `--vmstat-s` enables the `vmstat` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s))
 - `--w` enables the `w` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/w))
 - `--wc` enables the `wc` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/wc))
 - `--who` enables the `who` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/who))
