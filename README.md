@@ -232,13 +232,13 @@ Most parsers load all of the data from STDIN, parse it, then output the entire J
 
 #### Ignoring Errors
 
-You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-qq` cli option or the `ignore_exceptions=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
+You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-qq` cli option or the `ignore_exceptions=True` argument with the `parse()` function. This will add a `_jc_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
 
 Successfully parsed line with `-qq` option:
 ```json
 {
   "command_data": "data",
-  "_meta": {
+  "_jc_meta": {
     "success": true
   }
 }
@@ -246,7 +246,7 @@ Successfully parsed line with `-qq` option:
 Unsuccessfully parsed line with `-qq` option:
 ```json
 {
-  "_meta": {
+  "_jc_meta": {
     "success": false,
     "error": "error message",
     "line": "original line data"
