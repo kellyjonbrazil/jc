@@ -1,4 +1,4 @@
-.TH jc 1 2021-09-22 1.17.0 "JSON CLI output utility"
+.TH jc 1 2021-09-23 1.17.0 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -550,7 +550,7 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 
 etc...
 
-Note: Unbuffered output can be slower for faster data streams.
+Note: Unbuffered output can be slower for large data streams.
 .RE
 
 .SH CUSTOM PARSERS

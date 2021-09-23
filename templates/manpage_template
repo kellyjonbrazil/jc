@@ -165,7 +165,7 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 
 etc...
 
-Note: Unbuffered output can be slower for faster data streams.
+Note: Unbuffered output can be slower for large data streams.
 .RE
 
 .SH CUSTOM PARSERS
