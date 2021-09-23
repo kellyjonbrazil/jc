@@ -654,7 +654,7 @@ def main():
         else:
             jc.utils.error_message(
                 f'Parser issue with {parser_name}:\n'
-                f'             {e}\n'
+                f'             {e.__class__.__name__}: {e}\n'
                 '             For details use the -d or -dd option. Use "jc -h" for help.')
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
