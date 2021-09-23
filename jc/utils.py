@@ -173,18 +173,18 @@ def convert_to_bool(value):
     return False
 
 
-def stream_success(output_line, quiet):
+def stream_success(output_line, ignore_exceptions):
     """add _meta object to output line if -q (quiet) option is used"""
-    if quiet:
+    if ignore_exceptions:
         output_line.update({'_meta': {'success': True}})
 
     return output_line
 
 
-def stream_error(e, quiet, line):
-    """reraise the stream exception with annotation or print an error _meta field if quiet=True"""
-    if not quiet:
-        e.args = (str(e) + '... Use the quiet option (-q) to ignore streaming parser errors.',)
+def stream_error(e, ignore_exceptions, line):
+    """reraise the stream exception with annotation or print an error _meta field if ignore_exceptions=True"""
+    if not ignore_exceptions:
+        e.args = (str(e) + '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.',)
         raise e
     else:
         return {

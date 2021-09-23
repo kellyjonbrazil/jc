@@ -214,8 +214,8 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping_ip_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming-quiet.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O_streaming_quiet_json = json.loads(f.read())
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_ping_ip_O_streaming_ignore_exceptions_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_ping_ip_O_D_streaming_json = json.loads(f.read())
@@ -399,61 +399,61 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.ping_s.parse('')), [])
 
-    def test_ping_quiet_success(self):
+    def test_ping_ignore_exceptions_success(self):
         """
-        Test 'ping' with quiet option
+        Test 'ping' with -qq (ignore_exceptions) option
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O.splitlines(), quiet=True)), self.centos_7_7_ping_ip_O_streaming_quiet_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O.splitlines(), quiet=True, ignore_exceptions=True)), self.centos_7_7_ping_ip_O_streaming_ignore_exceptions_json)
 
-    def test_ping_quiet_error(self):
+    def test_ping_ignore_exceptions_error(self):
         """
-        Test 'ping' with quiet option and error
+        Test 'ping' with -qq (ignore_exceptions) option option and error
         """
         data_in = 'not ping'
         expected = json.loads('[{"_meta":{"success":false,"error":"ParseError: Could not detect ping OS","line":"not ping"}}]')
-        self.assertEqual(list(jc.parsers.ping_s.parse(data_in.splitlines(), quiet=True)), expected)
+        self.assertEqual(list(jc.parsers.ping_s.parse(data_in.splitlines(), quiet=True, ignore_exceptions=True)), expected)
 
     def test_ping_ip_O_centos_7_7(self):
         """
         Test 'ping <ip> -O' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O.splitlines())), self.centos_7_7_ping_ip_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O.splitlines(), quiet=True)), self.centos_7_7_ping_ip_O_streaming_json)
 
     def test_ping_ip_O_D_centos_7_7(self):
         """
         Test 'ping <ip> -O -D' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O_D.splitlines())), self.centos_7_7_ping_ip_O_D_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O_D.splitlines(), quiet=True)), self.centos_7_7_ping_ip_O_D_streaming_json)
 
     def test_ping_hostname_O_centos_7_7(self):
         """
         Test 'ping <hostname> -O' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_hostname_O.splitlines())), self.centos_7_7_ping_hostname_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_hostname_O.splitlines(), quiet=True)), self.centos_7_7_ping_hostname_O_streaming_json)
 
     def test_ping_hostname_O_p_centos_7_7(self):
         """
         Test 'ping <hostname> -O -p' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_hostname_O_p.splitlines())), self.centos_7_7_ping_hostname_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_hostname_O_p.splitlines(), quiet=True)), self.centos_7_7_ping_hostname_O_p_streaming_json)
 
     def test_ping_hostname_O_D_p_s_centos_7_7(self):
         """
         Test 'ping <hostname> -O -D -p -s' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_hostname_O_D_p_s.splitlines())), self.centos_7_7_ping_hostname_O_D_p_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_hostname_O_D_p_s.splitlines(), quiet=True)), self.centos_7_7_ping_hostname_O_D_p_s_streaming_json)
 
     def test_ping6_ip_O_p_centos_7_7(self):
         """
         Test 'ping6 <ip> -O -p' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_O_p.splitlines())), self.centos_7_7_ping6_ip_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_O_p.splitlines(), quiet=True)), self.centos_7_7_ping6_ip_O_p_streaming_json)
 
     def test_ping6_ip_O_p_unparsable_centos_7_7(self):
         """
         Test 'ping6 <ip> -O -p' with unparsable lines on Centos 7.7 (raises IndexError)
         """
-        g = jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_O_p_unparsable.splitlines())
+        g = jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_O_p_unparsable.splitlines(), quiet=True)
         with self.assertRaises(IndexError):
             list(g)
 
@@ -461,37 +461,37 @@ class MyTests(unittest.TestCase):
         """
         Test 'ping6 <ip> -O -D -p' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_O_D_p.splitlines())), self.centos_7_7_ping6_ip_O_D_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_O_D_p.splitlines(), quiet=True)), self.centos_7_7_ping6_ip_O_D_p_streaming_json)
 
     def test_ping6_hostname_O_p_centos_7_7(self):
         """
         Test 'ping6 <hostname> -O -p' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_hostname_O_p.splitlines())), self.centos_7_7_ping6_hostname_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_hostname_O_p.splitlines(), quiet=True)), self.centos_7_7_ping6_hostname_O_p_streaming_json)
 
     def test_ping6_hostname_O_D_p_s_centos_7_7(self):
         """
         Test 'ping6 <hostname> -O -D -p -s' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_hostname_O_D_p_s.splitlines())), self.centos_7_7_ping6_hostname_O_D_p_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_hostname_O_D_p_s.splitlines(), quiet=True)), self.centos_7_7_ping6_hostname_O_D_p_s_streaming_json)
 
     def test_ping_ip_dup_centos_7_7(self):
         """
         Test 'ping <ip>' to broadcast IP to get duplicate replies on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_dup.splitlines())), self.centos_7_7_ping_ip_dup_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_dup.splitlines(), quiet=True)), self.centos_7_7_ping_ip_dup_streaming_json)
 
     def test_ping6_ip_dup_centos_7_7(self):
         """
         Test 'ping6 <ip>' to broadcast IP to get duplicate replies on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_dup.splitlines())), self.centos_7_7_ping6_ip_dup_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping6_ip_dup.splitlines(), quiet=True)), self.centos_7_7_ping6_ip_dup_streaming_json)
 
     def test_ping_ip_O_unparsedlines_centos_7_7(self):
         """
         Test 'ping <ip> -O' on Centos 7.7 with unparsable lines and error messages
         """
-        g = jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O_unparsedlines.splitlines())
+        g = jc.parsers.ping_s.parse(self.centos_7_7_ping_ip_O_unparsedlines.splitlines(), quiet=True)
         with self.assertRaises(IndexError):
             list(g)
 
@@ -499,229 +499,229 @@ class MyTests(unittest.TestCase):
         """
         Test 'ping <ip> -O' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_ip_O.splitlines())), self.ubuntu_18_4_ping_ip_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_ip_O.splitlines(), quiet=True)), self.ubuntu_18_4_ping_ip_O_streaming_json)
 
     def test_ping_ip_O_D_ubuntu_18_4(self):
         """
         Test 'ping <ip> -O -D' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_ip_O_D.splitlines())), self.ubuntu_18_4_ping_ip_O_D_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_ip_O_D.splitlines(), quiet=True)), self.ubuntu_18_4_ping_ip_O_D_streaming_json)
 
     def test_ping_hostname_O_ubuntu_18_4(self):
         """
         Test 'ping <hostname> -O' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O.splitlines())), self.ubuntu_18_4_ping_hostname_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O.splitlines(), quiet=True)), self.ubuntu_18_4_ping_hostname_O_streaming_json)
 
     def test_ping_hostname_O_p_ubuntu_18_4(self):
         """
         Test 'ping <hostname> -O -p' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O_p.splitlines())), self.ubuntu_18_4_ping_hostname_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O_p.splitlines(), quiet=True)), self.ubuntu_18_4_ping_hostname_O_p_streaming_json)
 
     def test_ping_hostname_O_D_p_s_ubuntu_18_4(self):
         """
         Test 'ping <hostname> -O -D -p -s' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O_D_p_s.splitlines())), self.ubuntu_18_4_ping_hostname_O_D_p_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping_hostname_O_D_p_s.splitlines(), quiet=True)), self.ubuntu_18_4_ping_hostname_O_D_p_s_streaming_json)
 
     def test_ping6_ip_O_p_ubuntu_18_4(self):
         """
         Test 'ping6 <ip> -O -p' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_ip_O_p.splitlines())), self.ubuntu_18_4_ping6_ip_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_ip_O_p.splitlines(), quiet=True)), self.ubuntu_18_4_ping6_ip_O_p_streaming_json)
 
     def test_ping6_ip_O_D_p_ubuntu_18_4(self):
         """
         Test 'ping6 <ip> -O -D -p' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_ip_O_D_p.splitlines())), self.ubuntu_18_4_ping6_ip_O_D_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_ip_O_D_p.splitlines(), quiet=True)), self.ubuntu_18_4_ping6_ip_O_D_p_streaming_json)
 
     def test_ping6_hostname_O_p_ubuntu_18_4(self):
         """
         Test 'ping6 <hostname> -O -p' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_p.splitlines())), self.ubuntu_18_4_ping6_hostname_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_p.splitlines(), quiet=True)), self.ubuntu_18_4_ping6_hostname_O_p_streaming_json)
 
     def test_ping6_hostname_O_D_p_s_ubuntu_18_4(self):
         """
         Test 'ping6 <hostname> -O -D -p -s' on Ubuntu 18.4
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_D_p_s.splitlines())), self.ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_D_p_s.splitlines(), quiet=True)), self.ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json)
 
     def test_ping_ip_O_fedora32(self):
         """
         Test 'ping <ip> -O' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_ip_O.splitlines())), self.fedora32_ping_ip_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_ip_O.splitlines(), quiet=True)), self.fedora32_ping_ip_O_streaming_json)
 
     def test_ping_ip_O_D_fedora32(self):
         """
         Test 'ping <ip> -O -D' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_ip_O_D.splitlines())), self.fedora32_ping_ip_O_D_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_ip_O_D.splitlines(), quiet=True)), self.fedora32_ping_ip_O_D_streaming_json)
 
     def test_ping_hostname_O_fedora32(self):
         """
         Test 'ping <hostname> -O' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O.splitlines())), self.fedora32_ping_hostname_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O.splitlines(), quiet=True)), self.fedora32_ping_hostname_O_streaming_json)
 
     def test_ping_hostname_O_p_fedora32(self):
         """
         Test 'ping <hostname> -O -p' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O_p.splitlines())), self.fedora32_ping_hostname_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O_p.splitlines(), quiet=True)), self.fedora32_ping_hostname_O_p_streaming_json)
 
     def test_ping_hostname_O_D_p_s_fedora32(self):
         """
         Test 'ping <hostname> -O -D -p -s' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O_D_p_s.splitlines())), self.fedora32_ping_hostname_O_D_p_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping_hostname_O_D_p_s.splitlines(), quiet=True)), self.fedora32_ping_hostname_O_D_p_s_streaming_json)
 
     def test_ping6_ip_O_p_fedora32(self):
         """
         Test 'ping6 <ip> -O -p' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_ip_O_p.splitlines())), self.fedora32_ping6_ip_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_ip_O_p.splitlines(), quiet=True)), self.fedora32_ping6_ip_O_p_streaming_json)
 
     def test_ping6_ip_O_D_p_fedora32(self):
         """
         Test 'ping6 <ip> -O -D -p' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_ip_O_D_p.splitlines())), self.fedora32_ping6_ip_O_D_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_ip_O_D_p.splitlines(), quiet=True)), self.fedora32_ping6_ip_O_D_p_streaming_json)
 
     def test_ping6_hostname_O_p_fedora32(self):
         """
         Test 'ping6 <hostname> -O -p' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_hostname_O_p.splitlines())), self.fedora32_ping6_hostname_O_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_hostname_O_p.splitlines(), quiet=True)), self.fedora32_ping6_hostname_O_p_streaming_json)
 
     def test_ping6_hostname_O_D_p_s_fedora32(self):
         """
         Test 'ping6 <hostname> -O -D -p -s' on fedora32
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_hostname_O_D_p_s.splitlines())), self.fedora32_ping6_hostname_O_D_p_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.fedora32_ping6_hostname_O_D_p_s.splitlines(), quiet=True)), self.fedora32_ping6_hostname_O_D_p_s_streaming_json)
 
     def test_ping_hostname_p_freebsd12(self):
         """
         Test 'ping <hostname> -p' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname_p.splitlines())), self.freebsd12_ping_hostname_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname_p.splitlines(), quiet=True)), self.freebsd12_ping_hostname_p_streaming_json)
 
     def test_ping_hostname_s_freebsd12(self):
         """
         Test 'ping <hostname> -s' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname_s.splitlines())), self.freebsd12_ping_hostname_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname_s.splitlines(), quiet=True)), self.freebsd12_ping_hostname_s_streaming_json)
 
     def test_ping_ping_hostname_freebsd12(self):
         """
         Test 'ping <hostname>' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname.splitlines())), self.freebsd12_ping_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_hostname.splitlines(), quiet=True)), self.freebsd12_ping_hostname_streaming_json)
 
     def test_ping_ip_p_freebsd12(self):
         """
         Test 'ping <ip> -p' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip_p.splitlines())), self.freebsd12_ping_ip_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip_p.splitlines(), quiet=True)), self.freebsd12_ping_ip_p_streaming_json)
 
     def test_ping_ip_s_freebsd12(self):
         """
         Test 'ping <ip> -s' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip_s.splitlines())), self.freebsd12_ping_ip_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip_s.splitlines(), quiet=True)), self.freebsd12_ping_ip_s_streaming_json)
 
     def test_ping_ip_freebsd12(self):
         """
         Test 'ping6 <ip>' on freebsd127
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip.splitlines())), self.freebsd12_ping_ip_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping_ip.splitlines(), quiet=True)), self.freebsd12_ping_ip_streaming_json)
 
     def test_ping6_hostname_p_freebsd12(self):
         """
         Test 'ping6 <hostname> -p' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname_p.splitlines())), self.freebsd12_ping6_hostname_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname_p.splitlines(), quiet=True)), self.freebsd12_ping6_hostname_p_streaming_json)
 
     def test_ping6_hostname_s_freebsd12(self):
         """
         Test 'ping6 <hostname> -s' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname_s.splitlines())), self.freebsd12_ping6_hostname_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname_s.splitlines(), quiet=True)), self.freebsd12_ping6_hostname_s_streaming_json)
 
     def test_ping6_hostname_freebsd12(self):
         """
         Test 'ping6 <hostname>' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname.splitlines())), self.freebsd12_ping6_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_hostname.splitlines(), quiet=True)), self.freebsd12_ping6_hostname_streaming_json)
 
     def test_ping6_ip_p_freebsd12(self):
         """
         Test 'ping6 <ip> -p' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip_p.splitlines())), self.freebsd12_ping6_ip_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip_p.splitlines(), quiet=True)), self.freebsd12_ping6_ip_p_streaming_json)
 
     def test_ping6_ip_s_freebsd12(self):
         """
         Test 'ping6 <ip> -s' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip_s.splitlines())), self.freebsd12_ping6_ip_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip_s.splitlines(), quiet=True)), self.freebsd12_ping6_ip_s_streaming_json)
 
     def test_ping6_ip_freebsd12(self):
         """
         Test 'ping6 <ip>' on freebsd12
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip.splitlines())), self.freebsd12_ping6_ip_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.freebsd12_ping6_ip.splitlines(), quiet=True)), self.freebsd12_ping6_ip_streaming_json)
 
     def test_ping_hostname_p_osx_10_14_6(self):
         """
         Test 'ping <hostname> -p' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_hostname_p.splitlines())), self.osx_10_14_6_ping_hostname_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_hostname_p.splitlines(), quiet=True)), self.osx_10_14_6_ping_hostname_p_streaming_json)
 
     def test_ping_hostname_s_osx_10_14_6(self):
         """
         Test 'ping <hostname> -s' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_hostname_s.splitlines())), self.osx_10_14_6_ping_hostname_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_hostname_s.splitlines(), quiet=True)), self.osx_10_14_6_ping_hostname_s_streaming_json)
 
     def test_ping_hostname_osx_10_14_6(self):
         """
         Test 'ping <hostname>' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_hostname.splitlines())), self.osx_10_14_6_ping_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_hostname.splitlines(), quiet=True)), self.osx_10_14_6_ping_hostname_streaming_json)
 
     def test_ping_ip_p_osx_10_14_6(self):
         """
         Test 'ping <ip> -p' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_p.splitlines())), self.osx_10_14_6_ping_ip_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_p.splitlines(), quiet=True)), self.osx_10_14_6_ping_ip_p_streaming_json)
 
     def test_ping_ip_s_osx_10_14_6(self):
         """
         Test 'ping <ip> -s' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_s.splitlines())), self.osx_10_14_6_ping_ip_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_s.splitlines(), quiet=True)), self.osx_10_14_6_ping_ip_s_streaming_json)
 
     def test_ping_ip_osx_10_14_6(self):
         """
         Test 'ping <ip>' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip.splitlines())), self.osx_10_14_6_ping_ip_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip.splitlines(), quiet=True)), self.osx_10_14_6_ping_ip_streaming_json)
 
     def test_ping_ip_unreachable_osx_10_14_6(self):
         """
         Test 'ping <ip>' with host unreachable error on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_unreachable.splitlines())), self.osx_10_14_6_ping_ip_unreachable_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_unreachable.splitlines(), quiet=True)), self.osx_10_14_6_ping_ip_unreachable_streaming_json)
 
     def test_ping_ip_unknown_errors_osx_10_14_6(self):
         """
         Test 'ping <ip>' with unknown/unparsable errors on osx 10.14.6
         """
-        g = jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_unknown_errors.splitlines())
+        g = jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_unknown_errors.splitlines(), quiet=True)
         with self.assertRaises(IndexError):
             list(g)
 
@@ -729,43 +729,43 @@ class MyTests(unittest.TestCase):
         """
         Test 'ping6 <hostname> -p' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_hostname_p.splitlines())), self.osx_10_14_6_ping6_hostname_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_hostname_p.splitlines(), quiet=True)), self.osx_10_14_6_ping6_hostname_p_streaming_json)
 
     def test_ping6_hostname_s_osx_10_14_6(self):
         """
         Test 'ping6 <hostname> -s' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_hostname_s.splitlines())), self.osx_10_14_6_ping6_hostname_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_hostname_s.splitlines(), quiet=True)), self.osx_10_14_6_ping6_hostname_s_streaming_json)
 
     def test_ping6_hostname_osx_10_14_6(self):
         """
         Test 'ping6 <hostname>' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_hostname.splitlines())), self.osx_10_14_6_ping6_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_hostname.splitlines(), quiet=True)), self.osx_10_14_6_ping6_hostname_streaming_json)
 
     def test_ping6_ip_p_osx_10_14_6(self):
         """
         Test 'ping6 <ip> -p' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_p.splitlines())), self.osx_10_14_6_ping6_ip_p_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_p.splitlines(), quiet=True)), self.osx_10_14_6_ping6_ip_p_streaming_json)
 
     def test_ping6_ip_s_osx_10_14_6(self):
         """
         Test 'ping6 <ip> -s' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_s.splitlines())), self.osx_10_14_6_ping6_ip_s_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_s.splitlines(), quiet=True)), self.osx_10_14_6_ping6_ip_s_streaming_json)
 
     def test_ping6_ip_osx_10_14_6(self):
         """
         Test 'ping6 <ip>' on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip.splitlines())), self.osx_10_14_6_ping6_ip_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip.splitlines(), quiet=True)), self.osx_10_14_6_ping6_ip_streaming_json)
 
     def test_ping6_ip_unparsable_osx_10_14_6(self):
         """
         Test 'ping6 <ip>' with unparsable lines on osx 10.14.6
         """
-        g = jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_unparsable.splitlines())
+        g = jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_unparsable.splitlines(), quiet=True)
         with self.assertRaises(IndexError):
             list(g)
 
@@ -773,25 +773,25 @@ class MyTests(unittest.TestCase):
         """
         Test 'ping <ip>' to broadcast IP to get duplicate replies on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_dup.splitlines())), self.osx_10_14_6_ping_ip_dup_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping_ip_dup.splitlines(), quiet=True)), self.osx_10_14_6_ping_ip_dup_streaming_json)
 
     def test_ping6_ip_dup_osx_10_14_6(self):
         """
         Test 'ping6 <ip>' to broadcast IP to get duplicate replies on osx 10.14.6
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_dup.splitlines())), self.osx_10_14_6_ping6_ip_dup_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.osx_10_14_6_ping6_ip_dup.splitlines(), quiet=True)), self.osx_10_14_6_ping6_ip_dup_streaming_json)
 
     def test_ping_ip_O_pi(self):
         """
         Test 'ping6 <ip> -O' on raspberry pi
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.pi_ping_ip_O.splitlines())), self.pi_ping_ip_O_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.pi_ping_ip_O.splitlines(), quiet=True)), self.pi_ping_ip_O_streaming_json)
 
     def test_ping_ip_O_D_pi(self):
         """
         Test 'ping6 <ip> -O -D' on raspberry pi
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.pi_ping_ip_O_D.splitlines())), self.pi_ping_ip_O_D_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.pi_ping_ip_O_D.splitlines(), quiet=True)), self.pi_ping_ip_O_D_streaming_json)
 
 
 if __name__ == '__main__':

@@ -114,7 +114,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `-h` help. Use `jc -h --parser_name` for parser documentation
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
-- `-q` quiet mode. Suppresses parser warning messages
+- `-q` quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)
 - `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
 - `-u` unbuffer output
 - `-v` version information

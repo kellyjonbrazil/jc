@@ -330,15 +330,15 @@ def helptext():
     Parsers:
 {parsers_string}
     Options:
-            -a               about jc
-            -d               debug (-dd for verbose debug)
-            -h               help (-h --parser_name for parser documentation)
-            -m               monochrome output
-            -p               pretty print output
-            -q               quiet - suppress parser warnings
-            -r               raw JSON output
-            -u               unbuffer output
-            -v               version info
+            -a    about jc
+            -d    debug (-dd for verbose debug)
+            -h    help (-h --parser_name for parser documentation)
+            -m    monochrome output
+            -p    pretty print output
+            -q    quiet - suppress parser warnings (-qq to ignore streaming errors)
+            -r    raw JSON output
+            -u    unbuffer output
+            -v    version info
 
     Examples:
             Standard Syntax:
@@ -528,6 +528,7 @@ def main():
     help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
+    ignore_exceptions = True if options.count('q') > 1 else False
     raw = 'r' in options
     unbuffer = 'u' in options
     version_info = 'v' in options
@@ -623,7 +624,7 @@ def main():
 
         # streaming
         if getattr(parser.info, 'streaming', None):
-            result = parser.parse(sys.stdin, raw=raw, quiet=quiet)
+            result = parser.parse(sys.stdin, raw=raw, quiet=quiet, ignore_exceptions=ignore_exceptions)
             for line in result:
                 print(json_out(line,
                                pretty=pretty,
@@ -672,7 +673,7 @@ def main():
         else:
             streaming_msg = ''
             if getattr(parser.info, 'streaming', None):
-                streaming_msg = '             Use the -q option to ignore streaming parser errors.\n'
+                streaming_msg = '             Use the -qq option to ignore streaming parser errors.\n'
 
             jc.utils.error_message(
                 f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'

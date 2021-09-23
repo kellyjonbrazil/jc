@@ -117,15 +117,16 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False):
+def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
 
     Parameters:
 
-        data:        (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
-        raw:         (boolean)   output preprocessed JSON if True
-        quiet:       (boolean)   suppress warning messages and ignore parsing exceptions if True
+        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
+        raw:               (boolean)   output preprocessed JSON if True
+        quiet:             (boolean)   suppress warning messages if True
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
     Yields:
 
@@ -225,7 +226,7 @@ def parse(data, raw=False, quiet=False):
                     'timezone': tz or None
                 }
 
-            yield stream_success(output_line, quiet) if raw else stream_success(_process(output_line), quiet)
+            yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
             
         except Exception as e:
-            yield stream_error(e, quiet, line)
+            yield stream_error(e, ignore_exceptions, line)

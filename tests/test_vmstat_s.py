@@ -74,7 +74,7 @@ class MyTests(unittest.TestCase):
 
     def test_vmstat_unparsable(self):
         data = 'unparsable data'
-        g = jc.parsers.vmstat_s.parse(data.splitlines())
+        g = jc.parsers.vmstat_s.parse(data.splitlines(), quiet=True)
         with self.assertRaises(KeyError):
             list(g)
 
@@ -82,43 +82,43 @@ class MyTests(unittest.TestCase):
         """
         Test 'vmstat' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat.splitlines())), self.centos_7_7_vmstat_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat.splitlines(), quiet=True)), self.centos_7_7_vmstat_streaming_json)
 
     def test_vmstat_a_centos_7_7(self):
         """
         Test 'vmstat -a' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_a.splitlines())), self.centos_7_7_vmstat_a_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_a.splitlines(), quiet=True)), self.centos_7_7_vmstat_a_streaming_json)
 
     def test_vmstat_w_centos_7_7(self):
         """
         Test 'vmstat -w' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_w.splitlines())), self.centos_7_7_vmstat_w_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_w.splitlines(), quiet=True)), self.centos_7_7_vmstat_w_streaming_json)
 
     def test_vmstat_at_5_10_centos_7_7(self):
         """
         Test 'vmstat -at 5 10' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_at_5_10.splitlines())), self.centos_7_7_vmstat_at_5_10_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_at_5_10.splitlines(), quiet=True)), self.centos_7_7_vmstat_at_5_10_streaming_json)
 
     def test_vmstat_awt_centos_7_7(self):
         """
         Test 'vmstat -awt' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_awt.splitlines())), self.centos_7_7_vmstat_awt_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_awt.splitlines(), quiet=True)), self.centos_7_7_vmstat_awt_streaming_json)
 
     def test_vmstat_d_centos_7_7(self):
         """
         Test 'vmstat -d' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_d.splitlines())), self.centos_7_7_vmstat_d_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_d.splitlines(), quiet=True)), self.centos_7_7_vmstat_d_streaming_json)
 
     def test_vmstat_dt_centos_7_7(self):
         """
         Test 'vmstat -dt' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_dt.splitlines())), self.centos_7_7_vmstat_dt_streaming_json)
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_dt.splitlines(), quiet=True)), self.centos_7_7_vmstat_dt_streaming_json)
 
 if __name__ == '__main__':
     unittest.main()
