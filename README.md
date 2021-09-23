@@ -276,7 +276,7 @@ Streaming parsers accept any iterable object and return a generator iterator obj
 
 To use the generator object in your code, simply loop through it:
 
-```
+```python
 import jc.parsers.ls_s
 
 result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
