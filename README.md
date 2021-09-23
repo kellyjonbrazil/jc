@@ -230,7 +230,7 @@ Most parsers load all of the data from STDIN, parse it, then output the entire J
 
 > Note: Streaming parsers cannot be used with the "magic" syntax
 
-####Ignoring Errors
+#### Ignoring Errors
 
 You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or the `quiet=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
 
@@ -254,7 +254,7 @@ Unsuccessfully parsed line with `-q` option:
 }
 ```
 
-####Unbuffering Output
+#### Unbuffering Output
 
 Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. `ping`):
 ```
@@ -270,7 +270,7 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 ```
 > Note: Unbuffered output can be slower for large data streams.
 
-####Using Streaming Parsers as Python Modules
+#### Using Streaming Parsers as Python Modules
 
 Streaming parsers accept any iterable object and return a generator iterator object allowing lazy processing of the data. The input data should iterate on lines of string data. Examples of good input data are `sys.stdin` or `str.splitlines()`.
 
