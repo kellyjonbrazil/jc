@@ -108,7 +108,7 @@ Note: Streaming parsers cannot be used with the "magic" syntax
 
 \fBIgnoring Errors\fP
 
-You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the \fB-qq\fP cli option. This will add a \fB_meta\fP object to the JSON output with a \fBsuccess\fP attribute. If \fBsuccess\fP is \fBtrue\fP, then there were no issues parsing the line. If \fBsuccess\fP is \fBfalse\fP, then a parsing issue was found and \fBerror\fP and \fBline\fP fields will be added to include a short error description and the contents of the unparsable line, respectively:
+You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the \fB-qq\fP cli option. This will add a \fB_jc_meta\fP object to the JSON output with a \fBsuccess\fP attribute. If \fBsuccess\fP is \fBtrue\fP, then there were no issues parsing the line. If \fBsuccess\fP is \fBfalse\fP, then a parsing issue was found and \fBerror\fP and \fBline\fP fields will be added to include a short error description and the contents of the unparsable line, respectively:
 
 .RS
 Successfully parsed line with \fB-qq\fP option:
@@ -117,7 +117,7 @@ Successfully parsed line with \fB-qq\fP option:
 
   "command_data": "data",
   
-  "_meta": {
+  "_jc_meta": {
   
     "success": true
     
@@ -130,7 +130,7 @@ Unsuccessfully parsed line with \fB-qq\fP option:
 .RS
 {
 
-  "_meta": {
+  "_jc_meta": {
   
     "success": false,
     

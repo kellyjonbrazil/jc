@@ -174,21 +174,23 @@ def convert_to_bool(value):
 
 
 def stream_success(output_line, ignore_exceptions):
-    """add _meta object to output line if -q (quiet) option is used"""
+    """add _meta object to output line if -qq (ignore_exceptions) option is used"""
     if ignore_exceptions:
-        output_line.update({'_meta': {'success': True}})
+        output_line.update({'_jc_meta': {'success': True}})
 
     return output_line
 
 
 def stream_error(e, ignore_exceptions, line):
-    """reraise the stream exception with annotation or print an error _meta field if ignore_exceptions=True"""
+    """reraise the stream exception with annotation or print an error _jc_meta
+       field if ignore_exceptions=True
+    """
     if not ignore_exceptions:
         e.args = (str(e) + '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.',)
         raise e
     else:
         return {
-            '_meta':
+            '_jc_meta':
                 {
                     'success': False,
                     'error': f'{e.__class__.__name__}: {e}',

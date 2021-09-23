@@ -410,7 +410,7 @@ class MyTests(unittest.TestCase):
         Test 'ping' with -qq (ignore_exceptions) option option and error
         """
         data_in = 'not ping'
-        expected = json.loads('[{"_meta":{"success":false,"error":"ParseError: Could not detect ping OS","line":"not ping"}}]')
+        expected = json.loads('[{"_jc_meta":{"success":false,"error":"ParseError: Could not detect ping OS","line":"not ping"}}]')
         self.assertEqual(list(jc.parsers.ping_s.parse(data_in.splitlines(), quiet=True, ignore_exceptions=True)), expected)
 
     def test_ping_ip_O_centos_7_7(self):
