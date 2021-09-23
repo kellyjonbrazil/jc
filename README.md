@@ -277,12 +277,11 @@ Streaming parsers accept any iterable object and return a generator iterator obj
 To use the generator object in your code, simply loop through it:
 
 ```
-import json
 import jc.parsers.ls_s
 
 result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
 for item in result:
-    item_dict = json.loads(item)
+    print(item["filename"])
 ```
 
 ### Custom Parsers
