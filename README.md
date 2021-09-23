@@ -274,7 +274,7 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 
 Streaming parsers accept any iterable object and return a generator iterator object allowing lazy processing of the data. The input data should iterate on lines of string data. Examples of good input data are `sys.stdin` or `str.splitlines()`.
 
-To use the generator object in your code, simply loop through it:
+To use the generator object in your code, simply loop through it or use the [next()](https://docs.python.org/3/library/functions.html#next) builtin function:
 ```python
 import jc.parsers.ls_s
 
