@@ -248,7 +248,7 @@ Unsuccessfully parsed line with `-qq` option:
 {
   "_meta": {
     "success": false,
-    "error": "error parsing line",
+    "error": "error message",
     "line": "original line data"
   }
 }

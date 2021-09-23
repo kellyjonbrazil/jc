@@ -134,7 +134,7 @@ Unsuccessfully parsed line with \fB-qq\fP option:
   
     "success": false,
     
-    "error": "error parsing line",
+    "error": "error message",
     
     "line": "original line data"
     
