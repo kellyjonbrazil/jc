@@ -235,7 +235,7 @@ Most parsers load all of the data from STDIN, parse it, then output the entire J
 You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-q` cli option or the `quiet=True` argument with the `parse()` function. This will add a `_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
 
 Successfully parsed line with `-q` option:
-```
+```json
 {
   "command_data": "data",
   "_meta": {
@@ -244,7 +244,7 @@ Successfully parsed line with `-q` option:
 }
 ```
 Unsuccessfully parsed line with `-q` option:
-```
+```json
 {
   "_meta": {
     "success": false,
@@ -275,7 +275,6 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 Streaming parsers accept any iterable object and return a generator iterator object allowing lazy processing of the data. The input data should iterate on lines of string data. Examples of good input data are `sys.stdin` or `str.splitlines()`.
 
 To use the generator object in your code, simply loop through it:
-
 ```python
 import jc.parsers.ls_s
 
