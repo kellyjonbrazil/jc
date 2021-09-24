@@ -2,6 +2,10 @@
 
 Options supported: `-a`, `-w`, `-d`, `-t`
 
+The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ vmstat | jc --vmstat-s
