@@ -116,7 +116,7 @@ def has_data(data):
 
         Boolean      True if input string (data) contains non-whitespace characters, otherwise False
     """
-    return True if data and not data.isspace() else False
+    return bool(data and not data.isspace())
 
 
 def convert_to_int(value):
@@ -204,7 +204,7 @@ def convert_to_bool(value):
             pass
 
         if value:
-            return True if value.lower() in truthy else False
+            return value.lower() in truthy
 
     return False
 
@@ -224,15 +224,15 @@ def stream_error(e, ignore_exceptions, line):
     if not ignore_exceptions:
         e.args = (str(e) + '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.',)
         raise e
-    else:
-        return {
-            '_jc_meta':
-                {
-                    'success': False,
-                    'error': f'{e.__class__.__name__}: {e}',
-                    'line': line.strip()
-                }
-        }
+
+    return {
+        '_jc_meta':
+            {
+                'success': False,
+                'error': f'{e.__class__.__name__}: {e}',
+                'line': line.strip()
+            }
+    }
 
 
 class timestamp:
@@ -307,10 +307,8 @@ class timestamp:
         if 'UTC' in data:
             utc_tz = True
             if 'UTC+' in data or 'UTC-' in data:
-                if 'UTC+0000' in data or 'UTC-0000' in data:
-                    utc_tz = True
-                else:
-                    utc_tz = False
+                utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
+
         elif '+0000' in data or '-0000' in data:
             utc_tz = True
 

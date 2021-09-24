@@ -13,7 +13,7 @@ import shlex
 import subprocess
 import json
 import jc
-import jc.appdirs as appdirs
+from jc import appdirs
 import jc.utils
 import jc.tracebackplus
 from jc.exceptions import LibraryNotInstalled, ParseError
@@ -26,9 +26,9 @@ try:
     from pygments.token import (Name, Number, String, Keyword)
     from pygments.lexers import JsonLexer
     from pygments.formatters import Terminal256Formatter
-    pygments_installed = True
+    PYGMENTS_INSTALLED = True
 except Exception:
-    pygments_installed = False
+    PYGMENTS_INSTALLED = False
 
 
 class info():
@@ -144,7 +144,7 @@ if os.path.isdir(local_parsers_dir):
 
 # We only support 2.3.0+, pygments changed color names in 2.4.0.
 # startswith is sufficient and avoids potential exceptions from split and int.
-if pygments_installed:
+if PYGMENTS_INSTALLED:
     if pygments.__version__.startswith('2.3.'):
         PYGMENT_COLOR = {
             'black': '#ansiblack',
@@ -233,7 +233,7 @@ def set_env_colors(env_colors=None):
 
 def piped_output():
     """Return False if stdout is a TTY. True if output is being piped to another program"""
-    return False if sys.stdout.isatty() else True
+    return not sys.stdout.isatty()
 
 
 def ctrlc(signum, frame):
@@ -241,9 +241,9 @@ def ctrlc(signum, frame):
     sys.exit(JC_ERROR_EXIT)
 
 
-def parser_shortname(parser_argument):
+def parser_shortname(parser_arg):
     """Return short name of the parser with dashes and no -- prefix"""
-    return parser_argument[2:]
+    return parser_arg[2:]
 
 
 def parser_argument(parser):
@@ -401,8 +401,7 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
         return str(highlight(json.dumps(data, indent=indent, separators=separators, ensure_ascii=False),
                              JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
-    else:
-        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
+    return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
 
 
 def magic_parser(args):
@@ -429,7 +428,7 @@ def magic_parser(args):
             return False, None, None, []
 
         # option found - populate option list
-        elif arg.startswith('-'):
+        if arg.startswith('-'):
             options.extend(args_given.pop(0)[1:])
 
         # command found if iterator didn't already stop - stop iterating
@@ -460,7 +459,7 @@ def magic_parser(args):
     found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     return (
-        True if found_parser else False,    # was a suitable parser found?
+        bool(found_parser),                 # was a suitable parser found?
         args_given,                         # run_command
         found_parser,                       # the parser selected
         options                             # jc options to preserve
@@ -485,8 +484,7 @@ def run_user_command(command):
 
 def combined_exit_code(program_exit=0, jc_exit=0):
     exit_code = program_exit + jc_exit
-    if exit_code > 255:
-        exit_code = 255
+    exit_code = min(exit_code, 255)
     return exit_code
 
 
@@ -523,12 +521,12 @@ def main():
 
     about = 'a' in options
     debug = 'd' in options
-    verbose_debug = True if options.count('d') > 1 else False
+    verbose_debug = options.count('d') > 1
     mono = 'm' in options
     help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
-    ignore_exceptions = True if options.count('q') > 1 else False
+    ignore_exceptions = options.count('q') > 1
     raw = 'r' in options
     unbuffer = 'u' in options
     version_info = 'v' in options
@@ -536,7 +534,7 @@ def main():
     if verbose_debug:
         jc.tracebackplus.enable(context=11)
 
-    if not pygments_installed:
+    if not PYGMENTS_INSTALLED:
         mono = True
 
     if about:
@@ -568,23 +566,23 @@ def main():
         except FileNotFoundError:
             if debug:
                 raise
-            else:
-                jc.utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
-                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+            
+            jc.utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except OSError:
             if debug:
                 raise
-            else:
-                jc.utils.error_message([f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.'])
-                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+            jc.utils.error_message([f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.'])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:
             if debug:
                 raise
-            else:
-                jc.utils.error_message([f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'])
-                sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+            jc.utils.error_message([f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif run_command is not None:
         jc.utils.error_message([f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
@@ -651,34 +649,34 @@ def main():
     except (ParseError, LibraryNotInstalled) as e:
         if debug:
             raise
-        else:
-            jc.utils.error_message([f'Parser issue with {parser_name}:',
-                                    f'{e.__class__.__name__}: {e}',
-                                    'For details use the -d or -dd option. Use "jc -h" for help.'])
-            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        jc.utils.error_message([f'Parser issue with {parser_name}:',
+                                f'{e.__class__.__name__}: {e}',
+                                'For details use the -d or -dd option. Use "jc -h" for help.'])
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except json.JSONDecodeError:
         if debug:
             raise
-        else:
-            jc.utils.error_message(['There was an issue generating the JSON output.',
-                                    'For details use the -d or -dd option.'])
-            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        jc.utils.error_message(['There was an issue generating the JSON output.',
+                                'For details use the -d or -dd option.'])
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except Exception:
         if debug:
             raise
-        else:
-            streaming_msg = ''
-            if getattr(parser.info, 'streaming', None):
-                streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
-            jc.utils.error_message([
-                f'{parser_name} parser could not parse the input data. Did you use the correct parser?',
-                f'{streaming_msg}',
-                'For details use the -d or -dd option. Use "jc -h" for help.'
-            ])
-            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+        streaming_msg = ''
+        if getattr(parser.info, 'streaming', None):
+            streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
+
+        jc.utils.error_message([
+            f'{parser_name} parser could not parse the input data. Did you use the correct parser?',
+            f'{streaming_msg}',
+            'For details use the -d or -dd option. Use "jc -h" for help.'
+        ])
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 
 if __name__ == '__main__':
