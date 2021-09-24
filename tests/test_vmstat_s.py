@@ -43,6 +43,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-dt.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_vmstat_dt = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_04_vmstat_1_long = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-streaming.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_vmstat_streaming_json = json.loads(f.read())
@@ -65,12 +68,15 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-dt-streaming.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_vmstat_dt_streaming_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long-streaming.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_04_vmstat_1_long_streaming_json = json.loads(f.read())
+
 
     def test_vmstat_nodata(self):
         """
         Test 'vmstat' with no data
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse('')), [])
+        self.assertEqual(list(jc.parsers.vmstat_s.parse('', quiet=True)), [])
 
     def test_vmstat_unparsable(self):
         data = 'unparsable data'
@@ -119,6 +125,12 @@ class MyTests(unittest.TestCase):
         Test 'vmstat -dt' on Centos 7.7
         """
         self.assertEqual(list(jc.parsers.vmstat_s.parse(self.centos_7_7_vmstat_dt.splitlines(), quiet=True)), self.centos_7_7_vmstat_dt_streaming_json)
+
+    def test_vmstat_1_long_ubuntu_18_04(self):
+        """
+        Test 'vmstat -1' (on ubuntu) with long output that reprints the header rows
+        """
+        self.assertEqual(list(jc.parsers.vmstat_s.parse(self.ubuntu_18_04_vmstat_1_long.splitlines(), quiet=True)), self.ubuntu_18_04_vmstat_1_long_streaming_json)
 
 if __name__ == '__main__':
     unittest.main()

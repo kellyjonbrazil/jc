@@ -38,6 +38,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-w.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_vmstat_w = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_04_vmstat_1_long = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_vmstat_json = json.loads(f.read())
@@ -59,6 +62,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-w.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_vmstat_w_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_18_04_vmstat_1_long_json = json.loads(f.read())
 
     def test_vmstat_nodata(self):
         """
@@ -107,6 +113,12 @@ class MyTests(unittest.TestCase):
         Test 'vmstat -w'
         """
         self.assertEqual(jc.parsers.vmstat.parse(self.centos_7_7_vmstat_w, quiet=True), self.centos_7_7_vmstat_w_json)
+
+    def test_vmstat_1_long(self):
+        """
+        Test 'vmstat -1' (on ubuntu) with long output that reprints the header rows
+        """
+        self.assertEqual(jc.parsers.vmstat.parse(self.ubuntu_18_04_vmstat_1_long, quiet=True), self.ubuntu_18_04_vmstat_1_long_json)
 
 
 if __name__ == '__main__':
