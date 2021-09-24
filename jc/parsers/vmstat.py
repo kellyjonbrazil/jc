@@ -209,6 +209,9 @@ def parse(data, raw=False, quiet=False):
 
 
             # skip header rows
+            if (procs or disk) and (line.startswith('procs') or line.startswith('disk')):
+                continue
+
             if 'swpd' in line and 'free' in line and 'buff' in line and  'cache' in line:
                 buff_cache = True
                 tz = line.strip().split()[-1] if tstamp else None
