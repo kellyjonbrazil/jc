@@ -99,6 +99,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     for line in data:
         try:
+            output_line = {}
+
             #
             # parse the input here
             #

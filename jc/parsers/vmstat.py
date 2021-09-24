@@ -159,7 +159,7 @@ def _process(proc_data):
             ts = jc.utils.timestamp(f'{entry["timestamp"]} {entry["timezone"]}')
             entry['epoch'] = ts.naive
             entry['epoch_utc'] = ts.utc
-    
+
     return proc_data
 
 
@@ -195,12 +195,12 @@ def parse(data, raw=False, quiet=False):
             # detect output type
             if not procs and not disk and line.startswith('procs'):
                 procs = True
-                tstamp = True if '-timestamp-' in line else False
+                tstamp = '-timestamp-' in line
                 continue
 
             if not procs and not disk and line.startswith('disk'):
                 disk = True
-                tstamp = True if '-timestamp-' in line else False
+                tstamp = '-timestamp-' in line
                 continue
 
 
@@ -210,7 +210,7 @@ def parse(data, raw=False, quiet=False):
                 tz = line.strip().split()[-1] if tstamp else None
                 continue
 
-            elif 'swpd' in line and 'free' in line and 'inact' in line and  'active' in line:
+            if 'swpd' in line and 'free' in line and 'inact' in line and  'active' in line:
                 buff_cache = False
                 tz = line.strip().split()[-1] if tstamp else None
                 continue
