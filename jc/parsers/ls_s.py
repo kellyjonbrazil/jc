@@ -173,6 +173,6 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             output_line['date'] = ' '.join(parsed_line[5:8])
 
             yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
-            
+
         except Exception as e:
             yield stream_error(e, ignore_exceptions, line)
