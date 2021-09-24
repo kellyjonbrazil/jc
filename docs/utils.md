@@ -4,14 +4,16 @@ jc - JSON CLI output utility utils
 
 ## warning_message
 ```python
-warning_message(message)
+warning_message(message_lines)
 ```
 
-Prints a warning message for non-fatal issues
+Prints warning message for non-fatal issues. The first line is appended with
+'jc:  Warning - ' and subsequent lines are indented. Wraps text as needed based
+on the terminal width.
 
 Parameters:
 
-    message:        (string) text of message
+    message:   (list) list of string lines
 
 Returns:
 
@@ -20,14 +22,16 @@ Returns:
 
 ## error_message
 ```python
-error_message(message)
+error_message(message_lines)
 ```
 
-Prints an error message for fatal issues
+Prints an error message for fatal issues. The first line is appended with
+'jc:  Error - ' and subsequent lines are indented. Wraps text as needed based
+on the terminal width.
 
 Parameters:
 
-    message:        (string) text of message
+    message:   (list) list of string lines
 
 Returns:
 

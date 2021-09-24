@@ -2,41 +2,77 @@
 import sys
 import re
 import locale
+import shutil
 from datetime import datetime, timezone
+from textwrap import TextWrapper
 
 
-def warning_message(message):
+def warning_message(message_lines):
     """
-    Prints a warning message for non-fatal issues
+    Prints warning message for non-fatal issues. The first line is appended with
+    'jc:  Warning - ' and subsequent lines are indented. Wraps text as needed based
+    on the terminal width.
 
     Parameters:
 
-        message:        (string) text of message
+        message:   (list) list of string lines
 
     Returns:
 
         None - just prints output to STDERR
     """
+    # this is for backwards compatibility with existing custom parsers
+    if isinstance(message_lines, str):
+        message_lines = [message_lines]
 
-    error_string = f'jc:  Warning - {message}'
-    print(error_string, file=sys.stderr)
+    columns = shutil.get_terminal_size().columns
+
+    first_wrapper = TextWrapper(width=columns, subsequent_indent=' ' * 15)
+    next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 15,
+                               subsequent_indent=' ' * 15)
+
+    first_line = message_lines.pop(0)
+    first_str = f'jc:  Warning - {first_line}'
+    first_str = first_wrapper.fill(first_str)
+    print(first_str, file=sys.stderr)
+
+    for line in message_lines:
+        if line == '':
+            continue
+        message = next_wrapper.fill(line)
+        print(message, file=sys.stderr)
 
 
-def error_message(message):
+def error_message(message_lines):
     """
-    Prints an error message for fatal issues
+    Prints an error message for fatal issues. The first line is appended with
+    'jc:  Error - ' and subsequent lines are indented. Wraps text as needed based
+    on the terminal width.
 
     Parameters:
 
-        message:        (string) text of message
+        message:   (list) list of string lines
 
     Returns:
 
         None - just prints output to STDERR
     """
+    columns = shutil.get_terminal_size().columns
 
-    error_string = f'jc:  Error - {message}'
-    print(error_string, file=sys.stderr)
+    first_wrapper = TextWrapper(width=columns, subsequent_indent=' ' * 13)
+    next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 13,
+                               subsequent_indent=' ' * 13)
+
+    first_line = message_lines.pop(0)
+    first_str = f'jc:  Error - {first_line}'
+    first_str = first_wrapper.fill(first_str)
+    print(first_str, file=sys.stderr)
+
+    for line in message_lines:
+        if line == '':
+            continue
+        message = next_wrapper.fill(line)
+        print(message, file=sys.stderr)
 
 
 def compatibility(mod_name, compatible):
@@ -64,8 +100,8 @@ def compatibility(mod_name, compatible):
     if not platform_found:
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
-        warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n'
-                        f'               Compatible platforms: {compat_list}')
+        warning_message([f'{mod} parser not compatible with your OS ({sys.platform}).',
+                         f'Compatible platforms: {compat_list}'])
 
 
 def has_data(data):

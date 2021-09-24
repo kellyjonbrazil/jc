@@ -219,7 +219,7 @@ def set_env_colors(env_colors=None):
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
-        jc.utils.warning_message('Could not parse JC_COLORS environment variable')
+        jc.utils.warning_message(['Could not parse JC_COLORS environment variable'])
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
@@ -569,25 +569,25 @@ def main():
             if debug:
                 raise
             else:
-                jc.utils.error_message(f'"{run_command_str}" command could not be found. For details use the -d or -dd option.')
+                jc.utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except OSError:
             if debug:
                 raise
             else:
-                jc.utils.error_message(f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.')
+                jc.utils.error_message([f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.'])
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:
             if debug:
                 raise
             else:
-                jc.utils.error_message(f'"{run_command_str}" command could not be run. For details use the -d or -dd option.')
+                jc.utils.error_message([f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'])
                 sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif run_command is not None:
-        jc.utils.error_message(f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.')
+        jc.utils.error_message([f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # find the correct parser
@@ -606,16 +606,16 @@ def main():
                 break
 
         if not found:
-            jc.utils.error_message('Missing or incorrect arguments. Use "jc -h" for help.')
+            jc.utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # check for input errors (pipe vs magic)
     if not sys.stdin.isatty() and magic_stdout:
-        jc.utils.error_message('Piped data and Magic syntax used simultaneously. Use "jc -h" for help.')
+        jc.utils.error_message(['Piped data and Magic syntax used simultaneously. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif sys.stdin.isatty() and magic_stdout is None:
-        jc.utils.error_message('Missing piped data. Use "jc -h" for help.')
+        jc.utils.error_message(['Missing piped data. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # parse and print to stdout
@@ -652,19 +652,17 @@ def main():
         if debug:
             raise
         else:
-            jc.utils.error_message(
-                f'Parser issue with {parser_name}:\n'
-                f'             {e.__class__.__name__}: {e}\n'
-                '             For details use the -d or -dd option. Use "jc -h" for help.')
+            jc.utils.error_message([f'Parser issue with {parser_name}:',
+                                    f'{e.__class__.__name__}: {e}',
+                                    'For details use the -d or -dd option. Use "jc -h" for help.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except json.JSONDecodeError:
         if debug:
             raise
         else:
-            jc.utils.error_message(
-                'There was an issue generating the JSON output.\n'
-                '             For details use the -d or -dd option.')
+            jc.utils.error_message(['There was an issue generating the JSON output.',
+                                    'For details use the -d or -dd option.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except Exception:
@@ -673,12 +671,13 @@ def main():
         else:
             streaming_msg = ''
             if getattr(parser.info, 'streaming', None):
-                streaming_msg = '             Use the -qq option to ignore streaming parser errors.\n'
+                streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
-            jc.utils.error_message(
-                f'{parser_name} parser could not parse the input data. Did you use the correct parser?\n'
-                f'{streaming_msg}'
-                '             For details use the -d or -dd option. Use "jc -h" for help.')
+            jc.utils.error_message([
+                f'{parser_name} parser could not parse the input data. Did you use the correct parser?',
+                f'{streaming_msg}',
+                'For details use the -d or -dd option. Use "jc -h" for help.'
+            ])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
 
