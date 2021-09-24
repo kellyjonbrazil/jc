@@ -32,7 +32,7 @@ This will make it easier to use tools like `jq` without requiring escaping of sp
 **Examples**
 
 Bad:
-```
+```json
 {
   "Interface 1": [
     "192.168.1.1",
@@ -44,7 +44,7 @@ Bad:
 }
 ```
 Good:
-```
+```json
 [
   {
     "interface": "Interface 1",
