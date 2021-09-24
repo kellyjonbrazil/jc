@@ -297,7 +297,8 @@ Local plugin filenames must be valid python module names, therefore must consist
 > Note: The application data directory follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 
 ### Caveats
-**Locale:**
+
+#### Locale:
 
 For best results set the `LANG` locale environment variable to `C` or `en_US.UTF-8`. For example, either by setting directly on the command-line:
 ```
@@ -308,7 +309,7 @@ or by exporting to the environment before running commands:
 $ export LANG=C
 ```
 
-**Timezones:**
+#### Timezones:
 
 Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on).
 
