@@ -125,14 +125,14 @@ Returns:
 ```python
 stream_success(output_line, ignore_exceptions)
 ```
-add _jc_meta object to output line if -qq (ignore_exceptions) option is used
+Add `_jc_meta` object to output line if `ignore_exceptions=True`
 
 ## stream_error
 ```python
 stream_error(e, ignore_exceptions, line)
 ```
-reraise the stream exception with annotation or print an error _jc_meta
-field if ignore_exceptions=True
+Reraise the stream exception with annotation or print an error `_jc_meta`
+field if `ignore_exceptions=True`
 
 
 ## timestamp
