@@ -9,7 +9,7 @@ from textwrap import TextWrapper
 
 def warning_message(message_lines):
     """
-    Prints warning message for non-fatal issues. The first line is appended with
+    Prints warning message for non-fatal issues. The first line is prepended with
     'jc:  Warning - ' and subsequent lines are indented. Wraps text as needed based
     on the terminal width.
 
@@ -45,7 +45,7 @@ def warning_message(message_lines):
 
 def error_message(message_lines):
     """
-    Prints an error message for fatal issues. The first line is appended with
+    Prints an error message for fatal issues. The first line is prepended with
     'jc:  Error - ' and subsequent lines are indented. Wraps text as needed based
     on the terminal width.
 
@@ -210,7 +210,7 @@ def convert_to_bool(value):
 
 
 def stream_success(output_line, ignore_exceptions):
-    """add _meta object to output line if -qq (ignore_exceptions) option is used"""
+    """add _jc_meta object to output line if -qq (ignore_exceptions) option is used"""
     if ignore_exceptions:
         output_line.update({'_jc_meta': {'success': True}})
 
