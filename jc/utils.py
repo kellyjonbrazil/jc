@@ -246,7 +246,7 @@ class timestamp:
     Attributes:
 
         string              (str)   the input datetime string
-        format              (int)   the format rule that was used to decode the datetime string
+        format              (int)   the format rule that was used to decode the datetime string. None if conversion fails
         naive               (int)   timestamp based on locally configured timezone. None if conversion fails
         utc                 (int)   aware timestamp only if UTC timezone detected in datetime string. None if conversion fails
     """
