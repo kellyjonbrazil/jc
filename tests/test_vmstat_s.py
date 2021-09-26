@@ -71,7 +71,6 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long-streaming.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_04_vmstat_1_long_streaming_json = json.loads(f.read())
 
-
     def test_vmstat_nodata(self):
         """
         Test 'vmstat' with no data
@@ -81,7 +80,7 @@ class MyTests(unittest.TestCase):
     def test_vmstat_unparsable(self):
         data = 'unparsable data'
         g = jc.parsers.vmstat_s.parse(data.splitlines(), quiet=True)
-        with self.assertRaises(KeyError):
+        with self.assertRaises(ParseError):
             list(g)
 
     def test_vmstat_centos_7_7(self):

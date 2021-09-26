@@ -74,6 +74,7 @@ Examples:
 """
 import jc.utils
 from jc.utils import stream_success, stream_error
+from jc.exceptions import ParseError
 
 
 class info():
@@ -232,7 +233,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     'timezone': tz or None
                 }
 
-            yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+            if output_line:
+                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+            else:
+                raise ParseError('Not vmstat data')
 
         except Exception as e:
             yield stream_error(e, ignore_exceptions, line)
