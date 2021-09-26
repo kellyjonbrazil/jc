@@ -13,6 +13,8 @@ Usage (cli):
 
     $ vmstat | jc --vmstat-s
 
+> Note: When piping `jc` converted `vmstat` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `vmstat` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output) for more information.
+
 Usage (module):
 
     import jc.parsers.vmstat_s
