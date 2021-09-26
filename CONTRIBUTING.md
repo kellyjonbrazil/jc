@@ -15,7 +15,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 
 1. Open an issue to discuss the new feature, bug fix, or parser before opening a pull request. For new parsers, it is important to agree upon a schema before developing the parser.
 2. Fork the repo and create your branch from `dev`, if available, otherwise `master`.
-3. For new parsers: Use the `jc/parsers/foo.py` parser as a [template](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) to get started. You can even place a new parser python module file in the [parser plugin directory](https://github.com/kellyjonbrazil/jc#custom-parsers) to get started right away with just a standard `jc` installation.
+3. For new parsers: Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template to get started. You can even place a new parser python module file in the [parser plugin directory](https://github.com/kellyjonbrazil/jc#custom-parsers) to get started right away with just a standard `jc` installation.
 4. If you've added code that should be tested, add tests. All new parsers should have several sample outputs and tests.
 5. Documentation is auto-generated from docstrings, so ensure they are clear and accurate.
 6. Ensure the test suite passes. (Note: "**America/Los_Angeles**" timezone should be configured on the test system)
@@ -32,7 +32,7 @@ This will make it easier to use tools like `jq` without requiring escaping of sp
 **Examples**
 
 Bad:
-```
+```json
 {
   "Interface 1": [
     "192.168.1.1",
@@ -44,7 +44,7 @@ Bad:
 }
 ```
 Good:
-```
+```json
 [
   {
     "interface": "Interface 1",

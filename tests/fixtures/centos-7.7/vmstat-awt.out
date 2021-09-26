@@ -1,0 +1,4 @@
+procs -----------------------memory---------------------- ---swap-- -----io---- -system-- --------cpu-------- -----timestamp-----
+ r  b         swpd         free        inact       active   si   so    bi    bo   in   cs  us  sy  id  wa  st                 PDT
+ 2  0            0      2794864       295968       312724    0    0     1     3   29   57   0   0  99   0   0 2021-09-16 20:31:30
+

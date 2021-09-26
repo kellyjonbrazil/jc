@@ -1,5 +1,15 @@
 jc changelog
 
+20210923 v1.17.0
+- Note to Package Maintainers: please see note at 20210720 v1.16.0
+- Add wrapping of warning and error messages
+- Add vmstat parser tested on linux
+- Add support for streaming parsers
+- Add ls command streaming parser tested on linux, macOS, and freeBSD
+- Add ping command streaming parser tested on linux, macOS, and freeBSD
+- Add vmstat command streaming parser tested on linux
+- Add -u option to allow unbuffered output
+
 20210830 v1.16.2
 - Note to Package Maintainers: please see note at 20210720 v1.16.0
 - Update sfdisk parser to support the -F option and newer versions of sfdisk

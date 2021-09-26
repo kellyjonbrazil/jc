@@ -36,7 +36,7 @@ about jc (JSON output)
 .TP
 .B
 \fB-d\fP
-debug - show traceback (\fB-dd\fP for verbose traceback)
+debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP
@@ -52,11 +52,15 @@ pretty print output
 .TP
 .B
 \fB-q\fP
-quiet - suppress warnings
+quiet - suppress warnings (use \fB-qq\fP to ignore streaming parser errors)
 .TP
 .B
 \fB-r\fP
 raw JSON output
+.TP
+.B
+\fB-u\fP
+unbuffer output (useful for slow streaming data with streaming parsers)
 .TP
 .B
 \fB-v\fP
@@ -92,6 +96,76 @@ JC_COLORS=blue,brightblack,magenta,green
 or
 
 JC_COLORS=default,default,default,default
+.RE
+
+
+.SH STREAMING PARSERS
+Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP and \fBping-s\fP) that immediately start processing and outputing the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+
+.RS
+Note: Streaming parsers cannot be used with the "magic" syntax
+.RE
+
+\fBIgnoring Errors\fP
+
+You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the \fB-qq\fP cli option. This will add a \fB_jc_meta\fP object to the JSON output with a \fBsuccess\fP attribute. If \fBsuccess\fP is \fBtrue\fP, then there were no issues parsing the line. If \fBsuccess\fP is \fBfalse\fP, then a parsing issue was found and \fBerror\fP and \fBline\fP fields will be added to include a short error description and the contents of the unparsable line, respectively:
+
+.RS
+Successfully parsed line with \fB-qq\fP option:
+.RS
+{
+
+  "command_data": "data",
+  
+  "_jc_meta": {
+  
+    "success": true
+    
+  }
+  
+}
+.RE
+
+Unsuccessfully parsed line with \fB-qq\fP option:
+.RS
+{
+
+  "_jc_meta": {
+  
+    "success": false,
+    
+    "error": "error message",
+    
+    "line": "original line data"
+    
+  }
+  
+}
+.RE
+
+.RE
+\fBUnbuffering Output\fP
+
+Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. \fBping\fP):
+
+.RS
+$ ping 1.1.1.1 | jc --ping-s | jq
+
+<slow output>
+.RE
+
+This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in this example. To display the data on the terminal in realtime, you can disable the buffer with the \fB-u\fP (unbuffer) cli option:
+
+.RS
+$ ping 1.1.1.1 | jc --ping-s -u | jq
+
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"128","time_ms":"24.6","duplicate":false}
+
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"128","time_ms":"26.8","duplicate":false}
+
+etc...
+
+Note: Unbuffered output can be slower for large data streams.
 .RE
 
 .SH CUSTOM PARSERS

@@ -130,7 +130,7 @@ def parse(data, raw=False, quiet=False):
                 )
             except IndexError:
                 if not warned:
-                    jc.utils.warning_message('Filenames with newline characters detected. Some filenames may be truncated.')
+                    jc.utils.warning_message(['Filenames with newline characters detected. Some filenames may be truncated.'])
                     warned = True
 
     if raw:

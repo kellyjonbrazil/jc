@@ -4,14 +4,16 @@ jc - JSON CLI output utility utils
 
 ## warning_message
 ```python
-warning_message(message)
+warning_message(message_lines)
 ```
 
-Prints a warning message for non-fatal issues
+Prints warning message for non-fatal issues. The first line is prepended with
+'jc:  Warning - ' and subsequent lines are indented. Wraps text as needed based
+on the terminal width.
 
 Parameters:
 
-    message:        (string) text of message
+    message:   (list) list of string lines
 
 Returns:
 
@@ -20,14 +22,16 @@ Returns:
 
 ## error_message
 ```python
-error_message(message)
+error_message(message_lines)
 ```
 
-Prints an error message for fatal issues
+Prints an error message for fatal issues. The first line is prepended with
+'jc:  Error - ' and subsequent lines are indented. Wraps text as needed based
+on the terminal width.
 
 Parameters:
 
-    message:        (string) text of message
+    message:   (list) list of string lines
 
 Returns:
 
@@ -117,6 +121,20 @@ Returns:
     True/False      False unless a 'truthy' number or string is found ('y', 'yes', 'true', '1', 1, -1, etc.)
 
 
+## stream_success
+```python
+stream_success(output_line, ignore_exceptions)
+```
+Add `_jc_meta` object to output line if `ignore_exceptions=True`
+
+## stream_error
+```python
+stream_error(e, ignore_exceptions, line)
+```
+Reraise the stream exception with annotation or print an error `_jc_meta`
+field if `ignore_exceptions=True`
+
+
 ## timestamp
 ```python
 timestamp(datetime_string)
@@ -131,7 +149,7 @@ Parameters:
 Attributes:
 
     string              (str)   the input datetime string
-    format              (int)   the format rule that was used to decode the datetime string
+    format              (int)   the format rule that was used to decode the datetime string. None if conversion fails
     naive               (int)   timestamp based on locally configured timezone. None if conversion fails
     utc                 (int)   aware timestamp only if UTC timezone detected in datetime string. None if conversion fails
 

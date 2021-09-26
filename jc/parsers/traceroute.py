@@ -389,7 +389,7 @@ def parse(data, raw=False, quiet=False):
 
             # print warning to STDERR
             if not quiet:
-                jc.utils.warning_message('No header row found. For destination info redirect STDERR to STDOUT')
+                jc.utils.warning_message(['No header row found. For destination info redirect STDERR to STDOUT'])
 
         data = '\n'.join(new_data)
 

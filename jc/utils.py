@@ -2,41 +2,77 @@
 import sys
 import re
 import locale
+import shutil
 from datetime import datetime, timezone
+from textwrap import TextWrapper
 
 
-def warning_message(message):
+def warning_message(message_lines):
     """
-    Prints a warning message for non-fatal issues
+    Prints warning message for non-fatal issues. The first line is prepended with
+    'jc:  Warning - ' and subsequent lines are indented. Wraps text as needed based
+    on the terminal width.
 
     Parameters:
 
-        message:        (string) text of message
+        message:   (list) list of string lines
 
     Returns:
 
         None - just prints output to STDERR
     """
+    # this is for backwards compatibility with existing custom parsers
+    if isinstance(message_lines, str):
+        message_lines = [message_lines]
 
-    error_string = f'jc:  Warning - {message}'
-    print(error_string, file=sys.stderr)
+    columns = shutil.get_terminal_size().columns
+
+    first_wrapper = TextWrapper(width=columns, subsequent_indent=' ' * 15)
+    next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 15,
+                               subsequent_indent=' ' * 19)
+
+    first_line = message_lines.pop(0)
+    first_str = f'jc:  Warning - {first_line}'
+    first_str = first_wrapper.fill(first_str)
+    print(first_str, file=sys.stderr)
+
+    for line in message_lines:
+        if line == '':
+            continue
+        message = next_wrapper.fill(line)
+        print(message, file=sys.stderr)
 
 
-def error_message(message):
+def error_message(message_lines):
     """
-    Prints an error message for fatal issues
+    Prints an error message for fatal issues. The first line is prepended with
+    'jc:  Error - ' and subsequent lines are indented. Wraps text as needed based
+    on the terminal width.
 
     Parameters:
 
-        message:        (string) text of message
+        message:   (list) list of string lines
 
     Returns:
 
         None - just prints output to STDERR
     """
+    columns = shutil.get_terminal_size().columns
 
-    error_string = f'jc:  Error - {message}'
-    print(error_string, file=sys.stderr)
+    first_wrapper = TextWrapper(width=columns, subsequent_indent=' ' * 13)
+    next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 13,
+                               subsequent_indent=' ' * 17)
+
+    first_line = message_lines.pop(0)
+    first_str = f'jc:  Error - {first_line}'
+    first_str = first_wrapper.fill(first_str)
+    print(first_str, file=sys.stderr)
+
+    for line in message_lines:
+        if line == '':
+            continue
+        message = next_wrapper.fill(line)
+        print(message, file=sys.stderr)
 
 
 def compatibility(mod_name, compatible):
@@ -64,8 +100,8 @@ def compatibility(mod_name, compatible):
     if not platform_found:
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
-        warning_message(f'{mod} parser not compatible with your OS ({sys.platform}).\n'
-                        f'               Compatible platforms: {compat_list}')
+        warning_message([f'{mod} parser not compatible with your OS ({sys.platform}).',
+                         f'Compatible platforms: {compat_list}'])
 
 
 def has_data(data):
@@ -80,7 +116,7 @@ def has_data(data):
 
         Boolean      True if input string (data) contains non-whitespace characters, otherwise False
     """
-    return True if data and not data.isspace() else False
+    return bool(data and not data.isspace())
 
 
 def convert_to_int(value):
@@ -168,9 +204,35 @@ def convert_to_bool(value):
             pass
 
         if value:
-            return True if value.lower() in truthy else False
+            return value.lower() in truthy
 
     return False
+
+
+def stream_success(output_line, ignore_exceptions):
+    """Add `_jc_meta` object to output line if `ignore_exceptions=True`"""
+    if ignore_exceptions:
+        output_line.update({'_jc_meta': {'success': True}})
+
+    return output_line
+
+
+def stream_error(e, ignore_exceptions, line):
+    """Reraise the stream exception with annotation or print an error `_jc_meta`
+       field if `ignore_exceptions=True`
+    """
+    if not ignore_exceptions:
+        e.args = (str(e) + '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.',)
+        raise e
+
+    return {
+        '_jc_meta':
+            {
+                'success': False,
+                'error': f'{e.__class__.__name__}: {e}',
+                'line': line.strip()
+            }
+    }
 
 
 class timestamp:
@@ -184,7 +246,7 @@ class timestamp:
     Attributes:
 
         string              (str)   the input datetime string
-        format              (int)   the format rule that was used to decode the datetime string
+        format              (int)   the format rule that was used to decode the datetime string. None if conversion fails
         naive               (int)   timestamp based on locally configured timezone. None if conversion fails
         utc                 (int)   aware timestamp only if UTC timezone detected in datetime string. None if conversion fails
     """
@@ -245,10 +307,8 @@ class timestamp:
         if 'UTC' in data:
             utc_tz = True
             if 'UTC+' in data or 'UTC-' in data:
-                if 'UTC+0000' in data or 'UTC-0000' in data:
-                    utc_tz = True
-                else:
-                    utc_tz = False
+                utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
+
         elif '+0000' in data or '-0000' in data:
             utc_tz = True
 
@@ -267,6 +327,8 @@ class timestamp:
             {'id': 7000, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # C locale format (found in date cli): Wed Mar 24 11:11:30 UTC 2021
             {'id': 7100, 'format': '%b %d %H:%M:%S %Y', 'locale': None},  # C locale format (found in stat cli output - osx): # Mar 29 11:49:05 2021
             {'id': 7200, 'format': '%Y-%m-%d %H:%M:%S.%f %z', 'locale': None},  # C locale format (found in stat cli output - linux): 2019-08-13 18:13:43.555604315 -0400
+            {'id': 7250, 'format': '%Y-%m-%d %H:%M:%S', 'locale': None},  # C locale format with non-UTC tz (found in modified vmstat cli output): # 2021-09-16 20:32:28 PDT
+            {'id': 7255, 'format': '%Y-%m-%d %H:%M:%S %Z', 'locale': None},  # C locale format (found in modified vmstat cli output): # 2021-09-16 20:32:28 UTC
             {'id': 7300, 'format': '%a %Y-%m-%d %H:%M:%S %Z', 'locale': None},  # C locale format (found in timedatectl cli output): # Wed 2020-03-11 00:53:21 UTC
             # attempt locale changes last
             {'id': 8000, 'format': '%a %d %b %Y %H:%M:%S %Z', 'locale': ''},  # current locale format (found in upower cli output): # mar. 23 mars 2021 23:12:11 UTC
