@@ -6,7 +6,7 @@ Usage (cli):
 
     $ ping | jc --ping-s
 
-> Note: When piping `jc` converted ping output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#streaming-parsers) for more information.
+> Note: When piping `jc` converted `ping` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#streaming-parsers) for more information.
 
 Usage (module):
 
