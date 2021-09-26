@@ -59,7 +59,7 @@ Module Example:
     >>>
     >>> import subprocess
     >>> import jc.parsers.dig
-    >>> 
+    >>>
     >>> cmd_output = subprocess.check_output(['dig', 'example.com'], text=True)
     >>> data = jc.parsers.dig.parse(cmd_output)
     >>>
