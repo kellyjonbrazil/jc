@@ -29,7 +29,7 @@ def warning_message(message_lines):
 
     first_wrapper = TextWrapper(width=columns, subsequent_indent=' ' * 15)
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 15,
-                               subsequent_indent=' ' * 15)
+                               subsequent_indent=' ' * 19)
 
     first_line = message_lines.pop(0)
     first_str = f'jc:  Warning - {first_line}'
@@ -61,7 +61,7 @@ def error_message(message_lines):
 
     first_wrapper = TextWrapper(width=columns, subsequent_indent=' ' * 13)
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 13,
-                               subsequent_indent=' ' * 13)
+                               subsequent_indent=' ' * 17)
 
     first_line = message_lines.pop(0)
     first_str = f'jc:  Error - {first_line}'
