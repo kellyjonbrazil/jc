@@ -566,7 +566,7 @@ def main():
         except FileNotFoundError:
             if debug:
                 raise
-            
+
             jc.utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 

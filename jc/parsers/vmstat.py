@@ -207,17 +207,16 @@ def parse(data, raw=False, quiet=False):
                 tstamp = '-timestamp-' in line
                 continue
 
-
             # skip header rows
             if (procs or disk) and (line.startswith('procs') or line.startswith('disk')):
                 continue
 
-            if 'swpd' in line and 'free' in line and 'buff' in line and  'cache' in line:
+            if 'swpd' in line and 'free' in line and 'buff' in line and 'cache' in line:
                 buff_cache = True
                 tz = line.strip().split()[-1] if tstamp else None
                 continue
 
-            if 'swpd' in line and 'free' in line and 'inact' in line and  'active' in line:
+            if 'swpd' in line and 'free' in line and 'inact' in line and 'active' in line:
                 buff_cache = False
                 tz = line.strip().split()[-1] if tstamp else None
                 continue
