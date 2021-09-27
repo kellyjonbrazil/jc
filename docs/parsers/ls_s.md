@@ -3,7 +3,9 @@
 # jc.parsers.ls_s
 jc - JSON CLI output utility `ls` and `vdir` command output streaming parser
 
-This streaming parser requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` option on `ls`.
+> This streaming parser outputs JSON Lines
+
+Requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` option on `ls`.
 
 The `jc` `-qq` option can be used to ignore parsing errors. (e.g. filenames with newline characters, but `-b` was not used)
 

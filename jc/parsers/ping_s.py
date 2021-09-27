@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `ping` command output streaming parser
 
+> This streaming parser outputs JSON Lines
+
 Supports `ping` and `ping6` output.
 
 Usage (cli):
