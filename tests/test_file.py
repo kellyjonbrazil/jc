@@ -22,6 +22,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_file2 = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file3.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_file3 = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/file.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_file_json = json.loads(f.read())
@@ -34,6 +37,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_file2_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file3.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_file3_json = json.loads(f.read())
 
     def test_file_nodata(self):
         """
@@ -64,6 +70,12 @@ class MyTests(unittest.TestCase):
         Test 'file *' with filetpe descriptions including colons on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.file.parse(self.osx_10_14_6_file2, quiet=True), self.osx_10_14_6_file2_json)
+
+    def test_file3_osx_10_14_6(self):
+        """
+        Test 'file *' with gzip filetpe descriptions including ': ' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.file.parse(self.osx_10_14_6_file3, quiet=True), self.osx_10_14_6_file3_json)
 
 
 if __name__ == '__main__':
