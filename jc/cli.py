@@ -85,6 +85,7 @@ parsers = [
     'lsblk',
     'lsmod',
     'lsof',
+    'lsusb',
     'mount',
     'netstat',
     'ntpq',
