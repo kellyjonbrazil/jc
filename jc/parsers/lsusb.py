@@ -119,6 +119,7 @@ def parse(data, raw=False, quiet=False):
     section = ''
     device_descriptor_list = []
     configuration_descriptor_list = []
+    interface_association_list = []
     interface_descriptor_list = []
     cdc_header_list = []
     cdc_call_management_list = []
@@ -147,6 +148,7 @@ def parse(data, raw=False, quiet=False):
                 output_line = {}
                 device_descriptor_list = []
                 configuration_descriptor_list = []
+                interface_association_list = []
                 interface_descriptor_list = []
                 cdc_header_list = []
                 cdc_call_management_list = []
@@ -168,6 +170,7 @@ def parse(data, raw=False, quiet=False):
                 output_line = {}
                 device_descriptor_list = []
                 configuration_descriptor_list = []
+                interface_association_list = []
                 interface_descriptor_list = []
                 cdc_header_list = []
                 cdc_call_management_list = []
@@ -195,6 +198,7 @@ def parse(data, raw=False, quiet=False):
                 section = 'device_descriptor'
                 device_descriptor_list = []
                 configuration_descriptor_list = []
+                interface_association_list = []
                 interface_descriptor_list = []
                 cdc_header_list = []
                 cdc_call_management_list = []
@@ -211,6 +215,11 @@ def parse(data, raw=False, quiet=False):
                 section = 'configuration_descriptor'
                 configuration_descriptor_list = []
                 interface_descriptor_list = []
+                continue
+
+            if line.startswith('    Interface Association:'):
+                section = 'interface_association'
+                interface_association_list = []
                 continue
 
             if line.startswith('    Interface Descriptor:'):
@@ -319,35 +328,23 @@ def parse(data, raw=False, quiet=False):
                 output_line['device_descriptor']['configuration_descriptor']['attributes'] = configuration_descriptor_list
                 continue
 
-            if section == 'interface_descriptor' and line.startswith(' '):
-                interface_descriptor_list.append(_add_attributes(line))
+            if section == 'interface_association' and line.startswith(' '):
+                interface_association_list.append(_add_attributes(line))
+                if 'interface_association' not in output_line['device_descriptor']['configuration_descriptor']:
+                    output_line['device_descriptor']['configuration_descriptor']['interface_association'] = {}
+                output_line['device_descriptor']['configuration_descriptor']['interface_association']['attributes'] = interface_association_list
+                continue
 
-                if cdc_header_list:
-                    interface_descriptor_list.append({'cdc_header': cdc_header_list})
+            if section == 'report_descriptors' and line.startswith(' '):
+                report_descriptors_list.append(_add_attributes(line))
+                continue
 
-                if cdc_call_management_list:
-                    interface_descriptor_list.append({'cdc_call_management': cdc_call_management_list})
+            if section == 'hid_device_descriptor' and line.startswith(' '):
+                if report_descriptors_list:
+                    hid_device_descriptor_list.append({'report_descriptors': report_descriptors_list})
 
-                if cdc_acm_list:
-                    interface_descriptor_list.append({'cdc_acm': cdc_acm_list})
-
-                if cdc_union_list:
-                    interface_descriptor_list.append({'cdc_union': cdc_union_list})
-
-                if endpoint_descriptor_list:
-                    interface_descriptor_list.append({'endpoint_descriptor': endpoint_descriptor_list})
-
-                if interface_descriptor_list:
-                    if 'interface_descriptor_list' not in output_line['device_descriptor']['configuration_descriptor']:
-                        output_line['device_descriptor']['configuration_descriptor']['interface_descriptor'] = []
-                    output_line['device_descriptor']['configuration_descriptor']['interface_descriptor'].append(interface_descriptor_list)
-
-                    cdc_header_list = []
-                    cdc_call_management_list = []
-                    cdc_acm_list = []
-                    cdc_union_list = []
-                    endpoint_descriptor_list = []
-
+                report_descriptors_list = []
+                hid_device_descriptor_list.append(_add_attributes(line))
                 continue
 
             if section == 'cdc_header' and line.startswith(' '):
@@ -374,16 +371,34 @@ def parse(data, raw=False, quiet=False):
                 endpoint_descriptor_list.append(_add_attributes(line))
                 continue
 
-            if section == 'hid_device_descriptor' and line.startswith(' '):
-                if report_descriptors_list:
-                    hid_device_descriptor_list.append({'report_descriptors': report_descriptors_list})
+            if section == 'interface_descriptor' and line.startswith(' '):
+                interface_descriptor_list.append(_add_attributes(line))
 
-                report_descriptors_list = []
-                hid_device_descriptor_list.append(_add_attributes(line))
-                continue
+                if cdc_header_list:
+                    interface_descriptor_list.append({'cdc_header': cdc_header_list})
 
-            if section == 'report_descriptors' and line.startswith(' '):
-                report_descriptors_list.append(_add_attributes(line))
+                if cdc_call_management_list:
+                    interface_descriptor_list.append({'cdc_call_management': cdc_call_management_list})
+
+                if cdc_acm_list:
+                    interface_descriptor_list.append({'cdc_acm': cdc_acm_list})
+
+                if cdc_union_list:
+                    interface_descriptor_list.append({'cdc_union': cdc_union_list})
+
+                if endpoint_descriptor_list:
+                    interface_descriptor_list.append({'endpoint_descriptor': endpoint_descriptor_list})
+
+                if interface_descriptor_list:
+                    if 'interface_descriptor_list' not in output_line['device_descriptor']['configuration_descriptor']:
+                        output_line['device_descriptor']['configuration_descriptor']['interface_descriptor'] = []
+                    output_line['device_descriptor']['configuration_descriptor']['interface_descriptor'].append(interface_descriptor_list)
+
+                cdc_header_list = []
+                cdc_call_management_list = []
+                cdc_acm_list = []
+                cdc_union_list = []
+                endpoint_descriptor_list = []
                 continue
 
             if section == 'hub_descriptor' and line.startswith(' '):
@@ -397,6 +412,27 @@ def parse(data, raw=False, quiet=False):
                 hub_port_status_list.append(_add_attributes(line))
                 output_line['hub_descriptor']['hub_port_status'] = hub_port_status_list
                 continue
+
+    # get final list entries
+    if cdc_header_list:
+        interface_descriptor_list.append({'cdc_header': cdc_header_list})
+
+    if cdc_call_management_list:
+        interface_descriptor_list.append({'cdc_call_management': cdc_call_management_list})
+
+    if cdc_acm_list:
+        interface_descriptor_list.append({'cdc_acm': cdc_acm_list})
+
+    if cdc_union_list:
+        interface_descriptor_list.append({'cdc_union': cdc_union_list})
+
+    if endpoint_descriptor_list:
+        interface_descriptor_list.append({'endpoint_descriptor': endpoint_descriptor_list})
+
+    if interface_descriptor_list:
+        if 'interface_descriptor_list' not in output_line['device_descriptor']['configuration_descriptor']:
+            output_line['device_descriptor']['configuration_descriptor']['interface_descriptor'] = []
+        output_line['device_descriptor']['configuration_descriptor']['interface_descriptor'].append(interface_descriptor_list)
 
     if output_line:
         raw_output.append(output_line)
