@@ -84,6 +84,7 @@ class _LsUsb():
         self.interface_descriptor_idx = -1
         self.endpoint_descriptor_idx = -1
 
+        self.bus_list = []
         self.device_descriptor_list = []
         self.configuration_descriptor_list = []
         self.interface_association_list = []
@@ -161,28 +162,6 @@ class _LsUsb():
         #     self.raw_output.append(self.output_line)
 
         # self.output_line = {}
-        # # self._reset_lists()
-        # self.bus_idx += 1
-
-        # line_split = line.strip().split(maxsplit=6)
-        # self.output_line.update(
-        #     {
-        #         'bus': line_split[1],
-        #         'device': line_split[3][:-1],
-        #         'id': line_split[5],
-        #         'description': (line_split[6:7] or [None])[0]     # way to get a list item or None
-        #     }
-        # )
-
-        # line_split = line.strip().split(':', maxsplit=1)
-        # self.output_line.update(
-        #     {
-        #         'device_status':
-        #             {
-        #                 'value': line_split[1].strip()
-        #             }
-        #     }
-        # )
 
     def _set_sections(self, line):
         # ignore blank lines
@@ -195,6 +174,18 @@ class _LsUsb():
             self.bus_idx += 1
             self.interface_descriptor_idx = -1
             self.endpoint_descriptor_idx = -1
+
+            # bus informatin is on the same line so need to extract data immediately
+            line_split = line.strip().split(maxsplit=6)
+            self.bus_list.append(
+                {
+                    'bus': line_split[1],
+                    'device': line_split[3][:-1],
+                    'id': line_split[5],
+                    'description': (line_split[6:7] or [None])[0],     # way to get a list item or None
+                    'bus_idx': self.bus_idx
+                }
+            )
             return True
 
         if line.startswith('Device Descriptor:'):
@@ -254,6 +245,18 @@ class _LsUsb():
 
         if line.startswith('Device Status:'):
             self.section = 'device_status'
+
+            # some device status information is displayed on the initial line so need to extract immediately
+            line_split = line.strip().split(':', maxsplit=1)
+            self.device_status_list.append(
+                {
+                    'device_status':
+                        {
+                            'value': line_split[1].strip(),
+                            'bus_idx': self.bus_idx
+                        }
+                }
+            )
             return True
 
     def _populate_lists(self, line):
@@ -335,8 +338,17 @@ def parse(data, raw=False, quiet=False):
         s = _LsUsb()
 
         for line in data.splitlines():
-            print(f'''
+            # sections
+            if s._set_sections(line):
+                continue
+            
+            # create section lists and schema
+            if s._populate_lists(line):
+                continue
+
+    print(f'''
 {s.section=}
+{s.bus_list=}
 {s.device_descriptor_list=}
 {s.configuration_descriptor_list=}
 {s.interface_association_list=}
@@ -351,15 +363,7 @@ def parse(data, raw=False, quiet=False):
 {s.hub_descriptor_list=}
 {s.hub_port_status_list=}
 {s.device_status_list=}
-''')            
-
-            # sections
-            if s._set_sections(line):
-                continue
-            
-            # create section lists and schema
-            if s._populate_lists(line):
-                continue
+''')
 
     # output the raw object
     if s.output_line:
