@@ -126,10 +126,12 @@ class _LsUsb():
             temp_obj['key']: {
                 'value': temp_obj['val'],
                 'description': temp_obj['description'],
-                'indent': indent,
-                'bus_idx': self.bus_idx,
-                'interface_descriptor_idx': self.interface_descriptor_idx,
-                'endpoint_descriptor_idx': self.endpoint_descriptor_idx
+                '_state': {
+                    'indent': indent,
+                    'bus_idx': self.bus_idx,
+                    'interface_descriptor_idx': self.interface_descriptor_idx,
+                    'endpoint_descriptor_idx': self.endpoint_descriptor_idx
+                }
             }
         }
 
@@ -157,11 +159,43 @@ class _LsUsb():
         ['bus']['hub_descriptor']['hub_port_status'] = {}
         ['bus']['device_status'] = {}
         """
-        pass
-        # if self.output_line:
-        #     self.raw_output.append(self.output_line)
+        for idx, item in enumerate(self.bus_list):
+            if self.output_line:
+                self.raw_output.append(self.output_line)
 
-        # self.output_line = {}
+            self.output_line = {}
+
+            self.output_line['bus'] = item
+            
+            for dd in self.device_descriptor_list:
+                keyname = list(dd.keys()).copy()[0]
+                if dd[keyname]['_state']['bus_idx'] == idx:
+                    if 'device_descriptor' not in self.output_line['bus']:
+                        self.output_line['bus']['device_descriptor'] = {}
+                    self.output_line['bus']['device_descriptor'].update(dd)
+                    # del self.output_line['bus']['device_descriptor'][keyname]['_state']
+
+            for cd in self.configuration_descriptor_list:
+                keyname = list(cd.keys()).copy()[0]
+                if cd[keyname]['_state']['bus_idx'] == idx:
+                    if 'configuration_descriptor' not in self.output_line['bus']['device_descriptor']:
+                        self.output_line['bus']['device_descriptor']['configuration_descriptor'] = {}
+                    self.output_line['bus']['device_descriptor']['configuration_descriptor'].update(cd)
+                    # del self.output_line['bus']['device_descriptor']['configuration_descriptor'][keyname]['_state']
+
+            for ia in self.interface_association_list:
+                keyname = list(ia.keys()).copy()[0]
+                if ia[keyname]['_state']['bus_idx'] == idx:
+                    if 'interface_association' not in self.output_line['bus']['device_descriptor']['configuration_descriptor']:
+                        self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'] = {}
+                    self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
+                    # del self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
+
+            for device in self.device_descriptor_list:
+                pass
+
+                for endpoint_descriptor_idx in self.endpoint_descriptor_list:
+                    pass
 
     def _set_sections(self, line):
         # ignore blank lines
@@ -183,7 +217,9 @@ class _LsUsb():
                     'device': line_split[3][:-1],
                     'id': line_split[5],
                     'description': (line_split[6:7] or [None])[0],     # way to get a list item or None
-                    'bus_idx': self.bus_idx
+                    '_state': {
+                        'bus_idx': self.bus_idx
+                    }
                 }
             )
             return True
@@ -253,7 +289,9 @@ class _LsUsb():
                     'device_status':
                         {
                             'value': line_split[1].strip(),
-                            'bus_idx': self.bus_idx
+                            '_state': {
+                                'bus_idx': self.bus_idx
+                            }
                         }
                 }
             )
@@ -346,24 +384,27 @@ def parse(data, raw=False, quiet=False):
             if s._populate_lists(line):
                 continue
 
-    print(f'''
-{s.section=}
-{s.bus_list=}
-{s.device_descriptor_list=}
-{s.configuration_descriptor_list=}
-{s.interface_association_list=}
-{s.interface_descriptor_list=}
-{s.cdc_header_list=}
-{s.cdc_call_management_list=}
-{s.cdc_acm_list=}
-{s.cdc_union_list=}
-{s.endpoint_descriptor_list=}
-{s.hid_device_descriptor_list=}
-{s.report_descriptors_list=}
-{s.hub_descriptor_list=}
-{s.hub_port_status_list=}
-{s.device_status_list=}
-''')
+#     print(f'''
+# {s.section=}
+# {s.bus_list=}
+# {s.device_descriptor_list=}
+# {s.configuration_descriptor_list=}
+# {s.interface_association_list=}
+# {s.interface_descriptor_list=}
+# {s.cdc_header_list=}
+# {s.cdc_call_management_list=}
+# {s.cdc_acm_list=}
+# {s.cdc_union_list=}
+# {s.endpoint_descriptor_list=}
+# {s.hid_device_descriptor_list=}
+# {s.report_descriptors_list=}
+# {s.hub_descriptor_list=}
+# {s.hub_port_status_list=}
+# {s.device_status_list=}
+# ''')
+
+    # populate the schema
+    s._populate_schema()
 
     # output the raw object
     if s.output_line:
