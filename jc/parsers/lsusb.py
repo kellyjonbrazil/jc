@@ -168,28 +168,28 @@ class _LsUsb():
             self.output_line['bus'] = item
             
             for dd in self.device_descriptor_list:
-                keyname = list(dd.keys()).copy()[0]
-                if dd[keyname]['_state']['bus_idx'] == idx:
+                keyname = list(dd.keys())[0]
+                if '_state' in dd[keyname] and dd[keyname]['_state']['bus_idx'] == idx:
                     if 'device_descriptor' not in self.output_line['bus']:
                         self.output_line['bus']['device_descriptor'] = {}
                     self.output_line['bus']['device_descriptor'].update(dd)
-                    # del self.output_line['bus']['device_descriptor'][keyname]['_state']
+                    del self.output_line['bus']['device_descriptor'][keyname]['_state']
 
             for cd in self.configuration_descriptor_list:
-                keyname = list(cd.keys()).copy()[0]
-                if cd[keyname]['_state']['bus_idx'] == idx:
+                keyname = list(cd.keys())[0]
+                if '_state' in cd[keyname] and cd[keyname]['_state']['bus_idx'] == idx:
                     if 'configuration_descriptor' not in self.output_line['bus']['device_descriptor']:
                         self.output_line['bus']['device_descriptor']['configuration_descriptor'] = {}
                     self.output_line['bus']['device_descriptor']['configuration_descriptor'].update(cd)
-                    # del self.output_line['bus']['device_descriptor']['configuration_descriptor'][keyname]['_state']
+                    del self.output_line['bus']['device_descriptor']['configuration_descriptor'][keyname]['_state']
 
             for ia in self.interface_association_list:
-                keyname = list(ia.keys()).copy()[0]
-                if ia[keyname]['_state']['bus_idx'] == idx:
+                keyname = list(ia.keys())[0]
+                if '_state' in ia[keyname] and ia[keyname]['_state']['bus_idx'] == idx:
                     if 'interface_association' not in self.output_line['bus']['device_descriptor']['configuration_descriptor']:
                         self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'] = {}
                     self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
-                    # del self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
+                    del self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
 
             for device in self.device_descriptor_list:
                 pass
