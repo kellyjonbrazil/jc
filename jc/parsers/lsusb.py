@@ -268,7 +268,7 @@ class _LsUsb():
         ['device_descriptor']['configuration_descriptor'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_association'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['attributes'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_header'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_acm'] = {}
@@ -276,7 +276,7 @@ class _LsUsb():
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor']['report_descriptors'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0]['attributes'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0] = {}
         ['hub_descriptor'] = {}
         ['hub_descriptor']['hub_port_status'] = {}
         ['device_status'] = {}
@@ -415,16 +415,19 @@ class _LsUsb():
                     
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
+            
+            # ['hub_descriptor'] = {}
+            # ['hub_descriptor']['hub_port_status'] = {}
+            # ['device_status'] = {}
+            
+            for hd in self.hub_descriptor_list:
+                keyname = tuple(hd.keys())[0]
+                if '_state' in hd[keyname] and hd[keyname]['_state']['bus_idx'] == idx:
+                    if 'hub_descriptor' not in self.output_line:
+                        self.output_line['hub_descriptor'] = {}
+                    self.output_line['hub_descriptor'].update(hd)
+                    del self.output_line['hub_descriptor'][keyname]['_state']
 
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_header'] = {}
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_acm'] = {}
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor']['report_descriptors'] = {}
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
-                    # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0]['attributes'] = {}
 
                     
 
