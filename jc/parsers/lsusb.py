@@ -137,66 +137,6 @@ class _LsUsb():
 
         return line_obj
 
-    def _populate_schema(self):
-        """
-        Schema:
-        ['bus'] = {}
-        ['bus']['device_descriptor'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_association'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptor'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['attributes'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_header'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_adcm'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor']['report_descriptors'] = {}
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
-        ['bus']['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0]['attributes'] = {}
-        ['bus']['hub_descriptor'] = {}
-        ['bus']['hub_descriptor']['hub_port_status'] = {}
-        ['bus']['device_status'] = {}
-        """
-        for idx, item in enumerate(self.bus_list):
-            if self.output_line:
-                self.raw_output.append(self.output_line)
-
-            self.output_line = {}
-
-            self.output_line['bus'] = item
-            
-            for dd in self.device_descriptor_list:
-                keyname = list(dd.keys())[0]
-                if '_state' in dd[keyname] and dd[keyname]['_state']['bus_idx'] == idx:
-                    if 'device_descriptor' not in self.output_line['bus']:
-                        self.output_line['bus']['device_descriptor'] = {}
-                    self.output_line['bus']['device_descriptor'].update(dd)
-                    del self.output_line['bus']['device_descriptor'][keyname]['_state']
-
-            for cd in self.configuration_descriptor_list:
-                keyname = list(cd.keys())[0]
-                if '_state' in cd[keyname] and cd[keyname]['_state']['bus_idx'] == idx:
-                    if 'configuration_descriptor' not in self.output_line['bus']['device_descriptor']:
-                        self.output_line['bus']['device_descriptor']['configuration_descriptor'] = {}
-                    self.output_line['bus']['device_descriptor']['configuration_descriptor'].update(cd)
-                    del self.output_line['bus']['device_descriptor']['configuration_descriptor'][keyname]['_state']
-
-            for ia in self.interface_association_list:
-                keyname = list(ia.keys())[0]
-                if '_state' in ia[keyname] and ia[keyname]['_state']['bus_idx'] == idx:
-                    if 'interface_association' not in self.output_line['bus']['device_descriptor']['configuration_descriptor']:
-                        self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'] = {}
-                    self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
-                    del self.output_line['bus']['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
-
-            for device in self.device_descriptor_list:
-                pass
-
-                for endpoint_descriptor_idx in self.endpoint_descriptor_list:
-                    pass
-
     def _set_sections(self, line):
         # ignore blank lines
         if not line:
@@ -354,6 +294,101 @@ class _LsUsb():
             self.device_status_list.append(self._add_attributes(line))
             return True
 
+    def _populate_schema(self):
+        """
+        Schema:
+        = {}
+        ['device_descriptor'] = {}
+        ['device_descriptor']['configuration_descriptor'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_association'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['attributes'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_header'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_adcm'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor']['report_descriptors'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0]['attributes'] = {}
+        ['hub_descriptor'] = {}
+        ['hub_descriptor']['hub_port_status'] = {}
+        ['device_status'] = {}
+        """
+        for idx, item in enumerate(self.bus_list):
+            if self.output_line:
+                self.raw_output.append(self.output_line)
+
+            self.output_line = {}
+
+            del item['_state']
+            self.output_line.update(item)
+            
+            for dd in self.device_descriptor_list:
+                keyname = list(dd.keys())[0]
+                if '_state' in dd[keyname] and dd[keyname]['_state']['bus_idx'] == idx:
+                    if 'device_descriptor' not in self.output_line:
+                        self.output_line['device_descriptor'] = {}
+                    self.output_line['device_descriptor'].update(dd)
+                    del self.output_line['device_descriptor'][keyname]['_state']
+
+            for cd in self.configuration_descriptor_list:
+                keyname = list(cd.keys())[0]
+                if '_state' in cd[keyname] and cd[keyname]['_state']['bus_idx'] == idx:
+                    if 'configuration_descriptor' not in self.output_line['device_descriptor']:
+                        self.output_line['device_descriptor']['configuration_descriptor'] = {}
+                    self.output_line['device_descriptor']['configuration_descriptor'].update(cd)
+                    del self.output_line['device_descriptor']['configuration_descriptor'][keyname]['_state']
+
+            for ia in self.interface_association_list:
+                keyname = list(ia.keys())[0]
+                if '_state' in ia[keyname] and ia[keyname]['_state']['bus_idx'] == idx:
+                    if 'interface_association' not in self.output_line['device_descriptor']['configuration_descriptor']:
+                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'] = {}
+                    self.output_line['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
+                    del self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
+            
+            # add interface_descriptor key if it doesn't exist and there are entries for this bus
+            if self.interface_descriptor_list:
+                for iface_attrs in self.interface_descriptor_list:
+                    keyname = list(iface_attrs.keys())[0]
+                    if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx:
+                        if 'interface_descriptors' not in self.output_line['device_descriptor']['configuration_descriptor']:
+                            self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
+
+            # find max index for this bus idx, then iterate over that range
+            i_desc_iters = -1
+            for iface_attrs in self.interface_descriptor_list:
+                keyname = list(iface_attrs.keys())[0]
+                if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx:
+                    i_desc_iters = iface_attrs[keyname]['_state']['interface_descriptor_idx']
+
+            # create the interface descriptor object
+            if i_desc_iters > -1:
+                for iface_idx in range(i_desc_iters + 1):
+                    i_desc_obj = {}
+                    for iface_attrs in self.interface_descriptor_list:
+                        keyname = list(iface_attrs.keys())[0]
+                        if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx and iface_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            del iface_attrs[keyname]['_state']
+                            i_desc_obj.update(iface_attrs)
+                    
+                    # add the object to the list of interface descriptors
+                    self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
+
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_header'] = {}
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_adcm'] = {}
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor']['report_descriptors'] = {}
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
+                # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0]['attributes'] = {}
+
+                for endpoint_descriptor_idx in self.endpoint_descriptor_list:
+                    pass
+
 
 def parse(data, raw=False, quiet=False):
     """
@@ -385,22 +420,22 @@ def parse(data, raw=False, quiet=False):
                 continue
 
 #     print(f'''
-# {s.section=}
-# {s.bus_list=}
-# {s.device_descriptor_list=}
-# {s.configuration_descriptor_list=}
-# {s.interface_association_list=}
-# {s.interface_descriptor_list=}
-# {s.cdc_header_list=}
-# {s.cdc_call_management_list=}
-# {s.cdc_acm_list=}
-# {s.cdc_union_list=}
-# {s.endpoint_descriptor_list=}
-# {s.hid_device_descriptor_list=}
-# {s.report_descriptors_list=}
-# {s.hub_descriptor_list=}
-# {s.hub_port_status_list=}
-# {s.device_status_list=}
+# # {s.section=}
+# # {s.bus_list=}
+# # {s.device_descriptor_list=}
+# # {s.configuration_descriptor_list=}
+# # {s.interface_association_list=}
+# # {s.interface_descriptor_list=}
+# # {s.cdc_header_list=}
+# # {s.cdc_call_management_list=}
+# # {s.cdc_acm_list=}
+# # {s.cdc_union_list=}
+# # {s.endpoint_descriptor_list=}
+# # {s.hid_device_descriptor_list=}
+# # {s.report_descriptors_list=}
+# # {s.hub_descriptor_list=}
+# # {s.hub_port_status_list=}
+# # {s.device_status_list=}
 # ''')
 
     # populate the schema
