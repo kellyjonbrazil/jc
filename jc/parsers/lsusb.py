@@ -371,6 +371,22 @@ class _LsUsb():
                                 i_desc_obj['cdc_union'] = {}
                             i_desc_obj['cdc_union'].update(cu)
                             del i_desc_obj['cdc_union'][keyname]['_state']
+
+                    for hd in self.hid_device_descriptor_list:
+                        keyname = tuple(hd.keys())[0]
+                        if '_state' in hd[keyname] and hd[keyname]['_state']['bus_idx'] == idx and hd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            if 'hid_device_descriptor' not in i_desc_obj:
+                                i_desc_obj['hid_device_descriptor'] = {}
+                            i_desc_obj['hid_device_descriptor'].update(hd)
+                            del i_desc_obj['hid_device_descriptor'][keyname]['_state']
+
+                        for rd in self.report_descriptors_list:
+                            keyname = tuple(rd.keys())[0]
+                            if '_state' in rd[keyname] and rd[keyname]['_state']['bus_idx'] == idx and rd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                                if 'report_descriptors' not in i_desc_obj['hid_device_descriptor']:
+                                    i_desc_obj['hid_device_descriptor']['report_descriptors'] = {}
+                                i_desc_obj['hid_device_descriptor']['report_descriptors'].update(rd)
+                                del i_desc_obj['hid_device_descriptor']['report_descriptors'][keyname]['_state']
                     
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
