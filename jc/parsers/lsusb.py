@@ -419,7 +419,7 @@ class _LsUsb():
             # ['hub_descriptor'] = {}
             # ['hub_descriptor']['hub_port_status'] = {}
             # ['device_status'] = {}
-            
+
             for hd in self.hub_descriptor_list:
                 keyname = tuple(hd.keys())[0]
                 if '_state' in hd[keyname] and hd[keyname]['_state']['bus_idx'] == idx:
@@ -427,6 +427,23 @@ class _LsUsb():
                         self.output_line['hub_descriptor'] = {}
                     self.output_line['hub_descriptor'].update(hd)
                     del self.output_line['hub_descriptor'][keyname]['_state']
+            
+            for hps in self.hub_port_status_list:
+                keyname = tuple(hps.keys())[0]
+                if '_state' in hps[keyname] and hps[keyname]['_state']['bus_idx'] == idx:
+                    if 'hub_port_status' not in self.output_line['hub_descriptor']:
+                        self.output_line['hub_descriptor']['hub_port_status'] = {}
+                    self.output_line['hub_descriptor']['hub_port_status'].update(hps)
+                    del self.output_line['hub_descriptor']['hub_port_status'][keyname]['_state']
+
+            for ds in self.device_status_list:
+                keyname = tuple(ds.keys())[0]
+                if '_state' in ds[keyname] and ds[keyname]['_state']['bus_idx'] == idx:
+                    if 'device_status' not in self.output_line:
+                        self.output_line['device_status'] = {}
+                    self.output_line['device_status'].update(ds)
+                    del self.output_line['device_status'][keyname]['_state']
+
 
 
                     
