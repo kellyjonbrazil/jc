@@ -315,12 +315,11 @@ class _LsUsb():
                     del self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
             
             # add interface_descriptor key if it doesn't exist and there are entries for this bus
-            if self.interface_descriptor_list:
-                for iface_attrs in self.interface_descriptor_list:
-                    keyname = tuple(iface_attrs.keys())[0]
-                    if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx:
-                        if 'interface_descriptors' not in self.output_line['device_descriptor']['configuration_descriptor']:
-                            self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
+            for iface_attrs in self.interface_descriptor_list:
+                keyname = tuple(iface_attrs.keys())[0]
+                if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx:
+                    if 'interface_descriptors' not in self.output_line['device_descriptor']['configuration_descriptor']:
+                        self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
 
             # find max index for this bus idx, then iterate over that range
             i_desc_iters = -1
@@ -387,6 +386,32 @@ class _LsUsb():
                                     i_desc_obj['hid_device_descriptor']['report_descriptors'] = {}
                                 i_desc_obj['hid_device_descriptor']['report_descriptors'].update(rd)
                                 del i_desc_obj['hid_device_descriptor']['report_descriptors'][keyname]['_state']
+
+                    # add endpoint_descriptor key if it doesn't exist and there are entries for this interface_descriptor
+                    for endpoint_attrs in self.endpoint_descriptor_list:
+                        keyname = tuple(endpoint_attrs.keys())[0]
+                        if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            if 'endpoint_descriptors' not in i_desc_obj:
+                                i_desc_obj['endpoint_descriptors'] = []
+
+                    # find max index for this endpoint_descriptor idx, then iterate over that range
+                    e_desc_iters = -1
+                    for endpoint_attrs in self.endpoint_descriptor_list:
+                        keyname = tuple(endpoint_attrs.keys())[0]
+                        if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            e_desc_iters = endpoint_attrs[keyname]['_state']['endpoint_descriptor_idx']
+
+                    # create the endpoint descriptor object
+                    if e_desc_iters > -1:
+                        for endpoint_idx in range(e_desc_iters + 1):
+                            e_desc_obj = {}
+                            for endpoint_attrs in self.endpoint_descriptor_list:
+                                keyname = tuple(endpoint_attrs.keys())[0]
+                                if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx and endpoint_attrs[keyname]['_state']['endpoint_descriptor_idx'] == endpoint_idx:
+                                    del endpoint_attrs[keyname]['_state']
+                                    e_desc_obj.update(endpoint_attrs)
+                            
+                            i_desc_obj['endpoint_descriptors'].append(e_desc_obj)
                     
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
@@ -401,8 +426,7 @@ class _LsUsb():
                     # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
                     # ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0]['attributes'] = {}
 
-                    for endpoint_descriptor_idx in self.endpoint_descriptor_list:
-                        pass
+                    
 
 
 def parse(data, raw=False, quiet=False):
