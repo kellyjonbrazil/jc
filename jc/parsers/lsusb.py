@@ -434,9 +434,9 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    if jc.utils.has_data(data):
-        s = _LsUsb()
+    s = _LsUsb()
 
+    if jc.utils.has_data(data):
         for line in data.splitlines():
             # sections
             if s._set_sections(line):
