@@ -19,9 +19,84 @@ Schema:
 
     [
       {
-        "lsusb":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "bus":                                string,
+        "device":                             string,
+        "id":                                 string,
+        "description":                        string,
+        "device_descriptor": {
+          "attribute": {
+            "value":                          string,
+            "description":                    string
+          },
+          "configuration_descriptor": {
+            "attribute": {
+              "value":                        string,
+              "description":                  string
+            },
+            "interface_association": {
+              "value":                        string,
+              "description":                  string
+            },
+            "interface_descriptors": [
+              {
+                "attribute": {
+                  "value":                    string,
+                  "description":              string
+                },
+                "cdc_header": {
+                  "attribute": {
+                    "value":                  string,
+                    "description":            string
+                  }
+                },
+                "cdc_call_management": {
+                  "attribute": {
+                    "value":                  string,
+                    "description":            string
+                  }
+                },
+                "cdc_acm": {
+                  "attribute": {
+                    "value":                  string,
+                    "description":            string
+                  }
+                },
+                "cdc_union": {
+                  "attribute": {
+                    "value":                  string,
+                    "description":            string
+                  }
+                },
+                "endpoint_descriptors": [
+                  {
+                    "attribute": {
+                      "value":                string,
+                      "description":          string
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "hub_descriptor": {
+          "attribute": {
+            "value":                          string,
+            "description":                    string
+          },
+          "hub_port_status": {
+            "attribute": {
+              "value":                        string,
+              "description":                  string
+            }
+          }
+        },
+        "device_status": {
+          "attribute": {
+            "value":                          string,
+            "description":                    string
+          }
+        }
       }
     ]
 
@@ -35,7 +110,7 @@ Examples:
 """
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
-from rich import print
+# from rich import print
 
 
 class info():
