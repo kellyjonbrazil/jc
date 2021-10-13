@@ -143,13 +143,12 @@ class _LsUsb():
             self.section = ''
             return True
 
+        # bus informatin is on the same line so need to extract data immediately and set indexes
         if line.startswith('Bus '):
             self.section = 'bus'
             self.bus_idx += 1
             self.interface_descriptor_idx = -1
             self.endpoint_descriptor_idx = -1
-
-            # bus informatin is on the same line so need to extract data immediately
             line_split = line.strip().split(maxsplit=6)
             self.bus_list.append(
                 {
@@ -164,21 +163,22 @@ class _LsUsb():
             )
             return True
 
+        # This section is a list, so need to update indexes
         if line.startswith('    Interface Descriptor:'):
             self.section = 'interface_descriptor'
             self.interface_descriptor_idx += 1
             self.endpoint_descriptor_idx = -1
             return True
 
+        # This section is a list, so need to update the index
         if line.startswith('      Endpoint Descriptor:'):
             self.section = 'endpoint_descriptor'
             self.endpoint_descriptor_idx += 1
             return True
 
+        # some device status information is displayed on the initial line so need to extract immediately
         if line.startswith('Device Status:'):
             self.section = 'device_status'
-
-            # some device status information is displayed on the initial line so need to extract immediately
             line_split = line.strip().split(':', maxsplit=1)
             self.device_status_list.append(
                 {
@@ -193,7 +193,7 @@ class _LsUsb():
             )
             return True
 
-        # get the rest of the sections
+        # set the rest of the sections
         string_section_map = {
             'Device Descriptor:': 'device_descriptor',
             '  Configuration Descriptor:': 'configuration_descriptor',
