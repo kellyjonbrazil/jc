@@ -164,59 +164,15 @@ class _LsUsb():
             )
             return True
 
-        if line.startswith('Device Descriptor:'):
-            self.section = 'device_descriptor'
-            return True
-
-        if line.startswith('  Configuration Descriptor:'):
-            self.section = 'configuration_descriptor'
-            return True
-
-        if line.startswith('    Interface Association:'):
-            self.section = 'interface_association'
-            return True
-
         if line.startswith('    Interface Descriptor:'):
             self.section = 'interface_descriptor'
             self.interface_descriptor_idx += 1
             self.endpoint_descriptor_idx = -1
             return True
 
-        if line.startswith('      CDC Header:'):
-            self.section = 'cdc_header'
-            return True
-
-        if line.startswith('      CDC Call Management:'):
-            self.section = 'cdc_call_management'
-            return True
-
-        if line.startswith('      CDC ACM:'):
-            self.section = 'cdc_acm'
-            return True
-
-        if line.startswith('      CDC Union:'):
-            self.section = 'cdc_union'
-            return True
-
         if line.startswith('      Endpoint Descriptor:'):
             self.section = 'endpoint_descriptor'
             self.endpoint_descriptor_idx += 1
-            return True
-
-        if line.startswith('        HID Device Descriptor:'):
-            self.section = 'hid_device_descriptor'
-            return True
-
-        if line.startswith('         Report Descriptors:'):
-            self.section = 'report_descriptors'
-            return True
-
-        if line.startswith('Hub Descriptor:'):
-            self.section = 'hub_descriptor'
-            return True
-
-        if line.startswith(' Hub Port Status:'):
-            self.section = 'hub_port_status'
             return True
 
         if line.startswith('Device Status:'):
@@ -236,6 +192,26 @@ class _LsUsb():
                 }
             )
             return True
+
+        # get the rest of the sections
+        string_section_map = {
+            'Device Descriptor:': 'device_descriptor',
+            '  Configuration Descriptor:': 'configuration_descriptor',
+            '    Interface Association:': 'interface_association',
+            '      CDC Header:': 'cdc_header',
+            '      CDC Call Management:': 'cdc_call_management',
+            '      CDC ACM:': 'cdc_acm',
+            '      CDC Union:': 'cdc_union',
+            '        HID Device Descriptor:': 'hid_device_descriptor',
+            '         Report Descriptors:': 'report_descriptors',
+            'Hub Descriptor:': 'hub_descriptor',
+            ' Hub Port Status:': 'hub_port_status'
+        }
+
+        for sec in string_section_map.keys():
+            if line.startswith(sec):
+                self.section = string_section_map[sec]
+                return True
 
     def _populate_lists(self, line):
         section_list_map = {
@@ -415,10 +391,6 @@ class _LsUsb():
                     
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
-            
-            # ['hub_descriptor'] = {}
-            # ['hub_descriptor']['hub_port_status'] = {}
-            # ['device_status'] = {}
 
             for hd in self.hub_descriptor_list:
                 keyname = tuple(hd.keys())[0]
@@ -443,10 +415,6 @@ class _LsUsb():
                         self.output_line['device_status'] = {}
                     self.output_line['device_status'].update(ds)
                     del self.output_line['device_status'][keyname]['_state']
-
-
-
-                    
 
 
 def parse(data, raw=False, quiet=False):
