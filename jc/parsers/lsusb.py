@@ -135,6 +135,12 @@ class _LsUsb():
             }
         }
 
+        if line_obj[temp_obj['key']]['value'] is None:
+            del line_obj[temp_obj['key']]['value']
+
+        if line_obj[temp_obj['key']]['description'] is None:
+            del line_obj[temp_obj['key']]['description']
+
         return line_obj
 
     def _set_sections(self, line):
