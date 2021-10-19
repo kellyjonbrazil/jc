@@ -48,7 +48,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`uname -a` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -113,6 +113,30 @@ def parse(data, raw=False, quiet=False):
 
         # otherwise use linux parser
         else:
+            # fixup for cases where the 'processor' and/or 'machine' fields are blank
+            # Linux soya.ita.chalmers.se 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 GNU/Linux
+            # Linux soya.ita.chalmers.se 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 x86_64 GNU/Linux
+            # Linux soya.ita.chalmers.se 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 x86_64 x86_64 GNU/Linux
+            fixup_count = 0
+            fixup = data.split()
+            cleanup = True
+            if fixup[-2] == fixup[-3] and fixup[-2] != fixup[-4]:
+                fixup_count = 1
+
+            elif fixup[-2] != fixup[-3]:
+                fixup_count = 2
+
+            else:
+                cleanup = False
+
+            if cleanup:
+                for item in range(fixup_count):
+                    fixup.insert(-2, 'unknown')
+
+                data = ' '.join(fixup)
+                print(data)
+
+
             parsed_line = data.split(maxsplit=3)
 
             if len(parsed_line) < 3:
