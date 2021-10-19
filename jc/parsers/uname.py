@@ -114,9 +114,6 @@ def parse(data, raw=False, quiet=False):
         # otherwise use linux parser
         else:
             # fixup for cases where the 'processor' and/or 'machine' fields are blank
-            # Linux soya.ita.chalmers.se 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 GNU/Linux
-            # Linux soya.ita.chalmers.se 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 x86_64 GNU/Linux
-            # Linux soya.ita.chalmers.se 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64 x86_64 x86_64 GNU/Linux
             fixup_count = 0
             fixup = data.split()
             cleanup = True
@@ -134,8 +131,7 @@ def parse(data, raw=False, quiet=False):
                     fixup.insert(-2, 'unknown')
 
                 data = ' '.join(fixup)
-                print(data)
-
+            # end fixup
 
             parsed_line = data.split(maxsplit=3)
 
