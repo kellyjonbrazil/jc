@@ -1,0 +1,10 @@
+{
+  "kernel_name": "Linux",
+  "node_name": "debian",
+  "kernel_release": "5.7.0-2-amd64",
+  "operating_system": "GNU/Linux",
+  "processor": "unknown",
+  "hardware_platform": "unknown",
+  "machine": "x86_64",
+  "kernel_version": "#1 SMP Debian 5.7.10-1 (2020-07-26)"
+}
