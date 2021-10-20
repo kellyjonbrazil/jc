@@ -113,7 +113,11 @@ def parse(data, raw=False, quiet=False):
 
         # otherwise use linux parser
         else:
-            # fixup for cases where the 'processor' and/or 'hardware_platform' fields are blank
+            # fixup for cases where 'machine' exists but 'processor' and 'hardware_platform' fields are blank.
+            # if the fields exist then at least two of the three will be the same.
+            # if the fields do not exist then none of the fields in those positions will be the same.
+            # case of only two existing is undefined. Must either be one or all three existing, otherwise
+            # there will be unexpected results during parsing.
             fixup = data.split()
             fixup_set = set([fixup[-2], fixup[-3], fixup[-4]])
             if len(fixup_set) > 2:
