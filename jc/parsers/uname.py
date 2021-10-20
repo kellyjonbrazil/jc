@@ -98,8 +98,8 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        # check for OSX output
-        if data.startswith('Darwin'):
+        # check for macOS or FreeBSD output
+        if data.startswith('Darwin') or data.startswith('FreeBSD'):
             parsed_line = data.split()
 
             if len(parsed_line) < 5:

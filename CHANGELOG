@@ -3,6 +3,7 @@ jc changelog
 20211019 v1.17.1  *** in progress ***
 - Fix file parser for gzip files
 - Fix uname parser for cases where the 'processor' and/or 'machine' fields are missing on linux
+- Fix uname parser on FreeBSD
 - Add lsusb parser tested on linux
 
 20210923 v1.17.0
