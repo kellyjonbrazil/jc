@@ -113,26 +113,14 @@ def parse(data, raw=False, quiet=False):
 
         # otherwise use linux parser
         else:
-            # fixup for cases where the 'processor' and/or 'machine' fields are blank
-            fixup_count = 0
+            # fixup for cases where the 'processor' and/or 'hardware_platform' fields are blank
             fixup = data.split()
-            cleanup = True
-            if fixup[-2] == fixup[-3] and fixup[-2] != fixup[-4]:
-                fixup_count = 1
-
-            elif fixup[-2] != fixup[-3]:
-                fixup_count = 2
-
-            else:
-                cleanup = False
-
-            if cleanup:
-                for item in range(fixup_count):
-                    fixup.insert(-2, 'unknown')
-
+            fixup_set = set([fixup[-2], fixup[-3], fixup[-4]])
+            if len(fixup_set) > 2:
+                fixup.insert(-1, 'unknown')
+                fixup.insert(-1, 'unknown')
                 data = ' '.join(fixup)
-            # end fixup
-
+            
             parsed_line = data.split(maxsplit=3)
 
             if len(parsed_line) < 3:
@@ -145,8 +133,8 @@ def parse(data, raw=False, quiet=False):
             parsed_line = parsed_line[-1].rsplit(maxsplit=4)
 
             raw_output['operating_system'] = parsed_line.pop(-1)
-            raw_output['hardware_platform'] = parsed_line.pop(-1)
             raw_output['processor'] = parsed_line.pop(-1)
+            raw_output['hardware_platform'] = parsed_line.pop(-1)
             raw_output['machine'] = parsed_line.pop(-1)
 
             raw_output['kernel_version'] = parsed_line.pop(0)
