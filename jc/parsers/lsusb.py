@@ -242,7 +242,13 @@ class _LsUsb():
         # }
 
     def _add_device_status_attributes(self, line):
-        return self._add_attributes(line)
+        return {
+            'description': line.strip(),
+            '_state': {
+                'bus_idx': self.bus_idx
+            }
+        }
+    
 
     def _set_sections(self, line):
         # ignore blank lines
@@ -289,13 +295,10 @@ class _LsUsb():
             line_split = line.strip().split(':', maxsplit=1)
             self.device_status_list.append(
                 {
-                    'device_status':
-                        {
-                            'value': line_split[1].strip(),
-                            '_state': {
-                                'bus_idx': self.bus_idx
-                            }
-                        }
+                    'value': line_split[1].strip(),
+                    '_state': {
+                        'bus_idx': self.bus_idx
+                    }
                 }
             )
             return True
@@ -333,8 +336,7 @@ class _LsUsb():
             'hid_device_descriptor': self.hid_device_descriptor_list,
             'report_descriptors': self.report_descriptors_list,
             'endpoint_descriptor': self.endpoint_descriptor_list,
-            'hub_descriptor': self.hub_descriptor_list,
-            'device_status': self.device_status_list
+            'hub_descriptor': self.hub_descriptor_list
         }
 
         for sec in section_list_map.keys():
@@ -403,8 +405,7 @@ class _LsUsb():
             for iface_attrs in self.interface_descriptor_list:
                 keyname = tuple(iface_attrs.keys())[0]
                 if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx:
-                    if 'interface_descriptors' not in self.output_line['device_descriptor']['configuration_descriptor']:
-                        self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
+                    self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
 
             # find max index for this bus idx, then iterate over that range
             i_desc_iters = -1
@@ -464,8 +465,7 @@ class _LsUsb():
                     for endpoint_attrs in self.endpoint_descriptor_list:
                         keyname = tuple(endpoint_attrs.keys())[0]
                         if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            if 'endpoint_descriptors' not in i_desc_obj:
-                                i_desc_obj['endpoint_descriptors'] = []
+                            i_desc_obj['endpoint_descriptors'] = []
 
                     # find max index for this endpoint_descriptor idx, then iterate over that range
                     e_desc_iters = -1
@@ -481,9 +481,9 @@ class _LsUsb():
                             for endpoint_attrs in self.endpoint_descriptor_list:
                                 keyname = tuple(endpoint_attrs.keys())[0]
                                 if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx and endpoint_attrs[keyname]['_state']['endpoint_descriptor_idx'] == endpoint_idx:
-                                    del endpoint_attrs[keyname]['_state']
                                     e_desc_obj.update(endpoint_attrs)
-                            
+                                    del endpoint_attrs[keyname]['_state']
+
                             i_desc_obj['endpoint_descriptors'].append(e_desc_obj)
                     
                     # add the object to the list of interface descriptors
@@ -503,9 +503,9 @@ class _LsUsb():
 
             for ds in self.device_status_list:
                 keyname = tuple(ds.keys())[0]
-                if '_state' in ds[keyname] and ds[keyname]['_state']['bus_idx'] == idx:
+                if '_state' in ds and ds['_state']['bus_idx'] == idx:
                     self.output_line['device_status'].update(ds)
-                    del self.output_line['device_status'][keyname]['_state']
+                    del self.output_line['device_status']['_state']
 
 
 def parse(data, raw=False, quiet=False):
