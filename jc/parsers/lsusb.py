@@ -462,8 +462,8 @@ class _LsUsb():
                         if 'attributes' not in  self.output_line['device_descriptor'][last_attr]:
                              self.output_line['device_descriptor'][last_attr]['attributes'] = []
 
-                        i_desc_obj_attribute = f'{keyname} {dd[keyname].get("value", "")} {dd[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                        this_attribute = f'{keyname} {dd[keyname].get("value", "")} {dd[keyname].get("description", "")}'.strip()
+                        self.output_line['device_descriptor'][last_attr]['attributes'].append(this_attribute)
                         continue
 
                     self.output_line['device_descriptor'].update(dd)
@@ -479,8 +479,8 @@ class _LsUsb():
                         if 'attributes' not in  self.output_line['device_descriptor']['configuration_descriptor'][last_attr]:
                              self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'] = []
 
-                        i_desc_obj_attribute = f'{keyname} {cd[keyname].get("value", "")} {cd[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                        this_attribute = f'{keyname} {cd[keyname].get("value", "")} {cd[keyname].get("description", "")}'.strip()
+                        self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'].append(this_attribute)
                         continue
 
                     self.output_line['device_descriptor']['configuration_descriptor'].update(cd)
@@ -496,8 +496,8 @@ class _LsUsb():
                         if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]:
                             self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'] = []
 
-                        i_desc_obj_attribute = f'{keyname} {ia[keyname].get("value", "")} {ia[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                        this_attribute = f'{keyname} {ia[keyname].get("value", "")} {ia[keyname].get("description", "")}'.strip()
+                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'].append(this_attribute)
                         continue
 
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
@@ -530,8 +530,8 @@ class _LsUsb():
                                 if 'attributes' not in i_desc_obj[last_attr]:
                                     i_desc_obj[last_attr]['attributes'] = []
 
-                                i_desc_obj_attribute = f'{keyname} {iface_attrs[keyname].get("value", "")} {iface_attrs[keyname].get("description", "")}'.strip()
-                                i_desc_obj[last_attr]['attributes'].append(i_desc_obj_attribute)
+                                this_attribute = f'{keyname} {iface_attrs[keyname].get("value", "")} {iface_attrs[keyname].get("description", "")}'.strip()
+                                i_desc_obj[last_attr]['attributes'].append(this_attribute)
                                 continue
 
                             del iface_attrs[keyname]['_state']
@@ -548,8 +548,8 @@ class _LsUsb():
                                 if 'attributes' not in i_desc_obj['cdc_header'][last_attr]:
                                     i_desc_obj['cdc_header'][last_attr]['attributes'] = []
 
-                                i_desc_obj_attribute = f'{keyname} {ch[keyname].get("value", "")} {ch[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_header'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                this_attribute = f'{keyname} {ch[keyname].get("value", "")} {ch[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_header'][last_attr]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_header'].update(ch)
@@ -565,8 +565,8 @@ class _LsUsb():
                                 if 'attributes' not in i_desc_obj['cdc_call_management'][last_attr]:
                                     i_desc_obj['cdc_call_management'][last_attr]['attributes'] = []
 
-                                i_desc_obj_attribute = f'{keyname} {ccm[keyname].get("value", "")} {ccm[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_call_management'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                this_attribute = f'{keyname} {ccm[keyname].get("value", "")} {ccm[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_call_management'][last_attr]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_call_management'].update(ccm)
@@ -582,8 +582,8 @@ class _LsUsb():
                                 if 'attributes' not in i_desc_obj['cdc_acm'][last_attr]:
                                     i_desc_obj['cdc_acm'][last_attr]['attributes'] = []
 
-                                i_desc_obj_attribute = f'{keyname} {ca[keyname].get("value", "")} {ca[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_acm'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                this_attribute = f'{keyname} {ca[keyname].get("value", "")} {ca[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_acm'][last_attr]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_acm'].update(ca)
@@ -599,8 +599,8 @@ class _LsUsb():
                                 if 'attributes' not in i_desc_obj['cdc_union'][last_attr]:
                                     i_desc_obj['cdc_union'][last_attr]['attributes'] = []
 
-                                i_desc_obj_attribute = f'{keyname} {cu[keyname].get("value", "")} {cu[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_union'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                this_attribute = f'{keyname} {cu[keyname].get("value", "")} {cu[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_union'][last_attr]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_union'].update(cu)
@@ -616,8 +616,8 @@ class _LsUsb():
                                 if 'attributes' not in i_desc_obj['hid_device_descriptor'][last_attr]:
                                     i_desc_obj['hid_device_descriptor'][last_attr]['attributes'] = []
 
-                                i_desc_obj_attribute = f'{keyname} {hidd[keyname].get("value", "")} {hidd[keyname].get("description", "")}'.strip()
-                                i_desc_obj['hid_device_descriptor'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                this_attribute = f'{keyname} {hidd[keyname].get("value", "")} {hidd[keyname].get("description", "")}'.strip()
+                                i_desc_obj['hid_device_descriptor'][last_attr]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['hid_device_descriptor'].update(hidd)
@@ -657,8 +657,8 @@ class _LsUsb():
                                         if 'attributes' not in e_desc_obj[last_attr]:
                                             e_desc_obj[last_attr]['attributes'] = []
 
-                                        e_desc_obj_attribute = f'{keyname} {endpoint_attrs[keyname].get("value", "")} {endpoint_attrs[keyname].get("description", "")}'.strip()
-                                        e_desc_obj[last_attr]['attributes'].append(e_desc_obj_attribute)
+                                        this_attribute = f'{keyname} {endpoint_attrs[keyname].get("value", "")} {endpoint_attrs[keyname].get("description", "")}'.strip()
+                                        e_desc_obj[last_attr]['attributes'].append(this_attribute)
                                         continue
 
                                     e_desc_obj.update(endpoint_attrs)
@@ -679,8 +679,8 @@ class _LsUsb():
                         if 'attributes' not in self.output_line['hub_descriptor'][last_attr]:
                             self.output_line['hub_descriptor'][last_attr]['attributes'] = []
 
-                        hd_attribute = f'{keyname} {hd[keyname].get("value", "")} {hd[keyname].get("description", "")}'.strip()
-                        self.output_line['hub_descriptor'][last_attr]['attributes'].append(hd_attribute)
+                        this_attribute = f'{keyname} {hd[keyname].get("value", "")} {hd[keyname].get("description", "")}'.strip()
+                        self.output_line['hub_descriptor'][last_attr]['attributes'].append(this_attribute)
                         continue
             
                     self.output_line['hub_descriptor'].update(hd)
