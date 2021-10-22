@@ -199,7 +199,7 @@ class _LsUsb():
         self.bus_idx = -1
         self.interface_descriptor_idx = -1
         self.endpoint_descriptor_idx = -1
-        self.last_attribute = ''
+        self.last_item = ''
         self.last_indent = 0
         self.attribute_value = False
 
@@ -257,7 +257,7 @@ class _LsUsb():
                 'description': temp_obj['description'],
                 '_state': {
                     'attribute_value': self.attribute_value,
-                    'last_attribute': self.last_attribute,
+                    'last_item': self.last_item,
                     'bus_idx': self.bus_idx,
                     'interface_descriptor_idx': self.interface_descriptor_idx,
                     'endpoint_descriptor_idx': self.endpoint_descriptor_idx
@@ -275,7 +275,7 @@ class _LsUsb():
         self.last_indent = indent
 
         if not self.attribute_value:
-            self.last_attribute = temp_obj['key']
+            self.last_item = temp_obj['key']
 
         return line_obj
 
@@ -454,12 +454,12 @@ class _LsUsb():
 
                     # is this a top level value or an attribute?
                     if dd[keyname]['_state']['attribute_value']:
-                        last_attr = dd[keyname]['_state']['last_attribute']
-                        if 'attributes' not in  self.output_line['device_descriptor'][last_attr]:
-                             self.output_line['device_descriptor'][last_attr]['attributes'] = []
+                        last_item = dd[keyname]['_state']['last_item']
+                        if 'attributes' not in  self.output_line['device_descriptor'][last_item]:
+                             self.output_line['device_descriptor'][last_item]['attributes'] = []
 
                         this_attribute = f'{keyname} {dd[keyname].get("value", "")} {dd[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor'][last_attr]['attributes'].append(this_attribute)
+                        self.output_line['device_descriptor'][last_item]['attributes'].append(this_attribute)
                         continue
 
                     self.output_line['device_descriptor'].update(dd)
@@ -471,12 +471,12 @@ class _LsUsb():
 
                     # is this a top level value or an attribute?
                     if cd[keyname]['_state']['attribute_value']:
-                        last_attr = cd[keyname]['_state']['last_attribute']
-                        if 'attributes' not in  self.output_line['device_descriptor']['configuration_descriptor'][last_attr]:
-                             self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'] = []
+                        last_item = cd[keyname]['_state']['last_item']
+                        if 'attributes' not in  self.output_line['device_descriptor']['configuration_descriptor'][last_item]:
+                             self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'] = []
 
                         this_attribute = f'{keyname} {cd[keyname].get("value", "")} {cd[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'].append(this_attribute)
+                        self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'].append(this_attribute)
                         continue
 
                     self.output_line['device_descriptor']['configuration_descriptor'].update(cd)
@@ -488,12 +488,12 @@ class _LsUsb():
 
                     # is this a top level value or an attribute?
                     if ia[keyname]['_state']['attribute_value']:
-                        last_attr = ia[keyname]['_state']['last_attribute']
-                        if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]:
-                            self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'] = []
+                        last_item = ia[keyname]['_state']['last_item']
+                        if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_item]:
+                            self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_item]['attributes'] = []
 
                         this_attribute = f'{keyname} {ia[keyname].get("value", "")} {ia[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'].append(this_attribute)
+                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_item]['attributes'].append(this_attribute)
                         continue
 
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
@@ -522,12 +522,12 @@ class _LsUsb():
                             
                             # is this a top level value or an attribute?
                             if iface_attrs[keyname]['_state']['attribute_value']:
-                                last_attr = iface_attrs[keyname]['_state']['last_attribute']
-                                if 'attributes' not in i_desc_obj[last_attr]:
-                                    i_desc_obj[last_attr]['attributes'] = []
+                                last_item = iface_attrs[keyname]['_state']['last_item']
+                                if 'attributes' not in i_desc_obj[last_item]:
+                                    i_desc_obj[last_item]['attributes'] = []
 
                                 this_attribute = f'{keyname} {iface_attrs[keyname].get("value", "")} {iface_attrs[keyname].get("description", "")}'.strip()
-                                i_desc_obj[last_attr]['attributes'].append(this_attribute)
+                                i_desc_obj[last_item]['attributes'].append(this_attribute)
                                 continue
 
                             del iface_attrs[keyname]['_state']
@@ -540,12 +540,12 @@ class _LsUsb():
                             
                             # is this a top level value or an attribute?
                             if ch[keyname]['_state']['attribute_value']:
-                                last_attr = ch[keyname]['_state']['last_attribute']
-                                if 'attributes' not in i_desc_obj['cdc_header'][last_attr]:
-                                    i_desc_obj['cdc_header'][last_attr]['attributes'] = []
+                                last_item = ch[keyname]['_state']['last_item']
+                                if 'attributes' not in i_desc_obj['cdc_header'][last_item]:
+                                    i_desc_obj['cdc_header'][last_item]['attributes'] = []
 
                                 this_attribute = f'{keyname} {ch[keyname].get("value", "")} {ch[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_header'][last_attr]['attributes'].append(this_attribute)
+                                i_desc_obj['cdc_header'][last_item]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_header'].update(ch)
@@ -557,12 +557,12 @@ class _LsUsb():
                             
                             # is this a top level value or an attribute?
                             if ccm[keyname]['_state']['attribute_value']:
-                                last_attr = ccm[keyname]['_state']['last_attribute']
-                                if 'attributes' not in i_desc_obj['cdc_call_management'][last_attr]:
-                                    i_desc_obj['cdc_call_management'][last_attr]['attributes'] = []
+                                last_item = ccm[keyname]['_state']['last_item']
+                                if 'attributes' not in i_desc_obj['cdc_call_management'][last_item]:
+                                    i_desc_obj['cdc_call_management'][last_item]['attributes'] = []
 
                                 this_attribute = f'{keyname} {ccm[keyname].get("value", "")} {ccm[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_call_management'][last_attr]['attributes'].append(this_attribute)
+                                i_desc_obj['cdc_call_management'][last_item]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_call_management'].update(ccm)
@@ -574,12 +574,12 @@ class _LsUsb():
                             
                             # is this a top level value or an attribute?
                             if ca[keyname]['_state']['attribute_value']:
-                                last_attr = ca[keyname]['_state']['last_attribute']
-                                if 'attributes' not in i_desc_obj['cdc_acm'][last_attr]:
-                                    i_desc_obj['cdc_acm'][last_attr]['attributes'] = []
+                                last_item = ca[keyname]['_state']['last_item']
+                                if 'attributes' not in i_desc_obj['cdc_acm'][last_item]:
+                                    i_desc_obj['cdc_acm'][last_item]['attributes'] = []
 
                                 this_attribute = f'{keyname} {ca[keyname].get("value", "")} {ca[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_acm'][last_attr]['attributes'].append(this_attribute)
+                                i_desc_obj['cdc_acm'][last_item]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_acm'].update(ca)
@@ -591,12 +591,12 @@ class _LsUsb():
                             
                             # is this a top level value or an attribute?
                             if cu[keyname]['_state']['attribute_value']:
-                                last_attr = cu[keyname]['_state']['last_attribute']
-                                if 'attributes' not in i_desc_obj['cdc_union'][last_attr]:
-                                    i_desc_obj['cdc_union'][last_attr]['attributes'] = []
+                                last_item = cu[keyname]['_state']['last_item']
+                                if 'attributes' not in i_desc_obj['cdc_union'][last_item]:
+                                    i_desc_obj['cdc_union'][last_item]['attributes'] = []
 
                                 this_attribute = f'{keyname} {cu[keyname].get("value", "")} {cu[keyname].get("description", "")}'.strip()
-                                i_desc_obj['cdc_union'][last_attr]['attributes'].append(this_attribute)
+                                i_desc_obj['cdc_union'][last_item]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['cdc_union'].update(cu)
@@ -608,12 +608,12 @@ class _LsUsb():
                             
                             # is this a top level value or an attribute?
                             if hidd[keyname]['_state']['attribute_value']:
-                                last_attr = hidd[keyname]['_state']['last_attribute']
-                                if 'attributes' not in i_desc_obj['hid_device_descriptor'][last_attr]:
-                                    i_desc_obj['hid_device_descriptor'][last_attr]['attributes'] = []
+                                last_item = hidd[keyname]['_state']['last_item']
+                                if 'attributes' not in i_desc_obj['hid_device_descriptor'][last_item]:
+                                    i_desc_obj['hid_device_descriptor'][last_item]['attributes'] = []
 
                                 this_attribute = f'{keyname} {hidd[keyname].get("value", "")} {hidd[keyname].get("description", "")}'.strip()
-                                i_desc_obj['hid_device_descriptor'][last_attr]['attributes'].append(this_attribute)
+                                i_desc_obj['hid_device_descriptor'][last_item]['attributes'].append(this_attribute)
                                 continue
 
                             i_desc_obj['hid_device_descriptor'].update(hidd)
@@ -649,12 +649,12 @@ class _LsUsb():
                                     
                                     # is this a top level value or an attribute?
                                     if endpoint_attrs[keyname]['_state']['attribute_value']:
-                                        last_attr = endpoint_attrs[keyname]['_state']['last_attribute']
-                                        if 'attributes' not in e_desc_obj[last_attr]:
-                                            e_desc_obj[last_attr]['attributes'] = []
+                                        last_item = endpoint_attrs[keyname]['_state']['last_item']
+                                        if 'attributes' not in e_desc_obj[last_item]:
+                                            e_desc_obj[last_item]['attributes'] = []
 
                                         this_attribute = f'{keyname} {endpoint_attrs[keyname].get("value", "")} {endpoint_attrs[keyname].get("description", "")}'.strip()
-                                        e_desc_obj[last_attr]['attributes'].append(this_attribute)
+                                        e_desc_obj[last_item]['attributes'].append(this_attribute)
                                         continue
 
                                     e_desc_obj.update(endpoint_attrs)
@@ -671,12 +671,12 @@ class _LsUsb():
 
                     # is this a top level value or an attribute?
                     if hd[keyname]['_state']['attribute_value']:
-                        last_attr = hd[keyname]['_state']['last_attribute']
-                        if 'attributes' not in self.output_line['hub_descriptor'][last_attr]:
-                            self.output_line['hub_descriptor'][last_attr]['attributes'] = []
+                        last_item = hd[keyname]['_state']['last_item']
+                        if 'attributes' not in self.output_line['hub_descriptor'][last_item]:
+                            self.output_line['hub_descriptor'][last_item]['attributes'] = []
 
                         this_attribute = f'{keyname} {hd[keyname].get("value", "")} {hd[keyname].get("description", "")}'.strip()
-                        self.output_line['hub_descriptor'][last_attr]['attributes'].append(this_attribute)
+                        self.output_line['hub_descriptor'][last_item]['attributes'].append(this_attribute)
                         continue
             
                     self.output_line['hub_descriptor'].update(hd)
