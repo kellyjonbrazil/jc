@@ -169,6 +169,9 @@ class _LsUsb():
         self.bus_idx = -1
         self.interface_descriptor_idx = -1
         self.endpoint_descriptor_idx = -1
+        self.last_attribute = ''
+        self.last_indent = 0
+        self.attribute_value = False
 
         self.bus_list = []
         self.device_descriptor_list = []
@@ -201,6 +204,13 @@ class _LsUsb():
 
     def _add_attributes(self, line):
         indent = self._count_indent(line)
+        if indent > self.last_indent:
+            self.attribute_value = True
+        elif indent == self.last_indent and self.attribute_value == True:
+            self.attribute_value = True
+        else:
+            self.attribute_value = False
+
         # Section header is formatted with the correct spacing to be used with
         # jc.parsers.universal.sparse_table_parse(). Pad end of string to be at least len of 25
         section_header = 'key                   val description'
@@ -214,7 +224,8 @@ class _LsUsb():
                 'value': temp_obj['val'],
                 'description': temp_obj['description'],
                 '_state': {
-                    'indent': indent,
+                    'attribute_value': self.attribute_value,
+                    'last_attribute': self.last_attribute,
                     'bus_idx': self.bus_idx,
                     'interface_descriptor_idx': self.interface_descriptor_idx,
                     'endpoint_descriptor_idx': self.endpoint_descriptor_idx
@@ -227,6 +238,11 @@ class _LsUsb():
 
         if line_obj[temp_obj['key']]['description'] is None:
             del line_obj[temp_obj['key']]['description']
+        
+        self.last_indent = indent
+
+        if not self.attribute_value:
+            self.last_attribute = temp_obj['key']
 
         return line_obj
 
@@ -503,6 +519,17 @@ class _LsUsb():
             for hd in self.hub_descriptor_list:
                 keyname = tuple(hd.keys())[0]
                 if '_state' in hd[keyname] and hd[keyname]['_state']['bus_idx'] == idx:
+
+                    # is this a top level value or an attribute?
+                    if hd[keyname]['_state']['attribute_value']:
+                        last_attr = hd[keyname]['_state']['last_attribute']
+                        if 'attributes' not in self.output_line['hub_descriptor'][last_attr]:
+                            self.output_line['hub_descriptor'][last_attr]['attributes'] = []
+
+                        hd_attribute = f'{keyname} {hd[keyname].get("value")} {hd[keyname].get("description")}'
+                        self.output_line['hub_descriptor'][last_attr]['attributes'].append(hd_attribute)
+                        continue
+            
                     self.output_line['hub_descriptor'].update(hd)
                     del self.output_line['hub_descriptor'][keyname]['_state']
             
