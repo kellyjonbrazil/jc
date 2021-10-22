@@ -176,11 +176,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
-
+    # no further processing
     return proc_data
 
 
@@ -239,6 +235,7 @@ class _LsUsb():
     def _add_attributes(self, line):
         indent = self._count_indent(line)
 
+        # determine whether this is a top-level value or lower-level attribute item
         if indent > self.last_indent and self.old_section == self.section:
             self.attribute_value = True
         elif indent == self.last_indent and self.attribute_value == True and self.old_section == self.section:
@@ -436,7 +433,6 @@ class _LsUsb():
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_acm'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor']['report_descriptors'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0] = {}
         ['hub_descriptor'] = {}
