@@ -166,6 +166,7 @@ class _LsUsb():
         self.output_line = _NestedDict()
         
         self.section = ''
+        self.old_section = ''
         self.bus_idx = -1
         self.interface_descriptor_idx = -1
         self.endpoint_descriptor_idx = -1
@@ -204,9 +205,10 @@ class _LsUsb():
 
     def _add_attributes(self, line):
         indent = self._count_indent(line)
-        if indent > self.last_indent:
+
+        if indent > self.last_indent and self.old_section == self.section:
             self.attribute_value = True
-        elif indent == self.last_indent and self.attribute_value == True:
+        elif indent == self.last_indent and self.attribute_value == True and self.old_section == self.section:
             self.attribute_value = True
         else:
             self.attribute_value = False
@@ -239,6 +241,7 @@ class _LsUsb():
         if line_obj[temp_obj['key']]['description'] is None:
             del line_obj[temp_obj['key']]['description']
         
+        self.old_section = self.section
         self.last_indent = indent
 
         if not self.attribute_value:
@@ -279,6 +282,7 @@ class _LsUsb():
         # ignore blank lines
         if not line:
             self.section = ''
+            self.attribute_value = False
             return True
 
         # bus informatin is on the same line so need to extract data immediately and set indexes
@@ -287,6 +291,7 @@ class _LsUsb():
             self.bus_idx += 1
             self.interface_descriptor_idx = -1
             self.endpoint_descriptor_idx = -1
+            self.attribute_value = False
             line_split = line.strip().split(maxsplit=6)
             self.bus_list.append(
                 {
@@ -306,17 +311,20 @@ class _LsUsb():
             self.section = 'interface_descriptor'
             self.interface_descriptor_idx += 1
             self.endpoint_descriptor_idx = -1
+            self.attribute_value = False
             return True
 
         # This section is a list, so need to update the index
         if line.startswith('      Endpoint Descriptor:'):
             self.section = 'endpoint_descriptor'
             self.endpoint_descriptor_idx += 1
+            self.attribute_value = False
             return True
 
         # some device status information is displayed on the initial line so need to extract immediately
         if line.startswith('Device Status:'):
             self.section = 'device_status'
+            self.attribute_value = False
             line_split = line.strip().split(':', maxsplit=1)
             self.device_status_list.append(
                 {
@@ -346,6 +354,7 @@ class _LsUsb():
         for sec in string_section_map.keys():
             if line.startswith(sec):
                 self.section = string_section_map[sec]
+                self.attribute_value = False
                 return True
 
 
@@ -508,6 +517,17 @@ class _LsUsb():
                             for endpoint_attrs in self.endpoint_descriptor_list:
                                 keyname = tuple(endpoint_attrs.keys())[0]
                                 if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx and endpoint_attrs[keyname]['_state']['endpoint_descriptor_idx'] == endpoint_idx:
+                                    
+                                    # is this a top level value or an attribute?
+                                    if endpoint_attrs[keyname]['_state']['attribute_value']:
+                                        last_attr = endpoint_attrs[keyname]['_state']['last_attribute']
+                                        if 'attributes' not in e_desc_obj[last_attr]:
+                                            e_desc_obj[last_attr]['attributes'] = []
+
+                                        e_desc_obj_attribute = f'{keyname} {endpoint_attrs[keyname].get("value")} {endpoint_attrs[keyname].get("description")}'
+                                        e_desc_obj[last_attr]['attributes'].append(e_desc_obj_attribute)
+                                        continue
+
                                     e_desc_obj.update(endpoint_attrs)
                                     del endpoint_attrs[keyname]['_state']
 
