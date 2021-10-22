@@ -13,6 +13,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/uname-a.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_uname_a = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/uname.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_uname = f.read()
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/uname-a.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_uname_a = f.read()
 
@@ -74,11 +77,17 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.uname.parse('', quiet=True), {})
 
-    def test_uname_no_a(self):
+    def test_uname_no_a_osx(self):
         """
-        Test 'uname' without -a option. Should generate a ParseError exception
+        Test 'uname' without -a option on OSX. Should generate a ParseError exception
         """
         self.assertRaises(jc.parsers.uname.ParseError, jc.parsers.uname.parse, self.osx_10_14_6_uname)
+
+    def test_uname_no_a_centos(self):
+        """
+        Test 'uname' without -a option on Centos. Should generate a ParseError exception
+        """
+        self.assertRaises(jc.parsers.uname.ParseError, jc.parsers.uname.parse, self.centos_7_7_uname)
 
     def test_uname_centos_7_7(self):
         """

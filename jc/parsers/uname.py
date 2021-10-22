@@ -119,11 +119,12 @@ def parse(data, raw=False, quiet=False):
             # case of only two existing is undefined. Must either be one or all three existing, otherwise
             # there will be unexpected results during parsing.
             fixup = data.split()
-            fixup_set = set([fixup[-2], fixup[-3], fixup[-4]])
-            if len(fixup_set) > 2:
-                fixup.insert(-1, 'unknown')
-                fixup.insert(-1, 'unknown')
-                data = ' '.join(fixup)
+            if len(fixup) >= 4:
+                fixup_set = set([fixup[-2], fixup[-3], fixup[-4]])
+                if len(fixup_set) > 2:
+                    fixup.insert(-1, 'unknown')
+                    fixup.insert(-1, 'unknown')
+                    data = ' '.join(fixup)
             
             parsed_line = data.split(maxsplit=3)
 
