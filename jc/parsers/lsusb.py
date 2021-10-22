@@ -29,19 +29,25 @@ Schema:
         "device_descriptor": {
           "<attribute>": {
             "value":                          string,
-            "description":                    string
+            "description":                    string,
+            "attributes": [
+                                              string
+            ]
           },
           "configuration_descriptor": {
             "<attribute>": {
               "value":                        string,
-              "description":                  string
+              "description":                  string,
+              "attributes": [
+                                              string
+              ]
             },
             "interface_association": {
               "<attribute>": {
-                "value":                        string,
-                "description":                  string,
+                "value":                      string,
+                "description":                string,
                 "attributes": [
-                                                string
+                                              string
                 ]
               }
             },
@@ -449,12 +455,34 @@ class _LsUsb():
             for dd in self.device_descriptor_list:
                 keyname = tuple(dd.keys())[0]
                 if '_state' in dd[keyname] and dd[keyname]['_state']['bus_idx'] == idx:
+
+                    # is this a top level value or an attribute?
+                    if dd[keyname]['_state']['attribute_value']:
+                        last_attr = dd[keyname]['_state']['last_attribute']
+                        if 'attributes' not in  self.output_line['device_descriptor'][last_attr]:
+                             self.output_line['device_descriptor'][last_attr]['attributes'] = []
+
+                        i_desc_obj_attribute = f'{keyname} {dd[keyname].get("value", "")} {dd[keyname].get("description", "")}'.strip()
+                        self.output_line['device_descriptor'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                        continue
+
                     self.output_line['device_descriptor'].update(dd)
                     del self.output_line['device_descriptor'][keyname]['_state']
 
             for cd in self.configuration_descriptor_list:
                 keyname = tuple(cd.keys())[0]
                 if '_state' in cd[keyname] and cd[keyname]['_state']['bus_idx'] == idx:
+
+                    # is this a top level value or an attribute?
+                    if cd[keyname]['_state']['attribute_value']:
+                        last_attr = cd[keyname]['_state']['last_attribute']
+                        if 'attributes' not in  self.output_line['device_descriptor']['configuration_descriptor'][last_attr]:
+                             self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'] = []
+
+                        i_desc_obj_attribute = f'{keyname} {cd[keyname].get("value", "")} {cd[keyname].get("description", "")}'.strip()
+                        self.output_line['device_descriptor']['configuration_descriptor'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                        continue
+
                     self.output_line['device_descriptor']['configuration_descriptor'].update(cd)
                     del self.output_line['device_descriptor']['configuration_descriptor'][keyname]['_state']
 
@@ -465,8 +493,8 @@ class _LsUsb():
                     # is this a top level value or an attribute?
                     if ia[keyname]['_state']['attribute_value']:
                         last_attr = ia[keyname]['_state']['last_attribute']
-                        if 'attributes' not in i_desc_obj[last_attr]:
-                            i_desc_obj[last_attr]['attributes'] = []
+                        if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]:
+                            self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'] = []
 
                         i_desc_obj_attribute = f'{keyname} {ia[keyname].get("value", "")} {ia[keyname].get("description", "")}'.strip()
                         self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'].append(i_desc_obj_attribute)
