@@ -17,6 +17,8 @@ Usage (module):
 
 Schema:
 
+    Note: <attribute> field keynames are assigned directly from the lsusb output
+
     [
       {
         "bus":                                string,
@@ -24,12 +26,12 @@ Schema:
         "id":                                 string,
         "description":                        string,
         "device_descriptor": {
-          "attribute": {
+          "<attribute>": {
             "value":                          string,
             "description":                    string
           },
           "configuration_descriptor": {
-            "attribute": {
+            "<attribute>": {
               "value":                        string,
               "description":                  string
             },
@@ -39,37 +41,37 @@ Schema:
             },
             "interface_descriptors": [
               {
-                "attribute": {
+                "<attribute>": {
                   "value":                    string,
                   "description":              string
                 },
                 "cdc_header": {
-                  "attribute": {
+                  "<attribute>": {
                     "value":                  string,
                     "description":            string
                   }
                 },
                 "cdc_call_management": {
-                  "attribute": {
+                  "<attribute>": {
                     "value":                  string,
                     "description":            string
                   }
                 },
                 "cdc_acm": {
-                  "attribute": {
+                  "<attribute>": {
                     "value":                  string,
                     "description":            string
                   }
                 },
                 "cdc_union": {
-                  "attribute": {
+                  "<attribute>": {
                     "value":                  string,
                     "description":            string
                   }
                 },
                 "endpoint_descriptors": [
                   {
-                    "attribute": {
+                    "<attribute>": {
                       "value":                string,
                       "description":          string
                     }
@@ -80,14 +82,16 @@ Schema:
           }
         },
         "hub_descriptor": {
-          "attribute": {
+          "<attribute>": {
             "value":                          string,
             "description":                    string
           },
           "hub_port_status": {
-            "attribute": {
+            "<attribute>": {
               "value":                        string,
-              "description":                  string
+              "attributes": [
+                                              string
+              ]
             }
           }
         },
@@ -194,6 +198,7 @@ class _LsUsb():
                 break
         return indent
 
+
     def _add_attributes(self, line):
         indent = self._count_indent(line)
         # Section header is formatted with the correct spacing to be used with
@@ -225,21 +230,25 @@ class _LsUsb():
 
         return line_obj
 
+
     def _add_hub_port_status_attributes(self, line):
-        return self._add_attributes(line)
-        # indent = self._count_indent(line)
-        # line_obj = {
-        #     temp_obj['key']: {
-        #         'value': temp_obj['val'],
-        #         'description': temp_obj['description'],
-        #         '_state': {
-        #             'indent': indent,
-        #             'bus_idx': self.bus_idx,
-        #             'interface_descriptor_idx': self.interface_descriptor_idx,
-        #             'endpoint_descriptor_idx': self.endpoint_descriptor_idx
-        #         }
-        #     }
-        # }
+        # Port 1: 0000.0103 power enable connect
+        first_split = line.split(': ', maxsplit=1)
+        port_field = first_split[0].strip()
+        second_split = first_split[1].split(maxsplit=1)
+        port_val = second_split[0]
+        attributes = second_split[1].split()
+
+        return {
+            port_field: {
+                'value': port_val,
+                'attributes': attributes,
+                '_state': {
+                    'bus_idx': self.bus_idx
+                }
+            }
+        }
+
 
     def _add_device_status_attributes(self, line):
         return {
@@ -323,6 +332,7 @@ class _LsUsb():
                 self.section = string_section_map[sec]
                 return True
 
+
     def _populate_lists(self, line):
         section_list_map = {
             'device_descriptor': self.device_descriptor_list,
@@ -352,6 +362,7 @@ class _LsUsb():
         if line.startswith(' ') and self.section == 'device_status':
             self.device_status_list.append(self._add_device_status_attributes(line))
             return True
+
 
     def _populate_schema(self):
         """
@@ -502,7 +513,6 @@ class _LsUsb():
                     del self.output_line['hub_descriptor']['hub_port_status'][keyname]['_state']
 
             for ds in self.device_status_list:
-                keyname = tuple(ds.keys())[0]
                 if '_state' in ds and ds['_state']['bus_idx'] == idx:
                     self.output_line['device_status'].update(ds)
                     del self.output_line['device_status']['_state']
@@ -543,24 +553,5 @@ def parse(data, raw=False, quiet=False):
     # output the raw object
     if s.output_line:
         s.raw_output.append(s.output_line)
-
-#     print(f'''
-# {s.section=}
-# {s.bus_list=}
-# {s.device_descriptor_list=}
-# {s.configuration_descriptor_list=}
-# {s.interface_association_list=}
-# {s.interface_descriptor_list=}
-# {s.cdc_header_list=}
-# {s.cdc_call_management_list=}
-# {s.cdc_acm_list=}
-# {s.cdc_union_list=}
-# {s.endpoint_descriptor_list=}
-# {s.hid_device_descriptor_list=}
-# {s.report_descriptors_list=}
-# {s.hub_descriptor_list=}
-# {s.hub_port_status_list=}
-# {s.device_status_list=}
-# ''')
 
     return s.raw_output if raw else _process(s.raw_output)
