@@ -17,7 +17,8 @@ Usage (module):
 
 Schema:
 
-    Note: <attribute> field keynames are assigned directly from the lsusb output
+    Note: <attribute> field keynames are assigned directly from the lsusb output.
+          If there are duplicate <attribute> names in a section, only the last one is converted.
 
     [
       {
@@ -36,44 +37,67 @@ Schema:
               "description":                  string
             },
             "interface_association": {
-              "value":                        string,
-              "description":                  string
+              "<attribute>": {
+                "value":                        string,
+                "description":                  string,
+                "attributes": [
+                                                string
+                ]
+              }
             },
             "interface_descriptors": [
               {
                 "<attribute>": {
                   "value":                    string,
-                  "description":              string
+                  "description":              string,
+                  "attributes": [
+                                              string
+                  ]
                 },
                 "cdc_header": {
                   "<attribute>": {
                     "value":                  string,
-                    "description":            string
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
                   }
                 },
                 "cdc_call_management": {
                   "<attribute>": {
                     "value":                  string,
-                    "description":            string
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
                   }
                 },
                 "cdc_acm": {
                   "<attribute>": {
                     "value":                  string,
-                    "description":            string
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
                   }
                 },
                 "cdc_union": {
                   "<attribute>": {
                     "value":                  string,
-                    "description":            string
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
                   }
                 },
                 "endpoint_descriptors": [
                   {
                     "<attribute>": {
                       "value":                string,
-                      "description":          string
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
                     }
                   }
                 ]
@@ -84,7 +108,10 @@ Schema:
         "hub_descriptor": {
           "<attribute>": {
             "value":                          string,
-            "description":                    string
+            "description":                    string,
+            "attributes": [
+                                              string,
+            ]
           },
           "hub_port_status": {
             "<attribute>": {
@@ -434,6 +461,17 @@ class _LsUsb():
             for ia in self.interface_association_list:
                 keyname = tuple(ia.keys())[0]
                 if '_state' in ia[keyname] and ia[keyname]['_state']['bus_idx'] == idx:
+
+                    # is this a top level value or an attribute?
+                    if ia[keyname]['_state']['attribute_value']:
+                        last_attr = ia[keyname]['_state']['last_attribute']
+                        if 'attributes' not in i_desc_obj[last_attr]:
+                            i_desc_obj[last_attr]['attributes'] = []
+
+                        i_desc_obj_attribute = f'{keyname} {ia[keyname].get("value", "")} {ia[keyname].get("description", "")}'.strip()
+                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                        continue
+
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
                     del self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
             
@@ -457,6 +495,17 @@ class _LsUsb():
                     for iface_attrs in self.interface_descriptor_list:
                         keyname = tuple(iface_attrs.keys())[0]
                         if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx and iface_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            
+                            # is this a top level value or an attribute?
+                            if iface_attrs[keyname]['_state']['attribute_value']:
+                                last_attr = iface_attrs[keyname]['_state']['last_attribute']
+                                if 'attributes' not in i_desc_obj[last_attr]:
+                                    i_desc_obj[last_attr]['attributes'] = []
+
+                                i_desc_obj_attribute = f'{keyname} {iface_attrs[keyname].get("value", "")} {iface_attrs[keyname].get("description", "")}'.strip()
+                                i_desc_obj[last_attr]['attributes'].append(i_desc_obj_attribute)
+                                continue
+
                             del iface_attrs[keyname]['_state']
                             i_desc_obj.update(iface_attrs)
 
@@ -464,38 +513,94 @@ class _LsUsb():
                     for ch in self.cdc_header_list:
                         keyname = tuple(ch.keys())[0]
                         if '_state' in ch[keyname] and ch[keyname]['_state']['bus_idx'] == idx and ch[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            
+                            # is this a top level value or an attribute?
+                            if ch[keyname]['_state']['attribute_value']:
+                                last_attr = ch[keyname]['_state']['last_attribute']
+                                if 'attributes' not in i_desc_obj['cdc_header'][last_attr]:
+                                    i_desc_obj['cdc_header'][last_attr]['attributes'] = []
+
+                                i_desc_obj_attribute = f'{keyname} {ch[keyname].get("value", "")} {ch[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_header'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                continue
+
                             i_desc_obj['cdc_header'].update(ch)
                             del i_desc_obj['cdc_header'][keyname]['_state']
 
                     for ccm in self.cdc_call_management_list:
                         keyname = tuple(ccm.keys())[0]
                         if '_state' in ccm[keyname] and ccm[keyname]['_state']['bus_idx'] == idx and ccm[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            
+                            # is this a top level value or an attribute?
+                            if ccm[keyname]['_state']['attribute_value']:
+                                last_attr = ccm[keyname]['_state']['last_attribute']
+                                if 'attributes' not in i_desc_obj['cdc_call_management'][last_attr]:
+                                    i_desc_obj['cdc_call_management'][last_attr]['attributes'] = []
+
+                                i_desc_obj_attribute = f'{keyname} {ccm[keyname].get("value", "")} {ccm[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_call_management'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                continue
+
                             i_desc_obj['cdc_call_management'].update(ccm)
                             del i_desc_obj['cdc_call_management'][keyname]['_state']
 
                     for ca in self.cdc_acm_list:
                         keyname = tuple(ca.keys())[0]
                         if '_state' in ca[keyname] and ca[keyname]['_state']['bus_idx'] == idx and ca[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            
+                            # is this a top level value or an attribute?
+                            if ca[keyname]['_state']['attribute_value']:
+                                last_attr = ca[keyname]['_state']['last_attribute']
+                                if 'attributes' not in i_desc_obj['cdc_acm'][last_attr]:
+                                    i_desc_obj['cdc_acm'][last_attr]['attributes'] = []
+
+                                i_desc_obj_attribute = f'{keyname} {ca[keyname].get("value", "")} {ca[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_acm'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                continue
+
                             i_desc_obj['cdc_acm'].update(ca)
                             del i_desc_obj['cdc_acm'][keyname]['_state']
 
                     for cu in self.cdc_union_list:
                         keyname = tuple(cu.keys())[0]
                         if '_state' in cu[keyname] and cu[keyname]['_state']['bus_idx'] == idx and cu[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            
+                            # is this a top level value or an attribute?
+                            if cu[keyname]['_state']['attribute_value']:
+                                last_attr = cu[keyname]['_state']['last_attribute']
+                                if 'attributes' not in i_desc_obj['cdc_union'][last_attr]:
+                                    i_desc_obj['cdc_union'][last_attr]['attributes'] = []
+
+                                i_desc_obj_attribute = f'{keyname} {cu[keyname].get("value", "")} {cu[keyname].get("description", "")}'.strip()
+                                i_desc_obj['cdc_union'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                continue
+
                             i_desc_obj['cdc_union'].update(cu)
                             del i_desc_obj['cdc_union'][keyname]['_state']
 
-                    for hd in self.hid_device_descriptor_list:
-                        keyname = tuple(hd.keys())[0]
-                        if '_state' in hd[keyname] and hd[keyname]['_state']['bus_idx'] == idx and hd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            i_desc_obj['hid_device_descriptor'].update(hd)
+                    for hidd in self.hid_device_descriptor_list:
+                        keyname = tuple(hidd.keys())[0]
+                        if '_state' in hidd[keyname] and hidd[keyname]['_state']['bus_idx'] == idx and hidd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                            
+                            # is this a top level value or an attribute?
+                            if hidd[keyname]['_state']['attribute_value']:
+                                last_attr = hidd[keyname]['_state']['last_attribute']
+                                if 'attributes' not in i_desc_obj['hid_device_descriptor'][last_attr]:
+                                    i_desc_obj['hid_device_descriptor'][last_attr]['attributes'] = []
+
+                                i_desc_obj_attribute = f'{keyname} {hidd[keyname].get("value", "")} {hidd[keyname].get("description", "")}'.strip()
+                                i_desc_obj['hid_device_descriptor'][last_attr]['attributes'].append(i_desc_obj_attribute)
+                                continue
+
+                            i_desc_obj['hid_device_descriptor'].update(hidd)
                             del i_desc_obj['hid_device_descriptor'][keyname]['_state']
 
-                        for rd in self.report_descriptors_list:
-                            keyname = tuple(rd.keys())[0]
-                            if '_state' in rd[keyname] and rd[keyname]['_state']['bus_idx'] == idx and rd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                                i_desc_obj['hid_device_descriptor']['report_descriptors'].update(rd)
-                                del i_desc_obj['hid_device_descriptor']['report_descriptors'][keyname]['_state']
+                        # Not Implemented: Report Descriptors (need more samples)
+                        # for rd in self.report_descriptors_list:
+                        #     keyname = tuple(rd.keys())[0]
+                        #     if '_state' in rd[keyname] and rd[keyname]['_state']['bus_idx'] == idx and rd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
+                        #         i_desc_obj['hid_device_descriptor']['report_descriptors'].update(rd)
+                        #         del i_desc_obj['hid_device_descriptor']['report_descriptors'][keyname]['_state']
 
                     # add endpoint_descriptor key if it doesn't exist and there are entries for this interface_descriptor
                     for endpoint_attrs in self.endpoint_descriptor_list:
@@ -524,7 +629,7 @@ class _LsUsb():
                                         if 'attributes' not in e_desc_obj[last_attr]:
                                             e_desc_obj[last_attr]['attributes'] = []
 
-                                        e_desc_obj_attribute = f'{keyname} {endpoint_attrs[keyname].get("value")} {endpoint_attrs[keyname].get("description")}'
+                                        e_desc_obj_attribute = f'{keyname} {endpoint_attrs[keyname].get("value", "")} {endpoint_attrs[keyname].get("description", "")}'.strip()
                                         e_desc_obj[last_attr]['attributes'].append(e_desc_obj_attribute)
                                         continue
 
@@ -546,7 +651,7 @@ class _LsUsb():
                         if 'attributes' not in self.output_line['hub_descriptor'][last_attr]:
                             self.output_line['hub_descriptor'][last_attr]['attributes'] = []
 
-                        hd_attribute = f'{keyname} {hd[keyname].get("value")} {hd[keyname].get("description")}'
+                        hd_attribute = f'{keyname} {hd[keyname].get("value", "")} {hd[keyname].get("description", "")}'.strip()
                         self.output_line['hub_descriptor'][last_attr]['attributes'].append(hd_attribute)
                         continue
             
