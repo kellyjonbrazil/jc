@@ -235,7 +235,7 @@ class _LsUsb():
     def _add_attributes(self, line):
         indent = self._count_indent(line)
 
-        # determine whether this is a top-level value or lower-level attribute item
+        # determine whether this is a top-level value item or lower-level attribute
         if indent > self.last_indent and self.old_section == self.section:
             self.attribute_value = True
         elif indent == self.last_indent and self.attribute_value == True and self.old_section == self.section:
@@ -315,7 +315,7 @@ class _LsUsb():
             self.attribute_value = False
             return True
 
-        # bus informatin is on the same line so need to extract data immediately and set indexes
+        # bus information is on the same line so need to extract data immediately and set indexes
         if line.startswith('Bus '):
             self.section = 'bus'
             self.bus_idx += 1
