@@ -352,7 +352,7 @@ class _LsUsb():
         else:
             self.attribute_value = False
 
-        # Section header is formatted with the correct spacing to be used with
+        # section_header is formatted with the correct spacing to be used with
         # jc.parsers.universal.sparse_table_parse(). Pad end of string to be at least len of 25
         section_header = 'key                   val description'
 
