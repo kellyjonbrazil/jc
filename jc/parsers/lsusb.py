@@ -839,7 +839,7 @@ def parse(data, raw=False, quiet=False):
     # populate the schema
     lsusb._populate_schema()
 
-    # add any final output objects if they exist and output the raw_output object
+    # add any final output object if it exists and return the raw_output list
     if lsusb.output_line:
         lsusb.raw_output.append(lsusb.output_line)
 
