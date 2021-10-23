@@ -1,6 +1,6 @@
 """jc - JSON CLI output utility `lsusb` command output parser
 
-<<Short lsusb description and caveats>>
+Supports the `-v` option or no options.
 
 Usage (cli):
 
@@ -17,8 +17,8 @@ Usage (module):
 
 Schema:
 
-    Note: <attribute> field keynames are assigned directly from the lsusb output.
-          If there are duplicate <attribute> names in a section, only the last one is converted.
+    Note: <item> object keynames are assigned directly from the lsusb output.
+          If there are duplicate <item> names in a section, only the last one is converted.
 
     [
       {
@@ -27,7 +27,7 @@ Schema:
         "id":                                 string,
         "description":                        string,
         "device_descriptor": {
-          "<attribute>": {
+          "<item>": {
             "value":                          string,
             "description":                    string,
             "attributes": [
@@ -35,7 +35,7 @@ Schema:
             ]
           },
           "configuration_descriptor": {
-            "<attribute>": {
+            "<item>": {
               "value":                        string,
               "description":                  string,
               "attributes": [
@@ -43,7 +43,7 @@ Schema:
               ]
             },
             "interface_association": {
-              "<attribute>": {
+              "<item>": {
                 "value":                      string,
                 "description":                string,
                 "attributes": [
@@ -53,7 +53,7 @@ Schema:
             },
             "interface_descriptors": [
               {
-                "<attribute>": {
+                "<item>": {
                   "value":                    string,
                   "description":              string,
                   "attributes": [
@@ -61,7 +61,7 @@ Schema:
                   ]
                 },
                 "cdc_header": {
-                  "<attribute>": {
+                  "<item>": {
                     "value":                  string,
                     "description":            string,
                     "attributes": [
@@ -70,7 +70,7 @@ Schema:
                   }
                 },
                 "cdc_call_management": {
-                  "<attribute>": {
+                  "<item>": {
                     "value":                  string,
                     "description":            string,
                     "attributes": [
@@ -79,7 +79,7 @@ Schema:
                   }
                 },
                 "cdc_acm": {
-                  "<attribute>": {
+                  "<item>": {
                     "value":                  string,
                     "description":            string,
                     "attributes": [
@@ -88,7 +88,7 @@ Schema:
                   }
                 },
                 "cdc_union": {
-                  "<attribute>": {
+                  "<item>": {
                     "value":                  string,
                     "description":            string,
                     "attributes": [
@@ -98,7 +98,7 @@ Schema:
                 },
                 "endpoint_descriptors": [
                   {
-                    "<attribute>": {
+                    "<item>": {
                       "value":                string,
                       "description":          string,
                       "attributes": [
@@ -112,7 +112,7 @@ Schema:
           }
         },
         "hub_descriptor": {
-          "<attribute>": {
+          "<item>": {
             "value":                          string,
             "description":                    string,
             "attributes": [
@@ -120,7 +120,7 @@ Schema:
             ]
           },
           "hub_port_status": {
-            "<attribute>": {
+            "<item>": {
               "value":                        string,
               "attributes": [
                                               string
@@ -137,15 +137,127 @@ Schema:
 
 Examples:
 
-    $ lsusb | jc --lsusb -p
-    []
+    $ lsusb -v | jc --lsusb -p
+    [
+      {
+        "bus": "002",
+        "device": "001",
+        "id": "1d6b:0001",
+        "description": "Linux Foundation 1.1 root hub",
+        "device_descriptor": {
+          "bLength": {
+            "value": "18"
+          },
+          "bDescriptorType": {
+            "value": "1"
+          },
+          "bcdUSB": {
+            "value": "1.10"
+          },
+          ...
+          "bNumConfigurations": {
+            "value": "1"
+          },
+          "configuration_descriptor": {
+            "bLength": {
+              "value": "9"
+            },
+            ...
+            "iConfiguration": {
+              "value": "0"
+            },
+            "bmAttributes": {
+              "value": "0xe0",
+              "attributes": [
+                "Self Powered",
+                "Remote Wakeup"
+              ]
+            },
+            "MaxPower": {
+              "description": "0mA"
+            },
+            "interface_descriptors": [
+              {
+                "bLength": {
+                  "value": "9"
+                },
+                ...
+                "bInterfaceProtocol": {
+                  "value": "0",
+                  "description": "Full speed (or root) hub"
+                },
+                "iInterface": {
+                  "value": "0"
+                },
+                "endpoint_descriptors": [
+                  {
+                    "bLength": {
+                      "value": "7"
+                    },
+                    ...
+                    "bmAttributes": {
+                      "value": "3",
+                      "attributes": [
+                        "Transfer Type  Interrupt",
+                        "Synch Type  None",
+                        "Usage Type  Data"
+                      ]
+                    },
+                    "wMaxPacketSize": {
+                      "value": "0x0002",
+                      "description": "1x 2 bytes"
+                    },
+                    "bInterval": {
+                      "value": "255"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "hub_descriptor": {
+          "bLength": {
+            "value": "9"
+          },
+          ...
+          "wHubCharacteristic": {
+            "value": "0x000a",
+            "attributes": [
+              "No power switching (usb 1.0)",
+              "Per-port overcurrent protection"
+            ]
+          },
+          ...
+          "hub_port_status": {
+            "Port 1": {
+              "value": "0000.0103",
+              "attributes": [
+                "power",
+                "enable",
+                "connect"
+              ]
+            },
+            "Port 2": {
+              "value": "0000.0103",
+              "attributes": [
+                "power",
+                "enable",
+                "connect"
+              ]
+            }
+          }
+        },
+        "device_status": {
+          "value": "0x0001",
+          "description": "Self Powered"
+        }
+      }
+    ]
 
-    $ lsusb | jc --lsusb -p -r
-    []
 """
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
-# from rich import print
 
 
 class info():
@@ -711,23 +823,23 @@ def parse(data, raw=False, quiet=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
-    s = _LsUsb()
+    lsusb = _LsUsb()
 
     if jc.utils.has_data(data):
         for line in data.splitlines():
             # sections
-            if s._set_sections(line):
+            if lsusb._set_sections(line):
                 continue
             
             # create section lists and schema
-            if s._populate_lists(line):
+            if lsusb._populate_lists(line):
                 continue
 
     # populate the schema
-    s._populate_schema()
+    lsusb._populate_schema()
 
     # output the raw object
-    if s.output_line:
-        s.raw_output.append(s.output_line)
+    if lsusb.output_line:
+        lsusb.raw_output.append(lsusb.output_line)
 
-    return s.raw_output if raw else _process(s.raw_output)
+    return lsusb.raw_output if raw else _process(lsusb.raw_output)
