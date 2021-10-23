@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.uname
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -81,13 +82,13 @@ class MyTests(unittest.TestCase):
         """
         Test 'uname' without -a option on OSX. Should generate a ParseError exception
         """
-        self.assertRaises(jc.parsers.uname.ParseError, jc.parsers.uname.parse, self.osx_10_14_6_uname)
+        self.assertRaises(ParseError, jc.parsers.uname.parse, self.osx_10_14_6_uname, quiet=True)
 
     def test_uname_no_a_centos(self):
         """
         Test 'uname' without -a option on Centos. Should generate a ParseError exception
         """
-        self.assertRaises(jc.parsers.uname.ParseError, jc.parsers.uname.parse, self.centos_7_7_uname)
+        self.assertRaises(ParseError, jc.parsers.uname.parse, self.centos_7_7_uname, quiet=True)
 
     def test_uname_centos_7_7(self):
         """
