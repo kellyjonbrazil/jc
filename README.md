@@ -147,6 +147,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--lsblk` enables the `lsblk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk))
 - `--lsmod` enables the `lsmod` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod))
 - `--lsof` enables the `lsof` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof))
+- `--lsusb` enables the `lsusb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb))
 - `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
 - `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
