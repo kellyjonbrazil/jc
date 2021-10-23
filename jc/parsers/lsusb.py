@@ -254,7 +254,6 @@ Examples:
         }
       }
     ]
-
 """
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
@@ -266,9 +265,6 @@ class info():
     description = '`lsusb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['lsusb']
 
