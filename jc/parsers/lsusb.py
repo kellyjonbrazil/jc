@@ -257,6 +257,7 @@ Examples:
 """
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
+from jc.exceptions import ParseError
 
 
 class info():
@@ -823,6 +824,10 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         for line in data.splitlines():
+            # only -v option or no options are supported
+            if line.startswith('/'):
+              raise ParseError('Only `lsusb` or `lsusb -v` are supported.')
+
             # sections
             if lsusb._set_sections(line):
                 continue

@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.lsusb
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -25,6 +26,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-test-attributes2.out'), 'r', encoding='utf-8') as f:
             self.generic_lsusb_test_attributes2 = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-t.out'), 'r', encoding='utf-8') as f:
+            self.generic_lsusb_t = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsusb.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_lsusb_json = json.loads(f.read())
@@ -46,6 +50,12 @@ class MyTests(unittest.TestCase):
         Test 'lsusb' with no data
         """
         self.assertEqual(jc.parsers.lsusb.parse('', quiet=True), [])
+
+    def test_lsusb_parse_error_generic(self):
+        """
+        Test 'lsusb' with -t option (should raise ParseError)
+        """
+        self.assertRaises(ParseError, jc.parsers.lsusb.parse, self.generic_lsusb_t, quiet=True)
 
     def test_lsusb_centos_7_7(self):
         """
