@@ -1,12 +1,12 @@
 """jc - JSON CLI output utility `csv` file streaming parser
 
-The `csv` parser will attempt to automatically detect the delimiter character. If the delimiter cannot be detected it will default to comma. The first row of the file must be a header row.
+The `csv` streaming parser will attempt to automatically detect the delimiter character. If the delimiter cannot be detected it will default to comma. The first row of the file must be a header row.
 
-Note: The first 100 rows are read into memory to enable delimiter detection. Then the rest of the rows are loaded lazily.
+Note: The first 100 rows are read into memory to enable delimiter detection, then the rest of the rows are loaded lazily.
 
 Usage (cli):
 
-    $ cat file.csv | jc --csv
+    $ cat file.csv | jc --csv-s
 
 Usage (module):
 
@@ -31,7 +31,7 @@ Examples:
     129, 132, 13,  6, 3, 1,  41, 0.33,  1471
     ...
 
-    $ cat homes.csv | jc --csv_s
+    $ cat homes.csv | jc --csv-s
     {"Sell":"142","List":"160","Living":"28","Rooms":"10","Beds":"5","Baths":"3","Age":"60","Acres":"0.28","Taxes":"3167"}
     {"Sell":"175","List":"180","Living":"18","Rooms":"8","Beds":"4","Baths":"1","Age":"12","Acres":"0.43","Taxes":"4033"}
     {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3","Baths":"1","Age":"41","Acres":"0.33","Taxes":"1471"}
@@ -75,48 +75,6 @@ def _process(proc_data):
     return proc_data
 
 
-def old_parse(data, raw=False, quiet=False):
-    """
-    Main text parsing function
-
-    Parameters:
-
-        data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
-        quiet:       (boolean) suppress warning messages if True
-
-    Returns:
-
-        List of Dictionaries. Raw or processed structured data.
-    """
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
-
-    raw_output = []
-    cleandata = data.splitlines()
-
-    # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
-
-    if jc.utils.has_data(data):
-
-        dialect = None
-        try:
-            dialect = csv.Sniffer().sniff(data[:1024])
-        except Exception:
-            pass
-
-        reader = csv.DictReader(cleandata, dialect=dialect)
-
-        for row in reader:
-            raw_output.append(row)
-
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
-
-
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -153,7 +111,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     except Exception:
         pass
 
-    # chain `temp_list` and `data` together to lazy load all of the CSV data
+    # chain `temp_list` and `data` together to lazy load the rest of the CSV data
     new_data = itertools.chain(temp_list, data)
     reader = csv.DictReader(new_data, dialect=dialect)
 

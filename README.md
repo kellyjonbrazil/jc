@@ -115,6 +115,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--crontab` enables the `crontab` command and file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab))
 - `--crontab-u` enables the `crontab` file parser with user support ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u))
 - `--csv` enables the CSV file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/csv))
+- `--csv-s` enables the CSV file streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s))
 - `--date` enables the `date` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/date))
 - `--df` enables the `df` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/df))
 - `--dig` enables the `dig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/dig))
