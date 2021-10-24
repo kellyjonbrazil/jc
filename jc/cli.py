@@ -53,6 +53,7 @@ parsers = [
     'crontab',
     'crontab-u',
     'csv',
+    'csv-s',
     'date',
     'df',
     'dig',
