@@ -337,8 +337,7 @@ class _LsUsb():
             if char == ' ':
                 indent += 1
                 continue
-            else:
-                break
+            break
         return indent
 
     def _add_attributes(self, line):
@@ -487,11 +486,13 @@ class _LsUsb():
             ' Hub Port Status:': 'hub_port_status'
         }
 
-        for sec in string_section_map.keys():
-            if line.startswith(sec):
-                self.section = string_section_map[sec]
+        for sec_string, section_val in string_section_map.items():
+            if line.startswith(sec_string):
+                self.section = section_val
                 self.attribute_value = False
                 return True
+
+        return False
 
     def _populate_lists(self, line):
         section_list_map = {
@@ -509,7 +510,7 @@ class _LsUsb():
             'hub_descriptor': self.hub_descriptor_list
         }
 
-        for sec in section_list_map.keys():
+        for sec in section_list_map:
             if line.startswith(' ') and self.section == sec:
                 section_list_map[self.section].append(self._add_attributes(line))
                 return True
@@ -522,6 +523,8 @@ class _LsUsb():
         if line.startswith(' ') and self.section == 'device_status':
             self.device_status_list.append(self._add_device_status_attributes(line))
             return True
+
+        return False
 
     def _populate_schema(self):
         """
