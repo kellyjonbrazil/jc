@@ -15,7 +15,7 @@ if not sys.platform.startswith('win32'):
 
 
 # To create streaming output use:
-# $ cat vmstat.out | jc --ls-s | jello -c > vmstat-streaming.json
+# $ cat vmstat.out | jc --vmstat-s | jello -c > vmstat-streaming.json
 
 
 class MyTests(unittest.TestCase):
