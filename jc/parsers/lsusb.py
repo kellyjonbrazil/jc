@@ -294,7 +294,8 @@ class _NestedDict(dict):
     # https://stackoverflow.com/questions/5369723/multi-level-defaultdict-with-variable-depth
     # https://ohuiginn.net/mt/2010/07/nested_dictionaries_in_python.html
     def __getitem__(self, key):
-        if key in self: return self.get(key)
+        if key in self:
+            return self.get(key)
         return self.setdefault(key, _NestedDict())
 
 
@@ -302,7 +303,7 @@ class _LsUsb():
     def __init__(self):
         self.raw_output = []
         self.output_line = _NestedDict()
-        
+
         self.section = ''
         self.old_section = ''
         self.bus_idx = -1
@@ -340,14 +341,13 @@ class _LsUsb():
                 break
         return indent
 
-
     def _add_attributes(self, line):
         indent = self._count_indent(line)
 
         # determine whether this is a top-level value item or lower-level attribute
         if indent > self.last_indent and self.old_section == self.section:
             self.attribute_value = True
-        elif indent == self.last_indent and self.attribute_value == True and self.old_section == self.section:
+        elif indent == self.last_indent and self.attribute_value and self.old_section == self.section:
             self.attribute_value = True
         else:
             self.attribute_value = False
@@ -379,7 +379,7 @@ class _LsUsb():
 
         if line_obj[temp_obj['key']]['description'] is None:
             del line_obj[temp_obj['key']]['description']
-        
+
         self.old_section = self.section
         self.last_indent = indent
 
@@ -387,7 +387,6 @@ class _LsUsb():
             self.last_item = temp_obj['key']
 
         return line_obj
-
 
     def _add_hub_port_status_attributes(self, line):
         # Port 1: 0000.0103 power enable connect
@@ -407,7 +406,6 @@ class _LsUsb():
             }
         }
 
-
     def _add_device_status_attributes(self, line):
         return {
             'description': line.strip(),
@@ -415,7 +413,6 @@ class _LsUsb():
                 'bus_idx': self.bus_idx
             }
         }
-    
 
     def _set_sections(self, line):
         # ignore blank lines
@@ -496,7 +493,6 @@ class _LsUsb():
                 self.attribute_value = False
                 return True
 
-
     def _populate_lists(self, line):
         section_list_map = {
             'device_descriptor': self.device_descriptor_list,
@@ -527,7 +523,6 @@ class _LsUsb():
             self.device_status_list.append(self._add_device_status_attributes(line))
             return True
 
-
     def _populate_schema(self):
         """
         Schema:
@@ -556,7 +551,7 @@ class _LsUsb():
 
             del item['_state']
             self.output_line.update(item)
-            
+
             for dd in self.device_descriptor_list:
                 keyname = tuple(dd.keys())[0]
                 if '_state' in dd[keyname] and dd[keyname]['_state']['bus_idx'] == idx:
@@ -564,8 +559,8 @@ class _LsUsb():
                     # is this a top level value or an attribute?
                     if dd[keyname]['_state']['attribute_value']:
                         last_item = dd[keyname]['_state']['last_item']
-                        if 'attributes' not in  self.output_line['device_descriptor'][last_item]:
-                             self.output_line['device_descriptor'][last_item]['attributes'] = []
+                        if 'attributes' not in self.output_line['device_descriptor'][last_item]:
+                            self.output_line['device_descriptor'][last_item]['attributes'] = []
 
                         this_attribute = f'{keyname} {dd[keyname].get("value", "")} {dd[keyname].get("description", "")}'.strip()
                         self.output_line['device_descriptor'][last_item]['attributes'].append(this_attribute)
@@ -581,8 +576,8 @@ class _LsUsb():
                     # is this a top level value or an attribute?
                     if cd[keyname]['_state']['attribute_value']:
                         last_item = cd[keyname]['_state']['last_item']
-                        if 'attributes' not in  self.output_line['device_descriptor']['configuration_descriptor'][last_item]:
-                             self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'] = []
+                        if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor'][last_item]:
+                            self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'] = []
 
                         this_attribute = f'{keyname} {cd[keyname].get("value", "")} {cd[keyname].get("description", "")}'.strip()
                         self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'].append(this_attribute)
@@ -607,7 +602,7 @@ class _LsUsb():
 
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
                     del self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
-            
+
             # add interface_descriptor key if it doesn't exist and there are entries for this bus
             for iface_attrs in self.interface_descriptor_list:
                 keyname = tuple(iface_attrs.keys())[0]
@@ -628,7 +623,7 @@ class _LsUsb():
                     for iface_attrs in self.interface_descriptor_list:
                         keyname = tuple(iface_attrs.keys())[0]
                         if '_state' in iface_attrs[keyname] and iface_attrs[keyname]['_state']['bus_idx'] == idx and iface_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            
+
                             # is this a top level value or an attribute?
                             if iface_attrs[keyname]['_state']['attribute_value']:
                                 last_item = iface_attrs[keyname]['_state']['last_item']
@@ -646,7 +641,7 @@ class _LsUsb():
                     for ch in self.cdc_header_list:
                         keyname = tuple(ch.keys())[0]
                         if '_state' in ch[keyname] and ch[keyname]['_state']['bus_idx'] == idx and ch[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            
+
                             # is this a top level value or an attribute?
                             if ch[keyname]['_state']['attribute_value']:
                                 last_item = ch[keyname]['_state']['last_item']
@@ -663,7 +658,7 @@ class _LsUsb():
                     for ccm in self.cdc_call_management_list:
                         keyname = tuple(ccm.keys())[0]
                         if '_state' in ccm[keyname] and ccm[keyname]['_state']['bus_idx'] == idx and ccm[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            
+
                             # is this a top level value or an attribute?
                             if ccm[keyname]['_state']['attribute_value']:
                                 last_item = ccm[keyname]['_state']['last_item']
@@ -680,7 +675,7 @@ class _LsUsb():
                     for ca in self.cdc_acm_list:
                         keyname = tuple(ca.keys())[0]
                         if '_state' in ca[keyname] and ca[keyname]['_state']['bus_idx'] == idx and ca[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            
+
                             # is this a top level value or an attribute?
                             if ca[keyname]['_state']['attribute_value']:
                                 last_item = ca[keyname]['_state']['last_item']
@@ -697,7 +692,7 @@ class _LsUsb():
                     for cu in self.cdc_union_list:
                         keyname = tuple(cu.keys())[0]
                         if '_state' in cu[keyname] and cu[keyname]['_state']['bus_idx'] == idx and cu[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            
+
                             # is this a top level value or an attribute?
                             if cu[keyname]['_state']['attribute_value']:
                                 last_item = cu[keyname]['_state']['last_item']
@@ -714,7 +709,7 @@ class _LsUsb():
                     for hidd in self.hid_device_descriptor_list:
                         keyname = tuple(hidd.keys())[0]
                         if '_state' in hidd[keyname] and hidd[keyname]['_state']['bus_idx'] == idx and hidd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                            
+
                             # is this a top level value or an attribute?
                             if hidd[keyname]['_state']['attribute_value']:
                                 last_item = hidd[keyname]['_state']['last_item']
@@ -755,7 +750,7 @@ class _LsUsb():
                             for endpoint_attrs in self.endpoint_descriptor_list:
                                 keyname = tuple(endpoint_attrs.keys())[0]
                                 if '_state' in endpoint_attrs[keyname] and endpoint_attrs[keyname]['_state']['bus_idx'] == idx and endpoint_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx and endpoint_attrs[keyname]['_state']['endpoint_descriptor_idx'] == endpoint_idx:
-                                    
+
                                     # is this a top level value or an attribute?
                                     if endpoint_attrs[keyname]['_state']['attribute_value']:
                                         last_item = endpoint_attrs[keyname]['_state']['last_item']
@@ -770,7 +765,7 @@ class _LsUsb():
                                     del endpoint_attrs[keyname]['_state']
 
                             i_desc_obj['endpoint_descriptors'].append(e_desc_obj)
-                    
+
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
 
@@ -787,10 +782,10 @@ class _LsUsb():
                         this_attribute = f'{keyname} {hd[keyname].get("value", "")} {hd[keyname].get("description", "")}'.strip()
                         self.output_line['hub_descriptor'][last_item]['attributes'].append(this_attribute)
                         continue
-            
+
                     self.output_line['hub_descriptor'].update(hd)
                     del self.output_line['hub_descriptor'][keyname]['_state']
-            
+
             for hps in self.hub_port_status_list:
                 keyname = tuple(hps.keys())[0]
                 if '_state' in hps[keyname] and hps[keyname]['_state']['bus_idx'] == idx:
@@ -826,12 +821,12 @@ def parse(data, raw=False, quiet=False):
         for line in data.splitlines():
             # only -v option or no options are supported
             if line.startswith('/'):
-              raise ParseError('Only `lsusb` or `lsusb -v` are supported.')
+                raise ParseError('Only `lsusb` or `lsusb -v` are supported.')
 
             # sections
             if lsusb._set_sections(line):
                 continue
-            
+
             # create section lists and schema
             if lsusb._populate_lists(line):
                 continue
