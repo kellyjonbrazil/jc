@@ -104,6 +104,11 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     for line in itertools.islice(data, 100):
         temp_list.append(line)
 
+    # if length of temp_list is only 1, then was probably piped in with incorrect newline for the platform
+    # try splitting on lines again:
+    if len(temp_list) == 1:
+        temp_list = temp_list[0].splitlines()
+
     sniffdata = '\n'.join(temp_list)
 
     dialect = None
