@@ -99,13 +99,13 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso-streaming.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_ls_l_iso_streaming_json = json.loads(f.read())
 
-    def test_ls_empty_dir(self):
+    def test_ls_s_empty_dir(self):
         """
         Test plain 'ls' on an empty directory
         """
         self.assertEqual(list(jc.parsers.ls_s.parse('', quiet=True)), [])
 
-    def test_ls_centos_7_7(self):
+    def test_ls_s_centos_7_7_raise_exception(self):
         """
         Test plain 'ls /' on Centos 7.7 (raises ParseError)
         """
@@ -113,67 +113,67 @@ class MyTests(unittest.TestCase):
         with self.assertRaises(ParseError):
             list(g)
 
-    def test_ls_al_centos_7_7(self):
+    def test_ls_s_al_centos_7_7(self):
         """
         Test 'ls -al /' on Centos 7.7
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.centos_7_7_ls_al.splitlines(), quiet=True)), self.centos_7_7_ls_al_streaming_json)
 
-    def test_ls_al_ubuntu_18_4(self):
+    def test_ls_s_al_ubuntu_18_4(self):
         """
         Test 'ls -al /' on Ubuntu 18.4
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.ubuntu_18_4_ls_al.splitlines(), quiet=True)), self.ubuntu_18_4_ls_al_streaming_json)
 
-    def test_ls_al_osx_10_14_6(self):
+    def test_ls_s_al_osx_10_14_6(self):
         """
         Test 'ls -al /' on OSX 10.14.6
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.osx_10_14_6_ls_al.splitlines(), quiet=True)), self.osx_10_14_6_ls_al_streaming_json)
 
-    def test_ls_alh_centos_7_7(self):
+    def test_ls_s_alh_centos_7_7(self):
         """
         Test 'ls -alh /' on Centos 7.7
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.centos_7_7_ls_alh.splitlines(), quiet=True)), self.centos_7_7_ls_alh_streaming_json)
 
-    def test_ls_alh_ubuntu_18_4(self):
+    def test_ls_s_alh_ubuntu_18_4(self):
         """
         Test 'ls -alh /' on Ubuntu 18.4
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.ubuntu_18_4_ls_alh.splitlines(), quiet=True)), self.ubuntu_18_4_ls_alh_streaming_json)
 
-    def test_ls_alh_osx_10_14_6(self):
+    def test_ls_s_alh_osx_10_14_6(self):
         """
         Test 'ls -alh /' on OSX 10.14.6
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.osx_10_14_6_ls_alh.splitlines(), quiet=True)), self.osx_10_14_6_ls_alh_streaming_json)
 
-    def test_ls_alR_centos_7_7(self):
+    def test_ls_s_alR_centos_7_7(self):
         """
         Test 'ls -alR /usr' on Centos 7.7
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.centos_7_7_ls_alR.splitlines(), quiet=True)), self.centos_7_7_ls_alR_streaming_json)
 
-    def test_ls_alR_ubuntu_18_4(self):
+    def test_ls_s_alR_ubuntu_18_4(self):
         """
         Test 'ls -alR /usr' on Ubuntu 18.4
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.ubuntu_18_4_ls_alR.splitlines(), quiet=True)), self.ubuntu_18_4_ls_alR_streaming_json)
 
-    def test_ls_alR_osx_10_14_6(self):
+    def test_ls_s_alR_osx_10_14_6(self):
         """
         Test 'ls -alR /usr' on OSX 10.14.6
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.osx_10_14_6_ls_alR.splitlines(), quiet=True)), self.osx_10_14_6_ls_alR_streaming_json)
 
-    def test_ls_lR_empty_folder_osx_10_14_6(self):
+    def test_ls_s_lR_empty_folder_osx_10_14_6(self):
         """
         Test 'ls -lR' for empty directories on OSX 10.14.6
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.osx_10_14_6_ls_lR_empty_folder.splitlines(), quiet=True)), self.osx_10_14_6_ls_lR_empty_folder_streaming_json)
 
-    def test_ls_l_iso_ubuntu_18_4(self):
+    def test_ls_s_l_iso_ubuntu_18_4(self):
         """
         Test 'ls -l --time-style=full-iso' for files with convertible dates on Ubuntu 18.4
         """
