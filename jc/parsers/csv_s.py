@@ -41,7 +41,6 @@ import itertools
 import csv
 import jc.utils
 from jc.utils import stream_success, stream_error
-from jc.exceptions import ParseError
 
 
 class info():
@@ -70,7 +69,6 @@ def _process(proc_data):
 
         List of Dictionaries. Each Dictionary represents a row in the csv file.
     """
-
     # No further processing
     return proc_data
 
@@ -97,6 +95,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     if not quiet:
         jc.utils.compatibility(__name__, info.compatible)
 
+    # convert data to an iterable in case a sequence like a list is used as input.
+    # this allows the exhaustion of the input so we don't double-process later.
+    data = iter(data)
     temp_list = []
 
     # first, load the first 100 lines into a list to detect the CSV dialect
@@ -107,7 +108,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     dialect = None
     try:
-        dialect = csv.Sniffer().sniff(sniffdata[:1024])
+        dialect = csv.Sniffer().sniff(sniffdata)
     except Exception:
         pass
 
@@ -117,10 +118,6 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     for row in reader:
         try:
-            if row:
-                yield stream_success(row, ignore_exceptions) if raw else stream_success(_process(row), ignore_exceptions)
-            else:
-                raise ParseError('Not CSV data')
-
+            yield stream_success(row, ignore_exceptions) if raw else stream_success(_process(row), ignore_exceptions)
         except Exception as e:
             yield stream_error(e, ignore_exceptions, row)
