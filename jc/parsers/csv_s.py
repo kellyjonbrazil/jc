@@ -106,6 +106,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         temp_list.append(line)
 
     # check for Python bug that does not split on `\r` newlines from sys.stdin correctly
+    # https://bugs.python.org/issue45617
     if len(temp_list) == 1:
         raise ParseError('Unable to detect line endings. Please try the non-streaming CSV parser instead.')
 
