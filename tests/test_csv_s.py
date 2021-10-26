@@ -79,7 +79,7 @@ class MyTests(unittest.TestCase):
     def test_csv_unparsable(self):
         """
         Test CSV streaming parser with '\r' newlines. This will raise ParseError due to a Python bug
-        that does not correctly iterate on that line ending with sys.stdin.
+        that does not correctly iterate on that line ending with sys.stdin. 
         """
         data = r'unparsable\rdata'
         g = jc.parsers.csv_s.parse(data.splitlines(), quiet=True)
