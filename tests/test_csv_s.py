@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.csv_s
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -38,9 +39,6 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_homes = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r', encoding='utf-8') as f:
-            self.generic_csv_insurance = f.read()
-
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-10k-sales-records.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_10k_sales_records = f.read()
 
@@ -69,9 +67,6 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-homes-streaming.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_homes_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_csv_insurance_streaming_json = json.loads(f.read())
-
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-10k-sales-records-streaming.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_10k_sales_records_streaming_json = json.loads(f.read())
 
@@ -81,12 +76,16 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.csv_s.parse('', quiet=True)), [])
 
-    # no test for unparsable rows yet - CSV library fails right away if it can't decode the data
-    # def test_csv_unparsable(self):
-    #     data = 'unparsable data'
-    #     g = jc.parsers.csv_s.parse(data.splitlines(), quiet=True)
-    #     with self.assertRaises(ParseError):
-    #         list(g)
+    def test_csv_unparsable(self):
+        """
+        Test CSV streaming parser with '\r' newlines. This will raise ParseError due to a Python bug
+        that does not correctly iterate on that line ending with sys.stdin. Simulating this failure since
+        standard str.splitlines() does work correctly.
+        """
+        data = r'unparsable\rdata'
+        g = jc.parsers.csv_s.parse(data.splitlines(), quiet=True)
+        with self.assertRaises(ParseError):
+            list(g)
 
     def test_csv_s_biostats(self):
         """
@@ -135,12 +134,6 @@ class MyTests(unittest.TestCase):
         Test 'homes.csv' file
         """
         self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_homes.splitlines(), quiet=True)), self.generic_csv_homes_streaming_json)
-
-    def test_csv_s_insurance(self):
-        """
-        Test 'insurance.csv' file
-        """
-        self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_insurance.splitlines(), quiet=True)), self.generic_csv_insurance_streaming_json)
 
     def test_csv_s_10k_records(self):
         """
