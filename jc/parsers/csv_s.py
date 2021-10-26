@@ -17,10 +17,10 @@ Schema:
 
     csv file converted to a Dictionary: https://docs.python.org/3/library/csv.html
 
-  {
-    "column_name1":     string,
-    "column_name2":     string
-  }
+    {
+      "column_name1":     string,
+      "column_name2":     string
+    }
 
 Examples:
 
@@ -41,6 +41,7 @@ import itertools
 import csv
 import jc.utils
 from jc.utils import stream_success, stream_error
+from jc.exceptions import ParseError
 
 
 class info():
@@ -104,10 +105,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     for line in itertools.islice(data, 100):
         temp_list.append(line)
 
-    # if length of temp_list is only 1, then was probably piped in with incorrect newline for the platform
-    # try splitting on lines again:
+    # check for Python bug that does not split on `\r` newlines from sys.stdin correctly
     if len(temp_list) == 1:
-        temp_list = temp_list[0].splitlines()
+        raise ParseError('Unable to detect line endings. Please try the non-streaming CSV parser instead.')
 
     sniffdata = '\n'.join(temp_list)
 
