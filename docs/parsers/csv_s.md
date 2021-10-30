@@ -20,10 +20,10 @@ Schema:
 
     csv file converted to a Dictionary: https://docs.python.org/3/library/csv.html
 
-  {
-    "column_name1":     string,
-    "column_name2":     string
-  }
+    {
+      "column_name1":     string,
+      "column_name2":     string
+    }
 
 Examples:
 
