@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `csv` file streaming parser
 
+> This streaming parser outputs JSON Lines
+
 The `csv` streaming parser will attempt to automatically detect the delimiter character. If the delimiter cannot be detected it will default to comma. The first row of the file must be a header row.
 
 Note: The first 100 rows are read into memory to enable delimiter detection, then the rest of the rows are loaded lazily.
