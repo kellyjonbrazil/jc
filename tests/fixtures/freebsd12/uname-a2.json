@@ -1,0 +1,7 @@
+{
+  "machine": "amd64",
+  "kernel_name": "FreeBSD",
+  "node_name": "freebsd",
+  "kernel_release": "10.1-RELEASE-p10",
+  "kernel_version": "FreeBSD 10.1-RELEASE-p10 #0: Wed May 13 06:54:13 UTC 2015 root@amd64-builder.daemonology.net:/usr/obj/usr/src/sys/GENERIC"
+}

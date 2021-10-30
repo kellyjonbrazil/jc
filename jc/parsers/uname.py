@@ -48,7 +48,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`uname -a` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -98,8 +98,8 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        # check for OSX output
-        if data.startswith('Darwin'):
+        # check for macOS or FreeBSD output
+        if data.startswith('Darwin') or data.startswith('FreeBSD'):
             parsed_line = data.split()
 
             if len(parsed_line) < 5:
@@ -113,6 +113,19 @@ def parse(data, raw=False, quiet=False):
 
         # otherwise use linux parser
         else:
+            # fixup for cases where 'machine' exists but 'processor' and 'hardware_platform' fields are blank.
+            # if the fields exist then at least two of the three will be the same.
+            # if the fields do not exist then none of the fields in those positions will be the same.
+            # case of only two existing is undefined. Must either be one or all three existing, otherwise
+            # there will be unexpected results during parsing.
+            fixup = data.split()
+            if len(fixup) >= 4:
+                fixup_set = set([fixup[-2], fixup[-3], fixup[-4]])
+                if len(fixup_set) > 2:
+                    fixup.insert(-1, 'unknown')
+                    fixup.insert(-1, 'unknown')
+                    data = ' '.join(fixup)
+            
             parsed_line = data.split(maxsplit=3)
 
             if len(parsed_line) < 3:
@@ -125,8 +138,8 @@ def parse(data, raw=False, quiet=False):
             parsed_line = parsed_line[-1].rsplit(maxsplit=4)
 
             raw_output['operating_system'] = parsed_line.pop(-1)
-            raw_output['hardware_platform'] = parsed_line.pop(-1)
             raw_output['processor'] = parsed_line.pop(-1)
+            raw_output['hardware_platform'] = parsed_line.pop(-1)
             raw_output['machine'] = parsed_line.pop(-1)
 
             raw_output['kernel_version'] = parsed_line.pop(0)

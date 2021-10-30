@@ -1,0 +1,72 @@
+Applications:                    directory
+Desktop:                         directory
+Documents:                       directory
+Downloads:                       directory
+Library:                         directory
+Movies:                          directory
+Music:                           directory
+Pictures:                        directory
+Postman:                         directory
+Public:                          directory
+Virtual Machines.localized:      directory
+ansible:                         directory
+api:                             directory
+centosserial.sh:                 Bourne-Again shell script text executable, UTF-8 Unicode text
+coreosserial.sh:                 Bourne-Again shell script text executable, UTF-8 Unicode text
+data.json:                       UTF-8 Unicode text, with very long lines
+fazserial.sh:                    Bourne-Again shell script text executable, UTF-8 Unicode text
+fgt1serial.sh:                   Bourne-Again shell script text executable, UTF-8 Unicode text
+fgt2serial.sh:                   Bourne-Again shell script text executable, UTF-8 Unicode text
+file with colon: in the name:    empty
+fnditer.py:                      ASCII text
+fortiweb-docker.sh:              Bourne-Again shell script text executable, ASCII text
+ftmgr.sh:                        Bourne-Again shell script text executable, ASCII text
+git:                             directory
+google-cloud-sdk:                directory
+ipaddr.json:                     ASCII text, with very long lines
+jc-1.16.0-linux-x86_64.tar.gz:   gzip compressed data, last modified: Tue Jul 20 17:32:10 2021, from Unix, original size 93992960
+jc-1.16.1-linux-x86_64.tar.gz:   gzip compressed data, last modified: Tue Aug 17 20:42:30 2021, from Unix, original size 94033920
+jc-1.17.0-linux-x86_64.sha256:   ASCII text
+jc-1.17.0-linux-x86_64.tar.gz:   gzip compressed data, last modified: Sun Sep 26 22:16:00 2021, from Unix, original size 94136320
+jc-jq-jp-ps-cpu.gif:             GIF image data, version 89a, 1572 x 1212
+jc-jq-jp-uptime-small.gif:       GIF image data, version 89a, 800 x 617
+jc-jq-jp-uptime.gif:             GIF image data, version 89a, 1572 x 1212
+jcparsers.jlines:                ASCII text, with very long lines
+jcparsers.json:                  ASCII text, with very long lines
+jello-1.4.0-linux-x86_64.tar.gz: gzip compressed data, last modified: Sat Jun 19 18:19:55 2021, from Unix, original size 92006400
+jello-1.4.4-linux-x86_64.tar.gz: gzip compressed data, last modified: Fri Jun 25 08:53:06 2021, from Unix, original size 92016640
+jp:                              Mach-O 64-bit executable x86_64
+json-stream.py:                  Python script text executable, ASCII text
+json-stream2.py:                 Python script text executable, ASCII text
+jupyter.sh:                      ASCII text
+kb-fortinet.pem:                 PEM RSA private key
+kelly-aws.pem:                   PEM RSA private key
+kelly-aws2.pem:                  PEM RSA private key
+kellytest.sh:                    Bourne-Again shell script text executable, ASCII text
+kping.out:                       ASCII text
+loadplot.sh:                     Bourne-Again shell script text executable, ASCII text
+ls.jlines:                       UTF-8 Unicode text, with very long lines
+myrecording:                     data
+nse-certs:                       directory
+ping1.out:                       ASCII text
+reading.py:                      Python script text executable, ASCII text
+rpmbuild:                        directory
+scroll.py:                       Python script text executable, ASCII text
+state_test.py:                   Python script text executable, ASCII text
+stream-profiling.xlsx:           Microsoft Excel 2007+
+test-certs.xls:                  HTML document text, ISO-8859 text, with very long lines
+test-certs.xlsx:                 Microsoft Excel 2007+
+test-output:                     directory
+testcsv.csv:                     ASCII text, with CR, LF line terminators
+testedit.py:                     Python script text executable, ASCII text
+testfile.json:                   ASCII text
+testfile.kb:                     ASCII text
+testfile2.json:                  ASCII text
+tr2dot.py:                       Python script text executable, ASCII text
+traceroute.gv:                   ASCII text
+traceroute.gv.pdf:               PDF document, version 1.5
+trtwitter.out:                   ASCII text
+twitterdata.jlines:              HTML document text, ASCII text, with very long lines
+ubuntuserial.sh:                 Bourne-Again shell script text executable, UTF-8 Unicode text
+utils:                           directory
+win32.csv:                       ASCII text, with CRLF, LF line terminators
