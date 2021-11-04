@@ -798,7 +798,7 @@ class MyTests(unittest.TestCase):
 
     def test_ping_hostname_alpine_linux(self):
         """
-        Test 'ping6 <hostname>' on alpine linux
+        Test 'ping <hostname>' on alpine linux
         """
         self.assertEqual(jc.parsers.ping.parse(self.alpine_linux_3_13_ping_hostname, quiet=True), self.alpine_linux_3_13_ping_hostname_json)
 
