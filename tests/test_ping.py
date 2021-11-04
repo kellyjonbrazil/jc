@@ -203,6 +203,13 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
             self.pi_ping_ip_O_D = f.read()
 
+        # alpine-linux
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-ip.out'), 'r', encoding='utf-8') as f:
+            self.alpine_linux_3_13_ping_ip = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname.out'), 'r', encoding='utf-8') as f:
+            self.alpine_linux_3_13_ping_hostname = f.read()
+
         # output
 
         # centos
@@ -396,6 +403,14 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D.json'), 'r', encoding='utf-8') as f:
             self.pi_ping_ip_O_D_json = json.loads(f.read())
+
+        # alpine-linux
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-ip.json'), 'r', encoding='utf-8') as f:
+            self.alpine_linux_3_13_ping_ip_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname.json'), 'r', encoding='utf-8') as f:
+            self.alpine_linux_3_13_ping_hostname_json = json.loads(f.read())
+
 
     def test_ping_nodata(self):
         """
@@ -774,6 +789,18 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <ip> -O -D' on raspberry pi
         """
         self.assertEqual(jc.parsers.ping.parse(self.pi_ping_ip_O_D, quiet=True), self.pi_ping_ip_O_D_json)
+
+    def test_ping_ip_alpine_linux(self):
+        """
+        Test 'ping <ip> -O' on alpine linux
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.alpine_linux_3_13_ping_ip, quiet=True), self.alpine_linux_3_13_ping_ip_json)
+
+    def test_ping_hostname_alpine_linux(self):
+        """
+        Test 'ping6 <hostname>' on alpine linux
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.alpine_linux_3_13_ping_hostname, quiet=True), self.alpine_linux_3_13_ping_hostname_json)
 
 
 if __name__ == '__main__':

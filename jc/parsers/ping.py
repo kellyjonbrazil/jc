@@ -480,7 +480,7 @@ def _bsd_parse(data):
                         'round_trip_ms_min': split_line[0],
                         'round_trip_ms_avg': split_line[1],
                         'round_trip_ms_max': split_line[2],
-                        'round_trip_ms_stddev': split_line[3].replace(' ms', '')
+                        'round_trip_ms_stddev': split_line[3].replace(' ms', '') if len(split_line) == 4 else None
                     }
                 )
 
