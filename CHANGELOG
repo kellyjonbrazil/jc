@@ -1,5 +1,8 @@
 jc changelog
 
+20211104 v1.17.2 (in progress)
+- Fix ping parser to add Alpine linux support
+
 20211030 v1.17.1
 - Fix file parser for gzip files
 - Fix uname parser for cases where the 'processor' and/or 'hardware_platform' fields are missing on linux
