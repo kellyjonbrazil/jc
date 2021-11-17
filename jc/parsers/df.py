@@ -236,8 +236,9 @@ def parse(data, raw=False, quiet=False):
 
         # replace hash values with real values to fix long filesystem data in some older versions of df
         for item in raw_output:
-            if item['filesystem'] in filesystem_map:
-                item['filesystem'] = filesystem_map[item['filesystem']]
+            if 'filesystem' in item:
+                if item['filesystem'] in filesystem_map:
+                    item['filesystem'] = filesystem_map[item['filesystem']]
 
     if raw:
         return raw_output
