@@ -1,0 +1,4 @@
+Filesystem    Type 1024-blocks      Used Available Capacity Mounted on
+/dev/mapper/VolGroup00-LogVol00 ext3     6030784   1147932   4571556      21% /
+proc          proc           0         0         0       -  /proc
+sysfs        sysfs           0         0         0       -  /sys
