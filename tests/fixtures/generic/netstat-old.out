@@ -1,0 +1,14 @@
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      1/systemd
+udp        0      0 200.4.30.128:68         0.0.0.0:*                           903/NetworkManager
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node PID/Program name    Path
+unix  2      [ ACC ]     STREAM     LISTENING      18438 1/systemd           /run/lvm/lvmpolld.socket
+unix  2      [ ]         DGRAM                     23569 871/chronyd         /var/run/chrony/chronyd.sock
+unix  2      [ ACC ]     STREAM     LISTENING      23584 872/gssproxy        /run/gssproxy.sock
+unix  2      [ ACC ]     STREAM     LISTENING      18511 1/systemd           /run/rpcbind.sock
+unix  2      [ ACC ]     SEQPACKET  LISTENING      18521 1/systemd           /run/udev/control
+unix  3      [ ]         DGRAM                     11098 1/systemd           /run/systemd/notify
+unix  2      [ ]         DGRAM                     11100 1/systemd           /run/systemd/cgroups-agent
+unix  2      [ ACC ]     STREAM     LISTENING      24236 863/sssd            /var/lib/sss/pipes/private/sbus-monitor

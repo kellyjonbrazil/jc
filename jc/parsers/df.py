@@ -92,13 +92,14 @@ Examples:
       ...
     ]
 """
+import hashlib
 import jc.utils
 import jc.parsers.universal
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -165,6 +166,29 @@ def _process(proc_data):
     return proc_data
 
 
+def _long_filesystem_hash(header, line):
+    """Returns truncated hash and value of the filesystem field if it is too long for the column"""
+    filesystem_field = line.split()[0]
+
+    # get length of filesystem column
+    space_count = 0
+    for char in header[10:]:
+        if char == ' ':
+            space_count += 1
+            continue
+
+        break
+
+    filesystem_col_len = space_count + 9
+
+    # return the hash and value if the field data is longer than the column length
+    if len(filesystem_field) > filesystem_col_len:
+        truncated_hash = hashlib.sha256(filesystem_field.encode('utf-8')).hexdigest()[:filesystem_col_len]
+        return truncated_hash, filesystem_field
+
+    return None, None
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -184,7 +208,9 @@ def parse(data, raw=False, quiet=False):
         jc.utils.compatibility(__name__, info.compatible)
 
     cleandata = data.splitlines()
+    fix_data = []
     raw_output = []
+    filesystem_map = {}
 
     if jc.utils.has_data(data):
 
@@ -193,8 +219,26 @@ def parse(data, raw=False, quiet=False):
         cleandata[0] = cleandata[0].replace('-', '_')
         cleandata[0] = cleandata[0].replace('mounted on', 'mounted_on')
 
+        # fix long filesystem data in some older versions of df
+        header = cleandata[0]
+        fix_data.append(header)
+        for line in cleandata[1:]:
+            field_hash, field_value = _long_filesystem_hash(header, line)
+            if field_hash:
+                filesystem_map.update({field_hash: field_value})
+                newline = line.replace(field_value, field_hash)
+                fix_data.append(newline)
+            else:
+                fix_data.append(line)
+
         # parse the data
-        raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
+        raw_output = jc.parsers.universal.sparse_table_parse(fix_data)
+
+        # replace hash values with real values to fix long filesystem data in some older versions of df
+        for item in raw_output:
+            if 'filesystem' in item:
+                if item['filesystem'] in filesystem_map:
+                    item['filesystem'] = filesystem_map[item['filesystem']]
 
     if raw:
         return raw_output

@@ -74,6 +74,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.out'), 'r', encoding='utf-8') as f:
             self.freebsd12_netstat_aT = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.out'), 'r', encoding='utf-8') as f:
+            self.generic_netstat_old = f.read()
+
         # netstat -r
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_netstat_r = f.read()
@@ -182,6 +185,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_netstat_an_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.json'), 'r', encoding='utf-8') as f:
+            self.generic_netstat_old_json = json.loads(f.read())
 
         # netsat -r
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.json'), 'r', encoding='utf-8') as f:
@@ -352,6 +358,12 @@ class MyTests(unittest.TestCase):
         Test 'netstat -an' on FreeBSD12
         """
         self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_an, quiet=True), self.freebsd12_netstat_an_json)
+
+    def test_netstat_old_generic(self):
+        """
+        Test 'netstat' with older version of netstat on linux
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_old, quiet=True), self.generic_netstat_old_json)
 
     def test_netstat_r_centos_7_7(self):
         """

@@ -1,5 +1,10 @@
 jc changelog
 
+20211117 v1.17.2
+- Fix ping parser to add Alpine linux support
+- Fix netstat parser for older versions of netstat on linux
+- Fix df parser for cases where the filesystem field overflows the column length
+
 20211030 v1.17.1
 - Fix file parser for gzip files
 - Fix uname parser for cases where the 'processor' and/or 'hardware_platform' fields are missing on linux

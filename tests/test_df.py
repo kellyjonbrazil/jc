@@ -34,6 +34,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-h.out'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_df_h = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.out'), 'r', encoding='utf-8') as f:
+            self.generic_df_long_filesystem = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/df.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_df_json = json.loads(f.read())
@@ -58,6 +61,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-h.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_df_h_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.json'), 'r', encoding='utf-8') as f:
+            self.generic_df_long_filesystem_json = json.loads(f.read())
 
     def test_df_nodata(self):
         """
@@ -112,6 +118,12 @@ class MyTests(unittest.TestCase):
         Test 'df -h' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.df.parse(self.osx_10_14_6_df_h, quiet=True), self.osx_10_14_6_df_h_json)
+
+    def test_df_long_filesystem(self):
+        """
+        Test older version of 'df' with long filesystem data
+        """
+        self.assertEqual(jc.parsers.df.parse(self.generic_df_long_filesystem, quiet=True), self.generic_df_long_filesystem_json)
 
 
 if __name__ == '__main__':

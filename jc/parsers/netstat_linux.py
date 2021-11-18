@@ -8,7 +8,7 @@ def normalize_headers(header):
     header = header.replace('foreign address', 'foreign_address')
     header = header.replace('pid/program name', 'program_name')
     header = header.replace('security context', 'security_context')
-    header = header.replace('i-node', 'inode')
+    header = header.replace('i-node', ' inode')
     header = header.replace('-', '_')
 
     return header

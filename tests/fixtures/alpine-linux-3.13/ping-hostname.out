@@ -1,0 +1,9 @@
+PING google.com (142.250.125.102): 56 data bytes
+64 bytes from 142.250.125.102: seq=0 ttl=42 time=1.331 ms
+64 bytes from 142.250.125.102: seq=1 ttl=42 time=1.281 ms
+64 bytes from 142.250.125.102: seq=2 ttl=42 time=1.408 ms
+64 bytes from 142.250.125.102: seq=3 ttl=42 time=1.360 ms
+
+--- google.com ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 1.281/1.345/1.408 ms
