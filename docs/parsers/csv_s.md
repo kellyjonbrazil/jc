@@ -16,7 +16,9 @@ Usage (cli):
 Usage (module):
 
     import jc.parsers.csv_s
-    result = jc.parsers.csv_s.parse(csv_output)
+    result = jc.parsers.csv_s.parse(csv_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
 
 Schema:
 
