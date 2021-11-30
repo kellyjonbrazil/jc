@@ -468,14 +468,16 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     s = _state()
 
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    if not quiet: jc.utils.compatibility(__name__, info.compatible)
+    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
+        raise TypeError("Input data must be a non-string iterable object.")
 
     for line in data:
-
         output_line = {}
 
         try:
+            if not isinstance(line, str): raise TypeError("Input line must be a 'str' object.")
+
             # skip blank lines
             if line.strip() == '':
                 continue
