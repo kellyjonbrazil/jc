@@ -239,16 +239,19 @@ def stream_error(e, ignore_exceptions, line):
 
 
 def input_type_check(data):
+    """Ensure input data is a string"""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")
 
 
 def streaming_input_type_check(data):
+    """Ensure input data is an iterable, but not a string or bytes"""
     if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
         raise TypeError("Input data must be a non-string iterable object.")
 
 
 def streaming_line_input_type_check(line):
+    """Ensure each line is a string"""
     if not isinstance(line, str):
         raise TypeError("Input line must be a 'str' object.")
 
