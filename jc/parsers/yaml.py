@@ -85,7 +85,7 @@ from jc.exceptions import LibraryNotInstalled
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,8 +135,8 @@ def parse(data, raw=False, quiet=False):
     except Exception:
         raise LibraryNotInstalled('The ruamel.yaml library is not installed.')
 
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    if not quiet: jc.utils.compatibility(__name__, info.compatible)
+    if not isinstance(data, str): raise TypeError("Input data must be a 'str' object.")
 
     raw_output = []
 

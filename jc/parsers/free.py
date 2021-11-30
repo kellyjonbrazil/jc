@@ -73,7 +73,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`free` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,8 +122,8 @@ def parse(data, raw=False, quiet=False):
 
         List of Dictionaries. Raw or processed structured data.
     """
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    if not quiet: jc.utils.compatibility(__name__, info.compatible)
+    if not isinstance(data, str): raise TypeError("Input data must be a 'str' object.")
 
     cleandata = data.splitlines()
     raw_output = []

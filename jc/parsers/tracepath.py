@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -192,8 +192,8 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    if not quiet: jc.utils.compatibility(__name__, info.compatible)
+    if not isinstance(data, str): raise TypeError("Input data must be a 'str' object.")
 
     RE_TTL_HOST = re.compile(r'^\s?(?P<ttl>\d+)(?P<ttl_guess>\??):\s+(?P<host>(?:no reply|\S+))')  # groups: ttl, ttl_guess, host
     RE_PMTU = re.compile(r'\spmtu\s(?P<pmtu>[\d]+)')          # group: pmtu
