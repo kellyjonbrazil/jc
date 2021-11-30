@@ -74,7 +74,7 @@ class MyTests(unittest.TestCase):
         """
         Test CSV parser with no data
         """
-        self.assertEqual(list(jc.parsers.csv_s.parse('', quiet=True)), [])
+        self.assertEqual(list(jc.parsers.csv_s.parse([], quiet=True)), [])
 
     def test_csv_unparsable(self):
         """
