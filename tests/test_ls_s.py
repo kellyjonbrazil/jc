@@ -103,7 +103,7 @@ class MyTests(unittest.TestCase):
         """
         Test plain 'ls' on an empty directory
         """
-        self.assertEqual(list(jc.parsers.ls_s.parse('', quiet=True)), [])
+        self.assertEqual(list(jc.parsers.ls_s.parse([], quiet=True)), [])
 
     def test_ls_s_centos_7_7_raise_exception(self):
         """
