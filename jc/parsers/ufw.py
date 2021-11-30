@@ -394,8 +394,8 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
-    if not quiet: jc.utils.compatibility(__name__, info.compatible)
-    if not isinstance(data, str): raise TypeError("Input data must be a 'str' object.")
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
 
     raw_output = {}
     rules_list = []

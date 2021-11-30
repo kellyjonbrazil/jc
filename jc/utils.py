@@ -75,7 +75,7 @@ def error_message(message_lines):
         print(message, file=sys.stderr)
 
 
-def compatibility(mod_name, compatible):
+def compatibility(mod_name, compatible, quiet=False):
     """Checks for the parser's compatibility with the running OS platform.
 
     Parameters:
@@ -86,22 +86,25 @@ def compatibility(mod_name, compatible):
                         compatible options:
                         linux, darwin, cygwin, win32, aix, freebsd
 
+        quiet:          (bool) supress compatibility message if True
+
     Returns:
 
         None - just prints output to STDERR
     """
-    platform_found = False
+    if not quiet:
+        platform_found = False
 
-    for platform in compatible:
-        if sys.platform.startswith(platform):
-            platform_found = True
-            break
+        for platform in compatible:
+            if sys.platform.startswith(platform):
+                platform_found = True
+                break
 
-    if not platform_found:
-        mod = mod_name.split('.')[-1]
-        compat_list = ', '.join(compatible)
-        warning_message([f'{mod} parser not compatible with your OS ({sys.platform}).',
-                         f'Compatible platforms: {compat_list}'])
+        if not platform_found:
+            mod = mod_name.split('.')[-1]
+            compat_list = ', '.join(compatible)
+            warning_message([f'{mod} parser not compatible with your OS ({sys.platform}).',
+                            f'Compatible platforms: {compat_list}'])
 
 
 def has_data(data):
@@ -233,6 +236,21 @@ def stream_error(e, ignore_exceptions, line):
                 'line': line.strip()
             }
     }
+
+
+def input_type_check(data):
+    if not isinstance(data, str):
+        raise TypeError("Input data must be a 'str' object.")
+
+
+def streaming_input_type_check(data):
+    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
+        raise TypeError("Input data must be a non-string iterable object.")
+
+
+def streaming_line_input_type_check(line):
+    if not isinstance(line, str):
+        raise TypeError("Input line must be a 'str' object.")
 
 
 class timestamp:

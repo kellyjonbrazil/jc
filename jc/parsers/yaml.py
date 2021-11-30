@@ -135,8 +135,8 @@ def parse(data, raw=False, quiet=False):
     except Exception:
         raise LibraryNotInstalled('The ruamel.yaml library is not installed.')
 
-    if not quiet: jc.utils.compatibility(__name__, info.compatible)
-    if not isinstance(data, str): raise TypeError("Input data must be a 'str' object.")
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
 
     raw_output = []
 
