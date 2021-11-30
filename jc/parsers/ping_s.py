@@ -474,7 +474,6 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     for line in data:
         output_line = {}
-
         try:
             if not isinstance(line, str): raise TypeError("Input line must be a 'str' object.")
 
