@@ -123,15 +123,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         Iterator object
     """
-    if not quiet: jc.utils.compatibility(__name__, info.compatible)
-    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
-        raise TypeError("Input data must be a non-string iterable object.")
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.streaming_input_type_check(data)
 
     parent = ''
 
     for line in data:
         try:
-            if not isinstance(line, str): raise TypeError("Input line must be a 'str' object.")
+            jc.utils.streaming_line_input_type_check(line)
 
             # skip line if it starts with 'total 1234'
             if re.match(r'total [0-9]+', line):

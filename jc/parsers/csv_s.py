@@ -95,9 +95,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         Iterator object
     """
-    if not quiet: jc.utils.compatibility(__name__, info.compatible)
-    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
-        raise TypeError("Input data must be a non-string iterable object.")
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.streaming_input_type_check(data)
 
     # convert data to an iterable in case a sequence like a list is used as input.
     # this allows the exhaustion of the input so we don't double-process later.
