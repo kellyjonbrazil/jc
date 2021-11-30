@@ -75,7 +75,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'vmstat' with no data
         """
-        self.assertEqual(list(jc.parsers.vmstat_s.parse('', quiet=True)), [])
+        self.assertEqual(list(jc.parsers.vmstat_s.parse([], quiet=True)), [])
 
     def test_vmstat_s_unparsable(self):
         data = 'unparsable data'
