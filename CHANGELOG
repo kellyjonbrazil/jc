@@ -1,5 +1,8 @@
 jc changelog
 
+20211129 v1.17.3
+- Update parsers to exit with error if non-string input is detected (raise TypeError)
+
 20211117 v1.17.2
 - Fix ping parser to add Alpine linux support
 - Fix netstat parser for older versions of netstat on linux
