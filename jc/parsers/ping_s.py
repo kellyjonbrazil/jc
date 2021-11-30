@@ -72,7 +72,7 @@ from jc.utils import stream_success, stream_error
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.5'
+    version = '0.6'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
