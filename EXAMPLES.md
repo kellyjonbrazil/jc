@@ -1516,6 +1516,50 @@ cat example.ini | jc --ini -p
   }
 }
 ```
+### iostat
+```bash
+$ iostat | jc --iostat -p          # or:  jc -p iostat
+```
+```json
+[
+  {
+      "percent_user": 0.15,
+      "percent_nice": 0.0,
+      "percent_system": 0.18,
+      "percent_iowait": 0.0,
+      "percent_steal": 0.0,
+      "percent_idle": 99.67,
+      "type": "cpu"
+  },
+  {
+      "device": "sda",
+      "tps": 0.29,
+      "kb_read_s": 7.22,
+      "kb_wrtn_s": 1.25,
+      "kb_read": 194341,
+      "kb_wrtn": 33590,
+      "type": "device"
+  },
+  {
+      "device": "dm-0",
+      "tps": 0.29,
+      "kb_read_s": 5.99,
+      "kb_wrtn_s": 1.17,
+      "kb_read": 161361,
+      "kb_wrtn": 31522,
+      "type": "device"
+  },
+  {
+      "device": "dm-1",
+      "tps": 0.0,
+      "kb_read_s": 0.08,
+      "kb_wrtn_s": 0.0,
+      "kb_read": 2204,
+      "kb_wrtn": 0,
+      "type": "device"
+  }
+]
+```
 ### iptables
 ```bash
 iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
