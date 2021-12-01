@@ -76,6 +76,7 @@ parsers = [
     'id',
     'ifconfig',
     'ini',
+    'iostat',
     'iptables',
     'iw-scan',
     'jobs',
