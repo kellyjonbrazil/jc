@@ -1,7 +1,5 @@
 """jc - JSON CLI output utility `iostat` command output parser
 
-<<Short iostat description and caveats>>
-
 Usage (cli):
 
     $ iostat | jc --iostat
@@ -19,19 +17,121 @@ Schema:
 
     [
       {
-        "iostat":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "type":             string,
+        "percent_user":     float,
+        "percent_nice":     float,
+        "percent_system":   float,
+        "percent_iowait":   float,
+        "percent_steal":    float,
+        "percent_idle":     float,
+        "device":           string,
+        "tps":              float,
+        "kb_read_s":        float,
+        "mb_read_s":        float,
+        "kb_wrtn_s":        float,
+        "mb_wrtn_s":        float,
+        "kb_read":          integer,
+        "mb_read":          integer,
+        "kb_wrtn":          integer,
+        "mb_wrtn":          integer,
+        "rrqm_s":           float,
+        "wrqm_s":           float,
+        "r_s":              float,
+        "w_s":              float,
+        "rmb_s":            float,
+        "rkb_s":            float,
+        "wmb_s":            float,
+        "wkb_s":            float,
+        "avgrq_sz":         float,
+        "avgqu_sz":         float,
+        "await":            float,
+        "r_await":          float,
+        "w_await":          float,
+        "svctm":            float,
+        "percent_util":     float
       }
-    ]
 
 Examples:
 
     $ iostat | jc --iostat -p
-    []
+    [
+      {
+          "percent_user": 0.15,
+          "percent_nice": 0.0,
+          "percent_system": 0.18,
+          "percent_iowait": 0.0,
+          "percent_steal": 0.0,
+          "percent_idle": 99.67,
+          "type": "cpu"
+      },
+      {
+          "device": "sda",
+          "tps": 0.29,
+          "kb_read_s": 7.22,
+          "kb_wrtn_s": 1.25,
+          "kb_read": 194341,
+          "kb_wrtn": 33590,
+          "type": "device"
+      },
+      {
+          "device": "dm-0",
+          "tps": 0.29,
+          "kb_read_s": 5.99,
+          "kb_wrtn_s": 1.17,
+          "kb_read": 161361,
+          "kb_wrtn": 31522,
+          "type": "device"
+      },
+      {
+          "device": "dm-1",
+          "tps": 0.0,
+          "kb_read_s": 0.08,
+          "kb_wrtn_s": 0.0,
+          "kb_read": 2204,
+          "kb_wrtn": 0,
+          "type": "device"
+      }
+    ]
 
     $ iostat | jc --iostat -p -r
-    []
+    [
+      {
+        "percent_user": "0.15",
+        "percent_nice": "0.00",
+        "percent_system": "0.18",
+        "percent_iowait": "0.00",
+        "percent_steal": "0.00",
+        "percent_idle": "99.67",
+        "type": "cpu"
+      },
+      {
+        "device": "sda",
+        "tps": "0.29",
+        "kb_read_s": "7.22",
+        "kb_wrtn_s": "1.25",
+        "kb_read": "194341",
+        "kb_wrtn": "33590",
+        "type": "device"
+      },
+      {
+        "device": "dm-0",
+        "tps": "0.29",
+        "kb_read_s": "5.99",
+        "kb_wrtn_s": "1.17",
+        "kb_read": "161361",
+        "kb_wrtn": "31522",
+        "type": "device"
+      },
+      {
+        "device": "dm-1",
+        "tps": "0.00",
+        "kb_read_s": "0.08",
+        "kb_wrtn_s": "0.00",
+        "kb_read": "2204",
+        "kb_wrtn": "0",
+        "type": "device"
+      }
+    ]
 """
 import jc.utils
 import jc.parsers.universal
@@ -41,12 +141,9 @@ class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
     description = '`iostat` command parser'
-    author = 'John Doe'
-    author_email = 'johndoe@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    author = 'Kelly Brazil'
+    author_email = 'kellyjonbrazil@gmail.com'
+    compatible = ['linux']
     magic_commands = ['iostat']
 
 
@@ -66,14 +163,31 @@ def _process(proc_data):
         List of Dictionaries. Structured to conform to the schema.
     """
 
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
+    for entry in proc_data:
+        float_list = [
+            'percent_user', 'percent_nice', 'percent_system', 'percent_iowait',
+            'percent_steal', 'percent_idle', 'tps', 'kb_read_s', 'mb_read_s', 'kb_wrtn_s',
+            'mb_wrtn_s', 'rrqm_s', 'wrqm_s', 'r_s', 'w_s', 'rmb_s', 'rkb_s', 'wmb_s',
+            'wkb_s', 'avgrq_sz', 'avgqu_sz', 'await', 'r_await', 'w_await', 'svctm', 'percent_util'
+        ]
+        int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn']
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
+
+            if key in float_list:
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
 
 def _normalize_headers(line):
-    return line.replace('%', ' ').replace('/', '_').lower()
+    return line.replace('%', 'percent_').replace('/', '_').replace('-', '_').lower()
+
+def _create_obj_list(section_list, section_name):
+    output_list = jc.parsers.universal.simple_table_parse(section_list)
+    for item in output_list:
+        item['type'] = section_name
+    return output_list
 
 def parse(data, raw=False, quiet=False):
     """
@@ -103,17 +217,11 @@ def parse(data, raw=False, quiet=False):
         for line in filter(None, data.splitlines()):
             if line.startswith('avg-cpu:'):
                 if cpu_list:
-                    output_list = jc.parsers.universal.simple_table_parse(cpu_list)
-                    for item in output_list:
-                        item['type'] = 'cpu'
-                    raw_output.extend(output_list)
+                    raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
                     cpu_list = []
 
                 if device_list:
-                    output_list = jc.parsers.universal.simple_table_parse(device_list)
-                    for item in output_list:
-                        item['type'] = 'device'
-                    raw_output.extend(output_list)
+                    raw_output.extend(_create_obj_list(device_list, 'device'))
                     device_list = []
 
                 section = 'cpu'
@@ -125,17 +233,11 @@ def parse(data, raw=False, quiet=False):
 
             if line.startswith('Device:'):
                 if cpu_list:
-                    output_list = jc.parsers.universal.simple_table_parse(cpu_list)
-                    for item in output_list:
-                        item['type'] = 'cpu'
-                    raw_output.extend(output_list)
+                    raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
                     cpu_list = []
 
                 if device_list:
-                    output_list = jc.parsers.universal.simple_table_parse(device_list)
-                    for item in output_list:
-                        item['type'] = 'device'
-                    raw_output.extend(output_list)
+                    raw_output.extend(_create_obj_list(device_list, 'device'))
                     device_list = []
 
                 section = 'device'
@@ -151,20 +253,9 @@ def parse(data, raw=False, quiet=False):
                 device_list.append(line)
 
     if cpu_list:
-        output_list = jc.parsers.universal.simple_table_parse(cpu_list)
-        for item in output_list:
-            item['type'] = 'cpu'
-        raw_output.extend(output_list)
-        cpu_list = []
+        raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
 
     if device_list:
-        output_list = jc.parsers.universal.simple_table_parse(device_list)
-        for item in output_list:
-            item['type'] = 'device'
-        raw_output.extend(output_list)
-        device_list = []
+        raw_output.extend(_create_obj_list(device_list, 'device'))
 
     return raw_output if raw else _process(raw_output)
-
-if __name__ == '__main__':
-    pass
