@@ -48,8 +48,14 @@ Schema:
         "r_await":          float,
         "w_await":          float,
         "svctm":            float,
-        "percent_util":     float
+        "aqu_sz":           float,
+        "rareq_sz":         float,
+        "wareq_sz":         float,
+        "percent_util":     float,
+        "percent_rrqm":     float,
+        "percent_wrqm":     float
       }
+    ]
 
 Examples:
 
@@ -168,7 +174,8 @@ def _process(proc_data):
             'percent_user', 'percent_nice', 'percent_system', 'percent_iowait',
             'percent_steal', 'percent_idle', 'tps', 'kb_read_s', 'mb_read_s', 'kb_wrtn_s',
             'mb_wrtn_s', 'rrqm_s', 'wrqm_s', 'r_s', 'w_s', 'rmb_s', 'rkb_s', 'wmb_s',
-            'wkb_s', 'avgrq_sz', 'avgqu_sz', 'await', 'r_await', 'w_await', 'svctm', 'percent_util'
+            'wkb_s', 'avgrq_sz', 'avgqu_sz', 'await', 'r_await', 'w_await', 'svctm',
+            'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz'
         ]
         int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn']
         for key in entry:
@@ -231,7 +238,7 @@ def parse(data, raw=False, quiet=False):
                 cpu_list.append(headers)
                 continue
 
-            if line.startswith('Device:'):
+            if line.startswith('Device'):
                 if cpu_list:
                     raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
                     cpu_list = []
@@ -252,10 +259,10 @@ def parse(data, raw=False, quiet=False):
             if section == 'device':
                 device_list.append(line)
 
-    if cpu_list:
-        raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
+        if cpu_list:
+            raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
 
-    if device_list:
-        raw_output.extend(_create_obj_list(device_list, 'device'))
+        if device_list:
+            raw_output.extend(_create_obj_list(device_list, 'device'))
 
     return raw_output if raw else _process(raw_output)
