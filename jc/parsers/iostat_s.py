@@ -79,11 +79,13 @@ Schema:
 Examples:
 
     $ iostat | jc --iostat-s
-    {example output}
+    {"percent_user":0.14,"percent_nice":0.0,"percent_system":0.16,"percent_iowait":0.0,"percent_steal":0.0,"percent_idle":99.7,"type":"cpu"}
+    {"device":"sda","tps":0.24,"kb_read_s":5.28,"kb_wrtn_s":1.1,"kb_read":203305,"kb_wrtn":42368,"type":"device"}
     ...
 
     $ iostat | jc --iostat-s -r
-    {example output}
+    {"percent_user":"0.14","percent_nice":"0.00","percent_system":"0.16","percent_iowait":"0.00","percent_steal":"0.00","percent_idle":"99.70","type":"cpu"}
+    {"device":"sda","tps":"0.24","kb_read_s":"5.28","kb_wrtn_s":"1.10","kb_read":"203305","kb_wrtn":"42368","type":"device"}
     ...
 """
 import jc.utils
