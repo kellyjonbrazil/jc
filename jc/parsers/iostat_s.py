@@ -178,7 +178,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             jc.utils.streaming_line_input_type_check(line)
 
             # ignore blank lines and header line
-            if line == '\n' or line.startswith('Linux'):
+            if line == '\n' or line == '' or line.startswith('Linux'):
                 continue
 
             if line.startswith('avg-cpu:'):
