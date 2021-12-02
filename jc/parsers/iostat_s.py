@@ -2,7 +2,7 @@
 
 > This streaming parser outputs JSON Lines
 
-<<Short iostat description and caveats>>
+Note: `iostat` version 11 and higher include a JSON output option
 
 Usage (cli):
 
@@ -18,12 +18,57 @@ Usage (module):
 Schema:
 
     {
-      "iostat":            string,
-      "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
+      "type":             string,
+      "percent_user":     float,
+      "percent_nice":     float,
+      "percent_system":   float,
+      "percent_iowait":   float,
+      "percent_steal":    float,
+      "percent_idle":     float,
+      "device":           string,
+      "tps":              float,
+      "kb_read_s":        float,
+      "mb_read_s":        float,
+      "kb_wrtn_s":        float,
+      "mb_wrtn_s":        float,
+      "kb_read":          integer,
+      "mb_read":          integer,
+      "kb_wrtn":          integer,
+      "mb_wrtn":          integer,
+      "rrqm_s":           float,
+      "wrqm_s":           float,
+      "r_s":              float,
+      "w_s":              float,
+      "rmb_s":            float,
+      "rkb_s":            float,
+      "wmb_s":            float,
+      "wkb_s":            float,
+      "avgrq_sz":         float,
+      "avgqu_sz":         float,
+      "await":            float,
+      "r_await":          float,
+      "w_await":          float,
+      "svctm":            float,
+      "aqu_sz":           float,
+      "rareq_sz":         float,
+      "wareq_sz":         float,
+      "d_s":              float,
+      "dkb_s":            float,
+      "dmb_s":            float,
+      "drqm_s":           float,
+      "percent_drqm":     float,
+      "d_await":          float,
+      "dareq_sz":         float,
+      "f_s":              float,
+      "f_await":          float,
+      "percent_util":     float,
+      "percent_rrqm":     float,
+      "percent_wrqm":     float,
+      "_jc_meta":                      # This object only exists if using -qq or ignore_exceptions=True
         {
-          "success":    booean,      # true if successfully parsed, false if error
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
+          "success":      booean,      # true if successfully parsed, false if error
+          "error":        string,      # exists if "success" is false
+          "line":         string       # exists if "success" is false
         }
     }
 
@@ -73,7 +118,9 @@ def _process(proc_data):
         'percent_steal', 'percent_idle', 'tps', 'kb_read_s', 'mb_read_s', 'kb_wrtn_s',
         'mb_wrtn_s', 'rrqm_s', 'wrqm_s', 'r_s', 'w_s', 'rmb_s', 'rkb_s', 'wmb_s',
         'wkb_s', 'avgrq_sz', 'avgqu_sz', 'await', 'r_await', 'w_await', 'svctm',
-        'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz'
+        'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz',
+        'd_s', 'dkb_s', 'dmb_s', 'drqm_s', 'percent_drqm', 'd_await', 'dareq_sz',
+        'f_s', 'f_await'
     ]
     int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn']
     for key in proc_data:

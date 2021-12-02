@@ -1,5 +1,7 @@
 """jc - JSON CLI output utility `iostat` command output parser
 
+Note: `iostat` version 11 and higher include a JSON output option
+
 Usage (cli):
 
     $ iostat | jc --iostat
@@ -51,6 +53,15 @@ Schema:
         "aqu_sz":           float,
         "rareq_sz":         float,
         "wareq_sz":         float,
+        "d_s":              float,
+        "dkb_s":            float,
+        "dmb_s":            float,
+        "drqm_s":           float,
+        "percent_drqm":     float,
+        "d_await":          float,
+        "dareq_sz":         float,
+        "f_s":              float,
+        "f_await":          float,
         "percent_util":     float,
         "percent_rrqm":     float,
         "percent_wrqm":     float
@@ -175,7 +186,9 @@ def _process(proc_data):
             'percent_steal', 'percent_idle', 'tps', 'kb_read_s', 'mb_read_s', 'kb_wrtn_s',
             'mb_wrtn_s', 'rrqm_s', 'wrqm_s', 'r_s', 'w_s', 'rmb_s', 'rkb_s', 'wmb_s',
             'wkb_s', 'avgrq_sz', 'avgqu_sz', 'await', 'r_await', 'w_await', 'svctm',
-            'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz'
+            'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz',
+            'd_s', 'dkb_s', 'dmb_s', 'drqm_s', 'percent_drqm', 'd_await', 'dareq_sz',
+            'f_s', 'f_await'
         ]
         int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn']
         for key in entry:
