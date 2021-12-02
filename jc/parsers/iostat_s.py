@@ -149,7 +149,6 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 output_line = _create_obj_list(cpu_list, 'cpu')[0]
                 cpu_list = []
 
-
             if section == 'device':
                 device_list.append(headers)
                 device_list.append(line)
