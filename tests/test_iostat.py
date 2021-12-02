@@ -40,6 +40,17 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-1.out'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_iostat_1 = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-m.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_m = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-x.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_x = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-mx.out'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_mx = f.read()
 
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.json'), 'r', encoding='utf-8') as f:
@@ -71,6 +82,18 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-1.json'), 'r', encoding='utf-8') as f:
             self.ubuntu_18_4_iostat_1_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-m.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_m_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-x.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_x_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-mx.json'), 'r', encoding='utf-8') as f:
+            self.ubuntu_20_10_iostat_mx_json = json.loads(f.read())
 
     def test_iostat_nodata(self):
         """
@@ -137,6 +160,30 @@ class MyTests(unittest.TestCase):
         Test 'iostat 1 3' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.iostat.parse(self.ubuntu_18_4_iostat_1, quiet=True), self.ubuntu_18_4_iostat_1_json)
+
+    def test_iostat_ubuntu_20_10(self):
+        """
+        Test 'iostat' on Ubuntu 20.10
+        """
+        self.assertEqual(jc.parsers.iostat.parse(self.ubuntu_20_10_iostat, quiet=True), self.ubuntu_20_10_iostat_json)
+
+    def test_iostat_m_ubuntu_20_10(self):
+        """
+        Test 'iostat -m' on Ubuntu 20.10
+        """
+        self.assertEqual(jc.parsers.iostat.parse(self.ubuntu_20_10_iostat_m, quiet=True), self.ubuntu_20_10_iostat_m_json)
+
+    def test_iostat_x_ubuntu_20_10(self):
+        """
+        Test 'iostat -x' on Ubuntu 20.10
+        """
+        self.assertEqual(jc.parsers.iostat.parse(self.ubuntu_20_10_iostat_x, quiet=True), self.ubuntu_20_10_iostat_x_json)
+
+    def test_iostat_mx_ubuntu_20_10(self):
+        """
+        Test 'iostat -mx' on Ubuntu 20.10
+        """
+        self.assertEqual(jc.parsers.iostat.parse(self.ubuntu_20_10_iostat_mx, quiet=True), self.ubuntu_20_10_iostat_mx_json)
 
 
 if __name__ == '__main__':
