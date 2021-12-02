@@ -138,6 +138,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--id` enables the `id` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/id))
 - `--ifconfig` enables the `ifconfig` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig))
 - `--ini` enables the INI file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ini))
+- `--iostat` enables the `iostat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat))
 - `--iptables` enables the `iptables` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables))
 - `--iw-scan` enables the `iw dev [device] scan` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan))
 - `--jobs` enables the `jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs))

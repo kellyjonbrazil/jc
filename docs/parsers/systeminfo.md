@@ -229,4 +229,4 @@ Returns:
 ## Parser Information
 Compatibility:  win32
 
-Version 1.0 by Jon Smith (jon@rebelliondefense.com)
+Version 1.1 by Jon Smith (jon@rebelliondefense.com)

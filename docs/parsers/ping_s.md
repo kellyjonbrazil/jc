@@ -98,4 +98,4 @@ Returns:
 ## Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 0.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 0.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
