@@ -61,6 +61,8 @@ Schema:
       "dareq_sz":         float,
       "f_s":              float,
       "f_await":          float,
+      "kb_dscd_s":        float,
+      "mb_dscd_s":        float,
       "percent_util":     float,
       "percent_rrqm":     float,
       "percent_wrqm":     float,
@@ -120,7 +122,7 @@ def _process(proc_data):
         'wkb_s', 'avgrq_sz', 'avgqu_sz', 'await', 'r_await', 'w_await', 'svctm',
         'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz',
         'd_s', 'dkb_s', 'dmb_s', 'drqm_s', 'percent_drqm', 'd_await', 'dareq_sz',
-        'f_s', 'f_await'
+        'f_s', 'f_await', 'kb_dscd_s', 'mb_dscd_s'
     ]
     int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn']
     for key in proc_data:
