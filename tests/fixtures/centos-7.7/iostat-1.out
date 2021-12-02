@@ -1,0 +1,26 @@
+Linux 3.10.0-1062.1.2.el7.x86_64 (localhost.localdomain) 	11/30/2021 	_x86_64_	(1 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.14    0.00    0.16    0.00    0.00   99.70
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+sda               0.24         5.24         1.10     203305      42533
+dm-0              0.25         4.39         1.04     170325      40464
+dm-1              0.00         0.06         0.00       2204          0
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    0.00    0.00    0.00  100.00
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+sda               0.00         0.00         0.00          0          0
+dm-0              0.00         0.00         0.00          0          0
+dm-1              0.00         0.00         0.00          0          0
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    0.00    0.00    0.00  100.00
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+sda               0.00         0.00         0.00          0          0
+dm-0              0.00         0.00         0.00          0          0
+dm-1              0.00         0.00         0.00          0          0
+
