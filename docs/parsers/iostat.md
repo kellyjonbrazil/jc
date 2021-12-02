@@ -3,6 +3,8 @@
 # jc.parsers.iostat
 jc - JSON CLI output utility `iostat` command output parser
 
+Note: `iostat` version 11 and higher include a JSON output option
+
 Usage (cli):
 
     $ iostat | jc --iostat
@@ -37,6 +39,8 @@ Schema:
         "mb_read":          integer,
         "kb_wrtn":          integer,
         "mb_wrtn":          integer,
+        'kb_dscd':          integer,
+        'mb_dscd':          integer,
         "rrqm_s":           float,
         "wrqm_s":           float,
         "r_s":              float,
@@ -54,6 +58,17 @@ Schema:
         "aqu_sz":           float,
         "rareq_sz":         float,
         "wareq_sz":         float,
+        "d_s":              float,
+        "dkb_s":            float,
+        "dmb_s":            float,
+        "drqm_s":           float,
+        "percent_drqm":     float,
+        "d_await":          float,
+        "dareq_sz":         float,
+        "f_s":              float,
+        "f_await":          float,
+        "kb_dscd_s":        float,
+        "mb_dscd_s":        float,
         "percent_util":     float,
         "percent_rrqm":     float,
         "percent_wrqm":     float
