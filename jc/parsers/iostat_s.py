@@ -35,6 +35,8 @@ Schema:
       "mb_read":          integer,
       "kb_wrtn":          integer,
       "mb_wrtn":          integer,
+      'kb_dscd':          integer,
+      'mb_dscd':          integer,
       "rrqm_s":           float,
       "wrqm_s":           float,
       "r_s":              float,
@@ -124,7 +126,7 @@ def _process(proc_data):
         'd_s', 'dkb_s', 'dmb_s', 'drqm_s', 'percent_drqm', 'd_await', 'dareq_sz',
         'f_s', 'f_await', 'kb_dscd_s', 'mb_dscd_s'
     ]
-    int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn']
+    int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn', 'kb_dscd', 'mb_dscd']
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
