@@ -105,4 +105,4 @@ Returns:
 ## Parser Information
 Compatibility:  darwin
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

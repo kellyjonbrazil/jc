@@ -40,7 +40,7 @@ Returns:
 
 ## compatibility
 ```python
-compatibility(mod_name, compatible)
+compatibility(mod_name, compatible, quiet=False)
 ```
 Checks for the parser's compatibility with the running OS platform.
 
@@ -51,6 +51,8 @@ Parameters:
     compatible:     (list) sys.platform name(s) compatible with the parser
                     compatible options:
                     linux, darwin, cygwin, win32, aix, freebsd
+
+    quiet:          (bool) supress compatibility message if True
 
 Returns:
 
@@ -134,6 +136,24 @@ stream_error(e, ignore_exceptions, line)
 Reraise the stream exception with annotation or print an error `_jc_meta`
 field if `ignore_exceptions=True`
 
+
+## input_type_check
+```python
+input_type_check(data)
+```
+Ensure input data is a string
+
+## streaming_input_type_check
+```python
+streaming_input_type_check(data)
+```
+Ensure input data is an iterable, but not a string or bytes
+
+## streaming_line_input_type_check
+```python
+streaming_line_input_type_check(line)
+```
+Ensure each line is a string
 
 ## timestamp
 ```python

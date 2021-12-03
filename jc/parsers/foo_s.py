@@ -97,12 +97,13 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         Iterator object
     """
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.streaming_input_type_check(data)
 
     for line in data:
+        output_line = {}
         try:
-            output_line = {}
+            jc.utils.streaming_line_input_type_check(line)
 
             #
             # parse the input here

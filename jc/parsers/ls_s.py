@@ -64,7 +64,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.5'
+    version = '0.6'
     description = '`ls` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -123,13 +123,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         Iterator object
     """
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.streaming_input_type_check(data)
 
     parent = ''
 
     for line in data:
         try:
+            jc.utils.streaming_line_input_type_check(line)
 
             # skip line if it starts with 'total 1234'
             if re.match(r'total [0-9]+', line):

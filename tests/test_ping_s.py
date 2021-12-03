@@ -397,7 +397,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'ping' with no data
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse('', quiet=True)), [])
+        self.assertEqual(list(jc.parsers.ping_s.parse([], quiet=True)), [])
 
     def test_ping_s_unparsable(self):
         data = 'unparsable data'

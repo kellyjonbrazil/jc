@@ -72,7 +72,7 @@ from jc.utils import stream_success, stream_error
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.5'
+    version = '0.6'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -468,14 +468,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     s = _state()
 
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.streaming_input_type_check(data)
 
     for line in data:
-
         output_line = {}
-
         try:
+            jc.utils.streaming_line_input_type_check(line)
+
             # skip blank lines
             if line.strip() == '':
                 continue
