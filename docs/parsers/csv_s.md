@@ -16,7 +16,9 @@ Usage (cli):
 Usage (module):
 
     import jc.parsers.csv_s
-    result = jc.parsers.csv_s.parse(csv_output)
+    result = jc.parsers.csv_s.parse(csv_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
 
 Schema:
 
@@ -24,7 +26,13 @@ Schema:
 
     {
       "column_name1":     string,
-      "column_name2":     string
+      "column_name2":     string,
+      "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
+        {
+          "success":    booean,      # true if successfully parsed, false if error
+          "error":      string,      # exists if "success" is false
+          "line":       string       # exists if "success" is false
+        }
     }
 
 Examples:
