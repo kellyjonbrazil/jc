@@ -1,6 +1,6 @@
 jc changelog
 
-20211201 v1.17.3
+20211202 v1.17.3
 - Update parsers to exit with error if non-string input is detected (raise TypeError)
 - Update streaming parsers to exit with error if non-iterable input is detected (raise TypeError)
 - Simplify quiet-checking in parsers
