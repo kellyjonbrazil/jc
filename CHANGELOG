@@ -43,7 +43,7 @@ jc changelog
 20210720 v1.16.0
 - Note to Package Maintainers:
     TL;DR: `/man/jc.1.gz` and `/jc/man/jc.1.gz` are deprecated and only `/man/jc.1` should be used.
-    
+
     The Man page in the PyPi source packages will be moving from `/jc/man/jc.1.gz` to `/man/jc.1`
     in version 1.17.0. For now the Man pages will be available in both locations, but be aware that
     the Man page at `/jc/man/jc.1.gz` is now considered deprecated.
@@ -58,7 +58,7 @@ jc changelog
 - Binaries and DEB/RPM/MSI packages now include Python 3.9.5 interpreter
 
 20210628 v1.15.6
-- Fix issue to only load local plugin parsers that have filenames that end in .py 
+- Fix issue to only load local plugin parsers that have filenames that end in .py
 
 20210520 v1.15.5
 - Fix issue where help and about information would not display if a 3rd party parser library was missing. (e.g. xmltodict)

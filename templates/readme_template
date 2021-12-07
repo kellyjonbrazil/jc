@@ -213,7 +213,7 @@ Custom local parser plugins may be placed in a `jc/jcparsers` folder in your loc
 - macOS: `$HOME/Library/Application Support/jc/jcparsers`
 - Windows: `$LOCALAPPDATA\jc\jc\jcparsers`
 
-Local parser plugins are standard python module files. Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
+Local parser plugins are standard python module files. Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
 Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default parsers.
 
