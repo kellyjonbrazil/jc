@@ -526,7 +526,7 @@ def main():
     about = 'a' in options
     debug = 'd' in options
     verbose_debug = options.count('d') > 1
-    mono = 'm' in options
+    mono = bool('m' in options or os.getenv('NO_COLOR'))
     help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
