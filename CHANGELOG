@@ -2,6 +2,7 @@ jc changelog
 
 20211207 v1.17.4
 - Add support for the NO_COLOR environment variable to force mono
+- Add -C option to force color output even when using pipes (overrides -m and NO_COLOR)
 
 20211202 v1.17.3
 - Update parsers to exit with error if non-string input is detected (raise TypeError)
