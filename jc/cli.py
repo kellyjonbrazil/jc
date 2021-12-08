@@ -235,9 +235,11 @@ def set_env_colors(env_colors=None):
     }
 
 
-def piped_output():
-    """Return False if stdout is a TTY. True if output is being piped to another program"""
-    return not sys.stdout.isatty()
+def piped_output(force_color):
+    """Return False if stdout is a TTY. True if output is being piped to another program
+       and foce_color is True. This allows forcing of ANSI color codes even when using pipes.
+    """
+    return not sys.stdout.isatty() and not force_color
 
 
 def ctrlc(signum, frame):
@@ -335,6 +337,7 @@ def helptext():
 {parsers_string}
     Options:
             -a    about jc
+            -C    force color output even when using pipes (overrides -m)
             -d    debug (-dd for verbose debug)
             -h    help (-h --parser_name for parser documentation)
             -m    monochrome output
@@ -526,7 +529,8 @@ def main():
     about = 'a' in options
     debug = 'd' in options
     verbose_debug = options.count('d') > 1
-    mono = 'm' in options or bool(os.getenv('NO_COLOR'))
+    force_color = 'C' in options
+    mono = ('m' in options or bool(os.getenv('NO_COLOR'))) and not force_color
     help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
@@ -542,7 +546,11 @@ def main():
         mono = True
 
     if about:
-        print(json_out(about_jc(), pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+        print(json_out(about_jc(),
+              pretty=pretty,
+              env_colors=jc_colors,
+              mono=mono,
+              piped_out=piped_output(force_color)))
         sys.exit(0)
 
     if help_me:
@@ -632,7 +640,7 @@ def main():
                                pretty=pretty,
                                env_colors=jc_colors,
                                mono=mono,
-                               piped_out=piped_output()),
+                               piped_out=piped_output(force_color)),
                       flush=unbuffer)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
@@ -645,7 +653,7 @@ def main():
                            pretty=pretty,
                            env_colors=jc_colors,
                            mono=mono,
-                           piped_out=piped_output()),
+                           piped_out=piped_output(force_color)),
                   flush=unbuffer)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
