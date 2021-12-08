@@ -230,6 +230,9 @@ or
 JC_COLORS=default,default,default,default
 ```
 
+### Disable Colors via Environment Variable
+You can set the [`NO_COLOR`](http://no-color.org/) environment variable to any value to disable color output in `jc`. Note that using the `-C` option to force color output will override both the `NO_COLOR` environment variable and the `-m` option.
+
 ### Streaming Parsers
 Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that immediately start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
 

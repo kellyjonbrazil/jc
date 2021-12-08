@@ -86,6 +86,9 @@ ifconfig exit code = \fB1\fP, jc exit code = \fB100\fP, combined exit code = \fB
 .RE
 
 .SH ENVIRONMENT
+
+\fBCustom Colors\fP
+
 You can specify custom colors via the \fBJC_COLORS\fP environment variable. The \fBJC_COLORS\fP environment variable takes four comma separated string values in the following format:
 
 JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
@@ -102,6 +105,9 @@ or
 JC_COLORS=default,default,default,default
 .RE
 
+\fBDisable Color Output\fP
+
+You can set the `NO_COLOR` environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
 
 .SH STREAMING PARSERS
 Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP and \fBping-s\fP) that immediately start processing and outputing the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
