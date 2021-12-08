@@ -1,4 +1,4 @@
-.TH jc 1 2021-12-08 1.17.3 "JSON CLI output utility"
+.TH jc 1 2021-12-08 1.17.4 "JSON CLI output utility"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -441,7 +441,7 @@ about jc (JSON output)
 .TP
 .B
 \fB-C\fP
-force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)
+force color output even when using pipes (overrides \fB-m\fP and the \fBNO_COLOR\fP env variable)
 .TP
 .B
 \fB-d\fP
@@ -478,7 +478,7 @@ version information
 .SH EXIT CODES
 Any fatal errors within jc will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), jc will store the exit code of the program being parsed and add it to the  jc exit code. This way it is easier to determine if an error was from the parsed program or jc.
 
-Consider the following examples using `ifconfig`:
+Consider the following examples using \fBifconfig\fP:
 
 .RS
 ifconfig exit code = \fB0\fP, jc exit code = \fB0\fP, combined exit code = \fB0\fP (no errors)
@@ -512,7 +512,7 @@ JC_COLORS=default,default,default,default
 
 \fBDisable Color Output\fP
 
-You can set the `NO_COLOR` environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
+You can set the \fBNO_COLOR\fB environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
 
 .SH STREAMING PARSERS
 Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP and \fBping-s\fP) that immediately start processing and outputing the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
