@@ -35,6 +35,10 @@ Options:
 about jc (JSON output)
 .TP
 .B
+\fB-C\fP
+force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)
+.TP
+.B
 \fB-d\fP
 debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP

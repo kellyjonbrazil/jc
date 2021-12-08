@@ -110,6 +110,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
+- `-C` force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
 - `-h` help. Use `jc -h --parser_name` for parser documentation
 - `-m` monochrome JSON output
