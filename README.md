@@ -191,6 +191,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
+- `-C` force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
 - `-h` help. Use `jc -h --parser_name` for parser documentation
 - `-m` monochrome JSON output
@@ -228,6 +229,9 @@ or
 ```bash
 JC_COLORS=default,default,default,default
 ```
+
+### Disable Colors via Environment Variable
+You can set the [`NO_COLOR`](http://no-color.org/) environment variable to any value to disable color output in `jc`. Note that using the `-C` option to force color output will override both the `NO_COLOR` environment variable and the `-m` option.
 
 ### Streaming Parsers
 Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that immediately start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
