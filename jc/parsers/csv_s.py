@@ -24,11 +24,11 @@ Schema:
     {
       "column_name1":     string,
       "column_name2":     string,
-      "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta":                      # This object only exists if using -qq or ignore_exceptions=True
         {
-          "success":    boolean,     # true if successfully parsed, false if error
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
+          "success":      boolean,     # true if successfully parsed, false if error
+          "error":        string,      # exists if "success" is false
+          "line":         string       # exists if "success" is false
         }
     }
 
