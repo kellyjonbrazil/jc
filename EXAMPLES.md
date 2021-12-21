@@ -3793,5 +3793,36 @@ cat istio.yaml | jc --yaml -p
   }
 ]
 ```
+### zipinfo
+```bash
+zipinfo file.zip | jc --zipinfo -p          # or:  jc -p zipinfo file.zip
+```
+```json
+[
+  {
+    "archive": "file.zip",
+    "size": 4116,
+    "size_unit": "bytes",
+    "number_entries": 1,
+    "number_files": 1,
+    "bytes_uncompressed": 11837,
+    "bytes_compressed": 3966,
+    "percent_compressed": 66.5,
+    "files": [
+      {
+        "flags": "-rw-r--r--",
+        "zipversion": "2.1",
+        "zipunder": "unx",
+        "filesize": 11837,
+        "type": "bX",
+        "method": "defN",
+        "date": "21-Dec-08",
+        "time": "20:50",
+        "filename": "compressed_file"
+      }
+    ]
+  }
+]
+```
 
 © 2019-2021 Kelly Brazil

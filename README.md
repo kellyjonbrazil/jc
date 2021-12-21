@@ -188,6 +188,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--who` enables the `who` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/who))
 - `--xml` enables the XML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xml))
 - `--yaml` enables the YAML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml))
+- `--zipinfo` enables the `zipinfo` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo))
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
