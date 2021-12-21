@@ -36,7 +36,7 @@ Schema:
       "epoch_utc":      integer,     # timezone aware timestamp if date field is in UTC and can be converted
       "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
         {
-          "success":    booean,      # true if successfully parsed, false if error
+          "success":    boolean,     # true if successfully parsed, false if error
           "error":      string,      # exists if "success" is false
           "line":       string       # exists if "success" is false
         }
