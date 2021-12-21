@@ -1,5 +1,8 @@
 jc changelog
 
+20211221 v1.17.5
+- Add zipinfo parser tested on linux and macOS
+
 20211207 v1.17.4
 - Add support for the NO_COLOR environment variable to set mono (http://no-color.org/)
 - Add -C option to force color output even when using pipes (overrides -m and NO_COLOR)
