@@ -19,30 +19,31 @@ Usage (module):
     result = jc.parsers.zipinfo.parse(zipinfo_command_output)
 
 Schema:
-
-    {
-      "archive":              string,
-      "size":                 integer,
-      "size_unit":            string,
-      "number_entries":       integer,
-      "number_files":         integer,
-      "bytes_uncompressed":   integer,
-      "bytes_compressed":     integer,
-      "percent_compressed":   float,
-      "files": [
-        {
-          "flags":            string,
-          "zipversion":       string,
-          "zipunder":         string
-          "filesize":         integer,
-          "type":             string,
-          "method":           string,
-          "date":             string,
-          "time":             string,
-          "filename":         string
-        }
-      ]
-    }
+    [
+      {
+        "archive":              string,
+        "size":                 integer,
+        "size_unit":            string,
+        "number_entries":       integer,
+        "number_files":         integer,
+        "bytes_uncompressed":   integer,
+        "bytes_compressed":     integer,
+        "percent_compressed":   float,
+        "files": [
+          {
+            "flags":            string,
+            "zipversion":       string,
+            "zipunder":         string
+            "filesize":         integer,
+            "type":             string,
+            "method":           string,
+            "date":             string,
+            "time":             string,
+            "filename":         string
+          }
+        ]
+      }
+    ]
 
 Examples:
 
@@ -103,17 +104,20 @@ def _process(proc_data):
     """
 
     for entry in proc_data:
-        int_list = ['bytes_compressed', 'bytes_uncompressed', 'number_entries', 'number_files', 'size']
+        int_list = ['bytes_compressed', 'bytes_uncompressed', 'number_entries',
+                    'number_files', 'size', 'filesize']
+        float_list = ['percent_compressed']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+            if key in float_list:
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
-            if key in "files":
-                for d in entry[key]:
-                    for key in d:
-                        if key in "filesize":
-                            d[key] = jc.utils.convert_to_int(d[key])
-
+            if 'files' in key:
+                for item in entry['files']:
+                    for key in item:
+                        if key in int_list:
+                            item[key] = jc.utils.convert_to_int(item[key])
     return proc_data
 
 
@@ -134,47 +138,68 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output = {}
-
-    datalines = data.splitlines()
-    datalist = list(filter(None, datalines))
+    raw_output = []
+    archives = []
 
     if jc.utils.has_data(data):
+        datalines = data.splitlines()
 
-        archive_info = []
+        # remove last line of multi-archive output since it is not needed
+        if datalines[-1].endswith('archives were successfully processed.'):
+            datalines.pop(-1)
 
-        # 1st line
-        # Archive:  log4j-core-2.16.0.jar
-        line = datalist.pop(0)
-        _, archive = line.split()
+        # extract each archive into its own list of lines.
+        # archives are separated by a blank line
+        this_archive = []
+        for row in datalines:
+            if row == '':
+                archives.append(this_archive)
+                this_archive = []
+                continue
 
-        # 2nd line
-        # Zip file size: 1789565 bytes, number of entries: 1218
-        line = datalist.pop(0)
-        _, _, _, size, size_unit, _, _, _, number_entries = line.split()
-        size_unit = size_unit.rstrip(',')
+            this_archive.append(row)
 
-        # last line
-        # 1218 files, 3974141 bytes uncompressed, 1515455 bytes compressed:  61.9%
-        line = datalist.pop(-1)
-        number_files, _, bytes_uncompressed, _, _, bytes_compressed, _, _, percent_compressed = line.split()
-        percent_compressed = float(percent_compressed.rstrip("%"))
+        if this_archive:
+            archives.append(this_archive)
 
-        # Add header row for parsing
-        datalist[:0] = ['flags zipversion zipunder filesize type method date time filename']
+        # iterate through list of archives and parse
+        for archive_item in archives:
+            archive_info = {}
 
-        file_list = jc.parsers.universal.simple_table_parse(datalist)
+            # 1st line
+            # Archive:  log4j-core-2.16.0.jar
+            line = archive_item.pop(0)
+            _, archive = line.split()
 
-        archive_info.append({'archive': archive,
-                             'size': size,
-                             'size_unit': size_unit,
-                             'number_entries': number_entries,
-                             'number_files': number_files,
-                             'bytes_uncompressed': bytes_uncompressed,
-                             'bytes_compressed': bytes_compressed,
-                             'percent_compressed': percent_compressed,
-                             'files': file_list})
+            # 2nd line
+            # Zip file size: 1789565 bytes, number of entries: 1218
+            line = archive_item.pop(0)
+            _, _, _, size, size_unit, *_, number_entries = line.split()
+            size_unit = size_unit.rstrip(',')
 
-        raw_output = archive_info
+            # last line
+            # 1218 files, 3974141 bytes uncompressed, 1515455 bytes compressed:  61.9%
+            line = archive_item.pop(-1)
+            number_files, _, bytes_uncompressed, _, _, bytes_compressed, *_, percent_compressed = line.split()
+            percent_compressed = percent_compressed.rstrip("%")
+
+            # Add header row for parsing
+            archive_item[:0] = ['flags zipversion zipunder filesize type method date time filename']
+
+            file_list = jc.parsers.universal.simple_table_parse(archive_item)
+
+            archive_info = {
+                'archive': archive,
+                'size': size,
+                'size_unit': size_unit,
+                'number_entries': number_entries,
+                'number_files': number_files,
+                'bytes_uncompressed': bytes_uncompressed,
+                'bytes_compressed': bytes_compressed,
+                'percent_compressed': percent_compressed,
+                'files': file_list
+            }
+
+            raw_output.append(archive_info)
 
     return raw_output if raw else _process(raw_output)
