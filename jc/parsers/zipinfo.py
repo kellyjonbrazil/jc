@@ -21,27 +21,27 @@ Usage (module):
 Schema:
 
     {
-      "archive":            string,
-      "size":               integer,
-      "size_unit":          string,
-      "number_entries":     integer,
-      "number_files":       integer,
-      "bytes_uncompressed": integer,
-      "bytes_compressed":   integer,
-      "percent_compressed": float,
+      "archive":              string,
+      "size":                 integer,
+      "size_unit":            string,
+      "number_entries":       integer,
+      "number_files":         integer,
+      "bytes_uncompressed":   integer,
+      "bytes_compressed":     integer,
+      "percent_compressed":   float,
       "files": [
         {
-          "flags":      string,
-          "zipversion": string,
-          "zipunder":   string
-          "filesize":   integer,
-          "type":       string,
-          "method":     string,
-          "date":       string,
-          "time":       string,
-          "filename":   string
+          "flags":            string,
+          "zipversion":       string,
+          "zipunder":         string
+          "filesize":         integer,
+          "type":             string,
+          "method":           string,
+          "date":             string,
+          "time":             string,
+          "filename":         string
         }
-      ] 
+      ]
     }
 
 Examples:
@@ -82,9 +82,7 @@ class info():
     description = '`zipinfo` command parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
-
-    # compatible options: linux
-    compatible = ['linux']
+    compatible = ['linux', 'darwin']
     magic_commands = ['zipinfo']
 
 
@@ -140,10 +138,10 @@ def parse(data, raw=False, quiet=False):
 
     datalines = data.splitlines()
     datalist = list(filter(None, datalines))
- 
+
     if jc.utils.has_data(data):
 
-        archive_info = [] 
+        archive_info = []
 
         # 1st line
         # Archive:  log4j-core-2.16.0.jar
