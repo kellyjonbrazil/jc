@@ -1,0 +1,24 @@
+Archive:  jc1.zip
+Zip file size: 4116 bytes, number of entries: 1
+-rw-r--r--  2.1 unx    11837 bX defN 21-Dec-08 20:50 jc.1
+1 file, 11837 bytes uncompressed, 3966 bytes compressed:  66.5%
+
+Archive:  testzip.zip
+Zip file size: 8106 bytes, number of entries: 2
+-rw-r--r--  3.0 unx      197 tx defN 21-Aug-03 15:12 round-table.gv
+-rw-r--r--  3.0 unx     8342 bx defN 21-Aug-03 15:12 round-table.gv.pdf
+2 files, 8539 bytes uncompressed, 7651 bytes compressed:  10.4%
+
+Archive:  micro.zip
+Zip file size: 6144 bytes, number of entries: 8
+-rw-r--r--  2.1 unx    10688 bX defN 19-Sep-30 16:47 microsimservermac.py
+drwxrwxr-x  2.1 unx        0 bx stor 21-Dec-20 14:33 __MACOSX/
+-rw-r--r--  2.1 unx      176 bX defN 19-Sep-30 16:47 __MACOSX/._microsimservermac.py
+-rw-r--r--  2.1 unx      528 bX defN 19-Aug-27 07:46 Dockerfile
+-rw-r--r--  2.1 unx    10538 bX defN 19-Oct-01 13:22 microsimserver.py
+-rw-r--r--  2.1 unx      380 bX defN 19-Oct-01 13:22 changelog.txt
+-rwxr-xr-x  2.1 unx      263 bX defN 19-Oct-01 12:09 dockerhub.sh
+-rw-r--r--  2.1 unx      266 bX defN 19-Oct-01 12:09 __MACOSX/._dockerhub.sh
+8 files, 22839 bytes uncompressed, 4908 bytes compressed:  78.5%
+
+3 archives were successfully processed.
