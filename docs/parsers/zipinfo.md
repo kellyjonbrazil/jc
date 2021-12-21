@@ -22,6 +22,7 @@ Usage (module):
     result = jc.parsers.zipinfo.parse(zipinfo_command_output)
 
 Schema:
+
     [
       {
         "archive":              string,
