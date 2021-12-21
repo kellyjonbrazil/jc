@@ -125,7 +125,8 @@ parsers = [
     'wc',
     'who',
     'xml',
-    'yaml'
+    'yaml',
+    'zipinfo'
 ]
 
 JC_ERROR_EXIT = 100
