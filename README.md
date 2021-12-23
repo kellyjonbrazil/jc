@@ -91,7 +91,10 @@ pip3 install jc
 | FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
 
-> For more packages and binaries, see the [jc packaging](https://kellyjonbrazil.github.io/jc-packaging/) site.
+> For more OS Packages, see https://repology.org/project/jc/versions.
+
+### Binaries and Packages
+For precompiled binaries and packages, see [Releases](https://github.com/kellyjonbrazil/jc/releases) on Github.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
