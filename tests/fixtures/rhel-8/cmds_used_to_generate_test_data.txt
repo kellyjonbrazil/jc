@@ -1,0 +1,14 @@
+
+unzip apache-log4j-2.17.0-bin/log4j-core-2.17.0.jar META-INF/MANIFEST.MF
+
+cat MANIFEST.MF | jc --metamf > MANIFEST.MF.json
+
+#####
+
+unzip -c apache-log4j-2.17.0-bin/log4j-core-2.17.0.jar META-INF/MANIFEST.MF > unzip_c_MANIFEST.MF.single_jar.out
+unzip -c apache-log4j-2.17.0-bin/log4j-core-2.17.0.jar META-INF/MANIFEST.MF | jc --metamf > unzip_c_MANIFEST.MF.single_jar.json
+
+#####
+
+unzip -c 'apache-log4j-2.17.0-bin/*.jar' META-INF/MANIFEST.MF > unzip_c_MANIFEST.MF.multi_jar.out
+unzip -c 'apache-log4j-2.17.0-bin/*.jar' META-INF/MANIFEST.MF | jc --metamf > unzip_c_MANIFEST.MF.multi_jar.json 
