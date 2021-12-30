@@ -1,18 +1,13 @@
-"""jc - JSON CLI output utility `metamf` command output parser
-
-Options supported:
-- none
-
-Create key value pairs from a MANIFEST.MF file, to include key multiline value pairs.
+"""jc - JSON CLI output utility `jar-manifest` command output parser
 
 Usage (cli):
 
-    $ cat MANIFEST.MF | jc --metamf
+    $ cat MANIFEST.MF | jc --jar-manifest
 
 Usage (module):
 
-    import jc.parsers.metamf
-    result = jc.parsers.metamf.parse(metamf_command_output)
+    import jc.parsers.jar-manifest
+    result = jc.parsers.jar-manifest.parse(jar-manifest_command_output)
 
 Schema:
 
@@ -25,11 +20,11 @@ Schema:
 
 Examples:
 
-    $ cat MANIFEST.MF | jc --metamf -p
-    $ unzip -c apache-log4j-2.16.0-bin/log4j-core-2.16.0.jar META-INF/MANIFEST.MF | jc --metamf -p
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --metamf -p
+    $ cat MANIFEST.MF | jc --jar-manifest -p
+    $ unzip -c apache-log4j-2.16.0-bin/log4j-core-2.16.0.jar META-INF/MANIFEST.MF | jc --jar-manifest -p
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar-manifest -p
 
-    $ cat MANIFEST.MF | jc --metamf -p
+    $ cat MANIFEST.MF | jc --jar-manifest -p
 
     [
       {
@@ -47,7 +42,7 @@ Examples:
       }
     ]
 
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --metamf -p
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar-manifest -p
 
     [
       ...
@@ -80,7 +75,6 @@ Examples:
     ]
 """
 import jc.utils
-import jc.parsers.universal
 import re
 
 
@@ -90,7 +84,7 @@ class info():
     description = 'MANIFEST.MF file parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
-    compatible = ['linux']
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
 
 __version__ = info.version
@@ -163,11 +157,8 @@ def parse(data, raw=False, quiet=False):
             for i, line in enumerate(archive_item):
                 last = archive_item[-1]
 
-                # handle this line separately
+                # remove line since it is not needed and starts with "space"
                 if (re.match(r'^\s+inflating\s*:\s*META-INF/MANIFEST.MF', line, re.IGNORECASE)):
-                    k, v = line.split(":", maxsplit=1)
-                    v = re.sub(r'\s', '', v)
-                    manifests.append({k: v})
                     archive_item.pop(i)
                     continue
 
@@ -212,8 +203,7 @@ def parse(data, raw=False, quiet=False):
             # all other key value pairs
             for i, line in enumerate(archive_item):
                 k, v = line.split(":", maxsplit=1)
-                v = v.rstrip()
-                v = v.lstrip()
+                v = v.strip()
                 manifests.append({k: v})
 
             if manifests:
