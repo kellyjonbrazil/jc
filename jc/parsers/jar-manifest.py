@@ -47,7 +47,6 @@ Examples:
     [
       ...
       {
-        "inflating": "META-INF/MANIFEST.MF",
         "Archive": "apache-log4j-2.16.0-bin/log4j-spring-boot-2.16.0-sources.jar",
         "Manifest_Version": "1.0",
         "Built_By": "matt",
@@ -55,7 +54,6 @@ Examples:
         "Build_Jdk": "1.8.0_312"
       },
       {
-        "inflating": "META-INF/MANIFEST.MF",
         "Archive": "apache-log4j-2.16.0-bin/log4j-spring-boot-2.16.0-javadoc.jar",
         "Manifest_Version": "1.0",
         "Built_By": "matt",
@@ -63,7 +61,6 @@ Examples:
         "Build_Jdk": "1.8.0_312"
       },
       {
-        "inflating": "META-INF/MANIFEST.MF",
         "Bundle_SymbolicName": "org.apache.logging.log4j.spring-cloud-config-client.logging.log4j.core.util;version=\"[2.16,3)\",org.springframework.boot.autoconfigure.condition,org.springframework.cloud.context.environment,org.springframework.context,org.springframework.stereotype",
         "Export_Package": "org.apache.logging.log4j.spring.cloud.config.controller;version=\"2.16.0\"ient",
         "Archive": "apache-log4j-2.16.0-bin/log4j-spring-cloud-config-client-2.16.0.jar",
