@@ -1,13 +1,13 @@
-"""jc - JSON CLI output utility `jar-manifest` command output parser
+"""jc - JSON CLI output utility `jar_manifest` command output parser
 
 Usage (cli):
 
-    $ cat MANIFEST.MF | jc --jar-manifest
+    $ cat MANIFEST.MF | jc --jar_manifest
 
 Usage (module):
 
-    import jc.parsers.jar-manifest
-    result = jc.parsers.jar-manifest.parse(jar-manifest_command_output)
+    import jc.parsers.jar_manifest
+    result = jc.parsers.jar_manifest.parse(jar_manifest_command_output)
 
 Schema:
 
@@ -20,11 +20,11 @@ Schema:
 
 Examples:
 
-    $ cat MANIFEST.MF | jc --jar-manifest -p
-    $ unzip -c apache-log4j-2.16.0-bin/log4j-core-2.16.0.jar META-INF/MANIFEST.MF | jc --jar-manifest -p
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar-manifest -p
+    $ cat MANIFEST.MF | jc --jar_manifest -p
+    $ unzip -c apache-log4j-2.16.0-bin/log4j-core-2.16.0.jar META-INF/MANIFEST.MF | jc --jar_manifest -p
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar_manifest -p
 
-    $ cat MANIFEST.MF | jc --jar-manifest -p
+    $ cat MANIFEST.MF | jc --jar_manifest -p
 
     [
       {
@@ -42,7 +42,7 @@ Examples:
       }
     ]
 
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar-manifest -p
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar_manifest -p
 
     [
       ...
