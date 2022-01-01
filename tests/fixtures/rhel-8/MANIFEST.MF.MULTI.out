@@ -1,0 +1,2210 @@
+Archive:  log4j-api-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.api
+Built-By: rgoers
+Bnd-LastModified: 1639792270573
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j API
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j,org.apache.logging.log4j.inte
+ rnal,org.apache.logging.log4j.message,org.apache.logging.log4j.simple
+ ,org.apache.logging.log4j.spi,org.apache.logging.log4j.status,org.apa
+ che.logging.log4j.util,org.osgi.framework;version="[1.6,2)",org.osgi.
+ framework.wiring;version="[1.0,2)",sun.reflect;resolution:=optional
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j;uses:="org.apache.logging.log
+ 4j.message,org.apache.logging.log4j.spi,org.apache.logging.log4j.util
+ ";version="2.17.0",org.apache.logging.log4j.internal;uses:="org.apach
+ e.logging.log4j,org.apache.logging.log4j.message,org.apache.logging.l
+ og4j.util";version="2.17.0",org.apache.logging.log4j.message;uses:="o
+ rg.apache.logging.log4j.util";version="2.17.0",org.apache.logging.log
+ 4j.simple;uses:="org.apache.logging.log4j,org.apache.logging.log4j.me
+ ssage,org.apache.logging.log4j.spi,org.apache.logging.log4j.util";ver
+ sion="2.17.0",org.apache.logging.log4j.spi;uses:="org.apache.logging.
+ log4j,org.apache.logging.log4j.internal,org.apache.logging.log4j.mess
+ age,org.apache.logging.log4j.util";version="2.17.0",org.apache.loggin
+ g.log4j.status;uses:="org.apache.logging.log4j,org.apache.logging.log
+ 4j.message,org.apache.logging.log4j.spi";version="2.17.0",org.apache.
+ logging.log4j.util;uses:="org.apache.logging.log4j.message,org.apache
+ .logging.log4j.spi,org.osgi.framework";version="2.17.0"
+Bundle-Name: Apache Log4j API
+Log4jReleaseVersionJava6: 2.3
+Multi-Release: true
+Bundle-Activator: org.apache.logging.log4j.util.Activator
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j API
+Bundle-Description: The Apache Log4j API
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Specification-Version: 2.17.0
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-api/
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-api-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-api-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-core-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.core
+Built-By: rgoers
+Bnd-LastModified: 1639792304782
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Core
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.conversantmedia.util.concurrent;resolution:=option
+ al,com.fasterxml.jackson.annotation;version="[2.12,3)";resolution:=op
+ tional,com.fasterxml.jackson.core;version="[2.12,3)";resolution:=opti
+ onal,com.fasterxml.jackson.core.type;version="[2.12,3)";resolution:=o
+ ptional,com.fasterxml.jackson.core.util;version="[2.12,3)";resolution
+ :=optional,com.fasterxml.jackson.databind;version="[2.12,3)";resoluti
+ on:=optional,com.fasterxml.jackson.databind.annotation;version="[2.12
+ ,3)";resolution:=optional,com.fasterxml.jackson.databind.deser.std;ve
+ rsion="[2.12,3)";resolution:=optional,com.fasterxml.jackson.databind.
+ module;version="[2.12,3)";resolution:=optional,com.fasterxml.jackson.
+ databind.node;version="[2.12,3)";resolution:=optional,com.fasterxml.j
+ ackson.databind.ser;version="[2.12,3)";resolution:=optional,com.faste
+ rxml.jackson.databind.ser.impl;version="[2.12,3)";resolution:=optiona
+ l,com.fasterxml.jackson.databind.ser.std;version="[2.12,3)";resolutio
+ n:=optional,com.fasterxml.jackson.dataformat.xml;version="[2.12,3)";r
+ esolution:=optional,com.fasterxml.jackson.dataformat.xml.annotation;v
+ ersion="[2.12,3)";resolution:=optional,com.fasterxml.jackson.dataform
+ at.xml.util;version="[2.12,3)";resolution:=optional,com.fasterxml.jac
+ kson.dataformat.yaml;version="[2.12,3)";resolution:=optional,com.lmax
+ .disruptor;version="[3.4,4)";resolution:=optional,com.lmax.disruptor.
+ dsl;version="[3.4,4)";resolution:=optional,javax.activation;version="
+ [1.2,2)";resolution:=optional,javax.annotation.processing,javax.crypt
+ o,javax.jms;version="[1.1,2)";resolution:=optional,javax.lang.model,j
+ avax.lang.model.element,javax.lang.model.util,javax.mail;version="[1.
+ 6,2)";resolution:=optional,javax.mail.internet;version="[1.6,2)";reso
+ lution:=optional,javax.mail.util;version="[1.6,2)";resolution:=option
+ al,javax.management,javax.naming,javax.net,javax.net.ssl,javax.script
+ ,javax.sql,javax.tools,javax.xml.parsers,javax.xml.stream,javax.xml.t
+ ransform,javax.xml.transform.stream,javax.xml.validation,org.apache.c
+ ommons.compress.compressors;version="[1.21,2)";resolution:=optional,o
+ rg.apache.commons.compress.utils;version="[1.21,2)";resolution:=optio
+ nal,org.apache.commons.csv;version="[1.9,2)";resolution:=optional,org
+ .apache.kafka.clients.producer;resolution:=optional,org.apache.loggin
+ g.log4j;version="[2.17,3)",org.apache.logging.log4j.core,org.apache.l
+ ogging.log4j.core.appender,org.apache.logging.log4j.core.appender.db,
+ org.apache.logging.log4j.core.appender.rewrite,org.apache.logging.log
+ 4j.core.appender.rolling,org.apache.logging.log4j.core.appender.rolli
+ ng.action,org.apache.logging.log4j.core.async,org.apache.logging.log4
+ j.core.config,org.apache.logging.log4j.core.config.arbiters,org.apach
+ e.logging.log4j.core.config.builder.api,org.apache.logging.log4j.core
+ .config.builder.impl,org.apache.logging.log4j.core.config.composite,o
+ rg.apache.logging.log4j.core.config.json,org.apache.logging.log4j.cor
+ e.config.plugins,org.apache.logging.log4j.core.config.plugins.convert
+ ,org.apache.logging.log4j.core.config.plugins.processor,org.apache.lo
+ gging.log4j.core.config.plugins.util,org.apache.logging.log4j.core.co
+ nfig.plugins.validation,org.apache.logging.log4j.core.config.plugins.
+ validation.constraints,org.apache.logging.log4j.core.config.plugins.v
+ alidation.validators,org.apache.logging.log4j.core.config.plugins.vis
+ itors,org.apache.logging.log4j.core.config.status,org.apache.logging.
+ log4j.core.filter,org.apache.logging.log4j.core.impl,org.apache.loggi
+ ng.log4j.core.jackson,org.apache.logging.log4j.core.jmx,org.apache.lo
+ gging.log4j.core.layout,org.apache.logging.log4j.core.layout.internal
+ ,org.apache.logging.log4j.core.lookup,org.apache.logging.log4j.core.n
+ et,org.apache.logging.log4j.core.net.ssl,org.apache.logging.log4j.cor
+ e.pattern,org.apache.logging.log4j.core.script,org.apache.logging.log
+ 4j.core.selector,org.apache.logging.log4j.core.time,org.apache.loggin
+ g.log4j.core.tools.picocli,org.apache.logging.log4j.core.util,org.apa
+ che.logging.log4j.core.util.datetime,org.apache.logging.log4j.message
+ ;version="[2.17,3)",org.apache.logging.log4j.spi;version="[2.17,3)",o
+ rg.apache.logging.log4j.status;version="[2.17,3)",org.apache.logging.
+ log4j.util;version="[2.17,3)",org.codehaus.stax2;version="[4.2,5)";re
+ solution:=optional,org.fusesource.jansi;version="[2.3,3)";resolution:
+ =optional,org.jctools.queues;resolution:=optional,org.osgi.framework;
+ version="[1.6,2)",org.osgi.framework.wiring;version="[1.0,2)",org.w3c
+ .dom,org.xml.sax,org.zeromq;version="[0.4,1)";resolution:=optional,su
+ n.reflect;resolution:=optional
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.core;uses:="org.apache.loggin
+ g.log4j,org.apache.logging.log4j.core.config,org.apache.logging.log4j
+ .core.impl,org.apache.logging.log4j.core.layout,org.apache.logging.lo
+ g4j.core.time,org.apache.logging.log4j.message,org.apache.logging.log
+ 4j.spi,org.apache.logging.log4j.status,org.apache.logging.log4j.util"
+ ;version="2.17.0",org.apache.logging.log4j.core.appender;uses:="org.a
+ pache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging.
+ log4j.core.appender.rolling,org.apache.logging.log4j.core.async,org.a
+ pache.logging.log4j.core.config,org.apache.logging.log4j.core.config.
+ plugins,org.apache.logging.log4j.core.config.plugins.validation.const
+ raints,org.apache.logging.log4j.core.filter,org.apache.logging.log4j.
+ core.impl,org.apache.logging.log4j.core.layout,org.apache.logging.log
+ 4j.core.net,org.apache.logging.log4j.core.net.ssl,org.apache.logging.
+ log4j.core.script,org.apache.logging.log4j.core.util,org.apache.loggi
+ ng.log4j.status";version="2.17.0",org.apache.logging.log4j.core.appen
+ der.db;uses:="org.apache.logging.log4j.core,org.apache.logging.log4j.
+ core.appender,org.apache.logging.log4j.core.config,org.apache.logging
+ .log4j.core.config.plugins,org.apache.logging.log4j.core.util";versio
+ n="2.17.0",org.apache.logging.log4j.core.appender.db.jdbc;uses:="org.
+ apache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging
+ .log4j.core.appender.db,org.apache.logging.log4j.core.config,org.apac
+ he.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.co
+ nfig.plugins.validation.constraints,org.apache.logging.log4j.core.lay
+ out,org.apache.logging.log4j.core.util";version="2.17.0",org.apache.l
+ ogging.log4j.core.appender.mom;uses:="javax.jms,org.apache.logging.lo
+ g4j.core,org.apache.logging.log4j.core.appender,org.apache.logging.lo
+ g4j.core.config,org.apache.logging.log4j.core.config.plugins,org.apac
+ he.logging.log4j.core.net,org.apache.logging.log4j.core.util";version
+ ="2.17.0",org.apache.logging.log4j.core.appender.mom.jeromq;uses:="or
+ g.apache.logging.log4j.core,org.apache.logging.log4j.core.appender,or
+ g.apache.logging.log4j.core.config,org.apache.logging.log4j.core.conf
+ ig.plugins,org.apache.logging.log4j.core.config.plugins.validation.co
+ nstraints,org.zeromq";version="2.17.0",org.apache.logging.log4j.core.
+ appender.mom.kafka;uses:="org.apache.kafka.clients.producer,org.apach
+ e.logging.log4j.core,org.apache.logging.log4j.core.appender,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.plug
+ ins,org.apache.logging.log4j.core.util";version="2.17.0",org.apache.l
+ ogging.log4j.core.appender.nosql;uses:="org.apache.logging.log4j.core
+ ,org.apache.logging.log4j.core.appender,org.apache.logging.log4j.core
+ .appender.db,org.apache.logging.log4j.core.config.plugins,org.apache.
+ logging.log4j.core.util";version="2.17.0",org.apache.logging.log4j.co
+ re.appender.rewrite;uses:="org.apache.logging.log4j,org.apache.loggin
+ g.log4j.core,org.apache.logging.log4j.core.appender,org.apache.loggin
+ g.log4j.core.config,org.apache.logging.log4j.core.config.plugins,org.
+ apache.logging.log4j.core.util";version="2.17.0",org.apache.logging.l
+ og4j.core.appender.rolling;uses:="org.apache.logging.log4j,org.apache
+ .logging.log4j.core,org.apache.logging.log4j.core.appender,org.apache
+ .logging.log4j.core.appender.rolling.action,org.apache.logging.log4j.
+ core.config,org.apache.logging.log4j.core.config.plugins,org.apache.l
+ ogging.log4j.core.lookup,org.apache.logging.log4j.core.util";version=
+ "2.17.0",org.apache.logging.log4j.core.appender.rolling.action;uses:=
+ "org.apache.logging.log4j,org.apache.logging.log4j.core.config,org.ap
+ ache.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.
+ lookup,org.apache.logging.log4j.core.script,org.apache.logging.log4j.
+ core.util";version="2.17.0",org.apache.logging.log4j.core.appender.ro
+ uting;uses:="org.apache.logging.log4j.core,org.apache.logging.log4j.c
+ ore.appender,org.apache.logging.log4j.core.appender.rewrite,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.plug
+ ins,org.apache.logging.log4j.core.script,org.apache.logging.log4j.cor
+ e.util";version="2.17.0",org.apache.logging.log4j.core.async;uses:="c
+ om.conversantmedia.util.concurrent,com.lmax.disruptor,org.apache.logg
+ ing.log4j,org.apache.logging.log4j.core,org.apache.logging.log4j.core
+ .appender,org.apache.logging.log4j.core.config,org.apache.logging.log
+ 4j.core.config.plugins,org.apache.logging.log4j.core.config.plugins.v
+ alidation.constraints,org.apache.logging.log4j.core.impl,org.apache.l
+ ogging.log4j.core.jmx,org.apache.logging.log4j.core.selector,org.apac
+ he.logging.log4j.core.time,org.apache.logging.log4j.core.util,org.apa
+ che.logging.log4j.message,org.apache.logging.log4j.util";version="2.1
+ 7.0",org.apache.logging.log4j.core.config;uses:="org.apache.logging.l
+ og4j,org.apache.logging.log4j.core,org.apache.logging.log4j.core.asyn
+ c,org.apache.logging.log4j.core.config.builder.api,org.apache.logging
+ .log4j.core.config.plugins,org.apache.logging.log4j.core.config.plugi
+ ns.util,org.apache.logging.log4j.core.config.plugins.validation.const
+ raints,org.apache.logging.log4j.core.filter,org.apache.logging.log4j.
+ core.impl,org.apache.logging.log4j.core.lookup,org.apache.logging.log
+ 4j.core.net,org.apache.logging.log4j.core.script,org.apache.logging.l
+ og4j.core.util,org.apache.logging.log4j.message,org.apache.logging.lo
+ g4j.util";version="2.17.0",org.apache.logging.log4j.core.config.arbit
+ ers;uses:="org.apache.logging.log4j.core.config,org.apache.logging.lo
+ g4j.core.config.plugins,org.apache.logging.log4j.core.util";version="
+ 2.17.0",org.apache.logging.log4j.core.config.builder.api;uses:="org.a
+ pache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging.
+ log4j.core.config,org.apache.logging.log4j.core.config.builder.impl,o
+ rg.apache.logging.log4j.core.util";version="2.17.0",org.apache.loggin
+ g.log4j.core.config.builder.impl;uses:="javax.xml.transform,org.apach
+ e.logging.log4j,org.apache.logging.log4j.core,org.apache.logging.log4
+ j.core.config,org.apache.logging.log4j.core.config.builder.api,org.ap
+ ache.logging.log4j.core.config.plugins.util,org.apache.logging.log4j.
+ core.config.status";version="2.17.0",org.apache.logging.log4j.core.co
+ nfig.composite;uses:="org.apache.logging.log4j.core.config,org.apache
+ .logging.log4j.core.config.plugins.util";version="2.17.0",org.apache.
+ logging.log4j.core.config.json;uses:="com.fasterxml.jackson.databind,
+ org.apache.logging.log4j.core,org.apache.logging.log4j.core.config,or
+ g.apache.logging.log4j.core.config.plugins";version="2.17.0",org.apac
+ he.logging.log4j.core.config.plugins;uses:="org.apache.logging.log4j.
+ core.config.plugins.visitors";version="2.17.0",org.apache.logging.log
+ 4j.core.config.plugins.convert;uses:="org.apache.logging.log4j,org.ap
+ ache.logging.log4j.core.appender.rolling.action,org.apache.logging.lo
+ g4j.core.config.plugins,org.apache.logging.log4j.core.util";version="
+ 2.17.0",org.apache.logging.log4j.core.config.plugins.processor;uses:=
+ "javax.annotation.processing,javax.lang.model,javax.lang.model.elemen
+ t";version="2.17.0",org.apache.logging.log4j.core.config.plugins.util
+ ;uses:="org.apache.logging.log4j.core,org.apache.logging.log4j.core.c
+ onfig,org.apache.logging.log4j.core.config.plugins.processor,org.apac
+ he.logging.log4j.core.util";version="2.17.0",org.apache.logging.log4j
+ .core.config.plugins.validation;version="2.17.0",org.apache.logging.l
+ og4j.core.config.plugins.validation.constraints;uses:="org.apache.log
+ ging.log4j.core.config.plugins.validation,org.apache.logging.log4j.co
+ re.config.plugins.validation.validators";version="2.17.0",org.apache.
+ logging.log4j.core.config.plugins.validation.validators;uses:="org.ap
+ ache.logging.log4j.core.config.plugins.validation,org.apache.logging.
+ log4j.core.config.plugins.validation.constraints";version="2.17.0",or
+ g.apache.logging.log4j.core.config.plugins.visitors;uses:="org.apache
+ .logging.log4j,org.apache.logging.log4j.core,org.apache.logging.log4j
+ .core.config,org.apache.logging.log4j.core.config.plugins,org.apache.
+ logging.log4j.core.lookup";version="2.17.0",org.apache.logging.log4j.
+ core.config.properties;uses:="org.apache.logging.log4j.core,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.buil
+ der.api,org.apache.logging.log4j.core.config.builder.impl,org.apache.
+ logging.log4j.core.config.plugins,org.apache.logging.log4j.core.util"
+ ;version="2.17.0",org.apache.logging.log4j.core.config.status;uses:="
+ org.apache.logging.log4j";version="2.17.0",org.apache.logging.log4j.c
+ ore.config.xml;uses:="org.apache.logging.log4j.core,org.apache.loggin
+ g.log4j.core.config,org.apache.logging.log4j.core.config.plugins";ver
+ sion="2.17.0",org.apache.logging.log4j.core.config.yaml;uses:="com.fa
+ sterxml.jackson.databind,org.apache.logging.log4j.core,org.apache.log
+ ging.log4j.core.config,org.apache.logging.log4j.core.config.json,org.
+ apache.logging.log4j.core.config.plugins";version="2.17.0",org.apache
+ .logging.log4j.core.filter;uses:="org.apache.logging.log4j,org.apache
+ .logging.log4j.core,org.apache.logging.log4j.core.config,org.apache.l
+ ogging.log4j.core.config.plugins,org.apache.logging.log4j.core.script
+ ,org.apache.logging.log4j.core.util,org.apache.logging.log4j.message,
+ org.apache.logging.log4j.util";version="2.17.0",org.apache.logging.lo
+ g4j.core.impl;uses:="org.apache.logging.log4j,org.apache.logging.log4
+ j.core,org.apache.logging.log4j.core.config,org.apache.logging.log4j.
+ core.pattern,org.apache.logging.log4j.core.selector,org.apache.loggin
+ g.log4j.core.time,org.apache.logging.log4j.core.util,org.apache.loggi
+ ng.log4j.message,org.apache.logging.log4j.spi,org.apache.logging.log4
+ j.util";version="2.17.0",org.apache.logging.log4j.core.jackson;uses:=
+ "com.fasterxml.jackson.core,com.fasterxml.jackson.databind,com.faster
+ xml.jackson.databind.deser.std,com.fasterxml.jackson.databind.ser.std
+ ,com.fasterxml.jackson.dataformat.xml,com.fasterxml.jackson.dataforma
+ t.yaml,org.apache.logging.log4j.message,org.apache.logging.log4j.util
+ ";version="2.17.0",org.apache.logging.log4j.core.jmx;uses:="com.lmax.
+ disruptor,javax.management,org.apache.logging.log4j,org.apache.loggin
+ g.log4j.core,org.apache.logging.log4j.core.appender,org.apache.loggin
+ g.log4j.core.config,org.apache.logging.log4j.core.selector,org.apache
+ .logging.log4j.status";version="2.17.0",org.apache.logging.log4j.core
+ .layout;uses:="com.fasterxml.jackson.annotation,com.fasterxml.jackson
+ .core,com.fasterxml.jackson.databind,com.fasterxml.jackson.dataformat
+ .xml.annotation,org.apache.commons.csv,org.apache.logging.log4j,org.a
+ pache.logging.log4j.core,org.apache.logging.log4j.core.config,org.apa
+ che.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.i
+ mpl,org.apache.logging.log4j.core.net,org.apache.logging.log4j.core.p
+ attern,org.apache.logging.log4j.core.script,org.apache.logging.log4j.
+ core.util,org.apache.logging.log4j.message";version="2.17.0",org.apac
+ he.logging.log4j.core.layout.internal;version="2.17.0",org.apache.log
+ ging.log4j.core.lookup;uses:="org.apache.logging.log4j.core,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.plug
+ ins";version="2.17.0",org.apache.logging.log4j.core.message;uses:="or
+ g.apache.logging.log4j.message";version="2.17.0",org.apache.logging.l
+ og4j.core.net;uses:="javax.mail,javax.mail.internet,javax.naming,org.
+ apache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging
+ .log4j.core.appender,org.apache.logging.log4j.core.config,org.apache.
+ logging.log4j.core.config.plugins,org.apache.logging.log4j.core.net.s
+ sl,org.apache.logging.log4j.core.util";version="2.17.0",org.apache.lo
+ gging.log4j.core.net.ssl;uses:="javax.net.ssl,org.apache.logging.log4
+ j.core.config.plugins,org.apache.logging.log4j.status";version="2.17.
+ 0",org.apache.logging.log4j.core.osgi;uses:="org.apache.logging.log4j
+ .core,org.apache.logging.log4j.core.selector,org.osgi.framework";vers
+ ion="2.17.0",org.apache.logging.log4j.core.parser;uses:="org.apache.l
+ ogging.log4j.core";version="2.17.0",org.apache.logging.log4j.core.pat
+ tern;uses:="org.apache.logging.log4j,org.apache.logging.log4j.core,or
+ g.apache.logging.log4j.core.config,org.apache.logging.log4j.core.conf
+ ig.plugins,org.apache.logging.log4j.core.impl,org.apache.logging.log4
+ j.core.time,org.apache.logging.log4j.message,org.fusesource.jansi";ve
+ rsion="2.17.0",org.apache.logging.log4j.core.script;uses:="javax.scri
+ pt,org.apache.logging.log4j,org.apache.logging.log4j.core.config,org.
+ apache.logging.log4j.core.config.plugins,org.apache.logging.log4j.cor
+ e.util";version="2.17.0",org.apache.logging.log4j.core.selector;uses:
+ ="org.apache.logging.log4j.core,org.apache.logging.log4j.spi,org.apac
+ he.logging.log4j.status";version="2.17.0",org.apache.logging.log4j.co
+ re.time;uses:="org.apache.logging.log4j.core.util,org.apache.logging.
+ log4j.util";version="2.17.0",org.apache.logging.log4j.core.time.inter
+ nal;uses:="org.apache.logging.log4j.core.time";version="2.17.0",org.a
+ pache.logging.log4j.core.tools;version="2.17.0",org.apache.logging.lo
+ g4j.core.tools.picocli;version="2.17.0",org.apache.logging.log4j.core
+ .util;uses:="javax.crypto,javax.naming,org.apache.logging.log4j,org.a
+ pache.logging.log4j.core,org.apache.logging.log4j.core.config,org.apa
+ che.logging.log4j.core.config.plugins,org.apache.logging.log4j.util";
+ version="2.17.0",org.apache.logging.log4j.core.util.datetime;uses:="o
+ rg.apache.logging.log4j.core.time";version="2.17.0"
+Bundle-Name: Apache Log4j Core
+Log4jReleaseVersionJava6: 2.3
+Multi-Release: true
+Bundle-Activator: org.apache.logging.log4j.core.osgi.Activator
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Core
+Bundle-Description: The Apache Log4j Implementation
+Automatic-Module-Name: org.apache.logging.log4j.core
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Specification-Version: 2.17.0
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-core/
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-core-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-core-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-core-2.17.0-tests.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.core
+Built-By: rgoers
+Bnd-LastModified: 1639792304782
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Core
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.conversantmedia.util.concurrent;resolution:=option
+ al,com.fasterxml.jackson.annotation;version="[2.12,3)";resolution:=op
+ tional,com.fasterxml.jackson.core;version="[2.12,3)";resolution:=opti
+ onal,com.fasterxml.jackson.core.type;version="[2.12,3)";resolution:=o
+ ptional,com.fasterxml.jackson.core.util;version="[2.12,3)";resolution
+ :=optional,com.fasterxml.jackson.databind;version="[2.12,3)";resoluti
+ on:=optional,com.fasterxml.jackson.databind.annotation;version="[2.12
+ ,3)";resolution:=optional,com.fasterxml.jackson.databind.deser.std;ve
+ rsion="[2.12,3)";resolution:=optional,com.fasterxml.jackson.databind.
+ module;version="[2.12,3)";resolution:=optional,com.fasterxml.jackson.
+ databind.node;version="[2.12,3)";resolution:=optional,com.fasterxml.j
+ ackson.databind.ser;version="[2.12,3)";resolution:=optional,com.faste
+ rxml.jackson.databind.ser.impl;version="[2.12,3)";resolution:=optiona
+ l,com.fasterxml.jackson.databind.ser.std;version="[2.12,3)";resolutio
+ n:=optional,com.fasterxml.jackson.dataformat.xml;version="[2.12,3)";r
+ esolution:=optional,com.fasterxml.jackson.dataformat.xml.annotation;v
+ ersion="[2.12,3)";resolution:=optional,com.fasterxml.jackson.dataform
+ at.xml.util;version="[2.12,3)";resolution:=optional,com.fasterxml.jac
+ kson.dataformat.yaml;version="[2.12,3)";resolution:=optional,com.lmax
+ .disruptor;version="[3.4,4)";resolution:=optional,com.lmax.disruptor.
+ dsl;version="[3.4,4)";resolution:=optional,javax.activation;version="
+ [1.2,2)";resolution:=optional,javax.annotation.processing,javax.crypt
+ o,javax.jms;version="[1.1,2)";resolution:=optional,javax.lang.model,j
+ avax.lang.model.element,javax.lang.model.util,javax.mail;version="[1.
+ 6,2)";resolution:=optional,javax.mail.internet;version="[1.6,2)";reso
+ lution:=optional,javax.mail.util;version="[1.6,2)";resolution:=option
+ al,javax.management,javax.naming,javax.net,javax.net.ssl,javax.script
+ ,javax.sql,javax.tools,javax.xml.parsers,javax.xml.stream,javax.xml.t
+ ransform,javax.xml.transform.stream,javax.xml.validation,org.apache.c
+ ommons.compress.compressors;version="[1.21,2)";resolution:=optional,o
+ rg.apache.commons.compress.utils;version="[1.21,2)";resolution:=optio
+ nal,org.apache.commons.csv;version="[1.9,2)";resolution:=optional,org
+ .apache.kafka.clients.producer;resolution:=optional,org.apache.loggin
+ g.log4j;version="[2.17,3)",org.apache.logging.log4j.core,org.apache.l
+ ogging.log4j.core.appender,org.apache.logging.log4j.core.appender.db,
+ org.apache.logging.log4j.core.appender.rewrite,org.apache.logging.log
+ 4j.core.appender.rolling,org.apache.logging.log4j.core.appender.rolli
+ ng.action,org.apache.logging.log4j.core.async,org.apache.logging.log4
+ j.core.config,org.apache.logging.log4j.core.config.arbiters,org.apach
+ e.logging.log4j.core.config.builder.api,org.apache.logging.log4j.core
+ .config.builder.impl,org.apache.logging.log4j.core.config.composite,o
+ rg.apache.logging.log4j.core.config.json,org.apache.logging.log4j.cor
+ e.config.plugins,org.apache.logging.log4j.core.config.plugins.convert
+ ,org.apache.logging.log4j.core.config.plugins.processor,org.apache.lo
+ gging.log4j.core.config.plugins.util,org.apache.logging.log4j.core.co
+ nfig.plugins.validation,org.apache.logging.log4j.core.config.plugins.
+ validation.constraints,org.apache.logging.log4j.core.config.plugins.v
+ alidation.validators,org.apache.logging.log4j.core.config.plugins.vis
+ itors,org.apache.logging.log4j.core.config.status,org.apache.logging.
+ log4j.core.filter,org.apache.logging.log4j.core.impl,org.apache.loggi
+ ng.log4j.core.jackson,org.apache.logging.log4j.core.jmx,org.apache.lo
+ gging.log4j.core.layout,org.apache.logging.log4j.core.layout.internal
+ ,org.apache.logging.log4j.core.lookup,org.apache.logging.log4j.core.n
+ et,org.apache.logging.log4j.core.net.ssl,org.apache.logging.log4j.cor
+ e.pattern,org.apache.logging.log4j.core.script,org.apache.logging.log
+ 4j.core.selector,org.apache.logging.log4j.core.time,org.apache.loggin
+ g.log4j.core.tools.picocli,org.apache.logging.log4j.core.util,org.apa
+ che.logging.log4j.core.util.datetime,org.apache.logging.log4j.message
+ ;version="[2.17,3)",org.apache.logging.log4j.spi;version="[2.17,3)",o
+ rg.apache.logging.log4j.status;version="[2.17,3)",org.apache.logging.
+ log4j.util;version="[2.17,3)",org.codehaus.stax2;version="[4.2,5)";re
+ solution:=optional,org.fusesource.jansi;version="[2.3,3)";resolution:
+ =optional,org.jctools.queues;resolution:=optional,org.osgi.framework;
+ version="[1.6,2)",org.osgi.framework.wiring;version="[1.0,2)",org.w3c
+ .dom,org.xml.sax,org.zeromq;version="[0.4,1)";resolution:=optional,su
+ n.reflect;resolution:=optional
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.core;uses:="org.apache.loggin
+ g.log4j,org.apache.logging.log4j.core.config,org.apache.logging.log4j
+ .core.impl,org.apache.logging.log4j.core.layout,org.apache.logging.lo
+ g4j.core.time,org.apache.logging.log4j.message,org.apache.logging.log
+ 4j.spi,org.apache.logging.log4j.status,org.apache.logging.log4j.util"
+ ;version="2.17.0",org.apache.logging.log4j.core.appender;uses:="org.a
+ pache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging.
+ log4j.core.appender.rolling,org.apache.logging.log4j.core.async,org.a
+ pache.logging.log4j.core.config,org.apache.logging.log4j.core.config.
+ plugins,org.apache.logging.log4j.core.config.plugins.validation.const
+ raints,org.apache.logging.log4j.core.filter,org.apache.logging.log4j.
+ core.impl,org.apache.logging.log4j.core.layout,org.apache.logging.log
+ 4j.core.net,org.apache.logging.log4j.core.net.ssl,org.apache.logging.
+ log4j.core.script,org.apache.logging.log4j.core.util,org.apache.loggi
+ ng.log4j.status";version="2.17.0",org.apache.logging.log4j.core.appen
+ der.db;uses:="org.apache.logging.log4j.core,org.apache.logging.log4j.
+ core.appender,org.apache.logging.log4j.core.config,org.apache.logging
+ .log4j.core.config.plugins,org.apache.logging.log4j.core.util";versio
+ n="2.17.0",org.apache.logging.log4j.core.appender.db.jdbc;uses:="org.
+ apache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging
+ .log4j.core.appender.db,org.apache.logging.log4j.core.config,org.apac
+ he.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.co
+ nfig.plugins.validation.constraints,org.apache.logging.log4j.core.lay
+ out,org.apache.logging.log4j.core.util";version="2.17.0",org.apache.l
+ ogging.log4j.core.appender.mom;uses:="javax.jms,org.apache.logging.lo
+ g4j.core,org.apache.logging.log4j.core.appender,org.apache.logging.lo
+ g4j.core.config,org.apache.logging.log4j.core.config.plugins,org.apac
+ he.logging.log4j.core.net,org.apache.logging.log4j.core.util";version
+ ="2.17.0",org.apache.logging.log4j.core.appender.mom.jeromq;uses:="or
+ g.apache.logging.log4j.core,org.apache.logging.log4j.core.appender,or
+ g.apache.logging.log4j.core.config,org.apache.logging.log4j.core.conf
+ ig.plugins,org.apache.logging.log4j.core.config.plugins.validation.co
+ nstraints,org.zeromq";version="2.17.0",org.apache.logging.log4j.core.
+ appender.mom.kafka;uses:="org.apache.kafka.clients.producer,org.apach
+ e.logging.log4j.core,org.apache.logging.log4j.core.appender,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.plug
+ ins,org.apache.logging.log4j.core.util";version="2.17.0",org.apache.l
+ ogging.log4j.core.appender.nosql;uses:="org.apache.logging.log4j.core
+ ,org.apache.logging.log4j.core.appender,org.apache.logging.log4j.core
+ .appender.db,org.apache.logging.log4j.core.config.plugins,org.apache.
+ logging.log4j.core.util";version="2.17.0",org.apache.logging.log4j.co
+ re.appender.rewrite;uses:="org.apache.logging.log4j,org.apache.loggin
+ g.log4j.core,org.apache.logging.log4j.core.appender,org.apache.loggin
+ g.log4j.core.config,org.apache.logging.log4j.core.config.plugins,org.
+ apache.logging.log4j.core.util";version="2.17.0",org.apache.logging.l
+ og4j.core.appender.rolling;uses:="org.apache.logging.log4j,org.apache
+ .logging.log4j.core,org.apache.logging.log4j.core.appender,org.apache
+ .logging.log4j.core.appender.rolling.action,org.apache.logging.log4j.
+ core.config,org.apache.logging.log4j.core.config.plugins,org.apache.l
+ ogging.log4j.core.lookup,org.apache.logging.log4j.core.util";version=
+ "2.17.0",org.apache.logging.log4j.core.appender.rolling.action;uses:=
+ "org.apache.logging.log4j,org.apache.logging.log4j.core.config,org.ap
+ ache.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.
+ lookup,org.apache.logging.log4j.core.script,org.apache.logging.log4j.
+ core.util";version="2.17.0",org.apache.logging.log4j.core.appender.ro
+ uting;uses:="org.apache.logging.log4j.core,org.apache.logging.log4j.c
+ ore.appender,org.apache.logging.log4j.core.appender.rewrite,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.plug
+ ins,org.apache.logging.log4j.core.script,org.apache.logging.log4j.cor
+ e.util";version="2.17.0",org.apache.logging.log4j.core.async;uses:="c
+ om.conversantmedia.util.concurrent,com.lmax.disruptor,org.apache.logg
+ ing.log4j,org.apache.logging.log4j.core,org.apache.logging.log4j.core
+ .appender,org.apache.logging.log4j.core.config,org.apache.logging.log
+ 4j.core.config.plugins,org.apache.logging.log4j.core.config.plugins.v
+ alidation.constraints,org.apache.logging.log4j.core.impl,org.apache.l
+ ogging.log4j.core.jmx,org.apache.logging.log4j.core.selector,org.apac
+ he.logging.log4j.core.time,org.apache.logging.log4j.core.util,org.apa
+ che.logging.log4j.message,org.apache.logging.log4j.util";version="2.1
+ 7.0",org.apache.logging.log4j.core.config;uses:="org.apache.logging.l
+ og4j,org.apache.logging.log4j.core,org.apache.logging.log4j.core.asyn
+ c,org.apache.logging.log4j.core.config.builder.api,org.apache.logging
+ .log4j.core.config.plugins,org.apache.logging.log4j.core.config.plugi
+ ns.util,org.apache.logging.log4j.core.config.plugins.validation.const
+ raints,org.apache.logging.log4j.core.filter,org.apache.logging.log4j.
+ core.impl,org.apache.logging.log4j.core.lookup,org.apache.logging.log
+ 4j.core.net,org.apache.logging.log4j.core.script,org.apache.logging.l
+ og4j.core.util,org.apache.logging.log4j.message,org.apache.logging.lo
+ g4j.util";version="2.17.0",org.apache.logging.log4j.core.config.arbit
+ ers;uses:="org.apache.logging.log4j.core.config,org.apache.logging.lo
+ g4j.core.config.plugins,org.apache.logging.log4j.core.util";version="
+ 2.17.0",org.apache.logging.log4j.core.config.builder.api;uses:="org.a
+ pache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging.
+ log4j.core.config,org.apache.logging.log4j.core.config.builder.impl,o
+ rg.apache.logging.log4j.core.util";version="2.17.0",org.apache.loggin
+ g.log4j.core.config.builder.impl;uses:="javax.xml.transform,org.apach
+ e.logging.log4j,org.apache.logging.log4j.core,org.apache.logging.log4
+ j.core.config,org.apache.logging.log4j.core.config.builder.api,org.ap
+ ache.logging.log4j.core.config.plugins.util,org.apache.logging.log4j.
+ core.config.status";version="2.17.0",org.apache.logging.log4j.core.co
+ nfig.composite;uses:="org.apache.logging.log4j.core.config,org.apache
+ .logging.log4j.core.config.plugins.util";version="2.17.0",org.apache.
+ logging.log4j.core.config.json;uses:="com.fasterxml.jackson.databind,
+ org.apache.logging.log4j.core,org.apache.logging.log4j.core.config,or
+ g.apache.logging.log4j.core.config.plugins";version="2.17.0",org.apac
+ he.logging.log4j.core.config.plugins;uses:="org.apache.logging.log4j.
+ core.config.plugins.visitors";version="2.17.0",org.apache.logging.log
+ 4j.core.config.plugins.convert;uses:="org.apache.logging.log4j,org.ap
+ ache.logging.log4j.core.appender.rolling.action,org.apache.logging.lo
+ g4j.core.config.plugins,org.apache.logging.log4j.core.util";version="
+ 2.17.0",org.apache.logging.log4j.core.config.plugins.processor;uses:=
+ "javax.annotation.processing,javax.lang.model,javax.lang.model.elemen
+ t";version="2.17.0",org.apache.logging.log4j.core.config.plugins.util
+ ;uses:="org.apache.logging.log4j.core,org.apache.logging.log4j.core.c
+ onfig,org.apache.logging.log4j.core.config.plugins.processor,org.apac
+ he.logging.log4j.core.util";version="2.17.0",org.apache.logging.log4j
+ .core.config.plugins.validation;version="2.17.0",org.apache.logging.l
+ og4j.core.config.plugins.validation.constraints;uses:="org.apache.log
+ ging.log4j.core.config.plugins.validation,org.apache.logging.log4j.co
+ re.config.plugins.validation.validators";version="2.17.0",org.apache.
+ logging.log4j.core.config.plugins.validation.validators;uses:="org.ap
+ ache.logging.log4j.core.config.plugins.validation,org.apache.logging.
+ log4j.core.config.plugins.validation.constraints";version="2.17.0",or
+ g.apache.logging.log4j.core.config.plugins.visitors;uses:="org.apache
+ .logging.log4j,org.apache.logging.log4j.core,org.apache.logging.log4j
+ .core.config,org.apache.logging.log4j.core.config.plugins,org.apache.
+ logging.log4j.core.lookup";version="2.17.0",org.apache.logging.log4j.
+ core.config.properties;uses:="org.apache.logging.log4j.core,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.buil
+ der.api,org.apache.logging.log4j.core.config.builder.impl,org.apache.
+ logging.log4j.core.config.plugins,org.apache.logging.log4j.core.util"
+ ;version="2.17.0",org.apache.logging.log4j.core.config.status;uses:="
+ org.apache.logging.log4j";version="2.17.0",org.apache.logging.log4j.c
+ ore.config.xml;uses:="org.apache.logging.log4j.core,org.apache.loggin
+ g.log4j.core.config,org.apache.logging.log4j.core.config.plugins";ver
+ sion="2.17.0",org.apache.logging.log4j.core.config.yaml;uses:="com.fa
+ sterxml.jackson.databind,org.apache.logging.log4j.core,org.apache.log
+ ging.log4j.core.config,org.apache.logging.log4j.core.config.json,org.
+ apache.logging.log4j.core.config.plugins";version="2.17.0",org.apache
+ .logging.log4j.core.filter;uses:="org.apache.logging.log4j,org.apache
+ .logging.log4j.core,org.apache.logging.log4j.core.config,org.apache.l
+ ogging.log4j.core.config.plugins,org.apache.logging.log4j.core.script
+ ,org.apache.logging.log4j.core.util,org.apache.logging.log4j.message,
+ org.apache.logging.log4j.util";version="2.17.0",org.apache.logging.lo
+ g4j.core.impl;uses:="org.apache.logging.log4j,org.apache.logging.log4
+ j.core,org.apache.logging.log4j.core.config,org.apache.logging.log4j.
+ core.pattern,org.apache.logging.log4j.core.selector,org.apache.loggin
+ g.log4j.core.time,org.apache.logging.log4j.core.util,org.apache.loggi
+ ng.log4j.message,org.apache.logging.log4j.spi,org.apache.logging.log4
+ j.util";version="2.17.0",org.apache.logging.log4j.core.jackson;uses:=
+ "com.fasterxml.jackson.core,com.fasterxml.jackson.databind,com.faster
+ xml.jackson.databind.deser.std,com.fasterxml.jackson.databind.ser.std
+ ,com.fasterxml.jackson.dataformat.xml,com.fasterxml.jackson.dataforma
+ t.yaml,org.apache.logging.log4j.message,org.apache.logging.log4j.util
+ ";version="2.17.0",org.apache.logging.log4j.core.jmx;uses:="com.lmax.
+ disruptor,javax.management,org.apache.logging.log4j,org.apache.loggin
+ g.log4j.core,org.apache.logging.log4j.core.appender,org.apache.loggin
+ g.log4j.core.config,org.apache.logging.log4j.core.selector,org.apache
+ .logging.log4j.status";version="2.17.0",org.apache.logging.log4j.core
+ .layout;uses:="com.fasterxml.jackson.annotation,com.fasterxml.jackson
+ .core,com.fasterxml.jackson.databind,com.fasterxml.jackson.dataformat
+ .xml.annotation,org.apache.commons.csv,org.apache.logging.log4j,org.a
+ pache.logging.log4j.core,org.apache.logging.log4j.core.config,org.apa
+ che.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.i
+ mpl,org.apache.logging.log4j.core.net,org.apache.logging.log4j.core.p
+ attern,org.apache.logging.log4j.core.script,org.apache.logging.log4j.
+ core.util,org.apache.logging.log4j.message";version="2.17.0",org.apac
+ he.logging.log4j.core.layout.internal;version="2.17.0",org.apache.log
+ ging.log4j.core.lookup;uses:="org.apache.logging.log4j.core,org.apach
+ e.logging.log4j.core.config,org.apache.logging.log4j.core.config.plug
+ ins";version="2.17.0",org.apache.logging.log4j.core.message;uses:="or
+ g.apache.logging.log4j.message";version="2.17.0",org.apache.logging.l
+ og4j.core.net;uses:="javax.mail,javax.mail.internet,javax.naming,org.
+ apache.logging.log4j,org.apache.logging.log4j.core,org.apache.logging
+ .log4j.core.appender,org.apache.logging.log4j.core.config,org.apache.
+ logging.log4j.core.config.plugins,org.apache.logging.log4j.core.net.s
+ sl,org.apache.logging.log4j.core.util";version="2.17.0",org.apache.lo
+ gging.log4j.core.net.ssl;uses:="javax.net.ssl,org.apache.logging.log4
+ j.core.config.plugins,org.apache.logging.log4j.status";version="2.17.
+ 0",org.apache.logging.log4j.core.osgi;uses:="org.apache.logging.log4j
+ .core,org.apache.logging.log4j.core.selector,org.osgi.framework";vers
+ ion="2.17.0",org.apache.logging.log4j.core.parser;uses:="org.apache.l
+ ogging.log4j.core";version="2.17.0",org.apache.logging.log4j.core.pat
+ tern;uses:="org.apache.logging.log4j,org.apache.logging.log4j.core,or
+ g.apache.logging.log4j.core.config,org.apache.logging.log4j.core.conf
+ ig.plugins,org.apache.logging.log4j.core.impl,org.apache.logging.log4
+ j.core.time,org.apache.logging.log4j.message,org.fusesource.jansi";ve
+ rsion="2.17.0",org.apache.logging.log4j.core.script;uses:="javax.scri
+ pt,org.apache.logging.log4j,org.apache.logging.log4j.core.config,org.
+ apache.logging.log4j.core.config.plugins,org.apache.logging.log4j.cor
+ e.util";version="2.17.0",org.apache.logging.log4j.core.selector;uses:
+ ="org.apache.logging.log4j.core,org.apache.logging.log4j.spi,org.apac
+ he.logging.log4j.status";version="2.17.0",org.apache.logging.log4j.co
+ re.time;uses:="org.apache.logging.log4j.core.util,org.apache.logging.
+ log4j.util";version="2.17.0",org.apache.logging.log4j.core.time.inter
+ nal;uses:="org.apache.logging.log4j.core.time";version="2.17.0",org.a
+ pache.logging.log4j.core.tools;version="2.17.0",org.apache.logging.lo
+ g4j.core.tools.picocli;version="2.17.0",org.apache.logging.log4j.core
+ .util;uses:="javax.crypto,javax.naming,org.apache.logging.log4j,org.a
+ pache.logging.log4j.core,org.apache.logging.log4j.core.config,org.apa
+ che.logging.log4j.core.config.plugins,org.apache.logging.log4j.util";
+ version="2.17.0",org.apache.logging.log4j.core.util.datetime;uses:="o
+ rg.apache.logging.log4j.core.time";version="2.17.0"
+Bundle-Name: Apache Log4j Core
+Log4jReleaseVersionJava6: 2.3
+Bundle-Activator: org.apache.logging.log4j.core.osgi.Activator
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Core
+Bundle-Description: The Apache Log4j Implementation
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-core/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-iostreams-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.iostreams
+Built-By: rgoers
+Bnd-LastModified: 1639792491856
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Streaming Interface
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.io,org.apache.logging.log4j.io.internal,org.apache.log
+ ging.log4j.spi;version="[2.17,3)",org.apache.logging.log4j.util;versi
+ on="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.io;uses:="org.apache.logging.
+ log4j,org.apache.logging.log4j.spi";version="2.17.0",org.apache.loggi
+ ng.log4j.io.internal;uses:="org.apache.logging.log4j,org.apache.loggi
+ ng.log4j.spi";version="2.17.0"
+Bundle-Name: Apache Log4j Streaming Interface
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Streaming Interface
+Bundle-Description: The Apache Log4j streams to log event converters
+Automatic-Module-Name: org.apache.logging.log4j.iostreams
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-iostrea
+ ms/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-iostreams-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-iostreams-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-jcl-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.jcl
+Built-By: rgoers
+Bnd-LastModified: 1639792373081
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Commons Logging Bridge
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.commons.logging;version="[1.2,2)",org.apach
+ e.logging.log4j;version="[2.17,3)",org.apache.logging.log4j.spi;versi
+ on="[2.17,3)",org.apache.logging.log4j.util;version="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.jcl;uses:="org.apache.commons
+ .logging,org.apache.logging.log4j.spi";version="2.17.0"
+Bundle-Name: Apache Log4j Commons Logging Bridge
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Commons Logging Bridge
+Bundle-Description: The Apache Log4j Commons Logging Adapter
+Automatic-Module-Name: org.apache.logging.log4j.jcl
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-jcl/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-jcl-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-jcl-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-jul-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.jul
+Built-By: rgoers
+Bnd-LastModified: 1639792498346
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j JUL Adapter
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.core;version="[2.17,3)",org.apache.logging.log4j.core.
+ config;version="[2.17,3)",org.apache.logging.log4j.message;version="[
+ 2.17,3)",org.apache.logging.log4j.spi;version="[2.17,3)",org.apache.l
+ ogging.log4j.status;version="[2.17,3)",org.apache.logging.log4j.util;
+ version="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.jul;uses:="org.apache.logging
+ .log4j,org.apache.logging.log4j.spi";version="2.17.0"
+Bundle-Name: Apache Log4j JUL Adapter
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j JUL Adapter
+Bundle-Description: The Apache Log4j implementation of java.util.loggi
+ ng
+Automatic-Module-Name: org.apache.logging.log4j.jul
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-jul/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-jul-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-jul-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-flume-ng-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.flume
+Built-By: rgoers
+Bnd-LastModified: 1639792379279
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Flume Bridge
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.sleepycat.je,javax.crypto,org.apache.flume,org.apa
+ che.flume.agent.embedded;resolution:=optional,org.apache.flume.api,or
+ g.apache.flume.channel;resolution:=optional,org.apache.flume.event,or
+ g.apache.flume.instrumentation;resolution:=optional,org.apache.flume.
+ source;resolution:=optional,org.apache.logging.log4j;version="[2.17,3
+ )",org.apache.logging.log4j.core;version="[2.17,3)",org.apache.loggin
+ g.log4j.core.appender;version="[2.17,3)",org.apache.logging.log4j.cor
+ e.config;version="[2.17,3)",org.apache.logging.log4j.core.config.plug
+ ins;version="[2.17,3)",org.apache.logging.log4j.core.config.plugins.u
+ til;version="[2.17,3)",org.apache.logging.log4j.core.impl;version="[2
+ .17,3)",org.apache.logging.log4j.core.layout;version="[2.17,3)",org.a
+ pache.logging.log4j.core.net;version="[2.17,3)",org.apache.logging.lo
+ g4j.core.time;version="[2.17,3)",org.apache.logging.log4j.core.util;v
+ ersion="[2.17,3)",org.apache.logging.log4j.message;version="[2.17,3)"
+ ,org.apache.logging.log4j.status;version="[2.17,3)",org.apache.loggin
+ g.log4j.util;version="[2.17,3)",org.slf4j;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.flume.appender;uses:="com.sle
+ epycat.je,javax.crypto,org.apache.flume,org.apache.flume.agent.embedd
+ ed,org.apache.flume.event,org.apache.flume.source,org.apache.logging.
+ log4j,org.apache.logging.log4j.core,org.apache.logging.log4j.core.app
+ ender,org.apache.logging.log4j.core.config,org.apache.logging.log4j.c
+ ore.config.plugins,org.apache.logging.log4j.core.impl,org.apache.logg
+ ing.log4j.core.time,org.apache.logging.log4j.message,org.apache.loggi
+ ng.log4j.util";version="2.17.0"
+Bundle-Name: Apache Log4j Flume Bridge
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Flume Bridge
+Bundle-Description: The Apache Log4j Flume Appender
+Automatic-Module-Name: org.apache.logging.log4j.flume
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-flume-n
+ g/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-flume-ng-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-flume-ng-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-1.2-api-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.1.2-api
+Built-By: rgoers
+Bnd-LastModified: 1639792334345
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j 1.x Compatibility API
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: javax.jms;version="[1.1,2)";resolution:=optional,javax
+ .xml.parsers,javax.xml.transform,javax.xml.transform.stream,org.apach
+ e.log4j,org.apache.log4j.bridge,org.apache.log4j.builders,org.apache.
+ log4j.builders.appender,org.apache.log4j.builders.filter,org.apache.l
+ og4j.builders.layout,org.apache.log4j.builders.rewrite,org.apache.log
+ 4j.config,org.apache.log4j.helpers,org.apache.log4j.legacy.core,org.a
+ pache.log4j.or,org.apache.log4j.rewrite,org.apache.log4j.spi,org.apac
+ he.log4j.xml,org.apache.logging.log4j;version="[2.17,3)",org.apache.l
+ ogging.log4j.core;version="[2.17,3)",org.apache.logging.log4j.core.ap
+ pender;version="[2.17,3)",org.apache.logging.log4j.core.appender.rewr
+ ite;version="[2.17,3)",org.apache.logging.log4j.core.appender.rolling
+ ;version="[2.17,3)",org.apache.logging.log4j.core.config;version="[2.
+ 17,3)",org.apache.logging.log4j.core.config.builder.api;version="[2.1
+ 7,3)";resolution:=optional,org.apache.logging.log4j.core.config.build
+ er.impl;version="[2.17,3)";resolution:=optional,org.apache.logging.lo
+ g4j.core.config.plugins;version="[2.17,3)";resolution:=optional,org.a
+ pache.logging.log4j.core.config.plugins.util;version="[2.17,3)",org.a
+ pache.logging.log4j.core.config.status;version="[2.17,3)";resolution:
+ =optional,org.apache.logging.log4j.core.filter;version="[2.17,3)",org
+ .apache.logging.log4j.core.impl;version="[2.17,3)",org.apache.logging
+ .log4j.core.layout;version="[2.17,3)",org.apache.logging.log4j.core.l
+ ookup;version="[2.17,3)",org.apache.logging.log4j.core.net;version="[
+ 2.17,3)",org.apache.logging.log4j.core.pattern;version="[2.17,3)",org
+ .apache.logging.log4j.core.time;version="[2.17,3)",org.apache.logging
+ .log4j.core.tools;version="[2.17,3)",org.apache.logging.log4j.core.to
+ ols.picocli;version="[2.17,3)";resolution:=optional,org.apache.loggin
+ g.log4j.core.util;version="[2.17,3)",org.apache.logging.log4j.message
+ ;version="[2.17,3)",org.apache.logging.log4j.spi;version="[2.17,3)",o
+ rg.apache.logging.log4j.status;version="[2.17,3)",org.apache.logging.
+ log4j.util;version="[2.17,3)",org.w3c.dom,org.xml.sax
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.log4j;uses:="org.apache.log4j.helpers,org.a
+ pache.log4j.or,org.apache.log4j.spi,org.apache.logging.log4j.message,
+ org.apache.logging.log4j.spi";version="2.17.0",org.apache.log4j.bridg
+ e;uses:="org.apache.log4j,org.apache.log4j.helpers,org.apache.log4j.r
+ ewrite,org.apache.log4j.spi,org.apache.logging.log4j,org.apache.loggi
+ ng.log4j.core,org.apache.logging.log4j.core.appender,org.apache.loggi
+ ng.log4j.core.appender.rewrite,org.apache.logging.log4j.core.config,o
+ rg.apache.logging.log4j.core.filter,org.apache.logging.log4j.core.imp
+ l,org.apache.logging.log4j.core.layout,org.apache.logging.log4j.core.
+ time,org.apache.logging.log4j.message,org.apache.logging.log4j.util";
+ version="2.17.0",org.apache.log4j.builders;uses:="org.apache.log4j,or
+ g.apache.log4j.config,org.apache.log4j.rewrite,org.apache.log4j.spi,o
+ rg.apache.log4j.xml,org.apache.logging.log4j.core,org.w3c.dom";versio
+ n="2.17.0",org.apache.log4j.builders.appender;uses:="org.apache.log4j
+ ,org.apache.log4j.builders,org.apache.log4j.config,org.apache.log4j.x
+ ml,org.apache.logging.log4j.core.config.plugins,org.w3c.dom";version=
+ "2.17.0",org.apache.log4j.builders.filter;uses:="org.apache.log4j.bui
+ lders,org.apache.log4j.config,org.apache.log4j.spi,org.apache.log4j.x
+ ml,org.apache.logging.log4j.core.config.plugins,org.w3c.dom";version=
+ "2.17.0",org.apache.log4j.builders.layout;uses:="org.apache.log4j,org
+ .apache.log4j.builders,org.apache.log4j.config,org.apache.log4j.xml,o
+ rg.apache.logging.log4j.core.config.plugins,org.w3c.dom";version="2.1
+ 7.0",org.apache.log4j.builders.rewrite;uses:="org.apache.log4j.config
+ ,org.apache.log4j.rewrite,org.apache.log4j.xml,org.w3c.dom";version="
+ 2.17.0",org.apache.log4j.config;uses:="org.apache.log4j,org.apache.lo
+ g4j.builders,org.apache.log4j.spi,org.apache.logging.log4j.core,org.a
+ pache.logging.log4j.core.config,org.apache.logging.log4j.core.config.
+ builder.api,org.apache.logging.log4j.core.config.builder.impl,org.apa
+ che.logging.log4j.core.config.plugins,org.apache.logging.log4j.core.t
+ ools,org.apache.logging.log4j.core.tools.picocli";version="2.17.0",or
+ g.apache.log4j.helpers;uses:="org.apache.log4j,org.apache.log4j.spi,o
+ rg.apache.logging.log4j";version="2.17.0",org.apache.log4j.layout;use
+ s:="org.apache.logging.log4j.core,org.apache.logging.log4j.core.confi
+ g.plugins,org.apache.logging.log4j.core.layout";version="2.17.0",org.
+ apache.log4j.legacy.core;uses:="org.apache.logging.log4j,org.apache.l
+ ogging.log4j.spi";version="2.17.0",org.apache.log4j.or;version="2.17.
+ 0",org.apache.log4j.or.jms;uses:="org.apache.log4j.or";version="2.17.
+ 0",org.apache.log4j.pattern;uses:="org.apache.logging.log4j.core,org.
+ apache.logging.log4j.core.config.plugins,org.apache.logging.log4j.cor
+ e.pattern";version="2.17.0",org.apache.log4j.rewrite;uses:="org.apach
+ e.log4j.spi";version="2.17.0",org.apache.log4j.spi;uses:="org.apache.
+ log4j,org.apache.logging.log4j.core";version="2.17.0",org.apache.log4
+ j.xml;uses:="javax.xml.parsers,org.apache.log4j,org.apache.log4j.conf
+ ig,org.apache.log4j.rewrite,org.apache.log4j.spi,org.apache.logging.l
+ og4j.core,org.apache.logging.log4j.core.config,org.apache.logging.log
+ 4j.core.config.plugins,org.w3c.dom,org.xml.sax";version="2.17.0"
+Bundle-Name: Apache Log4j 1.x Compatibility API
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j 1.x Compatibility API
+Bundle-Description: The Apache Log4j 1.x Compatibility API
+Automatic-Module-Name: org.apache.log4j
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-1.2-api
+ /
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-1.2-api-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-1.2-api-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-slf4j-impl-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.slf4j-impl
+Built-By: rgoers
+Bnd-LastModified: 1639792362682
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j SLF4J Binding
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.message;version="[2.17,3)",org.apache.logging.log4j.sp
+ i;version="[2.17,3)",org.apache.logging.log4j.status;version="[2.17,3
+ )",org.apache.logging.log4j.util;version="[2.17,3)",org.apache.loggin
+ g.slf4j,org.slf4j;version="[1.7,2)",org.slf4j.ext;version="[1.7,2)";r
+ esolution:=optional,org.slf4j.impl,org.slf4j.spi;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.slf4j;uses:="org.apache.logging.log
+ 4j,org.apache.logging.log4j.message,org.apache.logging.log4j.spi,org.
+ slf4j,org.slf4j.spi";version="2.17.0",org.slf4j.impl;uses:="org.slf4j
+ ,org.slf4j.spi";version="2.17.0"
+Bundle-Name: Apache Log4j SLF4J Binding
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j SLF4J Binding
+Bundle-Description: The Apache Log4j SLF4J API binding to Log4j 2 Core
+Automatic-Module-Name: org.apache.logging.log4j.slf4j
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Specification-Version: 2.17.0
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-slf4j-i
+ mpl/
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-slf4j-impl-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-slf4j-impl-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-slf4j18-impl-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.slf4j18-impl
+Built-By: rgoers
+Bnd-LastModified: 1639792368300
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j SLF4J 1.8+ Binding
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.message;version="[2.17,3)",org.apache.logging.log4j.sp
+ i;version="[2.17,3)",org.apache.logging.log4j.status;version="[2.17,3
+ )",org.apache.logging.log4j.util;version="[2.17,3)",org.slf4j;version
+ ="[1.8,2)",org.slf4j.spi;version="[1.8,2)"
+Require-Capability: osgi.extender;filter:="(osgi.extender=osgi.service
+ loader.registrar)",osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Provide-Capability: osgi.serviceloader;osgi.serviceloader="org.slf4j.s
+ pi.SLF4JServiceProvider"
+Export-Package: org.apache.logging.slf4j;uses:="org.apache.logging.log
+ 4j.spi,org.slf4j,org.slf4j.spi";version="2.17.0",org.slf4j.impl;versi
+ on="2.17.0"
+Bundle-Name: Apache Log4j SLF4J 1.8+ Binding
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j SLF4J 1.8+ Binding
+Bundle-Description: The Apache Log4j SLF4J 1.8 API binding to Log4j 2 
+ Core
+Automatic-Module-Name: org.apache.logging.log4j.slf4j
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-slf4j18
+ -impl/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-slf4j18-impl-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-slf4j18-impl-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-to-slf4j-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.to-slf4j
+Built-By: rgoers
+Bnd-LastModified: 1639792357132
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j to SLF4J Adapter
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.message;version="[2.17,3)",org.apache.logging.log4j.sp
+ i;version="[2.17,3)",org.apache.logging.log4j.status;version="[2.17,3
+ )",org.apache.logging.log4j.util;version="[2.17,3)",org.slf4j;version
+ ="[1.7,2)",org.slf4j.spi;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.slf4j;uses:="org.apache.logging.log
+ 4j,org.apache.logging.log4j.message,org.apache.logging.log4j.spi,org.
+ apache.logging.log4j.util,org.slf4j";version="2.17.0"
+Bundle-Name: Apache Log4j to SLF4J Adapter
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j to SLF4J Adapter
+Bundle-Description: The Apache Log4j binding between Log4j 2 API and S
+ LF4J.
+Automatic-Module-Name: org.apache.logging.slf4j
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-to-slf4
+ j/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-to-slf4j-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-to-slf4j-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-jmx-gui-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.jmx-gui
+Built-By: rgoers
+Bnd-LastModified: 1639792398186
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j JMX GUI
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.sun.tools.jconsole;resolution:=optional,javax.mana
+ gement,javax.management.remote,javax.swing,org.apache.logging.log4j.c
+ ore.jmx;version="[2.17,3)",org.apache.logging.log4j.core.util;version
+ ="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.jmx.gui;uses:="com.sun.tools.
+ jconsole,javax.management,javax.management.remote,javax.swing,org.apa
+ che.logging.log4j.core.jmx";version="2.17.0"
+Bundle-Name: Apache Log4j JMX GUI
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j JMX GUI
+Bundle-Description: Swing GUI to remotely edit Log4j configurations. T
+ his includes a JConsole plugin and a StatusLogger monitor.
+Automatic-Module-Name: org.apache.logging.log4j.jmx.gui
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-jmx-gui
+ /
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-jmx-gui-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-jmx-gui-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-taglib-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.taglib
+Built-By: rgoers
+Bnd-LastModified: 1639792392710
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Tag Library
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: javax.servlet;version="[3.0,4)",javax.servlet.jsp,java
+ x.servlet.jsp.tagext,org.apache.logging.log4j;version="[2.17,3)",org.
+ apache.logging.log4j.message;version="[2.17,3)",org.apache.logging.lo
+ g4j.spi;version="[2.17,3)",org.apache.logging.log4j.status;version="[
+ 2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.taglib;uses:="javax.servlet.j
+ sp,javax.servlet.jsp.tagext,org.apache.logging.log4j,org.apache.loggi
+ ng.log4j.message";version="2.17.0"
+Bundle-Name: Apache Log4j Tag Library
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Tag Library
+Bundle-Description: The Apache Log4j Tag Library for Web Applications
+Automatic-Module-Name: org.apache.logging.log4j.taglib
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-taglib/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-taglib-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-taglib-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-web-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.web
+Built-By: rgoers
+Bnd-LastModified: 1639792385730
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Web
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: javax.servlet;version="[2.5,4)",javax.servlet.http;ver
+ sion="[3.0,4)",org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.core;version="[2.17,3)",org.apache.logging.log4j.core.
+ appender;version="[2.17,3)",org.apache.logging.log4j.core.async;versi
+ on="[2.17,3)",org.apache.logging.log4j.core.config;version="[2.17,3)"
+ ,org.apache.logging.log4j.core.config.plugins;version="[2.17,3)",org.
+ apache.logging.log4j.core.filter;version="[2.17,3)",org.apache.loggin
+ g.log4j.core.impl;version="[2.17,3)",org.apache.logging.log4j.core.la
+ yout;version="[2.17,3)",org.apache.logging.log4j.core.lookup;version=
+ "[2.17,3)",org.apache.logging.log4j.core.selector;version="[2.17,3)",
+ org.apache.logging.log4j.core.util;version="[2.17,3)",org.apache.logg
+ ing.log4j.spi;version="[2.17,3)",org.apache.logging.log4j.status;vers
+ ion="[2.17,3)",org.apache.logging.log4j.util;version="[2.17,3)",org.a
+ pache.logging.log4j.web
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.web;uses:="javax.servlet,java
+ x.servlet.http,org.apache.logging.log4j.core,org.apache.logging.log4j
+ .core.config.plugins,org.apache.logging.log4j.core.lookup";version="2
+ .17.0"
+Bundle-Name: Apache Log4j Web
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Web
+Bundle-Description: The Apache Log4j support for web servlet container
+ s
+Automatic-Module-Name: org.apache.logging.log4j.web
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-web/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-web-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-web-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-couchdb-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.couchdb
+Built-By: rgoers
+Bnd-LastModified: 1639792433303
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j CouchDB
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.core.appender;version="[2.17,3)",org.apache.logging.lo
+ g4j.core.appender.nosql;version="[2.17,3)",org.apache.logging.log4j.c
+ ore.config.plugins;version="[2.17,3)",org.apache.logging.log4j.core.c
+ onfig.plugins.convert;version="[2.17,3)",org.apache.logging.log4j.cor
+ e.config.plugins.validation.constraints;version="[2.17,3)",org.apache
+ .logging.log4j.status;version="[2.17,3)",org.apache.logging.log4j.uti
+ l;version="[2.17,3)",org.lightcouch
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.couchdb;uses:="org.apache.log
+ ging.log4j.core.appender.nosql,org.apache.logging.log4j.core.config.p
+ lugins,org.apache.logging.log4j.core.config.plugins.validation.constr
+ aints,org.lightcouch";version="2.17.0"
+Bundle-Name: Apache Log4j CouchDB
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j CouchDB
+Bundle-Description: CouchDB appender for Log4j.
+Automatic-Module-Name: org.apache.logging.log4j.couchdb
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-couchdb
+ /
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-couchdb-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-couchdb-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-mongodb4-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.mongodb4
+Built-By: rgoers
+Bnd-LastModified: 1639792442170
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j MongoDB 4
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.mongodb;version="[4.2,5)",com.mongodb.client;versi
+ on="[4.2,5)",com.mongodb.client.model;version="[4.2,5)",com.mongodb.c
+ lient.result;version="[4.2,5)",org.apache.logging.log4j;version="[2.1
+ 7,3)",org.apache.logging.log4j.core.appender;version="[2.17,3)",org.a
+ pache.logging.log4j.core.appender.nosql;version="[2.17,3)",org.apache
+ .logging.log4j.core.config.plugins;version="[2.17,3)",org.apache.logg
+ ing.log4j.core.config.plugins.validation.constraints;version="[2.17,3
+ )",org.apache.logging.log4j.core.filter;version="[2.17,3)",org.apache
+ .logging.log4j.core.util;version="[2.17,3)",org.apache.logging.log4j.
+ status;version="[2.17,3)",org.bson;version="[4.2,5)",org.bson.codecs;
+ version="[4.2,5)",org.bson.codecs.configuration;version="[4.2,5)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.mongodb4;uses:="com.mongodb,c
+ om.mongodb.client,org.apache.logging.log4j,org.apache.logging.log4j.c
+ ore.appender.nosql,org.apache.logging.log4j.core.config.plugins,org.a
+ pache.logging.log4j.core.filter,org.apache.logging.log4j.core.util,or
+ g.bson,org.bson.codecs";version="2.17.0"
+Bundle-Name: Apache Log4j MongoDB 4
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j MongoDB 4
+Bundle-Description: MongoDB appender for Log4j using the MongoDB 4 dri
+ ver API.
+Automatic-Module-Name: org.apache.logging.log4j.mongodb4
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-mongodb
+ 4/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-mongodb4-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-mongodb4-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-mongodb3-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.mongodb3
+Built-By: rgoers
+Bnd-LastModified: 1639792437220
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j MongoDB 3
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.mongodb;version="[3.12,4)",com.mongodb.client;vers
+ ion="[3.12,4)",com.mongodb.client.model;version="[3.12,4)",org.apache
+ .logging.log4j;version="[2.17,3)",org.apache.logging.log4j.core.appen
+ der;version="[2.17,3)",org.apache.logging.log4j.core.appender.nosql;v
+ ersion="[2.17,3)",org.apache.logging.log4j.core.config.plugins;versio
+ n="[2.17,3)",org.apache.logging.log4j.core.config.plugins.convert;ver
+ sion="[2.17,3)",org.apache.logging.log4j.core.config.plugins.validati
+ on.constraints;version="[2.17,3)",org.apache.logging.log4j.core.filte
+ r;version="[2.17,3)",org.apache.logging.log4j.core.util;version="[2.1
+ 7,3)",org.apache.logging.log4j.status;version="[2.17,3)",org.apache.l
+ ogging.log4j.util;version="[2.17,3)",org.bson;version="[3.12,4)",org.
+ bson.codecs;version="[3.12,4)",org.bson.codecs.configuration;version=
+ "[3.12,4)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.mongodb3;uses:="com.mongodb,c
+ om.mongodb.client,org.apache.logging.log4j,org.apache.logging.log4j.c
+ ore.appender.nosql,org.apache.logging.log4j.core.config.plugins,org.a
+ pache.logging.log4j.core.filter,org.apache.logging.log4j.core.util,or
+ g.bson,org.bson.codecs";version="2.17.0"
+Bundle-Name: Apache Log4j MongoDB 3
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j MongoDB 3
+Bundle-Description: MongoDB appender for Log4j using the MongoDB 3 dri
+ ver API.
+Automatic-Module-Name: org.apache.logging.log4j.mongodb3
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-mongodb
+ 3/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-mongodb3-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-mongodb3-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-cassandra-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.cassandra
+Built-By: rgoers
+Bnd-LastModified: 1639792447850
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Cassandra
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.datastax.driver.core;version="[3.1,4)",org.apache.
+ logging.log4j;version="[2.17,3)",org.apache.logging.log4j.core;versio
+ n="[2.17,3)",org.apache.logging.log4j.core.appender;version="[2.17,3)
+ ",org.apache.logging.log4j.core.appender.db;version="[2.17,3)",org.ap
+ ache.logging.log4j.core.config;version="[2.17,3)",org.apache.logging.
+ log4j.core.config.plugins;version="[2.17,3)",org.apache.logging.log4j
+ .core.config.plugins.convert;version="[2.17,3)",org.apache.logging.lo
+ g4j.core.config.plugins.validation.constraints;version="[2.17,3)",org
+ .apache.logging.log4j.core.filter;version="[2.17,3)",org.apache.loggi
+ ng.log4j.core.net;version="[2.17,3)",org.apache.logging.log4j.core.ut
+ il;version="[2.17,3)",org.apache.logging.log4j.spi;version="[2.17,3)"
+ ,org.apache.logging.log4j.util;version="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.cassandra;uses:="com.datastax
+ .driver.core,org.apache.logging.log4j.core,org.apache.logging.log4j.c
+ ore.appender,org.apache.logging.log4j.core.appender.db,org.apache.log
+ ging.log4j.core.config.plugins,org.apache.logging.log4j.core.net,org.
+ apache.logging.log4j.core.util";version="2.17.0"
+Bundle-Name: Apache Log4j Cassandra
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Cassandra
+Bundle-Description: Cassandra appender for Log4j.
+Automatic-Module-Name: org.apache.logging.log4j.cassandra
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-cassand
+ ra/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-cassandra-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-cassandra-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-jpa-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.jpa
+Built-By: rgoers
+Bnd-LastModified: 1639792427906
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j JPA
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.fasterxml.jackson.core.type;version="[2.12,3)",com
+ .fasterxml.jackson.databind;version="[2.12,3)",com.fasterxml.jackson.
+ databind.node;version="[2.12,3)",javax.persistence;version="[2.2,3)",
+ org.apache.logging.log4j;version="[2.17,3)",org.apache.logging.log4j.
+ core;version="[2.17,3)",org.apache.logging.log4j.core.appender;versio
+ n="[2.17,3)",org.apache.logging.log4j.core.appender.db;version="[2.17
+ ,3)",org.apache.logging.log4j.core.appender.db.jpa.converter,org.apac
+ he.logging.log4j.core.config;version="[2.17,3)",org.apache.logging.lo
+ g4j.core.config.plugins;version="[2.17,3)",org.apache.logging.log4j.c
+ ore.impl;version="[2.17,3)",org.apache.logging.log4j.core.time;versio
+ n="[2.17,3)",org.apache.logging.log4j.core.util;version="[2.17,3)",or
+ g.apache.logging.log4j.message;version="[2.17,3)",org.apache.logging.
+ log4j.spi;version="[2.17,3)",org.apache.logging.log4j.status;version=
+ "[2.17,3)",org.apache.logging.log4j.util;version="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core.appender.db.jpa
+Export-Package: org.apache.logging.log4j.core.appender.db.jpa;uses:="j
+ avax.persistence,org.apache.logging.log4j,org.apache.logging.log4j.co
+ re,org.apache.logging.log4j.core.appender.db,org.apache.logging.log4j
+ .core.appender.db.jpa.converter,org.apache.logging.log4j.core.config.
+ plugins,org.apache.logging.log4j.core.impl,org.apache.logging.log4j.c
+ ore.time,org.apache.logging.log4j.message,org.apache.logging.log4j.ut
+ il";version="2.17.0",org.apache.logging.log4j.core.appender.db.jpa.co
+ nverter;uses:="javax.persistence,org.apache.logging.log4j,org.apache.
+ logging.log4j.core.time,org.apache.logging.log4j.message,org.apache.l
+ ogging.log4j.util";version="2.17.0"
+Bundle-Name: Apache Log4j JPA
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j JPA
+Bundle-Description: Apache Log4j Java Persistence API Appender.
+Automatic-Module-Name: org.apache.logging.log4j.jpa
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-jpa/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-jpa-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-jpa-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-jdbc-dbcp2-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.jdbc-dbcp2
+Built-By: rgoers
+Bnd-LastModified: 1639792421637
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j JDBC DBCP 2
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: javax.management,org.apache.commons.dbcp2;version="[2.
+ 9,3)",org.apache.commons.pool2;version="[2.11,3)",org.apache.commons.
+ pool2.impl;version="[2.11,3)",org.apache.logging.log4j;version="[2.17
+ ,3)",org.apache.logging.log4j.core.config;version="[2.17,3)",org.apac
+ he.logging.log4j.core.config.plugins;version="[2.17,3)",org.apache.lo
+ gging.log4j.core.util;version="[2.17,3)",org.apache.logging.log4j.sta
+ tus;version="[2.17,3)",org.apache.logging.log4j.util;version="[2.17,3
+ )"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core.appender.db.jdbc
+Export-Package: org.apache.logging.log4j.core.appender.db.jdbc;version
+ ="2.17.0";uses:="org.apache.commons.dbcp2,org.apache.logging.log4j.co
+ re.config,org.apache.logging.log4j.core.config.plugins,org.apache.log
+ ging.log4j.core.util"
+Bundle-Name: Apache Log4j JDBC DBCP 2
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j JDBC DBCP 2
+Bundle-Description: Connection source for the JDBC Appender using Apac
+ he Commons DBCP2.
+Automatic-Module-Name: org.apache.logging.log4j.jdbc.dbcp2
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-jdbc-db
+ cp2/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-jdbc-dbcp2-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-jdbc-dbcp2-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-liquibase-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.liquibase
+Built-By: rgoers
+Bnd-LastModified: 1639792509649
+Implementation-Vendor-Id: org.apache
+Specification-Title: Apache Log4j Liquibase Binding
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: liquibase.logging.core;version="[3.5,4)",org.apache.lo
+ gging.log4j;version="[2.17,3)",org.apache.logging.log4j.spi;version="
+ [2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: liquibase.ext.logging.log4j2;uses:="liquibase.logging.
+ core";version="2.17.0"
+Bundle-Name: Apache Log4j Liquibase Binding
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Liquibase Binding
+Bundle-Description: The Apache Log4j Liquibase binding to Log4j 2 Core
+Automatic-Module-Name: 
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-liquiba
+ se/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-liquibase-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-liquibase-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-appserver-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.appserver
+Built-By: rgoers
+Bnd-LastModified: 1639792514243
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j App Server Support
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.juli.logging,org.apache.logging.log4j;versi
+ on="[2.17,3)",org.apache.logging.log4j.spi;version="[2.17,3)",org.ecl
+ ipse.jetty.util.log;version="[8.2,9)",javax.servlet;version="[2.5,4)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Fragment-Host: org.apache.logging.log4j.core
+Export-Package: org.apache.logging.log4j.web;version="2.17.0"
+Bundle-Name: Apache Log4j App Server Support
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j App Server Support
+Bundle-Description: Provide Log4j as the logging implementation for ap
+ plication servers
+Automatic-Module-Name: org.apache.logging.log4j.appserver
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-appserv
+ er/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-appserver-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-appserver-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-docker-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.docker
+Built-By: rgoers
+Bnd-LastModified: 1639792521331
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Docker Library
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: com.fasterxml.jackson.annotation;version="[2.12,3)",co
+ m.fasterxml.jackson.core.type;version="[2.12,3)",com.fasterxml.jackso
+ n.databind;version="[2.12,3)",org.apache.logging.log4j;version="[2.17
+ ,3)",org.apache.logging.log4j.core;version="[2.17,3)",org.apache.logg
+ ing.log4j.core.config.plugins;version="[2.17,3)",org.apache.logging.l
+ og4j.core.lookup;version="[2.17,3)",org.apache.logging.log4j.core.uti
+ l;version="[2.17,3)",org.apache.logging.log4j.docker.model,org.apache
+ .logging.log4j.status;version="[2.17,3)",org.apache.logging.log4j.uti
+ l;version="[2.17,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.docker;uses:="org.apache.logg
+ ing.log4j.core,org.apache.logging.log4j.core.config.plugins,org.apach
+ e.logging.log4j.core.lookup";version="2.17.0",org.apache.logging.log4
+ j.docker.model;version="2.17.0"
+Bundle-Name: Apache Log4j Docker Library
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Docker Library
+Bundle-Description: Apache Log4j Docker Support
+Automatic-Module-Name: org.apache.logging.log4j.docker
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-docker/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-docker-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-docker-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-spring-boot-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.spring-boot
+Built-By: rgoers
+Bnd-LastModified: 1639792532895
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Spring Boot Support
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: javax.net.ssl,org.apache.logging.log4j;version="[2.17,
+ 3)",org.apache.logging.log4j.core;version="[2.17,3)",org.apache.loggi
+ ng.log4j.core.config;version="[2.17,3)",org.apache.logging.log4j.core
+ .config.arbiters;version="[2.17,3)",org.apache.logging.log4j.core.con
+ fig.composite;version="[2.17,3)",org.apache.logging.log4j.core.config
+ .plugins;version="[2.17,3)",org.apache.logging.log4j.core.lookup;vers
+ ion="[2.17,3)",org.apache.logging.log4j.core.net.ssl;version="[2.17,3
+ )",org.apache.logging.log4j.core.util;version="[2.17,3)",org.apache.l
+ ogging.log4j.internal;version="[2.17,3)",org.apache.logging.log4j.spi
+ ;version="[2.17,3)",org.apache.logging.log4j.status;version="[2.17,3)
+ ",org.apache.logging.log4j.util;version="[2.17,3)",org.springframewor
+ k.boot.logging,org.springframework.boot.logging.log4j2,org.springfram
+ ework.core.env,org.springframework.util
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.spring.cloud.config.controlle
+ r;version="2.17.0"
+Bundle-Name: Apache Log4j Spring Boot Support
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Spring Boot Support
+Bundle-Description: Apache Log4j Spring Boot Support
+Automatic-Module-Name: org.apache.logging.log4j.spring.boot
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://logging.apache.org/log4j/2.x/log4j-spring-
+ boot/
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-spring-boot-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-spring-boot-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
+
+Archive:  log4j-spring-cloud-config-client-2.17.0.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: org.apache.logging.log4j.spring-cloud-config-clie
+ nt
+Built-By: rgoers
+Bnd-LastModified: 1639792541822
+Implementation-Vendor-Id: org.apache.logging.log4j
+Specification-Title: Apache Log4j Spring Cloud Config Client Support
+Log4jReleaseManager: Ralph Goers
+Bundle-DocURL: https://www.apache.org/
+Import-Package: org.apache.logging.log4j;version="[2.17,3)",org.apache
+ .logging.log4j.core.util;version="[2.17,3)",org.springframework.boot.
+ autoconfigure.condition,org.springframework.cloud.context.environment
+ ,org.springframework.context,org.springframework.stereotype
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Export-Package: org.apache.logging.log4j.spring.cloud.config.controlle
+ r;version="2.17.0"
+Bundle-Name: Apache Log4j Spring Cloud Config Client Support
+Log4jReleaseVersionJava6: 2.3
+Log4jReleaseVersionJava7: 2.12.2
+Log4jReleaseVersion: 2.17.0
+Implementation-Title: Apache Log4j Spring Cloud Config Client Support
+Bundle-Description: Apache Log4j Spring Cloud Config Client Support
+Automatic-Module-Name: org.apache.logging.log4j.spring.cloud.config.cl
+ ient
+Implementation-Version: 2.17.0
+Specification-Vendor: The Apache Software Foundation
+Bundle-ManifestVersion: 2
+Bundle-Vendor: The Apache Software Foundation
+Tool: Bnd-3.5.0.201709291849
+Implementation-Vendor: The Apache Software Foundation
+Bundle-Version: 2.17.0
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_144
+Implementation-URL: http://maven.apache.org/log4j-spring-cloud-config-
+ client
+Specification-Version: 2.17.0
+Log4jReleaseKey: B3D8E1BA
+
+
+
+Archive:  log4j-spring-cloud-config-client-2.17.0-sources.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Built-By: rgoers
+Created-By: Apache Maven 3.6.1
+Build-Jdk: 1.8.0_144
+
+
+
+Archive:  log4j-spring-cloud-config-client-2.17.0-javadoc.jar
+  inflating: META-INF/MANIFEST.MF    
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Javadoc Plugin 3.3.1
+
+
