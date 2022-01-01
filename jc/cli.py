@@ -80,6 +80,7 @@ parsers = [
     'iostat-s',
     'iptables',
     'iw-scan',
+    'jar-manifest',
     'jobs',
     'kv',
     'last',
