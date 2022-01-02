@@ -75,7 +75,7 @@ import csv
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -130,7 +130,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        dialect = "excel" # default in csv module
+        dialect = 'excel'  # default in csv module
         try:
             dialect = csv.Sniffer().sniff(data[:1024])
             if '""' in data:
