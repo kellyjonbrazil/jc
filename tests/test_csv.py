@@ -37,6 +37,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r', encoding='utf-8') as f:
             self.generic_csv_insurance = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.csv'), 'r', encoding='utf-8') as f:
+            self.generic_csv_doubleqouted = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_biostats_json = json.loads(f.read())
@@ -64,6 +67,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.json'), 'r', encoding='utf-8') as f:
             self.generic_csv_insurance_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.json'), 'r', encoding='utf-8') as f:
+            self.generic_csv_doubleqouted_json = json.loads(f.read())
 
     def test_csv_nodata(self):
         """
@@ -124,6 +130,12 @@ class MyTests(unittest.TestCase):
         Test 'insurance.csv' file
         """
         self.assertEqual(jc.parsers.csv.parse(self.generic_csv_insurance, quiet=True), self.generic_csv_insurance_json)
+
+    def test_doubleqouted(self):
+        """
+        Test 'csv-doubleqouted.csv' file
+        """
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_doubleqouted, quiet=True), self.generic_csv_doubleqouted_json)
 
 
 if __name__ == '__main__':

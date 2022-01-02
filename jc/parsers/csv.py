@@ -130,9 +130,11 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        dialect = None
+        dialect = "excel" # default in csv module
         try:
             dialect = csv.Sniffer().sniff(data[:1024])
+            if '""' in data:
+                dialect.doublequote = True
         except Exception:
             pass
 
