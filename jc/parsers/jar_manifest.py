@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `jar_manifest` command output parser
+"""jc - JSON CLI output utility `MANIFES.MF` file parser
 
 Usage (cli):
 
@@ -7,14 +7,14 @@ Usage (cli):
 Usage (module):
 
     import jc.parsers.jar_manifest
-    result = jc.parsers.jar_manifest.parse(jar_manifest_command_output)
+    result = jc.parsers.jar_manifest.parse(jar_manifest_file_output)
 
 Schema:
 
     [
       {
-        "key1":     string/int/float/boolean/null/array/object,
-        "key2":     string/int/float/boolean/null/array/object
+        "key1":     string,
+        "key2":     string
       }
     ]
 
