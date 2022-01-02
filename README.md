@@ -1010,4 +1010,4 @@ cat istio.yaml | jc --yaml -p
 ]
 ```
 
-© 2019-2021 Kelly Brazil
+© 2019-2022 Kelly Brazil
