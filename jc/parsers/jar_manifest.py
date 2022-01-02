@@ -2,7 +2,7 @@
 
 Usage (cli):
 
-    $ cat MANIFEST.MF | jc --jar_manifest
+    $ cat MANIFEST.MF | jc --jar-manifest
 
 Usage (module):
 
@@ -20,11 +20,11 @@ Schema:
 
 Examples:
 
-    $ cat MANIFEST.MF | jc --jar_manifest -p
-    $ unzip -c apache-log4j-2.16.0-bin/log4j-core-2.16.0.jar META-INF/MANIFEST.MF | jc --jar_manifest -p
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar_manifest -p
+    $ cat MANIFEST.MF | jc --jar-manifest -p
+    $ unzip -c apache-log4j-2.16.0-bin/log4j-core-2.16.0.jar META-INF/MANIFEST.MF | jc --jar-manifest -p
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar-manifest -p
 
-    $ cat MANIFEST.MF | jc --jar_manifest -p
+    $ cat MANIFEST.MF | jc --jar-manifest -p
 
     [
       {
@@ -42,7 +42,7 @@ Examples:
       }
     ]
 
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar_manifest -p
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | jc --jar-manifest -p
 
     [
       ...

@@ -145,6 +145,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--iostat-s` enables the `iostat` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s))
 - `--iptables` enables the `iptables` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables))
 - `--iw-scan` enables the `iw dev [device] scan` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan))
+- `--jar-manifest` enables the MANIFEST.MF file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest))
 - `--jobs` enables the `jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs))
 - `--kv` enables the Key/Value file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/kv))
 - `--last` enables the `last` and `lastb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/last))

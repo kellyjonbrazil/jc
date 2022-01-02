@@ -1,5 +1,8 @@
 jc changelog
 
+20220102 v1.17.6
+- Add jar-manifest file parser (for MANIFEST.MF files)
+
 20211221 v1.17.5
 - Add zipinfo parser tested on linux and macOS
 
