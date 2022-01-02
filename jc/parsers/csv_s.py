@@ -56,7 +56,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,9 +122,11 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     sniffdata = '\n'.join(temp_list)
 
-    dialect = None
+    dialect = 'excel'  # default in csv module
     try:
         dialect = csv.Sniffer().sniff(sniffdata)
+        if '""' in sniffdata:
+                dialect.doublequote = True
     except Exception:
         pass
 
