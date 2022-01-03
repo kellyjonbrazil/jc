@@ -37,7 +37,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
-    copyright = '© 2019-2021 Kelly Brazil'
+    copyright = '© 2019-2022 Kelly Brazil'
     license = 'MIT License'
 
 
@@ -80,6 +80,7 @@ parsers = [
     'iostat-s',
     'iptables',
     'iw-scan',
+    'jar-manifest',
     'jobs',
     'kv',
     'last',
