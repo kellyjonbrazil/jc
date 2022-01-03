@@ -113,20 +113,20 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     # first, load the first 100 lines into a list to detect the CSV dialect
     for line in itertools.islice(data, 100):
-        temp_list.append(line)
+        temp_list.append(line.rstrip())
 
     # check for Python bug that does not split on `\r` newlines from sys.stdin correctly
     # https://bugs.python.org/issue45617
     if len(temp_list) == 1:
         raise ParseError('Unable to detect line endings. Please try the non-streaming CSV parser instead.')
 
-    sniffdata = '\n'.join(temp_list)
-
+    sniffdata = '\n'.join(temp_list)[:1024]
     dialect = 'excel'  # default in csv module
+
     try:
         dialect = csv.Sniffer().sniff(sniffdata)
         if '""' in sniffdata:
-                dialect.doublequote = True
+            dialect.doublequote = True
     except Exception:
         pass
 
