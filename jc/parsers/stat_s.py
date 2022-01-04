@@ -18,12 +18,42 @@ Usage (module):
 Schema:
 
     {
-      "stat":            string,
-      "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
+      "file":                     string,
+      "link_to"                   string,
+      "size":                     integer,
+      "blocks":                   integer,
+      "io_blocks":                integer,
+      "type":                     string,
+      "device":                   string,
+      "inode":                    integer,
+      "links":                    integer,
+      "access":                   string,
+      "flags":                    string,
+      "uid":                      integer,
+      "user":                     string,
+      "gid":                      integer,
+      "group":                    string,
+      "access_time":              string,    # - = null
+      "access_time_epoch":        integer,   # naive timestamp
+      "access_time_epoch_utc":    integer,   # timezone-aware timestamp
+      "modify_time":              string,    # - = null
+      "modify_time_epoch":        integer,   # naive timestamp
+      "modify_time_epoch_utc":    integer,   # timezone-aware timestamp
+      "change_time":              string,    # - = null
+      "change_time_epoch":        integer,   # naive timestamp
+      "change_time_epoch_utc":    integer,   # timezone-aware timestamp
+      "birth_time":               string,    # - = null
+      "birth_time_epoch":         integer,   # naive timestamp
+      "birth_time_epoch_utc":     integer,   # timezone-aware timestamp
+      "unix_device":              integer,
+      "rdev":                     integer,
+      "block_size":               integer,
+      "unix_flags":               string
+      "_jc_meta":                            # This object only exists if using -qq or ignore_exceptions=True
         {
-          "success":    boolean,     # true if successfully parsed, false if error
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
+          "success":    boolean,             # true if successfully parsed, false if error
+          "error":      string,              # exists if "success" is false
+          "line":       string               # exists if "success" is false
         }
     }
 
@@ -68,14 +98,23 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    #
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
-    #
+    int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'unix_device',
+                'rdev', 'block_size']
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+
+    # turn - into null for time fields and add calculated timestamp fields
+    null_list = ['access_time', 'modify_time', 'change_time', 'birth_time']
+    for key in null_list:
+        if key in proc_data:
+            if proc_data[key] == '-':
+                proc_data[key] = None
+            ts = jc.utils.timestamp(proc_data[key])
+            proc_data[key + '_epoch'] = ts.naive
+            proc_data[key + '_epoch_utc'] = ts.utc
 
     return proc_data
-
 
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
