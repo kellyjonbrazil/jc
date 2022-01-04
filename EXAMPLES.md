@@ -1713,6 +1713,27 @@ iw dev wlan0 scan | jc --iw-scan -p          # or:  jc -p iw dev wlan0 scan
   }
 ]
 ```
+### jar-manifest
+```bash
+cat MANIFEST.MF | jc --jar-manifest -p
+```
+```json
+[
+  {
+    "Import_Package": "com.conversantmedia.util.concurrent;resolution:=optional,com.fasterxml.jackson.annotation;version=\"[2.12,3)\";resolution:=optional,com.fasterxml.jackson.core;version=\"[2.12,3)\";resolution:=optional,com.fasterxml.jackson.core.type;version=\"[2.12,3)\";resolution:=optional,com.fasterxml.jackson.cor...",
+    "Export_Package": "org.apache.logging.log4j.core;uses:=\"org.apache.logging.log4j,org.apache.logging.log4j.core.config,org.apache.logging.log4j.core.impl,org.apache.logging.log4j.core.layout,org.apache.logging.log4j.core.time,org.apache.logging.log4j.message,org.apache.logging.log4j.spi,org.apache.logging.log4j.status...",
+    "Manifest_Version": "1.0",
+    "Bundle_License": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+    "Bundle_SymbolicName": "org.apache.logging.log4j.core",
+    "Built_By": "matt",
+    "Bnd_LastModified": "1639373735804",
+    "Implementation_Vendor_Id": "org.apache.logging.log4j",
+    "Specification_Title": "Apache Log4j Core",
+    "Log4jReleaseManager": "Matt Sicker",
+    ...
+  }
+]
+```
 ### jobs
 ```bash
 jobs -l | jc --jobs -p

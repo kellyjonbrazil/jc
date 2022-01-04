@@ -1,7 +1,8 @@
 jc changelog
 
-20220102 v1.17.6
+20220103 v1.17.6
 - Add jar-manifest file parser (for MANIFEST.MF files)
+- Fix CSV parsers for some files that include doublequotes
 
 20211221 v1.17.5
 - Add zipinfo parser tested on linux and macOS

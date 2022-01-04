@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.jar_manifest
-jc - JSON CLI output utility `MANIFES.MF` file parser
+jc - JSON CLI output utility `MANIFEST.MF` file parser
 
 Usage (cli):
 
