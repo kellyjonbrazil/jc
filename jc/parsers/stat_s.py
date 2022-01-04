@@ -60,12 +60,10 @@ Schema:
 Examples:
 
     $ stat | jc --stat-s
-    {example output}
-    ...
+    {"file":"(stdin)","unix_device":1027739696,"inode":1155,"flags":"crw--w----","links":1,"user":"kbrazil","group":"tty","rdev":268435456,"size":0,"access_time":"Jan  4 15:27:44 2022","modify_time":"Jan  4 15:27:44 2022","change_time":"Jan  4 15:27:44 2022","birth_time":"Dec 31 16:00:00 1969","block_size":131072,"blocks":0,"unix_flags":"0","access_time_epoch":1641338864,"access_time_epoch_utc":null,"modify_time_epoch":1641338864,"modify_time_epoch_utc":null,"change_time_epoch":1641338864,"change_time_epoch_utc":null,"birth_time_epoch":null,"birth_time_epoch_utc":null}
 
     $ stat | jc --stat-s -r
-    {example output}
-    ...
+    {"file":"(stdin)","unix_device":"1027739696","inode":"1155","flags":"crw--w----","links":"1","user":"kbrazil","group":"tty","rdev":"268435456","size":"0","access_time":"Jan  4 15:28:08 2022","modify_time":"Jan  4 15:28:08 2022","change_time":"Jan  4 15:28:08 2022","birth_time":"Dec 31 16:00:00 1969","block_size":"131072","blocks":"0","unix_flags":"0"}
 """
 import shlex
 import jc.utils
