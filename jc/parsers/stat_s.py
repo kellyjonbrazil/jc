@@ -169,11 +169,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                         link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
                         output_line['file'] = filename
                         output_line['link_to'] = link
-                        # continue
                     else:
                         filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
                         output_line['file'] = filename
-                        # continue
 
                 # line #2
                 if line.startswith('  Size: '):
