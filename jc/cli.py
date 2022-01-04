@@ -105,6 +105,7 @@ parsers = [
     'shadow',
     'ss',
     'stat',
+    'stat-s',
     'sysctl',
     'systemctl',
     'systemctl-lj',
