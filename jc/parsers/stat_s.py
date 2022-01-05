@@ -142,7 +142,6 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     for line in data:
         try:
             jc.utils.streaming_line_input_type_check(line)
-            linecomplete = False
             line = line.rstrip()
 
             # ignore blank lines
@@ -158,10 +157,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 # line #1
                 if line.startswith('  File: '):
                     if output_line:
-                        linecomplete = True
-                    else:
-                        linecomplete = False
-                        output_line = {}
+                        yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+
+                    output_line = {}
                     line_list = line.split(maxsplit=1)
                     output_line['file'] = line_list[1]
 
@@ -262,12 +260,18 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     'blocks': value[13],
                     'unix_flags': value[14]
                 }
-                linecomplete = True
 
-            if linecomplete and output_line:
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
-            elif linecomplete:
-                raise ParseError('Not stat data')
+                if output_line:
+                    yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                    output_line = {}
 
         except Exception as e:
             yield stream_error(e, ignore_exceptions, line)
+            output_line = {}
+
+    # gather final item
+    try:
+        if output_line:
+            yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+    except Exception as e:
+        yield stream_error(e, ignore_exceptions, line)
