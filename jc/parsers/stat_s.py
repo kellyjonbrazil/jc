@@ -233,9 +233,17 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     output_line['birth_time'] = line_list[1]
                     continue
 
+                # catch non-stat data
+                if not line.startswith('  File: '):
+                    raise ParseError('Not stat data')
+
             # FreeBSD/OSX output
             if os_type != 'linux':
                 value = shlex.split(line)
+
+                if not value[1].isdigit():
+                    raise ParseError('Not stat data')
+
                 output_line = {
                     'file': ' '.join(value[15:]),
                     'unix_device': value[0],
