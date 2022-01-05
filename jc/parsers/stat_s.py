@@ -2,11 +2,13 @@
 
 > This streaming parser outputs JSON Lines
 
-<<Short stat description and caveats>>
+The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+
+The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
 
 Usage (cli):
 
-    $ stat | jc --stat-s
+    $ stat * | jc --stat-s
 
 Usage (module):
 
@@ -203,8 +205,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     continue
 
                 # line #5
+                # not implemented
                 if line.startswith('Context: '):
-                    # ignore this line
                     continue
 
                 # line #6
