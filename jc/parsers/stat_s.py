@@ -145,6 +145,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             linecomplete = False
             line = line.rstrip()
 
+            # ignore blank lines
+            if line == '':
+                continue
+
             # linux output
             if line.startswith('  File: '):
                 os_type = 'linux'
