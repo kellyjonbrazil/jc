@@ -274,8 +274,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             output_line = {}
 
     # gather final item
-    try:
-        if output_line:
+    if output_line:
+        try:
             yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
-    except Exception as e:
-        yield stream_error(e, ignore_exceptions, line)
+        except Exception as e:
+            yield stream_error(e, ignore_exceptions, line)
