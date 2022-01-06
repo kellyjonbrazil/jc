@@ -242,7 +242,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             if os_type != 'linux':
                 value = shlex.split(line)
 
-                if not value[1].isdigit():
+                if not value[0].isdigit() or not value[1].isdigit():
                     raise ParseError('Not stat data')
 
                 output_line = {
