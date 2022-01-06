@@ -236,8 +236,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     continue
 
                 # catch non-stat data
-                if not line.startswith('  File: '):
-                    raise ParseError('Not stat data')
+                raise ParseError('Not stat data')
 
             # FreeBSD/OSX output
             if os_type != 'linux':
