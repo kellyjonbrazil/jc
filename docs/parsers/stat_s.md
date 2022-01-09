@@ -5,7 +5,7 @@ jc - JSON CLI output utility `stat` command output streaming parser
 
 > This streaming parser outputs JSON Lines
 
-The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on).
 
 The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
 
@@ -53,7 +53,7 @@ Schema:
       "unix_device":              integer,
       "rdev":                     integer,
       "block_size":               integer,
-      "unix_flags":               string
+      "unix_flags":               string,
       "_jc_meta":                            # This object only exists if using -qq or ignore_exceptions=True
         {
           "success":              boolean,   # true if successfully parsed, false if error
