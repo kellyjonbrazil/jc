@@ -170,6 +170,7 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
 - `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))
 - `--stat` enables the `stat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/stat))
+- `--stat-s` enables the `stat` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s))
 - `--sysctl` enables the `sysctl` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl))
 - `--systemctl` enables the `systemctl` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl))
 - `--systemctl-lj` enables the `systemctl list-jobs` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj))
