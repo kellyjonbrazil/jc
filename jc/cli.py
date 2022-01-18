@@ -4,19 +4,16 @@ JC cli module
 
 import sys
 import os
-import os.path
-import re
 import importlib
 import textwrap
 import signal
 import shlex
 import subprocess
 import json
-import jc
-from jc import appdirs
-import jc.utils
-import jc.tracebackplus
-from jc.exceptions import LibraryNotInstalled, ParseError
+from .lib import __version__, parsers, local_parsers
+from . import utils
+from . import tracebackplus
+from .exceptions import LibraryNotInstalled, ParseError
 
 # make pygments import optional
 try:
@@ -31,122 +28,17 @@ except Exception:
     PYGMENTS_INSTALLED = False
 
 
+JC_ERROR_EXIT = 100
+
+
 class info():
-    version = jc.__version__
+    version = __version__
     description = 'JSON CLI output utility'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
     copyright = '© 2019-2022 Kelly Brazil'
     license = 'MIT License'
-
-
-__version__ = info.version
-
-parsers = [
-    'acpi',
-    'airport',
-    'airport-s',
-    'arp',
-    'blkid',
-    'cksum',
-    'crontab',
-    'crontab-u',
-    'csv',
-    'csv-s',
-    'date',
-    'df',
-    'dig',
-    'dir',
-    'dmidecode',
-    'dpkg-l',
-    'du',
-    'env',
-    'file',
-    'finger',
-    'free',
-    'fstab',
-    'group',
-    'gshadow',
-    'hash',
-    'hashsum',
-    'hciconfig',
-    'history',
-    'hosts',
-    'id',
-    'ifconfig',
-    'ini',
-    'iostat',
-    'iostat-s',
-    'iptables',
-    'iw-scan',
-    'jar-manifest',
-    'jobs',
-    'kv',
-    'last',
-    'ls',
-    'ls-s',
-    'lsblk',
-    'lsmod',
-    'lsof',
-    'lsusb',
-    'mount',
-    'netstat',
-    'ntpq',
-    'passwd',
-    'ping',
-    'ping-s',
-    'pip-list',
-    'pip-show',
-    'ps',
-    'route',
-    'rpm-qi',
-    'sfdisk',
-    'shadow',
-    'ss',
-    'stat',
-    'stat-s',
-    'sysctl',
-    'systemctl',
-    'systemctl-lj',
-    'systemctl-ls',
-    'systemctl-luf',
-    'systeminfo',
-    'time',
-    'timedatectl',
-    'tracepath',
-    'traceroute',
-    'ufw',
-    'ufw-appinfo',
-    'uname',
-    'upower',
-    'uptime',
-    'vmstat',
-    'vmstat-s',
-    'w',
-    'wc',
-    'who',
-    'xml',
-    'yaml',
-    'zipinfo'
-]
-
-JC_ERROR_EXIT = 100
-
-
-# List of custom or override parsers.
-# Allow any <user_data_dir>/jc/jcparsers/*.py
-local_parsers = []
-data_dir = appdirs.user_data_dir('jc', 'jc')
-local_parsers_dir = os.path.join(data_dir, 'jcparsers')
-if os.path.isdir(local_parsers_dir):
-    sys.path.append(data_dir)
-    for name in os.listdir(local_parsers_dir):
-        if re.match(r'\w+\.py$', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
-            plugin_name = name[0:-3]
-            local_parsers.append(plugin_name)
-            if plugin_name not in parsers:
-                parsers.append(plugin_name)
 
 
 # We only support 2.3.0+, pygments changed color names in 2.4.0.
@@ -226,7 +118,7 @@ def set_env_colors(env_colors=None):
 
     # if there is an issue with the env variable, just set all colors to default and move on
     if input_error:
-        jc.utils.warning_message(['Could not parse JC_COLORS environment variable'])
+        utils.warning_message(['Could not parse JC_COLORS environment variable'])
         color_list = ['default', 'default', 'default', 'default']
 
     # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
@@ -543,7 +435,7 @@ def main():
     version_info = 'v' in options
 
     if verbose_debug:
-        jc.tracebackplus.enable(context=11)
+        tracebackplus.enable(context=11)
 
     if not PYGMENTS_INSTALLED:
         mono = True
@@ -582,25 +474,25 @@ def main():
             if debug:
                 raise
 
-            jc.utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
+            utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except OSError:
             if debug:
                 raise
 
-            jc.utils.error_message([f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.'])
+            utils.error_message([f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:
             if debug:
                 raise
 
-            jc.utils.error_message([f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'])
+            utils.error_message([f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif run_command is not None:
-        jc.utils.error_message([f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
+        utils.error_message([f'"{run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # find the correct parser
@@ -619,16 +511,16 @@ def main():
                 break
 
         if not found:
-            jc.utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
+            utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # check for input errors (pipe vs magic)
     if not sys.stdin.isatty() and magic_stdout:
-        jc.utils.error_message(['Piped data and Magic syntax used simultaneously. Use "jc -h" for help.'])
+        utils.error_message(['Piped data and Magic syntax used simultaneously. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif sys.stdin.isatty() and magic_stdout is None:
-        jc.utils.error_message(['Missing piped data. Use "jc -h" for help.'])
+        utils.error_message(['Missing piped data. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     # parse and print to stdout
@@ -665,17 +557,17 @@ def main():
         if debug:
             raise
 
-        jc.utils.error_message([f'Parser issue with {parser_name}:',
-                                f'{e.__class__.__name__}: {e}',
-                                'For details use the -d or -dd option. Use "jc -h" for help.'])
+        utils.error_message([f'Parser issue with {parser_name}:',
+                             f'{e.__class__.__name__}: {e}',
+                             'For details use the -d or -dd option. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except json.JSONDecodeError:
         if debug:
             raise
 
-        jc.utils.error_message(['There was an issue generating the JSON output.',
-                                'For details use the -d or -dd option.'])
+        utils.error_message(['There was an issue generating the JSON output.',
+                             'For details use the -d or -dd option.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except Exception:
@@ -686,7 +578,7 @@ def main():
         if getattr(parser.info, 'streaming', None):
             streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
-        jc.utils.error_message([
+        utils.error_message([
             f'{parser_name} parser could not parse the input data. Did you use the correct parser?',
             f'{streaming_msg}',
             'For details use the -d or -dd option. Use "jc -h" for help.'
