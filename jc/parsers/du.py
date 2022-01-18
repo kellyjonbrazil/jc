@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('du', du_command_output)
+
+    or
+
     import jc.parsers.du
     result = jc.parsers.du.parse(du_command_output)
 

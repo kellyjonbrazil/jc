@@ -14,6 +14,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('date', date_command_output)
+
+    or
+
     import jc.parsers.date
     result = jc.parsers.date.parse(date_command_output)
 

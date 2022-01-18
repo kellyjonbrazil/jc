@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('arp', arp_command_output)
+
+    or
+
     import jc.parsers.arp
     result = jc.parsers.arp.parse(arp_command_output)
 

@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('crontab', crontab_output)
+
+    or
+
     import jc.parsers.crontab
     result = jc.parsers.crontab.parse(crontab_output)
 

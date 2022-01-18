@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('acpi', acpi_command_output)
+
+    or
+
     import jc.parsers.acpi
     result = jc.parsers.acpi.parse(acpi_command_output)
 

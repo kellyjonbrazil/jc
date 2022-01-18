@@ -18,6 +18,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('dig', dig_command_output)
+
+    or
+
     import jc.parsers.dig
     result = jc.parsers.dig.parse(dig_command_output)
 
