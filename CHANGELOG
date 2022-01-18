@@ -1,5 +1,8 @@
 jc changelog
 
+20220118 v1.18.0
+- Add high-level parse API for built-in and plugin parsers
+
 20220106 v1.17.7
 - Add stat command streaming parser tested on linux and macOS
 

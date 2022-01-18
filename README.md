@@ -32,10 +32,10 @@ $ jc dig example.com | jq -r '.[].answer[].data'
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary, or list of dictionaries, instead of JSON:
 ```python
 >>> import subprocess
->>> import jc.parsers.dig
->>> 
+>>> import jc
+>>>
 >>> cmd_output = subprocess.check_output(['dig', 'example.com'], text=True)
->>> data = jc.parsers.dig.parse(cmd_output)
+>>> data = jc.parse('dig', cmd_output)
 >>>
 >>> data
 [{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd', 'ra'], 'query_num': 1, 'answer_num':
@@ -290,9 +290,9 @@ Streaming parsers accept any iterable object and return a generator iterator obj
 
 To use the generator object in your code, simply loop through it or use the [next()](https://docs.python.org/3/library/functions.html#next) builtin function:
 ```python
-import jc.parsers.ls_s
+import jc
 
-result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
+result = jc.parse('ls_s', ls_command_output.splitlines())
 for item in result:
     print(item["filename"])
 ```
