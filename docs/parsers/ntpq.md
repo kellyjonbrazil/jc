@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ntpq', ntpq_command_output)
+
+    or
+
     import jc.parsers.ntpq
     result = jc.parsers.ntpq.parse(ntpq_command_output)
 

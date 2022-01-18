@@ -15,6 +15,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('timedatectl', timedatectl_command_output)
+
+    or
+
     import jc.parsers.timedatectl
     result = jc.parsers.timedatectl.parse(timedatectl_command_output)
 

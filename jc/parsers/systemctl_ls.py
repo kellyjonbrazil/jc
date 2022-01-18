@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('systemctl_ls', systemctl_ls_command_output)
+
+    or
+
     import jc.parsers.systemctl_ls
     result = jc.parsers.systemctl_ls.parse(systemctl_ls_command_output)
 

@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('history', history_command_output)
+
+    or
+
     import jc.parsers.history
     result = jc.parsers.history.parse(history_command_output)
 

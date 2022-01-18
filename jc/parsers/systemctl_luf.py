@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('systemctl_luf', systemctl_luf_command_output)
+
+    or
+
     import jc.parsers.systemctl_luf
     result = jc.parsers.systemctl_luf.parse(systemctl_luf_command_output)
 

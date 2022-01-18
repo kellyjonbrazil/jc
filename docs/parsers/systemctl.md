@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('systemctl', systemctl_command_output)
+
+    or
+
     import jc.parsers.systemctl
     result = jc.parsers.systemctl.parse(systemctl_command_output)
 

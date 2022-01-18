@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('file', file_command_output)
+
+    or
+
     import jc.parsers.file
     result = jc.parsers.file.parse(file_command_output)
 

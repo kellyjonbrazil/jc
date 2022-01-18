@@ -16,6 +16,13 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('vmstat_s', vmstat_command_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.vmstat_s
     result = jc.parsers.vmstat_s.parse(vmstat_command_output.splitlines())    # result is an iterable object
     for item in result:

@@ -15,6 +15,13 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('stat_s', stat_command_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.stat_s
     result = jc.parsers.stat_s.parse(stat_command_output.splitlines())    # result is an iterable object
     for item in result:

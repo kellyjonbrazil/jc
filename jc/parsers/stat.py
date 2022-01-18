@@ -14,6 +14,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('stat', stat_command_output)
+
+    or
+
     import jc.parsers.stat
     result = jc.parsers.stat.parse(stat_command_output)
 

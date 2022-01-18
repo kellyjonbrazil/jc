@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('iostat', iostat_command_output)
+
+    or
+
     import jc.parsers.iostat
     result = jc.parsers.iostat.parse(iostat_command_output)
 

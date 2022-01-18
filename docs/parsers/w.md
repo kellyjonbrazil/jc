@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('w', w_command_output)
+
+    or
+
     import jc.parsers.w
     result = jc.parsers.w.parse(w_command_output)
 

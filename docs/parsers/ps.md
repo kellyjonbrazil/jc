@@ -17,6 +17,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ps', ps_command_output)
+
+    or
+
     import jc.parsers.ps
     result = jc.parsers.ps.parse(ps_command_output)
 

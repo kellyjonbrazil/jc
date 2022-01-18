@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `ipables` command output parser
+"""jc - JSON CLI output utility `iptables` command output parser
 
 Supports `-vLn` and `--line-numbers` for all tables.
 
@@ -11,6 +11,11 @@ Usage (cli):
     $ jc iptables -L -t nat
 
 Usage (module):
+
+    import jc
+    result = jc.parse('iptables', iptables_command_output)
+
+    or
 
     import jc.parsers.iptables
     result = jc.parsers.iptables.parse(iptables_command_output)

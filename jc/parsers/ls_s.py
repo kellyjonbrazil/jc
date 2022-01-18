@@ -16,6 +16,13 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ls_s', ls_command_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.ls_s
     result = jc.parsers.ls_s.parse(ls_command_output.splitlines())    # result is an iterable object
     for item in result:

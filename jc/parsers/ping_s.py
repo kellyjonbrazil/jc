@@ -12,6 +12,13 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ping_s', ping_command_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.ping_s
     result = jc.parsers.ping_s.parse(ping_command_output.splitlines())    # result is an iterable object
     for item in result:

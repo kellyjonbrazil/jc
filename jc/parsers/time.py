@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('time', time_command_output)
+
+    or
+
     import jc.parsers.time
     result = jc.parsers.time.parse(time_command_output)
 

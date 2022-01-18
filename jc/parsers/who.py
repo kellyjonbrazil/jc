@@ -14,6 +14,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('who', who_command_output)
+
+    or
+
     import jc.parsers.who
     result = jc.parsers.who.parse(who_command_output)
 

@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ini', ini_file_output)
+
+    or
+
     import jc.parsers.ini
     result = jc.parsers.ini.parse(ini_file_output)
 

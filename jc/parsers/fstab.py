@@ -6,6 +6,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('fstab', fstab_command_output)
+
+    or
+
     import jc.parsers.fstab
     result = jc.parsers.fstab.parse(fstab_command_output)
 

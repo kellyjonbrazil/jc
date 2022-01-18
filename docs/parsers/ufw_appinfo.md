@@ -17,6 +17,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ufw_appinfo', ufw_appinfo_command_output)
+
+    or
+
     import jc.parsers.ufw_appinfo
     result = jc.parsers.ufw_appinfo.parse(ufw_appinfo_command_output)
 

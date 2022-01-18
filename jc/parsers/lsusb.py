@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('lsusb', lsusb_command_output)
+
+    or
+
     import jc.parsers.lsusb
     result = jc.parsers.lsusb.parse(lsusb_command_output)
 

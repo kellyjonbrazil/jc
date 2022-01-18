@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('kv', kv_file_output)
+
+    or
+
     import jc.parsers.kv
     result = jc.parsers.kv.parse(kv_file_output)
 

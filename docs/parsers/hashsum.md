@@ -23,6 +23,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('hashsum', md5sum_command_output)
+
+    or
+
     import jc.parsers.hashsum
     result = jc.parsers.hashsum.parse(md5sum_command_output)
 

@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('sysctl', sysctl_command_output)
+
+    or
+
     import jc.parsers.sysctl
     result = jc.parsers.sysctl.parse(sysctl_command_output)
 

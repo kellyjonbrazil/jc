@@ -10,6 +10,13 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('iostat_s', iostat_command_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.iostat_s
     result = jc.parsers.iostat_s.parse(iostat_command_output.splitlines())    # result is an iterable object
     for item in result:

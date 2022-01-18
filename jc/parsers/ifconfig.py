@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ifconfig', ifconfig_command_output)
+
+    or
+
     import jc.parsers.ifconfig
     result = jc.parsers.ifconfig.parse(ifconfig_command_output)
 

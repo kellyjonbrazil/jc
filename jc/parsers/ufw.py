@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ufw', ufw_command_output)
+
+    or
+
     import jc.parsers.ufw
     result = jc.parsers.ufw.parse(ufw_command_output)
 

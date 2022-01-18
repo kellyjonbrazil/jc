@@ -9,6 +9,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('jar_manifest', jar_manifest_file_output)
+
+    or
+
     import jc.parsers.jar_manifest
     result = jc.parsers.jar_manifest.parse(jar_manifest_file_output)
 

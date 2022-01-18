@@ -10,6 +10,13 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('foo_s', foo_command_output.splitlines())    # result is an iterable object
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.foo_s
     result = jc.parsers.foo_s.parse(foo_command_output.splitlines())    # result is an iterable object
     for item in result:

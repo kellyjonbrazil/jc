@@ -15,6 +15,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ss', ss_command_output)
+
+    or
+
     import jc.parsers.ss
     result = jc.parsers.ss.parse(ss_command_output)
 

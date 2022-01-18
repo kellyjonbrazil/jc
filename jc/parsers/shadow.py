@@ -6,6 +6,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('shadow', shadow_file_output)
+
+    or
+
     import jc.parsers.shadow
     result = jc.parsers.shadow.parse(shadow_file_output)
 

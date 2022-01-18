@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('finger', finger_command_output)
+
+    or
+
     import jc.parsers.finger
     result = jc.parsers.finger.parse(finger_command_output)
 

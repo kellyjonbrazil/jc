@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('wc', wc_command_output)
+
+    or
+
     import jc.parsers.wc
     result = jc.parsers.wc.parse(wc_command_output)
 

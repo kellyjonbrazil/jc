@@ -16,6 +16,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('traceroute', traceroute_command_output)
+
+    or
+
     import jc.parsers.traceroute
     result = jc.parsers.traceroute.parse(traceroute_command_output)
 

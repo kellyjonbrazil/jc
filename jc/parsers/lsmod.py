@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('lsmod', lsmod_command_output)
+
+    or
+
     import jc.parsers.lsmod
     result = jc.parsers.lsmod.parse(lsmod_command_output)
 

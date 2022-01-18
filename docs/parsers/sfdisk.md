@@ -22,6 +22,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('sfdisk', sfdisk_command_output)
+
+    or
+
     import jc.parsers.sfdisk
     result = jc.parsers.sfdisk.parse(sfdisk_command_output)
 

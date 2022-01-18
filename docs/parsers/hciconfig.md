@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('hciconfig', hciconfig_command_output)
+
+    or
+
     import jc.parsers.hciconfig
     result = jc.parsers.hciconfig.parse(hciconfig_command_output)
 
