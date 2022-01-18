@@ -84,6 +84,8 @@ Alternatively, you can bypass the high-level API and call the parser modules dir
     'class': 'IN', 'type': 'A', 'ttl': 29658, 'data': '93.184.216.34'}], 'query_time': 52, 'server':
     '2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
     'when_epoch': 1618614780, 'when_epoch_utc': None}]
+
+To get a list of all available parser module names, use `jc.parser_mod_list()`. For a list of plugin parser module names only, use `jc.plugin_parser_mod_list()`.
 """
 from .lib import __version__, parse, parser_mod_list, plugin_parser_mod_list
 
