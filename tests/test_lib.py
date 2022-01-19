@@ -37,5 +37,8 @@ class MyTests(unittest.TestCase):
     def test_jc_lib_plugin_parser_mod_list_is_list(self):
         self.assertIsInstance(jc.lib.plugin_parser_mod_list(), list)
 
+    def test_jc_lib_plugin_parser_mod_list_length_is_zero(self):
+        self.assertEqual(len(jc.lib.plugin_parser_mod_list()), 0)
+
 if __name__ == '__main__':
     unittest.main()
