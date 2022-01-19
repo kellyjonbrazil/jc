@@ -135,14 +135,15 @@ def parse(parser_mod_name, data, quiet=False, raw=False, ignore_exceptions=None,
         {'year': 2022, 'month': 'Jan', 'month_num': 1, 'day'...}
 
     To get a list of available parser module names, use `parser_mod_list()`
-    or `plugin_parser_mod_list()`.
+    or `plugin_parser_mod_list()`. `plugin_parser_mod_list()` is a subset of `parser_mod_list()`.
 
     You can also use the lower-level parser modules directly:
 
         >>> import jc.parsers.date
         >>> jc.parsers.date.parse('Tue Jan 18 10:23:07 PST 2022')
 
-    Though, accessing plugin parsers directly is a bit more involved:
+    Though, accessing plugin parsers directly is a bit more involved, so the higher-level
+    API is recommended. Here is how you can access plugin parsers without the API:
 
         >>> import os
         >>> import sys
