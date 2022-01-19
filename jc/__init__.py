@@ -88,7 +88,3 @@ Alternatively, you can bypass the high-level API and call the parser modules dir
 To get a list of all available parser module names, use `jc.parser_mod_list()`. For a list of plugin parser module names only, use `jc.plugin_parser_mod_list()`.
 """
 from .lib import __version__, parse, parser_mod_list, plugin_parser_mod_list
-
-# cleanup
-del lib
-del appdirs
