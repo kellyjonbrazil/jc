@@ -178,11 +178,12 @@ def parse(parser_mod_name, data,
         Streaming Parsers:  Generator Object
     """
     parser_cli_name = _modname_to_cliname(parser_mod_name)
-    modpath = ('jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.')
+    modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     jc_parser = importlib.import_module(f'{modpath}{parser_mod_name}')
 
     if ignore_exceptions is not None:
-        return jc_parser.parse(data, quiet=quiet, raw=raw, ignore_exceptions=ignore_exceptions, **kwargs)
+        return jc_parser.parse(data, quiet=quiet, raw=raw,
+                               ignore_exceptions=ignore_exceptions, **kwargs)
 
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
