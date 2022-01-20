@@ -100,6 +100,7 @@ parsers = [
 
 # Create the local_parsers list. This is a list of custom or
 # override parsers from <user_data_dir>/jc/jcparsers/*.py.
+# Once this list is created, extend the parsers list with it.
 local_parsers = []
 data_dir = appdirs.user_data_dir('jc', 'jc')
 local_parsers_dir = os.path.join(data_dir, 'jcparsers')
@@ -121,6 +122,12 @@ def _cliname_to_modname(parser_cli_name):
 def _modname_to_cliname(parser_mod_name):
     """Return module's cli name (underscores converted to dashes)"""
     return parser_mod_name.replace('_', '-')
+
+def _get_parser(parser_mod_name):
+    """Return the parser module object"""
+    parser_cli_name = _modname_to_cliname(parser_mod_name)
+    modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
+    return importlib.import_module(f'{modpath}{parser_mod_name}')
 
 def parse(parser_mod_name, data,
           quiet=False, raw=False, ignore_exceptions=None, **kwargs):
@@ -177,9 +184,7 @@ def parse(parser_mod_name, data,
         Standard Parsers:   Dictionary or List of Dictionaries
         Streaming Parsers:  Generator Object
     """
-    parser_cli_name = _modname_to_cliname(parser_mod_name)
-    modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
-    jc_parser = importlib.import_module(f'{modpath}{parser_mod_name}')
+    jc_parser = _get_parser(parser_mod_name)
 
     if ignore_exceptions is not None:
         return jc_parser.parse(data, quiet=quiet, raw=raw,
@@ -194,3 +199,7 @@ def parser_mod_list():
 def plugin_parser_mod_list():
     """Returns a list of plugin parser module names."""
     return [_cliname_to_modname(p) for p in local_parsers]
+
+def get_help(parser_mod_name):
+    """Show help screen for the selected parser"""
+    help(_get_parser(parser_mod_name))
