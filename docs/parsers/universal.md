@@ -7,10 +7,7 @@ jc - JSON CLI output utility universal Parsers
 simple_table_parse(data)
 ```
 
-Parse simple tables. The last column may contain data with spaces
-
-code adapted from Conor Heine at:
-https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+Parse simple tables. The last column may contain data with spaces.
 
 Parameters:
 

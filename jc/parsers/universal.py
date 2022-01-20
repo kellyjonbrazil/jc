@@ -6,10 +6,7 @@ import string
 
 def simple_table_parse(data):
     """
-    Parse simple tables. The last column may contain data with spaces
-
-    code adapted from Conor Heine at:
-    https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+    Parse simple tables. The last column may contain data with spaces.
 
     Parameters:
 
@@ -26,6 +23,8 @@ def simple_table_parse(data):
 
         List of Dictionaries
     """
+    # code adapted from Conor Heine at:
+    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
     headers = [h for h in ' '.join(data[0].strip().split()).split() if h]
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), data[1:])
     raw_output = [dict(zip(headers, r)) for r in raw_data]
