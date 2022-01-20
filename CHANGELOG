@@ -2,6 +2,8 @@ jc changelog
 
 20220119 v1.18.0
 - Add high-level parse API for built-in and plugin parsers
+- Add python module developer documentation
+- Exception handling enhancements
 - Documentation formatting enhancements
 
 20220106 v1.17.7
