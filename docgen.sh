@@ -12,6 +12,9 @@ pydocmd simple lib+ > ../docs/lib.md
 echo Building docs for: utils
 pydocmd simple utils+ > ../docs/utils.md
 
+echo Building docs for: universal parser
+pydocmd simple jc.parsers.universal+ > ../docs/parsers/universal.md
+
 # a bit of inception here... jc is being used to help
 # automate the generation of its own documentation. :)
 
