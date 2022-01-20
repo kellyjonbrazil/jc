@@ -32,9 +32,7 @@ modules directly:
     >>> data
     [{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', ...}]
 
-Available Functions:
-
-* Use `help(jc.lib)` for details
+Available Functions (use `help(jc.lib)` for details):
 
     parse(parser_module_name: str, data: str | iterable)
         High-level API to easily access the parser. This API will find both
