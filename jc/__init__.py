@@ -39,12 +39,12 @@ Available Functions (use `help(jc.lib)` for details):
         built-in parsers and local plugin parsers.
 
     get_help(parser_module_name: str)
-        Convenience function to display the help screen for a parser using its
-        module name.
+        Convenience function to display the help screen for a parser using
+        its module name.
 
     parser_mod_list()
-        Get a list of all available parser module names to be used in parse()
-        and get_help().
+        Get a list of all available parser module names to be used in
+        parse() and get_help().
 
     plugin_parser_mod_list()
         Get a list of plugin parser module names. This list is a subset of
