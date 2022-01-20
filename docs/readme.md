@@ -7,9 +7,16 @@ JC - JSON CLI output utility
 This package serializes the output of many standard unix command line tools
 to dictionaries and lists of dictionaries.
 
-For documentation on each parser, see the
-[documentation site](https://kellyjonbrazil.github.io/jc/) or use
-`jc.get_help('parser_module_name')`
+Interactive Documentation
+
+    >>> help(jc)
+    >>> help(jc.lib)
+    >>> help(jc.util)
+    >>> jc.get_help('parser_module_name')
+
+Online Documentation
+
+https://github.com/kellyjonbrazil/jc/tree/master/docs
 
 Example:
 

@@ -183,7 +183,7 @@ def parse(parser_mod_name, data,
     Returns:
 
         Standard Parsers:   Dictionary or List of Dictionaries
-        Streaming Parsers:  Generator Object
+        Streaming Parsers:  Generator Object containing Dictionaries
     """
     jc_parser = _get_parser(parser_mod_name)
 
@@ -198,9 +198,12 @@ def parser_mod_list():
     return [_cliname_to_modname(p) for p in parsers]
 
 def plugin_parser_mod_list():
-    """Returns a list of plugin parser module names."""
+    """
+    Returns a list of plugin parser module names. This function is a
+    subset of `parser_mod_list()`.
+    """
     return [_cliname_to_modname(p) for p in local_parsers]
 
 def get_help(parser_mod_name):
-    """Show help screen for the selected parser"""
+    """Show help screen for the selected parser."""
     help(_get_parser(parser_mod_name))

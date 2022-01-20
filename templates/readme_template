@@ -46,7 +46,7 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 'when_epoch': 1618614780, 'when_epoch_utc': None}]
 ```
 
-> For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or see the [online documentation](https://kellyjonbrazil.github.io/jc/docs/).
+> For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or see the [online documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs).
 
 Two representations of the data are available. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 

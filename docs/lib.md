@@ -65,7 +65,7 @@ Parameters:
 Returns:
 
     Standard Parsers:   Dictionary or List of Dictionaries
-    Streaming Parsers:  Generator Object
+    Streaming Parsers:  Generator Object containing Dictionaries
 
 
 ## parser_mod_list
@@ -78,10 +78,13 @@ Returns a list of all available parser module names.
 ```python
 plugin_parser_mod_list()
 ```
-Returns a list of plugin parser module names.
+
+Returns a list of plugin parser module names. This function is a
+subset of `parser_mod_list()`.
+
 
 ## get_help
 ```python
 get_help(parser_mod_name)
 ```
-Show help screen for the selected parser
+Show help screen for the selected parser.
