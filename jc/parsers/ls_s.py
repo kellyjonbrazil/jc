@@ -1,14 +1,19 @@
-"""jc - JSON CLI output utility `ls` and `vdir` command output streaming parser
+"""jc - JSON CLI output utility `ls` and `vdir` command output streaming
+parser
 
 > This streaming parser outputs JSON Lines
 
-Requires the `-l` option to be used on `ls`. If there are newline characters in the filename, then make sure to use the `-b` option on `ls`.
+Requires the `-l` option to be used on `ls`. If there are newline characters
+in the filename, then make sure to use the `-b` option on `ls`.
 
-The `jc` `-qq` option can be used to ignore parsing errors. (e.g. filenames with newline characters, but `-b` was not used)
+The `jc` `-qq` option can be used to ignore parsing errors. (e.g. filenames
+with newline characters, but `-b` was not used)
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive (i.e. based on the local time
+of the system the parser is run on)
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -17,14 +22,16 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('ls_s', ls_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parse('ls_s', ls_command_output.splitlines())
     for item in result:
         # do something
 
     or
 
     import jc.parsers.ls_s
-    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
     for item in result:
         # do something
 
@@ -39,28 +46,34 @@ Schema:
       "group":          string,
       "size":           integer,
       "date":           string,
-      "epoch":          integer,     # naive timestamp if date field exists and can be converted
-      "epoch_utc":      integer,     # timezone aware timestamp if date field is in UTC and can be converted
-      "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
+      "epoch":          integer,     # [0]
+      "epoch_utc":      integer,     # [1]
+
+      # Below object only exists if using -qq or ignore_exceptions=True
+
+      "_jc_meta":
         {
-          "success":    boolean,     # true if successfully parsed, false if error
+          "success":    boolean,     # false if error parsing
           "error":      string,      # exists if "success" is false
           "line":       string       # exists if "success" is false
         }
     }
 
+    [0] naive timestamp if date field exists and can be converted
+    [1] timezone aware timestamp if date field is in UTC and can be converted
+
 Examples:
 
     $ ls -l /usr/bin | jc --ls-s
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","group":"wheel","size":925,"date":"Feb 22 2019"}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":1,"owner":"root","group":"wheel","size":74,"date":"May 4 2019"}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,"owner":"root","group":"wheel","size":55152,"date":"May 3 2019"}
+    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","...}
+    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
+    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,...}
     ...
 
     $ ls -l /usr/bin | jc --ls-s -r
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"root","group":"wheel","size":"925","date":"Feb 22 2019"}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/Python.framework/Versions/2.7/bin/2to3-2.7","flags":"lrwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"74","date":"May 4 2019"}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1","owner":"root","group":"wheel","size":"55152","date":"May 3 2019"}
+    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"roo"..."}
+    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
+    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1...}
     ...
 """
 import re
@@ -75,8 +88,6 @@ class info():
     description = '`ls` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     streaming = True
 
@@ -117,7 +128,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Parameters:
 
-        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
+        data:              (iterable)  line-based text data to parse
+                                       (e.g. sys.stdin or str.splitlines())
+
         raw:               (boolean)   output preprocessed JSON if True
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True

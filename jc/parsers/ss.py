@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility `ss` command output parser
 
-Extended information options like -e and -p are not supported and may cause parsing irregularities.
+Extended information options like -e and -p are not supported and may cause
+parsing irregularities.
 
 Usage (cli):
 
@@ -22,7 +23,8 @@ Usage (module):
 
 Schema:
 
-    Information from https://www.cyberciti.biz/files/ss.html used to define field names
+    Information from https://www.cyberciti.biz/files/ss.html used to define
+    field names
 
     [
       {
@@ -288,8 +290,6 @@ class info():
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['ss']
 

@@ -57,8 +57,6 @@ class info():
     description = '`uname -a` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['uname']
 
@@ -130,7 +128,7 @@ def parse(data, raw=False, quiet=False):
                     fixup.insert(-1, 'unknown')
                     fixup.insert(-1, 'unknown')
                     data = ' '.join(fixup)
-            
+
             parsed_line = data.split(maxsplit=3)
 
             if len(parsed_line) < 3:

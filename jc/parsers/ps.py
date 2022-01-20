@@ -58,7 +58,7 @@ Examples:
         "stime": "Nov01",
         "tty": null,
         "time": "00:00:11",
-        "cmd": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+        "cmd": "/usr/lib/systemd/systemd --switched-root --system --dese..."
       },
       {
         "uid": "root",
@@ -93,7 +93,7 @@ Examples:
         "stime": "Nov01",
         "tty": "?",
         "time": "00:00:11",
-        "cmd": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+        "cmd": "/usr/lib/systemd/systemd --switched-root --system --dese..."
       },
       {
         "uid": "root",
@@ -131,7 +131,7 @@ Examples:
         "stat": "Ss",
         "start": "Nov09",
         "time": "0:08",
-        "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+        "command": "/usr/lib/systemd/systemd --switched-root --system --..."
       },
       {
         "user": "root",
@@ -175,7 +175,7 @@ Examples:
         "stat": "Ss",
         "start": "Nov09",
         "time": "0:08",
-        "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+        "command": "/usr/lib/systemd/systemd --switched-root --system --..."
       },
       {
         "user": "root",
@@ -216,8 +216,6 @@ class info():
     description = '`ps` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['ps']
 

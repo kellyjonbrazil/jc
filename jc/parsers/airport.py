@@ -89,9 +89,6 @@ class info():
     description = '`airport -I` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['darwin']
     magic_commands = ['airport -I']
 
@@ -144,7 +141,9 @@ def parse(data, raw=False, quiet=False):
 
         for line in filter(None, data.splitlines()):
             linedata = line.split(':', maxsplit=1)
-            raw_output[linedata[0].strip().lower().replace(' ', '_').replace('.', '_')] = linedata[1].strip()
+            key = linedata[0].strip().lower().replace(' ', '_').replace('.', '_')
+            value = linedata[1].strip()
+            raw_output[key] = value
 
     if raw:
         return raw_output

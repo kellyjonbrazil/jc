@@ -2,7 +2,9 @@
 
 Supports `-w` and `-F` options.
 
-Calculated epoch time fields are naive (i.e. based on the local time of the system the parser is run on) since there is no timezone information in the `last` command output.
+Calculated epoch time fields are naive (i.e. based on the local time of the
+system the parser is run on) since there is no timezone information in the
+`last` command output.
 
 Usage (cli):
 
@@ -32,9 +34,9 @@ Schema:
         "login":            string,
         "logout":           string,
         "duration":         string,
-        "login_epoch":      integer,   # (naive) available with last -F option
-        "logout_epoch":     integer,   # (naive) available with last -F option
-        "duration_seconds": integer    # available with last -F option
+        "login_epoch":      integer,  # (naive) available with last -F option
+        "logout_epoch":     integer,  # (naive) available with last -F option
+        "duration_seconds": integer   # available with last -F option
       }
     ]
 
@@ -114,8 +116,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Enhancements by https://github.com/zerolagtime'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['last', 'lastb']
 
@@ -203,7 +203,10 @@ def parse(data, raw=False, quiet=False):
         for entry in cleandata:
             output_line = {}
 
-            if entry.startswith('wtmp begins ') or entry.startswith('btmp begins ') or entry.startswith('utx.log begins '):
+            if (entry.startswith('wtmp begins ') or
+                entry.startswith('btmp begins ') or
+                entry.startswith('utx.log begins ')):
+
                 continue
 
             entry = entry.replace('system boot', 'system_boot')

@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+"""jc - JSON CLI output utility `crontab -l` command output and crontab
+file parser
 
 Supports `crontab -l` command output and crontab files.
 
@@ -182,9 +183,6 @@ class info():
     description = '`crontab` command and file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['crontab']
 

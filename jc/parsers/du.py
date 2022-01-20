@@ -37,23 +37,23 @@ Examples:
       },
       {
         "size": 56,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 1008,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       ...
     ]
@@ -66,23 +66,23 @@ Examples:
       },
       {
         "size": "56",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "1008",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       ...
     ]
@@ -97,9 +97,6 @@ class info():
     description = '`du` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['du']
 

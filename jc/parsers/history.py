@@ -1,8 +1,12 @@
 """jc - JSON CLI output utility `history` command output parser
 
-This parser will output a list of dictionaries each containing `line` and `command` keys. If you would like a simple dictionary output, then use the `-r` command-line option or the `raw=True` argument in the `parse()` function.
+This parser will output a list of dictionaries each containing `line` and
+`command` keys. If you would like a simple dictionary output, then use the
+`-r` command-line option or the `raw=True` argument in the `parse()`
+function.
 
-The "Magic" syntax is not supported since the `history` command is a shell builtin.
+The "Magic" syntax is not supported since the `history` command is a shell
+builtin.
 
 Usage (cli):
 
@@ -69,8 +73,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Optimizations by https://github.com/philippeitis'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
 
 

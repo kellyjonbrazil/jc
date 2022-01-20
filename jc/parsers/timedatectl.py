@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility `timedatectl` command output parser
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the `universal_time` field is available.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the `universal_time` field is available.
 
 Usage (cli):
 
@@ -25,7 +26,7 @@ Schema:
     {
       "local_time":                        string,
       "universal_time":                    string,
-      "epoch_utc":                         integer,     # timezone-aware timestamp
+      "epoch_utc":                         integer,     # timezone-aware
       "rtc_time":                          string,
       "time_zone":                         string,
       "ntp_enabled":                       boolean,
@@ -72,9 +73,6 @@ class info():
     description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['timedatectl', 'timedatectl status']
 

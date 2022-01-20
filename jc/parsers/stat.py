@@ -1,8 +1,10 @@
 """jc - JSON CLI output utility `stat` command output parser
 
-The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
+local time of the system the parser is run on)
 
-The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
+The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -178,8 +180,6 @@ class info():
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['stat']
 
@@ -200,8 +200,8 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'unix_device',
-                    'rdev', 'block_size']
+        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid',
+                    'unix_device', 'rdev', 'block_size']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

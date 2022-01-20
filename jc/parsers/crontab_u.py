@@ -1,6 +1,8 @@
-"""jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+"""jc - JSON CLI output utility `crontab -l` command output and crontab
+file parser
 
-This version of the `crontab -l` parser supports output that contains user information for processes.
+This version of the `crontab -l` parser supports output that contains user
+information for processes.
 
 Usage (cli):
 
@@ -57,7 +59,7 @@ Examples:
       "variables": [
         {
           "name": "PATH",
-          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sb..."
         },
         {
           "name": "SHELL",
@@ -82,7 +84,7 @@ Examples:
             "*"
           ],
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": [
@@ -101,7 +103,7 @@ Examples:
             "7"
           ],
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": [
@@ -120,7 +122,7 @@ Examples:
             "*"
           ],
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         }
       ]
     }
@@ -130,7 +132,7 @@ Examples:
       "variables": [
         {
           "name": "PATH",
-          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/..."
         },
         {
           "name": "SHELL",
@@ -145,7 +147,7 @@ Examples:
           "month": "*",
           "day_of_week": "*",
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": "47",
@@ -154,7 +156,7 @@ Examples:
           "month": "*",
           "day_of_week": "7",
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": "52",
@@ -163,7 +165,7 @@ Examples:
           "month": "*",
           "day_of_week": "*",
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         }
       ]
     }
@@ -178,9 +180,6 @@ class info():
     description = '`crontab` file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
 
 

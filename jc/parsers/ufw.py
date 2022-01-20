@@ -45,7 +45,7 @@ Schema:
               "end":                integer
             }
           ],
-          "to_service":             string,     # null if any to ports or port_ranges are set
+          "to_service":             string,     # [0]
           "from_ip":                string,
           "from_ip_prefix":         integer,
           "from_interface":         string,
@@ -59,11 +59,14 @@ Schema:
               "end":                integer
             }
           ],
-          "from_service":           string,     # null if any from ports or port_ranges are set
+          "from_service":           string,     # [1]
           "comment":                string      # null if no comment
         }
       ]
     }
+
+    [0] null if any 'to' ports or port_ranges are set
+    [1] null if any 'from' ports or port_ranges are set
 
 Examples:
 

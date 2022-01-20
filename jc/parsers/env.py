@@ -1,6 +1,9 @@
 """jc - JSON CLI output utility `env` and `printenv` command output parser
 
-This parser will output a list of dictionaries each containing `name` and `value` keys. If you would like a simple dictionary output, then use the `-r` command-line option or the `raw=True` argument in the `parse()` function.
+This parser will output a list of dictionaries each containing `name` and
+`value` keys. If you would like a simple dictionary output, then use the
+`-r` command-line option or the `raw=True` argument in the `parse()`
+function.
 
 Usage (cli):
 
@@ -78,8 +81,6 @@ class info():
     description = '`env` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     magic_commands = ['env', 'printenv']
 

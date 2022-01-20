@@ -8,66 +8,79 @@ Usage (cli):
 
     $ ping | jc --ping-s
 
-> Note: When piping `jc` converted `ping` output to other processes it may appear the output is hanging due to the OS pipe buffers. This is because `ping` output is too small to quickly fill up the buffer. Use the `-u` option to unbuffer the `jc` output if you would like immediate output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output) for more information.
+> Note: When piping `jc` converted `ping` output to other processes it may
+  appear the output is hanging due to the OS pipe buffers. This is because
+  `ping` output is too small to quickly fill up the buffer. Use the `-u`
+  option to unbuffer the `jc` output if you would like immediate output.
+  See the[readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
+  for more information.
 
 Usage (module):
 
     import jc
-    result = jc.parse('ping_s', ping_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parse('ping_s', ping_command_output.splitlines())
     for item in result:
         # do something
 
     or
 
     import jc.parsers.ping_s
-    result = jc.parsers.ping_s.parse(ping_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parsers.ping_s.parse(ping_command_output.splitlines())
     for item in result:
         # do something
 
 Schema:
 
     {
-      "type":                        string,        # 'reply', 'timeout', 'summary', etc. See `_error_type.type_map` for all options.
-      "source_ip":                   string,
-      "destination_ip":              string,
-      "sent_bytes":                  integer,
-      "pattern":                     string,        # (null if not set)
-      "destination":                 string,
-      "timestamp":                   float,
-      "response_bytes":              integer,
-      "response_ip":                 string,
-      "icmp_seq":                    integer,
-      "ttl":                         integer,
-      "time_ms":                     float,
-      "duplicate":                   boolean,
-      "packets_transmitted":         integer,
-      "packets_received":            integer,
-      "packet_loss_percent":         float,
-      "duplicates":                  integer,
-      "round_trip_ms_min":           float,
-      "round_trip_ms_avg":           float,
-      "round_trip_ms_max":           float,
-      "round_trip_ms_stddev":        float,
-      "_jc_meta":                                  # This object only exists if using -qq or ignore_exceptions=True
+      "type":                       string,   # [0]
+      "source_ip":                  string,
+      "destination_ip":             string,
+      "sent_bytes":                 integer,
+      "pattern":                    string,   # (null if not set)
+      "destination":                string,
+      "timestamp":                  float,
+      "response_bytes":             integer,
+      "response_ip":                string,
+      "icmp_seq":                   integer,
+      "ttl":                        integer,
+      "time_ms":                    float,
+      "duplicate":                  boolean,
+      "packets_transmitted":        integer,
+      "packets_received":           integer,
+      "packet_loss_percent":        float,
+      "duplicates":                 integer,
+      "round_trip_ms_min":          float,
+      "round_trip_ms_avg":          float,
+      "round_trip_ms_max":          float,
+      "round_trip_ms_stddev":       float,
+
+      # Below object only exists if using -qq or ignore_exceptions=True
+
+      "_jc_meta":
         {
-          "success":                 boolean,      # true if successfully parsed, false if error
-          "error":                   string,       # exists if "success" is false
-          "line":                    string        # exists if "success" is false
+          "success":                boolean,  # false if error parsing
+          "error":                  string,   # exists if "success" is false
+          "line":                   string    # exists if "success" is false
         }
     }
+
+    [0] 'reply', 'timeout', 'summary', etc. See `_error_type.type_map`
+        for all options.
 
 Examples:
 
     $ ping 1.1.1.1 | jc --ping-s
-    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"pattern":null,"response_bytes":64,"response_ip":"1.1.1.1","icmp_seq":0,"ttl":56,"time_ms":23.703}
-    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"pattern":null,"response_bytes":64,"response_ip":"1.1.1.1","icmp_seq":1,"ttl":56,"time_ms":22.862}
-    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"pattern":null,"response_bytes":64,"response_ip":"1.1.1.1","icmp_seq":2,"ttl":56,"time_ms":22.82}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"patte...}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"patte...}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":56,"patte...}
     ...
 
     $ ping 1.1.1.1 | jc --ping-s -r
-    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","pattern":null,"response_bytes":"64","response_ip":"1.1.1.1","icmp_seq":"0","ttl":"56","time_ms":"23.054"}
-    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","pattern":null,"response_bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"56","time_ms":"24.739"}
-    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","pattern":null,"response_bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"56","time_ms":"23.232"}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","patte...}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","patte...}
+    {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","patte...}
     ...
 """
 import string
@@ -83,8 +96,6 @@ class info():
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     streaming = True
 
@@ -104,10 +115,14 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = ['sent_bytes', 'packets_transmitted', 'packets_received', 'response_bytes', 'icmp_seq', 'ttl',
-                'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks']
-    float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
-                  'round_trip_ms_stddev', 'timestamp', 'time_ms']
+    int_list = [
+        'sent_bytes', 'packets_transmitted', 'packets_received', 'response_bytes', 'icmp_seq',
+        'ttl', 'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks'
+    ]
+    float_list = [
+        'packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
+        'round_trip_ms_stddev', 'timestamp', 'time_ms'
+    ]
 
     for key in proc_data:
         if key in int_list:
@@ -460,7 +475,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Parameters:
 
-        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
+        data:              (iterable)  line-based text data to parse
+                                       (e.g. sys.stdin or str.splitlines())
+
         raw:               (boolean)   output preprocessed JSON if True
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True

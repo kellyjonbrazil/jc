@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility `iw dev <device> scan` command output parser
 
-This parser is considered beta quality. Not all fields are parsed and there are not enough samples to test.
+This parser is considered beta quality. Not all fields are parsed and there
+are not enough samples to test.
 
 Usage (cli):
 
@@ -24,7 +25,7 @@ Schema:
 
     [
       {
-        "foo":     string/integer/float,         # best guess based on value
+        "foo":     string/integer/float,      # best guess based on value
         "bar":     string/integer/float,
         "baz":     string/integer/float
       }
@@ -131,8 +132,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Enhancements by Philipp Schmitt (https://pschmitt.dev/)'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['iw dev']
 
@@ -325,7 +324,9 @@ def parse(data, raw=False, quiet=False):
 
                 split_line = line.split(':', maxsplit=1)
                 if len(split_line) == 2:
-                    split_line[0] = split_line[0].lower().replace('*', '').replace('(', '').replace(')', '').replace(',', '').replace('-', '_').strip().replace(' ', '_')
+                    split_line[0] = split_line[0].lower().replace('*', '').replace('(', '')\
+                                                 .replace(')', '').replace(',', '').replace('-', '_')\
+                                                 .strip().replace(' ', '_')
                     section[split_line[0]] = split_line[1].strip()
 
                 continue

@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility `systemctl list-unit-files` command output parser
+"""jc - JSON CLI output utility `systemctl list-unit-files` command output
+parser
 
 Usage (cli):
 
@@ -55,8 +56,6 @@ class info():
     description = '`systemctl list-unit-files` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['systemctl list-unit-files']
 

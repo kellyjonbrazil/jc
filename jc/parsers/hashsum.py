@@ -78,10 +78,9 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Parses MD5 and SHA hash program output'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-    magic_commands = ['md5sum', 'md5', 'shasum', 'sha1sum', 'sha224sum', 'sha256sum', 'sha384sum', 'sha512sum']
+    magic_commands = ['md5sum', 'md5', 'shasum', 'sha1sum', 'sha224sum',
+                      'sha256sum', 'sha384sum', 'sha512sum']
 
 
 __version__ = info.version

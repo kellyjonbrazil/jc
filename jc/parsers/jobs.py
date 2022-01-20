@@ -2,7 +2,8 @@
 
 Also supports the `-l` option.
 
-The "Magic" syntax is not supported since the `jobs` command is a shell builtin.
+The "Magic" syntax is not supported since the `jobs` command is a shell
+builtin.
 
 Usage (cli):
 
@@ -102,8 +103,6 @@ class info():
     description = '`jobs` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['jobs']
 

@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility `systemctl list-sockets` command output parser
+"""jc - JSON CLI output utility `systemctl list-sockets` command output
+parser
 
 Usage (cli):
 
@@ -59,8 +60,6 @@ class info():
     description = '`systemctl list-sockets` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['systemctl list-sockets']
 

@@ -1,8 +1,10 @@
 """jc - JSON CLI output utility `date` command output parser
 
-The `epoch` calculated timestamp field is naive. (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -37,14 +39,18 @@ Schema:
       "second":             integer,
       "period":             string,
       "timezone":           string,
-      "utc_offset":         string,       # null if timezone field is not UTC
+      "utc_offset":         string,      # null if timezone field is not UTC
       "day_of_year":        integer,
       "week_of_year":       integer,
       "iso":                string,
-      "epoch":              integer,      # naive timestamp
-      "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
-      "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
+      "epoch":              integer,     # [0]
+      "epoch_utc":          integer,     # [1]
+      "timezone_aware":     boolean      # [2]
     }
+
+    [0] naive timestamp
+    [1] timezone-aware timestamp. Only available if timezone field is UTC
+    [2] if true, all fields are correctly based on UTC
 
 Examples:
 
@@ -81,8 +87,6 @@ class info():
     description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['date']
 
@@ -129,28 +133,33 @@ def parse(data, raw=False, quiet=False):
 
         # find the timezone no matter where it is in the string
         # from https://www.timeanddate.com/time/zones/
-        tz_abbr = ['A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT', 'AKST', 'ALMT',
-                   'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT', 'AWST', 'AZOST', 'AZOT',
-                   'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST', 'BTT', 'C', 'CAST', 'CAT', 'CCT',
-                   'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST', 'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST',
-                   'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT', 'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST',
-                   'EAT', 'ECT', 'EDT', 'EEST', 'EET', 'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST',
-                   'FKT', 'FNT', 'G', 'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT',
-                   'HOVST', 'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
-                   'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M', 'MAGST',
-                   'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT', 'MVT', 'MYT', 'N',
-                   'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST', 'NUT', 'NZDT', 'NZST', 'O',
-                   'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT', 'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT',
-                   'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT', 'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT',
-                   'SAMT', 'SAST', 'SBT', 'SCT', 'SGT', 'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT',
-                   'TLT', 'TMT', 'TOST', 'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET',
-                   'VLAST', 'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT', 'WGST',
-                   'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT', 'YEKST', 'YEKT', 'Z',
-                   'UTC', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900', 'UTC-0800', 'UTC-0700', 'UTC-0600',
-                   'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230', 'UTC-0200', 'UTC-0100', 'UTC+0000', 'UTC-0000',
-                   'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430', 'UTC+0500', 'UTC+0530', 'UTC+0545',
-                   'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030',
-                   'UTC+1100', 'UTC+1200', 'UTC+1300', 'UTC+1345', 'UTC+1400']
+        tz_abbr = [
+            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
+            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
+            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
+            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
+            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
+            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
+            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
+            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
+            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
+            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
+            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
+            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
+            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
+            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
+            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
+            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
+            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
+            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
+            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
+            'YEKST', 'YEKT', 'Z', 'UTC', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
+            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
+            'UTC-0200', 'UTC-0100', 'UTC+0000', 'UTC-0000', 'UTC+0100', 'UTC+0200', 'UTC+0300',
+            'UTC+0400', 'UTC+0430', 'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630',
+            'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100',
+            'UTC+1200', 'UTC+1300', 'UTC+1345', 'UTC+1400'
+        ]
         tz = None
         for term in data.replace('(', '').replace(')', '').split():
             if term in tz_abbr:

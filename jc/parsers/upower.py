@@ -1,8 +1,10 @@
 """jc - JSON CLI output utility `upower` command output parser
 
-The `updated_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `updated_epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
 
-The `updated_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `updated_epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -31,8 +33,8 @@ Schema:
         "native_path":                  string,
         "power_supply":                 boolean,
         "updated":                      string,
-        "updated_epoch":                integer,       # null if date-time conversion fails
-        "updated_epoch_utc":            integer,       # null if date-time conversion fails
+        "updated_epoch":                integer,       # [0]
+        "updated_epoch_utc":            integer,       # [0]
         "updated_seconds_ago":          integer,
         "has_history":                  boolean,
         "has_statistics":               boolean,
@@ -84,12 +86,14 @@ Schema:
       }
     ]
 
+    [0] null if date-time conversion fails
+
 Examples:
 
     $ upower -i /org/freedesktop/UPower/devices/battery | jc --upower -p
     [
       {
-        "native_path": "/sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/power_supply/BAT0",
+        "native_path": "/sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/p...",
         "vendor": "NOTEBOOK",
         "model": "BAT",
         "serial": "0001",
@@ -148,7 +152,7 @@ Examples:
     $ upower -i /org/freedesktop/UPower/devices/battery | jc --upower -p -r
     [
       {
-        "native_path": "/sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/power_supply/BAT0",
+        "native_path": "/sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/p...",
         "vendor": "NOTEBOOK",
         "model": "BAT",
         "serial": "0001",
@@ -203,9 +207,6 @@ class info():
     description = '`upower` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['upower']
 
@@ -238,7 +239,10 @@ def _process(proc_data):
                 entry['updated_epoch_utc'] = ts.utc
 
         # top level boolean conversions
-        bool_list = ['power_supply', 'has_history', 'has_statistics', 'on_battery', 'lid_is_closed', 'lid_is_present']
+        bool_list = [
+            'power_supply', 'has_history', 'has_statistics', 'on_battery', 'lid_is_closed',
+            'lid_is_present'
+        ]
         for key in entry:
             if key in bool_list:
                 entry[key] = jc.utils.convert_to_bool(entry[key])
@@ -374,7 +378,9 @@ def parse(data, raw=False, quiet=False):
 
             # general detail lines
             if line.startswith('    ') and ':' in line:
-                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
+                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_')\
+                                                    .replace(' ', '_').replace('(', '')\
+                                                    .replace(')', '')
                 val = line.split(':', maxsplit=1)[1].strip()
                 device_obj['detail'][key] = val
                 continue
@@ -393,7 +399,9 @@ def parse(data, raw=False, quiet=False):
 
             # top level lines
             if line.startswith('  ') and ':' in line:
-                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_').replace(' ', '_').replace('(', '').replace(')', '')
+                key = line.split(':', maxsplit=1)[0].strip().lower().replace('-', '_')\
+                                                    .replace(' ', '_').replace('(', '')\
+                                                    .replace(')', '')
                 val = line.split(':', maxsplit=1)[1].strip()
                 device_obj[key] = val
                 continue

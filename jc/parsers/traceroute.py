@@ -2,7 +2,10 @@
 
 Supports `traceroute` and `traceroute6` output.
 
-Note: On some operating systems you will need to redirect `STDERR` to `STDOUT` for destination info since the header line is sent to `STDERR`. A warning message will be printed to `STDERR` if the header row is not found.
+Note: On some operating systems you will need to redirect `STDERR` to
+      `STDOUT` for destination info since the header line is sent to
+      `STDERR`. A warning message will be printed to `STDERR` if the
+      header row is not found.
 
 e.g. `$ traceroute 8.8.8.8 2>&1 | jc --traceroute`
 
@@ -129,8 +132,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the trparse library by Luis Benitez at https://github.com/lbenitez000/trparse'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['traceroute', 'traceroute6']
 

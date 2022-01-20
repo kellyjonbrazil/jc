@@ -1,6 +1,9 @@
 """jc - JSON CLI output utility `sysctl -a` command output parser
 
-Note: Since `sysctl` output is not easily parsable only a very simple key/value object will be output. An attempt is made to convert obvious integers and floats. If no conversion is desired, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
+Note: Since `sysctl` output is not easily parsable only a very simple
+      key/value object will be output. An attempt is made to convert obvious
+      integers and floats. If no conversion is desired, use the `-r`
+      command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -23,7 +26,7 @@ Usage (module):
 Schema:
 
     {
-      "key1":     string/integer/float,         # best guess based on value
+      "key1":     string/integer/float,     # best guess based on value
       "key2":     string/integer/float,
       "key3":     string/integer/float
     }
@@ -63,9 +66,6 @@ class info():
     description = '`sysctl` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['sysctl']
 

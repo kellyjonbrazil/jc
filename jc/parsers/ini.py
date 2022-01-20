@@ -1,8 +1,12 @@
 """jc - JSON CLI output utility `INI` file parser
 
-Parses standard `INI` files and files containing simple key/value pairs. Delimiter can be `=` or `:`. Missing values are supported. Comment prefix can be `#` or `;`. Comments must be on their own line.
+Parses standard `INI` files and files containing simple key/value pairs.
+Delimiter can be `=` or `:`. Missing values are supported. Comment prefix
+can be `#` or `;`. Comments must be on their own line.
 
-Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
+Note: Values starting and ending with quotation marks will have the marks
+removed. If you would like to keep the quotation marks, use the `-r`
+command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -20,11 +24,8 @@ Usage (module):
 
 Schema:
 
-    ini or key/value document converted to a dictionary - see configparser standard
-          library documentation for more details.
-
-    Note: Values starting and ending with quotation marks will have the marks removed.
-          If you would like to keep the quotation marks, use the -r or raw=True argument.
+    ini or key/value document converted to a dictionary - see the
+    configparser standard library documentation for more details.
 
     {
       "key1":       string,
@@ -76,8 +77,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using configparser from the standard library'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
 
@@ -108,8 +107,12 @@ def _process(proc_data):
 
         # simple key/value files with no headers
         else:
-            if proc_data[heading] is not None and proc_data[heading].startswith('"') and proc_data[heading].endswith('"'):
+            if (proc_data[heading] is not None and
+               proc_data[heading].startswith('"') and
+               proc_data[heading].endswith('"')):
+
                 proc_data[heading] = proc_data[heading].lstrip('"').rstrip('"')
+
             elif proc_data[heading] is None:
                 proc_data[heading] = ''
 

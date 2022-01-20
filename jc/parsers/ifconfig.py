@@ -198,8 +198,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using ifconfig-parser from https://github.com/KnightWhoSayNi/ifconfig-parser'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['ifconfig']
 
@@ -235,10 +233,12 @@ class _IfconfigParser(object):
     # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     # SOFTWARE.
 
-    attributes = ['name', 'type', 'mac_addr', 'ipv4_addr', 'ipv4_bcast', 'ipv4_mask', 'ipv6_addr', 'ipv6_mask',
-                  'ipv6_scope', 'state', 'mtu', 'metric', 'rx_packets', 'rx_errors', 'rx_dropped', 'rx_overruns',
-                  'rx_frame', 'tx_packets', 'tx_errors', 'tx_dropped', 'tx_overruns', 'tx_carrier', 'tx_collisions',
-                  'rx_bytes', 'tx_bytes']
+    attributes = [
+        'name', 'type', 'mac_addr', 'ipv4_addr', 'ipv4_bcast', 'ipv4_mask', 'ipv6_addr',
+        'ipv6_mask', 'ipv6_scope', 'state', 'mtu', 'metric', 'rx_packets', 'rx_errors',
+        'rx_dropped', 'rx_overruns', 'rx_frame', 'tx_packets', 'tx_errors', 'tx_dropped',
+        'tx_overruns', 'tx_carrier', 'tx_collisions', 'rx_bytes', 'tx_bytes'
+    ]
 
     def __init__(self, console_output):
         """
@@ -436,9 +436,11 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        int_list = ['flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped', 'rx_overruns',
-                    'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped', 'tx_overruns', 'tx_carrier',
-                    'tx_collisions', 'metric']
+        int_list = [
+            'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
+            'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
+            'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric'
+        ]
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

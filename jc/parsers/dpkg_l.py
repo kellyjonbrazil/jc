@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility `dpkg -l` command output parser
 
-Set the `COLUMNS` environment variable to a large value to avoid field truncation. For example:
+Set the `COLUMNS` environment variable to a large value to avoid field
+truncation. For example:
 
     $ COLUMNS=500 dpkg -l | jc --dpkg-l
 
@@ -74,7 +75,7 @@ Examples:
         "name": "acpid",
         "version": "1:2.0.28-1ubuntu1",
         "architecture": "amd64",
-        "description": "Advanced Configuration and Power Interface event daemon",
+        "description": "Advanced Configuration and Power Interface...",
         "desired": "remove",
         "status": "half installed"
       },
@@ -118,7 +119,7 @@ Examples:
         "name": "acpid",
         "version": "1:2.0.28-1ubuntu1",
         "architecture": "amd64",
-        "description": "Advanced Configuration and Power Interface event daemon"
+        "description": "Advanced Configuration and Power Interface..."
       },
       {
         "codes": "pn",
@@ -140,9 +141,6 @@ class info():
     description = '`dpkg -l` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['dpkg -l']
 

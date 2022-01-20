@@ -55,7 +55,7 @@ Schema:
             "boot":                 boolean,
             "start":                integer,
             "end":                  integer,
-            "size":                 string,    # Note: will be integer when using deprecated -d sfdisk option
+            "size":                 string,    # [0]
             "cyls":                 integer,
             "mib":                  integer,
             "blocks":               integer,
@@ -68,6 +68,8 @@ Schema:
       }
     ]
 
+    [0] will be integer when using deprecated -d sfdisk option
+
 Examples:
 
     # sfdisk -l | jc --sfdisk -p
@@ -77,7 +79,7 @@ Examples:
         "cylinders": 2610,
         "heads": 255,
         "sectors_per_track": 63,
-        "units": "cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0",
+        "units": "cylinders of 8225280 bytes, blocks of 1024 bytes, ...",
         "partitions": [
           {
             "device": "/dev/sda1",
@@ -142,7 +144,7 @@ Examples:
         "cylinders": "2610",
         "heads": "255",
         "sectors_per_track": "63",
-        "units": "cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0",
+        "units": "cylinders of 8225280 bytes, blocks of 1024 bytes, co...",
         "partitions": [
           {
             "device": "/dev/sda1",
@@ -229,9 +231,11 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = ['cylinders', 'heads', 'sectors_per_track', 'start', 'end', 'cyls', 'mib',
-                'blocks', 'sectors', 'bytes', 'logical_sector_size', 'physical_sector_size',
-                'min_io_size', 'optimal_io_size', 'free_bytes', 'free_sectors']
+    int_list = [
+        'cylinders', 'heads', 'sectors_per_track', 'start', 'end', 'cyls', 'mib', 'blocks',
+        'sectors', 'bytes', 'logical_sector_size', 'physical_sector_size', 'min_io_size',
+        'optimal_io_size', 'free_bytes', 'free_sectors'
+    ]
     bool_list = ['boot']
 
     for entry in proc_data:

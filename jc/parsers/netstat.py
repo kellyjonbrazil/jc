@@ -2,7 +2,8 @@
 
 Caveats:
 - Use of multiple `l` options is not supported on OSX (e.g. `netstat -rlll`)
-- Use of the `A` option is not supported on OSX when using the `r` option (e.g. `netstat -rA`)
+- Use of the `A` option is not supported on OSX when using the `r` option
+  (e.g. `netstat -rA`)
 
 Usage (cli):
 
@@ -363,8 +364,6 @@ class info():
     description = '`netstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['netstat']
 
@@ -386,13 +385,14 @@ def _process(proc_data):
     """
     for entry in proc_data:
         # integer and float conversions
-        int_list = ['recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class',
-                    'osx_flags', 'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes',
-                    'route_refs', 'use', 'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts',
-                    'ierrs', 'opkts', 'oerrs', 'coll', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr',
-                    'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop', 'ibytes', 'obytes', 'r_mbuf',
-                    's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa', 'r_lowa', 's_lowa', 'r_bcnt',
-                    's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win']
+        int_list = [
+            'recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class', 'osx_flags',
+            'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes', 'route_refs', 'use',
+            'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts', 'ierrs', 'opkts', 'oerrs', 'coll',
+            'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr', 'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop',
+            'ibytes', 'obytes', 'r_mbuf', 's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa',
+            'r_lowa', 's_lowa', 'r_bcnt', 's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win'
+        ]
         float_list = ['rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime']
         for key in entry:
             if key in int_list:

@@ -11,14 +11,16 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('iostat_s', iostat_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parse('iostat_s', iostat_command_output.splitlines())
     for item in result:
         # do something
 
     or
 
     import jc.parsers.iostat_s
-    result = jc.parsers.iostat_s.parse(iostat_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parsers.iostat_s.parse(iostat_command_output.splitlines())
     for item in result:
         # do something
 
@@ -75,9 +77,12 @@ Schema:
       "percent_util":     float,
       "percent_rrqm":     float,
       "percent_wrqm":     float,
-      "_jc_meta":                      # This object only exists if using -qq or ignore_exceptions=True
+
+      # Below object only exists if using -qq or ignore_exceptions=True
+
+      "_jc_meta":
         {
-          "success":      boolean,     # true if successfully parsed, false if error
+          "success":      boolean,     # false if error parsing
           "error":        string,      # exists if "success" is false
           "line":         string       # exists if "success" is false
         }
@@ -86,13 +91,13 @@ Schema:
 Examples:
 
     $ iostat | jc --iostat-s
-    {"percent_user":0.14,"percent_nice":0.0,"percent_system":0.16,"percent_iowait":0.0,"percent_steal":0.0,"percent_idle":99.7,"type":"cpu"}
-    {"device":"sda","tps":0.24,"kb_read_s":5.28,"kb_wrtn_s":1.1,"kb_read":203305,"kb_wrtn":42368,"type":"device"}
+    {"percent_user":0.14,"percent_nice":0.0,"percent_system":0.16,...}
+    {"device":"sda","tps":0.24,"kb_read_s":5.28,"kb_wrtn_s":1.1...}
     ...
 
     $ iostat | jc --iostat-s -r
-    {"percent_user":"0.14","percent_nice":"0.00","percent_system":"0.16","percent_iowait":"0.00","percent_steal":"0.00","percent_idle":"99.70","type":"cpu"}
-    {"device":"sda","tps":"0.24","kb_read_s":"5.28","kb_wrtn_s":"1.10","kb_read":"203305","kb_wrtn":"42368","type":"device"}
+    {"percent_user":"0.14","percent_nice":"0.00","percent_system":"0.16"...}
+    {"device":"sda","tps":"0.24","kb_read_s":"5.28","kb_wrtn_s":"1.10"...}
     ...
 """
 import jc.utils
@@ -160,7 +165,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Parameters:
 
-        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
+        data:              (iterable)  line-based text data to parse
+                                       (e.g. sys.stdin or str.splitlines())
+
         raw:               (boolean)   output preprocessed JSON if True
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True
