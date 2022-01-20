@@ -6,7 +6,7 @@ import sys
 import os
 import re
 import importlib
-from . import appdirs
+from jc import appdirs
 
 __version__ = '1.18.0'
 
