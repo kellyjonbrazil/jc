@@ -3,9 +3,13 @@
 # jc.parsers.ini
 jc - JSON CLI output utility `INI` file parser
 
-Parses standard `INI` files and files containing simple key/value pairs. Delimiter can be `=` or `:`. Missing values are supported. Comment prefix can be `#` or `;`. Comments must be on their own line.
+Parses standard `INI` files and files containing simple key/value pairs.
+Delimiter can be `=` or `:`. Missing values are supported. Comment prefix
+can be `#` or `;`. Comments must be on their own line.
 
-Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
+Note: Values starting and ending with quotation marks will have the marks
+removed. If you would like to keep the quotation marks, use the `-r`
+command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -23,11 +27,8 @@ Usage (module):
 
 Schema:
 
-    ini or key/value document converted to a dictionary - see configparser standard
-          library documentation for more details.
-
-    Note: Values starting and ending with quotation marks will have the marks removed.
-          If you would like to keep the quotation marks, use the -r or raw=True argument.
+    ini or key/value document converted to a dictionary - see the
+    configparser standard library documentation for more details.
 
     {
       "key1":       string,

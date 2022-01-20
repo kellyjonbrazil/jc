@@ -9,9 +9,11 @@ Options supported:
 - `/C, /-C`
 - `/S`
 
-The "Magic" syntax is not supported since the `dir` command is a shell builtin.
+The "Magic" syntax is not supported since the `dir` command is a shell
+builtin.
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
 Usage (cli):
 

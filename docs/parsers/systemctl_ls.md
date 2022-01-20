@@ -1,7 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.systemctl_ls
-jc - JSON CLI output utility `systemctl list-sockets` command output parser
+jc - JSON CLI output utility `systemctl list-sockets` command output
+parser
 
 Usage (cli):
 

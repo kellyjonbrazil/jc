@@ -3,9 +3,13 @@
 # jc.parsers.kv
 jc - JSON CLI output utility `Key/Value` file parser
 
-Supports files containing simple key/value pairs. Delimiter can be `=` or `:`. Missing values are supported. Comment prefix can be `#` or `;`. Comments must be on their own line.
+Supports files containing simple key/value pairs. Delimiter can be `=` or
+`:`. Missing values are supported. Comment prefix can be `#` or `;`.
+Comments must be on their own line.
 
-Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
+Note: Values starting and ending with quotation marks will have the marks
+removed. If you would like to keep the quotation marks, use the `-r`
+command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -23,7 +27,8 @@ Usage (module):
 
 Schema:
 
-    key/value document converted to a dictionary - see configparser standard library documentation for more details.
+    key/value document converted to a dictionary - see the
+    configparser standard library documentation for more details.
 
     {
       "key1":       string,

@@ -7,11 +7,17 @@ Options supported:
 - `lbaR1`
 - `--time-style=full-iso`
 
-Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly parse filenames that include newline characters. Since `ls` does not encode newlines in filenames when outputting to a pipe it will cause `jc` to see multiple files instead of a single file if `-1`, `-l`, or `-b` is not used. Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
+Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly
+parse filenames that include newline characters. Since `ls` does not encode
+newlines in filenames when outputting to a pipe it will cause `jc` to see
+multiple files instead of a single file if `-1`, `-l`, or `-b` is not used.
+Alternatively, `vdir` can be used, which is the same as running `ls -lb`.
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -43,10 +49,13 @@ Schema:
         "group":        string,
         "size":         integer,
         "date":         string,
-        "epoch":        integer,     # naive timestamp if date field exists and can be converted
-        "epoch_utc":    integer      # timezone aware timestamp if date field is in UTC and can be converted
+        "epoch":        integer,     # [0]
+        "epoch_utc":    integer      # [1]
       }
     ]
+
+    [0] naive timestamp if date field exists and can be converted
+    [1] timezone aware timestamp if date field is in UTC and can be converted
 
 Examples:
 

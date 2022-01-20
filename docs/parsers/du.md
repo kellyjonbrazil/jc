@@ -40,23 +40,23 @@ Examples:
       },
       {
         "size": 56,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": 1008,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       ...
     ]
@@ -69,23 +69,23 @@ Examples:
       },
       {
         "size": "56",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/_CodeSignature"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local/standalone"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr/local"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/usr"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       {
         "size": "1008",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/Contents/Resources/Firmware/dfu"
+        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
       },
       ...
     ]

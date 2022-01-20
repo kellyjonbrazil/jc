@@ -5,9 +5,11 @@ jc - JSON CLI output utility `vmstat` command output parser
 
 Options supported: `-a`, `-w`, `-d`, `-t`
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -63,10 +65,13 @@ Schema:
         "io_seconds":                        integer,
         "timestamp":                         string,
         "timezone":                          string,
-        "epoch":                             integer,     # naive timestamp if -t flag is used
-        "epoch_utc":                         integer      # aware timestamp if -t flag is used and UTC TZ
+        "epoch":                             integer,     # [0]
+        "epoch_utc":                         integer      # [1]
       }
     ]
+
+    [0] naive timestamp if -t flag is used
+    [1] aware timestamp if -t flag is used and UTC TZ
 
 Examples:
 

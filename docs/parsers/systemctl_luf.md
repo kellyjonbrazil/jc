@@ -1,7 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.systemctl_luf
-jc - JSON CLI output utility `systemctl list-unit-files` command output parser
+jc - JSON CLI output utility `systemctl list-unit-files` command output
+parser
 
 Usage (cli):
 

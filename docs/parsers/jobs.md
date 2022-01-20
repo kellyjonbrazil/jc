@@ -5,7 +5,8 @@ jc - JSON CLI output utility `jobs` command output parser
 
 Also supports the `-l` option.
 
-The "Magic" syntax is not supported since the `jobs` command is a shell builtin.
+The "Magic" syntax is not supported since the `jobs` command is a shell
+builtin.
 
 Usage (cli):
 

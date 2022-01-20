@@ -56,11 +56,11 @@ Examples:
       },
       {
         "filename": "cd_catalog.xml",
-        "type": "XML 1.0 document text, ASCII text, with CRLF line terminators"
+        "type": "XML 1.0 document text, ASCII text, with CRLF line ..."
       },
       {
         "filename": "centosserial.sh",
-        "type": "Bourne-Again shell script text executable, UTF-8 Unicode text"
+        "type": "Bourne-Again shell script text executable, UTF-8 ..."
       },
       ...
     ]

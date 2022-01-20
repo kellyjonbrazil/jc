@@ -1,7 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.crontab
-jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+jc - JSON CLI output utility `crontab -l` command output and crontab
+file parser
 
 Supports `crontab -l` command output and crontab files.
 

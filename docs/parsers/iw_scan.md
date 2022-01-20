@@ -3,7 +3,8 @@
 # jc.parsers.iw_scan
 jc - JSON CLI output utility `iw dev <device> scan` command output parser
 
-This parser is considered beta quality. Not all fields are parsed and there are not enough samples to test.
+This parser is considered beta quality. Not all fields are parsed and there
+are not enough samples to test.
 
 Usage (cli):
 
@@ -27,7 +28,7 @@ Schema:
 
     [
       {
-        "foo":     string/integer/float,         # best guess based on value
+        "foo":     string/integer/float,      # best guess based on value
         "bar":     string/integer/float,
         "baz":     string/integer/float
       }

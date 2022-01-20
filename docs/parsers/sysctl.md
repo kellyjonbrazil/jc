@@ -3,7 +3,10 @@
 # jc.parsers.sysctl
 jc - JSON CLI output utility `sysctl -a` command output parser
 
-Note: Since `sysctl` output is not easily parsable only a very simple key/value object will be output. An attempt is made to convert obvious integers and floats. If no conversion is desired, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
+Note: Since `sysctl` output is not easily parsable only a very simple
+      key/value object will be output. An attempt is made to convert obvious
+      integers and floats. If no conversion is desired, use the `-r`
+      command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -26,7 +29,7 @@ Usage (module):
 Schema:
 
     {
-      "key1":     string/integer/float,         # best guess based on value
+      "key1":     string/integer/float,     # best guess based on value
       "key2":     string/integer/float,
       "key3":     string/integer/float
     }

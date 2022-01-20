@@ -3,7 +3,8 @@
 # jc.parsers.ss
 jc - JSON CLI output utility `ss` command output parser
 
-Extended information options like -e and -p are not supported and may cause parsing irregularities.
+Extended information options like -e and -p are not supported and may cause
+parsing irregularities.
 
 Usage (cli):
 
@@ -25,7 +26,8 @@ Usage (module):
 
 Schema:
 
-    Information from https://www.cyberciti.biz/files/ss.html used to define field names
+    Information from https://www.cyberciti.biz/files/ss.html used to define
+    field names
 
     [
       {

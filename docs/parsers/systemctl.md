@@ -42,14 +42,14 @@ Examples:
         "load": "loaded",
         "active": "active",
         "sub": "waiting",
-        "description": "Arbitrary Executable File Formats File System Automount Point"
+        "description": "Arbitrary Executable File Formats File System ..."
       },
       {
         "unit": "dev-block-8:2.device",
         "load": "loaded",
         "active": "active",
         "sub": "plugged",
-        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM o..."
       },
       {
         "unit": "dev-cdrom.device",

@@ -5,7 +5,8 @@ jc - JSON CLI output utility `netstat` command output parser
 
 Caveats:
 - Use of multiple `l` options is not supported on OSX (e.g. `netstat -rlll`)
-- Use of the `A` option is not supported on OSX when using the `r` option (e.g. `netstat -rA`)
+- Use of the `A` option is not supported on OSX when using the `r` option
+  (e.g. `netstat -rA`)
 
 Usage (cli):
 

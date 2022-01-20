@@ -4,12 +4,15 @@
 jc - JSON CLI output utility `dig` command output parser
 
 Options supported:
-- `+noall +answer` options are supported in cases where only the answer information is desired.
+- `+noall +answer` options are supported in cases where only the answer
+  information is desired.
 - `+axfr` option is supported on its own
 
-The `when_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `when_epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
 
-The `when_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `when_epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -98,12 +101,15 @@ Schema:
         "query_time":           integer,   # in msec
         "server":               string,
         "when":                 string,
-        "when_epoch":           integer,   # naive timestamp if when field is parsable, else null
-        "when_epoch_utc":       integer,   # timezone aware timestamp availabe for UTC, else null
+        "when_epoch":           integer,   # [0]
+        "when_epoch_utc":       integer,   # [1]
         "rcvd":                 integer
         "size":                 string
       }
     ]
+
+    [0] naive timestamp if when field is parsable, else null
+    [1] timezone aware timestamp availabe for UTC, else null
 
 Examples:
 
