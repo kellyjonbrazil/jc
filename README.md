@@ -45,6 +45,9 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 '2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
 'when_epoch': 1618614780, 'when_epoch_utc': None}]
 ```
+
+> For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or see the [online documentation](https://kellyjonbrazil.github.io/jc/docs/).
+
 Two representations of the data are available. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
