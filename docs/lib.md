@@ -34,7 +34,7 @@ You can also use the lower-level parser modules directly:
     >>> import jc.parsers.date
     >>> jc.parsers.date.parse('Tue Jan 18 10:23:07 PST 2022')
 
-Though, accessing plugin parsers directly is a bit more involved, so
+Though, accessing plugin parsers directly is a bit more cumbersome, so
 this higher-level API is recommended. Here is how you can access plugin
 parsers without this API:
 
@@ -49,13 +49,14 @@ parsers without this API:
 
 Parameters:
 
-    parser_mod_name:    (string)     Name of the parser module
+    parser_mod_name:    (string)     name of the parser module
 
-    data:               (string or   Data to parse (string for normal
+    data:               (string or   data to parse (string for normal
                         iterator)    parsers, iterator of strings for
                                      streaming parsers)
 
     raw:                (boolean)    output preprocessed JSON if True
+
     quiet:              (boolean)    suppress warning messages if True
 
     ignore_exceptions:  (boolean)    ignore parsing exceptions if True
