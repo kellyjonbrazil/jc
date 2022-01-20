@@ -12,8 +12,8 @@ in the filename, then make sure to use the `-b` option on `ls`.
 The `jc` `-qq` option can be used to ignore parsing errors. (e.g. filenames
 with newline characters, but `-b` was not used)
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time
-of the system the parser is run on)
+The `epoch` calculated timestamp field is naive (i.e. based on the local
+time of the system the parser is run on)
 
 The `epoch_utc` calculated timestamp field is timezone-aware and is only
 available if the timezone field is UTC.
@@ -62,8 +62,9 @@ Schema:
         }
     }
 
-    [0] naive timestamp if date field exists and can be converted
-    [1] timezone aware timestamp if date field is in UTC and can be converted
+    [0] naive timestamp if date field exists and can be converted.
+    [1] timezone aware timestamp if date field is in UTC and can
+        be converted
 
 Examples:
 

@@ -26,7 +26,7 @@ Schema:
         "type":                        integer,
         "bytes":                       integer,
         "description":                 string,
-        "values": {                               (null if empty)
+        "values": {                                 # null if empty
           "lowercase_no_spaces_keys":  string,
           "multiline_key_values": [
                                        string,

@@ -54,8 +54,9 @@ Schema:
       }
     ]
 
-    [0] naive timestamp if date field exists and can be converted
-    [1] timezone aware timestamp if date field is in UTC and can be converted
+    [0] naive timestamp if date field exists and can be converted.
+    [1] timezone aware timestamp if date field is in UTC and can
+        be converted.
 
 Examples:
 

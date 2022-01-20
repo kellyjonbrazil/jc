@@ -26,7 +26,7 @@ Schema:
     [
       {
         "filename":   string,
-        "type   ":    string
+        "type":       string
       }
     ]
 

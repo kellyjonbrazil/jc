@@ -37,9 +37,9 @@ Schema:
         "login":            string,
         "logout":           string,
         "duration":         string,
-        "login_epoch":      integer,  # (naive) available with last -F option
-        "logout_epoch":     integer,  # (naive) available with last -F option
-        "duration_seconds": integer   # available with last -F option
+        "login_epoch":      integer,  # (naive) available w/last -F option
+        "logout_epoch":     integer,  # (naive) available w/last -F option
+        "duration_seconds": integer   # available w/last -F option
       }
     ]
 

@@ -38,7 +38,7 @@ Schema:
         ],
         "tcp_ranges": [
           {
-            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "start":                integer,      # [0]
             "end":                  integer
           }
         ],
