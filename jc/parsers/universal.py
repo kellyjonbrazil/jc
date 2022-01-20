@@ -51,7 +51,7 @@ def sparse_table_parse(data, delim='\u2063'):
                          in the data.
 
         delim:  (string) Delimiter to use. By default `u\\2063`
-                         (invisible separator) is used since this is
+                         (invisible separator) is used since it is unlikely
                          to ever be seen in terminal output. You can change
                          this for troubleshooting purposes or if there is a
                          delimiter conflict with your data.
