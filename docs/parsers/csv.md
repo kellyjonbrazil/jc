@@ -4,8 +4,8 @@
 jc - JSON CLI output utility `csv` file parser
 
 The `csv` parser will attempt to automatically detect the delimiter
-character. If the delimiter cannot be detected it will default to comma. The
-first row of the file must be a header row.
+character. If the delimiter cannot be detected it will default to comma.
+The first row of the file must be a header row.
 
 Usage (cli):
 
