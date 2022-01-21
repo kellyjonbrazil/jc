@@ -16,13 +16,15 @@ to dictionaries and lists of dictionaries.
 
 ## Online Documentation
 
-Latest:
+### Latest:
 
 https://github.com/kellyjonbrazil/jc/tree/master/docs
 
-Specific version (replace `{{full_version_number}}` - e.g. `1.17.7`):
+### Specific version (replace `{{full_version_number}}` - e.g. `1.17.7`):
 
 `https://github.com/kellyjonbrazil/jc/tree/v{{full_version_number}}/docs`
+
+Specific versions can also be selected by tag in the branch dropdown menu.
 
 ## Example:
 
