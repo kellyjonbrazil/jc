@@ -14,7 +14,7 @@ to dictionaries and lists of dictionaries.
 
 ## Online Documentation
 
-### Latest:
+### Latest
 
 https://github.com/kellyjonbrazil/jc/tree/master/docs
 
@@ -26,7 +26,7 @@ Replace `{{full_version_number}}` - e.g. `1.17.7`:
 
 Specific versions can also be selected by tag in the branch dropdown menu.
 
-## Usage Example:
+## Usage Example
 
     >>> import subprocess
     >>> import jc

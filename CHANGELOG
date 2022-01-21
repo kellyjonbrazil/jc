@@ -1,5 +1,8 @@
 jc changelog
 
+20220121 v1.18.1
+- Minor fix for MacOS binary
+
 20220121 v1.18.0
 - Add high-level parse API for built-in and plugin parsers
 - Add python module developer documentation
