@@ -9,7 +9,7 @@ to dictionaries and lists of dictionaries.
 
     >>> help(jc)
     >>> help(jc.lib)
-    >>> help(jc.util)
+    >>> help(jc.utils)
     >>> jc.get_help('parser_module_name')
 
 ## Online Documentation
