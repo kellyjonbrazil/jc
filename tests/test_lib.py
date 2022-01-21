@@ -38,6 +38,7 @@ class MyTests(unittest.TestCase):
         self.assertIsInstance(jc.lib.plugin_parser_mod_list(), list)
 
     def test_lib_plugin_parser_mod_list_length_is_zero(self):
+        """Ensure there are no plugin parsers present during test/build."""
         self.assertEqual(len(jc.lib.plugin_parser_mod_list()), 0)
 
     def test_lib_cliname_to_modname(self):

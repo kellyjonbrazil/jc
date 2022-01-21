@@ -1,9 +1,10 @@
 jc changelog
 
-20220120 v1.18.0
+20220121 v1.18.0
 - Add high-level parse API for built-in and plugin parsers
 - Add python module developer documentation
-- Documentation formatting enhancements
+- Enhance magic syntax exception messages
+- Enhance documentation
 
 20220106 v1.17.7
 - Add stat command streaming parser tested on linux and macOS
