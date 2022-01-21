@@ -1,6 +1,8 @@
 ![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
+> Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
+
 > Try the `jc` [web demo](https://jc-web-demo.herokuapp.com/)
 
 > JC is [now available](https://galaxy.ansible.com/community/general) as an Ansible filter plugin in the `community.general` collection. See this [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/) for an example.
