@@ -5,18 +5,22 @@
 This package serializes the output of many standard unix command line tools
 to dictionaries and lists of dictionaries.
 
-Interactive Documentation
+## Interactive Documentation
 
     >>> help(jc)
     >>> help(jc.lib)
     >>> help(jc.util)
     >>> jc.get_help('parser_module_name')
 
-Online Documentation
+## Online Documentation
 
+Latest:
 https://github.com/kellyjonbrazil/jc/tree/master/docs
 
-Example:
+Specific version (replace <full_version_number> - e.g. `1.17.7`):
+https://github.com/kellyjonbrazil/jc/tree/v<full_version_number>/docs
+
+## Example:
 
     >>> import subprocess
     >>> import jc
@@ -39,7 +43,9 @@ modules directly:
     >>> data
     [{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', ...}]
 
-Available Functions (use `help(jc.lib)` for details):
+## Available Functions
+
+Use `help(jc.lib)` for details:
 
     parse(parser_module_name: str, data: str | iterable)
         High-level API to easily access the parser. This API will find both
