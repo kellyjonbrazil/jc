@@ -20,9 +20,9 @@ Latest:
 
 https://github.com/kellyjonbrazil/jc/tree/master/docs
 
-Specific version (replace `<full_version_number>` - e.g. `1.17.7`):
+Specific version (replace `{{full_version_number}}` - e.g. `1.17.7`):
 
-https://github.com/kellyjonbrazil/jc/tree/v<full_version_number>/docs
+`https://github.com/kellyjonbrazil/jc/tree/v{{full_version_number}}/docs`
 
 ## Example:
 
