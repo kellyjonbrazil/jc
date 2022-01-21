@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('lsblk', lsblk_command_output)
+
+    or
+
     import jc.parsers.lsblk
     result = jc.parsers.lsblk.parse(lsblk_command_output)
 
@@ -88,7 +93,10 @@ Examples:
       ...
     ]
 
-    $ lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,PKNAME,HCTL,TRAN,REV,VENDOR | jc --lsblk -p
+    $ lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,\
+      STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,\
+      SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,\
+      PKNAME,HCTL,TRAN,REV,VENDOR | jc --lsblk -p
     [
       {
         "name": "sda",
@@ -177,7 +185,10 @@ Examples:
       ...
     ]
 
-    $ lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,PKNAME,HCTL,TRAN,REV,VENDOR | jc --lsblk -p -r
+    $ lsblk -o +KNAME,FSTYPE,LABEL,UUID,PARTLABEL,PARTUUID,RA,MODEL,SERIAL,\
+      STATE,OWNER,GROUP,MODE,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,\
+      SCHED,RQ-SIZE,DISC-ALN,DISC-GRAN,DISC-MAX,DISC-ZERO,WSAME,WWN,RAND,\
+      PKNAME,HCTL,TRAN,REV,VENDOR | jc --lsblk -p -r
     [
       {
         "name": "sda",
@@ -283,7 +294,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

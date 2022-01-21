@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('file', file_command_output)
+
+    or
+
     import jc.parsers.file
     result = jc.parsers.file.parse(file_command_output)
 
@@ -18,7 +23,7 @@ Schema:
     [
       {
         "filename":   string,
-        "type   ":    string
+        "type":       string
       }
     ]
 
@@ -48,11 +53,11 @@ Examples:
       },
       {
         "filename": "cd_catalog.xml",
-        "type": "XML 1.0 document text, ASCII text, with CRLF line terminators"
+        "type": "XML 1.0 document text, ASCII text, with CRLF line ..."
       },
       {
         "filename": "centosserial.sh",
-        "type": "Bourne-Again shell script text executable, UTF-8 Unicode text"
+        "type": "Bourne-Again shell script text executable, UTF-8 ..."
       },
       ...
     ]
@@ -67,8 +72,6 @@ class info():
     description = '`file` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['file']
 
@@ -99,7 +102,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

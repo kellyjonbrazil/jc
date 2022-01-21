@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('dmidecode', dmidecode_command_output)
+
+    or
+
     import jc.parsers.dmidecode
     result = jc.parsers.dmidecode.parse(dmidecode_command_output)
 
@@ -24,7 +29,7 @@ Schema:
         "type":                        integer,
         "bytes":                       integer,
         "description":                 string,
-        "values": {                               (null if empty)
+        "values": {                                 # null if empty
           "lowercase_no_spaces_keys":  string,
           "multiline_key_values": [
                                        string,
@@ -140,7 +145,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

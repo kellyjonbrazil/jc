@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('tracepath', tracepath_command_output)
+
+    or
+
     import jc.parsers.tracepath
     result = jc.parsers.tracepath.parse(tracepath_command_output)
 
@@ -136,8 +141,6 @@ class info():
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['tracepath', 'tracepath6']
 
@@ -185,7 +188,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

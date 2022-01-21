@@ -1,6 +1,7 @@
 """jc - JSON CLI output utility `ss` command output parser
 
-Extended information options like -e and -p are not supported and may cause parsing irregularities.
+Extended information options like -e and -p are not supported and may cause
+parsing irregularities.
 
 Usage (cli):
 
@@ -12,12 +13,18 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ss', ss_command_output)
+
+    or
+
     import jc.parsers.ss
     result = jc.parsers.ss.parse(ss_command_output)
 
 Schema:
 
-    Information from https://www.cyberciti.biz/files/ss.html used to define field names
+    Information from https://www.cyberciti.biz/files/ss.html used to define
+    field names
 
     [
       {
@@ -283,8 +290,6 @@ class info():
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['ss']
 
@@ -330,7 +335,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

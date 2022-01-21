@@ -5,9 +5,12 @@ jc - JSON CLI output utility `traceroute` command output parser
 
 Supports `traceroute` and `traceroute6` output.
 
-Note: On some operating systems you will need to redirect `STDERR` to `STDOUT` for destination info since the header line is sent to `STDERR`. A warning message will be printed to `STDERR` if the header row is not found.
+Note: On some operating systems you will need to redirect `STDERR` to
+      `STDOUT` for destination info since the header line is sent to
+      `STDERR`. A warning message will be printed to `STDERR` if the
+      header row is not found.
 
-e.g. `$ traceroute 8.8.8.8 2>&1 | jc --traceroute`
+      e.g. `$ traceroute 8.8.8.8 2>&1 | jc --traceroute`
 
 Usage (cli):
 
@@ -18,6 +21,11 @@ Usage (cli):
     $ jc traceroute 1.2.3.4
 
 Usage (module):
+
+    import jc
+    result = jc.parse('traceroute', traceroute_command_output)
+
+    or
 
     import jc.parsers.traceroute
     result = jc.parsers.traceroute.parse(traceroute_command_output)
@@ -132,7 +140,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

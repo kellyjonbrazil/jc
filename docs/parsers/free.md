@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('free', free_command_output)
+
+    or
+
     import jc.parsers.free
     result = jc.parsers.free.parse(free_command_output)
 
@@ -87,7 +92,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

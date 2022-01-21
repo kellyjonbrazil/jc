@@ -1,8 +1,12 @@
-"""jc - JSON CLI output utility `ufw app info [application]` command output parser
+"""jc - JSON CLI output utility `ufw app info [application]` command
+output parser
 
-Supports individual apps via `ufw app info [application]` and all apps list via `ufw app info all`.
+Supports individual apps via `ufw app info [application]` and all apps list
+via `ufw app info all`.
 
-Because `ufw` application definitions allow overlapping ports and port ranges, this parser preserves that behavior, but also provides `normalized` lists and ranges that remove duplicate ports and merge overlapping ranges.
+Because `ufw` application definitions allow overlapping ports and port
+ranges, this parser preserves that behavior, but also provides `normalized`
+lists and ranges that remove duplicate ports and merge overlapping ranges.
 
 Usage (cli):
 
@@ -13,6 +17,11 @@ Usage (cli):
     $ jc ufw app info OpenSSH
 
 Usage (module):
+
+    import jc
+    result = jc.parse('ufw_appinfo', ufw_appinfo_command_output)
+
+    or
 
     import jc.parsers.ufw_appinfo
     result = jc.parsers.ufw_appinfo.parse(ufw_appinfo_command_output)
@@ -29,7 +38,7 @@ Schema:
         ],
         "tcp_ranges": [
           {
-            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "start":                integer,      # [0]
             "end":                  integer
           }
         ],
@@ -38,30 +47,34 @@ Schema:
         ],
         "udp_ranges": [
           {
-            "start":                integer,      # 'any' is converted to start/end: 0/65535
+            "start":                integer,      # [0]
             "end":                  integer
           }
         ],
         "normalized_tcp_list": [
-                                    integers      # duplicates and overlapping are removed
+                                    integers      # [1]
         ],
         "normalized_tcp_ranges": [
           {
-            "start":                integer,      # 'any' is converted to start/end: 0/65535
-            "end":                  integers      # overlapping are merged
+            "start":                integer,      # [0]
+            "end":                  integers      # [2]
           }
         ],
         "normalized_udp_list": [
-                                    integers      # duplicates and overlapping are removed
+                                    integers      # [1]
         ],
         "normalized_udp_ranges": [
           {
-            "start":                integer,      # 'any' is converted to start/end: 0/65535
-            "end":                  integers      # overlapping are merged
+            "start":                integer,      # [0]
+            "end":                  integers      # [2]
           }
         ]
       }
     ]
+
+    [0] 'any' is converted to start/end: 0/65535
+    [1] duplicates and overlapping are removed
+    [2] overlapping are merged
 
 Examples:
 
@@ -258,7 +271,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

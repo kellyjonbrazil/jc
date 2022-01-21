@@ -3,9 +3,11 @@
 # jc.parsers.date
 jc - JSON CLI output utility `date` command output parser
 
-The `epoch` calculated timestamp field is naive. (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -16,6 +18,11 @@ Usage (cli):
     $ jc date
 
 Usage (module):
+
+    import jc
+    result = jc.parse('date', date_command_output)
+
+    or
 
     import jc.parsers.date
     result = jc.parsers.date.parse(date_command_output)
@@ -35,14 +42,18 @@ Schema:
       "second":             integer,
       "period":             string,
       "timezone":           string,
-      "utc_offset":         string,       # null if timezone field is not UTC
+      "utc_offset":         string,      # null if timezone field is not UTC
       "day_of_year":        integer,
       "week_of_year":       integer,
       "iso":                string,
-      "epoch":              integer,      # naive timestamp
-      "epoch_utc":          integer,      # timezone-aware timestamp. Only available if timezone field is UTC
-      "timezone_aware":     boolean       # if true, all fields are correctly based on UTC
+      "epoch":              integer,     # [0]
+      "epoch_utc":          integer,     # [1]
+      "timezone_aware":     boolean      # [2]
     }
+
+    [0] naive timestamp
+    [1] timezone-aware timestamp. Only available if timezone field is UTC
+    [2] if true, all fields are correctly based on UTC
 
 Examples:
 
@@ -86,7 +97,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

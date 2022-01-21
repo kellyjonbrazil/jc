@@ -2,9 +2,12 @@
 
 > This streaming parser outputs JSON Lines
 
-The `csv` streaming parser will attempt to automatically detect the delimiter character. If the delimiter cannot be detected it will default to comma. The first row of the file must be a header row.
+The `csv` streaming parser will attempt to automatically detect the
+delimiter character. If the delimiter cannot be detected it will default
+to comma. The first row of the file must be a header row.
 
-Note: The first 100 rows are read into memory to enable delimiter detection, then the rest of the rows are loaded lazily.
+Note: The first 100 rows are read into memory to enable delimiter detection,
+then the rest of the rows are loaded lazily.
 
 Usage (cli):
 
@@ -12,21 +15,34 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    # result is an iterable object (generator)
+    result = jc.parse('csv_s', csv_output.splitlines())
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.csv_s
-    result = jc.parsers.csv_s.parse(csv_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parsers.csv_s.parse(csv_output.splitlines())
     for item in result:
         # do something
 
 Schema:
 
-    csv file converted to a Dictionary: https://docs.python.org/3/library/csv.html
+    csv file converted to a Dictionary:
+    https://docs.python.org/3/library/csv.html
 
     {
       "column_name1":     string,
       "column_name2":     string,
-      "_jc_meta":                      # This object only exists if using -qq or ignore_exceptions=True
+
+      # below object only exists if using -qq or ignore_exceptions=True
+
+      "_jc_meta":
         {
-          "success":      boolean,     # true if successfully parsed, false if error
+          "success":      boolean,     # false if error parsing
           "error":        string,      # exists if "success" is false
           "line":         string       # exists if "success" is false
         }
@@ -35,16 +51,16 @@ Schema:
 Examples:
 
     $ cat homes.csv
-    "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
+    "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres"...
     142, 160, 28, 10, 5, 3,  60, 0.28,  3167
     175, 180, 18,  8, 4, 1,  12, 0.43,  4033
     129, 132, 13,  6, 3, 1,  41, 0.33,  1471
     ...
 
     $ cat homes.csv | jc --csv-s
-    {"Sell":"142","List":"160","Living":"28","Rooms":"10","Beds":"5","Baths":"3","Age":"60","Acres":"0.28","Taxes":"3167"}
-    {"Sell":"175","List":"180","Living":"18","Rooms":"8","Beds":"4","Baths":"1","Age":"12","Acres":"0.43","Taxes":"4033"}
-    {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3","Baths":"1","Age":"41","Acres":"0.33","Taxes":"1471"}
+    {"Sell":"142","List":"160","Living":"28","Rooms":"10","Beds":"5"...}
+    {"Sell":"175","List":"180","Living":"18","Rooms":"8","Beds":"4"...}
+    {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3"...}
     ...
 """
 import itertools
@@ -78,7 +94,8 @@ def _process(proc_data):
 
     Returns:
 
-        List of Dictionaries. Each Dictionary represents a row in the csv file.
+        List of Dictionaries. Each Dictionary represents a row in the csv
+        file.
     """
     # No further processing
     return proc_data
@@ -90,8 +107,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Parameters:
 
-        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
-        raw:               (boolean)   output preprocessed JSON if True
+        data:              (iterable)  line-based text data to parse
+                                       (e.g. sys.stdin or str.splitlines())
+
+        raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True
 

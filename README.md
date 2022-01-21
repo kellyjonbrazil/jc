@@ -32,10 +32,10 @@ $ jc dig example.com | jq -r '.[].answer[].data'
 The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary, or list of dictionaries, instead of JSON:
 ```python
 >>> import subprocess
->>> import jc.parsers.dig
->>> 
+>>> import jc
+>>>
 >>> cmd_output = subprocess.check_output(['dig', 'example.com'], text=True)
->>> data = jc.parsers.dig.parse(cmd_output)
+>>> data = jc.parse('dig', cmd_output)
 >>>
 >>> data
 [{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd', 'ra'], 'query_num': 1, 'answer_num':
@@ -45,6 +45,9 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 '2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
 'when_epoch': 1618614780, 'when_epoch_utc': None}]
 ```
+
+> For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or see the [online documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs).
+
 Two representations of the data are available. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
@@ -290,9 +293,9 @@ Streaming parsers accept any iterable object and return a generator iterator obj
 
 To use the generator object in your code, simply loop through it or use the [next()](https://docs.python.org/3/library/functions.html#next) builtin function:
 ```python
-import jc.parsers.ls_s
+import jc
 
-result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
+result = jc.parse('ls_s', ls_command_output.splitlines())
 for item in result:
     print(item["filename"])
 ```

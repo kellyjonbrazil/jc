@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('blkid', blkid_command_output)
+
+    or
+
     import jc.parsers.blkid
     result = jc.parsers.blkid.parse(blkid_command_output)
 
@@ -125,9 +130,6 @@ class info():
     description = '`blkid` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['blkid']
 
@@ -151,9 +153,10 @@ def _process(proc_data):
         if 'devname' in entry:
             entry['device'] = entry.pop('devname')
 
-        int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size', 'id_part_entry_number',
-                    'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
-                    'logical_sector_size', 'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size',
+        int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size',
+                    'id_part_entry_number', 'id_part_entry_offset', 'id_part_entry_size',
+                    'minimum_io_size', 'physical_sector_size', 'logical_sector_size',
+                    'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size',
                     'id_iolimit_logical_sector_size']
         for key in entry:
             if key in int_list:
@@ -169,7 +172,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

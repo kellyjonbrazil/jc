@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility `systemctl list-unit-files` command output parser
+"""jc - JSON CLI output utility `systemctl list-unit-files` command output
+parser
 
 Usage (cli):
 
@@ -9,6 +10,11 @@ Usage (cli):
     $ jc systemctl list-unit-files
 
 Usage (module):
+
+    import jc
+    result = jc.parse('systemctl_luf', systemctl_luf_command_output)
+
+    or
 
     import jc.parsers.systemctl_luf
     result = jc.parsers.systemctl_luf.parse(systemctl_luf_command_output)
@@ -50,8 +56,6 @@ class info():
     description = '`systemctl list-unit-files` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['systemctl list-unit-files']
 
@@ -82,7 +86,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

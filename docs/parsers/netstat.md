@@ -5,7 +5,8 @@ jc - JSON CLI output utility `netstat` command output parser
 
 Caveats:
 - Use of multiple `l` options is not supported on OSX (e.g. `netstat -rlll`)
-- Use of the `A` option is not supported on OSX when using the `r` option (e.g. `netstat -rA`)
+- Use of the `A` option is not supported on OSX when using the `r` option
+  (e.g. `netstat -rA`)
 
 Usage (cli):
 
@@ -16,6 +17,11 @@ Usage (cli):
     $ jc netstat
 
 Usage (module):
+
+    import jc
+    result = jc.parse('netstat', netstat_command_output)
+
+    or
 
     import jc.parsers.netstat
     result = jc.parsers.netstat.parse(netstat_command_output)
@@ -369,7 +375,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('foo', foo_command_output)
+
+    or
+
     import jc.parsers.foo
     result = jc.parsers.foo.parse(foo_command_output)
 
@@ -67,7 +72,8 @@ def _process(proc_data):
 
     # process the data here
     # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
+    # use helper functions in jc.utils for int, float, bool
+    # conversions and timestamps
 
     return proc_data
 
@@ -79,7 +85,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
@@ -94,9 +100,11 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
-            #
+
             # parse the content here
-            #
+            # check out helper functions in jc.utils
+            # and jc.parsers.universal
+
             pass
 
     return raw_output if raw else _process(raw_output)

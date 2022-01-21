@@ -9,6 +9,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('hash', hash_command_output)
+
+    or
+
     import jc.parsers.hash
     result = jc.parsers.hash.parse(hash_command_output)
 
@@ -52,7 +57,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

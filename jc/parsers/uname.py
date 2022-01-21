@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('uname', uname_command_output)
+
+    or
+
     import jc.parsers.uname
     result = jc.parsers.uname.parse(uname_command_output)
 
@@ -52,8 +57,6 @@ class info():
     description = '`uname -a` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['uname']
 
@@ -84,7 +87,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
@@ -125,7 +128,7 @@ def parse(data, raw=False, quiet=False):
                     fixup.insert(-1, 'unknown')
                     fixup.insert(-1, 'unknown')
                     data = ' '.join(fixup)
-            
+
             parsed_line = data.split(maxsplit=3)
 
             if len(parsed_line) < 3:

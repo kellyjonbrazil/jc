@@ -15,13 +15,19 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('lsusb', lsusb_command_output)
+
+    or
+
     import jc.parsers.lsusb
     result = jc.parsers.lsusb.parse(lsusb_command_output)
 
 Schema:
 
-    Note: <item> object keynames are assigned directly from the lsusb output.
-          If there are duplicate <item> names in a section, only the last one is converted.
+    Note: <item> object keynames are assigned directly from the lsusb
+          output. If there are duplicate <item> names in a section, only the
+          last one is converted.
 
     [
       {
@@ -275,7 +281,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

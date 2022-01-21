@@ -6,6 +6,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('shadow', shadow_file_output)
+
+    or
+
     import jc.parsers.shadow
     result = jc.parsers.shadow.parse(shadow_file_output)
 
@@ -105,9 +110,6 @@ class info():
     description = '`/etc/shadow` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
 
 
@@ -142,7 +144,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

@@ -5,7 +5,8 @@ jc - JSON CLI output utility `who` command output parser
 
 Accepts any of the following who options (or no options): `-aTH`
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
 Usage (cli):
 
@@ -16,6 +17,11 @@ Usage (cli):
     $ jc who
 
 Usage (module):
+
+    import jc
+    result = jc.parse('who', who_command_output)
+
+    or
 
     import jc.parsers.who
     result = jc.parsers.who.parse(who_command_output)
@@ -29,13 +35,15 @@ Schema:
         "writeable_tty":   string,
         "tty":             string,
         "time":            string,
-        "epoch":           integer,     # naive timestamp. null if time cannot be converted
+        "epoch":           integer,     # [0]
         "idle":            string,
         "pid":             integer,
         "from":            string,
         "comment":         string
       }
     ]
+
+    [0] naive timestamp. null if time cannot be converted
 
 Examples:
 
@@ -147,7 +155,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

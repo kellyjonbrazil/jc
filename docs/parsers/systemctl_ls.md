@@ -1,7 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.systemctl_ls
-jc - JSON CLI output utility `systemctl list-sockets` command output parser
+jc - JSON CLI output utility `systemctl list-sockets` command output
+parser
 
 Usage (cli):
 
@@ -12,6 +13,11 @@ Usage (cli):
     $ jc systemctl list-sockets
 
 Usage (module):
+
+    import jc
+    result = jc.parse('systemctl_ls', systemctl_ls_command_output)
+
+    or
 
     import jc.parsers.systemctl_ls
     result = jc.parsers.systemctl_ls.parse(systemctl_ls_command_output)
@@ -65,7 +71,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

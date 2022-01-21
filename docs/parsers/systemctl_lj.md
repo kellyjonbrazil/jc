@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('systemctl_lj', systemctl_lj_command_output)
+
+    or
+
     import jc.parsers.systemctl_lj
     result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
 
@@ -90,7 +95,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

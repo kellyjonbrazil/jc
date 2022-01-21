@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('id', id_command_output)
+
+    or
+
     import jc.parsers.id
     result = jc.parsers.id.parse(id_command_output)
 
@@ -109,9 +114,6 @@ class info():
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['id']
 
@@ -154,7 +156,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

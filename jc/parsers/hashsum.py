@@ -20,6 +20,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('hashsum', md5sum_command_output)
+
+    or
+
     import jc.parsers.hashsum
     result = jc.parsers.hashsum.parse(md5sum_command_output)
 
@@ -73,10 +78,9 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Parses MD5 and SHA hash program output'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
-    magic_commands = ['md5sum', 'md5', 'shasum', 'sha1sum', 'sha224sum', 'sha256sum', 'sha384sum', 'sha512sum']
+    magic_commands = ['md5sum', 'md5', 'shasum', 'sha1sum', 'sha224sum',
+                      'sha256sum', 'sha384sum', 'sha512sum']
 
 
 __version__ = info.version
@@ -106,7 +110,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

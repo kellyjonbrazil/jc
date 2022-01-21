@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('free', free_command_output)
+
+    or
+
     import jc.parsers.free
     result = jc.parsers.free.parse(free_command_output)
 
@@ -77,8 +82,6 @@ class info():
     description = '`free` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['free']
 
@@ -115,7 +118,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

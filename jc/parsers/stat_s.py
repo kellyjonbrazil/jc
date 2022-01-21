@@ -2,9 +2,11 @@
 
 > This streaming parser outputs JSON Lines
 
-The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on).
+The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
+local time of the system the parser is run on).
 
-The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
+The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -12,8 +14,17 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    # result is an iterable object (generator)
+    result = jc.parse('stat_s', stat_command_output.splitlines())
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.stat_s
-    result = jc.parsers.stat_s.parse(stat_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parsers.stat_s.parse(stat_command_output.splitlines())
     for item in result:
         # do something
 
@@ -51,9 +62,12 @@ Schema:
       "rdev":                     integer,
       "block_size":               integer,
       "unix_flags":               string,
-      "_jc_meta":                            # This object only exists if using -qq or ignore_exceptions=True
+
+      # Below object only exists if using -qq or ignore_exceptions=True
+
+      "_jc_meta":
         {
-          "success":              boolean,   # true if successfully parsed, false if error
+          "success":              boolean,   # false if error parsing
           "error":                string,    # exists if "success" is false
           "line":                 string     # exists if "success" is false
         }
@@ -62,10 +76,10 @@ Schema:
 Examples:
 
     $ stat | jc --stat-s
-    {"file":"(stdin)","unix_device":1027739696,"inode":1155,"flags":"crw--w----","links":1,"user":"kbrazil","group":"tty","rdev":268435456,"size":0,"access_time":"Jan  4 15:27:44 2022","modify_time":"Jan  4 15:27:44 2022","change_time":"Jan  4 15:27:44 2022","birth_time":"Dec 31 16:00:00 1969","block_size":131072,"blocks":0,"unix_flags":"0","access_time_epoch":1641338864,"access_time_epoch_utc":null,"modify_time_epoch":1641338864,"modify_time_epoch_utc":null,"change_time_epoch":1641338864,"change_time_epoch_utc":null,"birth_time_epoch":null,"birth_time_epoch_utc":null}
+    {"file":"(stdin)","unix_device":1027739696,"inode":1155,"flags":"cr...}
 
     $ stat | jc --stat-s -r
-    {"file":"(stdin)","unix_device":"1027739696","inode":"1155","flags":"crw--w----","links":"1","user":"kbrazil","group":"tty","rdev":"268435456","size":"0","access_time":"Jan  4 15:28:08 2022","modify_time":"Jan  4 15:28:08 2022","change_time":"Jan  4 15:28:08 2022","birth_time":"Dec 31 16:00:00 1969","block_size":"131072","blocks":"0","unix_flags":"0"}
+    {"file":"(stdin)","unix_device":"1027739696","inode":"1155","flag...}
 """
 import shlex
 import jc.utils
@@ -98,8 +112,8 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid', 'unix_device',
-                'rdev', 'block_size']
+    int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid',
+                'unix_device', 'rdev', 'block_size']
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
@@ -122,8 +136,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Parameters:
 
-        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
-        raw:               (boolean)   output preprocessed JSON if True
+        data:              (iterable)  line-based text data to parse
+                                       (e.g. sys.stdin or str.splitlines())
+
+        raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True
 

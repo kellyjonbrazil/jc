@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('arp', arp_command_output)
+
+    or
+
     import jc.parsers.arp
     result = jc.parsers.arp.parse(arp_command_output)
 
@@ -122,8 +127,6 @@ class info():
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['arp']
 
@@ -164,7 +167,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

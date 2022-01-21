@@ -6,6 +6,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('xml', xml_file_output)
+
+    or
+
     import jc.parsers.xml
     result = jc.parsers.xml.parse(xml_file_output)
 
@@ -76,8 +81,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the xmltodict library at https://github.com/martinblech/xmltodict'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
 
@@ -108,7 +111,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

@@ -3,7 +3,8 @@
 # jc.parsers.dpkg_l
 jc - JSON CLI output utility `dpkg -l` command output parser
 
-Set the `COLUMNS` environment variable to a large value to avoid field truncation. For example:
+Set the `COLUMNS` environment variable to a large value to avoid field
+truncation. For example:
 
     $ COLUMNS=500 dpkg -l | jc --dpkg-l
 
@@ -16,6 +17,11 @@ Usage (cli):
     $ jc dpkg -l
 
 Usage (module):
+
+    import jc
+    result = jc.parse('dpkg_l', dpkg_command_output)
+
+    or
 
     import jc.parsers.dpkg_l
     result = jc.parsers.dpkg_l.parse(dpkg_command_output)
@@ -72,7 +78,7 @@ Examples:
         "name": "acpid",
         "version": "1:2.0.28-1ubuntu1",
         "architecture": "amd64",
-        "description": "Advanced Configuration and Power Interface event daemon",
+        "description": "Advanced Configuration and Power Interface...",
         "desired": "remove",
         "status": "half installed"
       },
@@ -116,7 +122,7 @@ Examples:
         "name": "acpid",
         "version": "1:2.0.28-1ubuntu1",
         "architecture": "amd64",
-        "description": "Advanced Configuration and Power Interface event daemon"
+        "description": "Advanced Configuration and Power Interface..."
       },
       {
         "codes": "pn",
@@ -145,7 +151,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

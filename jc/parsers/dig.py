@@ -1,12 +1,15 @@
 """jc - JSON CLI output utility `dig` command output parser
 
 Options supported:
-- `+noall +answer` options are supported in cases where only the answer information is desired.
+- `+noall +answer` options are supported in cases where only the answer
+  information is desired.
 - `+axfr` option is supported on its own
 
-The `when_epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `when_epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
 
-The `when_epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `when_epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -17,6 +20,11 @@ Usage (cli):
     $ jc dig example.com
 
 Usage (module):
+
+    import jc
+    result = jc.parse('dig', dig_command_output)
+
+    or
 
     import jc.parsers.dig
     result = jc.parsers.dig.parse(dig_command_output)
@@ -90,12 +98,15 @@ Schema:
         "query_time":           integer,   # in msec
         "server":               string,
         "when":                 string,
-        "when_epoch":           integer,   # naive timestamp if when field is parsable, else null
-        "when_epoch_utc":       integer,   # timezone aware timestamp availabe for UTC, else null
+        "when_epoch":           integer,   # [0]
+        "when_epoch_utc":       integer,   # [1]
         "rcvd":                 integer
         "size":                 string
       }
     ]
+
+    [0] naive timestamp if "when" field is parsable, else null
+    [1] timezone aware timestamp availabe for UTC, else null
 
 Examples:
 
@@ -320,8 +331,6 @@ class info():
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
     magic_commands = ['dig']
 
@@ -342,8 +351,8 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num', 'rcvd',
-                    'query_size', 'query_time']
+        int_list = ['id', 'query_num', 'answer_num', 'authority_num', 'additional_num',
+                    'rcvd', 'query_size', 'query_time']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
@@ -355,10 +364,12 @@ def _process(proc_data):
         if 'opt_pseudosection' in entry:
             if 'edns' in entry['opt_pseudosection']:
                 if 'version' in entry['opt_pseudosection']['edns']:
-                    entry['opt_pseudosection']['edns']['version'] = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['version'])
+                    val = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['version'])
+                    entry['opt_pseudosection']['edns']['version'] = val
 
                 if 'udp' in entry['opt_pseudosection']['edns']:
-                    entry['opt_pseudosection']['edns']['udp'] = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['udp'])
+                    val = jc.utils.convert_to_int(entry['opt_pseudosection']['edns']['udp'])
+                    entry['opt_pseudosection']['edns']['udp'] = val
 
         if 'answer' in entry:
             for ans in entry['answer']:
@@ -521,7 +532,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

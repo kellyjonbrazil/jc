@@ -9,9 +9,9 @@ from textwrap import TextWrapper
 
 def warning_message(message_lines):
     """
-    Prints warning message for non-fatal issues. The first line is prepended with
-    'jc:  Warning - ' and subsequent lines are indented. Wraps text as needed based
-    on the terminal width.
+    Prints warning message for non-fatal issues. The first line is
+    prepended with 'jc:  Warning - ' and subsequent lines are indented.
+    Wraps text as needed based on the terminal width.
 
     Parameters:
 
@@ -45,9 +45,9 @@ def warning_message(message_lines):
 
 def error_message(message_lines):
     """
-    Prints an error message for fatal issues. The first line is prepended with
-    'jc:  Error - ' and subsequent lines are indented. Wraps text as needed based
-    on the terminal width.
+    Prints an error message for fatal issues. The first line is
+    prepended with 'jc:  Error - ' and subsequent lines are indented.
+    Wraps text as needed based on the terminal width.
 
     Parameters:
 
@@ -76,17 +76,19 @@ def error_message(message_lines):
 
 
 def compatibility(mod_name, compatible, quiet=False):
-    """Checks for the parser's compatibility with the running OS platform.
+    """
+    Checks for the parser's compatibility with the running OS
+    platform.
 
     Parameters:
 
-        mod_name:       (string) __name__ of the calling module
+        mod_name:     (string) __name__ of the calling module
 
-        compatible:     (list) sys.platform name(s) compatible with the parser
-                        compatible options:
-                        linux, darwin, cygwin, win32, aix, freebsd
+        compatible:   (list) sys.platform name(s) compatible with
+                      the parser. compatible options:
+                      linux, darwin, cygwin, win32, aix, freebsd
 
-        quiet:          (bool) supress compatibility message if True
+        quiet:        (bool) supress compatibility message if True
 
     Returns:
 
@@ -109,7 +111,8 @@ def compatibility(mod_name, compatible, quiet=False):
 
 def has_data(data):
     """
-    Checks if the input contains data. If there are any non-whitespace characters then return True, else return False
+    Checks if the input contains data. If there are any non-whitespace
+    characters then return True, else return False.
 
     Parameters:
 
@@ -117,22 +120,24 @@ def has_data(data):
 
     Returns:
 
-        Boolean      True if input string (data) contains non-whitespace characters, otherwise False
+        Boolean      True if input string (data) contains non-whitespace
+                     characters, otherwise False
     """
     return bool(data and not data.isspace())
 
 
 def convert_to_int(value):
     """
-    Converts string and float input to int. Strips all non-numeric characters from strings.
+    Converts string and float input to int. Strips all non-numeric
+    characters from strings.
 
     Parameters:
 
-        value:          (string/integer/float) Input value
+        value:         (string/integer/float) Input value
 
     Returns:
 
-        integer/None    Integer if successful conversion, otherwise None
+        integer/None   Integer if successful conversion, otherwise None
     """
     if isinstance(value, str):
         str_val = re.sub(r'[^0-9\-\.]', '', value)
@@ -153,15 +158,16 @@ def convert_to_int(value):
 
 def convert_to_float(value):
     """
-    Converts string and int input to float. Strips all non-numeric characters from strings.
+    Converts string and int input to float. Strips all non-numeric
+    characters from strings.
 
     Parameters:
 
-        value:          (string) Input value
+        value:         (string) Input value
 
     Returns:
 
-        float/None      Float if successful conversion, otherwise None
+        float/None     Float if successful conversion, otherwise None
     """
     if isinstance(value, str):
         try:
@@ -178,7 +184,8 @@ def convert_to_float(value):
 
 def convert_to_bool(value):
     """
-    Converts string, integer, or float input to boolean by checking for 'truthy' values
+    Converts string, integer, or float input to boolean by checking
+    for 'truthy' values.
 
     Parameters:
 
@@ -186,7 +193,8 @@ def convert_to_bool(value):
 
     Returns:
 
-        True/False      False unless a 'truthy' number or string is found ('y', 'yes', 'true', '1', 1, -1, etc.)
+        True/False      False unless a 'truthy' number or string is found
+                        ('y', 'yes', 'true', '1', 1, -1, etc.)
     """
     # if number, then bool it
     # if string, try to convert to float
@@ -221,8 +229,9 @@ def stream_success(output_line, ignore_exceptions):
 
 
 def stream_error(e, ignore_exceptions, line):
-    """Reraise the stream exception with annotation or print an error `_jc_meta`
-       field if `ignore_exceptions=True`
+    """
+    Reraise the stream exception with annotation or print an error
+    `_jc_meta` field if `ignore_exceptions=True`.
     """
     if not ignore_exceptions:
         e.args = (str(e) + '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.',)
@@ -258,18 +267,28 @@ def streaming_line_input_type_check(line):
 
 class timestamp:
     """
-    Input a date-time text string of several formats and convert to a naive or timezone-aware epoch timestamp in UTC
+    Input a date-time text string of several formats and convert to a
+    naive or timezone-aware epoch timestamp in UTC.
 
     Parameters:
 
-        datetime_string:    (str)   a string representation of a date-time in several supported formats
+        datetime_string:  (str)  a string representation of a
+                                 date-time in several supported formats
 
     Attributes:
 
-        string              (str)   the input datetime string
-        format              (int)   the format rule that was used to decode the datetime string. None if conversion fails
-        naive               (int)   timestamp based on locally configured timezone. None if conversion fails
-        utc                 (int)   aware timestamp only if UTC timezone detected in datetime string. None if conversion fails
+        string            (str)   the input datetime string
+
+        format            (int)   the format rule that was used to
+                                  decode the datetime string. None if
+                                  conversion fails
+
+        naive             (int)   timestamp based on locally configured
+                                  timezone. None if conversion fails
+
+        utc               (int)   aware timestamp only if UTC timezone
+                                  detected in datetime string. None if
+                                  conversion fails
     """
 
     def __init__(self, datetime_string):
@@ -284,27 +303,42 @@ class timestamp:
 
     def _parse(self):
         """
-        Input a date-time text string of several formats and convert to a naive or timezone-aware epoch timestamp in UTC
+        Input a date-time text string of several formats and convert to
+        a naive or timezone-aware epoch timestamp in UTC.
 
         Parameters:
 
-            data:       (string) a string representation of a date-time in several supported formats
+            data:       (string) a string representation of a date-time
+                        in several supported formats
 
         Returns:
 
             Dictionary  A Dictionary of the following format:
 
                 {
-                    "format":               integer,     # for debugging purposes. None if conversion fails
-                    "timestamp_naive":      integer,     # timestamp based on locally configured timezone. None if conversion fails
-                    "timestamp_utc":        integer      # aware timestamp only if UTC timezone detected. None if conversion fails
+                    # for debugging purposes. None if conversion fails
+                    "format":               integer,
+
+                    # timestamp based on locally configured timezone.
+                    # None if conversion fails.
+                    "timestamp_naive":      integer,
+
+                    # aware timestamp only if UTC timezone detected.
+                    # None if conversion fails.
+                    "timestamp_utc":        integer
                 }
 
-                The format integer denotes which date_time format conversion succeeded.
-                The timestamp_naive integer is the converted date-time string to a naive epoch timestamp.
-                The timestamp_utc integer is the converted date-time string to an aware epoch timestamp
-                    in the UTC timezone. If an aware conversion cannot be performed (e.g. the UTC timezone
-                    is not found in the date-time string), then this field will be None.
+                The `format` integer denotes which date_time format
+                conversion succeeded.
+
+                The `timestamp_naive` integer is the converted date-time
+                string to a naive epoch timestamp.
+
+                The `timestamp_utc` integer is the converted date-time
+                string to an aware epoch timestamp in the UTC timezone. If
+                an aware conversion cannot be performed (e.g. the UTC
+                timezone is not found in the date-time string), then this
+                field will be None.
 
                 If the conversion completely fails, all fields will be None.
         """

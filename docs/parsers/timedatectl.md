@@ -3,7 +3,8 @@
 # jc.parsers.timedatectl
 jc - JSON CLI output utility `timedatectl` command output parser
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the `universal_time` field is available.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the `universal_time` field is available.
 
 Usage (cli):
 
@@ -15,6 +16,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('timedatectl', timedatectl_command_output)
+
+    or
+
     import jc.parsers.timedatectl
     result = jc.parsers.timedatectl.parse(timedatectl_command_output)
 
@@ -23,7 +29,7 @@ Schema:
     {
       "local_time":                        string,
       "universal_time":                    string,
-      "epoch_utc":                         integer,     # timezone-aware timestamp
+      "epoch_utc":                         integer,     # timezone-aware
       "rtc_time":                          string,
       "time_zone":                         string,
       "ntp_enabled":                       boolean,
@@ -78,7 +84,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

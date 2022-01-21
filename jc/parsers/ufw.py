@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('ufw', ufw_command_output)
+
+    or
+
     import jc.parsers.ufw
     result = jc.parsers.ufw.parse(ufw_command_output)
 
@@ -40,7 +45,7 @@ Schema:
               "end":                integer
             }
           ],
-          "to_service":             string,     # null if any to ports or port_ranges are set
+          "to_service":             string,     # [0]
           "from_ip":                string,
           "from_ip_prefix":         integer,
           "from_interface":         string,
@@ -54,11 +59,14 @@ Schema:
               "end":                integer
             }
           ],
-          "from_service":           string,     # null if any from ports or port_ranges are set
+          "from_service":           string,     # [1]
           "comment":                string      # null if no comment
         }
       ]
     }
+
+    [0] null if any 'to' ports or port_ranges are set
+    [1] null if any 'from' ports or port_ranges are set
 
 Examples:
 
@@ -387,7 +395,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

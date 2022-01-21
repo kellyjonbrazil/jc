@@ -2,7 +2,8 @@
 
 Accepts any of the following who options (or no options): `-aTH`
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
 Usage (cli):
 
@@ -13,6 +14,11 @@ Usage (cli):
     $ jc who
 
 Usage (module):
+
+    import jc
+    result = jc.parse('who', who_command_output)
+
+    or
 
     import jc.parsers.who
     result = jc.parsers.who.parse(who_command_output)
@@ -26,13 +32,15 @@ Schema:
         "writeable_tty":   string,
         "tty":             string,
         "time":            string,
-        "epoch":           integer,     # naive timestamp. null if time cannot be converted
+        "epoch":           integer,     # [0]
         "idle":            string,
         "pid":             integer,
         "from":            string,
         "comment":         string
       }
     ]
+
+    [0] naive timestamp. null if time cannot be converted
 
 Examples:
 
@@ -137,9 +145,6 @@ class info():
     description = '`who` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['who']
 
@@ -179,7 +184,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

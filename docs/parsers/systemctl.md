@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('systemctl', systemctl_command_output)
+
+    or
+
     import jc.parsers.systemctl
     result = jc.parsers.systemctl.parse(systemctl_command_output)
 
@@ -37,14 +42,14 @@ Examples:
         "load": "loaded",
         "active": "active",
         "sub": "waiting",
-        "description": "Arbitrary Executable File Formats File System Automount Point"
+        "description": "Arbitrary Executable File Formats File System ..."
       },
       {
         "unit": "dev-block-8:2.device",
         "load": "loaded",
         "active": "active",
         "sub": "plugged",
-        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM on /dev/sda2 2"
+        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM o..."
       },
       {
         "unit": "dev-cdrom.device",
@@ -73,7 +78,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

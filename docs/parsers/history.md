@@ -3,15 +3,24 @@
 # jc.parsers.history
 jc - JSON CLI output utility `history` command output parser
 
-This parser will output a list of dictionaries each containing `line` and `command` keys. If you would like a simple dictionary output, then use the `-r` command-line option or the `raw=True` argument in the `parse()` function.
+This parser will output a list of dictionaries each containing `line` and
+`command` keys. If you would like a simple dictionary output, then use the
+`-r` command-line option or the `raw=True` argument in the `parse()`
+function.
 
-The "Magic" syntax is not supported since the `history` command is a shell builtin.
+The "Magic" syntax is not supported since the `history` command is a shell
+builtin.
 
 Usage (cli):
 
     $ history | jc --history
 
 Usage (module):
+
+    import jc
+    result = jc.parse('history', history_command_output)
+
+    or
 
     import jc.parsers.history
     result = jc.parsers.history.parse(history_command_output)
@@ -74,7 +83,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

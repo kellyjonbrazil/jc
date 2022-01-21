@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('systemctl_lj', systemctl_lj_command_output)
+
+    or
+
     import jc.parsers.systemctl_lj
     result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
 
@@ -79,8 +84,6 @@ class info():
     description = '`systemctl list-jobs` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['systemctl list-jobs']
 
@@ -116,7 +119,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

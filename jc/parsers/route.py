@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('route', route_command_output)
+
+    or
+
     import jc.parsers.route
     result = jc.parsers.route.parse(route_command_output)
 
@@ -113,8 +118,6 @@ class info():
     description = '`route` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['route']
 
@@ -173,7 +176,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
@@ -192,7 +195,9 @@ def parse(data, raw=False, quiet=False):
         # fixup header row for ipv6
         if ' Next Hop ' in cleandata[0]:
             cleandata[0] = cleandata[0].replace(' If', ' Iface')
-        cleandata[0] = cleandata[0].replace(' Next Hop ', ' Next_Hop ').replace(' Flag ', ' Flags ').replace(' Met ', ' Metric ')
+        cleandata[0] = cleandata[0].replace(' Next Hop ', ' Next_Hop ')\
+                                   .replace(' Flag ', ' Flags ')\
+                                   .replace(' Met ', ' Metric ')
 
         cleandata[0] = cleandata[0].lower()
         raw_output = jc.parsers.universal.simple_table_parse(cleandata)

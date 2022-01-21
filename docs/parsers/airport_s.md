@@ -15,6 +15,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('airport_s', airport_s_command_output)
+
+    or
+
     import jc.parsers.airport_s
     result = jc.parsers.airport_s.parse(airport_s_command_output)
 
@@ -123,7 +128,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

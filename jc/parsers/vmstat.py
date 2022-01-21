@@ -2,9 +2,11 @@
 
 Options supported: `-a`, `-w`, `-d`, `-t`
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
-The `epoch_utc` calculated timestamp field is timezone-aware and is only available if the timezone field is UTC.
+The `epoch_utc` calculated timestamp field is timezone-aware and is only
+available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -15,6 +17,11 @@ Usage (cli):
     $ jc vmstat
 
 Usage (module):
+
+    import jc
+    result = jc.parse('vmstat', vmstat_command_output)
+
+    or
 
     import jc.parsers.vmstat
     result = jc.parsers.vmstat.parse(vmstat_command_output)
@@ -55,10 +62,13 @@ Schema:
         "io_seconds":                        integer,
         "timestamp":                         string,
         "timezone":                          string,
-        "epoch":                             integer,     # naive timestamp if -t flag is used
-        "epoch_utc":                         integer      # aware timestamp if -t flag is used and UTC TZ
+        "epoch":                             integer,     # [0]
+        "epoch_utc":                         integer      # [1]
       }
     ]
+
+    [0] naive timestamp if -t flag is used
+    [1] aware timestamp if -t flag is used and UTC TZ
 
 Examples:
 
@@ -125,9 +135,6 @@ class info():
     description = '`vmstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['vmstat']
 
@@ -148,11 +155,13 @@ def _process(proc_data):
         List of Dictionaries. Structured to conform to the schema.
     """
 
-    int_list = ['runnable_procs', 'uninterruptible_sleeping_procs', 'virtual_mem_used', 'free_mem', 'buffer_mem',
-                'cache_mem', 'inactive_mem', 'active_mem', 'swap_in', 'swap_out', 'blocks_in', 'blocks_out',
-                'interrupts', 'context_switches', 'user_time', 'system_time', 'idle_time', 'io_wait_time',
-                'stolen_time', 'total_reads', 'merged_reads', 'sectors_read', 'reading_ms', 'total_writes',
-                'merged_writes', 'sectors_written', 'writing_ms', 'current_io', 'io_seconds']
+    int_list = [
+        'runnable_procs', 'uninterruptible_sleeping_procs', 'virtual_mem_used', 'free_mem',
+        'buffer_mem', 'cache_mem', 'inactive_mem', 'active_mem', 'swap_in', 'swap_out', 'blocks_in',
+        'blocks_out', 'interrupts', 'context_switches', 'user_time', 'system_time', 'idle_time',
+        'io_wait_time', 'stolen_time', 'total_reads', 'merged_reads', 'sectors_read', 'reading_ms',
+        'total_writes', 'merged_writes', 'sectors_written', 'writing_ms', 'current_io', 'io_seconds'
+    ]
 
     for entry in proc_data:
         for key in entry:
@@ -174,7 +183,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

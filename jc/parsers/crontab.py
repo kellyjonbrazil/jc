@@ -1,4 +1,5 @@
-"""jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+"""jc - JSON CLI output utility `crontab -l` command output and crontab
+file parser
 
 Supports `crontab -l` command output and crontab files.
 
@@ -11,6 +12,11 @@ Usage (cli):
     $ jc crontab -l
 
 Usage (module):
+
+    import jc
+    result = jc.parse('crontab', crontab_output)
+
+    or
 
     import jc.parsers.crontab
     result = jc.parsers.crontab.parse(crontab_output)
@@ -177,9 +183,6 @@ class info():
     description = '`crontab` command and file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['crontab']
 
@@ -220,7 +223,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

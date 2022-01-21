@@ -3,9 +3,11 @@
 # jc.parsers.stat
 jc - JSON CLI output utility `stat` command output parser
 
-The `xxx_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
+local time of the system the parser is run on)
 
-The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
+The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -16,6 +18,11 @@ Usage (cli):
     $ jc stat *
 
 Usage (module):
+
+    import jc
+    result = jc.parse('stat', stat_command_output)
+
+    or
 
     import jc.parsers.stat
     result = jc.parsers.stat.parse(stat_command_output)
@@ -183,7 +190,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

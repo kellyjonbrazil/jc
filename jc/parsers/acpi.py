@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('acpi', acpi_command_output)
+
+    or
+
     import jc.parsers.acpi
     result = jc.parsers.acpi.parse(acpi_command_output)
 
@@ -231,8 +236,6 @@ class info():
     description = '`acpi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['acpi']
 
@@ -252,7 +255,8 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    int_list = ['id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity', 'last_full_capacity_percent']
+    int_list = ['id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity',
+                'last_full_capacity_percent']
     float_list = ['temperature']
 
     for entry in proc_data:
@@ -295,7 +299,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

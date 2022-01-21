@@ -3,7 +3,9 @@
 # jc.parsers.csv
 jc - JSON CLI output utility `csv` file parser
 
-The `csv` parser will attempt to automatically detect the delimiter character. If the delimiter cannot be detected it will default to comma. The first row of the file must be a header row.
+The `csv` parser will attempt to automatically detect the delimiter
+character. If the delimiter cannot be detected it will default to comma.
+The first row of the file must be a header row.
 
 Usage (cli):
 
@@ -11,12 +13,18 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('csv', csv_output)
+
+    or
+
     import jc.parsers.csv
     result = jc.parsers.csv.parse(csv_output)
 
 Schema:
 
-    csv file converted to a Dictionary: https://docs.python.org/3/library/csv.html
+    csv file converted to a Dictionary:
+    https://docs.python.org/3/library/csv.html
 
     [
       {
@@ -28,7 +36,7 @@ Schema:
 Examples:
 
     $ cat homes.csv
-    "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres", "Taxes"
+    "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres"...
     142, 160, 28, 10, 5, 3,  60, 0.28,  3167
     175, 180, 18,  8, 4, 1,  12, 0.43,  4033
     129, 132, 13,  6, 3, 1,  41, 0.33,  1471
@@ -89,7 +97,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

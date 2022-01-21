@@ -6,24 +6,25 @@ import string
 
 def simple_table_parse(data):
     """
-    Parse simple tables. The last column may contain data with spaces
-
-    code adapted from Conor Heine at:
-    https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+    Parse simple tables. The last column may contain data with spaces.
 
     Parameters:
 
-        data:       (list)   Text data to parse that has been split into lines via .splitlines().
-                             Item 0 must be the header row. Any spaces in header names should be
-                             changed to underscore '_'. You should also ensure headers are
-                             lowercase by using .lower().
+        data:   (list)   Text data to parse that has been split into lines
+                         via .splitlines(). Item 0 must be the header row.
+                         Any spaces in header names should be changed to
+                         underscore '_'. You should also ensure headers are
+                         lowercase by using .lower().
 
-                             Also, ensure there are no blank lines (list items) in the data.
+                         Also, ensure there are no blank lines (list items)
+                         in the data.
 
     Returns:
 
-        List of Dictionaries   raw structured data
+        List of Dictionaries
     """
+    # code adapted from Conor Heine at:
+    # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
     headers = [h for h in ' '.join(data[0].strip().split()).split() if h]
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), data[1:])
     raw_output = [dict(zip(headers, r)) for r in raw_data]
@@ -37,22 +38,26 @@ def sparse_table_parse(data, delim='\u2063'):
 
     Parameters:
 
-        data:       (list)   Text data to parse that has been split into lines via .splitlines().
-                             Item 0 must be the header row. Any spaces in header names should be
-                             changed to underscore '_'. You should also ensure headers are
-                             lowercase by using .lower(). Do not change the position of header
-                             names as the positions are used to find the data.
+        data:   (list)   Text data to parse that has been split into lines
+                         via .splitlines(). Item 0 must be the header row.
+                         Any spaces in header names should be changed to
+                         underscore '_'. You should also ensure headers are
+                         lowercase by using .lower(). Do not change the
+                         position of header names as the positions are used
+                         to find the data.
 
-                             Also, ensure there are no blank lines (list items) in the data.
+                         Also, ensure there are no blank lines (list items)
+                         in the data.
 
-        delim:      (string) Delimiter to use. By default 'u\2063' (invisible separator) is used
-                             since this is unlikely to ever be seen in terminal output. You can
-                             change this for troubleshooting purposes or if there is a delimiter
-                             conflict with your data.
+        delim:  (string) Delimiter to use. By default `u\\2063`
+                         (invisible separator) is used since it is unlikely
+                         to ever be seen in terminal output. You can change
+                         this for troubleshooting purposes or if there is a
+                         delimiter conflict with your data.
 
     Returns:
 
-        List of Dictionaries   raw structured data
+        List of Dictionaries
     """
     output = []
     header_text = data.pop(0)

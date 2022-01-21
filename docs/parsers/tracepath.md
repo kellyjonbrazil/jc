@@ -15,6 +15,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('tracepath', tracepath_command_output)
+
+    or
+
     import jc.parsers.tracepath
     result = jc.parsers.tracepath.parse(tracepath_command_output)
 
@@ -146,7 +151,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

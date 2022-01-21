@@ -3,7 +3,8 @@
 # jc.parsers.iw_scan
 jc - JSON CLI output utility `iw dev <device> scan` command output parser
 
-This parser is considered beta quality. Not all fields are parsed and there are not enough samples to test.
+This parser is considered beta quality. Not all fields are parsed and there
+are not enough samples to test.
 
 Usage (cli):
 
@@ -15,14 +16,19 @@ Usage (cli):
 
 Usage (module):
 
-    import jc.parsers.iw-scan
-    result = jc.parsers.iw-scan.parse(iw-scan_command_output)
+    import jc
+    result = jc.parse('iw_scan', iw_scan_command_output)
+
+    or
+
+    import jc.parsers.iw_scan
+    result = jc.parsers.iw_scan.parse(iw_scan_command_output)
 
 Schema:
 
     [
       {
-        "foo":     string/integer/float,         # best guess based on value
+        "foo":     string/integer/float,      # best guess based on value
         "bar":     string/integer/float,
         "baz":     string/integer/float
       }
@@ -135,7 +141,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

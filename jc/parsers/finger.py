@@ -12,6 +12,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('finger', finger_command_output)
+
+    or
+
     import jc.parsers.finger
     result = jc.parsers.finger.parse(finger_command_output)
 
@@ -96,9 +101,6 @@ class info():
     description = '`finger` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'freebsd']
     magic_commands = ['finger']
 
@@ -161,7 +163,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
@@ -174,11 +176,12 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
-        # Finger output is an abomination that is nearly unparsable. But there is a way:
-        # First find the location of the last character of 'Idle' in the table and cut
-        # all lines at that spot. Data before that spot can use the unviversal.sparse_table_parse function.
-        # All data after that spot can be run through regex to find the login datetime and possibly
-        # other fields.
+        # Finger output is an abomination that is nearly unparsable. But there
+        # is a way:
+        # First find the location of the last character of 'Idle' in the table
+        # and cut all lines at that spot. Data before that spot can use the
+        # unviversal.sparse_table_parse function. All data after that spot can
+        # be run through regex to find the login datetime and possibly other fields.
 
         data_lines = list(filter(None, data.splitlines()))
         sep_col = data_lines[0].find('Idle') + 4

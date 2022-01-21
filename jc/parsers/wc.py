@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('wc', wc_command_output)
+
+    or
+
     import jc.parsers.wc
     result = jc.parsers.wc.parse(wc_command_output)
 
@@ -58,8 +63,6 @@ class info():
     description = '`wc` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['wc']
 
@@ -96,7 +99,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

@@ -1,8 +1,12 @@
 """jc - JSON CLI output utility `Key/Value` file parser
 
-Supports files containing simple key/value pairs. Delimiter can be `=` or `:`. Missing values are supported. Comment prefix can be `#` or `;`. Comments must be on their own line.
+Supports files containing simple key/value pairs. Delimiter can be `=` or
+`:`. Missing values are supported. Comment prefix can be `#` or `;`.
+Comments must be on their own line.
 
-Note: Values starting and ending with quotation marks will have the marks removed. If you would like to keep the quotation marks, use the `-r` command-line argument or the `raw=True` argument in `parse()`.
+Note: Values starting and ending with quotation marks will have the marks
+removed. If you would like to keep the quotation marks, use the `-r`
+command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -10,12 +14,18 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('kv', kv_file_output)
+
+    or
+
     import jc.parsers.kv
     result = jc.parsers.kv.parse(kv_file_output)
 
 Schema:
 
-    key/value document converted to a dictionary - see configparser standard library documentation for more details.
+    key/value document converted to a dictionary - see the
+    configparser standard library documentation for more details.
 
     {
       "key1":       string,
@@ -52,8 +62,6 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'This is a wrapper for the INI parser'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
 
@@ -69,7 +77,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

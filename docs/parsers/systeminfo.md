@@ -5,15 +5,24 @@ jc - JSON CLI output utility `systeminfo` command output parser
 
 Blank or missing elements are set to `null`.
 
-The `original_install_date_epoch` and `system_boot_time_epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+The `original_install_date_epoch` and `system_boot_time_epoch` calculated
+timestamp fields are naive. (i.e. based on the local time of the system the
+parser is run on)
 
-The `original_install_date_epoch_utc` and `system_boot_time_epoch_utc` calculated timestamp fields are timezone-aware and are only available if the timezone field is UTC.
+The `original_install_date_epoch_utc` and `system_boot_time_epoch_utc`
+calculated timestamp fields are timezone-aware and are only available if
+the timezone field is UTC.
 
 Usage (cli):
 
     $ systeminfo | jc --systeminfo
 
 Usage (module):
+
+    import jc
+    result = jc.parse('systeminfo', systeminfo_command_output)
+
+    or
 
     import jc.parsers.systeminfo
     result = jc.parsers.systeminfo.parse(systeminfo_command_output)
@@ -31,11 +40,11 @@ Schema:
       "registered_organization":                    string,
       "product_id":                                 string,
       "original_install_date":                      string,
-      "original_install_date_epoch":                integer,     # naive timestamp
-      "original_install_date_epoch_utc":            integer,     # timezone-aware timestamp
+      "original_install_date_epoch":                integer,     # [0]
+      "original_install_date_epoch_utc":            integer,     # [1]
       "system_boot_time":                           string,
-      "system_boot_time_epoch":                     integer,     # naive timestamp
-      "system_boot_time_epoch_utc":                 integer,     # timezone-aware timestamp
+      "system_boot_time_epoch":                     integer,     # [0]
+      "system_boot_time_epoch_utc":                 integer,     # [1]
       "system_manufacturer":                        string,
       "system_model":                               string,
       "system_type":                                string,
@@ -79,6 +88,9 @@ Schema:
         "data_execution_prevention_available":      boolean
       }
     }
+
+    [0] naive timestamp
+    [1] timezone-aware timestamp
 
 Examples:
 
@@ -219,7 +231,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

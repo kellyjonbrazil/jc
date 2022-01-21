@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('hciconfig', hciconfig_command_output)
+
+    or
+
     import jc.parsers.hciconfig
     result = jc.parsers.hciconfig.parse(hciconfig_command_output)
 
@@ -321,9 +326,6 @@ class info():
     description = '`hciconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux']
     magic_commands = ['hciconfig']
 
@@ -346,13 +348,17 @@ def _process(proc_data):
 
     for entry in proc_data:
 
-        int_list = ['acl_mtu', 'acl_mtu_packets', 'sco_mtu', 'sco_mtu_packets', 'rx_bytes', 'rx_acl', 'rx_sco',
-                    'rx_events', 'rx_errors', 'tx_bytes', 'tx_acl', 'tx_sco', 'tx_commands', 'tx_errors']
+        int_list = ['acl_mtu', 'acl_mtu_packets', 'sco_mtu', 'sco_mtu_packets',
+                    'rx_bytes', 'rx_acl', 'rx_sco', 'rx_events', 'rx_errors',
+                    'tx_bytes', 'tx_acl', 'tx_sco', 'tx_commands', 'tx_errors']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
-        if 'service_classes' in entry and len(entry['service_classes']) == 1 and 'Unspecified' in entry['service_classes']:
+        if ('service_classes' in entry and
+            len(entry['service_classes']) == 1 and
+            'Unspecified' in entry['service_classes']):
+
             entry['service_classes'] = None
 
     return proc_data
@@ -365,7 +371,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

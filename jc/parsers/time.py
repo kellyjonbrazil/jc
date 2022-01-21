@@ -1,16 +1,25 @@
 """jc - JSON CLI output utility `/usr/bin/time` command output parser
 
-Output from `/usr/bin/time` is sent to `STDERR`, so the `-o` option can be used to redirect the output to a file that can be read by `jc`.
+Output from `/usr/bin/time` is sent to `STDERR`, so the `-o` option can be
+used to redirect the output to a file that can be read by `jc`.
 
-Alternatively, the output from `/usr/bin/time` can be redirected to `STDOUT` so `jc` can receive it.
+Alternatively, the output from `/usr/bin/time` can be redirected to `STDOUT`
+so `jc` can receive it.
 
-Note: `/usr/bin/time` is similar but different from the Bash builtin `time` command.
+Note: `/usr/bin/time` is similar but different from the Bash builtin
+      `time` command.
 
 Usage (cli):
 
-    $ /usr/bin/time -o timefile.out sleep 2.5; cat timefile.out | jc --time -p
+    $ /usr/bin/time -o timefile.out sleep 2; cat timefile.out | \\
+      jc --time -p
 
 Usage (module):
+
+    import jc
+    result = jc.parse('time', time_command_output)
+
+    or
 
     import jc.parsers.time
     result = jc.parsers.time.parse(time_command_output)
@@ -36,8 +45,8 @@ Schema:
       "average_unshared_stack_size":        integer,
       "average_shared_memory_size":         integer,
       "maximum_resident_set_size":          integer,
-      "block_input_operations":             integer,   # aka File system inputs
-      "block_output_operations":            integer,   # aka File system outputs
+      "block_input_operations":             integer,   # [0]
+      "block_output_operations":            integer,   # [1]
       "major_pagefaults":                   integer,
       "minor_pagefaults":                   integer,
       "swaps":                              integer,
@@ -57,15 +66,19 @@ Schema:
       "exit_status":                        integer
     }
 
+    [0] aka File system inputs
+    [1] aka File system outputs
+
 Examples:
 
-    $ /usr/bin/time --verbose -o timefile.out sleep 2.5; cat timefile.out | jc --time -p
+    $ /usr/bin/time --verbose -o timefile.out sleep 2; cat timefile.out | \\
+      jc --time -p
     {
-      "command_being_timed": "sleep 2.5",
+      "command_being_timed": "sleep 2",
       "user_time": 0.0,
       "system_time": 0.0,
       "cpu_percent": 0,
-      "elapsed_time": "0:02.50",
+      "elapsed_time": "0:02.00",
       "average_shared_text_size": 0,
       "average_unshared_data_size": 0,
       "average_stack_size": 0,
@@ -91,13 +104,14 @@ Examples:
       "elapsed_time_total_seconds": 2.5
     }
 
-    $ /usr/bin/time --verbose -o timefile.out sleep 2.5; cat timefile.out | jc --time -p -r
+    $ /usr/bin/time --verbose -o timefile.out sleep 2; cat timefile.out | \\
+      jc --time -p -r
     {
-      "command_being_timed": "\"sleep 2.5\"",
+      "command_being_timed": "\"sleep 2\"",
       "user_time": "0.00",
       "system_time": "0.00",
       "cpu_percent": "0",
-      "elapsed_time": "0:02.50",
+      "elapsed_time": "0:02.00",
       "average_shared_text_size": "0",
       "average_unshared_data_size": "0",
       "average_stack_size": "0",
@@ -127,9 +141,6 @@ class info():
     description = '`/usr/bin/time` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
 
 
@@ -168,12 +179,15 @@ def _process(proc_data):
                                                   (proc_data['elapsed_time_centiseconds'] / 100)
 
     # convert ints and floats
-    int_list = ['cpu_percent', 'average_shared_text_size', 'average_unshared_data_size', 'average_unshared_stack_size',
-                'average_shared_memory_size', 'maximum_resident_set_size', 'block_input_operations',
-                'block_output_operations', 'major_pagefaults', 'minor_pagefaults', 'swaps', 'page_reclaims',
-                'page_faults', 'messages_sent', 'messages_received', 'signals_received', 'voluntary_context_switches',
-                'involuntary_context_switches', 'average_stack_size', 'average_total_size', 'average_resident_set_size',
-                'signals_delivered', 'page_size', 'exit_status']
+    int_list = [
+        'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size',
+        'average_unshared_stack_size', 'average_shared_memory_size', 'maximum_resident_set_size',
+        'block_input_operations', 'block_output_operations', 'major_pagefaults', 'minor_pagefaults',
+        'swaps', 'page_reclaims', 'page_faults', 'messages_sent', 'messages_received',
+        'signals_received', 'voluntary_context_switches', 'involuntary_context_switches',
+        'average_stack_size', 'average_total_size', 'average_resident_set_size',
+        'signals_delivered', 'page_size', 'exit_status'
+    ]
     float_list = ['real_time', 'user_time', 'system_time']
     for key in proc_data:
         if key in int_list:
@@ -191,7 +205,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

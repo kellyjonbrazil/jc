@@ -9,6 +9,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('shadow', shadow_file_output)
+
+    or
+
     import jc.parsers.shadow
     result = jc.parsers.shadow.parse(shadow_file_output)
 
@@ -116,7 +121,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

@@ -3,7 +3,10 @@
 # jc.parsers.env
 jc - JSON CLI output utility `env` and `printenv` command output parser
 
-This parser will output a list of dictionaries each containing `name` and `value` keys. If you would like a simple dictionary output, then use the `-r` command-line option or the `raw=True` argument in the `parse()` function.
+This parser will output a list of dictionaries each containing `name` and
+`value` keys. If you would like a simple dictionary output, then use the
+`-r` command-line option or the `raw=True` argument in the `parse()`
+function.
 
 Usage (cli):
 
@@ -14,6 +17,11 @@ Usage (cli):
     $ jc env
 
 Usage (module):
+
+    import jc
+    result = jc.parse('env', env_command_output)
+
+    or
 
     import jc.parsers.env
     result = jc.parsers.env.parse(env_command_output)
@@ -84,7 +92,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

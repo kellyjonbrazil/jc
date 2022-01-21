@@ -5,9 +5,11 @@ jc - JSON CLI output utility `rpm -qi` command output parser
 
 Works with `rpm -qi [package]` or `rpm -qia`.
 
-The `..._epoch` calculated timestamp fields are naive (i.e. based on the local time of the system the parser is run on)
+The `..._epoch` calculated timestamp fields are naive. (i.e. based on the
+local time of the system the parser is run on)
 
-The `..._epoch_utc` calculated timestamp fields are timezone-aware and is only available if the timezone field is UTC.
+The `..._epoch_utc` calculated timestamp fields are timezone-aware and is
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -18,6 +20,11 @@ Usage (cli):
     $ jc rpm -qia
 
 Usage (module):
+
+    import jc
+    result = jc.parse('rpm_qi', rpm_qi_command_output)
+
+    or
 
     import jc.parsers.rpm_qi
     result = jc.parsers.rpm_qi.parse(rpm_qi_command_output)
@@ -32,16 +39,16 @@ Schema:
         "release":                  string,
         "architecture":             string,
         "install_date":             string,
-        "install_date_epoch":       integer,          # naive timestamp
-        "install_date_epoch_utc":   integer,          # Aware timestamp if timezone is UTC
+        "install_date_epoch":       integer,      # [0]
+        "install_date_epoch_utc":   integer,      # [1]
         "group":                    string,
         "size":                     integer,
         "license":                  string,
         "signature":                string,
         "source_rpm":               string,
         "build_date":               string,
-        "build_epoch":              integer,          # naive timestamp
-        "build_epoch_utc":          integer,          # Aware timestamp if timezone is UTC
+        "build_epoch":              integer,      # [0]
+        "build_epoch_utc":          integer,      # [1]
         "build_host":               string,
         "relocations":              string,
         "packager":                 string,
@@ -51,6 +58,9 @@ Schema:
         "description":              string
       }
     ]
+
+    [0] naive timestamp
+    [1] Aware timestamp if timezone is UTC
 
 Examples:
 
@@ -66,7 +76,7 @@ Examples:
         "group": "Development/Tools",
         "size": 1160660,
         "license": "GPLv2+",
-        "signature": "RSA/SHA256, Thu 22 Aug 2019 02:34:59 PM PDT, Key ID 24c6a8a7f4a80eb5",
+        "signature": "RSA/SHA256, Thu 22 Aug 2019 02:34:59 PM PDT, Key ...",
         "source_rpm": "make-3.82-24.el7.src.rpm",
         "build_date": "Thu 08 Aug 2019 05:47:25 PM PDT",
         "build_host": "x86-01.bsys.centos.org",
@@ -74,8 +84,8 @@ Examples:
         "packager": "CentOS BuildSystem <http://bugs.centos.org>",
         "vendor": "CentOS",
         "url": "http://www.gnu.org/software/make/",
-        "summary": "A GNU tool which simplifies the build process for users",
-        "description": "A GNU tool for controlling the generation of executables and other...",
+        "summary": "A GNU tool which simplifies the build process for ...",
+        "description": "A GNU tool for controlling the generation of ex...",
         "build_epoch": 1565311645,
         "build_epoch_utc": null,
         "install_date_epoch": 1571242902,
@@ -90,7 +100,7 @@ Examples:
         "group": "System Environment/Base",
         "size": 503608,
         "license": "GPLv2+",
-        "signature": "RSA/SHA256, Mon 12 Nov 2018 07:17:49 AM PST, Key ID 24c6a8a7f4a80eb5",
+        "signature": "RSA/SHA256, Mon 12 Nov 2018 07:17:49 AM PST, Key ...",
         "source_rpm": "kbd-1.15.5-15.el7.src.rpm",
         "build_date": "Tue 30 Oct 2018 03:40:00 PM PDT",
         "build_host": "x86-01.bsys.centos.org",
@@ -99,7 +109,7 @@ Examples:
         "vendor": "CentOS",
         "url": "http://ftp.altlinux.org/pub/people/legion/kbd",
         "summary": "Legacy data for kbd package",
-        "description": "The kbd-legacy package contains original keymaps for kbd package...",
+        "description": "The kbd-legacy package contains original keymap...",
         "build_epoch": 1540939200,
         "build_epoch_utc": null,
         "install_date_epoch": 1565891588,
@@ -120,7 +130,7 @@ Examples:
         "group": "Development/Tools",
         "size": "1160660",
         "license": "GPLv2+",
-        "signature": "RSA/SHA256, Thu 22 Aug 2019 02:34:59 PM PDT, Key ID 24c6a8a7f4a80eb5",
+        "signature": "RSA/SHA256, Thu 22 Aug 2019 02:34:59 PM PDT, Key ...",
         "source_rpm": "make-3.82-24.el7.src.rpm",
         "build_date": "Thu 08 Aug 2019 05:47:25 PM PDT",
         "build_host": "x86-01.bsys.centos.org",
@@ -128,8 +138,8 @@ Examples:
         "packager": "CentOS BuildSystem <http://bugs.centos.org>",
         "vendor": "CentOS",
         "url": "http://www.gnu.org/software/make/",
-        "summary": "A GNU tool which simplifies the build process for users",
-        "description": "A GNU tool for controlling the generation of executables and other..."
+        "summary": "A GNU tool which simplifies the build process for...",
+        "description": "A GNU tool for controlling the generation of exe..."
       },
       {
         "name": "kbd-legacy",
@@ -140,7 +150,7 @@ Examples:
         "group": "System Environment/Base",
         "size": "503608",
         "license": "GPLv2+",
-        "signature": "RSA/SHA256, Mon 12 Nov 2018 07:17:49 AM PST, Key ID 24c6a8a7f4a80eb5",
+        "signature": "RSA/SHA256, Mon 12 Nov 2018 07:17:49 AM PST, Key ...",
         "source_rpm": "kbd-1.15.5-15.el7.src.rpm",
         "build_date": "Tue 30 Oct 2018 03:40:00 PM PDT",
         "build_host": "x86-01.bsys.centos.org",
@@ -149,7 +159,7 @@ Examples:
         "vendor": "CentOS",
         "url": "http://ftp.altlinux.org/pub/people/legion/kbd",
         "summary": "Legacy data for kbd package",
-        "description": "The kbd-legacy package contains original keymaps for kbd package..."
+        "description": "The kbd-legacy package contains original keymaps..."
       },
       ...
     ]
@@ -171,7 +181,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

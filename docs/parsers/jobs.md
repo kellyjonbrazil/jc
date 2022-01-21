@@ -5,13 +5,19 @@ jc - JSON CLI output utility `jobs` command output parser
 
 Also supports the `-l` option.
 
-The "Magic" syntax is not supported since the `jobs` command is a shell builtin.
+The "Magic" syntax is not supported since the `jobs` command is a shell
+builtin.
 
 Usage (cli):
 
     $ jobs | jc --jobs
 
 Usage (module):
+
+    import jc
+    result = jc.parse('jobs', jobs_command_output)
+
+    or
 
     import jc.parsers.jobs
     result = jc.parsers.jobs.parse(jobs_command_output)
@@ -107,7 +113,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

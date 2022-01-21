@@ -13,6 +13,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('file', file_command_output)
+
+    or
+
     import jc.parsers.file
     result = jc.parsers.file.parse(file_command_output)
 
@@ -21,7 +26,7 @@ Schema:
     [
       {
         "filename":   string,
-        "type   ":    string
+        "type":       string
       }
     ]
 
@@ -51,11 +56,11 @@ Examples:
       },
       {
         "filename": "cd_catalog.xml",
-        "type": "XML 1.0 document text, ASCII text, with CRLF line terminators"
+        "type": "XML 1.0 document text, ASCII text, with CRLF line ..."
       },
       {
         "filename": "centosserial.sh",
-        "type": "Bourne-Again shell script text executable, UTF-8 Unicode text"
+        "type": "Bourne-Again shell script text executable, UTF-8 ..."
       },
       ...
     ]
@@ -77,7 +82,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

@@ -1,15 +1,22 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.crontab_u
-jc - JSON CLI output utility `crontab -l` command output and crontab file parser
+jc - JSON CLI output utility `crontab -l` command output and crontab
+file parser
 
-This version of the `crontab -l` parser supports output that contains user information for processes.
+This version of the `crontab -l` parser supports output that contains user
+information for processes.
 
 Usage (cli):
 
     $ crontab -l | jc --crontab-u
 
 Usage (module):
+
+    import jc
+    result = jc.parse('crontab_u', crontab_u_output)
+
+    or
 
     import jc.parsers.crontab_u
     result = jc.parsers.crontab_u.parse(crontab_u_output)
@@ -55,7 +62,7 @@ Examples:
       "variables": [
         {
           "name": "PATH",
-          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sb..."
         },
         {
           "name": "SHELL",
@@ -80,7 +87,7 @@ Examples:
             "*"
           ],
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": [
@@ -99,7 +106,7 @@ Examples:
             "7"
           ],
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": [
@@ -118,7 +125,7 @@ Examples:
             "*"
           ],
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         }
       ]
     }
@@ -128,7 +135,7 @@ Examples:
       "variables": [
         {
           "name": "PATH",
-          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+          "value": "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/..."
         },
         {
           "name": "SHELL",
@@ -143,7 +150,7 @@ Examples:
           "month": "*",
           "day_of_week": "*",
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": "47",
@@ -152,7 +159,7 @@ Examples:
           "month": "*",
           "day_of_week": "7",
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         },
         {
           "minute": "52",
@@ -161,7 +168,7 @@ Examples:
           "month": "*",
           "day_of_week": "*",
           "user": "root",
-          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )"
+          "command": "test -x /usr/sbin/anacron || ( cd / && run-parts ..."
         }
       ]
     }
@@ -183,7 +190,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:

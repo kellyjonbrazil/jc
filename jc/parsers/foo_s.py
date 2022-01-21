@@ -10,8 +10,17 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    # result is an iterable object (generator)
+    result = jc.parse('foo_s', foo_command_output.splitlines())
+    for item in result:
+        # do something
+
+    or
+
     import jc.parsers.foo_s
-    result = jc.parsers.foo_s.parse(foo_command_output.splitlines())    # result is an iterable object
+    # result is an iterable object (generator)
+    result = jc.parsers.foo_s.parse(foo_command_output.splitlines())
     for item in result:
         # do something
 
@@ -19,9 +28,12 @@ Schema:
 
     {
       "foo":            string,
-      "_jc_meta":                    # This object only exists if using -qq or ignore_exceptions=True
+
+      # Below object only exists if using -qq or ignore_exceptions=True
+
+      "_jc_meta":
         {
-          "success":    boolean,     # true if successfully parsed, false if error
+          "success":    boolean,     # false if error parsing
           "error":      string,      # exists if "success" is false
           "line":       string       # exists if "success" is false
         }
@@ -69,11 +81,11 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    #
+
     # process the data here
     # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool conversions and timestamps
-    #
+    # use helper functions in jc.utils for int, float,
+    # bool conversions and timestamps
 
     return proc_data
 
@@ -84,8 +96,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Parameters:
 
-        data:              (iterable)  line-based text data to parse (e.g. sys.stdin or str.splitlines())
-        raw:               (boolean)   output preprocessed JSON if True
+        data:              (iterable)  line-based text data to parse
+                                       (e.g. sys.stdin or str.splitlines())
+
+        raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
@@ -105,9 +119,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         try:
             jc.utils.streaming_line_input_type_check(line)
 
-            #
-            # parse the input here
-            #
+            # parse the content here
+            # check out helper functions in jc.utils
+            # and jc.parsers.universal
 
             if output_line:
                 yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)

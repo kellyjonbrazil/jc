@@ -6,15 +6,22 @@ Options supported:
 - `/C, /-C`
 - `/S`
 
-The "Magic" syntax is not supported since the `dir` command is a shell builtin.
+The "Magic" syntax is not supported since the `dir` command is a shell
+builtin.
 
-The `epoch` calculated timestamp field is naive (i.e. based on the local time of the system the parser is run on)
+The `epoch` calculated timestamp field is naive. (i.e. based on the local
+time of the system the parser is run on)
 
 Usage (cli):
 
     C:> dir | jc --dir
 
 Usage (module):
+
+    import jc
+    result = jc.parse('dir', dir_command_output)
+
+    or
 
     import jc.parsers.dir
     result = jc.parsers.dir.parse(dir_command_output)
@@ -123,8 +130,6 @@ class info():
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
-
-    # compatible options: win32
     compatible = ['win32']
 
 
@@ -166,7 +171,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

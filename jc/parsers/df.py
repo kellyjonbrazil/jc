@@ -10,6 +10,11 @@ Usage (cli):
 
 Usage (module):
 
+    import jc
+    result = jc.parse('df', df_command_output)
+
+    or
+
     import jc.parsers.df
     result = jc.parsers.df.parse(df_command_output)
 
@@ -103,8 +108,6 @@ class info():
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['df']
 
@@ -158,7 +161,8 @@ def _process(proc_data):
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
 
         # change used, available, use_percent, capacity_percent, ifree, iused, iused_percent to int
-        int_list = ['used', 'available', 'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent']
+        int_list = ['used', 'available', 'use_percent', 'capacity_percent', 'ifree',
+                    'iused', 'iused_percent']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
@@ -167,7 +171,10 @@ def _process(proc_data):
 
 
 def _long_filesystem_hash(header, line):
-    """Returns truncated hash and value of the filesystem field if it is too long for the column"""
+    """
+    Returns truncated hash and value of the filesystem field if it is too
+    long for the column.
+    """
     filesystem_field = line.split()[0]
 
     # get length of filesystem column
@@ -196,7 +203,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
@@ -233,7 +240,8 @@ def parse(data, raw=False, quiet=False):
         # parse the data
         raw_output = jc.parsers.universal.sparse_table_parse(fix_data)
 
-        # replace hash values with real values to fix long filesystem data in some older versions of df
+        # replace hash values with real values to fix long filesystem data
+        # in some older versions of df
         for item in raw_output:
             if 'filesystem' in item:
                 if item['filesystem'] in filesystem_map:

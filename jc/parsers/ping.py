@@ -4,7 +4,8 @@ Supports `ping` and `ping6` output.
 
 Usage (cli):
 
-    Note:  Use the ping `-c` (count) option, otherwise data will not be piped to `jc`.
+    Note:  Use the ping `-c` (count) option, otherwise data will not be
+           piped to `jc`.
 
     $ ping -c 3 1.2.3.4 | jc --ping
 
@@ -13,6 +14,11 @@ Usage (cli):
     $ jc ping -c 3 1.2.3.4
 
 Usage (module):
+
+    import jc
+    result = jc.parse('ping', ping_command_output)
+
+    or
 
     import jc.parsers.ping
     result = jc.parsers.ping.parse(ping_command_output)
@@ -23,7 +29,7 @@ Schema:
       "source_ip":                   string,
       "destination_ip":              string,
       "data_bytes":                  integer,
-      "pattern":                     string,        # (null if not set)
+      "pattern":                     string,        # null if not set
       "destination":                 string,
       "packets_transmitted":         integer,
       "packets_received":            integer,
@@ -35,8 +41,8 @@ Schema:
       "round_trip_ms_stddev":        float,
       "responses": [
         {
-          "type":                    string,        # 'reply', 'timeout', 'unparsable_line', etc. See `_error_type.type_map` for all options
-          "unparsed_line":           string,        # only if an 'unparsable_line' type
+          "type":                    string,        # [0]
+          "unparsed_line":           string,        # [1]
           "timestamp":               float,
           "bytes":                   integer,
           "response_ip":             string,
@@ -44,20 +50,25 @@ Schema:
           "ttl":                     integer,
           "time_ms":                 float,
           "duplicate":               boolean,
-          "vr":                      integer,       # hex value converted to decimal
-          "hl":                      integer,       # hex value converted to decimal
-          "tos":                     integer,       # hex value converted to decimal
-          "len":                     integer,       # hex value converted to decimal
-          "id":                      integer,       # hex value converted to decimal
-          "flg":                     integer,       # hex value converted to decimal
-          "off":                     integer,       # hex value converted to decimal
-          "pro":                     integer,       # hex value converted to decimal
-          "cks":                     ingeger,       # hex value converted to decimal
+          "vr":                      integer,       # [2]
+          "hl":                      integer,       # [2]
+          "tos":                     integer,       # [2]
+          "len":                     integer,       # [2]
+          "id":                      integer,       # [2]
+          "flg":                     integer,       # [2]
+          "off":                     integer,       # [2]
+          "pro":                     integer,       # [2]
+          "cks":                     ingeger,       # [2]
           "src":                     string,
           "dst":                     string
         }
       ]
     }
+
+    [0] 'reply', 'timeout', 'unparsable_line', etc. See
+        `_error_type.type_map` for all options
+    [1] only if an 'unparsable_line' type
+    [2] hex value converted to decimal
 
 Examples:
 
@@ -162,8 +173,6 @@ class info():
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['ping', 'ping6']
 
@@ -183,10 +192,14 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = ['data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl',
-                'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks']
-    float_list = ['packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
-                  'round_trip_ms_stddev', 'timestamp', 'time_ms']
+    int_list = [
+        'data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl',
+        'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks'
+    ]
+    float_list = [
+        'packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
+        'round_trip_ms_stddev', 'timestamp', 'time_ms'
+    ]
 
     for key in proc_data:
         if key in int_list:
@@ -609,7 +622,7 @@ def parse(data, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:

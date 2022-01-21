@@ -1,7 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 
 # jc.parsers.systemctl_luf
-jc - JSON CLI output utility `systemctl list-unit-files` command output parser
+jc - JSON CLI output utility `systemctl list-unit-files` command output
+parser
 
 Usage (cli):
 
@@ -12,6 +13,11 @@ Usage (cli):
     $ jc systemctl list-unit-files
 
 Usage (module):
+
+    import jc
+    result = jc.parse('systemctl_luf', systemctl_luf_command_output)
+
+    or
 
     import jc.parsers.systemctl_luf
     result = jc.parsers.systemctl_luf.parse(systemctl_luf_command_output)
@@ -61,7 +67,7 @@ Main text parsing function
 Parameters:
 
     data:        (string)  text data to parse
-    raw:         (boolean) output preprocessed JSON if True
+    raw:         (boolean) unprocessed output if True
     quiet:       (boolean) suppress warning messages if True
 
 Returns:
