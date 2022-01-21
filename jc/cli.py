@@ -470,18 +470,12 @@ def main():
             if magic_stderr:
                 print(magic_stderr[:-1], file=sys.stderr)
 
-        except FileNotFoundError:
+        except OSError as e:
             if debug:
                 raise
 
-            utils.error_message([f'"{run_command_str}" command could not be found. For details use the -d or -dd option.'])
-            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-        except OSError:
-            if debug:
-                raise
-
-            utils.error_message([f'"{run_command_str}" command could not be run due to too many open files. For details use the -d or -dd option.'])
+            error_msg = os.strerror(e.errno)
+            utils.error_message([f'"{run_command_str}" command could not be run: {error_msg}. For details use the -d or -dd option.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:
