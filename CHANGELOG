@@ -4,7 +4,7 @@ jc changelog
 - Add high-level parse API for built-in and plugin parsers
 - Add python module developer documentation
 - Enhance magic syntax exception messages
-- Enhance documentation
+- Enhance documentation formatting
 
 20220106 v1.17.7
 - Add stat command streaming parser tested on linux and macOS
