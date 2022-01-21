@@ -100,9 +100,11 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
-            #
+
             # parse the content here
-            #
+            # check out helper functions in jc.utils
+            # and jc.parsers.universal
+
             pass
 
     return raw_output if raw else _process(raw_output)

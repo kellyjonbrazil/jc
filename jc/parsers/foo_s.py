@@ -119,9 +119,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         try:
             jc.utils.streaming_line_input_type_check(line)
 
-            #
-            # parse the input here
-            #
+            # parse the content here
+            # check out helper functions in jc.utils
+            # and jc.parsers.universal
 
             if output_line:
                 yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
