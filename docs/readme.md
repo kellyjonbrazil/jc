@@ -4,8 +4,8 @@ JC - JSON CLI output utility
 
 * kellyjonbrazil@gmail.com
 
-This package serializes the output of many standard unix command line tools
-to dictionaries and lists of dictionaries.
+This package converts the output of many standard unix command line tools
+and file-types to dictionaries and lists of dictionaries.
 
 ## Interactive Documentation
 
