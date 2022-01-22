@@ -7,9 +7,9 @@ and file-types to dictionaries and lists of dictionaries.
 
 ## Interactive Documentation
 
-    >>> help(jc)
-    >>> help(jc.lib)
-    >>> help(jc.utils)
+    >>> help('jc')
+    >>> help('jc.lib')
+    >>> help('jc.utils')
     >>> jc.get_help('parser_module_name')
 
 ## Online Documentation
