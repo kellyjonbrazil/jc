@@ -1,16 +1,19 @@
-![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
+![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?
+         branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
-> `jc` was just featured in the [Console Open Source Newsletter](https://console.substack.com/p/console-89)
+> `jc` was just featured in the [Console Open Source Newsletter](https://
+console.substack.com/p/console-89)
 
-> Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
+> Check out the `jc` Python [package documentation](https://github.com/
+kellyjonbrazil/jc/tree/master/docs) for developers
 
 > Try the `jc` [web demo](https://jc-web-demo.herokuapp.com/)
 
 > JC is [now available](https://galaxy.ansible.com/community/general) as an
 Ansible filter plugin in the `community.general` collection. See this
-[blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
-for an example.
+[blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-
+ansible-with-jc/) for an example.
 
 # JC
 JSON CLI output utility
@@ -68,7 +71,8 @@ will be a python dictionary, or list of dictionaries, instead of JSON:
 ```
 
 > For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or
-see the [online documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs).
+see the [online documentation](https://github.com/kellyjonbrazil/jc/tree/master/
+docs).
 
 Two representations of the data are available. The default representation uses a
 strict schema per parser and converts known numbers to int/float JSON values.
@@ -82,24 +86,34 @@ function parameter in `parse()`.
 Schemas for each parser can be found at the documentation link beside each
 [**Parser**](#parsers) below.
 
-Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
+Release notes can be found [here](https://blog.kellybrazil.com/category/
+jc-news/).
 
 ## Why Would Anyone Do This!?
 For more information on the motivations for this project, please see my blog
-post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/) and my [interview with Console](https://console.substack.com/p/console-89).
+post on [Bringing the Unix Philosophy to the 21st Century](https://blog.
+kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/)
+and my [interview with Console](https://console.substack.com/p/console-89).
 
 See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
-- [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertto-json?view=powershell-7)
-- [blog: linux apps should have a json flag](https://thomashunter.name/posts/2012-06-06-linux-cli-apps-should-have-a-json-flag)
+- [powershell](https://docs.microsoft.com/en-us/powershell/module/microsoft.
+  powershell.utility/convertto-json?view=powershell-7)
+- [blog: linux apps should have a json flag](https://thomashunter.name/posts/
+  2012-06-06-linux-cli-apps-should-have-a-json-flag)
 - [Hacker News discussion](https://news.ycombinator.com/item?id=28266193)
-- [Reddit discussion](https://www.reddit.com/r/programming/comments/pa4cbb/bringing_the_unix_philosophy_to_the_21st_century/)
+- [Reddit discussion](https://www.reddit.com/r/programming/comments/pa4cbb/
+  bringing_the_unix_philosophy_to_the_21st_century/)
 
 Use Cases:
-- [Bash scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the-command-line/)
-- [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
-- [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/parsing-command-output-in-saltstack-with-jc/)
-- [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
+- [Bash scripting](https://blog.kellybrazil.com/2021/04/12/practical-json-at-the
+  -command-line/)
+- [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/
+  parsing-command-output-in-ansible-with-jc/)
+- [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/
+  parsing-command-output-in-saltstack-with-jc/)
+- [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/
+  parsing-command-output-in-nornir-with-jc/)
 
 ## Installation
 There are several ways to get `jc`. You can install via `pip`, OS package
@@ -129,8 +143,8 @@ pip3 install jc
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
 ### Binaries and Packages
-For precompiled binaries, see [Releases](https://github.com/kellyjonbrazil/jc/releases)
-on Github.
+For precompiled binaries, see [Releases](https://github.com/kellyjonbrazil/jc/
+releases) on Github.
 
 ## Usage
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the
@@ -309,16 +323,18 @@ local **"App data directory"**:
 - Windows: `$LOCALAPPDATA\jc\jc\jcparsers`
 
 Local parser plugins are standard python module files. Use the
-[`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py)
-or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py)
-parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
+[`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/
+parsers/foo.py) or [`jc/parsers/foo_s.py (streaming)`](https://github.com/
+kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parser as a template and
+simply place a `.py` file in the `jcparsers` subfolder.
 
 Local plugin filenames must be valid python module names, therefore must consist
 entirely of alphanumerics and start with a letter. Local plugins may override
 default parsers.
 
-> Note: The application data directory follows the
-[XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+> Note: The application data directory follows the [XDG Base Directory
+Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-
+latest.html)
 
 ### Caveats
 
@@ -351,9 +367,9 @@ parsers that convert platform-specific output will generate a warning message if
 they are run on an unsupported platform. To see all parser information,
 including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want
-to parse a file with linux `lsof` output on an macOS or Windows laptop. In that
-case you can suppress the warning message with the `-q` cli option or the
+You may still use a parser on an unsupported platform - for example, you may
+want to parse a file with linux `lsof` output on an macOS or Windows laptop. In
+that case you can suppress the warning message with the `-q` cli option or the
 `quiet=True` function parameter in `parse()`:
 
 macOS:
@@ -380,15 +396,20 @@ Tested on:
 - Windows 2019 Server
 
 ## Contributions
-Feel free to add/improve code or parsers! You can use the
-[`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py)
-or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template and submit your parser with a pull request.
+Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](
+https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) or
+[`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/
+master/jc/parsers/foo_s.py) parsers as a template and submit your parser with a
+pull request.
 
-Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/blob/master/CONTRIBUTING.md) for more information.
+Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/
+blob/master/CONTRIBUTING.md) for more information.
 
 ## Acknowledgments
-- Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
-- CI automation and code optimizations by [philippeitis](https://github.com/philippeitis)
+- Local parser plugin feature contributed by [Dean Serenevy](https://github.com/
+  duelafn)
+- CI automation and code optimizations by [philippeitis](https://github.com/
+  philippeitis)
 - [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module
   by KnightWhoSayNi
 - [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
