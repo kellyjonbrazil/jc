@@ -1,6 +1,8 @@
 ![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
+> `jc` was just featured in the [Console Open Source Newsletter](https://console.substack.com/p/console-89)
+
 > Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
 
 > Try the `jc` [web demo](https://jc-web-demo.herokuapp.com/)
@@ -59,7 +61,7 @@ Schemas for each parser can be found at the documentation link beside each [**Pa
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
 ## Why Would Anyone Do This!?
-For more information on the motivations for this project, please see my blog post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/).
+For more information on the motivations for this project, please see my blog post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/) and my [interview with Console](https://console.substack.com/p/console-89).
 
 See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
