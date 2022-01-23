@@ -7,33 +7,47 @@
 
 > Try the `jc` [web demo](https://jc-web-demo.herokuapp.com/)
 
-> JC is [now available](https://galaxy.ansible.com/community/general) as an Ansible filter plugin in the `community.general` collection. See this [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/) for an example.
+> JC is [now available](https://galaxy.ansible.com/community/general) as an
+Ansible filter plugin in the `community.general` collection. See this
+[blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
+for an example.
 
 # JC
 JSON CLI output utility
 
-`jc` JSONifies the output of many CLI tools and file-types for easier parsing in scripts. See the [**Parsers**](#parsers) section for supported commands and file-types.
+`jc` JSONifies the output of many CLI tools and file-types for easier parsing in
+scripts. See the [**Parsers**](#parsers) section for supported commands and
+file-types.
 ```bash
 dig example.com | jc --dig
 ```
 ```json
-[{"id":38052,"opcode":"QUERY","status":"NOERROR","flags":["qr","rd","ra"],"query_num":1,"answer_num":1,
-"authority_num":0,"additional_num":1,"opt_pseudosection":{"edns":{"version":0,"flags":[],"udp":4096}},"question":
-{"name":"example.com.","class":"IN","type":"A"},"answer":[{"name":"example.com.","class":"IN","type":"A","ttl":
-39049,"data":"93.184.216.34"}],"query_time":49,"server":"2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)","when":
-"Fri Apr 16 16:09:00 PDT 2021","rcvd":56,"when_epoch":1618614540,"when_epoch_utc":null}]
+[{"id":38052,"opcode":"QUERY","status":"NOERROR","flags":["qr","rd","ra"],
+"query_num":1,"answer_num":1,"authority_num":0,"additional_num":1,
+"opt_pseudosection":{"edns":{"version":0,"flags":[],"udp":4096}},"question":
+{"name":"example.com.","class":"IN","type":"A"},"answer":[{"name":
+"example.com.","class":"IN","type":"A","ttl":39049,"data":"93.184.216.34"}],
+"query_time":49,"server":"2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)",
+"when":"Fri Apr 16 16:09:00 PDT 2021","rcvd":56,"when_epoch":1618614540,
+"when_epoch_utc":null}]
 ```
-This allows further command-line processing of output with tools like `jq` or [`jello`](https://github.com/kellyjonbrazil/jello) by piping commands:
+
+This allows further command-line processing of output with tools like `jq`
+or [`jello`](https://github.com/kellyjonbrazil/jello) by piping commands:
 ```bash
 $ dig example.com | jc --dig | jq -r '.[].answer[].data'
 93.184.216.34
 ```
+
 or using the alternative "magic" syntax:
+
 ```bash
 $ jc dig example.com | jq -r '.[].answer[].data'
 93.184.216.34
 ```
-The `jc` parsers can also be used as python modules. In this case the output will be a python dictionary, or list of dictionaries, instead of JSON:
+
+The `jc` parsers can also be used as python modules. In this case the output
+will be a python dictionary, or list of dictionaries, instead of JSON:
 ```python
 >>> import subprocess
 >>> import jc
@@ -42,26 +56,37 @@ The `jc` parsers can also be used as python modules. In this case the output wil
 >>> data = jc.parse('dig', cmd_output)
 >>>
 >>> data
-[{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd', 'ra'], 'query_num': 1, 'answer_num':
-1, 'authority_num': 0, 'additional_num': 1, 'opt_pseudosection': {'edns': {'version': 0, 'flags': [], 'udp':
-4096}}, 'question': {'name': 'example.com.', 'class': 'IN', 'type': 'A'}, 'answer': [{'name': 'example.com.',
-'class': 'IN', 'type': 'A', 'ttl': 29658, 'data': '93.184.216.34'}], 'query_time': 52, 'server':
-'2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when': 'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56,
-'when_epoch': 1618614780, 'when_epoch_utc': None}]
+[{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd',
+'ra'], 'query_num': 1, 'answer_num': 1, 'authority_num': 0, 'additional_num':
+1, 'opt_pseudosection': {'edns': {'version': 0, 'flags': [], 'udp': 4096}},
+'question': {'name': 'example.com.', 'class': 'IN', 'type': 'A'}, 'answer':
+[{'name': 'example.com.', 'class': 'IN', 'type': 'A', 'ttl': 29658, 'data':
+'93.184.216.34'}], 'query_time': 52, 'server':
+'2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when':
+'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56, 'when_epoch': 1618614780,
+'when_epoch_utc': None}]
 ```
 
-> For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or see the [online documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs).
+> For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or
+see the [online documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs).
 
-Two representations of the data are available. The default representation uses a strict schema per parser and converts known numbers to int/float JSON values. Certain known values of `None` are converted to JSON `null`, known boolean values are converted, and, in some cases, additional semantic context fields are added.
+Two representations of the data are available. The default representation uses a
+strict schema per parser and converts known numbers to int/float JSON values.
+Certain known values of `None` are converted to JSON `null`, known boolean
+values are converted, and, in some cases, additional semantic context fields are
+added.
 
-To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True` function parameter in `parse()`.
+To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True`
+function parameter in `parse()`.
 
-Schemas for each parser can be found at the documentation link beside each [**Parser**](#parsers) below.
+Schemas for each parser can be found at the documentation link beside each
+[**Parser**](#parsers) below.
 
 Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
 
 ## Why Would Anyone Do This!?
-For more information on the motivations for this project, please see my blog post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/) and my [interview with Console](https://console.substack.com/p/console-89).
+For more information on the motivations for this project, please see my blog
+post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/) and my [interview with Console](https://console.substack.com/p/console-89).
 
 See also:
 - [libxo on FreeBSD](http://juniper.github.io/libxo/libxo-manual.html)
@@ -77,7 +102,10 @@ Use Cases:
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
 
 ## Installation
-There are several ways to get `jc`. You can install via `pip`, OS package repositories, via DEB/RPM/MSI packaged binaries for linux and Windows, or by downloading the correct binary for your architecture and running it anywhere on your filesystem.
+There are several ways to get `jc`. You can install via `pip`, OS package
+[repositories](https://repology.org/project/jc/versions), or by downloading the
+correct [binary](https://github.com/kellyjonbrazil/jc/releases) for your
+architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
 ```bash
@@ -86,7 +114,7 @@ pip3 install jc
 
 ### OS Package Repositories
 
-| OS                    | Command                                                                       | 
+| OS                    | Command                                                                       |
 |-----------------------|-------------------------------------------------------------------------------|
 | Debian/Ubuntu linux   | `apt-get install jc`                                                          |
 | Fedora linux          | `dnf install jc`                                                              |
@@ -101,18 +129,25 @@ pip3 install jc
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
 ### Binaries and Packages
-For precompiled binaries and packages, see [Releases](https://github.com/kellyjonbrazil/jc/releases) on Github.
+For precompiled binaries, see [Releases](https://github.com/kellyjonbrazil/jc/releases)
+on Github.
 
 ## Usage
-`jc` accepts piped input from `STDIN` and outputs a JSON representation of the previous command's output to `STDOUT`.
+`jc` accepts piped input from `STDIN` and outputs a JSON representation of the
+previous command's output to `STDOUT`.
 ```bash
 COMMAND | jc PARSER [OPTIONS]
 ```
-Alternatively, the "magic" syntax can be used by prepending `jc` to the command to be converted. Options can be passed to `jc` immediately before the command is given. (Note: command aliases and shell builtins are not supported)
+
+Alternatively, the "magic" syntax can be used by prepending `jc` to the command
+to be converted. Options can be passed to `jc` immediately before the command is
+given. (Note: command aliases and shell builtins are not supported)
 ```bash
 jc [OPTIONS] COMMAND
 ```
-The JSON output can be compact (default) or pretty formatted with the `-p` option.
+
+The JSON output can be compact (default) or pretty formatted with the `-p`
+option.
 
 ### Parsers
 
@@ -203,23 +238,32 @@ The JSON output can be compact (default) or pretty formatted with the `-p` optio
 - `--zipinfo` enables the `zipinfo` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo))
 
 ### Options
-- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of course!)
-- `-C` force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)
-- `-d` debug mode. Prints trace messages if parsing issues are encountered (use `-dd` for verbose debugging)
+- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
+       course!)
+- `-C` force color output even when using pipes (overrides `-m` and the
+       `NO_COLOR` env variable)
+- `-d` debug mode. Prints trace messages if parsing issues are encountered (use
+       `-dd` for verbose debugging)
 - `-h` help. Use `jc -h --parser_name` for parser documentation
 - `-m` monochrome JSON output
 - `-p` pretty format the JSON output
-- `-q` quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)
-- `-r` raw output. Provides a more literal JSON output, typically with string values and no additional semantic processing
+- `-q` quiet mode. Suppresses parser warning messages (use `-qq` to ignore
+       streaming parser errors)
+- `-r` raw output. Provides a more literal JSON output, typically with string
+       values and no additional semantic processing
 - `-u` unbuffer output
 - `-v` version information
 
 ### Exit Codes
-Any fatal errors within `jc` will generate an exit code of `100`, otherwise the exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`), `jc` will store the exit code of the program being parsed and add it to the `jc` exit code. This way it is easier to determine if an error was from the parsed program or `jc`.
+Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
+exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`),
+`jc` will store the exit code of the program being parsed and add it to the `jc`
+exit code. This way it is easier to determine if an error was from the parsed
+program or `jc`.
 
 Consider the following examples using `ifconfig`:
 
-| `ifconfig` exit code | `jc` exit code | Combined exit code | Interpretation                     | 
+| `ifconfig` exit code | `jc` exit code | Combined exit code | Interpretation                     |
 |----------------------|----------------|--------------------|------------------------------------|
 | `0`                  | `0`            | `0`                | No errors                          |
 | `1`                  | `0`            | `1`                | Error in  `ifconfig`               |
@@ -228,11 +272,16 @@ Consider the following examples using `ifconfig`:
 
 
 ### Setting Custom Colors via Environment Variable
-You can specify custom colors via the `JC_COLORS` environment variable. The `JC_COLORS` environment variable takes four comma separated string values in the following format:
+You can specify custom colors via the `JC_COLORS` environment variable. The
+`JC_COLORS` environment variable takes four comma separated string values in
+the following format:
 ```bash
 JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 ```
-Where colors are: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `gray`, `brightblack`, `brightred`, `brightgreen`, `brightyellow`, `brightblue`, `brightmagenta`, `brightcyan`, `white`, or  `default`
+
+Where colors are: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`,
+`gray`, `brightblack`, `brightred`, `brightgreen`, `brightyellow`, `brightblue`,
+`brightmagenta`, `brightcyan`, `white`, or  `default`
 
 For example, to set to the default colors:
 ```bash
@@ -244,16 +293,33 @@ JC_COLORS=default,default,default,default
 ```
 
 ### Disable Colors via Environment Variable
-You can set the [`NO_COLOR`](http://no-color.org/) environment variable to any value to disable color output in `jc`. Note that using the `-C` option to force color output will override both the `NO_COLOR` environment variable and the `-m` option.
+You can set the [`NO_COLOR`](http://no-color.org/) environment variable to any
+value to disable color output in `jc`. Note that using the `-C` option to force
+color output will override both the `NO_COLOR` environment variable and the `-m`
+option.
 
 ### Streaming Parsers
-Most parsers load all of the data from STDIN, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. `ls-s` and `ping-s`) that immediately start processing and outputing the data line-by-line as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while it is being received from STDIN. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. `ls -lR /`) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+Most parsers load all of the data from STDIN, parse it, then output the entire
+JSON document serially. There are some streaming parsers (e.g. `ls-s` and
+`ping-s`) that immediately start processing and outputing the data line-by-line
+as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while
+it is being received from STDIN. This can significantly reduce the amount of
+memory required to parse large amounts of command output (e.g. `ls -lR /`) and
+can sometimes process the data more quickly. Streaming parsers have slightly
+different behavior than standard parsers as outlined below.
 
 > Note: Streaming parsers cannot be used with the "magic" syntax
 
 #### Ignoring Errors
 
-You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the `-qq` cli option or the `ignore_exceptions=True` argument with the `parse()` function. This will add a `_jc_meta` object to the JSON output with a `success` attribute. If `success` is `true`, then there were no issues parsing the line. If `success` is `false`, then a parsing issue was found and `error` and `line` fields will be added to include a short error description and the contents of the unparsable line, respectively:
+You may want to ignore parsing errors when using streaming parsers since these
+may be used in long-lived processing pipelines and errors can break the pipe. To
+ignore parsing errors, use the `-qq` cli option or the `ignore_exceptions=True`
+argument with the `parse()` function. This will add a `_jc_meta` object to the
+JSON output with a `success` attribute. If `success` is `true`, then there were
+no issues parsing the line. If `success` is `false`, then a parsing issue was
+found and `error` and `line` fields will be added to include a short error
+description and the contents of the unparsable line, respectively:
 
 Successfully parsed line with `-qq` option:
 ```json
@@ -264,6 +330,7 @@ Successfully parsed line with `-qq` option:
   }
 }
 ```
+
 Unsuccessfully parsed line with `-qq` option:
 ```json
 {
@@ -277,25 +344,38 @@ Unsuccessfully parsed line with `-qq` option:
 
 #### Unbuffering Output
 
-Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. `ping`):
+Most operating systems will buffer output that is being piped from process to
+process. The buffer is usually around 4KB. When viewing the output in the
+terminal the OS buffer is not engaged so output is immediately displayed on the
+screen. When piping multiple processes together, though, it may seem as if the
+output is hanging when the input data is very slow (e.g. `ping`):
 ```
 $ ping 1.1.1.1 | jc --ping-s | jq
 <slow output>
 ```
-This is because the OS engages the 4KB buffer between `jc` and `jq` in this example. To display the data on the terminal in realtime, you can disable the buffer with the `-u` (unbuffer) cli option:
+
+This is because the OS engages the 4KB buffer between `jc` and `jq` in this
+example. To display the data on the terminal in realtime, you can disable the
+buffer with the `-u` (unbuffer) cli option:
 ```
 $ ping 1.1.1.1 | jc --ping-s -u | jq
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"128","time_ms":"24.6","duplicate":false}
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"128","time_ms":"26.8","duplicate":false}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","respons...}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","respons...}
 ...
 ```
+
 > Note: Unbuffered output can be slower for large data streams.
 
 #### Using Streaming Parsers as Python Modules
 
-Streaming parsers accept any iterable object and return a generator iterator object allowing lazy processing of the data. The input data should iterate on lines of string data. Examples of good input data are `sys.stdin` or `str.splitlines()`.
+Streaming parsers accept any iterable object and return an iterator object
+(generator) allowing lazy processing of the data. The input data should
+iterate on lines of string data. Examples of good input data are `sys.stdin` or
+`str.splitlines()`.
 
-To use the generator object in your code, simply loop through it or use the [next()](https://docs.python.org/3/library/functions.html#next) builtin function:
+To use the generator object in your code, simply loop through it or use the
+[next()](https://docs.python.org/3/library/functions.html#next) builtin
+function:
 ```python
 import jc
 
@@ -305,26 +385,35 @@ for item in result:
 ```
 
 ### Custom Parsers
-Custom local parser plugins may be placed in a `jc/jcparsers` folder in your local **"App data directory"**:
+Custom local parser plugins may be placed in a `jc/jcparsers` folder in your
+local **"App data directory"**:
 
 - Linux/unix: `$HOME/.local/share/jc/jcparsers`
 - macOS: `$HOME/Library/Application Support/jc/jcparsers`
 - Windows: `$LOCALAPPDATA\jc\jc\jcparsers`
 
-Local parser plugins are standard python module files. Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
+Local parser plugins are standard python module files. Use the
+[`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py)
+or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py)
+parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
-Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default parsers.
+Local plugin filenames must be valid python module names, therefore must consist
+entirely of alphanumerics and start with a letter. Local plugins may override
+default parsers.
 
-> Note: The application data directory follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+> Note: The application data directory follows the
+[XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 
 ### Caveats
 
 #### Locale
 
-For best results set the `LANG` locale environment variable to `C` or `en_US.UTF-8`. For example, either by setting directly on the command-line:
+For best results set the `LANG` locale environment variable to `C` or
+`en_US.UTF-8`. For example, either by setting directly on the command-line:
 ```
 $ LANG=C date | jc --date
 ```
+
 or by exporting to the environment before running commands:
 ```
 $ export LANG=C
@@ -332,19 +421,30 @@ $ export LANG=C
 
 #### Timezones
 
-Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based on the local timezone of the system the `jc` parser was run on).
+Some parsers have calculated epoch timestamp fields added to the output. Unless
+a timestamp field name has a `_utc` suffix it is considered naive. (i.e. based
+on the local timezone of the system the `jc` parser was run on).
 
-If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a `_utc` suffix on the key name. (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
+If a UTC timezone can be detected in the text of the command output, the
+timestamp will be timezone aware and have a `_utc` suffix on the key name.
+(e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
 
 ## Compatibility
-Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other parsers that convert platform-specific output will generate a warning message if they are run on an unsupported platform. To see all parser information, including compatibility, run `jc -ap`.
+Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other
+parsers that convert platform-specific output will generate a warning message if
+they are run on an unsupported platform. To see all parser information,
+including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want to parse a file with linux `lsof` output on an macOS or Windows laptop. In that case you can suppress the warning message with the `-q` cli option or the `quiet=True` function parameter in `parse()`:
+You may still use a parser on an unsupported platform - for example, you may want
+to parse a file with linux `lsof` output on an macOS or Windows laptop. In that
+case you can suppress the warning message with the `-q` cli option or the
+`quiet=True` function parameter in `parse()`:
 
 macOS:
 ```bash
 cat lsof.out | jc --lsof -q
 ```
+
 or Windows:
 ```bash
 type lsof.out | jc --lsof -q
@@ -364,22 +464,30 @@ Tested on:
 - Windows 2019 Server
 
 ## Contributions
-Feel free to add/improve code or parsers! You can use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template and submit your parser with a pull request.
+Feel free to add/improve code or parsers! You can use the
+[`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py)
+or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template and submit your parser with a pull request.
 
 Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/blob/master/CONTRIBUTING.md) for more information.
 
 ## Acknowledgments
 - Local parser plugin feature contributed by [Dean Serenevy](https://github.com/duelafn)
 - CI automation and code optimizations by [philippeitis](https://github.com/philippeitis)
-- [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module by KnightWhoSayNi
+- [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module
+  by KnightWhoSayNi
 - [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
-- [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van der Neut
+- [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van
+  der Neut
 - [`trparse`](https://github.com/lbenitez000/trparse) module by Luis Benitez
-- Parsing [code](https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501) from Conor Heine adapted for some parsers
+- Parsing [code](https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501)
+  from Conor Heine adapted for some parsers
 - Excellent constructive feedback from [Ilya Sher](https://github.com/ilyash-b)
 
 ## Examples
-Here are some examples of `jc` output. For more examples, see [here](https://kellyjonbrazil.github.io/jc/EXAMPLES) or the parser documentation.
+Here are some examples of `jc` output. For more examples, see
+[here](https://kellyjonbrazil.github.io/jc/EXAMPLES) or the parser
+documentation.
+
 ### arp
 ```bash
 arp | jc --arp -p          # or:  jc -p arp
@@ -787,7 +895,7 @@ ps axu | jc --ps -p          # or:  jc -p ps axu
     "stat": "Ss",
     "start": "Nov09",
     "time": "0:08",
-    "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+    "command": "/usr/lib/systemd/systemd --switched-root --system --deseria..."
   },
   {
     "user": "root",
@@ -819,7 +927,8 @@ ps axu | jc --ps -p          # or:  jc -p ps axu
 ```
 ### traceroute
 ```bash
-traceroute -m 2 8.8.8.8 | jc --traceroute -p          # or:  jc -p traceroute -m 2 8.8.8.8
+traceroute -m 2 8.8.8.8 | jc --traceroute -p
+# or:  jc -p traceroute -m 2 8.8.8.8
 ```
 ```json
 {
