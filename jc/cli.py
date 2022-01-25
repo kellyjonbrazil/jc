@@ -10,7 +10,8 @@ import signal
 import shlex
 import subprocess
 import json
-from .lib import __version__, parsers, local_parsers
+from .lib import (__version__, parser_info, parsers, local_parsers,
+                  _parser_argument, _get_parser)
 from . import utils
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -147,29 +148,12 @@ def parser_shortname(parser_arg):
     return parser_arg[2:]
 
 
-def parser_argument(parser):
-    """Return short name of the parser with dashes and with -- prefix"""
-    return f'--{parser}'
-
-
-def parser_mod_shortname(parser):
-    """Return short name of the parser's module name (no -- prefix and dashes converted to underscores)"""
-    return parser.replace('--', '').replace('-', '_')
-
-
-def parser_module(parser):
-    """Import the module just in time and return the module object"""
-    shortname = parser_mod_shortname(parser)
-    path = ('jcparsers.' if shortname in local_parsers else 'jc.parsers.')
-    return importlib.import_module(path + shortname)
-
-
 def parsers_text(indent=0, pad=0):
     """Return the argument and description information from each parser"""
     ptext = ''
     for parser in parsers:
-        parser_arg = parser_argument(parser)
-        parser_mod = parser_module(parser)
+        parser_arg = _parser_argument(parser)
+        parser_mod = _get_parser(parser)
 
         if hasattr(parser_mod, 'info'):
             parser_desc = parser_mod.info.description
@@ -184,22 +168,7 @@ def parsers_text(indent=0, pad=0):
 
 def about_jc():
     """Return jc info and the contents of each parser.info as a dictionary"""
-    parser_list = []
-
-    for parser in parsers:
-        parser_mod = parser_module(parser)
-
-        if hasattr(parser_mod, 'info'):
-            info_dict = {}
-            info_dict['name'] = parser_mod.__name__.split('.')[-1]
-            info_dict['argument'] = parser_argument(parser)
-            parser_entry = vars(parser_mod.info)
-
-            for k, v in parser_entry.items():
-                if not k.startswith('__'):
-                    info_dict[k] = v
-
-        parser_list.append(info_dict)
+    parser_list = [parser_info(p) for p in parsers]
 
     return {
         'name': 'jc',
@@ -264,8 +233,7 @@ def help_doc(options):
         parser_name = parser_shortname(arg)
 
         if parser_name in parsers:
-            # load parser module just in time so we don't need to load all modules
-            parser = parser_module(arg)
+            parser = _get_parser(arg)
             compatible = ', '.join(parser.info.compatible)
             doc_text = \
                 f'{parser.__doc__}\n'\
@@ -491,7 +459,7 @@ def main():
 
     # find the correct parser
     if magic_found_parser:
-        parser = parser_module(magic_found_parser)
+        parser = _get_parser(magic_found_parser)
         parser_name = parser_shortname(magic_found_parser)
 
     else:
@@ -500,7 +468,7 @@ def main():
             parser_name = parser_shortname(arg)
 
             if parser_name in parsers:
-                parser = parser_module(arg)
+                parser = _get_parser(arg)
                 found = True
                 break
 

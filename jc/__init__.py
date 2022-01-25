@@ -69,5 +69,5 @@ Use `help(jc.lib)` for details:
         Get a list of plugin parser module names. This list is a subset of
         parser_mod_list().
 """
-from .lib import (__version__, parse, parser_mod_list,
-                  plugin_parser_mod_list, get_help)
+from .lib import (__version__, parse, parser_mod_list, plugin_parser_mod_list,
+                  parser_info, all_parser_info, get_help)
