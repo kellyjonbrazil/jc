@@ -6,9 +6,10 @@ import sys
 import os
 import re
 import importlib
+from typing import Dict, Iterable, List, Any, Union, Iterator, Optional
 from jc import appdirs
 
-__version__ = '1.18.1'
+__version__ = '1.18.2'
 
 parsers = [
     'acpi',
@@ -139,8 +140,15 @@ def _get_parser(parser_mod_name):
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
-def parse(parser_mod_name, data,
-          quiet=False, raw=False, ignore_exceptions=None, **kwargs):
+def parse(parser_mod_name: str,
+          data: Union[str, Iterable[str]],
+          quiet: Optional[bool] = False,
+          raw: Optional[bool] = False,
+          ignore_exceptions: Optional[Union[None, bool]] = None,
+          **kwargs: Any,
+          ) -> Union[Dict[str, Any],
+                     List[Dict[str, Any]],
+                     Iterator[Dict[str, Any]]]:
     """
     Parse the string data using the supplied parser module.
 
@@ -206,18 +214,18 @@ def parse(parser_mod_name, data,
 
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
-def parser_mod_list():
+def parser_mod_list() -> List[str]:
     """Returns a list of all available parser module names."""
     return [_cliname_to_modname(p) for p in parsers]
 
-def plugin_parser_mod_list():
+def plugin_parser_mod_list() -> List[str]:
     """
     Returns a list of plugin parser module names. This function is a
     subset of `parser_mod_list()`.
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def parser_info(parser_mod_name):
+def parser_info(parser_mod_name: str) -> Dict[str, str]:
     """
     Returns a dictionary that includes the module metadata.
 
@@ -239,12 +247,15 @@ def parser_info(parser_mod_name):
             if not k.startswith('__'):
                 info_dict[k] = v
 
+        if _modname_to_cliname(parser_mod_name) in local_parsers:
+            info_dict['plugin'] = True
+
         return info_dict
 
-def all_parser_info():
+def all_parser_info() -> List[Dict[str, str]]:
     return [parser_info(_cliname_to_modname(p)) for p in parsers]
 
-def get_help(parser_mod_name):
+def get_help(parser_mod_name) -> None:
     """
     Show help screen for the selected parser.
 
