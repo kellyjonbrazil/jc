@@ -255,7 +255,7 @@ def parser_info(parser_mod_name: str) -> Dict[str, str]:
 def all_parser_info() -> List[Dict[str, str]]:
     return [parser_info(_cliname_to_modname(p)) for p in parsers]
 
-def get_help(parser_mod_name) -> None:
+def get_help(parser_mod_name: str) -> None:
     """
     Show help screen for the selected parser.
 
