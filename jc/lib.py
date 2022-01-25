@@ -8,7 +8,7 @@ import re
 import importlib
 from jc import appdirs
 
-__version__ = '1.18.0'
+__version__ = '1.18.1'
 
 parsers = [
     'acpi',
@@ -112,7 +112,10 @@ if os.path.isdir(local_parsers_dir):
             local_parsers.append(plugin_name)
             if plugin_name not in parsers:
                 parsers.append(plugin_name)
-    del name
+    try:
+        del name
+    except Exception:
+        pass
 
 
 def _cliname_to_modname(parser_cli_name):
