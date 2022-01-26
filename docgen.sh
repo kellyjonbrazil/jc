@@ -5,15 +5,19 @@
 cd jc
 echo Building docs for: package
 pydoc-markdown -m jc '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/readme.md
+sed -i "" 's/^#### /### /g' ../docs/readme.md
 
 echo Building docs for: lib
 pydoc-markdown -m jc.lib '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/lib.md
+sed -i "" 's/^#### /### /g' ../docs/lib.md
 
 echo Building docs for: utils
 pydoc-markdown -m jc.utils '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/utils.md
+sed -i "" 's/^#### /### /g' ../docs/utils.md
 
 echo Building docs for: universal parser
 pydoc-markdown -m jc.parsers.universal '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/parsers/universal.md
+sed -i "" 's/^#### /### /g' ../docs/parsers/universal.md
 
 # a bit of inception here... jc is being used to help
 # automate the generation of its own documentation. :)
