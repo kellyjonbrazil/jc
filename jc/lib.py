@@ -225,7 +225,7 @@ def plugin_parser_mod_list() -> List[str]:
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def parser_info(parser_mod_name: str) -> Dict[str, str]:
+def parser_info(parser_mod_name: str) -> Dict[str, Any]:
     """
     Returns a dictionary that includes the module metadata.
 
@@ -252,7 +252,7 @@ def parser_info(parser_mod_name: str) -> Dict[str, str]:
 
         return info_dict
 
-def all_parser_info() -> List[Dict[str, str]]:
+def all_parser_info() -> List[Dict[str, Any]:
     return [parser_info(_cliname_to_modname(p)) for p in parsers]
 
 def get_help(parser_mod_name: str) -> None:
