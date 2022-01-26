@@ -5,6 +5,7 @@
   * [parser\_mod\_list](#jc.lib.parser_mod_list)
   * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
   * [parser\_info](#jc.lib.parser_info)
+  * [all\_parser\_info](#jc.lib.all_parser_info)
   * [get\_help](#jc.lib.get_help)
 
 <a id="jc.lib"></a>
@@ -19,7 +20,7 @@ JC lib module
 ### parse
 
 ```python
-def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[Union[None, bool]] = None, **kwargs: Any) -> Union[Dict[str, Any], List[Dict[str, Any]], Iterator[Dict[str, Any]]]
+def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[bool] = None, **kwargs: Any) -> Union[Dict, List[Dict], Iterator[Dict]]
 ```
 
 Parse the string data using the supplied parser module.
@@ -104,13 +105,23 @@ subset of `parser_mod_list()`.
 ### parser\_info
 
 ```python
-def parser_info(parser_mod_name: str) -> Dict[str, Any]
+def parser_info(parser_mod_name: str) -> Dict
 ```
 
 Returns a dictionary that includes the module metadata.
 
 This function will accept module_name, cli-name, and --argument-name
 variants of the module name string.
+
+<a id="jc.lib.all_parser_info"></a>
+
+### all\_parser\_info
+
+```python
+def all_parser_info() -> List[Dict]
+```
+
+Returns a list of dictionaris that includes metadata for all modules.
 
 <a id="jc.lib.get_help"></a>
 

@@ -5,9 +5,10 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
+from typing import Dict, Iterable, List, Any, Union, Iterator, Optional
 
 
-def warning_message(message_lines):
+def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message for non-fatal issues. The first line is
     prepended with 'jc:  Warning - ' and subsequent lines are indented.
@@ -43,7 +44,7 @@ def warning_message(message_lines):
         print(message, file=sys.stderr)
 
 
-def error_message(message_lines):
+def error_message(message_lines: List[str]) -> None:
     """
     Prints an error message for fatal issues. The first line is
     prepended with 'jc:  Error - ' and subsequent lines are indented.
@@ -75,7 +76,7 @@ def error_message(message_lines):
         print(message, file=sys.stderr)
 
 
-def compatibility(mod_name, compatible, quiet=False):
+def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None:
     """
     Checks for the parser's compatibility with the running OS
     platform.
@@ -109,7 +110,7 @@ def compatibility(mod_name, compatible, quiet=False):
                             f'Compatible platforms: {compat_list}'])
 
 
-def has_data(data):
+def has_data(data: str) -> bool:
     """
     Checks if the input contains data. If there are any non-whitespace
     characters then return True, else return False.
@@ -126,7 +127,7 @@ def has_data(data):
     return bool(data and not data.isspace())
 
 
-def convert_to_int(value):
+def convert_to_int(value: Union[str, float]) -> int:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
@@ -156,7 +157,7 @@ def convert_to_int(value):
         return None
 
 
-def convert_to_float(value):
+def convert_to_float(value: Union[str, int]) -> float:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
@@ -182,7 +183,7 @@ def convert_to_float(value):
         return None
 
 
-def convert_to_bool(value):
+def convert_to_bool(value: Union[str, int, float]) -> bool:
     """
     Converts string, integer, or float input to boolean by checking
     for 'truthy' values.
@@ -220,7 +221,7 @@ def convert_to_bool(value):
     return False
 
 
-def stream_success(output_line, ignore_exceptions):
+def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict:
     """Add `_jc_meta` object to output line if `ignore_exceptions=True`"""
     if ignore_exceptions:
         output_line.update({'_jc_meta': {'success': True}})
@@ -228,7 +229,7 @@ def stream_success(output_line, ignore_exceptions):
     return output_line
 
 
-def stream_error(e, ignore_exceptions, line):
+def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict:
     """
     Reraise the stream exception with annotation or print an error
     `_jc_meta` field if `ignore_exceptions=True`.
@@ -247,26 +248,26 @@ def stream_error(e, ignore_exceptions, line):
     }
 
 
-def input_type_check(data):
+def input_type_check(data: str) -> None:
     """Ensure input data is a string"""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")
 
 
-def streaming_input_type_check(data):
+def streaming_input_type_check(data: Iterable) -> None:
     """Ensure input data is an iterable, but not a string or bytes"""
     if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
         raise TypeError("Input data must be a non-string iterable object.")
 
 
-def streaming_line_input_type_check(line):
+def streaming_line_input_type_check(line: str) -> None:
     """Ensure each line is a string"""
     if not isinstance(line, str):
         raise TypeError("Input line must be a 'str' object.")
 
 
 class timestamp:
-    def __init__(self, datetime_string):
+    def __init__(self, datetime_string: str) -> None:
         """
         Input a date-time text string of several formats and convert to a
         naive or timezone-aware epoch timestamp in UTC.

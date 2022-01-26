@@ -27,7 +27,7 @@ jc - JSON CLI output utility utils
 ### warning\_message
 
 ```python
-def warning_message(message_lines)
+def warning_message(message_lines: List[str]) -> None
 ```
 
 Prints warning message for non-fatal issues. The first line is
@@ -47,7 +47,7 @@ Returns:
 ### error\_message
 
 ```python
-def error_message(message_lines)
+def error_message(message_lines: List[str]) -> None
 ```
 
 Prints an error message for fatal issues. The first line is
@@ -67,7 +67,7 @@ Returns:
 ### compatibility
 
 ```python
-def compatibility(mod_name, compatible, quiet=False)
+def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None
 ```
 
 Checks for the parser's compatibility with the running OS
@@ -92,7 +92,7 @@ Returns:
 ### has\_data
 
 ```python
-def has_data(data)
+def has_data(data: str) -> bool
 ```
 
 Checks if the input contains data. If there are any non-whitespace
@@ -112,7 +112,7 @@ Returns:
 ### convert\_to\_int
 
 ```python
-def convert_to_int(value)
+def convert_to_int(value: Union[str, float]) -> int
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -131,7 +131,7 @@ Returns:
 ### convert\_to\_float
 
 ```python
-def convert_to_float(value)
+def convert_to_float(value: Union[str, int]) -> float
 ```
 
 Converts string and int input to float. Strips all non-numeric
@@ -150,7 +150,7 @@ Returns:
 ### convert\_to\_bool
 
 ```python
-def convert_to_bool(value)
+def convert_to_bool(value: Union[str, int, float]) -> bool
 ```
 
 Converts string, integer, or float input to boolean by checking
@@ -170,7 +170,7 @@ Returns:
 ### stream\_success
 
 ```python
-def stream_success(output_line, ignore_exceptions)
+def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict
 ```
 
 Add `_jc_meta` object to output line if `ignore_exceptions=True`
@@ -180,7 +180,7 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 ### stream\_error
 
 ```python
-def stream_error(e, ignore_exceptions, line)
+def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict
 ```
 
 Reraise the stream exception with annotation or print an error
@@ -191,7 +191,7 @@ Reraise the stream exception with annotation or print an error
 ### input\_type\_check
 
 ```python
-def input_type_check(data)
+def input_type_check(data: str) -> None
 ```
 
 Ensure input data is a string
@@ -201,7 +201,7 @@ Ensure input data is a string
 ### streaming\_input\_type\_check
 
 ```python
-def streaming_input_type_check(data)
+def streaming_input_type_check(data: Iterable) -> None
 ```
 
 Ensure input data is an iterable, but not a string or bytes
@@ -211,7 +211,7 @@ Ensure input data is an iterable, but not a string or bytes
 ### streaming\_line\_input\_type\_check
 
 ```python
-def streaming_line_input_type_check(line)
+def streaming_line_input_type_check(line: str) -> None
 ```
 
 Ensure each line is a string
@@ -229,7 +229,7 @@ class timestamp()
 ### \_\_init\_\_
 
 ```python
-def __init__(datetime_string)
+def __init__(datetime_string: str) -> None
 ```
 
 Input a date-time text string of several formats and convert to a
