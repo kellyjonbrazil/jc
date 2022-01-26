@@ -82,16 +82,6 @@ Examples:
     {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1...}
     ...
 
-<a id="jc.parsers.ls_s.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.ls_s.parse"></a>
 
 #### parse

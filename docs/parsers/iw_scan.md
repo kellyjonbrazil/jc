@@ -126,16 +126,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.iw_scan.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.iw_scan.parse"></a>
 
 #### parse

@@ -105,16 +105,6 @@ Examples:
     {"runnable_procs":"2","uninterruptible_sleeping_procs":"0","virtua...}
     ...
 
-<a id="jc.parsers.vmstat_s.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.vmstat_s.parse"></a>
 
 #### parse

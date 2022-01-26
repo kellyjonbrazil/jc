@@ -52,16 +52,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.systemctl_luf.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.systemctl_luf.parse"></a>
 
 #### parse

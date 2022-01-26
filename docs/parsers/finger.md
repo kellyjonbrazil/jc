@@ -95,16 +95,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.finger.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.finger.parse"></a>
 
 #### parse

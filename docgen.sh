@@ -2,18 +2,21 @@
 # Generate docs.md
 # requires pydoc-markdown 2.1.0.post1
 
+# old config
+# '{"processors":[{"type":"filter"},{"type":"pydocmd"}]}'
+
 cd jc
 echo Building docs for: package
-pydoc-markdown -m jc '{"processors": [{"type":"filter"},{"type":"pydocmd"}]}' > ../docs/readme.md
+pydoc-markdown -m jc '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/readme.md
 
 echo Building docs for: lib
-pydoc-markdown -m jc.lib '{"processors": [{"type":"filter"},{"type":"pydocmd"}]}' > ../docs/lib.md
+pydoc-markdown -m jc.lib '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/lib.md
 
 echo Building docs for: utils
-pydoc-markdown -m jc.utils '{"processors": [{"type":"filter"},{"type":"pydocmd"}]}' > ../docs/utils.md
+pydoc-markdown -m jc.utils '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/utils.md
 
 echo Building docs for: universal parser
-pydoc-markdown -m jc.parsers.universal '{"processors": [{"type":"filter"},{"type":"pydocmd"}]}' > ../docs/parsers/universal.md
+pydoc-markdown -m jc.parsers.universal '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' > ../docs/parsers/universal.md
 
 # a bit of inception here... jc is being used to help
 # automate the generation of its own documentation. :)
@@ -36,7 +39,7 @@ do
 
     echo "Building docs for: ${parser_name}"
     echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
-    pydoc-markdown -m jc.parsers."${parser_name}" '{"processors": [{"type":"filter"},{"type":"pydocmd"}]}' >> ../docs/parsers/"${parser_name}".md
+    pydoc-markdown -m jc.parsers."${parser_name}" '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' >> ../docs/parsers/"${parser_name}".md
     echo "## Parser Information" >> ../docs/parsers/"${parser_name}".md
     echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
     echo >> ../docs/parsers/"${parser_name}".md

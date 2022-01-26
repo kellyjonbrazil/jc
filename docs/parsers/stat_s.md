@@ -86,16 +86,6 @@ Examples:
     $ stat | jc --stat-s -r
     {"file":"(stdin)","unix_device":"1027739696","inode":"1155","flag...}
 
-<a id="jc.parsers.stat_s.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.stat_s.parse"></a>
 
 #### parse

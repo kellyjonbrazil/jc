@@ -105,16 +105,6 @@ Examples:
     {"device":"sda","tps":"0.24","kb_read_s":"5.28","kb_wrtn_s":"1.10"...}
     ...
 
-<a id="jc.parsers.iostat_s.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.iostat_s.parse"></a>
 
 #### parse

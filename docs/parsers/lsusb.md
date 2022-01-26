@@ -266,16 +266,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.lsusb.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.lsusb.parse"></a>
 
 #### parse

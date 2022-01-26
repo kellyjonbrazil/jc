@@ -360,16 +360,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.netstat.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.netstat.parse"></a>
 
 #### parse

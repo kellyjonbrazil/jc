@@ -102,16 +102,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.df.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.df.parse"></a>
 
 #### parse

@@ -137,16 +137,6 @@ Examples:
       "exit_status": "0"
     }
 
-<a id="jc.parsers.time.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.time.parse"></a>
 
 #### parse

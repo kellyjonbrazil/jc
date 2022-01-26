@@ -166,16 +166,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.rpm_qi.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.rpm_qi.parse"></a>
 
 #### parse

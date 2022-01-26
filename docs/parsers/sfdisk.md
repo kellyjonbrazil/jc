@@ -207,16 +207,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.sfdisk.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.sfdisk.parse"></a>
 
 #### parse

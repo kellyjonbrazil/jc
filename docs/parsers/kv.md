@@ -58,16 +58,6 @@ Examples:
       "occupation": "Engineer"
     }
 
-<a id="jc.parsers.kv.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.kv.parse"></a>
 
 #### parse

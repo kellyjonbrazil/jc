@@ -327,16 +327,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.dig.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.dig.parse"></a>
 
 #### parse

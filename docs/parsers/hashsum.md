@@ -73,16 +73,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.hashsum.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.hashsum.parse"></a>
 
 #### parse

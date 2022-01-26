@@ -167,16 +167,6 @@ Examples:
       ]
     }
 
-<a id="jc.parsers.ping.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.ping.parse"></a>
 
 #### parse

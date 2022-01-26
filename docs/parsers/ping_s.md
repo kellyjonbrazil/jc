@@ -88,16 +88,6 @@ Examples:
     {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","patte...}
     ...
 
-<a id="jc.parsers.ping_s.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.ping_s.parse"></a>
 
 #### parse

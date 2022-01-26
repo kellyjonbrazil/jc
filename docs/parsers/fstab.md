@@ -90,16 +90,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.fstab.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.fstab.parse"></a>
 
 #### parse

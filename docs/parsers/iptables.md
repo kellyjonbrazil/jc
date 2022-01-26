@@ -168,16 +168,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.iptables.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.iptables.parse"></a>
 
 #### parse

@@ -68,16 +68,6 @@ Examples:
     {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3"...}
     ...
 
-<a id="jc.parsers.csv_s.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.csv_s.parse"></a>
 
 #### parse

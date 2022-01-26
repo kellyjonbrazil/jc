@@ -203,16 +203,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.upower.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.upower.parse"></a>
 
 #### parse

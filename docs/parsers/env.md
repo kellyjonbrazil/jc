@@ -77,16 +77,6 @@ Examples:
       "_": "/usr/bin/env"
     }
 
-<a id="jc.parsers.env.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.env.parse"></a>
 
 #### parse

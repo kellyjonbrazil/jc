@@ -52,16 +52,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.pip_list.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.pip_list.parse"></a>
 
 #### parse

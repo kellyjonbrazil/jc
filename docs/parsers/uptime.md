@@ -70,16 +70,6 @@ Example:
       "load_15m": "1.94"
     }
 
-<a id="jc.parsers.uptime.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.uptime.parse"></a>
 
 #### parse

@@ -125,16 +125,6 @@ Examples:
       ]
     }
 
-<a id="jc.parsers.traceroute.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.traceroute.__version__"></a>
 
 #### \_\_version\_\_

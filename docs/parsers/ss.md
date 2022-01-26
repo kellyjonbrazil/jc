@@ -285,16 +285,6 @@ Examples:
         }
       ]
 
-<a id="jc.parsers.ss.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.ss.parse"></a>
 
 #### parse

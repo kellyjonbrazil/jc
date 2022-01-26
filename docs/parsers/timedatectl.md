@@ -69,16 +69,6 @@ Examples:
       "dst_active": "yes"
     }
 
-<a id="jc.parsers.timedatectl.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.timedatectl.parse"></a>
 
 #### parse

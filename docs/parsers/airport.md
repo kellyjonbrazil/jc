@@ -85,16 +85,6 @@ Examples:
       "channel": "48,80"
     }
 
-<a id="jc.parsers.airport.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.airport.parse"></a>
 
 #### parse

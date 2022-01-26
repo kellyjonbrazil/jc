@@ -143,16 +143,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.ufw_appinfo.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.ufw_appinfo.parse"></a>
 
 #### parse

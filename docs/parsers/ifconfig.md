@@ -191,16 +191,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.ifconfig.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.ifconfig._IfconfigParser"></a>
 
 ## \_IfconfigParser Objects

@@ -322,16 +322,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.hciconfig.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.hciconfig.parse"></a>
 
 #### parse

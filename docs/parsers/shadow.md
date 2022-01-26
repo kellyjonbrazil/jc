@@ -106,16 +106,6 @@ Examples:
       ...
     ]
 
-<a id="jc.parsers.shadow.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.shadow.parse"></a>
 
 #### parse

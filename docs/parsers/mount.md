@@ -80,16 +80,6 @@ Example:
       ...
     ]
 
-<a id="jc.parsers.mount.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.mount.parse"></a>
 
 #### parse

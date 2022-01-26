@@ -82,16 +82,6 @@ Examples:
       "timezone_aware": true
     }
 
-<a id="jc.parsers.date.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.date.parse"></a>
 
 #### parse

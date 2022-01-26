@@ -42,16 +42,6 @@ Examples:
       }
     ]
 
-<a id="jc.parsers.hash.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.hash.parse"></a>
 
 #### parse

@@ -52,16 +52,6 @@ Example:
       "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
     }
 
-<a id="jc.parsers.uname.info"></a>
-
-## info Objects
-
-```python
-class info()
-```
-
-Provides parser metadata (version, author, etc.)
-
 <a id="jc.parsers.uname.parse"></a>
 
 #### parse
