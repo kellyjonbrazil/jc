@@ -146,9 +146,9 @@ def parse(
     data: Union[str, Iterable[str]],
     quiet: Optional[bool] = False,
     raw: Optional[bool] = False,
-    ignore_exceptions: Optional[Union[None, bool]] = None,
+    ignore_exceptions: Optional[bool] = None,
     **kwargs: Any
-) -> Union[Dict[str, Any], List[Dict[str, Any]], Iterator[Dict[str, Any]]]:
+) -> Union[Dict, List[Dict], Iterator[Dict]]:
     """
     Parse the string data using the supplied parser module.
 
@@ -225,7 +225,7 @@ def plugin_parser_mod_list() -> List[str]:
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def parser_info(parser_mod_name: str) -> Dict[str, Any]:
+def parser_info(parser_mod_name: str) -> Dict:
     """
     Returns a dictionary that includes the module metadata.
 
@@ -252,7 +252,10 @@ def parser_info(parser_mod_name: str) -> Dict[str, Any]:
 
         return info_dict
 
-def all_parser_info() -> List[Dict[str, Any]]:
+def all_parser_info() -> List[Dict]:
+    """
+    Returns a list of dictionaris that includes metadata for all modules.
+    """
     return [parser_info(_cliname_to_modname(p)) for p in parsers]
 
 def get_help(parser_mod_name: str) -> None:
