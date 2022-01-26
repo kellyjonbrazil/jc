@@ -238,20 +238,20 @@ naive or timezone-aware epoch timestamp in UTC.
 Parameters:
 
     datetime_string:  (str)  a string representation of a
-                            date-time in several supported formats
+                             date-time in several supported formats
 
 Attributes:
 
-    string            (str)   the input datetime string
+    string            (str)  the input datetime string
 
-    format            (int)   the format rule that was used to
-                            decode the datetime string. None if
-                            conversion fails
+    format            (int)  the format rule that was used to
+                             decode the datetime string. None if
+                             conversion fails
 
-    naive             (int)   timestamp based on locally configured
-                            timezone. None if conversion fails
+    naive             (int)  timestamp based on locally configured
+                             timezone. None if conversion fails
 
-    utc               (int)   aware timestamp only if UTC timezone
-                            detected in datetime string. None if
-                            conversion fails
+    utc               (int)  aware timestamp only if UTC timezone
+                             detected in datetime string. None if
+                             conversion fails
 

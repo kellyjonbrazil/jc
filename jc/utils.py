@@ -274,22 +274,22 @@ class timestamp:
         Parameters:
 
             datetime_string:  (str)  a string representation of a
-                                    date-time in several supported formats
+                                     date-time in several supported formats
 
         Attributes:
 
-            string            (str)   the input datetime string
+            string            (str)  the input datetime string
 
-            format            (int)   the format rule that was used to
-                                    decode the datetime string. None if
-                                    conversion fails
+            format            (int)  the format rule that was used to
+                                     decode the datetime string. None if
+                                     conversion fails
 
-            naive             (int)   timestamp based on locally configured
-                                    timezone. None if conversion fails
+            naive             (int)  timestamp based on locally configured
+                                     timezone. None if conversion fails
 
-            utc               (int)   aware timestamp only if UTC timezone
-                                    detected in datetime string. None if
-                                    conversion fails
+            utc               (int)  aware timestamp only if UTC timezone
+                                     detected in datetime string. None if
+                                     conversion fails
         """
         self.string = datetime_string
         dt = self._parse()
@@ -394,28 +394,33 @@ class timestamp:
 
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC timezone and added known non-UTC offsets
-        tz_abbr = ['A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT', 'AKST', 'ALMT',
-                   'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT', 'AWST', 'AZOST', 'AZOT',
-                   'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST', 'BTT', 'C', 'CAST', 'CAT', 'CCT',
-                   'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST', 'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST',
-                   'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT', 'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST',
-                   'EAT', 'ECT', 'EDT', 'EEST', 'EET', 'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST',
-                   'FKT', 'FNT', 'G', 'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT',
-                   'HOVST', 'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
-                   'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M', 'MAGST',
-                   'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT', 'MVT', 'MYT', 'N',
-                   'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST', 'NUT', 'NZDT', 'NZST', 'O',
-                   'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT', 'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT',
-                   'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT', 'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT',
-                   'SAMT', 'SAST', 'SBT', 'SCT', 'SGT', 'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT',
-                   'TLT', 'TMT', 'TOST', 'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET',
-                   'VLAST', 'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT', 'WGST',
-                   'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT', 'YEKST', 'YEKT', 'Z',
-                   'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900', 'UTC-0800', 'UTC-0700', 'UTC-0600',
-                   'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230', 'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200',
-                   'UTC+0300', 'UTC+0400', 'UTC+0430', 'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630',
-                   'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200',
-                   'UTC+1300', 'UTC+1345', 'UTC+1400']
+        tz_abbr = [
+            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
+            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
+            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
+            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
+            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
+            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
+            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
+            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
+            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
+            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
+            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
+            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
+            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
+            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
+            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
+            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
+            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
+            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
+            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
+            'YEKST', 'YEKT', 'Z', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
+            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
+            'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430',
+            'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800',
+            'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200', 'UTC+1300',
+            'UTC+1345', 'UTC+1400'
+        ]
 
         # normalize the timezone by taking out any timezone reference, except UTC
         cleandata = data.replace('(', '').replace(')', '')
