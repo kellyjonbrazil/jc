@@ -10,174 +10,173 @@ Supports `crontab -l` command output and crontab files.
 
 Usage (cli):
 
-$ crontab -l | jc --crontab
+    $ crontab -l | jc --crontab
 
-or
+    or
 
-$ jc crontab -l
+    $ jc crontab -l
 
 Usage (module):
 
-import jc
-result = jc.parse('crontab', crontab_output)
+    import jc
+    result = jc.parse('crontab', crontab_output)
 
-or
+    or
 
-import jc.parsers.crontab
-result = jc.parsers.crontab.parse(crontab_output)
+    import jc.parsers.crontab
+    result = jc.parsers.crontab.parse(crontab_output)
 
 Schema:
 
-{
-"variables": [
-{
-"name":             string,
-"value":            string
-}
-],
-"schedule": [
-{
-"occurrence"        string,
-"minute": [
-string
-],
-"hour": [
-string
-],
-"day_of_month": [
-string
-],
-"month": [
-string
-],
-"day_of_week": [
-string
-],
-"occurrence":       string,
-"command":          string
-}
-]
-}
+    {
+      "variables": [
+        {
+          "name":             string,
+          "value":            string
+        }
+      ],
+      "schedule": [
+        {
+          "occurrence"        string,
+          "minute": [
+                              string
+          ],
+          "hour": [
+                              string
+          ],
+          "day_of_month": [
+                              string
+          ],
+          "month": [
+                              string
+          ],
+          "day_of_week": [
+                              string
+          ],
+          "occurrence":       string,
+          "command":          string
+        }
+      ]
+    }
 
-**Examples**:
+Examples:
 
-  
-  $ crontab -l | jc --crontab -p
-  {
-- `"variables"` - [
-  {
-- `"name"` - "MAILTO",
-- `"value"` - "root"
-  },
-  {
-- `"name"` - "PATH",
-- `"value"` - "/sbin:/bin:/usr/sbin:/usr/bin"
-  },
-  {
-- `"name"` - "SHELL",
-- `"value"` - "/bin/bash"
-  }
-  ],
-- `"schedule"` - [
-  {
-- `"minute"` - [
-  "5"
-  ],
-- `"hour"` - [
-  "10-11",
-  "22"
-  ],
-- `"day_of_month"` - [
-  "*"
-  ],
-- `"month"` - [
-  "*"
-  ],
-- `"day_of_week"` - [
-  "*"
-  ],
-- `"command"` - "/var/www/devdaily.com/bin/mk-new-links.php"
-  },
-  {
-- `"minute"` - [
-  "30"
-  ],
-- `"hour"` - [
-  "4/2"
-  ],
-- `"day_of_month"` - [
-  "*"
-  ],
-- `"month"` - [
-  "*"
-  ],
-- `"day_of_week"` - [
-  "*"
-  ],
-- `"command"` - "/var/www/devdaily.com/bin/create-all-backups.sh"
-  },
-  {
-- `"occurrence"` - "yearly",
-- `"command"` - "/home/maverick/bin/annual-maintenance"
-  },
-  {
-- `"occurrence"` - "reboot",
-- `"command"` - "/home/cleanup"
-  },
-  {
-- `"occurrence"` - "monthly",
-- `"command"` - "/home/maverick/bin/tape-backup"
-  }
-  ]
-  }
-  
-  $ cat /etc/crontab | jc --crontab -p -r
-  {
-- `"variables"` - [
-  {
-- `"name"` - "MAILTO",
-- `"value"` - "root"
-  },
-  {
-- `"name"` - "PATH",
-- `"value"` - "/sbin:/bin:/usr/sbin:/usr/bin"
-  },
-  {
-- `"name"` - "SHELL",
-- `"value"` - "/bin/bash"
-  }
-  ],
-- `"schedule"` - [
-  {
-- `"minute"` - "5",
-- `"hour"` - "10-11,22",
-- `"day_of_month"` - "*",
-- `"month"` - "*",
-- `"day_of_week"` - "*",
-- `"command"` - "/var/www/devdaily.com/bin/mk-new-links.php"
-  },
-  {
-- `"minute"` - "30",
-- `"hour"` - "4/2",
-- `"day_of_month"` - "*",
-- `"month"` - "*",
-- `"day_of_week"` - "*",
-- `"command"` - "/var/www/devdaily.com/bin/create-all-backups.sh"
-  },
-  {
-- `"occurrence"` - "yearly",
-- `"command"` - "/home/maverick/bin/annual-maintenance"
-  },
-  {
-- `"occurrence"` - "reboot",
-- `"command"` - "/home/cleanup"
-  },
-  {
-- `"occurrence"` - "monthly",
-- `"command"` - "/home/maverick/bin/tape-backup"
-  }
-  ]
-  }
+    $ crontab -l | jc --crontab -p
+    {
+      "variables": [
+        {
+          "name": "MAILTO",
+          "value": "root"
+        },
+        {
+          "name": "PATH",
+          "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+        },
+        {
+          "name": "SHELL",
+          "value": "/bin/bash"
+        }
+      ],
+      "schedule": [
+        {
+          "minute": [
+            "5"
+          ],
+          "hour": [
+            "10-11",
+            "22"
+          ],
+          "day_of_month": [
+            "*"
+          ],
+          "month": [
+            "*"
+          ],
+          "day_of_week": [
+            "*"
+          ],
+          "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+        },
+        {
+          "minute": [
+            "30"
+          ],
+          "hour": [
+            "4/2"
+          ],
+          "day_of_month": [
+            "*"
+          ],
+          "month": [
+            "*"
+          ],
+          "day_of_week": [
+            "*"
+          ],
+          "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+        },
+        {
+          "occurrence": "yearly",
+          "command": "/home/maverick/bin/annual-maintenance"
+        },
+        {
+          "occurrence": "reboot",
+          "command": "/home/cleanup"
+        },
+        {
+          "occurrence": "monthly",
+          "command": "/home/maverick/bin/tape-backup"
+        }
+      ]
+    }
+
+    $ cat /etc/crontab | jc --crontab -p -r
+    {
+      "variables": [
+        {
+          "name": "MAILTO",
+          "value": "root"
+        },
+        {
+          "name": "PATH",
+          "value": "/sbin:/bin:/usr/sbin:/usr/bin"
+        },
+        {
+          "name": "SHELL",
+          "value": "/bin/bash"
+        }
+      ],
+      "schedule": [
+        {
+          "minute": "5",
+          "hour": "10-11,22",
+          "day_of_month": "*",
+          "month": "*",
+          "day_of_week": "*",
+          "command": "/var/www/devdaily.com/bin/mk-new-links.php"
+        },
+        {
+          "minute": "30",
+          "hour": "4/2",
+          "day_of_month": "*",
+          "month": "*",
+          "day_of_week": "*",
+          "command": "/var/www/devdaily.com/bin/create-all-backups.sh"
+        },
+        {
+          "occurrence": "yearly",
+          "command": "/home/maverick/bin/annual-maintenance"
+        },
+        {
+          "occurrence": "reboot",
+          "command": "/home/cleanup"
+        },
+        {
+          "occurrence": "monthly",
+          "command": "/home/maverick/bin/tape-backup"
+        }
+      ]
+    }
 
 <a id="jc.parsers.crontab.info"></a>
 
@@ -199,18 +198,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  Dictionary. Raw or processed structured data.
+    Dictionary. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, aix, freebsd

@@ -23,104 +23,103 @@ available if the timezone field is UTC.
 
 Usage (cli):
 
-$ ls | jc --ls
+    $ ls | jc --ls
 
-or
+    or
 
-$ jc ls
+    $ jc ls
 
 Usage (module):
 
-import jc
-result = jc.parse('ls', ls_command_output)
+    import jc
+    result = jc.parse('ls', ls_command_output)
 
-or
+    or
 
-import jc.parsers.ls
-result = jc.parsers.ls.parse(ls_command_output)
+    import jc.parsers.ls
+    result = jc.parsers.ls.parse(ls_command_output)
 
 Schema:
 
-[
-{
-"filename":     string,
-"flags":        string,
-"links":        integer,
-"parent":       string,
-"owner":        string,
-"group":        string,
-"size":         integer,
-"date":         string,
-"epoch":        integer,     # [0]
-"epoch_utc":    integer      # [1]
-}
-]
+    [
+      {
+        "filename":     string,
+        "flags":        string,
+        "links":        integer,
+        "parent":       string,
+        "owner":        string,
+        "group":        string,
+        "size":         integer,
+        "date":         string,
+        "epoch":        integer,     # [0]
+        "epoch_utc":    integer      # [1]
+      }
+    ]
 
-[0] naive timestamp if date field exists and can be converted.
-[1] timezone aware timestamp if date field is in UTC and can
-be converted.
+    [0] naive timestamp if date field exists and can be converted.
+    [1] timezone aware timestamp if date field is in UTC and can
+        be converted.
 
-**Examples**:
+Examples:
 
-  
-  $ ls /usr/bin | jc --ls -p
-  [
-  {
-- `"filename"` - "apropos"
-  },
-  {
-- `"filename"` - "arch"
-  },
-  ...
-  ]
-  
-  $ ls -l /usr/bin | jc --ls -p
-  [
-  {
-- `"filename"` - "apropos",
-- `"link_to"` - "whatis",
-- `"flags"` - "lrwxrwxrwx.",
-- `"links"` - 1,
-- `"owner"` - "root",
-- `"group"` - "root",
-- `"size"` - 6,
-- `"date"` - "Aug 15 10:53"
-  },
-  {
-- `"filename"` - "ar",
-- `"flags"` - "-rwxr-xr-x.",
-- `"links"` - 1,
-- `"owner"` - "root",
-- `"group"` - "root",
-- `"size"` - 62744,
-- `"date"` - "Aug 8 16:14"
-  },
-  ...
-  ]
-  
-  $ ls -l /usr/bin | jc --ls -p -r
-  [
-  {
-- `"filename"` - "apropos",
-- `"link_to"` - "whatis",
-- `"flags"` - "lrwxrwxrwx.",
-- `"links"` - "1",
-- `"owner"` - "root",
-- `"group"` - "root",
-- `"size"` - "6",
-- `"date"` - "Aug 15 10:53"
-  },
-  {
-- `"filename"` - "arch",
-- `"flags"` - "-rwxr-xr-x.",
-- `"links"` - "1",
-- `"owner"` - "root",
-- `"group"` - "root",
-- `"size"` - "33080",
-- `"date"` - "Aug 19 23:25"
-  },
-  ...
-  ]
+    $ ls /usr/bin | jc --ls -p
+    [
+      {
+        "filename": "apropos"
+      },
+      {
+        "filename": "arch"
+      },
+      ...
+    ]
+
+    $ ls -l /usr/bin | jc --ls -p
+    [
+      {
+        "filename": "apropos",
+        "link_to": "whatis",
+        "flags": "lrwxrwxrwx.",
+        "links": 1,
+        "owner": "root",
+        "group": "root",
+        "size": 6,
+        "date": "Aug 15 10:53"
+      },
+      {
+        "filename": "ar",
+        "flags": "-rwxr-xr-x.",
+        "links": 1,
+        "owner": "root",
+        "group": "root",
+        "size": 62744,
+        "date": "Aug 8 16:14"
+      },
+      ...
+    ]
+
+    $ ls -l /usr/bin | jc --ls -p -r
+    [
+      {
+        "filename": "apropos",
+        "link_to": "whatis",
+        "flags": "lrwxrwxrwx.",
+        "links": "1",
+        "owner": "root",
+        "group": "root",
+        "size": "6",
+        "date": "Aug 15 10:53"
+      },
+      {
+        "filename": "arch",
+        "flags": "-rwxr-xr-x.",
+        "links": "1",
+        "owner": "root",
+        "group": "root",
+        "size": "33080",
+        "date": "Aug 19 23:25"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.ls.info"></a>
 
@@ -142,18 +141,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd

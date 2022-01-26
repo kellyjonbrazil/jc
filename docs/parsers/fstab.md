@@ -7,89 +7,88 @@ jc - JSON CLI output utility `fstab` file parser
 
 Usage (cli):
 
-$ cat /etc/fstab | jc --fstab
+    $ cat /etc/fstab | jc --fstab
 
 Usage (module):
 
-import jc
-result = jc.parse('fstab', fstab_command_output)
+    import jc
+    result = jc.parse('fstab', fstab_command_output)
 
-or
+    or
 
-import jc.parsers.fstab
-result = jc.parsers.fstab.parse(fstab_command_output)
+    import jc.parsers.fstab
+    result = jc.parsers.fstab.parse(fstab_command_output)
 
 Schema:
 
-[
-{
-"fs_spec":      string,
-"fs_file":      string,
-"fs_vfstype":   string,
-"fs_mntops":    string,
-"fs_freq":      integer,
-"fs_passno":    integer
-}
-]
+    [
+      {
+        "fs_spec":      string,
+        "fs_file":      string,
+        "fs_vfstype":   string,
+        "fs_mntops":    string,
+        "fs_freq":      integer,
+        "fs_passno":    integer
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ cat /etc/fstab | jc --fstab -p
-  [
-  {
-- `"fs_spec"` - "/dev/mapper/centos-root",
-- `"fs_file"` - "/",
-- `"fs_vfstype"` - "xfs",
-- `"fs_mntops"` - "defaults",
-- `"fs_freq"` - 0,
-- `"fs_passno"` - 0
-  },
-  {
-- `"fs_spec"` - "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
-- `"fs_file"` - "/boot",
-- `"fs_vfstype"` - "xfs",
-- `"fs_mntops"` - "defaults",
-- `"fs_freq"` - 0,
-- `"fs_passno"` - 0
-  },
-  {
-- `"fs_spec"` - "/dev/mapper/centos-swap",
-- `"fs_file"` - "swap",
-- `"fs_vfstype"` - "swap",
-- `"fs_mntops"` - "defaults",
-- `"fs_freq"` - 0,
-- `"fs_passno"` - 0
-  }
-  ]
-  
-  $ cat /etc/fstab | jc --fstab -p -r
-  [
-  {
-- `"fs_spec"` - "/dev/mapper/centos-root",
-- `"fs_file"` - "/",
-- `"fs_vfstype"` - "xfs",
-- `"fs_mntops"` - "defaults",
-- `"fs_freq"` - "0",
-- `"fs_passno"` - "0"
-  },
-  {
-- `"fs_spec"` - "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
-- `"fs_file"` - "/boot",
-- `"fs_vfstype"` - "xfs",
-- `"fs_mntops"` - "defaults",
-- `"fs_freq"` - "0",
-- `"fs_passno"` - "0"
-  },
-  {
-- `"fs_spec"` - "/dev/mapper/centos-swap",
-- `"fs_file"` - "swap",
-- `"fs_vfstype"` - "swap",
-- `"fs_mntops"` - "defaults",
-- `"fs_freq"` - "0",
-- `"fs_passno"` - "0"
-  }
-  ]
+    $ cat /etc/fstab | jc --fstab -p
+    [
+      {
+        "fs_spec": "/dev/mapper/centos-root",
+        "fs_file": "/",
+        "fs_vfstype": "xfs",
+        "fs_mntops": "defaults",
+        "fs_freq": 0,
+        "fs_passno": 0
+      },
+      {
+        "fs_spec": "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
+        "fs_file": "/boot",
+        "fs_vfstype": "xfs",
+        "fs_mntops": "defaults",
+        "fs_freq": 0,
+        "fs_passno": 0
+      },
+      {
+        "fs_spec": "/dev/mapper/centos-swap",
+        "fs_file": "swap",
+        "fs_vfstype": "swap",
+        "fs_mntops": "defaults",
+        "fs_freq": 0,
+        "fs_passno": 0
+      }
+    ]
+
+    $ cat /etc/fstab | jc --fstab -p -r
+    [
+      {
+        "fs_spec": "/dev/mapper/centos-root",
+        "fs_file": "/",
+        "fs_vfstype": "xfs",
+        "fs_mntops": "defaults",
+        "fs_freq": "0",
+        "fs_passno": "0"
+      },
+      {
+        "fs_spec": "UUID=05d927bb-5875-49e3-ada1-7f46cb31c932",
+        "fs_file": "/boot",
+        "fs_vfstype": "xfs",
+        "fs_mntops": "defaults",
+        "fs_freq": "0",
+        "fs_passno": "0"
+      },
+      {
+        "fs_spec": "/dev/mapper/centos-swap",
+        "fs_file": "swap",
+        "fs_vfstype": "swap",
+        "fs_mntops": "defaults",
+        "fs_freq": "0",
+        "fs_passno": "0"
+      }
+    ]
 
 <a id="jc.parsers.fstab.info"></a>
 
@@ -111,18 +110,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, freebsd

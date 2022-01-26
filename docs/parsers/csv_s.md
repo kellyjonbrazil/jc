@@ -16,58 +16,57 @@ then the rest of the rows are loaded lazily.
 
 Usage (cli):
 
-$ cat file.csv | jc --csv-s
+    $ cat file.csv | jc --csv-s
 
 Usage (module):
 
-import jc
-# result is an iterable object (generator)
-result = jc.parse('csv_s', csv_output.splitlines())
-for item in result:
-# do something
+    import jc
+    # result is an iterable object (generator)
+    result = jc.parse('csv_s', csv_output.splitlines())
+    for item in result:
+        # do something
 
-or
+    or
 
-import jc.parsers.csv_s
-# result is an iterable object (generator)
-result = jc.parsers.csv_s.parse(csv_output.splitlines())
-for item in result:
-# do something
+    import jc.parsers.csv_s
+    # result is an iterable object (generator)
+    result = jc.parsers.csv_s.parse(csv_output.splitlines())
+    for item in result:
+        # do something
 
 Schema:
 
-csv file converted to a Dictionary:
-https://docs.python.org/3/library/csv.html
+    csv file converted to a Dictionary:
+    https://docs.python.org/3/library/csv.html
 
-{
-"column_name1":     string,
-"column_name2":     string,
+    {
+      "column_name1":     string,
+      "column_name2":     string,
 
-# below object only exists if using -qq or ignore_exceptions=True
+      # below object only exists if using -qq or ignore_exceptions=True
 
-"_jc_meta":
-{
-"success":      boolean,     # false if error parsing
-"error":        string,      # exists if "success" is false
-"line":         string       # exists if "success" is false
-}
-}
+      "_jc_meta":
+        {
+          "success":      boolean,     # false if error parsing
+          "error":        string,      # exists if "success" is false
+          "line":         string       # exists if "success" is false
+        }
+    }
 
-**Examples**:
+Examples:
 
-  
-  $ cat homes.csv
-  "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres"...
-  142, 160, 28, 10, 5, 3,  60, 0.28,  3167
-  175, 180, 18,  8, 4, 1,  12, 0.43,  4033
-  129, 132, 13,  6, 3, 1,  41, 0.33,  1471
-  ...
-  
-  $ cat homes.csv | jc --csv-s
-  {"Sell":"142","List":"160","Living":"28","Rooms":"10","Beds":"5"...}
-  {"Sell":"175","List":"180","Living":"18","Rooms":"8","Beds":"4"...}
-  {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3"...}
-  ...
+    $ cat homes.csv
+    "Sell", "List", "Living", "Rooms", "Beds", "Baths", "Age", "Acres"...
+    142, 160, 28, 10, 5, 3,  60, 0.28,  3167
+    175, 180, 18,  8, 4, 1,  12, 0.43,  4033
+    129, 132, 13,  6, 3, 1,  41, 0.33,  1471
+    ...
+
+    $ cat homes.csv | jc --csv-s
+    {"Sell":"142","List":"160","Living":"28","Rooms":"10","Beds":"5"...}
+    {"Sell":"175","List":"180","Living":"18","Rooms":"8","Beds":"4"...}
+    {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3"...}
+    ...
 
 <a id="jc.parsers.csv_s.info"></a>
 
@@ -89,27 +88,22 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 
 Main text parsing generator function. Returns an iterator object.
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (iterable)  line-based text data to parse
-  (e.g. sys.stdin or str.splitlines())
-  
-- `raw` - (boolean)   unprocessed output if True
-- `quiet` - (boolean)   suppress warning messages if True
-- `ignore_exceptions` - (boolean)   ignore parsing exceptions if True
-  
+    data:              (iterable)  line-based text data to parse
+                                   (e.g. sys.stdin or str.splitlines())
 
-**Yields**:
+    raw:               (boolean)   unprocessed output if True
+    quiet:             (boolean)   suppress warning messages if True
+    ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
-  
-  Dictionary. Raw or processed structured data.
-  
+Yields:
 
-**Returns**:
+    Dictionary. Raw or processed structured data.
 
-  
-  Iterator object
+Returns:
+
+    Iterator object
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

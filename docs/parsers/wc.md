@@ -7,58 +7,57 @@ jc - JSON CLI output utility `wc` command output parser
 
 Usage (cli):
 
-$ wc file.txt | jc --wc
+    $ wc file.txt | jc --wc
 
-or
+    or
 
-$ jc wc file.txt
+    $ jc wc file.txt
 
 Usage (module):
 
-import jc
-result = jc.parse('wc', wc_command_output)
+    import jc
+    result = jc.parse('wc', wc_command_output)
 
-or
+    or
 
-import jc.parsers.wc
-result = jc.parsers.wc.parse(wc_command_output)
+    import jc.parsers.wc
+    result = jc.parsers.wc.parse(wc_command_output)
 
 Schema:
 
-[
-{
-"filename":     string,
-"lines":        integer,
-"words":        integer,
-"characters":   integer
-}
-]
+    [
+      {
+        "filename":     string,
+        "lines":        integer,
+        "words":        integer,
+        "characters":   integer
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ wc * | jc --wc -p
-  [
-  {
-- `"filename"` - "airport-I.json",
-- `"lines"` - 1,
-- `"words"` - 30,
-- `"characters"` - 307
-  },
-  {
-- `"filename"` - "airport-I.out",
-- `"lines"` - 15,
-- `"words"` - 33,
-- `"characters"` - 348
-  },
-  {
-- `"filename"` - "airport-s.json",
-- `"lines"` - 1,
-- `"words"` - 202,
-- `"characters"` - 2152
-  },
-  ...
-  ]
+    $ wc * | jc --wc -p
+    [
+      {
+        "filename": "airport-I.json",
+        "lines": 1,
+        "words": 30,
+        "characters": 307
+      },
+      {
+        "filename": "airport-I.out",
+        "lines": 15,
+        "words": 33,
+        "characters": 348
+      },
+      {
+        "filename": "airport-s.json",
+        "lines": 1,
+        "words": 202,
+        "characters": 2152
+      },
+      ...
+    ]
 
 <a id="jc.parsers.wc.info"></a>
 
@@ -80,18 +79,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd

@@ -16,16 +16,13 @@ Prints warning message for non-fatal issues. The first line is
 prepended with 'jc:  Warning - ' and subsequent lines are indented.
 Wraps text as needed based on the terminal width.
 
-**Arguments**:
+Parameters:
 
-  
-- `message` - (list) list of string lines
-  
+    message:   (list) list of string lines
 
-**Returns**:
+Returns:
 
-  
-  None - just prints output to STDERR
+    None - just prints output to STDERR
 
 <a id="jc.utils.error_message"></a>
 
@@ -39,16 +36,13 @@ Prints an error message for fatal issues. The first line is
 prepended with 'jc:  Error - ' and subsequent lines are indented.
 Wraps text as needed based on the terminal width.
 
-**Arguments**:
+Parameters:
 
-  
-- `message` - (list) list of string lines
-  
+    message:   (list) list of string lines
 
-**Returns**:
+Returns:
 
-  
-  None - just prints output to STDERR
+    None - just prints output to STDERR
 
 <a id="jc.utils.compatibility"></a>
 
@@ -61,22 +55,19 @@ def compatibility(mod_name, compatible, quiet=False)
 Checks for the parser's compatibility with the running OS
 platform.
 
-**Arguments**:
+Parameters:
 
-  
-- `mod_name` - (string) __name__ of the calling module
-  
-- `compatible` - (list) sys.platform name(s) compatible with
-  the parser. compatible options:
-  linux, darwin, cygwin, win32, aix, freebsd
-  
-- `quiet` - (bool) supress compatibility message if True
-  
+    mod_name:     (string) __name__ of the calling module
 
-**Returns**:
+    compatible:   (list) sys.platform name(s) compatible with
+                  the parser. compatible options:
+                  linux, darwin, cygwin, win32, aix, freebsd
 
-  
-  None - just prints output to STDERR
+    quiet:        (bool) supress compatibility message if True
+
+Returns:
+
+    None - just prints output to STDERR
 
 <a id="jc.utils.has_data"></a>
 
@@ -89,17 +80,14 @@ def has_data(data)
 Checks if the input contains data. If there are any non-whitespace
 characters then return True, else return False.
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string) input to check whether it contains data
-  
+    data:        (string) input to check whether it contains data
 
-**Returns**:
+Returns:
 
-  
-  Boolean      True if input string (data) contains non-whitespace
-  characters, otherwise False
+    Boolean      True if input string (data) contains non-whitespace
+                 characters, otherwise False
 
 <a id="jc.utils.convert_to_int"></a>
 
@@ -112,16 +100,13 @@ def convert_to_int(value)
 Converts string and float input to int. Strips all non-numeric
 characters from strings.
 
-**Arguments**:
+Parameters:
 
-  
-- `value` - (string/integer/float) Input value
-  
+    value:         (string/integer/float) Input value
 
-**Returns**:
+Returns:
 
-  
-  integer/None   Integer if successful conversion, otherwise None
+    integer/None   Integer if successful conversion, otherwise None
 
 <a id="jc.utils.convert_to_float"></a>
 
@@ -134,16 +119,13 @@ def convert_to_float(value)
 Converts string and int input to float. Strips all non-numeric
 characters from strings.
 
-**Arguments**:
+Parameters:
 
-  
-- `value` - (string) Input value
-  
+    value:         (string) Input value
 
-**Returns**:
+Returns:
 
-  
-  float/None     Float if successful conversion, otherwise None
+    float/None     Float if successful conversion, otherwise None
 
 <a id="jc.utils.convert_to_bool"></a>
 
@@ -156,17 +138,14 @@ def convert_to_bool(value)
 Converts string, integer, or float input to boolean by checking
 for 'truthy' values.
 
-**Arguments**:
+Parameters:
 
-  
-- `value` - (string/integer/float) Input value
-  
+    value:          (string/integer/float) Input value
 
-**Returns**:
+Returns:
 
-  
-  True/False      False unless a 'truthy' number or string is found
-  ('y', 'yes', 'true', '1', 1, -1, etc.)
+    True/False      False unless a 'truthy' number or string is found
+                    ('y', 'yes', 'true', '1', 1, -1, etc.)
 
 <a id="jc.utils.stream_success"></a>
 
@@ -230,26 +209,23 @@ class timestamp()
 Input a date-time text string of several formats and convert to a
 naive or timezone-aware epoch timestamp in UTC.
 
-**Arguments**:
+Parameters:
 
-  
-- `datetime_string` - (str)  a string representation of a
-  date-time in several supported formats
-  
+    datetime_string:  (str)  a string representation of a
+                             date-time in several supported formats
 
-**Attributes**:
+Attributes:
 
-  
-  string            (str)   the input datetime string
-  
-  format            (int)   the format rule that was used to
-  decode the datetime string. None if
-  conversion fails
-  
-  naive             (int)   timestamp based on locally configured
-  timezone. None if conversion fails
-  
-  utc               (int)   aware timestamp only if UTC timezone
-  detected in datetime string. None if
-  conversion fails
+    string            (str)   the input datetime string
+
+    format            (int)   the format rule that was used to
+                              decode the datetime string. None if
+                              conversion fails
+
+    naive             (int)   timestamp based on locally configured
+                              timezone. None if conversion fails
+
+    utc               (int)   aware timestamp only if UTC timezone
+                              detected in datetime string. None if
+                              conversion fails
 

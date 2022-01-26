@@ -7,98 +7,97 @@ jc - JSON CLI output utility `/etc/passwd` file Parser
 
 Usage (cli):
 
-$ cat /etc/passwd | jc --passwd
+    $ cat /etc/passwd | jc --passwd
 
 Usage (module):
 
-import jc
-result = jc.parse('passwd', passwd_file_output)
+    import jc
+    result = jc.parse('passwd', passwd_file_output)
 
-or
+    or
 
-import jc.parsers.passwd
-result = jc.parsers.passwd.parse(passwd_file_output)
+    import jc.parsers.passwd
+    result = jc.parsers.passwd.parse(passwd_file_output)
 
 Schema:
 
-[
-{
-"username":     string,
-"password":     string,
-"uid":          integer,
-"gid":          integer,
-"comment":      string,
-"home":         string,
-"shell":        string
-}
-]
+    [
+      {
+        "username":     string,
+        "password":     string,
+        "uid":          integer,
+        "gid":          integer,
+        "comment":      string,
+        "home":         string,
+        "shell":        string
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ cat /etc/passwd | jc --passwd -p
-  [
-  {
-- `"username"` - "nobody",
-- `"password"` - "*",
-- `"uid"` - -2,
-- `"gid"` - -2,
-- `"comment"` - "Unprivileged User",
-- `"home"` - "/var/empty",
-- `"shell"` - "/usr/bin/false"
-  },
-  {
-- `"username"` - "root",
-- `"password"` - "*",
-- `"uid"` - 0,
-- `"gid"` - 0,
-- `"comment"` - "System Administrator",
-- `"home"` - "/var/root",
-- `"shell"` - "/bin/sh"
-  },
-  {
-- `"username"` - "daemon",
-- `"password"` - "*",
-- `"uid"` - 1,
-- `"gid"` - 1,
-- `"comment"` - "System Services",
-- `"home"` - "/var/root",
-- `"shell"` - "/usr/bin/false"
-  },
-  ...
-  ]
-  
-  $ cat /etc/passwd | jc --passwd -p -r
-  [
-  {
-- `"username"` - "nobody",
-- `"password"` - "*",
-- `"uid"` - "-2",
-- `"gid"` - "-2",
-- `"comment"` - "Unprivileged User",
-- `"home"` - "/var/empty",
-- `"shell"` - "/usr/bin/false"
-  },
-  {
-- `"username"` - "root",
-- `"password"` - "*",
-- `"uid"` - "0",
-- `"gid"` - "0",
-- `"comment"` - "System Administrator",
-- `"home"` - "/var/root",
-- `"shell"` - "/bin/sh"
-  },
-  {
-- `"username"` - "daemon",
-- `"password"` - "*",
-- `"uid"` - "1",
-- `"gid"` - "1",
-- `"comment"` - "System Services",
-- `"home"` - "/var/root",
-- `"shell"` - "/usr/bin/false"
-  },
-  ...
-  ]
+    $ cat /etc/passwd | jc --passwd -p
+    [
+      {
+        "username": "nobody",
+        "password": "*",
+        "uid": -2,
+        "gid": -2,
+        "comment": "Unprivileged User",
+        "home": "/var/empty",
+        "shell": "/usr/bin/false"
+      },
+      {
+        "username": "root",
+        "password": "*",
+        "uid": 0,
+        "gid": 0,
+        "comment": "System Administrator",
+        "home": "/var/root",
+        "shell": "/bin/sh"
+      },
+      {
+        "username": "daemon",
+        "password": "*",
+        "uid": 1,
+        "gid": 1,
+        "comment": "System Services",
+        "home": "/var/root",
+        "shell": "/usr/bin/false"
+      },
+      ...
+    ]
+
+    $ cat /etc/passwd | jc --passwd -p -r
+    [
+      {
+        "username": "nobody",
+        "password": "*",
+        "uid": "-2",
+        "gid": "-2",
+        "comment": "Unprivileged User",
+        "home": "/var/empty",
+        "shell": "/usr/bin/false"
+      },
+      {
+        "username": "root",
+        "password": "*",
+        "uid": "0",
+        "gid": "0",
+        "comment": "System Administrator",
+        "home": "/var/root",
+        "shell": "/bin/sh"
+      },
+      {
+        "username": "daemon",
+        "password": "*",
+        "uid": "1",
+        "gid": "1",
+        "comment": "System Services",
+        "home": "/var/root",
+        "shell": "/usr/bin/false"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.passwd.info"></a>
 
@@ -120,18 +119,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, aix, freebsd

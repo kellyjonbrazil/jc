@@ -7,62 +7,61 @@ jc - JSON CLI output utility `systemctl` command output parser
 
 Usage (cli):
 
-$ systemctl | jc --systemctl
+    $ systemctl | jc --systemctl
 
-or
+    or
 
-$ jc systemctl
+    $ jc systemctl
 
 Usage (module):
 
-import jc
-result = jc.parse('systemctl', systemctl_command_output)
+    import jc
+    result = jc.parse('systemctl', systemctl_command_output)
 
-or
+    or
 
-import jc.parsers.systemctl
-result = jc.parsers.systemctl.parse(systemctl_command_output)
+    import jc.parsers.systemctl
+    result = jc.parsers.systemctl.parse(systemctl_command_output)
 
 Schema:
 
-[
-{
-"unit":          string,
-"load":          string,
-"active":        string,
-"sub":           string,
-"description":   string
-}
-]
+    [
+      {
+        "unit":          string,
+        "load":          string,
+        "active":        string,
+        "sub":           string,
+        "description":   string
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ systemctl -a | jc --systemctl -p
-  [
-  {
-- `"unit"` - "proc-sys-fs-binfmt_misc.automount",
-- `"load"` - "loaded",
-- `"active"` - "active",
-- `"sub"` - "waiting",
-- `"description"` - "Arbitrary Executable File Formats File System ..."
-  },
-  {
-- `"unit"` - "dev-block-8:2.device",
-- `"load"` - "loaded",
-- `"active"` - "active",
-- `"sub"` - "plugged",
-- `"description"` - "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM o..."
-  },
-  {
-- `"unit"` - "dev-cdrom.device",
-- `"load"` - "loaded",
-- `"active"` - "active",
-- `"sub"` - "plugged",
-- `"description"` - "VMware_Virtual_IDE_CDROM_Drive"
-  },
-  ...
-  ]
+    $ systemctl -a | jc --systemctl -p
+    [
+      {
+        "unit": "proc-sys-fs-binfmt_misc.automount",
+        "load": "loaded",
+        "active": "active",
+        "sub": "waiting",
+        "description": "Arbitrary Executable File Formats File System ..."
+      },
+      {
+        "unit": "dev-block-8:2.device",
+        "load": "loaded",
+        "active": "active",
+        "sub": "plugged",
+        "description": "LVM PV 3klkIj-w1qk-DkJi-0XBJ-y3o7-i2Ac-vHqWBM o..."
+      },
+      {
+        "unit": "dev-cdrom.device",
+        "load": "loaded",
+        "active": "active",
+        "sub": "plugged",
+        "description": "VMware_Virtual_IDE_CDROM_Drive"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.systemctl.info"></a>
 
@@ -84,18 +83,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux

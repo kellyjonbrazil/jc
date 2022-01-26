@@ -8,54 +8,53 @@ parser
 
 Usage (cli):
 
-$ systemctl list-sockets | jc --systemctl-ls
+    $ systemctl list-sockets | jc --systemctl-ls
 
-or
+    or
 
-$ jc systemctl list-sockets
+    $ jc systemctl list-sockets
 
 Usage (module):
 
-import jc
-result = jc.parse('systemctl_ls', systemctl_ls_command_output)
+    import jc
+    result = jc.parse('systemctl_ls', systemctl_ls_command_output)
 
-or
+    or
 
-import jc.parsers.systemctl_ls
-result = jc.parsers.systemctl_ls.parse(systemctl_ls_command_output)
+    import jc.parsers.systemctl_ls
+    result = jc.parsers.systemctl_ls.parse(systemctl_ls_command_output)
 
 Schema:
 
-[
-{
-"listen":       string,
-"unit":         string,
-"activates":    string
-}
-]
+    [
+      {
+        "listen":       string,
+        "unit":         string,
+        "activates":    string
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ systemctl list-sockets | jc --systemctl-ls -p
-  [
-  {
-- `"listen"` - "/dev/log",
-- `"unit"` - "systemd-journald.socket",
-- `"activates"` - "systemd-journald.service"
-  },
-  {
-- `"listen"` - "/run/dbus/system_bus_socket",
-- `"unit"` - "dbus.socket",
-- `"activates"` - "dbus.service"
-  },
-  {
-- `"listen"` - "/run/dmeventd-client",
-- `"unit"` - "dm-event.socket",
-- `"activates"` - "dm-event.service"
-  },
-  ...
-  ]
+    $ systemctl list-sockets | jc --systemctl-ls -p
+    [
+      {
+        "listen": "/dev/log",
+        "unit": "systemd-journald.socket",
+        "activates": "systemd-journald.service"
+      },
+      {
+        "listen": "/run/dbus/system_bus_socket",
+        "unit": "dbus.socket",
+        "activates": "dbus.service"
+      },
+      {
+        "listen": "/run/dmeventd-client",
+        "unit": "dm-event.socket",
+        "activates": "dm-event.service"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.systemctl_ls.info"></a>
 
@@ -77,18 +76,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux

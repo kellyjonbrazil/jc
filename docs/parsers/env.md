@@ -12,71 +12,70 @@ function.
 
 Usage (cli):
 
-$ env | jc --env
+    $ env | jc --env
 
-or
+    or
 
-$ jc env
+    $ jc env
 
 Usage (module):
 
-import jc
-result = jc.parse('env', env_command_output)
+    import jc
+    result = jc.parse('env', env_command_output)
 
-or
+    or
 
-import jc.parsers.env
-result = jc.parsers.env.parse(env_command_output)
+    import jc.parsers.env
+    result = jc.parsers.env.parse(env_command_output)
 
 Schema:
 
-[
-{
-"name":     string,
-"value":    string
-}
-]
+    [
+      {
+        "name":     string,
+        "value":    string
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ env | jc --env -p
-  [
-  {
-- `"name"` - "XDG_SESSION_ID",
-- `"value"` - "1"
-  },
-  {
-- `"name"` - "HOSTNAME",
-- `"value"` - "localhost.localdomain"
-  },
-  {
-- `"name"` - "TERM",
-- `"value"` - "vt220"
-  },
-  {
-- `"name"` - "SHELL",
-- `"value"` - "/bin/bash"
-  },
-  {
-- `"name"` - "HISTSIZE",
-- `"value"` - "1000"
-  },
-  ...
-  ]
-  
-  $ env | jc --env -p -r
-  {
-- `"TERM"` - "xterm-256color",
-- `"SHELL"` - "/bin/bash",
-- `"USER"` - "root",
-- `"PATH"` - "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-- `"PWD"` - "/root",
-- `"LANG"` - "en_US.UTF-8",
-- `"HOME"` - "/root",
-- `"LOGNAME"` - "root",
-- `"_"` - "/usr/bin/env"
-  }
+    $ env | jc --env -p
+    [
+      {
+        "name": "XDG_SESSION_ID",
+        "value": "1"
+      },
+      {
+        "name": "HOSTNAME",
+        "value": "localhost.localdomain"
+      },
+      {
+        "name": "TERM",
+        "value": "vt220"
+      },
+      {
+        "name": "SHELL",
+        "value": "/bin/bash"
+      },
+      {
+        "name": "HISTSIZE",
+        "value": "1000"
+      },
+      ...
+    ]
+
+    $ env | jc --env -p -r
+    {
+      "TERM": "xterm-256color",
+      "SHELL": "/bin/bash",
+      "USER": "root",
+      "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "PWD": "/root",
+      "LANG": "en_US.UTF-8",
+      "HOME": "/root",
+      "LOGNAME": "root",
+      "_": "/usr/bin/env"
+    }
 
 <a id="jc.parsers.env.info"></a>
 
@@ -98,19 +97,16 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  Dictionary of raw structured data or
-  List of Dictionaries of processed structured data
+    Dictionary of raw structured data or
+    List of Dictionaries of processed structured data
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

@@ -7,51 +7,50 @@ jc - JSON CLI output utility `pip-list` command output parser
 
 Usage (cli):
 
-$ pip list | jc --pip-list
+    $ pip list | jc --pip-list
 
-or
+    or
 
-$ jc pip list
+    $ jc pip list
 
 Usage (module):
 
-import jc
-result = jc.parse('pip_list', pip_list_command_output)
+    import jc
+    result = jc.parse('pip_list', pip_list_command_output)
 
-or
+    or
 
-import jc.parsers.pip_list
-result = jc.parsers.pip_list.parse(pip_list_command_output)
+    import jc.parsers.pip_list
+    result = jc.parsers.pip_list.parse(pip_list_command_output)
 
 Schema:
 
-[
-{
-"package":     string,
-"version":     string,
-"location":    string
-}
-]
+    [
+      {
+        "package":     string,
+        "version":     string,
+        "location":    string
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ pip list | jc --pip-list -p
-  [
-  {
-- `"package"` - "ansible",
-- `"version"` - "2.8.5"
-  },
-  {
-- `"package"` - "antlr4-python3-runtime",
-- `"version"` - "4.7.2"
-  },
-  {
-- `"package"` - "asn1crypto",
-- `"version"` - "0.24.0"
-  },
-  ...
-  ]
+    $ pip list | jc --pip-list -p
+    [
+      {
+        "package": "ansible",
+        "version": "2.8.5"
+      },
+      {
+        "package": "antlr4-python3-runtime",
+        "version": "4.7.2"
+      },
+      {
+        "package": "asn1crypto",
+        "version": "0.24.0"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.pip_list.info"></a>
 
@@ -73,18 +72,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

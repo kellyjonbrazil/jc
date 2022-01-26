@@ -12,78 +12,77 @@ Note: The default listing format.
 
 Usage (cli):
 
-$ zipinfo <archive> | jc --zipinfo
+    $ zipinfo <archive> | jc --zipinfo
 
-or
+    or
 
-$ jc zipinfo
+    $ jc zipinfo
 
 Usage (module):
 
-import jc
-result = jc.parse('zipinfo', zipinfo_command_output)
+    import jc
+    result = jc.parse('zipinfo', zipinfo_command_output)
 
-or
+    or
 
-import jc.parsers.zipinfo
-result = jc.parsers.zipinfo.parse(zipinfo_command_output)
+    import jc.parsers.zipinfo
+    result = jc.parsers.zipinfo.parse(zipinfo_command_output)
 
 Schema:
 
-[
-{
-"archive":              string,
-"size":                 integer,
-"size_unit":            string,
-"number_entries":       integer,
-"number_files":         integer,
-"bytes_uncompressed":   integer,
-"bytes_compressed":     integer,
-"percent_compressed":   float,
-"files": [
-{
-"flags":            string,
-"zipversion":       string,
-"zipunder":         string
-"filesize":         integer,
-"type":             string,
-"method":           string,
-"date":             string,
-"time":             string,
-"filename":         string
-}
-]
-}
-]
+    [
+      {
+        "archive":              string,
+        "size":                 integer,
+        "size_unit":            string,
+        "number_entries":       integer,
+        "number_files":         integer,
+        "bytes_uncompressed":   integer,
+        "bytes_compressed":     integer,
+        "percent_compressed":   float,
+        "files": [
+          {
+            "flags":            string,
+            "zipversion":       string,
+            "zipunder":         string
+            "filesize":         integer,
+            "type":             string,
+            "method":           string,
+            "date":             string,
+            "time":             string,
+            "filename":         string
+          }
+        ]
+      }
+    ]
 
-**Examples**:
+Examples:
 
-  
-  $ zipinfo log4j-core-2.16.0.jar | jc --zipinfo -p
-  
-  [
-  {
-- `"archive"` - "log4j-core-2.16.0.jar",
-- `"size"` - 1789565,
-- `"size_unit"` - "bytes",
-- `"number_entries"` - 1218,
-- `"number_files"` - 1218,
-- `"bytes_uncompressed"` - 3974141,
-- `"bytes_compressed"` - 1515455,
-- `"percent_compressed"` - 61.9,
-- `"files"` - [
-  {
-- `"flags"` - "-rw-r--r--",
-- `"zipversion"` - "2.0",
-- `"zipunder"` - "unx",
-- `"filesize"` - 19810,
-- `"type"` - "bl",
-- `"method"` - "defN",
-- `"date"` - "21-Dec-12",
-- `"time"` - "23:35",
-- `"filename"` - "META-INF/MANIFEST.MF"
-  },
-  ...
+    $ zipinfo log4j-core-2.16.0.jar | jc --zipinfo -p
+
+    [
+      {
+        "archive": "log4j-core-2.16.0.jar",
+        "size": 1789565,
+        "size_unit": "bytes",
+        "number_entries": 1218,
+        "number_files": 1218,
+        "bytes_uncompressed": 3974141,
+        "bytes_compressed": 1515455,
+        "percent_compressed": 61.9,
+        "files": [
+          {
+            "flags": "-rw-r--r--",
+            "zipversion": "2.0",
+            "zipunder": "unx",
+            "filesize": 19810,
+            "type": "bl",
+            "method": "defN",
+            "date": "21-Dec-12",
+            "time": "23:35",
+            "filename": "META-INF/MANIFEST.MF"
+          },
+    ...
 
 <a id="jc.parsers.zipinfo.info"></a>
 
@@ -105,18 +104,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  List of Dictionaries. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin

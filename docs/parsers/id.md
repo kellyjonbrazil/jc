@@ -7,109 +7,108 @@ jc - JSON CLI output utility `id` command output parser
 
 Usage (cli):
 
-$ id | jc --id
+    $ id | jc --id
 
-or
+    or
 
-$ jc id
+    $ jc id
 
 Usage (module):
 
-import jc
-result = jc.parse('id', id_command_output)
+    import jc
+    result = jc.parse('id', id_command_output)
 
-or
+    or
 
-import jc.parsers.id
-result = jc.parsers.id.parse(id_command_output)
+    import jc.parsers.id
+    result = jc.parsers.id.parse(id_command_output)
 
 Schema:
 
-{
-"uid": {
-"id":       integer,
-"name":     string
-},
-"gid": {
-"id":       integer,
-"name":     string
-},
-"groups": [
-{
-"id":     integer,
-"name":   string
-},
-{
-"id":     integer,
-"name":   string
-}
-],
-"context": {
-"user":     string,
-"role":     string,
-"type":     string,
-"level":    string
-}
-}
+    {
+      "uid": {
+        "id":       integer,
+        "name":     string
+      },
+      "gid": {
+        "id":       integer,
+        "name":     string
+      },
+      "groups": [
+        {
+          "id":     integer,
+          "name":   string
+        },
+        {
+          "id":     integer,
+          "name":   string
+        }
+      ],
+      "context": {
+        "user":     string,
+        "role":     string,
+        "type":     string,
+        "level":    string
+      }
+    }
 
-**Examples**:
+Examples:
 
-  
-  $ id | jc --id -p
-  {
-- `"uid"` - {
-- `"id"` - 1000,
-- `"name"` - "joeuser"
-  },
-- `"gid"` - {
-- `"id"` - 1000,
-- `"name"` - "joeuser"
-  },
-- `"groups"` - [
-  {
-- `"id"` - 1000,
-- `"name"` - "joeuser"
-  },
-  {
-- `"id"` - 10,
-- `"name"` - "wheel"
-  }
-  ],
-- `"context"` - {
-- `"user"` - "unconfined_u",
-- `"role"` - "unconfined_r",
-- `"type"` - "unconfined_t",
-- `"level"` - "s0-s0:c0.c1023"
-  }
-  }
-  
-  $ id | jc --id -p -r
-  {
-- `"uid"` - {
-- `"id"` - "1000",
-- `"name"` - "joeuser"
-  },
-- `"gid"` - {
-- `"id"` - "1000",
-- `"name"` - "joeuser"
-  },
-- `"groups"` - [
-  {
-- `"id"` - "1000",
-- `"name"` - "joeuser"
-  },
-  {
-- `"id"` - "10",
-- `"name"` - "wheel"
-  }
-  ],
-- `"context"` - {
-- `"user"` - "unconfined_u",
-- `"role"` - "unconfined_r",
-- `"type"` - "unconfined_t",
-- `"level"` - "s0-s0:c0.c1023"
-  }
-  }
+    $ id | jc --id -p
+    {
+      "uid": {
+        "id": 1000,
+        "name": "joeuser"
+      },
+      "gid": {
+        "id": 1000,
+        "name": "joeuser"
+      },
+      "groups": [
+        {
+          "id": 1000,
+          "name": "joeuser"
+        },
+        {
+          "id": 10,
+          "name": "wheel"
+        }
+      ],
+      "context": {
+        "user": "unconfined_u",
+        "role": "unconfined_r",
+        "type": "unconfined_t",
+        "level": "s0-s0:c0.c1023"
+      }
+    }
+
+    $ id | jc --id -p -r
+    {
+      "uid": {
+        "id": "1000",
+        "name": "joeuser"
+      },
+      "gid": {
+        "id": "1000",
+        "name": "joeuser"
+      },
+      "groups": [
+        {
+          "id": "1000",
+          "name": "joeuser"
+        },
+        {
+          "id": "10",
+          "name": "wheel"
+        }
+      ],
+      "context": {
+        "user": "unconfined_u",
+        "role": "unconfined_r",
+        "type": "unconfined_t",
+        "level": "s0-s0:c0.c1023"
+      }
+    }
 
 <a id="jc.parsers.id.info"></a>
 
@@ -131,18 +130,15 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-**Arguments**:
+Parameters:
 
-  
-- `data` - (string)  text data to parse
-- `raw` - (boolean) unprocessed output if True
-- `quiet` - (boolean) suppress warning messages if True
-  
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-**Returns**:
+Returns:
 
-  
-  Dictionary. Raw or processed structured data.
+    Dictionary. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, aix, freebsd
