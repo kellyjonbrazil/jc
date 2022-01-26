@@ -146,9 +146,7 @@ def parse(parser_mod_name: str,
           raw: Optional[bool] = False,
           ignore_exceptions: Optional[Union[None, bool]] = None,
           **kwargs: Any,
-          ) -> Union[Dict[str, Any],
-                     List[Dict[str, Any]],
-                     Iterator[Dict[str, Any]]]:
+          ) -> Union[Dict[str, Any], List[Dict[str, Any]], Iterator[Dict[str, Any]]]:
     """
     Parse the string data using the supplied parser module.
 
