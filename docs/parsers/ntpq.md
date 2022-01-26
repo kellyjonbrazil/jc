@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.ntpq](#jc.parsers.ntpq)
+  * [parse](#jc.parsers.ntpq.parse)
+
 <a id="jc.parsers.ntpq"></a>
 
 # jc.parsers.ntpq

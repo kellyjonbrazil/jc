@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.ls](#jc.parsers.ls)
+  * [parse](#jc.parsers.ls.parse)
+
 <a id="jc.parsers.ls"></a>
 
 # jc.parsers.ls

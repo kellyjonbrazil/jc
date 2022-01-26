@@ -1,4 +1,18 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.ifconfig](#jc.parsers.ifconfig)
+  * [\_IfconfigParser](#jc.parsers.ifconfig._IfconfigParser)
+    * [\_\_init\_\_](#jc.parsers.ifconfig._IfconfigParser.__init__)
+    * [list\_interfaces](#jc.parsers.ifconfig._IfconfigParser.list_interfaces)
+    * [count\_interfaces](#jc.parsers.ifconfig._IfconfigParser.count_interfaces)
+    * [filter\_interfaces](#jc.parsers.ifconfig._IfconfigParser.filter_interfaces)
+    * [get\_interface](#jc.parsers.ifconfig._IfconfigParser.get_interface)
+    * [get\_interfaces](#jc.parsers.ifconfig._IfconfigParser.get_interfaces)
+    * [is\_available](#jc.parsers.ifconfig._IfconfigParser.is_available)
+    * [parser](#jc.parsers.ifconfig._IfconfigParser.parser)
+  * [parse](#jc.parsers.ifconfig.parse)
+
 <a id="jc.parsers.ifconfig"></a>
 
 # jc.parsers.ifconfig

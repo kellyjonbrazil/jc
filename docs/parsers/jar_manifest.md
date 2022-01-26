@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.jar\_manifest](#jc.parsers.jar_manifest)
+  * [parse](#jc.parsers.jar_manifest.parse)
+
 <a id="jc.parsers.jar_manifest"></a>
 
 # jc.parsers.jar\_manifest

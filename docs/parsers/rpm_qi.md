@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.rpm\_qi](#jc.parsers.rpm_qi)
+  * [parse](#jc.parsers.rpm_qi.parse)
+
 <a id="jc.parsers.rpm_qi"></a>
 
 # jc.parsers.rpm\_qi

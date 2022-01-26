@@ -1,3 +1,9 @@
+# Table of Contents
+
+* [jc.parsers.universal](#jc.parsers.universal)
+  * [simple\_table\_parse](#jc.parsers.universal.simple_table_parse)
+  * [sparse\_table\_parse](#jc.parsers.universal.sparse_table_parse)
+
 <a id="jc.parsers.universal"></a>
 
 # jc.parsers.universal

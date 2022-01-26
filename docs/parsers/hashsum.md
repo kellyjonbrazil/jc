@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.hashsum](#jc.parsers.hashsum)
+  * [parse](#jc.parsers.hashsum.parse)
+
 <a id="jc.parsers.hashsum"></a>
 
 # jc.parsers.hashsum

@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.tracepath](#jc.parsers.tracepath)
+  * [parse](#jc.parsers.tracepath.parse)
+
 <a id="jc.parsers.tracepath"></a>
 
 # jc.parsers.tracepath

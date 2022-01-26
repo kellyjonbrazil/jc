@@ -1,3 +1,12 @@
+# Table of Contents
+
+* [jc.lib](#jc.lib)
+  * [parse](#jc.lib.parse)
+  * [parser\_mod\_list](#jc.lib.parser_mod_list)
+  * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
+  * [parser\_info](#jc.lib.parser_info)
+  * [get\_help](#jc.lib.get_help)
+
 <a id="jc.lib"></a>
 
 # jc.lib
@@ -10,9 +19,7 @@ JC lib module
 ### parse
 
 ```python
-def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[Union[None, bool]] = None, **kwargs: Any, ,) -> Union[Dict[str, Any],
-                     List[Dict[str, Any]],
-                     Iterator[Dict[str, Any]]]
+def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[Union[None, bool]] = None, **kwargs: Any, ,) -> Union[Dict[str, Any], List[Dict[str, Any]], Iterator[Dict[str, Any]]]
 ```
 
 Parse the string data using the supplied parser module.

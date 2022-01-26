@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.hciconfig](#jc.parsers.hciconfig)
+  * [parse](#jc.parsers.hciconfig.parse)
+
 <a id="jc.parsers.hciconfig"></a>
 
 # jc.parsers.hciconfig

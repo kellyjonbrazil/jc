@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.blkid](#jc.parsers.blkid)
+  * [parse](#jc.parsers.blkid.parse)
+
 <a id="jc.parsers.blkid"></a>
 
 # jc.parsers.blkid

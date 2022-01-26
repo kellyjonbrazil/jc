@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.finger](#jc.parsers.finger)
+  * [parse](#jc.parsers.finger.parse)
+
 <a id="jc.parsers.finger"></a>
 
 # jc.parsers.finger

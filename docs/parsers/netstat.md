@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.netstat](#jc.parsers.netstat)
+  * [parse](#jc.parsers.netstat.parse)
+
 <a id="jc.parsers.netstat"></a>
 
 # jc.parsers.netstat

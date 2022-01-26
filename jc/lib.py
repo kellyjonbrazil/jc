@@ -140,15 +140,15 @@ def _get_parser(parser_mod_name):
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
-def parse(parser_mod_name: str,
-          data: Union[str, Iterable[str]],
-          quiet: Optional[bool] = False,
-          raw: Optional[bool] = False,
-          ignore_exceptions: Optional[Union[None, bool]] = None,
-          **kwargs: Any,
-          ) -> Union[Dict[str, Any],
-                     List[Dict[str, Any]],
-                     Iterator[Dict[str, Any]]]:
+
+def parse(
+    parser_mod_name: str,
+    data: Union[str, Iterable[str]],
+    quiet: Optional[bool] = False,
+    raw: Optional[bool] = False,
+    ignore_exceptions: Optional[Union[None, bool]] = None,
+    **kwargs: Any,
+) -> Union[Dict[str, Any], List[Dict[str, Any]], Iterator[Dict[str, Any]]]:
     """
     Parse the string data using the supplied parser module.
 

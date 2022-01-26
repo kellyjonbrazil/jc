@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.mount](#jc.parsers.mount)
+  * [parse](#jc.parsers.mount.parse)
+
 <a id="jc.parsers.mount"></a>
 
 # jc.parsers.mount

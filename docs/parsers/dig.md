@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.dig](#jc.parsers.dig)
+  * [parse](#jc.parsers.dig.parse)
+
 <a id="jc.parsers.dig"></a>
 
 # jc.parsers.dig

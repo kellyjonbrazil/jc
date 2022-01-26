@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.systemctl\_lj](#jc.parsers.systemctl_lj)
+  * [parse](#jc.parsers.systemctl_lj.parse)
+
 <a id="jc.parsers.systemctl_lj"></a>
 
 # jc.parsers.systemctl\_lj

@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.ping](#jc.parsers.ping)
+  * [parse](#jc.parsers.ping.parse)
+
 <a id="jc.parsers.ping"></a>
 
 # jc.parsers.ping

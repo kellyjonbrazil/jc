@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.uptime](#jc.parsers.uptime)
+  * [parse](#jc.parsers.uptime.parse)
+
 <a id="jc.parsers.uptime"></a>
 
 # jc.parsers.uptime

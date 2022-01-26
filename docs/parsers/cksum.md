@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.cksum](#jc.parsers.cksum)
+  * [parse](#jc.parsers.cksum.parse)
+
 <a id="jc.parsers.cksum"></a>
 
 # jc.parsers.cksum

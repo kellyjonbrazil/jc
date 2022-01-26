@@ -1,4 +1,12 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.traceroute](#jc.parsers.traceroute)
+  * [\_\_version\_\_](#jc.parsers.traceroute.__version__)
+  * [\_Hop](#jc.parsers.traceroute._Hop)
+    * [add\_probe](#jc.parsers.traceroute._Hop.add_probe)
+  * [parse](#jc.parsers.traceroute.parse)
+
 <a id="jc.parsers.traceroute"></a>
 
 # jc.parsers.traceroute

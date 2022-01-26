@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.iptables](#jc.parsers.iptables)
+  * [parse](#jc.parsers.iptables.parse)
+
 <a id="jc.parsers.iptables"></a>
 
 # jc.parsers.iptables

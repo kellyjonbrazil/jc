@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.gshadow](#jc.parsers.gshadow)
+  * [parse](#jc.parsers.gshadow.parse)
+
 <a id="jc.parsers.gshadow"></a>
 
 # jc.parsers.gshadow

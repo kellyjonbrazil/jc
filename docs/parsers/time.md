@@ -1,4 +1,9 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+# Table of Contents
+
+* [jc.parsers.time](#jc.parsers.time)
+  * [parse](#jc.parsers.time.parse)
+
 <a id="jc.parsers.time"></a>
 
 # jc.parsers.time
