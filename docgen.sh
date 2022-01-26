@@ -1,12 +1,35 @@
 #!/bin/bash
 # Generate docs.md
 # requires pydoc-markdown 4.5.0
+readme_config=$(cat <<'EOF'
+{
+    "processors": [
+        {
+            "type": "filter"
+        },
+        {
+            "type": "pydocmd"
+        }
+    ],
+    "renderer": {
+        "type": "markdown",
+        "header_level_by_type": {
+            "Module": 1,
+            "Class": 3,
+            "Method": 3,
+            "Function": 3,
+            "Data": 3
+        }
+    }
+}
+EOF
+)
+
 toc_config=$(cat <<'EOF'
 {
     "processors": [
         {
-            "type": "filter",
-            "expression":"not name ==\"info\" and default()"
+            "type": "filter"
         },
         {
             "type": "pydocmd"
@@ -27,12 +50,12 @@ toc_config=$(cat <<'EOF'
 EOF
 )
 
-config=$(cat <<'EOF'
+parser_config=$(cat <<'EOF'
 {
     "processors": [
         {
             "type": "filter",
-            "expression":"not name ==\"info\" and default()"
+            "expression": "not name == \"info\" and not name.startswith(\"_\") and default()"
         },
         {
             "type": "pydocmd"
@@ -54,7 +77,7 @@ EOF
 
 cd jc
 echo Building docs for: package
-pydoc-markdown -m jc "${config}" > ../docs/readme.md
+pydoc-markdown -m jc "${readme_config}" > ../docs/readme.md
 
 echo Building docs for: lib
 pydoc-markdown -m jc.lib "${toc_config}" > ../docs/lib.md
@@ -86,7 +109,7 @@ do
 
     echo "Building docs for: ${parser_name}"
     echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
-    pydoc-markdown -m jc.parsers."${parser_name}" "${config}" >> ../docs/parsers/"${parser_name}".md
+    pydoc-markdown -m jc.parsers."${parser_name}" "${parser_config}" >> ../docs/parsers/"${parser_name}".md
     echo "### Parser Information" >> ../docs/parsers/"${parser_name}".md
     echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
     echo >> ../docs/parsers/"${parser_name}".md
