@@ -6,7 +6,7 @@ jc - JSON CLI output utility universal Parsers
 
 <a id="jc.parsers.universal.simple_table_parse"></a>
 
-#### simple\_table\_parse
+### simple\_table\_parse
 
 ```python
 def simple_table_parse(data)
@@ -31,7 +31,7 @@ Returns:
 
 <a id="jc.parsers.universal.sparse_table_parse"></a>
 
-#### sparse\_table\_parse
+### sparse\_table\_parse
 
 ```python
 def sparse_table_parse(data, delim='\u2063')

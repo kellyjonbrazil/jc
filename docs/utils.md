@@ -6,7 +6,7 @@ jc - JSON CLI output utility utils
 
 <a id="jc.utils.warning_message"></a>
 
-#### warning\_message
+### warning\_message
 
 ```python
 def warning_message(message_lines)
@@ -26,7 +26,7 @@ Returns:
 
 <a id="jc.utils.error_message"></a>
 
-#### error\_message
+### error\_message
 
 ```python
 def error_message(message_lines)
@@ -46,7 +46,7 @@ Returns:
 
 <a id="jc.utils.compatibility"></a>
 
-#### compatibility
+### compatibility
 
 ```python
 def compatibility(mod_name, compatible, quiet=False)
@@ -71,7 +71,7 @@ Returns:
 
 <a id="jc.utils.has_data"></a>
 
-#### has\_data
+### has\_data
 
 ```python
 def has_data(data)
@@ -91,7 +91,7 @@ Returns:
 
 <a id="jc.utils.convert_to_int"></a>
 
-#### convert\_to\_int
+### convert\_to\_int
 
 ```python
 def convert_to_int(value)
@@ -110,7 +110,7 @@ Returns:
 
 <a id="jc.utils.convert_to_float"></a>
 
-#### convert\_to\_float
+### convert\_to\_float
 
 ```python
 def convert_to_float(value)
@@ -129,7 +129,7 @@ Returns:
 
 <a id="jc.utils.convert_to_bool"></a>
 
-#### convert\_to\_bool
+### convert\_to\_bool
 
 ```python
 def convert_to_bool(value)
@@ -149,7 +149,7 @@ Returns:
 
 <a id="jc.utils.stream_success"></a>
 
-#### stream\_success
+### stream\_success
 
 ```python
 def stream_success(output_line, ignore_exceptions)
@@ -159,7 +159,7 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 
 <a id="jc.utils.stream_error"></a>
 
-#### stream\_error
+### stream\_error
 
 ```python
 def stream_error(e, ignore_exceptions, line)
@@ -170,7 +170,7 @@ Reraise the stream exception with annotation or print an error
 
 <a id="jc.utils.input_type_check"></a>
 
-#### input\_type\_check
+### input\_type\_check
 
 ```python
 def input_type_check(data)
@@ -180,7 +180,7 @@ Ensure input data is a string
 
 <a id="jc.utils.streaming_input_type_check"></a>
 
-#### streaming\_input\_type\_check
+### streaming\_input\_type\_check
 
 ```python
 def streaming_input_type_check(data)
@@ -190,7 +190,7 @@ Ensure input data is an iterable, but not a string or bytes
 
 <a id="jc.utils.streaming_line_input_type_check"></a>
 
-#### streaming\_line\_input\_type\_check
+### streaming\_line\_input\_type\_check
 
 ```python
 def streaming_line_input_type_check(line)

@@ -7,7 +7,7 @@ JC lib module
 
 <a id="jc.lib.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[Union[None, bool]] = None, **kwargs: Any, ,) -> Union[Dict[str, Any],
@@ -73,7 +73,7 @@ Returns:
 
 <a id="jc.lib.parser_mod_list"></a>
 
-#### parser\_mod\_list
+### parser\_mod\_list
 
 ```python
 def parser_mod_list() -> List[str]
@@ -83,7 +83,7 @@ Returns a list of all available parser module names.
 
 <a id="jc.lib.plugin_parser_mod_list"></a>
 
-#### plugin\_parser\_mod\_list
+### plugin\_parser\_mod\_list
 
 ```python
 def plugin_parser_mod_list() -> List[str]
@@ -94,7 +94,7 @@ subset of `parser_mod_list()`.
 
 <a id="jc.lib.parser_info"></a>
 
-#### parser\_info
+### parser\_info
 
 ```python
 def parser_info(parser_mod_name: str) -> Dict[str, Any]
@@ -107,7 +107,7 @@ variants of the module name string.
 
 <a id="jc.lib.get_help"></a>
 
-#### get\_help
+### get\_help
 
 ```python
 def get_help(parser_mod_name: str) -> None
