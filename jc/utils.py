@@ -266,32 +266,31 @@ def streaming_line_input_type_check(line):
 
 
 class timestamp:
-    """
-    Input a date-time text string of several formats and convert to a
-    naive or timezone-aware epoch timestamp in UTC.
-
-    Parameters:
-
-        datetime_string:  (str)  a string representation of a
-                                 date-time in several supported formats
-
-    Attributes:
-
-        string            (str)   the input datetime string
-
-        format            (int)   the format rule that was used to
-                                  decode the datetime string. None if
-                                  conversion fails
-
-        naive             (int)   timestamp based on locally configured
-                                  timezone. None if conversion fails
-
-        utc               (int)   aware timestamp only if UTC timezone
-                                  detected in datetime string. None if
-                                  conversion fails
-    """
-
     def __init__(self, datetime_string):
+        """
+        Input a date-time text string of several formats and convert to a
+        naive or timezone-aware epoch timestamp in UTC.
+
+        Parameters:
+
+            datetime_string:  (str)  a string representation of a
+                                    date-time in several supported formats
+
+        Attributes:
+
+            string            (str)   the input datetime string
+
+            format            (int)   the format rule that was used to
+                                    decode the datetime string. None if
+                                    conversion fails
+
+            naive             (int)   timestamp based on locally configured
+                                    timezone. None if conversion fails
+
+            utc               (int)   aware timestamp only if UTC timezone
+                                    detected in datetime string. None if
+                                    conversion fails
+        """
         self.string = datetime_string
         dt = self._parse()
         self.format = dt['format']

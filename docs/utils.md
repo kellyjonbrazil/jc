@@ -14,6 +14,7 @@
   * [streaming\_input\_type\_check](#jc.utils.streaming_input_type_check)
   * [streaming\_line\_input\_type\_check](#jc.utils.streaming_line_input_type_check)
   * [timestamp](#jc.utils.timestamp)
+    * [\_\_init\_\_](#jc.utils.timestamp.__init__)
 
 <a id="jc.utils"></a>
 
@@ -223,26 +224,34 @@ Ensure each line is a string
 class timestamp()
 ```
 
+<a id="jc.utils.timestamp.__init__"></a>
+
+### \_\_init\_\_
+
+```python
+def __init__(datetime_string)
+```
+
 Input a date-time text string of several formats and convert to a
 naive or timezone-aware epoch timestamp in UTC.
 
 Parameters:
 
     datetime_string:  (str)  a string representation of a
-                             date-time in several supported formats
+                            date-time in several supported formats
 
 Attributes:
 
     string            (str)   the input datetime string
 
     format            (int)   the format rule that was used to
-                              decode the datetime string. None if
-                              conversion fails
+                            decode the datetime string. None if
+                            conversion fails
 
     naive             (int)   timestamp based on locally configured
-                              timezone. None if conversion fails
+                            timezone. None if conversion fails
 
     utc               (int)   aware timestamp only if UTC timezone
-                              detected in datetime string. None if
-                              conversion fails
+                            detected in datetime string. None if
+                            conversion fails
 
