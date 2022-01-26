@@ -203,7 +203,7 @@ ifconfig parser module written by threeheadedknight@protonmail.com
 
 <a id="jc.parsers.ifconfig._IfconfigParser.__init__"></a>
 
-#### \_\_init\_\_
+### \_\_init\_\_
 
 ```python
 def __init__(console_output)
@@ -213,7 +213,7 @@ def __init__(console_output)
 
 <a id="jc.parsers.ifconfig._IfconfigParser.list_interfaces"></a>
 
-#### list\_interfaces
+### list\_interfaces
 
 ```python
 def list_interfaces()
@@ -223,7 +223,7 @@ def list_interfaces()
 
 <a id="jc.parsers.ifconfig._IfconfigParser.count_interfaces"></a>
 
-#### count\_interfaces
+### count\_interfaces
 
 ```python
 def count_interfaces()
@@ -233,7 +233,7 @@ def count_interfaces()
 
 <a id="jc.parsers.ifconfig._IfconfigParser.filter_interfaces"></a>
 
-#### filter\_interfaces
+### filter\_interfaces
 
 ```python
 def filter_interfaces(**kwargs)
@@ -244,7 +244,7 @@ def filter_interfaces(**kwargs)
 
 <a id="jc.parsers.ifconfig._IfconfigParser.get_interface"></a>
 
-#### get\_interface
+### get\_interface
 
 ```python
 def get_interface(name)
@@ -255,7 +255,7 @@ def get_interface(name)
 
 <a id="jc.parsers.ifconfig._IfconfigParser.get_interfaces"></a>
 
-#### get\_interfaces
+### get\_interfaces
 
 ```python
 def get_interfaces()
@@ -265,7 +265,7 @@ def get_interfaces()
 
 <a id="jc.parsers.ifconfig._IfconfigParser.is_available"></a>
 
-#### is\_available
+### is\_available
 
 ```python
 def is_available(name)
@@ -276,7 +276,7 @@ def is_available(name)
 
 <a id="jc.parsers.ifconfig._IfconfigParser.parser"></a>
 
-#### parser
+### parser
 
 ```python
 def parser(source_data)
@@ -287,7 +287,7 @@ def parser(source_data)
 
 <a id="jc.parsers.ifconfig.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -305,7 +305,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
 Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)

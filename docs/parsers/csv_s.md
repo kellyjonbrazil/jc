@@ -70,7 +70,7 @@ Examples:
 
 <a id="jc.parsers.csv_s.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
@@ -95,7 +95,7 @@ Returns:
 
     Iterator object
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

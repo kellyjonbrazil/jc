@@ -73,7 +73,7 @@ Examples:
 
 <a id="jc.parsers.ini.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -91,7 +91,7 @@ Returns:
 
     Dictionary representing the ini file
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

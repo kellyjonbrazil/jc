@@ -127,7 +127,7 @@ Examples:
 
 <a id="jc.parsers.traceroute.__version__"></a>
 
-#### \_\_version\_\_
+### \_\_version\_\_
 
 Copyright (C) 2015 Luis Benitez
 
@@ -165,7 +165,7 @@ class _Hop(object)
 
 <a id="jc.parsers.traceroute._Hop.add_probe"></a>
 
-#### add\_probe
+### add\_probe
 
 ```python
 def add_probe(probe)
@@ -175,7 +175,7 @@ Adds a Probe instance to this hop's results.
 
 <a id="jc.parsers.traceroute.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -193,7 +193,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

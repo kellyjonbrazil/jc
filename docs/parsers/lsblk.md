@@ -281,7 +281,7 @@ Examples:
 
 <a id="jc.parsers.lsblk.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -299,7 +299,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -37,8 +37,9 @@ do
     echo "Building docs for: ${parser_name}"
     echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
     pydoc-markdown -m jc.parsers."${parser_name}" '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' >> ../docs/parsers/"${parser_name}".md
-    echo "#### Parser Information" >> ../docs/parsers/"${parser_name}".md
+    echo "### Parser Information" >> ../docs/parsers/"${parser_name}".md
     echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
     echo >> ../docs/parsers/"${parser_name}".md
     echo "Version ${version} by ${author} (${author_email})" >> ../docs/parsers/"${parser_name}".md
+    sed -i "" 's/^#### /### /g' ../docs/parsers/"${parser_name}".md
 done

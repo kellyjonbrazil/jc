@@ -86,7 +86,7 @@ Examples:
 
 <a id="jc.parsers.zipinfo.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -104,7 +104,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin
 
 Version 0.01 by Matt J (https://github.com/listuser)

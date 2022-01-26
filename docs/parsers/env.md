@@ -79,7 +79,7 @@ Examples:
 
 <a id="jc.parsers.env.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -98,7 +98,7 @@ Returns:
     Dictionary of raw structured data or
     List of Dictionaries of processed structured data
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -110,7 +110,7 @@ Examples:
 
 <a id="jc.parsers.w.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
@@ -128,7 +128,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

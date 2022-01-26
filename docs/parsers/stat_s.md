@@ -88,7 +88,7 @@ Examples:
 
 <a id="jc.parsers.stat_s.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
@@ -113,7 +113,7 @@ Returns:
 
     Iterator object
 
-#### Parser Information
+### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 0.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
