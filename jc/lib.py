@@ -252,7 +252,7 @@ def parser_info(parser_mod_name: str) -> Dict[str, Any]:
 
         return info_dict
 
-def all_parser_info() -> List[Dict[str, Any]:
+def all_parser_info() -> List[Dict[str, Any]]:
     return [parser_info(_cliname_to_modname(p)) for p in parsers]
 
 def get_help(parser_mod_name: str) -> None:
