@@ -1,9 +1,6 @@
 #!/bin/bash
 # Generate docs.md
-# requires pydoc-markdown 2.1.0.post1
-
-# old config
-# '{"processors":[{"type":"filter"},{"type":"pydocmd"}]}'
+# requires pydoc-markdown 4.5.0
 
 cd jc
 echo Building docs for: package
@@ -22,13 +19,13 @@ pydoc-markdown -m jc.parsers.universal '{"processors":[{"type":"filter","express
 # automate the generation of its own documentation. :)
 
 # pull jc parser objects into a bash array from jq
+# filter out any plugin parsers
 parsers=()
 while read -r value
 do
     parsers+=("$value")
 done < <(jc -a | jq -c '.parsers[] | select(.plugin != true)')
 
-# iterate over the bash array
 for parser in "${parsers[@]}"
 do
     parser_name=$(jq -r '.name' <<< "$parser")
@@ -40,7 +37,7 @@ do
     echo "Building docs for: ${parser_name}"
     echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
     pydoc-markdown -m jc.parsers."${parser_name}" '{"processors":[{"type":"filter","expression":"not name ==\"info\" and default()"},{"type":"pydocmd"}]}' >> ../docs/parsers/"${parser_name}".md
-    echo "## Parser Information" >> ../docs/parsers/"${parser_name}".md
+    echo "#### Parser Information" >> ../docs/parsers/"${parser_name}".md
     echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
     echo >> ../docs/parsers/"${parser_name}".md
     echo "Version ${version} by ${author} (${author_email})" >> ../docs/parsers/"${parser_name}".md

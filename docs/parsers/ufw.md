@@ -225,7 +225,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux
 
 Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

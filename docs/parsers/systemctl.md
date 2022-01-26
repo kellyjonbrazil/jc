@@ -83,7 +83,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -102,7 +102,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 2.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

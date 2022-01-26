@@ -132,7 +132,7 @@ Returns:
 
     Iterator object
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux
 
 Version 0.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

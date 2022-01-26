@@ -109,7 +109,7 @@ Returns:
 
     Iterator object
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 0.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

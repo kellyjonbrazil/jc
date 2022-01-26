@@ -62,7 +62,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

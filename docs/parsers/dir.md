@@ -145,7 +145,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+#### Parser Information
 Compatibility:  win32
 
 Version 1.4 by Rasheed Elsaleh (rasheed@rebelliondefense.com)

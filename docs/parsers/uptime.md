@@ -90,7 +90,7 @@ Returns:
 
     Dictionary. Raw or processed structured data
 
-## Parser Information
+#### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
