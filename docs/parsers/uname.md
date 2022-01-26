@@ -1,78 +1,90 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.uname"></a>
 
 # jc.parsers.uname
+
 jc - JSON CLI output utility `uname -a` command output parser
 
 Note: Must use `uname -a`
 
 Usage (cli):
 
-    $ uname -a | jc --uname
+$ uname -a | jc --uname
 
-    or
+or
 
-    $ jc uname -a
+$ jc uname -a
 
 Usage (module):
 
-    import jc
-    result = jc.parse('uname', uname_command_output)
+import jc
+result = jc.parse('uname', uname_command_output)
 
-    or
+or
 
-    import jc.parsers.uname
-    result = jc.parsers.uname.parse(uname_command_output)
+import jc.parsers.uname
+result = jc.parsers.uname.parse(uname_command_output)
 
 Schema:
 
-    {
-        "kernel_name":        string,
-        "node_name":          string,
-        "kernel_release":     string,
-        "operating_system":   string,
-        "hardware_platform":  string,
-        "processor":          string,
-        "machine":            string,
-        "kernel_version":     string
-    }
+{
+"kernel_name":        string,
+"node_name":          string,
+"kernel_release":     string,
+"operating_system":   string,
+"hardware_platform":  string,
+"processor":          string,
+"machine":            string,
+"kernel_version":     string
+}
 
-Example:
+**Example**:
 
-    $ uname -a | jc --uname -p
-    {
-      "kernel_name": "Linux",
-      "node_name": "user-ubuntu",
-      "kernel_release": "4.15.0-65-generic",
-      "operating_system": "GNU/Linux",
-      "hardware_platform": "x86_64",
-      "processor": "x86_64",
-      "machine": "x86_64",
-      "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
-    }
+  
+  $ uname -a | jc --uname -p
+  {
+- `"kernel_name"` - "Linux",
+- `"node_name"` - "user-ubuntu",
+- `"kernel_release"` - "4.15.0-65-generic",
+- `"operating_system"` - "GNU/Linux",
+- `"hardware_platform"` - "x86_64",
+- `"processor"` - "x86_64",
+- `"machine"` - "x86_64",
+- `"kernel_version"` - "`74`-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
+  }
 
+<a id="jc.parsers.uname.info"></a>
 
-## info
+## info Objects
+
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.uname.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    Dictionary. Raw or processed structured data.
+  
+  Dictionary. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, freebsd

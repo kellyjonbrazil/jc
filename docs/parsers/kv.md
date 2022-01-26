@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.kv"></a>
 
 # jc.parsers.kv
+
 jc - JSON CLI output utility `Key/Value` file parser
 
 Supports files containing simple key/value pairs. Delimiter can be `=` or
@@ -13,74 +15,84 @@ command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
-    $ cat foo.txt | jc --kv
+$ cat foo.txt | jc --kv
 
 Usage (module):
 
-    import jc
-    result = jc.parse('kv', kv_file_output)
+import jc
+result = jc.parse('kv', kv_file_output)
 
-    or
+or
 
-    import jc.parsers.kv
-    result = jc.parsers.kv.parse(kv_file_output)
+import jc.parsers.kv
+result = jc.parsers.kv.parse(kv_file_output)
 
 Schema:
 
-    key/value document converted to a dictionary - see the
-    configparser standard library documentation for more details.
+key/value document converted to a dictionary - see the
+configparser standard library documentation for more details.
 
-    {
-      "key1":       string,
-      "key2":       string
-    }
+{
+"key1":       string,
+"key2":       string
+}
 
-Examples:
+**Examples**:
 
-    $ cat keyvalue.txt
-    # this file contains key/value pairs
-    name = John Doe
-    address=555 California Drive
-    age: 34
-    ; comments can include # or ;
-    # delimiter can be = or :
-    # quoted values have quotation marks stripped by default
-    # but can be preserved with the -r argument
-    occupation:"Engineer"
+  
+  $ cat keyvalue.txt
+  # this file contains key/value pairs
+  name = John Doe
+  address=555 California Drive
+- `age` - 34
+  ; comments can include # or ;
+  # delimiter can be = or :
+  # quoted values have quotation marks stripped by default
+  # but can be preserved with the -r argument
+  occupation:"Engineer"
+  
+  $ cat keyvalue.txt | jc --kv -p
+  {
+- `"name"` - "John Doe",
+- `"address"` - "555 California Drive",
+- `"age"` - "34",
+- `"occupation"` - "Engineer"
+  }
 
-    $ cat keyvalue.txt | jc --kv -p
-    {
-      "name": "John Doe",
-      "address": "555 California Drive",
-      "age": "34",
-      "occupation": "Engineer"
-    }
+<a id="jc.parsers.kv.info"></a>
 
+## info Objects
 
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.kv.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-    Note: this is just a wrapper for jc.parsers.ini
+Note: this is just a wrapper for jc.parsers.ini
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    Dictionary representing the key/value file
+  
+  Dictionary representing the key/value file
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

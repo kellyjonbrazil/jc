@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.ini"></a>
 
 # jc.parsers.ini
+
 jc - JSON CLI output utility `INI` file parser
 
 Parses standard `INI` files and files containing simple key/value pairs.
@@ -13,85 +15,95 @@ command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
-    $ cat foo.ini | jc --ini
+$ cat foo.ini | jc --ini
 
 Usage (module):
 
-    import jc
-    result = jc.parse('ini', ini_file_output)
+import jc
+result = jc.parse('ini', ini_file_output)
 
-    or
+or
 
-    import jc.parsers.ini
-    result = jc.parsers.ini.parse(ini_file_output)
+import jc.parsers.ini
+result = jc.parsers.ini.parse(ini_file_output)
 
 Schema:
 
-    ini or key/value document converted to a dictionary - see the
-    configparser standard library documentation for more details.
+ini or key/value document converted to a dictionary - see the
+configparser standard library documentation for more details.
 
-    {
-      "key1":       string,
-      "key2":       string
-    }
+{
+"key1":       string,
+"key2":       string
+}
 
-Examples:
+**Examples**:
 
-    $ cat example.ini
-    [DEFAULT]
-    ServerAliveInterval = 45
-    Compression = yes
-    CompressionLevel = 9
-    ForwardX11 = yes
+  
+  $ cat example.ini
+  [DEFAULT]
+  ServerAliveInterval = 45
+  Compression = yes
+  CompressionLevel = 9
+  ForwardX11 = yes
+  
+  [bitbucket.org]
+  User = hg
+  
+  [topsecret.server.com]
+  Port = 50022
+  ForwardX11 = no
+  
+  $ cat example.ini | jc --ini -p
+  {
+- `"bitbucket.org"` - {
+- `"serveraliveinterval"` - "45",
+- `"compression"` - "yes",
+- `"compressionlevel"` - "9",
+- `"forwardx11"` - "yes",
+- `"user"` - "hg"
+  },
+- `"topsecret.server.com"` - {
+- `"serveraliveinterval"` - "45",
+- `"compression"` - "yes",
+- `"compressionlevel"` - "9",
+- `"forwardx11"` - "no",
+- `"port"` - "50022"
+  }
+  }
 
-    [bitbucket.org]
-    User = hg
+<a id="jc.parsers.ini.info"></a>
 
-    [topsecret.server.com]
-    Port = 50022
-    ForwardX11 = no
+## info Objects
 
-    $ cat example.ini | jc --ini -p
-    {
-      "bitbucket.org": {
-        "serveraliveinterval": "45",
-        "compression": "yes",
-        "compressionlevel": "9",
-        "forwardx11": "yes",
-        "user": "hg"
-      },
-      "topsecret.server.com": {
-        "serveraliveinterval": "45",
-        "compression": "yes",
-        "compressionlevel": "9",
-        "forwardx11": "no",
-        "port": "50022"
-      }
-    }
-
-
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.ini.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    Dictionary representing the ini file
+  
+  Dictionary representing the ini file
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

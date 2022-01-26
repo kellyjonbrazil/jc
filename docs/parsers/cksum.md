@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.cksum"></a>
 
 # jc.parsers.cksum
+
 jc - JSON CLI output utility `cksum` command output parser
 
 This parser works with the following checksum calculation utilities:
@@ -9,77 +11,87 @@ This parser works with the following checksum calculation utilities:
 
 Usage (cli):
 
-    $ cksum file.txt | jc --cksum
+$ cksum file.txt | jc --cksum
 
-    or
+or
 
-    $ jc cksum file.txt
+$ jc cksum file.txt
 
 Usage (module):
 
-    import jc
-    result = jc.parse('cksum', cksum_command_output)
+import jc
+result = jc.parse('cksum', cksum_command_output)
 
-    or
+or
 
-    import jc.parsers.cksum
-    result = jc.parsers.cksum.parse(cksum_command_output)
+import jc.parsers.cksum
+result = jc.parsers.cksum.parse(cksum_command_output)
 
 Schema:
 
-    [
-      {
-        "filename":     string,
-        "checksum":     integer,
-        "blocks":       integer
-      }
-    ]
+[
+{
+"filename":     string,
+"checksum":     integer,
+"blocks":       integer
+}
+]
 
-Examples:
+**Examples**:
 
-    $ cksum * | jc --cksum -p
-    [
-      {
-        "filename": "__init__.py",
-        "checksum": 4294967295,
-        "blocks": 0
-      },
-      {
-        "filename": "airport.py",
-        "checksum": 2208551092,
-        "blocks": 3745
-      },
-      {
-        "filename": "airport_s.py",
-        "checksum": 1113817598,
-        "blocks": 4572
-      },
-      ...
-    ]
+  
+  $ cksum * | jc --cksum -p
+  [
+  {
+- `"filename"` - "__init__.py",
+- `"checksum"` - 4294967295,
+- `"blocks"` - 0
+  },
+  {
+- `"filename"` - "airport.py",
+- `"checksum"` - 2208551092,
+- `"blocks"` - 3745
+  },
+  {
+- `"filename"` - "airport_s.py",
+- `"checksum"` - 1113817598,
+- `"blocks"` - 4572
+  },
+  ...
+  ]
 
+<a id="jc.parsers.cksum.info"></a>
 
-## info
+## info Objects
+
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.cksum.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    List of Dictionaries. Raw or processed structured data.
+  
+  List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd

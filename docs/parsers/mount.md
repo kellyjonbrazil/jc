@@ -1,106 +1,118 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.mount"></a>
 
 # jc.parsers.mount
+
 jc - JSON CLI output utility `mount` command output parser
 
 Usage (cli):
 
-    $ mount | jc --mount
+$ mount | jc --mount
 
-    or
+or
 
-    $ jc mount
+$ jc mount
 
 Usage (module):
 
-    import jc
-    result = jc.parse('mount', mount_command_output)
+import jc
+result = jc.parse('mount', mount_command_output)
 
-    or
+or
 
-    import jc.parsers.mount
-    result = jc.parsers.mount.parse(mount_command_output)
+import jc.parsers.mount
+result = jc.parsers.mount.parse(mount_command_output)
 
 Schema:
 
-    [
-      {
-        "filesystem":       string,
-        "mount_point":      string,
-        "type":             string,
-        "access": [
-                            string
-        ]
-      }
-    ]
+[
+{
+"filesystem":       string,
+"mount_point":      string,
+"type":             string,
+"access": [
+string
+]
+}
+]
 
-Example:
+**Example**:
 
-    $ mount | jc --mount -p
-    [
-      {
-        "filesystem": "sysfs",
-        "mount_point": "/sys",
-        "type": "sysfs",
-        "access": [
-          "rw",
-          "nosuid",
-          "nodev",
-          "noexec",
-          "relatime"
-        ]
-      },
-      {
-        "filesystem": "proc",
-        "mount_point": "/proc",
-        "type": "proc",
-        "access": [
-          "rw",
-          "nosuid",
-          "nodev",
-          "noexec",
-          "relatime"
-        ]
-      },
-      {
-        "filesystem": "udev",
-        "mount_point": "/dev",
-        "type": "devtmpfs",
-        "access": [
-          "rw",
-          "nosuid",
-          "relatime",
-          "size=977500k",
-          "nr_inodes=244375",
-          "mode=755"
-        ]
-      },
-      ...
-    ]
+  
+  $ mount | jc --mount -p
+  [
+  {
+- `"filesystem"` - "sysfs",
+- `"mount_point"` - "/sys",
+- `"type"` - "sysfs",
+- `"access"` - [
+  "rw",
+  "nosuid",
+  "nodev",
+  "noexec",
+  "relatime"
+  ]
+  },
+  {
+- `"filesystem"` - "proc",
+- `"mount_point"` - "/proc",
+- `"type"` - "proc",
+- `"access"` - [
+  "rw",
+  "nosuid",
+  "nodev",
+  "noexec",
+  "relatime"
+  ]
+  },
+  {
+- `"filesystem"` - "udev",
+- `"mount_point"` - "/dev",
+- `"type"` - "devtmpfs",
+- `"access"` - [
+  "rw",
+  "nosuid",
+  "relatime",
+  "size=977500k",
+  "nr_inodes=244375",
+  "mode=755"
+  ]
+  },
+  ...
+  ]
 
+<a id="jc.parsers.mount.info"></a>
 
-## info
+## info Objects
+
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.mount.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    List of Dictionaries. Raw or processed structured data.
+  
+  List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, freebsd

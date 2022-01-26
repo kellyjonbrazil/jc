@@ -1,118 +1,130 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.du"></a>
 
 # jc.parsers.du
+
 jc - JSON CLI output utility `du` command output parser
 
 Usage (cli):
 
-    $ du | jc --du
+$ du | jc --du
 
-    or
+or
 
-    $ jc du
+$ jc du
 
 Usage (module):
 
-    import jc
-    result = jc.parse('du', du_command_output)
+import jc
+result = jc.parse('du', du_command_output)
 
-    or
+or
 
-    import jc.parsers.du
-    result = jc.parsers.du.parse(du_command_output)
+import jc.parsers.du
+result = jc.parsers.du.parse(du_command_output)
 
 Schema:
 
-    [
-      {
-        "size":     integer,
-        "name":     string
-      }
-    ]
+[
+{
+"size":     integer,
+"name":     string
+}
+]
 
-Examples:
+**Examples**:
 
-    $ du /usr | jc --du -p
-    [
-      {
-        "size": 104608,
-        "name": "/usr/bin"
-      },
-      {
-        "size": 56,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": 0,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": 1008,
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      ...
-    ]
+  
+  $ du /usr | jc --du -p
+  [
+  {
+- `"size"` - 104608,
+- `"name"` - "/usr/bin"
+  },
+  {
+- `"size"` - 56,
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - 0,
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - 0,
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - 0,
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - 1008,
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  ...
+  ]
+  
+  $ du /usr | jc --du -p -r
+  [
+  {
+- `"size"` - "104608",
+- `"name"` - "/usr/bin"
+  },
+  {
+- `"size"` - "56",
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - "0",
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - "0",
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - "0",
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  {
+- `"size"` - "1008",
+- `"name"` - "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
+  },
+  ...
+  ]
 
-    $ du /usr | jc --du -p -r
-    [
-      {
-        "size": "104608",
-        "name": "/usr/bin"
-      },
-      {
-        "size": "56",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": "0",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      {
-        "size": "1008",
-        "name": "/usr/standalone/firmware/iBridge1_1Customer.bundle/..."
-      },
-      ...
-    ]
+<a id="jc.parsers.du.info"></a>
 
+## info Objects
 
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.du.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    List of Dictionaries. Raw or processed structured data.
+  
+  List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, aix, freebsd

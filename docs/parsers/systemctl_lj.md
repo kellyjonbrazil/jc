@@ -1,106 +1,118 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.systemctl_lj"></a>
 
-# jc.parsers.systemctl_lj
+# jc.parsers.systemctl\_lj
+
 jc - JSON CLI output utility `systemctl list-jobs` command output parser
 
 Usage (cli):
 
-    $ systemctl list-jobs | jc --systemctl-lj
+$ systemctl list-jobs | jc --systemctl-lj
 
-    or
+or
 
-    $ jc systemctl list-jobs
+$ jc systemctl list-jobs
 
 Usage (module):
 
-    import jc
-    result = jc.parse('systemctl_lj', systemctl_lj_command_output)
+import jc
+result = jc.parse('systemctl_lj', systemctl_lj_command_output)
 
-    or
+or
 
-    import jc.parsers.systemctl_lj
-    result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
+import jc.parsers.systemctl_lj
+result = jc.parsers.systemctl_lj.parse(systemctl_lj_command_output)
 
 Schema:
 
-    [
-      {
-        "job":      integer,
-        "unit":     string,
-        "type":     string,
-        "state":    string
-      }
-    ]
+[
+{
+"job":      integer,
+"unit":     string,
+"type":     string,
+"state":    string
+}
+]
 
-Examples:
+**Examples**:
 
-    $ systemctl list-jobs| jc --systemctl-lj -p
-    [
-      {
-        "job": 3543,
-        "unit": "nginxAfterGlusterfs.service",
-        "type": "start",
-        "state": "waiting"
-      },
-      {
-        "job": 3545,
-        "unit": "glusterReadyForLocalhostMount.service",
-        "type": "start",
-        "state": "running"
-      },
-      {
-        "job": 3506,
-        "unit": "nginx.service",
-        "type": "start",
-        "state": "waiting"
-      }
-    ]
+  
+  $ systemctl list-jobs| jc --systemctl-lj -p
+  [
+  {
+- `"job"` - 3543,
+- `"unit"` - "nginxAfterGlusterfs.service",
+- `"type"` - "start",
+- `"state"` - "waiting"
+  },
+  {
+- `"job"` - 3545,
+- `"unit"` - "glusterReadyForLocalhostMount.service",
+- `"type"` - "start",
+- `"state"` - "running"
+  },
+  {
+- `"job"` - 3506,
+- `"unit"` - "nginx.service",
+- `"type"` - "start",
+- `"state"` - "waiting"
+  }
+  ]
+  
+  $ systemctl list-jobs| jc --systemctl-lj -p -r
+  [
+  {
+- `"job"` - "3543",
+- `"unit"` - "nginxAfterGlusterfs.service",
+- `"type"` - "start",
+- `"state"` - "waiting"
+  },
+  {
+- `"job"` - "3545",
+- `"unit"` - "glusterReadyForLocalhostMount.service",
+- `"type"` - "start",
+- `"state"` - "running"
+  },
+  {
+- `"job"` - "3506",
+- `"unit"` - "nginx.service",
+- `"type"` - "start",
+- `"state"` - "waiting"
+  }
+  ]
 
-    $ systemctl list-jobs| jc --systemctl-lj -p -r
-    [
-      {
-        "job": "3543",
-        "unit": "nginxAfterGlusterfs.service",
-        "type": "start",
-        "state": "waiting"
-      },
-      {
-        "job": "3545",
-        "unit": "glusterReadyForLocalhostMount.service",
-        "type": "start",
-        "state": "running"
-      },
-      {
-        "job": "3506",
-        "unit": "nginx.service",
-        "type": "start",
-        "state": "waiting"
-      }
-    ]
+<a id="jc.parsers.systemctl_lj.info"></a>
 
+## info Objects
 
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.systemctl_lj.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    List of Dictionaries. Raw or processed structured data.
+  
+  List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux

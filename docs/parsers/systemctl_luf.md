@@ -1,78 +1,90 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.systemctl_luf"></a>
 
-# jc.parsers.systemctl_luf
+# jc.parsers.systemctl\_luf
+
 jc - JSON CLI output utility `systemctl list-unit-files` command output
 parser
 
 Usage (cli):
 
-    $ systemctl list-unit-files | jc --systemctl-luf
+$ systemctl list-unit-files | jc --systemctl-luf
 
-    or
+or
 
-    $ jc systemctl list-unit-files
+$ jc systemctl list-unit-files
 
 Usage (module):
 
-    import jc
-    result = jc.parse('systemctl_luf', systemctl_luf_command_output)
+import jc
+result = jc.parse('systemctl_luf', systemctl_luf_command_output)
 
-    or
+or
 
-    import jc.parsers.systemctl_luf
-    result = jc.parsers.systemctl_luf.parse(systemctl_luf_command_output)
+import jc.parsers.systemctl_luf
+result = jc.parsers.systemctl_luf.parse(systemctl_luf_command_output)
 
 Schema:
 
-    [
-      {
-        "unit_file":   string,
-        "state":       string
-      }
-    ]
+[
+{
+"unit_file":   string,
+"state":       string
+}
+]
 
-Examples:
+**Examples**:
 
-    $ systemctl list-unit-files | jc --systemctl-luf -p
-    [
-      {
-        "unit_file": "proc-sys-fs-binfmt_misc.automount",
-        "state": "static"
-      },
-      {
-        "unit_file": "dev-hugepages.mount",
-        "state": "static"
-      },
-      {
-        "unit_file": "dev-mqueue.mount",
-        "state": "static"
-      },
-      ...
-    ]
+  
+  $ systemctl list-unit-files | jc --systemctl-luf -p
+  [
+  {
+- `"unit_file"` - "proc-sys-fs-binfmt_misc.automount",
+- `"state"` - "static"
+  },
+  {
+- `"unit_file"` - "dev-hugepages.mount",
+- `"state"` - "static"
+  },
+  {
+- `"unit_file"` - "dev-mqueue.mount",
+- `"state"` - "static"
+  },
+  ...
+  ]
 
+<a id="jc.parsers.systemctl_luf.info"></a>
 
-## info
+## info Objects
+
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.systemctl_luf.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    List of Dictionaries. Raw or processed structured data.
+  
+  List of Dictionaries. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux

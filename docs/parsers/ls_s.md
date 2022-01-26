@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.ls_s"></a>
 
-# jc.parsers.ls_s
+# jc.parsers.ls\_s
+
 jc - JSON CLI output utility `ls` and `vdir` command output streaming
 parser
 
@@ -20,96 +22,108 @@ available if the timezone field is UTC.
 
 Usage (cli):
 
-    $ ls | jc --ls-s
+$ ls | jc --ls-s
 
 Usage (module):
 
-    import jc
-    # result is an iterable object (generator)
-    result = jc.parse('ls_s', ls_command_output.splitlines())
-    for item in result:
-        # do something
+import jc
+# result is an iterable object (generator)
+result = jc.parse('ls_s', ls_command_output.splitlines())
+for item in result:
+# do something
 
-    or
+or
 
-    import jc.parsers.ls_s
-    # result is an iterable object (generator)
-    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
-    for item in result:
-        # do something
+import jc.parsers.ls_s
+# result is an iterable object (generator)
+result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
+for item in result:
+# do something
 
 Schema:
 
-    {
-      "filename":       string,
-      "flags":          string,
-      "links":          integer,
-      "parent":         string,
-      "owner":          string,
-      "group":          string,
-      "size":           integer,
-      "date":           string,
-      "epoch":          integer,     # [0]
-      "epoch_utc":      integer,     # [1]
+{
+"filename":       string,
+"flags":          string,
+"links":          integer,
+"parent":         string,
+"owner":          string,
+"group":          string,
+"size":           integer,
+"date":           string,
+"epoch":          integer,     # [0]
+"epoch_utc":      integer,     # [1]
 
-      # Below object only exists if using -qq or ignore_exceptions=True
+# Below object only exists if using -qq or ignore_exceptions=True
 
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
-    }
+"_jc_meta":
+{
+"success":    boolean,     # false if error parsing
+"error":      string,      # exists if "success" is false
+"line":       string       # exists if "success" is false
+}
+}
 
-    [0] naive timestamp if date field exists and can be converted.
-    [1] timezone aware timestamp if date field is in UTC and can
-        be converted
+[0] naive timestamp if date field exists and can be converted.
+[1] timezone aware timestamp if date field is in UTC and can
+be converted
 
-Examples:
+**Examples**:
 
-    $ ls -l /usr/bin | jc --ls-s
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","...}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,...}
-    ...
+  
+  $ ls -l /usr/bin | jc --ls-s
+  {"filename":"2to3-","flags":"-rwxr-xr-x","links":4,"owner":"root","...}
+  {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
+  {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":1,...}
+  ...
+  
+  $ ls -l /usr/bin | jc --ls-s -r
+  {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"roo"..."}
+  {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
+  {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1...}
+  ...
 
-    $ ls -l /usr/bin | jc --ls-s -r
-    {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"roo"..."}
-    {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
-    {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1...}
-    ...
+<a id="jc.parsers.ls_s.info"></a>
 
+## info Objects
 
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.ls_s.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
 Main text parsing generator function. Returns an iterator object.
 
-Parameters:
+**Arguments**:
 
-    data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+  
+- `data` - (iterable)  line-based text data to parse
+  (e.g. sys.stdin or str.splitlines())
+  
+- `raw` - (boolean)   unprocessed output if True
+- `quiet` - (boolean)   suppress warning messages if True
+- `ignore_exceptions` - (boolean)   ignore parsing exceptions if True
+  
 
-    raw:               (boolean)   unprocessed output if True
-    quiet:             (boolean)   suppress warning messages if True
-    ignore_exceptions: (boolean)   ignore parsing exceptions if True
+**Yields**:
 
-Yields:
+  
+  Dictionary. Raw or processed structured data.
+  
 
-    Dictionary. Raw or processed structured data.
+**Returns**:
 
-Returns:
-
-    Iterator object
+  
+  Iterator object
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd

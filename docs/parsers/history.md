@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.history"></a>
 
 # jc.parsers.history
+
 jc - JSON CLI output utility `history` command output parser
 
 This parser will output a list of dictionaries each containing `line` and
@@ -13,83 +15,93 @@ builtin.
 
 Usage (cli):
 
-    $ history | jc --history
+$ history | jc --history
 
 Usage (module):
 
-    import jc
-    result = jc.parse('history', history_command_output)
+import jc
+result = jc.parse('history', history_command_output)
 
-    or
+or
 
-    import jc.parsers.history
-    result = jc.parsers.history.parse(history_command_output)
+import jc.parsers.history
+result = jc.parsers.history.parse(history_command_output)
 
 Schema:
 
-    [
-      {
-        "line":     integer,
-        "command":  string
-      }
-    ]
+[
+{
+"line":     integer,
+"command":  string
+}
+]
 
-Examples:
+**Examples**:
 
-    $ history | jc --history -p
-    [
-      {
-        "line": 118,
-        "command": "sleep 100"
-      },
-      {
-        "line": 119,
-        "command": "ls /bin"
-      },
-      {
-        "line": 120,
-        "command": "echo "hello""
-      },
-      {
-        "line": 121,
-        "command": "docker images"
-      },
-      ...
-    ]
+  
+  $ history | jc --history -p
+  [
+  {
+- `"line"` - 118,
+- `"command"` - "sleep 100"
+  },
+  {
+- `"line"` - 119,
+- `"command"` - "ls /bin"
+  },
+  {
+- `"line"` - 120,
+- `"command"` - "echo \"hello\""
+  },
+  {
+- `"line"` - 121,
+- `"command"` - "docker images"
+  },
+  ...
+  ]
+  
+  $ history | jc --history -p -r
+  {
+- `"118"` - "sleep 100",
+- `"119"` - "ls /bin",
+- `"120"` - "echo \"hello\"",
+- `"121"` - "docker images",
+  ...
+  }
 
-    $ history | jc --history -p -r
-    {
-      "118": "sleep 100",
-      "119": "ls /bin",
-      "120": "echo "hello"",
-      "121": "docker images",
-      ...
-    }
+<a id="jc.parsers.history.info"></a>
 
+## info Objects
 
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.history.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    Dictionary of raw structured data or
-    List of Dictionaries of processed structured data
+  
+  Dictionary of raw structured data or
+  List of Dictionaries of processed structured data
 
 ## Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd

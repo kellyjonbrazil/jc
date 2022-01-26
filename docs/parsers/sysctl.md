@@ -1,88 +1,100 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.sysctl"></a>
 
 # jc.parsers.sysctl
+
 jc - JSON CLI output utility `sysctl -a` command output parser
 
 Note: Since `sysctl` output is not easily parsable only a very simple
-      key/value object will be output. An attempt is made to convert obvious
-      integers and floats. If no conversion is desired, use the `-r`
-      command-line argument or the `raw=True` argument in `parse()`.
+key/value object will be output. An attempt is made to convert obvious
+integers and floats. If no conversion is desired, use the `-r`
+command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
-    $ sysctl -a | jc --sysctl
+$ sysctl -a | jc --sysctl
 
-    or
+or
 
-    $ jc sysctl -a
+$ jc sysctl -a
 
 Usage (module):
 
-    import jc
-    result = jc.parse('sysctl', sysctl_command_output)
+import jc
+result = jc.parse('sysctl', sysctl_command_output)
 
-    or
+or
 
-    import jc.parsers.sysctl
-    result = jc.parsers.sysctl.parse(sysctl_command_output)
+import jc.parsers.sysctl
+result = jc.parsers.sysctl.parse(sysctl_command_output)
 
 Schema:
 
-    {
-      "key1":     string/integer/float,     # best guess based on value
-      "key2":     string/integer/float,
-      "key3":     string/integer/float
-    }
+{
+"key1":     string/integer/float,     # best guess based on value
+"key2":     string/integer/float,
+"key3":     string/integer/float
+}
 
-Examples:
+**Examples**:
 
-    $ sysctl -a | jc --sysctl -p
-    {
-      "user.cs_path": "/usr/bin:/bin:/usr/sbin:/sbin",
-      "user.bc_base_max": 99,
-      "user.bc_dim_max": 2048,
-      "user.bc_scale_max": 99,
-      "user.bc_string_max": 1000,
-      "user.coll_weights_max": 2,
-      "user.expr_nest_max": 32
-      ...
-    }
+  
+  $ sysctl -a | jc --sysctl -p
+  {
+- `"user.cs_path"` - "/usr/bin:/bin:/usr/sbin:/sbin",
+- `"user.bc_base_max"` - 99,
+- `"user.bc_dim_max"` - 2048,
+- `"user.bc_scale_max"` - 99,
+- `"user.bc_string_max"` - 1000,
+- `"user.coll_weights_max"` - 2,
+- `"user.expr_nest_max"` - 32
+  ...
+  }
+  
+  $ sysctl -a | jc --sysctl -p -r
+  {
+- `"user.cs_path"` - "/usr/bin:/bin:/usr/sbin:/sbin",
+- `"user.bc_base_max"` - "99",
+- `"user.bc_dim_max"` - "2048",
+- `"user.bc_scale_max"` - "99",
+- `"user.bc_string_max"` - "1000",
+- `"user.coll_weights_max"` - "2",
+- `"user.expr_nest_max"` - "32",
+  ...
+  }
 
-    $ sysctl -a | jc --sysctl -p -r
-    {
-      "user.cs_path": "/usr/bin:/bin:/usr/sbin:/sbin",
-      "user.bc_base_max": "99",
-      "user.bc_dim_max": "2048",
-      "user.bc_scale_max": "99",
-      "user.bc_string_max": "1000",
-      "user.coll_weights_max": "2",
-      "user.expr_nest_max": "32",
-      ...
-    }
+<a id="jc.parsers.sysctl.info"></a>
 
+## info Objects
 
-## info
 ```python
-info()
+class info()
 ```
+
 Provides parser metadata (version, author, etc.)
 
-## parse
+<a id="jc.parsers.sysctl.parse"></a>
+
+#### parse
+
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
 
-Parameters:
+**Arguments**:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+  
+- `data` - (string)  text data to parse
+- `raw` - (boolean) unprocessed output if True
+- `quiet` - (boolean) suppress warning messages if True
+  
 
-Returns:
+**Returns**:
 
-    Dictionary. Raw or processed structured data.
+  
+  Dictionary. Raw or processed structured data.
 
 ## Parser Information
 Compatibility:  linux, darwin, freebsd
