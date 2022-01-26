@@ -157,7 +157,7 @@ SOFTWARE.
 
 <a id="jc.parsers.traceroute._Hop"></a>
 
-## \_Hop Objects
+### \_Hop Objects
 
 ```python
 class _Hop(object)

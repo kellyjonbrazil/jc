@@ -217,7 +217,7 @@ Ensure each line is a string
 
 <a id="jc.utils.timestamp"></a>
 
-## timestamp Objects
+### timestamp Objects
 
 ```python
 class timestamp()
