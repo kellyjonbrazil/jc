@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.airport\_s](#jc.parsers.airport_s)
-  * [parse](#jc.parsers.airport_s.parse)
-
 <a id="jc.parsers.airport_s"></a>
 
 # jc.parsers.airport\_s

@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.stat\_s](#jc.parsers.stat_s)
-  * [parse](#jc.parsers.stat_s.parse)
-
 <a id="jc.parsers.stat_s"></a>
 
 # jc.parsers.stat\_s

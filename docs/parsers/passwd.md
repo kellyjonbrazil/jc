@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.passwd](#jc.parsers.passwd)
-  * [parse](#jc.parsers.passwd.parse)
-
 <a id="jc.parsers.passwd"></a>
 
 # jc.parsers.passwd

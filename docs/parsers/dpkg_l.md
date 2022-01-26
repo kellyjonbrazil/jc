@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.dpkg\_l](#jc.parsers.dpkg_l)
-  * [parse](#jc.parsers.dpkg_l.parse)
-
 <a id="jc.parsers.dpkg_l"></a>
 
 # jc.parsers.dpkg\_l

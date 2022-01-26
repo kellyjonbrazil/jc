@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.route](#jc.parsers.route)
-  * [parse](#jc.parsers.route.parse)
-
 <a id="jc.parsers.route"></a>
 
 # jc.parsers.route

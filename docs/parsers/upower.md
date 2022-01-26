@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.upower](#jc.parsers.upower)
-  * [parse](#jc.parsers.upower.parse)
-
 <a id="jc.parsers.upower"></a>
 
 # jc.parsers.upower

@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.arp](#jc.parsers.arp)
-  * [parse](#jc.parsers.arp.parse)
-
 <a id="jc.parsers.arp"></a>
 
 # jc.parsers.arp

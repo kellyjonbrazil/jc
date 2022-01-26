@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.sysctl](#jc.parsers.sysctl)
-  * [parse](#jc.parsers.sysctl.parse)
-
 <a id="jc.parsers.sysctl"></a>
 
 # jc.parsers.sysctl

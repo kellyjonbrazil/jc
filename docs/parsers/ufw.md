@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.ufw](#jc.parsers.ufw)
-  * [parse](#jc.parsers.ufw.parse)
-
 <a id="jc.parsers.ufw"></a>
 
 # jc.parsers.ufw

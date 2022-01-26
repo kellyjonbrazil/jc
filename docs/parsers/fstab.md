@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.fstab](#jc.parsers.fstab)
-  * [parse](#jc.parsers.fstab.parse)
-
 <a id="jc.parsers.fstab"></a>
 
 # jc.parsers.fstab

@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.pip\_list](#jc.parsers.pip_list)
-  * [parse](#jc.parsers.pip_list.parse)
-
 <a id="jc.parsers.pip_list"></a>
 
 # jc.parsers.pip\_list

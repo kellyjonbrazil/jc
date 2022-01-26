@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.systeminfo](#jc.parsers.systeminfo)
-  * [parse](#jc.parsers.systeminfo.parse)
-
 <a id="jc.parsers.systeminfo"></a>
 
 # jc.parsers.systeminfo

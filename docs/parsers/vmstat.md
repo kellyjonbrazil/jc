@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.vmstat](#jc.parsers.vmstat)
-  * [parse](#jc.parsers.vmstat.parse)
-
 <a id="jc.parsers.vmstat"></a>
 
 # jc.parsers.vmstat

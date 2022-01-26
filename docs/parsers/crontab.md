@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.crontab](#jc.parsers.crontab)
-  * [parse](#jc.parsers.crontab.parse)
-
 <a id="jc.parsers.crontab"></a>
 
 # jc.parsers.crontab

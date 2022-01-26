@@ -1,7 +1,3 @@
-# Table of Contents
-
-* [jc](#jc)
-
 <a id="jc"></a>
 
 # jc

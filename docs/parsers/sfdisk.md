@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.sfdisk](#jc.parsers.sfdisk)
-  * [parse](#jc.parsers.sfdisk.parse)
-
 <a id="jc.parsers.sfdisk"></a>
 
 # jc.parsers.sfdisk

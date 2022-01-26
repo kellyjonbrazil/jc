@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.ini](#jc.parsers.ini)
-  * [parse](#jc.parsers.ini.parse)
-
 <a id="jc.parsers.ini"></a>
 
 # jc.parsers.ini

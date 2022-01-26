@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.iw\_scan](#jc.parsers.iw_scan)
-  * [parse](#jc.parsers.iw_scan.parse)
-
 <a id="jc.parsers.iw_scan"></a>
 
 # jc.parsers.iw\_scan

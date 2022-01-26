@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.hosts](#jc.parsers.hosts)
-  * [parse](#jc.parsers.hosts.parse)
-
 <a id="jc.parsers.hosts"></a>
 
 # jc.parsers.hosts

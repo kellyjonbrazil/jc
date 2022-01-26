@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.timedatectl](#jc.parsers.timedatectl)
-  * [parse](#jc.parsers.timedatectl.parse)
-
 <a id="jc.parsers.timedatectl"></a>
 
 # jc.parsers.timedatectl

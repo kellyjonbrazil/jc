@@ -1,9 +1,4 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-# Table of Contents
-
-* [jc.parsers.dmidecode](#jc.parsers.dmidecode)
-  * [parse](#jc.parsers.dmidecode.parse)
-
 <a id="jc.parsers.dmidecode"></a>
 
 # jc.parsers.dmidecode
