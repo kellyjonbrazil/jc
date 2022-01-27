@@ -10,7 +10,7 @@ import signal
 import shlex
 import subprocess
 import json
-from .lib import (__version__, parser_info, parsers, local_parsers,
+from .lib import (__version__, all_parser_info, parsers,
                   _parser_argument, _get_parser)
 from . import utils
 from . import tracebackplus
@@ -168,8 +168,6 @@ def parsers_text(indent=0, pad=0):
 
 def about_jc():
     """Return jc info and the contents of each parser.info as a dictionary"""
-    parser_list = [parser_info(p) for p in parsers]
-
     return {
         'name': 'jc',
         'version': info.version,
@@ -179,8 +177,8 @@ def about_jc():
         'website': info.website,
         'copyright': info.copyright,
         'license': info.license,
-        'parser_count': len(parser_list),
-        'parsers': parser_list
+        'parser_count': len(all_parser_info()),
+        'parsers': all_parser_info()
     }
 
 
@@ -521,7 +519,7 @@ def main():
 
         utils.error_message([f'Parser issue with {parser_name}:',
                              f'{e.__class__.__name__}: {e}',
-                             'Please ensure the locale is set to C (LANG=C) and you used the correct parser.',
+                             'If this is the correct parser, try setting the locale to C (LANG=C).',
                              'For details use the -d or -dd option. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
@@ -544,7 +542,7 @@ def main():
         utils.error_message([
             f'{parser_name} parser could not parse the input data.',
             f'{streaming_msg}',
-            'Please ensure the locale is set to C (LANG=C) and you used the correct parser.',
+            'If this is the correct parser, try setting the locale to C (LANG=C).',
             'For details use the -d or -dd option. Use "jc -h" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
