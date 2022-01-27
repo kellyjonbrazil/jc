@@ -34,6 +34,24 @@ class MyTests(unittest.TestCase):
     def test_lib_parser_mod_list_length(self):
         self.assertGreaterEqual(len(jc.lib.parser_mod_list()), 80)
 
+    def test_lib_parser_info_is_dict(self):
+        self.assertIsInstance(jc.lib.parser_info('csv'), dict)
+
+    def test_lib_parser_info_csv(self):
+        self.assertTrue(jc.lib.parser_info('csv')['name'] == 'csv')
+
+    def test_lib_all_parser_info_is_list(self):
+        self.assertIsInstance(jc.lib.all_parser_info(), list)
+
+    def test_lib_all_parser_info_contains_csv(self):
+        p_list = []
+        for p in jc.lib.all_parser_info():
+            p_list.append(p['name'])
+        self.assertTrue('csv' in p_list)
+
+    def test_lib_all_parser_info_length(self):
+        self.assertGreaterEqual(len(jc.lib.all_parser_info()), 80)
+
     def test_lib_plugin_parser_mod_list_is_list(self):
         self.assertIsInstance(jc.lib.plugin_parser_mod_list(), list)
 
@@ -43,6 +61,9 @@ class MyTests(unittest.TestCase):
 
     def test_lib_cliname_to_modname(self):
         self.assertEqual(jc.lib._cliname_to_modname('module-name'), 'module_name')
+
+    def test_lib_argumentname_to_modname(self):
+        self.assertEqual(jc.lib._cliname_to_modname('--module-name'), 'module_name')
 
     def test_lib_modname_to_cliname(self):
         self.assertEqual(jc.lib._modname_to_cliname('module_name'), 'module-name')
