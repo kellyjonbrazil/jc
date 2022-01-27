@@ -140,7 +140,6 @@ def _get_parser(parser_mod_name):
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
-
 def parse(
     parser_mod_name: str,
     data: Union[str, Iterable[str]],
@@ -229,8 +228,8 @@ def parser_info(parser_mod_name: str) -> Dict:
     """
     Returns a dictionary that includes the module metadata.
 
-    This function will accept module_name, cli-name, and --argument-name
-    variants of the module name string.
+    This function will accept **module_name**, **cli-name**, and
+    **--argument-name** variants of the module name string.
     """
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
@@ -262,7 +261,7 @@ def get_help(parser_mod_name: str) -> None:
     """
     Show help screen for the selected parser.
 
-    This function will accept module_name, cli-name, and --argument-name
-    variants of the module name string.
+    This function will accept **module_name**, **cli-name**, and
+    **--argument-name** variants of the module name string.
     """
     help(_get_parser(parser_mod_name))

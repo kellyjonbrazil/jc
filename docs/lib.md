@@ -110,8 +110,8 @@ def parser_info(parser_mod_name: str) -> Dict
 
 Returns a dictionary that includes the module metadata.
 
-This function will accept module_name, cli-name, and --argument-name
-variants of the module name string.
+This function will accept **module_name**, **cli-name**, and
+**--argument-name** variants of the module name string.
 
 <a id="jc.lib.all_parser_info"></a>
 
@@ -133,6 +133,6 @@ def get_help(parser_mod_name: str) -> None
 
 Show help screen for the selected parser.
 
-This function will accept module_name, cli-name, and --argument-name
-variants of the module name string.
+This function will accept **module_name**, **cli-name**, and
+**--argument-name** variants of the module name string.
 
