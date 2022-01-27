@@ -194,7 +194,7 @@ Reraise the stream exception with annotation or print an error
 def input_type_check(data: str) -> None
 ```
 
-Ensure input data is a string. Raises TypeError if not.
+Ensure input data is a string. Raises `TypeError` if not.
 
 <a id="jc.utils.streaming_input_type_check"></a>
 
@@ -205,7 +205,7 @@ def streaming_input_type_check(data: Iterable) -> None
 ```
 
 Ensure input data is an iterable, but not a string or bytes. Raises
-TypeError if not.
+`TypeError` if not.
 
 <a id="jc.utils.streaming_line_input_type_check"></a>
 
@@ -215,7 +215,7 @@ TypeError if not.
 def streaming_line_input_type_check(line: str) -> None
 ```
 
-Ensure each line is a string. Raises TypeError if not.
+Ensure each line is a string. Raises `TypeError` if not.
 
 <a id="jc.utils.timestamp"></a>
 
