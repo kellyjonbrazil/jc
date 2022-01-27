@@ -74,9 +74,10 @@ Use `help(jc.lib)` for details:
 
     parser_mod_list() -> list
         Get a list of all available parser module names to be used in
-        parse() and get_help().
+        parse(), parser_info(), and get_help().
 
     plugin_parser_mod_list() -> list
-        Get a list of plugin parser module names. This list is a subset of
+        Get a list of plugin parser module names to be used in
+        parse(), parser_info(), and get_help(). This list is a subset of
         parser_mod_list().
 
