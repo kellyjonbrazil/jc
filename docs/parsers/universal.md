@@ -15,7 +15,7 @@ jc - JSON CLI output utility universal Parsers
 ### simple\_table\_parse
 
 ```python
-def simple_table_parse(data)
+def simple_table_parse(data: List[str]) -> List[Dict]
 ```
 
 Parse simple tables. The last column may contain data with spaces.
@@ -40,7 +40,7 @@ Returns:
 ### sparse\_table\_parse
 
 ```python
-def sparse_table_parse(data, delim='\u2063')
+def sparse_table_parse(data: List[str], delim: Optional[str] = '\u2063') -> List[Dict]
 ```
 
 Parse tables with missing column data or with spaces in column data.
