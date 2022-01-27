@@ -6,7 +6,7 @@ import sys
 import os
 import re
 import importlib
-from typing import Dict, Iterable, List, Any, Union, Iterator, Optional
+from typing import Dict, List, Iterable, Union, Iterator, Optional
 from jc import appdirs
 
 __version__ = '1.18.2'
@@ -143,10 +143,10 @@ def _get_parser(parser_mod_name):
 def parse(
     parser_mod_name: str,
     data: Union[str, Iterable[str]],
-    quiet: Optional[bool] = False,
-    raw: Optional[bool] = False,
-    ignore_exceptions: Optional[bool] = None,
-    **kwargs: Optional[Any]
+    quiet: bool = False,
+    raw: bool = False,
+    ignore_exceptions: bool = None,
+    **kwargs
 ) -> Union[Dict, List[Dict], Iterator[Dict]]:
     """
     Parse the string data using the supplied parser module.
@@ -224,7 +224,7 @@ def plugin_parser_mod_list() -> List[str]:
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def parser_info(parser_mod_name: str) -> Dict:
+def parser_info(parser_mod_name: str) -> Union[Dict, None]:
     """
     Returns a dictionary that includes the module metadata.
 
@@ -237,7 +237,7 @@ def parser_info(parser_mod_name: str) -> Dict:
     parser_mod = _get_parser(parser_mod_name)
 
     if hasattr(parser_mod, 'info'):
-        info_dict = {}
+        info_dict: Dict = {}
         info_dict['name'] = parser_mod_name
         info_dict['argument'] = _parser_argument(parser_mod_name)
         parser_entry = vars(parser_mod.info)
@@ -251,7 +251,9 @@ def parser_info(parser_mod_name: str) -> Dict:
 
         return info_dict
 
-def all_parser_info() -> List[Dict]:
+    return None
+
+def all_parser_info() -> List[Optional[Dict]]:
     """
     Returns a list of dictionaris that includes metadata for all modules.
     """

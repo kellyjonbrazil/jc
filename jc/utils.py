@@ -127,7 +127,7 @@ def has_data(data: str) -> bool:
     return bool(data and not data.isspace())
 
 
-def convert_to_int(value: Union[str, float]) -> int:
+def convert_to_int(value: Union[str, float]) -> Union[int, None]:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
@@ -157,7 +157,7 @@ def convert_to_int(value: Union[str, float]) -> int:
         return None
 
 
-def convert_to_float(value: Union[str, int]) -> float:
+def convert_to_float(value: Union[str, int]) -> Union[float, None]:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
