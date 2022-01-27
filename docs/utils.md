@@ -112,7 +112,7 @@ Returns:
 ### convert\_to\_int
 
 ```python
-def convert_to_int(value: Union[str, float]) -> int
+def convert_to_int(value: Union[str, float]) -> Union[int, None]
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -131,7 +131,7 @@ Returns:
 ### convert\_to\_float
 
 ```python
-def convert_to_float(value: Union[str, int]) -> float
+def convert_to_float(value: Union[str, int]) -> Union[float, None]
 ```
 
 Converts string and int input to float. Strips all non-numeric
