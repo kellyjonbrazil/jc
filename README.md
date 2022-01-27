@@ -236,8 +236,6 @@ option.
 - `--xml` enables the XML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xml))
 - `--yaml` enables the YAML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml))
 - `--zipinfo` enables the `zipinfo` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo))
-- `--testing-two` enables the test parser 2 ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/testing_two))
-- `--testing` enables the test parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/testing))
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
