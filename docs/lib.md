@@ -20,7 +20,7 @@ JC lib module
 ### parse
 
 ```python
-def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[bool] = None, **kwargs: Any) -> Union[Dict, List[Dict], Iterator[Dict]]
+def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: Optional[bool] = False, raw: Optional[bool] = False, ignore_exceptions: Optional[bool] = None, **kwargs: Optional[Any]) -> Union[Dict, List[Dict], Iterator[Dict]]
 ```
 
 Parse the string data using the supplied parser module.
