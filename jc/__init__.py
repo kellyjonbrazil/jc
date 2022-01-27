@@ -54,18 +54,25 @@ modules directly:
 Use `help(jc.lib)` for details:
 
     parse(parser_module_name: str, data: str | iterable)
+      -> dict | list[dict] | Interable[dict]
         High-level API to easily access the parser. This API will find both
         built-in parsers and local plugin parsers.
 
-    get_help(parser_module_name: str)
+    parser_info(parser_module_name: str) -> dict
+        Get the metadata for a particular parser.
+
+    all_parser_info() -> list[dict]
+        Get the metadata for all parsers.
+
+    get_help(parser_module_name: str) -> None
         Convenience function to display the help screen for a parser using
         its module name.
 
-    parser_mod_list()
+    parser_mod_list() -> list
         Get a list of all available parser module names to be used in
         parse() and get_help().
 
-    plugin_parser_mod_list()
+    plugin_parser_mod_list() -> list
         Get a list of plugin parser module names. This list is a subset of
         parser_mod_list().
 """
