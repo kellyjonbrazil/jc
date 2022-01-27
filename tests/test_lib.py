@@ -40,8 +40,9 @@ class MyTests(unittest.TestCase):
     def test_lib_parser_info_csv(self):
         self.assertTrue(jc.lib.parser_info('csv')['name'] == 'csv')
 
-    def test_lib_all_parser_info_is_list(self):
+    def test_lib_all_parser_info_is_list_of_dicts(self):
         self.assertIsInstance(jc.lib.all_parser_info(), list)
+        self.assertIsInstance(jc.lib.all_parser_info()[0], dict)
 
     def test_lib_all_parser_info_contains_csv(self):
         p_list = []
