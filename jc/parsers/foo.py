@@ -39,6 +39,7 @@ Examples:
     []
 """
 import jc.utils
+from typing import Optional, List, Dict
 
 
 class info():
@@ -57,7 +58,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
 
@@ -78,7 +79,11 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False):
+def parse(
+    data: str,
+    raw: Optional[bool] = False,
+    quiet: Optional[bool] = False
+) -> List[Dict]:
     """
     Main text parsing function
 

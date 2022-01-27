@@ -49,6 +49,7 @@ Examples:
     {example output}
     ...
 """
+from typing import Optional, Dict, Iterable
 import jc.utils
 from jc.utils import stream_success, stream_error
 from jc.exceptions import ParseError
@@ -69,7 +70,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data: Dict) -> Dict:
     """
     Final processing to conform to the schema.
 
@@ -90,7 +91,12 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False, ignore_exceptions=False):
+def parse(
+    data: Iterable[str],
+    raw: Optional[bool] = False,
+    quiet: Optional[bool] = False,
+    ignore_exceptions: Optional[bool] = False
+) -> Iterable[Dict]:
     """
     Main text parsing generator function. Returns an iterator object.
 
