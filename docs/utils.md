@@ -120,7 +120,7 @@ characters from strings.
 
 Parameters:
 
-    value:         (string/integer/float) Input value
+    value:         (string/float) Input value
 
 Returns:
 
@@ -139,7 +139,7 @@ characters from strings.
 
 Parameters:
 
-    value:         (string) Input value
+    value:         (string/integer) Input value
 
 Returns:
 
@@ -194,7 +194,7 @@ Reraise the stream exception with annotation or print an error
 def input_type_check(data: str) -> None
 ```
 
-Ensure input data is a string
+Ensure input data is a string. Raises TypeError if not.
 
 <a id="jc.utils.streaming_input_type_check"></a>
 
@@ -204,7 +204,8 @@ Ensure input data is a string
 def streaming_input_type_check(data: Iterable) -> None
 ```
 
-Ensure input data is an iterable, but not a string or bytes
+Ensure input data is an iterable, but not a string or bytes. Raises
+TypeError if not.
 
 <a id="jc.utils.streaming_line_input_type_check"></a>
 
@@ -214,7 +215,7 @@ Ensure input data is an iterable, but not a string or bytes
 def streaming_line_input_type_check(line: str) -> None
 ```
 
-Ensure each line is a string
+Ensure each line is a string. Raises TypeError if not.
 
 <a id="jc.utils.timestamp"></a>
 

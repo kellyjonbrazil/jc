@@ -5,7 +5,7 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
-from typing import Dict, Iterable, List, Any, Union, Iterator, Optional
+from typing import Dict, Iterable, List, Union, Optional
 
 
 def warning_message(message_lines: List[str]) -> None:
@@ -134,7 +134,7 @@ def convert_to_int(value: Union[str, float]) -> int:
 
     Parameters:
 
-        value:         (string/integer/float) Input value
+        value:         (string/float) Input value
 
     Returns:
 
@@ -164,7 +164,7 @@ def convert_to_float(value: Union[str, int]) -> float:
 
     Parameters:
 
-        value:         (string) Input value
+        value:         (string/integer) Input value
 
     Returns:
 
@@ -249,19 +249,22 @@ def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict:
 
 
 def input_type_check(data: str) -> None:
-    """Ensure input data is a string"""
+    """Ensure input data is a string. Raises TypeError if not."""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")
 
 
 def streaming_input_type_check(data: Iterable) -> None:
-    """Ensure input data is an iterable, but not a string or bytes"""
+    """
+    Ensure input data is an iterable, but not a string or bytes. Raises
+    TypeError if not.
+    """
     if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
         raise TypeError("Input data must be a non-string iterable object.")
 
 
 def streaming_line_input_type_check(line: str) -> None:
-    """Ensure each line is a string"""
+    """Ensure each line is a string. Raises TypeError if not."""
     if not isinstance(line, str):
         raise TypeError("Input line must be a 'str' object.")
 
