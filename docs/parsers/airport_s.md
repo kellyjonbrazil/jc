@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.airport_s"></a>
 
-# jc.parsers.airport_s
+# jc.parsers.airport\_s
+
 jc - JSON CLI output utility `airport -s` command output parser
 
 The `airport` program can be found at `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport`.
@@ -111,16 +113,12 @@ Examples:
       ...
     ]
 
+<a id="jc.parsers.airport_s.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -135,7 +133,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  darwin
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

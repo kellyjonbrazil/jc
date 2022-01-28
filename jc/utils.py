@@ -5,9 +5,10 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
+from typing import Dict, Iterable, List, Union, Optional
 
 
-def warning_message(message_lines):
+def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message for non-fatal issues. The first line is
     prepended with 'jc:  Warning - ' and subsequent lines are indented.
@@ -43,7 +44,7 @@ def warning_message(message_lines):
         print(message, file=sys.stderr)
 
 
-def error_message(message_lines):
+def error_message(message_lines: List[str]) -> None:
     """
     Prints an error message for fatal issues. The first line is
     prepended with 'jc:  Error - ' and subsequent lines are indented.
@@ -75,7 +76,7 @@ def error_message(message_lines):
         print(message, file=sys.stderr)
 
 
-def compatibility(mod_name, compatible, quiet=False):
+def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None:
     """
     Checks for the parser's compatibility with the running OS
     platform.
@@ -109,7 +110,7 @@ def compatibility(mod_name, compatible, quiet=False):
                             f'Compatible platforms: {compat_list}'])
 
 
-def has_data(data):
+def has_data(data: str) -> bool:
     """
     Checks if the input contains data. If there are any non-whitespace
     characters then return True, else return False.
@@ -126,14 +127,14 @@ def has_data(data):
     return bool(data and not data.isspace())
 
 
-def convert_to_int(value):
+def convert_to_int(value: Union[str, float]) -> Union[int, None]:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
 
     Parameters:
 
-        value:         (string/integer/float) Input value
+        value:         (string/float) Input value
 
     Returns:
 
@@ -156,14 +157,14 @@ def convert_to_int(value):
         return None
 
 
-def convert_to_float(value):
+def convert_to_float(value: Union[str, int]) -> Union[float, None]:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
 
     Parameters:
 
-        value:         (string) Input value
+        value:         (string/integer) Input value
 
     Returns:
 
@@ -182,7 +183,7 @@ def convert_to_float(value):
         return None
 
 
-def convert_to_bool(value):
+def convert_to_bool(value: Union[str, int, float]) -> bool:
     """
     Converts string, integer, or float input to boolean by checking
     for 'truthy' values.
@@ -220,7 +221,7 @@ def convert_to_bool(value):
     return False
 
 
-def stream_success(output_line, ignore_exceptions):
+def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict:
     """Add `_jc_meta` object to output line if `ignore_exceptions=True`"""
     if ignore_exceptions:
         output_line.update({'_jc_meta': {'success': True}})
@@ -228,7 +229,7 @@ def stream_success(output_line, ignore_exceptions):
     return output_line
 
 
-def stream_error(e, ignore_exceptions, line):
+def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict:
     """
     Reraise the stream exception with annotation or print an error
     `_jc_meta` field if `ignore_exceptions=True`.
@@ -247,51 +248,53 @@ def stream_error(e, ignore_exceptions, line):
     }
 
 
-def input_type_check(data):
-    """Ensure input data is a string"""
+def input_type_check(data: str) -> None:
+    """Ensure input data is a string. Raises `TypeError` if not."""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")
 
 
-def streaming_input_type_check(data):
-    """Ensure input data is an iterable, but not a string or bytes"""
+def streaming_input_type_check(data: Iterable) -> None:
+    """
+    Ensure input data is an iterable, but not a string or bytes. Raises
+    `TypeError` if not.
+    """
     if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
         raise TypeError("Input data must be a non-string iterable object.")
 
 
-def streaming_line_input_type_check(line):
-    """Ensure each line is a string"""
+def streaming_line_input_type_check(line: str) -> None:
+    """Ensure each line is a string. Raises `TypeError` if not."""
     if not isinstance(line, str):
         raise TypeError("Input line must be a 'str' object.")
 
 
 class timestamp:
-    """
-    Input a date-time text string of several formats and convert to a
-    naive or timezone-aware epoch timestamp in UTC.
+    def __init__(self, datetime_string: str) -> None:
+        """
+        Input a date-time text string of several formats and convert to a
+        naive or timezone-aware epoch timestamp in UTC.
 
-    Parameters:
+        Parameters:
 
-        datetime_string:  (str)  a string representation of a
-                                 date-time in several supported formats
+            datetime_string:  (str)  a string representation of a
+                                     date-time in several supported formats
 
-    Attributes:
+        Attributes:
 
-        string            (str)   the input datetime string
+            string            (str)  the input datetime string
 
-        format            (int)   the format rule that was used to
-                                  decode the datetime string. None if
-                                  conversion fails
+            format            (int)  the format rule that was used to
+                                     decode the datetime string. None if
+                                     conversion fails
 
-        naive             (int)   timestamp based on locally configured
-                                  timezone. None if conversion fails
+            naive             (int)  timestamp based on locally configured
+                                     timezone. None if conversion fails
 
-        utc               (int)   aware timestamp only if UTC timezone
-                                  detected in datetime string. None if
-                                  conversion fails
-    """
-
-    def __init__(self, datetime_string):
+            utc               (int)  aware timestamp only if UTC timezone
+                                     detected in datetime string. None if
+                                     conversion fails
+        """
         self.string = datetime_string
         dt = self._parse()
         self.format = dt['format']
@@ -395,28 +398,33 @@ class timestamp:
 
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC timezone and added known non-UTC offsets
-        tz_abbr = ['A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT', 'AKST', 'ALMT',
-                   'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT', 'AWST', 'AZOST', 'AZOT',
-                   'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST', 'BTT', 'C', 'CAST', 'CAT', 'CCT',
-                   'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST', 'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST',
-                   'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT', 'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST',
-                   'EAT', 'ECT', 'EDT', 'EEST', 'EET', 'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST',
-                   'FKT', 'FNT', 'G', 'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT',
-                   'HOVST', 'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
-                   'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M', 'MAGST',
-                   'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT', 'MVT', 'MYT', 'N',
-                   'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST', 'NUT', 'NZDT', 'NZST', 'O',
-                   'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT', 'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT',
-                   'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT', 'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT',
-                   'SAMT', 'SAST', 'SBT', 'SCT', 'SGT', 'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT',
-                   'TLT', 'TMT', 'TOST', 'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET',
-                   'VLAST', 'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT', 'WGST',
-                   'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT', 'YEKST', 'YEKT', 'Z',
-                   'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900', 'UTC-0800', 'UTC-0700', 'UTC-0600',
-                   'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230', 'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200',
-                   'UTC+0300', 'UTC+0400', 'UTC+0430', 'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630',
-                   'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200',
-                   'UTC+1300', 'UTC+1345', 'UTC+1400']
+        tz_abbr = [
+            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
+            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
+            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
+            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
+            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
+            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
+            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
+            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
+            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
+            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
+            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
+            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
+            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
+            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
+            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
+            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
+            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
+            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
+            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
+            'YEKST', 'YEKT', 'Z', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
+            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
+            'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430',
+            'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800',
+            'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200', 'UTC+1300',
+            'UTC+1345', 'UTC+1400'
+        ]
 
         # normalize the timezone by taking out any timezone reference, except UTC
         cleandata = data.replace('(', '').replace(')', '')

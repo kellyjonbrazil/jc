@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.blkid"></a>
 
 # jc.parsers.blkid
+
 jc - JSON CLI output utility `blkid` command output parser
 
 Usage (cli):
@@ -88,7 +90,7 @@ Examples:
       {
         "id_fs_uuid": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
         "id_fs_uuid_enc": "3klkIj-w1kk-DkJi-0XBJ-y3i7-i2Ac-vHqWBM",
-        "id_fs_version": "LVM2\x20001",
+        "id_fs_version": "LVM2\\x20001",
         "id_fs_type": "LVM2_member",
         "id_fs_usage": "raid",
         "id_iolimit_minimum_io_size": 512,
@@ -123,16 +125,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.blkid.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -147,7 +145,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

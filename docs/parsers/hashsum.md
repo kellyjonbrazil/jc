@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.hashsum"></a>
 
 # jc.parsers.hashsum
+
 jc - JSON CLI output utility `hash sum` command output parser
 
 This parser works with the following hash calculation utilities:
@@ -71,16 +73,12 @@ Examples:
       ...
     ]
 
+<a id="jc.parsers.hashsum.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -95,7 +93,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

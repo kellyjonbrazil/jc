@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.jar_manifest"></a>
 
-# jc.parsers.jar_manifest
+# jc.parsers.jar\_manifest
+
 jc - JSON CLI output utility `MANIFEST.MF` file parser
 
 Usage (cli):
@@ -29,16 +31,16 @@ Schema:
 Examples:
 
     $ cat MANIFEST.MF | jc --jar-manifest -p
-    $ unzip -c log4j-core-2.16.0.jar META-INF/MANIFEST.MF | \
+    $ unzip -c log4j-core-2.16.0.jar META-INF/MANIFEST.MF | \\
       jc --jar-manifest -p
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | \
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | \\
       jc --jar-manifest -p
 
     $ cat MANIFEST.MF | jc --jar-manifest -p
     [
       {
         "Import_Package": "com.conversantmedia.util.concurrent;resoluti...",
-        "Export_Package": "org.apache.logging.log4j.core;uses:="org.ap...",
+        "Export_Package": "org.apache.logging.log4j.core;uses:=\"org.ap...",
         "Manifest_Version": "1.0",
         "Bundle_License": "https://www.apache.org/licenses/LICENSE-2.0.txt",
         "Bundle_SymbolicName": "org.apache.logging.log4j.core",
@@ -51,7 +53,7 @@ Examples:
       }
     ]
 
-    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | \
+    $ unzip -c 'apache-log4j-2.16.0-bin/*.jar' META-INF/MANIFEST.MF | \\
       jc --jar-manifest -p
     [
       ...
@@ -80,16 +82,12 @@ Examples:
       ...
     ]
 
+<a id="jc.parsers.jar_manifest.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -104,7 +102,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Version 0.01 by Matt J (https://github.com/listuser)

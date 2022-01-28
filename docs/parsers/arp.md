@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.arp"></a>
 
 # jc.parsers.arp
+
 jc - JSON CLI output utility `arp` command output parser
 
 Supports `arp` and `arp -a` output.
@@ -120,16 +122,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.arp.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -144,7 +142,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
 Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.time"></a>
 
 # jc.parsers.time
+
 jc - JSON CLI output utility `/usr/bin/time` command output parser
 
 Output from `/usr/bin/time` is sent to `STDERR`, so the `-o` option can be
@@ -14,7 +16,7 @@ Note: `/usr/bin/time` is similar but different from the Bash builtin
 
 Usage (cli):
 
-    $ /usr/bin/time -o timefile.out sleep 2; cat timefile.out | \
+    $ /usr/bin/time -o timefile.out sleep 2; cat timefile.out | \\
       jc --time -p
 
 Usage (module):
@@ -74,7 +76,7 @@ Schema:
 
 Examples:
 
-    $ /usr/bin/time --verbose -o timefile.out sleep 2; cat timefile.out | \
+    $ /usr/bin/time --verbose -o timefile.out sleep 2; cat timefile.out | \\
       jc --time -p
     {
       "command_being_timed": "sleep 2",
@@ -107,10 +109,10 @@ Examples:
       "elapsed_time_total_seconds": 2.5
     }
 
-    $ /usr/bin/time --verbose -o timefile.out sleep 2; cat timefile.out | \
+    $ /usr/bin/time --verbose -o timefile.out sleep 2; cat timefile.out | \\
       jc --time -p -r
     {
-      "command_being_timed": ""sleep 2"",
+      "command_being_timed": "\"sleep 2\"",
       "user_time": "0.00",
       "system_time": "0.00",
       "cpu_percent": "0",
@@ -135,16 +137,12 @@ Examples:
       "exit_status": "0"
     }
 
+<a id="jc.parsers.time.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -159,7 +157,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

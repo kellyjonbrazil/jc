@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.upower"></a>
 
 # jc.parsers.upower
+
 jc - JSON CLI output utility `upower` command output parser
 
 The `updated_epoch` calculated timestamp field is naive. (i.e. based on the
@@ -201,16 +203,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.upower.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -225,7 +223,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

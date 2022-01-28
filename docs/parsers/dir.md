@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.dir"></a>
 
 # jc.parsers.dir
+
 jc - JSON CLI output utility `dir` command output parser
 
 Options supported:
@@ -53,7 +55,7 @@ Examples:
         "dir": true,
         "size": null,
         "filename": ".",
-        "parent": "C:\Program Files\Internet Explorer",
+        "parent": "C:\\Program Files\\Internet Explorer",
         "epoch": 1616624100
       },
       {
@@ -62,7 +64,7 @@ Examples:
         "dir": true,
         "size": null,
         "filename": "..",
-        "parent": "C:\Program Files\Internet Explorer",
+        "parent": "C:\\Program Files\\Internet Explorer",
         "epoch": 1616624100
       },
       {
@@ -71,7 +73,7 @@ Examples:
         "dir": true,
         "size": null,
         "filename": "en-US",
-        "parent": "C:\Program Files\Internet Explorer",
+        "parent": "C:\\Program Files\\Internet Explorer",
         "epoch": 1575715740
       },
       {
@@ -80,7 +82,7 @@ Examples:
         "dir": false,
         "size": 54784,
         "filename": "ExtExport.exe",
-        "parent": "C:\Program Files\Internet Explorer",
+        "parent": "C:\\Program Files\\Internet Explorer",
         "epoch": 1575713340
       },
       ...
@@ -94,7 +96,7 @@ Examples:
         "dir": true,
         "size": null,
         "filename": ".",
-        "parent": "C:\Program Files\Internet Explorer"
+        "parent": "C:\\Program Files\\Internet Explorer"
       },
       {
         "date": "03/24/2021",
@@ -102,7 +104,7 @@ Examples:
         "dir": true,
         "size": null,
         "filename": "..",
-        "parent": "C:\Program Files\Internet Explorer"
+        "parent": "C:\\Program Files\\Internet Explorer"
       },
       {
         "date": "12/07/2019",
@@ -110,7 +112,7 @@ Examples:
         "dir": true,
         "size": null,
         "filename": "en-US",
-        "parent": "C:\Program Files\Internet Explorer"
+        "parent": "C:\\Program Files\\Internet Explorer"
       },
       {
         "date": "12/07/2019",
@@ -118,21 +120,17 @@ Examples:
         "dir": false,
         "size": "54,784",
         "filename": "ExtExport.exe",
-        "parent": "C:\Program Files\Internet Explorer"
+        "parent": "C:\\Program Files\\Internet Explorer"
       },
       ...
     ]
 
+<a id="jc.parsers.dir.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -147,7 +145,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  win32
 
 Version 1.4 by Rasheed Elsaleh (rasheed@rebelliondefense.com)

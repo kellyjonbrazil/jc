@@ -1,3 +1,2 @@
-include jc/man/jc.1.gz
 include man/jc.1
 include CHANGELOG

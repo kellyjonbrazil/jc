@@ -1,5 +1,12 @@
 jc changelog
 
+20220127 v1.18.2
+- Fix for plugin parsers with underscores in the name
+- Add type hints to public API functions
+- Add plugin attribute to plugin parser metadata
+- Add C locale hint to parsing error messages
+- Refactor more cli code into lib
+
 20220121 v1.18.1
 - Minor fix for MacOS binary
 

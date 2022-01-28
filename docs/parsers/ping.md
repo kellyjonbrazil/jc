@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.ping"></a>
 
 # jc.parsers.ping
+
 jc - JSON CLI output utility `ping` command output parser
 
 Supports `ping` and `ping6` output.
@@ -165,16 +167,12 @@ Examples:
       ]
     }
 
+<a id="jc.parsers.ping.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -189,7 +187,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

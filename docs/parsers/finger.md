@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.finger"></a>
 
 # jc.parsers.finger
+
 jc - JSON CLI output utility `finger` command output parser
 
 Supports `-s` output option. Does not support the `-l` detail option.
@@ -93,16 +95,12 @@ Examples:
       ...
     ]
 
+<a id="jc.parsers.finger.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -117,7 +115,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, freebsd
 
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.iostat_s"></a>
 
-# jc.parsers.iostat_s
+# jc.parsers.iostat\_s
+
 jc - JSON CLI output utility `iostat` command output streaming parser
 
 > This streaming parser outputs JSON Lines
@@ -103,16 +105,12 @@ Examples:
     {"device":"sda","tps":"0.24","kb_read_s":"5.28","kb_wrtn_s":"1.10"...}
     ...
 
+<a id="jc.parsers.iostat_s.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
 Main text parsing generator function. Returns an iterator object.
@@ -134,7 +132,7 @@ Returns:
 
     Iterator object
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,17 +1,26 @@
+# Table of Contents
 
-# lib
+* [jc.lib](#jc.lib)
+  * [parse](#jc.lib.parse)
+  * [parser\_mod\_list](#jc.lib.parser_mod_list)
+  * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
+  * [parser\_info](#jc.lib.parser_info)
+  * [all\_parser\_info](#jc.lib.all_parser_info)
+  * [get\_help](#jc.lib.get_help)
+
+<a id="jc.lib"></a>
+
+# jc.lib
+
 jc - JSON CLI output utility
 JC lib module
 
+<a id="jc.lib.parse"></a>
 
-## parse
+### parse
+
 ```python
-parse(parser_mod_name,
-      data,
-      quiet=False,
-      raw=False,
-      ignore_exceptions=None,
-      **kwargs)
+def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: bool = False, raw: bool = False, ignore_exceptions: bool = None, **kwargs) -> Union[Dict, List[Dict], Iterator[Dict]]
 ```
 
 Parse the string data using the supplied parser module.
@@ -49,7 +58,10 @@ parsers without this API:
 
 Parameters:
 
-    parser_mod_name:    (string)     name of the parser module
+    parser_mod_name:    (string)     name of the parser module. This
+                                     function will accept module_name,
+                                     cli-name, and --argument-name
+                                     variants of the module name.
 
     data:               (string or   data to parse (string for normal
                         iterator)    parsers, iterator of strings for
@@ -67,24 +79,60 @@ Returns:
     Standard Parsers:   Dictionary or List of Dictionaries
     Streaming Parsers:  Generator Object containing Dictionaries
 
+<a id="jc.lib.parser_mod_list"></a>
 
-## parser_mod_list
+### parser\_mod\_list
+
 ```python
-parser_mod_list()
+def parser_mod_list() -> List[str]
 ```
+
 Returns a list of all available parser module names.
 
-## plugin_parser_mod_list
+<a id="jc.lib.plugin_parser_mod_list"></a>
+
+### plugin\_parser\_mod\_list
+
 ```python
-plugin_parser_mod_list()
+def plugin_parser_mod_list() -> List[str]
 ```
 
 Returns a list of plugin parser module names. This function is a
 subset of `parser_mod_list()`.
 
+<a id="jc.lib.parser_info"></a>
 
-## get_help
+### parser\_info
+
 ```python
-get_help(parser_mod_name)
+def parser_info(parser_mod_name: str) -> Union[Dict, None]
 ```
+
+Returns a dictionary that includes the module metadata.
+
+This function will accept **module_name**, **cli-name**, and
+**--argument-name** variants of the module name string.
+
+<a id="jc.lib.all_parser_info"></a>
+
+### all\_parser\_info
+
+```python
+def all_parser_info() -> List[Optional[Dict]]
+```
+
+Returns a list of dictionaris that includes metadata for all modules.
+
+<a id="jc.lib.get_help"></a>
+
+### get\_help
+
+```python
+def get_help(parser_mod_name: str) -> None
+```
+
 Show help screen for the selected parser.
+
+This function will accept **module_name**, **cli-name**, and
+**--argument-name** variants of the module name string.
+

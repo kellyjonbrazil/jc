@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.timedatectl"></a>
 
 # jc.parsers.timedatectl
+
 jc - JSON CLI output utility `timedatectl` command output parser
 
 The `epoch_utc` calculated timestamp field is timezone-aware and is only
@@ -67,16 +69,12 @@ Examples:
       "dst_active": "yes"
     }
 
+<a id="jc.parsers.timedatectl.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -91,7 +89,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

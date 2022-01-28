@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.date"></a>
 
 # jc.parsers.date
+
 jc - JSON CLI output utility `date` command output parser
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the local
@@ -80,16 +82,12 @@ Examples:
       "timezone_aware": true
     }
 
+<a id="jc.parsers.date.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -104,7 +102,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 2.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

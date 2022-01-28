@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.pip_list"></a>
 
-# jc.parsers.pip_list
+# jc.parsers.pip\_list
+
 jc - JSON CLI output utility `pip-list` command output parser
 
 Usage (cli):
@@ -50,16 +52,12 @@ Examples:
       ...
     ]
 
+<a id="jc.parsers.pip_list.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -74,7 +72,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

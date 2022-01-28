@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.stat_s"></a>
 
-# jc.parsers.stat_s
+# jc.parsers.stat\_s
+
 jc - JSON CLI output utility `stat` command output streaming parser
 
 > This streaming parser outputs JSON Lines
@@ -84,16 +86,12 @@ Examples:
     $ stat | jc --stat-s -r
     {"file":"(stdin)","unix_device":"1027739696","inode":"1155","flag...}
 
+<a id="jc.parsers.stat_s.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
 Main text parsing generator function. Returns an iterator object.
@@ -115,7 +113,7 @@ Returns:
 
     Iterator object
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 0.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

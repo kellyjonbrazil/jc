@@ -1,7 +1,7 @@
 ![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
-> `jc` was just featured in the [Console Open Source Newsletter](https://console.substack.com/p/console-89)
+> `jc` was recently featured in the [Console Open Source Newsletter](https://console.substack.com/p/console-89)
 
 > Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
 

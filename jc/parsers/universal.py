@@ -2,9 +2,10 @@
 
 
 import string
+from typing import List, Dict, Optional
 
 
-def simple_table_parse(data):
+def simple_table_parse(data: List[str]) -> List[Dict]:
     """
     Parse simple tables. The last column may contain data with spaces.
 
@@ -32,7 +33,7 @@ def simple_table_parse(data):
     return raw_output
 
 
-def sparse_table_parse(data, delim='\u2063'):
+def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[Dict]:
     """
     Parse tables with missing column data or with spaces in column data.
 

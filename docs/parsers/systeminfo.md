@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.systeminfo"></a>
 
 # jc.parsers.systeminfo
+
 jc - JSON CLI output utility `systeminfo` command output parser
 
 Blank or missing elements are set to `null`.
@@ -114,9 +116,9 @@ Examples:
         "Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz"
       ],
       "bios_version": "Dell Inc. 1.16.2, 4/21/2020",
-      "windows_directory": "C:\WINDOWS",
-      "system_directory": "C:\WINDOWS\system32",
-      "boot_device": "\Device\HarddiskVolume2",
+      "windows_directory": "C:\\WINDOWS",
+      "system_directory": "C:\\WINDOWS\\system32",
+      "boot_device": "\\Device\\HarddiskVolume2",
       "system_locale": "en-us;English (United States)",
       "input_locale": "en-us;English (United States)",
       "time_zone": "(UTC+00:00) UTC",
@@ -125,9 +127,9 @@ Examples:
       "virtual_memory_max_size_mb": 37367,
       "virtual_memory_available_mb": 22266,
       "virtual_memory_in_use_mb": 15101,
-      "page_file_locations": "C:\pagefile.sys",
+      "page_file_locations": "C:\\pagefile.sys",
       "domain": "test.com",
-      "logon_server": "\\TESTDC01",
+      "logon_server": "\\\\TESTDC01",
       "hotfixs": [
         "KB2693643",
         "KB4601054"
@@ -176,9 +178,9 @@ Examples:
         "Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz"
       ],
       "bios_version": "Dell Inc. 1.16.2, 4/21/2020",
-      "windows_directory": "C:\WINDOWS",
-      "system_directory": "C:\WINDOWS\system32",
-      "boot_device": "\Device\HarddiskVolume2",
+      "windows_directory": "C:\\WINDOWS",
+      "system_directory": "C:\\WINDOWS\\system32",
+      "boot_device": "\\Device\\HarddiskVolume2",
       "system_locale": "en-us;English (United States)",
       "input_locale": "en-us;English (United States)",
       "time_zone": "(UTC+00:00) UTC",
@@ -187,9 +189,9 @@ Examples:
       "virtual_memory_max_size_mb": "37,367 MB",
       "virtual_memory_available_mb": "22,266 MB",
       "virtual_memory_in_use_mb": "15,101 MB",
-      "page_file_locations": "C:\pagefile.sys",
+      "page_file_locations": "C:\\pagefile.sys",
       "domain": "test.com",
-      "logon_server": "\\TESTDC01",
+      "logon_server": "\\\\TESTDC01",
       "hotfixs": [
         "KB2693643",
         "KB4601054"
@@ -214,16 +216,12 @@ Examples:
       }
     }
 
+<a id="jc.parsers.systeminfo.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -238,7 +236,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  win32
 
 Version 1.1 by Jon Smith (jon@rebelliondefense.com)

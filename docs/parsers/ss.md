@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.ss"></a>
 
 # jc.parsers.ss
+
 jc - JSON CLI output utility `ss` command output parser
 
 Extended information options like -e and -p are not supported and may cause
@@ -283,16 +285,12 @@ Examples:
         }
       ]
 
+<a id="jc.parsers.ss.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -307,7 +305,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

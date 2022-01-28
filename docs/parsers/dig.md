@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.dig"></a>
 
 # jc.parsers.dig
+
 jc - JSON CLI output utility `dig` command output parser
 
 Options supported:
@@ -325,16 +327,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.dig.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -349,7 +347,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
 Version 2.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

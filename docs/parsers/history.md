@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.history"></a>
 
 # jc.parsers.history
+
 jc - JSON CLI output utility `history` command output parser
 
 This parser will output a list of dictionaries each containing `line` and
@@ -48,7 +50,7 @@ Examples:
       },
       {
         "line": 120,
-        "command": "echo "hello""
+        "command": "echo \"hello\""
       },
       {
         "line": 121,
@@ -61,21 +63,17 @@ Examples:
     {
       "118": "sleep 100",
       "119": "ls /bin",
-      "120": "echo "hello"",
+      "120": "echo \"hello\"",
       "121": "docker images",
       ...
     }
 
+<a id="jc.parsers.history.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -91,7 +89,7 @@ Returns:
     Dictionary of raw structured data or
     List of Dictionaries of processed structured data
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

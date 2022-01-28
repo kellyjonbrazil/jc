@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.crontab_u"></a>
 
-# jc.parsers.crontab_u
+# jc.parsers.crontab\_u
+
 jc - JSON CLI output utility `crontab -l` command output and crontab
 file parser
 
@@ -173,16 +175,12 @@ Examples:
       ]
     }
 
+<a id="jc.parsers.crontab_u.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -197,7 +195,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

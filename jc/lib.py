@@ -6,9 +6,10 @@ import sys
 import os
 import re
 import importlib
+from typing import Dict, List, Iterable, Union, Iterator, Optional
 from jc import appdirs
 
-__version__ = '1.18.1'
+__version__ = '1.18.2'
 
 parsers = [
     'acpi',
@@ -98,6 +99,14 @@ parsers = [
     'zipinfo'
 ]
 
+def _cliname_to_modname(parser_cli_name):
+    """Return real module name (dashes converted to underscores)"""
+    return parser_cli_name.replace('--', '').replace('-', '_')
+
+def _modname_to_cliname(parser_mod_name):
+    """Return module's cli name (underscores converted to dashes)"""
+    return parser_mod_name.replace('_', '-')
+
 # Create the local_parsers list. This is a list of custom or
 # override parsers from <user_data_dir>/jc/jcparsers/*.py.
 # Once this list is created, extend the parsers list with it.
@@ -109,31 +118,36 @@ if os.path.isdir(local_parsers_dir):
     for name in os.listdir(local_parsers_dir):
         if re.match(r'\w+\.py$', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
             plugin_name = name[0:-3]
-            local_parsers.append(plugin_name)
+            local_parsers.append(_modname_to_cliname(plugin_name))
             if plugin_name not in parsers:
-                parsers.append(plugin_name)
+                parsers.append(_modname_to_cliname(plugin_name))
     try:
         del name
     except Exception:
         pass
 
-
-def _cliname_to_modname(parser_cli_name):
-    """Return real module name (dashes converted to underscores)"""
-    return parser_cli_name.replace('-', '_')
-
-def _modname_to_cliname(parser_mod_name):
-    """Return module's cli name (underscores converted to dashes)"""
-    return parser_mod_name.replace('_', '-')
+def _parser_argument(parser_mod_name):
+    """Return short name of the parser with dashes and with -- prefix"""
+    parser = _modname_to_cliname(parser_mod_name)
+    return f'--{parser}'
 
 def _get_parser(parser_mod_name):
     """Return the parser module object"""
+    # ensure parser_mod_name is a true module name and not a cli name
+    parser_mod_name = _cliname_to_modname(parser_mod_name)
+
     parser_cli_name = _modname_to_cliname(parser_mod_name)
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
-def parse(parser_mod_name, data,
-          quiet=False, raw=False, ignore_exceptions=None, **kwargs):
+def parse(
+    parser_mod_name: str,
+    data: Union[str, Iterable[str]],
+    quiet: bool = False,
+    raw: bool = False,
+    ignore_exceptions: bool = None,
+    **kwargs
+) -> Union[Dict, List[Dict], Iterator[Dict]]:
     """
     Parse the string data using the supplied parser module.
 
@@ -170,7 +184,10 @@ def parse(parser_mod_name, data,
 
     Parameters:
 
-        parser_mod_name:    (string)     name of the parser module
+        parser_mod_name:    (string)     name of the parser module. This
+                                         function will accept module_name,
+                                         cli-name, and --argument-name
+                                         variants of the module name.
 
         data:               (string or   data to parse (string for normal
                             iterator)    parsers, iterator of strings for
@@ -196,17 +213,57 @@ def parse(parser_mod_name, data,
 
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
-def parser_mod_list():
+def parser_mod_list() -> List[str]:
     """Returns a list of all available parser module names."""
     return [_cliname_to_modname(p) for p in parsers]
 
-def plugin_parser_mod_list():
+def plugin_parser_mod_list() -> List[str]:
     """
     Returns a list of plugin parser module names. This function is a
     subset of `parser_mod_list()`.
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def get_help(parser_mod_name):
-    """Show help screen for the selected parser."""
+def parser_info(parser_mod_name: str) -> Union[Dict, None]:
+    """
+    Returns a dictionary that includes the module metadata.
+
+    This function will accept **module_name**, **cli-name**, and
+    **--argument-name** variants of the module name string.
+    """
+    # ensure parser_mod_name is a true module name and not a cli name
+    parser_mod_name = _cliname_to_modname(parser_mod_name)
+
+    parser_mod = _get_parser(parser_mod_name)
+
+    if hasattr(parser_mod, 'info'):
+        info_dict: Dict = {}
+        info_dict['name'] = parser_mod_name
+        info_dict['argument'] = _parser_argument(parser_mod_name)
+        parser_entry = vars(parser_mod.info)
+
+        for k, v in parser_entry.items():
+            if not k.startswith('__'):
+                info_dict[k] = v
+
+        if _modname_to_cliname(parser_mod_name) in local_parsers:
+            info_dict['plugin'] = True
+
+        return info_dict
+
+    return None
+
+def all_parser_info() -> List[Optional[Dict]]:
+    """
+    Returns a list of dictionaris that includes metadata for all modules.
+    """
+    return [parser_info(_cliname_to_modname(p)) for p in parsers]
+
+def get_help(parser_mod_name: str) -> None:
+    """
+    Show help screen for the selected parser.
+
+    This function will accept **module_name**, **cli-name**, and
+    **--argument-name** variants of the module name string.
+    """
     help(_get_parser(parser_mod_name))

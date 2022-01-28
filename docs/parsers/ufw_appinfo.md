@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.ufw_appinfo"></a>
 
-# jc.parsers.ufw_appinfo
+# jc.parsers.ufw\_appinfo
+
 jc - JSON CLI output utility `ufw app info [application]` command
 output parser
 
@@ -141,16 +143,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.ufw_appinfo.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -165,7 +163,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.iostat"></a>
 
 # jc.parsers.iostat
+
 jc - JSON CLI output utility `iostat` command output parser
 
 Note: `iostat` version 11 and higher include a JSON output option
@@ -162,16 +164,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.iostat.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -186,7 +184,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

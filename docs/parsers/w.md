@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.w"></a>
 
 # jc.parsers.w
+
 jc - JSON CLI output utility `w` command output parser
 
 Usage (cli):
@@ -106,16 +108,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.w.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -130,7 +128,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

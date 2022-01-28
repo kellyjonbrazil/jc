@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.vmstat_s"></a>
 
-# jc.parsers.vmstat_s
+# jc.parsers.vmstat\_s
+
 jc - JSON CLI output utility `vmstat` command output streaming parser
 
 > This streaming parser outputs JSON Lines
@@ -103,16 +105,12 @@ Examples:
     {"runnable_procs":"2","uninterruptible_sleeping_procs":"0","virtua...}
     ...
 
+<a id="jc.parsers.vmstat_s.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
 Main text parsing generator function. Returns an iterator object.
@@ -134,7 +132,7 @@ Returns:
 
     Iterator object
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 0.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

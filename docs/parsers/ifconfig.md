@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.ifconfig"></a>
 
 # jc.parsers.ifconfig
+
 jc - JSON CLI output utility `ifconfig` command output parser
 
 Note: No `ifconfig` options are supported.
@@ -189,16 +191,12 @@ Examples:
       }
     ]
 
+<a id="jc.parsers.ifconfig.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -213,7 +211,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
 Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)

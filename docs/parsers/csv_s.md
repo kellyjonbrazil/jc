@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.csv_s"></a>
 
-# jc.parsers.csv_s
+# jc.parsers.csv\_s
+
 jc - JSON CLI output utility `csv` file streaming parser
 
 > This streaming parser outputs JSON Lines
@@ -66,16 +68,12 @@ Examples:
     {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3"...}
     ...
 
+<a id="jc.parsers.csv_s.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
 Main text parsing generator function. Returns an iterator object.
@@ -97,7 +95,7 @@ Returns:
 
     Iterator object
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

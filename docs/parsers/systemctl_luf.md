@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.systemctl_luf"></a>
 
-# jc.parsers.systemctl_luf
+# jc.parsers.systemctl\_luf
+
 jc - JSON CLI output utility `systemctl list-unit-files` command output
 parser
 
@@ -50,16 +52,12 @@ Examples:
       ...
     ]
 
+<a id="jc.parsers.systemctl_luf.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -74,7 +72,7 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux
 
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

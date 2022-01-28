@@ -1,6 +1,8 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.uname"></a>
 
 # jc.parsers.uname
+
 jc - JSON CLI output utility `uname -a` command output parser
 
 Note: Must use `uname -a`
@@ -50,16 +52,12 @@ Example:
       "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
     }
 
+<a id="jc.parsers.uname.parse"></a>
 
-## info
-```python
-info()
-```
-Provides parser metadata (version, author, etc.)
+### parse
 
-## parse
 ```python
-parse(data, raw=False, quiet=False)
+def parse(data, raw=False, quiet=False)
 ```
 
 Main text parsing function
@@ -74,7 +72,7 @@ Returns:
 
     Dictionary. Raw or processed structured data.
 
-## Parser Information
+### Parser Information
 Compatibility:  linux, darwin, freebsd
 
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

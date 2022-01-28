@@ -1,10 +1,33 @@
+# Table of Contents
 
-# utils
+* [jc.utils](#jc.utils)
+  * [warning\_message](#jc.utils.warning_message)
+  * [error\_message](#jc.utils.error_message)
+  * [compatibility](#jc.utils.compatibility)
+  * [has\_data](#jc.utils.has_data)
+  * [convert\_to\_int](#jc.utils.convert_to_int)
+  * [convert\_to\_float](#jc.utils.convert_to_float)
+  * [convert\_to\_bool](#jc.utils.convert_to_bool)
+  * [stream\_success](#jc.utils.stream_success)
+  * [stream\_error](#jc.utils.stream_error)
+  * [input\_type\_check](#jc.utils.input_type_check)
+  * [streaming\_input\_type\_check](#jc.utils.streaming_input_type_check)
+  * [streaming\_line\_input\_type\_check](#jc.utils.streaming_line_input_type_check)
+  * [timestamp](#jc.utils.timestamp)
+    * [\_\_init\_\_](#jc.utils.timestamp.__init__)
+
+<a id="jc.utils"></a>
+
+# jc.utils
+
 jc - JSON CLI output utility utils
 
-## warning_message
+<a id="jc.utils.warning_message"></a>
+
+### warning\_message
+
 ```python
-warning_message(message_lines)
+def warning_message(message_lines: List[str]) -> None
 ```
 
 Prints warning message for non-fatal issues. The first line is
@@ -19,10 +42,12 @@ Returns:
 
     None - just prints output to STDERR
 
+<a id="jc.utils.error_message"></a>
 
-## error_message
+### error\_message
+
 ```python
-error_message(message_lines)
+def error_message(message_lines: List[str]) -> None
 ```
 
 Prints an error message for fatal issues. The first line is
@@ -37,10 +62,12 @@ Returns:
 
     None - just prints output to STDERR
 
+<a id="jc.utils.compatibility"></a>
 
-## compatibility
+### compatibility
+
 ```python
-compatibility(mod_name, compatible, quiet=False)
+def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None
 ```
 
 Checks for the parser's compatibility with the running OS
@@ -60,10 +87,12 @@ Returns:
 
     None - just prints output to STDERR
 
+<a id="jc.utils.has_data"></a>
 
-## has_data
+### has\_data
+
 ```python
-has_data(data)
+def has_data(data: str) -> bool
 ```
 
 Checks if the input contains data. If there are any non-whitespace
@@ -78,10 +107,12 @@ Returns:
     Boolean      True if input string (data) contains non-whitespace
                  characters, otherwise False
 
+<a id="jc.utils.convert_to_int"></a>
 
-## convert_to_int
+### convert\_to\_int
+
 ```python
-convert_to_int(value)
+def convert_to_int(value: Union[str, float]) -> Union[int, None]
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -89,16 +120,18 @@ characters from strings.
 
 Parameters:
 
-    value:         (string/integer/float) Input value
+    value:         (string/float) Input value
 
 Returns:
 
     integer/None   Integer if successful conversion, otherwise None
 
+<a id="jc.utils.convert_to_float"></a>
 
-## convert_to_float
+### convert\_to\_float
+
 ```python
-convert_to_float(value)
+def convert_to_float(value: Union[str, int]) -> Union[float, None]
 ```
 
 Converts string and int input to float. Strips all non-numeric
@@ -106,16 +139,18 @@ characters from strings.
 
 Parameters:
 
-    value:         (string) Input value
+    value:         (string/integer) Input value
 
 Returns:
 
     float/None     Float if successful conversion, otherwise None
 
+<a id="jc.utils.convert_to_bool"></a>
 
-## convert_to_bool
+### convert\_to\_bool
+
 ```python
-convert_to_bool(value)
+def convert_to_bool(value: Union[str, int, float]) -> bool
 ```
 
 Converts string, integer, or float input to boolean by checking
@@ -130,43 +165,72 @@ Returns:
     True/False      False unless a 'truthy' number or string is found
                     ('y', 'yes', 'true', '1', 1, -1, etc.)
 
+<a id="jc.utils.stream_success"></a>
 
-## stream_success
+### stream\_success
+
 ```python
-stream_success(output_line, ignore_exceptions)
+def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict
 ```
+
 Add `_jc_meta` object to output line if `ignore_exceptions=True`
 
-## stream_error
+<a id="jc.utils.stream_error"></a>
+
+### stream\_error
+
 ```python
-stream_error(e, ignore_exceptions, line)
+def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict
 ```
 
 Reraise the stream exception with annotation or print an error
 `_jc_meta` field if `ignore_exceptions=True`.
 
+<a id="jc.utils.input_type_check"></a>
 
-## input_type_check
+### input\_type\_check
+
 ```python
-input_type_check(data)
+def input_type_check(data: str) -> None
 ```
-Ensure input data is a string
 
-## streaming_input_type_check
+Ensure input data is a string. Raises `TypeError` if not.
+
+<a id="jc.utils.streaming_input_type_check"></a>
+
+### streaming\_input\_type\_check
+
 ```python
-streaming_input_type_check(data)
+def streaming_input_type_check(data: Iterable) -> None
 ```
-Ensure input data is an iterable, but not a string or bytes
 
-## streaming_line_input_type_check
+Ensure input data is an iterable, but not a string or bytes. Raises
+`TypeError` if not.
+
+<a id="jc.utils.streaming_line_input_type_check"></a>
+
+### streaming\_line\_input\_type\_check
+
 ```python
-streaming_line_input_type_check(line)
+def streaming_line_input_type_check(line: str) -> None
 ```
-Ensure each line is a string
 
-## timestamp
+Ensure each line is a string. Raises `TypeError` if not.
+
+<a id="jc.utils.timestamp"></a>
+
+### timestamp Objects
+
 ```python
-timestamp(datetime_string)
+class timestamp()
+```
+
+<a id="jc.utils.timestamp.__init__"></a>
+
+### \_\_init\_\_
+
+```python
+def __init__(datetime_string: str) -> None
 ```
 
 Input a date-time text string of several formats and convert to a
@@ -179,16 +243,16 @@ Parameters:
 
 Attributes:
 
-    string            (str)   the input datetime string
+    string            (str)  the input datetime string
 
-    format            (int)   the format rule that was used to
-                              decode the datetime string. None if
-                              conversion fails
+    format            (int)  the format rule that was used to
+                             decode the datetime string. None if
+                             conversion fails
 
-    naive             (int)   timestamp based on locally configured
-                              timezone. None if conversion fails
+    naive             (int)  timestamp based on locally configured
+                             timezone. None if conversion fails
 
-    utc               (int)   aware timestamp only if UTC timezone
-                              detected in datetime string. None if
-                              conversion fails
+    utc               (int)  aware timestamp only if UTC timezone
+                             detected in datetime string. None if
+                             conversion fails
 
