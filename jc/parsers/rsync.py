@@ -25,7 +25,7 @@ Schema:
 
     [
       {
-        "type":                           string,      # 'file' or 'summary'
+        "type":                           string,      # 'item' or 'summary'
         "filename":                       string,
         "metadata":                       string,
         "update_type":                    string/null,
@@ -85,7 +85,15 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # no further processing needed
+    int_list = ['sent', 'received', 'total_size']
+    float_list = ['bytes_sec', 'speedup']
+    for entry in proc_data:
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
+            if key in float_list:
+                entry[key] = jc.utils.convert_to_float(entry[key])
+
     return proc_data
 
 
@@ -200,7 +208,7 @@ def parse(
                 filename = file_line.group('name')
 
                 output_line = {
-                    'type': 'file',
+                    'type': 'item',
                     'filename': filename,
                     'metadata': meta,
                     'update_type': update_type[meta[0]],
