@@ -9,7 +9,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator, Optional
 from jc import appdirs
 
-__version__ = '1.18.2'
+__version__ = '1.18.3'
 
 parsers = [
     'acpi',
@@ -68,6 +68,7 @@ parsers = [
     'pip-show',
     'ps',
     'route',
+    'rsync',
     'rpm-qi',
     'sfdisk',
     'shadow',
