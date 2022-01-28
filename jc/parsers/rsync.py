@@ -25,6 +25,7 @@ Schema:
 
     [
       {
+        "type":                           string,      # 'file' or 'summary'
         "filename":                       string,
         "metadata":                       string,
         "update_type":                    string/null,
@@ -37,7 +38,12 @@ Schema:
         "group_different":                bool/null,
         "future":                         null,
         "acl_different":                  bool/null,
-        "extended_attribute_different":   bool/null
+        "extended_attribute_different":   bool/null,
+        "sent":                           integer,   # need to convert
+        "received":                       integer,   # need to convert
+        "bytes_sec":                      float,     # need to convert
+        "total_size":                     integer,   # need to convert
+        "speedup":                        float,     # need to convert
       }
     ]
 
@@ -79,12 +85,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
-
+    # no further processing needed
     return proc_data
 
 
@@ -180,18 +181,26 @@ def parse(
         '+': None
     }
 
+    summary = {}
+
     if jc.utils.has_data(data):
 
         file_line_re = re.compile(r'(?P<meta>^[<>ch.*][fdlDS][c.+][s.+][t.+][p.+][o.+][g.+][u.+][a.+][x.+]) (?P<name>.+)')
+        stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
+        stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
 
         for line in filter(None, data.splitlines()):
 
             file_line = file_line_re.match(line)
+            stat1_line = stat1_line_re.match(line)
+            stat2_line = stat2_line_re.match(line)
+
             if file_line:
                 meta = file_line.group('meta')
                 filename = file_line.group('name')
 
                 output_line = {
+                    'type': 'file',
                     'filename': filename,
                     'metadata': meta,
                     'update_type': update_type[meta[0]],
@@ -208,5 +217,21 @@ def parse(
                 }
 
                 raw_output.append(output_line)
+                continue
+
+            if stat1_line:
+                summary = {
+                    'type': 'summary',
+                    'sent': stat1_line.group('sent'),
+                    'received': stat1_line.group('received'),
+                    'bytes_sec': stat1_line.group('bytes_sec')
+                }
+                continue
+
+            if stat2_line:
+                summary['total_size'] = stat2_line.group('total_size')
+                summary['speedup'] = stat2_line.group('speedup')
+                raw_output.append(summary)
+                continue
 
     return raw_output if raw else _process(raw_output)
