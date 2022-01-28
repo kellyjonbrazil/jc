@@ -1,6 +1,6 @@
 jc changelog
 
-20220125 v1.18.2
+20220127 v1.18.2
 - Fix for plugin parsers with underscores in the name
 - Add type hints to public API functions
 - Add plugin attribute to plugin parser metadata
