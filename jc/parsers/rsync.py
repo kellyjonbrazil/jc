@@ -65,6 +65,7 @@ Examples:
     []
 """
 import re
+from copy import deepcopy
 from typing import List, Dict
 import jc.utils
 
@@ -128,7 +129,13 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
-    rsync_run: Dict = {}
+
+    rsync_run_new: Dict = {
+        'summary': {},
+        'items': []
+    }
+
+    rsync_run = deepcopy(rsync_run_new)
 
     last_process = ''
 
@@ -202,10 +209,6 @@ def parse(
     }
 
     if jc.utils.has_data(data):
-        rsync_run.update({
-            'summary': {},
-            'items': []
-        })
 
         file_line_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+][s.+][t.+][p.+][o.+][g.+][u.+][a.+][x.+]) (?P<name>.+)')
         stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
@@ -219,10 +222,6 @@ def parse(
         stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
 
         for line in filter(None, data.splitlines()):
-
-            stat1_line_log_v = stat1_line_log_v_re.match(line)
-            stat2_line_log_v = stat2_line_log_v_re.match(line)
-            stat3_line_log_v = stat3_line_log_v_re.match(line)
 
             file_line = file_line_re.match(line)
             if file_line:
@@ -257,13 +256,9 @@ def parse(
                 meta = file_line_log.group('meta')
 
                 if process != last_process:
-                    if rsync_run:
-                        raw_output.append(rsync_run)
-                        rsync_run = {
-                            'summary': {},
-                            'items': []
-                        }
-                        last_process = process
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = process
 
                 output_line = {
                     'filename': filename,
@@ -283,7 +278,6 @@ def parse(
                     'acl_different': acl_different[meta[9]],
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
-
                 rsync_run['items'].append(output_line)
                 continue
 
@@ -314,7 +308,35 @@ def parse(
                 }
                 continue
 
-    if rsync_run:
-        raw_output.append(rsync_run)
+            stat1_line_log_v = stat1_line_log_v_re.match(line)
+            if stat1_line_log_v:
+                rsync_run['summary'] = {
+                    'date': stat1_line_log_v.group('date'),
+                    'time': stat1_line_log_v.group('time'),
+                    'process': stat1_line_log_v.group('process'),
+                    'matches': stat1_line_log_v.group('matches'),
+                    'hash_hits': stat1_line_log_v.group('hash_hits'),
+                    'false_alarms': stat1_line_log_v.group('false_alarms'),
+                    'data': stat1_line_log_v.group('data')
+                }
+                continue
+
+            stat2_line_log_v = stat2_line_log_v_re.match(line)
+            if stat2_line_log_v:
+                rsync_run['summary']['sent'] = stat2_line_log_v.group('sent')
+                rsync_run['summary']['received'] = stat2_line_log_v.group('received')
+                rsync_run['summary']['bytes_sec'] = stat2_line_log_v.group('bytes_sec')
+                continue
+
+            stat3_line_log_v = stat3_line_log_v_re.match(line)
+            if stat3_line_log_v:
+                rsync_run['summary']['total_size'] = stat3_line_log_v.group('total_size')
+                rsync_run['summary']['speedup'] = stat3_line_log_v.group('speedup')
+                continue
+
+    raw_output.append(rsync_run)
+
+    # cleanup blank entries
+    raw_output = [run for run in raw_output if run != rsync_run_new]
 
     return raw_output if raw else _process(raw_output)
