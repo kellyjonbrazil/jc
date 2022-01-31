@@ -29,36 +29,47 @@ Schema:
     [
       {
         "summary": {
-          "date":                           string,
-          "time":                           string,
-          "process":                        integer,     # need to convert
-          "sent":                           integer,     # need to convert
-          "received":                       integer,     # need to convert
-          "total_size":                     integer,     # need to convert
-          "matches":                        integer,     # need to convert
-          "hash_hits":                      integer,     # need to convert
-          "false_alarms":                   integer,     # need to convert
-          "data":                           integer,     # need to convert
-          "bytes_sec":                      float,       # need to convert
-          "speedup":                        float        # need to convert
+          "date":                             string,
+          "time":                             string,
+          "process":                          integer,
+          "sent":                             integer,
+          "received":                         integer,
+          "total_size":                       integer,
+          "matches":                          integer,
+          "hash_hits":                        integer,
+          "false_alarms":                     integer,
+          "data":                             integer,
+          "bytes_sec":                        float,
+          "speedup":                          float
         },
         "files": [
-          "filename":                       string,
-          "metadata":                       string,
-          "update_type":                    string/null,
-          "file_type":                      string/null,
-          "checksum_or_value_different":    bool/null,
-          "size_different":                 bool/null,
-          "modification_time_different":    bool/null,
-          "permissions_different":          bool/null,
-          "owner_different":                bool/null,
-          "group_different":                bool/null,
-          "future":                         null,
-          "acl_different":                  bool/null,
-          "extended_attribute_different":   bool/null
+          {
+            "filename":                       string,
+            "date":                           string,
+            "time":                           string,
+            "process":                        integer,
+            "metadata":                       string,
+            "update_type":                    string/null,  [0]
+            "file_type":                      string/null,  [1]
+            "checksum_or_value_different":    bool/null,
+            "size_different":                 bool/null,
+            "modification_time_different":    bool/null,
+            "permissions_different":          bool/null,
+            "owner_different":                bool/null,
+            "group_different":                bool/null,
+            "future":                         null,
+            "acl_different":                  bool/null,
+            "extended_attribute_different":   bool/null,
+            "epoch":                          int,          [2]
+          }
         ]
       }
     ]
+
+    [0] 'file sent', 'file received', 'local change or creation',
+        'hard link', 'not updated', 'message'
+    [1] 'file', 'directory', 'symlink', 'device', 'special file'
+    [2] naive timestamp if time and date fields exist and can be converted.
 
 Examples:
 
@@ -104,12 +115,25 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         'false_alarms', 'data'
     ]
     float_list = ['bytes_sec', 'speedup']
+
     for item in proc_data:
         for key in item['summary']:
             if key in int_list:
                 item['summary'][key] = jc.utils.convert_to_int(item['summary'][key])
             if key in float_list:
                 item['summary'][key] = jc.utils.convert_to_float(item['summary'][key])
+
+        for entry in item['files']:
+            for key in entry:
+                if key in int_list:
+                    entry[key] = jc.utils.convert_to_int(entry[key])
+
+            # add timestamp
+            if 'date' in entry and 'time' in entry:
+                date = entry['date'].replace('/', '-')
+                date_time = f'{date} {entry["time"]}'
+                ts = jc.utils.timestamp(date_time)
+                entry['epoch'] = ts.naive
 
     return proc_data
 
