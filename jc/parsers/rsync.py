@@ -1,8 +1,10 @@
 """jc - JSON CLI output utility `rsync` command output parser
 
-Supports the following options with all levels of verbosity:
-- `-i` or `--itemize-changes`
-- `--log-file`
+Supports the `-i` or `--itemize-changes` options with all levels of
+verbosity.
+
+Will also process the rsync log file generated with the `--log-file`
+option.
 
 Usage (cli):
 
@@ -36,7 +38,7 @@ Schema:
           "matches":                        integer,     # need to convert
           "hash_hits":                      integer,     # need to convert
           "false_alarms":                   integer,     # need to convert
-          "data":                           integer?,    # need to convert
+          "data":                           integer,     # need to convert
           "bytes_sec":                      float,       # need to convert
           "speedup":                        float        # need to convert
         },
@@ -97,7 +99,10 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = ['process', 'sent', 'received', 'total_size', 'matches', 'has_hits', 'false_alarms', 'data']
+    int_list = [
+        'process', 'sent', 'received', 'total_size', 'matches', 'hash_hits',
+        'false_alarms', 'data'
+    ]
     float_list = ['bytes_sec', 'speedup']
     for item in proc_data:
         for key in item['summary']:
