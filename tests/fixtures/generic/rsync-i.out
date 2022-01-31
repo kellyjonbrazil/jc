@@ -1,0 +1,11 @@
+>f+++++++++ some/dir/new-file.txt
+.f....og..x some/dir/existing-file-with-changed-owner-and-group.txt
+.f........x some/dir/existing-file-with-changed-unnamed-attribute.txt
+>f...p....x some/dir/existing-file-with-changed-permissions.txt
+>f..t..g..x some/dir/existing-file-with-changed-time-and-group.txt
+>f.s......x some/dir/existing-file-with-changed-size.txt
+>f.st.....x some/dir/existing-file-with-changed-size-and-time-stamp.txt 
+cd+++++++++ some/dir/new-directory/
+.d....og... some/dir/existing-directory-with-changed-owner-and-group/
+.d..t...... some/dir/existing-directory-with-different-time-stamp/
+
