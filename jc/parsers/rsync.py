@@ -1,7 +1,8 @@
 """jc - JSON CLI output utility `rsync` command output parser
 
-Supports the `-i` or `--itemize-changes` option with all levels of
-verbosity.
+Supports the following options with all levels of verbosity:
+- `-i` or `--itemize-changes`
+- `--log-file`
 
 Usage (cli):
 
@@ -31,7 +32,13 @@ Schema:
           "process":                        integer,     # need to convert
           "sent":                           integer,     # need to convert
           "received":                       integer,     # need to convert
-          "total_size":                     integer      # need to convert
+          "total_size":                     integer,     # need to convert
+          "matches":                        integer,     # need to convert
+          "hash_hits":                      integer,     # need to convert
+          "false_alarms":                   integer,     # need to convert
+          "data":                           integer?,    # need to convert
+          "bytes_sec":                      float,       # need to convert
+          "speedup":                        float        # need to convert
         },
         "files": [
           "filename":                       string,
@@ -46,12 +53,7 @@ Schema:
           "group_different":                bool/null,
           "future":                         null,
           "acl_different":                  bool/null,
-          "extended_attribute_different":   bool/null,
-          "sent":                           integer,     # need to convert
-          "received":                       integer,     # need to convert
-          "bytes_sec":                      float,       # need to convert
-          "total_size":                     integer,     # need to convert
-          "speedup":                        float,       # need to convert
+          "extended_attribute_different":   bool/null
         ]
       }
     ]
@@ -95,14 +97,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # int_list = ['sent', 'received', 'total_size']
-    # float_list = ['bytes_sec', 'speedup']
-    # for entry in proc_data:
-    #     for key in entry:
-    #         if key in int_list:
-    #             entry[key] = jc.utils.convert_to_int(entry[key])
-    #         if key in float_list:
-    #             entry[key] = jc.utils.convert_to_float(entry[key])
+    int_list = ['process', 'sent', 'received', 'total_size', 'matches', 'has_hits', 'false_alarms', 'data']
+    float_list = ['bytes_sec', 'speedup']
+    for item in proc_data:
+        for key in item['summary']:
+            if key in int_list:
+                item['summary'][key] = jc.utils.convert_to_int(item['summary'][key])
+            if key in float_list:
+                item['summary'][key] = jc.utils.convert_to_float(item['summary'][key])
 
     return proc_data
 
