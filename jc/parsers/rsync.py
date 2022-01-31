@@ -33,7 +33,7 @@ Schema:
           "received":                       integer,     # need to convert
           "total_size":                     integer      # need to convert
         },
-        "items": [
+        "files": [
           "filename":                       string,
           "metadata":                       string,
           "update_type":                    string/null,
@@ -132,7 +132,7 @@ def parse(
 
     rsync_run_new: Dict = {
         'summary': {},
-        'items': []
+        'files': []
     }
 
     rsync_run = deepcopy(rsync_run_new)
@@ -194,8 +194,6 @@ def parse(
         '+': None
     }
 
-    future = None
-
     acl_different = {
         'a': True,
         '.': False,
@@ -239,12 +237,11 @@ def parse(
                     'permissions_different': permissions_different[meta[5]],
                     'owner_different': owner_different[meta[6]],
                     'group_different': group_different[meta[7]],
-                    'future': future,
                     'acl_different': acl_different[meta[9]],
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
 
-                rsync_run['items'].append(output_line)
+                rsync_run['files'].append(output_line)
                 continue
 
             file_line_log = file_line_log_re.match(line)
@@ -274,11 +271,10 @@ def parse(
                     'permissions_different': permissions_different[meta[5]],
                     'owner_different': owner_different[meta[6]],
                     'group_different': group_different[meta[7]],
-                    'future': future,
                     'acl_different': acl_different[meta[9]],
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
-                rsync_run['items'].append(output_line)
+                rsync_run['files'].append(output_line)
                 continue
 
             stat1_line = stat1_line_re.match(line)
