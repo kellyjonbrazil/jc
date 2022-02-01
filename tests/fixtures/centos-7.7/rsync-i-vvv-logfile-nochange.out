@@ -1,0 +1,657 @@
+2022/01/29 07:11:29 [49859] building file list
+2022/01/29 07:11:29 [49859] [sender] make_file(.,*,0)
+2022/01/29 07:11:29 [49859] [sender] pushing local filters for /home/kbrazil/rsynctest/source/
+2022/01/29 07:11:29 [49859] [sender] make_file(a.txt,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(b.txt,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(c.txt,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(d.txt,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(file with spaces.txt,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(pyspark-2.4.5-py2.py3-none-any.whl,*,2)
+2022/01/29 07:11:29 [49859] send_file_list done
+2022/01/29 07:11:29 [49859] send_files starting
+2022/01/29 07:11:29 [49859] [sender] pushing local filters for /home/kbrazil/rsynctest/source/folder/
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file1,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file2,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file3,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file4,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file5,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file6,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file7,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file8,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file9,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file10,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file11,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file12,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file13,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file14,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file15,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file16,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file17,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file18,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file19,*,2)
+2022/01/29 07:11:29 [49859] [sender] make_file(folder/file20,*,2)
+2022/01/29 07:11:29 [49859] server_recv(2) starting pid=49860
+2022/01/29 07:11:29 [49859] recv_file_name(.)
+2022/01/29 07:11:29 [49859] recv_file_name(a.txt)
+2022/01/29 07:11:29 [49859] recv_file_name(b.txt)
+2022/01/29 07:11:29 [49859] recv_file_name(c.txt)
+2022/01/29 07:11:29 [49859] recv_file_name(d.txt)
+2022/01/29 07:11:29 [49859] recv_file_name(file with spaces.txt)
+2022/01/29 07:11:29 [49859] recv_file_name(folder)
+2022/01/29 07:11:29 [49859] recv_file_name(pyspark-2.4.5-py2.py3-none-any.whl)
+2022/01/29 07:11:29 [49859] received 8 names
+2022/01/29 07:11:29 [49859] recv_file_list done
+2022/01/29 07:11:29 [49859] get_local_name count=8 dest
+2022/01/29 07:11:29 [49859] generator starting pid=49860
+2022/01/29 07:11:29 [49859] delta-transmission disabled for local transfer or --whole-file
+2022/01/29 07:11:29 [49859] recv_generator(.,0)
+2022/01/29 07:11:29 [49859] set modtime of . to (1643424952) Fri Jan 28 18:55:52 2022
+2022/01/29 07:11:29 [49859] recv_generator(.,1)
+2022/01/29 07:11:29 [49859] recv_generator(a.txt,2)
+2022/01/29 07:11:29 [49859] recv_generator(b.txt,3)
+2022/01/29 07:11:29 [49859] recv_generator(c.txt,4)
+2022/01/29 07:11:29 [49859] recv_generator(d.txt,5)
+2022/01/29 07:11:29 [49859] recv_generator(file with spaces.txt,6)
+2022/01/29 07:11:29 [49859] recv_generator(pyspark-2.4.5-py2.py3-none-any.whl,7)
+2022/01/29 07:11:29 [49859] recv_generator(folder,8)
+2022/01/29 07:11:29 [49859] send_files(0, source/.)
+2022/01/29 07:11:29 [49859] .d..t...... ./
+2022/01/29 07:11:29 [49859] send_files(2, source/a.txt)
+2022/01/29 07:11:29 [49859] send_files mapped source/a.txt of size 47
+2022/01/29 07:11:29 [49859] calling match_sums source/a.txt
+2022/01/29 07:11:29 [49859] sending file_sum
+2022/01/29 07:11:29 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:29 [49859] >f+++++++++ a.txt
+2022/01/29 07:11:29 [49859] sender finished source/a.txt
+2022/01/29 07:11:29 [49859] send_files(3, source/b.txt)
+2022/01/29 07:11:29 [49859] send_files mapped source/b.txt of size 47
+2022/01/29 07:11:29 [49859] calling match_sums source/b.txt
+2022/01/29 07:11:29 [49859] sending file_sum
+2022/01/29 07:11:29 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:29 [49859] >f+++++++++ b.txt
+2022/01/29 07:11:29 [49859] sender finished source/b.txt
+2022/01/29 07:11:29 [49859] send_files(4, source/c.txt)
+2022/01/29 07:11:29 [49859] send_files mapped source/c.txt of size 47
+2022/01/29 07:11:29 [49859] calling match_sums source/c.txt
+2022/01/29 07:11:29 [49859] sending file_sum
+2022/01/29 07:11:29 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:29 [49859] >f+++++++++ c.txt
+2022/01/29 07:11:29 [49859] sender finished source/c.txt
+2022/01/29 07:11:29 [49859] send_files(5, source/d.txt)
+2022/01/29 07:11:29 [49859] send_files mapped source/d.txt of size 47
+2022/01/29 07:11:29 [49859] calling match_sums source/d.txt
+2022/01/29 07:11:29 [49859] sending file_sum
+2022/01/29 07:11:29 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:29 [49859] >f+++++++++ d.txt
+2022/01/29 07:11:29 [49859] sender finished source/d.txt
+2022/01/29 07:11:29 [49859] send_files(6, source/file with spaces.txt)
+2022/01/29 07:11:29 [49859] send_files mapped source/file with spaces.txt of size 47
+2022/01/29 07:11:29 [49859] calling match_sums source/file with spaces.txt
+2022/01/29 07:11:29 [49859] sending file_sum
+2022/01/29 07:11:29 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:29 [49859] >f+++++++++ file with spaces.txt
+2022/01/29 07:11:29 [49859] sender finished source/file with spaces.txt
+2022/01/29 07:11:29 [49859] send_files(7, source/pyspark-2.4.5-py2.py3-none-any.whl)
+2022/01/29 07:11:29 [49859] send_files mapped source/pyspark-2.4.5-py2.py3-none-any.whl of size 218257928
+2022/01/29 07:11:29 [49859] calling match_sums source/pyspark-2.4.5-py2.py3-none-any.whl
+2022/01/29 07:11:29 [49859] recv_files(8) starting
+2022/01/29 07:11:29 [49859] [receiver] receiving flist for dir 1
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file1)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file2)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file3)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file4)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file5)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file6)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file7)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file8)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file9)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file10)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file11)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file12)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file13)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file14)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file15)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file16)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file17)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file18)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file19)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file20)
+2022/01/29 07:11:29 [49859] received 20 names
+2022/01/29 07:11:29 [49859] recv_file_list done
+2022/01/29 07:11:29 [49859] recv_files(.)
+2022/01/29 07:11:29 [49859] recv_files(a.txt)
+2022/01/29 07:11:29 [49859] got file_sum
+2022/01/29 07:11:29 [49859] set modtime of .a.txt.9ZAUJ6 to (1643342949) Thu Jan 27 20:09:09 2022
+2022/01/29 07:11:29 [49859] renaming .a.txt.9ZAUJ6 to a.txt
+2022/01/29 07:11:29 [49859] recv_files(b.txt)
+2022/01/29 07:11:29 [49859] got file_sum
+2022/01/29 07:11:29 [49859] set modtime of .b.txt.eIiFqa to (1643342953) Thu Jan 27 20:09:13 2022
+2022/01/29 07:11:29 [49859] renaming .b.txt.eIiFqa to b.txt
+2022/01/29 07:11:29 [49859] recv_files(c.txt)
+2022/01/29 07:11:29 [49859] got file_sum
+2022/01/29 07:11:29 [49859] set modtime of .c.txt.peRw7d to (1643342956) Thu Jan 27 20:09:16 2022
+2022/01/29 07:11:29 [49859] renaming .c.txt.peRw7d to c.txt
+2022/01/29 07:11:29 [49859] recv_files(d.txt)
+2022/01/29 07:11:29 [49859] got file_sum
+2022/01/29 07:11:29 [49859] set modtime of .d.txt.PAXpOh to (1643342959) Thu Jan 27 20:09:19 2022
+2022/01/29 07:11:29 [49859] renaming .d.txt.PAXpOh to d.txt
+2022/01/29 07:11:29 [49859] recv_files(file with spaces.txt)
+2022/01/29 07:11:29 [49859] got file_sum
+2022/01/29 07:11:29 [49859] set modtime of .file with spaces.txt.BUujvl to (1643342980) Thu Jan 27 20:09:40 2022
+2022/01/29 07:11:29 [49859] renaming .file with spaces.txt.BUujvl to file with spaces.txt
+2022/01/29 07:11:29 [49859] recv_files(pyspark-2.4.5-py2.py3-none-any.whl)
+2022/01/29 07:11:29 [49859] [generator] receiving flist for dir 1
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file1)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file2)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file3)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file4)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file5)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file6)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file7)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file8)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file9)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file10)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file11)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file12)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file13)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file14)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file15)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file16)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file17)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file18)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file19)
+2022/01/29 07:11:29 [49859] recv_file_name(folder/file20)
+2022/01/29 07:11:29 [49859] received 20 names
+2022/01/29 07:11:29 [49859] recv_file_list done
+2022/01/29 07:11:29 [49859] recv_generator(folder,9)
+2022/01/29 07:11:29 [49859] set modtime of folder to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:29 [49859] recv_generator(folder/file1,10)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file10,11)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file11,12)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file12,13)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file13,14)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file14,15)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file15,16)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file16,17)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file17,18)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file18,19)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file19,20)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file2,21)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file20,22)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file3,23)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file4,24)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file5,25)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file6,26)
+2022/01/29 07:11:29 [49859] recv_generator(folder/file7,27)
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ pyspark-2.4.5-py2.py3-none-any.whl
+2022/01/29 07:11:31 [49859] sender finished source/pyspark-2.4.5-py2.py3-none-any.whl
+2022/01/29 07:11:31 [49859] recv_generator(folder/file8,28)
+2022/01/29 07:11:31 [49859] recv_generator(folder/file9,29)
+2022/01/29 07:11:31 [49859] generate_files phase=1
+2022/01/29 07:11:31 [49859] send_files(9, source/folder)
+2022/01/29 07:11:31 [49859] cd+++++++++ folder/
+2022/01/29 07:11:31 [49859] send_files(10, source/folder/file1)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file1 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file1
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file1
+2022/01/29 07:11:31 [49859] sender finished source/folder/file1
+2022/01/29 07:11:31 [49859] send_files(11, source/folder/file10)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file10 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file10
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file10
+2022/01/29 07:11:31 [49859] sender finished source/folder/file10
+2022/01/29 07:11:31 [49859] send_files(12, source/folder/file11)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file11 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file11
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file11
+2022/01/29 07:11:31 [49859] sender finished source/folder/file11
+2022/01/29 07:11:31 [49859] send_files(13, source/folder/file12)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file12 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file12
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file12
+2022/01/29 07:11:31 [49859] sender finished source/folder/file12
+2022/01/29 07:11:31 [49859] send_files(14, source/folder/file13)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file13 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file13
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file13
+2022/01/29 07:11:31 [49859] sender finished source/folder/file13
+2022/01/29 07:11:31 [49859] send_files(15, source/folder/file14)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file14 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file14
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file14
+2022/01/29 07:11:31 [49859] sender finished source/folder/file14
+2022/01/29 07:11:31 [49859] send_files(16, source/folder/file15)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file15 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file15
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file15
+2022/01/29 07:11:31 [49859] sender finished source/folder/file15
+2022/01/29 07:11:31 [49859] send_files(17, source/folder/file16)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file16 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file16
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file16
+2022/01/29 07:11:31 [49859] sender finished source/folder/file16
+2022/01/29 07:11:31 [49859] send_files(18, source/folder/file17)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file17 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file17
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file17
+2022/01/29 07:11:31 [49859] sender finished source/folder/file17
+2022/01/29 07:11:31 [49859] send_files(19, source/folder/file18)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file18 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file18
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file18
+2022/01/29 07:11:31 [49859] sender finished source/folder/file18
+2022/01/29 07:11:31 [49859] send_files(20, source/folder/file19)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file19 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file19
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file19
+2022/01/29 07:11:31 [49859] sender finished source/folder/file19
+2022/01/29 07:11:31 [49859] send_files(21, source/folder/file2)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file2 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file2
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file2
+2022/01/29 07:11:31 [49859] sender finished source/folder/file2
+2022/01/29 07:11:31 [49859] send_files(22, source/folder/file20)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file20 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file20
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file20
+2022/01/29 07:11:31 [49859] sender finished source/folder/file20
+2022/01/29 07:11:31 [49859] send_files(23, source/folder/file3)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file3 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file3
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file3
+2022/01/29 07:11:31 [49859] sender finished source/folder/file3
+2022/01/29 07:11:31 [49859] send_files(24, source/folder/file4)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file4 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file4
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file4
+2022/01/29 07:11:31 [49859] sender finished source/folder/file4
+2022/01/29 07:11:31 [49859] send_files(25, source/folder/file5)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file5 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file5
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file5
+2022/01/29 07:11:31 [49859] sender finished source/folder/file5
+2022/01/29 07:11:31 [49859] send_files(26, source/folder/file6)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file6 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file6
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file6
+2022/01/29 07:11:31 [49859] sender finished source/folder/file6
+2022/01/29 07:11:31 [49859] send_files(27, source/folder/file7)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file7 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file7
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file7
+2022/01/29 07:11:31 [49859] sender finished source/folder/file7
+2022/01/29 07:11:31 [49859] send_files(28, source/folder/file8)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file8 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file8
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file8
+2022/01/29 07:11:31 [49859] sender finished source/folder/file8
+2022/01/29 07:11:31 [49859] send_files(29, source/folder/file9)
+2022/01/29 07:11:31 [49859] send_files mapped source/folder/file9 of size 0
+2022/01/29 07:11:31 [49859] calling match_sums source/folder/file9
+2022/01/29 07:11:31 [49859] sending file_sum
+2022/01/29 07:11:31 [49859] false_alarms=0 hash_hits=0 matches=0
+2022/01/29 07:11:31 [49859] >f+++++++++ folder/file9
+2022/01/29 07:11:31 [49859] sender finished source/folder/file9
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of .pyspark-2.4.5-py2.py3-none-any.whl.15ydcp to (1643424957) Fri Jan 28 18:55:57 2022
+2022/01/29 07:11:31 [49859] renaming .pyspark-2.4.5-py2.py3-none-any.whl.15ydcp to pyspark-2.4.5-py2.py3-none-any.whl
+2022/01/29 07:11:31 [49859] set modtime of . to (1643424952) Fri Jan 28 18:55:52 2022
+2022/01/29 07:11:31 [49859] recv_files(folder)
+2022/01/29 07:11:31 [49859] recv_files(folder/file1)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file1.GY1N3v to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file1.GY1N3v to folder/file1
+2022/01/29 07:11:31 [49859] recv_files(folder/file10)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file10.5JhpVC to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file10.5JhpVC to folder/file10
+2022/01/29 07:11:31 [49859] recv_files(folder/file11)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file11.eL20MJ to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file11.eL20MJ to folder/file11
+2022/01/29 07:11:31 [49859] recv_files(folder/file12)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file12.HMxDEQ to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file12.HMxDEQ to folder/file12
+2022/01/29 07:11:31 [49859] recv_files(folder/file13)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file13.E0DgwX to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file13.E0DgwX to folder/file13
+2022/01/29 07:11:31 [49859] recv_files(folder/file14)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file14.xcu0n4 to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file14.xcu0n4 to folder/file14
+2022/01/29 07:11:31 [49859] recv_files(folder/file15)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file15.wwQKfb to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file15.wwQKfb to folder/file15
+2022/01/29 07:11:31 [49859] recv_files(folder/file16)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file16.AIhB7h to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file16.AIhB7h to folder/file16
+2022/01/29 07:11:31 [49859] recv_files(folder/file17)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file17.6l2AZo to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file17.6l2AZo to folder/file17
+2022/01/29 07:11:31 [49859] recv_files(folder/file18)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file18.kA2BRv to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file18.kA2BRv to folder/file18
+2022/01/29 07:11:31 [49859] recv_files(folder/file19)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file19.IBvDJC to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file19.IBvDJC to folder/file19
+2022/01/29 07:11:31 [49859] recv_files(folder/file2)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file2.w7rFBJ to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file2.w7rFBJ to folder/file2
+2022/01/29 07:11:31 [49859] recv_files(folder/file20)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file20.G3THtQ to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file20.G3THtQ to folder/file20
+2022/01/29 07:11:31 [49859] recv_files(folder/file3)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file3.8gXKlX to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file3.8gXKlX to folder/file3
+2022/01/29 07:11:31 [49859] recv_files(folder/file4)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file4.Xt8Ud4 to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file4.Xt8Ud4 to folder/file4
+2022/01/29 07:11:31 [49859] recv_files(folder/file5)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file5.KjR55a to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file5.KjR55a to folder/file5
+2022/01/29 07:11:31 [49859] recv_files(folder/file6)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file6.VwchYh to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file6.VwchYh to folder/file6
+2022/01/29 07:11:31 [49859] recv_files(folder/file7)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file7.Uo9sQo to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file7.Uo9sQo to folder/file7
+2022/01/29 07:11:31 [49859] recv_files(folder/file8)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file8.ht2FIv to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file8.ht2FIv to folder/file8
+2022/01/29 07:11:31 [49859] recv_files(folder/file9)
+2022/01/29 07:11:31 [49859] got file_sum
+2022/01/29 07:11:31 [49859] set modtime of folder/.file9.2HK6AC to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] renaming folder/.file9.2HK6AC to folder/file9
+2022/01/29 07:11:31 [49859] set modtime of folder to (1643343369) Thu Jan 27 20:16:09 2022
+2022/01/29 07:11:31 [49859] send_files phase=1
+2022/01/29 07:11:31 [49859] recv_files phase=1
+2022/01/29 07:11:31 [49859] generate_files phase=2
+2022/01/29 07:11:31 [49859] send_files phase=2
+2022/01/29 07:11:31 [49859] send files finished
+2022/01/29 07:11:31 [49859] total: matches=0  hash_hits=0  false_alarms=0 data=218258163
+2022/01/29 07:11:31 [49859] recv_files phase=2
+2022/01/29 07:11:31 [49859] recv_files finished
+2022/01/29 07:11:31 [49859] generate_files phase=3
+2022/01/29 07:11:31 [49859] generate_files finished
+2022/01/29 07:11:31 [49859] sent 218,313,010 bytes  received 8,608 bytes  87,328,647.20 bytes/sec
+2022/01/29 07:11:31 [49859] total size is 218,258,163  speedup is 1.00
+2022/01/29 07:11:31 [49859] [sender] _exit_cleanup(code=0, file=main.c, line=1178): about to call exit(0)
+2022/01/29 07:11:33 [49865] building file list
+2022/01/29 07:11:33 [49865] [sender] make_file(.,*,0)
+2022/01/29 07:11:33 [49865] [sender] pushing local filters for /home/kbrazil/rsynctest/source/
+2022/01/29 07:11:33 [49865] [sender] make_file(a.txt,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(b.txt,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(c.txt,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(d.txt,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(file with spaces.txt,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(pyspark-2.4.5-py2.py3-none-any.whl,*,2)
+2022/01/29 07:11:33 [49865] send_file_list done
+2022/01/29 07:11:33 [49865] send_files starting
+2022/01/29 07:11:33 [49865] [sender] pushing local filters for /home/kbrazil/rsynctest/source/folder/
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file1,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file2,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file3,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file4,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file5,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file6,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file7,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file8,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file9,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file10,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file11,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file12,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file13,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file14,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file15,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file16,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file17,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file18,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file19,*,2)
+2022/01/29 07:11:33 [49865] [sender] make_file(folder/file20,*,2)
+2022/01/29 07:11:33 [49865] server_recv(2) starting pid=49866
+2022/01/29 07:11:33 [49865] recv_file_name(.)
+2022/01/29 07:11:33 [49865] recv_file_name(a.txt)
+2022/01/29 07:11:33 [49865] recv_file_name(b.txt)
+2022/01/29 07:11:33 [49865] recv_file_name(c.txt)
+2022/01/29 07:11:33 [49865] recv_file_name(d.txt)
+2022/01/29 07:11:33 [49865] recv_file_name(file with spaces.txt)
+2022/01/29 07:11:33 [49865] recv_file_name(folder)
+2022/01/29 07:11:33 [49865] recv_file_name(pyspark-2.4.5-py2.py3-none-any.whl)
+2022/01/29 07:11:33 [49865] received 8 names
+2022/01/29 07:11:33 [49865] recv_file_list done
+2022/01/29 07:11:33 [49865] get_local_name count=8 dest
+2022/01/29 07:11:33 [49865] generator starting pid=49866
+2022/01/29 07:11:33 [49865] delta-transmission disabled for local transfer or --whole-file
+2022/01/29 07:11:33 [49865] recv_generator(.,0)
+2022/01/29 07:11:33 [49865] recv_generator(.,1)
+2022/01/29 07:11:33 [49865] recv_generator(a.txt,2)
+2022/01/29 07:11:33 [49865] recv_generator(b.txt,3)
+2022/01/29 07:11:33 [49865] recv_generator(c.txt,4)
+2022/01/29 07:11:33 [49865] recv_generator(d.txt,5)
+2022/01/29 07:11:33 [49865] recv_generator(file with spaces.txt,6)
+2022/01/29 07:11:33 [49865] recv_generator(pyspark-2.4.5-py2.py3-none-any.whl,7)
+2022/01/29 07:11:33 [49865] recv_generator(folder,8)
+2022/01/29 07:11:33 [49865] send_files(0, source/.)
+2022/01/29 07:11:33 [49865] .d          ./
+2022/01/29 07:11:33 [49865] send_files(2, source/a.txt)
+2022/01/29 07:11:33 [49865] .f          a.txt
+2022/01/29 07:11:33 [49865] send_files(3, source/b.txt)
+2022/01/29 07:11:33 [49865] .f          b.txt
+2022/01/29 07:11:33 [49865] send_files(4, source/c.txt)
+2022/01/29 07:11:33 [49865] .f          c.txt
+2022/01/29 07:11:33 [49865] send_files(5, source/d.txt)
+2022/01/29 07:11:33 [49865] .f          d.txt
+2022/01/29 07:11:33 [49865] send_files(6, source/file with spaces.txt)
+2022/01/29 07:11:33 [49865] .f          file with spaces.txt
+2022/01/29 07:11:33 [49865] send_files(7, source/pyspark-2.4.5-py2.py3-none-any.whl)
+2022/01/29 07:11:33 [49865] .f          pyspark-2.4.5-py2.py3-none-any.whl
+2022/01/29 07:11:33 [49865] recv_files(8) starting
+2022/01/29 07:11:33 [49865] [receiver] receiving flist for dir 1
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file1)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file2)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file3)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file4)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file5)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file6)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file7)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file8)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file9)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file10)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file11)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file12)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file13)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file14)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file15)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file16)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file17)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file18)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file19)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file20)
+2022/01/29 07:11:33 [49865] received 20 names
+2022/01/29 07:11:33 [49865] recv_file_list done
+2022/01/29 07:11:33 [49865] recv_files(.)
+2022/01/29 07:11:33 [49865] recv_files(a.txt)
+2022/01/29 07:11:33 [49865] recv_files(b.txt)
+2022/01/29 07:11:33 [49865] recv_files(c.txt)
+2022/01/29 07:11:33 [49865] recv_files(d.txt)
+2022/01/29 07:11:33 [49865] recv_files(file with spaces.txt)
+2022/01/29 07:11:33 [49865] recv_files(pyspark-2.4.5-py2.py3-none-any.whl)
+2022/01/29 07:11:33 [49865] [generator] receiving flist for dir 1
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file1)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file2)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file3)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file4)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file5)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file6)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file7)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file8)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file9)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file10)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file11)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file12)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file13)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file14)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file15)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file16)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file17)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file18)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file19)
+2022/01/29 07:11:33 [49865] recv_file_name(folder/file20)
+2022/01/29 07:11:33 [49865] received 20 names
+2022/01/29 07:11:33 [49865] recv_file_list done
+2022/01/29 07:11:33 [49865] recv_generator(folder,9)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file1,10)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file10,11)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file11,12)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file12,13)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file13,14)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file14,15)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file15,16)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file16,17)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file17,18)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file18,19)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file19,20)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file2,21)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file20,22)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file3,23)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file4,24)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file5,25)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file6,26)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file7,27)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file8,28)
+2022/01/29 07:11:33 [49865] recv_generator(folder/file9,29)
+2022/01/29 07:11:33 [49865] generate_files phase=1
+2022/01/29 07:11:33 [49865] send_files(9, source/folder)
+2022/01/29 07:11:33 [49865] .d          folder/
+2022/01/29 07:11:33 [49865] send_files(10, source/folder/file1)
+2022/01/29 07:11:33 [49865] .f          folder/file1
+2022/01/29 07:11:33 [49865] send_files(11, source/folder/file10)
+2022/01/29 07:11:33 [49865] .f          folder/file10
+2022/01/29 07:11:33 [49865] send_files(12, source/folder/file11)
+2022/01/29 07:11:33 [49865] .f          folder/file11
+2022/01/29 07:11:33 [49865] send_files(13, source/folder/file12)
+2022/01/29 07:11:33 [49865] .f          folder/file12
+2022/01/29 07:11:33 [49865] send_files(14, source/folder/file13)
+2022/01/29 07:11:33 [49865] .f          folder/file13
+2022/01/29 07:11:33 [49865] send_files(15, source/folder/file14)
+2022/01/29 07:11:33 [49865] .f          folder/file14
+2022/01/29 07:11:33 [49865] send_files(16, source/folder/file15)
+2022/01/29 07:11:33 [49865] .f          folder/file15
+2022/01/29 07:11:33 [49865] send_files(17, source/folder/file16)
+2022/01/29 07:11:33 [49865] .f          folder/file16
+2022/01/29 07:11:33 [49865] send_files(18, source/folder/file17)
+2022/01/29 07:11:33 [49865] .f          folder/file17
+2022/01/29 07:11:33 [49865] send_files(19, source/folder/file18)
+2022/01/29 07:11:33 [49865] .f          folder/file18
+2022/01/29 07:11:33 [49865] send_files(20, source/folder/file19)
+2022/01/29 07:11:33 [49865] .f          folder/file19
+2022/01/29 07:11:33 [49865] send_files(21, source/folder/file2)
+2022/01/29 07:11:33 [49865] .f          folder/file2
+2022/01/29 07:11:33 [49865] send_files(22, source/folder/file20)
+2022/01/29 07:11:33 [49865] .f          folder/file20
+2022/01/29 07:11:33 [49865] send_files(23, source/folder/file3)
+2022/01/29 07:11:33 [49865] .f          folder/file3
+2022/01/29 07:11:33 [49865] send_files(24, source/folder/file4)
+2022/01/29 07:11:33 [49865] .f          folder/file4
+2022/01/29 07:11:33 [49865] send_files(25, source/folder/file5)
+2022/01/29 07:11:33 [49865] .f          folder/file5
+2022/01/29 07:11:33 [49865] send_files(26, source/folder/file6)
+2022/01/29 07:11:33 [49865] .f          folder/file6
+2022/01/29 07:11:33 [49865] send_files(27, source/folder/file7)
+2022/01/29 07:11:33 [49865] .f          folder/file7
+2022/01/29 07:11:33 [49865] send_files(28, source/folder/file8)
+2022/01/29 07:11:33 [49865] .f          folder/file8
+2022/01/29 07:11:33 [49865] send_files(29, source/folder/file9)
+2022/01/29 07:11:33 [49865] .f          folder/file9
+2022/01/29 07:11:33 [49865] send_files phase=1
+2022/01/29 07:11:33 [49865] recv_files(folder)
+2022/01/29 07:11:33 [49865] recv_files(folder/file1)
+2022/01/29 07:11:33 [49865] recv_files(folder/file10)
+2022/01/29 07:11:33 [49865] recv_files(folder/file11)
+2022/01/29 07:11:33 [49865] recv_files(folder/file12)
+2022/01/29 07:11:33 [49865] recv_files(folder/file13)
+2022/01/29 07:11:33 [49865] recv_files(folder/file14)
+2022/01/29 07:11:33 [49865] recv_files(folder/file15)
+2022/01/29 07:11:33 [49865] recv_files(folder/file16)
+2022/01/29 07:11:33 [49865] recv_files(folder/file17)
+2022/01/29 07:11:33 [49865] recv_files(folder/file18)
+2022/01/29 07:11:33 [49865] recv_files(folder/file19)
+2022/01/29 07:11:33 [49865] recv_files(folder/file2)
+2022/01/29 07:11:33 [49865] recv_files(folder/file20)
+2022/01/29 07:11:33 [49865] recv_files(folder/file3)
+2022/01/29 07:11:33 [49865] recv_files(folder/file4)
+2022/01/29 07:11:33 [49865] recv_files(folder/file5)
+2022/01/29 07:11:33 [49865] recv_files(folder/file6)
+2022/01/29 07:11:33 [49865] recv_files(folder/file7)
+2022/01/29 07:11:33 [49865] recv_files(folder/file8)
+2022/01/29 07:11:33 [49865] recv_files(folder/file9)
+2022/01/29 07:11:33 [49865] recv_files phase=1
+2022/01/29 07:11:33 [49865] generate_files phase=2
+2022/01/29 07:11:33 [49865] send_files phase=2
+2022/01/29 07:11:33 [49865] send files finished
+2022/01/29 07:11:33 [49865] total: matches=0  hash_hits=0  false_alarms=0 data=0
+2022/01/29 07:11:33 [49865] recv_files phase=2
+2022/01/29 07:11:33 [49865] recv_files finished
+2022/01/29 07:11:33 [49865] generate_files phase=3
+2022/01/29 07:11:33 [49865] generate_files finished
+2022/01/29 07:11:33 [49865] sent 611 bytes  received 4,043 bytes  9,308.00 bytes/sec
+2022/01/29 07:11:33 [49865] total size is 218,258,163  speedup is 46,896.90
+2022/01/29 07:11:33 [49865] [sender] _exit_cleanup(code=0, file=main.c, line=1178): about to call exit(0)
+
