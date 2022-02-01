@@ -31,12 +31,8 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-vvv-logfile.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_vvv_logfile = f.read()
 
-        
-
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/rsync.out'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_rsync = f.read()
-
-
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-vvv-logfile-nochange.out'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_rsync_i_vvv_logfile_nochange = f.read()
 
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i.json'), 'r', encoding='utf-8') as f:
@@ -60,10 +56,8 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-vvv-logfile.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_vvv_logfile_json = json.loads(f.read())
 
-        # with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/rsync.json'), 'r', encoding='utf-8') as f:
-        #     self.ubuntu_18_4_rsync_json = json.loads(f.read())
-
-
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-vvv-logfile-nochange.json'), 'r', encoding='utf-8') as f:
+            self.centos_7_7_rsync_i_vvv_logfile_nochange_json = json.loads(f.read())
 
     def test_rsync_nodata(self):
         """
@@ -112,6 +106,12 @@ class MyTests(unittest.TestCase):
         Test 'rsync -ivvv --log-file=xxx' on Centos 7.7
         """
         self.assertEqual(jc.parsers.rsync.parse(self.centos_7_7_rsync_i_vvv_logfile, quiet=True), self.centos_7_7_rsync_i_vvv_logfile_json)
+
+    def test_rsync_centos_7_7_rsync_i_vvv_logfile_nochange(self):
+        """
+        Test 'rsync -ivvv --log-file=xxx' on Centos 7.7 with no file changes
+        """
+        self.assertEqual(jc.parsers.rsync.parse(self.centos_7_7_rsync_i_vvv_logfile_nochange, quiet=True), self.centos_7_7_rsync_i_vvv_logfile_nochange_json)
 
     # def test_rsync_ubuntu_18_4(self):
     #     """

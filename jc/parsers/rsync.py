@@ -246,58 +246,75 @@ def parse(
     checksum_or_value_different = {
         'c': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     size_different = {
         's': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     modification_time_different = {
         't': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     permissions_different = {
         'p': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     owner_different = {
         'o': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     group_different = {
         'g': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     acl_different = {
         'a': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     extended_attribute_different = {
         'x': True,
         '.': False,
-        '+': None
+        '+': None,
+        ' ': None,
+        '?': None
     }
 
     if jc.utils.has_data(data):
 
-        file_line_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+][s.+][t.+][p.+][o.+][g.+][u.+][a.+][x.+]) (?P<name>.+)')
+        file_line_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
         stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
         stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
 
-        file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+][s.+][t.+][p.+][o.+][g.+][u.+][a.+][x.+])\s+(?P<name>.+)')
+        file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
+        file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
         stat_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+total\s+size\s+(?P<total_size>[\d,]+)')
 
         stat1_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total:\s+matches=(?P<matches>[\d,]+)\s+hash_hits=(?P<hash_hits>[\d,]+)\s+false_alarms=(?P<false_alarms>[\d,]+)\s+data=(?P<data>[\d,]+)')
@@ -358,6 +375,37 @@ def parse(
                     'group_different': group_different[meta[7]],
                     'acl_different': acl_different[meta[9]],
                     'extended_attribute_different': extended_attribute_different[meta[10]]
+                }
+                rsync_run['files'].append(output_line)
+                continue
+
+            file_line_log_mac = file_line_log_mac_re.match(line)
+            if file_line_log_mac:
+                filename = file_line_log_mac.group('name')
+                date = file_line_log_mac.group('date')
+                time = file_line_log_mac.group('time')
+                process = file_line_log_mac.group('process')
+                meta = file_line_log_mac.group('meta')
+
+                if process != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = process
+
+                output_line = {
+                    'filename': filename,
+                    'date': date,
+                    'time': time,
+                    'process': process,
+                    'metadata': meta,
+                    'update_type': update_type[meta[0]],
+                    'file_type': file_type[meta[1]],
+                    'checksum_or_value_different': checksum_or_value_different[meta[2]],
+                    'size_different': size_different[meta[3]],
+                    'modification_time_different': modification_time_different[meta[4]],
+                    'permissions_different': permissions_different[meta[5]],
+                    'owner_different': owner_different[meta[6]],
+                    'group_different': group_different[meta[7]]
                 }
                 rsync_run['files'].append(output_line)
                 continue
