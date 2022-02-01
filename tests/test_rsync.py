@@ -34,6 +34,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-vvv-logfile-nochange.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_vvv_logfile_nochange = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv-logfile-nochange.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_rsync_i_vvv_logfile_nochange = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_json = json.loads(f.read())
@@ -58,6 +61,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-vvv-logfile-nochange.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_vvv_logfile_nochange_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv-logfile-nochange.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_rsync_i_vvv_logfile_nochange_json = json.loads(f.read())
 
     def test_rsync_nodata(self):
         """
@@ -113,12 +119,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.rsync.parse(self.centos_7_7_rsync_i_vvv_logfile_nochange, quiet=True), self.centos_7_7_rsync_i_vvv_logfile_nochange_json)
 
-    # def test_rsync_ubuntu_18_4(self):
-    #     """
-    #     Test 'rsync' on Ubuntu 18.4
-    #     """
-    #     self.assertEqual(jc.parsers.rsync.parse(self.ubuntu_18_4_rsync, quiet=True), self.ubuntu_18_4_rsync_json)
-
+    def test_rsync_osx_10_14_6_rsync_i_vvv_logfile_nochange(self):
+        """
+        Test 'rsync -ivvv --log-file=xxx' on OSX 10.14.6 with no file changes
+        """
+        self.assertEqual(jc.parsers.rsync.parse(self.osx_10_14_6_rsync_i_vvv_logfile_nochange, quiet=True), self.osx_10_14_6_rsync_i_vvv_logfile_nochange_json)
 
 
 if __name__ == '__main__':
