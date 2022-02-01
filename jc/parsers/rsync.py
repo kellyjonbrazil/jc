@@ -310,6 +310,7 @@ def parse(
     if jc.utils.has_data(data):
 
         file_line_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
+        file_line_mac_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
         stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
         stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
 
@@ -341,6 +342,27 @@ def parse(
                     'group_different': group_different[meta[7]],
                     'acl_different': acl_different[meta[9]],
                     'extended_attribute_different': extended_attribute_different[meta[10]]
+                }
+
+                rsync_run['files'].append(output_line)
+                continue
+
+            file_line_mac = file_line_mac_re.match(line)
+            if file_line_mac:
+                filename = file_line_mac.group('name')
+                meta = file_line_mac.group('meta')
+
+                output_line = {
+                    'filename': filename,
+                    'metadata': meta,
+                    'update_type': update_type[meta[0]],
+                    'file_type': file_type[meta[1]],
+                    'checksum_or_value_different': checksum_or_value_different[meta[2]],
+                    'size_different': size_different[meta[3]],
+                    'modification_time_different': modification_time_different[meta[4]],
+                    'permissions_different': permissions_different[meta[5]],
+                    'owner_different': owner_different[meta[6]],
+                    'group_different': group_different[meta[7]]
                 }
 
                 rsync_run['files'].append(output_line)

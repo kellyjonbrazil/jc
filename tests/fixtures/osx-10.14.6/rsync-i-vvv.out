@@ -1,0 +1,156 @@
+building file list ... 
+[sender] make_file(.,*,2)
+[sender] make_file(folder,*,2)
+[sender] make_file(c.txt,*,2)
+[sender] make_file(b.txt,*,2)
+[sender] make_file(a.txt,*,2)
+[sender] make_file(d.txt,*,2)
+[sender] make_file(folder/c.txt,*,2)
+[sender] make_file(folder/b.txt,*,2)
+[sender] make_file(folder/a.txt,*,2)
+[sender] make_file(folder/d.txt,*,2)
+done
+server_recv(2) starting pid=13404
+send_file_list done
+send_files starting
+recv_file_name(.)
+recv_file_name(folder)
+recv_file_name(c.txt)
+recv_file_name(b.txt)
+recv_file_name(a.txt)
+recv_file_name(d.txt)
+recv_file_name(folder/c.txt)
+recv_file_name(folder/b.txt)
+recv_file_name(folder/a.txt)
+recv_file_name(folder/d.txt)
+received 10 names
+recv_file_list done
+get_local_name count=10 dest
+generator starting pid=13404 count=10
+delta-transmission disabled for local transfer or --whole-file
+recv_generator(.,0)
+recv_files(10) starting
+send_files(0, source/.)
+.d..t.... ./
+set modtime of . to (1643731675) Tue Feb  1 08:07:55 2022
+recv_generator(a.txt,1)
+send_files(1, source/a.txt)
+send_files mapped source/a.txt of size 40
+calling match_sums source/a.txt
+>f+++++++ a.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/a.txt
+recv_generator(b.txt,2)
+recv_files(.)
+send_files(2, source/b.txt)
+send_files mapped source/b.txt of size 40
+calling match_sums source/b.txt
+>f+++++++ b.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/b.txt
+recv_generator(c.txt,3)
+send_files(3, source/c.txt)
+send_files mapped source/c.txt of size 40
+calling match_sums source/c.txt
+>f+++++++ c.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/c.txt
+recv_generator(d.txt,4)
+send_files(4, source/d.txt)
+send_files mapped source/d.txt of size 40
+calling match_sums source/d.txt
+>f+++++++ d.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/d.txt
+recv_generator(folder,5)
+recv_files(a.txt)
+send_files(5, source/folder)
+cd+++++++ folder/
+set modtime of folder to (1643731693) Tue Feb  1 08:08:13 2022
+recv_generator(folder/a.txt,6)
+send_files(6, source/folder/a.txt)
+send_files mapped source/folder/a.txt of size 40
+calling match_sums source/folder/a.txt
+>f+++++++ folder/a.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/a.txt
+recv_generator(folder/b.txt,7)
+send_files(7, source/folder/b.txt)
+send_files mapped source/folder/b.txt of size 40
+calling match_sums source/folder/b.txt
+>f+++++++ folder/b.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/b.txt
+recv_generator(folder/c.txt,8)
+send_files(8, source/folder/c.txt)
+send_files mapped source/folder/c.txt of size 40
+calling match_sums source/folder/c.txt
+>f+++++++ folder/c.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/c.txt
+recv_generator(folder/d.txt,9)
+send_files(9, source/folder/d.txt)
+send_files mapped source/folder/d.txt of size 40
+calling match_sums source/folder/d.txt
+>f+++++++ folder/d.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/d.txt
+generate_files phase=1
+send_files phase=1
+got file_sum
+set modtime of .a.txt.oj9IpV to (1643731665) Tue Feb  1 08:07:45 2022
+renaming .a.txt.oj9IpV to a.txt
+recv_files(b.txt)
+got file_sum
+set modtime of .b.txt.cscHph to (1643731668) Tue Feb  1 08:07:48 2022
+renaming .b.txt.cscHph to b.txt
+recv_files(c.txt)
+got file_sum
+set modtime of .c.txt.7G49mz to (1643731671) Tue Feb  1 08:07:51 2022
+renaming .c.txt.7G49mz to c.txt
+recv_files(d.txt)
+got file_sum
+set modtime of .d.txt.fqafla to (1643731675) Tue Feb  1 08:07:55 2022
+renaming .d.txt.fqafla to d.txt
+recv_files(folder)
+recv_files(folder/a.txt)
+got file_sum
+set modtime of folder/.a.txt.s7JSpw to (1643731685) Tue Feb  1 08:08:05 2022
+renaming folder/.a.txt.s7JSpw to folder/a.txt
+recv_files(folder/b.txt)
+got file_sum
+set modtime of folder/.b.txt.91fm9W to (1643731687) Tue Feb  1 08:08:07 2022
+renaming folder/.b.txt.91fm9W to folder/b.txt
+recv_files(folder/c.txt)
+got file_sum
+set modtime of folder/.c.txt.I0phi8 to (1643731690) Tue Feb  1 08:08:10 2022
+renaming folder/.c.txt.I0phi8 to folder/c.txt
+recv_files(folder/d.txt)
+got file_sum
+set modtime of folder/.d.txt.2HWHBz to (1643731693) Tue Feb  1 08:08:13 2022
+renaming folder/.d.txt.2HWHBz to folder/d.txt
+recv_files phase=1
+generate_files phase=2
+send_files phase=2
+send files finished
+total: matches=0  hash_hits=0  false_alarms=0 data=320
+recv_files phase=2
+recv_files finished
+generate_files phase=3
+recv_generator(.,0)
+set modtime of . to (1643731675) Tue Feb  1 08:07:55 2022
+recv_generator(folder,5)
+set modtime of folder to (1643731693) Tue Feb  1 08:08:13 2022
+generate_files finished
+
+sent 924 bytes  received 208 bytes  2264.00 bytes/sec
+total size is 320  speedup is 0.28
+_exit_cleanup(code=0, file=/BuildRoot/Library/Caches/com.apple.xbs/Sources/rsync/rsync-52.200.2/rsync/main.c, line=996): about to call exit(0)

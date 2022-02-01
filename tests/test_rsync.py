@@ -19,6 +19,14 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-ivvv.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_ivvv = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_rsync_ivvv = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv-nochange.out'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_rsync_ivvv_nochange = f.read()
+
+
+
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-logfile.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_logfile = f.read()
 
@@ -46,6 +54,16 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-ivvv.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_ivvv_json = json.loads(f.read())
+
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_rsync_ivvv_json = json.loads(f.read())
+
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv-nochange.json'), 'r', encoding='utf-8') as f:
+            self.osx_10_14_6_rsync_ivvv_nochange_json = json.loads(f.read())
+
+            
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-logfile.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i_logfile_json = json.loads(f.read())
@@ -88,6 +106,19 @@ class MyTests(unittest.TestCase):
         Test 'rsync -ivvv' on Centos 7.7
         """
         self.assertEqual(jc.parsers.rsync.parse(self.centos_7_7_rsync_ivvv, quiet=True), self.centos_7_7_rsync_ivvv_json)
+
+
+    def test_rsync_osx_10_14_6_rsync_ivvv(self):
+        """
+        Test 'rsync -ivvv' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.rsync.parse(self.osx_10_14_6_rsync_ivvv, quiet=True), self.osx_10_14_6_rsync_ivvv_json)
+
+    def test_rsync_osx_10_14_6_rsync_ivvv_nochange(self):
+        """
+        Test 'rsync -ivvv' on OSX 10.14.6 with no file changes
+        """
+        self.assertEqual(jc.parsers.rsync.parse(self.osx_10_14_6_rsync_ivvv_nochange, quiet=True), self.osx_10_14_6_rsync_ivvv_nochange_json)
 
     def test_rsync_centos_7_7_rsync_i_logfile(self):
         """
