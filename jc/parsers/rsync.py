@@ -73,11 +73,65 @@ Schema:
 
 Examples:
 
-    $ rsync | jc --rsync -p
-    []
+    $ rsync -i -a source/ dest | jc --rsync -p
+    [
+      {
+        "summary": {
+          "sent": 1708,
+          "received": 8209,
+          "bytes_sec": 19834.0,
+          "total_size": 235,
+          "speedup": 0.02
+        },
+        "files": [
+          {
+            "filename": "./",
+            "metadata": ".d..t......",
+            "update_type": "not updated",
+            "file_type": "directory",
+            "checksum_or_value_different": false,
+            "size_different": false,
+            "modification_time_different": true,
+            "permissions_different": false,
+            "owner_different": false,
+            "group_different": false,
+            "acl_different": false,
+            "extended_attribute_different": false
+          },
+          ...
+        ]
+      }
+    ]
 
     $ rsync | jc --rsync -p -r
-    []
+    [
+      {
+        "summary": {
+          "sent": "1,708",
+          "received": "8,209",
+          "bytes_sec": "19,834.00",
+          "total_size": "235",
+          "speedup": "0.02"
+        },
+        "files": [
+          {
+            "filename": "./",
+            "metadata": ".d..t......",
+            "update_type": "not updated",
+            "file_type": "directory",
+            "checksum_or_value_different": false,
+            "size_different": false,
+            "modification_time_different": true,
+            "permissions_different": false,
+            "owner_different": false,
+            "group_different": false,
+            "acl_different": false,
+            "extended_attribute_different": false
+          },
+          ...
+        ]
+      }
+    ]
 """
 import re
 from copy import deepcopy
