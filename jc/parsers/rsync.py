@@ -144,7 +144,7 @@ class info():
     description = '`rsync` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux', 'darwin', 'cygwin', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['rsync -i', 'rsync --itemize-changes']
 
 
