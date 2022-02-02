@@ -70,6 +70,7 @@ parsers = [
     'route',
     'rpm-qi',
     'rsync',
+    'rsync-s',
     'sfdisk',
     'shadow',
     'ss',
