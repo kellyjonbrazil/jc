@@ -256,7 +256,7 @@ def parser_info(parser_mod_name: str) -> Union[Dict, None]:
 
 def all_parser_info() -> List[Optional[Dict]]:
     """
-    Returns a list of dictionaris that includes metadata for all modules.
+    Returns a list of dictionaries that includes metadata for all modules.
     """
     return [parser_info(_cliname_to_modname(p)) for p in parsers]
 
