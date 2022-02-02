@@ -60,10 +60,10 @@ def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[
 
         List of Dictionaries
     """
-    output = []
-    header_text = data.pop(0)
+    output: List = []
+    header_text: str = data.pop(0)
     header_text = header_text + ' '
-    header_list = header_text.split()
+    header_list: List = header_text.split()
 
     # find each column index and end position
     header_search = [header_list[0]]
@@ -96,7 +96,7 @@ def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[
                             h_end -= 1
 
                         # insert custom delimiter
-                        entry = entry[:h_end] + delim + entry[h_end + 1:]
+                        entry = f'{entry[:h_end]}{delim}{entry[h_end + 1:]}'
 
             # create the entry list from the new custom delimiter
             entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
