@@ -57,7 +57,6 @@ Schema:
             "permissions_different":          bool/null,
             "owner_different":                bool/null,
             "group_different":                bool/null,
-            "future":                         null,
             "acl_different":                  bool/null,
             "extended_attribute_different":   bool/null,
             "epoch":                          int,          [2]
