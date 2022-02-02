@@ -63,7 +63,7 @@ class info():
     author_email = 'johndoe@gmail.com'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     streaming = True
 
 
