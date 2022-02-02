@@ -5,7 +5,7 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
-from typing import Dict, Iterable, List, Union
+from typing import Dict, Iterable, List, Union, Optional
 
 
 def warning_message(message_lines: List[str]) -> None:
@@ -127,7 +127,7 @@ def has_data(data: str) -> bool:
     return bool(data and not data.isspace())
 
 
-def convert_to_int(value: Union[str, float]) -> Union[int, None]:
+def convert_to_int(value: Union[str, float]) -> Optional[int]:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
@@ -157,7 +157,7 @@ def convert_to_int(value: Union[str, float]) -> Union[int, None]:
         return None
 
 
-def convert_to_float(value: Union[str, int]) -> Union[float, None]:
+def convert_to_float(value: Union[str, int]) -> Optional[float]:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
@@ -277,23 +277,21 @@ class timestamp:
 
         Parameters:
 
-            datetime_string:  (str)  a string representation of a
-                                     date-time in several supported formats
+            datetime_string  (str):  a string representation of a
+                datetime in several supported formats
 
-        Attributes:
+        Returns a timestamp object with the following attributes:
 
-            string            (str)  the input datetime string
+            string  (str):  the input datetime string
 
-            format            (int)  the format rule that was used to
-                                     decode the datetime string. None if
-                                     conversion fails
+            format  (int | None):  the format rule that was used to decode
+                the datetime string. None if conversion fails.
 
-            naive             (int)  timestamp based on locally configured
-                                     timezone. None if conversion fails
+            naive  (int | None):  timestamp based on locally configured
+                timezone. None if conversion fails.
 
-            utc               (int)  aware timestamp only if UTC timezone
-                                     detected in datetime string. None if
-                                     conversion fails
+            utc  (int | None)  aware timestamp only if UTC timezone
+                detected in datetime string. None if conversion fails.
         """
         self.string = datetime_string
         dt = self._parse()
@@ -316,19 +314,19 @@ class timestamp:
 
         Returns:
 
-            Dictionary  A Dictionary of the following format:
+            Dictionary of the following format:
 
                 {
                     # for debugging purposes. None if conversion fails
-                    "format":               integer,
+                    "format":               int,
 
                     # timestamp based on locally configured timezone.
                     # None if conversion fails.
-                    "timestamp_naive":      integer,
+                    "timestamp_naive":      int,
 
                     # aware timestamp only if UTC timezone detected.
                     # None if conversion fails.
-                    "timestamp_utc":        integer
+                    "timestamp_utc":        int
                 }
 
                 The `format` integer denotes which date_time format

@@ -225,7 +225,7 @@ def plugin_parser_mod_list() -> List[str]:
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def parser_info(parser_mod_name: str) -> Union[Dict, None]:
+def parser_info(parser_mod_name: str) -> Optional[Dict]:
     """
     Returns a dictionary that includes the module metadata.
 
