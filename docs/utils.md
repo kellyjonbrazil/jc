@@ -251,6 +251,6 @@ Returns a timestamp object with the following attributes:
     naive  (int | None):  timestamp based on locally configured
         timezone. None if conversion fails.
 
-    utc  (int | None)  aware timestamp only if UTC timezone
+    utc  (int | None):  aware timestamp only if UTC timezone
         detected in datetime string. None if conversion fails.
 
