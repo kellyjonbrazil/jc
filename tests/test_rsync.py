@@ -118,7 +118,7 @@ class MyTests(unittest.TestCase):
         Test 'rsync -ivvv' on OSX 10.14.6 with no file changes
         """
         self.assertEqual(jc.parsers.rsync.parse(self.osx_10_14_6_rsync_ivvv_nochange, quiet=True), self.osx_10_14_6_rsync_ivvv_nochange_json)
-    
+
     def test_rsync_centos_7_7_rsync_ivvv_nochange(self):
         """
         Test 'rsync -ivvv' on Centos 7.7 with no file changes
