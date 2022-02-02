@@ -44,7 +44,7 @@ Schema:
           {
             "flags":            string,
             "zipversion":       string,
-            "zipunder":         string
+            "zipunder":         string,
             "filesize":         integer,
             "type":             string,
             "method":           string,

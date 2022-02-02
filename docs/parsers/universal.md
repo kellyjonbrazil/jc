@@ -40,7 +40,7 @@ Returns:
 ### sparse\_table\_parse
 
 ```python
-def sparse_table_parse(data: List[str], delim: Optional[str] = '\u2063') -> List[Dict]
+def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]
 ```
 
 Parse tables with missing column data or with spaces in column data.

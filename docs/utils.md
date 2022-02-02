@@ -67,7 +67,7 @@ Returns:
 ### compatibility
 
 ```python
-def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None
+def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None
 ```
 
 Checks for the parser's compatibility with the running OS
@@ -112,7 +112,7 @@ Returns:
 ### convert\_to\_int
 
 ```python
-def convert_to_int(value: Union[str, float]) -> Union[int, None]
+def convert_to_int(value: Union[str, float]) -> Optional[int]
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -131,7 +131,7 @@ Returns:
 ### convert\_to\_float
 
 ```python
-def convert_to_float(value: Union[str, int]) -> Union[float, None]
+def convert_to_float(value: Union[str, int]) -> Optional[float]
 ```
 
 Converts string and int input to float. Strips all non-numeric
@@ -238,21 +238,19 @@ naive or timezone-aware epoch timestamp in UTC.
 
 Parameters:
 
-    datetime_string:  (str)  a string representation of a
-                             date-time in several supported formats
+    datetime_string  (str):  a string representation of a
+        datetime in several supported formats
 
-Attributes:
+Returns a timestamp object with the following attributes:
 
-    string            (str)  the input datetime string
+    string  (str):  the input datetime string
 
-    format            (int)  the format rule that was used to
-                             decode the datetime string. None if
-                             conversion fails
+    format  (int | None):  the format rule that was used to decode
+        the datetime string. None if conversion fails.
 
-    naive             (int)  timestamp based on locally configured
-                             timezone. None if conversion fails
+    naive  (int | None):  timestamp based on locally configured
+        timezone. None if conversion fails.
 
-    utc               (int)  aware timestamp only if UTC timezone
-                             detected in datetime string. None if
-                             conversion fails
+    utc  (int | None)  aware timestamp only if UTC timezone
+        detected in datetime string. None if conversion fails.
 

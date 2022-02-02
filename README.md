@@ -128,7 +128,7 @@ pip3 install jc
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
-### Binaries and Packages
+### Binaries
 For precompiled binaries, see [Releases](https://github.com/kellyjonbrazil/jc/releases)
 on Github.
 
@@ -208,6 +208,7 @@ option.
 - `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
 - `--route` enables the `route` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/route))
 - `--rpm-qi` enables the `rpm -qi` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi))
+- `--rsync` enables the `rsync` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync))
 - `--sfdisk` enables the `sfdisk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk))
 - `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
 - `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))

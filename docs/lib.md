@@ -105,7 +105,7 @@ subset of `parser_mod_list()`.
 ### parser\_info
 
 ```python
-def parser_info(parser_mod_name: str) -> Union[Dict, None]
+def parser_info(parser_mod_name: str) -> Optional[Dict]
 ```
 
 Returns a dictionary that includes the module metadata.
@@ -121,7 +121,7 @@ This function will accept **module_name**, **cli-name**, and
 def all_parser_info() -> List[Optional[Dict]]
 ```
 
-Returns a list of dictionaris that includes metadata for all modules.
+Returns a list of dictionaries that includes metadata for all modules.
 
 <a id="jc.lib.get_help"></a>
 
