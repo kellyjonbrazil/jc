@@ -5,7 +5,7 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
-from typing import Dict, Iterable, List, Union, Optional
+from typing import Dict, Iterable, List, Union
 
 
 def warning_message(message_lines: List[str]) -> None:
@@ -76,7 +76,7 @@ def error_message(message_lines: List[str]) -> None:
         print(message, file=sys.stderr)
 
 
-def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None:
+def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS
     platform.

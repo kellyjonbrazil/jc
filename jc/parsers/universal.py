@@ -2,7 +2,7 @@
 
 
 import string
-from typing import List, Dict, Optional
+from typing import List, Dict
 
 
 def simple_table_parse(data: List[str]) -> List[Dict]:
@@ -33,7 +33,7 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
     return raw_output
 
 
-def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[Dict]:
+def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
     """
     Parse tables with missing column data or with spaces in column data.
 
@@ -96,7 +96,7 @@ def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[
                             h_end -= 1
 
                         # insert custom delimiter
-                        entry = f'{entry[:h_end]}{delim}{entry[h_end + 1:]}'
+                        entry = entry[:h_end] + delim + entry[h_end + 1:]
 
             # create the entry list from the new custom delimiter
             entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
