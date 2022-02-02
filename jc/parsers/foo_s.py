@@ -119,10 +119,11 @@ def parse(
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.streaming_input_type_check(data)
+    line = ''
 
-    for line in data:
-        output_line: Dict = {}
-        try:
+    try:
+        for line in data:
+            output_line: Dict = {}
             jc.utils.streaming_line_input_type_check(line)
 
             # parse the content here
@@ -134,5 +135,5 @@ def parse(
             else:
                 raise ParseError('Not foo data')
 
-        except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+    except Exception as e:
+        yield stream_error(e, ignore_exceptions, line)
