@@ -174,108 +174,110 @@ def parse(
     last_process: str = ''
     line: str = ''
 
-    try:
+    update_type = {
+        '<': 'file sent',
+        '>': 'file received',
+        'c': 'local change or creation',
+        'h': 'hard link',
+        '.': 'not updated',
+        '*': 'message',
+        '+': None
+    }
 
+    file_type = {
+        'f': 'file',
+        'd': 'directory',
+        'L': 'symlink',
+        'D': 'device',
+        'S': 'special file',
+        '+': None
+    }
+
+    checksum_or_value_different = {
+        'c': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    size_different = {
+        's': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    modification_time_different = {
+        't': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    permissions_different = {
+        'p': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    owner_different = {
+        'o': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    group_different = {
+        'g': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    acl_different = {
+        'a': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    extended_attribute_different = {
+        'x': True,
+        '.': False,
+        '+': None,
+        ' ': None,
+        '?': None
+    }
+
+    file_line_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
+    file_line_mac_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
+    stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
+    stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
+
+    file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
+    file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
+    stat_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+total\s+size\s+(?P<total_size>[\d,]+)')
+
+    stat1_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total:\s+matches=(?P<matches>[\d,]+)\s+hash_hits=(?P<hash_hits>[\d,]+)\s+false_alarms=(?P<false_alarms>[\d,]+)\s+data=(?P<data>[\d,]+)')
+    stat2_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+(?P<bytes_sec>[\d,.]+)\s+bytes/sec')
+    stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
+
+    try:
         for line in data:
+            jc.utils.streaming_line_input_type_check(line)
             output_line: Dict = {}
 
-            jc.utils.streaming_line_input_type_check(line)
-
-            update_type = {
-                '<': 'file sent',
-                '>': 'file received',
-                'c': 'local change or creation',
-                'h': 'hard link',
-                '.': 'not updated',
-                '*': 'message',
-                '+': None
-            }
-
-            file_type = {
-                'f': 'file',
-                'd': 'directory',
-                'L': 'symlink',
-                'D': 'device',
-                'S': 'special file',
-                '+': None
-            }
-
-            checksum_or_value_different = {
-                'c': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            size_different = {
-                's': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            modification_time_different = {
-                't': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            permissions_different = {
-                'p': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            owner_different = {
-                'o': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            group_different = {
-                'g': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            acl_different = {
-                'a': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            extended_attribute_different = {
-                'x': True,
-                '.': False,
-                '+': None,
-                ' ': None,
-                '?': None
-            }
-
-            file_line_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
-            file_line_mac_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
-            stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
-            stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
-
-            file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
-            file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
-            stat_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+total\s+size\s+(?P<total_size>[\d,]+)')
-
-            stat1_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total:\s+matches=(?P<matches>[\d,]+)\s+hash_hits=(?P<hash_hits>[\d,]+)\s+false_alarms=(?P<false_alarms>[\d,]+)\s+data=(?P<data>[\d,]+)')
-            stat2_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+(?P<bytes_sec>[\d,.]+)\s+bytes/sec')
-            stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
+            # ignore blank lines
+            if line == '':
+                continue
 
             file_line = file_line_re.match(line)
             if file_line:
@@ -326,7 +328,8 @@ def parse(
             file_line_log = file_line_log_re.match(line)
             if file_line_log:
                 if process != last_process:
-                    yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+                    if summary:
+                        yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
                     last_process = process
                     summary = {}
 
@@ -361,7 +364,8 @@ def parse(
             file_line_log_mac = file_line_log_mac_re.match(line)
             if file_line_log_mac:
                 if process != last_process:
-                    yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+                    if summary:
+                        yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
                     last_process = process
                     summary = {}
 
