@@ -10,6 +10,7 @@
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
   * [stream\_success](#jc.utils.stream_success)
   * [stream\_error](#jc.utils.stream_error)
+  * [add\_jc\_meta](#jc.utils.add_jc_meta)
   * [input\_type\_check](#jc.utils.input_type_check)
   * [streaming\_input\_type\_check](#jc.utils.streaming_input_type_check)
   * [streaming\_line\_input\_type\_check](#jc.utils.streaming_line_input_type_check)
@@ -185,6 +186,45 @@ def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict
 
 Reraise the stream exception with annotation or print an error
 `_jc_meta` field if `ignore_exceptions=True`.
+
+<a id="jc.utils.add_jc_meta"></a>
+
+### add\_jc\_meta
+
+```python
+def add_jc_meta(func)
+```
+
+Decorator for streaming parsers to add stream_success and stream_error
+objects. This simplifies the yield lines in the streaming parsers.
+
+With the decorator on parse():
+
+    # successfully parsed line:
+    yield output_line if raw else _process(output_line)
+
+    # unsuccessfully parsed line:
+    except Exception as e:
+        yield e, line
+
+Without the decorator on parse():
+
+    # successfully parsed line:
+    yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+
+    # unsuccessfully parsed line:
+    except Exception as e:
+        yield stream_error(e, ignore_exceptions, line)
+
+In all cases above:
+
+    output_line:  (Dict):  successfully parsed line yielded as a dict
+
+    e:            (BaseException):  exception object as the first value
+                  of the tuple if the line was not successfully parsed.
+
+    line:         (str):  string of the original line that did not
+                  successfully parse.
 
 <a id="jc.utils.input_type_check"></a>
 

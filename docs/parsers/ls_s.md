@@ -87,6 +87,7 @@ Examples:
 ### parse
 
 ```python
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
@@ -99,7 +100,10 @@ Parameters:
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
-    ignore_exceptions: (boolean)   ignore parsing exceptions if True
+    ignore_exceptions: (boolean)   ignore parsing exceptions if True.
+                                   This can be used directly or
+                                   (preferably) by being passed to the
+                                   @add_jc_meta decorator.
 
 Yields:
 
@@ -112,4 +116,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 0.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
