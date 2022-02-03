@@ -2,11 +2,15 @@
 
 > This streaming parser outputs JSON Lines
 
-<<Short rsync description and caveats>>
+Supports the `-i` or `--itemize-changes` options with all levels of
+verbosity.
+
+Will also process the rsync log file generated with the `--log-file`
+option.
 
 Usage (cli):
 
-    $ rsync | jc --rsync-s
+    $ rsync -i -a source/ dest | jc --rsync-s
 
 Usage (module):
 
@@ -27,7 +31,35 @@ Usage (module):
 Schema:
 
     {
-      "rsync":            string,
+      "type":                           string,       # 'file' or 'summary'
+      "date":                           string,
+      "time":                           string,
+      "process":                        integer,
+      "sent":                           integer,
+      "received":                       integer,
+      "total_size":                     integer,
+      "matches":                        integer,
+      "hash_hits":                      integer,
+      "false_alarms":                   integer,
+      "data":                           integer,
+      "bytes_sec":                      float,
+      "speedup":                        float,
+      "filename":                       string,
+      "date":                           string,
+      "time":                           string,
+      "process":                        integer,
+      "metadata":                       string,
+      "update_type":                    string/null,  [0]
+      "file_type":                      string/null,  [1]
+      "checksum_or_value_different":    bool/null,
+      "size_different":                 bool/null,
+      "modification_time_different":    bool/null,
+      "permissions_different":          bool/null,
+      "owner_different":                bool/null,
+      "group_different":                bool/null,
+      "acl_different":                  bool/null,
+      "extended_attribute_different":   bool/null,
+      "epoch":                          int,          [2]
 
       # Below object only exists if using -qq or ignore_exceptions=True
 
@@ -38,6 +70,11 @@ Schema:
           "line":       string       # exists if "success" is false
         }
     }
+
+    [0] 'file sent', 'file received', 'local change or creation',
+        'hard link', 'not updated', 'message'
+    [1] 'file', 'directory', 'symlink', 'device', 'special file'
+    [2] naive timestamp if time and date fields exist and can be converted.
 
 Examples:
 
@@ -81,11 +118,24 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured data to conform to the schema.
     """
+    int_list = [
+        'process', 'sent', 'received', 'total_size', 'matches', 'hash_hits',
+        'false_alarms', 'data'
+    ]
+    float_list = ['bytes_sec', 'speedup']
 
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float,
-    # bool conversions and timestamps
+    for key in proc_data.copy():
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
+
+        # add timestamp
+        if 'date' in proc_data and 'time' in proc_data:
+            date = proc_data['date'].replace('/', '-')
+            date_time = f'{date} {proc_data["time"]}'
+            ts = jc.utils.timestamp(date_time)
+            proc_data['epoch'] = ts.naive
 
     return proc_data
 
@@ -119,11 +169,16 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.streaming_input_type_check(data)
 
-    for line in data:
-        output_line: Dict = {}
-        summary: Dict = {}
+    summary: Dict = {}
+    process: str = ''
+    last_process: str = ''
+    line: str = ''
 
-        try:
+    try:
+
+        for line in data:
+            output_line: Dict = {}
+
             jc.utils.streaming_line_input_type_check(line)
 
             update_type = {
@@ -228,6 +283,7 @@ def parse(
                 meta = file_line.group('meta')
 
                 output_line = {
+                    'type': 'file',
                     'filename': filename,
                     'metadata': meta,
                     'update_type': update_type[meta[0]],
@@ -241,6 +297,9 @@ def parse(
                     'acl_different': acl_different[meta[9]],
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
+
+                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                continue
 
             file_line_mac = file_line_mac_re.match(line)
             if file_line_mac:
@@ -248,6 +307,7 @@ def parse(
                 meta = file_line_mac.group('meta')
 
                 output_line = {
+                    'type': 'file',
                     'filename': filename,
                     'metadata': meta,
                     'update_type': update_type[meta[0]],
@@ -260,8 +320,16 @@ def parse(
                     'group_different': group_different[meta[7]]
                 }
 
+                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                continue
+
             file_line_log = file_line_log_re.match(line)
             if file_line_log:
+                if process != last_process:
+                    yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+                    last_process = process
+                    summary = {}
+
                 filename = file_line_log.group('name')
                 date = file_line_log.group('date')
                 time = file_line_log.group('time')
@@ -269,6 +337,7 @@ def parse(
                 meta = file_line_log.group('meta')
 
                 output_line = {
+                    'type': 'file',
                     'filename': filename,
                     'date': date,
                     'time': time,
@@ -286,8 +355,16 @@ def parse(
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
 
+                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                continue
+
             file_line_log_mac = file_line_log_mac_re.match(line)
             if file_line_log_mac:
+                if process != last_process:
+                    yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+                    last_process = process
+                    summary = {}
+
                 filename = file_line_log_mac.group('name')
                 date = file_line_log_mac.group('date')
                 time = file_line_log_mac.group('time')
@@ -295,6 +372,7 @@ def parse(
                 meta = file_line_log_mac.group('meta')
 
                 output_line = {
+                    'type': 'file',
                     'filename': filename,
                     'date': date,
                     'time': time,
@@ -310,22 +388,29 @@ def parse(
                     'group_different': group_different[meta[7]]
                 }
 
+                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                continue
+
             stat1_line = stat1_line_re.match(line)
             if stat1_line:
                 summary = {
+                    'type': 'summary',
                     'sent': stat1_line.group('sent'),
                     'received': stat1_line.group('received'),
                     'bytes_sec': stat1_line.group('bytes_sec')
                 }
+                continue
 
             stat2_line = stat2_line_re.match(line)
             if stat2_line:
                 summary['total_size'] = stat2_line.group('total_size')
                 summary['speedup'] = stat2_line.group('speedup')
+                continue
 
             stat_line_log = stat_line_log_re.match(line)
             if stat_line_log:
                 summary = {
+                    'type': 'summary',
                     'date': stat_line_log.group('date'),
                     'time': stat_line_log.group('time'),
                     'process': stat_line_log.group('process'),
@@ -333,10 +418,12 @@ def parse(
                     'received': stat_line_log.group('received'),
                     'total_size': stat_line_log.group('total_size')
                 }
+                continue
 
             stat1_line_log_v = stat1_line_log_v_re.match(line)
             if stat1_line_log_v:
                 summary = {
+                    'type': 'summary',
                     'date': stat1_line_log_v.group('date'),
                     'time': stat1_line_log_v.group('time'),
                     'process': stat1_line_log_v.group('process'),
@@ -345,22 +432,23 @@ def parse(
                     'false_alarms': stat1_line_log_v.group('false_alarms'),
                     'data': stat1_line_log_v.group('data')
                 }
+                continue
 
             stat2_line_log_v = stat2_line_log_v_re.match(line)
             if stat2_line_log_v:
                 summary['sent'] = stat2_line_log_v.group('sent')
                 summary['received'] = stat2_line_log_v.group('received')
                 summary['bytes_sec'] = stat2_line_log_v.group('bytes_sec')
+                continue
 
             stat3_line_log_v = stat3_line_log_v_re.match(line)
             if stat3_line_log_v:
                 summary['total_size'] = stat3_line_log_v.group('total_size')
                 summary['speedup'] = stat3_line_log_v.group('speedup')
-
-            if output_line:
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
-            else:
                 continue
 
-        except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+        if summary:
+            yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+
+    except Exception as e:
+        yield stream_error(e, ignore_exceptions, line)
