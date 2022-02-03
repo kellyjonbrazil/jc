@@ -83,13 +83,13 @@ Examples:
 """
 import shlex
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.utils import add_jc_meta
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.5'
+    version = '1.0'
     description = '`stat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -130,6 +130,8 @@ def _process(proc_data):
 
     return proc_data
 
+
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -141,7 +143,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
-        ignore_exceptions: (boolean)   ignore parsing exceptions if True
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True.
+                                       This can be used directly or
+                                       (preferably) by being passed to the
+                                       @add_jc_meta decorator.
 
     Yields:
 
@@ -175,7 +180,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 # line #1
                 if line.startswith('  File: '):
                     if output_line:
-                        yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                        yield output_line if raw else _process(output_line)
 
                     output_line = {}
                     line_list = line.split(maxsplit=1)
@@ -281,16 +286,16 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 }
 
                 if output_line:
-                    yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                    yield output_line if raw else _process(output_line)
                     output_line = {}
 
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+            yield e, line
             output_line = {}
 
     # gather final item
     if output_line:
         try:
-            yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+            yield output_line if raw else _process(output_line)
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+            yield e, line

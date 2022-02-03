@@ -49,9 +49,9 @@ Examples:
     {example output}
     ...
 """
-from typing import Dict, Iterable
+from typing import Dict, Iterable, Union
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.utils import add_jc_meta
 from jc.exceptions import ParseError
 
 
@@ -91,12 +91,13 @@ def _process(proc_data: Dict) -> Dict:
     return proc_data
 
 
+@add_jc_meta
 def parse(
     data: Iterable[str],
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Iterable[Dict]:
+) -> Union[Iterable[Dict], tuple]:
     """
     Main text parsing generator function. Returns an iterator object.
 
@@ -107,7 +108,10 @@ def parse(
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
-        ignore_exceptions: (boolean)   ignore parsing exceptions if True
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True.
+                                       This can be used directly or
+                                       (preferably) by being passed to the
+                                       @add_jc_meta decorator.
 
     Yields:
 
@@ -131,9 +135,9 @@ def parse(
             # and jc.parsers.universal
 
             if output_line:
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
             else:
                 raise ParseError('Not foo data')
 
     except Exception as e:
-        yield stream_error(e, ignore_exceptions, line)
+        yield e, line

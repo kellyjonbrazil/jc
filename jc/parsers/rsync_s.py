@@ -87,15 +87,15 @@ Examples:
     ...
 """
 import re
-from typing import Dict, Iterable
+from typing import Dict, Iterable, Union
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.utils import add_jc_meta
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`rsync` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -140,12 +140,13 @@ def _process(proc_data: Dict) -> Dict:
     return proc_data
 
 
+@add_jc_meta
 def parse(
     data: Iterable[str],
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Iterable[Dict]:
+) -> Union[Iterable[Dict], tuple]:
     """
     Main text parsing generator function. Returns an iterator object.
 
@@ -156,7 +157,10 @@ def parse(
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
-        ignore_exceptions: (boolean)   ignore parsing exceptions if True
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True.
+                                       This can be used directly or
+                                       (preferably) by being passed to the
+                                       @add_jc_meta decorator.
 
     Yields:
 
@@ -300,7 +304,7 @@ def parse(
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
 
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
                 continue
 
             file_line_mac = file_line_mac_re.match(line)
@@ -322,14 +326,14 @@ def parse(
                     'group_different': group_different[meta[7]]
                 }
 
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
                 continue
 
             file_line_log = file_line_log_re.match(line)
             if file_line_log:
                 if process != last_process:
                     if summary:
-                        yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+                        yield output_line if raw else _process(output_line)
                     last_process = process
                     summary = {}
 
@@ -358,14 +362,14 @@ def parse(
                     'extended_attribute_different': extended_attribute_different[meta[10]]
                 }
 
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
                 continue
 
             file_line_log_mac = file_line_log_mac_re.match(line)
             if file_line_log_mac:
                 if process != last_process:
                     if summary:
-                        yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+                        yield output_line if raw else _process(output_line)
                     last_process = process
                     summary = {}
 
@@ -392,7 +396,7 @@ def parse(
                     'group_different': group_different[meta[7]]
                 }
 
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
                 continue
 
             stat1_line = stat1_line_re.match(line)
@@ -452,7 +456,7 @@ def parse(
                 continue
 
         if summary:
-            yield stream_success(summary, ignore_exceptions) if raw else stream_success(_process(summary), ignore_exceptions)
+            yield summary if raw else _process(summary)
 
     except Exception as e:
-        yield stream_error(e, ignore_exceptions, line)
+        yield e, line

@@ -3,6 +3,7 @@ import sys
 import re
 import locale
 import shutil
+from functools import wraps
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from typing import Dict, Iterable, List, Union, Optional
@@ -246,6 +247,58 @@ def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict:
                 'line': line.strip()
             }
     }
+
+
+def add_jc_meta(func):
+    """
+    Decorator for streaming parsers to add stream_success and stream_error
+    objects. This simplifies the yield lines in the streaming parsers.
+
+    With the decorator on parse():
+
+        # successfully parsed line:
+        yield output_line if raw else _process(output_line)
+
+        # unsuccessfully parsed line:
+        except Exception as e:
+            yield e, line
+
+    Without the decorator on parse():
+
+        # successfully parsed line:
+        yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+
+        # unsuccessfully parsed line:
+        except Exception as e:
+            yield stream_error(e, ignore_exceptions, line)
+
+    In all cases above:
+
+        output_line:  (Dict):  successfully parsed line yielded as a dict
+
+        e:            (BaseException):  exception object as the first value
+                      of the tuple if the line was not successfully parsed.
+
+        line:         (str):  string of the original line that did not
+                      successfully parse.
+    """
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        ignore_exceptions = kwargs.get('ignore_exceptions', False)
+        gen = func(*args, **kwargs)
+        for value in gen:
+            # if the yielded value is a dict, then we know it was a
+            # successfully parsed line
+            if isinstance(value, dict):
+                yield stream_success(value, ignore_exceptions)
+
+            # otherwise it will be a tuple and we know it was an error
+            else:
+                exception_obj = value[0]
+                line = value[1]
+                yield stream_error(exception_obj, ignore_exceptions, line)
+
+    return wrapper
 
 
 def input_type_check(data: str) -> None:
