@@ -74,7 +74,7 @@ Examples:
     $ xrandr | jc --xrandr
 """
 import re
-from typing import Dict, List, Iterator, Optional, Union
+from typing import Dict, List, Optional, Union
 
 import jc.utils
 
@@ -93,10 +93,6 @@ class info:
 
 
 __version__ = info.version
-
-# ScreenLine = Dict[str, int]
-# DeviceLine = Dict[str, int | bool | str]
-# ModeLine = Dict[str, int]
 
 try:
     from typing import TypedDict
@@ -154,11 +150,11 @@ try:
         },
     )
 except ImportError:
-    Screen = Dict[str, int | str]
-    Device = Dict[str, str | int | bool]
-    Frequency = Dict[str, float | bool]
-    Mode = Dict[str, int | bool | List[Frequency]]
-    Response = Dict[str, Device | Mode | Screen]
+    Screen = Dict[str, Union[int, str]]
+    Device = Dict[str, Union[str, int, bool]]
+    Frequency = Dict[str, Union[float, bool]]
+    Mode = Dict[str, Union[int, bool, List[Frequency]]]
+    Response = Dict[str, Union[Device, Mode, Screen]]
 
 
 def _process(proc_data):
@@ -222,7 +218,6 @@ def _parse_screen(next_lines: List[str]) -> Optional[Screen]:
 # eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis)
 #       310mm x 170mm
 # regex101 demo link
-# https://regex101.com/r/5ZQEDC/1
 _device_pattern = (
     r"(?P<device_name>.+) "
     + "(?P<is_connected>(connected|disconnected)) ?"
