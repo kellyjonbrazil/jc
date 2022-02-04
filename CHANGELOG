@@ -3,7 +3,7 @@ jc changelog
 20220202 v1.18.3
 - Add rsync command and log file parser tested on linux and macOS
 - Add rsync command and log file streaming parser tested on linux and macOS
-- Move exception handling from streaming parsers to cli module to simplify code
+- Refactor ignore_exceptions functionality in streaming parsers
 
 20220127 v1.18.2
 - Fix for plugin parsers with underscores in the name

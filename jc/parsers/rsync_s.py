@@ -89,7 +89,7 @@ Examples:
 import re
 from typing import Dict, Iterable, Union
 import jc.utils
-from jc.utils import add_jc_meta
+from jc.utils import ignore_exceptions_msg, add_jc_meta
 from jc.exceptions import ParseError
 
 
@@ -157,10 +157,7 @@ def parse(
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
-        ignore_exceptions: (boolean)   ignore parsing exceptions if True.
-                                       This can be used directly or
-                                       (preferably) by being passed to the
-                                       @add_jc_meta decorator.
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
     Yields:
 
@@ -459,4 +456,8 @@ def parse(
             yield summary if raw else _process(summary)
 
     except Exception as e:
+        if not ignore_exceptions:
+            e.args = (str(e) + ignore_exceptions_msg,)
+            raise e
+
         yield e, line

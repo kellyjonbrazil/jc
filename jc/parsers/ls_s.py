@@ -79,7 +79,7 @@ Examples:
 """
 import re
 import jc.utils
-from jc.utils import add_jc_meta
+from jc.utils import ignore_exceptions_msg, add_jc_meta
 from jc.exceptions import ParseError
 
 
@@ -135,10 +135,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
-        ignore_exceptions: (boolean)   ignore parsing exceptions if True.
-                                       This can be used directly or
-                                       (preferably) by being passed to the
-                                       @add_jc_meta decorator.
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
     Yields:
 
@@ -152,9 +149,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     jc.utils.streaming_input_type_check(data)
 
     parent = ''
+    line = ''
 
-    for line in data:
-        try:
+    try:
+        for line in data:
             jc.utils.streaming_line_input_type_check(line)
 
             # skip line if it starts with 'total 1234'
@@ -202,5 +200,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
             yield output_line if raw else _process(output_line)
 
-        except Exception as e:
-            yield e, line
+    except Exception as e:
+        if not ignore_exceptions:
+            e.args = (str(e) + ignore_exceptions_msg,)
+            raise e
+
+        yield e, line

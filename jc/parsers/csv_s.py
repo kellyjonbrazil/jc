@@ -66,7 +66,7 @@ Examples:
 import itertools
 import csv
 import jc.utils
-from jc.utils import add_jc_meta
+from jc.utils import ignore_exceptions_msg, add_jc_meta
 from jc.exceptions import ParseError
 
 
@@ -113,10 +113,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
-        ignore_exceptions: (boolean)   ignore parsing exceptions if True.
-                                       This can be used directly or
-                                       (preferably) by being passed to the
-                                       @add_jc_meta decorator.
+        ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
     Yields:
 
@@ -161,4 +158,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         try:
             yield row if raw else _process(row)
         except Exception as e:
-            yield e, row
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
+
+            yield e, str(row)

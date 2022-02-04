@@ -181,11 +181,10 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 ### stream\_error
 
 ```python
-def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict
+def stream_error(e: BaseException, line: str) -> Dict
 ```
 
-Reraise the stream exception with annotation or print an error
-`_jc_meta` field if `ignore_exceptions=True`.
+Return an error `_jc_meta` field.
 
 <a id="jc.utils.add_jc_meta"></a>
 
@@ -205,6 +204,10 @@ With the decorator on parse():
 
     # unsuccessfully parsed line:
     except Exception as e:
+        if not ignore_exceptions:
+            e.args = (str(e) + ignore_exceptions_msg,)
+            raise e
+
         yield e, line
 
 Without the decorator on parse():
@@ -214,7 +217,11 @@ Without the decorator on parse():
 
     # unsuccessfully parsed line:
     except Exception as e:
-        yield stream_error(e, ignore_exceptions, line)
+        if not ignore_exceptions:
+            e.args = (str(e) + ignore_exceptions_msg,)
+            raise e
+
+        yield stream_error(e, line)
 
 In all cases above:
 
