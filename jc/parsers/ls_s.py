@@ -149,10 +149,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     jc.utils.streaming_input_type_check(data)
 
     parent = ''
-    line = ''
 
-    try:
-        for line in data:
+    for line in data:
+        try:
             jc.utils.streaming_line_input_type_check(line)
 
             # skip line if it starts with 'total 1234'
@@ -165,7 +164,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
             # Look for parent line if glob or -R is used
             if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line) \
-               and line.strip().endswith(':'):
+                and line.strip().endswith(':'):
                 parent = line.strip()[:-1]
                 continue
 
@@ -200,9 +199,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
             yield output_line if raw else _process(output_line)
 
-    except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
+        except Exception as e:
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
 
-        yield e, line
+            yield e, line

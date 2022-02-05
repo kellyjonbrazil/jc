@@ -157,11 +157,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     jc.utils.streaming_input_type_check(data)
 
     output_line = {}
-    line = ''
     os_type = ''
 
-    try:
-        for line in data:
+    for line in data:
+        try:
             jc.utils.streaming_line_input_type_check(line)
             line = line.rstrip()
 
@@ -287,13 +286,21 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     yield output_line if raw else _process(output_line)
                     output_line = {}
 
+        except Exception as e:
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
+
+            yield e, line
+
+    try:
         # gather final item
         if output_line:
             yield output_line if raw else _process(output_line)
 
     except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
 
-        yield e, line
+            yield e, line

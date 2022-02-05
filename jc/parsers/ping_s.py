@@ -491,14 +491,13 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         Iterator object
     """
-    s = _state()
-    line = ''
-
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.streaming_input_type_check(data)
 
-    try:
-        for line in data:
+    s = _state()
+
+    for line in data:
+        try:
             output_line = {}
             jc.utils.streaming_line_input_type_check(line)
 
@@ -548,9 +547,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             else:
                 continue
 
-    except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
+        except Exception as e:
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
 
-        yield e, line
+            yield e, line

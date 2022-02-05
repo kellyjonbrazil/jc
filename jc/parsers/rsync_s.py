@@ -173,7 +173,6 @@ def parse(
     summary: Dict = {}
     process: str = ''
     last_process: str = ''
-    line: str = ''
 
     update_type = {
         '<': 'file sent',
@@ -271,8 +270,8 @@ def parse(
     stat2_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+(?P<bytes_sec>[\d,.]+)\s+bytes/sec')
     stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
 
-    try:
-        for line in data:
+    for line in data:
+        try:
             jc.utils.streaming_line_input_type_check(line)
             output_line: Dict = {}
 
@@ -452,12 +451,20 @@ def parse(
                 summary['speedup'] = stat3_line_log_v.group('speedup')
                 continue
 
+        except Exception as e:
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
+
+            yield e, line
+
+    try:
         if summary:
             yield summary if raw else _process(summary)
 
     except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
 
-        yield e, line
+            yield e, line

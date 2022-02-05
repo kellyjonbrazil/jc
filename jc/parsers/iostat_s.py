@@ -189,10 +189,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     headers = ''
     cpu_list = []
     device_list = []
-    line = ''
 
-    try:
-        for line in data:
+    for line in data:
+        try:
             jc.utils.streaming_line_input_type_check(line)
             output_line = {}
 
@@ -231,9 +230,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             else:
                 raise ParseError('Not iostat data')
 
-    except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
+        except Exception as e:
+            if not ignore_exceptions:
+                e.args = (str(e) + ignore_exceptions_msg,)
+                raise e
 
-        yield e, line
+            yield e, line
