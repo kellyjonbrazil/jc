@@ -87,7 +87,9 @@ import string
 import ipaddress
 import jc.utils
 from jc.exceptions import ParseError
-from jc.utils import ignore_exceptions_msg, add_jc_meta
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 
 
 class info():
@@ -492,14 +494,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         Iterator object
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     s = _state()
 
     for line in data:
         try:
             output_line = {}
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
 
             # skip blank lines
             if line.strip() == '':
@@ -548,8 +550,4 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 continue
 
         except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
-
-            yield e, line
+            yield raise_or_yield(ignore_exceptions, e, line)
