@@ -5,6 +5,7 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
+from functools import lru_cache
 from typing import List, Union, Optional
 
 
@@ -252,7 +253,7 @@ class timestamp:
                 detected in datetime string. None if conversion fails.
         """
         self.string = datetime_string
-        dt = self._parse()
+        dt = self._parse_dt(self.string)
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
@@ -260,14 +261,16 @@ class timestamp:
     def __repr__(self):
         return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
 
-    def _parse(self):
+    @staticmethod
+    @lru_cache
+    def _parse_dt(dt_string):
         """
         Input a date-time text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
 
         Parameters:
 
-            data:       (string) a string representation of a date-time
+            dt_string:  (string) a string representation of a date-time
                         in several supported formats
 
         Returns:
@@ -301,7 +304,7 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        data = self.string or ''
+        data = dt_string or ''
         normalized_datetime = ''
         utc_tz = False
         dt = None
