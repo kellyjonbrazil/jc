@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Union, Optional
+from typing import List, Tuple, Union, Optional
 
 
 def warning_message(message_lines: List[str]) -> None:
@@ -229,15 +229,22 @@ def input_type_check(data: str) -> None:
 
 
 class timestamp:
-    def __init__(self, datetime_string: str) -> None:
+    def __init__(self, datetime_string: str, format_hint: Union[List, Tuple, None] = None) -> None:
         """
-        Input a date-time text string of several formats and convert to a
+        Input a datetime text string of several formats and convert to a
         naive or timezone-aware epoch timestamp in UTC.
 
         Parameters:
 
             datetime_string  (str):  a string representation of a
                 datetime in several supported formats
+
+            format_hint  (list | tuple):  an optional list of format ID
+                integers to instruct the timestamp object to try those
+                formats first in the order given. Other formats will be
+                tried after the format hint list is exhausted. This can
+                speed up timestamp conversion so several different formats
+                don't have to be tried in brute-force fashion.
 
         Returns a timestamp object with the following attributes:
 
@@ -253,7 +260,13 @@ class timestamp:
                 detected in datetime string. None if conversion fails.
         """
         self.string = datetime_string
-        dt = self._parse_dt(self.string)
+
+        if not format_hint:
+            format_hint = tuple()
+        else:
+            format_hint = tuple(format_hint)
+
+        dt = self._parse_dt(self.string, format_hint=format_hint)
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
@@ -263,15 +276,21 @@ class timestamp:
 
     @staticmethod
     @lru_cache(maxsize=512)
-    def _parse_dt(dt_string):
+    def _parse_dt(dt_string, format_hint=None):
         """
-        Input a date-time text string of several formats and convert to
+        Input a datetime text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
 
         Parameters:
 
-            dt_string:  (string) a string representation of a date-time
-                        in several supported formats
+            dt_string:    (string) a string representation of a date-time
+                          in several supported formats
+
+            format_hint:  (list | tuple) a list of format ID int's that
+                          should be tried first. This can increase
+                          performance since the function will not need to
+                          try many incorrect formats before finding the
+                          correct one.
 
         Returns:
 
@@ -317,6 +336,12 @@ class timestamp:
             'timestamp_utc': None
         }
         utc_tz = False
+
+        # convert format_hint to a tuple so it is hashable (for lru_cache)
+        if not format_hint:
+            format_hint = tuple()
+        else:
+            format_hint = tuple(format_hint)
 
         # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
         data = data.replace('Coordinated Universal Time', 'UTC')
@@ -398,7 +423,17 @@ class timestamp:
         p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
         normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
 
-        for fmt in formats:
+        # try format hints first, then fall back to brute-force method
+        hint_obj_list = []
+        for fmt_id in format_hint:
+            for fmt in formats:
+                if fmt_id == fmt['id']:
+                    hint_obj_list.append(fmt)
+
+        remaining_formats = [fmt for fmt in formats if not fmt['id'] in format_hint]
+        optimized_formats = hint_obj_list + remaining_formats
+
+        for fmt in optimized_formats:
             try:
                 locale.setlocale(locale.LC_TIME, fmt['locale'])
                 dt = datetime.strptime(normalized_datetime, fmt['format'])
