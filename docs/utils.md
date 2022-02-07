@@ -184,16 +184,23 @@ class timestamp()
 ### \_\_init\_\_
 
 ```python
-def __init__(datetime_string: str) -> None
+def __init__(datetime_string: str, format_hint: Union[List, Tuple, None] = None) -> None
 ```
 
-Input a date-time text string of several formats and convert to a
+Input a datetime text string of several formats and convert to a
 naive or timezone-aware epoch timestamp in UTC.
 
 Parameters:
 
     datetime_string  (str):  a string representation of a
         datetime in several supported formats
+
+    format_hint  (list | tuple):  an optional list of format ID
+        integers to instruct the timestamp object to try those
+        formats first in the order given. Other formats will be
+        tried after the format hint list is exhausted. This can
+        speed up timestamp conversion so several different formats
+        don't have to be tried in brute-force fashion.
 
 Returns a timestamp object with the following attributes:
 
