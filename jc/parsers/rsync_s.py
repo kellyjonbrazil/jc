@@ -134,7 +134,7 @@ def _process(proc_data: Dict) -> Dict:
         if 'date' in proc_data and 'time' in proc_data:
             date = proc_data['date'].replace('/', '-')
             date_time = f'{date} {proc_data["time"]}'
-            ts = jc.utils.timestamp(date_time)
+            ts = jc.utils.timestamp(date_time, format_hint=(7250,))
             proc_data['epoch'] = ts.naive
 
     return proc_data

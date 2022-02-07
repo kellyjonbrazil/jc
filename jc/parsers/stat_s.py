@@ -126,7 +126,7 @@ def _process(proc_data):
         if key in proc_data:
             if proc_data[key] == '-':
                 proc_data[key] = None
-            ts = jc.utils.timestamp(proc_data[key])
+            ts = jc.utils.timestamp(proc_data[key], format_hint=(7100, 7200))
             proc_data[key + '_epoch'] = ts.naive
             proc_data[key + '_epoch_utc'] = ts.utc
 

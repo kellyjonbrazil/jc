@@ -166,7 +166,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -197,12 +197,12 @@ def _process(proc_data):
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
         if 'build_date' in entry:
-            timestamp = jc.utils.timestamp(entry['build_date'])
+            timestamp = jc.utils.timestamp(entry['build_date'], format_hint=(3000,))
             entry['build_epoch'] = timestamp.naive
             entry['build_epoch_utc'] = timestamp.utc
 
         if 'install_date' in entry:
-            timestamp = jc.utils.timestamp(entry['install_date'])
+            timestamp = jc.utils.timestamp(entry['install_date'], format_hint=(3000,))
             entry['install_date_epoch'] = timestamp.naive
             entry['install_date_epoch_utc'] = timestamp.utc
 

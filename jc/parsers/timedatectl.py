@@ -69,7 +69,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -99,7 +99,7 @@ def _process(proc_data):
             proc_data[key] = jc.utils.convert_to_bool(proc_data[key])
 
     if 'universal_time' in proc_data:
-        ts = jc.utils.timestamp(proc_data['universal_time'])
+        ts = jc.utils.timestamp(proc_data['universal_time'], format_hint=(7300,))
         proc_data['epoch_utc'] = ts.utc
 
     return proc_data

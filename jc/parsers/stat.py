@@ -176,7 +176,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -213,7 +213,7 @@ def _process(proc_data):
             if key in entry:
                 if entry[key] == '-':
                     entry[key] = None
-                ts = jc.utils.timestamp(entry[key])
+                ts = jc.utils.timestamp(entry[key], format_hint=(7100, 7200))
                 entry[key + '_epoch'] = ts.naive
                 entry[key + '_epoch_utc'] = ts.utc
 

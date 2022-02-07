@@ -131,7 +131,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`vmstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -169,7 +169,8 @@ def _process(proc_data):
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
         if entry['timestamp']:
-            ts = jc.utils.timestamp(f'{entry["timestamp"]} {entry["timezone"]}')
+            fmt_hint = (7250, 7255)
+            ts = jc.utils.timestamp(f'{entry["timestamp"]} {entry["timezone"]}', format_hint=fmt_hint)
             entry['epoch'] = ts.naive
             entry['epoch_utc'] = ts.utc
 

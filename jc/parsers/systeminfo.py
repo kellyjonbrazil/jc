@@ -217,7 +217,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.1"
+    version = "1.2"
     description = "`systeminfo` command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
@@ -279,8 +279,10 @@ def _process(proc_data):
             # to: (UTC-0800)
             tz_fields = tz.split()
             tz = " " + tz_fields[0].replace(":", "")
-        proc_data[key + '_epoch'] = jc.utils.timestamp(f"{proc_data.get(key)}{tz}").naive
-        proc_data[key + '_epoch_utc'] = jc.utils.timestamp(f"{proc_data.get(key)}{tz}").utc
+            ts_formats = (1700, 1705, 1710)
+            ts = jc.utils.timestamp(f"{proc_data.get(key)}{tz}", format_hint=ts_formats)
+        proc_data[key + '_epoch'] = ts.naive
+        proc_data[key + '_epoch_utc'] = ts.utc
 
     hyperv_key = "hyperv_requirements"
     hyperv_subkey_list = [

@@ -327,7 +327,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.2'
+    version = '2.3'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -384,7 +384,7 @@ def _process(proc_data):
                 auth['ttl'] = jc.utils.convert_to_int(auth['ttl'])
 
         if 'when' in entry:
-            ts = jc.utils.timestamp(entry['when'])
+            ts = jc.utils.timestamp(entry['when'], format_hint=(1000, 7000))
             entry['when_epoch'] = ts.naive
             entry['when_epoch_utc'] = ts.utc
 

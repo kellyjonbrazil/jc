@@ -122,7 +122,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`ls` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -154,7 +154,7 @@ def _process(proc_data):
         if 'date' in entry:
             # to speed up processing only try to convert the date if it's not the default format
             if not re.match(r'[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}', entry['date']):
-                ts = jc.utils.timestamp(entry['date'])
+                ts = jc.utils.timestamp(entry['date'], format_hint=(7200,))
                 entry['epoch'] = ts.naive
                 entry['epoch_utc'] = ts.utc
 

@@ -126,7 +126,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
@@ -152,7 +152,7 @@ def _process(proc_data):
         # add timestamps
         if 'date' in entry and 'time' in entry:
             dt = entry['date'] + ' ' + entry['time']
-            timestamp = jc.utils.timestamp(dt)
+            timestamp = jc.utils.timestamp(dt, format_hint=(1600,))
             entry['epoch'] = timestamp.naive
 
         # add ints

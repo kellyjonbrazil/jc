@@ -185,7 +185,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if 'date' in entry and 'time' in entry:
                 date = entry['date'].replace('/', '-')
                 date_time = f'{date} {entry["time"]}'
-                ts = jc.utils.timestamp(date_time)
+                ts = jc.utils.timestamp(date_time, format_hint=(7250,))
                 entry['epoch'] = ts.naive
 
     return proc_data

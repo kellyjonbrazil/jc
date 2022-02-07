@@ -145,7 +145,8 @@ def _process(proc_data):
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
     if proc_data['timestamp']:
-        ts = jc.utils.timestamp(f'{proc_data["timestamp"]} {proc_data["timezone"]}')
+        fmt_hint = (7250, 7255)
+        ts = jc.utils.timestamp(f'{proc_data["timestamp"]} {proc_data["timezone"]}', format_hint=fmt_hint)
         proc_data['epoch'] = ts.naive
         proc_data['epoch_utc'] = ts.utc
 
