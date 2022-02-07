@@ -8,12 +8,7 @@
   * [convert\_to\_int](#jc.utils.convert_to_int)
   * [convert\_to\_float](#jc.utils.convert_to_float)
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
-  * [stream\_success](#jc.utils.stream_success)
-  * [stream\_error](#jc.utils.stream_error)
-  * [add\_jc\_meta](#jc.utils.add_jc_meta)
   * [input\_type\_check](#jc.utils.input_type_check)
-  * [streaming\_input\_type\_check](#jc.utils.streaming_input_type_check)
-  * [streaming\_line\_input\_type\_check](#jc.utils.streaming_line_input_type_check)
   * [timestamp](#jc.utils.timestamp)
     * [\_\_init\_\_](#jc.utils.timestamp.__init__)
 
@@ -166,73 +161,6 @@ Returns:
     True/False      False unless a 'truthy' number or string is found
                     ('y', 'yes', 'true', '1', 1, -1, etc.)
 
-<a id="jc.utils.stream_success"></a>
-
-### stream\_success
-
-```python
-def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict
-```
-
-Add `_jc_meta` object to output line if `ignore_exceptions=True`
-
-<a id="jc.utils.stream_error"></a>
-
-### stream\_error
-
-```python
-def stream_error(e: BaseException, line: str) -> Dict
-```
-
-Return an error `_jc_meta` field.
-
-<a id="jc.utils.add_jc_meta"></a>
-
-### add\_jc\_meta
-
-```python
-def add_jc_meta(func)
-```
-
-Decorator for streaming parsers to add stream_success and stream_error
-objects. This simplifies the yield lines in the streaming parsers.
-
-With the decorator on parse():
-
-    # successfully parsed line:
-    yield output_line if raw else _process(output_line)
-
-    # unsuccessfully parsed line:
-    except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
-
-        yield e, line
-
-Without the decorator on parse():
-
-    # successfully parsed line:
-    yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
-
-    # unsuccessfully parsed line:
-    except Exception as e:
-        if not ignore_exceptions:
-            e.args = (str(e) + ignore_exceptions_msg,)
-            raise e
-
-        yield stream_error(e, line)
-
-In all cases above:
-
-    output_line:  (Dict):  successfully parsed line yielded as a dict
-
-    e:            (BaseException):  exception object as the first value
-                  of the tuple if the line was not successfully parsed.
-
-    line:         (str):  string of the original line that did not
-                  successfully parse.
-
 <a id="jc.utils.input_type_check"></a>
 
 ### input\_type\_check
@@ -242,27 +170,6 @@ def input_type_check(data: str) -> None
 ```
 
 Ensure input data is a string. Raises `TypeError` if not.
-
-<a id="jc.utils.streaming_input_type_check"></a>
-
-### streaming\_input\_type\_check
-
-```python
-def streaming_input_type_check(data: Iterable) -> None
-```
-
-Ensure input data is an iterable, but not a string or bytes. Raises
-`TypeError` if not.
-
-<a id="jc.utils.streaming_line_input_type_check"></a>
-
-### streaming\_line\_input\_type\_check
-
-```python
-def streaming_line_input_type_check(line: str) -> None
-```
-
-Ensure each line is a string. Raises `TypeError` if not.
 
 <a id="jc.utils.timestamp"></a>
 

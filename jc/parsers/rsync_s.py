@@ -89,13 +89,13 @@ Examples:
 import re
 from typing import Dict, Iterable, Union
 import jc.utils
-from jc.utils import ignore_exceptions_msg, add_jc_meta
-from jc.exceptions import ParseError
-
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.0'
     description = '`rsync` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -168,7 +168,7 @@ def parse(
         Iterator object
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     summary: Dict = {}
     process: str = ''
@@ -272,7 +272,7 @@ def parse(
 
     for line in data:
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
             output_line: Dict = {}
 
             # ignore blank lines
@@ -452,19 +452,12 @@ def parse(
                 continue
 
         except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
+            yield raise_or_yield(ignore_exceptions, e, line)
 
-            yield e, line
-
+    # gather final item
     try:
         if summary:
             yield summary if raw else _process(summary)
 
     except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
-
-            yield e, line
+        yield raise_or_yield(ignore_exceptions, e, '')

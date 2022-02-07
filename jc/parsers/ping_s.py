@@ -86,10 +86,10 @@ Examples:
 import string
 import ipaddress
 import jc.utils
-from jc.exceptions import ParseError
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
+from jc.exceptions import ParseError
 
 
 class info():
@@ -500,8 +500,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     for line in data:
         try:
-            output_line = {}
             streaming_line_input_type_check(line)
+            output_line = {}
 
             # skip blank lines
             if line.strip() == '':

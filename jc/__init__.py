@@ -10,6 +10,8 @@ and file-types to dictionaries and lists of dictionaries.
     >>> help('jc')
     >>> help('jc.lib')
     >>> help('jc.utils')
+    >>> help('jc.streaming')
+    >>> help('jc.parsers.universal')
     >>> jc.get_help('parser_module_name')
 
 ## Online Documentation

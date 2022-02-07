@@ -4,6 +4,21 @@ from functools import wraps
 from typing import Dict, Iterable
 
 
+def streaming_input_type_check(data: Iterable) -> None:
+    """
+    Ensure input data is an iterable, but not a string or bytes. Raises
+    `TypeError` if not.
+    """
+    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
+        raise TypeError("Input data must be a non-string iterable object.")
+
+
+def streaming_line_input_type_check(line: str) -> None:
+    """Ensure each line is a string. Raises `TypeError` if not."""
+    if not isinstance(line, str):
+        raise TypeError("Input line must be a 'str' object.")
+
+
 def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict:
     """Add `_jc_meta` object to output line if `ignore_exceptions=True`"""
     if ignore_exceptions:
@@ -43,8 +58,10 @@ def add_jc_meta(func):
     Without the decorator on parse():
 
         # successfully parsed line:
-        yield stream_success(output_line, ignore_exceptions) if raw \\
-            else stream_success(_process(output_line), ignore_exceptions)
+        if raw:
+            yield stream_success(output_line, ignore_exceptions)
+        else:
+            stream_success(_process(output_line), ignore_exceptions)
 
         # unsuccessfully parsed line:
         except Exception as e:
@@ -82,26 +99,16 @@ def add_jc_meta(func):
     return wrapper
 
 
-def streaming_input_type_check(data: Iterable) -> None:
-    """
-    Ensure input data is an iterable, but not a string or bytes. Raises
-    `TypeError` if not.
-    """
-    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
-        raise TypeError("Input data must be a non-string iterable object.")
-
-
-def streaming_line_input_type_check(line: str) -> None:
-    """Ensure each line is a string. Raises `TypeError` if not."""
-    if not isinstance(line, str):
-        raise TypeError("Input line must be a 'str' object.")
-
-
 def raise_or_yield(
     ignore_exceptions: bool,
     e: BaseException,
     line: str
 ) -> tuple:
+    """
+    Return the exception object and line string if ignore_exceptions is
+    True. Otherwise, re-raise the exception from the exception object with
+    an annotation.
+    """
     ignore_exceptions_msg = '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.'
 
     if not ignore_exceptions:

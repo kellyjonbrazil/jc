@@ -85,6 +85,9 @@ pydoc-markdown -m jc.lib "${toc_config}" > ../docs/lib.md
 echo Building docs for: utils
 pydoc-markdown -m jc.utils "${toc_config}" > ../docs/utils.md
 
+echo Building docs for: streaming
+pydoc-markdown -m jc.streaming "${toc_config}" > ../docs/streaming.md
+
 echo Building docs for: universal parser
 pydoc-markdown -m jc.parsers.universal "${toc_config}" > ../docs/parsers/universal.md
 

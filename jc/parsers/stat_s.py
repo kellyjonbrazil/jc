@@ -83,7 +83,9 @@ Examples:
 """
 import shlex
 import jc.utils
-from jc.utils import ignore_exceptions_msg, add_jc_meta
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 
 
@@ -154,14 +156,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         Iterator object
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     output_line = {}
     os_type = ''
 
     for line in data:
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
             line = line.rstrip()
 
             # ignore blank lines
@@ -287,20 +289,12 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     output_line = {}
 
         except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
+            yield raise_or_yield(ignore_exceptions, e, line)
 
-            yield e, line
-
+    # gather final item
     try:
-        # gather final item
         if output_line:
             yield output_line if raw else _process(output_line)
 
     except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
-
-            yield e, line
+        yield raise_or_yield(ignore_exceptions, e, '')

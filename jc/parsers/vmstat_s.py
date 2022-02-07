@@ -101,7 +101,9 @@ Examples:
     ...
 """
 import jc.utils
-from jc.utils import ignore_exceptions_msg, add_jc_meta
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 
 
@@ -173,7 +175,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         Iterator object
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     procs = None
     buff_cache = None
@@ -182,9 +184,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     tz = None
 
     for line in data:
-        output_line = {}
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
+            output_line = {}
 
             # skip blank lines
             if line.strip() == '':
@@ -272,8 +274,4 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 raise ParseError('Not vmstat data')
 
         except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
-
-            yield e, line
+            yield raise_or_yield(ignore_exceptions, e, line)

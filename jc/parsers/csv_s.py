@@ -66,7 +66,7 @@ Examples:
 import itertools
 import csv
 import jc.utils
-from jc.utils import ignore_exceptions_msg, add_jc_meta
+from jc.streaming import streaming_input_type_check, add_jc_meta, raise_or_yield
 from jc.exceptions import ParseError
 
 
@@ -124,7 +124,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         Iterator object
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     # convert data to an iterable in case a sequence like a list is used as input.
     # this allows the exhaustion of the input so we don't double-process later.
@@ -158,8 +158,4 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         try:
             yield row if raw else _process(row)
         except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
-
-            yield e, str(row)
+            yield raise_or_yield(ignore_exceptions, e, str(row))

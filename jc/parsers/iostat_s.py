@@ -101,7 +101,9 @@ Examples:
     ...
 """
 import jc.utils
-from jc.utils import ignore_exceptions_msg, add_jc_meta
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 import jc.parsers.universal
 
@@ -183,7 +185,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         Iterator object
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     section = ''  # either 'cpu' or 'device'
     headers = ''
@@ -192,9 +194,8 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     for line in data:
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
             output_line = {}
-
 
             # ignore blank lines and header line
             if line == '\n' or line == '' or line.startswith('Linux'):
@@ -231,8 +232,4 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 raise ParseError('Not iostat data')
 
         except Exception as e:
-            if not ignore_exceptions:
-                e.args = (str(e) + ignore_exceptions_msg,)
-                raise e
-
-            yield e, line
+            yield raise_or_yield(ignore_exceptions, e, line)
