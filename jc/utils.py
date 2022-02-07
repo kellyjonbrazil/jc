@@ -258,7 +258,7 @@ class timestamp:
         self.utc = dt['timestamp_utc']
 
     def __repr__(self):
-        return f'timestamp(string="{self.string}", format={self.format}, naive={self.naive}, utc={self.utc})'
+        return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
 
     def _parse(self):
         """
