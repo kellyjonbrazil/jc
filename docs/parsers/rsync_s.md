@@ -83,12 +83,12 @@ Schema:
 
 Examples:
 
-    $ rsync | jc --rsync-s
-    {example output}
+    $ rsync -i -a source/ dest | jc --rsync-s
+    {"type":"file","filename":"./","metadata":".d..t......","update_...}
     ...
 
-    $ rsync | jc --rsync-s -r
-    {example output}
+    $ cat rsync_backup.log | jc --rsync-s
+    {"type":"file","filename":"./","date":"2022/01/28","time":"03:53...}
     ...
 
 <a id="jc.parsers.rsync_s.parse"></a>
