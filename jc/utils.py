@@ -262,7 +262,7 @@ class timestamp:
         return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
 
     @staticmethod
-    @lru_cache
+    @lru_cache(maxsize=512)
     def _parse_dt(dt_string):
         """
         Input a date-time text string of several formats and convert to
