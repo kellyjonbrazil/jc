@@ -107,8 +107,10 @@ def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
         if not platform_found:
             mod = mod_name.split('.')[-1]
             compat_list = ', '.join(compatible)
-            warning_message([f'{mod} parser not compatible with your OS ({sys.platform}).',
-                            f'Compatible platforms: {compat_list}'])
+            warning_message([
+                f'{mod} parser not compatible with your OS ({sys.platform}).',
+                f'Compatible platforms: {compat_list}'
+            ])
 
 
 def has_data(data: str) -> bool:
@@ -229,7 +231,10 @@ def input_type_check(data: str) -> None:
 
 
 class timestamp:
-    def __init__(self, datetime_string: str, format_hint: Union[List, Tuple, None] = None) -> None:
+    def __init__(self,
+                 datetime_string: str,
+                 format_hint: Union[List, Tuple, None] = None
+    ) -> None:
         """
         Input a datetime text string of several formats and convert to a
         naive or timezone-aware epoch timestamp in UTC.
