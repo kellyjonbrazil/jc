@@ -89,13 +89,15 @@ def set_env_colors(env_colors=None):
     """
     Return a dictionary to be used in Pygments custom style class.
 
-    Grab custom colors from JC_COLORS environment variable. JC_COLORS env variable takes 4 comma
-    separated string values and should be in the format of:
+    Grab custom colors from JC_COLORS environment variable. JC_COLORS env
+    variable takes 4 comma separated string values and should be in the
+    format of:
 
     JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 
-    Where colors are: black, red, green, yellow, blue, magenta, cyan, gray, brightblack, brightred,
-                      brightgreen, brightyellow, brightblue, brightmagenta, brightcyan, white, default
+    Where colors are: black, red, green, yellow, blue, magenta, cyan, gray,
+                      brightblack, brightred, brightgreen, brightyellow,
+                      brightblue, brightmagenta, brightcyan, white, default
 
     Default colors:
 
@@ -132,8 +134,10 @@ def set_env_colors(env_colors=None):
 
 
 def piped_output(force_color):
-    """Return False if stdout is a TTY. True if output is being piped to another program
-       and foce_color is True. This allows forcing of ANSI color codes even when using pipes.
+    """
+    Return False if stdout is a TTY. True if output is being piped to
+    another program and foce_color is True. This allows forcing of ANSI
+    color codes even when using pipes.
     """
     return not sys.stdout.isatty() and not force_color
 
@@ -224,8 +228,8 @@ def helptext():
 
 def help_doc(options):
     """
-    Returns the parser documentation if a parser is found in the arguments, otherwise
-    the general help text is returned.
+    Returns the parser documentation if a parser is found in the arguments,
+    otherwise the general help text is returned.
     """
     for arg in options:
         parser_name = parser_shortname(arg)
@@ -253,7 +257,10 @@ def versiontext():
 
 
 def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
-    """Return a JSON formatted string. String may include color codes or be pretty printed."""
+    """
+    Return a JSON formatted string. String may include color codes or be
+    pretty printed.
+    """
     separators = (',', ':')
     indent = None
 
@@ -277,10 +284,10 @@ def magic_parser(args):
     Parse command arguments for magic syntax: jc -p ls -al
 
     Return a tuple:
-        valid_command   (bool)  is this a valid command? (exists in magic dict)
-        run_command     (list)  list of the user's command to run. None if no command.
-        jc_parser       (str)   parser to use for this user's command.
-        jc_options      (list)  list of jc options
+        valid_command (bool)  is this a valid cmd? (exists in magic dict)
+        run_command   (list)  list of the user's cmd to run. None if no cmd.
+        jc_parser     (str)   parser to use for this user's cmd.
+        jc_options    (list)  list of jc options
     """
     # bail immediately if there are no args or a parser is defined
     if len(args) <= 1 or args[1].startswith('--'):
@@ -335,12 +342,15 @@ def magic_parser(args):
 
 
 def run_user_command(command):
-    """Use subprocess to run the user's command. Returns the STDOUT, STDERR, and the Exit Code as a tuple."""
+    """
+    Use subprocess to run the user's command. Returns the STDOUT, STDERR,
+    and the Exit Code as a tuple.
+    """
     proc = subprocess.Popen(command,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
-                            close_fds=False,            # Allows inheriting file descriptors. Useful for process substitution
-                            universal_newlines=True)
+                            close_fds=False,            # Allows inheriting file descriptors;
+                            universal_newlines=True)    # useful for process substitution
     stdout, stderr = proc.communicate()
 
     return (
@@ -441,14 +451,18 @@ def main():
                 raise
 
             error_msg = os.strerror(e.errno)
-            utils.error_message([f'"{run_command_str}" command could not be run: {error_msg}. For details use the -d or -dd option.'])
+            utils.error_message([
+                f'"{run_command_str}" command could not be run: {error_msg}. For details use the -d or -dd option.'
+            ])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
         except Exception:
             if debug:
                 raise
 
-            utils.error_message([f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'])
+            utils.error_message([
+                f'"{run_command_str}" command could not be run. For details use the -d or -dd option.'
+            ])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif run_command is not None:
@@ -489,7 +503,10 @@ def main():
 
         # streaming
         if getattr(parser.info, 'streaming', None):
-            result = parser.parse(sys.stdin, raw=raw, quiet=quiet, ignore_exceptions=ignore_exceptions)
+            result = parser.parse(sys.stdin,
+                                  raw=raw,
+                                  quiet=quiet,
+                                  ignore_exceptions=ignore_exceptions)
             for line in result:
                 print(json_out(line,
                                pretty=pretty,
@@ -503,7 +520,9 @@ def main():
         # regular
         else:
             data = magic_stdout or sys.stdin.read()
-            result = parser.parse(data, raw=raw, quiet=quiet)
+            result = parser.parse(data,
+                                  raw=raw,
+                                  quiet=quiet)
             print(json_out(result,
                            pretty=pretty,
                            env_colors=jc_colors,
@@ -517,10 +536,11 @@ def main():
         if debug:
             raise
 
-        utils.error_message([f'Parser issue with {parser_name}:',
-                             f'{e.__class__.__name__}: {e}',
-                             'If this is the correct parser, try setting the locale to C (LANG=C).',
-                             'For details use the -d or -dd option. Use "jc -h" for help.'])
+        utils.error_message([
+            f'Parser issue with {parser_name}:', f'{e.__class__.__name__}: {e}',
+            'If this is the correct parser, try setting the locale to C (LANG=C).',
+            'For details use the -d or -dd option. Use "jc -h" for help.'
+        ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except json.JSONDecodeError:
