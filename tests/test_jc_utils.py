@@ -127,6 +127,7 @@ class MyTests(unittest.TestCase):
             '0.0': False,
             '0.1': True,
             '-0.1': True,
+            '*': True,
             'true': True,
             'True': True,
             'false': False,
@@ -147,3 +148,46 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_to_bool(input_string), expected_output)
+
+
+    def test_has_data_nodata(self):
+        self.assertFalse(jc.utils.has_data('     \n      '))
+
+
+    def test_has_data_withdata(self):
+        self.assertTrue(jc.utils.has_data('     \n  abcd    \n    '))
+
+
+    def test_input_type_check_wrong(self):
+        self.assertRaises(TypeError, jc.utils.input_type_check, ['abc'])
+
+
+    def test_input_type_check_correct(self):
+        self.assertEqual(jc.utils.input_type_check('abc'), None)
+
+
+    # need to mock shutil.get_terminal_size().columns or add a column parameter to test
+    # def test_warning_message(self):
+    #     msg = [
+    #         'this is a long first line that will be wrapped yada yada yada yada yada yada yada.',
+    #         'this is a second long line that will be wrapped yada yada yada yada yada yada yada yada yada.',
+    #         'this is a third long line that will be wrapped yada yada yada yada yada yada yada yada yada.'
+    #     ]
+
+    #     expected = '''jc:  Warning - this is a long first line that will be wrapped yada yada yada
+    #            yada yada yada yada.
+    #            this is a second long line that will be wrapped yada yada yada
+    #                yada yada yada yada yada yada.
+    #            this is a third long line that will be wrapped yada yada yada
+    #                yada yada yada yada yada yada.'''
+
+    #     f = io.StringIO()
+    #     with contextlib.redirect_stderr(f):
+    #         jc.utils.warning_message(msg)
+
+    #     self.assertEqual(f.getvalue(), expected + '\n')
+
+
+
+if __name__ == '__main__':
+    unittest.main()
