@@ -4,7 +4,7 @@ Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity.
 
 Will also process the rsync log file generated with the `--log-file`
-option.
+option and the `-i` or `--itemize-changes` options.
 
 Usage (cli):
 
@@ -13,6 +13,10 @@ Usage (cli):
     or
 
     $ jc rsync -i -a source/ dest
+
+    or
+
+    $ cat rsync-backup.log | jc --rsync
 
 Usage (module):
 
