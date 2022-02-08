@@ -1,8 +1,9 @@
 jc changelog
 
-20220202 v1.18.3
+20220208 v1.18.3
 - Add rsync command and log file parser tested on linux and macOS
 - Add rsync command and log file streaming parser tested on linux and macOS
+- Add xrandr command parser tested on linux
 - Enhance timestamp performance with caching and format hints
 - Refactor ignore_exceptions functionality in streaming parsers
 
