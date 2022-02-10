@@ -157,36 +157,6 @@ except ImportError:
     Response = Dict[str, Union[Device, Mode, Screen]]
 
 
-def _process(proc_data):
-    """
-    Final processing to conform to the schema.
-
-    Parameters:
-
-        proc_data:   (List of Dictionaries) raw structured data to process
-
-    Returns:
-
-        List of Dictionaries. Structured data to conform to the schema.
-    """
-    for entry in proc_data:
-        int_list = ["links", "size"]
-        for key in entry:
-            if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
-
-        if "date" in entry:
-            # to speed up processing only try to convert the date if it's not the default format
-            if not re.match(
-                r"[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}", entry["date"]
-            ):
-                ts = jc.utils.timestamp(entry["date"])
-                entry["epoch"] = ts.naive
-                entry["epoch_utc"] = ts.utc
-
-    return proc_data
-
-
 _screen_pattern = (
     r"Screen (?P<screen_number>\d+): "
     + "minimum (?P<minimum_width>\d+) x (?P<minimum_height>\d+), "
@@ -345,4 +315,6 @@ def parse(data: str, raw=False, quiet=False):
                 device = _parse_device(linedata)
                 if device:
                     result["unassociated_devices"].append(device)
+    if not result["unassociated_devices"] and not result["screens"]:
+        return {}
     return result
