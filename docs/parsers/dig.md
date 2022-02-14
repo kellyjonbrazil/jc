@@ -350,4 +350,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
-Version 2.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -8,11 +8,7 @@
   * [convert\_to\_int](#jc.utils.convert_to_int)
   * [convert\_to\_float](#jc.utils.convert_to_float)
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
-  * [stream\_success](#jc.utils.stream_success)
-  * [stream\_error](#jc.utils.stream_error)
   * [input\_type\_check](#jc.utils.input_type_check)
-  * [streaming\_input\_type\_check](#jc.utils.streaming_input_type_check)
-  * [streaming\_line\_input\_type\_check](#jc.utils.streaming_line_input_type_check)
   * [timestamp](#jc.utils.timestamp)
     * [\_\_init\_\_](#jc.utils.timestamp.__init__)
 
@@ -67,7 +63,7 @@ Returns:
 ### compatibility
 
 ```python
-def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None
+def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None
 ```
 
 Checks for the parser's compatibility with the running OS
@@ -112,7 +108,7 @@ Returns:
 ### convert\_to\_int
 
 ```python
-def convert_to_int(value: Union[str, float]) -> Union[int, None]
+def convert_to_int(value: Union[str, float]) -> Optional[int]
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -131,7 +127,7 @@ Returns:
 ### convert\_to\_float
 
 ```python
-def convert_to_float(value: Union[str, int]) -> Union[float, None]
+def convert_to_float(value: Union[str, int]) -> Optional[float]
 ```
 
 Converts string and int input to float. Strips all non-numeric
@@ -165,27 +161,6 @@ Returns:
     True/False      False unless a 'truthy' number or string is found
                     ('y', 'yes', 'true', '1', 1, -1, etc.)
 
-<a id="jc.utils.stream_success"></a>
-
-### stream\_success
-
-```python
-def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict
-```
-
-Add `_jc_meta` object to output line if `ignore_exceptions=True`
-
-<a id="jc.utils.stream_error"></a>
-
-### stream\_error
-
-```python
-def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict
-```
-
-Reraise the stream exception with annotation or print an error
-`_jc_meta` field if `ignore_exceptions=True`.
-
 <a id="jc.utils.input_type_check"></a>
 
 ### input\_type\_check
@@ -195,27 +170,6 @@ def input_type_check(data: str) -> None
 ```
 
 Ensure input data is a string. Raises `TypeError` if not.
-
-<a id="jc.utils.streaming_input_type_check"></a>
-
-### streaming\_input\_type\_check
-
-```python
-def streaming_input_type_check(data: Iterable) -> None
-```
-
-Ensure input data is an iterable, but not a string or bytes. Raises
-`TypeError` if not.
-
-<a id="jc.utils.streaming_line_input_type_check"></a>
-
-### streaming\_line\_input\_type\_check
-
-```python
-def streaming_line_input_type_check(line: str) -> None
-```
-
-Ensure each line is a string. Raises `TypeError` if not.
 
 <a id="jc.utils.timestamp"></a>
 
@@ -230,29 +184,34 @@ class timestamp()
 ### \_\_init\_\_
 
 ```python
-def __init__(datetime_string: str) -> None
+def __init__(datetime_string: str, format_hint: Union[List, Tuple, None] = None) -> None
 ```
 
-Input a date-time text string of several formats and convert to a
+Input a datetime text string of several formats and convert to a
 naive or timezone-aware epoch timestamp in UTC.
 
 Parameters:
 
-    datetime_string:  (str)  a string representation of a
-                             date-time in several supported formats
+    datetime_string  (str):  a string representation of a
+        datetime in several supported formats
 
-Attributes:
+    format_hint  (list | tuple):  an optional list of format ID
+        integers to instruct the timestamp object to try those
+        formats first in the order given. Other formats will be
+        tried after the format hint list is exhausted. This can
+        speed up timestamp conversion so several different formats
+        don't have to be tried in brute-force fashion.
 
-    string            (str)  the input datetime string
+Returns a timestamp object with the following attributes:
 
-    format            (int)  the format rule that was used to
-                             decode the datetime string. None if
-                             conversion fails
+    string  (str):  the input datetime string
 
-    naive             (int)  timestamp based on locally configured
-                             timezone. None if conversion fails
+    format  (int | None):  the format rule that was used to decode
+        the datetime string. None if conversion fails.
 
-    utc               (int)  aware timestamp only if UTC timezone
-                             detected in datetime string. None if
-                             conversion fails
+    naive  (int | None):  timestamp based on locally configured
+        timezone. None if conversion fails.
+
+    utc  (int | None):  aware timestamp only if UTC timezone
+        detected in datetime string. None if conversion fails.
 

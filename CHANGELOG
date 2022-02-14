@@ -1,5 +1,13 @@
 jc changelog
 
+20220214 v1.18.3
+- Add rsync command and log file parser tested on linux and macOS
+- Add rsync command and log file streaming parser tested on linux and macOS
+- Add xrandr command parser tested on linux
+- Enhance timestamp performance with caching and format hints
+- Refactor ignore_exceptions functionality in streaming parsers
+- Fix man page in packages
+
 20220127 v1.18.2
 - Fix for plugin parsers with underscores in the name
 - Add type hints to public API functions

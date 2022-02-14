@@ -2,7 +2,7 @@
 
 
 import string
-from typing import List, Dict, Optional
+from typing import List, Dict
 
 
 def simple_table_parse(data: List[str]) -> List[Dict]:
@@ -33,7 +33,7 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
     return raw_output
 
 
-def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[Dict]:
+def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
     """
     Parse tables with missing column data or with spaces in column data.
 
@@ -60,10 +60,10 @@ def sparse_table_parse(data: List[str], delim: Optional[str] ='\u2063') -> List[
 
         List of Dictionaries
     """
-    output = []
-    header_text = data.pop(0)
+    output: List = []
+    header_text: str = data.pop(0)
     header_text = header_text + ' '
-    header_list = header_text.split()
+    header_list: List = header_text.split()
 
     # find each column index and end position
     header_search = [header_list[0]]

@@ -1,0 +1,233 @@
+2022/02/01 08:09:26 [617] server_recv(2) starting pid=617
+2022/02/01 08:09:26 [617] receiving file list
+2022/02/01 08:09:26 [617] recv_file_name(.)
+2022/02/01 08:09:26 [617] recv_file_name(folder)
+2022/02/01 08:09:26 [617] recv_file_name(c.txt)
+2022/02/01 08:09:26 [617] recv_file_name(b.txt)
+2022/02/01 08:09:26 [617] recv_file_name(a.txt)
+2022/02/01 08:09:26 [617] recv_file_name(d.txt)
+2022/02/01 08:09:26 [617] recv_file_name(folder/c.txt)
+2022/02/01 08:09:26 [617] recv_file_name(folder/b.txt)
+2022/02/01 08:09:26 [617] recv_file_name(folder/a.txt)
+2022/02/01 08:09:26 [617] recv_file_name(folder/d.txt)
+2022/02/01 08:09:26 [617] received 10 names
+2022/02/01 08:09:26 [617] recv_file_list done
+2022/02/01 08:09:26 [617] get_local_name count=10 dest
+2022/02/01 08:09:26 [617] generator starting pid=617 count=10
+2022/02/01 08:09:26 [617] recv_files(10) starting
+2022/02/01 08:09:26 [617] delta-transmission disabled for local transfer or --whole-file
+2022/02/01 08:09:26 [617] recv_generator(.,0)
+2022/02/01 08:09:26 [617] set modtime of . to (1643731675) Tue Feb  1 08:07:55 2022
+2022/02/01 08:09:26 [617] recv_generator(a.txt,1)
+2022/02/01 08:09:26 [617] recv_files(.)
+2022/02/01 08:09:26 [617] recv_generator(b.txt,2)
+2022/02/01 08:09:26 [617] .d..t.... ./
+2022/02/01 08:09:26 [617] recv_generator(c.txt,3)
+2022/02/01 08:09:26 [617] recv_files(a.txt)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] recv_generator(d.txt,4)
+2022/02/01 08:09:26 [617] >f+++++++ a.txt
+2022/02/01 08:09:26 [617] set modtime of .a.txt.3zgq9u to (1643731665) Tue Feb  1 08:07:45 2022
+2022/02/01 08:09:26 [617] recv_generator(folder,5)
+2022/02/01 08:09:26 [617] renaming .a.txt.3zgq9u to a.txt
+2022/02/01 08:09:26 [617] recv_files(b.txt)
+2022/02/01 08:09:26 [617] set modtime of folder to (1643731693) Tue Feb  1 08:08:13 2022
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ b.txt
+2022/02/01 08:09:26 [617] recv_generator(folder/a.txt,6)
+2022/02/01 08:09:26 [617] set modtime of .b.txt.ZzrbL4 to (1643731668) Tue Feb  1 08:07:48 2022
+2022/02/01 08:09:26 [617] recv_generator(folder/b.txt,7)
+2022/02/01 08:09:26 [617] renaming .b.txt.ZzrbL4 to b.txt
+2022/02/01 08:09:26 [617] recv_files(c.txt)
+2022/02/01 08:09:26 [617] recv_generator(folder/c.txt,8)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ c.txt
+2022/02/01 08:09:26 [617] recv_generator(folder/d.txt,9)
+2022/02/01 08:09:26 [617] set modtime of .c.txt.EPrPMr to (1643731671) Tue Feb  1 08:07:51 2022
+2022/02/01 08:09:26 [617] renaming .c.txt.EPrPMr to c.txt
+2022/02/01 08:09:26 [617] generate_files phase=1
+2022/02/01 08:09:26 [617] recv_files(d.txt)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ d.txt
+2022/02/01 08:09:26 [617] set modtime of .d.txt.6KXXf5 to (1643731675) Tue Feb  1 08:07:55 2022
+2022/02/01 08:09:26 [617] renaming .d.txt.6KXXf5 to d.txt
+2022/02/01 08:09:26 [617] recv_files(folder)
+2022/02/01 08:09:26 [617] cd+++++++ folder/
+2022/02/01 08:09:26 [617] recv_files(folder/a.txt)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ folder/a.txt
+2022/02/01 08:09:26 [617] set modtime of folder/.a.txt.Se2V6X to (1643731685) Tue Feb  1 08:08:05 2022
+2022/02/01 08:09:26 [617] renaming folder/.a.txt.Se2V6X to folder/a.txt
+2022/02/01 08:09:26 [617] recv_files(folder/b.txt)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ folder/b.txt
+2022/02/01 08:09:26 [617] set modtime of folder/.b.txt.U8duhi to (1643731687) Tue Feb  1 08:08:07 2022
+2022/02/01 08:09:26 [617] renaming folder/.b.txt.U8duhi to folder/b.txt
+2022/02/01 08:09:26 [617] recv_files(folder/c.txt)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ folder/c.txt
+2022/02/01 08:09:26 [617] set modtime of folder/.c.txt.oEepsv to (1643731690) Tue Feb  1 08:08:10 2022
+2022/02/01 08:09:26 [617] renaming folder/.c.txt.oEepsv to folder/c.txt
+2022/02/01 08:09:26 [617] recv_files(folder/d.txt)
+2022/02/01 08:09:26 [617] got file_sum
+2022/02/01 08:09:26 [617] >f+++++++ folder/d.txt
+2022/02/01 08:09:26 [617] set modtime of folder/.d.txt.AUmsdE to (1643731693) Tue Feb  1 08:08:13 2022
+2022/02/01 08:09:26 [617] renaming folder/.d.txt.AUmsdE to folder/d.txt
+2022/02/01 08:09:26 [617] recv_files phase=1
+2022/02/01 08:09:26 [617] generate_files phase=2
+2022/02/01 08:09:26 [617] recv_files phase=2
+2022/02/01 08:09:26 [617] generate_files phase=3
+2022/02/01 08:09:26 [617] recv_files finished
+2022/02/01 08:09:26 [617] recv_generator(.,0)
+2022/02/01 08:09:26 [617] set modtime of . to (1643731675) Tue Feb  1 08:07:55 2022
+2022/02/01 08:09:26 [617] recv_generator(folder,5)
+2022/02/01 08:09:26 [617] set modtime of folder to (1643731693) Tue Feb  1 08:08:13 2022
+2022/02/01 08:09:26 [617] generate_files finished
+2022/02/01 08:09:26 [617] sent 2887 bytes  received 212 bytes  total size 320
+2022/02/01 08:09:26 [617] _exit_cleanup(code=0, file=/BuildRoot/Library/Caches/com.apple.xbs/Sources/rsync/rsync-52.200.2/rsync/main.c, line=891): about to call exit(0)
+2022/02/01 13:09:25 [9503] server_recv(2) starting pid=9503
+2022/02/01 13:09:25 [9503] receiving file list
+2022/02/01 13:09:25 [9503] recv_file_name(.)
+2022/02/01 13:09:25 [9503] recv_file_name(folder)
+2022/02/01 13:09:25 [9503] recv_file_name(c.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(b.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(a.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(d.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(folder/c.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(folder/b.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(folder/a.txt)
+2022/02/01 13:09:25 [9503] recv_file_name(folder/d.txt)
+2022/02/01 13:09:25 [9503] received 10 names
+2022/02/01 13:09:25 [9503] recv_file_list done
+2022/02/01 13:09:25 [9503] get_local_name count=10 dest
+2022/02/01 13:09:25 [9503] generator starting pid=9503 count=10
+2022/02/01 13:09:25 [9503] recv_files(10) starting
+2022/02/01 13:09:25 [9503] delta-transmission disabled for local transfer or --whole-file
+2022/02/01 13:09:25 [9503] recv_generator(.,0)
+2022/02/01 13:09:25 [9503] set modtime of . to (1643731675) Tue Feb  1 08:07:55 2022
+2022/02/01 13:09:25 [9503] recv_generator(a.txt,1)
+2022/02/01 13:09:25 [9503] recv_files(.)
+2022/02/01 13:09:25 [9503] recv_generator(b.txt,2)
+2022/02/01 13:09:25 [9503] .d..t.... ./
+2022/02/01 13:09:25 [9503] recv_generator(c.txt,3)
+2022/02/01 13:09:25 [9503] recv_generator(d.txt,4)
+2022/02/01 13:09:25 [9503] recv_files(a.txt)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] recv_generator(folder,5)
+2022/02/01 13:09:25 [9503] >f+++++++ a.txt
+2022/02/01 13:09:25 [9503] set modtime of .a.txt.jTX5bR to (1643731665) Tue Feb  1 08:07:45 2022
+2022/02/01 13:09:25 [9503] set modtime of folder to (1643731693) Tue Feb  1 08:08:13 2022
+2022/02/01 13:09:25 [9503] renaming .a.txt.jTX5bR to a.txt
+2022/02/01 13:09:25 [9503] recv_files(b.txt)
+2022/02/01 13:09:25 [9503] recv_generator(folder/a.txt,6)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] recv_generator(folder/b.txt,7)
+2022/02/01 13:09:25 [9503] >f+++++++ b.txt
+2022/02/01 13:09:25 [9503] set modtime of .b.txt.5SSygw to (1643731668) Tue Feb  1 08:07:48 2022
+2022/02/01 13:09:25 [9503] recv_generator(folder/c.txt,8)
+2022/02/01 13:09:25 [9503] renaming .b.txt.5SSygw to b.txt
+2022/02/01 13:09:25 [9503] recv_files(c.txt)
+2022/02/01 13:09:25 [9503] recv_generator(folder/d.txt,9)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] >f+++++++ c.txt
+2022/02/01 13:09:25 [9503] generate_files phase=1
+2022/02/01 13:09:25 [9503] set modtime of .c.txt.f18rCl to (1643731671) Tue Feb  1 08:07:51 2022
+2022/02/01 13:09:25 [9503] renaming .c.txt.f18rCl to c.txt
+2022/02/01 13:09:25 [9503] recv_files(d.txt)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] >f+++++++ d.txt
+2022/02/01 13:09:25 [9503] set modtime of .d.txt.87Atbf to (1643731675) Tue Feb  1 08:07:55 2022
+2022/02/01 13:09:25 [9503] renaming .d.txt.87Atbf to d.txt
+2022/02/01 13:09:25 [9503] recv_files(folder)
+2022/02/01 13:09:25 [9503] cd+++++++ folder/
+2022/02/01 13:09:25 [9503] recv_files(folder/a.txt)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] >f+++++++ folder/a.txt
+2022/02/01 13:09:25 [9503] set modtime of folder/.a.txt.p2jkNN to (1643731685) Tue Feb  1 08:08:05 2022
+2022/02/01 13:09:25 [9503] renaming folder/.a.txt.p2jkNN to folder/a.txt
+2022/02/01 13:09:25 [9503] recv_files(folder/b.txt)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] >f+++++++ folder/b.txt
+2022/02/01 13:09:25 [9503] set modtime of folder/.b.txt.sXugTy to (1643731687) Tue Feb  1 08:08:07 2022
+2022/02/01 13:09:25 [9503] renaming folder/.b.txt.sXugTy to folder/b.txt
+2022/02/01 13:09:25 [9503] recv_files(folder/c.txt)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] >f+++++++ folder/c.txt
+2022/02/01 13:09:25 [9503] set modtime of folder/.c.txt.nCgF2I to (1643731690) Tue Feb  1 08:08:10 2022
+2022/02/01 13:09:25 [9503] renaming folder/.c.txt.nCgF2I to folder/c.txt
+2022/02/01 13:09:25 [9503] recv_files(folder/d.txt)
+2022/02/01 13:09:25 [9503] got file_sum
+2022/02/01 13:09:25 [9503] >f+++++++ folder/d.txt
+2022/02/01 13:09:25 [9503] set modtime of folder/.d.txt.HdWXqY to (1643731693) Tue Feb  1 08:08:13 2022
+2022/02/01 13:09:25 [9503] renaming folder/.d.txt.HdWXqY to folder/d.txt
+2022/02/01 13:09:25 [9503] recv_files phase=1
+2022/02/01 13:09:25 [9503] generate_files phase=2
+2022/02/01 13:09:25 [9503] recv_files phase=2
+2022/02/01 13:09:25 [9503] generate_files phase=3
+2022/02/01 13:09:25 [9503] recv_files finished
+2022/02/01 13:09:25 [9503] recv_generator(.,0)
+2022/02/01 13:09:25 [9503] set modtime of . to (1643731675) Tue Feb  1 08:07:55 2022
+2022/02/01 13:09:25 [9503] recv_generator(folder,5)
+2022/02/01 13:09:25 [9503] set modtime of folder to (1643731693) Tue Feb  1 08:08:13 2022
+2022/02/01 13:09:25 [9503] generate_files finished
+2022/02/01 13:09:25 [9503] sent 2889 bytes  received 212 bytes  total size 320
+2022/02/01 13:09:25 [9503] _exit_cleanup(code=0, file=/BuildRoot/Library/Caches/com.apple.xbs/Sources/rsync/rsync-52.200.2/rsync/main.c, line=891): about to call exit(0)
+2022/02/01 13:10:37 [9546] server_recv(2) starting pid=9546
+2022/02/01 13:10:37 [9546] receiving file list
+2022/02/01 13:10:37 [9546] recv_file_name(.)
+2022/02/01 13:10:37 [9546] recv_file_name(folder)
+2022/02/01 13:10:37 [9546] recv_file_name(c.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(b.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(a.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(d.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(folder/c.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(folder/b.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(folder/a.txt)
+2022/02/01 13:10:37 [9546] recv_file_name(folder/d.txt)
+2022/02/01 13:10:37 [9546] received 10 names
+2022/02/01 13:10:37 [9546] recv_file_list done
+2022/02/01 13:10:37 [9546] get_local_name count=10 dest
+2022/02/01 13:10:37 [9546] generator starting pid=9546 count=10
+2022/02/01 13:10:37 [9546] recv_files(10) starting
+2022/02/01 13:10:37 [9546] delta-transmission disabled for local transfer or --whole-file
+2022/02/01 13:10:37 [9546] recv_generator(.,0)
+2022/02/01 13:10:37 [9546] recv_generator(a.txt,1)
+2022/02/01 13:10:37 [9546] recv_generator(b.txt,2)
+2022/02/01 13:10:37 [9546] recv_files(.)
+2022/02/01 13:10:37 [9546] .d        ./
+2022/02/01 13:10:37 [9546] recv_generator(c.txt,3)
+2022/02/01 13:10:37 [9546] recv_files(a.txt)
+2022/02/01 13:10:37 [9546] .f        a.txt
+2022/02/01 13:10:37 [9546] recv_generator(d.txt,4)
+2022/02/01 13:10:37 [9546] recv_files(b.txt)
+2022/02/01 13:10:37 [9546] .f        b.txt
+2022/02/01 13:10:37 [9546] recv_generator(folder,5)
+2022/02/01 13:10:37 [9546] recv_files(c.txt)
+2022/02/01 13:10:37 [9546] .f        c.txt
+2022/02/01 13:10:37 [9546] recv_generator(folder/a.txt,6)
+2022/02/01 13:10:37 [9546] recv_files(d.txt)
+2022/02/01 13:10:37 [9546] .f        d.txt
+2022/02/01 13:10:37 [9546] recv_generator(folder/b.txt,7)
+2022/02/01 13:10:37 [9546] recv_files(folder)
+2022/02/01 13:10:37 [9546] .d        folder/
+2022/02/01 13:10:37 [9546] recv_generator(folder/c.txt,8)
+2022/02/01 13:10:37 [9546] recv_files(folder/a.txt)
+2022/02/01 13:10:37 [9546] .f        folder/a.txt
+2022/02/01 13:10:37 [9546] recv_generator(folder/d.txt,9)
+2022/02/01 13:10:37 [9546] recv_files(folder/b.txt)
+2022/02/01 13:10:37 [9546] .f        folder/b.txt
+2022/02/01 13:10:37 [9546] generate_files phase=1
+2022/02/01 13:10:37 [9546] recv_files(folder/c.txt)
+2022/02/01 13:10:37 [9546] .f        folder/c.txt
+2022/02/01 13:10:37 [9546] recv_files(folder/d.txt)
+2022/02/01 13:10:37 [9546] .f        folder/d.txt
+2022/02/01 13:10:37 [9546] recv_files phase=1
+2022/02/01 13:10:37 [9546] generate_files phase=2
+2022/02/01 13:10:37 [9546] recv_files phase=2
+2022/02/01 13:10:37 [9546] generate_files phase=3
+2022/02/01 13:10:37 [9546] recv_files finished
+2022/02/01 13:10:37 [9546] recv_generator(.,0)
+2022/02/01 13:10:37 [9546] recv_generator(folder,5)
+2022/02/01 13:10:37 [9546] generate_files finished
+2022/02/01 13:10:37 [9546] sent 1403 bytes  received 212 bytes  total size 320
+2022/02/01 13:10:37 [9546] _exit_cleanup(code=0, file=/BuildRoot/Library/Caches/com.apple.xbs/Sources/rsync/rsync-52.200.2/rsync/main.c, line=891): about to call exit(0)

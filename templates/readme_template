@@ -128,7 +128,7 @@ pip3 install jc
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
-### Binaries and Packages
+### Binaries
 For precompiled binaries, see [Releases](https://github.com/kellyjonbrazil/jc/releases)
 on Github.
 

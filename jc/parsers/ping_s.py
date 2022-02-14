@@ -86,13 +86,15 @@ Examples:
 import string
 import ipaddress
 import jc.utils
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
-from jc.utils import stream_success, stream_error
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.6'
+    version = '1.0'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -469,6 +471,7 @@ def _linux_parse(line, s):
         return output_line
 
 
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -488,17 +491,17 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    streaming_input_type_check(data)
+
     s = _state()
 
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
-
     for line in data:
-        output_line = {}
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
+            output_line = {}
 
             # skip blank lines
             if line.strip() == '':
@@ -542,9 +545,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
             # yield the output line if it has data
             if output_line:
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
             else:
                 continue
 
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+            yield raise_or_yield(ignore_exceptions, e, line)

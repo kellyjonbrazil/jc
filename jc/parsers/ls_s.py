@@ -79,13 +79,15 @@ Examples:
 """
 import re
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.6'
+    version = '1.0'
     description = '`ls` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -116,13 +118,14 @@ def _process(proc_data):
     if 'date' in proc_data:
         # to speed up processing only try to convert the date if it's not the default format
         if not re.match(r'[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}', proc_data['date']):
-            ts = jc.utils.timestamp(proc_data['date'])
+            ts = jc.utils.timestamp(proc_data['date'], format_hint=(7200,))
             proc_data['epoch'] = ts.naive
             proc_data['epoch_utc'] = ts.utc
 
     return proc_data
 
 
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -142,16 +145,16 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     parent = ''
 
     for line in data:
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
 
             # skip line if it starts with 'total 1234'
             if re.match(r'total [0-9]+', line):
@@ -163,7 +166,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
             # Look for parent line if glob or -R is used
             if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', line) \
-               and line.strip().endswith(':'):
+                and line.strip().endswith(':'):
                 parent = line.strip()[:-1]
                 continue
 
@@ -196,7 +199,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             output_line['size'] = parsed_line[4]
             output_line['date'] = ' '.join(parsed_line[5:8])
 
-            yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+            yield output_line if raw else _process(output_line)
 
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+            yield raise_or_yield(ignore_exceptions, e, line)

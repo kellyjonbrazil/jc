@@ -128,7 +128,7 @@ pip3 install jc
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
-### Binaries and Packages
+### Binaries
 For precompiled binaries, see [Releases](https://github.com/kellyjonbrazil/jc/releases)
 on Github.
 
@@ -208,6 +208,8 @@ option.
 - `--ps` enables the `ps` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ps))
 - `--route` enables the `route` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/route))
 - `--rpm-qi` enables the `rpm -qi` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi))
+- `--rsync` enables the `rsync` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync))
+- `--rsync-s` enables the `rsync` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync_s))
 - `--sfdisk` enables the `sfdisk` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk))
 - `--shadow` enables the `/etc/shadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow))
 - `--ss` enables the `ss` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ss))
@@ -234,6 +236,7 @@ option.
 - `--wc` enables the `wc` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/wc))
 - `--who` enables the `who` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/who))
 - `--xml` enables the XML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xml))
+- `--xrandr` enables the `xrandr` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr))
 - `--yaml` enables the YAML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml))
 - `--zipinfo` enables the `zipinfo` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo))
 

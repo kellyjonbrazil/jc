@@ -66,13 +66,13 @@ Examples:
 import itertools
 import csv
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.streaming import streaming_input_type_check, add_jc_meta, raise_or_yield
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -101,6 +101,7 @@ def _process(proc_data):
     return proc_data
 
 
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -120,10 +121,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     # convert data to an iterable in case a sequence like a list is used as input.
     # this allows the exhaustion of the input so we don't double-process later.
@@ -155,6 +156,6 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     for row in reader:
         try:
-            yield stream_success(row, ignore_exceptions) if raw else stream_success(_process(row), ignore_exceptions)
+            yield row if raw else _process(row)
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, row)
+            yield raise_or_yield(ignore_exceptions, e, str(row))

@@ -101,14 +101,16 @@ Examples:
     ...
 """
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 import jc.parsers.universal
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`iostat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -159,6 +161,8 @@ def _create_obj_list(section_list, section_name):
         item['type'] = section_name
     return output_list
 
+
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -178,10 +182,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     section = ''  # either 'cpu' or 'device'
     headers = ''
@@ -189,9 +193,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     device_list = []
 
     for line in data:
-        output_line = {}
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
+            output_line = {}
 
             # ignore blank lines and header line
             if line == '\n' or line == '' or line.startswith('Linux'):
@@ -223,9 +227,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 device_list = []
 
             if output_line:
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
             else:
                 raise ParseError('Not iostat data')
 
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+            yield raise_or_yield(ignore_exceptions, e, line)

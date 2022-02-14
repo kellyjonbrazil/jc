@@ -5,7 +5,8 @@ import locale
 import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
-from typing import Dict, Iterable, List, Union, Optional
+from functools import lru_cache
+from typing import List, Tuple, Union, Optional
 
 
 def warning_message(message_lines: List[str]) -> None:
@@ -76,7 +77,7 @@ def error_message(message_lines: List[str]) -> None:
         print(message, file=sys.stderr)
 
 
-def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False) -> None:
+def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS
     platform.
@@ -106,8 +107,10 @@ def compatibility(mod_name: str, compatible: List, quiet: Optional[bool] = False
         if not platform_found:
             mod = mod_name.split('.')[-1]
             compat_list = ', '.join(compatible)
-            warning_message([f'{mod} parser not compatible with your OS ({sys.platform}).',
-                            f'Compatible platforms: {compat_list}'])
+            warning_message([
+                f'{mod} parser not compatible with your OS ({sys.platform}).',
+                f'Compatible platforms: {compat_list}'
+            ])
 
 
 def has_data(data: str) -> bool:
@@ -127,7 +130,7 @@ def has_data(data: str) -> bool:
     return bool(data and not data.isspace())
 
 
-def convert_to_int(value: Union[str, float]) -> Union[int, None]:
+def convert_to_int(value: Union[str, float]) -> Optional[int]:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
@@ -157,7 +160,7 @@ def convert_to_int(value: Union[str, float]) -> Union[int, None]:
         return None
 
 
-def convert_to_float(value: Union[str, int]) -> Union[float, None]:
+def convert_to_float(value: Union[str, int]) -> Optional[float]:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
@@ -221,114 +224,94 @@ def convert_to_bool(value: Union[str, int, float]) -> bool:
     return False
 
 
-def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict:
-    """Add `_jc_meta` object to output line if `ignore_exceptions=True`"""
-    if ignore_exceptions:
-        output_line.update({'_jc_meta': {'success': True}})
-
-    return output_line
-
-
-def stream_error(e: BaseException, ignore_exceptions: bool, line: str) -> Dict:
-    """
-    Reraise the stream exception with annotation or print an error
-    `_jc_meta` field if `ignore_exceptions=True`.
-    """
-    if not ignore_exceptions:
-        e.args = (str(e) + '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.',)
-        raise e
-
-    return {
-        '_jc_meta':
-            {
-                'success': False,
-                'error': f'{e.__class__.__name__}: {e}',
-                'line': line.strip()
-            }
-    }
-
-
 def input_type_check(data: str) -> None:
     """Ensure input data is a string. Raises `TypeError` if not."""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")
 
 
-def streaming_input_type_check(data: Iterable) -> None:
-    """
-    Ensure input data is an iterable, but not a string or bytes. Raises
-    `TypeError` if not.
-    """
-    if not hasattr(data, '__iter__') or isinstance(data, (str, bytes)):
-        raise TypeError("Input data must be a non-string iterable object.")
-
-
-def streaming_line_input_type_check(line: str) -> None:
-    """Ensure each line is a string. Raises `TypeError` if not."""
-    if not isinstance(line, str):
-        raise TypeError("Input line must be a 'str' object.")
-
-
 class timestamp:
-    def __init__(self, datetime_string: str) -> None:
+    def __init__(self,
+                 datetime_string: str,
+                 format_hint: Union[List, Tuple, None] = None
+    ) -> None:
         """
-        Input a date-time text string of several formats and convert to a
+        Input a datetime text string of several formats and convert to a
         naive or timezone-aware epoch timestamp in UTC.
 
         Parameters:
 
-            datetime_string:  (str)  a string representation of a
-                                     date-time in several supported formats
+            datetime_string  (str):  a string representation of a
+                datetime in several supported formats
 
-        Attributes:
+            format_hint  (list | tuple):  an optional list of format ID
+                integers to instruct the timestamp object to try those
+                formats first in the order given. Other formats will be
+                tried after the format hint list is exhausted. This can
+                speed up timestamp conversion so several different formats
+                don't have to be tried in brute-force fashion.
 
-            string            (str)  the input datetime string
+        Returns a timestamp object with the following attributes:
 
-            format            (int)  the format rule that was used to
-                                     decode the datetime string. None if
-                                     conversion fails
+            string  (str):  the input datetime string
 
-            naive             (int)  timestamp based on locally configured
-                                     timezone. None if conversion fails
+            format  (int | None):  the format rule that was used to decode
+                the datetime string. None if conversion fails.
 
-            utc               (int)  aware timestamp only if UTC timezone
-                                     detected in datetime string. None if
-                                     conversion fails
+            naive  (int | None):  timestamp based on locally configured
+                timezone. None if conversion fails.
+
+            utc  (int | None):  aware timestamp only if UTC timezone
+                detected in datetime string. None if conversion fails.
         """
         self.string = datetime_string
-        dt = self._parse()
+
+        if not format_hint:
+            format_hint = tuple()
+        else:
+            format_hint = tuple(format_hint)
+
+        dt = self._parse_dt(self.string, format_hint=format_hint)
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
 
     def __repr__(self):
-        return f'timestamp(string="{self.string}", format={self.format}, naive={self.naive}, utc={self.utc})'
+        return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
 
-    def _parse(self):
+    @staticmethod
+    @lru_cache(maxsize=512)
+    def _parse_dt(dt_string, format_hint=None):
         """
-        Input a date-time text string of several formats and convert to
+        Input a datetime text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
 
         Parameters:
 
-            data:       (string) a string representation of a date-time
-                        in several supported formats
+            dt_string:    (string) a string representation of a date-time
+                          in several supported formats
+
+            format_hint:  (list | tuple) a list of format ID int's that
+                          should be tried first. This can increase
+                          performance since the function will not need to
+                          try many incorrect formats before finding the
+                          correct one.
 
         Returns:
 
-            Dictionary  A Dictionary of the following format:
+            Dictionary of the following format:
 
                 {
                     # for debugging purposes. None if conversion fails
-                    "format":               integer,
+                    "format":               int,
 
                     # timestamp based on locally configured timezone.
                     # None if conversion fails.
-                    "timestamp_naive":      integer,
+                    "timestamp_naive":      int,
 
                     # aware timestamp only if UTC timezone detected.
                     # None if conversion fails.
-                    "timestamp_utc":        integer
+                    "timestamp_utc":        int
                 }
 
                 The `format` integer denotes which date_time format
@@ -345,7 +328,7 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        data = self.string or ''
+        data = dt_string or ''
         normalized_datetime = ''
         utc_tz = False
         dt = None
@@ -358,6 +341,12 @@ class timestamp:
             'timestamp_utc': None
         }
         utc_tz = False
+
+        # convert format_hint to a tuple so it is hashable (for lru_cache)
+        if not format_hint:
+            format_hint = tuple()
+        else:
+            format_hint = tuple(format_hint)
 
         # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
         data = data.replace('Coordinated Universal Time', 'UTC')
@@ -439,7 +428,17 @@ class timestamp:
         p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
         normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
 
-        for fmt in formats:
+        # try format hints first, then fall back to brute-force method
+        hint_obj_list = []
+        for fmt_id in format_hint:
+            for fmt in formats:
+                if fmt_id == fmt['id']:
+                    hint_obj_list.append(fmt)
+
+        remaining_formats = [fmt for fmt in formats if not fmt['id'] in format_hint]
+        optimized_formats = hint_obj_list + remaining_formats
+
+        for fmt in optimized_formats:
             try:
                 locale.setlocale(locale.LC_TIME, fmt['locale'])
                 dt = datetime.strptime(normalized_datetime, fmt['format'])

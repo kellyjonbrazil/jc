@@ -1,0 +1,422 @@
+sending incremental file list
+[sender] make_file(.,*,0)
+[sender] pushing local filters for /home/kbrazil/rsynctest/source/
+[sender] make_file(a.txt,*,2)
+[sender] make_file(b.txt,*,2)
+[sender] make_file(c.txt,*,2)
+[sender] make_file(d.txt,*,2)
+[sender] make_file(file with spaces.txt,*,2)
+[sender] make_file(folder,*,2)
+send_file_list done
+send_files starting
+[sender] pushing local filters for /home/kbrazil/rsynctest/source/folder/
+[sender] make_file(folder/file1,*,2)
+[sender] make_file(folder/file2,*,2)
+[sender] make_file(folder/file3,*,2)
+[sender] make_file(folder/file4,*,2)
+[sender] make_file(folder/file5,*,2)
+[sender] make_file(folder/file6,*,2)
+[sender] make_file(folder/file7,*,2)
+[sender] make_file(folder/file8,*,2)
+[sender] make_file(folder/file9,*,2)
+[sender] make_file(folder/file10,*,2)
+[sender] make_file(folder/file11,*,2)
+[sender] make_file(folder/file12,*,2)
+[sender] make_file(folder/file13,*,2)
+[sender] make_file(folder/file14,*,2)
+[sender] make_file(folder/file15,*,2)
+[sender] make_file(folder/file16,*,2)
+[sender] make_file(folder/file17,*,2)
+[sender] make_file(folder/file18,*,2)
+[sender] make_file(folder/file19,*,2)
+[sender] make_file(folder/file20,*,2)
+server_recv(2) starting pid=7804
+recv_file_name(.)
+recv_file_name(a.txt)
+recv_file_name(b.txt)
+recv_file_name(c.txt)
+recv_file_name(d.txt)
+recv_file_name(file with spaces.txt)
+recv_file_name(folder)
+received 7 names
+recv_file_list done
+get_local_name count=7 dest
+generator starting pid=7804
+delta-transmission disabled for local transfer or --whole-file
+recv_generator(.,0)
+set modtime of . to (1643343337) Thu Jan 27 20:15:37 2022
+recv_generator(.,1)
+recv_generator(a.txt,2)
+recv_generator(b.txt,3)
+recv_generator(c.txt,4)
+recv_generator(d.txt,5)
+recv_generator(file with spaces.txt,6)
+recv_generator(folder,7)
+send_files(0, source/.)
+.d..t...... ./
+send_files(2, source/a.txt)
+send_files mapped source/a.txt of size 47
+calling match_sums source/a.txt
+>f+++++++++ a.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/a.txt
+send_files(3, source/b.txt)
+send_files mapped source/b.txt of size 47
+calling match_sums source/b.txt
+>f+++++++++ b.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/b.txt
+send_files(4, source/c.txt)
+send_files mapped source/c.txt of size 47
+calling match_sums source/c.txt
+>f+++++++++ c.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/c.txt
+send_files(5, source/d.txt)
+send_files mapped source/d.txt of size 47
+calling match_sums source/d.txt
+>f+++++++++ d.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/d.txt
+send_files(6, source/file with spaces.txt)
+send_files mapped source/file with spaces.txt of size 47
+calling match_sums source/file with spaces.txt
+>f+++++++++ file with spaces.txt
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/file with spaces.txt
+recv_files(7) starting
+[receiver] receiving flist for dir 1
+recv_file_name(folder/file1)
+recv_file_name(folder/file2)
+recv_file_name(folder/file3)
+recv_file_name(folder/file4)
+recv_file_name(folder/file5)
+recv_file_name(folder/file6)
+recv_file_name(folder/file7)
+recv_file_name(folder/file8)
+recv_file_name(folder/file9)
+recv_file_name(folder/file10)
+recv_file_name(folder/file11)
+recv_file_name(folder/file12)
+recv_file_name(folder/file13)
+recv_file_name(folder/file14)
+recv_file_name(folder/file15)
+recv_file_name(folder/file16)
+recv_file_name(folder/file17)
+recv_file_name(folder/file18)
+recv_file_name(folder/file19)
+recv_file_name(folder/file20)
+received 20 names
+recv_file_list done
+recv_files(.)
+recv_files(a.txt)
+got file_sum
+set modtime of .a.txt.WA5SfS to (1643342949) Thu Jan 27 20:09:09 2022
+renaming .a.txt.WA5SfS to a.txt
+recv_files(b.txt)
+got file_sum
+set modtime of .b.txt.b6U9z7 to (1643342953) Thu Jan 27 20:09:13 2022
+renaming .b.txt.b6U9z7 to b.txt
+recv_files(c.txt)
+got file_sum
+set modtime of .c.txt.0ZRrUm to (1643342956) Thu Jan 27 20:09:16 2022
+renaming .c.txt.0ZRrUm to c.txt
+recv_files(d.txt)
+got file_sum
+set modtime of .d.txt.N3zKeC to (1643342959) Thu Jan 27 20:09:19 2022
+renaming .d.txt.N3zKeC to d.txt
+recv_files(file with spaces.txt)
+got file_sum
+set modtime of .file with spaces.txt.KN33yR to (1643342980) Thu Jan 27 20:09:40 2022
+renaming .file with spaces.txt.KN33yR to file with spaces.txt
+[generator] receiving flist for dir 1
+recv_file_name(folder/file1)
+recv_file_name(folder/file2)
+recv_file_name(folder/file3)
+recv_file_name(folder/file4)
+recv_file_name(folder/file5)
+recv_file_name(folder/file6)
+recv_file_name(folder/file7)
+recv_file_name(folder/file8)
+recv_file_name(folder/file9)
+recv_file_name(folder/file10)
+recv_file_name(folder/file11)
+recv_file_name(folder/file12)
+recv_file_name(folder/file13)
+recv_file_name(folder/file14)
+recv_file_name(folder/file15)
+recv_file_name(folder/file16)
+recv_file_name(folder/file17)
+recv_file_name(folder/file18)
+recv_file_name(folder/file19)
+recv_file_name(folder/file20)
+received 20 names
+recv_file_list done
+recv_generator(folder,8)
+set modtime of folder to (1643343369) Thu Jan 27 20:16:09 2022
+recv_generator(folder/file1,9)
+set modtime of . to (1643343337) Thu Jan 27 20:15:37 2022
+recv_generator(folder/file10,10)
+recv_generator(folder/file11,11)
+recv_generator(folder/file12,12)
+recv_generator(folder/file13,13)
+recv_generator(folder/file14,14)
+recv_generator(folder/file15,15)
+recv_generator(folder/file16,16)
+recv_generator(folder/file17,17)
+recv_generator(folder/file18,18)
+recv_generator(folder/file19,19)
+recv_generator(folder/file2,20)
+recv_generator(folder/file20,21)
+recv_generator(folder/file3,22)
+recv_generator(folder/file4,23)
+recv_generator(folder/file5,24)
+recv_generator(folder/file6,25)
+recv_generator(folder/file7,26)
+recv_generator(folder/file8,27)
+recv_generator(folder/file9,28)
+generate_files phase=1
+send_files(8, source/folder)
+cd+++++++++ folder/
+send_files(9, source/folder/file1)
+send_files mapped source/folder/file1 of size 0
+calling match_sums source/folder/file1
+>f+++++++++ folder/file1
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file1
+send_files(10, source/folder/file10)
+send_files mapped source/folder/file10 of size 0
+calling match_sums source/folder/file10
+>f+++++++++ folder/file10
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file10
+send_files(11, source/folder/file11)
+send_files mapped source/folder/file11 of size 0
+calling match_sums source/folder/file11
+>f+++++++++ folder/file11
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file11
+send_files(12, source/folder/file12)
+send_files mapped source/folder/file12 of size 0
+calling match_sums source/folder/file12
+>f+++++++++ folder/file12
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file12
+send_files(13, source/folder/file13)
+send_files mapped source/folder/file13 of size 0
+calling match_sums source/folder/file13
+>f+++++++++ folder/file13
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file13
+send_files(14, source/folder/file14)
+send_files mapped source/folder/file14 of size 0
+calling match_sums source/folder/file14
+>f+++++++++ folder/file14
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file14
+send_files(15, source/folder/file15)
+send_files mapped source/folder/file15 of size 0
+calling match_sums source/folder/file15
+>f+++++++++ folder/file15
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file15
+send_files(16, source/folder/file16)
+send_files mapped source/folder/file16 of size 0
+calling match_sums source/folder/file16
+>f+++++++++ folder/file16
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file16
+send_files(17, source/folder/file17)
+send_files mapped source/folder/file17 of size 0
+calling match_sums source/folder/file17
+>f+++++++++ folder/file17
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file17
+send_files(18, source/folder/file18)
+send_files mapped source/folder/file18 of size 0
+calling match_sums source/folder/file18
+>f+++++++++ folder/file18
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file18
+send_files(19, source/folder/file19)
+send_files mapped source/folder/file19 of size 0
+calling match_sums source/folder/file19
+>f+++++++++ folder/file19
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file19
+send_files(20, source/folder/file2)
+send_files mapped source/folder/file2 of size 0
+calling match_sums source/folder/file2
+>f+++++++++ folder/file2
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file2
+send_files(21, source/folder/file20)
+send_files mapped source/folder/file20 of size 0
+calling match_sums source/folder/file20
+>f+++++++++ folder/file20
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file20
+send_files(22, source/folder/file3)
+send_files mapped source/folder/file3 of size 0
+calling match_sums source/folder/file3
+>f+++++++++ folder/file3
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file3
+send_files(23, source/folder/file4)
+send_files mapped source/folder/file4 of size 0
+calling match_sums source/folder/file4
+>f+++++++++ folder/file4
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file4
+send_files(24, source/folder/file5)
+send_files mapped source/folder/file5 of size 0
+calling match_sums source/folder/file5
+>f+++++++++ folder/file5
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file5
+send_files(25, source/folder/file6)
+send_files mapped source/folder/file6 of size 0
+calling match_sums source/folder/file6
+>f+++++++++ folder/file6
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file6
+send_files(26, source/folder/file7)
+send_files mapped source/folder/file7 of size 0
+calling match_sums source/folder/file7
+>f+++++++++ folder/file7
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file7
+send_files(27, source/folder/file8)
+send_files mapped source/folder/file8 of size 0
+calling match_sums source/folder/file8
+>f+++++++++ folder/file8
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file8
+send_files(28, source/folder/file9)
+send_files mapped source/folder/file9 of size 0
+calling match_sums source/folder/file9
+>f+++++++++ folder/file9
+sending file_sum
+false_alarms=0 hash_hits=0 matches=0
+sender finished source/folder/file9
+recv_files(folder)
+recv_files(folder/file1)
+got file_sum
+set modtime of folder/.file1.iqSNT6 to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file1.iqSNT6 to folder/file1
+recv_files(folder/file10)
+got file_sum
+set modtime of folder/.file10.AlTyem to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file10.AlTyem to folder/file10
+recv_files(folder/file11)
+got file_sum
+set modtime of folder/.file11.McEkzB to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file11.McEkzB to folder/file11
+recv_files(folder/file12)
+got file_sum
+set modtime of folder/.file12.6i46TQ to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file12.6i46TQ to folder/file12
+recv_files(folder/file13)
+got file_sum
+set modtime of folder/.file13.GE3Te6 to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file13.GE3Te6 to folder/file13
+recv_files(folder/file14)
+got file_sum
+set modtime of folder/.file14.iHFHzl to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file14.iHFHzl to folder/file14
+recv_files(folder/file15)
+got file_sum
+set modtime of folder/.file15.QXUvUA to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file15.QXUvUA to folder/file15
+recv_files(folder/file16)
+got file_sum
+set modtime of folder/.file16.avHkfQ to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file16.avHkfQ to folder/file16
+recv_files(folder/file17)
+got file_sum
+set modtime of folder/.file17.wH89z5 to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file17.wH89z5 to folder/file17
+recv_files(folder/file18)
+got file_sum
+set modtime of folder/.file18.Kpj0Uk to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file18.Kpj0Uk to folder/file18
+recv_files(folder/file19)
+got file_sum
+set modtime of folder/.file19.885QfA to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file19.885QfA to folder/file19
+recv_files(folder/file2)
+got file_sum
+set modtime of folder/.file2.SQrIAP to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file2.SQrIAP to folder/file2
+recv_files(folder/file20)
+got file_sum
+set modtime of folder/.file20.kXpAV4 to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file20.kXpAV4 to folder/file20
+recv_files(folder/file3)
+got file_sum
+set modtime of folder/.file3.GRdtgk to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file3.GRdtgk to folder/file3
+recv_files(folder/file4)
+got file_sum
+set modtime of folder/.file4.uJGmBz to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file4.uJGmBz to folder/file4
+recv_files(folder/file5)
+got file_sum
+set modtime of folder/.file5.OPPgWO to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file5.OPPgWO to folder/file5
+recv_files(folder/file6)
+got file_sum
+set modtime of folder/.file6.abEbh4 to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file6.abEbh4 to folder/file6
+recv_files(folder/file7)
+got file_sum
+set modtime of folder/.file7.4T46Bj to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file7.4T46Bj to folder/file7
+recv_files(folder/file8)
+got file_sum
+set modtime of folder/.file8.CA62Wy to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file8.CA62Wy to folder/file8
+recv_files(folder/file9)
+got file_sum
+set modtime of folder/.file9.Yu80hO to (1643343369) Thu Jan 27 20:16:09 2022
+renaming folder/.file9.Yu80hO to folder/file9
+set modtime of folder to (1643343369) Thu Jan 27 20:16:09 2022
+send_files phase=1
+recv_files phase=1
+generate_files phase=2
+send_files phase=2
+send files finished
+total: matches=0  hash_hits=0  false_alarms=0 data=235
+recv_files phase=2
+recv_files finished
+generate_files phase=3
+generate_files finished
+
+sent 1,708 bytes  received 8,209 bytes  19,834.00 bytes/sec
+total size is 235  speedup is 0.02
+[sender] _exit_cleanup(code=0, file=main.c, line=1178): about to call exit(0)
+

@@ -101,13 +101,15 @@ Examples:
     ...
 """
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.6'
+    version = '1.0'
     description = '`vmstat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -143,13 +145,15 @@ def _process(proc_data):
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
     if proc_data['timestamp']:
-        ts = jc.utils.timestamp(f'{proc_data["timestamp"]} {proc_data["timezone"]}')
+        fmt_hint = (7250, 7255)
+        ts = jc.utils.timestamp(f'{proc_data["timestamp"]} {proc_data["timezone"]}', format_hint=fmt_hint)
         proc_data['epoch'] = ts.naive
         proc_data['epoch_utc'] = ts.utc
 
     return proc_data
 
 
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -169,10 +173,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     procs = None
     buff_cache = None
@@ -181,9 +185,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     tz = None
 
     for line in data:
-        output_line = {}
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
+            output_line = {}
 
             # skip blank lines
             if line.strip() == '':
@@ -266,9 +270,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 }
 
             if output_line:
-                yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                yield output_line if raw else _process(output_line)
             else:
                 raise ParseError('Not vmstat data')
 
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+            yield raise_or_yield(ignore_exceptions, e, line)

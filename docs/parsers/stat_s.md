@@ -91,6 +91,7 @@ Examples:
 ### parse
 
 ```python
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
@@ -111,9 +112,9 @@ Yields:
 
 Returns:
 
-    Iterator object
+    Iterator object (generator)
 
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 0.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

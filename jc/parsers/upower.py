@@ -203,7 +203,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`upower` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -234,7 +234,8 @@ def _process(proc_data):
             entry['updated_seconds_ago'] = jc.utils.convert_to_int(updated_list[-3])
 
             if entry['updated']:
-                ts = jc.utils.timestamp(entry['updated'])
+                hints = (1000, 2000, 3000, 4000, 5000, 8000, 8100)
+                ts = jc.utils.timestamp(entry['updated'], format_hint=hints)
                 entry['updated_epoch'] = ts.naive
                 entry['updated_epoch_utc'] = ts.utc
 

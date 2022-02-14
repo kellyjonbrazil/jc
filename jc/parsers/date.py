@@ -83,7 +83,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.2'
+    version = '2.3'
     description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -168,7 +168,7 @@ def parse(data, raw=False, quiet=False):
         dt = None
         dt_utc = None
 
-        timestamp = jc.utils.timestamp(data)
+        timestamp = jc.utils.timestamp(data, format_hint=(1000, 6000, 7000))
         if timestamp.naive:
             dt = datetime.fromtimestamp(timestamp.naive)
         if timestamp.utc:

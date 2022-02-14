@@ -83,13 +83,15 @@ Examples:
 """
 import shlex
 import jc.utils
-from jc.utils import stream_success, stream_error
+from jc.streaming import (
+    add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
+)
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.5'
+    version = '1.0'
     description = '`stat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -124,12 +126,14 @@ def _process(proc_data):
         if key in proc_data:
             if proc_data[key] == '-':
                 proc_data[key] = None
-            ts = jc.utils.timestamp(proc_data[key])
+            ts = jc.utils.timestamp(proc_data[key], format_hint=(7100, 7200))
             proc_data[key + '_epoch'] = ts.naive
             proc_data[key + '_epoch_utc'] = ts.utc
 
     return proc_data
 
+
+@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
     Main text parsing generator function. Returns an iterator object.
@@ -149,17 +153,17 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.streaming_input_type_check(data)
+    streaming_input_type_check(data)
 
     output_line = {}
     os_type = ''
 
     for line in data:
         try:
-            jc.utils.streaming_line_input_type_check(line)
+            streaming_line_input_type_check(line)
             line = line.rstrip()
 
             # ignore blank lines
@@ -175,7 +179,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 # line #1
                 if line.startswith('  File: '):
                     if output_line:
-                        yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                        yield output_line if raw else _process(output_line)
 
                     output_line = {}
                     line_list = line.split(maxsplit=1)
@@ -281,16 +285,16 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 }
 
                 if output_line:
-                    yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
+                    yield output_line if raw else _process(output_line)
                     output_line = {}
 
         except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
-            output_line = {}
+            yield raise_or_yield(ignore_exceptions, e, line)
 
     # gather final item
-    if output_line:
-        try:
-            yield stream_success(output_line, ignore_exceptions) if raw else stream_success(_process(output_line), ignore_exceptions)
-        except Exception as e:
-            yield stream_error(e, ignore_exceptions, line)
+    try:
+        if output_line:
+            yield output_line if raw else _process(output_line)
+
+    except Exception as e:
+        yield raise_or_yield(ignore_exceptions, e, '')

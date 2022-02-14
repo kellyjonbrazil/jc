@@ -2743,6 +2743,39 @@ rpm_qia | jc --rpm_qi -p          # or:  jc -p rpm -qia
   }
 ]
 ```
+### rsync
+```bash
+rsync -i -a source/ dest | jc --rsync -p          # or jc -p rsync -i -a source/ dest
+```
+```json
+[
+  {
+    "summary": {
+      "sent": 1708,
+      "received": 8209,
+      "bytes_sec": 19834.0,
+      "total_size": 235,
+      "speedup": 0.02
+    },
+    "files": [
+      {
+        "filename": "./",
+        "metadata": ".d..t......",
+        "update_type": "not updated",
+        "file_type": "directory",
+        "checksum_or_value_different": false,
+        "size_different": false,
+        "modification_time_different": true,
+        "permissions_different": false,
+        "owner_different": false,
+        "group_different": false,
+        "acl_different": false,
+        "extended_attribute_different": false
+      }
+    ]
+  }
+]
+```
 ### sfdisk
 ```bash
 sfdisk -l | jc --sfdisk -p          # or jc -p sfdisk -l

@@ -38,8 +38,8 @@ Examples:
     $ foo | jc --foo -p -r
     []
 """
-import jc.utils
 from typing import List, Dict
+import jc.utils
 
 
 class info():

@@ -6,10 +6,10 @@ import sys
 import os
 import re
 import importlib
-from typing import Dict, List, Iterable, Union, Iterator, Optional
+from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.18.2'
+__version__ = '1.18.3'
 
 parsers = [
     'acpi',
@@ -69,6 +69,8 @@ parsers = [
     'ps',
     'route',
     'rpm-qi',
+    'rsync',
+    'rsync-s',
     'sfdisk',
     'shadow',
     'ss',
@@ -95,6 +97,7 @@ parsers = [
     'wc',
     'who',
     'xml',
+    'xrandr',
     'yaml',
     'zipinfo'
 ]
@@ -224,7 +227,7 @@ def plugin_parser_mod_list() -> List[str]:
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
-def parser_info(parser_mod_name: str) -> Union[Dict, None]:
+def parser_info(parser_mod_name: str) -> Dict:
     """
     Returns a dictionary that includes the module metadata.
 
@@ -235,9 +238,9 @@ def parser_info(parser_mod_name: str) -> Union[Dict, None]:
     parser_mod_name = _cliname_to_modname(parser_mod_name)
 
     parser_mod = _get_parser(parser_mod_name)
+    info_dict: Dict = {}
 
     if hasattr(parser_mod, 'info'):
-        info_dict: Dict = {}
         info_dict['name'] = parser_mod_name
         info_dict['argument'] = _parser_argument(parser_mod_name)
         parser_entry = vars(parser_mod.info)
@@ -249,15 +252,13 @@ def parser_info(parser_mod_name: str) -> Union[Dict, None]:
         if _modname_to_cliname(parser_mod_name) in local_parsers:
             info_dict['plugin'] = True
 
-        return info_dict
+    return info_dict
 
-    return None
-
-def all_parser_info() -> List[Optional[Dict]]:
+def all_parser_info() -> List[Dict]:
     """
-    Returns a list of dictionaris that includes metadata for all modules.
+    Returns a list of dictionaries that includes metadata for all modules.
     """
-    return [parser_info(_cliname_to_modname(p)) for p in parsers]
+    return [parser_info(p) for p in parsers]
 
 def get_help(parser_mod_name: str) -> None:
     """
