@@ -112,7 +112,7 @@ Yields:
 
 Returns:
 
-    Iterator object
+    Iterator object (generator)
 
 ### Parser Information
 Compatibility:  linux, darwin, freebsd

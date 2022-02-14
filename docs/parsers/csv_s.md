@@ -94,7 +94,7 @@ Yields:
 
 Returns:
 
-    Iterator object
+    Iterator object (generator)
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

@@ -167,7 +167,7 @@ def parse(
 
     Returns:
 
-        Iterator object
+        Iterator object (generator)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)
