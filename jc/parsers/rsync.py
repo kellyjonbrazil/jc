@@ -63,7 +63,7 @@ Schema:
             "group_different":                bool/null,
             "acl_different":                  bool/null,
             "extended_attribute_different":   bool/null,
-            "epoch":                          int,          [2]
+            "epoch":                          integer,      [2]
           }
         ]
       }

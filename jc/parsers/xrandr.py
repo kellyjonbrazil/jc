@@ -1,74 +1,79 @@
 """jc - JSON CLI output utility `xrandr` command output parser
 
-Options supported:
+Usage (cli):
+
+    $ xrandr | jc --xrandr
+
+    or
+
+    $ jc xrandr
 
 Usage (module):
+
+    import jc
+    result = jc.parse('xrandr', xrandr_command_output)
+
+    or
 
     import jc.parsers.xrandr
     result = jc.parsers.xrandr.parse(xrandr_command_output)
 
 Schema:
-    {
-     "screens": [
+  {
+    "screens": [
       {
-       "screen_number": 0,
-       "minimum_width": 8,
-       "minimum_height": 8,
-       "current_width": 1920,
-       "current_height": 1080,
-       "maximum_width": 32767,
-       "maximum_height": 32767,
-       "associated_device": {
+        "screen_number":                     integer,
+        "minimum_width":                     integer,
+        "minimum_height":                    integer,
+        "current_width":                     integer,
+        "current_height":                    integer,
+        "maximum_width":                     integer,
+        "maximum_height":                    integer,
+        "associated_device": {
         "associated_modes": [
-         {
-          "resolution_width": 1920,
-          "resolution_height": 1080,
-          "is_high_resolution": false,
+          {
+          "resolution_width":                integer,
+          "resolution_height":               integer,
+          "is_high_resolution":              boolean,
           "frequencies": [
-           {
-            "frequency": 60.03,
-            "is_current": true,
-            "is_preferred": true
-           },
-           {
-            "frequency": 59.93,
-            "is_current": false,
-            "is_preferred": false
-           }
-          ]
-         },
-         {
-          "resolution_width": 1680,
-          "resolution_height": 1050,
-          "is_high_resolution": false,
-          "frequencies": [
-           {
-            "frequency": 59.88,
-            "is_current": false,
-            "is_preferred": false
-           }
-          ]
-         }
+            {
+            "frequency":                     float,
+            "is_current":                    boolean,
+            "is_preferred":                  boolean
+            }
         ],
-        "is_connected": true,
-        "is_primary": true,
-        "device_name": "eDP1",
-        "resolution_width": 1920,
-        "resolution_height": 1080,
-        "offset_width": 0,
-        "offset_height": 0,
-        "dimension_width": 310,
-        "dimension_height": 170
-       }
+        "is_connected":                      boolean,
+        "is_primary":                        boolean,
+        "device_name":                       string,
+        "resolution_width":                  integer,
+        "resolution_height":                 integer,
+        "offset_width":                      integer,
+        "offset_height":                     integer,
+        "dimension_width":                   integer,
+        "dimension_height":                  integer
+        }
       }
-     ],
-     "unassociated_devices": []
-    }
-Translated from:
-    Screen 0: minimum 8 x 8, current 1920 x 1080, maximum 32767 x 32767
-    eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 310mm x 170mm
-       1920x1080     60.03*+  59.93
-       1680x1050     59.88
+    ],
+    "unassociated_devices": [
+      {
+        "associated_modes": [
+          {
+            "resolution_width":              integer,
+            "resolution_height":             integer,
+            "is_high_resolution":            boolean,
+            "frequencies": [
+              {
+                "frequency":                 float,
+                "is_current":                boolean,
+                "is_preferred":              boolean
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+
 Examples:
 
     $ xrandr | jc --xrandr
@@ -82,7 +87,7 @@ import jc.utils
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.9"
+    version = "1.0"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "lyter_git at sent.com"
@@ -199,7 +204,7 @@ _device_pattern = (
 )
 
 
-def _parse_device(next_lines: List[str]) -> Optional[Device]:
+def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device]:
     if not next_lines:
         return None
 
@@ -223,8 +228,10 @@ def _parse_device(next_lines: List[str]) -> Optional[Device]:
             try:
                 if v:
                     device[k] = int(v)
-            except ValueError:
-                print(f"Error: {next_line} : {k} - {v} is not int-able")
+            except ValueError and not quiet:
+                jc.utils.warning_message(
+                    [f"Error: {next_line} : {k} - {v} is not int-able"]
+                )
 
     while next_lines:
         next_line = next_lines.pop()
@@ -286,35 +293,31 @@ def parse(data: str, raw=False, quiet=False):
     Parameters:
 
         data:        (string)  text data to parse
-        raw:         (boolean) output preprocessed JSON if True
+        raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
 
         List of Dictionaries. Raw or processed structured data.
     """
-    if not quiet:
-        jc.utils.compatibility(__name__, info.compatible)
-
-    warned = False
-    parent = ""
-    next_is_parent = False
-    new_section = False
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
 
     linedata = data.splitlines()
     linedata.reverse()  # For popping
-
     result: Response = {"screens": [], "unassociated_devices": []}
+
     if jc.utils.has_data(data):
-        result: Response = {"screens": [], "unassociated_devices": []}
         while linedata:
             screen = _parse_screen(linedata)
             if screen:
                 result["screens"].append(screen)
             else:
-                device = _parse_device(linedata)
+                device = _parse_device(linedata, quiet)
                 if device:
                     result["unassociated_devices"].append(device)
+
     if not result["unassociated_devices"] and not result["screens"]:
         return {}
+
     return result

@@ -236,6 +236,7 @@ option.
 - `--wc` enables the `wc` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/wc))
 - `--who` enables the `who` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/who))
 - `--xml` enables the XML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xml))
+- `--xrandr` enables the `xrandr` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr))
 - `--yaml` enables the YAML file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml))
 - `--zipinfo` enables the `zipinfo` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo))
 
