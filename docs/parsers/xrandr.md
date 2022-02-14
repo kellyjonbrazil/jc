@@ -82,7 +82,7 @@ Schema:
 
 Examples:
 
-    $ xrandr | jc --xrandr
+    $ xrandr | jc --xrandr -p
     {
       "screens": [
         {
