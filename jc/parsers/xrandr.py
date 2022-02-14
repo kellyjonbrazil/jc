@@ -19,60 +19,61 @@ Usage (module):
     result = jc.parsers.xrandr.parse(xrandr_command_output)
 
 Schema:
-  {
-    "screens": [
-      {
-        "screen_number":                     integer,
-        "minimum_width":                     integer,
-        "minimum_height":                    integer,
-        "current_width":                     integer,
-        "current_height":                    integer,
-        "maximum_width":                     integer,
-        "maximum_height":                    integer,
-        "associated_device": {
-        "associated_modes": [
-          {
-          "resolution_width":                integer,
-          "resolution_height":               integer,
-          "is_high_resolution":              boolean,
-          "frequencies": [
+
+    {
+      "screens": [
+        {
+          "screen_number":                     integer,
+          "minimum_width":                     integer,
+          "minimum_height":                    integer,
+          "current_width":                     integer,
+          "current_height":                    integer,
+          "maximum_width":                     integer,
+          "maximum_height":                    integer,
+          "associated_device": {
+          "associated_modes": [
             {
-            "frequency":                     float,
-            "is_current":                    boolean,
-            "is_preferred":                  boolean
-            }
-        ],
-        "is_connected":                      boolean,
-        "is_primary":                        boolean,
-        "device_name":                       string,
-        "resolution_width":                  integer,
-        "resolution_height":                 integer,
-        "offset_width":                      integer,
-        "offset_height":                     integer,
-        "dimension_width":                   integer,
-        "dimension_height":                  integer
-        }
-      }
-    ],
-    "unassociated_devices": [
-      {
-        "associated_modes": [
-          {
-            "resolution_width":              integer,
-            "resolution_height":             integer,
-            "is_high_resolution":            boolean,
+            "resolution_width":                integer,
+            "resolution_height":               integer,
+            "is_high_resolution":              boolean,
             "frequencies": [
               {
-                "frequency":                 float,
-                "is_current":                boolean,
-                "is_preferred":              boolean
+              "frequency":                     float,
+              "is_current":                    boolean,
+              "is_preferred":                  boolean
               }
-            ]
+          ],
+          "is_connected":                      boolean,
+          "is_primary":                        boolean,
+          "device_name":                       string,
+          "resolution_width":                  integer,
+          "resolution_height":                 integer,
+          "offset_width":                      integer,
+          "offset_height":                     integer,
+          "dimension_width":                   integer,
+          "dimension_height":                  integer
           }
-        ]
-      }
-    ]
-  }
+        }
+      ],
+      "unassociated_devices": [
+        {
+          "associated_modes": [
+            {
+              "resolution_width":              integer,
+              "resolution_height":             integer,
+              "is_high_resolution":            boolean,
+              "frequencies": [
+                {
+                  "frequency":                 float,
+                  "is_current":                boolean,
+                  "is_preferred":              boolean
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
 
 Examples:
 
