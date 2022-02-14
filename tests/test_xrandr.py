@@ -19,6 +19,12 @@ from jc.parsers.xrandr import (
 
 
 class XrandrTests(unittest.TestCase):
+    def test_xrandr_nodata(self):
+        """
+        Test 'xrandr' with no data
+        """
+        self.assertEqual(parse('', quiet=True), {})
+
     def test_regexes(self):
         devices = [
             "HDMI1 connected (normal left inverted right x axis y axis)",
@@ -158,11 +164,11 @@ class XrandrTests(unittest.TestCase):
             38, len(actual["screens"][0]["associated_device"]["associated_modes"])
         )
 
-        with open("tests/fixtures/generic/simple_xrandr.out", "r") as f:
+        with open("tests/fixtures/generic/xrandr_simple.out", "r") as f:
             txt = f.read()
         actual = parse(txt)
 
-        with open("tests/fixtures/generic/simple_xrandr.json", "w") as f:
+        with open("tests/fixtures/generic/xrandr_simple.json", "w") as f:
             json.dump(actual, f, indent=True)
 
         self.assertEqual(1, len(actual["screens"]))
@@ -170,3 +176,6 @@ class XrandrTests(unittest.TestCase):
         self.assertEqual(
             2, len(actual["screens"][0]["associated_device"]["associated_modes"])
         )
+
+if __name__ == '__main__':
+    unittest.main()
