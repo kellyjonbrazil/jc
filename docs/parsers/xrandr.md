@@ -89,7 +89,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw=False, quiet=False)
+def parse(data: str, raw: bool = False, quiet: bool = False)
 ```
 
 Main text parsing function

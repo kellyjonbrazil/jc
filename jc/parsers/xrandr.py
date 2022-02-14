@@ -287,7 +287,7 @@ def _parse_mode(line: str) -> Optional[Mode]:
     return mode
 
 
-def parse(data: str, raw=False, quiet=False):
+def parse(data: str, raw: bool =False, quiet: bool =False):
     """
     Main text parsing function
 
