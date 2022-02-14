@@ -6,10 +6,8 @@
 jc - JSON CLI output utility `rsync` command output parser
 
 Supports the `-i` or `--itemize-changes` options with all levels of
-verbosity.
-
-Will also process the rsync log file generated with the `--log-file`
-option and the `-i` or `--itemize-changes` options.
+verbosity. This parser will process the STDOUT output or a log file
+generated with the `--log-file` option.
 
 Usage (cli):
 
