@@ -97,6 +97,7 @@ parsers = [
     'wc',
     'who',
     'xml',
+    'xrandr',
     'yaml',
     'zipinfo'
 ]
