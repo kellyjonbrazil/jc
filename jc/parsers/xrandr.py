@@ -31,18 +31,21 @@ Schema:
           "maximum_width":                     integer,
           "maximum_height":                    integer,
           "associated_device": {
-          "associated_modes": [
-            {
-            "resolution_width":                integer,
-            "resolution_height":               integer,
-            "is_high_resolution":              boolean,
-            "frequencies": [
+            "associated_modes": [
               {
-              "frequency":                     float,
-              "is_current":                    boolean,
-              "is_preferred":                  boolean
+                "resolution_width":            integer,
+                "resolution_height":           integer,
+                "is_high_resolution":          boolean,
+                "frequencies": [
+                  {
+                    "frequency":               float,
+                    "is_current":              boolean,
+                    "is_preferred":            boolean
+                  }
+                ]
               }
-          ],
+            ]
+          },
           "is_connected":                      boolean,
           "is_primary":                        boolean,
           "device_name":                       string,
@@ -52,7 +55,6 @@ Schema:
           "offset_height":                     integer,
           "dimension_width":                   integer,
           "dimension_height":                  integer
-          }
         }
       ],
       "unassociated_devices": [
@@ -137,7 +139,6 @@ Examples:
 """
 import re
 from typing import Dict, List, Optional, Union
-
 import jc.utils
 
 
