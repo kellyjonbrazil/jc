@@ -38,6 +38,7 @@ Examples:
     $ nmcli | jc --nmcli -p -r
     []
 """
+import re
 from typing import List, Dict, Optional
 import jc.utils
 
@@ -87,13 +88,28 @@ def _normalize_key(keyname: str) -> str:
 def _normalize_value(value: str) -> Optional[str]:
     value = value.strip()
 
-    if value == '""':
-        value = ''
-
     if value == '--':
         return None
 
+    if value.startswith('"') and value.endswith('"'):
+        value = value.strip('"')
+
     return value
+
+
+def _add_text_kv(key: str, value: str) -> Optional[Dict]:
+    """
+    Add keys with _text suffix if there is a text description inside
+    paranthesis at the end of a value. The value of the _text field will
+    only be the text inside the parenthesis. This allows cleanup of the
+    original field (convert to int/float/etc) without losing information.
+    """
+    if value and '(' in value and value.endswith(')'):
+        new_val = re.search(r'\((\w+)\)$', value)
+        if new_val:
+            return ({key + '_text': new_val.group(1)})
+
+    return None
 
 
 
@@ -114,6 +130,10 @@ def _device_show_parse(data: str) -> List[Dict]:
 
         item.update({key_n: value_n})
 
+        text_kv = _add_text_kv(key_n, value_n)
+        if text_kv:
+            item.update(text_kv)
+
     # get final item
     if item:
         raw_output.append(item)
@@ -131,6 +151,10 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
         key_n = _normalize_key(key)
         value_n = _normalize_value(value)
         item.update({key_n: value_n})
+
+        text_kv = _add_text_kv(key_n, value_n)
+        if text_kv:
+            item.update(text_kv)
 
     if item:
         raw_output.append(item)
