@@ -38,7 +38,7 @@ Examples:
     $ nmcli | jc --nmcli -p -r
     []
 """
-from typing import List, Dict
+from typing import List, Dict, Optional
 import jc.utils
 
 
@@ -84,6 +84,59 @@ def _normalize_key(keyname: str) -> str:
                   .replace('GENERAL_', '')\
                   .lower()
 
+def _normalize_value(value: str) -> Optional[str]:
+    value = value.strip()
+
+    if value == '""':
+        value = ''
+
+    if value == '--':
+        return None
+
+    return value
+
+
+
+def _device_show_parse(data: str) -> List[Dict]:
+    raw_output: List = []
+    item: Dict = {}
+    current_item = ''
+
+    for line in filter(None, data.splitlines()):
+        key, value = line.split(':', maxsplit=1)
+        key_n = _normalize_key(key)
+        value_n = _normalize_value(value)
+
+        if item and 'device' in key_n and value_n != current_item:
+            raw_output.append(item)
+            item = {}
+            current_item = value
+
+        item.update({key_n: value_n})
+
+    # get final item
+    if item:
+        raw_output.append(item)
+
+    return raw_output
+
+
+def _connection_show_x_parse(data: str) -> List[Dict]:
+    raw_output: List = []
+    item: Dict = {}
+
+    for line in filter(None, data.splitlines()):
+        key, value = line.split(':', maxsplit=1)
+
+        key_n = _normalize_key(key)
+        value_n = _normalize_value(value)
+        item.update({key_n: value_n})
+
+    if item:
+        raw_output.append(item)
+
+    return raw_output
+
 
 def parse(
     data: str,
@@ -107,24 +160,16 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
-    item: Dict = {}
-    current_item = ''
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
-            key, value = line.split(':', maxsplit=1)
-            key = _normalize_key(key)
-            value = value.strip()
+        # nmcli device show
+        # nmcli device show lo
+        if data.startswith('GENERAL.DEVICE'):
+            raw_output = _device_show_parse(data)
 
-            if item and 'device' in key and value != current_item:
-                raw_output.append(item)
-                item = {}
-                current_item = value
-
-            item.update({key: value})
-
-    if item:
-        raw_output.append(item)
+        # nmcli connection show lo
+        elif data.startswith('connection.id:'):
+            raw_output = _connection_show_x_parse(data)
 
     return raw_output if raw else _process(raw_output)
