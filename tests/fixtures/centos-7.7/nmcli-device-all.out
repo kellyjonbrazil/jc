@@ -1,0 +1,5 @@
+DEVICE   TYPE      STATE      IP4-CONNECTIVITY  IP6-CONNECTIVITY  DBUS-PATH                                  CONNECTION  CON-UUID                              CON-PATH                                           
+ens33    ethernet  connected  full              full              /org/freedesktop/NetworkManager/Devices/2  ens33       d92ece08-9e02-47d5-b2d2-92c80e155744  /org/freedesktop/NetworkManager/ActiveConnection/1 
+docker0  bridge    unmanaged  unknown           unknown           /org/freedesktop/NetworkManager/Devices/3  --          --                                    --                                                 
+lo       loopback  unmanaged  unknown           unknown           /org/freedesktop/NetworkManager/Devices/1  --          --                                    --                                                 
+

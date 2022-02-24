@@ -1,0 +1,3 @@
+RUNNING  VERSION  STATE      STARTUP  CONNECTIVITY  NETWORKING  WIFI-HW  WIFI     WWAN-HW  WWAN    
+running  1.18.0   connected  started  full          enabled     enabled  enabled  enabled  enabled 
+

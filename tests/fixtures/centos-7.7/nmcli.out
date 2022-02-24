@@ -1,0 +1,29 @@
+ens33: connected to ens33
+	"Intel 82545EM"
+	ethernet (e1000), 00:0C:29:3B:58:0E, hw, mtu 1500
+	ip4 default
+	inet4 192.168.71.181/24
+	route4 0.0.0.0/0
+	route4 192.168.71.0/24
+	inet6 fe80::c1cb:715d:bc3e:b8a0/64
+	route6 fe80::/64
+	route6 ff00::/8
+
+docker0: unmanaged
+	"docker0"
+	bridge, 02:42:76:3F:0D:C3, sw, mtu 1500
+
+lo: unmanaged
+	"lo"
+	loopback (unknown), 00:00:00:00:00:00, sw, mtu 65536
+
+DNS configuration:
+	servers: 192.168.71.2
+	domains: localdomain
+	interface: ens33
+
+Use "nmcli device show" to get complete information about known devices and
+"nmcli connection show" to get an overview on active connection profiles.
+
+Consult nmcli(1) and nmcli-examples(7) manual pages for complete usage details.
+
