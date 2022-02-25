@@ -144,6 +144,17 @@ def _split_routes(value: str) -> Dict:
     return output_dict
 
 
+def _split_options(value: str) -> Dict:
+    # ip_address = 192.168.71.180
+    # requested_broadcast_address = 1
+    output_dict = {}
+    k, v = value.split('=')
+    output_dict['name'] = k.strip()
+    output_dict['value'] = v.strip()
+
+    return output_dict
+
+
 def _device_show_parse(data: str) -> List[Dict]:
     raw_output: List = []
     item: Dict = {}
@@ -165,6 +176,12 @@ def _device_show_parse(data: str) -> List[Dict]:
         if text_kv:
             item[key_n] = _remove_text_from_value(value_n)
             item.update(text_kv)
+
+        if '_option_' in key_n and key_n[-1].isdigit():
+            item[key_n] = _split_options(item[key_n])
+
+        if '_route_' in key_n and key_n[-1].isdigit():
+            item[key_n] = _split_routes(item[key_n])
 
     # get final item
     if item:
@@ -188,6 +205,9 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
         if text_kv:
             item[key_n] = _remove_text_from_value(value_n)
             item.update(text_kv)
+
+        if '_option_' in key_n and key_n[-1].isdigit():
+            item[key_n] = _split_options(item[key_n])
 
         if '_route_' in key_n and key_n[-1].isdigit():
             item[key_n] = _split_routes(item[key_n])
