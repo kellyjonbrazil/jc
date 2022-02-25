@@ -102,7 +102,7 @@ Examples:
       }
     ]
 
-    $ nmcli | jc --nmcli -p -r
+    $ nmcli connection show ens33 | jc --nmcli -p -r
     [
       {
         "connection_id": "ens33",
