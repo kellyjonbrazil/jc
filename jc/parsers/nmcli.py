@@ -1,14 +1,21 @@
 """jc - JSON CLI output utility `nmcli` command output parser
 
-<<Short nmcli description and caveats>>
+Supports the following `nmcli` subcommands:
+- `nmcli general`
+- `nmcli general permissions`
+- `nmcli connection`
+- `nmcli connection show <device_name>`
+- `nmcli device`
+- `nmcli device show`
+- `nmcli device show <device_name>`
 
 Usage (cli):
 
-    $ nmcli | jc --nmcli
+    $ nmcli device show lo | jc --nmcli
 
     or
 
-    $ jc nmcli
+    $ jc nmcli device show lo
 
 Usage (module):
 
@@ -22,26 +29,123 @@ Usage (module):
 
 Schema:
 
+    Because there are so many options, the schema is best effort. Integer
+    and Float value conversions are attempted and the original values are
+    kept if they fail. If you don't want automatic conversion, then use the
+    -r or raw=True option to disable it.
+
+    The structure is flat, for the most part, but there are a couple of
+    "well-known" keys that are further parsed into objects for convenience.
+    These are documented below.
+
     [
       {
-        "nmcli":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "<key>":                  string/integer/float,  [0]
+        "dhcp4_option_x": {
+          "name":                 string,
+          "value":                string/integer/float,
+        },
+        "ip4_route_x": {
+          "dst":                  string,
+          "nh":                   string,
+          "mt":                   integer
+        },
+        "ip6_route_x": {
+          "dst":                  string,
+          "nh":                   string,
+          "mt":                   integer,
+          "table":                integer
+        }
       }
     ]
 
+    [0] all values of `---` are converted to null
+
 Examples:
 
-    $ nmcli | jc --nmcli -p
-    []
+    $ nmcli connection show ens33 | jc --nmcli -p
+    [
+      {
+        "connection_id": "ens33",
+        "connection_uuid": "d92ece08-9e02-47d5-b2d2-92c80e155744",
+        "connection_stable_id": null,
+        "connection_type": "802-3-ethernet",
+        "connection_interface_name": "ens33",
+        "connection_autoconnect": "yes",
+        ...
+        "ip4_address_1": "192.168.71.180/24",
+        "ip4_gateway": "192.168.71.2",
+        "ip4_route_1": {
+          "dst": "0.0.0.0/0",
+          "nh": "192.168.71.2",
+          "mt": 100
+        },
+        "ip4_route_2": {
+          "dst": "192.168.71.0/24",
+          "nh": "0.0.0.0",
+          "mt": 100
+        },
+        "ip4_dns_1": "192.168.71.2",
+        "ip4_domain_1": "localdomain",
+        "dhcp4_option_1": {
+          "name": "broadcast_address",
+          "value": "192.168.71.255"
+        },
+        ...
+        "ip6_address_1": "fe80::c1cb:715d:bc3e:b8a0/64",
+        "ip6_gateway": null,
+        "ip6_route_1": {
+          "dst": "fe80::/64",
+          "nh": "::",
+          "mt": 100
+        }
+      }
+    ]
 
     $ nmcli | jc --nmcli -p -r
-    []
+    [
+      {
+        "connection_id": "ens33",
+        "connection_uuid": "d92ece08-9e02-47d5-b2d2-92c80e155744",
+        "connection_stable_id": null,
+        "connection_type": "802-3-ethernet",
+        "connection_interface_name": "ens33",
+        "connection_autoconnect": "yes",
+        ...
+        "ip4_address_1": "192.168.71.180/24",
+        "ip4_gateway": "192.168.71.2",
+        "ip4_route_1": {
+          "dst": "0.0.0.0/0",
+          "nh": "192.168.71.2",
+          "mt": "100"
+        },
+        "ip4_route_2": {
+          "dst": "192.168.71.0/24",
+          "nh": "0.0.0.0",
+          "mt": "100"
+        },
+        "ip4_dns_1": "192.168.71.2",
+        "ip4_domain_1": "localdomain",
+        "dhcp4_option_1": {
+          "name": "broadcast_address",
+          "value": "192.168.71.255"
+        },
+        ...
+        "ip6_address_1": "fe80::c1cb:715d:bc3e:b8a0/64",
+        "ip6_gateway": null,
+        "ip6_route_1": {
+          "dst": "fe80::/64",
+          "nh": "::",
+          "mt": "100"
+        }
+      }
+    ]
 """
 import re
 from typing import List, Dict, Optional
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
+from jc.exceptions import ParseError
 
 
 class info():
@@ -70,10 +174,36 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         List of Dictionaries. Structured to conform to the schema.
     """
 
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
+    for entry in proc_data:
+        for key in entry:
+            # use normal int/float conversions since jc.utils.convert_to_int is too greedy
+            try:
+                if '.' in entry[key]:
+                    entry[key] = float(entry[key])
+                else:
+                    entry[key] = int(entry[key])
+            except Exception:
+                pass
+
+            if '_option_' in key and key[-1].isdigit():
+                for k in entry[key]:
+                    try:
+                        if '.' in entry[key][k]:
+                            entry[key][k] = float(entry[key][k])
+                        else:
+                            entry[key][k] = int(entry[key][k])
+                    except Exception:
+                        pass
+
+            if '_route_' in key and key[-1].isdigit():
+                for k in entry[key]:
+                    try:
+                        if '.' in entry[key][k]:
+                            entry[key][k] = float(entry[key][k])
+                        else:
+                            entry[key][k] = int(entry[key][k])
+                    except Exception:
+                        pass
 
     return proc_data
 
@@ -220,7 +350,17 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
 
 
 def _general_permissions_parse(data: str) -> List[Dict]:
-    print('general permissions')
+    raw_output = []
+    output_dict = {}
+    for line in filter(None, data.splitlines()):
+        key, value = line.split()
+        key_n = _normalize_key(key)
+        output_dict[key_n] = value
+
+    output_dict.pop('permission')
+    raw_output.append(output_dict)
+
+    return raw_output
 
 
 def _table_parse(data: str) -> List[Dict]:
@@ -262,7 +402,7 @@ def parse(
 
         # nmcli (second line startswith \t)
         if data.splitlines()[1].startswith('\t'):
-            print('nmcli only')
+            raise ParseError('Use device, connection, or general subcommands in nmcli.')
 
         # nmcli device show
         # nmcli device show lo
