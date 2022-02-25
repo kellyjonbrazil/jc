@@ -199,6 +199,7 @@ option.
 - `--lsusb` enables the `lsusb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb))
 - `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
 - `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
+- `--nmcli` enables the `nmcli` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli))
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
 - `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
 - `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))

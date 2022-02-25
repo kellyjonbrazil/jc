@@ -342,7 +342,6 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
         if '_route_' in key_n and key_n[-1].isdigit():
             item[key_n] = _split_routes(item[key_n])
 
-
     if item:
         raw_output.append(item)
 
@@ -402,7 +401,7 @@ def parse(
 
         # nmcli (second line startswith \t)
         if data.splitlines()[1].startswith('\t'):
-            raise ParseError('Use device, connection, or general subcommands in nmcli.')
+            raise ParseError('Use the device, connection, or general subcommand in nmcli.')
 
         # nmcli device show
         # nmcli device show lo
