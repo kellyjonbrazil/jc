@@ -563,7 +563,7 @@ def main():
             f'{parser_name} parser could not parse the input data.',
             f'{streaming_msg}',
             'If this is the correct parser, try setting the locale to C (LANG=C).',
-            'For details use the -d or -dd option. Use "jc -h" for help.'
+            f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
