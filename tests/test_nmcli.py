@@ -180,7 +180,7 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.nmcli.parse(self.fedora32_nmcli_device_show_ens33, quiet=True), self.fedora32_nmcli_device_show_ens33_json)
 
-    def test_nmcli_device_show_ens33_fedora32(self):
+    def test_nmcli_device_show_fedora32(self):
         """
         Test 'nmcli device show' on fedora32
         """
