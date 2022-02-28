@@ -44,6 +44,15 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/nmcli-general-permissions.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_nmcli_general_permissions = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-connection-show-ens33.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_nmcli_connection_show_ens33 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-device-show-ens33.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_nmcli_device_show_ens33 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-device-show.out'), 'r', encoding='utf-8') as f:
+            self.fedora32_nmcli_device_show = f.read()
+
 
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/nmcli-connection-all.json'), 'r', encoding='utf-8') as f:
@@ -75,6 +84,15 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/nmcli-general-permissions.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_nmcli_general_permissions_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-connection-show-ens33.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_nmcli_connection_show_ens33_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-device-show-ens33.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_nmcli_device_show_ens33_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-device-show.json'), 'r', encoding='utf-8') as f:
+            self.fedora32_nmcli_device_show_json = json.loads(f.read())
 
 
 
@@ -149,6 +167,24 @@ class MyTests(unittest.TestCase):
         Test 'nmcli general permissions' on Centos 7.7
         """
         self.assertEqual(jc.parsers.nmcli.parse(self.centos_7_7_nmcli_general_permissions, quiet=True), self.centos_7_7_nmcli_general_permissions_json)
+
+    def test_nmcli_connection_show_ens33_fedora32(self):
+        """
+        Test 'nmcli connection show ens33' on fedora32
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.fedora32_nmcli_connection_show_ens33, quiet=True), self.fedora32_nmcli_connection_show_ens33_json)
+
+    def test_nmcli_device_show_ens33_fedora32(self):
+        """
+        Test 'nmcli device show ens33' on fedora32
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.fedora32_nmcli_device_show_ens33, quiet=True), self.fedora32_nmcli_device_show_ens33_json)
+
+    def test_nmcli_device_show_ens33_fedora32(self):
+        """
+        Test 'nmcli device show' on fedora32
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.fedora32_nmcli_device_show, quiet=True), self.fedora32_nmcli_device_show_json)
 
 
 if __name__ == '__main__':
