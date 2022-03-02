@@ -50,6 +50,10 @@ Schema:
           "name":                 string,
           "value":                string/integer/float,
         },
+        "dhcp6_option_x": {
+          "name":                 string,
+          "value":                string/integer/float,
+        },
         "ip4_route_x": {
           "dst":                  string,
           "nh":                   string,

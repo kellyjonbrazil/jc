@@ -45,6 +45,10 @@ Schema:
           "name":                 string,
           "value":                string/integer/float,
         },
+        "dhcp6_option_x": {
+          "name":                 string,
+          "value":                string/integer/float,
+        },
         "ip4_route_x": {
           "dst":                  string,
           "nh":                   string,
@@ -185,17 +189,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             except Exception:
                 pass
 
-            if '_option_' in key and key[-1].isdigit():
-                for k in entry[key]:
-                    try:
-                        if '.' in entry[key][k]:
-                            entry[key][k] = float(entry[key][k])
-                        else:
-                            entry[key][k] = int(entry[key][k])
-                    except Exception:
-                        pass
-
-            if '_route_' in key and key[-1].isdigit():
+            if ('_option_' in key or '_route_' in key) and key[-1].isdigit():
                 for k in entry[key]:
                     try:
                         if '.' in entry[key][k]:
