@@ -4,6 +4,8 @@
   * [parse](#jc.lib.parse)
   * [parser\_mod\_list](#jc.lib.parser_mod_list)
   * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
+  * [standard\_parser\_mod\_list](#jc.lib.standard_parser_mod_list)
+  * [streaming\_parser\_mod\_list](#jc.lib.streaming_parser_mod_list)
   * [parser\_info](#jc.lib.parser_info)
   * [all\_parser\_info](#jc.lib.all_parser_info)
   * [get\_help](#jc.lib.get_help)
@@ -98,6 +100,29 @@ def plugin_parser_mod_list() -> List[str]
 ```
 
 Returns a list of plugin parser module names. This function is a
+subset of `parser_mod_list()`.
+
+<a id="jc.lib.standard_parser_mod_list"></a>
+
+### standard\_parser\_mod\_list
+
+```python
+def standard_parser_mod_list() -> List[str]
+```
+
+Returns a list of standard parser module names. This function is a
+subset of `parser_mod_list()` and does not contain any streaming
+parsers.
+
+<a id="jc.lib.streaming_parser_mod_list"></a>
+
+### streaming\_parser\_mod\_list
+
+```python
+def streaming_parser_mod_list() -> List[str]
+```
+
+Returns a list of streaming parser module names. This function is a
 subset of `parser_mod_list()`.
 
 <a id="jc.lib.parser_info"></a>
