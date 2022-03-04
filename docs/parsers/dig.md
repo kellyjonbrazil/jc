@@ -3,7 +3,7 @@
 
 # jc.parsers.dig
 
-jc - JSON CLI output utility `dig` command output parser
+jc - JSON Convert `dig` command output parser
 
 Options supported:
 - `+noall +answer` options are supported in cases where only the answer
@@ -329,7 +329,7 @@ Examples:
 
 <a id="jc.parsers.dig.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

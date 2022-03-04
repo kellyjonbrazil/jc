@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `YAML` file parser
+"""jc - JSON Convert `YAML` file parser
 
 Usage (cli):
 

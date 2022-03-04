@@ -3,7 +3,7 @@
 
 # jc.parsers.xml
 
-jc - JSON CLI output utility `XML` file parser
+jc - JSON Convert `XML` file parser
 
 Usage (cli):
 
@@ -77,7 +77,7 @@ Examples:
 
 <a id="jc.parsers.xml.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

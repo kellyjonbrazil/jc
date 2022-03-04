@@ -3,7 +3,7 @@
 
 # jc.parsers.airport
 
-jc - JSON CLI output utility `airport -I` command output parser
+jc - JSON Convert `airport -I` command output parser
 
 The `airport` program can be found at `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport`.
 
@@ -87,7 +87,7 @@ Examples:
 
 <a id="jc.parsers.airport.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `wc` command output parser
+"""jc - JSON Convert `wc` command output parser
 
 Usage (cli):
 

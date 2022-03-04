@@ -3,7 +3,7 @@
 
 # jc.parsers.zipinfo
 
-jc - JSON CLI output utility `zipinfo` command output parser
+jc - JSON Convert `zipinfo` command output parser
 
 Options supported:
 - none
@@ -86,7 +86,7 @@ Examples:
 
 <a id="jc.parsers.zipinfo.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

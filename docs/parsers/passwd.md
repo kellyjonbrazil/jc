@@ -3,7 +3,7 @@
 
 # jc.parsers.passwd
 
-jc - JSON CLI output utility `/etc/passwd` file Parser
+jc - JSON Convert `/etc/passwd` file Parser
 
 Usage (cli):
 
@@ -101,7 +101,7 @@ Examples:
 
 <a id="jc.parsers.passwd.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

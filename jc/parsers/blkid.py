@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `blkid` command output parser
+"""jc - JSON Convert `blkid` command output parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility exceptions"""
+"""jc - JSON Convert exceptions"""
 
 
 class ParseError(Exception):

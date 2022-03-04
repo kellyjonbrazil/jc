@@ -3,7 +3,7 @@
 
 # jc.parsers.pip\_show
 
-jc - JSON CLI output utility `pip-show` command output parser
+jc - JSON Convert `pip-show` command output parser
 
 Usage (cli):
 
@@ -72,7 +72,7 @@ Examples:
 
 <a id="jc.parsers.pip_show.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

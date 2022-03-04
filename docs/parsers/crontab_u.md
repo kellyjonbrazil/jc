@@ -3,7 +3,7 @@
 
 # jc.parsers.crontab\_u
 
-jc - JSON CLI output utility `crontab -l` command output and crontab
+jc - JSON Convert `crontab -l` command output and crontab
 file parser
 
 This version of the `crontab -l` parser supports output that contains user
@@ -177,7 +177,7 @@ Examples:
 
 <a id="jc.parsers.crontab_u.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

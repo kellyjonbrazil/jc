@@ -3,7 +3,7 @@
 
 # jc.parsers.blkid
 
-jc - JSON CLI output utility `blkid` command output parser
+jc - JSON Convert `blkid` command output parser
 
 Usage (cli):
 
@@ -127,7 +127,7 @@ Examples:
 
 <a id="jc.parsers.blkid.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

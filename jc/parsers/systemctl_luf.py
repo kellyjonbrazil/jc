@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `systemctl list-unit-files` command output
+"""jc - JSON Convert `systemctl list-unit-files` command output
 parser
 
 Usage (cli):

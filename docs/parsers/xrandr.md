@@ -3,7 +3,7 @@
 
 # jc.parsers.xrandr
 
-jc - JSON CLI output utility `xrandr` command output parser
+jc - JSON Convert `xrandr` command output parser
 
 Usage (cli):
 
@@ -144,7 +144,7 @@ Examples:
 
 <a id="jc.parsers.xrandr.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict

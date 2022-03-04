@@ -3,7 +3,7 @@
 
 # jc.parsers.traceroute
 
-jc - JSON CLI output utility `traceroute` command output parser
+jc - JSON Convert `traceroute` command output parser
 
 Supports `traceroute` and `traceroute6` output.
 
@@ -127,7 +127,7 @@ Examples:
 
 <a id="jc.parsers.traceroute.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

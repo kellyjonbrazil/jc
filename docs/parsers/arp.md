@@ -3,7 +3,7 @@
 
 # jc.parsers.arp
 
-jc - JSON CLI output utility `arp` command output parser
+jc - JSON Convert `arp` command output parser
 
 Supports `arp` and `arp -a` output.
 
@@ -124,7 +124,7 @@ Examples:
 
 <a id="jc.parsers.arp.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

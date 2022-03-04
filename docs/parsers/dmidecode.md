@@ -3,7 +3,7 @@
 
 # jc.parsers.dmidecode
 
-jc - JSON CLI output utility `dmidecode` command output parser
+jc - JSON Convert `dmidecode` command output parser
 
 Usage (cli):
 
@@ -132,7 +132,7 @@ Examples:
 
 <a id="jc.parsers.dmidecode.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

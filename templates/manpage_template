@@ -1,4 +1,4 @@
-.TH jc 1 {{ today }} {{ jc.version}} "JSON CLI output utility"
+.TH jc 1 {{ today }} {{ jc.version}} "JSON Convert"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS

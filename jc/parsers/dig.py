@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `dig` command output parser
+"""jc - JSON Convert `dig` command output parser
 
 Options supported:
 - `+noall +answer` options are supported in cases where only the answer

@@ -3,7 +3,7 @@
 
 # jc.parsers.lsof
 
-jc - JSON CLI output utility `lsof` command output parser
+jc - JSON Convert `lsof` command output parser
 
 Usage (cli):
 
@@ -126,7 +126,7 @@ Examples:
 
 <a id="jc.parsers.lsof.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

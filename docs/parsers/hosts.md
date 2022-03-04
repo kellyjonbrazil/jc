@@ -3,7 +3,7 @@
 
 # jc.parsers.hosts
 
-jc - JSON CLI output utility `/etc/hosts` file parser
+jc - JSON Convert `/etc/hosts` file parser
 
 Usage (cli):
 
@@ -81,7 +81,7 @@ Examples:
 
 <a id="jc.parsers.hosts.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

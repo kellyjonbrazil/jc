@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `tracepath` command output parser
+"""jc - JSON Convert `tracepath` command output parser
 
 Supports `tracepath` and `tracepath6` output.
 

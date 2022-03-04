@@ -3,7 +3,7 @@
 
 # jc.parsers.systemctl
 
-jc - JSON CLI output utility `systemctl` command output parser
+jc - JSON Convert `systemctl` command output parser
 
 Usage (cli):
 
@@ -65,7 +65,7 @@ Examples:
 
 <a id="jc.parsers.systemctl.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

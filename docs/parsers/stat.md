@@ -3,7 +3,7 @@
 
 # jc.parsers.stat
 
-jc - JSON CLI output utility `stat` command output parser
+jc - JSON Convert `stat` command output parser
 
 The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -177,7 +177,7 @@ Examples:
 
 <a id="jc.parsers.stat.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

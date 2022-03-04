@@ -3,7 +3,7 @@
 
 # jc.parsers.pip\_list
 
-jc - JSON CLI output utility `pip-list` command output parser
+jc - JSON Convert `pip-list` command output parser
 
 Usage (cli):
 
@@ -54,7 +54,7 @@ Examples:
 
 <a id="jc.parsers.pip_list.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

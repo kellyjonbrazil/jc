@@ -3,7 +3,7 @@
 
 # jc.parsers.ps
 
-jc - JSON CLI output utility `ps` command output parser
+jc - JSON Convert `ps` command output parser
 
 `ps` options supported:
 - `ef`
@@ -213,7 +213,7 @@ Examples:
 
 <a id="jc.parsers.ps.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

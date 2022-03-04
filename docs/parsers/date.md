@@ -3,7 +3,7 @@
 
 # jc.parsers.date
 
-jc - JSON CLI output utility `date` command output parser
+jc - JSON Convert `date` command output parser
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the local
 time of the system the parser is run on)
@@ -84,7 +84,7 @@ Examples:
 
 <a id="jc.parsers.date.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

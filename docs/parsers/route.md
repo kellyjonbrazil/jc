@@ -3,7 +3,7 @@
 
 # jc.parsers.route
 
-jc - JSON CLI output utility `route` command output parser
+jc - JSON Convert `route` command output parser
 
 Usage (cli):
 
@@ -115,7 +115,7 @@ Examples:
 
 <a id="jc.parsers.route.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

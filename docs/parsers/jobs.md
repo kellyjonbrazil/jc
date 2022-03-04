@@ -3,7 +3,7 @@
 
 # jc.parsers.jobs
 
-jc - JSON CLI output utility `jobs` command output parser
+jc - JSON Convert `jobs` command output parser
 
 Also supports the `-l` option.
 
@@ -100,7 +100,7 @@ Example:
 
 <a id="jc.parsers.jobs.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

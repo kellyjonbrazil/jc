@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `route` command output parser
+"""jc - JSON Convert `route` command output parser
 
 Usage (cli):
 

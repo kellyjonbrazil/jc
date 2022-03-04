@@ -3,7 +3,7 @@
 
 # jc.parsers.csv\_s
 
-jc - JSON CLI output utility `csv` file streaming parser
+jc - JSON Convert `csv` file streaming parser
 
 > This streaming parser outputs JSON Lines
 
@@ -70,7 +70,7 @@ Examples:
 
 <a id="jc.parsers.csv_s.parse"></a>
 
-### parse
+#### parse
 
 ```python
 @add_jc_meta

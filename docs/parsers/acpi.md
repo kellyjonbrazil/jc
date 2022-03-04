@@ -3,7 +3,7 @@
 
 # jc.parsers.acpi
 
-jc - JSON CLI output utility `acpi` command output parser
+jc - JSON Convert `acpi` command output parser
 
 Usage (cli):
 
@@ -234,7 +234,7 @@ Examples:
 
 <a id="jc.parsers.acpi.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

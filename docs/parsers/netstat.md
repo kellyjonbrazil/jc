@@ -3,7 +3,7 @@
 
 # jc.parsers.netstat
 
-jc - JSON CLI output utility `netstat` command output parser
+jc - JSON Convert `netstat` command output parser
 
 Caveats:
 - Use of multiple `l` options is not supported on OSX (e.g. `netstat -rlll`)
@@ -362,7 +362,7 @@ Examples:
 
 <a id="jc.parsers.netstat.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

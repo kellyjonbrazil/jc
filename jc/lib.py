@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility
+"""jc - JSON Convert
 JC lib module
 """
 

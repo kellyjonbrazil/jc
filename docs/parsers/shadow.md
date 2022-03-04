@@ -3,7 +3,7 @@
 
 # jc.parsers.shadow
 
-jc - JSON CLI output utility `/etc/shadow` file parser
+jc - JSON Convert `/etc/shadow` file parser
 
 Usage (cli):
 
@@ -108,7 +108,7 @@ Examples:
 
 <a id="jc.parsers.shadow.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -3,7 +3,7 @@
 
 # jc.parsers.lsblk
 
-jc - JSON CLI output utility `lsblk` command output parser
+jc - JSON Convert `lsblk` command output parser
 
 Usage (cli):
 
@@ -281,7 +281,7 @@ Examples:
 
 <a id="jc.parsers.lsblk.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

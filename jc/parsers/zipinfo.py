@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `zipinfo` command output parser
+"""jc - JSON Convert `zipinfo` command output parser
 
 Options supported:
 - none

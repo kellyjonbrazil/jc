@@ -3,7 +3,7 @@
 
 # jc.parsers.gshadow
 
-jc - JSON CLI output utility `/etc/gshadow` file parser
+jc - JSON Convert `/etc/gshadow` file parser
 
 Usage (cli):
 
@@ -84,7 +84,7 @@ Examples:
 
 <a id="jc.parsers.gshadow.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

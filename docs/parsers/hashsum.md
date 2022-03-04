@@ -3,7 +3,7 @@
 
 # jc.parsers.hashsum
 
-jc - JSON CLI output utility `hash sum` command output parser
+jc - JSON Convert `hash sum` command output parser
 
 This parser works with the following hash calculation utilities:
 - `md5`
@@ -75,7 +75,7 @@ Examples:
 
 <a id="jc.parsers.hashsum.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -3,7 +3,7 @@
 
 # jc.parsers.iptables
 
-jc - JSON CLI output utility `iptables` command output parser
+jc - JSON Convert `iptables` command output parser
 
 Supports `-vLn` and `--line-numbers` for all tables.
 
@@ -170,7 +170,7 @@ Examples:
 
 <a id="jc.parsers.iptables.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

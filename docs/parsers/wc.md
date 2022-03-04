@@ -3,7 +3,7 @@
 
 # jc.parsers.wc
 
-jc - JSON CLI output utility `wc` command output parser
+jc - JSON Convert `wc` command output parser
 
 Usage (cli):
 
@@ -61,7 +61,7 @@ Examples:
 
 <a id="jc.parsers.wc.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

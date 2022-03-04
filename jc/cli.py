@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility
+"""jc - JSON Convert
 JC cli module
 """
 
@@ -34,7 +34,7 @@ JC_ERROR_EXIT = 100
 
 class info():
     version = __version__
-    description = 'JSON CLI output utility'
+    description = 'JSON Convert'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'

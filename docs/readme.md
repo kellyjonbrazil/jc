@@ -2,7 +2,7 @@
 
 # jc
 
-JC - JSON CLI output utility
+JC - JSON Convert
 
 * kellyjonbrazil@gmail.com
 

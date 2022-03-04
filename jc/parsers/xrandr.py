@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `xrandr` command output parser
+"""jc - JSON Convert `xrandr` command output parser
 
 Usage (cli):
 

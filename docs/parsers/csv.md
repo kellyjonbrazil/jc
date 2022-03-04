@@ -3,7 +3,7 @@
 
 # jc.parsers.csv
 
-jc - JSON CLI output utility `csv` file parser
+jc - JSON Convert `csv` file parser
 
 The `csv` parser will attempt to automatically detect the delimiter
 character. If the delimiter cannot be detected it will default to comma.
@@ -84,7 +84,7 @@ Examples:
 
 <a id="jc.parsers.csv.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

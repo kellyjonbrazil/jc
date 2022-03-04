@@ -3,7 +3,7 @@
 
 # jc.parsers.uname
 
-jc - JSON CLI output utility `uname -a` command output parser
+jc - JSON Convert `uname -a` command output parser
 
 Note: Must use `uname -a`
 
@@ -54,7 +54,7 @@ Example:
 
 <a id="jc.parsers.uname.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

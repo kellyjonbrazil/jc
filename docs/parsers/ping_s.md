@@ -3,7 +3,7 @@
 
 # jc.parsers.ping\_s
 
-jc - JSON CLI output utility `ping` command output streaming parser
+jc - JSON Convert `ping` command output streaming parser
 
 > This streaming parser outputs JSON Lines
 
@@ -90,7 +90,7 @@ Examples:
 
 <a id="jc.parsers.ping_s.parse"></a>
 
-### parse
+#### parse
 
 ```python
 @add_jc_meta

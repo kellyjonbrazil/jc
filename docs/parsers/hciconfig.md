@@ -3,7 +3,7 @@
 
 # jc.parsers.hciconfig
 
-jc - JSON CLI output utility `hciconfig` command output parser
+jc - JSON Convert `hciconfig` command output parser
 
 Usage (cli):
 
@@ -324,7 +324,7 @@ Examples:
 
 <a id="jc.parsers.hciconfig.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

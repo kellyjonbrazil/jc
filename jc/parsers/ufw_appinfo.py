@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `ufw app info [application]` command
+"""jc - JSON Convert `ufw app info [application]` command
 output parser
 
 Supports individual apps via `ufw app info [application]` and all apps list

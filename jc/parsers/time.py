@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `/usr/bin/time` command output parser
+"""jc - JSON Convert `/usr/bin/time` command output parser
 
 Output from `/usr/bin/time` is sent to `STDERR`, so the `-o` option can be
 used to redirect the output to a file that can be read by `jc`.

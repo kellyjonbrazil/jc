@@ -3,7 +3,7 @@
 
 # jc.parsers.last
 
-jc - JSON CLI output utility `last` and `lastb` command output parser
+jc - JSON Convert `last` and `lastb` command output parser
 
 Supports `-w` and `-F` options.
 
@@ -111,7 +111,7 @@ Examples:
 
 <a id="jc.parsers.last.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

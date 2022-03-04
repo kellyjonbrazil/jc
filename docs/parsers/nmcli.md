@@ -3,7 +3,7 @@
 
 # jc.parsers.nmcli
 
-jc - JSON CLI output utility `nmcli` command output parser
+jc - JSON Convert `nmcli` command output parser
 
 Supports the following `nmcli` subcommands:
 - `nmcli general`
@@ -152,7 +152,7 @@ Examples:
 
 <a id="jc.parsers.nmcli.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]

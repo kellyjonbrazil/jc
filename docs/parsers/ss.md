@@ -3,7 +3,7 @@
 
 # jc.parsers.ss
 
-jc - JSON CLI output utility `ss` command output parser
+jc - JSON Convert `ss` command output parser
 
 Extended information options like -e and -p are not supported and may cause
 parsing irregularities.
@@ -287,7 +287,7 @@ Examples:
 
 <a id="jc.parsers.ss.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

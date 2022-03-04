@@ -3,7 +3,7 @@
 
 # jc.parsers.env
 
-jc - JSON CLI output utility `env` and `printenv` command output parser
+jc - JSON Convert `env` and `printenv` command output parser
 
 This parser will output a list of dictionaries each containing `name` and
 `value` keys. If you would like a simple dictionary output, then use the
@@ -79,7 +79,7 @@ Examples:
 
 <a id="jc.parsers.env.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

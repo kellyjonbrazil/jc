@@ -3,7 +3,7 @@
 
 # jc.parsers.systemctl\_lj
 
-jc - JSON CLI output utility `systemctl list-jobs` command output parser
+jc - JSON Convert `systemctl list-jobs` command output parser
 
 Usage (cli):
 
@@ -82,7 +82,7 @@ Examples:
 
 <a id="jc.parsers.systemctl_lj.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

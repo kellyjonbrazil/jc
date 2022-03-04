@@ -3,7 +3,7 @@
 
 # jc.parsers.fstab
 
-jc - JSON CLI output utility `fstab` file parser
+jc - JSON Convert `fstab` file parser
 
 Usage (cli):
 
@@ -92,7 +92,7 @@ Examples:
 
 <a id="jc.parsers.fstab.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -3,7 +3,7 @@
 
 # jc.parsers.tracepath
 
-jc - JSON CLI output utility `tracepath` command output parser
+jc - JSON Convert `tracepath` command output parser
 
 Supports `tracepath` and `tracepath6` output.
 
@@ -138,7 +138,7 @@ Examples:
 
 <a id="jc.parsers.tracepath.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

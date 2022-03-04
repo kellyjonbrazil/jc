@@ -3,7 +3,7 @@
 
 # jc.parsers.yaml
 
-jc - JSON CLI output utility `YAML` file parser
+jc - JSON Convert `YAML` file parser
 
 Usage (cli):
 
@@ -91,7 +91,7 @@ Examples:
 
 <a id="jc.parsers.yaml.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

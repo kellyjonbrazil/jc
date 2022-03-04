@@ -3,7 +3,7 @@
 
 # jc.parsers.dir
 
-jc - JSON CLI output utility `dir` command output parser
+jc - JSON Convert `dir` command output parser
 
 Options supported:
 - `/T timefield`
@@ -127,7 +127,7 @@ Examples:
 
 <a id="jc.parsers.dir.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -12,11 +12,11 @@
 
 # jc.streaming
 
-jc - JSON CLI output utility streaming utils
+jc - JSON Convert streaming utils
 
 <a id="jc.streaming.streaming_input_type_check"></a>
 
-### streaming\_input\_type\_check
+#### streaming\_input\_type\_check
 
 ```python
 def streaming_input_type_check(data: Iterable) -> None
@@ -27,7 +27,7 @@ Ensure input data is an iterable, but not a string or bytes. Raises
 
 <a id="jc.streaming.streaming_line_input_type_check"></a>
 
-### streaming\_line\_input\_type\_check
+#### streaming\_line\_input\_type\_check
 
 ```python
 def streaming_line_input_type_check(line: str) -> None
@@ -37,7 +37,7 @@ Ensure each line is a string. Raises `TypeError` if not.
 
 <a id="jc.streaming.stream_success"></a>
 
-### stream\_success
+#### stream\_success
 
 ```python
 def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict
@@ -47,7 +47,7 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 
 <a id="jc.streaming.stream_error"></a>
 
-### stream\_error
+#### stream\_error
 
 ```python
 def stream_error(e: BaseException, line: str) -> Dict
@@ -57,7 +57,7 @@ Return an error `_jc_meta` field.
 
 <a id="jc.streaming.add_jc_meta"></a>
 
-### add\_jc\_meta
+#### add\_jc\_meta
 
 ```python
 def add_jc_meta(func)
@@ -102,10 +102,11 @@ In all cases above:
 
 <a id="jc.streaming.raise_or_yield"></a>
 
-### raise\_or\_yield
+#### raise\_or\_yield
 
 ```python
-def raise_or_yield(ignore_exceptions: bool, e: BaseException, line: str) -> tuple
+def raise_or_yield(ignore_exceptions: bool, e: BaseException,
+                   line: str) -> tuple
 ```
 
 Return the exception object and line string if ignore_exceptions is

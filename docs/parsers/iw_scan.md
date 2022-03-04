@@ -3,7 +3,7 @@
 
 # jc.parsers.iw\_scan
 
-jc - JSON CLI output utility `iw dev <device> scan` command output parser
+jc - JSON Convert `iw dev <device> scan` command output parser
 
 This parser is considered beta quality. Not all fields are parsed and there
 are not enough samples to test.
@@ -128,7 +128,7 @@ Examples:
 
 <a id="jc.parsers.iw_scan.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

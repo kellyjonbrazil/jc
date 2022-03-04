@@ -3,7 +3,7 @@
 
 # jc.parsers.jar\_manifest
 
-jc - JSON CLI output utility `MANIFEST.MF` file parser
+jc - JSON Convert `MANIFEST.MF` file parser
 
 Usage (cli):
 
@@ -84,7 +84,7 @@ Examples:
 
 <a id="jc.parsers.jar_manifest.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -3,7 +3,7 @@
 
 # jc.parsers.free
 
-jc - JSON CLI output utility `free` command output parser
+jc - JSON Convert `free` command output parser
 
 Usage (cli):
 
@@ -79,7 +79,7 @@ Examples:
 
 <a id="jc.parsers.free.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

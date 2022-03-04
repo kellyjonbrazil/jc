@@ -3,7 +3,7 @@
 
 # jc.parsers.systemctl\_luf
 
-jc - JSON CLI output utility `systemctl list-unit-files` command output
+jc - JSON Convert `systemctl list-unit-files` command output
 parser
 
 Usage (cli):
@@ -54,7 +54,7 @@ Examples:
 
 <a id="jc.parsers.systemctl_luf.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

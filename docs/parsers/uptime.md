@@ -3,7 +3,7 @@
 
 # jc.parsers.uptime
 
-jc - JSON CLI output utility `uptime` command output parser
+jc - JSON Convert `uptime` command output parser
 
 Usage (cli):
 
@@ -72,7 +72,7 @@ Example:
 
 <a id="jc.parsers.uptime.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

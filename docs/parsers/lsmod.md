@@ -3,7 +3,7 @@
 
 # jc.parsers.lsmod
 
-jc - JSON CLI output utility `lsmod` command output parser
+jc - JSON Convert `lsmod` command output parser
 
 Usage (cli):
 
@@ -132,7 +132,7 @@ Examples:
 
 <a id="jc.parsers.lsmod.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

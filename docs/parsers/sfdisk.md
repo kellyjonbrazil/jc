@@ -3,7 +3,7 @@
 
 # jc.parsers.sfdisk
 
-jc - JSON CLI output utility `sfdisk` command output parser
+jc - JSON Convert `sfdisk` command output parser
 
 Supports the following `sfdisk` options:
 - `-l`
@@ -209,7 +209,7 @@ Examples:
 
 <a id="jc.parsers.sfdisk.parse"></a>
 
-### parse
+#### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

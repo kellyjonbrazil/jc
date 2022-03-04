@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility universal Parsers"""
+"""jc - JSON Convert universal Parsers"""
 
 
 import string
