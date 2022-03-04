@@ -36,9 +36,7 @@ Example:
     >>> jc.parse('date', 'Tue Jan 18 10:23:07 PST 2022')
     {'year': 2022, 'month': 'Jan', 'month_num': 1, 'day'...}
 
-To get a list of available parser module names, use `parser_mod_list()`
-or `plugin_parser_mod_list()`. `plugin_parser_mod_list()` is a subset
-of `parser_mod_list()`.
+To get a list of available parser module names, use `parser_mod_list()`.
 
 You can also use the lower-level parser modules directly:
 
