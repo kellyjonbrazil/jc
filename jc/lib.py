@@ -144,6 +144,17 @@ def _get_parser(parser_mod_name):
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
+def _parser_is_streaming(parser):
+    """
+    Returns True if this is a streaming parser, else False
+
+    parser is a parser module object.
+    """
+    if getattr(parser.info, 'streaming', None):
+        return True
+
+    return False
+
 def parse(
     parser_mod_name: str,
     data: Union[str, Iterable[str]],
@@ -237,7 +248,7 @@ def standard_parser_mod_list() -> List[str]:
     plist = []
     for p in parsers:
         parser = _get_parser(p)
-        if not getattr(parser.info, 'streaming', None):
+        if not _parser_is_streaming(parser):
             plist.append(p)
     return plist
 
@@ -249,7 +260,7 @@ def streaming_parser_mod_list() -> List[str]:
     plist = []
     for p in parsers:
         parser = _get_parser(p)
-        if getattr(parser.info, 'streaming', None):
+        if _parser_is_streaming(parser):
             plist.append(p)
     return plist
 
