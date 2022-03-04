@@ -11,7 +11,7 @@ import shlex
 import subprocess
 import json
 from .lib import (__version__, all_parser_info, parsers,
-                  _parser_argument, _get_parser)
+                  _parser_argument, _get_parser, streaming_parser_mod_list)
 from . import utils
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -502,7 +502,7 @@ def main():
         # differentiate between regular and streaming parsers
 
         # streaming
-        if getattr(parser.info, 'streaming', None):
+        if parser_name in streaming_parser_mod_list():
             result = parser.parse(sys.stdin,
                                   raw=raw,
                                   quiet=quiet,
