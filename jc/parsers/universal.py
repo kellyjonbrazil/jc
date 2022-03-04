@@ -1,4 +1,4 @@
-"""jc - JSON Convert universal Parsers"""
+"""jc - JSON Convert universal parsers"""
 
 
 import string
