@@ -228,6 +228,31 @@ def plugin_parser_mod_list() -> List[str]:
     """
     return [_cliname_to_modname(p) for p in local_parsers]
 
+def standard_parser_mod_list() -> List[str]:
+    """
+    Returns a list of standard parser module names. This function is a
+    subset of `parser_mod_list()` and does not contain any streaming
+    parsers.
+    """
+    plist = []
+    for p in parsers:
+        parser = _get_parser(p)
+        if not getattr(parser.info, 'streaming', None):
+            plist.append(p)
+    return plist
+
+def streaming_parser_mod_list() -> List[str]:
+    """
+    Returns a list of streaming parser module names. This function is a
+    subset of `parser_mod_list()`.
+    """
+    plist = []
+    for p in parsers:
+        parser = _get_parser(p)
+        if getattr(parser.info, 'streaming', None):
+            plist.append(p)
+    return plist
+
 def parser_info(parser_mod_name: str) -> Dict:
     """
     Returns a dictionary that includes the module metadata.

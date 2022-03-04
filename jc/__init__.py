@@ -98,6 +98,23 @@ Get a list of all available parser module names to be used in
 Get a list of plugin parser module names to be used in
 `parse()`, `parser_info()`, and `get_help()`. This list is a subset of
 `parser_mod_list()`.
+
+### standard_parser_mod_list
+
+    standard_parser_mod_list() -> list
+
+Get a list of standard parser module names to be used in
+`parse()`, `parser_info()`, and `get_help()`. This list is a subset of
+`parser_mod_list()` and does not contain any streaming parsers.
+
+### streaming_parser_mod_list
+
+    streaming_parser_mod_list() -> list
+
+Get a list of streaming parser module names to be used in
+`parse()`, `parser_info()`, and `get_help()`. This list is a subset of
+`parser_mod_list()`.
 """
 from .lib import (__version__, parse, parser_mod_list, plugin_parser_mod_list,
+                  standard_parser_mod_list, streaming_parser_mod_list,
                   parser_info, all_parser_info, get_help)
