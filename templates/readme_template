@@ -53,16 +53,9 @@ will be a python dictionary, or list of dictionaries, instead of JSON:
 >>> cmd_output = subprocess.check_output(['dig', 'example.com'], text=True)
 >>> data = jc.parse('dig', cmd_output)
 >>>
->>> data
-[{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd',
-'ra'], 'query_num': 1, 'answer_num': 1, 'authority_num': 0, 'additional_num':
-1, 'opt_pseudosection': {'edns': {'version': 0, 'flags': [], 'udp': 4096}},
-'question': {'name': 'example.com.', 'class': 'IN', 'type': 'A'}, 'answer':
+>>> data[0]['answer']
 [{'name': 'example.com.', 'class': 'IN', 'type': 'A', 'ttl': 29658, 'data':
-'93.184.216.34'}], 'query_time': 52, 'server':
-'2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when':
-'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56, 'when_epoch': 1618614780,
-'when_epoch_utc': None}]
+'93.184.216.34'}]
 ```
 
 > For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or
