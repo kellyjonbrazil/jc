@@ -83,7 +83,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.3'
+    version = '2.4'
     description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -188,7 +188,7 @@ def parse(data, raw=False, quiet=False):
             'hour_24': dt.hour,
             'minute': dt.minute,
             'second': dt.second,
-            'period': dt.strftime('%p'),
+            'period': dt.strftime('%p').upper(),
             'timezone': tz,
             'utc_offset': dt.strftime('%z') or None,
             'day_of_year': int(dt.strftime('%j')),

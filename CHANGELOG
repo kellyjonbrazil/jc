@@ -1,5 +1,8 @@
 jc changelog
 
+20220305 v1.18.5
+- Fix date parser to ensure AM/PM period string is always uppercase
+
 20220304 v1.18.4
 - Add nmcli command parser tested on linux
 - Enhance parse error messages at the cli
