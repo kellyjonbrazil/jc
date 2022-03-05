@@ -247,7 +247,7 @@ def standard_parser_mod_list() -> List[str]:
     for p in parsers:
         parser = _get_parser(p)
         if not _parser_is_streaming(parser):
-            plist.append(p)
+            plist.append(_cliname_to_modname(p))
     return plist
 
 def streaming_parser_mod_list() -> List[str]:
@@ -259,7 +259,7 @@ def streaming_parser_mod_list() -> List[str]:
     for p in parsers:
         parser = _get_parser(p)
         if _parser_is_streaming(parser):
-            plist.append(p)
+            plist.append(_cliname_to_modname(p))
     return plist
 
 def parser_info(parser_mod_name: str) -> Dict:
