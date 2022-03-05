@@ -82,7 +82,7 @@ Example:
 
 <a id="jc.parsers.mount.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

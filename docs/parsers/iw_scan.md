@@ -128,7 +128,7 @@ Examples:
 
 <a id="jc.parsers.iw_scan.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

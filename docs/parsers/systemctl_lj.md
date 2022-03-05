@@ -82,7 +82,7 @@ Examples:
 
 <a id="jc.parsers.systemctl_lj.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -177,7 +177,7 @@ Examples:
 
 <a id="jc.parsers.crontab_u.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

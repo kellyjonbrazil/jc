@@ -324,7 +324,7 @@ Examples:
 
 <a id="jc.parsers.hciconfig.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

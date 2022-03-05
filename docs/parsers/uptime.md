@@ -72,7 +72,7 @@ Example:
 
 <a id="jc.parsers.uptime.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

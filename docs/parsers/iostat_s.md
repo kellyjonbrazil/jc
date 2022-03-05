@@ -107,7 +107,7 @@ Examples:
 
 <a id="jc.parsers.iostat_s.parse"></a>
 
-#### parse
+### parse
 
 ```python
 @add_jc_meta

@@ -166,7 +166,7 @@ Examples:
 
 <a id="jc.parsers.iostat.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

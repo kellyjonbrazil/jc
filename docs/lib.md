@@ -19,7 +19,7 @@ JC lib module
 
 <a id="jc.lib.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(parser_mod_name: str,
@@ -86,7 +86,7 @@ Returns:
 
 <a id="jc.lib.parser_mod_list"></a>
 
-#### parser\_mod\_list
+### parser\_mod\_list
 
 ```python
 def parser_mod_list() -> List[str]
@@ -96,7 +96,7 @@ Returns a list of all available parser module names.
 
 <a id="jc.lib.plugin_parser_mod_list"></a>
 
-#### plugin\_parser\_mod\_list
+### plugin\_parser\_mod\_list
 
 ```python
 def plugin_parser_mod_list() -> List[str]
@@ -107,7 +107,7 @@ subset of `parser_mod_list()`.
 
 <a id="jc.lib.standard_parser_mod_list"></a>
 
-#### standard\_parser\_mod\_list
+### standard\_parser\_mod\_list
 
 ```python
 def standard_parser_mod_list() -> List[str]
@@ -119,7 +119,7 @@ parsers.
 
 <a id="jc.lib.streaming_parser_mod_list"></a>
 
-#### streaming\_parser\_mod\_list
+### streaming\_parser\_mod\_list
 
 ```python
 def streaming_parser_mod_list() -> List[str]
@@ -130,7 +130,7 @@ subset of `parser_mod_list()`.
 
 <a id="jc.lib.parser_info"></a>
 
-#### parser\_info
+### parser\_info
 
 ```python
 def parser_info(parser_mod_name: str) -> Dict
@@ -143,7 +143,7 @@ This function will accept **module_name**, **cli-name**, and
 
 <a id="jc.lib.all_parser_info"></a>
 
-#### all\_parser\_info
+### all\_parser\_info
 
 ```python
 def all_parser_info() -> List[Dict]
@@ -153,7 +153,7 @@ Returns a list of dictionaries that includes metadata for all modules.
 
 <a id="jc.lib.get_help"></a>
 
-#### get\_help
+### get\_help
 
 ```python
 def get_help(parser_mod_name: str) -> None

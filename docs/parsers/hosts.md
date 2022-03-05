@@ -81,7 +81,7 @@ Examples:
 
 <a id="jc.parsers.hosts.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -90,7 +90,7 @@ Examples:
 
 <a id="jc.parsers.ping_s.parse"></a>
 
-#### parse
+### parse
 
 ```python
 @add_jc_meta

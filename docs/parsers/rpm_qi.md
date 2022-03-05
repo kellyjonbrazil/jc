@@ -168,7 +168,7 @@ Examples:
 
 <a id="jc.parsers.rpm_qi.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

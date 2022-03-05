@@ -12,7 +12,7 @@ jc - JSON Convert universal parsers
 
 <a id="jc.parsers.universal.simple_table_parse"></a>
 
-#### simple\_table\_parse
+### simple\_table\_parse
 
 ```python
 def simple_table_parse(data: List[str]) -> List[Dict]
@@ -37,7 +37,7 @@ Returns:
 
 <a id="jc.parsers.universal.sparse_table_parse"></a>
 
-#### sparse\_table\_parse
+### sparse\_table\_parse
 
 ```python
 def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]

@@ -180,7 +180,7 @@ Examples:
 
 <a id="jc.parsers.crontab.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -20,7 +20,7 @@ jc - JSON Convert utils
 
 <a id="jc.utils.warning_message"></a>
 
-#### warning\_message
+### warning\_message
 
 ```python
 def warning_message(message_lines: List[str]) -> None
@@ -40,7 +40,7 @@ Returns:
 
 <a id="jc.utils.error_message"></a>
 
-#### error\_message
+### error\_message
 
 ```python
 def error_message(message_lines: List[str]) -> None
@@ -60,7 +60,7 @@ Returns:
 
 <a id="jc.utils.compatibility"></a>
 
-#### compatibility
+### compatibility
 
 ```python
 def compatibility(mod_name: str,
@@ -87,7 +87,7 @@ Returns:
 
 <a id="jc.utils.has_data"></a>
 
-#### has\_data
+### has\_data
 
 ```python
 def has_data(data: str) -> bool
@@ -107,7 +107,7 @@ Returns:
 
 <a id="jc.utils.convert_to_int"></a>
 
-#### convert\_to\_int
+### convert\_to\_int
 
 ```python
 def convert_to_int(value: Union[str, float]) -> Optional[int]
@@ -126,7 +126,7 @@ Returns:
 
 <a id="jc.utils.convert_to_float"></a>
 
-#### convert\_to\_float
+### convert\_to\_float
 
 ```python
 def convert_to_float(value: Union[str, int]) -> Optional[float]
@@ -145,7 +145,7 @@ Returns:
 
 <a id="jc.utils.convert_to_bool"></a>
 
-#### convert\_to\_bool
+### convert\_to\_bool
 
 ```python
 def convert_to_bool(value: Union[str, int, float]) -> bool
@@ -165,7 +165,7 @@ Returns:
 
 <a id="jc.utils.input_type_check"></a>
 
-#### input\_type\_check
+### input\_type\_check
 
 ```python
 def input_type_check(data: str) -> None
@@ -175,7 +175,7 @@ Ensure input data is a string. Raises `TypeError` if not.
 
 <a id="jc.utils.timestamp"></a>
 
-## timestamp Objects
+### timestamp Objects
 
 ```python
 class timestamp()
@@ -183,7 +183,7 @@ class timestamp()
 
 <a id="jc.utils.timestamp.__init__"></a>
 
-#### \_\_init\_\_
+### \_\_init\_\_
 
 ```python
 def __init__(datetime_string: str,

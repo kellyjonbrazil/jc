@@ -84,7 +84,7 @@ Examples:
 
 <a id="jc.parsers.date.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

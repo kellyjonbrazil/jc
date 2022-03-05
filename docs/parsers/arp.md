@@ -124,7 +124,7 @@ Examples:
 
 <a id="jc.parsers.arp.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

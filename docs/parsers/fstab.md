@@ -92,7 +92,7 @@ Examples:
 
 <a id="jc.parsers.fstab.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

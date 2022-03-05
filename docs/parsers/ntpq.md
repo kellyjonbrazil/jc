@@ -213,7 +213,7 @@ Examples:
 
 <a id="jc.parsers.ntpq.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

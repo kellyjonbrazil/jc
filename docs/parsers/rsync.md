@@ -141,7 +141,7 @@ Examples:
 
 <a id="jc.parsers.rsync.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]

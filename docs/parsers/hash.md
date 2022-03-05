@@ -44,7 +44,7 @@ Examples:
 
 <a id="jc.parsers.hash.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

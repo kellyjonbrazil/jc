@@ -213,7 +213,7 @@ Examples:
 
 <a id="jc.parsers.ps.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

@@ -205,7 +205,7 @@ Examples:
 
 <a id="jc.parsers.upower.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

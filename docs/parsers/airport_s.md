@@ -115,7 +115,7 @@ Examples:
 
 <a id="jc.parsers.airport_s.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

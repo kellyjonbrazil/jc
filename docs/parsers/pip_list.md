@@ -54,7 +54,7 @@ Examples:
 
 <a id="jc.parsers.pip_list.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)

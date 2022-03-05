@@ -145,7 +145,7 @@ Examples:
 
 <a id="jc.parsers.ufw_appinfo.parse"></a>
 
-#### parse
+### parse
 
 ```python
 def parse(data, raw=False, quiet=False)
