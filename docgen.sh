@@ -1,6 +1,6 @@
 #!/bin/bash
 # Generate docs.md
-# requires pydoc-markdown 4.5.0
+# requires pydoc-markdown 4.6.1
 readme_config=$(cat <<'EOF'
 {
     "processors": [
