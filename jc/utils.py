@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility utils"""
+"""jc - JSON Convert utils"""
 import sys
 import re
 import locale

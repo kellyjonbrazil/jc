@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `dmidecode` command output parser
+"""jc - JSON Convert `dmidecode` command output parser
 
 Usage (cli):
 

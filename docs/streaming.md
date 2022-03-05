@@ -12,7 +12,7 @@
 
 # jc.streaming
 
-jc - JSON CLI output utility streaming utils
+jc - JSON Convert streaming utils
 
 <a id="jc.streaming.streaming_input_type_check"></a>
 
@@ -105,7 +105,8 @@ In all cases above:
 ### raise\_or\_yield
 
 ```python
-def raise_or_yield(ignore_exceptions: bool, e: BaseException, line: str) -> tuple
+def raise_or_yield(ignore_exceptions: bool, e: BaseException,
+                   line: str) -> tuple
 ```
 
 Return the exception object and line string if ignore_exceptions is

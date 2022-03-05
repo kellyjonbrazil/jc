@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility streaming utils"""
+"""jc - JSON Convert streaming utils"""
 
 from functools import wraps
 from typing import Dict, Iterable

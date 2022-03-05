@@ -3,7 +3,7 @@
 
 # jc.parsers.cksum
 
-jc - JSON CLI output utility `cksum` command output parser
+jc - JSON Convert `cksum` command output parser
 
 This parser works with the following checksum calculation utilities:
 - `sum`

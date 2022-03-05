@@ -16,7 +16,7 @@
 
 # jc.utils
 
-jc - JSON CLI output utility utils
+jc - JSON Convert utils
 
 <a id="jc.utils.warning_message"></a>
 
@@ -63,7 +63,9 @@ Returns:
 ### compatibility
 
 ```python
-def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None
+def compatibility(mod_name: str,
+                  compatible: List,
+                  quiet: bool = False) -> None
 ```
 
 Checks for the parser's compatibility with the running OS
@@ -184,7 +186,8 @@ class timestamp()
 ### \_\_init\_\_
 
 ```python
-def __init__(datetime_string: str, format_hint: Union[List, Tuple, None] = None) -> None
+def __init__(datetime_string: str,
+             format_hint: Union[List, Tuple, None] = None) -> None
 ```
 
 Input a datetime text string of several formats and convert to a

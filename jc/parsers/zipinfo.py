@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `zipinfo` command output parser
+"""jc - JSON Convert `zipinfo` command output parser
 
 Options supported:
 - none
@@ -85,7 +85,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.01'
+    version = '1.0'
     description = '`zipinfo` command parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'

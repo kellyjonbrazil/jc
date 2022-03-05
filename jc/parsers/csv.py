@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `csv` file parser
+"""jc - JSON Convert `csv` file parser
 
 The `csv` parser will attempt to automatically detect the delimiter
 character. If the delimiter cannot be detected it will default to comma.

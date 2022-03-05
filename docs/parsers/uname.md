@@ -3,7 +3,7 @@
 
 # jc.parsers.uname
 
-jc - JSON CLI output utility `uname -a` command output parser
+jc - JSON Convert `uname -a` command output parser
 
 Note: Must use `uname -a`
 

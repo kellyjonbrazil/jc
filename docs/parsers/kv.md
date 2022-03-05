@@ -3,7 +3,7 @@
 
 # jc.parsers.kv
 
-jc - JSON CLI output utility `Key/Value` file parser
+jc - JSON Convert `Key/Value` file parser
 
 Supports files containing simple key/value pairs. Delimiter can be `=` or
 `:`. Missing values are supported. Comment prefix can be `#` or `;`.

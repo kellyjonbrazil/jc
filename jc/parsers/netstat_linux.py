@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility Linux netstat Parser"""
+"""jc - JSON Convert Linux netstat Parser"""
 import string
 
 

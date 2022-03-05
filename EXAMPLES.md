@@ -2387,6 +2387,47 @@ netstat -i | jc --netstat -p          # or:  jc -p netstat -i
   }
 ]
 ```
+### nmcli
+```bash
+nmcli connection show ens33 | jc --nmcli -p          # or jc -p nmcli connection show ens33
+```
+```json
+[
+      {
+        "connection_id": "ens33",
+        "connection_uuid": "d92ece08-9e02-47d5-b2d2-92c80e155744",
+        "connection_stable_id": null,
+        "connection_type": "802-3-ethernet",
+        "connection_interface_name": "ens33",
+        "connection_autoconnect": "yes",
+        "ip4_address_1": "192.168.71.180/24",
+        "ip4_gateway": "192.168.71.2",
+        "ip4_route_1": {
+          "dst": "0.0.0.0/0",
+          "nh": "192.168.71.2",
+          "mt": 100
+        },
+        "ip4_route_2": {
+          "dst": "192.168.71.0/24",
+          "nh": "0.0.0.0",
+          "mt": 100
+        },
+        "ip4_dns_1": "192.168.71.2",
+        "ip4_domain_1": "localdomain",
+        "dhcp4_option_1": {
+          "name": "broadcast_address",
+          "value": "192.168.71.255"
+        },
+        "ip6_address_1": "fe80::c1cb:715d:bc3e:b8a0/64",
+        "ip6_gateway": null,
+        "ip6_route_1": {
+          "dst": "fe80::/64",
+          "nh": "::",
+          "mt": 100
+        }
+      }
+    ]
+```
 ### ntpq
 ```bash
 ntpq -p | jc --ntpq -p          # or:  jc -p ntpq -p

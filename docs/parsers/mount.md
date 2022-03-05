@@ -3,7 +3,7 @@
 
 # jc.parsers.mount
 
-jc - JSON CLI output utility `mount` command output parser
+jc - JSON Convert `mount` command output parser
 
 Usage (cli):
 

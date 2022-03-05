@@ -3,7 +3,7 @@
 
 # jc.parsers.free
 
-jc - JSON CLI output utility `free` command output parser
+jc - JSON Convert `free` command output parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `ls` and `vdir` command output streaming
+"""jc - JSON Convert `ls` and `vdir` command output streaming
 parser
 
 > This streaming parser outputs JSON Lines

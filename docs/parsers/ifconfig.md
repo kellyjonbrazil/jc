@@ -3,7 +3,7 @@
 
 # jc.parsers.ifconfig
 
-jc - JSON CLI output utility `ifconfig` command output parser
+jc - JSON Convert `ifconfig` command output parser
 
 Note: No `ifconfig` options are supported.
 

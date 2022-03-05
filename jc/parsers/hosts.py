@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `/etc/hosts` file parser
+"""jc - JSON Convert `/etc/hosts` file parser
 
 Usage (cli):
 

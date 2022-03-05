@@ -3,7 +3,7 @@
 
 # jc.parsers.ping
 
-jc - JSON CLI output utility `ping` command output parser
+jc - JSON Convert `ping` command output parser
 
 Supports `ping` and `ping6` output.
 

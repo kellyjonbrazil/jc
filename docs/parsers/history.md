@@ -3,7 +3,7 @@
 
 # jc.parsers.history
 
-jc - JSON CLI output utility `history` command output parser
+jc - JSON Convert `history` command output parser
 
 This parser will output a list of dictionaries each containing `line` and
 `command` keys. If you would like a simple dictionary output, then use the

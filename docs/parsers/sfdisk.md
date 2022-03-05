@@ -3,7 +3,7 @@
 
 # jc.parsers.sfdisk
 
-jc - JSON CLI output utility `sfdisk` command output parser
+jc - JSON Convert `sfdisk` command output parser
 
 Supports the following `sfdisk` options:
 - `-l`

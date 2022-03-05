@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `ping` command output streaming parser
+"""jc - JSON Convert `ping` command output streaming parser
 
 > This streaming parser outputs JSON Lines
 

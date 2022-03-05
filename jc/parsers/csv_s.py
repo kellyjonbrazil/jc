@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `csv` file streaming parser
+"""jc - JSON Convert `csv` file streaming parser
 
 > This streaming parser outputs JSON Lines
 

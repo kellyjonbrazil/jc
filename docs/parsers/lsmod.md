@@ -3,7 +3,7 @@
 
 # jc.parsers.lsmod
 
-jc - JSON CLI output utility `lsmod` command output parser
+jc - JSON Convert `lsmod` command output parser
 
 Usage (cli):
 

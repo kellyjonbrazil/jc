@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `dir` command output parser
+"""jc - JSON Convert `dir` command output parser
 
 Options supported:
 - `/T timefield`

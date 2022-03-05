@@ -3,7 +3,7 @@
 
 # jc.parsers.rpm\_qi
 
-jc - JSON CLI output utility `rpm -qi` command output parser
+jc - JSON Convert `rpm -qi` command output parser
 
 Works with `rpm -qi [package]` or `rpm -qia`.
 

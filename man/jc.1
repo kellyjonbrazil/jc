@@ -1,4 +1,4 @@
-.TH jc 1 2022-02-14 1.18.3 "JSON CLI output utility"
+.TH jc 1 2022-03-05 1.18.4 "JSON Convert"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -256,6 +256,11 @@ Key/Value file parser
 .B
 \fB--netstat\fP
 `netstat` command parser
+
+.TP
+.B
+\fB--nmcli\fP
+`nmcli` command parser
 
 .TP
 .B
@@ -558,34 +563,28 @@ You may want to ignore parsing errors when using streaming parsers since these m
 .RS
 Successfully parsed line with \fB-qq\fP option:
 .RS
+.na
+.nf
 {
-
   "command_data": "data",
-  
   "_jc_meta": {
-  
     "success": true
-    
   }
-  
 }
 .RE
 
 Unsuccessfully parsed line with \fB-qq\fP option:
 .RS
+.na
+.nf
 {
-
   "_jc_meta": {
-  
     "success": false,
-    
     "error": "error message",
-    
     "line": "original line data"
-    
   }
-  
 }
+.fi
 .RE
 
 .RE
@@ -594,21 +593,23 @@ Unsuccessfully parsed line with \fB-qq\fP option:
 Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. \fBping\fP):
 
 .RS
+.na
+.nf
 $ ping 1.1.1.1 | jc --ping-s | jq
-
 <slow output>
+.fi
 .RE
 
 This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in this example. To display the data on the terminal in realtime, you can disable the buffer with the \fB-u\fP (unbuffer) cli option:
 
 .RS
+.na
+.nf
 $ ping 1.1.1.1 | jc --ping-s -u | jq
-
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"1","ttl":"128","time_ms":"24.6","duplicate":false}
-
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response_ip":"1.1.1.1","icmp_seq":"2","ttl":"128","time_ms":"26.8","duplicate":false}
-
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64",...}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64",...}
 etc...
+.fi
 
 Note: Unbuffered output can be slower for large data streams.
 .RE

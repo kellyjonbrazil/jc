@@ -3,7 +3,7 @@
 
 # jc.parsers.finger
 
-jc - JSON CLI output utility `finger` command output parser
+jc - JSON Convert `finger` command output parser
 
 Supports `-s` output option. Does not support the `-l` detail option.
 

@@ -3,7 +3,7 @@
 
 # jc.parsers.zipinfo
 
-jc - JSON CLI output utility `zipinfo` command output parser
+jc - JSON Convert `zipinfo` command output parser
 
 Options supported:
 - none
@@ -107,4 +107,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin
 
-Version 0.01 by Matt J (https://github.com/listuser)
+Version 1.0 by Matt J (https://github.com/listuser)

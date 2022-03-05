@@ -3,7 +3,7 @@
 
 # jc.parsers.iostat\_s
 
-jc - JSON CLI output utility `iostat` command output streaming parser
+jc - JSON Convert `iostat` command output streaming parser
 
 > This streaming parser outputs JSON Lines
 

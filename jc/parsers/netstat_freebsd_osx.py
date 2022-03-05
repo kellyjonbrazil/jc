@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility FreeBSD and OSX netstat Parser"""
+"""jc - JSON Convert FreeBSD and OSX netstat Parser"""
 
 
 def normalize_headers(header):

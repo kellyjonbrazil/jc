@@ -3,7 +3,7 @@
 
 # jc.parsers.shadow
 
-jc - JSON CLI output utility `/etc/shadow` file parser
+jc - JSON Convert `/etc/shadow` file parser
 
 Usage (cli):
 

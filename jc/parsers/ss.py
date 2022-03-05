@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `ss` command output parser
+"""jc - JSON Convert `ss` command output parser
 
 Extended information options like -e and -p are not supported and may cause
 parsing irregularities.

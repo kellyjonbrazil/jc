@@ -3,7 +3,7 @@
 
 # jc.parsers.acpi
 
-jc - JSON CLI output utility `acpi` command output parser
+jc - JSON Convert `acpi` command output parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility
+"""jc - JSON Convert
 JC lib module
 """
 
@@ -9,7 +9,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.18.3'
+__version__ = '1.18.4'
 
 parsers = [
     'acpi',
@@ -60,6 +60,7 @@ parsers = [
     'lsusb',
     'mount',
     'netstat',
+    'nmcli',
     'ntpq',
     'passwd',
     'ping',
@@ -143,6 +144,17 @@ def _get_parser(parser_mod_name):
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
+def _parser_is_streaming(parser):
+    """
+    Returns True if this is a streaming parser, else False
+
+    parser is a parser module object.
+    """
+    if getattr(parser.info, 'streaming', None):
+        return True
+
+    return False
+
 def parse(
     parser_mod_name: str,
     data: Union[str, Iterable[str]],
@@ -163,9 +175,7 @@ def parse(
         >>> jc.parse('date', 'Tue Jan 18 10:23:07 PST 2022')
         {'year': 2022, 'month': 'Jan', 'month_num': 1, 'day'...}
 
-    To get a list of available parser module names, use `parser_mod_list()`
-    or `plugin_parser_mod_list()`. `plugin_parser_mod_list()` is a subset
-    of `parser_mod_list()`.
+    To get a list of available parser module names, use `parser_mod_list()`.
 
     You can also use the lower-level parser modules directly:
 
@@ -226,6 +236,31 @@ def plugin_parser_mod_list() -> List[str]:
     subset of `parser_mod_list()`.
     """
     return [_cliname_to_modname(p) for p in local_parsers]
+
+def standard_parser_mod_list() -> List[str]:
+    """
+    Returns a list of standard parser module names. This function is a
+    subset of `parser_mod_list()` and does not contain any streaming
+    parsers.
+    """
+    plist = []
+    for p in parsers:
+        parser = _get_parser(p)
+        if not _parser_is_streaming(parser):
+            plist.append(_cliname_to_modname(p))
+    return plist
+
+def streaming_parser_mod_list() -> List[str]:
+    """
+    Returns a list of streaming parser module names. This function is a
+    subset of `parser_mod_list()`.
+    """
+    plist = []
+    for p in parsers:
+        parser = _get_parser(p)
+        if _parser_is_streaming(parser):
+            plist.append(_cliname_to_modname(p))
+    return plist
 
 def parser_info(parser_mod_name: str) -> Dict:
     """

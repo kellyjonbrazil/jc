@@ -3,7 +3,7 @@
 
 # jc.parsers.rsync\_s
 
-jc - JSON CLI output utility `rsync` command output streaming parser
+jc - JSON Convert `rsync` command output streaming parser
 
 > This streaming parser outputs JSON Lines
 
@@ -99,7 +99,10 @@ Examples:
 
 ```python
 @add_jc_meta
-def parse(data: Iterable[str], raw: bool = False, quiet: bool = False, ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+def parse(data: Iterable[str],
+          raw: bool = False,
+          quiet: bool = False,
+          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
 ```
 
 Main text parsing generator function. Returns an iterator object.

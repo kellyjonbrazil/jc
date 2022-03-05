@@ -3,7 +3,7 @@
 
 # jc.parsers.rsync
 
-jc - JSON CLI output utility `rsync` command output parser
+jc - JSON Convert `rsync` command output parser
 
 Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the STDOUT output or a log file

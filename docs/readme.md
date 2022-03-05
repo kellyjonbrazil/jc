@@ -2,7 +2,7 @@
 
 # jc
 
-JC - JSON CLI output utility
+JC - JSON Convert
 
 * kellyjonbrazil@gmail.com
 
@@ -26,9 +26,9 @@ https://github.com/kellyjonbrazil/jc/tree/master/docs
 
 ### Specific Version
 
-Replace `{{full_version_number}}` - e.g. `1.17.7`:
+Replace `<full_version_number>` - e.g. `1.17.7`:
 
-`https://github.com/kellyjonbrazil/jc/tree/v{{full_version_number}}/docs`
+`https://github.com/kellyjonbrazil/jc/tree/v<full_version_number>/docs`
 
 Specific versions can also be selected by tag in the branch dropdown menu.
 
@@ -57,29 +57,65 @@ modules directly:
 
 ## Available Functions
 
-Use `help(jc.lib)` for details:
+Use `help(jc.lib)` for details.
 
-    parse(parser_module_name: str, data: str | Iterable)
-      -> dict | list[dict] | Iterable[dict]
-        High-level API to easily access the parser. This API will find both
-        built-in parsers and local plugin parsers.
+### parse
+
+    parse(
+        parser_module_name: str,
+        data: str | Iterable
+    ) -> dict | list[dict] | Iterable[dict]
+
+High-level API to easily access the parser. This API will find both
+built-in parsers and local plugin parsers.
+
+### parser_info
 
     parser_info(parser_module_name: str) -> dict
-        Get the metadata for a particular parser.
+
+Get the metadata for a particular parser.
+
+### all_parser_info
 
     all_parser_info() -> list[dict]
-        Get the metadata for all parsers.
+
+Get the metadata for all parsers.
+
+### get_help
 
     get_help(parser_module_name: str) -> None
-        Convenience function to display the help screen for a parser using
-        its module name.
+
+Convenience function to display the help screen for a parser using
+its module name.
+
+### parser_mod_list
 
     parser_mod_list() -> list
-        Get a list of all available parser module names to be used in
-        parse(), parser_info(), and get_help().
+
+Get a list of all available parser module names to be used in
+`parse()`, `parser_info()`, and `get_help()`.
+
+### plugin_parser_mod_list
 
     plugin_parser_mod_list() -> list
-        Get a list of plugin parser module names to be used in
-        parse(), parser_info(), and get_help(). This list is a subset of
-        parser_mod_list().
+
+Get a list of plugin parser module names to be used in
+`parse()`, `parser_info()`, and `get_help()`. This list is a subset of
+`parser_mod_list()`.
+
+### standard_parser_mod_list
+
+    standard_parser_mod_list() -> list
+
+Get a list of standard parser module names to be used in
+`parse()`, `parser_info()`, and `get_help()`. This list is a subset of
+`parser_mod_list()` and does not contain any streaming parsers.
+
+### streaming_parser_mod_list
+
+    streaming_parser_mod_list() -> list
+
+Get a list of streaming parser module names to be used in
+`parse()`, `parser_info()`, and `get_help()`. This list is a subset of
+`parser_mod_list()`.
 

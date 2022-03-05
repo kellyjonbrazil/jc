@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `ntpq -p` command output parser
+"""jc - JSON Convert `ntpq -p` command output parser
 
 Usage (cli):
 

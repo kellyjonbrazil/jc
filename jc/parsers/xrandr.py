@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `xrandr` command output parser
+"""jc - JSON Convert `xrandr` command output parser
 
 Usage (cli):
 
@@ -288,7 +288,7 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
                     device[k] = int(v)
             except ValueError and not quiet:
                 jc.utils.warning_message(
-                    [f"Error: {next_line} : {k} - {v} is not int-able"]
+                    [f"{next_line} : {k} - {v} is not int-able"]
                 )
 
     while next_lines:

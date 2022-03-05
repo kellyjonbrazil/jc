@@ -3,7 +3,7 @@
 
 # jc.parsers.ps
 
-jc - JSON CLI output utility `ps` command output parser
+jc - JSON Convert `ps` command output parser
 
 `ps` options supported:
 - `ef`

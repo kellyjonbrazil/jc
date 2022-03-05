@@ -1,0 +1,1 @@
+[{"device":"ens33","type":"ethernet","state":"connected","connection":"ens33"},{"device":"docker0","type":"bridge","state":"unmanaged","connection":null},{"device":"lo","type":"loopback","state":"unmanaged","connection":null}]

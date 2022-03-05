@@ -1,0 +1,12 @@
+GENERAL.DEVICE:                         lo
+GENERAL.TYPE:                           loopback
+GENERAL.HWADDR:                         00:00:00:00:00:00
+GENERAL.MTU:                            65536
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+IP4.ADDRESS[1]:                         127.0.0.1/8
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         ::1/128
+IP6.GATEWAY:                            --
+

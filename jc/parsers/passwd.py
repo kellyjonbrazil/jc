@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `/etc/passwd` file Parser
+"""jc - JSON Convert `/etc/passwd` file Parser
 
 Usage (cli):
 

@@ -1,0 +1,4 @@
+DEVICE   TYPE      STATE      CONNECTION 
+ens33    ethernet  connected  ens33      
+docker0  bridge    unmanaged  --         
+lo       loopback  unmanaged  --  

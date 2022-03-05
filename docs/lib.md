@@ -4,6 +4,8 @@
   * [parse](#jc.lib.parse)
   * [parser\_mod\_list](#jc.lib.parser_mod_list)
   * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
+  * [standard\_parser\_mod\_list](#jc.lib.standard_parser_mod_list)
+  * [streaming\_parser\_mod\_list](#jc.lib.streaming_parser_mod_list)
   * [parser\_info](#jc.lib.parser_info)
   * [all\_parser\_info](#jc.lib.all_parser_info)
   * [get\_help](#jc.lib.get_help)
@@ -12,7 +14,7 @@
 
 # jc.lib
 
-jc - JSON CLI output utility
+jc - JSON Convert
 JC lib module
 
 <a id="jc.lib.parse"></a>
@@ -20,7 +22,12 @@ JC lib module
 ### parse
 
 ```python
-def parse(parser_mod_name: str, data: Union[str, Iterable[str]], quiet: bool = False, raw: bool = False, ignore_exceptions: bool = None, **kwargs) -> Union[Dict, List[Dict], Iterator[Dict]]
+def parse(parser_mod_name: str,
+          data: Union[str, Iterable[str]],
+          quiet: bool = False,
+          raw: bool = False,
+          ignore_exceptions: bool = None,
+          **kwargs) -> Union[Dict, List[Dict], Iterator[Dict]]
 ```
 
 Parse the string data using the supplied parser module.
@@ -34,9 +41,7 @@ Example:
     >>> jc.parse('date', 'Tue Jan 18 10:23:07 PST 2022')
     {'year': 2022, 'month': 'Jan', 'month_num': 1, 'day'...}
 
-To get a list of available parser module names, use `parser_mod_list()`
-or `plugin_parser_mod_list()`. `plugin_parser_mod_list()` is a subset
-of `parser_mod_list()`.
+To get a list of available parser module names, use `parser_mod_list()`.
 
 You can also use the lower-level parser modules directly:
 
@@ -98,6 +103,29 @@ def plugin_parser_mod_list() -> List[str]
 ```
 
 Returns a list of plugin parser module names. This function is a
+subset of `parser_mod_list()`.
+
+<a id="jc.lib.standard_parser_mod_list"></a>
+
+### standard\_parser\_mod\_list
+
+```python
+def standard_parser_mod_list() -> List[str]
+```
+
+Returns a list of standard parser module names. This function is a
+subset of `parser_mod_list()` and does not contain any streaming
+parsers.
+
+<a id="jc.lib.streaming_parser_mod_list"></a>
+
+### streaming\_parser\_mod\_list
+
+```python
+def streaming_parser_mod_list() -> List[str]
+```
+
+Returns a list of streaming parser module names. This function is a
 subset of `parser_mod_list()`.
 
 <a id="jc.lib.parser_info"></a>

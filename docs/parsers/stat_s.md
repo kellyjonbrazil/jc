@@ -3,7 +3,7 @@
 
 # jc.parsers.stat\_s
 
-jc - JSON CLI output utility `stat` command output streaming parser
+jc - JSON Convert `stat` command output streaming parser
 
 > This streaming parser outputs JSON Lines
 

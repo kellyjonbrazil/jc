@@ -8,7 +8,7 @@
 
 # jc.parsers.universal
 
-jc - JSON CLI output utility universal Parsers
+jc - JSON Convert universal parsers
 
 <a id="jc.parsers.universal.simple_table_parse"></a>
 

@@ -3,7 +3,7 @@
 
 # jc.parsers.ls
 
-jc - JSON CLI output utility `ls` and `vdir` command output parser
+jc - JSON Convert `ls` and `vdir` command output parser
 
 Options supported:
 - `lbaR1`

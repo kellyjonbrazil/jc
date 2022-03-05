@@ -3,7 +3,7 @@
 
 # jc.parsers.pip\_show
 
-jc - JSON CLI output utility `pip-show` command output parser
+jc - JSON Convert `pip-show` command output parser
 
 Usage (cli):
 

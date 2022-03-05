@@ -1,0 +1,42 @@
+GENERAL.DEVICE:                         ens33
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         00:0C:29:3B:58:0E
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected)
+GENERAL.CONNECTION:                     ens33
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/1
+WIRED-PROPERTIES.CARRIER:               on
+IP4.ADDRESS[1]:                         192.168.71.180/24
+IP4.GATEWAY:                            192.168.71.2
+IP4.ROUTE[1]:                           dst = 0.0.0.0/0, nh = 192.168.71.2, mt = 100
+IP4.ROUTE[2]:                           dst = 192.168.71.0/24, nh = 0.0.0.0, mt = 100
+IP4.DNS[1]:                             192.168.71.2
+IP4.DOMAIN[1]:                          localdomain
+IP6.ADDRESS[1]:                         fe80::c1cb:715d:bc3e:b8a0/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 100
+IP6.ROUTE[2]:                           dst = ff00::/8, nh = ::, mt = 256, table=255
+
+GENERAL.DEVICE:                         docker0
+GENERAL.TYPE:                           bridge
+GENERAL.HWADDR:                         02:42:99:67:E8:21
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+IP4.ADDRESS[1]:                         172.17.0.1/16
+IP4.GATEWAY:                            --
+IP4.ROUTE[1]:                           dst = 172.17.0.0/16, nh = 0.0.0.0, mt = 0
+IP6.GATEWAY:                            --
+
+GENERAL.DEVICE:                         lo
+GENERAL.TYPE:                           loopback
+GENERAL.HWADDR:                         00:00:00:00:00:00
+GENERAL.MTU:                            65536
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+IP4.ADDRESS[1]:                         127.0.0.1/8
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         ::1/128
+IP6.GATEWAY:                            --

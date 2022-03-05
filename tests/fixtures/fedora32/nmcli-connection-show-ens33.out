@@ -1,0 +1,148 @@
+connection.id:                          ens33
+connection.uuid:                        fbea23dd-6738-403f-b3a5-5d4a3444216a
+connection.stable-id:                   --
+connection.type:                        802-3-ethernet
+connection.interface-name:              ens33
+connection.autoconnect:                 yes
+connection.autoconnect-priority:        0
+connection.autoconnect-retries:         -1 (default)
+connection.multi-connect:               0 (default)
+connection.auth-retries:                -1
+connection.timestamp:                   1646019157
+connection.read-only:                   no
+connection.permissions:                 --
+connection.zone:                        --
+connection.master:                      --
+connection.slave-type:                  --
+connection.autoconnect-slaves:          -1 (default)
+connection.secondaries:                 --
+connection.gateway-ping-timeout:        0
+connection.metered:                     unknown
+connection.lldp:                        default
+connection.mdns:                        -1 (default)
+connection.llmnr:                       -1 (default)
+connection.wait-device-timeout:         -1
+802-3-ethernet.port:                    --
+802-3-ethernet.speed:                   0
+802-3-ethernet.duplex:                  --
+802-3-ethernet.auto-negotiate:          no
+802-3-ethernet.mac-address:             --
+802-3-ethernet.cloned-mac-address:      --
+802-3-ethernet.generate-mac-address-mask:--
+802-3-ethernet.mac-address-blacklist:   --
+802-3-ethernet.mtu:                     auto
+802-3-ethernet.s390-subchannels:        --
+802-3-ethernet.s390-nettype:            --
+802-3-ethernet.s390-options:            --
+802-3-ethernet.wake-on-lan:             default
+802-3-ethernet.wake-on-lan-password:    --
+ipv4.method:                            auto
+ipv4.dns:                               --
+ipv4.dns-search:                        --
+ipv4.dns-options:                       --
+ipv4.dns-priority:                      0
+ipv4.addresses:                         --
+ipv4.gateway:                           --
+ipv4.routes:                            --
+ipv4.route-metric:                      -1
+ipv4.route-table:                       0 (unspec)
+ipv4.routing-rules:                     --
+ipv4.ignore-auto-routes:                no
+ipv4.ignore-auto-dns:                   no
+ipv4.dhcp-client-id:                    --
+ipv4.dhcp-iaid:                         --
+ipv4.dhcp-timeout:                      0 (default)
+ipv4.dhcp-send-hostname:                yes
+ipv4.dhcp-hostname:                     --
+ipv4.dhcp-fqdn:                         --
+ipv4.dhcp-hostname-flags:               0x0 (none)
+ipv4.never-default:                     no
+ipv4.may-fail:                          yes
+ipv4.dad-timeout:                       -1 (default)
+ipv6.method:                            auto
+ipv6.dns:                               --
+ipv6.dns-search:                        --
+ipv6.dns-options:                       --
+ipv6.dns-priority:                      0
+ipv6.addresses:                         --
+ipv6.gateway:                           --
+ipv6.routes:                            --
+ipv6.route-metric:                      -1
+ipv6.route-table:                       0 (unspec)
+ipv6.routing-rules:                     --
+ipv6.ignore-auto-routes:                no
+ipv6.ignore-auto-dns:                   no
+ipv6.never-default:                     no
+ipv6.may-fail:                          yes
+ipv6.ip6-privacy:                       -1 (unknown)
+ipv6.addr-gen-mode:                     stable-privacy
+ipv6.ra-timeout:                        0 (default)
+ipv6.dhcp-duid:                         --
+ipv6.dhcp-iaid:                         --
+ipv6.dhcp-timeout:                      0 (default)
+ipv6.dhcp-send-hostname:                yes
+ipv6.dhcp-hostname:                     --
+ipv6.dhcp-hostname-flags:               0x0 (none)
+ipv6.token:                             --
+proxy.method:                           none
+proxy.browser-only:                     no
+proxy.pac-url:                          --
+proxy.pac-script:                       --
+GENERAL.NAME:                           ens33
+GENERAL.UUID:                           fbea23dd-6738-403f-b3a5-5d4a3444216a
+GENERAL.DEVICES:                        ens33
+GENERAL.IP-IFACE:                       ens33
+GENERAL.STATE:                          activated
+GENERAL.DEFAULT:                        yes
+GENERAL.DEFAULT6:                       yes
+GENERAL.SPEC-OBJECT:                    --
+GENERAL.VPN:                            no
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/ActiveConnection/2
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/Settings/1
+GENERAL.ZONE:                           --
+GENERAL.MASTER-PATH:                    --
+IP4.ADDRESS[1]:                         10.0.0.178/24
+IP4.GATEWAY:                            10.0.0.1
+IP4.ROUTE[1]:                           dst = 0.0.0.0/0, nh = 10.0.0.1, mt = 100
+IP4.ROUTE[2]:                           dst = 10.0.0.0/24, nh = 0.0.0.0, mt = 100
+IP4.DNS[1]:                             75.75.75.75
+IP4.DNS[2]:                             75.75.76.76
+IP4.DOMAIN[1]:                          hsd1.ca.comcast.net
+DHCP4.OPTION[1]:                        dhcp_lease_time = 172800
+DHCP4.OPTION[2]:                        domain_name = hsd1.ca.comcast.net
+DHCP4.OPTION[3]:                        domain_name_servers = 75.75.75.75 75.75.76.76
+DHCP4.OPTION[4]:                        expiry = 1646191487
+DHCP4.OPTION[5]:                        ip_address = 10.0.0.178
+DHCP4.OPTION[6]:                        next_server = 10.0.0.1
+DHCP4.OPTION[7]:                        requested_broadcast_address = 1
+DHCP4.OPTION[8]:                        requested_domain_name = 1
+DHCP4.OPTION[9]:                        requested_domain_name_servers = 1
+DHCP4.OPTION[10]:                       requested_domain_search = 1
+DHCP4.OPTION[11]:                       requested_host_name = 1
+DHCP4.OPTION[12]:                       requested_interface_mtu = 1
+DHCP4.OPTION[13]:                       requested_ms_classless_static_routes = 1
+DHCP4.OPTION[14]:                       requested_nis_domain = 1
+DHCP4.OPTION[15]:                       requested_nis_servers = 1
+DHCP4.OPTION[16]:                       requested_ntp_servers = 1
+DHCP4.OPTION[17]:                       requested_rfc3442_classless_static_routes = 1
+DHCP4.OPTION[18]:                       requested_root_path = 1
+DHCP4.OPTION[19]:                       requested_routers = 1
+DHCP4.OPTION[20]:                       requested_static_routes = 1
+DHCP4.OPTION[21]:                       requested_subnet_mask = 1
+DHCP4.OPTION[22]:                       requested_time_offset = 1
+DHCP4.OPTION[23]:                       requested_wpad = 1
+DHCP4.OPTION[24]:                       routers = 10.0.0.1
+DHCP4.OPTION[25]:                       subnet_mask = 255.255.255.0
+IP6.ADDRESS[1]:                         2601:641:482:9cc0::2d6d/128
+IP6.ADDRESS[2]:                         fe80::9263:6fcc:6db6:8b56/64
+IP6.GATEWAY:                            fe80::f88c:f4ff:fef1:d8f9
+IP6.ROUTE[1]:                           dst = fd29:95c1:bb51::/64, nh = fe80::1453:e8bf:c07a:2ca8, mt = 100
+IP6.ROUTE[2]:                           dst = 2601:641:482:9cc0::/60, nh = ::, mt = 100
+IP6.ROUTE[3]:                           dst = ::/0, nh = fe80::f88c:f4ff:fef1:d8f9, mt = 100
+IP6.ROUTE[4]:                           dst = ff00::/8, nh = ::, mt = 256, table=255
+IP6.ROUTE[5]:                           dst = fe80::/64, nh = ::, mt = 100
+IP6.ROUTE[6]:                           dst = 2601:641:482:9cc0::2d6d/128, nh = ::, mt = 100
+IP6.DNS[1]:                             2001:558:feed::1
+IP6.DNS[2]:                             2001:558:feed::2
+DHCP6.OPTION[1]:                        dhcp6_name_servers = 2001:558:feed::1 2001:558:feed::2
+DHCP6.OPTION[2]:                        ip6_address = 2601:641:482:9cc0::2d6d

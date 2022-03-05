@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `systeminfo` command output parser
+"""jc - JSON Convert `systeminfo` command output parser
 
 Blank or missing elements are set to `null`.
 

@@ -1,5 +1,11 @@
 jc changelog
 
+20220304 v1.18.4
+- Add nmcli command parser tested on linux
+- Enhance parse error messages at the cli
+- Add standard and streaming parser list functions to the public API
+- Enhance python developer documentation formatting
+
 20220214 v1.18.3
 - Add rsync command and log file parser tested on linux and macOS
 - Add rsync command and log file streaming parser tested on linux and macOS

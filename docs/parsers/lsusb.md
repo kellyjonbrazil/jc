@@ -3,7 +3,7 @@
 
 # jc.parsers.lsusb
 
-jc - JSON CLI output utility `lsusb` command output parser
+jc - JSON Convert `lsusb` command output parser
 
 Supports the `-v` option or no options.
 

@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility
+"""jc - JSON Convert
 JC cli module
 """
 
@@ -11,7 +11,7 @@ import shlex
 import subprocess
 import json
 from .lib import (__version__, all_parser_info, parsers,
-                  _parser_argument, _get_parser)
+                  _parser_argument, _get_parser, _parser_is_streaming)
 from . import utils
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -34,7 +34,7 @@ JC_ERROR_EXIT = 100
 
 class info():
     version = __version__
-    description = 'JSON CLI output utility'
+    description = 'JSON Convert'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
@@ -502,7 +502,7 @@ def main():
         # differentiate between regular and streaming parsers
 
         # streaming
-        if getattr(parser.info, 'streaming', None):
+        if _parser_is_streaming(parser):
             result = parser.parse(sys.stdin,
                                   raw=raw,
                                   quiet=quiet,
@@ -539,7 +539,7 @@ def main():
         utils.error_message([
             f'Parser issue with {parser_name}:', f'{e.__class__.__name__}: {e}',
             'If this is the correct parser, try setting the locale to C (LANG=C).',
-            'For details use the -d or -dd option. Use "jc -h" for help.'
+            f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
@@ -563,7 +563,7 @@ def main():
             f'{parser_name} parser could not parse the input data.',
             f'{streaming_msg}',
             'If this is the correct parser, try setting the locale to C (LANG=C).',
-            'For details use the -d or -dd option. Use "jc -h" for help.'
+            f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 

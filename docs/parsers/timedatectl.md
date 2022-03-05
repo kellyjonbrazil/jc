@@ -3,7 +3,7 @@
 
 # jc.parsers.timedatectl
 
-jc - JSON CLI output utility `timedatectl` command output parser
+jc - JSON Convert `timedatectl` command output parser
 
 The `epoch_utc` calculated timestamp field is timezone-aware and is only
 available if the `universal_time` field is available.

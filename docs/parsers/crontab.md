@@ -3,7 +3,7 @@
 
 # jc.parsers.crontab
 
-jc - JSON CLI output utility `crontab -l` command output and crontab
+jc - JSON Convert `crontab -l` command output and crontab
 file parser
 
 Supports `crontab -l` command output and crontab files.

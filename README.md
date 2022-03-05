@@ -1,8 +1,6 @@
 ![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
 ![Pypi](https://img.shields.io/pypi/v/jc.svg)
 
-> `jc` was recently featured in the [Console Open Source Newsletter](https://console.substack.com/p/console-89)
-
 > Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
 
 > Try the `jc` [web demo](https://jc-web-demo.herokuapp.com/)
@@ -13,7 +11,7 @@ Ansible filter plugin in the `community.general` collection. See this
 for an example.
 
 # JC
-JSON CLI output utility
+JSON Convert
 
 `jc` JSONifies the output of many CLI tools and file-types for easier parsing in
 scripts. See the [**Parsers**](#parsers) section for supported commands and
@@ -55,16 +53,9 @@ will be a python dictionary, or list of dictionaries, instead of JSON:
 >>> cmd_output = subprocess.check_output(['dig', 'example.com'], text=True)
 >>> data = jc.parse('dig', cmd_output)
 >>>
->>> data
-[{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', 'flags': ['qr', 'rd',
-'ra'], 'query_num': 1, 'answer_num': 1, 'authority_num': 0, 'additional_num':
-1, 'opt_pseudosection': {'edns': {'version': 0, 'flags': [], 'udp': 4096}},
-'question': {'name': 'example.com.', 'class': 'IN', 'type': 'A'}, 'answer':
+>>> data[0]['answer']
 [{'name': 'example.com.', 'class': 'IN', 'type': 'A', 'ttl': 29658, 'data':
-'93.184.216.34'}], 'query_time': 52, 'server':
-'2600:1700:bab0:d40::1#53(2600:1700:bab0:d40::1)', 'when':
-'Fri Apr 16 16:13:00 PDT 2021', 'rcvd': 56, 'when_epoch': 1618614780,
-'when_epoch_utc': None}]
+'93.184.216.34'}]
 ```
 
 > For `jc` Python package documentation, use `help('jc')`, `help('jc.lib')`, or
@@ -199,6 +190,7 @@ option.
 - `--lsusb` enables the `lsusb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb))
 - `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
 - `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
+- `--nmcli` enables the `nmcli` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli))
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
 - `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
 - `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))

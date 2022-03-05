@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `iostat` command output parser
+"""jc - JSON Convert `iostat` command output parser
 
 Note: `iostat` version 11 and higher include a JSON output option
 

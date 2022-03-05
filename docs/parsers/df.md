@@ -3,7 +3,7 @@
 
 # jc.parsers.df
 
-jc - JSON CLI output utility `df` command output parser
+jc - JSON Convert `df` command output parser
 
 Usage (cli):
 

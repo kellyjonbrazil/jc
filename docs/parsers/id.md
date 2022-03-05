@@ -3,7 +3,7 @@
 
 # jc.parsers.id
 
-jc - JSON CLI output utility `id` command output parser
+jc - JSON Convert `id` command output parser
 
 Usage (cli):
 

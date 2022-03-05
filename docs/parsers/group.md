@@ -3,7 +3,7 @@
 
 # jc.parsers.group
 
-jc - JSON CLI output utility `/etc/group` file parser
+jc - JSON Convert `/etc/group` file parser
 
 Usage (cli):
 

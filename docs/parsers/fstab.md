@@ -3,7 +3,7 @@
 
 # jc.parsers.fstab
 
-jc - JSON CLI output utility `fstab` file parser
+jc - JSON Convert `fstab` file parser
 
 Usage (cli):
 

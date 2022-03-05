@@ -3,7 +3,7 @@
 
 # jc.parsers.ini
 
-jc - JSON CLI output utility `INI` file parser
+jc - JSON Convert `INI` file parser
 
 Parses standard `INI` files and files containing simple key/value pairs.
 Delimiter can be `=` or `:`. Missing values are supported. Comment prefix

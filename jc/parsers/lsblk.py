@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `lsblk` command output parser
+"""jc - JSON Convert `lsblk` command output parser
 
 Usage (cli):
 

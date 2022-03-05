@@ -1,4 +1,4 @@
-"""jc - JSON CLI output utility `MANIFEST.MF` file parser
+"""jc - JSON Convert `MANIFEST.MF` file parser
 
 Usage (cli):
 

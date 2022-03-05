@@ -3,7 +3,7 @@
 
 # jc.parsers.vmstat
 
-jc - JSON CLI output utility `vmstat` command output parser
+jc - JSON Convert `vmstat` command output parser
 
 Options supported: `-a`, `-w`, `-d`, `-t`
 

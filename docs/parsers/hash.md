@@ -3,7 +3,7 @@
 
 # jc.parsers.hash
 
-jc - JSON CLI output utility `hash` command output parser
+jc - JSON Convert `hash` command output parser
 
 Usage (cli):
 

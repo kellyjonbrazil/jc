@@ -3,7 +3,7 @@
 
 # jc.parsers.du
 
-jc - JSON CLI output utility `du` command output parser
+jc - JSON Convert `du` command output parser
 
 Usage (cli):
 

@@ -3,7 +3,7 @@
 
 # jc.parsers.xml
 
-jc - JSON CLI output utility `XML` file parser
+jc - JSON Convert `XML` file parser
 
 Usage (cli):
 

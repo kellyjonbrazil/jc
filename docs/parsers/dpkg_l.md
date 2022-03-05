@@ -3,7 +3,7 @@
 
 # jc.parsers.dpkg\_l
 
-jc - JSON CLI output utility `dpkg -l` command output parser
+jc - JSON Convert `dpkg -l` command output parser
 
 Set the `COLUMNS` environment variable to a large value to avoid field
 truncation. For example:

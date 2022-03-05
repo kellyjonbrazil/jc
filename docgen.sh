@@ -1,6 +1,6 @@
 #!/bin/bash
 # Generate docs.md
-# requires pydoc-markdown 4.5.0
+# requires pydoc-markdown 4.6.1
 readme_config=$(cat <<'EOF'
 {
     "processors": [
@@ -18,7 +18,7 @@ readme_config=$(cat <<'EOF'
             "Class": 3,
             "Method": 3,
             "Function": 3,
-            "Data": 3
+            "Variable": 3
         }
     }
 }
@@ -43,7 +43,7 @@ toc_config=$(cat <<'EOF'
             "Class": 3,
             "Method": 3,
             "Function": 3,
-            "Data": 3
+            "Variable": 3
         }
     }
 }
@@ -68,7 +68,7 @@ parser_config=$(cat <<'EOF'
             "Class": 3,
             "Method": 3,
             "Function": 3,
-            "Data": 3
+            "Variable": 3
         }
     }
 }

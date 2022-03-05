@@ -3,7 +3,7 @@
 
 # jc.parsers.systemctl
 
-jc - JSON CLI output utility `systemctl` command output parser
+jc - JSON Convert `systemctl` command output parser
 
 Usage (cli):
 

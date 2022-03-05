@@ -3,7 +3,7 @@
 
 # jc.parsers.iptables
 
-jc - JSON CLI output utility `iptables` command output parser
+jc - JSON Convert `iptables` command output parser
 
 Supports `-vLn` and `--line-numbers` for all tables.
 

@@ -1,0 +1,1 @@
+[{"device":"lo","type":"loopback","hwaddr":"00:00:00:00:00:00","mtu":65536,"state":10,"state_text":"unmanaged","connection":null,"con_path":null,"ip4_address_1":"127.0.0.1/8","ip4_gateway":null,"ip6_address_1":"::1/128","ip6_gateway":null}]
