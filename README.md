@@ -99,6 +99,7 @@ correct [binary](https://github.com/kellyjonbrazil/jc/releases) for your
 architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
+[![Pypi](https://img.shields.io/pypi/v/jc.svg)](https://pypi.org/project/jc/)
 ```bash
 pip3 install jc
 ```
