@@ -452,7 +452,7 @@ def main():
 
             error_msg = os.strerror(e.errno)
             utils.error_message([
-                f'"{run_command_str}" command could not be run: {error_msg}. For details use the -d or -dd option.'
+                f'"{run_command_str}" command could not be run: {error_msg}.'
             ])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
