@@ -123,7 +123,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -208,11 +208,6 @@ def parse(data, raw=False, quiet=False):
 
                 raw_output.append(output_line)
 
-            if raw:
-                return raw_output
-            else:
-                return _process(raw_output)
-
         # detect if linux style was used
         elif cleandata[0].startswith('Address'):
 
@@ -235,7 +230,4 @@ def parse(data, raw=False, quiet=False):
                 }
                 raw_output.append(output_line)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
