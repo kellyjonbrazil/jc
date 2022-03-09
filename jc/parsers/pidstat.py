@@ -1,6 +1,6 @@
 """jc - JSON Convert `pidstat` command output parser
 
-<<Short pidstat description and caveats>>
+Must use the `-h` option in `pidstat`.
 
 Usage (cli):
 
@@ -24,9 +24,27 @@ Schema:
 
     [
       {
-        "pidstat":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "time": "1646857494",
+        "uid": "1000",
+        "pid": "2201",
+        "percent_usr": "0.00",
+        "percent_system": "0.00",
+        "percent_guest": "0.00",
+        "percent_cpu": "0.00",
+        "cpu": "0",
+        "minflt_s": "0.09",
+        "majflt_s": "0.00",
+        "vsz": "108328",
+        "rss": "1040",
+        "percent_mem": "0.03",
+        "stksize": "132",
+        "stkref": "20",
+        "kb_rd_s": "0.00",
+        "kb_wr_s": "0.00",
+        "kb_ccwr_s": "0.00",
+        "cswch_s": "0.00",
+        "nvcswch_s": "0.00",
+        "command": "pidstat -dlrsuwh"
       }
     ]
 
@@ -40,6 +58,8 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
+from jc.parsers.universal import simple_table_parse
+from jc.exceptions import ParseError
 
 
 class info():
@@ -101,12 +121,26 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        # check for line starting with # as the start of the table
+        data_list = list(filter(None, data.splitlines()))
+        for line in data_list.copy():
+            if line.startswith('#'):
+                break
+            else:
+                data_list.pop(0)
 
-            # parse the content here
-            # check out helper functions in jc.utils
-            # and jc.parsers.universal
+        if not data_list:
+            raise ParseError('Could not parse pidstat output. Make sure to use "pidstat -h".')
 
-            pass
+        # normalize headers
+        data_list[0] = data_list[0].replace('#', ' ')\
+                                   .replace('/', '_')\
+                                   .replace('%', 'percent_')\
+                                   .lower()
+
+        # remove remaining header lines (e.g. pidstat -h 2 5)
+        data_list = [i for i in data_list if not i.startswith('#')]
+
+        raw_output = simple_table_parse(data_list)
 
     return raw_output if raw else _process(raw_output)
