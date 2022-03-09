@@ -123,7 +123,6 @@ You may want to ignore parsing errors when using streaming parsers since these m
 .RS
 Successfully parsed line with \fB-qq\fP option:
 .RS
-.na
 .nf
 {
   "command_data": "data",
@@ -131,11 +130,11 @@ Successfully parsed line with \fB-qq\fP option:
     "success": true
   }
 }
+.fi
 .RE
 
 Unsuccessfully parsed line with \fB-qq\fP option:
 .RS
-.na
 .nf
 {
   "_jc_meta": {
@@ -153,7 +152,6 @@ Unsuccessfully parsed line with \fB-qq\fP option:
 Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. \fBping\fP):
 
 .RS
-.na
 .nf
 $ ping 1.1.1.1 | jc \fB--ping-s\fP | jq
 <slow output>
@@ -163,7 +161,6 @@ $ ping 1.1.1.1 | jc \fB--ping-s\fP | jq
 This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in this example. To display the data on the terminal in realtime, you can disable the buffer with the \fB-u\fP (unbuffer) cli option:
 
 .RS
-.na
 .nf
 $ ping 1.1.1.1 | jc \fB--ping-s\fP \fB-u\fP | jq
 {"type":"reply","pattern":null,"timestamp":null,"bytes":"64",...}
@@ -178,7 +175,6 @@ Note: Unbuffered output can be slower for large data streams.
 Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
 
 .RS
-.na
 .nf
 - Linux/unix: \fB$HOME/.local/share/jc/jcparsers\fP
 - macOS: \fB$HOME/Library/Application Support/jc/jcparsers\fP
