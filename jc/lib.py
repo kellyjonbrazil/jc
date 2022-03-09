@@ -9,7 +9,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.18.5'
+__version__ = '1.18.6'
 
 parsers = [
     'acpi',
@@ -63,6 +63,7 @@ parsers = [
     'nmcli',
     'ntpq',
     'passwd',
+    'pidstat',
     'ping',
     'ping-s',
     'pip-list',
