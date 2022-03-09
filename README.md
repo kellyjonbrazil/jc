@@ -194,6 +194,7 @@ option.
 - `--nmcli` enables the `nmcli` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli))
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
 - `--passwd` enables the `/etc/passwd` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd))
+- `--pidstat` enables the `pidstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat))
 - `--ping` enables the `ping` and `ping6` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping))
 - `--ping-s` enables the `ping` and `ping6` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s))
 - `--pip-list` enables the `pip list` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list))
