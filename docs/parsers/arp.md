@@ -145,4 +145,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
