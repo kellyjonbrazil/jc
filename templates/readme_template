@@ -1,5 +1,5 @@
-![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)
-![Pypi](https://img.shields.io/pypi/v/jc.svg)
+[![Tests](https://github.com/kellyjonbrazil/jc/workflows/Tests/badge.svg?branch=master)](https://github.com/kellyjonbrazil/jc/actions)
+[![Pypi](https://img.shields.io/pypi/v/jc.svg)](https://pypi.org/project/jc/)
 
 > Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
 
@@ -99,6 +99,7 @@ correct [binary](https://github.com/kellyjonbrazil/jc/releases) for your
 architecture and running it anywhere on your filesystem.
 
 ### Pip (macOS, linux, unix, Windows)
+[![Pypi](https://img.shields.io/pypi/v/jc.svg)](https://pypi.org/project/jc/)
 ```bash
 pip3 install jc
 ```

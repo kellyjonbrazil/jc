@@ -9,7 +9,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.18.4'
+__version__ = '1.18.5'
 
 parsers = [
     'acpi',
