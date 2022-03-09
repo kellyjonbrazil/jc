@@ -67,7 +67,7 @@ Examples:
         "percent_guest": 0.0,
         "percent_cpu": 0.03,
         "cpu": 0,
-        "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+        "command": "/usr/lib/systemd/systemd --switched-root --system..."
       },
       {
         "time": 1646859134,
@@ -104,7 +104,7 @@ Examples:
         "percent_guest": "0.00",
         "percent_cpu": "0.03",
         "cpu": "0",
-        "command": "/usr/lib/systemd/systemd --switched-root --system --deserialize 22"
+        "command": "/usr/lib/systemd/systemd --switched-root --system..."
       },
       {
         "time": "1646859134",
