@@ -23,11 +23,6 @@ Usage (module):
     import jc
     result = jc.parse('zipinfo', zipinfo_command_output)
 
-    or
-
-    import jc.parsers.zipinfo
-    result = jc.parsers.zipinfo.parse(zipinfo_command_output)
-
 Schema:
 
     [

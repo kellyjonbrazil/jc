@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('lsof', lsof_command_output)
 
-    or
-
-    import jc.parsers.lsof
-    result = jc.parsers.lsof.parse(lsof_command_output)
-
 Schema:
 
     [

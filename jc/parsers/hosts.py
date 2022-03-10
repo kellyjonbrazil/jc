@@ -9,11 +9,6 @@ Usage (module):
     import jc
     result = jc.parse('hosts', hosts_file_output)
 
-    or
-
-    import jc.parsers.hosts
-    result = jc.parsers.hosts.parse(hosts_file_output)
-
 Schema:
 
     [

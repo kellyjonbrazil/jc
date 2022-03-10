@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('free', free_command_output)
 
-    or
-
-    import jc.parsers.free
-    result = jc.parsers.free.parse(free_command_output)
-
 Schema:
 
     [

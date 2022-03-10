@@ -24,11 +24,6 @@ Usage (module):
     import jc
     result = jc.parse('last', last_command_output)
 
-    or
-
-    import jc.parsers.last
-    result = jc.parsers.last.parse(last_command_output)
-
 Schema:
 
     [

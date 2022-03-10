@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('df', df_command_output)
 
-    or
-
-    import jc.parsers.df
-    result = jc.parsers.df.parse(df_command_output)
-
 Schema:
 
     [

@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('netstat', netstat_command_output)
 
-    or
-
-    import jc.parsers.netstat
-    result = jc.parsers.netstat.parse(netstat_command_output)
-
 Schema:
 
     [

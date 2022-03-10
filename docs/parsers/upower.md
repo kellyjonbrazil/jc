@@ -24,11 +24,6 @@ Usage (module):
     import jc
     result = jc.parse('upower', upower_command_output)
 
-    or
-
-    import jc.parsers.upower
-    result = jc.parsers.upower.parse(upower_command_output)
-
 Schema:
 
     [

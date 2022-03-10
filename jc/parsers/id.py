@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('id', id_command_output)
 
-    or
-
-    import jc.parsers.id
-    result = jc.parsers.id.parse(id_command_output)
-
 Schema:
 
     {

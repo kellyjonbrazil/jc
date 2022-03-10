@@ -14,11 +14,6 @@ Usage (module):
     import jc
     result = jc.parse('jobs', jobs_command_output)
 
-    or
-
-    import jc.parsers.jobs
-    result = jc.parsers.jobs.parse(jobs_command_output)
-
 Schema:
 
     [

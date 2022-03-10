@@ -23,11 +23,6 @@ Usage (module):
     import jc
     result = jc.parse('ping', ping_command_output)
 
-    or
-
-    import jc.parsers.ping
-    result = jc.parsers.ping.parse(ping_command_output)
-
 Schema:
 
     {

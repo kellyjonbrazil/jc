@@ -20,11 +20,6 @@ Usage (module):
     import jc
     result = jc.parse('iptables', iptables_command_output)
 
-    or
-
-    import jc.parsers.iptables
-    result = jc.parsers.iptables.parse(iptables_command_output)
-
 Schema:
 
     [

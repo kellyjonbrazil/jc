@@ -20,11 +20,6 @@ Usage (module):
     import jc
     result = jc.parse('airport_s', airport_s_command_output)
 
-    or
-
-    import jc.parsers.airport_s
-    result = jc.parsers.airport_s.parse(airport_s_command_output)
-
 Schema:
 
     [

@@ -21,11 +21,6 @@ Usage (module):
     import jc
     result = jc.parse('pidstat', pidstat_command_output)
 
-    or
-
-    import jc.parsers.pidstat
-    result = jc.parsers.pidstat.parse(pidstat_command_output)
-
 Schema:
 
     [

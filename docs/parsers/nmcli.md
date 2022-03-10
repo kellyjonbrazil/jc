@@ -27,11 +27,6 @@ Usage (module):
     import jc
     result = jc.parse('nmcli', nmcli_command_output)
 
-    or
-
-    import jc.parsers.nmcli
-    result = jc.parsers.nmcli.parse(nmcli_command_output)
-
 Schema:
 
     Because there are so many options, the schema is not strictly defined.

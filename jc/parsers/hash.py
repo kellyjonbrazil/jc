@@ -9,11 +9,6 @@ Usage (module):
     import jc
     result = jc.parse('hash', hash_command_output)
 
-    or
-
-    import jc.parsers.hash
-    result = jc.parsers.hash.parse(hash_command_output)
-
 Schema:
 
     [

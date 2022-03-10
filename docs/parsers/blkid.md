@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('blkid', blkid_command_output)
 
-    or
-
-    import jc.parsers.blkid
-    result = jc.parsers.blkid.parse(blkid_command_output)
-
 Schema:
 
     [

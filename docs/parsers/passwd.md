@@ -14,11 +14,6 @@ Usage (module):
     import jc
     result = jc.parse('passwd', passwd_file_output)
 
-    or
-
-    import jc.parsers.passwd
-    result = jc.parsers.passwd.parse(passwd_file_output)
-
 Schema:
 
     [

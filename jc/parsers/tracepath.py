@@ -15,11 +15,6 @@ Usage (module):
     import jc
     result = jc.parse('tracepath', tracepath_command_output)
 
-    or
-
-    import jc.parsers.tracepath
-    result = jc.parsers.tracepath.parse(tracepath_command_output)
-
 Schema:
 
     {

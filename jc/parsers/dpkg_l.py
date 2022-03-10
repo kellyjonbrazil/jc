@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('dpkg_l', dpkg_command_output)
 
-    or
-
-    import jc.parsers.dpkg_l
-    result = jc.parsers.dpkg_l.parse(dpkg_command_output)
-
 Schema:
 
     [

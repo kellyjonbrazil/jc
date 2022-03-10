@@ -29,11 +29,6 @@ Usage (module):
     import jc
     result = jc.parse('ls', ls_command_output)
 
-    or
-
-    import jc.parsers.ls
-    result = jc.parsers.ls.parse(ls_command_output)
-
 Schema:
 
     [

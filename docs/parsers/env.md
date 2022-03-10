@@ -23,11 +23,6 @@ Usage (module):
     import jc
     result = jc.parse('env', env_command_output)
 
-    or
-
-    import jc.parsers.env
-    result = jc.parsers.env.parse(env_command_output)
-
 Schema:
 
     [

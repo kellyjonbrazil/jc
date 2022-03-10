@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('mount', mount_command_output)
 
-    or
-
-    import jc.parsers.mount
-    result = jc.parsers.mount.parse(mount_command_output)
-
 Schema:
 
     [

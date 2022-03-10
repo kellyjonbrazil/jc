@@ -7,7 +7,15 @@ from typing import List, Dict
 
 def simple_table_parse(data: List[str]) -> List[Dict]:
     """
-    Parse simple tables. The last column may contain data with spaces.
+    Parse simple tables. There should be no blank cells. The last column
+    may contain data with spaces.
+
+    Example Table:
+
+       col1      col2      col3      col4      col5
+       apple     orange    pear      banana    my favorite fruits
+       carrot    squash    celery    spinach   my favorite veggies
+       chicken   beef      pork      eggs      my favorite proteins
 
     Parameters:
 
@@ -36,6 +44,14 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
 def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
     """
     Parse tables with missing column data or with spaces in column data.
+    Data elements must line up within column boundaries.
+
+    Example Table:
+
+       col1         col2      col3      col4          col5
+                    orange    pear      fuzzy peach   my favorite fruits
+       green beans            celery    spinach       my favorite veggies
+       chicken      beef      pork      brown eggs    my favorite proteins
 
     Parameters:
 
