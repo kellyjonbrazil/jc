@@ -117,6 +117,7 @@ Examples:
       }
     ]
 """
+from typing import List, Dict, Any
 import jc.utils
 import jc.parsers.universal
 
@@ -134,7 +135,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
 
@@ -160,7 +161,11 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False):
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[Dict]:
     """
     Main text parsing function
 
@@ -190,7 +195,7 @@ def parse(data, raw=False, quiet=False):
         if cleandata[0][-1] == ']':
             for line in cleandata:
                 splitline = line.split()
-                output_line = {
+                output_line: Dict[str, Any] = {
                     'name': splitline[0],
                     'address': splitline[1].lstrip('(').rstrip(')'),
                     'hwtype': splitline[-1].lstrip('[').rstrip(']'),
@@ -220,13 +225,13 @@ def parse(data, raw=False, quiet=False):
         # otherwise, try bsd style
         else:
             for line in cleandata:
-                line = line.split()
+                splitline = line.split()
                 output_line = {
-                    'name': line[0],
-                    'address': line[1].lstrip('(').rstrip(')'),
-                    'hwtype': line[4].lstrip('[').rstrip(']'),
-                    'hwaddress': line[3],
-                    'iface': line[6],
+                    'name': splitline[0],
+                    'address': splitline[1].lstrip('(').rstrip(')'),
+                    'hwtype': splitline[4].lstrip('[').rstrip(']'),
+                    'hwaddress': splitline[3],
+                    'iface': splitline[6],
                 }
                 raw_output.append(output_line)
 

@@ -127,7 +127,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data, raw=False, quiet=False)
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
 ```
 
 Main text parsing function
