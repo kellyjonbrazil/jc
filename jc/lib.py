@@ -64,6 +64,7 @@ parsers = [
     'ntpq',
     'passwd',
     'pidstat',
+    'pidstat-s',
     'ping',
     'ping-s',
     'pip-list',
