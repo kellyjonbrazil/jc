@@ -49,7 +49,7 @@ Examples:
     {example output}
     ...
 """
-from typing import Dict, Iterable, Union
+from typing import Dict, Iterable, Union, NoReturn
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -103,7 +103,7 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Union[Iterable[Dict], tuple]:
+) -> Union[Iterable[Dict], NoReturn]:
     """
     Main text parsing generator function. Returns an iterator object.
 

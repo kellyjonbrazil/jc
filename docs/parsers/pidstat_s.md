@@ -63,7 +63,7 @@ Examples:
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,
-          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+          ignore_exceptions: bool = False) -> Union[Iterable[Dict], NoReturn]
 ```
 
 Main text parsing generator function. Returns an iterator object.
