@@ -1,6 +1,7 @@
 """jc - JSON Convert `iostat` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 Note: `iostat` version 11 and higher include a JSON output option
 
@@ -8,19 +9,18 @@ Usage (cli):
 
     $ iostat | jc --iostat-s
 
+> Note: When piping `jc` converted `iostat` output to other processes it may
+  appear the output is hanging due to the OS pipe buffers. This is because
+  `iostat` output is too small to quickly fill up the buffer. Use the `-u`
+  option to unbuffer the `jc` output if you would like immediate output. See
+  the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
+  for more information.
+
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('iostat_s', iostat_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.iostat_s
-    # result is an iterable object (generator)
-    result = jc.parsers.iostat_s.parse(iostat_command_output.splitlines())
     for item in result:
         # do something
 

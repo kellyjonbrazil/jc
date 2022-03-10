@@ -1,7 +1,7 @@
-"""jc - JSON Convert `ls` and `vdir` command output streaming
-parser
+"""jc - JSON Convert `ls` and `vdir` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 Requires the `-l` option to be used on `ls`. If there are newline characters
 in the filename, then make sure to use the `-b` option on `ls`.
@@ -22,16 +22,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('ls_s', ls_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.ls_s
-    # result is an iterable object (generator)
-    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
     for item in result:
         # do something
 

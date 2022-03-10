@@ -1,6 +1,7 @@
 """jc - JSON Convert `csv` file streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 The `csv` streaming parser will attempt to automatically detect the
 delimiter character. If the delimiter cannot be detected it will default
@@ -16,16 +17,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('csv_s', csv_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.csv_s
-    # result is an iterable object (generator)
-    result = jc.parsers.csv_s.parse(csv_output.splitlines())
     for item in result:
         # do something
 

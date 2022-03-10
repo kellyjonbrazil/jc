@@ -1,6 +1,7 @@
 """jc - JSON Convert `ping` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 Supports `ping` and `ping6` output.
 
@@ -18,16 +19,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('ping_s', ping_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.ping_s
-    # result is an iterable object (generator)
-    result = jc.parsers.ping_s.parse(ping_command_output.splitlines())
     for item in result:
         # do something
 

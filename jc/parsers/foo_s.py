@@ -1,6 +1,7 @@
 """jc - JSON Convert `foo` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 <<Short foo description and caveats>>
 
@@ -11,16 +12,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('foo_s', foo_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.foo_s
-    # result is an iterable object (generator)
-    result = jc.parsers.foo_s.parse(foo_command_output.splitlines())
     for item in result:
         # do something
 
