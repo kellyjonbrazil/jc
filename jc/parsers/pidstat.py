@@ -206,7 +206,7 @@ def parse(
         if not data_list:
             raise ParseError('Could not parse pidstat output. Make sure to use "pidstat -h".')
 
-        # normalize headers
+        # normalize header
         data_list[0] = data_list[0].replace('#', ' ')\
                                    .replace('/', '_')\
                                    .replace('%', 'percent_')\
