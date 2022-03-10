@@ -63,14 +63,12 @@ Schema:
       "block_size":               integer,
       "unix_flags":               string,
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":              boolean,   # false if error parsing
-          "error":                string,    # exists if "success" is false
-          "line":                 string     # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":                boolean,   # false if error parsing
+        "error":                  string,    # exists if "success" is false
+        "line":                   string     # exists if "success" is false
+      }
     }
 
 Examples:

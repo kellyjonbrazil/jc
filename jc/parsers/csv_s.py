@@ -39,13 +39,11 @@ Schema:
       "column_name2":     string,
 
       # below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":      boolean,     # false if error parsing
-          "error":        string,      # exists if "success" is false
-          "line":         string       # exists if "success" is false
-        }
+      "_jc_meta": {
+        "success":        boolean,     # false if error parsing
+        "error":          string,      # exists if "success" is false
+        "line":           string       # exists if "success" is false
+      }
     }
 
 Examples:

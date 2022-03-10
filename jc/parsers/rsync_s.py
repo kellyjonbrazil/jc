@@ -63,14 +63,12 @@ Schema:
       "extended_attribute_different":   bool/null,
       "epoch":                          integer,      [2]
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] 'file sent', 'file received', 'local change or creation',

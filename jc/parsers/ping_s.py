@@ -56,14 +56,12 @@ Schema:
       "round_trip_ms_max":          float,
       "round_trip_ms_stddev":       float,
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":                boolean,  # false if error parsing
-          "error":                  string,   # exists if "success" is false
-          "line":                   string    # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":                  boolean,  # false if error parsing
+        "error":                    string,   # exists if "success" is false
+        "line":                     string    # exists if "success" is false
+      }
     }
 
     [0] 'reply', 'timeout', 'summary', etc. See `_error_type.type_map`

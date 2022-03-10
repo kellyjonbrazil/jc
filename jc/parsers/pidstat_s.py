@@ -2,7 +2,8 @@
 
 > This streaming parser outputs JSON Lines
 
-<<Short pidstat description and caveats>>
+Must use the `-h` option in `pidstat`. All other `pidstat` options are
+supported in combination with `-h`.
 
 Usage (cli):
 
@@ -27,26 +28,48 @@ Usage (module):
 Schema:
 
     {
-      "pidstat":            string,
+      "time":             integer,
+      "uid":              integer,
+      "pid":              integer,
+      "percent_usr":      float,
+      "percent_system":   float,
+      "percent_guest":    float,
+      "percent_cpu":      float,
+      "cpu":              integer,
+      "minflt_s":         float,
+      "majflt_s":         float,
+      "vsz":              integer,
+      "rss":              integer,
+      "percent_mem":      float,
+      "stksize":          integer,
+      "stkref":           integer,
+      "kb_rd_s":          float,
+      "kb_wr_s":          float,
+      "kb_ccwr_s":        float,
+      "cswch_s":          float,
+      "nvcswch_s":        float,
+      "command":          string,
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":        boolean,     # false if error parsing
+        "error":          string,      # exists if "success" is false
+        "line":           string       # exists if "success" is false
+      }
     }
 
 Examples:
 
-    $ pidstat | jc --pidstat-s
-    {example output}
+    $ pidstat -hl | jc --pidstat-s
+    {"time":1646859134,"uid":0,"pid":1,"percent_usr":0.0,"percent_system...}
+    {"time":1646859134,"uid":0,"pid":6,"percent_usr":0.0,"percent_system...}
+    {"time":1646859134,"uid":0,"pid":9,"percent_usr":0.0,"percent_system...}
     ...
 
-    $ pidstat | jc --pidstat-s -r
-    {example output}
+    $ pidstat -hl | jc --pidstat-s -r
+    {"time":"1646859134","uid":"0","pid":"1","percent_usr":"0.00","perc...}
+    {"time":"1646859134","uid":"0","pid":"6","percent_usr":"0.00","perc...}
+    {"time":"1646859134","uid":"0","pid":"9","percent_usr":"0.00","perc...}
     ...
 """
 from typing import Dict, Iterable, Union

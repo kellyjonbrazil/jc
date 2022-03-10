@@ -80,14 +80,12 @@ Schema:
       "epoch":                            integer,     # [0]
       "epoch_utc":                        integer      # [1]
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":                      boolean,  # [2]
-          "error":                        string,   # [3]
-          "line":                         string    # [3]
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":                        boolean,  # [2]
+        "error":                          string,   # [3]
+        "line":                           string    # [3]
+      }
     }
 
     [0] naive timestamp if -t flag is used

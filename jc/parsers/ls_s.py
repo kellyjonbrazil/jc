@@ -49,14 +49,12 @@ Schema:
       "epoch":          integer,     # [0]
       "epoch_utc":      integer,     # [1]
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] naive timestamp if date field exists and can be converted.
