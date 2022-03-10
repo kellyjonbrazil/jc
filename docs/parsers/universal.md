@@ -23,10 +23,10 @@ may contain data with spaces.
 
 Example Table:
 
-   col1      col2      col3      col4      col5
-   apple     orange    pear      banana    my favorite fruits
-   carrot    squash    celery    spinach   my favorite veggies
-   chicken   beef      pork      eggs      my favorite proteins
+    col1      col2      col3      col4      col5
+    apple     orange    pear      banana    my favorite fruits
+    carrot    squash    celery    spinach   my favorite veggies
+    chicken   beef      pork      eggs      my favorite proteins
 
 Parameters:
 
@@ -56,10 +56,10 @@ Data elements must line up within column boundaries.
 
 Example Table:
 
-   col1         col2      col3      col4          col5
-                orange    pear      fuzzy peach   my favorite fruits
-   green beans            celery    spinach       my favorite veggies
-   chicken      beef      pork      brown eggs    my favorite proteins
+    col1         col2      col3      col4          col5
+    apple        orange              fuzzy peach   my favorite fruits
+    green beans            celery    spinach       my favorite veggies
+    chicken      beef                brown eggs    my favorite proteins
 
 Parameters:
 

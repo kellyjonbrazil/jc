@@ -12,10 +12,10 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
 
     Example Table:
 
-       col1      col2      col3      col4      col5
-       apple     orange    pear      banana    my favorite fruits
-       carrot    squash    celery    spinach   my favorite veggies
-       chicken   beef      pork      eggs      my favorite proteins
+        col1      col2      col3      col4      col5
+        apple     orange    pear      banana    my favorite fruits
+        carrot    squash    celery    spinach   my favorite veggies
+        chicken   beef      pork      eggs      my favorite proteins
 
     Parameters:
 
@@ -48,10 +48,10 @@ def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
 
     Example Table:
 
-       col1         col2      col3      col4          col5
-                    orange    pear      fuzzy peach   my favorite fruits
-       green beans            celery    spinach       my favorite veggies
-       chicken      beef      pork      brown eggs    my favorite proteins
+        col1         col2      col3      col4          col5
+        apple        orange              fuzzy peach   my favorite fruits
+        green beans            celery    spinach       my favorite veggies
+        chicken      beef                brown eggs    my favorite proteins
 
     Parameters:
 
