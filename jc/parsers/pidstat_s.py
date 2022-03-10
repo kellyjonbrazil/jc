@@ -1,6 +1,7 @@
 """jc - JSON Convert `pidstat` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+iterator of Dictionaries (module)
 
 Must use the `-h` option in `pidstat`. All other `pidstat` options are
 supported in combination with `-h`.
@@ -12,16 +13,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('pidstat_s', pidstat_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.pidstat_s
-    # result is an iterable object (generator)
-    result = jc.parsers.pidstat_s.parse(pidstat_command_output.splitlines())
     for item in result:
         # do something
 
@@ -61,9 +54,9 @@ Schema:
 Examples:
 
     $ pidstat -hl | jc --pidstat-s
-    {"time":1646859134,"uid":0,"pid":1,"percent_usr":0.0,"percent_system...}
-    {"time":1646859134,"uid":0,"pid":6,"percent_usr":0.0,"percent_system...}
-    {"time":1646859134,"uid":0,"pid":9,"percent_usr":0.0,"percent_system...}
+    {"time":1646859134,"uid":0,"pid":1,"percent_usr":0.0,"percent_syste...}
+    {"time":1646859134,"uid":0,"pid":6,"percent_usr":0.0,"percent_syste...}
+    {"time":1646859134,"uid":0,"pid":9,"percent_usr":0.0,"percent_syste...}
     ...
 
     $ pidstat -hl | jc --pidstat-s -r
