@@ -35,6 +35,7 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
+from jc.parsers.universal import simple_table_parse
 
 
 class info():
@@ -93,15 +94,39 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
+    output_line: Dict = {}
+    header_found = False
+    header_start: int = 0
+    stat_type: str = ''    # 'cpu' or 'interrupts'
 
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
 
-            # parse the content here
-            # check out helper functions in jc.utils
-            # and jc.parsers.universal
+            # check for header, normalize it, and fix the time column
+            if ' CPU ' in line:
+                header_found = True
+                if '%usr' in line:
+                    stat_type = 'cpu'
+                else:
+                    stat_type = 'interrupts'
 
-            pass
+                header_text: str = line.replace('/', '_')\
+                                  .replace('%', 'percent_')\
+                                  .lower()
+                header_start = line.find('CPU ')
+                header_text = header_text[header_start:]
+                continue
+
+            # data line - pull time from beginning and then parse as a table
+            if header_found:
+                output_line = simple_table_parse([header_text, line[header_start:]])[0]
+                output_line['type'] = stat_type
+                item_time = line[:header_start].strip()
+                if 'Average:' not in item_time:
+                    output_line['time'] = line[:header_start].strip()
+                else:
+                    output_line['average'] = True
+                raw_output.append(output_line)
 
     return raw_output if raw else _process(raw_output)
