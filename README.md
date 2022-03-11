@@ -190,6 +190,7 @@ option.
 - `--lsof` enables the `lsof` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof))
 - `--lsusb` enables the `lsusb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb))
 - `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
+- `--mpstat` enables the `mpstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat))
 - `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
 - `--nmcli` enables the `nmcli` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli))
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
