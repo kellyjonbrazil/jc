@@ -191,6 +191,7 @@ option.
 - `--lsusb` enables the `lsusb` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb))
 - `--mount` enables the `mount` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mount))
 - `--mpstat` enables the `mpstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat))
+- `--mpstat-s` enables the `mpstat` command streaming parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s))
 - `--netstat` enables the `netstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat))
 - `--nmcli` enables the `nmcli` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli))
 - `--ntpq` enables the `ntpq -p` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq))
