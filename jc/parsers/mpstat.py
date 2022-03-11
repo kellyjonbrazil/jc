@@ -1,7 +1,5 @@
 """jc - JSON Convert `mpstat` command output parser
 
-<<Short mpstat description and caveats>>
-
 Usage (cli):
 
     $ mpstat | jc --mpstat
@@ -19,19 +17,93 @@ Schema:
 
     [
       {
-        "mpstat":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "type":               string,
+        "time":               string,
+        "cpu":                string,
+        "average":            boolean,
+        "percent_usr":        float,
+        "percent_nice":       float,
+        "percent_sys":        float,
+        "percent_iowait":     float,
+        "percent_irq":        float,
+        "percent_soft":       float,
+        "percent_steal":      float,
+        "percent_guest":      float,
+        "percent_gnice":      float,
+        "percent_idle":       float,
+        "intr_s":             float,
+        "<x>_s":              float,      # <x> is an integer
+        "nmi_s":              float,
+        "loc_s":              float,
+        "spu_s":              float,
+        "pmi_s":              float,
+        "iwi_s":              float,
+        "rtr_s":              float,
+        "res_s":              float,
+        "cal_s":              float,
+        "tlb_s":              float,
+        "trm_s":              float,
+        "thr_s":              float,
+        "dfr_s":              float,
+        "mce_s":              float,
+        "mcp_s":              float,
+        "err_s":              float,
+        "mis_s":              float,
+        "pin_s":              float,
+        "npi_s":              float,
+        "piw_s":              float,
+        "hi_s":               float,
+        "timer_s":            float,
+        "net_tx_s":           float,
+        "net_rx_s":           float,
+        "block_s":            float,
+        "block_iopoll_s":     float,
+        "tasklet_s":          float,
+        "sched_s":            float,
+        "hrtimer_s":          float,
+        "rcu_s":              float
       }
     ]
 
 Examples:
 
     $ mpstat | jc --mpstat -p
-    []
+    [
+      {
+        "cpu": "all",
+        "percent_usr": 12.94,
+        "percent_nice": 0.0,
+        "percent_sys": 26.42,
+        "percent_iowait": 0.43,
+        "percent_irq": 0.0,
+        "percent_soft": 0.16,
+        "percent_steal": 0.0,
+        "percent_guest": 0.0,
+        "percent_gnice": 0.0,
+        "percent_idle": 60.05,
+        "type": "cpu",
+        "time": "01:58:14 PM"
+      }
+    ]
 
     $ mpstat | jc --mpstat -p -r
-    []
+    [
+      {
+        "cpu": "all",
+        "percent_usr": "12.94",
+        "percent_nice": "0.00",
+        "percent_sys": "26.42",
+        "percent_iowait": "0.43",
+        "percent_irq": "0.00",
+        "percent_soft": "0.16",
+        "percent_steal": "0.00",
+        "percent_guest": "0.00",
+        "percent_gnice": "0.00",
+        "percent_idle": "60.05",
+        "type": "cpu",
+        "time": "01:58:14 PM"
+      }
+    ]
 """
 from typing import List, Dict
 import jc.utils
@@ -63,11 +135,18 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
+    float_list = [
+        "percent_usr", "percent_nice", "percent_sys", "percent_iowait", "percent_irq",
+        "percent_soft", "percent_steal", "percent_guest", "percent_gnice", "percent_idle", "intr_s",
+        "nmi_s", "loc_s", "spu_s", "pmi_s", "iwi_s", "rtr_s", "res_s", "cal_s", "tlb_s", "trm_s",
+        "thr_s", "dfr_s", "mce_s", "mcp_s", "err_s", "mis_s", "pin_s", "npi_s", "piw_s", "hi_s",
+        "timer_s", "net_tx_s", "net_rx_s", "block_s", "block_iopoll_s", "tasklet_s", "sched_s",
+        "hrtimer_s", "rcu_s"
+    ]
+    for entry in proc_data:
+        for key in entry:
+            if (key in float_list or (key[0].isdigit() and key.endswith('_s'))):
+                entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
 
@@ -95,7 +174,7 @@ def parse(
 
     raw_output: List = []
     output_line: Dict = {}
-    header_found = False
+    header_found: bool = False
     header_start: int = 0
     stat_type: str = ''    # 'cpu' or 'interrupts'
 
@@ -112,8 +191,8 @@ def parse(
                     stat_type = 'interrupts'
 
                 header_text: str = line.replace('/', '_')\
-                                  .replace('%', 'percent_')\
-                                  .lower()
+                                       .replace('%', 'percent_')\
+                                       .lower()
                 header_start = line.find('CPU ')
                 header_text = header_text[header_start:]
                 continue
