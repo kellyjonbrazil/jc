@@ -1,0 +1,5 @@
+Linux 3.10.0-1062.1.2.el7.x86_64 (localhost) 	03/11/2022 	_x86_64_	(1 CPU)
+
+03:14:20 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+03:14:20 PM  all    0.23    0.00    0.37    0.01    0.00    0.00    0.00    0.00    0.00   99.39
+
