@@ -17,6 +17,12 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
         carrot    squash    celery    spinach   my favorite veggies
         chicken   beef      pork      eggs      my favorite proteins
 
+        [{'col1': 'apple', 'col2': 'orange', 'col3': 'pear', 'col4':
+        'banana', 'col5': 'my favorite fruits'}, {'col1': 'carrot', 'col2':
+        'squash', 'col3': 'celery', 'col4': 'spinach', 'col5':
+        'my favorite veggies'}, {'col1': 'chicken', 'col2': 'beef', 'col3':
+        'pork', 'col4': 'eggs', 'col5': 'my favorite proteins'}]
+
     Parameters:
 
         data:   (list)   Text data to parse that has been split into lines
@@ -44,7 +50,8 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
 def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
     """
     Parse tables with missing column data or with spaces in column data.
-    Data elements must line up within column boundaries.
+    Blank cells are converted to None in the resulting dictionary. Data
+    elements must line up within column boundaries.
 
     Example Table:
 
@@ -52,6 +59,12 @@ def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
         apple        orange              fuzzy peach   my favorite fruits
         green beans            celery    spinach       my favorite veggies
         chicken      beef                brown eggs    my favorite proteins
+
+        [{'col1': 'apple', 'col2': 'orange', 'col3': None, 'col4':
+        'fuzzy peach', 'col5': 'my favorite fruits'}, {'col1':
+        'green beans', 'col2': None, 'col3': 'celery', 'col4': 'spinach',
+        'col5': 'my favorite veggies'}, {'col1': 'chicken', 'col2': 'beef',
+        'col3': None, 'col4': 'brown eggs', 'col5': 'my favorite proteins'}]
 
     Parameters:
 
