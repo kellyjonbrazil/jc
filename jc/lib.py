@@ -59,6 +59,7 @@ parsers = [
     'lsof',
     'lsusb',
     'mount',
+    'mpstat',
     'netstat',
     'nmcli',
     'ntpq',
