@@ -10,7 +10,7 @@ import signal
 import shlex
 import subprocess
 import json
-from .lib import (__version__, all_parser_info, parsers,
+from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _parser_argument, _get_parser, _parser_is_streaming)
 from . import utils
 from . import tracebackplus
@@ -235,12 +235,12 @@ def help_doc(options):
         parser_name = parser_shortname(arg)
 
         if parser_name in parsers:
-            parser = _get_parser(arg)
-            compatible = ', '.join(parser.info.compatible)
+            p_info = parser_info(arg, documentation=True)
+            compatible = ', '.join(p_info['compatible'])
             doc_text = \
-                f'{parser.__doc__}\n'\
+                f'{p_info["documentation"]}\n'\
                 f'Compatibility:  {compatible}\n\n'\
-                f'Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})\n'
+                f'Version {p_info["version"]} by {p_info["author"]} ({p_info["author_email"]})\n'
 
             return doc_text
 
