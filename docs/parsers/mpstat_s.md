@@ -89,7 +89,7 @@ Examples:
     {"cpu":"all","intr_s":37.61,"type":"interrupts","time":"03:15:06 PM"}
     ...
 
-    $ mpstat | jc --mpstat-s -r
+    $ mpstat -A | jc --mpstat-s -r
     {"cpu":"all","percent_usr":"0.22","percent_nice":"0.00","percent_...}
     {"cpu":"0","percent_usr":"0.22","percent_nice":"0.00","percent_sy...}
     {"cpu":"all","intr_s":"37.61","type":"interrupts","time":"03:15:06 PM"}
