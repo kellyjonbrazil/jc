@@ -553,7 +553,7 @@ def main():
             raise
 
         streaming_msg = ''
-        if getattr(parser.info, 'streaming', None):
+        if _parser_is_streaming(parser):
             streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
         utils.error_message([
