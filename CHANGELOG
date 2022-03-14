@@ -6,6 +6,7 @@ jc changelog
 - Add mpstat command parser tested on linux
 - Add mpstat command streaming parser tested on linux
 - Add ASCII table parser
+- Add documentation option to parser_info() and all_parser_info()
 
 20220305 v1.18.5
 - Fix date parser to ensure AM/PM period string is always uppercase
