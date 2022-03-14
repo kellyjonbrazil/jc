@@ -4,14 +4,13 @@ JC cli module
 
 import sys
 import os
-import importlib
 import textwrap
 import signal
 import shlex
 import subprocess
 import json
 from .lib import (__version__, parser_info, all_parser_info, parsers,
-                  _parser_argument, _get_parser, _parser_is_streaming)
+                  _get_parser, _parser_is_streaming)
 from . import utils
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -155,17 +154,14 @@ def parser_shortname(parser_arg):
 def parsers_text(indent=0, pad=0):
     """Return the argument and description information from each parser"""
     ptext = ''
-    for parser in parsers:
-        parser_arg = _parser_argument(parser)
-        parser_mod = _get_parser(parser)
-
-        if hasattr(parser_mod, 'info'):
-            parser_desc = parser_mod.info.description
-            padding = pad - len(parser_arg)
-            padding_char = ' '
-            indent_text = padding_char * indent
-            padding_text = padding_char * padding
-            ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
+    padding_char = ' '
+    for p in all_parser_info():
+        parser_arg = p['argument']
+        padding = pad - len(parser_arg)
+        parser_desc = p['description']
+        indent_text = padding_char * indent
+        padding_text = padding_char * padding
+        ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
 
     return ptext
 
