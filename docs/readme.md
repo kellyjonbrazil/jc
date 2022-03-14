@@ -71,13 +71,16 @@ built-in parsers and local plugin parsers.
 
 ### parser_info
 
-    parser_info(parser_module_name: str) -> dict
+    parser_info(
+        parser_module_name: str,
+        documentation: bool = False
+    ) -> dict
 
 Get the metadata for a particular parser.
 
 ### all_parser_info
 
-    all_parser_info() -> list[dict]
+    all_parser_info(documentation: bool = False) -> list[dict]
 
 Get the metadata for all parsers.
 
