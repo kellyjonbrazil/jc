@@ -156,9 +156,9 @@ def parsers_text(indent=0, pad=0):
     ptext = ''
     padding_char = ' '
     for p in all_parser_info():
-        parser_arg = p['argument']
+        parser_arg = p.get('argument', 'UNKNOWN')
         padding = pad - len(parser_arg)
-        parser_desc = p['description']
+        parser_desc = p.get('description', 'No description available.')
         indent_text = padding_char * indent
         padding_text = padding_char * padding
         ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
@@ -232,11 +232,15 @@ def help_doc(options):
 
         if parser_name in parsers:
             p_info = parser_info(arg, documentation=True)
-            compatible = ', '.join(p_info['compatible'])
+            compatible = ', '.join(p_info.get('compatible', ['unknown']))
+            documentation = p_info.get('documentation', 'No documentation available.')
+            version = p_info.get('version', 'unknown')
+            author = p_info.get('author', 'unknown')
+            author_email = p_info.get('author_email', 'unknown')
             doc_text = \
-                f'{p_info["documentation"]}\n'\
+                f'{documentation}\n'\
                 f'Compatibility:  {compatible}\n\n'\
-                f'Version {p_info["version"]} by {p_info["author"]} ({p_info["author_email"]})\n'
+                f'Version {version} by {author} ({author_email})\n'
 
             return doc_text
 
@@ -314,12 +318,9 @@ def magic_parser(args):
     if len(args_given) == 0:
         return False, None, None, []
 
-    magic_dict = {}
-    parser_info = about_jc()['parsers']
-
     # create a dictionary of magic_commands to their respective parsers.
-    for entry in parser_info:
-        # Update the dict with all of the magic commands for this parser, if they exist.
+    magic_dict = {}
+    for entry in all_parser_info():
         magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
 
     # find the command and parser

@@ -297,7 +297,10 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
             info_dict['plugin'] = True
 
         if documentation:
-            info_dict['documentation'] = parser_mod.__doc__
+            docs = parser_mod.__doc__
+            if not docs:
+                docs = 'No documentation available.\n'
+            info_dict['documentation'] = docs
 
     return info_dict
 
