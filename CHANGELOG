@@ -4,6 +4,8 @@ jc changelog
 - Add pidstat command parser tested on linux
 - Add pidstat command streaming parser tested on linux
 - Add mpstat command parser tested on linux
+- Add mpstat command streaming parser tested on linux
+- Add ASCII table parser
 
 20220305 v1.18.5
 - Fix date parser to ensure AM/PM period string is always uppercase
