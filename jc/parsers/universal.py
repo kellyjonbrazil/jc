@@ -90,6 +90,7 @@ def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]:
 
         List of Dictionaries
     """
+    data = data.copy()
     output: List = []
     header_text: str = data.pop(0)
     header_text = header_text + ' '
