@@ -45,10 +45,9 @@ Examples:
 """
 from os import sep
 import re
-from typing import Iterable, List, Dict, Tuple, Optional, Union, Generator
+from typing import Iterable, List, Dict, Optional, Generator
 import jc.utils
 from jc.exceptions import ParseError
-from jc.parsers.universal import sparse_table_parse
 
 
 class info():
@@ -139,7 +138,7 @@ def _pretty_set_separators(table_lines: Iterable, separator: str) -> Generator[s
             continue
 
         # remove the table column separator characters and yield the line
-        line = line.replace('|', ' ').replace('│', ' ')
+        # line = line.replace('|', ' ').replace('│', ' ')
         yield line
 
 
@@ -185,6 +184,29 @@ def _pretty_normalize_rows(table_lines: Iterable,
             # table separator found - this is a data separator
             yield data_separator
             continue
+
+
+def _pretty_table_parse(table: Iterable) -> List[Dict]:
+    temp_table = []
+    for line in table:
+        # normalize separator
+        line = line.replace('│', '|')
+
+        # remove first separator if it is the first char in the line
+        if line[0] == '|':
+            line = line.replace('|', ' ', 1)
+
+        # remove last separator if it is the last char in the line
+        if line[-1] == '|':
+            line = line[::-1].replace('|', ' ', 1)[::-1]
+
+        temp_table.append([x.strip() for x in line.split('|')])
+
+    headers = temp_table[0]
+    raw_data = temp_table[1:]
+    result = [dict.fromkeys(headers, None)]
+    result.extend([dict(zip(headers, r)) for r in raw_data])
+    return result
 
 
 def _pretty_remove_header_rows(table: List[Dict], sep: str, data_sep: str) -> List[Optional[Dict]]:
@@ -294,13 +316,13 @@ def _parse_pretty(string: str) -> List:
     separator = '  ' + sep + ' '
     data_separator = '  ' + data_sep + ' '
 
-    clean_gen = _pretty_set_separators(string_lines, separator)
-    normalized_gen = _pretty_normalize_rows(clean_gen, separator, data_separator)
-    raw_table = sparse_table_parse(normalized_gen)
-    new_keynames_dict = _pretty_map_new_keynames(raw_table, sep)
-    data_table = _pretty_remove_header_rows(raw_table, sep, data_sep)
-    table_with_renamed_keys = _pretty_rename_keys(data_table, new_keynames_dict)
-    final_table = _pretty_consolidate_rows(table_with_renamed_keys)
+    clean: Generator = _pretty_set_separators(string_lines, separator)
+    normalized: Generator = _pretty_normalize_rows(clean, separator, data_separator)
+    raw_table: List[Dict] = _pretty_table_parse(normalized)  # was sparse_table_parse()
+    new_keynames: Dict = _pretty_map_new_keynames(raw_table, sep)
+    data_table: List[Optional[Dict]] = _pretty_remove_header_rows(raw_table, sep, data_sep)
+    table_with_renamed_keys: List[Optional[Dict]] = _pretty_rename_keys(data_table, new_keynames)
+    final_table: List[Dict] = _pretty_consolidate_rows(table_with_renamed_keys)
 
     return final_table
 
