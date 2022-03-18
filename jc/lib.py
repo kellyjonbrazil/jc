@@ -13,7 +13,7 @@ parsers = [
     'airport',
     'airport-s',
     'arp',
-    'asciitable',
+    # 'asciitable',
     'asciitable-m',
     'blkid',
     'cksum',
