@@ -43,7 +43,6 @@ Examples:
     $ asciitable-m | jc --asciitable-m -p -r
     []
 """
-from os import sep
 import re
 from typing import Iterable, List, Dict, Optional, Generator
 import jc.utils
