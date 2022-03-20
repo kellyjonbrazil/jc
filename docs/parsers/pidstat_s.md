@@ -83,10 +83,12 @@ Examples:
 
 ```python
 @add_jc_meta
-def parse(data: Iterable[str],
-          raw: bool = False,
-          quiet: bool = False,
-          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+def parse(
+    data: Iterable[str],
+    raw: bool = False,
+    quiet: bool = False,
+    ignore_exceptions: bool = False
+) -> Union[Generator[Dict, None, None], tuple]
 ```
 
 Main text parsing generator function. Returns an iterator object.

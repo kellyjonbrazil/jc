@@ -54,7 +54,8 @@ Returns:
 ### sparse\_table\_parse
 
 ```python
-def sparse_table_parse(data: List[str], delim: str = '\u2063') -> List[Dict]
+def sparse_table_parse(data: Iterable[str],
+                       delim: str = '\u2063') -> List[Dict]
 ```
 
 Parse tables with missing column data or with spaces in column data.
@@ -77,16 +78,14 @@ Example Table:
 
 Parameters:
 
-    data:   (list)   Text data to parse that has been split into lines
-                     via .splitlines(). Item 0 must be the header row.
-                     Any spaces in header names should be changed to
-                     underscore '_'. You should also ensure headers are
-                     lowercase by using .lower(). Do not change the
-                     position of header names as the positions are used
-                     to find the data.
+    data:   (iter)   An iterable of string lines (e.g. str.splitlines())
+                     Item 0 must be the header row. Any spaces in header
+                     names should be changed to underscore '_'. You
+                     should also ensure headers are lowercase by using
+                     .lower(). Do not change the position of header
+                     names as the positions are used to find the data.
 
-                     Also, ensure there are no blank lines (list items)
-                     in the data.
+                     Also, ensure there are no blank line items.
 
     delim:  (string) Delimiter to use. By default `u\\2063`
                      (invisible separator) is used since it is unlikely
