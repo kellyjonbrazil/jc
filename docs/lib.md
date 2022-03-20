@@ -14,8 +14,7 @@
 
 # jc.lib
 
-jc - JSON Convert
-JC lib module
+jc - JSON Convert lib module
 
 <a id="jc.lib.parse"></a>
 
