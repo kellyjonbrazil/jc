@@ -224,8 +224,9 @@ def _get_data(table: Iterable[Tuple[int, List]]) -> List[List[List[str]]]:
     """
     return a list of rows, which are lists made up of lists of strings:
         [                                # data
-            [                            # rows
-                ['str', 'str', 'str']    # lines
+            [                            # data rows
+                ['str', 'str', 'str'],   # data lines
+                ['str', 'str', 'str']
             ]
         ]
     """
