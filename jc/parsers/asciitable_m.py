@@ -287,7 +287,7 @@ def _create_table_dict(header: List[str], data: List[List[str]]) -> List[Dict[st
     return [dict(zip(header, r)) for r in data]
 
 
-def _parse_pretty(string: str) -> List:
+def _parse_pretty(string: str) -> List[Dict[str, str]]:
     string_lines: List[str] = string.splitlines()
     clean: List[Tuple[int, List[str]]] = _normalize_rows(string_lines)
     raw_headers: List[List[str]] = _get_headers(clean)
