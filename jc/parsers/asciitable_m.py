@@ -126,7 +126,7 @@ def _is_separator(line: str) -> bool:
 
 
 def _snake_case(line: str) -> str:
-    """replace spaces between words with an underscores and set to lowercase"""
+    """replace spaces between words with an underscore and set to lowercase"""
     return re.sub(r'\b \b', '_', line).lower()
 
 
