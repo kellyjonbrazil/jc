@@ -77,7 +77,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
 
 def _remove_ansi(string: str) -> str:
-    ansi_escape =re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
+    ansi_escape = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
     return ansi_escape.sub('', string)
 
 
