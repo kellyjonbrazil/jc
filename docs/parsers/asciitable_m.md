@@ -22,10 +22,10 @@ For example:
     │          │         │        │
     ╘══════════╧═════════╧════════╛
 
-Cells with multiple lines within rows will be joined with a new-line
+Cells with multiple lines within rows will be joined with a newline
 character ('\n').
 
-Headers (keys) are converted to snake case and newlines between multi-line
+Headers (keys) are converted to snake-case and newlines between multi-line
 headers are joined with an underscore. All values are returned as strings.
 
 Usage (cli):
