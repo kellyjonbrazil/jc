@@ -36,7 +36,7 @@ For example:
     foo        bar       baz
     ---------  --------  ------
     good day             12345
-    hi there   abc def
+    hi there   abc def   3.14
 
     etc...
 
@@ -81,12 +81,11 @@ Examples:
       }
     ]
 
-
     $ echo '
     >     foo        bar       baz
     >     ---------  --------  ------
     >     good day             12345
-    >     hi there   abc def'            | jc --asciitable -p
+    >     hi there   abc def   3.14'  | jc --asciitable -p
     [
       {
         "foo": "good day",
@@ -96,7 +95,7 @@ Examples:
       {
         "foo": "hi there",
         "bar": "abc def",
-        "baz": null
+        "baz": "3.14"
       }
     ]
 """
