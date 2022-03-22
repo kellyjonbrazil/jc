@@ -40,6 +40,9 @@ For example:
 
     etc...
 
+    Headers (keys) are converted to snake-case. All values are returned as
+    strings, except empty strings, which are converted to None/null.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable

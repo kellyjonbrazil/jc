@@ -26,7 +26,8 @@ Cells with multiple lines within rows will be joined with a newline
 character ('\n').
 
 Headers (keys) are converted to snake-case and newlines between multi-line
-headers are joined with an underscore. All values are returned as strings.
+headers are joined with an underscore. All values are returned as strings,
+except empty strings, which are converted to None/null.
 
 Usage (cli):
 
