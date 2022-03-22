@@ -90,6 +90,20 @@ def _lstrip(string: str) -> str:
     return '\n'.join(new_lstrip_list)
 
 
+def _rstrip(string: str) -> str:
+    """find the rightmost non-whitespace character and rstrip to that index"""
+    rstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
+    end_points = (len(x.rstrip()) for x in rstrip_list)
+    max_point = max(end_points)
+    new_rstrip_list = (x[:max_point] for x in rstrip_list)
+    return '\n'.join(new_rstrip_list)
+
+
+def _strip(string: str) -> str:
+    string = _lstrip(string)
+    string = _rstrip(string)
+    return string
+
 def _table_sniff(string: str) -> str:
     """Find the table-type via heuristics"""
     # pretty tables
@@ -326,7 +340,7 @@ def parse(
 
     if jc.utils.has_data(data):
         data = _remove_ansi(data)
-        data = _lstrip(data)
+        data = _strip(data)
         table_type = _table_sniff(data)
 
         if table_type == 'pretty':
