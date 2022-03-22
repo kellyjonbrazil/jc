@@ -104,6 +104,7 @@ def _strip(string: str) -> str:
     string = _rstrip(string)
     return string
 
+
 def _table_sniff(string: str) -> str:
     """Find the table-type via heuristics"""
     # pretty tables
@@ -127,14 +128,16 @@ def _table_sniff(string: str) -> str:
 def _is_separator(line: str) -> bool:
     """Returns true if a table separator line is found"""
     strip_line = line.strip()
-    if   strip_line.startswith('╒═') and strip_line.endswith('═╕')\
-        or strip_line.startswith('╞═') and strip_line.endswith('═╡')\
-        or strip_line.startswith('╘═') and strip_line.endswith('═╛')\
-        or strip_line.startswith('┌─') and strip_line.endswith('─┐')\
-        or strip_line.startswith('├─') and strip_line.endswith('─┤')\
-        or strip_line.startswith('└─') and strip_line.endswith('─┘')\
-        or strip_line.startswith('+=') and strip_line.endswith('=+')\
-        or strip_line.startswith('+-') and strip_line.endswith('-+'):
+    if any((
+        strip_line.startswith('╒═') and strip_line.endswith('═╕'),
+        strip_line.startswith('╞═') and strip_line.endswith('═╡'),
+        strip_line.startswith('╘═') and strip_line.endswith('═╛'),
+        strip_line.startswith('┌─') and strip_line.endswith('─┐'),
+        strip_line.startswith('├─') and strip_line.endswith('─┤'),
+        strip_line.startswith('└─') and strip_line.endswith('─┘'),
+        strip_line.startswith('+=') and strip_line.endswith('=+'),
+        strip_line.startswith('+-') and strip_line.endswith('-+')
+    )):
         return True
     return False
 
