@@ -95,7 +95,7 @@ def _rstrip(string: str) -> str:
     rstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
     end_points = (len(x.rstrip()) for x in rstrip_list)
     max_point = max(end_points)
-    new_rstrip_list = (x[:max_point] for x in rstrip_list)
+    new_rstrip_list = ((x + ' ' * max_point)[:max_point] for x in rstrip_list)
     return '\n'.join(new_rstrip_list)
 
 
@@ -341,6 +341,7 @@ def parse(
     if jc.utils.has_data(data):
         data = _remove_ansi(data)
         data = _strip(data)
+        print(data.replace(' ', '~'))
         table_type = _table_sniff(data)
 
         if table_type == 'pretty':

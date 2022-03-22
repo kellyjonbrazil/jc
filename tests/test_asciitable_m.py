@@ -1,5 +1,6 @@
 import os
 import unittest
+from jc.exceptions import ParseError
 import jc.parsers.asciitable_m
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -216,6 +217,32 @@ class MyTests(unittest.TestCase):
         ]
 
         self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
+
+    def test_asciitable_m_markdown(self):
+        """
+        Test 'asciitable_m' with a markdown table. Should raise a ParseError
+        """
+        input = '''
+        | type   |   total |   used |    free |   shared |   buff cache |   available |
+        |--------|---------|--------|---------|----------|--------------|-------------|
+        | Mem    | 3861332 | 222820 | 3364176 |    11832 |       274336 |     3389588 |
+        | Swap   | 2097148 |      0 | 2097148 |          |              |             |
+        '''
+
+        self.assertRaises(ParseError, jc.parsers.asciitable_m.parse, input, quiet=True)
+
+    def test_asciitable_m_simple(self):
+        """
+        Test 'asciitable_m' with a simple table. Should raise a ParseError
+        """
+        input = '''
+        type      total    used     free    shared    buff cache    available
+        ------  -------  ------  -------  --------  ------------  -----------
+        Mem     3861332  222820  3364176     11832        274336      3389588
+        Swap    2097148       0  2097148
+        '''
+
+        self.assertRaises(ParseError, jc.parsers.asciitable_m.parse, input, quiet=True)
 
 
 if __name__ == '__main__':
