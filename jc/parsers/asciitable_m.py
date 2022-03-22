@@ -341,7 +341,6 @@ def parse(
     if jc.utils.has_data(data):
         data = _remove_ansi(data)
         data = _strip(data)
-        print(data.replace(' ', '~'))
         table_type = _table_sniff(data)
 
         if table_type == 'pretty':
