@@ -1,7 +1,8 @@
 """jc - JSON Convert `asciitable-m` parser
 
-This parser converts ASCII and Unicode text tables with multi-line rows.
-Tables must have some sort of separator line between rows.
+This parser converts various styles of ASCII and Unicode text tables with
+multi-line rows. Tables must have a header row and separator line between
+rows.
 
 For example:
 
@@ -16,6 +17,12 @@ For example:
     │          │         │        │
     ╘══════════╧═════════╧════════╛
 
+Cells with multiple lines within rows will be joined with a new-line
+character ('\n').
+
+Headers (keys) are converted to snake case and newlines between multi-line
+headers are joined with an underscore. All values are returned as strings.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable-m
@@ -29,19 +36,60 @@ Schema:
 
     [
       {
-        "asciitable-m":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "column_name1":     string,
+        "column_name2":     string
       }
     ]
 
 Examples:
 
-    $ asciitable-m | jc --asciitable-m -p
-    []
+    $ echo '
+    > +----------+---------+--------+
+    > | foo      | bar     | baz    |
+    > |          |         | buz    |
+    > +==========+=========+========+
+    > | good day | 12345   |        |
+    > | mate     |         |        |
+    > +----------+---------+--------+
+    > | hi there | abc def | 3.14   |
+    > |          |         |        |
+    > +==========+=========+========+' | jc --asciitable-m -p
+    [
+      {
+        "foo": "good day\nmate",
+        "bar": "12345",
+        "baz_buz": ""
+      },
+      {
+        "foo": "hi there",
+        "bar": "abc def",
+        "baz_buz": "3.14"
+      }
+    ]
 
-    $ asciitable-m | jc --asciitable-m -p -r
-    []
+    $ echo '
+    > ╒══════════╤═════════╤════════╕
+    > │ foo      │ bar     │ baz    │
+    > │          │         │ buz    │
+    > ╞══════════╪═════════╪════════╡
+    > │ good day │ 12345   │        │
+    > │ mate     │         │        │
+    > ├──────────┼─────────┼────────┤
+    > │ hi there │ abc def │ 3.14   │
+    > │          │         │        │
+    > ╘══════════╧═════════╧════════╛' | jc --asciitable-m -p
+    [
+      {
+        "foo": "good day\nmate",
+        "bar": "12345",
+        "baz_buz": ""
+      },
+      {
+        "foo": "hi there",
+        "bar": "abc def",
+        "baz_buz": "3.14"
+      }
+    ]
 """
 import re
 from typing import Iterable, Tuple, List, Dict
@@ -91,7 +139,7 @@ def _lstrip(string: str) -> str:
 
 
 def _rstrip(string: str) -> str:
-    """find the rightmost non-whitespace character and rstrip to that index"""
+    """find the rightmost non-whitespace character and rstrip and pad to that index"""
     rstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
     end_points = (len(x.rstrip()) for x in rstrip_list)
     max_point = max(end_points)
@@ -110,10 +158,12 @@ def _table_sniff(string: str) -> str:
     # pretty tables
     for line in string.splitlines():
         line = line.strip()
-        if   line.startswith('╞═') and line.endswith('═╡')\
-          or line.startswith('├─') and line.endswith('─┤')\
-          or line.startswith('+=') and line.endswith('=+')\
-          or line.startswith('+-') and line.endswith('-+'):
+        if any((
+            line.startswith('╞═') and line.endswith('═╡'),
+            line.startswith('├─') and line.endswith('─┤'),
+            line.startswith('+=') and line.endswith('=+'),
+            line.startswith('+-') and line.endswith('-+')
+        )):
             return 'pretty'
 
     # markdown tables
