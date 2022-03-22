@@ -63,7 +63,7 @@ Examples:
       {
         "foo": "good day\nmate",
         "bar": "12345",
-        "baz_buz": ""
+        "baz_buz": null
       },
       {
         "foo": "hi there",
@@ -87,7 +87,7 @@ Examples:
       {
         "foo": "good day\nmate",
         "bar": "12345",
-        "baz_buz": ""
+        "baz_buz": null
       },
       {
         "foo": "hi there",

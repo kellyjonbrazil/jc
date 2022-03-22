@@ -43,7 +43,7 @@ For example:
     good day             12345
     hi there   abc def
 
-    etc.
+    etc...
 
 Usage (cli):
 
@@ -65,11 +65,45 @@ Schema:
 
 Examples:
 
-    $ asciitable | jc --asciitable -p
-    []
+    $ echo '
+    >     ╒══════════╤═════════╤════════╕
+    >     │ foo      │ bar     │ baz    │
+    >     ╞══════════╪═════════╪════════╡
+    >     │ good day │         │ 12345  │
+    >     ├──────────┼─────────┼────────┤
+    >     │ hi there │ abc def │ 3.14   │
+    >     ╘══════════╧═════════╧════════╛' | jc --asciitable -p
+    [
+      {
+        "foo": "good day",
+        "bar": null,
+        "baz": "12345"
+      },
+      {
+        "foo": "hi there",
+        "bar": "abc def",
+        "baz": "3.14"
+      }
+    ]
 
-    $ asciitable | jc --asciitable -p -r
-    []
+
+    $ echo '
+    >     foo        bar       baz
+    >     ---------  --------  ------
+    >     good day             12345
+    >     hi there   abc def'            | jc --asciitable -p
+    [
+      {
+        "foo": "good day",
+        "bar": null,
+        "baz": "12345"
+      },
+      {
+        "foo": "hi there",
+        "bar": "abc def",
+        "baz": null
+      }
+    ]
 
 <a id="jc.parsers.asciitable.parse"></a>
 
