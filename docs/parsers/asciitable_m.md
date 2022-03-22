@@ -41,8 +41,8 @@ Schema:
 
     [
       {
-        "column_name1":     string,
-        "column_name2":     string
+        "column_name1":     string,    # empty string is null
+        "column_name2":     string     # empty string is null
       }
     ]
 

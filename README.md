@@ -147,6 +147,7 @@ option.
 - `--airport` enables the `airport -I` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport))
 - `--airport-s` enables the `airport -s` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s))
 - `--arp` enables the `arp` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/arp))
+- `--asciitable` enables the ASCII and Unicode table parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable))
 - `--asciitable-m` enables the multi-line ASCII and Unicode table parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m))
 - `--blkid` enables the `blkid` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid))
 - `--cksum` enables the `cksum` and `sum` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum))

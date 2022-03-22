@@ -36,8 +36,8 @@ Schema:
 
     [
       {
-        "column_name1":     string,
-        "column_name2":     string
+        "column_name1":     string,    # empty string is null
+        "column_name2":     string     # empty string is null
       }
     ]
 
@@ -92,7 +92,7 @@ Examples:
     ]
 """
 import re
-from typing import Iterable, Tuple, List, Dict
+from typing import Iterable, Tuple, List, Dict, Optional
 import jc.utils
 from jc.exceptions import ParseError
 
@@ -350,11 +350,21 @@ def _collapse_data(table: List[List[List[str]]]) -> List[List[str]]:
     return result
 
 
-def _create_table_dict(header: List[str], data: List[List[str]]) -> List[Dict[str, str]]:
-    return [dict(zip(header, r)) for r in data]
+def _create_table_dict(header: List[str], data: List[List[str]]) -> List[Dict[str, Optional[str]]]:
+    """
+    zip the headers and data to create a list of dictionaries. Also convert
+    empty strings to None.
+    """
+    table_list_dict: List[Dict[str, Optional[str]]] = [dict(zip(header, r)) for r in data]
+    for row in table_list_dict:
+        for k, v in row.items():
+            if v == '':
+                row[k] = None
+
+    return table_list_dict
 
 
-def _parse_pretty(string: str) -> List[Dict[str, str]]:
+def _parse_pretty(string: str) -> List[Dict[str, Optional[str]]]:
     string_lines: List[str] = string.splitlines()
     clean: List[Tuple[int, List[str]]] = _normalize_rows(string_lines)
     raw_headers: List[List[str]] = _get_headers(clean)
@@ -362,7 +372,7 @@ def _parse_pretty(string: str) -> List[Dict[str, str]]:
 
     new_headers: List[str] = _collapse_headers(raw_headers)
     new_data: List[List[str]] = _collapse_data(raw_data)
-    final_table: List[Dict[str, str]] = _create_table_dict(new_headers, new_data)
+    final_table: List[Dict[str, Optional[str]]] = _create_table_dict(new_headers, new_data)
 
     return final_table
 
