@@ -244,7 +244,6 @@ def parse(
 
     if jc.utils.has_data(data):
         data = _remove_ansi(data)
-        print(data)
         data = _strip(data)
         data_list = _normalize_rows(data)
         raw_output = _parse_pretty(data_list)
