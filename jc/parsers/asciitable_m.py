@@ -162,6 +162,7 @@ def _table_sniff(string: str) -> str:
         if any((
             line.startswith('╞═') and line.endswith('═╡'),
             line.startswith('├─') and line.endswith('─┤'),
+            line.startswith('┡━') and line.endswith('━┩'),
             line.startswith('+=') and line.endswith('=+'),
             line.startswith('+-') and line.endswith('-+')
         )):
@@ -183,6 +184,8 @@ def _is_separator(line: str) -> bool:
         strip_line.startswith('╒═') and strip_line.endswith('═╕'),
         strip_line.startswith('╞═') and strip_line.endswith('═╡'),
         strip_line.startswith('╘═') and strip_line.endswith('═╛'),
+        strip_line.startswith('┏━') and strip_line.endswith('━┓'),
+        strip_line.startswith('┡━') and strip_line.endswith('━┩'),
         strip_line.startswith('┌─') and strip_line.endswith('─┐'),
         strip_line.startswith('├─') and strip_line.endswith('─┤'),
         strip_line.startswith('└─') and strip_line.endswith('─┘'),
