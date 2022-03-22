@@ -270,6 +270,37 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
+    def test_asciitable_pretty_ansi(self):
+        """
+        Test 'asciitable' with a pretty table with ANSI codes
+        """
+        input = '''┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓                                   \n                                   ┃\x1b[1m \x1b[0m\x1b[1mReleased    \x1b[0m\x1b[1m \x1b[0m┃\x1b[1m \x1b[0m\x1b[1mTitle                            \x1b[0m\x1b[1m \x1b[0m┃\x1b[1m \x1b[0m\x1b[1m    Box Office\x1b[0m\x1b[1m \x1b[0m┃                                   \n                                   ┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩                                   \n                                   │\x1b[36m \x1b[0m\x1b[36mDec 20, 2019\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mStar Wars: The Rise of Skywalker \x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m  $952,110,690\x1b[0m\x1b[32m \x1b[0m│                                   \n                                   │\x1b[36m \x1b[0m\x1b[36mMay 25, 2018\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mSolo: A Star Wars Story          \x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m  $393,151,347\x1b[0m\x1b[32m \x1b[0m│                                   \n                                   │\x1b[36m \x1b[0m\x1b[36mDec 15, 2017\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mStar Wars Ep. V111: The Last Jedi\x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m$1,332,539,889\x1b[0m\x1b[32m \x1b[0m│                                   \n                                   │\x1b[36m \x1b[0m\x1b[36mDec 16, 2016\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mRogue One: A Star Wars Story     \x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m$1,332,439,889\x1b[0m\x1b[32m \x1b[0m│                                   \n                                   └──────────────┴───────────────────────────────────┴────────────────┘                                   \n'''
+
+        expected = [
+            {
+                "released": "Dec 20, 2019",
+                "title": "Star Wars: The Rise of Skywalker",
+                "box_office": "$952,110,690"
+            },
+            {
+                "released": "May 25, 2018",
+                "title": "Solo: A Star Wars Story",
+                "box_office": "$393,151,347"
+            },
+            {
+                "released": "Dec 15, 2017",
+                "title": "Star Wars Ep. V111: The Last Jedi",
+                "box_office": "$1,332,539,889"
+            },
+            {
+                "released": "Dec 16, 2016",
+                "title": "Rogue One: A Star Wars Story",
+                "box_office": "$1,332,439,889"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

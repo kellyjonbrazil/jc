@@ -204,7 +204,7 @@ def _snake_case(line: str) -> str:
 def _fixup_separators(line: str) -> str:
     """Normalize separators, and remove first and last separators"""
     # normalize separator
-    line = line.replace('│', '|')
+    line = line.replace('│', '|').replace('┃', '|')
 
     # remove first separator if it is the first char in the line
     if line[0] == '|':

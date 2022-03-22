@@ -218,6 +218,30 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
+    def test_asciitable_m_pretty_ansi(self):
+        """
+        Test 'asciitable-m' with a pretty table with ANSI codes
+        """
+        input = '''
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓                                   
+┃\x1b[1m \x1b[0m\x1b[1mReleased    \x1b[0m\x1b[1m \x1b[0m┃\x1b[1m \x1b[0m\x1b[1mTitle                            \x1b[0m\x1b[1m \x1b[0m┃\x1b[1m \x1b[0m\x1b[1m    Box Office\x1b[0m\x1b[1m \x1b[0m┃                                   
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩                                   
+│\x1b[36m \x1b[0m\x1b[36mDec 20, 2019\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mStar Wars: The Rise of Skywalker \x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m  $952,110,690\x1b[0m\x1b[32m \x1b[0m│                                   
+│\x1b[36m \x1b[0m\x1b[36mMay 25, 2018\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mSolo: A Star Wars Story          \x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m  $393,151,347\x1b[0m\x1b[32m \x1b[0m│                                   
+│\x1b[36m \x1b[0m\x1b[36mDec 15, 2017\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mStar Wars Ep. V111: The Last Jedi\x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m$1,332,539,889\x1b[0m\x1b[32m \x1b[0m│                                   
+│\x1b[36m \x1b[0m\x1b[36mDec 16, 2016\x1b[0m\x1b[36m \x1b[0m│\x1b[35m \x1b[0m\x1b[35mRogue One: A Star Wars Story     \x1b[0m\x1b[35m \x1b[0m│\x1b[32m \x1b[0m\x1b[32m$1,332,439,889\x1b[0m\x1b[32m \x1b[0m│                                   
+└──────────────┴───────────────────────────────────┴────────────────┘                                   
+'''
+        expected = [
+            {
+                "released": "Dec 20, 2019\nMay 25, 2018\nDec 15, 2017\nDec 16, 2016",
+                "title": "Star Wars: The Rise of Skywalker\nSolo: A Star Wars Story\nStar Wars Ep. V111: The Last Jedi\nRogue One: A Star Wars Story",
+                "box_office": "$952,110,690\n$393,151,347\n$1,332,539,889\n$1,332,439,889"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
+
     def test_asciitable_m_markdown(self):
         """
         Test 'asciitable_m' with a markdown table. Should raise a ParseError
