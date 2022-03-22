@@ -44,21 +44,21 @@ class MyTests(unittest.TestCase):
                 "avai_labl_e": "3389\n588"
             },
             {
-                "type": "",
-                "tota_l": "",
-                "used": "",
-                "fr_ee": "",
+                "type": None,
+                "tota_l": None,
+                "used": None,
+                "fr_ee": None,
                 "shar_ed": "test 2",
-                "buff_cac_he": "",
-                "avai_labl_e": ""
+                "buff_cac_he": None,
+                "avai_labl_e": None
             },
             {
                 "type": "last",
                 "tota_l": "last",
                 "used": "last",
                 "fr_ee": "ab cde",
-                "shar_ed": "",
-                "buff_cac_he": "",
+                "shar_ed": None,
+                "buff_cac_he": None,
                 "avai_labl_e": "final"
             }
         ]
@@ -100,17 +100,17 @@ class MyTests(unittest.TestCase):
                 "tota_l": "2097\n148",
                 "used": "0",
                 "fr_ee": "2097\n148\nkb",
-                "shar_ed": "",
-                "buff_cac_he": "",
-                "avai_labl_e": ""
+                "shar_ed": None,
+                "buff_cac_he": None,
+                "avai_labl_e": None
             },
             {
                 "type": "last",
                 "tota_l": "last",
                 "used": "last",
                 "fr_ee": "ab cde",
-                "shar_ed": "",
-                "buff_cac_he": "",
+                "shar_ed": None,
+                "buff_cac_he": None,
                 "avai_labl_e": "final"
             }
         ]
@@ -152,21 +152,21 @@ class MyTests(unittest.TestCase):
                 "avai_labl_e": "3389\n588"
             },
             {
-                "type": "",
-                "tota_l": "",
-                "used": "",
-                "fr_ee": "",
+                "type": None,
+                "tota_l": None,
+                "used": None,
+                "fr_ee": None,
                 "shar_ed": "test 2",
-                "buff_cac_he": "",
-                "avai_labl_e": ""
+                "buff_cac_he": None,
+                "avai_labl_e": None
             },
             {
                 "type": "last",
                 "tota_l": "last",
                 "used": "last",
                 "fr_ee": "ab cde",
-                "shar_ed": "",
-                "buff_cac_he": "",
+                "shar_ed": None,
+                "buff_cac_he": None,
                 "avai_labl_e": "final"
             }
         ]
@@ -210,9 +210,9 @@ class MyTests(unittest.TestCase):
                 "tota_l": "2097\n148",
                 "used": "0",
                 "free": "2097\n148",
-                "shar_ed": "",
-                "buff_cac_he": "",
-                "avai_labl_e": ""
+                "shar_ed": None,
+                "buff_cac_he": None,
+                "avai_labl_e": None
             }
         ]
 
