@@ -252,7 +252,7 @@ def _fixup_separators(line: str) -> str:
 
 def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
     """
-    Return a List of tuples of a row counters and data lines.
+    Return a List of tuples of row-counters and data lines.
     """
     result = []
     header_found = False
@@ -293,7 +293,7 @@ def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
             row_counter += 1
             continue
 
-        # subsequent data row found
+        # data row found
         if not _is_separator(line) and header_found and data_found:
             line = _fixup_separators(line)
             line_list =  line.split('|')
