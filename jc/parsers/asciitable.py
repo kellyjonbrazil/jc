@@ -171,12 +171,34 @@ def _is_separator(line: str) -> bool:
         strip_line.startswith('╒═') and strip_line.endswith('═╕'),
         strip_line.startswith('╞═') and strip_line.endswith('═╡'),
         strip_line.startswith('╘═') and strip_line.endswith('═╛'),
+        strip_line.startswith('┏━') and strip_line.endswith('━┓'),
+        strip_line.startswith('┣━') and strip_line.endswith('━┫'),
+        strip_line.startswith('┗━') and strip_line.endswith('━┛'),
+        strip_line.startswith('┡━') and strip_line.endswith('━┩'),
+        strip_line.startswith('┢━') and strip_line.endswith('━┪'),
+        strip_line.startswith('┟─') and strip_line.endswith('─┧'),
+        strip_line.startswith('┞─') and strip_line.endswith('─┦'),
+        strip_line.startswith('┠─') and strip_line.endswith('─┨'),
+        strip_line.startswith('┝━') and strip_line.endswith('━┥'),
+        strip_line.startswith('┍━') and strip_line.endswith('━┑'),
+        strip_line.startswith('┕━') and strip_line.endswith('━┙'),
+        strip_line.startswith('┎─') and strip_line.endswith('─┒'),
+        strip_line.startswith('┖─') and strip_line.endswith('─┚'),
+        strip_line.startswith('╓─') and strip_line.endswith('─╖'),
+        strip_line.startswith('╟─') and strip_line.endswith('─╢'),
+        strip_line.startswith('╙─') and strip_line.endswith('─╜'),
+        strip_line.startswith('╔═') and strip_line.endswith('═╗'),
+        strip_line.startswith('╠═') and strip_line.endswith('═╣'),
+        strip_line.startswith('╚═') and strip_line.endswith('═╝'),
         strip_line.startswith('┌─') and strip_line.endswith('─┐'),
         strip_line.startswith('├─') and strip_line.endswith('─┤'),
         strip_line.startswith('└─') and strip_line.endswith('─┘'),
-        strip_line.startswith('┏━') and strip_line.endswith('━┓'),
-        strip_line.startswith('┡━') and strip_line.endswith('━┩'),
+        strip_line.startswith('━━') and strip_line.endswith('━━'),
         strip_line.startswith('──') and strip_line.endswith('──'),
+        strip_line.startswith('┄┄') and strip_line.endswith('┄┄'),
+        strip_line.startswith('┅┅') and strip_line.endswith('┅┅'),
+        strip_line.startswith('┈┈') and strip_line.endswith('┈┈'),
+        strip_line.startswith('┉┉') and strip_line.endswith('┉┉'),
         strip_line.startswith('══') and strip_line.endswith('══'),
         strip_line.startswith('+=') and strip_line.endswith('=+'),
         strip_line.startswith('+-') and strip_line.endswith('-+'),
@@ -208,15 +230,20 @@ def _normalize_rows(table: str) -> List[str]:
             continue
 
         # data row - remove column separators
-        line = line.replace('│', ' ').replace('|', ' ').replace('┃', ' ')
+        line = line.replace('|', ' ')\
+                   .replace('│', ' ')\
+                   .replace('┃', ' ')\
+                   .replace('┆', ' ')\
+                   .replace('┇', ' ')\
+                   .replace('┊', ' ')\
+                   .replace('┋', ' ')\
+                   .replace('╎', ' ')\
+                   .replace('╏', ' ')\
+                   .replace('║', ' ')
         result.append(line)
 
     result[0] = _snake_case(result[0])
     return result
-
-
-def _parse_pretty(table: List[str]) -> List[Dict[str, str]]:
-    return sparse_table_parse(table)
 
 
 def parse(
@@ -246,6 +273,6 @@ def parse(
         data = _remove_ansi(data)
         data = _strip(data)
         data_list = _normalize_rows(data)
-        raw_output = _parse_pretty(data_list)
+        raw_output = sparse_table_parse(data_list)
 
     return raw_output if raw else _process(raw_output)

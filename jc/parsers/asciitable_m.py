@@ -163,6 +163,14 @@ def _table_sniff(string: str) -> str:
             line.startswith('╞═') and line.endswith('═╡'),
             line.startswith('├─') and line.endswith('─┤'),
             line.startswith('┡━') and line.endswith('━┩'),
+            line.startswith('┣━') and line.endswith('━┫'),
+            line.startswith('┢━') and line.endswith('━┪'),
+            line.startswith('┟─') and line.endswith('─┧'),
+            line.startswith('┞─') and line.endswith('─┦'),
+            line.startswith('┠─') and line.endswith('─┨'),
+            line.startswith('┝━') and line.endswith('━┥'),
+            line.startswith('╟─') and line.endswith('─╢'),
+            line.startswith('╠═') and line.endswith('═╣'),
             line.startswith('+=') and line.endswith('=+'),
             line.startswith('+-') and line.endswith('-+')
         )):
@@ -185,7 +193,24 @@ def _is_separator(line: str) -> bool:
         strip_line.startswith('╞═') and strip_line.endswith('═╡'),
         strip_line.startswith('╘═') and strip_line.endswith('═╛'),
         strip_line.startswith('┏━') and strip_line.endswith('━┓'),
+        strip_line.startswith('┣━') and strip_line.endswith('━┫'),
+        strip_line.startswith('┗━') and strip_line.endswith('━┛'),
         strip_line.startswith('┡━') and strip_line.endswith('━┩'),
+        strip_line.startswith('┢━') and strip_line.endswith('━┪'),
+        strip_line.startswith('┟─') and strip_line.endswith('─┧'),
+        strip_line.startswith('┞─') and strip_line.endswith('─┦'),
+        strip_line.startswith('┠─') and strip_line.endswith('─┨'),
+        strip_line.startswith('┝━') and strip_line.endswith('━┥'),
+        strip_line.startswith('┍━') and strip_line.endswith('━┑'),
+        strip_line.startswith('┕━') and strip_line.endswith('━┙'),
+        strip_line.startswith('┎─') and strip_line.endswith('─┒'),
+        strip_line.startswith('┖─') and strip_line.endswith('─┚'),
+        strip_line.startswith('╓─') and strip_line.endswith('─╖'),
+        strip_line.startswith('╟─') and strip_line.endswith('─╢'),
+        strip_line.startswith('╙─') and strip_line.endswith('─╜'),
+        strip_line.startswith('╔═') and strip_line.endswith('═╗'),
+        strip_line.startswith('╠═') and strip_line.endswith('═╣'),
+        strip_line.startswith('╚═') and strip_line.endswith('═╝'),
         strip_line.startswith('┌─') and strip_line.endswith('─┐'),
         strip_line.startswith('├─') and strip_line.endswith('─┤'),
         strip_line.startswith('└─') and strip_line.endswith('─┘'),
@@ -204,7 +229,15 @@ def _snake_case(line: str) -> str:
 def _fixup_separators(line: str) -> str:
     """Normalize separators, and remove first and last separators"""
     # normalize separator
-    line = line.replace('│', '|').replace('┃', '|')
+    line = line.replace('│', '|')\
+               .replace('┃', '|')\
+               .replace('┆', '|')\
+               .replace('┇', '|')\
+               .replace('┊', '|')\
+               .replace('┋', '|')\
+               .replace('╎', '|')\
+               .replace('╏', '|')\
+               .replace('║', '|')
 
     # remove first separator if it is the first char in the line
     if line[0] == '|':
