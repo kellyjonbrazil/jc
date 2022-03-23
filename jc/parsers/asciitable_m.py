@@ -222,7 +222,12 @@ def _is_separator(line: str) -> bool:
 
 
 def _snake_case(line: str) -> str:
-    """replace spaces between words with an underscore and set to lowercase"""
+    """
+    replace spaces between words and special characters with an underscore
+    and set to lowercase
+    """
+    # must include all column separator characters in regex
+    line = re.sub(r'[^a-zA-Z0-9 |│┃┆┇┊┋╎╏║]', '_', line)
     return re.sub(r'\b \b', '_', line).lower()
 
 
@@ -360,6 +365,7 @@ def _collapse_headers(table: List[List[str]]) -> List[str]:
         for i, header in enumerate(line):
             if header:
                 new_header = result[i] + '_' + header
+                # remove consecutive underscores
                 new_header = re.sub(r'__+', '_', new_header)
                 new_line.append(new_header)
             else:

@@ -211,7 +211,11 @@ def _is_separator(line: str) -> bool:
 
 
 def _snake_case(line: str) -> str:
-    """replace spaces between words with an underscore and set to lowercase"""
+    """
+    replace spaces between words and special characters with an underscore
+    and set to lowercase
+    """
+    line = re.sub(r'[^a-zA-Z0-9 ]', '_', line)
     return re.sub(r'\b \b', '_', line).lower()
 
 
@@ -246,6 +250,22 @@ def _normalize_rows(table: str) -> List[str]:
     return result
 
 
+def _fixup_headers(table: List[Dict]) -> List[Dict]:
+    """remove consecutive underscores and any trailing underscores"""
+    new_table = []
+    for row in table:
+        new_row = row.copy()
+        for k, v in row.items():
+            k_new = k
+            # remove consecutive underscores
+            k_new = re.sub(r'__+', '_', k_new)
+            # remove trailing underscores
+            k_new = re.sub(r'_+$', '', k_new)
+            new_row[k_new] = new_row.pop(k)
+        new_table.append(new_row)
+
+    return new_table
+
 def parse(
     data: str,
     raw: bool = False,
@@ -273,6 +293,7 @@ def parse(
         data = _remove_ansi(data)
         data = _strip(data)
         data_list = _normalize_rows(data)
-        raw_output = sparse_table_parse(data_list)
+        raw_table = sparse_table_parse(data_list)
+        raw_output = _fixup_headers(raw_table)
 
     return raw_output if raw else _process(raw_output)

@@ -242,6 +242,34 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
+    def test_asciitable_m_special_chars_in_header(self):
+        """
+        Test 'asciitable_m' with a pure ASCII table that has special
+        characters in the header. These should be converted to underscores
+        and no trailing or consecutive underscores should end up in the
+        resulting key names.
+        """
+        input = '''
++----------+------------+-----------+----------------+-------+--------------------+
+| Protocol | Address    | Age (min) | Hardware Addr  | Type  | Interface          |
+|          |            | of int    |                |       |                    |
++----------+------------+-----------+----------------+-------+--------------------+
+| Internet | 10.12.13.1 |       98  | 0950.5785.5cd1 | ARPA  | FastEthernet2.13   |
++----------+------------+-----------+----------------+-------+--------------------+
+        '''
+        expected = [
+            {
+                "protocol": "Internet",
+                "address": "10.12.13.1",
+                "age_min_of_int": "98",
+                "hardware_addr": "0950.5785.5cd1",
+                "type": "ARPA",
+                "interface": "FastEthernet2.13"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
+
     def test_asciitable_m_markdown(self):
         """
         Test 'asciitable_m' with a markdown table. Should raise a ParseError

@@ -301,6 +301,49 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
+    def test_asciitable_special_chars_in_header(self):
+        """
+        Test 'asciitable' with a pure ASCII table that has special
+        characters in the header. These should be converted to underscores
+        and no trailing or consecutive underscores should end up in the
+        resulting key names.
+        """
+        input = '''
+Protocol  Address     Age (min)  Hardware Addr   Type   Interface
+Internet  10.12.13.1        98   0950.5785.5cd1  ARPA   FastEthernet2.13
+Internet  10.12.13.3       131   0150.7685.14d5  ARPA   GigabitEthernet2.13
+Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
+        '''
+
+        expected = [
+            {
+                "protocol": "Internet",
+                "address": "10.12.13.1",
+                "age_min": "98",
+                "hardware_addr": "0950.5785.5cd1",
+                "type": "ARPA",
+                "interface": "FastEthernet2.13"
+            },
+            {
+                "protocol": "Internet",
+                "address": "10.12.13.3",
+                "age_min": "131",
+                "hardware_addr": "0150.7685.14d5",
+                "type": "ARPA",
+                "interface": "GigabitEthernet2.13"
+            },
+            {
+                "protocol": "Internet",
+                "address": "10.12.13.4",
+                "age_min": "198",
+                "hardware_addr": "0950.5C8A.5c41",
+                "type": "ARPA",
+                "interface": "GigabitEthernet2.17"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
