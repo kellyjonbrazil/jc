@@ -176,6 +176,18 @@ def _is_separator(line: str) -> bool:
     # This function is cacheable since tables have identical separators
     strip_line = line.strip()
     if any((
+        strip_line.startswith('|-') and strip_line.endswith('-|'),
+        strip_line.startswith('━━') and strip_line.endswith('━━'),
+        strip_line.startswith('──') and strip_line.endswith('──'),
+        strip_line.startswith('┄┄') and strip_line.endswith('┄┄'),
+        strip_line.startswith('┅┅') and strip_line.endswith('┅┅'),
+        strip_line.startswith('┈┈') and strip_line.endswith('┈┈'),
+        strip_line.startswith('┉┉') and strip_line.endswith('┉┉'),
+        strip_line.startswith('══') and strip_line.endswith('══'),
+        strip_line.startswith('--') and strip_line.endswith('--'),
+        strip_line.startswith('==') and strip_line.endswith('=='),
+        strip_line.startswith('+=') and strip_line.endswith('=+'),
+        strip_line.startswith('+-') and strip_line.endswith('-+'),
         strip_line.startswith('╒') and strip_line.endswith('╕'),
         strip_line.startswith('╞') and strip_line.endswith('╡'),
         strip_line.startswith('╘') and strip_line.endswith('╛'),
@@ -202,19 +214,7 @@ def _is_separator(line: str) -> bool:
         strip_line.startswith('├') and strip_line.endswith('┤'),
         strip_line.startswith('└') and strip_line.endswith('┘'),
         strip_line.startswith('╭') and strip_line.endswith('╮'),
-        strip_line.startswith('╰') and strip_line.endswith('╯'),
-        strip_line.startswith('━━') and strip_line.endswith('━━'),
-        strip_line.startswith('──') and strip_line.endswith('──'),
-        strip_line.startswith('┄┄') and strip_line.endswith('┄┄'),
-        strip_line.startswith('┅┅') and strip_line.endswith('┅┅'),
-        strip_line.startswith('┈┈') and strip_line.endswith('┈┈'),
-        strip_line.startswith('┉┉') and strip_line.endswith('┉┉'),
-        strip_line.startswith('══') and strip_line.endswith('══'),
-        strip_line.startswith('+=') and strip_line.endswith('=+'),
-        strip_line.startswith('+-') and strip_line.endswith('-+'),
-        strip_line.startswith('--') and strip_line.endswith('--'),
-        strip_line.startswith('==') and strip_line.endswith('=='),
-        strip_line.startswith('|-') and strip_line.endswith('-|')
+        strip_line.startswith('╰') and strip_line.endswith('╯')
     )):
         return True
     return False
