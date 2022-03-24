@@ -2,7 +2,7 @@
 from typing import Iterable, List, Dict
 
 
-def simple_table_parse(data: List[str]) -> List[Dict]:
+def simple_table_parse(data: Iterable[str]) -> List[Dict]:
     """
     Parse simple tables. There should be no blank cells. The last column
     may contain data with spaces.
@@ -22,7 +22,7 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
 
     Parameters:
 
-        data:   (list)   Text data to parse that has been split into lines
+        data:   (iter)   Text data to parse that has been split into lines
                          via .splitlines(). Item 0 must be the header row.
                          Any spaces in header names should be changed to
                          underscore '_'. You should also ensure headers are
@@ -37,6 +37,10 @@ def simple_table_parse(data: List[str]) -> List[Dict]:
     """
     # code adapted from Conor Heine at:
     # https://gist.github.com/cahna/43a1a3ff4d075bcd71f9d7120037a501
+
+    # cast iterable to a list. Also keeps from mutating the caller's list
+    data = list(data)
+
     headers = [h for h in ' '.join(data[0].strip().split()).split() if h]
     raw_data = map(lambda s: s.strip().split(None, len(headers) - 1), data[1:])
     raw_output = [dict(zip(headers, r)) for r in raw_data]
