@@ -15,7 +15,7 @@ jc - JSON Convert universal parsers
 ### simple\_table\_parse
 
 ```python
-def simple_table_parse(data: List[str]) -> List[Dict]
+def simple_table_parse(data: Iterable[str]) -> List[Dict]
 ```
 
 Parse simple tables. There should be no blank cells. The last column
@@ -36,7 +36,7 @@ Example Table:
 
 Parameters:
 
-    data:   (list)   Text data to parse that has been split into lines
+    data:   (iter)   Text data to parse that has been split into lines
                      via .splitlines(). Item 0 must be the header row.
                      Any spaces in header names should be changed to
                      underscore '_'. You should also ensure headers are

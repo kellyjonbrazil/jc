@@ -43,6 +43,12 @@ For example:
     good day             12345
     hi there   abc def   3.14
 
+    or
+
+    foo        bar       baz
+    good day             12345
+    hi there   abc def   3.14
+
     etc...
 
     Headers (keys) are converted to snake-case. All values are returned as
