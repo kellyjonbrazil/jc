@@ -272,11 +272,11 @@ def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
             continue
 
         # skip top table frame
-        if _is_separator(line) and not header_found and not data_found:
+        if not header_found and not data_found and _is_separator(line):
             continue
 
         # first header row found
-        if not _is_separator(line) and not header_found and not data_found:
+        if not header_found and not data_found and not _is_separator(line):
             header_found = True
             line = _snake_case(line)
             line = _fixup_separators(line)
@@ -286,7 +286,7 @@ def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
             continue
 
         # subsequent header row found
-        if not _is_separator(line) and header_found and not data_found:
+        if header_found and not data_found and not _is_separator(line):
             line = _snake_case(line)
             line = _fixup_separators(line)
             line_list =  line.split('|')
@@ -295,13 +295,13 @@ def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
             continue
 
         # table separator found - this is a header separator
-        if _is_separator(line) and header_found and not data_found:
+        if header_found and not data_found and _is_separator(line):
             data_found = True
             row_counter += 1
             continue
 
         # data row found
-        if not _is_separator(line) and header_found and data_found:
+        if header_found and data_found and not _is_separator(line):
             line = _fixup_separators(line)
             line_list =  line.split('|')
             line_list = [x.strip() for x in line_list]
@@ -309,7 +309,7 @@ def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
             continue
 
         # table separator found - this is a data separator
-        if _is_separator(line) and header_found and data_found:
+        if header_found and data_found and _is_separator(line):
             row_counter += 1
             continue
 
