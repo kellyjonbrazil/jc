@@ -93,6 +93,7 @@ Examples:
     ]
 """
 import re
+from functools import lru_cache
 from typing import Iterable, Tuple, List, Dict, Optional
 import jc.utils
 from jc.exceptions import ParseError
@@ -184,9 +185,10 @@ def _table_sniff(string: str) -> str:
     # simple tables
     return 'simple'
 
-
+@lru_cache(maxsize=32)
 def _is_separator(line: str) -> bool:
     """returns true if a table separator line is found"""
+    # This function is cacheable since tables have identical separators
     strip_line = line.strip()
     if any((
         strip_line.startswith('╒') and strip_line.endswith('╕'),

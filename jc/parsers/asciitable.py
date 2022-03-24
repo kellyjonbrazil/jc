@@ -38,6 +38,12 @@ For example:
     good day             12345
     hi there   abc def   3.14
 
+    or
+
+    foo        bar       baz
+    good day             12345
+    hi there   abc def   3.14
+
     etc...
 
     Headers (keys) are converted to snake-case. All values are returned as
@@ -103,6 +109,7 @@ Examples:
     ]
 """
 import re
+from functools import lru_cache
 from typing import List, Dict
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
@@ -163,9 +170,10 @@ def _strip(string: str) -> str:
     string = _rstrip(string)
     return string
 
-
+@lru_cache(maxsize=32)
 def _is_separator(line: str) -> bool:
     """returns true if a table separator line is found"""
+    # This function is cacheable since tables have identical separators
     strip_line = line.strip()
     if any((
         strip_line.startswith('╒') and strip_line.endswith('╕'),
