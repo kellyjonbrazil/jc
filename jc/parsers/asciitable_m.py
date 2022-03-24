@@ -155,7 +155,7 @@ def _strip(string: str) -> str:
 
 
 def _table_sniff(string: str) -> str:
-    """Find the table-type via heuristics"""
+    """find the table-type via heuristics"""
     # pretty tables
     for line in string.splitlines():
         line = line.strip()
@@ -186,7 +186,7 @@ def _table_sniff(string: str) -> str:
 
 
 def _is_separator(line: str) -> bool:
-    """Returns true if a table separator line is found"""
+    """returns true if a table separator line is found"""
     strip_line = line.strip()
     if any((
         strip_line.startswith('╒') and strip_line.endswith('╕'),
@@ -234,7 +234,7 @@ def _snake_case(line: str) -> str:
 
 
 def _fixup_separators(line: str) -> str:
-    """Normalize separators, and remove first and last separators"""
+    """normalize separators, and remove first and last separators"""
     # normalize separator
     line = line.replace('│', '|')\
                .replace('┃', '|')\
@@ -258,9 +258,7 @@ def _fixup_separators(line: str) -> str:
 
 
 def _normalize_rows(table_lines: Iterable[str]) -> List[Tuple[int, List[str]]]:
-    """
-    Return a List of tuples of row-counters and data lines.
-    """
+    """return a List of tuples of row-counters and data lines."""
     result = []
     header_found = False
     data_found = False

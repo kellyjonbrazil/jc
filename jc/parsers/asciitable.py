@@ -165,7 +165,7 @@ def _strip(string: str) -> str:
 
 
 def _is_separator(line: str) -> bool:
-    """Returns true if a table separator line is found"""
+    """returns true if a table separator line is found"""
     strip_line = line.strip()
     if any((
         strip_line.startswith('╒') and strip_line.endswith('╕'),
@@ -223,7 +223,7 @@ def _snake_case(line: str) -> str:
 
 def _normalize_rows(table: str) -> List[str]:
     """
-    Return a List row strings. Header is snake-cased
+    returns a List of row strings. Header is snake-cased
     """
     result = []
     for line in table.splitlines():
@@ -257,7 +257,7 @@ def _fixup_headers(table: List[Dict]) -> List[Dict]:
     new_table = []
     for row in table:
         new_row = row.copy()
-        for k, v in row.items():
+        for k in row:
             k_new = k
             # remove consecutive underscores
             k_new = re.sub(r'__+', '_', k_new)
@@ -267,6 +267,7 @@ def _fixup_headers(table: List[Dict]) -> List[Dict]:
         new_table.append(new_row)
 
     return new_table
+
 
 def parse(
     data: str,
