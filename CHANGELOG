@@ -1,6 +1,6 @@
 jc changelog
 
-20220323 v1.18.6
+20220325 v1.18.6
 - Add pidstat command parser tested on linux
 - Add pidstat command streaming parser tested on linux
 - Add mpstat command parser tested on linux
