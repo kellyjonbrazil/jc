@@ -24,11 +24,6 @@ Usage (module):
     import jc
     result = jc.parse('time', time_command_output)
 
-    or
-
-    import jc.parsers.time
-    result = jc.parsers.time.parse(time_command_output)
-
 Schema:
 
     Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage

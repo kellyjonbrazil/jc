@@ -9,11 +9,6 @@ Usage (module):
     import jc
     result = jc.parse('group', group_file_output)
 
-    or
-
-    import jc.parsers.group
-    result = jc.parsers.group.parse(group_file_output)
-
 Schema:
 
     [

@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('xrandr', xrandr_command_output)
 
-    or
-
-    import jc.parsers.xrandr
-    result = jc.parsers.xrandr.parse(xrandr_command_output)
-
 Schema:
 
     {

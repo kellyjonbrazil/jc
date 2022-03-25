@@ -21,11 +21,6 @@ Usage (module):
     import jc
     result = jc.parse('iw_scan', iw_scan_command_output)
 
-    or
-
-    import jc.parsers.iw_scan
-    result = jc.parsers.iw_scan.parse(iw_scan_command_output)
-
 Schema:
 
     [

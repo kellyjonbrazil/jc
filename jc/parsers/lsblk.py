@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('lsblk', lsblk_command_output)
 
-    or
-
-    import jc.parsers.lsblk
-    result = jc.parsers.lsblk.parse(lsblk_command_output)
-
 Schema:
 
     [

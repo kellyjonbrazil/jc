@@ -4,14 +4,13 @@ JC cli module
 
 import sys
 import os
-import importlib
 import textwrap
 import signal
 import shlex
 import subprocess
 import json
-from .lib import (__version__, all_parser_info, parsers,
-                  _parser_argument, _get_parser, _parser_is_streaming)
+from .lib import (__version__, parser_info, all_parser_info, parsers,
+                  _get_parser, _parser_is_streaming)
 from . import utils
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -155,17 +154,14 @@ def parser_shortname(parser_arg):
 def parsers_text(indent=0, pad=0):
     """Return the argument and description information from each parser"""
     ptext = ''
-    for parser in parsers:
-        parser_arg = _parser_argument(parser)
-        parser_mod = _get_parser(parser)
-
-        if hasattr(parser_mod, 'info'):
-            parser_desc = parser_mod.info.description
-            padding = pad - len(parser_arg)
-            padding_char = ' '
-            indent_text = padding_char * indent
-            padding_text = padding_char * padding
-            ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
+    padding_char = ' '
+    for p in all_parser_info():
+        parser_arg = p.get('argument', 'UNKNOWN')
+        padding = pad - len(parser_arg)
+        parser_desc = p.get('description', 'No description available.')
+        indent_text = padding_char * indent
+        padding_text = padding_char * padding
+        ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
 
     return ptext
 
@@ -235,12 +231,16 @@ def help_doc(options):
         parser_name = parser_shortname(arg)
 
         if parser_name in parsers:
-            parser = _get_parser(arg)
-            compatible = ', '.join(parser.info.compatible)
+            p_info = parser_info(arg, documentation=True)
+            compatible = ', '.join(p_info.get('compatible', ['unknown']))
+            documentation = p_info.get('documentation', 'No documentation available.')
+            version = p_info.get('version', 'unknown')
+            author = p_info.get('author', 'unknown')
+            author_email = p_info.get('author_email', 'unknown')
             doc_text = \
-                f'{parser.__doc__}\n'\
+                f'{documentation}\n'\
                 f'Compatibility:  {compatible}\n\n'\
-                f'Version {parser.info.version} by {parser.info.author} ({parser.info.author_email})\n'
+                f'Version {version} by {author} ({author_email})\n'
 
             return doc_text
 
@@ -318,12 +318,9 @@ def magic_parser(args):
     if len(args_given) == 0:
         return False, None, None, []
 
-    magic_dict = {}
-    parser_info = about_jc()['parsers']
-
     # create a dictionary of magic_commands to their respective parsers.
-    for entry in parser_info:
-        # Update the dict with all of the magic commands for this parser, if they exist.
+    magic_dict = {}
+    for entry in all_parser_info():
         magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
 
     # find the command and parser
@@ -452,7 +449,7 @@ def main():
 
             error_msg = os.strerror(e.errno)
             utils.error_message([
-                f'"{run_command_str}" command could not be run: {error_msg}. For details use the -d or -dd option.'
+                f'"{run_command_str}" command could not be run: {error_msg}.'
             ])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
@@ -556,7 +553,7 @@ def main():
             raise
 
         streaming_msg = ''
-        if getattr(parser.info, 'streaming', None):
+        if _parser_is_streaming(parser):
             streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
         utils.error_message([

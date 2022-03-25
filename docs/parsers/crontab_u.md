@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('crontab_u', crontab_u_output)
 
-    or
-
-    import jc.parsers.crontab_u
-    result = jc.parsers.crontab_u.parse(crontab_u_output)
-
 Schema:
 
     {

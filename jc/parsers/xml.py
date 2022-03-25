@@ -9,11 +9,6 @@ Usage (module):
     import jc
     result = jc.parse('xml', xml_file_output)
 
-    or
-
-    import jc.parsers.xml
-    result = jc.parsers.xml.parse(xml_file_output)
-
 Schema:
 
     XML Document converted to a Dictionary

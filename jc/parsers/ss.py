@@ -16,11 +16,6 @@ Usage (module):
     import jc
     result = jc.parse('ss', ss_command_output)
 
-    or
-
-    import jc.parsers.ss
-    result = jc.parsers.ss.parse(ss_command_output)
-
 Schema:
 
     Information from https://www.cyberciti.biz/files/ss.html used to define

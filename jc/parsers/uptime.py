@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('uptime', uptime_command_output)
 
-    or
-
-    import jc.parsers.uptime
-    result = jc.parsers.uptime.parse(uptime_command_output)
-
 Schema:
 
     {

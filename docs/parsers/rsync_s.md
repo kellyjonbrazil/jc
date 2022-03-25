@@ -5,7 +5,8 @@
 
 jc - JSON Convert `rsync` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the STDOUT output or a log file
@@ -22,16 +23,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('rsync_s', rsync_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.rsync_s
-    # result is an iterable object (generator)
-    result = jc.parsers.rsync_s.parse(rsync_command_output.splitlines())
     for item in result:
         # do something
 
@@ -68,14 +61,12 @@ Schema:
       "extended_attribute_different":   bool/null,
       "epoch":                          integer,      [2]
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] 'file sent', 'file received', 'local change or creation',
@@ -99,10 +90,12 @@ Examples:
 
 ```python
 @add_jc_meta
-def parse(data: Iterable[str],
-          raw: bool = False,
-          quiet: bool = False,
-          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+def parse(
+    data: Iterable[str],
+    raw: bool = False,
+    quiet: bool = False,
+    ignore_exceptions: bool = False
+) -> Union[Generator[Dict, None, None], tuple]
 ```
 
 Main text parsing generator function. Returns an iterator object.

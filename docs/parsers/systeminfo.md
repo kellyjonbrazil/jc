@@ -24,11 +24,6 @@ Usage (module):
     import jc
     result = jc.parse('systeminfo', systeminfo_command_output)
 
-    or
-
-    import jc.parsers.systeminfo
-    result = jc.parsers.systeminfo.parse(systeminfo_command_output)
-
 Schema:
 
     {

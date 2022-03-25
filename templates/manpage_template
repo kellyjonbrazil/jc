@@ -123,7 +123,6 @@ You may want to ignore parsing errors when using streaming parsers since these m
 .RS
 Successfully parsed line with \fB-qq\fP option:
 .RS
-.na
 .nf
 {
   "command_data": "data",
@@ -131,11 +130,11 @@ Successfully parsed line with \fB-qq\fP option:
     "success": true
   }
 }
+.fi
 .RE
 
 Unsuccessfully parsed line with \fB-qq\fP option:
 .RS
-.na
 .nf
 {
   "_jc_meta": {
@@ -153,9 +152,8 @@ Unsuccessfully parsed line with \fB-qq\fP option:
 Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. \fBping\fP):
 
 .RS
-.na
 .nf
-$ ping 1.1.1.1 | jc --ping-s | jq
+$ ping 1.1.1.1 | jc \fB--ping-s\fP | jq
 <slow output>
 .fi
 .RE
@@ -163,9 +161,8 @@ $ ping 1.1.1.1 | jc --ping-s | jq
 This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in this example. To display the data on the terminal in realtime, you can disable the buffer with the \fB-u\fP (unbuffer) cli option:
 
 .RS
-.na
 .nf
-$ ping 1.1.1.1 | jc --ping-s -u | jq
+$ ping 1.1.1.1 | jc \fB--ping-s\fP \fB-u\fP | jq
 {"type":"reply","pattern":null,"timestamp":null,"bytes":"64",...}
 {"type":"reply","pattern":null,"timestamp":null,"bytes":"64",...}
 etc...
@@ -178,11 +175,11 @@ Note: Unbuffered output can be slower for large data streams.
 Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
 
 .RS
+.nf
 - Linux/unix: \fB$HOME/.local/share/jc/jcparsers\fP
-
 - macOS: \fB$HOME/Library/Application Support/jc/jcparsers\fP
-
 - Windows: \fB$LOCALAPPDATA\\jc\\jc\\jcparsers\fP
+.fi
 .RE
 
 Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
@@ -194,11 +191,15 @@ Note: The application data directory follows the XDG Base Directory Specificatio
 .SH CAVEATS
 \fBLocale:\fP For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
 
-\fB$ LANG=C date | jc --date\fP
+.RS
+$ LANG=C date | jc \fB--date\fP
+.RE
 
 or by exporting to the environment before running commands:
 
-\fB$ export LANG=C\fP
+.RS
+$ export LANG=C
+.RE
 
 \fBTimezones:\fP Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
 

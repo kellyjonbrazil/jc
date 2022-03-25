@@ -18,11 +18,6 @@ Usage (module):
     import jc
     result = jc.parse('route', route_command_output)
 
-    or
-
-    import jc.parsers.route
-    result = jc.parsers.route.parse(route_command_output)
-
 Schema:
 
     [

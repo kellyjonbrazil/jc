@@ -1,7 +1,4 @@
-"""jc - JSON Convert
-JC lib module
-"""
-
+"""jc - JSON Convert lib module"""
 import sys
 import os
 import re
@@ -9,13 +6,15 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.18.5'
+__version__ = '1.18.6'
 
 parsers = [
     'acpi',
     'airport',
     'airport-s',
     'arp',
+    'asciitable',
+    'asciitable-m',
     'blkid',
     'cksum',
     'crontab',
@@ -59,10 +58,14 @@ parsers = [
     'lsof',
     'lsusb',
     'mount',
+    'mpstat',
+    'mpstat-s',
     'netstat',
     'nmcli',
     'ntpq',
     'passwd',
+    'pidstat',
+    'pidstat-s',
     'ping',
     'ping-s',
     'pip-list',
@@ -262,16 +265,21 @@ def streaming_parser_mod_list() -> List[str]:
             plist.append(_cliname_to_modname(p))
     return plist
 
-def parser_info(parser_mod_name: str) -> Dict:
+def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
     """
-    Returns a dictionary that includes the module metadata.
+    Returns a dictionary that includes the parser module metadata.
 
-    This function will accept **module_name**, **cli-name**, and
-    **--argument-name** variants of the module name string.
+    Parameters:
+
+        parser_mod_name:    (string)     name of the parser module. This
+                                         function will accept module_name,
+                                         cli-name, and --argument-name
+                                         variants of the module name.
+
+        documentation:      (boolean)    include parser docstring if True
     """
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
-
     parser_mod = _get_parser(parser_mod_name)
     info_dict: Dict = {}
 
@@ -287,13 +295,24 @@ def parser_info(parser_mod_name: str) -> Dict:
         if _modname_to_cliname(parser_mod_name) in local_parsers:
             info_dict['plugin'] = True
 
+        if documentation:
+            docs = parser_mod.__doc__
+            if not docs:
+                docs = 'No documentation available.\n'
+            info_dict['documentation'] = docs
+
     return info_dict
 
-def all_parser_info() -> List[Dict]:
+def all_parser_info(documentation: bool = False) -> List[Dict]:
     """
-    Returns a list of dictionaries that includes metadata for all modules.
+    Returns a list of dictionaries that includes metadata for all parser
+    modules.
+
+    Parameters:
+
+        documentation:      (boolean)    include parser docstrings if True
     """
-    return [parser_info(p) for p in parsers]
+    return [parser_info(p, documentation=documentation) for p in parsers]
 
 def get_help(parser_mod_name: str) -> None:
     """

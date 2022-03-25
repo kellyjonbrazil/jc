@@ -26,11 +26,6 @@ Usage (module):
     import jc
     result = jc.parse('dir', dir_command_output)
 
-    or
-
-    import jc.parsers.dir
-    result = jc.parsers.dir.parse(dir_command_output)
-
 Schema:
 
     [

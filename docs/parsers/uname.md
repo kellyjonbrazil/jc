@@ -20,11 +20,6 @@ Usage (module):
     import jc
     result = jc.parse('uname', uname_command_output)
 
-    or
-
-    import jc.parsers.uname
-    result = jc.parsers.uname.parse(uname_command_output)
-
 Schema:
 
     {

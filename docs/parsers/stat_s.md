@@ -5,7 +5,8 @@
 
 jc - JSON Convert `stat` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
 local time of the system the parser is run on).
@@ -20,16 +21,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('stat_s', stat_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.stat_s
-    # result is an iterable object (generator)
-    result = jc.parsers.stat_s.parse(stat_command_output.splitlines())
     for item in result:
         # do something
 
@@ -68,14 +61,12 @@ Schema:
       "block_size":               integer,
       "unix_flags":               string,
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":              boolean,   # false if error parsing
-          "error":                string,    # exists if "success" is false
-          "line":                 string     # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":                boolean,   # false if error parsing
+        "error":                  string,    # exists if "success" is false
+        "line":                   string     # exists if "success" is false
+      }
     }
 
 Examples:

@@ -21,11 +21,6 @@ Usage (module):
     import jc
     result = jc.parse('vmstat', vmstat_command_output)
 
-    or
-
-    import jc.parsers.vmstat
-    result = jc.parsers.vmstat.parse(vmstat_command_output)
-
 Schema:
 
     [

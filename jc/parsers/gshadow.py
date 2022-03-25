@@ -9,11 +9,6 @@ Usage (module):
     import jc
     result = jc.parse('gshadow', gshadow_file_output)
 
-    or
-
-    import jc.parsers.gshadow
-    result = jc.parsers.gshadow.parse(gshadow_file_output)
-
 Schema:
 
     [

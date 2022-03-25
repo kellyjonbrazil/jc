@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('pip_list', pip_list_command_output)
 
-    or
-
-    import jc.parsers.pip_list
-    result = jc.parsers.pip_list.parse(pip_list_command_output)
-
 Schema:
 
     [

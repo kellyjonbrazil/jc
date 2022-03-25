@@ -3,10 +3,10 @@
 
 # jc.parsers.ls\_s
 
-jc - JSON Convert `ls` and `vdir` command output streaming
-parser
+jc - JSON Convert `ls` and `vdir` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 Requires the `-l` option to be used on `ls`. If there are newline characters
 in the filename, then make sure to use the `-b` option on `ls`.
@@ -27,16 +27,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('ls_s', ls_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.ls_s
-    # result is an iterable object (generator)
-    result = jc.parsers.ls_s.parse(ls_command_output.splitlines())
     for item in result:
         # do something
 
@@ -54,14 +46,12 @@ Schema:
       "epoch":          integer,     # [0]
       "epoch_utc":      integer,     # [1]
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] naive timestamp if date field exists and can be converted.

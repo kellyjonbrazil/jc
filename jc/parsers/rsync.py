@@ -21,11 +21,6 @@ Usage (module):
     import jc
     result = jc.parse('rsync', rsync_command_output)
 
-    or
-
-    import jc.parsers.rsync
-    result = jc.parsers.rsync.parse(rsync_command_output)
-
 Schema:
 
     [

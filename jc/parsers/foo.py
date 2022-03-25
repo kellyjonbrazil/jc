@@ -15,11 +15,6 @@ Usage (module):
     import jc
     result = jc.parse('foo', foo_command_output)
 
-    or
-
-    import jc.parsers.foo
-    result = jc.parsers.foo.parse(foo_command_output)
-
 Schema:
 
     [

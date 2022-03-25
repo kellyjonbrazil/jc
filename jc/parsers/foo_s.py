@@ -1,6 +1,7 @@
 """jc - JSON Convert `foo` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 <<Short foo description and caveats>>
 
@@ -11,16 +12,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('foo_s', foo_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.foo_s
-    # result is an iterable object (generator)
-    result = jc.parsers.foo_s.parse(foo_command_output.splitlines())
     for item in result:
         # do something
 
@@ -29,14 +22,12 @@ Schema:
     {
       "foo":            string,
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":    boolean,     # false if error parsing
-          "error":      string,      # exists if "success" is false
-          "line":       string       # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
 Examples:
@@ -49,7 +40,7 @@ Examples:
     {example output}
     ...
 """
-from typing import Dict, Iterable, Union
+from typing import Dict, Iterable, Generator, Union
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -99,7 +90,7 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Union[Iterable[Dict], tuple]:
+) -> Union[Generator[Dict, None, None], tuple]:
     """
     Main text parsing generator function. Returns an iterator object.
 

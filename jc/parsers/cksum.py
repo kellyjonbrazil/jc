@@ -17,11 +17,6 @@ Usage (module):
     import jc
     result = jc.parse('cksum', cksum_command_output)
 
-    or
-
-    import jc.parsers.cksum
-    result = jc.parsers.cksum.parse(cksum_command_output)
-
 Schema:
 
     [

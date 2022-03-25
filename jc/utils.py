@@ -108,7 +108,7 @@ def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
             mod = mod_name.split('.')[-1]
             compat_list = ', '.join(compatible)
             warning_message([
-                f'{mod} parser not compatible with your OS ({sys.platform}).',
+                f'{mod} parser is not compatible with your OS ({sys.platform}).',
                 f'Compatible platforms: {compat_list}'
             ])
 

@@ -21,11 +21,6 @@ Usage (module):
     import jc
     result = jc.parse('rpm_qi', rpm_qi_command_output)
 
-    or
-
-    import jc.parsers.rpm_qi
-    result = jc.parsers.rpm_qi.parse(rpm_qi_command_output)
-
 Schema:
 
     [

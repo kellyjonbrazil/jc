@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('dmidecode', dmidecode_command_output)
 
-    or
-
-    import jc.parsers.dmidecode
-    result = jc.parsers.dmidecode.parse(dmidecode_command_output)
-
 Schema:
 
     [

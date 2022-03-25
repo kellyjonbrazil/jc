@@ -2149,6 +2149,29 @@ mount | jc --mount -p          # or:  jc -p mount
   }
 ]
 ```
+### mpstat
+```bash
+mpstat | jc --mpstat -p          # or  jc -p mpstat
+```
+```json
+[
+  {
+    "cpu": "all",
+    "percent_usr": 12.94,
+    "percent_nice": 0.0,
+    "percent_sys": 26.42,
+    "percent_iowait": 0.43,
+    "percent_irq": 0.0,
+    "percent_soft": 0.16,
+    "percent_steal": 0.0,
+    "percent_guest": 0.0,
+    "percent_gnice": 0.0,
+    "percent_idle": 60.05,
+    "type": "cpu",
+    "time": "01:58:14 PM"
+  }
+]
+```
 ### netstat
 ```bash
 netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
@@ -2494,6 +2517,47 @@ cat /etc/passwd | jc --passwd -p
     "comment": "System Services",
     "home": "/var/root",
     "shell": "/usr/bin/false"
+  }
+]
+```
+### pidstat
+```bash
+pidstat -hl | jc --pidstat -p          # or  jc -p pidstat -hl
+```
+```json
+[
+  {
+    "time": 1646859134,
+    "uid": 0,
+    "pid": 1,
+    "percent_usr": 0.0,
+    "percent_system": 0.03,
+    "percent_guest": 0.0,
+    "percent_cpu": 0.03,
+    "cpu": 0,
+    "command": "/usr/lib/systemd/systemd --switched-root --system..."
+  },
+  {
+    "time": 1646859134,
+    "uid": 0,
+    "pid": 6,
+    "percent_usr": 0.0,
+    "percent_system": 0.0,
+    "percent_guest": 0.0,
+    "percent_cpu": 0.0,
+    "cpu": 0,
+    "command": "ksoftirqd/0"
+  },
+  {
+    "time": 1646859134,
+    "uid": 0,
+    "pid": 2263,
+    "percent_usr": 0.0,
+    "percent_system": 0.0,
+    "percent_guest": 0.0,
+    "percent_cpu": 0.0,
+    "cpu": 0,
+    "command": "kworker/0:0"
   }
 ]
 ```

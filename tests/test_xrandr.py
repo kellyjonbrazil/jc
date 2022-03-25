@@ -146,7 +146,7 @@ class XrandrTests(unittest.TestCase):
         self.maxDiff = None
         with open("tests/fixtures/generic/xrandr.out", "r") as f:
             txt = f.read()
-        actual = parse(txt)
+        actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(4, len(actual["unassociated_devices"]))
@@ -156,7 +156,7 @@ class XrandrTests(unittest.TestCase):
 
         with open("tests/fixtures/generic/xrandr_2.out", "r") as f:
             txt = f.read()
-        actual = parse(txt)
+        actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(3, len(actual["unassociated_devices"]))
@@ -166,7 +166,7 @@ class XrandrTests(unittest.TestCase):
 
         with open("tests/fixtures/generic/xrandr_simple.out", "r") as f:
             txt = f.read()
-        actual = parse(txt)
+        actual = parse(txt, quiet=True)
 
         with open("tests/fixtures/generic/xrandr_simple.json", "w") as f:
             json.dump(actual, f, indent=True)

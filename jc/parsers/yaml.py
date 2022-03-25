@@ -9,11 +9,6 @@ Usage (module):
     import jc
     result = jc.parse('yaml', yaml_file_output)
 
-    or
-
-    import jc.parsers.yaml
-    result = jc.parsers.yaml.parse(yaml_file_output)
-
 Schema:
 
     YAML Document converted to a Dictionary

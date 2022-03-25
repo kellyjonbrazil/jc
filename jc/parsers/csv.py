@@ -13,11 +13,6 @@ Usage (module):
     import jc
     result = jc.parse('csv', csv_output)
 
-    or
-
-    import jc.parsers.csv
-    result = jc.parsers.csv.parse(csv_output)
-
 Schema:
 
     csv file converted to a Dictionary:

@@ -15,11 +15,6 @@ Usage (module):
     import jc
     result = jc.parse('airport', airport_command_output)
 
-    or
-
-    import jc.parsers.airport
-    result = jc.parsers.airport.parse(airport_command_output)
-
 Schema:
 
     {

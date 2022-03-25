@@ -5,7 +5,8 @@
 
 jc - JSON Convert `ping` command output streaming parser
 
-> This streaming parser outputs JSON Lines
+> This streaming parser outputs JSON Lines (cli) or returns a Generator
+  iterator of Dictionaries (module)
 
 Supports `ping` and `ping6` output.
 
@@ -23,16 +24,8 @@ Usage (cli):
 Usage (module):
 
     import jc
-    # result is an iterable object (generator)
+
     result = jc.parse('ping_s', ping_command_output.splitlines())
-    for item in result:
-        # do something
-
-    or
-
-    import jc.parsers.ping_s
-    # result is an iterable object (generator)
-    result = jc.parsers.ping_s.parse(ping_command_output.splitlines())
     for item in result:
         # do something
 
@@ -61,14 +54,12 @@ Schema:
       "round_trip_ms_max":          float,
       "round_trip_ms_stddev":       float,
 
-      # Below object only exists if using -qq or ignore_exceptions=True
-
-      "_jc_meta":
-        {
-          "success":                boolean,  # false if error parsing
-          "error":                  string,   # exists if "success" is false
-          "line":                   string    # exists if "success" is false
-        }
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":                  boolean,  # false if error parsing
+        "error":                    string,   # exists if "success" is false
+        "line":                     string    # exists if "success" is false
+      }
     }
 
     [0] 'reply', 'timeout', 'summary', etc. See `_error_type.type_map`

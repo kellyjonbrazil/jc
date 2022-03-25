@@ -14,8 +14,7 @@
 
 # jc.lib
 
-jc - JSON Convert
-JC lib module
+jc - JSON Convert lib module
 
 <a id="jc.lib.parse"></a>
 
@@ -133,23 +132,34 @@ subset of `parser_mod_list()`.
 ### parser\_info
 
 ```python
-def parser_info(parser_mod_name: str) -> Dict
+def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict
 ```
 
-Returns a dictionary that includes the module metadata.
+Returns a dictionary that includes the parser module metadata.
 
-This function will accept **module_name**, **cli-name**, and
-**--argument-name** variants of the module name string.
+Parameters:
+
+    parser_mod_name:    (string)     name of the parser module. This
+                                     function will accept module_name,
+                                     cli-name, and --argument-name
+                                     variants of the module name.
+
+    documentation:      (boolean)    include parser docstring if True
 
 <a id="jc.lib.all_parser_info"></a>
 
 ### all\_parser\_info
 
 ```python
-def all_parser_info() -> List[Dict]
+def all_parser_info(documentation: bool = False) -> List[Dict]
 ```
 
-Returns a list of dictionaries that includes metadata for all modules.
+Returns a list of dictionaries that includes metadata for all parser
+modules.
+
+Parameters:
+
+    documentation:      (boolean)    include parser docstrings if True
 
 <a id="jc.lib.get_help"></a>
 

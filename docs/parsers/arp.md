@@ -20,11 +20,6 @@ Usage (module):
     import jc
     result = jc.parse('arp', arp_command_output)
 
-    or
-
-    import jc.parsers.arp
-    result = jc.parsers.arp.parse(arp_command_output)
-
 Schema:
 
     [
@@ -127,7 +122,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data, raw=False, quiet=False)
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
 ```
 
 Main text parsing function
@@ -145,4 +140,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
