@@ -119,10 +119,11 @@ def parse_post(raw_data):
                 entry['program_name'] = None
 
             if entry['program_name']:
-                pid = entry['program_name'].split('/', maxsplit=1)[0]
-                name = entry['program_name'].split('/', maxsplit=1)[1]
-                entry['pid'] = pid
-                entry['program_name'] = name
+                if len(entry['program_name'].split('/', maxsplit=1)) == 2:
+                    pid = entry['program_name'].split('/', maxsplit=1)[0]
+                    name = entry['program_name'].split('/', maxsplit=1)[1]
+                    entry['pid'] = pid
+                    entry['program_name'] = name
 
         if 'local_address' in entry:
             if entry['local_address']:
