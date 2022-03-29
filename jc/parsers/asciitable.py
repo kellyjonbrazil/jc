@@ -38,7 +38,7 @@ or
     good day             12345
     hi there   abc def   3.14
 
-    or
+or
 
     foo        bar       baz
     good day             12345
