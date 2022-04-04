@@ -1,5 +1,8 @@
 jc changelog
 
+20220404 v1.18.7 (in progress)
+- Fix key/value and ini parsers to allow duplicate keys
+
 20220325 v1.18.6
 - Add pidstat command parser tested on linux
 - Add pidstat command streaming parser tested on linux
