@@ -18,7 +18,7 @@ For example:
     ╘══════════╧═════════╧════════╛
 
 Cells with multiple lines within rows will be joined with a newline
-character ('\n').
+character ('\\n').
 
 Headers (keys) are converted to snake-case and newlines between multi-line
 headers are joined with an underscore. All values are returned as strings,
@@ -57,7 +57,7 @@ Examples:
     > +==========+=========+========+' | jc --asciitable-m -p
     [
       {
-        "foo": "good day\nmate",
+        "foo": "good day\\nmate",
         "bar": "12345",
         "baz_buz": null
       },
@@ -81,7 +81,7 @@ Examples:
     > ╘══════════╧═════════╧════════╛' | jc --asciitable-m -p
     [
       {
-        "foo": "good day\nmate",
+        "foo": "good day\\nmate",
         "bar": "12345",
         "baz_buz": null
       },

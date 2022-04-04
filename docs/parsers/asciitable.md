@@ -20,7 +20,7 @@ For example:
     │ hi there │ abc def │ 3.14   │
     ╘══════════╧═════════╧════════╛
 
-    or
+or
 
     +-----------------------------+
     | foo        bar       baz    |
@@ -29,30 +29,30 @@ For example:
     | hi there   abc def   3.14   |
     +-----------------------------+
 
-    or
+or
 
     | foo      | bar     | baz    |
     |----------|---------|--------|
     | good day |         | 12345  |
     | hi there | abc def | 3.14   |
 
-    or
+or
 
     foo        bar       baz
     ---------  --------  ------
     good day             12345
     hi there   abc def   3.14
 
-    or
+or
 
     foo        bar       baz
     good day             12345
     hi there   abc def   3.14
 
-    etc...
+etc...
 
-    Headers (keys) are converted to snake-case. All values are returned as
-    strings, except empty strings, which are converted to None/null.
+Headers (keys) are converted to snake-case. All values are returned as
+strings, except empty strings, which are converted to None/null.
 
 Usage (cli):
 
