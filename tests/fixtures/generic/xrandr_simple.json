@@ -43,6 +43,7 @@
     "is_connected": true,
     "is_primary": true,
     "device_name": "eDP1",
+    "rotation": "normal",
     "resolution_width": 1920,
     "resolution_height": 1080,
     "offset_width": 0,
