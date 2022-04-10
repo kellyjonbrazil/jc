@@ -49,7 +49,8 @@ Schema:
           "offset_width":                      integer,
           "offset_height":                     integer,
           "dimension_width":                   integer,
-          "dimension_height":                  integer
+          "dimension_height":                  integer,
+          "rotation":                          string
         }
       ],
       "unassociated_devices": [
@@ -125,7 +126,8 @@ Examples:
             "offset_width": 0,
             "offset_height": 0,
             "dimension_width": 310,
-            "dimension_height": 170
+            "dimension_height": 170,
+            "rotation": "normal"
           }
         }
       ],
@@ -140,7 +142,7 @@ import jc.utils
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.0"
+    version = "1.1"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "lyter_git at sent.com"

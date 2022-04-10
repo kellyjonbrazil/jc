@@ -131,7 +131,7 @@ Examples:
             "offset_width": 0,
             "offset_height": 0,
             "dimension_width": 310,
-            "dimension_height": 170
+            "dimension_height": 170,
             "rotation": "normal"
           }
         }
@@ -162,4 +162,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.0 by Kevin Lyter (lyter_git at sent.com)
+Version 1.1 by Kevin Lyter (lyter_git at sent.com)
