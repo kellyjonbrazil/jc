@@ -54,7 +54,8 @@ Schema:
           "offset_width":                      integer,
           "offset_height":                     integer,
           "dimension_width":                   integer,
-          "dimension_height":                  integer
+          "dimension_height":                  integer,
+          "rotation":                          string
         }
       ],
       "unassociated_devices": [
@@ -131,6 +132,7 @@ Examples:
             "offset_height": 0,
             "dimension_width": 310,
             "dimension_height": 170
+            "rotation": "normal"
           }
         }
       ],
