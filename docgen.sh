@@ -83,22 +83,22 @@ cd jc
 
 (
     echo Building docs for: lib
-    pydoc-markdown -m jc.lib "${toc_config}" > ../docs/lib.md; echo "+++ lib docs complete" &
+    pydoc-markdown -m jc.lib "${toc_config}" > ../docs/lib.md; echo "+++ lib docs complete"
 ) &
 
 (
     echo Building docs for: utils
-    pydoc-markdown -m jc.utils "${toc_config}" > ../docs/utils.md; echo "+++ utils docs complete" &
+    pydoc-markdown -m jc.utils "${toc_config}" > ../docs/utils.md; echo "+++ utils docs complete"
 ) &
 
 (
     echo Building docs for: streaming
-    pydoc-markdown -m jc.streaming "${toc_config}" > ../docs/streaming.md; echo "+++ streaming docs complete" &
+    pydoc-markdown -m jc.streaming "${toc_config}" > ../docs/streaming.md; echo "+++ streaming docs complete"
 ) &
 
 (
     echo Building docs for: universal parser
-    pydoc-markdown -m jc.parsers.universal "${toc_config}" > ../docs/parsers/universal.md; echo "+++ universal parser docs complete" &
+    pydoc-markdown -m jc.parsers.universal "${toc_config}" > ../docs/parsers/universal.md; echo "+++ universal parser docs complete"
 ) &
 
 # a bit of inception here... jc is being used to help
