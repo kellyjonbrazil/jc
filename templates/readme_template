@@ -106,17 +106,17 @@ pip3 install jc
 
 ### OS Package Repositories
 
-| OS                    | Command                                                                       |
-|-----------------------|-------------------------------------------------------------------------------|
-| Debian/Ubuntu linux   | `apt-get install jc`                                                          |
-| Fedora linux          | `dnf install jc`                                                              |
-| openSUSE linux        | `zypper install jc`                                                           |
-| Arch linux            | `pacman -S jc`                                                                |
-| NixOS linux           | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
-| Guix System linux     | `guix install jc`                                                             |
-| macOS                 | `brew install jc`                                                             |
-| FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
-| Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
+| OS                                   | Command                                                                       |
+|--------------------------------------|-------------------------------------------------------------------------------|
+| Debian/Ubuntu linux                  | `apt-get install jc`                                                          |
+| Fedora linux                         | `dnf install jc`                                                              |
+| openSUSE linux                       | `zypper install jc`                                                           |
+| Archlinux User Repositories (AUR)    | `paru -S jc` or `aura  -A jc` or `yay -S jc`                                  |
+| NixOS linux                          | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
+| Guix System linux                    | `guix install jc`                                                             |
+| macOS                                | `brew install jc`                                                             |
+| FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
+| Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
