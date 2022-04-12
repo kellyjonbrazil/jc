@@ -111,7 +111,7 @@ pip3 install jc
 | Debian/Ubuntu linux   | `apt-get install jc`                                                          |
 | Fedora linux          | `dnf install jc`                                                              |
 | openSUSE linux        | `zypper install jc`                                                           |
-| Arch linux            | `pacman -S jc`                                                                |
+| Archlinux User Repositories (AUR)           | `paru -S jc` or `aura  -A jc` or `yay -S jc`                                                              |
 | NixOS linux           | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
 | Guix System linux     | `guix install jc`                                                             |
 | macOS                 | `brew install jc`                                                             |
