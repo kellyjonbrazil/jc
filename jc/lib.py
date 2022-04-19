@@ -33,6 +33,7 @@ parsers = [
     'finger',
     'free',
     'fstab',
+    'git-log',
     'group',
     'gshadow',
     'hash',
