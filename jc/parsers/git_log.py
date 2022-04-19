@@ -8,12 +8,8 @@ Can be used with the following format options:
 - `fuller`
 
 Additional options supported (work in progress):
-- --stat  ???
-- --compact-summary ???
-- --summary (indented one space) ???
-- --numstat
+- --stat
 - --shortstat
-- --log-size
 
 Usage (cli):
 
@@ -39,7 +35,15 @@ Schema:
         "commit_by":            string,
         "commit_by_email":      string,
         "commit_by_date":       string,
-        "message":              string
+        "message":              string,
+        "stats" : {
+          "files_changed":      integer,
+          "insertions":         integer,
+          "deletions":          integer,
+          "files": [
+                                string
+          ]
+        }
       }
     ]
 
@@ -120,7 +124,8 @@ def parse(
 
     raw_output: List = []
     output_line = {}
-    message_lines = []
+    message_lines: List[str] = []
+    file_list: List[str] = []
 
     if jc.utils.has_data(data):
 
@@ -141,9 +146,14 @@ def parse(
                 if output_line:
                     if message_lines:
                         output_line['message'] = '\n'.join(message_lines)
+
+                    if file_list:
+                        output_line['stats']['files'].append(file_list)
+
                     raw_output.append(output_line)
                     output_line = {}
                     message_lines = []
+                    file_list = []
                 output_line['commit'] = line_list[1]
                 continue
 
@@ -177,11 +187,35 @@ def parse(
 
             if line.startswith('    '):
                 message_lines.append(line.strip())
+                continue
 
+            if line.startswith(' ') and 'changed, ' not in line:
+                # this is a file name
+                file_name = line.split('|')[0].strip()
+                file_list.append(file_name)
+                continue
+
+            if line.startswith(' ') and 'changed, ' in line:
+                # this is the stat summary
+                changes_pattern = r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insertions>\d+)\s(insertions?\(\+\))?(,\s+)?(?P<deletions>\d+)?(\s+deletions?\(\-\))?'
+                changes = re.match(changes_pattern, line)
+                files = changes['files']
+                insertions = changes['insertions']
+                deletions = changes['deletions']
+                output_line['stats'] = {
+                    'files_changed': files or '0',
+                    'insertions': insertions or '0',
+                    'deletions':  deletions or '0',
+                    'files': []
+                }
 
     if output_line:
         if message_lines:
             output_line['message'] = '\n'.join(message_lines)
+
+        if file_list:
+            output_line['stats']['files'].append(file_list)
+
         raw_output.append(output_line)
 
     return raw_output if raw else _process(raw_output)
