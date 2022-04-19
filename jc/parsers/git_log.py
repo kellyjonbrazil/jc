@@ -148,7 +148,7 @@ def parse(
                         output_line['message'] = '\n'.join(message_lines)
 
                     if file_list:
-                        output_line['stats']['files'].append(file_list)
+                        output_line['stats']['files'].extend(file_list)
 
                     raw_output.append(output_line)
                     output_line = {}
@@ -205,16 +205,16 @@ def parse(
                 output_line['stats'] = {
                     'files_changed': files or '0',
                     'insertions': insertions or '0',
-                    'deletions':  deletions or '0',
-                    'files': []
+                    'deletions':  deletions or '0'
                 }
+                output_line['stats']['files']: List[str] = []
 
     if output_line:
         if message_lines:
             output_line['message'] = '\n'.join(message_lines)
 
         if file_list:
-            output_line['stats']['files'].append(file_list)
+            output_line['stats']['files'].extend(file_list)
 
         raw_output.append(output_line)
 
