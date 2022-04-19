@@ -7,7 +7,7 @@ Can be used with the following format options:
 - `full`
 - `fuller`
 
-Additional options supported (work in progress):
+Additional options supported:
 - --stat
 - --shortstat
 
@@ -85,12 +85,17 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # nothing to process
+    int_list = ['files_changed', 'insertions', 'deletions']
+    for entry in proc_data:
+        if 'stats' in entry:
+            for key in entry['stats']:
+                if key in int_list:
+                    entry['stats'][key] = jc.utils.convert_to_int(entry['stats'][key])
     return proc_data
 
 
 def _is_commit_hash(hash_string: str) -> bool:
-    # 0c55240e9da30ac4293cc324f1094de2abd3da91
+    # 0c55240e9da30ac4293dc324f1094de2abd3da91
     if len(hash_string) != 40:
         return False
 
@@ -148,7 +153,7 @@ def parse(
                         output_line['message'] = '\n'.join(message_lines)
 
                     if file_list:
-                        output_line['stats']['files'].extend(file_list)
+                        output_line['stats']['files'] = file_list
 
                     raw_output.append(output_line)
                     output_line = {}
@@ -207,8 +212,7 @@ def parse(
                 output_line['stats'] = {
                     'files_changed': files or '0',
                     'insertions': insertions or '0',
-                    'deletions':  deletions or '0',
-                    'files': []
+                    'deletions':  deletions or '0'
                 }
 
     if output_line:
@@ -216,7 +220,7 @@ def parse(
             output_line['message'] = '\n'.join(message_lines)
 
         if file_list:
-            output_line['stats']['files'].extend(file_list)
+            output_line['stats']['files'] = file_list
 
         raw_output.append(output_line)
 

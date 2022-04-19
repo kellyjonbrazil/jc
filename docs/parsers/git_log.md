@@ -12,7 +12,7 @@ Can be used with the following format options:
 - `full`
 - `fuller`
 
-Additional options supported (work in progress):
+Additional options supported:
 - --stat
 - --shortstat
 
