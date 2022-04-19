@@ -13,8 +13,8 @@ Can be used with the following format options:
 - `fuller`
 
 Additional options supported:
-- --stat
-- --shortstat
+- `--stat`
+- `--shortstat`
 
 Usage (cli):
 
