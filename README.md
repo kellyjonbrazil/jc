@@ -167,6 +167,7 @@ option.
 - `--finger` enables the `finger` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/finger))
 - `--free` enables the `free` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/free))
 - `--fstab` enables the `/etc/fstab` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab))
+- `--git-log` enables the `git log` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log))
 - `--group` enables the `/etc/group` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/group))
 - `--gshadow` enables the `/etc/gshadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow))
 - `--hash` enables the `hash` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hash))
