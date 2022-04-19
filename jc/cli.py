@@ -177,6 +177,8 @@ def about_jc():
         'website': info.website,
         'copyright': info.copyright,
         'license': info.license,
+        'python_version': '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro))),
+        'python_path': sys.executable,
         'parser_count': len(all_parser_info()),
         'parsers': all_parser_info()
     }
@@ -249,8 +251,11 @@ def help_doc(options):
 
 def versiontext():
     """Return the version text"""
+    py_ver = '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)))
     versiontext_string = f'''\
-    jc version {info.version}
+    jc version:  {info.version}
+    python interpreter version:  {py_ver}
+    python path:  {sys.executable}
     {info.website}
     {info.copyright}'''
     return textwrap.dedent(versiontext_string)
