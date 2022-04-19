@@ -123,7 +123,7 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
-    output_line = {}
+    output_line: Dict = {}
     message_lines: List[str] = []
     file_list: List[str] = []
 
@@ -199,15 +199,17 @@ def parse(
                 # this is the stat summary
                 changes_pattern = r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insertions>\d+)\s(insertions?\(\+\))?(,\s+)?(?P<deletions>\d+)?(\s+deletions?\(\-\))?'
                 changes = re.match(changes_pattern, line)
-                files = changes['files']
-                insertions = changes['insertions']
-                deletions = changes['deletions']
+                if changes:
+                    files = changes['files']
+                    insertions = changes['insertions']
+                    deletions = changes['deletions']
+
                 output_line['stats'] = {
                     'files_changed': files or '0',
                     'insertions': insertions or '0',
-                    'deletions':  deletions or '0'
+                    'deletions':  deletions or '0',
+                    'files': []
                 }
-                output_line['stats']['files']: List[str] = []
 
     if output_line:
         if message_lines:
