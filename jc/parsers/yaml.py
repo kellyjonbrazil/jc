@@ -1,5 +1,7 @@
 """jc - JSON Convert `YAML` file parser
 
+Note: datetime objects will be converted to strings.
+
 Usage (cli):
 
     $ cat foo.yaml | jc --yaml

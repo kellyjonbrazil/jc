@@ -5,6 +5,8 @@
 
 jc - JSON Convert `YAML` file parser
 
+Note: datetime objects will be converted to strings.
+
 Usage (cli):
 
     $ cat foo.yaml | jc --yaml
@@ -107,4 +109,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
