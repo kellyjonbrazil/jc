@@ -1,6 +1,19 @@
 """jc - JSON Convert `git log` command output parser
 
-<<Short git-log description and caveats>>
+Can be used with the following format options:
+- `oneline`
+- `short`
+- `medium`
+- `full`
+- `fuller`
+
+Additional options supported (work in progress):
+- --stat  ???
+- --compact-summary ???
+- --summary (indented one space) ???
+- --numstat
+- --shortstat
+- --log-size
 
 Usage (cli):
 
@@ -19,9 +32,14 @@ Schema:
 
     [
       {
-        "git-log":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "commit":               string,
+        "author":               string,
+        "author_email":         string,
+        "date":                 string,
+        "commit_by":            string,
+        "commit_by_email":      string,
+        "commit_by_date":       string,
+        "message":              string
       }
     ]
 
@@ -63,12 +81,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
-
+    # nothing to process
     return proc_data
 
 
