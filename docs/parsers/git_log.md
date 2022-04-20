@@ -43,8 +43,8 @@ Schema:
         "author":               string,
         "author_email":         string,
         "date":                 string,
-        "epoch":                integer,
-        "epoch_utc":            integer,
+        "epoch":                integer, [0]
+        "epoch_utc":            integer, [1]
         "commit_by":            string,
         "commit_by_email":      string,
         "commit_by_date":       string,
@@ -60,13 +60,52 @@ Schema:
       }
     ]
 
+    [0] naive timestamp if "date" field is parsable, else null
+    [1] timezone aware timestamp availabe for UTC, else null
+
 Examples:
 
-    $ git-log | jc --git-log -p
-    []
+    $ git log | jc --git-log -p
+    [
+      {
+        "commit": "b53e42aca623181aa9bc72194e6eeef1e9a3a237",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "date": "Wed Apr 20 09:44:42 2022 -0400",
+        "message": "add calculated timestamp",
+        "epoch": 1650462282,
+        "epoch_utc": null
+      },
+      {
+        "commit": "477329ce5b8f5c2a8e4384ba3f59289fc18c957d",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "date": "Wed Apr 20 08:26:26 2022 -0400",
+        "message": "add linefeed to version text",
+        "epoch": 1650457586,
+        "epoch_utc": null
+      },
+      ...
+    ]
 
-    $ git-log | jc --git-log -p -r
-    []
+
+    $ git log | jc --git-log -p -r
+    [
+      {
+        "commit": "b53e42aca623181aa9bc72194e6eeef1e9a3a237",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "date": "Wed Apr 20 09:44:42 2022 -0400",
+        "message": "add calculated timestamp"
+      },
+      {
+        "commit": "477329ce5b8f5c2a8e4384ba3f59289fc18c957d",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "date": "Wed Apr 20 08:26:26 2022 -0400",
+        "message": "add linefeed to version text"
+      }
+    ]
 
 <a id="jc.parsers.git_log.parse"></a>
 
