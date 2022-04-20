@@ -65,46 +65,88 @@ Schema:
 
 Examples:
 
-    $ git log | jc --git-log -p
+    $ git log --stat | jc --git-log -p
     [
+      {
+        "commit": "728d882ed007b3c8b785018874a0eb06e1143b66",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "date": "Wed Apr 20 09:50:19 2022 -0400",
+        "stats": {
+          "files_changed": 2,
+          "insertions": 90,
+          "deletions": 12,
+          "files": [
+            "docs/parsers/git_log.md",
+            "jc/parsers/git_log.py"
+          ]
+        },
+        "message": "add timestamp docs and examples",
+        "epoch": 1650462619,
+        "epoch_utc": null
+      },
       {
         "commit": "b53e42aca623181aa9bc72194e6eeef1e9a3a237",
         "author": "Kelly Brazil",
         "author_email": "kellyjonbrazil@gmail.com",
         "date": "Wed Apr 20 09:44:42 2022 -0400",
+        "stats": {
+          "files_changed": 5,
+          "insertions": 29,
+          "deletions": 6,
+          "files": [
+            "docs/parsers/git_log.md",
+            "docs/utils.md",
+            "jc/parsers/git_log.py",
+            "jc/utils.py",
+            "man/jc.1"
+          ]
+        },
         "message": "add calculated timestamp",
         "epoch": 1650462282,
-        "epoch_utc": null
-      },
-      {
-        "commit": "477329ce5b8f5c2a8e4384ba3f59289fc18c957d",
-        "author": "Kelly Brazil",
-        "author_email": "kellyjonbrazil@gmail.com",
-        "date": "Wed Apr 20 08:26:26 2022 -0400",
-        "message": "add linefeed to version text",
-        "epoch": 1650457586,
         "epoch_utc": null
       },
       ...
     ]
 
-
-    $ git log | jc --git-log -p -r
+    $ git log --stat | jc --git-log -p -r
     [
+      {
+        "commit": "728d882ed007b3c8b785018874a0eb06e1143b66",
+        "author": "Kelly Brazil",
+        "author_email": "kellyjonbrazil@gmail.com",
+        "date": "Wed Apr 20 09:50:19 2022 -0400",
+        "stats": {
+          "files_changed": "2",
+          "insertions": "90",
+          "deletions": "12",
+          "files": [
+            "docs/parsers/git_log.md",
+            "jc/parsers/git_log.py"
+          ]
+        },
+        "message": "add timestamp docs and examples"
+      },
       {
         "commit": "b53e42aca623181aa9bc72194e6eeef1e9a3a237",
         "author": "Kelly Brazil",
         "author_email": "kellyjonbrazil@gmail.com",
         "date": "Wed Apr 20 09:44:42 2022 -0400",
+        "stats": {
+          "files_changed": "5",
+          "insertions": "29",
+          "deletions": "6",
+          "files": [
+            "docs/parsers/git_log.md",
+            "docs/utils.md",
+            "jc/parsers/git_log.py",
+            "jc/utils.py",
+            "man/jc.1"
+          ]
+        },
         "message": "add calculated timestamp"
       },
-      {
-        "commit": "477329ce5b8f5c2a8e4384ba3f59289fc18c957d",
-        "author": "Kelly Brazil",
-        "author_email": "kellyjonbrazil@gmail.com",
-        "date": "Wed Apr 20 08:26:26 2022 -0400",
-        "message": "add linefeed to version text"
-      }
+      ...
     ]
 
 <a id="jc.parsers.git_log.parse"></a>
