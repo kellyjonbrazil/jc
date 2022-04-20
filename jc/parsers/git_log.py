@@ -11,6 +11,12 @@ Additional options supported:
 - `--stat`
 - `--shortstat`
 
+The `epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ git log | jc --git-log
@@ -32,6 +38,8 @@ Schema:
         "author":               string,
         "author_email":         string,
         "date":                 string,
+        "epoch":                integer,
+        "epoch_utc":            integer,
         "commit_by":            string,
         "commit_by_email":      string,
         "commit_by_date":       string,
@@ -86,7 +94,13 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         List of Dictionaries. Structured to conform to the schema.
     """
     int_list = ['files_changed', 'insertions', 'deletions']
+
     for entry in proc_data:
+        if 'date' in entry:
+            ts = jc.utils.timestamp(entry['date'], format_hint=(1100,))
+            entry['epoch'] = ts.naive
+            entry['epoch_utc'] = ts.utc
+
         if 'stats' in entry:
             for key in entry['stats']:
                 if key in int_list:

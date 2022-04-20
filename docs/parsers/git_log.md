@@ -16,6 +16,12 @@ Additional options supported:
 - `--stat`
 - `--shortstat`
 
+The `epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ git log | jc --git-log
@@ -37,6 +43,8 @@ Schema:
         "author":               string,
         "author_email":         string,
         "date":                 string,
+        "epoch":                integer,
+        "epoch_utc":            integer,
         "commit_by":            string,
         "commit_by_email":      string,
         "commit_by_date":       string,

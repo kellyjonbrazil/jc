@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Tuple, Union, Optional
+from typing import List, Iterable, Union, Optional
 
 
 def warning_message(message_lines: List[str]) -> None:
@@ -233,7 +233,7 @@ def input_type_check(data: str) -> None:
 class timestamp:
     def __init__(self,
                  datetime_string: str,
-                 format_hint: Union[List, Tuple, None] = None
+                 format_hint: Optional[Iterable] = None
     ) -> None:
         """
         Input a datetime text string of several formats and convert to a
@@ -244,7 +244,7 @@ class timestamp:
             datetime_string  (str):  a string representation of a
                 datetime in several supported formats
 
-            format_hint  (list | tuple):  an optional list of format ID
+            format_hint  (iterable):  an optional iterable of format ID
                 integers to instruct the timestamp object to try those
                 formats first in the order given. Other formats will be
                 tried after the format hint list is exhausted. This can
@@ -361,6 +361,7 @@ class timestamp:
 
         formats = [
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
+            {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
             {'id': 1500, 'format': '%Y-%m-%d %H:%M', 'locale': None},  # en_US.UTF-8 local format (found in who cli output): 2021-03-23 00:14
             {'id': 1600, 'format': '%m/%d/%Y %I:%M %p', 'locale': None},  # Windows english format (found in dir cli output): 12/07/2019 02:09 AM
             {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
