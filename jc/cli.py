@@ -256,6 +256,7 @@ def versiontext():
     jc version:  {info.version}
     python interpreter version:  {py_ver}
     python path:  {sys.executable}
+
     {info.website}
     {info.copyright}'''
     return textwrap.dedent(versiontext_string)
