@@ -148,6 +148,8 @@ import re
 from typing import List, Dict
 import jc.utils
 
+hash_pattern = re.compile(r'([0-9]|[a-f])+')
+changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insertions>\d+)\s(insertions?\(\+\))?(,\s+)?(?P<deletions>\d+)?(\s+deletions?\(\-\))?')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -194,8 +196,7 @@ def _is_commit_hash(hash_string: str) -> bool:
     if len(hash_string) != 40:
         return False
 
-    hash_pattern = r'([0-9]|[a-f])+'
-    if re.match(hash_pattern, hash_string):
+    if hash_pattern.match(hash_string):
         return True
 
     return False
@@ -304,8 +305,7 @@ def parse(
 
             if line.startswith(' ') and 'changed, ' in line:
                 # this is the stat summary
-                changes_pattern = r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insertions>\d+)\s(insertions?\(\+\))?(,\s+)?(?P<deletions>\d+)?(\s+deletions?\(\-\))?'
-                changes = re.match(changes_pattern, line)
+                changes = changes_pattern.match(line)
                 if changes:
                     files = changes['files']
                     insertions = changes['insertions']
