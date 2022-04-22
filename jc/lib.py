@@ -94,6 +94,7 @@ parsers = [
     'ufw',
     'ufw-appinfo',
     'uname',
+    'update-alt-gs',
     'update-alt-q',
     'upower',
     'uptime',
