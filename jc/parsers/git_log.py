@@ -234,11 +234,18 @@ def parse(
 
             # oneline style
             if line_list and _is_commit_hash(line_list[0]):
+                if output_line:
+                    if file_list:
+                        output_line['stats']['files'] = file_list
+
+                    raw_output.append(output_line)
+                    output_line = {}
+                    message_lines = []
+                    file_list = []
                 output_line = {
                     'commit': line_list[0],
                     'message': line_list[1]
                 }
-                raw_output.append(output_line)
                 continue
 
             # all other styles
