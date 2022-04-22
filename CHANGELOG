@@ -1,6 +1,6 @@
 jc changelog
 
-20220404 v1.18.7 (in progress)
+20220404 v1.18.7
 - Add git log command parser
 - Add update-alternatives --query parser
 - Add update-alternatives --get-selections parser

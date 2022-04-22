@@ -1,0 +1,35 @@
+import os
+import unittest
+import json
+import jc.parsers.update_alt_q
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+class MyTests(unittest.TestCase):
+
+    def setUp(self):
+        # input
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query.out'), 'r', encoding='utf-8') as f:
+            self.update_alternatives_query = f.read()
+
+        # output
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query.json'), 'r', encoding='utf-8') as f:
+            self.update_alternatives_query_json = json.loads(f.read())
+
+
+    def test_update_alt_q_nodata(self):
+        """
+        Test 'update-alternatives --query' with no data
+        """
+        self.assertEqual(jc.parsers.update_alt_q.parse('', quiet=True), {})
+
+    def test_update_alt_q(self):
+        """
+        Test 'update-alternatives --query'
+        """
+        self.assertEqual(jc.parsers.update_alt_q.parse(self.update_alternatives_query, quiet=True), self.update_alternatives_query_json)
+
+
+if __name__ == '__main__':
+    unittest.main()
