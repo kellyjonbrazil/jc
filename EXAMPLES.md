@@ -3645,6 +3645,69 @@ uname -a | jc --uname -p          # or:  jc -p uname -a
   "kernel_version": "#74-Ubuntu SMP Tue Sep 17 17:06:04 UTC 2019"
 }
 ```
+### update-alternatives --get-selections
+```bash
+update-alternatives --get-selections | jc --update-alt-gs -p          # or:  jc -p update-alternatives --get-selections
+```
+```json
+[
+  {
+    "name": "arptables",
+    "status": "auto",
+    "current": "/usr/sbin/arptables-nft"
+  },
+  {
+    "name": "awk",
+    "status": "auto",
+    "current": "/usr/bin/gawk"
+  }
+]
+```
+### update-alternatives --query
+```bash
+update-alternatives --query editor | jc --update-alt-q -p          # or:  jc -p update-alternatives --query editor
+```
+```json
+{
+  "name": "editor",
+  "link": "/usr/bin/editor",
+  "slaves": [
+    {
+      "name": "editor.1.gz",
+      "path": "/usr/share/man/man1/editor.1.gz"
+    },
+    {
+      "name": "editor.da.1.gz",
+      "path": "/usr/share/man/da/man1/editor.1.gz"
+    }
+  ],
+  "status": "auto",
+  "best": "/bin/nano",
+  "value": "/bin/nano",
+  "alternatives": [
+    {
+      "name": "/bin/ed",
+      "priority": -100,
+      "slaves": [
+        {
+          "name": "editor.1.gz",
+          "path": "/usr/share/man/man1/ed.1.gz"
+        }
+      ]
+    },
+    {
+      "name": "/bin/nano",
+      "priority": 40,
+      "slaves": [
+        {
+          "name": "editor.1.gz",
+          "path": "/usr/share/man/man1/nano.1.gz"
+        }
+      ]
+    }
+  ]
+}
+```
 ### upower
 ```bash
 upower -i /org/freedesktop/UPower/devices/battery | jc --upower -p          # or jc -p upower -i /org/freedesktop/UPower/devices/battery

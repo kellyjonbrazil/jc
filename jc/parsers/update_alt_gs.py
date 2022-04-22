@@ -18,9 +18,9 @@ Schema:
 
     [
       {
-        "update-alternatives --get-selection":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "name":     string,
+        "status":   string,
+        "current":  string
       }
     ]
 
