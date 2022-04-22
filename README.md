@@ -228,6 +228,8 @@ option.
 - `--ufw` enables the `ufw status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw))
 - `--ufw-appinfo` enables the `ufw app info [application]` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo))
 - `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
+- `--update-alt-gs` enables the `update-alternatives --get-selections` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs))
+- `--update-alt-q` enables the `update-alternatives --query` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q))
 - `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
 - `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
 - `--vmstat` enables the `vmstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat))
