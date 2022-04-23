@@ -402,9 +402,9 @@ Local parser plugins are standard python module files. Use the
 or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py)
 parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
-Local plugin filenames must be valid python module names, therefore must consist
-entirely of alphanumerics and start with a letter. Local plugins may override
-default parsers.
+Local plugin filenames must be valid python module names and therefore must
+start with a letter and consist entirely of alphanumerics. Local plugins
+may override default parsers.
 
 > Note: The application data directory follows the
 [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
