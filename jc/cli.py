@@ -4,6 +4,7 @@ JC cli module
 
 import sys
 import os
+import locale
 import textwrap
 import signal
 import shlex
@@ -30,6 +31,13 @@ except Exception:
 
 JC_ERROR_EXIT = 100
 
+try:
+    UTF_8_SUPPORT = bool(locale.getlocale()[1] == 'UTF-8')
+except Exception:
+    UTF_8_SUPPORT = False
+
+CPR = '©' if UTF_8_SUPPORT else '(c)'
+
 
 class info():
     version = __version__
@@ -37,7 +45,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
-    copyright = '© 2019-2022 Kelly Brazil'
+    copyright = f'{CPR} 2019-2022 Kelly Brazil'
     license = 'MIT License'
 
 
@@ -269,6 +277,7 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
     """
     separators = (',', ':')
     indent = None
+    ascii = False if UTF_8_SUPPORT else True
 
     if pretty:
         separators = None
@@ -279,10 +288,10 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        return str(highlight(json.dumps(data, indent=indent, separators=separators, ensure_ascii=False),
+        return str(highlight(json.dumps(data, indent=indent, separators=separators, ensure_ascii=ascii),
                              JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
-    return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
+    return json.dumps(data, indent=indent, separators=separators, ensure_ascii=ascii)
 
 
 def magic_parser(args):
