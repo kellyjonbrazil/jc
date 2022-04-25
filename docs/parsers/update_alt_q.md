@@ -35,7 +35,7 @@ Schema:
       "value":                string,   # (null if 'none')
       "alternatives": [
         {
-          "name":             string,
+          "alternative":      string,
           "priority":         integer,
           "slaves": [
             {
@@ -68,7 +68,7 @@ Examples:
       "value": "/bin/nano",
       "alternatives": [
         {
-          "name": "/bin/ed",
+          "alternative": "/bin/ed",
           "priority": -100,
           "slaves": [
             {
@@ -78,7 +78,7 @@ Examples:
           ]
         },
         {
-          "name": "/bin/nano",
+          "alternative": "/bin/nano",
           "priority": 40,
           "slaves": [
             {
@@ -109,7 +109,7 @@ Examples:
       "value": "/bin/nano",
       "alternatives": [
         {
-          "name": "/bin/ed",
+          "alternative": "/bin/ed",
           "priority": "-100",
           "slaves": [
             {
@@ -119,7 +119,7 @@ Examples:
           ]
         },
         {
-          "name": "/bin/nano",
+          "alternative": "/bin/nano",
           "priority": "40",
           "slaves": [
             {
