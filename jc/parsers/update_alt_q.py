@@ -30,7 +30,7 @@ Schema:
       "value":                string,   # (null if 'none')
       "alternatives": [
         {
-          "alternative":             string,
+          "alternative":      string,
           "priority":         integer,
           "slaves": [
             {
