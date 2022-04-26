@@ -37,7 +37,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
-    copyright = f'© 2019-2022 Kelly Brazil'
+    copyright = '© 2019-2022 Kelly Brazil'
     license = 'MIT License'
 
 
