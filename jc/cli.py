@@ -261,7 +261,8 @@ def versiontext():
     python path:  {sys.executable}
 
     {info.website}
-    {info.copyright}'''
+    {info.copyright}
+    '''
     return textwrap.dedent(versiontext_string)
 
 
