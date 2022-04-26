@@ -5,13 +5,15 @@
 
 jc - JSON Convert `Key/Value` file parser
 
-Supports files containing simple key/value pairs. Delimiter can be `=` or
-`:`. Missing values are supported. Comment prefix can be `#` or `;`.
-Comments must be on their own line.
+Supports files containing simple key/value pairs.
 
-Note: Values starting and ending with quotation marks will have the marks
-removed. If you would like to keep the quotation marks, use the `-r`
-command-line argument or the `raw=True` argument in `parse()`.
+- Delimiter can be `=` or `:`. Missing values are supported.
+- Comment prefix can be `#` or `;`. Comments must be on their own line.
+- If duplicate keys are found, only the last value will be used.
+
+> Note: Values starting and ending with quotation marks will have the marks
+        removed. If you would like to keep the quotation marks, use the `-r`
+        command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -78,4 +80,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

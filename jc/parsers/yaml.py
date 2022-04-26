@@ -1,5 +1,7 @@
 """jc - JSON Convert `YAML` file parser
 
+Note: datetime objects will be converted to strings.
+
 Usage (cli):
 
     $ cat foo.yaml | jc --yaml
@@ -85,7 +87,7 @@ from jc.exceptions import LibraryNotInstalled
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -146,6 +148,11 @@ def parse(data, raw=False, quiet=False):
         YAML.official_plug_ins = lambda a: []
 
         yaml = YAML(typ='safe')
+
+        # modify the timestamp constructor to output datetime objects as
+        # strings since JSON does not support datetime objects
+        yaml.constructor.yaml_constructors['tag:yaml.org,2002:timestamp'] = \
+            yaml.constructor.yaml_constructors['tag:yaml.org,2002:str']
 
         for document in yaml.load_all(data):
             raw_output.append(document)

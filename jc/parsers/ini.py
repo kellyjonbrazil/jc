@@ -1,12 +1,14 @@
 """jc - JSON Convert `INI` file parser
 
 Parses standard `INI` files and files containing simple key/value pairs.
-Delimiter can be `=` or `:`. Missing values are supported. Comment prefix
-can be `#` or `;`. Comments must be on their own line.
 
-Note: Values starting and ending with quotation marks will have the marks
-removed. If you would like to keep the quotation marks, use the `-r`
-command-line argument or the `raw=True` argument in `parse()`.
+- Delimiter can be `=` or `:`. Missing values are supported.
+- Comment prefix can be `#` or `;`. Comments must be on their own line.
+- If duplicate keys are found, only the last value will be used.
+
+> Note: Values starting and ending with quotation marks will have the marks
+        removed. If you would like to keep the quotation marks, use the `-r`
+        command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 
@@ -67,7 +69,7 @@ import configparser
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,7 +137,9 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        ini = configparser.ConfigParser(allow_no_value=True, interpolation=None)
+        ini = configparser.ConfigParser(allow_no_value=True,
+                                        interpolation=None,
+                                        strict=False)
         try:
             ini.read_string(data)
             raw_output = {s: dict(ini.items(s)) for s in ini.sections()}

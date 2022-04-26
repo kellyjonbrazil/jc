@@ -1,5 +1,17 @@
 jc changelog
 
+20220425 v1.18.7
+- Add git log command parser
+- Add update-alternatives --query parser
+- Add update-alternatives --get-selections parser
+- Fix key/value and ini parsers to allow duplicate keys
+- Fix yaml file parser for files including timestamp objects
+- Fix UnicodeDecodeError on some systems where LANG=C is set and unicode
+  characters are in the output
+- Update xrandr parser: add a 'rotation' field
+- Fix failing tests by moving template files
+- Add python interpreter version and path to -v and -a output
+
 20220325 v1.18.6
 - Add pidstat command parser tested on linux
 - Add pidstat command streaming parser tested on linux
@@ -361,16 +373,16 @@ jc changelog
 - Add axfr support for dig command parser
 
 20200312 v1.9.2
-- Updated arp parser to fix OSX detection for some edge cases
+- Update arp parser to fix OSX detection for some edge cases
 
 20200312 v1.9.1
-- Updated file command parser to make filename splitting more robust
+- Update file command parser to make filename splitting more robust
 
 20200311 v1.9.0
-- Added ntpq command parser
-- Added timedatectl status command parser
-- Added airport -I and airport -s command parser
-- Added file command parser
+- Add ntpq command parser
+- Add timedatectl status command parser
+- Add airport -I and airport -s command parser
+- Add file command parser
 - Optimized history command parser by https://github.com/philippeitis
 - Magic syntax fix for certain edge cases
 
@@ -378,23 +390,23 @@ jc changelog
 - CLI optimizations by https://github.com/philippeitis
 - Refactored magic syntax function and added tests (https://github.com/philippeitis)
 - Github actions for CI testing on multiple platforms by https://github.com/philippeitis
-- Updated ls parser to fix parsing error in OSX with -lR when there are empty folders
+- Update ls parser to fix parsing error in OSX with -lR when there are empty folders
 
 20200303 v1.8.0
-- Added blkid command parser
-- Added last and lastb command parser
-- Added who command parser
-- Added CSV file parser
-- Added /etc/passwd file parser
-- Added /etc/shadow file parser
-- Added /etc/group file parser
-- Added /etc/gshadow file parser
+- Add blkid command parser
+- Add last and lastb command parser
+- Add who command parser
+- Add CSV file parser
+- Add /etc/passwd file parser
+- Add /etc/shadow file parser
+- Add /etc/group file parser
+- Add /etc/gshadow file parser
 
 20200227 v1.7.5
-- Updated ls parser to support filenames with newline characters
+- Update ls parser to support filenames with newline characters
 
 20200219 v1.7.4
-- Updated ls parser to support multiple directories, globbing, and -R (recursive)
+- Update ls parser to support multiple directories, globbing, and -R (recursive)
 
 20200211 v1.7.3
 - Add alternative 'magic' syntax: e.g. `jc ls -al`
@@ -411,8 +423,8 @@ jc changelog
 - Add crontab file parser with user support (tested on linux)
 - Add __version__ variable to parser modules
 - Add exit code on error
-- Updated history parser to output "line" as an integer
-- Updated compatibility list for some parsers
+- Update history parser to output "line" as an integer
+- Update compatibility list for some parsers
 - Bugfix in crontab file parser: header insertion was clobbering first row
 - Just-in-time loading of parser modules instead of loading all at start
 
@@ -425,7 +437,7 @@ jc changelog
 - Add tests for ls, dig, ps, w, uptime on OSX
 - Add about option
 - Add universal parsers to refactor repetitive code
-- Updated ifconfig parser to output 'state' as an array
+- Update ifconfig parser to output 'state' as an array
 
 20191117 v1.5.1
 - Add ss parser
@@ -438,11 +450,11 @@ jc changelog
 - Add -d option to debug parsing issues
 - Add compatibility warnings to stderr
 - Add documentation
-- Updated iptables parser to allow --line-numbers option
-- Updated lsblk parser to allow parsing of added columns
-- Updated mount parser: changed 'access' field name to 'options'
-- Updated netstat parser to allow parsing of unix sockets and raw network connections
-- Updated w parser to fix unaligned data where blanks are possible
+- Update iptables parser to allow --line-numbers option
+- Update lsblk parser to allow parsing of added columns
+- Update mount parser: changed 'access' field name to 'options'
+- Update netstat parser to allow parsing of unix sockets and raw network connections
+- Update w parser to fix unaligned data where blanks are possible
 - Clean up code and reorganize package
 
 20191031 v1.1.1

@@ -68,7 +68,7 @@ Parameters:
                                      variants of the module name.
 
     data:               (string or   data to parse (string for normal
-                        iterator)    parsers, iterator of strings for
+                        iterable)    parsers, iterable of strings for
                                      streaming parsers)
 
     raw:                (boolean)    output preprocessed JSON if True

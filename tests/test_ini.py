@@ -41,6 +41,18 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ini.parse(self.generic_ini_iptelserver, quiet=True), self.generic_ini_iptelserver_json)
 
+    def test_ini_duplicate_keys(self):
+        """
+        Test input that contains duplicate keys. Only the last value should be used.
+        """
+        data = '''
+duplicate_key: value1
+another_key = foo
+duplicate_key = value2
+'''
+        expected = {'duplicate_key': 'value2', 'another_key': 'foo'}
+        self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

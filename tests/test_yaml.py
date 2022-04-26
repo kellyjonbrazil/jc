@@ -41,6 +41,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.yaml.parse(self.generic_yaml_istio_sidecar, quiet=True), self.generic_yaml_istio_sidecar_json)
 
+    def test_yaml_datetime(self):
+        """
+        Test yaml file with datetime object (should convert to a string)
+        """
+        data = 'deploymentTime: 2022-04-18T11:12:47'
+        expected = [{"deploymentTime":"2022-04-18T11:12:47"}]
+        self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

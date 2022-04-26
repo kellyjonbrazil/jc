@@ -37,7 +37,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
-    copyright = '© 2019-2022 Kelly Brazil'
+    copyright = f'© 2019-2022 Kelly Brazil'
     license = 'MIT License'
 
 
@@ -82,6 +82,16 @@ if PYGMENTS_INSTALLED:
             'brightcyan': 'ansibrightcyan',
             'white': 'ansiwhite',
         }
+
+
+def asciify(string):
+    """
+    Return a string downgraded from Unicode to ASCII with some simple
+    conversions.
+    """
+    string = string.replace('©', '(c)')
+    string = ascii(string)
+    return string.replace(r'\n', '\n')
 
 
 def set_env_colors(env_colors=None):
@@ -177,6 +187,8 @@ def about_jc():
         'website': info.website,
         'copyright': info.copyright,
         'license': info.license,
+        'python_version': '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro))),
+        'python_path': sys.executable,
         'parser_count': len(all_parser_info()),
         'parsers': all_parser_info()
     }
@@ -249,8 +261,12 @@ def help_doc(options):
 
 def versiontext():
     """Return the version text"""
+    py_ver = '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)))
     versiontext_string = f'''\
-    jc version {info.version}
+    jc version:  {info.version}
+    python interpreter version:  {py_ver}
+    python path:  {sys.executable}
+
     {info.website}
     {info.copyright}'''
     return textwrap.dedent(versiontext_string)
@@ -273,10 +289,23 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        return str(highlight(json.dumps(data, indent=indent, separators=separators, ensure_ascii=False),
-                             JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        try:
+            return str(highlight(json.dumps(data,
+                                            indent=indent,
+                                            separators=separators,
+                                            ensure_ascii=False),
+                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        except UnicodeEncodeError:
+            return str(highlight(json.dumps(data,
+                                            indent=indent,
+                                            separators=separators,
+                                            ensure_ascii=True),
+                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
-    return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
+    try:
+        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
+    except UnicodeEncodeError:
+        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=True)
 
 
 def magic_parser(args):
@@ -422,11 +451,17 @@ def main():
         sys.exit(0)
 
     if help_me:
-        print(help_doc(sys.argv))
+        try:
+            print(help_doc(sys.argv))
+        except UnicodeEncodeError:
+            print(asciify(help_doc(sys.argv)))
         sys.exit(0)
 
     if version_info:
-        print(versiontext())
+        try:
+            print(versiontext())
+        except UnicodeEncodeError:
+            print(asciify(versiontext()))
         sys.exit(0)
 
     # if magic syntax used, try to run the command and error if it's not found, etc.

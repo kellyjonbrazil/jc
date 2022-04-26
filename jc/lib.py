@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.18.6'
+__version__ = '1.18.7'
 
 parsers = [
     'acpi',
@@ -33,6 +33,7 @@ parsers = [
     'finger',
     'free',
     'fstab',
+    'git-log',
     'group',
     'gshadow',
     'hash',
@@ -93,6 +94,8 @@ parsers = [
     'ufw',
     'ufw-appinfo',
     'uname',
+    'update-alt-gs',
+    'update-alt-q',
     'upower',
     'uptime',
     'vmstat',
@@ -206,7 +209,7 @@ def parse(
                                          variants of the module name.
 
         data:               (string or   data to parse (string for normal
-                            iterator)    parsers, iterator of strings for
+                            iterable)    parsers, iterable of strings for
                                          streaming parsers)
 
         raw:                (boolean)    output preprocessed JSON if True

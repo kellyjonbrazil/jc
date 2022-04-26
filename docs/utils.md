@@ -187,7 +187,7 @@ class timestamp()
 
 ```python
 def __init__(datetime_string: str,
-             format_hint: Union[List, Tuple, None] = None) -> None
+             format_hint: Optional[Iterable] = None) -> None
 ```
 
 Input a datetime text string of several formats and convert to a
@@ -198,7 +198,7 @@ Parameters:
     datetime_string  (str):  a string representation of a
         datetime in several supported formats
 
-    format_hint  (list | tuple):  an optional list of format ID
+    format_hint  (iterable):  an optional iterable of format ID
         integers to instruct the timestamp object to try those
         formats first in the order given. Other formats will be
         tried after the format hint list is exhausted. This can

@@ -30,7 +30,8 @@ class XrandrTests(unittest.TestCase):
             "HDMI1 connected (normal left inverted right x axis y axis)",
             "VIRTUAL1 disconnected (normal left inverted right x axis y axis)",
             "eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 310mm x 170mm",
-            "eDP-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 309mm x 174mm"
+            "eDP-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 309mm x 174mm",
+            "HDMI-0 connected 2160x3840+3840+0 right (normal left inverted right x axis y axis) 609mm x 349mm",
         ]
         for device in devices:
             self.assertIsNotNone(re.match(_device_pattern, device))
@@ -85,7 +86,7 @@ class XrandrTests(unittest.TestCase):
 
     def test_device(self):
         # regex101 sample link for tests/edits https://regex101.com/r/3cHMv3/1
-        sample = "eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 310mm x 170mm"
+        sample = "eDP1 connected primary 1920x1080+0+0 left (normal left inverted right x axis y axis) 310mm x 170mm"
         actual: Optional[Device] = _parse_device([sample])
 
         expected = {
@@ -98,6 +99,7 @@ class XrandrTests(unittest.TestCase):
             "offset_height": 0,
             "dimension_width": 310,
             "dimension_height": 170,
+            "rotation": "left",
         }
 
         self.assertIsNotNone(actual)

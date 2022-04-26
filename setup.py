@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='jc',
-    version='1.18.6',
+    version='1.18.7',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
     description='Converts the output of popular command-line tools and file-types to JSON.',

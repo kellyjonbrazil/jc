@@ -106,17 +106,17 @@ pip3 install jc
 
 ### OS Package Repositories
 
-| OS                    | Command                                                                       |
-|-----------------------|-------------------------------------------------------------------------------|
-| Debian/Ubuntu linux   | `apt-get install jc`                                                          |
-| Fedora linux          | `dnf install jc`                                                              |
-| openSUSE linux        | `zypper install jc`                                                           |
-| Archlinux User Repositories (AUR)           | `paru -S jc` or `aura  -A jc` or `yay -S jc`                                                              |
-| NixOS linux           | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
-| Guix System linux     | `guix install jc`                                                             |
-| macOS                 | `brew install jc`                                                             |
-| FreeBSD               | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
-| Ansible filter plugin | `ansible-galaxy collection install community.general`                         |
+| OS                                   | Command                                                                       |
+|--------------------------------------|-------------------------------------------------------------------------------|
+| Debian/Ubuntu linux                  | `apt-get install jc`                                                          |
+| Fedora linux                         | `dnf install jc`                                                              |
+| openSUSE linux                       | `zypper install jc`                                                           |
+| Archlinux User Repositories (AUR)    | `paru -S jc` or `aura  -A jc` or `yay -S jc`                                  |
+| NixOS linux                          | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
+| Guix System linux                    | `guix install jc`                                                             |
+| macOS                                | `brew install jc`                                                             |
+| FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
+| Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
@@ -167,6 +167,7 @@ option.
 - `--finger` enables the `finger` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/finger))
 - `--free` enables the `free` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/free))
 - `--fstab` enables the `/etc/fstab` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab))
+- `--git-log` enables the `git log` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log))
 - `--group` enables the `/etc/group` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/group))
 - `--gshadow` enables the `/etc/gshadow` file parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow))
 - `--hash` enables the `hash` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/hash))
@@ -227,6 +228,8 @@ option.
 - `--ufw` enables the `ufw status` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw))
 - `--ufw-appinfo` enables the `ufw app info [application]` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo))
 - `--uname` enables the `uname -a` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uname))
+- `--update-alt-gs` enables the `update-alternatives --get-selections` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs))
+- `--update-alt-q` enables the `update-alternatives --query` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q))
 - `--upower` enables the `upower` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/upower))
 - `--uptime` enables the `uptime` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime))
 - `--vmstat` enables the `vmstat` command parser ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat))
@@ -399,9 +402,9 @@ Local parser plugins are standard python module files. Use the
 or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py)
 parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
-Local plugin filenames must be valid python module names, therefore must consist
-entirely of alphanumerics and start with a letter. Local plugins may override
-default parsers.
+Local plugin filenames must be valid python module names and therefore must
+start with a letter and consist entirely of alphanumerics. Local plugins
+may override default parsers.
 
 > Note: The application data directory follows the
 [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)

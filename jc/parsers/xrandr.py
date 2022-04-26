@@ -49,7 +49,8 @@ Schema:
           "offset_width":                      integer,
           "offset_height":                     integer,
           "dimension_width":                   integer,
-          "dimension_height":                  integer
+          "dimension_height":                  integer,
+          "rotation":                          string
         }
       ],
       "unassociated_devices": [
@@ -125,7 +126,8 @@ Examples:
             "offset_width": 0,
             "offset_height": 0,
             "dimension_width": 310,
-            "dimension_height": 170
+            "dimension_height": 170,
+            "rotation": "normal"
           }
         }
       ],
@@ -140,7 +142,7 @@ import jc.utils
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.0"
+    version = "1.1"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "lyter_git at sent.com"
@@ -252,6 +254,7 @@ _device_pattern = (
     + "(?P<is_primary> primary)? ?"
     + "((?P<resolution_width>\d+)x(?P<resolution_height>\d+)"
     + "\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
+    + "(?P<rotation>(inverted|left|right))? ?"
     + "\(normal left inverted right x axis y axis\)"
     + "( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
@@ -275,9 +278,10 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         "is_primary": matches["is_primary"] is not None
         and len(matches["is_primary"]) > 0,
         "device_name": matches["device_name"],
+        "rotation": matches["rotation"] or "normal",
     }
     for k, v in matches.items():
-        if k not in {"is_connected", "is_primary", "device_name"}:
+        if k not in {"is_connected", "is_primary", "device_name", "rotation"}:
             try:
                 if v:
                     device[k] = int(v)

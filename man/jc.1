@@ -1,4 +1,4 @@
-.TH jc 1 2022-03-25 1.18.6 "JSON Convert"
+.TH jc 1 2022-04-25 1.18.7 "JSON Convert"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -136,6 +136,11 @@ CSV file streaming parser
 .B
 \fB--fstab\fP
 `/etc/fstab` file parser
+
+.TP
+.B
+\fB--git-log\fP
+`git log` command parser
 
 .TP
 .B
@@ -436,6 +441,16 @@ Key/Value file parser
 .B
 \fB--uname\fP
 `uname -a` command parser
+
+.TP
+.B
+\fB--update-alt-gs\fP
+`update-alternatives --get-selections` command parser
+
+.TP
+.B
+\fB--update-alt-q\fP
+`update-alternatives --query` command parser
 
 .TP
 .B
