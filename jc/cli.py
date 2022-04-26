@@ -84,16 +84,7 @@ if PYGMENTS_INSTALLED:
         }
 
 
-def asciify(string):
-    """
-    Return a string downgraded from Unicode to ASCII with some simple
-    conversions.
-    """
-    string = string.replace('©', '(c)')
-    # the ascii() function adds single quotes around the string
-    string = ascii(string)[1:-1]
-    string = string.replace(r'\n', '\n')
-    return string
+
 
 
 def set_env_colors(env_colors=None):
@@ -449,17 +440,11 @@ def main():
         sys.exit(0)
 
     if help_me:
-        try:
-            print(help_doc(sys.argv))
-        except UnicodeEncodeError:
-            print(asciify(help_doc(sys.argv)))
+        utils.safe_print(help_doc(sys.argv))
         sys.exit(0)
 
     if version_info:
-        try:
-            print(versiontext())
-        except UnicodeEncodeError:
-            print(asciify(versiontext()))
+        utils.safe_print(versiontext())
         sys.exit(0)
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
@@ -474,10 +459,7 @@ def main():
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
-                try:
-                    print(magic_stderr[:-1], file=sys.stderr)
-                except UnicodeEncodeError:
-                    print(asciify(magic_stderr[:-1], file=sys.stderr))
+                utils.safe_print(magic_stderr[:-1], file=sys.stderr)
 
         except OSError as e:
             if debug:
