@@ -278,16 +278,16 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
         separators = None
         indent = 2
 
-    j_data = json.dumps(data, indent=indent, separators=separators, ensure_ascii=ascii_only)
+    j_string = json.dumps(data, indent=indent, separators=separators, ensure_ascii=ascii_only)
 
     if not mono and not piped_out:
         # set colors
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        return str(highlight(j_data, JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        return str(highlight(j_string, JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
-    return j_data
+    return j_string
 
 
 def magic_parser(args):
