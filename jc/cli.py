@@ -274,7 +274,7 @@ def versiontext():
     return textwrap.dedent(versiontext_string)
 
 
-def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
+def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, ascii_only=False):
     """
     Return a JSON formatted string. String may include color codes or be
     pretty printed.
@@ -291,23 +291,13 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        try:
-            return str(highlight(json.dumps(data,
-                                            indent=indent,
-                                            separators=separators,
-                                            ensure_ascii=False),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
-        except UnicodeEncodeError:
-            return str(highlight(json.dumps(data,
-                                            indent=indent,
-                                            separators=separators,
-                                            ensure_ascii=True),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        return str(highlight(json.dumps(data,
+                                        indent=indent,
+                                        separators=separators,
+                                        ensure_ascii=ascii_only),
+                             JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
-    try:
-        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
-    except UnicodeEncodeError:
-        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=True)
+    return json.dumps(data, indent=indent, separators=separators, ensure_ascii=ascii_only)
 
 
 def magic_parser(args):
@@ -445,11 +435,19 @@ def main():
         mono = True
 
     if about:
-        print(json_out(about_jc(),
-              pretty=pretty,
-              env_colors=jc_colors,
-              mono=mono,
-              piped_out=piped_output(force_color)))
+        try:
+            print(json_out(about_jc(),
+                           pretty=pretty,
+                           env_colors=jc_colors,
+                           mono=mono,
+                           piped_out=piped_output(force_color)))
+        except UnicodeEncodeError:
+            print(json_out(about_jc(),
+                           pretty=pretty,
+                           env_colors=jc_colors,
+                           mono=mono,
+                           piped_out=piped_output(force_color),
+                           ascii_only=True))
         sys.exit(0)
 
     if help_me:
@@ -478,7 +476,10 @@ def main():
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
-                print(magic_stderr[:-1], file=sys.stderr)
+                try:
+                    print(magic_stderr[:-1], file=sys.stderr)
+                except UnicodeEncodeError:
+                    print(asciify(magic_stderr[:-1], file=sys.stderr))
 
         except OSError as e:
             if debug:
@@ -542,12 +543,21 @@ def main():
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
             for line in result:
-                print(json_out(line,
-                               pretty=pretty,
-                               env_colors=jc_colors,
-                               mono=mono,
-                               piped_out=piped_output(force_color)),
-                      flush=unbuffer)
+                try:
+                    print(json_out(line,
+                                   pretty=pretty,
+                                   env_colors=jc_colors,
+                                   mono=mono,
+                                   piped_out=piped_output(force_color)),
+                          flush=unbuffer)
+                except UnicodeEncodeError:
+                    print(json_out(line,
+                                   pretty=pretty,
+                                   env_colors=jc_colors,
+                                   mono=mono,
+                                   piped_out=piped_output(force_color),
+                                   ascii_only=True),
+                          flush=unbuffer)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -557,12 +567,22 @@ def main():
             result = parser.parse(data,
                                   raw=raw,
                                   quiet=quiet)
-            print(json_out(result,
-                           pretty=pretty,
-                           env_colors=jc_colors,
-                           mono=mono,
-                           piped_out=piped_output(force_color)),
-                  flush=unbuffer)
+
+            try:
+                print(json_out(result,
+                               pretty=pretty,
+                               env_colors=jc_colors,
+                               mono=mono,
+                               piped_out=piped_output(force_color)),
+                      flush=unbuffer)
+            except UnicodeEncodeError:
+                print(json_out(result,
+                               pretty=pretty,
+                               env_colors=jc_colors,
+                               mono=mono,
+                               piped_out=piped_output(force_color),
+                               ascii_only=True),
+                      flush=unbuffer)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
 
