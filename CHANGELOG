@@ -1,12 +1,15 @@
 jc changelog
 
+20220425 v1.18.8
+- Fix quotation marks around asciified output with UnicodeEncodeError
+
 20220425 v1.18.7
 - Add git log command parser
 - Add update-alternatives --query parser
 - Add update-alternatives --get-selections parser
 - Fix key/value and ini parsers to allow duplicate keys
 - Fix yaml file parser for files including timestamp objects
-- Fix UnicodeDecodeError on some systems where LANG=C is set and unicode
+- Fix UnicodeEncodeError on some systems where LANG=C is set and unicode
   characters are in the output
 - Update xrandr parser: add a 'rotation' field
 - Fix failing tests by moving template files
