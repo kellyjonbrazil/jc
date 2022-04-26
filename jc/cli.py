@@ -358,7 +358,8 @@ def run_user_command(command):
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             close_fds=False,            # Allows inheriting file descriptors;
-                            universal_newlines=True)    # useful for process substitution
+                            universal_newlines=True,    #     useful for process substitution
+                            encoding='UTF-8')
     stdout, stderr = proc.communicate()
 
     return (
