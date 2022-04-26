@@ -90,8 +90,10 @@ def asciify(string):
     conversions.
     """
     string = string.replace('©', '(c)')
-    string = ascii(string)
-    return string.replace(r'\n', '\n')
+    # the ascii() function adds single quotes around the string
+    string = ascii(string)[1:-1]
+    string = string.replace(r'\n', '\n')
+    return string
 
 
 def set_env_colors(env_colors=None):
