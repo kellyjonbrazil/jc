@@ -1,7 +1,6 @@
 # Table of Contents
 
 * [jc.utils](#jc.utils)
-  * [asciify](#jc.utils.asciify)
   * [warning\_message](#jc.utils.warning_message)
   * [error\_message](#jc.utils.error_message)
   * [compatibility](#jc.utils.compatibility)
@@ -18,17 +17,6 @@
 # jc.utils
 
 jc - JSON Convert utils
-
-<a id="jc.utils.asciify"></a>
-
-### asciify
-
-```python
-def asciify(string: str) -> str
-```
-
-Return a string downgraded from Unicode to ASCII with some simple
-conversions.
 
 <a id="jc.utils.warning_message"></a>
 
