@@ -84,6 +84,26 @@ if PYGMENTS_INSTALLED:
         }
 
 
+def safe_print_json(string, pretty=None, env_colors=None, mono=None,
+                    piped_out=None, flush=None):
+    """Safely prints JSON output in both UTF-8 and ASCII systems"""
+    try:
+        print(json_out(string,
+                        pretty=pretty,
+                        env_colors=env_colors,
+                        mono=mono,
+                        piped_out=piped_out),
+              flush=flush)
+    except UnicodeEncodeError:
+        print(json_out(string,
+                        pretty=pretty,
+                        env_colors=env_colors,
+                        mono=mono,
+                        piped_out=piped_out,
+                        ascii_only=True),
+              flush=flush)
+
+
 def set_env_colors(env_colors=None):
     """
     Return a dictionary to be used in Pygments custom style class.
@@ -423,19 +443,11 @@ def main():
         mono = True
 
     if about:
-        try:
-            print(json_out(about_jc(),
-                           pretty=pretty,
-                           env_colors=jc_colors,
-                           mono=mono,
-                           piped_out=piped_output(force_color)))
-        except UnicodeEncodeError:
-            print(json_out(about_jc(),
-                           pretty=pretty,
-                           env_colors=jc_colors,
-                           mono=mono,
-                           piped_out=piped_output(force_color),
-                           ascii_only=True))
+        safe_print_json(about_jc(),
+                        pretty=pretty,
+                        env_colors=jc_colors,
+                        mono=mono,
+                        piped_out=piped_output(force_color))
         sys.exit(0)
 
     if help_me:
@@ -522,21 +534,12 @@ def main():
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
             for line in result:
-                try:
-                    print(json_out(line,
-                                   pretty=pretty,
-                                   env_colors=jc_colors,
-                                   mono=mono,
-                                   piped_out=piped_output(force_color)),
-                          flush=unbuffer)
-                except UnicodeEncodeError:
-                    print(json_out(line,
-                                   pretty=pretty,
-                                   env_colors=jc_colors,
-                                   mono=mono,
-                                   piped_out=piped_output(force_color),
-                                   ascii_only=True),
-                          flush=unbuffer)
+                safe_print_json(line,
+                                pretty=pretty,
+                                env_colors=jc_colors,
+                                mono=mono,
+                                piped_out=piped_output(force_color),
+                                flush=unbuffer)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -547,21 +550,12 @@ def main():
                                   raw=raw,
                                   quiet=quiet)
 
-            try:
-                print(json_out(result,
-                               pretty=pretty,
-                               env_colors=jc_colors,
-                               mono=mono,
-                               piped_out=piped_output(force_color)),
-                      flush=unbuffer)
-            except UnicodeEncodeError:
-                print(json_out(result,
-                               pretty=pretty,
-                               env_colors=jc_colors,
-                               mono=mono,
-                               piped_out=piped_output(force_color),
-                               ascii_only=True),
-                      flush=unbuffer)
+            safe_print_json(result,
+                            pretty=pretty,
+                            env_colors=jc_colors,
+                            mono=mono,
+                            piped_out=piped_output(force_color),
+                            flush=unbuffer)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
 
