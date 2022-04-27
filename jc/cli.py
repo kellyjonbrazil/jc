@@ -84,9 +84,6 @@ if PYGMENTS_INSTALLED:
         }
 
 
-
-
-
 def set_env_colors(env_colors=None):
     """
     Return a dictionary to be used in Pygments custom style class.
@@ -442,11 +439,11 @@ def main():
         sys.exit(0)
 
     if help_me:
-        utils.safe_print(help_doc(sys.argv))
+        utils._safe_print(help_doc(sys.argv))
         sys.exit(0)
 
     if version_info:
-        utils.safe_print(versiontext())
+        utils._safe_print(versiontext())
         sys.exit(0)
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
@@ -461,7 +458,7 @@ def main():
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
-                utils.safe_print(magic_stderr[:-1], file=sys.stderr)
+                utils._safe_print(magic_stderr[:-1], file=sys.stderr)
 
         except OSError as e:
             if debug:
