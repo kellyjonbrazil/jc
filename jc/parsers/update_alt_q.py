@@ -241,10 +241,12 @@ def parse(
                 if not 'alternatives' in raw_output:
                     raw_output['alternatives'] = []
 
-                if slaves:
-                    alt_obj['slaves'] = slaves
+                if alt_obj:
+                    if slaves:
+                        alt_obj['slaves'] = slaves
+                        slaves = []
+
                     raw_output['alternatives'].append(alt_obj)
-                    slaves = []
 
                 alt_obj = {"alternative": line_list[1]}
                 continue

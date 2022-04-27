@@ -1,0 +1,1 @@
+{"name":"php-fpm.sock","link":"/run/php/php-fpm.sock","status":"auto","best":"/run/php/php8.1-fpm.sock","value":"/run/php/php8.1-fpm.sock","alternatives":[{"alternative":"/run/php/php7.4-fpm.sock","priority":74},{"alternative":"/run/php/php8.0-fpm.sock","priority":80},{"alternative":"/run/php/php8.1-fpm.sock","priority":81}]}

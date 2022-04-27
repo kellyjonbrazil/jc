@@ -1,0 +1,14 @@
+Name: php-fpm.sock
+Link: /run/php/php-fpm.sock
+Status: auto
+Best: /run/php/php8.1-fpm.sock
+Value: /run/php/php8.1-fpm.sock
+
+Alternative: /run/php/php7.4-fpm.sock
+Priority: 74
+
+Alternative: /run/php/php8.0-fpm.sock
+Priority: 80
+
+Alternative: /run/php/php8.1-fpm.sock
+Priority: 81
