@@ -1,6 +1,7 @@
 jc changelog
 
-20220426 v1.18.8
+20220427 v1.18.8
+- Fix update-alternatives --query parser for cases where `slaves` are not present
 - Fix UnicodeEncodeError on some systems where LANG=C is set and unicode
   characters are in the output
 - Update history parser: do not drop non-ASCII characters if the system
