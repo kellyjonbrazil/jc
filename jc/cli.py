@@ -89,18 +89,18 @@ def safe_print_json(string, pretty=None, env_colors=None, mono=None,
     """Safely prints JSON output in both UTF-8 and ASCII systems"""
     try:
         print(json_out(string,
-                        pretty=pretty,
-                        env_colors=env_colors,
-                        mono=mono,
-                        piped_out=piped_out),
+                       pretty=pretty,
+                       env_colors=env_colors,
+                       mono=mono,
+                       piped_out=piped_out),
               flush=flush)
     except UnicodeEncodeError:
         print(json_out(string,
-                        pretty=pretty,
-                        env_colors=env_colors,
-                        mono=mono,
-                        piped_out=piped_out,
-                        ascii_only=True),
+                       pretty=pretty,
+                       env_colors=env_colors,
+                       mono=mono,
+                       piped_out=piped_out,
+                       ascii_only=True),
               flush=flush)
 
 
