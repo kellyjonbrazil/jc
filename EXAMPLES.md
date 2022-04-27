@@ -1059,6 +1059,53 @@ cat /etc/fstab | jc --fstab -p
   }
 ]
 ```
+### git log
+```bash
+git log --stat | jc --git-log -p          or:  jc -p git log --stat
+```
+```json
+[
+  {
+    "commit": "728d882ed007b3c8b785018874a0eb06e1143b66",
+    "author": "Kelly Brazil",
+    "author_email": "kellyjonbrazil@gmail.com",
+    "date": "Wed Apr 20 09:50:19 2022 -0400",
+    "stats": {
+      "files_changed": 2,
+      "insertions": 90,
+      "deletions": 12,
+      "files": [
+        "docs/parsers/git_log.md",
+        "jc/parsers/git_log.py"
+      ]
+    },
+    "message": "add timestamp docs and examples",
+    "epoch": 1650462619,
+    "epoch_utc": null
+  },
+  {
+    "commit": "b53e42aca623181aa9bc72194e6eeef1e9a3a237",
+    "author": "Kelly Brazil",
+    "author_email": "kellyjonbrazil@gmail.com",
+    "date": "Wed Apr 20 09:44:42 2022 -0400",
+    "stats": {
+      "files_changed": 5,
+      "insertions": 29,
+      "deletions": 6,
+      "files": [
+        "docs/parsers/git_log.md",
+        "docs/utils.md",
+        "jc/parsers/git_log.py",
+        "jc/utils.py",
+        "man/jc.1"
+      ]
+    },
+    "message": "add calculated timestamp",
+    "epoch": 1650462282,
+    "epoch_utc": null
+  }
+]
+```
 ### /etc/group file
 ```bash
 cat /etc/group | jc --group -p
