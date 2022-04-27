@@ -328,6 +328,9 @@ or by exporting to the environment before running commands:
 $ export LANG=C
 ```
 
+On some older systems UTF-8 output will be downgraded to ASCII with `\\u`
+escape sequences if the `C` locale does not support UTF-8 encoding.
+
 #### Timezones
 
 Some parsers have calculated epoch timestamp fields added to the output. Unless

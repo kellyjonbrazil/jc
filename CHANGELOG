@@ -3,6 +3,9 @@ jc changelog
 20220426 v1.18.8
 - Fix UnicodeEncodeError on some systems where LANG=C is set and unicode
   characters are in the output
+- Update history parser: do not drop non-ASCII characters if the system
+  is configured for UTF-8 encoding
+- Enhance "magic syntax" to always use UTF-8 encoding
 
 20220425 v1.18.7
 - Add git log command parser
