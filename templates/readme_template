@@ -143,8 +143,10 @@ The JSON output can be compact (default) or pretty formatted with the `-p`
 option.
 
 ### Parsers
-{% for parser in jc.parsers %}
-- `{{ parser.argument }}` enables the {{ parser.description }} ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }})){% endfor %}
+
+| Argument     | Command or Filetype     | Documentation     |
+|--------------|-------------------------|-------------------|{% for parser in jc.parsers %}
+| `{{ parser.argument }}` | {{ parser.description }} | [documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }}) |{% endfor %}
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
