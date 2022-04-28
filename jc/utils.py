@@ -9,6 +9,26 @@ from functools import lru_cache
 from typing import List, Iterable, Union, Optional
 
 
+def _asciify(string: str) -> str:
+    """
+    Return a string downgraded from Unicode to ASCII with some simple
+    conversions.
+    """
+    string = string.replace('©', '(c)')
+    # the ascii() function adds single quotes around the string
+    string = ascii(string)[1:-1]
+    string = string.replace(r'\n', '\n')
+    return string
+
+
+def _safe_print(string: str, sep=' ', end='\n', file=sys.stdout, flush=False) -> None:
+    """Output for both UTF-8 and ASCII encoding systems"""
+    try:
+        print(string, sep=sep, end=end, file=file, flush=flush)
+    except UnicodeEncodeError:
+        print(_asciify(string), sep=sep, end=end, file=file, flush=flush)
+
+
 def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message for non-fatal issues. The first line is
@@ -36,13 +56,13 @@ def warning_message(message_lines: List[str]) -> None:
     first_line = message_lines.pop(0)
     first_str = f'jc:  Warning - {first_line}'
     first_str = first_wrapper.fill(first_str)
-    print(first_str, file=sys.stderr)
+    _safe_print(first_str, file=sys.stderr)
 
     for line in message_lines:
         if line == '':
             continue
         message = next_wrapper.fill(line)
-        print(message, file=sys.stderr)
+        _safe_print(message, file=sys.stderr)
 
 
 def error_message(message_lines: List[str]) -> None:
@@ -68,13 +88,13 @@ def error_message(message_lines: List[str]) -> None:
     first_line = message_lines.pop(0)
     first_str = f'jc:  Error - {first_line}'
     first_str = first_wrapper.fill(first_str)
-    print(first_str, file=sys.stderr)
+    _safe_print(first_str, file=sys.stderr)
 
     for line in message_lines:
         if line == '':
             continue
         message = next_wrapper.fill(line)
-        print(message, file=sys.stderr)
+        _safe_print(message, file=sys.stderr)
 
 
 def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:

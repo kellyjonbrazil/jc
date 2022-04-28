@@ -201,6 +201,8 @@ or by exporting to the environment before running commands:
 $ export LANG=C
 .RE
 
+On some older systems UTF-8 output will be downgraded to ASCII with `\\u` escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
+
 \fBTimezones:\fP Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
 
 If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a \fB_utc\fP suffix on the key name. (e.g. \fBepoch_utc\fP) No other timezones are supported for aware timestamps.

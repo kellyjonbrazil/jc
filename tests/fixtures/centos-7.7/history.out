@@ -998,3 +998,4 @@
  1062  ls
  1063  cd testfiles/
  1064  history > history.out 
+ 1065  export MYTEST=©2019-2022

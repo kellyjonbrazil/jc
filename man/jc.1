@@ -1,4 +1,4 @@
-.TH jc 1 2022-04-25 1.18.7 "JSON Convert"
+.TH jc 1 2022-04-27 1.18.8 "JSON Convert"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -685,6 +685,8 @@ or by exporting to the environment before running commands:
 .RS
 $ export LANG=C
 .RE
+
+On some older systems UTF-8 output will be downgraded to ASCII with `\\u` escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
 
 \fBTimezones:\fP Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
 

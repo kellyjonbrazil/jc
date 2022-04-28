@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`update-alternatives --query` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -241,10 +241,12 @@ def parse(
                 if not 'alternatives' in raw_output:
                     raw_output['alternatives'] = []
 
-                if slaves:
-                    alt_obj['slaves'] = slaves
+                if alt_obj:
+                    if slaves:
+                        alt_obj['slaves'] = slaves
+                        slaves = []
+
                     raw_output['alternatives'].append(alt_obj)
-                    slaves = []
 
                 alt_obj = {"alternative": line_list[1]}
                 continue

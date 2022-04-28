@@ -37,7 +37,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     website = 'https://github.com/kellyjonbrazil/jc'
-    copyright = f'© 2019-2022 Kelly Brazil'
+    copyright = '© 2019-2022 Kelly Brazil'
     license = 'MIT License'
 
 
@@ -84,14 +84,24 @@ if PYGMENTS_INSTALLED:
         }
 
 
-def asciify(string):
-    """
-    Return a string downgraded from Unicode to ASCII with some simple
-    conversions.
-    """
-    string = string.replace('©', '(c)')
-    string = ascii(string)
-    return string.replace(r'\n', '\n')
+def safe_print_json(string, pretty=None, env_colors=None, mono=None,
+                    piped_out=None, flush=None):
+    """Safely prints JSON output in both UTF-8 and ASCII systems"""
+    try:
+        print(json_out(string,
+                       pretty=pretty,
+                       env_colors=env_colors,
+                       mono=mono,
+                       piped_out=piped_out),
+              flush=flush)
+    except UnicodeEncodeError:
+        print(json_out(string,
+                       pretty=pretty,
+                       env_colors=env_colors,
+                       mono=mono,
+                       piped_out=piped_out,
+                       ascii_only=True),
+              flush=flush)
 
 
 def set_env_colors(env_colors=None):
@@ -268,11 +278,12 @@ def versiontext():
     python path:  {sys.executable}
 
     {info.website}
-    {info.copyright}'''
+    {info.copyright}
+    '''
     return textwrap.dedent(versiontext_string)
 
 
-def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
+def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, ascii_only=False):
     """
     Return a JSON formatted string. String may include color codes or be
     pretty printed.
@@ -284,28 +295,16 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False):
         separators = None
         indent = 2
 
+    j_string = json.dumps(data, indent=indent, separators=separators, ensure_ascii=ascii_only)
+
     if not mono and not piped_out:
         # set colors
         class JcStyle(Style):
             styles = set_env_colors(env_colors)
 
-        try:
-            return str(highlight(json.dumps(data,
-                                            indent=indent,
-                                            separators=separators,
-                                            ensure_ascii=False),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
-        except UnicodeEncodeError:
-            return str(highlight(json.dumps(data,
-                                            indent=indent,
-                                            separators=separators,
-                                            ensure_ascii=True),
-                                 JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+        return str(highlight(j_string, JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
-    try:
-        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=False)
-    except UnicodeEncodeError:
-        return json.dumps(data, indent=indent, separators=separators, ensure_ascii=True)
+    return j_string
 
 
 def magic_parser(args):
@@ -376,7 +375,8 @@ def run_user_command(command):
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             close_fds=False,            # Allows inheriting file descriptors;
-                            universal_newlines=True)    # useful for process substitution
+                            universal_newlines=True,    #     useful for process substitution
+                            encoding='UTF-8')
     stdout, stderr = proc.communicate()
 
     return (
@@ -443,25 +443,19 @@ def main():
         mono = True
 
     if about:
-        print(json_out(about_jc(),
-              pretty=pretty,
-              env_colors=jc_colors,
-              mono=mono,
-              piped_out=piped_output(force_color)))
+        safe_print_json(about_jc(),
+                        pretty=pretty,
+                        env_colors=jc_colors,
+                        mono=mono,
+                        piped_out=piped_output(force_color))
         sys.exit(0)
 
     if help_me:
-        try:
-            print(help_doc(sys.argv))
-        except UnicodeEncodeError:
-            print(asciify(help_doc(sys.argv)))
+        utils._safe_print(help_doc(sys.argv))
         sys.exit(0)
 
     if version_info:
-        try:
-            print(versiontext())
-        except UnicodeEncodeError:
-            print(asciify(versiontext()))
+        utils._safe_print(versiontext())
         sys.exit(0)
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
@@ -476,7 +470,7 @@ def main():
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
-                print(magic_stderr[:-1], file=sys.stderr)
+                utils._safe_print(magic_stderr[:-1], file=sys.stderr)
 
         except OSError as e:
             if debug:
@@ -540,12 +534,12 @@ def main():
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
             for line in result:
-                print(json_out(line,
-                               pretty=pretty,
-                               env_colors=jc_colors,
-                               mono=mono,
-                               piped_out=piped_output(force_color)),
-                      flush=unbuffer)
+                safe_print_json(line,
+                                pretty=pretty,
+                                env_colors=jc_colors,
+                                mono=mono,
+                                piped_out=piped_output(force_color),
+                                flush=unbuffer)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -555,12 +549,13 @@ def main():
             result = parser.parse(data,
                                   raw=raw,
                                   quiet=quiet)
-            print(json_out(result,
-                           pretty=pretty,
-                           env_colors=jc_colors,
-                           mono=mono,
-                           piped_out=piped_output(force_color)),
-                  flush=unbuffer)
+
+            safe_print_json(result,
+                            pretty=pretty,
+                            env_colors=jc_colors,
+                            mono=mono,
+                            piped_out=piped_output(force_color),
+                            flush=unbuffer)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
 
