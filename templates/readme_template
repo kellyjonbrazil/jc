@@ -146,7 +146,7 @@ option.
 
 | Argument     | Command or Filetype     | Documentation     |
 |--------------|-------------------------|-------------------|{% for parser in jc.parsers %}
-| `{{ parser.argument }}` | {{ parser.description }} | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }}) |{% endfor %}
+| `{{ parser.argument }}` | {{ parser.description }} | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }}) |{% endfor %}
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of

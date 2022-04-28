@@ -146,104 +146,104 @@ option.
 
 | Argument     | Command or Filetype     | Documentation     |
 |--------------|-------------------------|-------------------|
-| `--acpi` | `acpi` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi) |
-| `--airport` | `airport -I` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/airport) |
-| `--airport-s` | `airport -s` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s) |
-| `--arp` | `arp` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/arp) |
-| `--asciitable` | ASCII and Unicode table parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable) |
-| `--asciitable-m` | multi-line ASCII and Unicode table parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m) |
-| `--blkid` | `blkid` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid) |
-| `--cksum` | `cksum` and `sum` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum) |
-| `--crontab` | `crontab` command and file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab) |
-| `--crontab-u` | `crontab` file parser with user support | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u) |
-| `--csv` | CSV file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/csv) |
-| `--csv-s` | CSV file streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s) |
-| `--date` | `date` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/date) |
-| `--df` | `df` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/df) |
-| `--dig` | `dig` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/dig) |
-| `--dir` | `dir` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/dir) |
-| `--dmidecode` | `dmidecode` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/dmidecode) |
-| `--dpkg-l` | `dpkg -l` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/dpkg_l) |
-| `--du` | `du` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/du) |
-| `--env` | `env` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/env) |
-| `--file` | `file` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/file) |
-| `--finger` | `finger` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/finger) |
-| `--free` | `free` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/free) |
-| `--fstab` | `/etc/fstab` file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab) |
-| `--git-log` | `git log` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log) |
-| `--group` | `/etc/group` file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/group) |
-| `--gshadow` | `/etc/gshadow` file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow) |
-| `--hash` | `hash` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/hash) |
-| `--hashsum` | hashsum command parser (`md5sum`, `shasum`, etc.) | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/hashsum) |
-| `--hciconfig` | `hciconfig` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/hciconfig) |
-| `--history` | `history` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/history) |
-| `--hosts` | `/etc/hosts` file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts) |
-| `--id` | `id` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/id) |
-| `--ifconfig` | `ifconfig` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig) |
-| `--ini` | INI file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ini) |
-| `--iostat` | `iostat` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat) |
-| `--iostat-s` | `iostat` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s) |
-| `--iptables` | `iptables` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables) |
-| `--iw-scan` | `iw dev [device] scan` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan) |
-| `--jar-manifest` | MANIFEST.MF file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest) |
-| `--jobs` | `jobs` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs) |
-| `--kv` | Key/Value file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/kv) |
-| `--last` | `last` and `lastb` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/last) |
-| `--ls` | `ls` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ls) |
-| `--ls-s` | `ls` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s) |
-| `--lsblk` | `lsblk` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk) |
-| `--lsmod` | `lsmod` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod) |
-| `--lsof` | `lsof` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof) |
-| `--lsusb` | `lsusb` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb) |
-| `--mount` | `mount` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/mount) |
-| `--mpstat` | `mpstat` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat) |
-| `--mpstat-s` | `mpstat` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s) |
-| `--netstat` | `netstat` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat) |
-| `--nmcli` | `nmcli` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli) |
-| `--ntpq` | `ntpq -p` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq) |
-| `--passwd` | `/etc/passwd` file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd) |
-| `--pidstat` | `pidstat` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat) |
-| `--pidstat-s` | `pidstat` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat_s) |
-| `--ping` | `ping` and `ping6` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ping) |
-| `--ping-s` | `ping` and `ping6` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s) |
-| `--pip-list` | `pip list` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list) |
-| `--pip-show` | `pip show` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show) |
-| `--ps` | `ps` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ps) |
-| `--route` | `route` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/route) |
-| `--rpm-qi` | `rpm -qi` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi) |
-| `--rsync` | `rsync` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync) |
-| `--rsync-s` | `rsync` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync_s) |
-| `--sfdisk` | `sfdisk` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk) |
-| `--shadow` | `/etc/shadow` file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow) |
-| `--ss` | `ss` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ss) |
-| `--stat` | `stat` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/stat) |
-| `--stat-s` | `stat` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s) |
-| `--sysctl` | `sysctl` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl) |
-| `--systemctl` | `systemctl` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl) |
-| `--systemctl-lj` | `systemctl list-jobs` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj) |
-| `--systemctl-ls` | `systemctl list-sockets` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls) |
-| `--systemctl-luf` | `systemctl list-unit-files` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_luf) |
-| `--systeminfo` | `systeminfo` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo) |
-| `--time` | `/usr/bin/time` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/time) |
-| `--timedatectl` | `timedatectl status` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl) |
-| `--tracepath` | `tracepath` and `tracepath6` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath) |
-| `--traceroute` | `traceroute` and `traceroute6` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute) |
-| `--ufw` | `ufw status` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw) |
-| `--ufw-appinfo` | `ufw app info [application]` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo) |
-| `--uname` | `uname -a` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/uname) |
-| `--update-alt-gs` | `update-alternatives --get-selections` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs) |
-| `--update-alt-q` | `update-alternatives --query` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q) |
-| `--upower` | `upower` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/upower) |
-| `--uptime` | `uptime` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime) |
-| `--vmstat` | `vmstat` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat) |
-| `--vmstat-s` | `vmstat` command streaming parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s) |
-| `--w` | `w` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/w) |
-| `--wc` | `wc` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/wc) |
-| `--who` | `who` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/who) |
-| `--xml` | XML file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/xml) |
-| `--xrandr` | `xrandr` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr) |
-| `--yaml` | YAML file parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml) |
-| `--zipinfo` | `zipinfo` command parser | [➥](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo) |
+| `--acpi` | `acpi` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi) |
+| `--airport` | `airport -I` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/airport) |
+| `--airport-s` | `airport -s` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s) |
+| `--arp` | `arp` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/arp) |
+| `--asciitable` | ASCII and Unicode table parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable) |
+| `--asciitable-m` | multi-line ASCII and Unicode table parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m) |
+| `--blkid` | `blkid` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid) |
+| `--cksum` | `cksum` and `sum` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum) |
+| `--crontab` | `crontab` command and file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab) |
+| `--crontab-u` | `crontab` file parser with user support | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u) |
+| `--csv` | CSV file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/csv) |
+| `--csv-s` | CSV file streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s) |
+| `--date` | `date` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/date) |
+| `--df` | `df` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/df) |
+| `--dig` | `dig` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/dig) |
+| `--dir` | `dir` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/dir) |
+| `--dmidecode` | `dmidecode` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/dmidecode) |
+| `--dpkg-l` | `dpkg -l` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/dpkg_l) |
+| `--du` | `du` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/du) |
+| `--env` | `env` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/env) |
+| `--file` | `file` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/file) |
+| `--finger` | `finger` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/finger) |
+| `--free` | `free` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/free) |
+| `--fstab` | `/etc/fstab` file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab) |
+| `--git-log` | `git log` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log) |
+| `--group` | `/etc/group` file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/group) |
+| `--gshadow` | `/etc/gshadow` file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow) |
+| `--hash` | `hash` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/hash) |
+| `--hashsum` | hashsum command parser (`md5sum`, `shasum`, etc.) | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/hashsum) |
+| `--hciconfig` | `hciconfig` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/hciconfig) |
+| `--history` | `history` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/history) |
+| `--hosts` | `/etc/hosts` file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts) |
+| `--id` | `id` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/id) |
+| `--ifconfig` | `ifconfig` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig) |
+| `--ini` | INI file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ini) |
+| `--iostat` | `iostat` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat) |
+| `--iostat-s` | `iostat` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s) |
+| `--iptables` | `iptables` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables) |
+| `--iw-scan` | `iw dev [device] scan` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan) |
+| `--jar-manifest` | MANIFEST.MF file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest) |
+| `--jobs` | `jobs` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs) |
+| `--kv` | Key/Value file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/kv) |
+| `--last` | `last` and `lastb` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/last) |
+| `--ls` | `ls` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ls) |
+| `--ls-s` | `ls` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s) |
+| `--lsblk` | `lsblk` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk) |
+| `--lsmod` | `lsmod` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod) |
+| `--lsof` | `lsof` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof) |
+| `--lsusb` | `lsusb` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb) |
+| `--mount` | `mount` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/mount) |
+| `--mpstat` | `mpstat` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat) |
+| `--mpstat-s` | `mpstat` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s) |
+| `--netstat` | `netstat` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat) |
+| `--nmcli` | `nmcli` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli) |
+| `--ntpq` | `ntpq -p` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq) |
+| `--passwd` | `/etc/passwd` file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd) |
+| `--pidstat` | `pidstat` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat) |
+| `--pidstat-s` | `pidstat` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat_s) |
+| `--ping` | `ping` and `ping6` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ping) |
+| `--ping-s` | `ping` and `ping6` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s) |
+| `--pip-list` | `pip list` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list) |
+| `--pip-show` | `pip show` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show) |
+| `--ps` | `ps` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ps) |
+| `--route` | `route` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/route) |
+| `--rpm-qi` | `rpm -qi` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi) |
+| `--rsync` | `rsync` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync) |
+| `--rsync-s` | `rsync` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync_s) |
+| `--sfdisk` | `sfdisk` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk) |
+| `--shadow` | `/etc/shadow` file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow) |
+| `--ss` | `ss` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ss) |
+| `--stat` | `stat` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/stat) |
+| `--stat-s` | `stat` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s) |
+| `--sysctl` | `sysctl` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl) |
+| `--systemctl` | `systemctl` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl) |
+| `--systemctl-lj` | `systemctl list-jobs` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj) |
+| `--systemctl-ls` | `systemctl list-sockets` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls) |
+| `--systemctl-luf` | `systemctl list-unit-files` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_luf) |
+| `--systeminfo` | `systeminfo` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo) |
+| `--time` | `/usr/bin/time` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/time) |
+| `--timedatectl` | `timedatectl status` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl) |
+| `--tracepath` | `tracepath` and `tracepath6` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath) |
+| `--traceroute` | `traceroute` and `traceroute6` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute) |
+| `--ufw` | `ufw status` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw) |
+| `--ufw-appinfo` | `ufw app info [application]` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo) |
+| `--uname` | `uname -a` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/uname) |
+| `--update-alt-gs` | `update-alternatives --get-selections` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs) |
+| `--update-alt-q` | `update-alternatives --query` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q) |
+| `--upower` | `upower` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/upower) |
+| `--uptime` | `uptime` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime) |
+| `--vmstat` | `vmstat` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat) |
+| `--vmstat-s` | `vmstat` command streaming parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s) |
+| `--w` | `w` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/w) |
+| `--wc` | `wc` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/wc) |
+| `--who` | `who` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/who) |
+| `--xml` | XML file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/xml) |
+| `--xrandr` | `xrandr` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr) |
+| `--yaml` | YAML file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml) |
+| `--zipinfo` | `zipinfo` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo) |
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
