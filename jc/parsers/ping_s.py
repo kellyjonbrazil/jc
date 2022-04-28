@@ -1,7 +1,7 @@
 """jc - JSON Convert `ping` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Supports `ping` and `ping6` output.
 

@@ -5,8 +5,8 @@
 
 jc - JSON Convert `stat` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
 local time of the system the parser is run on).

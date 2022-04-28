@@ -1,7 +1,7 @@
 """jc - JSON Convert `rsync` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the STDOUT output or a log file

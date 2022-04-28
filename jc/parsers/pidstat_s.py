@@ -1,7 +1,7 @@
 """jc - JSON Convert `pidstat` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Must use the `-h` option in `pidstat`. All other `pidstat` options are
 supported in combination with `-h`.

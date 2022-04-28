@@ -5,8 +5,8 @@
 
 jc - JSON Convert `iostat` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Note: `iostat` version 11 and higher include a JSON output option
 
