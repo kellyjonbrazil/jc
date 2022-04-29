@@ -1,4 +1,4 @@
-.TH jc 1 2022-04-28 1.19.0 "JSON Convert"
+.TH jc 1 2022-04-29 1.19.0 "JSON Convert"
 .SH NAME
 jc \- JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -674,7 +674,7 @@ Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
 
 Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
 
-Local plugin filenames must be valid python module names, therefore must consist entirely of alphanumerics and start with a letter. Local plugins may override default plugins.
+Local plugin filenames must be valid python module names and therefore must start with a letter and consist entirely of alphanumerics and underscores. Local plugins may override default parsers.
 
 Note: The application data directory follows the XDG Base Directory Specification
 
