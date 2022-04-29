@@ -279,9 +279,9 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 
 #### Using Streaming Parsers as Python Modules
 
-Streaming parsers accept any iterable object and return an iterator object
-(generator) allowing lazy processing of the data. The input data should
-iterate on lines of string data. Examples of good input data are `sys.stdin` or
+Streaming parsers accept any iterable object and return an iterable object
+allowing lazy processing of the data. The input data should iterate on lines
+of string data. Examples of good input data are `sys.stdin` or
 `str.splitlines()`.
 
 To use the generator object in your code, simply loop through it or use the
