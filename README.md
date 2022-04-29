@@ -382,9 +382,9 @@ allowing lazy processing of the data. The input data should iterate on lines
 of string data. Examples of good input data are `sys.stdin` or
 `str.splitlines()`.
 
-To use the generator object in your code, simply loop through it or use the
-[next()](https://docs.python.org/3/library/functions.html#next) builtin
-function:
+To use the returned iterable object in your code, simply loop through it or
+use the [next()](https://docs.python.org/3/library/functions.html#next)
+builtin function:
 ```python
 import jc
 
@@ -407,8 +407,8 @@ or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob
 parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
 Local plugin filenames must be valid python module names and therefore must
-start with a letter and consist entirely of alphanumerics. Local plugins
-may override default parsers.
+start with a letter and consist entirely of alphanumerics and underscores.
+Local plugins may override default parsers.
 
 > Note: The application data directory follows the
 [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
