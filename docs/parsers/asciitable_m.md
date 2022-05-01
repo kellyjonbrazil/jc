@@ -29,6 +29,9 @@ Headers (keys) are converted to snake-case and newlines between multi-line
 headers are joined with an underscore. All values are returned as strings,
 except empty strings, which are converted to None/null.
 
+> Note: table column separator characters (e.g. `|`) cannot be present
+  inside the cell data.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable-m
