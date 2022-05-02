@@ -3,6 +3,23 @@
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
   Dictionaries (module)
 
+Can be used with the following format options:
+- `oneline`
+- `short`
+- `medium`
+- `full`
+- `fuller`
+
+Additional options supported:
+- `--stat`
+- `--shortstat`
+
+The `epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
+
 Usage (cli):
 
     $ git log | jc --git-log-s
@@ -18,7 +35,24 @@ Usage (module):
 Schema:
 
     {
-      "git_log_s":            string,
+      "commit":               string,
+      "author":               string,
+      "author_email":         string,
+      "date":                 string,
+      "epoch":                integer, [0]
+      "epoch_utc":            integer, [1]
+      "commit_by":            string,
+      "commit_by_email":      string,
+      "commit_by_date":       string,
+      "message":              string,
+      "stats" : {
+        "files_changed":      integer,
+        "insertions":         integer,
+        "deletions":          integer,
+        "files": [
+                              string
+        ]
+      }
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
@@ -28,14 +62,14 @@ Schema:
       }
     }
 
+    [0] naive timestamp if "date" field is parsable, else null
+    [1] timezone aware timestamp availabe for UTC, else null
+
 Examples:
 
     $ git log | jc --git-log-s
-    {example output}
-    ...
-
-    $ git log | jc --git-log-s -r
-    {example output}
+    {"commit":"a730ae18c8e81c5261db132df73cd74f272a0a26","author":"Kelly...}
+    {"commit":"930bf439c06c48a952baec05a9896c8d92b7693e","author":"Kelly...}
     ...
 """
 import re
