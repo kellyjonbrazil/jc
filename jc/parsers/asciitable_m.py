@@ -386,8 +386,8 @@ def _collapse_data(table: List[List[List[str]]], quiet=False) -> List[List[str]]
     """combine data rows to return a simple list of lists"""
     result: List[List[str]] = []
 
-    try:
-        for index, row in enumerate(table):
+    for index, row in enumerate(table):
+        try:
             new_row: List[str] = []
             for line in row:
                 if new_row:
@@ -397,12 +397,12 @@ def _collapse_data(table: List[List[List[str]]], quiet=False) -> List[List[str]]
                     new_row = line
 
             result.append(new_row)
-    except IndexError:
-        if not quiet:
-            row_string = '\n'.join([' | '.join(l) for l in row])
-            jc.utils.warning_message(
-                [f'Possible table separator character found in row {index}:  {row_string}. Skipping.']
-            )
+        except IndexError:
+            if not quiet:
+                row_string = '\n'.join([' | '.join(l) for l in row])
+                jc.utils.warning_message(
+                    [f'Possible table separator character found in row {index}:  {row_string}. Skipping.']
+                )
 
     return result
 
