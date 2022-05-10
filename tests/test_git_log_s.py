@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.git_log_s
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -111,11 +112,34 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
             self.generic_git_log_oneline_shortstat_streaming_json = json.loads(f.read())
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
+            self.generic_git_log_streaming_ignore_exceptions_json = json.loads(f.read())
+
     def test_git_log_s_nodata(self):
         """
         Test 'git_log' with no data
         """
         self.assertEqual(list(jc.parsers.git_log_s.parse([], quiet=True)), [])
+
+    def test_git_log_s_unparsable(self):
+        data = 'unparsable data'
+        g = jc.parsers.git_log_s.parse(data.splitlines(), quiet=True)
+        with self.assertRaises(ParseError):
+            list(g)
+
+    def test_git_log_s_ignore_exceptions_success(self):
+        """
+        Test 'git log' with -qq (ignore_exceptions) option
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log.splitlines(), quiet=True, ignore_exceptions=True)), self.generic_git_log_streaming_ignore_exceptions_json)
+
+    def test_ping_s_ignore_exceptions_error(self):
+        """
+        Test 'ping' with -qq (ignore_exceptions) option option and error
+        """
+        data_in = 'not git log'
+        expected = json.loads('[{"_jc_meta":{"success":false,"error":"ParseError: Not git_log_s data","line":"not git log"}}]')
+        self.assertEqual(list(jc.parsers.git_log_s.parse(data_in.splitlines(), quiet=True, ignore_exceptions=True)), expected)
 
     def test_git_log_s(self):
         """
