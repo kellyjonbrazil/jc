@@ -16,6 +16,7 @@ parsers = [
     'asciitable',
     'asciitable-m',
     'blkid',
+    'chage',
     'cksum',
     'crontab',
     'crontab-u',

@@ -153,6 +153,7 @@ option.
 | `--asciitable` | ASCII and Unicode table parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable) |
 | `--asciitable-m` | multi-line ASCII and Unicode table parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m) |
 | `--blkid` | `blkid` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid) |
+| `--chage` | `chage --list` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/chage) |
 | `--cksum` | `cksum` and `sum` command parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum) |
 | `--crontab` | `crontab` command and file parser | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab) |
 | `--crontab-u` | `crontab` file parser with user support | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u) |

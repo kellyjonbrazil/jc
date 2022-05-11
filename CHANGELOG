@@ -1,6 +1,7 @@
 jc changelog
 
 20220510 v1.19.0 (in progress)
+- Add chage --list command parser tested on linux
 - Add git log command streaming parser
 - Add top -b command parser tested on linux
 - Add top -b command streaming parser tested on linux
