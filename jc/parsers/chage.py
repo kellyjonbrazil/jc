@@ -29,7 +29,7 @@ Schema:
 
 Examples:
 
-    $ chage | jc --chage -p
+    $ chage --list joeuser | jc --chage -p
     {
       "password_last_changed": "never",
       "password_expires": "never",
@@ -40,7 +40,7 @@ Examples:
       "warning_days_before_password_expires": 7
     }
 
-    $ chage | jc --chage -p -r
+    $ chage --list joeuser | jc --chage -p -r
     {
       "password_last_changed": "never",
       "password_expires": "never",
