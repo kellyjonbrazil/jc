@@ -5,7 +5,8 @@ jc changelog
 - Add git log command streaming parser
 - Add top -b command parser tested on linux
 - Add top -b command streaming parser tested on linux
-- Fix asciitable-m parser to skip rows that contain column separator
+- Allow jc to pip install on unsupported python version 3.6
+- Fix asciitable-m parser to skip some rows that contain column separator
   characters in cell data. A warning message will be printed to STDOUT
   unless `-q` or `quiet=True` is used.
 - Add YAML output option
