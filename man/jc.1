@@ -1,15 +1,15 @@
 .TH jc 1 2022-05-12 1.19.0 "JSON Convert"
 .SH NAME
-jc \- JSONifies the output of many CLI tools and file-types
+\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
 COMMAND | jc PARSER [OPTIONS]
 
 or "Magic" syntax:
 
-jc [OPTIONS] COMMAND
+\fBjc\fP [OPTIONS] COMMAND
 
 .SH DESCRIPTION
-jc JSONifies the output of many CLI tools and file-types for easier parsing in scripts. jc accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending jc to the command to be converted. Options can be passed to jc immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
+\fBjc\fP JSONifies the output of many CLI tools and file-types for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
 
 .SH OPTIONS
 .B
@@ -532,7 +532,7 @@ Options:
 .TP
 .B
 \fB-a\fP
-about jc (JSON output)
+about \fBjc\fP (JSON output)
 .TP
 .B
 \fB-C\fP
@@ -571,7 +571,7 @@ unbuffer output (useful for slow streaming data with streaming parsers)
 version information
 
 .SH EXIT CODES
-Any fatal errors within jc will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), jc will store the exit code of the program being parsed and add it to the  jc exit code. This way it is easier to determine if an error was from the parsed program or jc.
+Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.
 
 Consider the following examples using \fBifconfig\fP:
 
@@ -607,10 +607,10 @@ JC_COLORS=default,default,default,default
 
 \fBDisable Color Output\fP
 
-You can set the \fBNO_COLOR\fB environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
+You can set the \fBNO_COLOR\fP environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
 
 .SH STREAMING PARSERS
-Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP and \fBping-s\fP) that immediately start processing and outputing the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP, \fBping-s\fP, etc.) that immediately start processing and outputing the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
 
 .RS
 Note: Streaming parsers cannot be used with the "magic" syntax
@@ -682,14 +682,16 @@ Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
 .fi
 .RE
 
-Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
+Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP or \fBjc/parsers/foo_s.py\fP (streaming) parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
 
 Local plugin filenames must be valid python module names and therefore must start with a letter and consist entirely of alphanumerics and underscores. Local plugins may override default parsers.
 
 Note: The application data directory follows the XDG Base Directory Specification
 
 .SH CAVEATS
-\fBLocale:\fP For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
+\fBLocale\fP
+
+For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
 
 .RS
 $ LANG=C date | jc \fB--date\fP
@@ -701,9 +703,11 @@ or by exporting to the environment before running commands:
 $ export LANG=C
 .RE
 
-On some older systems UTF-8 output will be downgraded to ASCII with `\\u` escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
+On some older systems UTF-8 output will be downgraded to ASCII with \fB\\u\fP escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
 
-\fBTimezones:\fP Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
+\fBTimezones\fP
+
+Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
 
 If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a \fB_utc\fP suffix on the key name. (e.g. \fBepoch_utc\fP) No other timezones are supported for aware timestamps.
 
