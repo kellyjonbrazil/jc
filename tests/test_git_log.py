@@ -58,6 +58,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat.out'), 'r', encoding='utf-8') as f:
             self.git_log_oneline_shortstat = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix.out'), 'r', encoding='utf-8') as f:
+            self.git_log_fuller_hash_in_message_fix = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix.out'), 'r', encoding='utf-8') as f:
+            self.git_log_fuller_is_hash_regex_fix = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log.json'), 'r', encoding='utf-8') as f:
             self.git_log_json = json.loads(f.read())
@@ -106,6 +112,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat.json'), 'r', encoding='utf-8') as f:
             self.git_log_oneline_shortstat_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix.json'), 'r', encoding='utf-8') as f:
+            self.git_log_fuller_hash_in_message_fix_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix.json'), 'r', encoding='utf-8') as f:
+            self.git_log_fuller_is_hash_regex_fix_json = json.loads(f.read())
 
 
     def test_git_log_nodata(self):
@@ -209,6 +221,20 @@ class MyTests(unittest.TestCase):
         Test 'git_log --format=oneline --shortstat'
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_oneline_shortstat, quiet=True), self.git_log_oneline_shortstat_json)
+
+    def test_git_log_fuller_hash_in_message_fix(self):
+        """
+        Test 'git_log --format=fuller --stat' fix for when a commit message
+        contains a line that is only a commit hash value.
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_hash_in_message_fix, quiet=True), self.git_log_fuller_hash_in_message_fix_json)
+
+    def test_git_log_fuller_is_hash_fix(self):
+        """
+        Test 'git_log --format=fuller --stat' fix for when a commit message
+        contains a line that evaluated as true to an older _is_hash regex
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_is_hash_regex_fix, quiet=True), self.git_log_fuller_is_hash_regex_fix_json)
 
 
 if __name__ == '__main__':

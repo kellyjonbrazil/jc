@@ -7,7 +7,7 @@ from jc.exceptions import ParseError
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # To create streaming output use:
-# $ cat git_log.out | jc --git-log-s | jello -c > git-log-streaming.json
+# $ cat git-log.out | jc --git-log-s | jello -c > git-log-streaming.json
 
 
 class MyTests(unittest.TestCase):
@@ -63,6 +63,12 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat.out'), 'r', encoding='utf-8') as f:
             self.generic_git_log_oneline_shortstat = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix.out'), 'r', encoding='utf-8') as f:
+            self.generic_git_log_fuller_hash_in_message_fix = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix.out'), 'r', encoding='utf-8') as f:
+            self.generic_git_log_fuller_is_hash_regex_fix = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming.json'), 'r', encoding='utf-8') as f:
             self.generic_git_log_streaming_json = json.loads(f.read())
@@ -114,6 +120,12 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
             self.generic_git_log_streaming_ignore_exceptions_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix-streaming.json'), 'r', encoding='utf-8') as f:
+            self.generic_git_log_fuller_hash_in_message_fix_streaming_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix-streaming.json'), 'r', encoding='utf-8') as f:
+            self.generic_git_log_fuller_is_hash_regex_fix_streaming_json = json.loads(f.read())
 
     def test_git_log_s_nodata(self):
         """
@@ -236,6 +248,20 @@ class MyTests(unittest.TestCase):
         Test 'git_log --format=oneline --shortstat'
         """
         self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_oneline_shortstat.splitlines(), quiet=True)), self.generic_git_log_oneline_shortstat_streaming_json)
+
+    def test_git_log_fuller_hash_in_message_fix(self):
+        """
+        Test 'git_log --format=fuller --stat' fix for when a commit message
+        contains a line that is only a commit hash value.
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_fuller_hash_in_message_fix.splitlines(), quiet=True)), self.generic_git_log_fuller_hash_in_message_fix_streaming_json)
+
+    def test_git_log_fuller_is_hash_fix(self):
+        """
+        Test 'git_log --format=fuller --stat' fix for when a commit message
+        contains a line that evaluated as true to an older _is_hash regex
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_fuller_is_hash_regex_fix.splitlines(), quiet=True)), self.generic_git_log_fuller_is_hash_regex_fix_streaming_json)
 
 
 if __name__ == '__main__':

@@ -148,12 +148,12 @@ import re
 from typing import List, Dict
 import jc.utils
 
-hash_pattern = re.compile(r'([0-9]|[a-f])+')
+hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
 changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insertions>\d+)\s(insertions?\(\+\))?(,\s+)?(?P<deletions>\d+)?(\s+deletions?\(\-\))?')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`git log` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -234,7 +234,7 @@ def parse(
             line_list = line.split(maxsplit=1)
 
             # oneline style
-            if line_list and _is_commit_hash(line_list[0]):
+            if not line.startswith(' ') and line_list and _is_commit_hash(line_list[0]):
                 if output_line:
                     if file_list:
                         output_line['stats']['files'] = file_list
