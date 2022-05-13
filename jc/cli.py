@@ -84,26 +84,6 @@ if PYGMENTS_INSTALLED:
         }
 
 
-def safe_print_json(string, pretty=None, env_colors=None, mono=None,
-                    piped_out=None, flush=None):
-    """Safely prints JSON output in both UTF-8 and ASCII systems"""
-    try:
-        print(json_out(string,
-                       pretty=pretty,
-                       env_colors=env_colors,
-                       mono=mono,
-                       piped_out=piped_out),
-              flush=flush)
-    except UnicodeEncodeError:
-        print(json_out(string,
-                       pretty=pretty,
-                       env_colors=env_colors,
-                       mono=mono,
-                       piped_out=piped_out,
-                       ascii_only=True),
-              flush=flush)
-
-
 def set_env_colors(env_colors=None):
     """
     Return a dictionary to be used in Pygments custom style class.
@@ -305,6 +285,26 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
         return str(highlight(j_string, JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
     return j_string
+
+
+def safe_print_json(list_or_dict, pretty=None, env_colors=None, mono=None,
+                    piped_out=None, flush=None):
+    """Safely prints JSON output in both UTF-8 and ASCII systems"""
+    try:
+        print(json_out(list_or_dict,
+                       pretty=pretty,
+                       env_colors=env_colors,
+                       mono=mono,
+                       piped_out=piped_out),
+              flush=flush)
+    except UnicodeEncodeError:
+        print(json_out(list_or_dict,
+                       pretty=pretty,
+                       env_colors=env_colors,
+                       mono=mono,
+                       piped_out=piped_out,
+                       ascii_only=True),
+              flush=flush)
 
 
 def magic_parser(args):

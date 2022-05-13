@@ -270,6 +270,72 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
+    def test_asciitable_m_sep_char_in_cell(self):
+        """
+        Test 'asciitable_m' with a column separator character inside the data
+        """
+        input = '''
+| Author          | yada        | yada2           | yada3           | yada4           | yada5           | yada6      | yada7           |
+├─────────────────┼─────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼────────────┼─────────────────┤
+│ Kelly Brazil    │             │ a76d46f9ecb1eff │ kellyjonbrazil@ │ Fri Feb 4 12:14 │ refactor ignore │ 1644005656 │                 │
+│                 │             │ 4d6cc7ad633c97c │ gmail.com       │ :16 2022 -0800  │ _exceptions     │            │                 │
+│                 │             │ ec0e99001a      │                 │                 │                 │            │                 │
+├─────────────────┼─────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼────────────┼─────────────────┤
+│ Kevin Lyter     │             │ 6b069a82d0fa19c │ lyterk@sent.com │ Thu Feb 3 18:13 │ Add xrandr to l │ 1643940838 │                 │
+│                 │             │ 8d83b19b934bace │                 │ :58 2022 -0800  │ ib.py           │            │                 │
+│                 │             │ 556cb758d7      │                 │                 │                 │            │                 │
+├─────────────────┼─────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼────────────┼─────────────────┤
+│ Kevin Lyter     │             │ 6b793d052147406 │ lyterk@sent.com │ Thu Feb 3 18:13 │ Clean up types  │ 1643940791 │                 │
+│                 │             │ f388c4d5dc04f50 │                 │ :11 2022 -0800  │                 │            │                 │
+│                 │             │ 6a3456f409      │                 │                 │                 │            │                 │
+│                 │             │                 │                 │                 │ * | operator =  │            │                 │
+│                 │             │                 │                 │                 │ > Union[]       │            │                 │
+│                 │             │                 │                 │                 │ * Rem           │            │                 │
+│                 │             │                 │                 │                 │ ove unused impo │            │                 │
+│                 │             │                 │                 │                 │ rt Iterator     │            │                 │
+│                 │             │                 │                 │                 │ * R             │            │                 │
+│                 │             │                 │                 │                 │ emove comment   │            │                 │
+├─────────────────┼─────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼────────────┼─────────────────┤
+│ Kevin Lyter     │             │ ce9103f7cc66689 │ lyterk@sent.com │ Thu Feb 3 18:12 │ Delete old file │ 1643940766 │                 │
+│                 │             │ 5dc7840d32797d8 │                 │ :46 2022 -0800  │ s in template f │            │                 │
+│                 │             │ c7274cf1b8      │                 │                 │ older           │            │                 │
+├─────────────────┼─────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼────────────┼─────────────────┤
+        '''
+        expected = [
+            {
+                "author": "Kelly Brazil",
+                "yada": None,
+                "yada2": "a76d46f9ecb1eff\n4d6cc7ad633c97c\nec0e99001a",
+                "yada3": "kellyjonbrazil@\ngmail.com",
+                "yada4": "Fri Feb 4 12:14\n:16 2022 -0800",
+                "yada5": "refactor ignore\n_exceptions",
+                "yada6": "1644005656",
+                "yada7": None
+            },
+            {
+                "author": "Kevin Lyter",
+                "yada": None,
+                "yada2": "6b069a82d0fa19c\n8d83b19b934bace\n556cb758d7",
+                "yada3": "lyterk@sent.com",
+                "yada4": "Thu Feb 3 18:13\n:58 2022 -0800",
+                "yada5": "Add xrandr to l\nib.py",
+                "yada6": "1643940838",
+                "yada7": None
+            },
+            {
+                "author": "Kevin Lyter",
+                "yada": None,
+                "yada2": "ce9103f7cc66689\n5dc7840d32797d8\nc7274cf1b8",
+                "yada3": "lyterk@sent.com",
+                "yada4": "Thu Feb 3 18:12\n:46 2022 -0800",
+                "yada5": "Delete old file\ns in template f\nolder",
+                "yada6": "1643940766",
+                "yada7": None
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=False), expected)
+
     def test_asciitable_m_markdown(self):
         """
         Test 'asciitable_m' with a markdown table. Should raise a ParseError

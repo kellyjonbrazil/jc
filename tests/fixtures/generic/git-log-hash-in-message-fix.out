@@ -1,0 +1,38 @@
+commit e05824a36ca62aa9f3a21854ec8b40a3e0f7a68d
+Author:     Benedikt Heine <bebe@bebehei.de>
+AuthorDate: Mon Oct 28 12:42:22 2019 +0100
+Commit:     Benedikt Heine <bebe@bebehei.de>
+CommitDate: Sun Apr 12 17:27:16 2020 +0200
+
+    Split monit status fields on monit version
+    
+    With the commit [0] on monit, the field size changed. So splitting hard
+    after 35 chars, new versions of monit break when using monit.status.
+    
+    [0] https://bitbucket.org/tildeslash/monit/commits/
+    471c4bbc388c1c536f07ce1dd26b811bd39a9467
+
+ salt/modules/monit.py | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+commit 910a2ac4809bb05b886adfe75f4857eb53fdfbb1
+Merge: 6c3964ce30 f0a1e923e3
+Author:     Daniel Wozniak <dwozniak@saltstack.com>
+AuthorDate: Sun Apr 12 00:09:37 2020 -0700
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 12 00:09:37 2020 -0700
+
+    Merge pull request #53911 from terminalmage/squelch-log
+    
+    alternatives: Don't log error when running "alternatives --display" on nonexistant target
+
+commit 6c3964ce30929e749c0965bc0d60527e9fe8dbb1
+Merge: 3026c25faf 2ac4da54e3
+Author:     Daniel Wozniak <dwozniak@saltstack.com>
+AuthorDate: Sun Apr 12 00:09:16 2020 -0700
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 12 00:09:16 2020 -0700
+
+    Merge pull request #54199 from driskell/patch-2
+    
+    Fix broken sdb.get_or_set_hash for Hashicorp Vault

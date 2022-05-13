@@ -5,8 +5,8 @@
 
 jc - JSON Convert `stat` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 The `xxx_epoch` calculated timestamp fields are naive. (i.e. based on the
 local time of the system the parser is run on).
@@ -86,7 +86,7 @@ Examples:
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 
-Main text parsing generator function. Returns an iterator object.
+Main text parsing generator function. Returns an iterable object.
 
 Parameters:
 
@@ -97,13 +97,9 @@ Parameters:
     quiet:             (boolean)   suppress warning messages if True
     ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
-Yields:
-
-    Dictionary. Raw or processed structured data.
-
 Returns:
 
-    Iterator object (generator)
+    Iterable of Dictionaries
 
 ### Parser Information
 Compatibility:  linux, darwin, freebsd

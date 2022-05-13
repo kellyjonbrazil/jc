@@ -1,7 +1,7 @@
 """jc - JSON Convert `pidstat` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Must use the `-h` option in `pidstat`. All other `pidstat` options are
 supported in combination with `-h`.
@@ -72,7 +72,7 @@ Examples:
     {"time":"1646859134","uid":"0","pid":"9","percent_usr":"0.00","perc...}
     ...
 """
-from typing import Dict, Iterable, Generator, Union
+from typing import Dict, Iterable, Union
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -126,9 +126,9 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Union[Generator[Dict, None, None], tuple]:
+) -> Union[Iterable[Dict], tuple]:
     """
-    Main text parsing generator function. Returns an iterator object.
+    Main text parsing generator function. Returns an iterable object.
 
     Parameters:
 
@@ -139,13 +139,9 @@ def parse(
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
-    Yields:
-
-        Dictionary. Raw or processed structured data.
-
     Returns:
 
-        Iterator object (generator)
+        Iterable of Dictionaries
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)

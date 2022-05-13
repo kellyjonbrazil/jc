@@ -111,13 +111,13 @@ pip3 install jc
 | Debian/Ubuntu linux                  | `apt-get install jc`                                                          |
 | Fedora linux                         | `dnf install jc`                                                              |
 | openSUSE linux                       | `zypper install jc`                                                           |
-| Archlinux User Repositories (AUR)    | `paru -S jc` or `aura  -A jc` or `yay -S jc`                                  |
+| Archlinux Community Repository       | `paru -S jc` or `aura -S jc` or `yay -S jc`                                   |
 | NixOS linux                          | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
 | Guix System linux                    | `guix install jc`                                                             |
+| Gentoo Linux                         | `emerge dev-python/jc`                                                        |
 | macOS                                | `brew install jc`                                                             |
 | FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
-| Gentoo Linux                         | `emerge dev-python/jc`                                                        |
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
@@ -143,8 +143,10 @@ The JSON output can be compact (default) or pretty formatted with the `-p`
 option.
 
 ### Parsers
-{% for parser in jc.parsers %}
-- `{{ parser.argument }}` enables the {{ parser.description }} ([documentation](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }})){% endfor %}
+
+| Argument     | Command or Filetype     | Documentation     |
+|--------------|-------------------------|-------------------|{% for parser in jc.parsers %}
+| `{{ parser.argument }}` | {{ parser.description }} | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }}) |{% endfor %}
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
@@ -277,14 +279,14 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 
 #### Using Streaming Parsers as Python Modules
 
-Streaming parsers accept any iterable object and return an iterator object
-(generator) allowing lazy processing of the data. The input data should
-iterate on lines of string data. Examples of good input data are `sys.stdin` or
+Streaming parsers accept any iterable object and return an iterable object
+allowing lazy processing of the data. The input data should iterate on lines
+of string data. Examples of good input data are `sys.stdin` or
 `str.splitlines()`.
 
-To use the generator object in your code, simply loop through it or use the
-[next()](https://docs.python.org/3/library/functions.html#next) builtin
-function:
+To use the returned iterable object in your code, simply loop through it or
+use the [next()](https://docs.python.org/3/library/functions.html#next)
+builtin function:
 ```python
 import jc
 
@@ -307,8 +309,8 @@ or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob
 parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
 
 Local plugin filenames must be valid python module names and therefore must
-start with a letter and consist entirely of alphanumerics. Local plugins
-may override default parsers.
+start with a letter and consist entirely of alphanumerics and underscores.
+Local plugins may override default parsers.
 
 > Note: The application data directory follows the
 [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)

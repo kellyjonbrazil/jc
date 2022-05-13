@@ -26,11 +26,12 @@ https://github.com/kellyjonbrazil/jc/tree/master/docs
 
 ### Specific Version
 
-Replace `<full_version_number>` - e.g. `1.17.7`:
-
 `https://github.com/kellyjonbrazil/jc/tree/v<full_version_number>/docs`
 
-Specific versions can also be selected by tag in the branch dropdown menu.
+> Replace `<full_version_number>` - e.g. `1.18.0`:
+
+Specific versions can also be selected by tag in the branch Github dropdown
+menu.
 
 ## Usage Example
 
@@ -93,14 +94,14 @@ its module name.
 
 ### parser_mod_list
 
-    parser_mod_list() -> list
+    parser_mod_list() -> list[str]
 
 Get a list of all available parser module names to be used in
 `parse()`, `parser_info()`, and `get_help()`.
 
 ### plugin_parser_mod_list
 
-    plugin_parser_mod_list() -> list
+    plugin_parser_mod_list() -> list[str]
 
 Get a list of plugin parser module names to be used in
 `parse()`, `parser_info()`, and `get_help()`. This list is a subset of
@@ -108,7 +109,7 @@ Get a list of plugin parser module names to be used in
 
 ### standard_parser_mod_list
 
-    standard_parser_mod_list() -> list
+    standard_parser_mod_list() -> list[str]
 
 Get a list of standard parser module names to be used in
 `parse()`, `parser_info()`, and `get_help()`. This list is a subset of
@@ -116,7 +117,7 @@ Get a list of standard parser module names to be used in
 
 ### streaming_parser_mod_list
 
-    streaming_parser_mod_list() -> list
+    streaming_parser_mod_list() -> list[str]
 
 Get a list of streaming parser module names to be used in
 `parse()`, `parser_info()`, and `get_help()`. This list is a subset of

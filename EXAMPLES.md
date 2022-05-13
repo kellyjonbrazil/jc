@@ -265,6 +265,21 @@ blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev 
   }
 ]
 ```
+### chage --list
+```bash
+chage --list joeuser | jc --chage -p          # or:  jc -p chage --list joeuser
+```
+```json
+{
+  "password_last_changed": "never",
+  "password_expires": "never",
+  "password_inactive": "never",
+  "account_expires": "never",
+  "min_days_between_password_change": 0,
+  "max_days_between_password_change": 99999,
+  "warning_days_before_password_expires": 7
+}
+```
 ### cksum
 ```bash
 cksum * | jc --cksum -p          # or:  jc -p cksum *

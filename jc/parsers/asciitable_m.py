@@ -24,6 +24,11 @@ Headers (keys) are converted to snake-case and newlines between multi-line
 headers are joined with an underscore. All values are returned as strings,
 except empty strings, which are converted to None/null.
 
+> Note: table column separator characters (e.g. `|`) cannot be present
+  inside the cell data. If detected, a warning message will be printed to
+  STDERR and the line will be skipped. The warning message can be suppressed
+  by using the `-q` command option or by setting `quiet=True` in `parse()`.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable-m
@@ -101,7 +106,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'multi-line ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -377,20 +382,27 @@ def _collapse_headers(table: List[List[str]]) -> List[str]:
     return result
 
 
-def _collapse_data(table: List[List[List[str]]]) -> List[List[str]]:
+def _collapse_data(table: List[List[List[str]]], quiet=False) -> List[List[str]]:
     """combine data rows to return a simple list of lists"""
     result: List[List[str]] = []
 
-    for row in table:
-        new_row: List[str] = []
-        for line in row:
-            if new_row:
-                for i, item in enumerate(line):
-                    new_row[i] = (new_row[i] + '\n' + item).strip()
-            else:
-                new_row = line
+    for index, row in enumerate(table):
+        try:
+            new_row: List[str] = []
+            for line in row:
+                if new_row:
+                    for i, item in enumerate(line):
+                        new_row[i] = (new_row[i] + '\n' + item).strip()
+                else:
+                    new_row = line
 
-        result.append(new_row)
+            result.append(new_row)
+        except IndexError:
+            if not quiet:
+                row_string = '\n'.join([' | '.join(l) for l in row])
+                jc.utils.warning_message(
+                    [f'Possible table separator character found in row {index}:  {row_string}. Skipping.']
+                )
 
     return result
 
@@ -409,14 +421,14 @@ def _create_table_dict(header: List[str], data: List[List[str]]) -> List[Dict[st
     return table_list_dict
 
 
-def _parse_pretty(string: str) -> List[Dict[str, Optional[str]]]:
+def _parse_pretty(string: str, quiet: bool =False) -> List[Dict[str, Optional[str]]]:
     string_lines: List[str] = string.splitlines()
     clean: List[Tuple[int, List[str]]] = _normalize_rows(string_lines)
     raw_headers: List[List[str]] = _get_headers(clean)
     raw_data: List[List[List[str]]] = _get_data(clean)
 
     new_headers: List[str] = _collapse_headers(raw_headers)
-    new_data: List[List[str]] = _collapse_data(raw_data)
+    new_data: List[List[str]] = _collapse_data(raw_data, quiet)
     final_table: List[Dict[str, Optional[str]]] = _create_table_dict(new_headers, new_data)
 
     return final_table
@@ -452,7 +464,7 @@ def parse(
         table_type = _table_sniff(data)
 
         if table_type == 'pretty':
-            raw_output = _parse_pretty(data)
+            raw_output = _parse_pretty(data, quiet)
         elif table_type == 'markdown':
             raise ParseError('Only "pretty" tables supported with multiline. "markdown" table detected. Please try the "asciitable" parser.')
         else:

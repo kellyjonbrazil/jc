@@ -29,6 +29,11 @@ Headers (keys) are converted to snake-case and newlines between multi-line
 headers are joined with an underscore. All values are returned as strings,
 except empty strings, which are converted to None/null.
 
+> Note: table column separator characters (e.g. `|`) cannot be present
+  inside the cell data. If detected, a warning message will be printed to
+  STDERR and the line will be skipped. The warning message can be suppressed
+  by using the `-q` command option or by setting `quiet=True` in `parse()`.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable-m
@@ -120,4 +125,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

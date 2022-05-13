@@ -125,6 +125,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.df.parse(self.generic_df_long_filesystem, quiet=True), self.generic_df_long_filesystem_json)
 
+    def test_df_centos_7_7_trailing_newline(self):
+        """
+        Test plain 'df' on Centos 7.7 with a trailing newline
+        """
+        cmd_output = self.centos_7_7_df + '\n'
+        self.assertEqual(jc.parsers.df.parse(cmd_output, quiet=True), self.centos_7_7_df_json)
+
 
 if __name__ == '__main__':
     unittest.main()

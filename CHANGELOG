@@ -1,5 +1,15 @@
 jc changelog
 
+20220513 v1.19.0
+- Add chage --list command parser tested on linux
+- Add git log command streaming parser
+- Fix git log standard parser for coner-cases where hash values are in messages
+- Fix df command parser for rare instances when a newline is found at the end
+- Allow jc to pip install on unsupported python version 3.6
+- Fix asciitable-m parser to skip some rows that contain column separator
+  characters in cell data. A warning message will be printed to STDOUT
+  unless `-q` or `quiet=True` is used.
+
 20220427 v1.18.8
 - Fix update-alternatives --query parser for cases where `slaves` are not present
 - Fix UnicodeEncodeError on some systems where LANG=C is set and unicode

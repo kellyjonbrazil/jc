@@ -1,7 +1,7 @@
 """jc - JSON Convert `iostat` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Note: `iostat` version 11 and higher include a JSON output option
 
@@ -163,7 +163,7 @@ def _create_obj_list(section_list, section_name):
 @add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     """
-    Main text parsing generator function. Returns an iterator object.
+    Main text parsing generator function. Returns an iterable object.
 
     Parameters:
 
@@ -174,13 +174,9 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         quiet:             (boolean)   suppress warning messages if True
         ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
-    Yields:
-
-        Dictionary. Raw or processed structured data.
-
     Returns:
 
-        Iterator object (generator)
+        Iterable of Dictionaries
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)

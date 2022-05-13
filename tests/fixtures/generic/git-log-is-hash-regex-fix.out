@@ -1,0 +1,124 @@
+commit 6170eac439e590d774eb2e448c68eec90ea3fac0
+Author:     Jasper Lievisse Adriaanse <j@jasper.la>
+AuthorDate: Fri Jul 3 15:19:49 2020 +0200
+Commit:     Daniel Wozniak <dan.woz@gmail.com>
+CommitDate: Fri Aug 28 12:16:13 2020 -0700
+
+    Sync OpenBSD installation documentation with reality
+    
+    OpenBSD's salt package moved to python3 a while ago and dependencies
+    have changed since this page was last updated.
+    
+    While here tweak a reference to the OpenBSD package, not pkg, repo.
+
+ doc/topics/installation/openbsd.rst | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
+
+commit 2d684bd506d473379670ff8905db689d051ff7db
+Author:     Bryce Larson <blarson@saltstack.com>
+AuthorDate: Thu Aug 13 18:04:22 2020 +0000
+Commit:     Daniel Wozniak <dan.woz@gmail.com>
+CommitDate: Fri Aug 28 11:03:45 2020 -0700
+
+    hard-code ami ids
+
+ .ci/kitchen-amazon2-py3                                 | 1 +
+ .ci/kitchen-amazon2-py3-pytest                          | 1 +
+ .ci/kitchen-archlts-py3                                 | 1 +
+ .ci/kitchen-archlts-py3-pytest                          | 1 +
+ .ci/kitchen-centos7-py3                                 | 1 +
+ .ci/kitchen-centos7-py3-cloud                           | 1 +
+ .ci/kitchen-centos7-py3-cloud-pytest                    | 1 +
+ .ci/kitchen-centos7-py3-m2crypto                        | 1 +
+ .ci/kitchen-centos7-py3-m2crypto-pytest                 | 1 +
+ .ci/kitchen-centos7-py3-proxy                           | 1 +
+ .ci/kitchen-centos7-py3-pycryptodome                    | 1 +
+ .ci/kitchen-centos7-py3-pycryptodome-pytest             | 1 +
+ .ci/kitchen-centos7-py3-pytest                          | 1 +
+ .ci/kitchen-centos7-py3-tcp                             | 1 +
+ .ci/kitchen-centos7-py3-tcp-pytest                      | 1 +
+ .ci/kitchen-centos8-py3                                 | 1 +
+ .ci/kitchen-centos8-py3-pytest                          | 1 +
+ .ci/kitchen-debian10-py3                                | 1 +
+ .ci/kitchen-debian10-py3-pytest                         | 1 +
+ .ci/kitchen-debian9-py3                                 | 1 +
+ .ci/kitchen-debian9-py3-pytest                          | 1 +
+ .ci/kitchen-fedora31-py3                                | 1 +
+ .ci/kitchen-fedora31-py3-pytest                         | 1 +
+ .ci/kitchen-fedora32-py3                                | 1 +
+ .ci/kitchen-fedora32-py3-pytest                         | 1 +
+ .ci/kitchen-opensuse15-py3                              | 1 +
+ .ci/kitchen-opensuse15-py3-pytest                       | 1 +
+ .ci/kitchen-ubuntu1604-py3                              | 1 +
+ .ci/kitchen-ubuntu1604-py3-m2crypto                     | 1 +
+ .ci/kitchen-ubuntu1604-py3-m2crypto-pytest              | 1 +
+ .ci/kitchen-ubuntu1604-py3-proxy                        | 1 +
+ .ci/kitchen-ubuntu1604-py3-pycryptodome                 | 1 +
+ .ci/kitchen-ubuntu1604-py3-pycryptodome-pytest          | 1 +
+ .ci/kitchen-ubuntu1604-py3-pytest                       | 1 +
+ .ci/kitchen-ubuntu1604-py3-tcp                          | 1 +
+ .ci/kitchen-ubuntu1604-py3-tcp-pytest                   | 1 +
+ .ci/kitchen-ubuntu1804-py3                              | 1 +
+ .ci/kitchen-ubuntu1804-py3-pytest                       | 1 +
+ .ci/kitchen-ubuntu2004-py3                              | 1 +
+ .ci/kitchen-ubuntu2004-py3-pytest                       | 1 +
+ .ci/kitchen-windows2016-py3                             | 1 +
+ .ci/kitchen-windows2016-py3-pytest                      | 1 +
+ .ci/kitchen-windows2019-py3                             | 1 +
+ .ci/kitchen-windows2019-py3-pytest                      | 1 +
+ cicd/jenkins/kitchen-amazon2-py3                        | 1 +
+ cicd/jenkins/kitchen-amazon2-py3-pytest                 | 1 +
+ cicd/jenkins/kitchen-archlts-py3                        | 1 +
+ cicd/jenkins/kitchen-archlts-py3-pytest                 | 1 +
+ cicd/jenkins/kitchen-centos7-py3                        | 1 +
+ cicd/jenkins/kitchen-centos7-py3-cloud                  | 1 +
+ cicd/jenkins/kitchen-centos7-py3-cloud-pytest           | 1 +
+ cicd/jenkins/kitchen-centos7-py3-m2crypto               | 1 +
+ cicd/jenkins/kitchen-centos7-py3-m2crypto-pytest        | 1 +
+ cicd/jenkins/kitchen-centos7-py3-proxy                  | 1 +
+ cicd/jenkins/kitchen-centos7-py3-pycryptodome           | 1 +
+ cicd/jenkins/kitchen-centos7-py3-pycryptodome-pytest    | 1 +
+ cicd/jenkins/kitchen-centos7-py3-pytest                 | 1 +
+ cicd/jenkins/kitchen-centos7-py3-tcp                    | 1 +
+ cicd/jenkins/kitchen-centos7-py3-tcp-pytest             | 1 +
+ cicd/jenkins/kitchen-centos8-py3                        | 1 +
+ cicd/jenkins/kitchen-centos8-py3-pytest                 | 1 +
+ cicd/jenkins/kitchen-debian10-py3                       | 1 +
+ cicd/jenkins/kitchen-debian10-py3-pytest                | 1 +
+ cicd/jenkins/kitchen-debian9-py3                        | 1 +
+ cicd/jenkins/kitchen-debian9-py3-pytest                 | 1 +
+ cicd/jenkins/kitchen-fedora31-py3                       | 1 +
+ cicd/jenkins/kitchen-fedora31-py3-pytest                | 1 +
+ cicd/jenkins/kitchen-fedora32-py3                       | 1 +
+ cicd/jenkins/kitchen-fedora32-py3-pytest                | 1 +
+ cicd/jenkins/kitchen-opensuse15-py3                     | 1 +
+ cicd/jenkins/kitchen-opensuse15-py3-pytest              | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3                     | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-m2crypto            | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-m2crypto-pytest     | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-proxy               | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-pycryptodome        | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-pycryptodome-pytest | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-pytest              | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-tcp                 | 1 +
+ cicd/jenkins/kitchen-ubuntu1604-py3-tcp-pytest          | 1 +
+ cicd/jenkins/kitchen-ubuntu1804-py3                     | 1 +
+ cicd/jenkins/kitchen-ubuntu1804-py3-pytest              | 1 +
+ cicd/jenkins/kitchen-ubuntu2004-py3                     | 1 +
+ cicd/jenkins/kitchen-ubuntu2004-py3-pytest              | 1 +
+ cicd/jenkins/kitchen-windows2016-py3                    | 1 +
+ cicd/jenkins/kitchen-windows2016-py3-pytest             | 1 +
+ cicd/jenkins/kitchen-windows2019-py3                    | 1 +
+ cicd/jenkins/kitchen-windows2019-py3-pytest             | 1 +
+ 88 files changed, 88 insertions(+)
+
+commit 3332f5e131f223a9fd9fef22437c7830210d301f
+Author:     krionbsd <krion@FreeBSD.org>
+AuthorDate: Thu Jul 30 14:50:44 2020 +0200
+Commit:     Daniel Wozniak <dan.woz@gmail.com>
+CommitDate: Thu Aug 27 13:04:37 2020 -0700
+
+    [merge jam] port 53224
+
+ tests/unit/test_loader.py | 67 ++++++++++++++++++++++-------------------------
+ 1 file changed, 31 insertions(+), 36 deletions(-)

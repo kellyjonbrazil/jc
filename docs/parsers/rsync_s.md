@@ -5,8 +5,8 @@
 
 jc - JSON Convert `rsync` command output streaming parser
 
-> This streaming parser outputs JSON Lines (cli) or returns a Generator
-  iterator of Dictionaries (module)
+> This streaming parser outputs JSON Lines (cli) or returns an Iterable of
+  Dictionaries (module)
 
 Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the STDOUT output or a log file
@@ -90,15 +90,13 @@ Examples:
 
 ```python
 @add_jc_meta
-def parse(
-    data: Iterable[str],
-    raw: bool = False,
-    quiet: bool = False,
-    ignore_exceptions: bool = False
-) -> Union[Generator[Dict, None, None], tuple]
+def parse(data: Iterable[str],
+          raw: bool = False,
+          quiet: bool = False,
+          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
 ```
 
-Main text parsing generator function. Returns an iterator object.
+Main text parsing generator function. Returns an iterable object.
 
 Parameters:
 
@@ -109,13 +107,9 @@ Parameters:
     quiet:             (boolean)   suppress warning messages if True
     ignore_exceptions: (boolean)   ignore parsing exceptions if True
 
-Yields:
-
-    Dictionary. Raw or processed structured data.
-
 Returns:
 
-    Iterator object (generator)
+    Iterable of Dictionaries
 
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
