@@ -5,6 +5,7 @@ jc changelog
 - Add git log command streaming parser
 - Add top -b command parser tested on linux
 - Add top -b command streaming parser tested on linux
+- Fix git log standard parser for coner-cases where hash values are in messages
 - Fix df command parser for rare instances when a newline is found at the end
 - Allow jc to pip install on unsupported python version 3.6
 - Fix asciitable-m parser to skip some rows that contain column separator
