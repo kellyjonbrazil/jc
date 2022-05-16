@@ -127,7 +127,7 @@ def parse(
         for row in cleandata:
             if row.startswith('---'):
                 if last_key_data:
-                    package[last_key] = package[last_key] + '\n'.join(last_key_data)
+                    package[last_key] = package[last_key] + '\n' + '\n'.join(last_key_data)
 
                 raw_output.append(package)
                 package = {}
@@ -143,7 +143,7 @@ def parse(
                     item_value = None
 
                 if last_key_data and last_key != item_key:
-                    package[last_key] = package[last_key] + '\n'.join(last_key_data)
+                    package[last_key] = package[last_key] + '\n' + '\n'.join(last_key_data)
                     last_key_data = []
 
                 package[item_key] = item_value
@@ -156,7 +156,7 @@ def parse(
 
         if package:
             if last_key_data:
-                package[last_key] = package[last_key] + '\n'.join(last_key_data)
+                package[last_key] = package[last_key] + '\n' + '\n'.join(last_key_data)
 
             raw_output.append(package)
 
