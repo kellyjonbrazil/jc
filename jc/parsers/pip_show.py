@@ -60,12 +60,13 @@ Examples:
       }
     ]
 """
+from typing import List, Dict, Optional
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`pip show` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -76,7 +77,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
 
@@ -92,7 +93,11 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False):
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[Dict]:
     """
     Main text parsing function
 
@@ -109,8 +114,10 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output = []
-    package = {}
+    raw_output: List = []
+    package: Dict = {}
+    last_key: str = ''
+    last_key_data: List = []
 
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
@@ -119,21 +126,38 @@ def parse(data, raw=False, quiet=False):
 
         for row in cleandata:
             if row.startswith('---'):
+                if last_key_data:
+                    package[last_key] = '\n'.join(last_key_data)
+
                 raw_output.append(package)
                 package = {}
+                last_key = ''
+                last_key_data = []
                 continue
 
-            item_key = row.split(': ', maxsplit=1)[0].lower().replace('-', '_')
-            item_value = row.split(': ', maxsplit=1)[1]
+            if not row.startswith(' '):
+                item_key = row.split(': ', maxsplit=1)[0].lower().replace('-', '_')
+                item_value: Optional[str] = row.split(': ', maxsplit=1)[1]
 
-            if item_value == '':
-                item_value = None
+                if item_value == '':
+                    item_value = None
 
-            package.update({item_key: item_value})
+                if last_key_data and last_key != item_key:
+                    package[last_key] = '\n'.join(last_key_data)
+                    last_key_data = []
 
-        raw_output.append(package)
+                package[item_key] = item_value
+                last_key = item_key
+                continue
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+            if row.startswith(' '):
+                last_key_data.append(row.strip())
+                continue
+
+        if package:
+            if last_key_data:
+                package[last_key] = '\n'.join(last_key_data)
+
+            raw_output.append(package)
+
+    return raw_output if raw else _process(raw_output)
