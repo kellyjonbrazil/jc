@@ -144,9 +144,9 @@ option.
 
 ### Parsers
 
-| Argument     | Command or Filetype     | Documentation     |
-|--------------|-------------------------|-------------------|{% for parser in jc.parsers %}
-| `{{ parser.argument }}` | {{ parser.description }} | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/{{ parser.name }}) |{% endfor %}
+| Argument          | Command or Filetype                                     | Documentation                                                           |
+|-------------------|---------------------------------------------------------|-------------------------------------------------------------------------|{% for parser in jc.parsers %}
+| `{{ "{:>15}".format(parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<70}".format("[📃](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
 
 ### Options
 - `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
@@ -342,6 +342,21 @@ on the local timezone of the system the `jc` parser was run on).
 If a UTC timezone can be detected in the text of the command output, the
 timestamp will be timezone aware and have a `_utc` suffix on the key name.
 (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
+
+## Use In Other Shells
+`jc` can be used in most any shell. Some modern shells have JSON deserialization
+capabilities built-in which makes using `jc` even more convenient.
+
+For example, the following is possible in [NGS](https://ngs-lang.org/)
+(Next Generation Shell):
+```bash
+myvar = ``jc dig www.google.com``[0].answer[0].data
+```
+This allows direct assignment of a JSON value to a variable in a single line
+of code.
+
+For more examples of how to use `jc` in other shells, see this
+[WIKI article](https://github.com/kellyjonbrazil/jc/wiki/Using-jc-With-Different-Shells).
 
 ## Compatibility
 Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other
