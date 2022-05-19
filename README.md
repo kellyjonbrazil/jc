@@ -444,7 +444,7 @@ timestamp will be timezone aware and have a `_utc` suffix on the key name.
 
 ## Use In Other Shells
 `jc` can be used in most any shell. Some modern shells have JSON deserialization
-capabilities built-in which makes using `jc` even more convenient.
+and filtering capabilities built-in which makes using `jc` even more convenient.
 
 For example, the following is possible in [NGS](https://ngs-lang.org/)
 (Next Generation Shell):
