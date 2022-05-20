@@ -352,11 +352,11 @@ For example, the following is possible in [NGS](https://ngs-lang.org/)
 ```bash
 myvar = ``jc dig www.google.com``[0].answer[0].data
 ```
-This allows direct assignment of a JSON value to a variable in a single line
-of code.
+This runs `jc`, parses the output JSON, and assigs the resulting data structure
+to a variable in a single line of code.
 
 For more examples of how to use `jc` in other shells, see this
-[WIKI article](https://github.com/kellyjonbrazil/jc/wiki/Using-jc-With-Different-Shells).
+[wiki page](https://github.com/kellyjonbrazil/jc/wiki/Using-jc-With-Different-Shells).
 
 ## Compatibility
 Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other
@@ -364,9 +364,9 @@ parsers that convert platform-specific output will generate a warning message if
 they are run on an unsupported platform. To see all parser information,
 including compatibility, run `jc -ap`.
 
-You may still use a parser on an unsupported platform - for example, you may want
-to parse a file with linux `lsof` output on an macOS or Windows laptop. In that
-case you can suppress the warning message with the `-q` cli option or the
+You may still use a parser on an unsupported platform - for example, you may
+want to parse a file with linux `lsof` output on an macOS or Windows laptop. In
+that case you can suppress the warning message with the `-q` cli option or the
 `quiet=True` function parameter in `parse()`:
 
 macOS:
@@ -395,7 +395,8 @@ Tested on:
 ## Contributions
 Feel free to add/improve code or parsers! You can use the
 [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py)
-or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template and submit your parser with a pull request.
+or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template and submit your parser with a pull
+request.
 
 Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/blob/master/CONTRIBUTING.md) for more information.
 
