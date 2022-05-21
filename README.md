@@ -442,6 +442,21 @@ If a UTC timezone can be detected in the text of the command output, the
 timestamp will be timezone aware and have a `_utc` suffix on the key name.
 (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
 
+## Use In Other Shells
+`jc` can be used in most any shell. Some modern shells have JSON deserialization
+and filtering capabilities built-in which makes using `jc` even more convenient.
+
+For example, the following is possible in [NGS](https://ngs-lang.org/)
+(Next Generation Shell):
+```bash
+myvar = ``jc dig www.google.com``[0].answer[0].data
+```
+This runs `jc`, parses the output JSON, and assigs the resulting data structure
+to a variable in a single line of code.
+
+For more examples of how to use `jc` in other shells, see this
+[wiki page](https://github.com/kellyjonbrazil/jc/wiki/Using-jc-With-Different-Shells).
+
 ## Compatibility
 Some parsers like `dig`, `xml`, `csv`, etc. will work on any platform. Other
 parsers that convert platform-specific output will generate a warning message if
