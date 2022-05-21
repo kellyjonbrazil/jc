@@ -630,14 +630,6 @@ def main():
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    # except json.JSONDecodeError:
-    #     if debug:
-    #         raise
-
-    #     utils.error_message(['There was an issue generating the JSON output.',
-    #                          'For details use the -d or -dd option.'])
-    #     sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
     except Exception:
         if debug:
             raise
