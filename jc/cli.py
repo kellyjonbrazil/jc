@@ -21,7 +21,7 @@ try:
     from pygments import highlight
     from pygments.style import Style
     from pygments.token import (Name, Number, String, Keyword)
-    from pygments.lexers import JsonLexer
+    from pygments.lexers.data import JsonLexer, YamlLexer
     from pygments.formatters import Terminal256Formatter
     PYGMENTS_INSTALLED = True
 except Exception:
@@ -273,15 +273,27 @@ def yaml_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
         YAML_INSTALLED = False
 
     if YAML_INSTALLED:
-        y_string = io.BytesIO()
+        y_string_buf = io.BytesIO()
         # monkey patch to disable plugins since we don't use them and in
         # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
         # plugin code is incompatible with the pyoxidizer packager
         YAML.official_plug_ins = lambda a: []
         yaml=YAML()
         yaml.default_flow_style = False
-        yaml.dump(data, y_string)
-        return '---\n' + y_string.getvalue().decode('utf-8')[:-1]
+        yaml.explicit_start = True
+        yaml.allow_unicode = not ascii_only
+        yaml.encoding = 'utf-8'
+        yaml.dump(data, y_string_buf)
+        y_string = y_string_buf.getvalue().decode('utf-8')[:-1]
+
+        if not mono and not piped_out:
+            # set colors
+            class JcStyle(Style):
+                styles = set_env_colors(env_colors)
+
+            return str(highlight(y_string, YamlLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+
+        return y_string
 
     utils.warning_message(['YAML Library not installed. Reverting to JSON output.'])
     return json_out(data, pretty=pretty, env_colors=env_colors, mono=mono, piped_out=piped_out, ascii_only=ascii_only)
@@ -313,16 +325,25 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
     return j_string
 
 
-def safe_print_json(list_or_dict, pretty=None, env_colors=None, mono=None,
-                    piped_out=None, flush=None, yaml=None):
-    """Safely prints JSON output in both UTF-8 and ASCII systems"""
+def safe_print_out(list_or_dict, pretty=None, env_colors=None, mono=None,
+                   piped_out=None, flush=None, yaml=None):
+    """Safely prints JSON or YAML output in both UTF-8 and ASCII systems"""
     if yaml:
-        print(yaml_out(list_or_dict,
-                       pretty=pretty,
-                       env_colors=env_colors,
-                       mono=mono,
-                       piped_out=piped_out),
-              flush=flush)
+        try:
+            print(yaml_out(list_or_dict,
+                           pretty=pretty,
+                           env_colors=env_colors,
+                           mono=mono,
+                           piped_out=piped_out),
+                  flush=flush)
+        except UnicodeEncodeError:
+            print(yaml_out(list_or_dict,
+                           pretty=pretty,
+                           env_colors=env_colors,
+                           mono=mono,
+                           piped_out=piped_out,
+                           ascii_only=True),
+                  flush=flush)
 
     else:
         try:
@@ -479,12 +500,12 @@ def main():
         mono = True
 
     if about:
-        safe_print_json(about_jc(),
-                        pretty=pretty,
-                        env_colors=jc_colors,
-                        mono=mono,
-                        piped_out=piped_output(force_color),
-                        yaml=yaml_out)
+        safe_print_out(about_jc(),
+                       pretty=pretty,
+                       env_colors=jc_colors,
+                       mono=mono,
+                       piped_out=piped_output(force_color),
+                       yaml=yaml_out)
         sys.exit(0)
 
     if help_me:
@@ -571,13 +592,13 @@ def main():
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
             for line in result:
-                safe_print_json(line,
-                                pretty=pretty,
-                                env_colors=jc_colors,
-                                mono=mono,
-                                piped_out=piped_output(force_color),
-                                flush=unbuffer,
-                                yaml=yaml_out)
+                safe_print_out(line,
+                               pretty=pretty,
+                               env_colors=jc_colors,
+                               mono=mono,
+                               piped_out=piped_output(force_color),
+                               flush=unbuffer,
+                               yaml=yaml_out)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -588,13 +609,13 @@ def main():
                                   raw=raw,
                                   quiet=quiet)
 
-            safe_print_json(result,
-                            pretty=pretty,
-                            env_colors=jc_colors,
-                            mono=mono,
-                            piped_out=piped_output(force_color),
-                            flush=unbuffer,
-                            yaml=yaml_out)
+            safe_print_out(result,
+                           pretty=pretty,
+                           env_colors=jc_colors,
+                           mono=mono,
+                           piped_out=piped_output(force_color),
+                           flush=unbuffer,
+                           yaml=yaml_out)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
 
