@@ -230,6 +230,7 @@ class MyTests(unittest.TestCase):
             {},
             [],
             '',
+            {'ipv6': 'fe80::5a37:f41:1076:ba24:'},  # test for colon at the end
             {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
         ]
 
@@ -238,6 +239,7 @@ class MyTests(unittest.TestCase):
             '--- {}',
             '--- []',
             "--- ''",
+            "---\nipv6: 'fe80::5a37:f41:1076:ba24:'",
             '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
         ]
 
