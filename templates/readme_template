@@ -149,8 +149,8 @@ option.
 | `{{ "{:>15}".format(parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<70}".format("[📃](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
 
 ### Options
-- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON, of
-       course!)
+- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON or
+       YAML, of course!)
 - `-C` force color output even when using pipes (overrides `-m` and the
        `NO_COLOR` env variable)
 - `-d` debug mode. Prints trace messages if parsing issues are encountered (use
@@ -164,6 +164,7 @@ option.
        values and no additional semantic processing
 - `-u` unbuffer output
 - `-v` version information
+- `-y` YAML output
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the

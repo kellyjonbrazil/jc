@@ -32,7 +32,7 @@ Options:
 .TP
 .B
 \fB-a\fP
-about \fBjc\fP (JSON output)
+about \fBjc\fP (JSON or YAML output)
 .TP
 .B
 \fB-C\fP
@@ -69,6 +69,10 @@ unbuffer output (useful for slow streaming data with streaming parsers)
 .B
 \fB-v\fP
 version information
+.TP
+.B
+\fB-y\fP
+YAML output
 
 .SH EXIT CODES
 Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.
