@@ -1,6 +1,8 @@
 jc changelog
 
-20220515 v1.20.0 (in progress)
+20220523 v1.20.0 (in progress)
+- Add YAML output option with `-y`
+- Add `top -b` standard and streaming parsers tested on linux
 - Fix pip-show parser for packages with a multi-line license field
 
 20220513 v1.19.0
@@ -10,7 +12,7 @@ jc changelog
 - Fix df command parser for rare instances when a newline is found at the end
 - Allow jc to pip install on unsupported python version 3.6
 - Fix asciitable-m parser to skip some rows that contain column separator
-  characters in cell data. A warning message will be printed to STDOUT
+  characters in cell data. A warning message will be printed to STDERR
   unless `-q` or `quiet=True` is used.
 
 20220427 v1.18.8
