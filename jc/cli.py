@@ -2,13 +2,13 @@
 JC cli module
 """
 
+import io
 import sys
 import os
 import textwrap
 import signal
 import shlex
 import subprocess
-import json
 from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _get_parser, _parser_is_streaming)
 from . import utils
@@ -21,12 +21,11 @@ try:
     from pygments import highlight
     from pygments.style import Style
     from pygments.token import (Name, Number, String, Keyword)
-    from pygments.lexers import JsonLexer
+    from pygments.lexers.data import JsonLexer, YamlLexer
     from pygments.formatters import Terminal256Formatter
     PYGMENTS_INSTALLED = True
 except Exception:
     PYGMENTS_INSTALLED = False
-
 
 JC_ERROR_EXIT = 100
 
@@ -210,6 +209,7 @@ def helptext():
             -r    raw JSON output
             -u    unbuffer output
             -v    version info
+            -y    YAML output
 
     Examples:
             Standard Syntax:
@@ -263,11 +263,52 @@ def versiontext():
     return textwrap.dedent(versiontext_string)
 
 
+def yaml_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, ascii_only=False):
+    """
+    Return a YAML formatted string. String may include color codes. If the
+    YAML library is not installed, output will fall back to JSON with a
+    warning message to STDERR"""
+    # make ruamel.yaml import optional
+    try:
+        from ruamel.yaml import YAML
+        YAML_INSTALLED = True
+    except Exception:
+        YAML_INSTALLED = False
+
+    if YAML_INSTALLED:
+        y_string_buf = io.BytesIO()
+        # monkey patch to disable plugins since we don't use them and in
+        # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
+        # plugin code is incompatible with the pyoxidizer packager
+        YAML.official_plug_ins = lambda a: []
+        yaml=YAML()
+        yaml.default_flow_style = False
+        yaml.explicit_start = True
+        yaml.allow_unicode = not ascii_only
+        yaml.encoding = 'utf-8'
+        yaml.dump(data, y_string_buf)
+        y_string = y_string_buf.getvalue().decode('utf-8')[:-1]
+
+        if not mono and not piped_out:
+            # set colors
+            class JcStyle(Style):
+                styles = set_env_colors(env_colors)
+
+            return str(highlight(y_string, YamlLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
+
+        return y_string
+
+    utils.warning_message(['YAML Library not installed. Reverting to JSON output.'])
+    return json_out(data, pretty=pretty, env_colors=env_colors, mono=mono, piped_out=piped_out, ascii_only=ascii_only)
+
+
 def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, ascii_only=False):
     """
     Return a JSON formatted string. String may include color codes or be
     pretty printed.
     """
+    import json
+
     separators = (',', ':')
     indent = None
 
@@ -287,24 +328,42 @@ def json_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
     return j_string
 
 
-def safe_print_json(list_or_dict, pretty=None, env_colors=None, mono=None,
-                    piped_out=None, flush=None):
-    """Safely prints JSON output in both UTF-8 and ASCII systems"""
-    try:
-        print(json_out(list_or_dict,
-                       pretty=pretty,
-                       env_colors=env_colors,
-                       mono=mono,
-                       piped_out=piped_out),
-              flush=flush)
-    except UnicodeEncodeError:
-        print(json_out(list_or_dict,
-                       pretty=pretty,
-                       env_colors=env_colors,
-                       mono=mono,
-                       piped_out=piped_out,
-                       ascii_only=True),
-              flush=flush)
+def safe_print_out(list_or_dict, pretty=None, env_colors=None, mono=None,
+                   piped_out=None, flush=None, yaml=None):
+    """Safely prints JSON or YAML output in both UTF-8 and ASCII systems"""
+    if yaml:
+        try:
+            print(yaml_out(list_or_dict,
+                           pretty=pretty,
+                           env_colors=env_colors,
+                           mono=mono,
+                           piped_out=piped_out),
+                  flush=flush)
+        except UnicodeEncodeError:
+            print(yaml_out(list_or_dict,
+                           pretty=pretty,
+                           env_colors=env_colors,
+                           mono=mono,
+                           piped_out=piped_out,
+                           ascii_only=True),
+                  flush=flush)
+
+    else:
+        try:
+            print(json_out(list_or_dict,
+                           pretty=pretty,
+                           env_colors=env_colors,
+                           mono=mono,
+                           piped_out=piped_out),
+                  flush=flush)
+        except UnicodeEncodeError:
+            print(json_out(list_or_dict,
+                           pretty=pretty,
+                           env_colors=env_colors,
+                           mono=mono,
+                           piped_out=piped_out,
+                           ascii_only=True),
+                  flush=flush)
 
 
 def magic_parser(args):
@@ -435,6 +494,7 @@ def main():
     raw = 'r' in options
     unbuffer = 'u' in options
     version_info = 'v' in options
+    yaml_out = 'y' in options
 
     if verbose_debug:
         tracebackplus.enable(context=11)
@@ -443,11 +503,12 @@ def main():
         mono = True
 
     if about:
-        safe_print_json(about_jc(),
-                        pretty=pretty,
-                        env_colors=jc_colors,
-                        mono=mono,
-                        piped_out=piped_output(force_color))
+        safe_print_out(about_jc(),
+                       pretty=pretty,
+                       env_colors=jc_colors,
+                       mono=mono,
+                       piped_out=piped_output(force_color),
+                       yaml=yaml_out)
         sys.exit(0)
 
     if help_me:
@@ -534,12 +595,13 @@ def main():
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
             for line in result:
-                safe_print_json(line,
-                                pretty=pretty,
-                                env_colors=jc_colors,
-                                mono=mono,
-                                piped_out=piped_output(force_color),
-                                flush=unbuffer)
+                safe_print_out(line,
+                               pretty=pretty,
+                               env_colors=jc_colors,
+                               mono=mono,
+                               piped_out=piped_output(force_color),
+                               flush=unbuffer,
+                               yaml=yaml_out)
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -550,12 +612,13 @@ def main():
                                   raw=raw,
                                   quiet=quiet)
 
-            safe_print_json(result,
-                            pretty=pretty,
-                            env_colors=jc_colors,
-                            mono=mono,
-                            piped_out=piped_output(force_color),
-                            flush=unbuffer)
+            safe_print_out(result,
+                           pretty=pretty,
+                           env_colors=jc_colors,
+                           mono=mono,
+                           piped_out=piped_output(force_color),
+                           flush=unbuffer,
+                           yaml=yaml_out)
 
         sys.exit(combined_exit_code(magic_exit_code, 0))
 
@@ -568,14 +631,6 @@ def main():
             'If this is the correct parser, try setting the locale to C (LANG=C).',
             f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
-        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    except json.JSONDecodeError:
-        if debug:
-            raise
-
-        utils.error_message(['There was an issue generating the JSON output.',
-                             'For details use the -d or -dd option.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     except Exception:
