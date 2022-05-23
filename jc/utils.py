@@ -97,6 +97,20 @@ def error_message(message_lines: List[str]) -> None:
         _safe_print(message, file=sys.stderr)
 
 
+def is_compatible(compatible: List) -> bool:
+    """
+    Returns True if the parser is compatible with the running OS platform.
+    """
+    platform_found = False
+
+    for platform in compatible:
+        if sys.platform.startswith(platform):
+            platform_found = True
+            break
+
+    return platform_found
+
+
 def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS
@@ -116,21 +130,13 @@ def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
 
         None - just prints output to STDERR
     """
-    if not quiet:
-        platform_found = False
-
-        for platform in compatible:
-            if sys.platform.startswith(platform):
-                platform_found = True
-                break
-
-        if not platform_found:
-            mod = mod_name.split('.')[-1]
-            compat_list = ', '.join(compatible)
-            warning_message([
-                f'{mod} parser is not compatible with your OS ({sys.platform}).',
-                f'Compatible platforms: {compat_list}'
-            ])
+    if not quiet and not is_compatible(compatible):
+        mod = mod_name.split('.')[-1]
+        compat_list = ', '.join(compatible)
+        warning_message([
+            f'{mod} parser is not compatible with your OS ({sys.platform}).',
+            f'Compatible platforms: {compat_list}'
+        ])
 
 
 def has_data(data: str) -> bool:
