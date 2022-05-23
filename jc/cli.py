@@ -264,7 +264,10 @@ def versiontext():
 
 
 def yaml_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, ascii_only=False):
-    """Return a YAML formatted string"""
+    """
+    Return a YAML formatted string. String may include color codes. If the
+    YAML library is not installed, output will fall back to JSON with a
+    warning message to STDERR"""
     # make ruamel.yaml import optional
     try:
         from ruamel.yaml import YAML
