@@ -3,6 +3,7 @@
 * [jc.utils](#jc.utils)
   * [warning\_message](#jc.utils.warning_message)
   * [error\_message](#jc.utils.error_message)
+  * [is\_compatible](#jc.utils.is_compatible)
   * [compatibility](#jc.utils.compatibility)
   * [has\_data](#jc.utils.has_data)
   * [convert\_to\_int](#jc.utils.convert_to_int)
@@ -26,8 +27,8 @@ jc - JSON Convert utils
 def warning_message(message_lines: List[str]) -> None
 ```
 
-Prints warning message for non-fatal issues. The first line is
-prepended with 'jc:  Warning - ' and subsequent lines are indented.
+Prints warning message to STDERR for non-fatal issues. The first line
+is prepended with 'jc:  Warning - ' and subsequent lines are indented.
 Wraps text as needed based on the terminal width.
 
 Parameters:
@@ -46,7 +47,7 @@ Returns:
 def error_message(message_lines: List[str]) -> None
 ```
 
-Prints an error message for fatal issues. The first line is
+Prints an error message to STDERR for fatal issues. The first line is
 prepended with 'jc:  Error - ' and subsequent lines are indented.
 Wraps text as needed based on the terminal width.
 
@@ -58,6 +59,16 @@ Returns:
 
     None - just prints output to STDERR
 
+<a id="jc.utils.is_compatible"></a>
+
+### is\_compatible
+
+```python
+def is_compatible(compatible: List) -> bool
+```
+
+Returns True if the parser is compatible with the running OS platform.
+
 <a id="jc.utils.compatibility"></a>
 
 ### compatibility
@@ -68,8 +79,8 @@ def compatibility(mod_name: str,
                   quiet: bool = False) -> None
 ```
 
-Checks for the parser's compatibility with the running OS
-platform.
+Checks for the parser's compatibility with the running OS platform and
+prints a warning message to STDERR if not compatible and quiet=False.
 
 Parameters:
 
