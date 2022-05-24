@@ -91,6 +91,7 @@ parsers = [
     'systeminfo',
     'time',
     'timedatectl',
+    'top',
     'tracepath',
     'traceroute',
     'ufw',
