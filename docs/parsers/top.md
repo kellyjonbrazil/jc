@@ -9,7 +9,7 @@ Requires batch mode (`-b`). The `-n` option must also be used to limit
 the number of times `top` is run.
 
 Warning messages will be printed to STDERR if truncated fields are detected.
-These warnings an be suppressed with the `-q` or `quiet=True` option.
+These warnings can be suppressed with the `-q` or `quiet=True` option.
 
 Usage (cli):
 
