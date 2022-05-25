@@ -319,6 +319,7 @@ def _safe_split(string: str, path: str, delim: str = ' ', quiet=False) -> List[s
 
     return split_string
 
+
 def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
     """
     Final processing to conform to the schema.
@@ -565,7 +566,7 @@ def parse(
                 )
                 continue
 
-            if line.startswith('KiB Mem :'):
+            if line[1:].startswith('iB Mem :'):
                 # KiB Mem :  3861332 total,  3446476 free,   216940 used,   197916 buff/cache
                 line_list = line.split()
                 item_obj.update(
