@@ -136,16 +136,16 @@ class info():
 __version__ = info.version
 
 
-def _safe_split(string: str, path: str, delim: str = ' ') -> List[str]:
+def _safe_split(string: str, path: str, delim: str = ' ', quiet=False) -> List[str]:
     split_string = string.split(delim)
     split_string = [x for x in split_string if not x.endswith('+')]
 
-    if string.endswith('+'):
+    if string.endswith('+') and not quiet:
         jc.utils.warning_message([f'{path} list was truncated'])
 
     return split_string
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
+def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
     """
     Final processing to conform to the schema.
 
@@ -280,7 +280,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 proc['supplementary_gids'] = _safe_split(
                     proc['supplementary_gids'],
                     f'item[{idx}]["processes"][{p_idx}]["supplementary_gids"]',
-                    ','
+                    ',', quiet=quiet
                 )
 
                 proc['supplementary_gids'] = [jc.utils.convert_to_int(x) for x in proc['supplementary_gids']]
@@ -290,14 +290,15 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 proc['supplementary_groups'] = _safe_split(
                     proc['supplementary_groups'],
                     f'item[{idx}]["processes"][{p_idx}]["supplementary_groups"]',
-                    ','
+                    ',', quiet=quiet
                 )
 
             # split environment_variables to a list of strings
             if proc.get('environment_variables'):
                 proc['environment_variables'] = _safe_split(
                     proc['environment_variables'],
-                    f'item[{idx}]["processes"][{p_idx}]["environment_variables"]'
+                    f'item[{idx}]["processes"][{p_idx}]["environment_variables"]',
+                    quiet=quiet
                 )
 
     return proc_data
@@ -417,4 +418,4 @@ def parse(
                 item_obj['processes'] = parse_table(process_list)
             raw_output.append(item_obj)
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output if raw else _process(raw_output, quiet=quiet)
