@@ -1,46 +1,48 @@
 jc changelog
 
-20220523 v1.20.0 (in progress)
+20220525 v1.20.0 (in progress)
 - Add YAML output option with `-y`
 - Add `top -b` standard and streaming parsers tested on linux
+- Add `plugin_parser_count`, `standard_parser_count`, and `streaming_parser_count`
+  keys to `jc -a` output
 - Fix pip-show parser for packages with a multi-line license field
 
 20220513 v1.19.0
-- Add chage --list command parser tested on linux
-- Add git log command streaming parser
-- Fix git log standard parser for corner-cases where hash values are in messages
-- Fix df command parser for rare instances when a newline is found at the end
+- Add `chage --list` command parser tested on linux
+- Add `git log` command streaming parser
+- Fix `git log` standard parser for corner-cases where hash values are in messages
+- Fix `df` command parser for rare instances when a newline is found at the end
 - Allow jc to pip install on unsupported python version 3.6
-- Fix asciitable-m parser to skip some rows that contain column separator
+- Fix `asciitable-m` parser to skip some rows that contain column separator
   characters in cell data. A warning message will be printed to STDERR
   unless `-q` or `quiet=True` is used.
 
 20220427 v1.18.8
-- Fix update-alternatives --query parser for cases where `slaves` are not present
+- Fix `update-alternatives --query` parser for cases where `slaves` are not present
 - Fix UnicodeEncodeError on some systems where LANG=C is set and unicode
   characters are in the output
-- Update history parser: do not drop non-ASCII characters if the system
+- Update `history` parser: do not drop non-ASCII characters if the system
   is configured for UTF-8 encoding
 - Enhance "magic syntax" to always use UTF-8 encoding
 
 20220425 v1.18.7
-- Add git log command parser
-- Add update-alternatives --query parser
-- Add update-alternatives --get-selections parser
+- Add `git log` command parser
+- Add `update-alternatives --query` parser
+- Add `update-alternatives --get-selections` parser
 - Fix key/value and ini parsers to allow duplicate keys
 - Fix yaml file parser for files including timestamp objects
-- Update xrandr parser: add a 'rotation' field
+- Update `xrandr` parser: add a 'rotation' field
 - Fix failing tests by moving template files
 - Add python interpreter version and path to -v and -a output
 
 20220325 v1.18.6
-- Add pidstat command parser tested on linux
-- Add pidstat command streaming parser tested on linux
-- Add mpstat command parser tested on linux
-- Add mpstat command streaming parser tested on linux
+- Add `pidstat` command parser tested on linux
+- Add `pidstat` command streaming parser tested on linux
+- Add `mpstat` command parser tested on linux
+- Add `mpstat` command streaming parser tested on linux
 - Add single-line ASCII and Unicode table parser
 - Add multi-line ASCII and Unicode table parser
-- Add documentation option to parser_info() and all_parser_info()
+- Add documentation option to `parser_info()` and `all_parser_info()`
 
 20220305 v1.18.5
 - Fix date parser to ensure AM/PM period string is always uppercase

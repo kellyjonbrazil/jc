@@ -10,7 +10,8 @@ import signal
 import shlex
 import subprocess
 from .lib import (__version__, parser_info, all_parser_info, parsers,
-                  _get_parser, _parser_is_streaming)
+                  _get_parser, _parser_is_streaming, standard_parser_mod_list,
+                  plugin_parser_mod_list, streaming_parser_mod_list)
 from . import utils
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -179,6 +180,9 @@ def about_jc():
         'python_version': '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro))),
         'python_path': sys.executable,
         'parser_count': len(all_parser_info()),
+        'standard_parser_count': len(standard_parser_mod_list()),
+        'streaming_parser_count': len(streaming_parser_mod_list()),
+        'plugin_parser_count': len(plugin_parser_mod_list()),
         'parsers': all_parser_info()
     }
 
