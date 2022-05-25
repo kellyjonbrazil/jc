@@ -44,23 +44,23 @@ Schema:
         "cpu_hardware":                                 float,
         "cpu_software":                                 float,
         "cpu_steal":                                    float,
-        "mem_total":                                    integer,
-        "mem_free":                                     integer,
-        "mem_used":                                     integer,
-        "mem_buff_cache":                               integer,
-        "swap_total":                                   integer,
-        "swap_free":                                    integer,
-        "swap_used":                                    integer,
-        "mem_available":                                integer,
+        "mem_total":                                    float,    [0]
+        "mem_free":                                     float,    [0]
+        "mem_used":                                     float,    [0]
+        "mem_buff_cache":                               float,    [0]
+        "swap_total":                                   float,    [0]
+        "swap_free":                                    float,    [0]
+        "swap_used":                                    float,    [0]
+        "mem_available":                                float,    [0]
         "processes": [
           {
             "pid":                                      integer,
             "user":                                     string,
             "priority":                                 integer,
             "nice":                                     integer,
-            "virtual_mem":                              string,
-            "resident_mem":                             string,
-            "shared_mem":                               string,
+            "virtual_mem":                              float,    [1]
+            "resident_mem":                             float,    [1]
+            "shared_mem":                               float,    [1]
             "status":                                   string,
             "percent_cpu":                              float,
             "percent_mem":                              float,
@@ -81,9 +81,9 @@ Schema:
             "thread_count":                             integer,
             "last_used_processor":                      integer,
             "time":                                     string,
-            "swap":                                     string,
-            "code":                                     string,
-            "data":                                     string,
+            "swap":                                     float,    [1]
+            "code":                                     float,    [1]
+            "data":                                     float,    [1]
             "major_page_fault_count":                   integer,
             "minor_page_fault_count":                   integer,
             "dirty_pages_count":                        integer,
@@ -102,7 +102,7 @@ Schema:
             ]
             "major_page_fault_count_delta":             integer,
             "minor_page_fault_count_delta":             integer,
-            "used":                                     string,
+            "used":                                     float,    [1]
             "ipc_namespace_inode":                      integer,
             "mount_namespace_inode":                    integer,
             "net_namespace_inode":                      integer,
@@ -113,6 +113,9 @@ Schema:
         ]
       }
     ]
+
+    [0] Values are in the units output by `top`
+    [1] Unit suffix stripped during float conversion
 
 Examples:
 
@@ -138,19 +141,23 @@ Examples:
         "cpu_hardware": 0.0,
         "cpu_software": 0.0,
         "cpu_steal": 0.0,
-        "swap_total": 2,
-        "swap_free": 2,
-        "swap_used": 0,
-        "mem_available": 3,
+        "mem_total": 3.7,
+        "mem_free": 3.3,
+        "mem_used": 0.2,
+        "mem_buff_cache": 0.2,
+        "swap_total": 2.0,
+        "swap_free": 2.0,
+        "swap_used": 0.0,
+        "mem_available": 3.3,
         "processes": [
           {
             "pid": 2225,
             "user": "kbrazil",
             "priority": 20,
             "nice": 0,
-            "virtual_mem": 158,
-            "resident_mem": 2,
-            "shared_mem": 1,
+            "virtual_mem": 158.1,
+            "resident_mem": 2.2,
+            "shared_mem": 1.6,
             "status": "running",
             "percent_cpu": 12.5,
             "percent_mem": 0.1,
@@ -171,9 +178,9 @@ Examples:
             "thread_count": 1,
             "last_used_processor": 0,
             "time": "0:00",
-            "swap": "0.0m",
-            "code": "0.1m",
-            "data": "1.0m",
+            "swap": 0.0,
+            "code": 0.1,
+            "data": 1.0,
             "major_page_fault_count": 0,
             "minor_page_fault_count": 736,
             "dirty_pages_count": 0,
@@ -195,7 +202,7 @@ Examples:
             ],
             "major_page_fault_count_delta": 0,
             "minor_page_fault_count_delta": 4,
-            "used": "2.2m",
+            "used": 2.2,
             "ipc_namespace_inode": 4026531839,
             "mount_namespace_inode": 4026531840,
             "net_namespace_inode": 4026531956,
@@ -395,19 +402,19 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
 
     int_list: List = [
         'uptime', 'users', 'tasks_total', 'tasks_running', 'tasks_sleeping', 'tasks_stopped',
-        'tasks_zombie', 'mem_total', 'mem_free', 'mem_used', 'mem_buff_cache', 'swap_total',
-        'swap_free', 'swap_used', 'mem_available', 'pid', 'priority', 'nice', 'parent_pid', 'uid',
-        'real_uid', 'saved_uid', 'gid', 'pgrp', 'tty_process_gid', 'session_id', 'thread_count',
-        'last_used_processor', 'major_page_fault_count', 'minor_page_fault_count',
-        'dirty_pages_count', 'thread_gid', 'major_page_fault_count_delta',
-        'minor_page_fault_count_delta', 'ipc_namespace_inode', 'mount_namespace_inode',
-        'net_namespace_inode', 'pid_namespace_inode', 'user_namespace_inode', 'nts_namespace_inode',
-        'virtual_mem', 'resident_mem', 'shared_mem'
+        'tasks_zombie', 'pid', 'priority', 'nice', 'parent_pid', 'uid', 'real_uid', 'saved_uid',
+        'gid', 'pgrp', 'tty_process_gid', 'session_id', 'thread_count', 'last_used_processor',
+        'major_page_fault_count', 'minor_page_fault_count', 'dirty_pages_count', 'thread_gid',
+        'major_page_fault_count_delta', 'minor_page_fault_count_delta', 'ipc_namespace_inode',
+        'mount_namespace_inode', 'net_namespace_inode', 'pid_namespace_inode',
+        'user_namespace_inode', 'nts_namespace_inode'
     ]
 
     float_list: List = [
         'load_1m', 'load_5m', 'load_15m', 'cpu_user', 'cpu_sys', 'cpu_nice', 'cpu_idle', 'cpu_wait',
-        'cpu_hardware', 'cpu_software', 'cpu_steal', 'percent_cpu', 'percent_mem'
+        'cpu_hardware', 'cpu_software', 'cpu_steal', 'percent_cpu', 'percent_mem', 'mem_total',
+        'mem_free', 'mem_used', 'mem_buff_cache', 'swap_total', 'swap_free', 'swap_used',
+        'mem_available', 'virtual_mem', 'resident_mem', 'shared_mem', 'swap', 'code', 'data', 'used'
     ]
 
     for idx, item in enumerate(proc_data):
@@ -593,7 +600,6 @@ def parse(
                 continue
 
             if line.startswith('   PID '):
-                # line = normalize_headers(line)
                 process_table = True
                 process_list.append(line)
                 continue
