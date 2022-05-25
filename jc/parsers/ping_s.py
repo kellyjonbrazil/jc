@@ -7,7 +7,7 @@ Supports `ping` and `ping6` output.
 
 Usage (cli):
 
-    $ ping | jc --ping-s
+    $ ping 1.2.3.4 | jc --ping-s
 
 > Note: When piping `jc` converted `ping` output to other processes it may
   appear the output is hanging due to the OS pipe buffers. This is because
