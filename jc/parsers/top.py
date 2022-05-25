@@ -1,7 +1,10 @@
-"""jc - JSON Convert `top` command output parser
+"""jc - JSON Convert `top -b` command output parser
 
-Requires batch mode (`-b`). The `-n` option should also be used to limit
+Requires batch mode (`-b`). The `-n` option must also be used to limit
 the number of times `top` is run.
+
+Warning messages will be printed to STDERR if truncated fields are detected.
+These warnings an be suppressed with the `-q` or `quiet=True` option.
 
 Usage (cli):
 
@@ -17,6 +20,8 @@ Usage (module):
     result = jc.parse('top', top_command_output)
 
 Schema:
+
+    All `-` values are converted to `null`
 
     [
       {
@@ -59,7 +64,7 @@ Schema:
             "status":                                   string,
             "percent_cpu":                              float,
             "percent_mem":                              float,
-            "time_hundredths ":                         string,
+            "time_hundredths":                          string,
             "command":                                  string,
             "parent_pid":                               integer,
             "uid":                                      integer,
@@ -112,10 +117,179 @@ Schema:
 Examples:
 
     $ top -b -n 3 | jc --top -p
-    []
+    [
+      {
+        "time": "11:20:43",
+        "uptime": 118,
+        "users": 2,
+        "load_1m": 0.0,
+        "load_5m": 0.01,
+        "load_15m": 0.05,
+        "tasks_total": 108,
+        "tasks_running": 2,
+        "tasks_sleeping": 106,
+        "tasks_stopped": 0,
+        "tasks_zombie": 0,
+        "cpu_user": 5.6,
+        "cpu_sys": 11.1,
+        "cpu_nice": 0.0,
+        "cpu_idle": 83.3,
+        "cpu_wait": 0.0,
+        "cpu_hardware": 0.0,
+        "cpu_software": 0.0,
+        "cpu_steal": 0.0,
+        "swap_total": 2,
+        "swap_free": 2,
+        "swap_used": 0,
+        "mem_available": 3,
+        "processes": [
+          {
+            "pid": 2225,
+            "user": "kbrazil",
+            "priority": 20,
+            "nice": 0,
+            "virtual_mem": 158,
+            "resident_mem": 2,
+            "shared_mem": 1,
+            "status": "running",
+            "percent_cpu": 12.5,
+            "percent_mem": 0.1,
+            "time_hundredths": "0:00.02",
+            "command": "top",
+            "parent_pid": 1884,
+            "uid": 1000,
+            "real_uid": 1000,
+            "real_user": "kbrazil",
+            "saved_uid": 1000,
+            "saved_user": "kbrazil",
+            "gid": 1000,
+            "group": "kbrazil",
+            "pgrp": 2225,
+            "tty": "pts/0",
+            "tty_process_gid": 2225,
+            "session_id": 1884,
+            "thread_count": 1,
+            "last_used_processor": 0,
+            "time": "0:00",
+            "swap": "0.0m",
+            "code": "0.1m",
+            "data": "1.0m",
+            "major_page_fault_count": 0,
+            "minor_page_fault_count": 736,
+            "dirty_pages_count": 0,
+            "sleeping_in_function": null,
+            "flags": "..4.2...",
+            "cgroups": "1:name=systemd:/user.slice/user-1000.+",
+            "supplementary_gids": [
+              10,
+              1000
+            ],
+            "supplementary_groups": [
+              "wheel",
+              "kbrazil"
+            ],
+            "thread_gid": 2225,
+            "environment_variables": [
+              "XDG_SESSION_ID=2",
+              "HOSTNAME=localhost"
+            ],
+            "major_page_fault_count_delta": 0,
+            "minor_page_fault_count_delta": 4,
+            "used": "2.2m",
+            "ipc_namespace_inode": 4026531839,
+            "mount_namespace_inode": 4026531840,
+            "net_namespace_inode": 4026531956,
+            "pid_namespace_inode": 4026531836,
+            "user_namespace_inode": 4026531837,
+            "nts_namespace_inode": 4026531838
+          },
+          ...
+        ]
+      }
+    ]
 
     $ top -b -n 3 | jc --top -p -r
-    []
+    [
+      {
+        "time": "11:20:43",
+        "uptime": "1:18",
+        "users": "2",
+        "load_1m": "0.00",
+        "load_5m": "0.01",
+        "load_15m": "0.05",
+        "tasks_total": "108",
+        "tasks_running": "2",
+        "tasks_sleeping": "106",
+        "tasks_stopped": "0",
+        "tasks_zombie": "0",
+        "cpu_user": "5.6",
+        "cpu_sys": "11.1",
+        "cpu_nice": "0.0",
+        "cpu_idle": "83.3",
+        "cpu_wait": "0.0",
+        "cpu_hardware": "0.0",
+        "cpu_software": "0.0",
+        "cpu_steal": "0.0",
+        "swap_total": "2.0",
+        "swap_free": "2.0",
+        "swap_used": "0.0",
+        "mem_available": "3.3",
+        "processes": [
+          {
+            "PID": "2225",
+            "USER": "kbrazil",
+            "PR": "20",
+            "NI": "0",
+            "VIRT": "158.1m",
+            "RES": "2.2m",
+            "SHR": "1.6m",
+            "S": "R",
+            "%CPU": "12.5",
+            "%MEM": "0.1",
+            "TIME+": "0:00.02",
+            "COMMAND": "top",
+            "PPID": "1884",
+            "UID": "1000",
+            "RUID": "1000",
+            "RUSER": "kbrazil",
+            "SUID": "1000",
+            "SUSER": "kbrazil",
+            "GID": "1000",
+            "GROUP": "kbrazil",
+            "PGRP": "2225",
+            "TTY": "pts/0",
+            "TPGID": "2225",
+            "SID": "1884",
+            "nTH": "1",
+            "P": "0",
+            "TIME": "0:00",
+            "SWAP": "0.0m",
+            "CODE": "0.1m",
+            "DATA": "1.0m",
+            "nMaj": "0",
+            "nMin": "736",
+            "nDRT": "0",
+            "WCHAN": "-",
+            "Flags": "..4.2...",
+            "CGROUPS": "1:name=systemd:/user.slice/user-1000.+",
+            "SUPGIDS": "10,1000",
+            "SUPGRPS": "wheel,kbrazil",
+            "TGID": "2225",
+            "ENVIRON": "XDG_SESSION_ID=2 HOSTNAME=localhost S+",
+            "vMj": "0",
+            "vMn": "4",
+            "USED": "2.2m",
+            "nsIPC": "4026531839",
+            "nsMNT": "4026531840",
+            "nsNET": "4026531956",
+            "nsPID": "4026531836",
+            "nsUSER": "4026531837",
+            "nsUTS": "4026531838"
+          },
+          ...
+        ]
+      }
+    ]
 """
 from typing import List, Dict
 import jc.utils
@@ -141,7 +315,7 @@ def _safe_split(string: str, path: str, delim: str = ' ', quiet=False) -> List[s
     split_string = [x for x in split_string if not x.endswith('+')]
 
     if string.endswith('+') and not quiet:
-        jc.utils.warning_message([f'{path} list was truncated'])
+        jc.utils.warning_message([f'{path} list was truncated by top'])
 
     return split_string
 
@@ -171,7 +345,7 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
         'PID': 'pid',
         'SWAP': 'swap',
         'TIME': 'time',
-        'TIME+': 'time_hundredths ',
+        'TIME+': 'time_hundredths',
         'TTY': 'tty',
         'UID': 'uid',
         'USED': 'used',
@@ -219,41 +393,29 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
     }
 
     int_list: List = [
-        'uptime',
-        'users',
-        'tasks_total',
-        'tasks_running',
-        'tasks_sleeping',
-        'tasks_stopped',
-        'tasks_zombie',
-        'mem_total',
-        'mem_free',
-        'mem_used',
-        'mem_buff_cache',
-        'swap_total',
-        'swap_free',
-        'swap_used',
-        'mem_available'
+        'uptime', 'users', 'tasks_total', 'tasks_running', 'tasks_sleeping', 'tasks_stopped',
+        'tasks_zombie', 'mem_total', 'mem_free', 'mem_used', 'mem_buff_cache', 'swap_total',
+        'swap_free', 'swap_used', 'mem_available', 'pid', 'priority', 'nice', 'parent_pid', 'uid',
+        'real_uid', 'saved_uid', 'gid', 'pgrp', 'tty_process_gid', 'session_id', 'thread_count',
+        'last_used_processor', 'major_page_fault_count', 'minor_page_fault_count',
+        'dirty_pages_count', 'thread_gid', 'major_page_fault_count_delta',
+        'minor_page_fault_count_delta', 'ipc_namespace_inode', 'mount_namespace_inode',
+        'net_namespace_inode', 'pid_namespace_inode', 'user_namespace_inode', 'nts_namespace_inode',
+        'virtual_mem', 'resident_mem', 'shared_mem'
     ]
 
     float_list: List = [
-        'load_1m',
-        'load_5m',
-        'load_15m',
-        'cpu_user',
-        'cpu_sys',
-        'cpu_nice',
-        'cpu_idle',
-        'cpu_wait',
-        'cpu_hardware',
-        'cpu_software',
-        'cpu_steal'
+        'load_1m', 'load_5m', 'load_15m', 'cpu_user', 'cpu_sys', 'cpu_nice', 'cpu_idle', 'cpu_wait',
+        'cpu_hardware', 'cpu_software', 'cpu_steal', 'percent_cpu', 'percent_mem'
     ]
 
-
     for idx, item in enumerate(proc_data):
-        # root int and float conversions
         for key in item:
+            # root truncation warnings
+            if isinstance(item[key], str) and item[key].endswith('+') and not quiet:
+                jc.utils.warning_message([f'item[{idx}]["{key}"] was truncated by top'])
+
+            # root int and float conversions
             if key in int_list:
                 item[key] = jc.utils.convert_to_int(item[key])
 
@@ -266,10 +428,31 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
             for old_key in proc_copy.keys():
                 proc[key_map[old_key]] = proc.pop(old_key)
 
-            # set dashes to nulls
+            # cleanup values
             for key in proc.keys():
+
+                # set dashes to nulls
                 if proc[key] == '-':
                     proc[key] = None
+
+                # because of ambiguous column spacing (right-justified numbers
+                # with left-justified dashes for null values) there are some hanging
+                # dashes that need to be cleaned up in some values. Seems the correct
+                # values are kept in the assigned columns, so this should not affect
+                # data integrity.
+                if proc[key] and proc[key].endswith(' -'):
+                    new_val = proc[key][::-1]
+                    new_val = new_val.replace('- ', '')
+                    new_val = new_val[::-1]
+                    proc[key] = new_val
+
+                # do int/float conversions for the process objects
+                if proc[key]:
+                    if key in int_list:
+                        proc[key] = jc.utils.convert_to_int(proc[key])
+
+                    if key in float_list:
+                        proc[key] = jc.utils.convert_to_float(proc[key])
 
             # set status string
             if proc.get('status'):
@@ -300,6 +483,11 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
                     f'item[{idx}]["processes"][{p_idx}]["environment_variables"]',
                     quiet=quiet
                 )
+
+            for key in proc.keys():
+                # print final warnings for truncated string values
+                if isinstance(proc[key], str) and proc[key].endswith('+') and not quiet:
+                    jc.utils.warning_message([f'item[{idx}]["processes"][{p_idx}]["{key}"] was truncated by top'])
 
     return proc_data
 

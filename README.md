@@ -228,6 +228,7 @@ option.
 | `   --systeminfo` | `systeminfo` command parser                             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo)       |
 | `         --time` | `/usr/bin/time` command parser                          | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/time)             |
 | `  --timedatectl` | `timedatectl status` command parser                     | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl)      |
+| `          --top` | `top -b` command parser                                 | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/top)              |
 | `    --tracepath` | `tracepath` and `tracepath6` command parser             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)        |
 | `   --traceroute` | `traceroute` and `traceroute6` command parser           | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute)       |
 | `          --ufw` | `ufw status` command parser                             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw)              |
