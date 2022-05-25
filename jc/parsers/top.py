@@ -136,6 +136,15 @@ class info():
 __version__ = info.version
 
 
+def _safe_split(string: str, path: str, delim: str = ' ') -> List[str]:
+    split_string = string.split(delim)
+    split_string = [x for x in split_string if not x.endswith('+')]
+
+    if string.endswith('+'):
+        jc.utils.warning_message([f'{path} list was truncated'])
+
+    return split_string
+
 def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
@@ -242,7 +251,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     ]
 
 
-    for item in proc_data:
+    for idx, item in enumerate(proc_data):
         # root int and float conversions
         for key in item:
             if key in int_list:
@@ -251,7 +260,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if key in float_list:
                 item[key] = jc.utils.convert_to_float(item[key])
 
-        for proc in item['processes']:
+        for p_idx, proc in enumerate(item['processes']):
             # rename processes keys to conform to schema
             proc_copy = proc.copy()
             for old_key in proc_copy.keys():
@@ -267,20 +276,29 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 proc['status'] = status_map[proc['status']]
 
             # split supplementary_gids to a list of integers
+            if proc.get('supplementary_gids'):
+                proc['supplementary_gids'] = _safe_split(
+                    proc['supplementary_gids'],
+                    f'item[{idx}]["processes"][{p_idx}]["supplementary_gids"]',
+                    ','
+                )
+
+                proc['supplementary_gids'] = [jc.utils.convert_to_int(x) for x in proc['supplementary_gids']]
 
             # split supplementary_groups to a list of strings
+            if proc.get('supplementary_groups'):
+                proc['supplementary_groups'] = _safe_split(
+                    proc['supplementary_groups'],
+                    f'item[{idx}]["processes"][{p_idx}]["supplementary_groups"]',
+                    ','
+                )
 
             # split environment_variables to a list of strings
             if proc.get('environment_variables'):
-                env_list = proc['environment_variables'].split()
-                env_list = [x if '=' in x else f'{x} (truncated)' for x in env_list]
-                proc['environment_variables'] = env_list
-
-            
-
-
-
-        
+                proc['environment_variables'] = _safe_split(
+                    proc['environment_variables'],
+                    f'item[{idx}]["processes"][{p_idx}]["environment_variables"]'
+                )
 
     return proc_data
 
