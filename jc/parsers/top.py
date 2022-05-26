@@ -528,7 +528,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in data.splitlines():
             if line.startswith('top - '):
                 if item_obj:
                     if process_list:
@@ -599,12 +599,11 @@ def parse(
                 )
                 continue
 
-            if line.startswith('   PID '):
+            if not process_table and line == '':
                 process_table = True
-                process_list.append(line)
                 continue
 
-            if process_table:
+            if process_table and not line == '':
                 process_list.append(line)
                 continue
 
