@@ -134,7 +134,7 @@ def set_env_colors(env_colors=None):
 
 def piped_output(force_color):
     """
-    Return False if stdout is a TTY. True if output is being piped to
+    Return False if `STDOUT` is a TTY. True if output is being piped to
     another program and foce_color is True. This allows forcing of ANSI
     color codes even when using pipes.
     """

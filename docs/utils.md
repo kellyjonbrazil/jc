@@ -27,7 +27,7 @@ jc - JSON Convert utils
 def warning_message(message_lines: List[str]) -> None
 ```
 
-Prints warning message to STDERR for non-fatal issues. The first line
+Prints warning message to `STDERR` for non-fatal issues. The first line
 is prepended with 'jc:  Warning - ' and subsequent lines are indented.
 Wraps text as needed based on the terminal width.
 
@@ -47,7 +47,7 @@ Returns:
 def error_message(message_lines: List[str]) -> None
 ```
 
-Prints an error message to STDERR for fatal issues. The first line is
+Prints an error message to `STDERR` for fatal issues. The first line is
 prepended with 'jc:  Error - ' and subsequent lines are indented.
 Wraps text as needed based on the terminal width.
 
@@ -80,7 +80,7 @@ def compatibility(mod_name: str,
 ```
 
 Checks for the parser's compatibility with the running OS platform and
-prints a warning message to STDERR if not compatible and quiet=False.
+prints a warning message to `STDERR` if not compatible and quiet=False.
 
 Parameters:
 

@@ -4,7 +4,7 @@
 > Dictionaries (module)
 
 Supports the `-i` or `--itemize-changes` options with all levels of
-verbosity. This parser will process the STDOUT output or a log file
+verbosity. This parser will process the `STDOUT` output or a log file
 generated with the `--log-file` option.
 
 Usage (cli):
