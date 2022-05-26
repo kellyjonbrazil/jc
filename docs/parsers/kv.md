@@ -12,8 +12,8 @@ Supports files containing simple key/value pairs.
 - If duplicate keys are found, only the last value will be used.
 
 > Note: Values starting and ending with quotation marks will have the marks
-        removed. If you would like to keep the quotation marks, use the `-r`
-        command-line argument or the `raw=True` argument in `parse()`.
+> removed. If you would like to keep the quotation marks, use the `-r`
+> command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 

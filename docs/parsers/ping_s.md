@@ -6,7 +6,7 @@
 jc - JSON Convert `ping` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
-  Dictionaries (module)
+> Dictionaries (module)
 
 Supports `ping` and `ping6` output.
 
@@ -15,11 +15,11 @@ Usage (cli):
     $ ping 1.2.3.4 | jc --ping-s
 
 > Note: When piping `jc` converted `ping` output to other processes it may
-  appear the output is hanging due to the OS pipe buffers. This is because
-  `ping` output is too small to quickly fill up the buffer. Use the `-u`
-  option to unbuffer the `jc` output if you would like immediate output.
-  See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
-  for more information.
+> appear the output is hanging due to the OS pipe buffers. This is because
+> `ping` output is too small to quickly fill up the buffer. Use the `-u`
+> option to unbuffer the `jc` output if you would like immediate output.
+> See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
+> for more information.
 
 Usage (module):
 

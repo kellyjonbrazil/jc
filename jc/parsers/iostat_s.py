@@ -1,20 +1,20 @@
 """jc - JSON Convert `iostat` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
-  Dictionaries (module)
+> Dictionaries (module)
 
-Note: `iostat` version 11 and higher include a JSON output option
+> Note: `iostat` version 11 and higher include a JSON output option
 
 Usage (cli):
 
     $ iostat | jc --iostat-s
 
 > Note: When piping `jc` converted `iostat` output to other processes it may
-  appear the output is hanging due to the OS pipe buffers. This is because
-  `iostat` output is too small to quickly fill up the buffer. Use the `-u`
-  option to unbuffer the `jc` output if you would like immediate output. See
-  the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
-  for more information.
+> appear the output is hanging due to the OS pipe buffers. This is because
+> `iostat` output is too small to quickly fill up the buffer. Use the `-u`
+> option to unbuffer the `jc` output if you would like immediate output. See
+> the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
+> for more information.
 
 Usage (module):
 
