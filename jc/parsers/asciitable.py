@@ -117,7 +117,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -222,18 +222,20 @@ def _is_separator(line: str) -> bool:
 
 def _snake_case(line: str) -> str:
     """
-    replace spaces between words and special characters with an underscore
-    and set to lowercase
+    Replace spaces between words and special characters with an underscore
+    and set to lowercase. Ignore the replacement char (�) used for header
+    padding.
     """
-    line = re.sub(r'[^a-zA-Z0-9 ]', '_', line)
-    return re.sub(r'\b \b', '_', line).lower()
+    line = re.sub(r'[^a-zA-Z0-9� ]', '_', line)  # special characters
+    line = re.sub(r'\b \b', '_', line).lower()   # spaces betwee words
+    return line
 
 
 def _normalize_rows(table: str) -> List[str]:
     """
     returns a List of row strings. Header is snake-cased
     """
-    result = []
+    result: List[str] = []
     for line in table.splitlines():
         # skip blank lines
         if not line.strip():
@@ -243,7 +245,36 @@ def _normalize_rows(table: str) -> List[str]:
         if _is_separator(line):
             continue
 
-        # data row - remove column separators
+        # header or data row found - remove column separators
+        if not result:  # this is the header row
+            # normalize the separator
+            line = line.replace('│', '|')\
+                       .replace('┃', '|')\
+                       .replace('┆', '|')\
+                       .replace('┇', '|')\
+                       .replace('┊', '|')\
+                       .replace('┋', '|')\
+                       .replace('╎', '|')\
+                       .replace('╏', '|')\
+                       .replace('║', '|')
+
+            # find the number of chars to pad in front of headers that are too
+            # far away from the separator. Replace spaces with unicode char: �
+            # we will remove this char from headers after sparse_table_parse
+            problem_header_pattern = re.compile(r'(?:\| )( +)([^|]+)')
+            problem_headers = problem_header_pattern.findall(line)
+            if problem_headers:
+                for p_header in problem_headers:
+                    old_header = p_header[0] + p_header[1]
+                    sub_chars = '�' * len(p_header[0])
+                    new_header = sub_chars + p_header[1]
+                    line = line.replace(old_header, new_header)
+
+            line = line.replace('|', ' ')
+            result.append(_snake_case(line))
+            continue
+
+        # this is a data row
         line = line.replace('|', ' ')\
                    .replace('│', ' ')\
                    .replace('┃', ' ')\
@@ -256,7 +287,6 @@ def _normalize_rows(table: str) -> List[str]:
                    .replace('║', ' ')
         result.append(line)
 
-    result[0] = _snake_case(result[0])
     return result
 
 
@@ -266,7 +296,8 @@ def _fixup_headers(table: List[Dict]) -> List[Dict]:
     for row in table:
         new_row = row.copy()
         for k in row:
-            k_new = k
+            # remove replacement character
+            k_new = k.replace('�', '')
             # remove consecutive underscores
             k_new = re.sub(r'__+', '_', k_new)
             # remove trailing underscores

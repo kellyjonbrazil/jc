@@ -1,11 +1,12 @@
 jc changelog
 
-20220525 v1.20.0 (in progress)
+20220526 v1.20.0 (in progress)
 - Add YAML output option with `-y`
 - Add `top -b` standard and streaming parsers tested on linux
 - Add `plugin_parser_count`, `standard_parser_count`, and `streaming_parser_count`
   keys to `jc -a` output
-- Fix pip-show parser for packages with a multi-line license field
+- Fix `pip-show` parser for packages with a multi-line license field
+- Fix ASCII Table parser for cases where centered headers cause mis-aligned fields
 
 20220513 v1.19.0
 - Add `chage --list` command parser tested on linux
