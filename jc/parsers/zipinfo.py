@@ -1,9 +1,6 @@
 """jc - JSON Convert `zipinfo` command output parser
 
-Options supported:
-- none
-
-Note: The default listing format.
+> Note: No `zipinfo` options are supported.
 
 Usage (cli):
 

@@ -7,12 +7,12 @@ jc - JSON Convert `traceroute` command output parser
 
 Supports `traceroute` and `traceroute6` output.
 
-Note: On some operating systems you will need to redirect `STDERR` to
-      `STDOUT` for destination info since the header line is sent to
-      `STDERR`. A warning message will be printed to `STDERR` if the
-      header row is not found.
-
-      e.g. `$ traceroute 8.8.8.8 2>&1 | jc --traceroute`
+> Note: On some operating systems you will need to redirect `STDERR` to
+> `STDOUT` for destination info since the header line is sent to
+> `STDERR`. A warning message will be printed to `STDERR` if the
+> header row is not found.
+>
+> e.g. `$ traceroute 8.8.8.8 2>&1 | jc --traceroute`
 
 Usage (cli):
 

@@ -5,7 +5,7 @@
 
 jc - JSON Convert `YAML` file parser
 
-Note: datetime objects will be converted to strings.
+> Note: `datetime` objects will be converted to strings.
 
 Usage (cli):
 

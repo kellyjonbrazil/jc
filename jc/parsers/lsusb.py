@@ -17,9 +17,9 @@ Usage (module):
 
 Schema:
 
-    Note: <item> object keynames are assigned directly from the lsusb
-          output. If there are duplicate <item> names in a section, only the
-          last one is converted.
+> Note: <item> object keynames are assigned directly from the lsusb
+> output. If there are duplicate <item> names in a section, only the
+> last one is converted.
 
     [
       {

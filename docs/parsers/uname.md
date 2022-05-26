@@ -5,7 +5,7 @@
 
 jc - JSON Convert `uname -a` command output parser
 
-Note: Must use `uname -a`
+> Note: Must use `uname -a`
 
 Usage (cli):
 

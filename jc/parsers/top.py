@@ -21,7 +21,7 @@ Usage (module):
 
 Schema:
 
-    All `-` values are converted to `null`
+All `-` values are converted to `null`
 
     [
       {
