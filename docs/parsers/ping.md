@@ -9,8 +9,8 @@ Supports `ping` and `ping6` output.
 
 Usage (cli):
 
-    Note:  Use the ping `-c` (count) option, otherwise data will not be
-           piped to `jc`.
+> Note:  Use the ping `-c` (count) option, otherwise data will not be
+> piped to `jc`.
 
     $ ping -c 3 1.2.3.4 | jc --ping
 
