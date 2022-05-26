@@ -3,7 +3,12 @@
 This parser converts ASCII and Unicode text tables with single-line rows.
 
 Column headers must be at least two spaces apart from each other and must
-be unique.
+be unique. For best results, column headers should be left-justified. If
+column separators are present, then non-left-justified headers will be fixed
+automatically.
+
+Row separators are optional and are ignored. Each non-row-separator line is
+considered a separate row in the table.
 
 For example:
 
