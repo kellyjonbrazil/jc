@@ -92,6 +92,7 @@ parsers = [
     'time',
     'timedatectl',
     'top',
+    'top-s',
     'tracepath',
     'traceroute',
     'ufw',
