@@ -177,7 +177,6 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
 
         Dictionary. Structured data to conform to the schema.
     """
-
     key_map: Dict = {
         '%CPU': 'percent_cpu',
         '%MEM': 'percent_mem',
@@ -461,11 +460,7 @@ def parse(
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
 
-    try:
-        if output_line:
-            if process_list:
-                output_line['processes'] = parse_table(process_list)
-            yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
-
-    except Exception as e:
-        yield raise_or_yield(ignore_exceptions, e, line)
+    if output_line:
+        if process_list:
+            output_line['processes'] = parse_table(process_list)
+        yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
