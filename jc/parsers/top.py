@@ -394,6 +394,7 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
 
     status_map: Dict = {
         'D': 'uninterruptible sleep',
+        'I': 'idle',
         'R': 'running',
         'S': 'sleeping',
         'T': 'stopped by job control signal',
