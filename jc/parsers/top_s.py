@@ -453,6 +453,11 @@ def parse(
                 process_list.append(line.rstrip())
                 continue
 
+            if process_table and line.rstrip() == '':
+                continue
+
+            raise ParseError('Not top data')
+
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
 
