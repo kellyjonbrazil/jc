@@ -3,7 +3,7 @@
 
 # jc.parsers.pidstat\_s
 
-jc - JSON Convert `pidstat` command output streaming parser
+jc - JSON Convert `pidstat -h` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)

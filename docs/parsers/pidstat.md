@@ -3,7 +3,7 @@
 
 # jc.parsers.pidstat
 
-jc - JSON Convert `pidstat` command output parser
+jc - JSON Convert `pidstat -h` command output parser
 
 Must use the `-h` option in `pidstat`. All other `pidstat` options are
 supported in combination with `-h`.

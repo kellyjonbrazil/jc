@@ -1,4 +1,4 @@
-"""jc - JSON Convert `pidstat` command output streaming parser
+"""jc - JSON Convert `pidstat -h` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)
@@ -84,7 +84,7 @@ from jc.exceptions import ParseError
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`pidstat` command streaming parser'
+    description = '`pidstat -h` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']

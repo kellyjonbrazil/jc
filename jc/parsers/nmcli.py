@@ -24,14 +24,14 @@ Usage (module):
 
 Schema:
 
-    Because there are so many options, the schema is not strictly defined.
-    Integer and Float value conversions are attempted and the original
-    values are kept if they fail. If you don't want automatic conversion,
-    then use the -r or raw=True option to disable it.
+Because there are so many options, the schema is not strictly defined.
+Integer and Float value conversions are attempted and the original
+values are kept if they fail. If you don't want automatic conversion,
+then use the `-r` or `raw=True` option to disable it.
 
-    The structure is flat, for the most part, but there are a couple of
-    "well-known" keys that are further parsed into objects for convenience.
-    These are documented below.
+The structure is flat, for the most part, but there are a couple of
+"well-known" keys that are further parsed into objects for convenience.
+These are documented below.
 
     [
       {

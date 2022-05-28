@@ -16,8 +16,8 @@ Usage (module):
 
 Schema:
 
-    XML Document converted to a Dictionary
-    See https://github.com/martinblech/xmltodict for details
+XML Document converted to a Dictionary. See https://github.com/martinblech/xmltodict
+for details.
 
     {
       "key1":   string/object,
