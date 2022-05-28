@@ -445,7 +445,10 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
             # rename processes keys to conform to schema
             proc_copy = proc.copy()
             for old_key in proc_copy.keys():
-                proc[key_map[old_key]] = proc.pop(old_key)
+                if old_key in proc:
+                    proc[key_map[old_key]] = proc.pop(old_key)
+                else:
+                    jc.utils.warning_message([f'Unknown field detected at item[{idx}]["processes"]: {old_key}'])
 
             # cleanup values
             for key in proc.keys():

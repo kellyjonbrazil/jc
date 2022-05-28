@@ -180,40 +180,49 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
     key_map: Dict = {
         '%CPU': 'percent_cpu',
         '%MEM': 'percent_mem',
+        'CGNAME': 'control_group_name', #
         'CGROUPS': 'cgroups',
         'CODE': 'code',
         'COMMAND': 'command',
         'DATA': 'data',
+        'ENVIRON': 'environment_variables',
         'Flags': 'flags',
         'GID': 'gid',
         'GROUP': 'group',
+        'LXC': 'lxc_container_name',  #
+        'NI': 'nice',
+        'NU': 'numa_node',  #
+        'OOMa': 'out_of_mem_adjustment', #
+        'OOMs': 'out_of_mem_score',  #
+        'P': 'last_used_processor',
         'PGRP': 'pgrp',
         'PID': 'pid',
-        'SWAP': 'swap',
-        'TIME': 'time',
-        'TIME+': 'time_hundredths',
-        'TTY': 'tty',
-        'UID': 'uid',
-        'USED': 'used',
-        'USER': 'user',
-        'PR': 'priority',
-        'NI': 'nice',
-        'VIRT': 'virtual_mem',
-        'RES': 'resident_mem',
-        'SHR': 'shared_mem',
-        'S': 'status',
-        'ENVIRON': 'environment_variables',
-        'P': 'last_used_processor',
         'PPID': 'parent_pid',
+        'PR': 'priority',
+        'RES': 'resident_mem',
+        'RSan': 'resident_anon_mem',  #
+        'RSfd': 'resident_file_backed_mem',  #
+        'RSlk': 'resident_locked_mem',  #
+        'RSsh': 'resident_shared_mem', #
         'RUID': 'real_uid',
         'RUSER': 'real_user',
+        'S': 'status',
+        'SHR': 'shared_mem',
         'SID': 'session_id',
         'SUID': 'saved_uid',
         'SUPGIDS': 'supplementary_gids',
         'SUPGRPS': 'supplementary_groups',
         'SUSER': 'saved_user',
+        'SWAP': 'swap',
         'TGID': 'thread_gid',
+        'TIME': 'time',
+        'TIME+': 'time_hundredths',
         'TPGID': 'tty_process_gid',
+        'TTY': 'tty',
+        'UID': 'uid',
+        'USED': 'used',
+        'USER': 'user',
+        'VIRT': 'virtual_mem',
         'WCHAN': 'sleeping_in_function',
         'nDRT': 'dirty_pages_count',
         'nMaj': 'major_page_fault_count',
@@ -272,7 +281,10 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
         # rename processes keys to conform to schema
         proc_copy = proc.copy()
         for old_key in proc_copy.keys():
-            proc[key_map[old_key]] = proc.pop(old_key)
+            if old_key in proc:
+                proc[key_map[old_key]] = proc.pop(old_key)
+            else:
+                jc.utils.warning_message([f'Unknown field detected at item[{idx}]["processes"]: {old_key}'])
 
         # cleanup values
         for key in proc.keys():
