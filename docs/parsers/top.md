@@ -114,7 +114,16 @@ All `-` values are converted to `null`
             "net_namespace_inode":                      integer,
             "pid_namespace_inode":                      integer,
             "user_namespace_inode":                     integer,
-            "nts_namespace_inode":                      integer
+            "nts_namespace_inode":                      integer,
+            "control_group_name":                       string,
+            "lxc_container_name":                       string,
+            "numa_node":                                integer,
+            "out_of_mem_adjustment":                    integer,
+            "out_of_mem_score":                         integer,
+            "resident_anon_mem":                        integer,
+            "resident_file_backed_mem":                 integer,
+            "resident_locked_mem":                      integer,
+            "resident_shared_mem":                      integer
           }
         ]
       }

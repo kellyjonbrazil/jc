@@ -109,7 +109,16 @@ All `-` values are converted to `null`
             "net_namespace_inode":                      integer,
             "pid_namespace_inode":                      integer,
             "user_namespace_inode":                     integer,
-            "nts_namespace_inode":                      integer
+            "nts_namespace_inode":                      integer,
+            "control_group_name":                       string,
+            "lxc_container_name":                       string,
+            "numa_node":                                integer,
+            "out_of_mem_adjustment":                    integer,
+            "out_of_mem_score":                         integer,
+            "resident_anon_mem":                        integer,
+            "resident_file_backed_mem":                 integer,
+            "resident_locked_mem":                      integer,
+            "resident_shared_mem":                      integer
           }
         ]
       }
@@ -343,7 +352,7 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
     key_map: Dict = {
         '%CPU': 'percent_cpu',
         '%MEM': 'percent_mem',
-        'CGNAME': 'control_group_name', #
+        'CGNAME': 'control_group_name',
         'CGROUPS': 'cgroups',
         'CODE': 'code',
         'COMMAND': 'command',
@@ -352,21 +361,21 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
         'Flags': 'flags',
         'GID': 'gid',
         'GROUP': 'group',
-        'LXC': 'lxc_container_name',  #
+        'LXC': 'lxc_container_name',
         'NI': 'nice',
-        'NU': 'numa_node',  #
-        'OOMa': 'out_of_mem_adjustment', #
-        'OOMs': 'out_of_mem_score',  #
+        'NU': 'numa_node',
+        'OOMa': 'out_of_mem_adjustment',
+        'OOMs': 'out_of_mem_score',
         'P': 'last_used_processor',
         'PGRP': 'pgrp',
         'PID': 'pid',
         'PPID': 'parent_pid',
         'PR': 'priority',
         'RES': 'resident_mem',
-        'RSan': 'resident_anon_mem',  #
-        'RSfd': 'resident_file_backed_mem',  #
-        'RSlk': 'resident_locked_mem',  #
-        'RSsh': 'resident_shared_mem', #
+        'RSan': 'resident_anon_mem',
+        'RSfd': 'resident_file_backed_mem',
+        'RSlk': 'resident_locked_mem',
+        'RSsh': 'resident_shared_mem',
         'RUID': 'real_uid',
         'RUSER': 'real_user',
         'S': 'status',
