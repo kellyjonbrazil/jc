@@ -1,6 +1,6 @@
 jc changelog
 
-20220526 v1.20.0 (in progress)
+20220528 v1.20.0
 - Add YAML output option with `-y`
 - Add `top -b` standard and streaming parsers tested on linux
 - Add `plugin_parser_count`, `standard_parser_count`, and `streaming_parser_count`
