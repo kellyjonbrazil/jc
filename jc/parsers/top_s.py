@@ -264,7 +264,9 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
         'major_page_fault_count', 'minor_page_fault_count', 'dirty_pages_count', 'thread_gid',
         'major_page_fault_count_delta', 'minor_page_fault_count_delta', 'ipc_namespace_inode',
         'mount_namespace_inode', 'net_namespace_inode', 'pid_namespace_inode',
-        'user_namespace_inode', 'nts_namespace_inode'
+        'user_namespace_inode', 'nts_namespace_inode', 'numa_node', 'out_of_mem_adjustment',
+        'out_of_mem_score', 'resident_anon_mem', 'resident_file_backed_mem', 'resident_locked_mem',
+        'resident_shared_mem'
     ]
 
     float_list: List = [
