@@ -70,9 +70,9 @@ Schema:
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
-        "success":                        boolean,  # [2]
-        "error":                          string,   # [3]
-        "line":                           string    # [3]
+        "success":                        boolean,     # [2]
+        "error":                          string,      # [3]
+        "line":                           string       # [3]
       }
     }
 

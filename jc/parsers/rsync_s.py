@@ -44,8 +44,8 @@ Schema:
       "time":                           string,
       "process":                        integer,
       "metadata":                       string,
-      "update_type":                    string/null,  [0]
-      "file_type":                      string/null,  [1]
+      "update_type":                    string/null,  # [0]
+      "file_type":                      string/null,  # [1]
       "checksum_or_value_different":    bool/null,
       "size_different":                 bool/null,
       "modification_time_different":    bool/null,
@@ -54,7 +54,7 @@ Schema:
       "group_different":                bool/null,
       "acl_different":                  bool/null,
       "extended_attribute_different":   bool/null,
-      "epoch":                          integer,      [2]
+      "epoch":                          integer,      # [2]
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {

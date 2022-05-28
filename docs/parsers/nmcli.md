@@ -40,7 +40,7 @@ Schema:
 
     [
       {
-        "<key>":                  string/integer/float,  [0]
+        "<key>":                  string/integer/float,   # [0]
         "dhcp4_option_x": {
           "name":                 string,
           "value":                string/integer/float,

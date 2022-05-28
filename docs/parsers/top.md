@@ -50,23 +50,23 @@ All `-` values are converted to `null`
         "cpu_hardware":                                 float,
         "cpu_software":                                 float,
         "cpu_steal":                                    float,
-        "mem_total":                                    float,    [0]
-        "mem_free":                                     float,    [0]
-        "mem_used":                                     float,    [0]
-        "mem_buff_cache":                               float,    [0]
-        "swap_total":                                   float,    [0]
-        "swap_free":                                    float,    [0]
-        "swap_used":                                    float,    [0]
-        "mem_available":                                float,    [0]
+        "mem_total":                                    float,    # [0]
+        "mem_free":                                     float,    # [0]
+        "mem_used":                                     float,    # [0]
+        "mem_buff_cache":                               float,    # [0]
+        "swap_total":                                   float,    # [0]
+        "swap_free":                                    float,    # [0]
+        "swap_used":                                    float,    # [0]
+        "mem_available":                                float,    # [0]
         "processes": [
           {
             "pid":                                      integer,
             "user":                                     string,
             "priority":                                 integer,
             "nice":                                     integer,
-            "virtual_mem":                              float,    [1]
-            "resident_mem":                             float,    [1]
-            "shared_mem":                               float,    [1]
+            "virtual_mem":                              float,    # [1]
+            "resident_mem":                             float,    # [1]
+            "shared_mem":                               float,    # [1]
             "status":                                   string,
             "percent_cpu":                              float,
             "percent_mem":                              float,
@@ -87,9 +87,9 @@ All `-` values are converted to `null`
             "thread_count":                             integer,
             "last_used_processor":                      integer,
             "time":                                     string,
-            "swap":                                     float,    [1]
-            "code":                                     float,    [1]
-            "data":                                     float,    [1]
+            "swap":                                     float,    # [1]
+            "code":                                     float,    # [1]
+            "data":                                     float,    # [1]
             "major_page_fault_count":                   integer,
             "minor_page_fault_count":                   integer,
             "dirty_pages_count":                        integer,
@@ -108,7 +108,7 @@ All `-` values are converted to `null`
             ]
             "major_page_fault_count_delta":             integer,
             "minor_page_fault_count_delta":             integer,
-            "used":                                     float,    [1]
+            "used":                                     float,    # [1]
             "ipc_namespace_inode":                      integer,
             "mount_namespace_inode":                    integer,
             "net_namespace_inode":                      integer,

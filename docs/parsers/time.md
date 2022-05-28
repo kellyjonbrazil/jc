@@ -5,10 +5,10 @@
 
 jc - JSON Convert `/usr/bin/time` command output parser
 
-Output from `/usr/bin/time` is sent to STDERR, so the `-o` option can be
+Output from `/usr/bin/time` is sent to `STDERR`, so the `-o` option can be
 used to redirect the output to a file that can be read by `jc`.
 
-Alternatively, the output from `/usr/bin/time` can be redirected to STDOUT
+Alternatively, the output from `/usr/bin/time` can be redirected to `STDOUT`
 so `jc` can receive it.
 
 > Note: `/usr/bin/time` is similar but different from the Bash builtin

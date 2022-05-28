@@ -21,8 +21,8 @@ Usage (module):
 
 Schema:
 
-    ini or key/value document converted to a dictionary - see the
-    configparser standard library documentation for more details.
+ini or key/value document converted to a dictionary - see the configparser
+standard library documentation for more details.
 
     {
       "key1":       string,
