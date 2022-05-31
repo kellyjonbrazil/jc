@@ -195,7 +195,61 @@ class MyTests(unittest.TestCase):
         for test_dict, expected_json in zip(test_input, expected_output):
             self.assertEqual(jc.cli.json_out(test_dict, pretty=True), expected_json)
 
+    def test_cli_yaml_out(self):
+        test_input = [
+            None,
+            {},
+            [],
+            '',
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        ]
+
+        if pygments.__version__.startswith('2.3.'):
+            expected_output = [
+                '---\n...',
+                '--- {}',
+                '--- []',
+                "--- \x1b[32m'\x1b[39m\x1b[32m'\x1b[39m",
+                '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
+            ]
+        else:
+            expected_output = [
+                '---\n...',
+                '--- {}',
+                '--- []',
+                "--- \x1b[32m'\x1b[39m\x1b[32m'\x1b[39m",
+                '---\n\x1b[34;01mkey1\x1b[39;00m: value1\n\x1b[34;01mkey2\x1b[39;00m: 2\n\x1b[34;01mkey3\x1b[39;00m:\n\x1b[34;01mkey4\x1b[39;00m: 3.14\n\x1b[34;01mkey5\x1b[39;00m: true'
+            ]
+
+        for test_dict, expected_json in zip(test_input, expected_output):
+            self.assertEqual(jc.cli.yaml_out(test_dict), expected_json)
+
+    def test_cli_yaml_out_mono(self):
+        test_input = [
+            None,
+            {},
+            [],
+            '',
+            {'ipv6': 'fe80::5a37:f41:1076:ba24:'},  # test for colon at the end
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        ]
+
+        expected_output = [
+            '---\n...',
+            '--- {}',
+            '--- []',
+            "--- ''",
+            "---\nipv6: 'fe80::5a37:f41:1076:ba24:'",
+            '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
+        ]
+
+        for test_dict, expected_json in zip(test_input, expected_output):
+            self.assertEqual(jc.cli.yaml_out(test_dict, mono=True), expected_json)
+
     def test_cli_about_jc(self):
         self.assertEqual(jc.cli.about_jc()['name'], 'jc')
         self.assertGreaterEqual(jc.cli.about_jc()['parser_count'], 55)
         self.assertEqual(jc.cli.about_jc()['parser_count'], len(jc.cli.about_jc()['parsers']))
+
+if __name__ == '__main__':
+    unittest.main()

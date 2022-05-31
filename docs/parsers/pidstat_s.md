@@ -3,10 +3,10 @@
 
 # jc.parsers.pidstat\_s
 
-jc - JSON Convert `pidstat` command output streaming parser
+jc - JSON Convert `pidstat -h` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
-  Dictionaries (module)
+> Dictionaries (module)
 
 Must use the `-h` option in `pidstat`. All other `pidstat` options are
 supported in combination with `-h`.
@@ -16,11 +16,11 @@ Usage (cli):
     $ pidstat | jc --pidstat-s
 
 > Note: When piping `jc` converted `pidstat` output to other processes it
-  may appear the output is hanging due to the OS pipe buffers. This is
-  because `pidstat` output is too small to quickly fill up the buffer. Use
-  the `-u` option to unbuffer the `jc` output if you would like immediate
-  output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
-  for more information.
+> may appear the output is hanging due to the OS pipe buffers. This is
+> because `pidstat` output is too small to quickly fill up the buffer. Use
+> the `-u` option to unbuffer the `jc` output if you would like immediate
+> output. See the [readme](https://github.com/kellyjonbrazil/jc/tree/master#unbuffering-output)
+> for more information.
 
 Usage (module):
 

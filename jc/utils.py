@@ -31,8 +31,8 @@ def _safe_print(string: str, sep=' ', end='\n', file=sys.stdout, flush=False) ->
 
 def warning_message(message_lines: List[str]) -> None:
     """
-    Prints warning message for non-fatal issues. The first line is
-    prepended with 'jc:  Warning - ' and subsequent lines are indented.
+    Prints warning message to `STDERR` for non-fatal issues. The first line
+    is prepended with 'jc:  Warning - ' and subsequent lines are indented.
     Wraps text as needed based on the terminal width.
 
     Parameters:
@@ -67,7 +67,7 @@ def warning_message(message_lines: List[str]) -> None:
 
 def error_message(message_lines: List[str]) -> None:
     """
-    Prints an error message for fatal issues. The first line is
+    Prints an error message to `STDERR` for fatal issues. The first line is
     prepended with 'jc:  Error - ' and subsequent lines are indented.
     Wraps text as needed based on the terminal width.
 
@@ -97,10 +97,24 @@ def error_message(message_lines: List[str]) -> None:
         _safe_print(message, file=sys.stderr)
 
 
+def is_compatible(compatible: List) -> bool:
+    """
+    Returns True if the parser is compatible with the running OS platform.
+    """
+    platform_found = False
+
+    for platform in compatible:
+        if sys.platform.startswith(platform):
+            platform_found = True
+            break
+
+    return platform_found
+
+
 def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
     """
-    Checks for the parser's compatibility with the running OS
-    platform.
+    Checks for the parser's compatibility with the running OS platform and
+    prints a warning message to `STDERR` if not compatible and quiet=False.
 
     Parameters:
 
@@ -116,21 +130,13 @@ def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
 
         None - just prints output to STDERR
     """
-    if not quiet:
-        platform_found = False
-
-        for platform in compatible:
-            if sys.platform.startswith(platform):
-                platform_found = True
-                break
-
-        if not platform_found:
-            mod = mod_name.split('.')[-1]
-            compat_list = ', '.join(compatible)
-            warning_message([
-                f'{mod} parser is not compatible with your OS ({sys.platform}).',
-                f'Compatible platforms: {compat_list}'
-            ])
+    if not quiet and not is_compatible(compatible):
+        mod = mod_name.split('.')[-1]
+        compat_list = ', '.join(compatible)
+        warning_message([
+            f'{mod} parser is not compatible with your OS ({sys.platform}).',
+            f'Compatible platforms: {compat_list}'
+        ])
 
 
 def has_data(data: str) -> bool:

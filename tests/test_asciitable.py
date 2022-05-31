@@ -344,6 +344,78 @@ Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
+    def test_asciitable_centered_col_header(self):
+        """
+        Test 'asciitable' with long centered column header which can break
+        column alignment
+        """
+        input = '''
+            +---------+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+------------------+
+            | fdc_id  |        data_type         |                                                                                                                           description                                                                                                                           | food_category_id | publication_date |
+            +---------+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+------------------+
+            | 167512  | sr_legacy_food           | Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough                                                                                                                                                                               |                  | 2019-04-01       |
+            | 167513  | sr_legacy_food           | Pillsbury, Cinnamon Rolls with Icing, refrigerated dough                                                                                                                                                                                                        |                  | 2019-04-01       |
+            | 167514  | sr_legacy_food           | Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry                                                                                                                                                                                                |                  | 2019-04-01       |
+            | 167515  | sr_legacy_food           | George Weston Bakeries, Thomas English Muffins                                                                                                                                                                                                                  |                  | 2019-04-01       |
+            | 167516  | sr_legacy_food           | Waffles, buttermilk, frozen, ready-to-heat                                                                                                                                                                                                                      |                  | 2019-04-01       |
+            | 167517  | sr_legacy_food           | Waffle, buttermilk, frozen, ready-to-heat, toasted                                                                                                                                                                                                              |                  | 2019-04-01       |
+            | 167518  | sr_legacy_food           | Waffle, buttermilk, frozen, ready-to-heat, microwaved                                                                                                                                                                                                           |                  | 2019-04-01       |
+        '''
+
+        expected = [
+            {
+                "fdc_id": "167512",
+                "data_type": "sr_legacy_food",
+                "description": "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            },
+            {
+                "fdc_id": "167513",
+                "data_type": "sr_legacy_food",
+                "description": "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            },
+            {
+                "fdc_id": "167514",
+                "data_type": "sr_legacy_food",
+                "description": "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            },
+            {
+                "fdc_id": "167515",
+                "data_type": "sr_legacy_food",
+                "description": "George Weston Bakeries, Thomas English Muffins",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            },
+            {
+                "fdc_id": "167516",
+                "data_type": "sr_legacy_food",
+                "description": "Waffles, buttermilk, frozen, ready-to-heat",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            },
+            {
+                "fdc_id": "167517",
+                "data_type": "sr_legacy_food",
+                "description": "Waffle, buttermilk, frozen, ready-to-heat, toasted",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            },
+            {
+                "fdc_id": "167518",
+                "data_type": "sr_legacy_food",
+                "description": "Waffle, buttermilk, frozen, ready-to-heat, microwaved",
+                "food_category_id": None,
+                "publication_date": "2019-04-01"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

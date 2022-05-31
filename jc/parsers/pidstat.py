@@ -1,4 +1,4 @@
-"""jc - JSON Convert `pidstat` command output parser
+"""jc - JSON Convert `pidstat -h` command output parser
 
 Must use the `-h` option in `pidstat`. All other `pidstat` options are
 supported in combination with `-h`.
@@ -129,7 +129,7 @@ from jc.exceptions import ParseError
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`pidstat` command parser'
+    description = '`pidstat -h` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']

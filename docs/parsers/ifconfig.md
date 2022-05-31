@@ -5,7 +5,7 @@
 
 jc - JSON Convert `ifconfig` command output parser
 
-Note: No `ifconfig` options are supported.
+> Note: No `ifconfig` options are supported.
 
 Usage (cli):
 

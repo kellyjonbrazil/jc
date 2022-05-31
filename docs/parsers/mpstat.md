@@ -5,7 +5,7 @@
 
 jc - JSON Convert `mpstat` command output parser
 
-Note: Latest versions of `mpstat` support JSON output (v11.5.1+)
+> Note: Latest versions of `mpstat` support JSON output (v11.5.1+)
 
 Usage (cli):
 

@@ -1,9 +1,9 @@
 """jc - JSON Convert `sysctl -a` command output parser
 
-Note: Since `sysctl` output is not easily parsable only a very simple
-      key/value object will be output. An attempt is made to convert obvious
-      integers and floats. If no conversion is desired, use the `-r`
-      command-line argument or the `raw=True` argument in `parse()`.
+> Note: Since `sysctl` output is not easily parsable only a very simple
+> key/value object will be output. An attempt is made to convert obvious
+> integers and floats. If no conversion is desired, use the `-r`
+> command-line argument or the `raw=True` argument in `parse()`.
 
 Usage (cli):
 

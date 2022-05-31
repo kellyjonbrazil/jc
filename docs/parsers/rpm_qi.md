@@ -10,7 +10,7 @@ Works with `rpm -qi [package]` or `rpm -qia`.
 The `..._epoch` calculated timestamp fields are naive. (i.e. based on the
 local time of the system the parser is run on)
 
-The `..._epoch_utc` calculated timestamp fields are timezone-aware and is
+The `..._epoch_utc` calculated timestamp fields are timezone-aware and are
 only available if the timezone field is UTC.
 
 Usage (cli):

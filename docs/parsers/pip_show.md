@@ -70,7 +70,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data, raw=False, quiet=False)
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
 ```
 
 Main text parsing function
@@ -88,4 +88,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

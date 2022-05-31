@@ -25,9 +25,10 @@ headers are joined with an underscore. All values are returned as strings,
 except empty strings, which are converted to None/null.
 
 > Note: table column separator characters (e.g. `|`) cannot be present
-  inside the cell data. If detected, a warning message will be printed to
-  STDERR and the line will be skipped. The warning message can be suppressed
-  by using the `-q` command option or by setting `quiet=True` in `parse()`.
+> inside the cell data. If detected, a warning message will be printed to
+> `STDERR` and the line will be skipped. The warning message can be
+> suppressed by using the `-q` command option or by setting `quiet=True` in
+> `parse()`.
 
 Usage (cli):
 

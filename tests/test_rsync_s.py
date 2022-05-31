@@ -20,7 +20,6 @@ if not sys.platform.startswith('win32'):
 class MyTests(unittest.TestCase):
 
     def setUp(self):
-        pass
         # input
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i.out'), 'r', encoding='utf-8') as f:
             self.centos_7_7_rsync_i = f.read()

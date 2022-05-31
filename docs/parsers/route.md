@@ -22,20 +22,20 @@ Schema:
 
     [
       {
-        "destination":     string,
-        "gateway":         string,
-        "genmask":         string,
-        "flags":           string,
+        "destination":        string,
+        "gateway":            string,
+        "genmask":            string,
+        "flags":              string,
         "flags_pretty": [
-                           string
+                              string
         ]
-        "metric":          integer,
-        "ref":             integer,
-        "use":             integer,
-        "mss":             integer,
-        "window":          integer,
-        "irtt":            integer,
-        "iface":           string
+        "metric":             integer,
+        "ref":                integer,
+        "use":                integer,
+        "mss":                integer,
+        "window":             integer,
+        "irtt":               integer,
+        "iface":              string
       }
     ]
 

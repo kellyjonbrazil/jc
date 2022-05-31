@@ -49,7 +49,7 @@ class MyTests(unittest.TestCase):
 
     def test_wc_stdin_osx_10_14_6(self):
         """
-        Test 'wc' from STDIN on OSX 10.14.6
+        Test 'wc' from `STDIN` on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.wc.parse(self.osx_10_14_6_wc_stdin, quiet=True), self.osx_10_14_6_wc_stdin_json)
 

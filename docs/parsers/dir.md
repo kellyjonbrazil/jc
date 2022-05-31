@@ -19,7 +19,7 @@ time of the system the parser is run on)
 
 Usage (cli):
 
-    C:> dir | jc --dir
+    C:\> dir | jc --dir
 
 Usage (module):
 
@@ -42,7 +42,7 @@ Schema:
 
 Examples:
 
-    C:> dir | jc --dir -p
+    C:\> dir | jc --dir -p
     [
       {
         "date": "03/24/2021",
@@ -83,7 +83,7 @@ Examples:
       ...
     ]
 
-    C:> dir | jc --dir -p -r
+    C:\> dir | jc --dir -p -r
     [
       {
         "date": "03/24/2021",

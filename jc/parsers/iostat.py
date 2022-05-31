@@ -1,6 +1,6 @@
 """jc - JSON Convert `iostat` command output parser
 
-Note: `iostat` version 11 and higher include a JSON output option
+> Note: `iostat` version 11 and higher include a JSON output option
 
 Usage (cli):
 

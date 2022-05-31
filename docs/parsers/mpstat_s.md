@@ -6,9 +6,9 @@
 jc - JSON Convert `mpstat` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
-  Dictionaries (module)
+> Dictionaries (module)
 
-Note: Latest versions of `mpstat` support JSON output (v11.5.1+)
+> Note: Latest versions of `mpstat` support JSON output (v11.5.1+)
 
 Usage (cli):
 

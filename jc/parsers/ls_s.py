@@ -1,7 +1,7 @@
 """jc - JSON Convert `ls` and `vdir` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
-  Dictionaries (module)
+> Dictionaries (module)
 
 Requires the `-l` option to be used on `ls`. If there are newline characters
 in the filename, then make sure to use the `-b` option on `ls`.

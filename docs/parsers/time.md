@@ -11,8 +11,8 @@ used to redirect the output to a file that can be read by `jc`.
 Alternatively, the output from `/usr/bin/time` can be redirected to `STDOUT`
 so `jc` can receive it.
 
-Note: `/usr/bin/time` is similar but different from the Bash builtin
-      `time` command.
+> Note: `/usr/bin/time` is similar but different from the Bash builtin
+> `time` command.
 
 Usage (cli):
 
@@ -26,8 +26,8 @@ Usage (module):
 
 Schema:
 
-    Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage
-            https://man7.org/linux/man-pages/man1/time.1.html
+Source: https://www.freebsd.org/cgi/man.cgi?query=getrusage,
+https://man7.org/linux/man-pages/man1/time.1.html
 
     {
       "real_time":                          float,

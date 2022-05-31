@@ -1,7 +1,7 @@
 """jc - JSON Convert `git log` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
-  Dictionaries (module)
+> Dictionaries (module)
 
 Can be used with the following format options:
 - `oneline`
@@ -39,8 +39,8 @@ Schema:
       "author":               string,
       "author_email":         string,
       "date":                 string,
-      "epoch":                integer, [0]
-      "epoch_utc":            integer, [1]
+      "epoch":                integer,  # [0]
+      "epoch_utc":            integer,  # [1]
       "commit_by":            string,
       "commit_by_email":      string,
       "commit_by_date":       string,

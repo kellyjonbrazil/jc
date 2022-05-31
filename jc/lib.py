@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.19.0'
+__version__ = '1.20.0'
 
 parsers = [
     'acpi',
@@ -91,6 +91,8 @@ parsers = [
     'systeminfo',
     'time',
     'timedatectl',
+    'top',
+    'top-s',
     'tracepath',
     'traceroute',
     'ufw',
