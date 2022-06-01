@@ -285,7 +285,7 @@ def yaml_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
         # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
         # plugin code is incompatible with the pyoxidizer packager
         YAML.official_plug_ins = lambda a: []
-        yaml=YAML()
+        yaml = YAML()
         yaml.default_flow_style = False
         yaml.explicit_start = True
         yaml.allow_unicode = not ascii_only
