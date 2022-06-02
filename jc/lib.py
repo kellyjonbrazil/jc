@@ -73,6 +73,7 @@ parsers = [
     'ping-s',
     'pip-list',
     'pip-show',
+    'postconf',
     'ps',
     'route',
     'rpm-qi',
