@@ -1,6 +1,7 @@
 jc changelog
 
 20220601 v1.20.1 (in progress)
+- Add `postconf -M` parser tested on linux
 - Fix `id` parser for cases where the user or group name is not present
 
 20220531 v1.20.0

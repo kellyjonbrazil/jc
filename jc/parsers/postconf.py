@@ -17,11 +17,21 @@ Schema:
 
     [
       {
-        "postconf":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "service_name":                     string,
+        "service_type":                     string,
+        "private":                          boolean/null,  # [0]
+        "unprivileged":                     boolean/null,  # [0]
+        "chroot":                           boolean/null,  # [0]
+        "wake_up_time":                     integer,       # [1]
+        "no_wake_up_before_first_use":      boolean/null,  # [2]
+        "process_limit":                    integer,
+        "command":                          string
       }
     ]
+
+    [0] '-' converted to null/None
+    [1] '-' converted to -1
+    [2] null/None if `wake_up_time` is null/None
 
 Examples:
 
