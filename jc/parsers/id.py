@@ -144,6 +144,13 @@ def _process(proc_data):
     return proc_data
 
 
+def _get_item(list, index, default=None):
+      if index < len(list):
+        return list[index]
+
+      return default
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -158,12 +165,6 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
-    def _get_item(list, index, default=None):
-      if index < len(list):
-        return list[index]
-
-      return default
-
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
