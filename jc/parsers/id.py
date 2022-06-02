@@ -144,9 +144,9 @@ def _process(proc_data):
     return proc_data
 
 
-def _get_item(list, index, default=None):
-      if index < len(list):
-        return list[index]
+def _get_item(my_list, index, default=None):
+      if index < len(my_list):
+        return my_list[index]
 
       return default
 
