@@ -24,7 +24,7 @@ Schema:
         "chroot":                           boolean/null,  # [0]
         "wake_up_time":                     integer,       # [1]
         "no_wake_up_before_first_use":      boolean/null,  # [2]
-        "process_limit":                    integer,
+        "process_limit":                    integer,       # [1]
         "command":                          string
       }
     ]
@@ -71,11 +71,36 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    for item in proc_data:
+        if item['private'] == '-':
+            item['private'] = None
+        else:
+            item['private'] = jc.utils.convert_to_bool(item['private'])
 
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
+        if item['unprivileged'] == '-':
+            item['unprivileged'] = None
+        else:
+            item['unprivileged'] = jc.utils.convert_to_bool(item['unprivileged'])
+
+        if item['chroot'] == '-':
+            item['chroot'] = None
+        else:
+            item['chroot'] = jc.utils.convert_to_bool(item['chroot'])
+
+        if item['wake_up_time'].endswith('?'):
+            item['no_wake_up_before_first_use'] = True
+        else:
+            item['no_wake_up_before_first_use'] = False
+
+        if item['wake_up_time'] == '-':
+            item['wake_up_time'] = -1
+        else:
+            item['wake_up_time'] = jc.utils.convert_to_int(item['wake_up_time'])
+
+        if item['process_limit'] == '-':
+            item['process_limit'] = -1
+        else:
+            item['process_limit'] = jc.utils.convert_to_int(item['process_limit'])
 
     return proc_data
 
