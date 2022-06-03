@@ -22,16 +22,15 @@ Schema:
         "private":                          boolean/null,  # [0]
         "unprivileged":                     boolean/null,  # [0]
         "chroot":                           boolean/null,  # [0]
-        "wake_up_time":                     integer,       # [1]
-        "no_wake_up_before_first_use":      boolean/null,  # [2]
-        "process_limit":                    integer,       # [1]
+        "wake_up_time":                     integer/null,  # [0]
+        "no_wake_up_before_first_use":      boolean/null,  # [1]
+        "process_limit":                    integer/null,  # [0]
         "command":                          string
       }
     ]
 
     [0] '-' converted to null/None
-    [1] '-' converted to -1
-    [2] null/None if `wake_up_time` is null/None
+    [1] null/None if `wake_up_time` is null/None
 
 Examples:
 
@@ -71,36 +70,27 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    keys = ['private', 'unprivileged', 'chroot', 'wake_up_time', 'process_limit']
+    bools = ['private', 'unprivileged', 'chroot']
+    integers = ['wake_up_time', 'process_limit']
+
     for item in proc_data:
-        if item['private'] == '-':
-            item['private'] = None
-        else:
-            item['private'] = jc.utils.convert_to_bool(item['private'])
-
-        if item['unprivileged'] == '-':
-            item['unprivileged'] = None
-        else:
-            item['unprivileged'] = jc.utils.convert_to_bool(item['unprivileged'])
-
-        if item['chroot'] == '-':
-            item['chroot'] = None
-        else:
-            item['chroot'] = jc.utils.convert_to_bool(item['chroot'])
-
         if item['wake_up_time'].endswith('?'):
             item['no_wake_up_before_first_use'] = True
         else:
             item['no_wake_up_before_first_use'] = False
 
-        if item['wake_up_time'] == '-':
-            item['wake_up_time'] = -1
-        else:
-            item['wake_up_time'] = jc.utils.convert_to_int(item['wake_up_time'])
+        for key in keys:
+            if item[key] == '-':
+                item[key] = None
 
-        if item['process_limit'] == '-':
-            item['process_limit'] = -1
-        else:
-            item['process_limit'] = jc.utils.convert_to_int(item['process_limit'])
+        for key in bools:
+            if item[key] is not None:
+                item[key] = jc.utils.convert_to_bool(item[key])
+
+        for key in integers:
+            if item[key] is not None:
+                item[key] = jc.utils.convert_to_int(item[key])
 
     return proc_data
 
