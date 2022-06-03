@@ -77,6 +77,8 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     for item in proc_data:
         if item['wake_up_time'].endswith('?'):
             item['no_wake_up_before_first_use'] = True
+        elif item['wake_up_time'] == '-':
+            item['no_wake_up_before_first_use'] = None
         else:
             item['no_wake_up_before_first_use'] = False
 
