@@ -9,6 +9,7 @@ import textwrap
 import signal
 import shlex
 import subprocess
+from typing import List, Dict
 from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _get_parser, _parser_is_streaming, standard_parser_mod_list,
                   plugin_parser_mod_list, streaming_parser_mod_list)
@@ -83,6 +84,19 @@ if PYGMENTS_INSTALLED:
             'white': 'ansiwhite',
         }
 
+long_options_map: Dict[str, List[str]] = {
+    '--about': ['a', 'about jc'],
+    '--force-color': ['C', 'force color output even when using pipes (overrides -m)'],
+    '--debug': ['d', 'debug (double for verbose debug)'],
+    '--help': ['h', 'help (--help --parser_name for parser documentation)'],
+    '--monochrome': ['m', 'monochrome output'],
+    '--pretty': ['p', 'pretty print output'],
+    '--quiet': ['q', 'suppress warnings (double to ignore streaming errors)'],
+    '--raw': ['r', 'raw output'],
+    '--unbuffer': ['u', 'unbuffer output'],
+    '--version': ['v', 'version info'],
+    '--yaml-out': ['y', 'YAML output']
+}
 
 def set_env_colors(env_colors=None):
     """
@@ -166,6 +180,22 @@ def parsers_text(indent=0, pad=0):
     return ptext
 
 
+def options_text(indent=0, pad=0):
+    """Return the argument and description information from each option"""
+    otext = ''
+    padding_char = ' '
+    for option in long_options_map:
+        o_short = '-' + long_options_map[option][0]
+        o_desc = long_options_map[option][1]
+        o_combined = o_short + ',  ' + option
+        padding = pad - len(o_combined)
+        indent_text = padding_char * indent
+        padding_text = padding_char * padding
+        otext += indent_text + o_combined + padding_text + o_desc + '\n'
+
+    return otext
+
+
 def about_jc():
     """Return jc info and the contents of each parser.info as a dictionary"""
     return {
@@ -189,43 +219,35 @@ def about_jc():
 
 def helptext():
     """Return the help text with the list of parsers"""
-    parsers_string = parsers_text(indent=12, pad=17)
+    parsers_string = parsers_text(indent=4, pad=20)
+    options_string = options_text(indent=4, pad=20)
 
     helptext_string = f'''\
-    jc converts the output of many commands and file-types to JSON
+jc converts the output of many commands and file-types to JSON or YAML
 
-    Usage:  COMMAND | jc PARSER [OPTIONS]
+Usage:
+    COMMAND | jc PARSER [OPTIONS]
 
-            or magic syntax:
+    or magic syntax:
 
-            jc [OPTIONS] COMMAND
+    jc [OPTIONS] COMMAND
 
-    Parsers:
+Parsers:
 {parsers_string}
-    Options:
-            -a    about jc
-            -C    force color output even when using pipes (overrides -m)
-            -d    debug (-dd for verbose debug)
-            -h    help (-h --parser_name for parser documentation)
-            -m    monochrome output
-            -p    pretty print output
-            -q    quiet - suppress parser warnings (-qq to ignore streaming errors)
-            -r    raw JSON output
-            -u    unbuffer output
-            -v    version info
-            -y    YAML output
+Options:
+{options_string}
+Examples:
+    Standard Syntax:
+        $ dig www.google.com | jc --dig --pretty
 
-    Examples:
-            Standard Syntax:
-                $ dig www.google.com | jc --dig -p
+    Magic Syntax:
+        $ jc --pretty dig www.google.com
 
-            Magic Syntax:
-                $ jc -p dig www.google.com
-
-            Parser Documentation:
-                $ jc -h --dig
+    Parser Documentation:
+        $ jc --help --dig
     '''
-    return textwrap.dedent(helptext_string)
+
+    return helptext_string
 
 
 def help_doc(options):
@@ -381,7 +403,7 @@ def magic_parser(args):
         jc_options    (list)  list of jc options
     """
     # bail immediately if there are no args or a parser is defined
-    if len(args) <= 1 or args[1].startswith('--'):
+    if len(args) <= 1 or (args[1].startswith('--') and args[1] not in long_options_map):
         return False, None, None, []
 
     args_given = args[1:]
@@ -389,6 +411,12 @@ def magic_parser(args):
 
     # find the options
     for arg in list(args_given):
+        # long option found - populate option list
+        if arg in long_options_map:
+            options.extend(long_options_map[arg][0])
+            args_given.pop(0)
+            continue
+
         # parser found - use standard syntax
         if arg.startswith('--'):
             return False, None, None, []
@@ -483,6 +511,9 @@ def main():
     # find options if magic_parser did not find a command
     if not valid_command:
         for opt in sys.argv:
+            if opt in long_options_map:
+                options.extend(long_options_map[opt][0])
+
             if opt.startswith('-') and not opt.startswith('--'):
                 options.extend(opt[1:])
 
