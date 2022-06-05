@@ -245,7 +245,7 @@ Examples:
 
     Parser Documentation:
         $ jc --help --dig
-    '''
+'''
 
     return helptext_string
 
