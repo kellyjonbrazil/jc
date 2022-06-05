@@ -14,6 +14,8 @@ from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _get_parser, _parser_is_streaming, standard_parser_mod_list,
                   plugin_parser_mod_list, streaming_parser_mod_list)
 from . import utils
+from .cli_data import long_options_map
+from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
@@ -84,19 +86,6 @@ if PYGMENTS_INSTALLED:
             'white': 'ansiwhite',
         }
 
-long_options_map: Dict[str, List[str]] = {
-    '--about': ['a', 'about jc'],
-    '--force-color': ['C', 'force color output even when using pipes (overrides -m)'],
-    '--debug': ['d', 'debug (double for verbose debug)'],
-    '--help': ['h', 'help (--help --parser_name for parser documentation)'],
-    '--monochrome': ['m', 'monochrome output'],
-    '--pretty': ['p', 'pretty print output'],
-    '--quiet': ['q', 'suppress warnings (double to ignore streaming errors)'],
-    '--raw': ['r', 'raw output'],
-    '--unbuffer': ['u', 'unbuffer output'],
-    '--version': ['v', 'version info'],
-    '--yaml-out': ['y', 'YAML output']
-}
 
 def set_env_colors(env_colors=None):
     """
@@ -530,6 +519,8 @@ def main():
     unbuffer = 'u' in options
     version_info = 'v' in options
     yaml_out = 'y' in options
+    bash_comp = 'B' in options
+    zsh_comp = 'Z' in options
 
     if verbose_debug:
         tracebackplus.enable(context=11)
@@ -552,6 +543,14 @@ def main():
 
     if version_info:
         utils._safe_print(versiontext())
+        sys.exit(0)
+
+    if bash_comp:
+        utils._safe_print(bash_completion())
+        sys.exit(0)
+
+    if zsh_comp:
+        utils._safe_print(zsh_completion())
         sys.exit(0)
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
