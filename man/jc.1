@@ -542,43 +542,43 @@ Options:
 .TP
 .B
 \fB-a\fP, \fB--about\fP
-about \fBjc\fP (JSON or YAML output)
+About \fBjc\fP (JSON or YAML output)
 .TP
 .B
 \fB-C\fP, \fB--force-color\fP
-force color output even when using pipes (overrides \fB-m\fP and the \fBNO_COLOR\fP env variable)
+Force color output even when using pipes (overrides \fB-m\fP and the \fBNO_COLOR\fP env variable)
 .TP
 .B
 \fB-d\fP, \fB--debug\fP
-debug - show traceback (use \fB-dd\fP for verbose traceback)
+Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP, \fB--help\fP
-help (\fB--help --parser_name\fP for parser documentation)
+Help (\fB--help --parser_name\fP for parser documentation)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP
-monochrome output
+Monochrome output
 .TP
 .B
 \fB-p\fP, \fB--pretty\fP
-pretty print output
+Pretty print output
 .TP
 .B
 \fB-q\fP, \fB--quiet\fP
-quiet - suppress warnings (use \fB-qq\fP to ignore streaming parser errors)
+Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming parser errors)
 .TP
 .B
 \fB-r\fP, \fB--raw\fP
-raw output
+Raw output. Provides more literal output, typically with string values and no additional semantic processing
 .TP
 .B
 \fB-u\fP, \fB--unbuffer\fP
-unbuffer output (useful for slow streaming data with streaming parsers)
+Unbuffer output (useful for slow streaming data with streaming parsers)
 .TP
 .B
 \fB-v\fP, \fB--version\fP
-version information
+Version information
 .TP
 .B
 \fB-y\fP, \fB--yaml-out\fP
@@ -586,11 +586,11 @@ YAML output
 .TP
 .B
 \fB-B\fP, \fB--bash-comp\fP
-generate Bash shell completion script
+Generate Bash shell completion script
 .TP
 .B
 \fB-Z\fP, \fB--zsh-comp\fP
-generate Zsh shell completion script
+Generate Zsh shell completion script
 
 .SH EXIT CODES
 Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.
