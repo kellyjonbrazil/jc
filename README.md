@@ -251,24 +251,21 @@ option.
 | `      --zipinfo` | `zipinfo` command parser                                | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo)          |
 
 ### Options
-- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON or
-       YAML, of course!)
-- `-C` force color output even when using pipes (overrides `-m` and the
-       `NO_COLOR` env variable)
-- `-d` debug mode. Prints trace messages if parsing issues are encountered (use
-       `-dd` for verbose debugging)
-- `-h` help. Use `jc -h --parser_name` for parser documentation
-- `-m` monochrome JSON output
-- `-p` pretty format the JSON output
-- `-q` quiet mode. Suppresses parser warning messages (use `-qq` to ignore
-       streaming parser errors)
-- `-r` raw output. Provides a more literal JSON output, typically with string
-       values and no additional semantic processing
-- `-u` unbuffer output
-- `-v` version information
-- `-y` YAML output
-- `-B` generate Bash shell completion script
-- `-Z` generate Zsh shell completion script
+| Option                | Description                                                                                                  |
+|-----------------------|--------------------------------------------------------------------------------------------------------------|
+| `‑a`, `‑‑about`       | about `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                      |
+| `‑C`, `‑‑force_color` | force color output even when using pipes (overrides `‑m` and the `NO_COLOR` env variable)                    |
+| `‑d`, `‑‑debug`       | debug mode. Prints trace messages if parsing issues are encountered (use`‑dd` for verbose debugging)         |
+| `‑h`, `‑‑help`        | help. Use `jc ‑h ‑‑parser_name` for parser documentation                                                     |
+| `‑m`, `‑‑monochrome`  | monochrome output                                                                                            |
+| `‑p`, `‑‑pretty`      | pretty format the JSON output                                                                                |
+| `‑q`, `‑‑quiet`       | quiet mode. Suppresses parser warning messages (use `‑qq` to ignore streaming parser errors)                 |
+| `‑r`, `‑‑raw`         | raw output. Provides more literal output, typically with string values and no additional semantic processing |
+| `‑u`, `‑‑unbuffer`    | unbuffer output                                                                                              |
+| `‑v`, `‑‑version`     | version information                                                                                          |
+| `‑y`, `‑‑yaml‑out`    | YAML output                                                                                                  |
+| `‑B`, `‑‑bash‑comp`   | generate Bash shell completion script                                                                        |
+| `‑Z`, `‑‑zsh‑comp`    | generate Zsh shell completion script                                                                         |
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
