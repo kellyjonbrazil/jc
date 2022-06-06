@@ -210,6 +210,7 @@ option.
 | `       --ping-s` | `ping` and `ping6` command streaming parser             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s)           |
 | `     --pip-list` | `pip list` command parser                               | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)         |
 | `     --pip-show` | `pip show` command parser                               | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)         |
+| `     --postconf` | `postconf -M` command parser                            | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)         |
 | `           --ps` | `ps` command parser                                     | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)               |
 | `        --route` | `route` command parser                                  | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/route)            |
 | `       --rpm-qi` | `rpm -qi` command parser                                | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi)           |
@@ -266,6 +267,8 @@ option.
 - `-u` unbuffer output
 - `-v` version information
 - `-y` YAML output
+- `-B` generate Bash shell completion script
+- `-Z` generate Zsh shell completion script
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
