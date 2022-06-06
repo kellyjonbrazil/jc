@@ -4,10 +4,11 @@ from string import Template
 from .cli_data import long_options_map
 from .lib import all_parser_info
 
-# $(jc -a | jq -r '.parsers[] | .argument, .magic_commands[]?')
+
 bash_template = Template('''\
 complete -W "${bash_arguments}${bash_options}${bash_commands}" jc
 ''')
+
 
 zsh_template = Template('''\
 #compdef jc
@@ -29,6 +30,7 @@ _jc() {
 
 _jc
 ''')
+
 
 def get_commands():
     command_list = []
