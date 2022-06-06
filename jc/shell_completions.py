@@ -6,7 +6,43 @@ from .lib import all_parser_info
 
 
 bash_template = Template('''\
-complete -W "${bash_arguments}${bash_options}${bash_commands}" jc
+_jc()
+{
+    local cur prev jc_commands jc_parsers jc_options
+
+    jc_commands=(${bash_commands})
+    jc_parsers=(${bash_arguments})
+    jc_options=(${bash_options})
+
+    COMPREPLY=()
+    _get_comp_words_by_ref cur prev
+
+    # detect magic syntax and use called command's autocompletion
+    if [[ " $${jc_commands[*]} " =~ " $${prev} " ]]; then
+        _command
+        return 0
+    fi
+
+    # if parser argument, then display options
+    if [[ " $${jc_parsers[*]} " =~ " $${prev} " ]]; then
+        COMPREPLY=( $$( compgen -W "$${jc_options[*]}" \\
+        -- "$${cur}" ) )
+        return 0
+    fi
+
+    # if option, then display options and parsers and commands
+    if [[ " $${jc_options[*]} " =~ " $${prev} " ]]; then
+        COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_parsers[*]} $${jc_commands[*]}" \\
+        -- "$${cur}" ) )
+        return 0
+    fi
+
+    # default completion
+    COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_parsers[*]} $${jc_commands[*]}" \\
+        -- "$${cur}" ) )
+
+} &&
+complete -F _jc jc
 ''')
 
 
@@ -68,9 +104,9 @@ def gen_zsh_command_descriptions(command_list):
 
 
 def bash_completion():
-    args = '\n'.join(get_arguments())
-    options = '\n' + '\n'.join(get_options())
-    commands = '\n' + '\n'.join(get_commands())
+    args = ' '.join(get_arguments())
+    options = ' '.join(get_options())
+    commands = ' '.join(get_commands())
     return bash_template.substitute(bash_arguments=args,
                                     bash_options=options,
                                     bash_commands=commands)
