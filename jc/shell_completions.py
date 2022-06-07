@@ -8,39 +8,35 @@ from .lib import all_parser_info
 bash_template = Template('''\
 _jc()
 {
-    local cur prev jc_commands jc_parsers jc_options
+    local cur prev words cword jc_commands jc_parsers jc_options
 
     jc_commands=(${bash_commands})
     jc_parsers=(${bash_arguments})
     jc_options=(${bash_options})
 
     COMPREPLY=()
-    _get_comp_words_by_ref cur prev
+    _get_comp_words_by_ref cur prev words cword
 
-    # detect magic syntax and use called command's autocompletion
-    if [[ " $${jc_commands[*]} " =~ " $${prev} " ]]; then
-        _command
-        return 0
-    fi
+    # if magic command is found anywhere in the line, use called command's autocompletion
+    for i in "$${words[@]}"; do
+        if [[ " $${jc_commands[*]} " =~ " $${i} " ]]; then
+            _command
+            return 0
+        fi
+    done
 
-    # if parser argument, then display options
-    if [[ " $${jc_parsers[*]} " =~ " $${prev} " ]]; then
-        COMPREPLY=( $$( compgen -W "$${jc_options[*]}" \\
-        -- "$${cur}" ) )
-        return 0
-    fi
-
-    # if option, then display options and parsers and commands
-    if [[ " $${jc_options[*]} " =~ " $${prev} " ]]; then
-        COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_parsers[*]} $${jc_commands[*]}" \\
-        -- "$${cur}" ) )
-        return 0
-    fi
+    # if a parser arg is found anywhere in the line, only show options
+    for i in "$${words[@]}"; do
+        if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
+            COMPREPLY=( $$( compgen -W "$${jc_options[*]}" \\
+            -- "$${cur}" ) )
+           return 0
+        fi
+    done
 
     # default completion
     COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_parsers[*]} $${jc_commands[*]}" \\
         -- "$${cur}" ) )
-
 } &&
 complete -F _jc jc
 ''')
@@ -74,7 +70,7 @@ def get_commands():
         if 'magic_commands' in cmd:
             command_list.extend(cmd['magic_commands'])
 
-    return list(set([i.split()[0] for i in command_list]))
+    return sorted(list(set([i.split()[0] for i in command_list])))
 
 
 def get_options():
