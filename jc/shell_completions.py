@@ -9,7 +9,7 @@ bash_template = Template('''\
 _jc()
 {
     local cur prev words cword jc_commands jc_parsers jc_options \\
-          jc_about_options jc_special_options
+          jc_about_options jc_about_mod_options jc_help_options jc_special_options
 
     jc_commands=(${bash_commands})
     jc_parsers=(${bash_parsers})
