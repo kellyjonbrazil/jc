@@ -8,15 +8,37 @@ from .lib import all_parser_info
 bash_template = Template('''\
 _jc()
 {
-    local cur prev words cword jc_commands jc_parsers jc_options jc_special_options
+    local cur prev words cword jc_commands jc_parsers jc_options \\
+          jc_about_options jc_special_options
 
     jc_commands=(${bash_commands})
-    jc_parsers=(${bash_arguments})
+    jc_parsers=(${bash_parsers})
     jc_options=(${bash_options})
-    jc_special_options=(${bash_special_opts})
+    jc_about_options=(${bash_about_options})
+    jc_about_mod_options=(${bash_about_mod_options})
+    jc_help_options=(${bash_help_options})
+    jc_special_options=(${bash_special_options})
 
     COMPREPLY=()
     _get_comp_words_by_ref cur prev words cword
+
+    # if jc_about_options are found anywhere in the line, then only complete from jc_about_mod_options
+    for i in "$${words[@]}"; do
+        if [[ " $${jc_about_options[*]} " =~ " $${i} " ]]; then
+            COMPREPLY=( $$( compgen -W "$${jc_about_mod_options[*]}" \\
+            -- "$${cur}" ) )
+            return 0
+        fi
+    done
+
+    # if jc_help_options are found anywhere in the line, then only complete with parsers
+    for i in "$${words[@]}"; do
+        if [[ " $${jc_help_options[*]} " =~ " $${i} " ]]; then
+            COMPREPLY=( $$( compgen -W "$${jc_parsers[*]}" \\
+            -- "$${cur}" ) )
+            return 0
+        fi
+    done
 
     # if special options are found anywhere in the line, then no more completions
     for i in "$${words[@]}"; do
@@ -43,7 +65,7 @@ _jc()
     done
 
     # default completion
-    COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_special_options[*]} $${jc_parsers[*]} $${jc_commands[*]}" \\
+    COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_about_options[*]} $${jc_help_options[*]} $${jc_special_options[*]} $${jc_parsers[*]} $${jc_commands[*]}" \\
         -- "$${cur}" ) )
 } &&
 complete -F _jc jc
@@ -77,7 +99,10 @@ _jc() {
 _jc
 ''')
 
-special_options = ['--about', '-a', '--version', '-v', '--bash-comp', '-B', '--zsh-comp', '-Z']
+about_options = ['--about', '-a']
+about_mod_options = ['--pretty', '-p', '--yaml-out', '-y', '--monochrome', '-m', '--force-color', '-C']
+help_options = ['--help', '-h']
+special_options = ['--version', '-v', '--bash-comp', '-B', '--zsh-comp', '-Z']
 
 def get_commands():
     command_list = []
@@ -115,17 +140,31 @@ def gen_zsh_command_descriptions(command_list):
 
 
 def bash_completion():
-    args = ' '.join(get_arguments())
+    parsers_str = ' '.join(get_arguments())
     opts_no_special = get_options()
-    for option in special_options:
-        opts_no_special.remove(option)
-    options = ' '.join(opts_no_special)
-    s_options = ' '.join(special_options)
-    commands = ' '.join(get_commands())
-    return bash_template.substitute(bash_arguments=args,
-                                    bash_special_opts=s_options,
-                                    bash_options=options,
-                                    bash_commands=commands)
+
+    for s_option in special_options:
+        opts_no_special.remove(s_option)
+
+    for a_option in about_options:
+        opts_no_special.remove(a_option)
+
+    for h_option in help_options:
+        opts_no_special.remove(h_option)
+
+    options_str = ' '.join(opts_no_special)
+    about_options_str = ' '.join(about_options)
+    about_mod_options_str = ' '.join(about_mod_options)
+    help_options_str = ' '.join(help_options)
+    special_options_str = ' '.join(special_options)
+    commands_str = ' '.join(get_commands())
+    return bash_template.substitute(bash_parsers=parsers_str,
+                                    bash_special_options=special_options_str,
+                                    bash_about_options=about_options_str,
+                                    bash_about_mod_options=about_mod_options_str,
+                                    bash_help_options=help_options_str,
+                                    bash_options=options_str,
+                                    bash_commands=commands_str)
 
 
 def zsh_completion():
