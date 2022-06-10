@@ -31,6 +31,26 @@ _jc()
         fi
     done
 
+    # if jc_help_options and a parser are found anywhere in the line, then no more completions
+    if
+        (
+            for i in "$${words[@]}"; do
+                if [[ " $${jc_help_options[*]} " =~ " $${i} " ]]; then
+                    return 0
+                fi
+            done
+            return 1
+        ) && (
+            for i in "$${words[@]}"; do
+                if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
+                    return 0
+                fi
+            done
+            return 1
+        ); then
+        return 0
+    fi
+
     # if jc_help_options are found anywhere in the line, then only complete with parsers
     for i in "$${words[@]}"; do
         if [[ " $${jc_help_options[*]} " =~ " $${i} " ]]; then
@@ -55,10 +75,10 @@ _jc()
         fi
     done
 
-    # if a parser arg is found anywhere in the line, only show options
+    # if a parser arg is found anywhere in the line, only show options and help options
     for i in "$${words[@]}"; do
         if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
-            COMPREPLY=( $$( compgen -W "$${jc_options[*]}" \\
+            COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_help_options[*]}" \\
             -- "$${cur}" ) )
            return 0
         fi
