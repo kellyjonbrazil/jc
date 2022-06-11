@@ -23,7 +23,7 @@ _jc()
     _get_comp_words_by_ref cur prev words cword
 
     # if jc_about_options are found anywhere in the line, then only complete from jc_about_mod_options
-    for i in "$${words[@]}"; do
+    for i in "$${words[@]::$${#words[@]}-1}"; do
         if [[ " $${jc_about_options[*]} " =~ " $${i} " ]]; then
             COMPREPLY=( $$( compgen -W "$${jc_about_mod_options[*]}" \\
             -- "$${cur}" ) )
@@ -34,14 +34,14 @@ _jc()
     # if jc_help_options and a parser are found anywhere in the line, then no more completions
     if
         (
-            for i in "$${words[@]}"; do
+            for i in "$${words[@]::$${#words[@]}-1}"; do
                 if [[ " $${jc_help_options[*]} " =~ " $${i} " ]]; then
                     return 0
                 fi
             done
             return 1
         ) && (
-            for i in "$${words[@]}"; do
+            for i in "$${words[@]::$${#words[@]}-1}"; do
                 if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
                     return 0
                 fi
@@ -52,7 +52,7 @@ _jc()
     fi
 
     # if jc_help_options are found anywhere in the line, then only complete with parsers
-    for i in "$${words[@]}"; do
+    for i in "$${words[@]::$${#words[@]}-1}"; do
         if [[ " $${jc_help_options[*]} " =~ " $${i} " ]]; then
             COMPREPLY=( $$( compgen -W "$${jc_parsers[*]}" \\
             -- "$${cur}" ) )
@@ -61,14 +61,14 @@ _jc()
     done
 
     # if special options are found anywhere in the line, then no more completions
-    for i in "$${words[@]}"; do
+    for i in "$${words[@]::$${#words[@]}-1}"; do
         if [[ " $${jc_special_options[*]} " =~ " $${i} " ]]; then
             return 0
         fi
     done
 
     # if magic command is found anywhere in the line, use called command's autocompletion
-    for i in "$${words[@]}"; do
+    for i in "$${words[@]::$${#words[@]}-1}"; do
         if [[ " $${jc_commands[*]} " =~ " $${i} " ]]; then
             _command
             return 0
@@ -76,7 +76,7 @@ _jc()
     done
 
     # if a parser arg is found anywhere in the line, only show options and help options
-    for i in "$${words[@]}"; do
+    for i in "$${words[@]::$${#words[@]}-1}"; do
         if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
             COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_help_options[*]}" \\
             -- "$${cur}" ) )
