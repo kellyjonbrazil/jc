@@ -102,9 +102,7 @@ _jc() {
              jc_about_options jc_about_options_describe \\
              jc_about_mod_options jc_about_mod_options_describe \\
              jc_help_options jc_help_options_describe \\
-             jc_special_options jc_special_options_describe \\
-             jc_options_and_help_describe \\
-             jc_default_describe
+             jc_special_options jc_special_options_describe
 
     jc_commands=(${zsh_commands})
     jc_commands_describe=(
@@ -134,15 +132,6 @@ _jc() {
     jc_special_options_describe=(
         ${zsh_special_options_describe}
     )
-    jc_options_and_help_describe=(
-        ${zsh_options_and_help_describe}
-    )
-    jc_default_describe=(
-        ${zsh_default_describe}
-    )
-
-    zsh_options_and_help_describe=options_and_help_describe,
-        zsh_default_describe=default_describe
 
     # if jc_about_options are found anywhere in the line, then only complete from jc_about_mod_options
     for i in $${words:0:-1}; do
@@ -200,13 +189,13 @@ _jc() {
     # if a parser arg is found anywhere in the line, only show options and help options
     for i in $${words:0:-1}; do
         if (( $$jc_parsers[(Ie)$${i}] )); then
-            _describe 'commands' jc_options_and_help_describe
+            _describe 'commands' jc_options_describe -- jc_help_options_describe
             return 0
         fi
     done
 
     # default completion
-    _describe 'commands' jc_default_describe
+    _describe 'commands' jc_options_describe -- jc_about_options_describe -- jc_help_options_describe -- jc_special_options_describe -- jc_parsers_describe -- jc_commands_describe
 }
 
 _jc
@@ -336,8 +325,6 @@ def zsh_completion():
     special_options_describe = '\n        '.join(get_descriptions(special_options))
     commands_str = ' '.join(get_commands())
     commands_describe = '\n        '.join(get_zsh_command_descriptions(get_commands()))
-    options_and_help_describe = '\n        '.join([options_describe, help_options_describe])
-    default_describe = '\n        '.join([options_describe, about_options_describe, help_options_describe, special_options_describe, parsers_describe, commands_describe])
 
     return zsh_template.substitute(
         zsh_parsers=parsers_str,
@@ -353,7 +340,5 @@ def zsh_completion():
         zsh_options=options_str,
         zsh_options_describe=options_describe,
         zsh_commands=commands_str,
-        zsh_commands_describe=commands_describe,
-        zsh_options_and_help_describe=options_and_help_describe,
-        zsh_default_describe=default_describe
+        zsh_commands_describe=commands_describe
     )
