@@ -80,7 +80,7 @@ _jc()
         if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
             COMPREPLY=( $$( compgen -W "$${jc_options[*]} $${jc_help_options[*]}" \\
             -- "$${cur}" ) )
-           return 0
+            return 0
         fi
     done
 
@@ -96,24 +96,115 @@ zsh_template = Template('''\
 #compdef jc
 
 _jc() {
+    local -a jc_commands jc_commands_describe \\
+             jc_parsers jc_parsers_describe \\
+             jc_options jc_options_describe \\
+             jc_about_options jc_about_options_describe \\
+             jc_about_mod_options jc_about_mod_options_describe \\
+             jc_help_options jc_help_options_describe \\
+             jc_special_options jc_special_options_describe \\
+             jc_options_and_help_describe \\
+             jc_default_describe
+
+    jc_commands=(${zsh_commands})
+    jc_commands_describe=(
+        ${zsh_commands_describe}
+    )
+    jc_parsers=(${zsh_parsers})
+    jc_parsers_describe=(
+        ${zsh_parsers_describe}
+    )
+    jc_options=(${zsh_options})
+    jc_options_describe=(
+        ${zsh_options_describe}
+    )
+    jc_about_options=(${zsh_about_options})
+    jc_about_options_describe=(
+        ${zsh_about_options_describe}
+    )
+    jc_about_mod_options=(${zsh_about_mod_options})
+    jc_about_mod_options_describe=(
+        ${zsh_about_mod_options_describe}
+    )
+    jc_help_options=(${zsh_help_options})
+    jc_help_options_describe=(
+        ${zsh_help_options_describe}
+    )
+    jc_special_options=(${zsh_special_options})
+    jc_special_options_describe=(
+        ${zsh_special_options_describe}
+    )
+    jc_options_and_help_describe=(
+        ${zsh_options_and_help_describe}
+    )
+    jc_default_describe=(
+        ${zsh_default_describe}
+    )
+
+    zsh_options_and_help_describe=options_and_help_describe,
+        zsh_default_describe=default_describe
+
+    # if jc_about_options are found anywhere in the line, then only complete from jc_about_mod_options
+    for i in $${words:0:-1}; do
+        if (( $$jc_about_options[(Ie)$${i}] )); then
+            _describe 'commands' jc_about_mod_options_describe
+            return 0
+        fi
+    done
+
+    # if jc_help_options and a parser are found anywhere in the line, then no more completions
+     if
+        (
+            for i in $${words:0:-1}; do
+                if (( $$jc_help_options[(Ie)$${i}] )); then
+                    return 0
+                fi
+            done
+            return 1
+        ) && (
+            for i in $${words:0:-1}; do
+                if (( $$jc_parsers[(Ie)$${i}] )); then
+                    return 0
+                fi
+            done
+            return 1
+        ); then
+        return 0
+    fi
+
+    # if jc_help_options are found anywhere in the line, then only complete with parsers
+    for i in $${words:0:-1}; do
+        if (( $$jc_help_options[(Ie)$${i}] )); then
+            _describe 'commands' jc_parsers_describe
+            return 0
+        fi
+    done
+
+    # if special options are found anywhere in the line, then no more completions
+    for i in $${words:0:-1}; do
+        if (( $$jc_special_options[(Ie)$${i}] )); then
+            return 0
+        fi
+    done
 
     # if magic command is found anywhere in the line, use called command's autocompletion
+    for i in $${words:0:-1}; do
+        if (( $$jc_commands[(Ie)$${i}] )); then
+            _normal -P
+            return 0
+        fi
+    done
 
-    # if a parser arg is found anywhere in the line, only show options
+    # if a parser arg is found anywhere in the line, only show options and help options
+    for i in $${words:0:-1}; do
+        if (( $$jc_parsers[(Ie)$${i}] )); then
+            _describe 'commands' jc_options_and_help_describe
+            return 0
+        fi
+    done
 
     # default completion
-  # autogenerate completions based on jc --help output
-  # _arguments --
-
-  # add commands supported by magic syntax
-  #   local -a commands
-  #   commands=(
-  #     # e.g. 'arp:run arp with magic syntax.'
-  #     ${zsh_commands}
-  #   )
-
-  #   _describe -t commands 'commands' commands
-  #   return 0
+    _describe 'commands' jc_default_describe
 }
 
 _jc
@@ -142,16 +233,25 @@ def get_options():
     return options_list
 
 
-def get_arguments():
-    arg_list = []
+def get_parsers():
+    p_list = []
     for cmd in all_parser_info():
         if 'argument' in cmd:
-            arg_list.append(cmd['argument'])
+            p_list.append(cmd['argument'])
 
-    return arg_list
+    return p_list
 
 
-def gen_zsh_command_descriptions(command_list):
+def get_parsers_descriptions():
+    pd_list = []
+    for p in all_parser_info():
+        if 'description' in p:
+            pd_list.append(f"'{p['argument']}:{p['description']}'")
+
+    return pd_list
+
+
+def get_zsh_command_descriptions(command_list):
     zsh_commands = []
     for cmd in command_list:
         zsh_commands.append(f"""'{cmd}:run "{cmd}" command with magic syntax.'""")
@@ -159,8 +259,27 @@ def gen_zsh_command_descriptions(command_list):
     return zsh_commands
 
 
+def get_descriptions(opt_list):
+    """Return a list of options:description items."""
+    opt_desc_list = []
+
+    for item in opt_list:
+        # get long options
+        if item in long_options_map:
+            opt_desc_list.append(f"'{item}:{long_options_map[item][1]}'")
+            continue
+
+        # get short options
+        for k, v in long_options_map.items():
+            if item[1:] == v[0]:
+                opt_desc_list.append(f"'{item}:{v[1]}'")
+                continue
+
+    return opt_desc_list
+
+
 def bash_completion():
-    parsers_str = ' '.join(get_arguments())
+    parsers_str = ' '.join(get_parsers())
     opts_no_special = get_options()
 
     for s_option in special_options:
@@ -178,15 +297,61 @@ def bash_completion():
     help_options_str = ' '.join(help_options)
     special_options_str = ' '.join(special_options)
     commands_str = ' '.join(get_commands())
-    return bash_template.substitute(bash_parsers=parsers_str,
-                                    bash_special_options=special_options_str,
-                                    bash_about_options=about_options_str,
-                                    bash_about_mod_options=about_mod_options_str,
-                                    bash_help_options=help_options_str,
-                                    bash_options=options_str,
-                                    bash_commands=commands_str)
+    return bash_template.substitute(
+        bash_parsers=parsers_str,
+        bash_special_options=special_options_str,
+        bash_about_options=about_options_str,
+        bash_about_mod_options=about_mod_options_str,
+        bash_help_options=help_options_str,
+        bash_options=options_str,
+        bash_commands=commands_str
+    )
 
 
 def zsh_completion():
-    commands = '\n    '.join(gen_zsh_command_descriptions(get_commands()))
-    return zsh_template.substitute(zsh_commands=commands)
+    parsers_str = ' '.join(get_parsers())
+    parsers_describe = '\n        '.join(get_parsers_descriptions())
+    opts_no_special = get_options()
+
+    for s_option in special_options:
+        opts_no_special.remove(s_option)
+
+    for a_option in about_options:
+        opts_no_special.remove(a_option)
+
+    for h_option in help_options:
+        opts_no_special.remove(h_option)
+
+    options_str = ' '.join(opts_no_special)
+    options_describe = '\n        '.join(get_descriptions(opts_no_special))
+    about_options_str = ' '.join(about_options)
+    about_options_describe = '\n        '.join(get_descriptions(about_options))
+    about_mod_options_str = ' '.join(about_mod_options)
+    about_mod_options_describe = '\n        '.join(get_descriptions(about_mod_options))
+    help_options_str = ' '.join(help_options)
+    help_options_describe = '\n        '.join(get_descriptions(help_options))
+    special_options_str = ' '.join(special_options)
+    special_options_describe = '\n        '.join(get_descriptions(special_options))
+    commands_str = ' '.join(get_commands())
+    commands_describe = '\n        '.join(get_zsh_command_descriptions(get_commands()))
+    options_and_help_describe = '\n        '.join([options_describe, help_options_describe])
+    default_describe = '\n        '.join([options_describe, about_options_describe, help_options_describe, special_options_describe, parsers_describe, commands_describe])
+
+    return zsh_template.substitute(
+        zsh_parsers=parsers_str,
+        zsh_parsers_describe=parsers_describe,
+        zsh_special_options=special_options_str,
+        zsh_special_options_describe=special_options_describe,
+        zsh_about_options=about_options_str,
+        zsh_about_options_describe=about_options_describe,
+        zsh_about_mod_options=about_mod_options_str,
+        zsh_about_mod_options_describe=about_mod_options_describe,
+        zsh_help_options=help_options_str,
+        zsh_help_options_describe=help_options_describe,
+        zsh_options=options_str,
+        zsh_options_describe=options_describe,
+        zsh_commands=commands_str,
+        zsh_commands_describe=commands_describe,
+        zsh_options_and_help_describe=options_and_help_describe,
+        zsh_default_describe=default_describe
+    )
