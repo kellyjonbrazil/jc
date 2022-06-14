@@ -190,7 +190,9 @@ _jc() {
     # if magic command is found anywhere in the line, use called command's autocompletion
     for i in $${words:0:-1}; do
         if (( $$jc_commands[(Ie)$${i}] )); then
-            _normal -P
+            # still not working 100%. works fine as `jc dig`, but `jc -p dig`
+            # will only complete with files, not program-specific completions
+            _arguments '*::arguments:_normal'
             return 0
         fi
     done
