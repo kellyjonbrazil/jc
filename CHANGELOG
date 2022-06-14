@@ -1,7 +1,9 @@
 jc changelog
 
-20220601 v1.20.1 (in progress)
+20220614 v1.20.1 (in progress)
 - Add `postconf -M` parser tested on linux
+- Add long options (e.g. `--help`, `--about`, `--pretty`, etc.)
+- Add shell completions for Bash and Zsh
 - Fix `id` parser for cases where the user or group name is not present
 
 20220531 v1.20.0
