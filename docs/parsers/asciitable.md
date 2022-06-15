@@ -59,6 +59,9 @@ etc...
 Headers (keys) are converted to snake-case. All values are returned as
 strings, except empty strings, which are converted to None/null.
 
+> Note: To preserve the case of the keys use the `-r` cli option or
+> `raw=True` argument in `parse()`.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable
@@ -141,4 +144,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

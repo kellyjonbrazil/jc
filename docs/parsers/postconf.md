@@ -39,11 +39,55 @@ Schema:
 
 Examples:
 
-    $ postconf | jc --postconf -p
-    []
+    $ postconf -M | jc --postconf -p
+    [
+      {
+        "service_name": "smtp",
+        "service_type": "inet",
+        "private": false,
+        "unprivileged": null,
+        "chroot": true,
+        "wake_up_time": null,
+        "process_limit": null,
+        "command": "smtpd",
+        "no_wake_up_before_first_use": null
+      },
+      {
+        "service_name": "pickup",
+        "service_type": "unix",
+        "private": false,
+        "unprivileged": null,
+        "chroot": true,
+        "wake_up_time": 60,
+        "process_limit": 1,
+        "command": "pickup",
+        "no_wake_up_before_first_use": false
+      }
+    ]
 
-    $ postconf | jc --postconf -p -r
-    []
+    $ postconf -M | jc --postconf -p -r
+    [
+      {
+        "service_name": "smtp",
+        "service_type": "inet",
+        "private": "n",
+        "unprivileged": "-",
+        "chroot": "y",
+        "wake_up_time": "-",
+        "process_limit": "-",
+        "command": "smtpd"
+      },
+      {
+        "service_name": "pickup",
+        "service_type": "unix",
+        "private": "n",
+        "unprivileged": "-",
+        "chroot": "y",
+        "wake_up_time": "60",
+        "process_limit": "1",
+        "command": "pickup"
+      }
+    ]
 
 <a id="jc.parsers.postconf.parse"></a>
 
