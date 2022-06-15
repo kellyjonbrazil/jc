@@ -270,6 +270,34 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
+    def test_asciitable_no_lower_raw(self):
+        """
+        Test 'asciitable_m' with a pure ASCII table that has special
+        characters and mixed case in the header. These should be converted to underscores
+        and no trailing or consecutive underscores should end up in the
+        resulting key names. Using `raw` in this test to preserve case. (no lower)
+        """
+        input = '''
++----------+------------+-----------+----------------+-------+--------------------+
+| Protocol | Address    | Age (min) | Hardware Addr  | Type  | Interface          |
+|          |            | of int    |                |       |                    |
++----------+------------+-----------+----------------+-------+--------------------+
+| Internet | 10.12.13.1 |       98  | 0950.5785.5cd1 | ARPA  | FastEthernet2.13   |
++----------+------------+-----------+----------------+-------+--------------------+
+        '''
+        expected = [
+            {
+                "Protocol": "Internet",
+                "Address": "10.12.13.1",
+                "Age_min_of_int": "98",
+                "Hardware_Addr": "0950.5785.5cd1",
+                "Type": "ARPA",
+                "Interface": "FastEthernet2.13"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable_m.parse(input, raw=True, quiet=True), expected)
+
     def test_asciitable_m_sep_char_in_cell(self):
         """
         Test 'asciitable_m' with a column separator character inside the data

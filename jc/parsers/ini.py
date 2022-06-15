@@ -6,9 +6,10 @@ Parses standard `INI` files and files containing simple key/value pairs.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
 - If duplicate keys are found, only the last value will be used.
 
-> Note: Values starting and ending with quotation marks will have the marks
-> removed. If you would like to keep the quotation marks, use the `-r`
-> command-line argument or the `raw=True` argument in `parse()`.
+> Note: Values starting and ending with double or single quotation marks
+> will have the marks removed. If you would like to keep the quotation
+> marks, use the `-r` command-line argument or the `raw=True` argument in
+> `parse()`.
 
 Usage (cli):
 
@@ -69,7 +70,7 @@ import configparser
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -99,16 +100,20 @@ def _process(proc_data):
             for key, value in proc_data[heading].items():
                 if value is not None and value.startswith('"') and value.endswith('"'):
                     proc_data[heading][key] = value.lstrip('"').rstrip('"')
+
+                elif value is not None and value.startswith("'") and value.endswith("'"):
+                    proc_data[heading][key] = value.lstrip("'").rstrip("'")
+
                 elif value is None:
                     proc_data[heading][key] = ''
 
         # simple key/value files with no headers
         else:
-            if (proc_data[heading] is not None and
-               proc_data[heading].startswith('"') and
-               proc_data[heading].endswith('"')):
-
+            if proc_data[heading] is not None and proc_data[heading].startswith('"') and proc_data[heading].endswith('"'):
                 proc_data[heading] = proc_data[heading].lstrip('"').rstrip('"')
+
+            elif proc_data[heading] is not None and proc_data[heading].startswith("'") and proc_data[heading].endswith("'"):
+                proc_data[heading] = proc_data[heading].lstrip("'").rstrip("'")
 
             elif proc_data[heading] is None:
                 proc_data[heading] = ''

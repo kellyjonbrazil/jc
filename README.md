@@ -210,6 +210,7 @@ option.
 | `       --ping-s` | `ping` and `ping6` command streaming parser             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s)           |
 | `     --pip-list` | `pip list` command parser                               | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)         |
 | `     --pip-show` | `pip show` command parser                               | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)         |
+| `     --postconf` | `postconf -M` command parser                            | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)         |
 | `           --ps` | `ps` command parser                                     | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)               |
 | `        --route` | `route` command parser                                  | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/route)            |
 | `       --rpm-qi` | `rpm -qi` command parser                                | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi)           |
@@ -250,22 +251,21 @@ option.
 | `      --zipinfo` | `zipinfo` command parser                                | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo)          |
 
 ### Options
-- `-a` about `jc`. Prints information about `jc` and the parsers (in JSON or
-       YAML, of course!)
-- `-C` force color output even when using pipes (overrides `-m` and the
-       `NO_COLOR` env variable)
-- `-d` debug mode. Prints trace messages if parsing issues are encountered (use
-       `-dd` for verbose debugging)
-- `-h` help. Use `jc -h --parser_name` for parser documentation
-- `-m` monochrome JSON output
-- `-p` pretty format the JSON output
-- `-q` quiet mode. Suppresses parser warning messages (use `-qq` to ignore
-       streaming parser errors)
-- `-r` raw output. Provides a more literal JSON output, typically with string
-       values and no additional semantic processing
-- `-u` unbuffer output
-- `-v` version information
-- `-y` YAML output
+| Short | Long            | Description                                                                                                  |
+|-------|-----------------|--------------------------------------------------------------------------------------------------------------|
+| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                      |
+| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                    |
+| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)         |
+| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                     |
+| `-m`  | `--monochrome`  | Monochrome output                                                                                            |
+| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                |
+| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                 |
+| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing |
+| `-u`  | `--unbuffer`    | Unbuffer output                                                                                              |
+| `-v`  | `--version`     | Version information                                                                                          |
+| `-y`  | `--yaml-out`    | YAML output                                                                                                  |
+| `-B`  | `--bash-comp`   | Generate Bash shell completion script                                                                        |
+| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script                                                                         |
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the

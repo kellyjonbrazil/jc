@@ -11,9 +11,10 @@ Parses standard `INI` files and files containing simple key/value pairs.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
 - If duplicate keys are found, only the last value will be used.
 
-> Note: Values starting and ending with quotation marks will have the marks
-> removed. If you would like to keep the quotation marks, use the `-r`
-> command-line argument or the `raw=True` argument in `parse()`.
+> Note: Values starting and ending with double or single quotation marks
+> will have the marks removed. If you would like to keep the quotation
+> marks, use the `-r` command-line argument or the `raw=True` argument in
+> `parse()`.
 
 Usage (cli):
 
@@ -91,4 +92,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

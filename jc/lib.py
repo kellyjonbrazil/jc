@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.20.0'
+__version__ = '1.20.1'
 
 parsers = [
     'acpi',
@@ -73,6 +73,7 @@ parsers = [
     'ping-s',
     'pip-list',
     'pip-show',
+    'postconf',
     'ps',
     'route',
     'rpm-qi',

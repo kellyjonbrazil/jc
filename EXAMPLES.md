@@ -2728,6 +2728,36 @@ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt whe
   }
 ]
 ```
+### postconf -M
+```bash
+postconf -M | jc --postconf -p          # or jc -p postconf -M
+```
+```json
+[
+  {
+    "service_name": "smtp",
+    "service_type": "inet",
+    "private": false,
+    "unprivileged": null,
+    "chroot": true,
+    "wake_up_time": null,
+    "process_limit": null,
+    "command": "smtpd",
+    "no_wake_up_before_first_use": null
+  },
+  {
+    "service_name": "pickup",
+    "service_type": "unix",
+    "private": false,
+    "unprivileged": null,
+    "chroot": true,
+    "wake_up_time": 60,
+    "process_limit": 1,
+    "command": "pickup",
+    "no_wake_up_before_first_use": false
+  }
+]
+```
 ### ps
 ```bash
 ps -ef | jc --ps -p          # or:  jc -p ps -ef
@@ -3464,6 +3494,105 @@ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
   "dst_active": true,
   "epoch_utc": 1583888001
 }
+```
+### tob -b
+```bash
+top -b -n 1 | jc --top -p          # or jc -p tob -b -n 1
+```
+```json
+[
+  {
+    "time": "11:20:43",
+    "uptime": 118,
+    "users": 2,
+    "load_1m": 0.0,
+    "load_5m": 0.01,
+    "load_15m": 0.05,
+    "tasks_total": 108,
+    "tasks_running": 2,
+    "tasks_sleeping": 106,
+    "tasks_stopped": 0,
+    "tasks_zombie": 0,
+    "cpu_user": 5.6,
+    "cpu_sys": 11.1,
+    "cpu_nice": 0.0,
+    "cpu_idle": 83.3,
+    "cpu_wait": 0.0,
+    "cpu_hardware": 0.0,
+    "cpu_software": 0.0,
+    "cpu_steal": 0.0,
+    "mem_total": 3.7,
+    "mem_free": 3.3,
+    "mem_used": 0.2,
+    "mem_buff_cache": 0.2,
+    "swap_total": 2.0,
+    "swap_free": 2.0,
+    "swap_used": 0.0,
+    "mem_available": 3.3,
+    "processes": [
+      {
+        "pid": 2225,
+        "user": "kbrazil",
+        "priority": 20,
+        "nice": 0,
+        "virtual_mem": 158.1,
+        "resident_mem": 2.2,
+        "shared_mem": 1.6,
+        "status": "running",
+        "percent_cpu": 12.5,
+        "percent_mem": 0.1,
+        "time_hundredths": "0:00.02",
+        "command": "top",
+        "parent_pid": 1884,
+        "uid": 1000,
+        "real_uid": 1000,
+        "real_user": "kbrazil",
+        "saved_uid": 1000,
+        "saved_user": "kbrazil",
+        "gid": 1000,
+        "group": "kbrazil",
+        "pgrp": 2225,
+        "tty": "pts/0",
+        "tty_process_gid": 2225,
+        "session_id": 1884,
+        "thread_count": 1,
+        "last_used_processor": 0,
+        "time": "0:00",
+        "swap": 0.0,
+        "code": 0.1,
+        "data": 1.0,
+        "major_page_fault_count": 0,
+        "minor_page_fault_count": 736,
+        "dirty_pages_count": 0,
+        "sleeping_in_function": null,
+        "flags": "..4.2...",
+        "cgroups": "1:name=systemd:/user.slice/user-1000.+",
+        "supplementary_gids": [
+          10,
+          1000
+        ],
+        "supplementary_groups": [
+          "wheel",
+          "kbrazil"
+        ],
+        "thread_gid": 2225,
+        "environment_variables": [
+          "XDG_SESSION_ID=2",
+          "HOSTNAME=localhost"
+        ],
+        "major_page_fault_count_delta": 0,
+        "minor_page_fault_count_delta": 4,
+        "used": 2.2,
+        "ipc_namespace_inode": 4026531839,
+        "mount_namespace_inode": 4026531840,
+        "net_namespace_inode": 4026531956,
+        "pid_namespace_inode": 4026531836,
+        "user_namespace_inode": 4026531837,
+        "nts_namespace_inode": 4026531838
+      }
+    ]
+  }
+]
 ```
 ### tracepath
 ```bash

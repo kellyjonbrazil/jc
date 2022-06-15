@@ -25,7 +25,10 @@ class MyTests(unittest.TestCase):
             'jc -h': (False, None, None, []),
             'jc -h --arp': (False, None, None, []),
             'jc -h arp': (False, None, None, []),
-            'jc -h arp -a': (False, None, None, [])
+            'jc -h arp -a': (False, None, None, []),
+            'jc --pretty dig': (True, ['dig'], '--dig', ['p']),
+            'jc --pretty --monochrome --quiet --raw dig': (True, ['dig'], '--dig', ['p', 'm', 'q', 'r']),
+            'jc --about --yaml-out': (False, None, None, [])
         }
 
         for command, expected_command in commands.items():

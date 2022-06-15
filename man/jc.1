@@ -1,4 +1,4 @@
-.TH jc 1 2022-05-31 1.20.0 "JSON Convert"
+.TH jc 1 2022-06-15 1.20.1 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -339,6 +339,11 @@ Key/Value file parser
 
 .TP
 .B
+\fB--postconf\fP
+`postconf -M` command parser
+
+.TP
+.B
 \fB--ps\fP
 `ps` command parser
 
@@ -536,48 +541,56 @@ Options:
 
 .TP
 .B
-\fB-a\fP
-about \fBjc\fP (JSON or YAML output)
+\fB-a\fP, \fB--about\fP
+About \fBjc\fP (JSON or YAML output)
 .TP
 .B
-\fB-C\fP
-force color output even when using pipes (overrides \fB-m\fP and the \fBNO_COLOR\fP env variable)
+\fB-C\fP, \fB--force-color\fP
+Force color output even when using pipes (overrides \fB-m\fP and the \fBNO_COLOR\fP env variable)
 .TP
 .B
-\fB-d\fP
-debug - show traceback (use \fB-dd\fP for verbose traceback)
+\fB-d\fP, \fB--debug\fP
+Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
-\fB-h\fP
-help (\fB-h --parser_name\fP for parser documentation)
+\fB-h\fP, \fB--help\fP
+Help (\fB--help --parser_name\fP for parser documentation)
 .TP
 .B
-\fB-m\fP
-monochrome output
+\fB-m\fP, \fB--monochrome\fP
+Monochrome output
 .TP
 .B
-\fB-p\fP
-pretty print output
+\fB-p\fP, \fB--pretty\fP
+Pretty print output
 .TP
 .B
-\fB-q\fP
-quiet - suppress warnings (use \fB-qq\fP to ignore streaming parser errors)
+\fB-q\fP, \fB--quiet\fP
+Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming parser errors)
 .TP
 .B
-\fB-r\fP
-raw JSON output
+\fB-r\fP, \fB--raw\fP
+Raw output. Provides more literal output, typically with string values and no additional semantic processing
 .TP
 .B
-\fB-u\fP
-unbuffer output (useful for slow streaming data with streaming parsers)
+\fB-u\fP, \fB--unbuffer\fP
+Unbuffer output (useful for slow streaming data with streaming parsers)
 .TP
 .B
-\fB-v\fP
-version information
+\fB-v\fP, \fB--version\fP
+Version information
 .TP
 .B
-\fB-y\fP
+\fB-y\fP, \fB--yaml-out\fP
 YAML output
+.TP
+.B
+\fB-B\fP, \fB--bash-comp\fP
+Generate Bash shell completion script
+.TP
+.B
+\fB-Z\fP, \fB--zsh-comp\fP
+Generate Zsh shell completion script
 
 .SH EXIT CODES
 Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.

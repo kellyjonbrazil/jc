@@ -105,7 +105,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,6 +144,13 @@ def _process(proc_data):
     return proc_data
 
 
+def _get_item(my_list, index, default=None):
+      if index < len(my_list):
+        return my_list[index]
+
+      return default
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -174,14 +181,14 @@ def parse(data, raw=False, quiet=False):
                 uid_parsed = uid_parsed.split('=')
                 raw_output['uid'] = {}
                 raw_output['uid']['id'] = uid_parsed[1]
-                raw_output['uid']['name'] = uid_parsed[2]
+                raw_output['uid']['name'] = _get_item(uid_parsed, 2)
 
             if section.startswith('gid'):
                 gid_parsed = section.replace('(', '=').replace(')', '=')
                 gid_parsed = gid_parsed.split('=')
                 raw_output['gid'] = {}
                 raw_output['gid']['id'] = gid_parsed[1]
-                raw_output['gid']['name'] = gid_parsed[2]
+                raw_output['gid']['name'] = _get_item(gid_parsed, 2)
 
             if section.startswith('groups'):
                 groups_parsed = section.replace('(', '=').replace(')', '=')
@@ -193,7 +200,7 @@ def parse(data, raw=False, quiet=False):
                     group_dict = {}
                     grp_parsed = group.split('=')
                     group_dict['id'] = grp_parsed[0]
-                    group_dict['name'] = grp_parsed[1]
+                    group_dict['name'] = _get_item(grp_parsed, 1)
                     raw_output['groups'].append(group_dict)
 
             if section.startswith('context'):
