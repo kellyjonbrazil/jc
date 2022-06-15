@@ -16,12 +16,24 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-iptelserver.ini'), 'r', encoding='utf-8') as f:
             self.generic_ini_iptelserver = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-double-quote.ini'), 'r', encoding='utf-8') as f:
+            self.generic_ini_double_quote = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-single-quote.ini'), 'r', encoding='utf-8') as f:
+            self.generic_ini_single_quote = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-test.json'), 'r', encoding='utf-8') as f:
             self.generic_ini_test_json = json.loads(f.read())
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-iptelserver.json'), 'r', encoding='utf-8') as f:
             self.generic_ini_iptelserver_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-double-quote.json'), 'r', encoding='utf-8') as f:
+            self.generic_ini_double_quote_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-single-quote.json'), 'r', encoding='utf-8') as f:
+            self.generic_ini_single_quote_json = json.loads(f.read())
 
     def test_ini_nodata(self):
         """
@@ -52,6 +64,19 @@ duplicate_key = value2
 '''
         expected = {'duplicate_key': 'value2', 'another_key': 'foo'}
         self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
+
+    def test_ini_doublequote(self):
+        """
+        Test ini file with double quotes around a value
+        """
+        self.assertEqual(jc.parsers.ini.parse(self.generic_ini_double_quote, quiet=True), self.generic_ini_double_quote_json)
+
+    def test_ini_singlequote(self):
+        """
+        Test ini file with single quotes around a value
+        """
+        self.assertEqual(jc.parsers.ini.parse(self.generic_ini_single_quote, quiet=True), self.generic_ini_single_quote_json)
+
 
 
 if __name__ == '__main__':
