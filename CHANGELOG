@@ -1,6 +1,6 @@
 jc changelog
 
-20220615 v1.20.1 (in progress)
+20220615 v1.20.1
 - Add `postconf -M` parser tested on linux
 - Update `asciitable` and `asciitable-m` parsers to preserve case in key
   names when using the `-r` or `raw=True` options.
