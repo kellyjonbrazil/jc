@@ -179,9 +179,12 @@ _jc() {
     # if magic command is found anywhere in the line, use called command's autocompletion
     for i in $${words:0:-1}; do
         if (( $$jc_commands[(Ie)$${i}] )); then
+            # hack to remove options between jc and the magic command
             shift $$(( $${#words} - 2 )) words
             words[1,0]=(jc)
             CURRENT=$${#words}
+
+            # run the magic command's completions
             _arguments '*::arguments:_normal'
             return 0
         fi
