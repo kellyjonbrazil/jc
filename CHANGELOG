@@ -1,7 +1,9 @@
 jc changelog
 
-20220614 v1.20.1 (in progress)
+20220615 v1.20.1 (in progress)
 - Add `postconf -M` parser tested on linux
+- Update `asciitable` and `asciitable-m` parsers to preserve case in key
+  names when using the `-r` or `raw=True` options.
 - Add long options (e.g. `--help`, `--about`, `--pretty`, etc.)
 - Add shell completions for Bash and Zsh
 - Fix `id` parser for cases where the user or group name is not present
