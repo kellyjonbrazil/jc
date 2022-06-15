@@ -344,6 +344,49 @@ Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
+    def test_asciitable_no_lower_raw(self):
+        """
+        Test 'asciitable' with a pure ASCII table that has special
+        characters and mixed case in the header. These should be converted to underscores
+        and no trailing or consecutive underscores should end up in the
+        resulting key names. Using `raw` in this test to preserve case. (no lower)
+        """
+        input = '''
+Protocol  Address     Age (min)  Hardware Addr   Type   Interface
+Internet  10.12.13.1        98   0950.5785.5cd1  ARPA   FastEthernet2.13
+Internet  10.12.13.3       131   0150.7685.14d5  ARPA   GigabitEthernet2.13
+Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
+        '''
+
+        expected = [
+            {
+                "Protocol": "Internet",
+                "Address": "10.12.13.1",
+                "Age_min": "98",
+                "Hardware_Addr": "0950.5785.5cd1",
+                "Type": "ARPA",
+                "Interface": "FastEthernet2.13"
+            },
+            {
+                "Protocol": "Internet",
+                "Address": "10.12.13.3",
+                "Age_min": "131",
+                "Hardware_Addr": "0150.7685.14d5",
+                "Type": "ARPA",
+                "Interface": "GigabitEthernet2.13"
+            },
+            {
+                "Protocol": "Internet",
+                "Address": "10.12.13.4",
+                "Age_min": "198",
+                "Hardware_Addr": "0950.5C8A.5c41",
+                "Type": "ARPA",
+                "Interface": "GigabitEthernet2.17"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, raw=True, quiet=True), expected)
+
     def test_asciitable_centered_col_header(self):
         """
         Test 'asciitable' with long centered column header which can break

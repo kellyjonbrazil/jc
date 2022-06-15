@@ -54,6 +54,9 @@ etc...
 Headers (keys) are converted to snake-case. All values are returned as
 strings, except empty strings, which are converted to None/null.
 
+> Note: To preserve the case of the keys use the `-r` cli option or
+> `raw=True` argument in `parse()`.
+
 Usage (cli):
 
     $ cat table.txt | jc --asciitable
@@ -122,7 +125,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,6 +147,12 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    # normalize keys: convert to lowercase
+    for item in proc_data:
+        for key in item.copy():
+            k_new = key.lower()
+            item[k_new] = item.pop(key)
+
     return proc_data
 
 
@@ -232,7 +241,7 @@ def _snake_case(line: str) -> str:
     padding.
     """
     line = re.sub(r'[^a-zA-Z0-9� ]', '_', line)  # special characters
-    line = re.sub(r'\b \b', '_', line).lower()   # spaces betwee words
+    line = re.sub(r'\b \b', '_', line)           # spaces between words
     return line
 
 

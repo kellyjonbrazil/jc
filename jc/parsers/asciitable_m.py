@@ -24,6 +24,9 @@ Headers (keys) are converted to snake-case and newlines between multi-line
 headers are joined with an underscore. All values are returned as strings,
 except empty strings, which are converted to None/null.
 
+> Note: To preserve the case of the keys use the `-r` cli option or
+> `raw=True` argument in `parse()`.
+
 > Note: table column separator characters (e.g. `|`) cannot be present
 > inside the cell data. If detected, a warning message will be printed to
 > `STDERR` and the line will be skipped. The warning message can be
@@ -107,7 +110,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'multi-line ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -129,6 +132,12 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    # normalize keys: convert to lowercase
+    for item in proc_data:
+        for key in item.copy():
+            k_new = key.lower()
+            item[k_new] = item.pop(key)
+
     return proc_data
 
 
@@ -238,7 +247,7 @@ def _snake_case(line: str) -> str:
     """
     # must include all column separator characters in regex
     line = re.sub(r'[^a-zA-Z0-9 |│┃┆┇┊┋╎╏║]', '_', line)
-    return re.sub(r'\b \b', '_', line).lower()
+    return re.sub(r'\b \b', '_', line)
 
 
 def _fixup_separators(line: str) -> str:
