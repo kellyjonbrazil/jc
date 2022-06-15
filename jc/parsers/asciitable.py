@@ -236,9 +236,8 @@ def _is_separator(line: str) -> bool:
 
 def _snake_case(line: str) -> str:
     """
-    Replace spaces between words and special characters with an underscore
-    and set to lowercase. Ignore the replacement char (�) used for header
-    padding.
+    Replace spaces between words and special characters with an underscore.
+    Ignore the replacement char (�) used for header padding.
     """
     line = re.sub(r'[^a-zA-Z0-9� ]', '_', line)  # special characters
     line = re.sub(r'\b \b', '_', line)           # spaces between words

@@ -242,8 +242,7 @@ def _is_separator(line: str) -> bool:
 
 def _snake_case(line: str) -> str:
     """
-    replace spaces between words and special characters with an underscore
-    and set to lowercase
+    replace spaces between words and special characters with an underscore.
     """
     # must include all column separator characters in regex
     line = re.sub(r'[^a-zA-Z0-9 |│┃┆┇┊┋╎╏║]', '_', line)
