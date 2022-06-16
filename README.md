@@ -144,8 +144,8 @@ option.
 
 ### Parsers
 
-| Argument          | Command or Filetype                                     | Documentation                                                           |
-|-------------------|---------------------------------------------------------|-------------------------------------------------------------------------|
+| Argument          | Command or Filetype                                     | Documentation                                                          |
+|-------------------|---------------------------------------------------------|------------------------------------------------------------------------|
 | `         --acpi` | `acpi` command parser                                   | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi)             |
 | `      --airport` | `airport -I` command parser                             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/airport)          |
 | `    --airport-s` | `airport -s` command parser                             | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s)        |
@@ -251,6 +251,7 @@ option.
 | `      --zipinfo` | `zipinfo` command parser                                | [📃](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo)          |
 
 ### Options
+
 | Short | Long            | Description                                                                                                         |
 |-------|-----------------|---------------------------------------------------------------------------------------------------------------------|
 | `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                             |
