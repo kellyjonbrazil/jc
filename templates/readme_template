@@ -44,7 +44,7 @@ $ jc dig example.com | jq -r '.[].answer[].data'
 93.184.216.34
 ```
 
-The `jc` can also be used as a python library. In this case the output will be
+`jc` can also be used as a python library. In this case the output will be
 a python dictionary, a list of dictionaries, or even a
 [lazy iterable of dictionaries](#using-streaming-parsers-as-python-modules)
 instead of JSON:
