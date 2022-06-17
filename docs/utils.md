@@ -80,7 +80,8 @@ def compatibility(mod_name: str,
 ```
 
 Checks for the parser's compatibility with the running OS platform and
-prints a warning message to `STDERR` if not compatible and quiet=False.
+prints a warning message to `STDERR` if not compatible and
+`quiet=False.`
 
 Parameters:
 

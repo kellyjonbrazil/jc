@@ -114,7 +114,8 @@ def is_compatible(compatible: List) -> bool:
 def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS platform and
-    prints a warning message to `STDERR` if not compatible and quiet=False.
+    prints a warning message to `STDERR` if not compatible and
+    `quiet=False.`
 
     Parameters:
 
