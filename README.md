@@ -45,8 +45,8 @@ $ jc dig example.com | jq -r '.[].answer[].data'
 ```
 
 The `jc` parsers can also be used as python modules. In this case the output
-will be a python dictionary, or list of dictionaries, or even a [lazy
-iterable of dicionaries](#using-streaming-parsers-as-python-modules) instead
+will be a python dictionary, list of dictionaries, or even a [lazy
+iterable of dictionaries](#using-streaming-parsers-as-python-modules) instead
 of JSON:
 ```python
 >>> import subprocess
