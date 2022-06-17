@@ -143,7 +143,7 @@ def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
 def has_data(data: str) -> bool:
     """
     Checks if the input contains data. If there are any non-whitespace
-    characters then return True, else return False.
+    characters then return `True`, else return `False`.
 
     Parameters:
 
