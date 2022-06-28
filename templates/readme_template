@@ -44,8 +44,10 @@ $ jc dig example.com | jq -r '.[].answer[].data'
 93.184.216.34
 ```
 
-The `jc` parsers can also be used as python modules. In this case the output
-will be a python dictionary, or list of dictionaries, instead of JSON:
+`jc` can also be used as a python library. In this case the output will be
+a python dictionary, a list of dictionaries, or even a
+[lazy iterable of dictionaries](#using-streaming-parsers-as-python-modules)
+instead of JSON:
 ```python
 >>> import subprocess
 >>> import jc
@@ -144,26 +146,27 @@ option.
 
 ### Parsers
 
-| Argument          | Command or Filetype                                     | Documentation                                                           |
-|-------------------|---------------------------------------------------------|-------------------------------------------------------------------------|{% for parser in jc.parsers %}
-| `{{ "{:>15}".format(parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<70}".format("[📃](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
+| Argument          | Command or Filetype                                     | Documentation                                                              |
+|-------------------|---------------------------------------------------------|----------------------------------------------------------------------------|{% for parser in jc.parsers %}
+| `{{ "{:>15}".format(parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<74}".format("[details](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
 
 ### Options
-| Short | Long            | Description                                                                                                  |
-|-------|-----------------|--------------------------------------------------------------------------------------------------------------|
-| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                      |
-| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                    |
-| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)         |
-| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                     |
-| `-m`  | `--monochrome`  | Monochrome output                                                                                            |
-| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                |
-| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                 |
-| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing |
-| `-u`  | `--unbuffer`    | Unbuffer output                                                                                              |
-| `-v`  | `--version`     | Version information                                                                                          |
-| `-y`  | `--yaml-out`    | YAML output                                                                                                  |
-| `-B`  | `--bash-comp`   | Generate Bash shell completion script                                                                        |
-| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script                                                                         |
+
+| Short | Long            | Description                                                                                                         |
+|-------|-----------------|---------------------------------------------------------------------------------------------------------------------|
+| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                             |
+| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                           |
+| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
+| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                            |
+| `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
+| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
+| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
+| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
+| `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
+| `-v`  | `--version`     | Version information                                                                                                 |
+| `-y`  | `--yaml-out`    | YAML output                                                                                                         |
+| `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))    |
+| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))     |
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the

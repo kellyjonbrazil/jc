@@ -114,7 +114,8 @@ def is_compatible(compatible: List) -> bool:
 def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS platform and
-    prints a warning message to `STDERR` if not compatible and quiet=False.
+    prints a warning message to `STDERR` if not compatible and
+    `quiet=False.`
 
     Parameters:
 
@@ -142,7 +143,7 @@ def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
 def has_data(data: str) -> bool:
     """
     Checks if the input contains data. If there are any non-whitespace
-    characters then return True, else return False.
+    characters then return `True`, else return `False`.
 
     Parameters:
 

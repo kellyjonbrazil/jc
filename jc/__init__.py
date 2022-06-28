@@ -26,7 +26,7 @@ https://github.com/kellyjonbrazil/jc/tree/master/docs
 
 > Replace `<full_version_number>` - e.g. `1.18.0`:
 
-Specific versions can also be selected by tag in the branch Github dropdown
+Specific versions can also be selected by tag in the Github branch dropdown
 menu.
 
 ## Usage Example
