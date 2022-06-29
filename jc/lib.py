@@ -36,6 +36,7 @@ parsers = [
     'fstab',
     'git-log',
     'git-log-s',
+    'gpg',
     'group',
     'gshadow',
     'hash',
