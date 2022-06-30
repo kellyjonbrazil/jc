@@ -1121,6 +1121,37 @@ git log --stat | jc --git-log -p          or:  jc -p git log --stat
   }
 ]
 ```
+### gpg --with-colons
+```bash
+gpg --with-colons --show-keys file.gpg | jc --gpg -p          # or  jc -p gpg --with-colons --show-keys file.gpg
+```
+```json
+[
+  {
+    "type": "pub",
+    "validity": "f",
+    "key_length": "1024",
+    "pub_key_alg": "17",
+    "key_id": "6C7EE1B8621CC013",
+    "creation_date": "899817715",
+    "expiration_date": "1055898235",
+    "certsn_uidhash_trustinfo": null,
+    "owner_trust": "m",
+    "user_id": null,
+    "signature_class": null,
+    "key_capabilities": "scESC",
+    "cert_fingerprint_other": null,
+    "flag": null,
+    "token_sn": null,
+    "hash_alg": null,
+    "curve_name": null,
+    "compliance_flags": null,
+    "last_update_date": null,
+    "origin": null,
+    "comment": null
+  }
+]
+```
 ### /etc/group file
 ```bash
 cat /etc/group | jc --group -p
