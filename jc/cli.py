@@ -622,7 +622,7 @@ def main():
     try:
         # differentiate between regular and streaming parsers
 
-        # streaming
+        # streaming (only supports UTF-8 string data for now)
         if _parser_is_streaming(parser):
             result = parser.parse(sys.stdin,
                                   raw=raw,
@@ -639,9 +639,17 @@ def main():
 
             sys.exit(combined_exit_code(magic_exit_code, 0))
 
-        # regular
+        # regular (supports binary and UTF-8 string data)
         else:
-            data = magic_stdout or sys.stdin.read()
+            data = magic_stdout or sys.stdin.buffer.read()
+
+            # convert to UTF-8, if possible. Otherwise, leave as bytes
+            try:
+                if isinstance(data, bytes):
+                    data = data.decode('utf-8')
+            except UnicodeDecodeError:
+                pass
+
             result = parser.parse(data,
                                   raw=raw,
                                   quiet=quiet)
