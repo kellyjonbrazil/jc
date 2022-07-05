@@ -14,7 +14,7 @@ from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _get_parser, _parser_is_streaming, standard_parser_mod_list,
                   plugin_parser_mod_list, streaming_parser_mod_list)
 from . import utils
-from .cli_data import long_options_map
+from .cli_data import long_options_map, new_pygments_colors, old_pygments_colors
 from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -48,43 +48,9 @@ class info():
 # startswith is sufficient and avoids potential exceptions from split and int.
 if PYGMENTS_INSTALLED:
     if pygments.__version__.startswith('2.3.'):
-        PYGMENT_COLOR = {
-            'black': '#ansiblack',
-            'red': '#ansidarkred',
-            'green': '#ansidarkgreen',
-            'yellow': '#ansibrown',
-            'blue': '#ansidarkblue',
-            'magenta': '#ansipurple',
-            'cyan': '#ansiteal',
-            'gray': '#ansilightgray',
-            'brightblack': '#ansidarkgray',
-            'brightred': '#ansired',
-            'brightgreen': '#ansigreen',
-            'brightyellow': '#ansiyellow',
-            'brightblue': '#ansiblue',
-            'brightmagenta': '#ansifuchsia',
-            'brightcyan': '#ansiturquoise',
-            'white': '#ansiwhite',
-        }
+        PYGMENT_COLOR = old_pygments_colors
     else:
-        PYGMENT_COLOR = {
-            'black': 'ansiblack',
-            'red': 'ansired',
-            'green': 'ansigreen',
-            'yellow': 'ansiyellow',
-            'blue': 'ansiblue',
-            'magenta': 'ansimagenta',
-            'cyan': 'ansicyan',
-            'gray': 'ansigray',
-            'brightblack': 'ansibrightblack',
-            'brightred': 'ansibrightred',
-            'brightgreen': 'ansibrightgreen',
-            'brightyellow': 'ansibrightyellow',
-            'brightblue': 'ansibrightblue',
-            'brightmagenta': 'ansibrightmagenta',
-            'brightcyan': 'ansibrightcyan',
-            'white': 'ansiwhite',
-        }
+        PYGMENT_COLOR = new_pygments_colors
 
 
 def set_env_colors(env_colors=None):

@@ -16,3 +16,41 @@ long_options_map: Dict[str, List[str]] = {
     '--bash-comp': ['B', 'gen Bash completion: jc -B > /etc/bash_completion.d/jc'],
     '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"']
 }
+
+new_pygments_colors = {
+    'black': 'ansiblack',
+    'red': 'ansired',
+    'green': 'ansigreen',
+    'yellow': 'ansiyellow',
+    'blue': 'ansiblue',
+    'magenta': 'ansimagenta',
+    'cyan': 'ansicyan',
+    'gray': 'ansigray',
+    'brightblack': 'ansibrightblack',
+    'brightred': 'ansibrightred',
+    'brightgreen': 'ansibrightgreen',
+    'brightyellow': 'ansibrightyellow',
+    'brightblue': 'ansibrightblue',
+    'brightmagenta': 'ansibrightmagenta',
+    'brightcyan': 'ansibrightcyan',
+    'white': 'ansiwhite',
+}
+
+old_pygments_colors = {
+    'black': '#ansiblack',
+    'red': '#ansidarkred',
+    'green': '#ansidarkgreen',
+    'yellow': '#ansibrown',
+    'blue': '#ansidarkblue',
+    'magenta': '#ansipurple',
+    'cyan': '#ansiteal',
+    'gray': '#ansilightgray',
+    'brightblack': '#ansidarkgray',
+    'brightred': '#ansired',
+    'brightgreen': '#ansigreen',
+    'brightyellow': '#ansiyellow',
+    'brightblue': '#ansiblue',
+    'brightmagenta': '#ansifuchsia',
+    'brightcyan': '#ansiturquoise',
+    'white': '#ansiwhite',
+}
