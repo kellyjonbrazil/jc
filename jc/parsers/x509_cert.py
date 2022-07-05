@@ -71,7 +71,13 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     return proc_data
 
 
+def _i2b(integer: int) -> bytes:
+    """Convert long integers into a bytes object (big endian)"""
+    return integer.to_bytes((integer.bit_length() + 7) // 8, byteorder='big')
+
+
 def _b2a(byte_string: bytes) -> str:
+    """Convert a byte string to a colon-delimited hex ascii string"""
     return binascii.hexlify(byte_string, ':').decode('utf-8')
 
 
@@ -86,31 +92,26 @@ def _fix_objects(obj):
     if isinstance(obj, OrderedDict):
         obj = dict(obj)
 
-    if isinstance(obj, datetime):
-        obj = int(round(obj.timestamp()))
-
-    if isinstance(obj, bytes):
-        obj = _b2a(obj)
-
     if isinstance(obj, dict):
-        for k, v in obj.items():
+        for k, v in obj.copy().items():
+            if k == 'serial_number':
+                obj.update({k: _b2a(_i2b(v))})
+                continue
+
+            if k == 'modulus':
+                obj.update({k: _b2a(_i2b(v))})
+                continue
+
             if isinstance(v, datetime):
+                iso = v.isoformat()
                 v = int(round(v.timestamp()))
-                obj.update({k: v})
+                obj.update({k: v, f'{k}_iso': iso})
                 continue
 
             if isinstance(v, bytes):
                 v = _b2a(v)
                 obj.update({k: v})
                 continue
-
-            if isinstance(v, set):
-                v = list(v)
-                obj.update({k: v})
-
-            if isinstance(v, OrderedDict):
-                v = dict(v)
-                obj.update({k: v})
 
             if isinstance(v, dict):
                 obj.update({k: _fix_objects(v)})
@@ -162,20 +163,14 @@ def parse(
         except TypeError:
             der_bytes = data  # type: ignore
 
+        certs = []
         if pem.detect(der_bytes):
-            type_name, headers, der_bytes = pem.unarmor(der_bytes)
+            for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
+                certs.append(x509.Certificate.load(der_bytes))
 
-        cert = x509.Certificate.load(der_bytes)
+        else:
+            certs.append(x509.Certificate.load(der_bytes))
 
-        # convert bytes to hexadecimal representation strings for JSON conversion: _b2a()
-        # convert datetime objects to timestamp integers for JSON conversion:
-        # timestamp = int(round(dt_obj.timestamp()))
-
-        clean_dict = _fix_objects(cert.native)
-        # import pprint
-        # pprint.pprint(clean_dict)
-
-        raw_output = clean_dict
-
+        raw_output = [_fix_objects(cert.native) for cert in certs]
 
     return raw_output if raw else _process(raw_output)
