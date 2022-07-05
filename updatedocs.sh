@@ -19,3 +19,7 @@
 wait
 echo
 echo "All documentation updated"
+
+echo
+echo "Building shell completion scripts"
+./build-completions.py && echo "++++ shell completion build successful" || echo "---- shell completion build failed"

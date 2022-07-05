@@ -1,6 +1,6 @@
 jc changelog
 
-20220630 v1.20.2
+20220705 v1.20.2
 - Add `gpg --with-colons` parser tested on linux
 - Add DER and PEM encoded X.509 Certificate parser
 - Add Bash and Zsh completion scripts to DEB and RPM packages
