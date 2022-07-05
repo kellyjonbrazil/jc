@@ -1,6 +1,6 @@
 """jc - JSON Convert X.509 Certificate format file parser
 
-This parser will convert DER, PEM, and PKCS#12 encoded X.509 certificates.
+This parser will convert DER and PEM encoded X.509 certificates.
 
 Usage (cli):
 
@@ -40,7 +40,7 @@ from jc.parsers.asn1crypto import pem, x509
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'X.509 certificate file parser'
+    description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the asn1crypto library at https://github.com/wbond/asn1crypto/releases/tag/1.5.1'
