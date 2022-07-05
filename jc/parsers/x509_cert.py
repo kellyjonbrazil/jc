@@ -113,6 +113,14 @@ def _fix_objects(obj):
                 obj.update({k: v})
                 continue
 
+            if isinstance(v, set):
+                v = list(v)
+                obj.update({k: v})
+
+            if isinstance(v, OrderedDict):
+                v = dict(v)
+                obj.update({k: v})
+
             if isinstance(v, dict):
                 obj.update({k: _fix_objects(v)})
                 continue
