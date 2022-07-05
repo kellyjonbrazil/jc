@@ -4122,6 +4122,85 @@ who -a | jc --who -p          # or:  jc -p who -a
   }
 ]
 ```
+### X.509 PEM and DER certificate files
+```bash
+cat entrust.pem | jc --x509-cert -p
+```
+```json
+[
+  {
+    "tbs_certificate": {
+      "version": "v3",
+      "serial_number": "a6:8b:79:29:00:00:00:00:50:d0:91:f9",
+      "signature": {
+        "algorithm": "sha384_ecdsa",
+        "parameters": null
+      },
+      "issuer": {
+        "country_name": "US",
+        "organization_name": "Entrust, Inc.",
+        "organizational_unit_name": [
+          "See www.entrust.net/legal-terms",
+          "(c) 2012 Entrust, Inc. - for authorized use only"
+        ],
+        "common_name": "Entrust Root Certification Authority - EC1"
+      },
+      "validity": {
+        "not_before": 1355844336,
+        "not_after": 2144764536,
+        "not_before_iso": "2012-12-18T15:25:36+00:00",
+        "not_after_iso": "2037-12-18T15:55:36+00:00"
+      },
+      "subject": {
+        "country_name": "US",
+        "organization_name": "Entrust, Inc.",
+        "organizational_unit_name": [
+          "See www.entrust.net/legal-terms",
+          "(c) 2012 Entrust, Inc. - for authorized use only"
+        ],
+        "common_name": "Entrust Root Certification Authority - EC1"
+      },
+      "subject_public_key_info": {
+        "algorithm": {
+          "algorithm": "ec",
+          "parameters": "secp384r1"
+        },
+        "public_key": "04:84:13:c9:d0:ba:6d:41:7b:e2:6c:d0:eb:55:5f:66:02:1a:24:f4:5b:89:69:47:e3:b8:c2:7d:f1:f2:02:c5:9f:a0:f6:5b:d5:8b:06:19:86:4f:53:10:6d:07:24:27:a1:a0:f8:d5:47:19:61:4c:7d:ca:93:27:ea:74:0c:ef:6f:96:09:fe:63:ec:70:5d:36:ad:67:77:ae:c9:9d:7c:55:44:3a:a2:63:51:1f:f5:e3:62:d4:a9:47:07:3e:cc:20"
+      },
+      "issuer_unique_id": null,
+      "subject_unique_id": null,
+      "extensions": [
+        {
+          "extn_id": "key_usage",
+          "critical": true,
+          "extn_value": [
+            "key_cert_sign",
+            "crl_sign"
+          ]
+        },
+        {
+          "extn_id": "basic_constraints",
+          "critical": true,
+          "extn_value": {
+            "ca": true,
+            "path_len_constraint": null
+          }
+        },
+        {
+          "extn_id": "key_identifier",
+          "critical": false,
+          "extn_value": "b7:63:e7:1a:dd:8d:e9:08:a6:55:83:a4:e0:6a:50:41:65:11:42:49"
+        }
+      ]
+    },
+    "signature_algorithm": {
+      "algorithm": "sha384_ecdsa",
+      "parameters": null
+    },
+    "signature_value": "30:64:02:30:61:79:d8:e5:42:47:df:1c:ae:53:99:17:b6:6f:1c:7d:e1:bf:11:94:d1:03:88:75:e4:8d:89:a4:8a:77:46:de:6d:61:ef:02:f5:fb:b5:df:cc:fe:4e:ff:fe:a9:e6:a7:02:30:5b:99:d7:85:37:06:b5:7b:08:fd:eb:27:8b:4a:94:f9:e1:fa:a7:8e:26:08:e8:7c:92:68:6d:73:d8:6f:26:ac:21:02:b8:99:b7:26:41:5b:25:60:ae:d0:48:1a:ee:06"
+  }
+]
+```
 ### XML files
 ```bash
 cat cd_catalog.xml
