@@ -174,7 +174,8 @@ def parse(
         certs = []
         if pem.detect(der_bytes):
             for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
-                certs.append(x509.Certificate.load(der_bytes))
+                if type_name == 'CERTIFICATE':
+                    certs.append(x509.Certificate.load(der_bytes))
 
         else:
             certs.append(x509.Certificate.load(der_bytes))
