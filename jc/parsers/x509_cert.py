@@ -235,7 +235,12 @@ def _i2b(integer: int) -> bytes:
 
 def _b2a(byte_string: bytes) -> str:
     """Convert a byte string to a colon-delimited hex ascii string"""
-    return binascii.hexlify(byte_string, ':').decode('utf-8')
+    # need try/except since seperator was only introduced in python 3.8.
+    # provides compatibility for python 3.6 and 3.7.
+    try:
+      return binascii.hexlify(byte_string, ':').decode('utf-8')
+    except TypeError:
+      return binascii.hexlify(byte_string).decode('utf-8')
 
 
 def _fix_objects(obj):
