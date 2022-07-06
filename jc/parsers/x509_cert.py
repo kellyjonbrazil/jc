@@ -240,7 +240,9 @@ def _b2a(byte_string: bytes) -> str:
     try:
       return binascii.hexlify(byte_string, ':').decode('utf-8')
     except TypeError:
-      return binascii.hexlify(byte_string).decode('utf-8')
+      hex_string = binascii.hexlify(byte_string).decode('utf-8')
+      colon_seperated = ':'.join(hex_string[i:i+2] for i in range(0, len(hex_string), 2))
+      return colon_seperated
 
 
 def _fix_objects(obj):
