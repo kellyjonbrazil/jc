@@ -244,7 +244,7 @@ def _fix_objects(obj):
     into JSON serializable types.
     """
     if isinstance(obj, set):
-        obj = list(obj)
+        obj = sorted(list(obj))
 
     if isinstance(obj, OrderedDict):
         obj = dict(obj)
@@ -271,7 +271,7 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, set):
-                v = list(v)
+                v = sorted(list(v))
                 obj.update({k: v})
 
             if isinstance(v, OrderedDict):
