@@ -1,4 +1,4 @@
-.TH jc 1 2022-06-15 1.20.1 "JSON Convert"
+.TH jc 1 2022-07-05 1.20.2 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -151,6 +151,11 @@ CSV file streaming parser
 .B
 \fB--git-log-s\fP
 `git log` command streaming parser
+
+.TP
+.B
+\fB--gpg\fP
+`gpg --with-colons` command parser
 
 .TP
 .B
@@ -511,6 +516,11 @@ Key/Value file parser
 .B
 \fB--who\fP
 `who` command parser
+
+.TP
+.B
+\fB--x509-cert\fP
+X.509 PEM and DER certificate file parser
 
 .TP
 .B

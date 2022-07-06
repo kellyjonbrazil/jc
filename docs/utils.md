@@ -102,20 +102,23 @@ Returns:
 ### has\_data
 
 ```python
-def has_data(data: str) -> bool
+def has_data(data: Union[str, bytes]) -> bool
 ```
 
-Checks if the input contains data. If there are any non-whitespace
-characters then return `True`, else return `False`.
+Checks if the string input contains data. If there are any
+non-whitespace characters then return `True`, else return `False`.
+
+For bytes, returns True if there is any data.
 
 Parameters:
 
-    data:        (string) input to check whether it contains data
+    data:        (string, bytes) input to check whether it contains data
 
 Returns:
 
     Boolean      True if input string (data) contains non-whitespace
-                 characters, otherwise False
+                 characters, otherwise False. For bytes data, returns
+                 True if there is any data, otherwise False.
 
 <a id="jc.utils.convert_to_int"></a>
 

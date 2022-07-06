@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.20.1'
+__version__ = '1.20.2'
 
 parsers = [
     'acpi',
@@ -36,6 +36,7 @@ parsers = [
     'fstab',
     'git-log',
     'git-log-s',
+    'gpg',
     'group',
     'gshadow',
     'hash',
@@ -108,6 +109,7 @@ parsers = [
     'w',
     'wc',
     'who',
+    'x509-cert',
     'xml',
     'xrandr',
     'yaml',

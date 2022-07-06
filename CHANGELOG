@@ -1,5 +1,10 @@
 jc changelog
 
+20220705 v1.20.2
+- Add `gpg --with-colons` parser tested on linux
+- Add DER and PEM encoded X.509 Certificate parser
+- Add Bash and Zsh completion scripts to DEB and RPM packages
+
 20220615 v1.20.1
 - Add `postconf -M` parser tested on linux
 - Update `asciitable` and `asciitable-m` parsers to preserve case in key
