@@ -4,7 +4,7 @@ This parser will convert DER and PEM encoded X.509 certificate files.
 
 You can convert other certificate formats (e.g. PKCS #7, PKCS #12, etc.) by
 processing them through a program like `openssl` and sending the output to
-jc. (See example below)
+`jc`. (See example below)
 
 Usage (cli):
 
