@@ -483,7 +483,7 @@ def parse(
 
     Parameters:
 
-        data:        (string)  text data to parse
+        data:        (string or bytes) text or binary data to parse
         raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
