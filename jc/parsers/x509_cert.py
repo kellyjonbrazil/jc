@@ -196,8 +196,8 @@ Examples:
       }
     ]
 
-    $ openssl pkcs7 -in thawte.p7b -inform der -print_certs | \
-      jc --x509-cert | -p
+    $ openssl pkcs7 -in thawte.p7b -inform der -print_certs | \\
+      jc --x509-cert -p
     [
       {
         "tbs_certificate": {
