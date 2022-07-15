@@ -1,4 +1,4 @@
-"""jc - JSON Convert `m3u` and `m3u8` file parser
+"""jc - JSON Convert M3U and M3U8 file parser
 
 Only standard extended info fields are supported.
 
