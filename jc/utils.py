@@ -29,6 +29,15 @@ def _safe_print(string: str, sep=' ', end='\n', file=sys.stdout, flush=False) ->
         print(_asciify(string), sep=sep, end=end, file=file, flush=flush)
 
 
+def _safe_pager(string: str) -> None:
+    """Pager output for both UTF-8 and ASCII encoding systems"""
+    from pydoc import pager
+    try:
+        pager(string)
+    except UnicodeEncodeError:
+        pager(_asciify(string))
+
+
 def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message to `STDERR` for non-fatal issues. The first line

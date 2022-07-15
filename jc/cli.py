@@ -225,9 +225,11 @@ def help_doc(options):
                 f'Compatibility:  {compatible}\n\n'\
                 f'Version {version} by {author} ({author_email})\n'
 
-            return doc_text
+            utils._safe_pager(doc_text)
+            return
 
-    return helptext()
+    utils._safe_print(helptext())
+    return
 
 
 def versiontext():
@@ -504,7 +506,7 @@ def main():
         sys.exit(0)
 
     if help_me:
-        utils._safe_print(help_doc(sys.argv))
+        help_doc(sys.argv)
         sys.exit(0)
 
     if version_info:
