@@ -1,5 +1,9 @@
 jc changelog
 
+20220705 v1.20.3
+- Add pager functionality to help (parser documentation only)
+- Add m3u/m3u8 file parser
+
 20220705 v1.20.2
 - Add `gpg --with-colons` parser tested on linux
 - Add DER and PEM encoded X.509 Certificate parser
