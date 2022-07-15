@@ -61,6 +61,7 @@ parsers = [
     'lsmod',
     'lsof',
     'lsusb',
+    'm3u',
     'mount',
     'mpstat',
     'mpstat-s',
