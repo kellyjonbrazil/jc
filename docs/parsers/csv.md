@@ -20,8 +20,8 @@ Usage (module):
 
 Schema:
 
-    csv file converted to a Dictionary:
-    https://docs.python.org/3/library/csv.html
+CSV file converted to a Dictionary:
+https://docs.python.org/3/library/csv.html
 
     [
       {
