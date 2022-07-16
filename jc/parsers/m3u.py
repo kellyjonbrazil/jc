@@ -1,6 +1,12 @@
 """jc - JSON Convert M3U and M3U8 file parser
 
-Only standard extended info fields are supported.
+This parser will make a best-effort to parse extended field information. If
+the extended fields cannot be successfully parsed, then an `unparsed_info`
+field will be added to the object. If not using `--quiet`, then a warning
+message also will be printed to `STDERR`.
+
+Parsing issues with extended field information will usually occur with lines
+that include punctuation like single quotes.
 
 Usage (cli):
 
@@ -17,9 +23,14 @@ Schema:
       {
         "runtime":              integer,
         "display":              string,
-        "path":                 string
+        "path":                 string,
+        <extended fields>:      string,  # [0]
+        "unparsed_info":        string,  # [1]
       }
     ]
+
+    [0] Field names are pulled directly from the #EXTINF: line
+    [1] Only added if the extended information cannot be parsed
 
 Examples:
 
@@ -51,7 +62,9 @@ Examples:
       }
     ]
 """
+import shlex
 from typing import List, Dict
+from typing_extensions import runtime
 import jc.utils
 
 
@@ -114,18 +127,48 @@ def parse(
     output_line = {}
 
     if jc.utils.has_data(data):
-
         for line in filter(None, data.splitlines()):
             # ignore any lines with only whitespace
             if not jc.utils.has_data(line):
                 continue
 
-            # standard extended info fields
+            # extended info fields
             if line.lstrip().startswith('#EXTINF:'):
-                output_line = {
-                    'runtime': line.split(':')[1].split(',')[0].strip(),
-                    'display': line.split(':')[1].split(',')[1].strip()
-                }
+                splitline = line.strip().split(':', maxsplit=1)
+
+                # best-effort to parse additional extended fields
+                # if a parsing error occurs, a warning message will be
+                # printed to STDERR and `unparsed_info` added
+                try:
+                    extline = shlex.shlex(splitline[1], posix=True)
+                    extline.whitespace_split = True
+                    extline.whitespace = ', \n'
+                    extline_list = list(extline)
+                    runtime = extline_list.pop(0)
+                    display_list = []
+
+                    for item in extline_list:
+                        if '=' in item:
+                            k, v = item.split('=', maxsplit=1)
+                            output_line.update({k: v})
+
+                        else:
+                            display_list.append(item)
+
+                    display = ' '.join(display_list)
+                    output_line.update({
+                        'runtime': runtime,
+                        'display': display
+                    })
+
+                except Exception:
+                    if not quiet:
+                        jc.utils.warning_message([
+                            'Not able to parse non-standard extensions in the following line:',
+                            line
+                        ])
+                    output_line = {'unparsed_info': line}
+
                 continue
 
             # ignore all other extension info (obsolete)
@@ -136,6 +179,7 @@ def parse(
             output_line.update(
                 {'path': line.strip()}
             )
+
             raw_output.append(output_line)
             output_line = {}
 
