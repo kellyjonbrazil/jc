@@ -3,6 +3,7 @@ jc changelog
 20220705 v1.20.3
 - Add pager functionality to help (parser documentation only)
 - Add m3u/m3u8 file parser
+- Minor parser performance optimizations
 
 20220705 v1.20.2
 - Add `gpg --with-colons` parser tested on linux

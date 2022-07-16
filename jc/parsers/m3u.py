@@ -79,7 +79,8 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = ['runtime']
+    int_list = {'runtime'}
+
     for entry in proc_data:
         for key in entry:
             if key in int_list:

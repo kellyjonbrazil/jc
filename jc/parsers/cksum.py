@@ -54,7 +54,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`cksum` and `sum` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -77,9 +77,9 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    int_list = {'checksum', 'blocks'}
 
     for entry in proc_data:
-        int_list = ['checksum', 'blocks']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

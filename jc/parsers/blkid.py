@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`blkid` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,15 +144,17 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    int_list = {
+        'part_entry_number', 'part_entry_offset', 'part_entry_size', 'id_part_entry_number',
+        'id_part_entry_offset', 'id_part_entry_size', 'minimum_io_size', 'physical_sector_size',
+        'logical_sector_size', 'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size',
+        'id_iolimit_logical_sector_size'
+    }
+
     for entry in proc_data:
         if 'devname' in entry:
             entry['device'] = entry.pop('devname')
 
-        int_list = ['part_entry_number', 'part_entry_offset', 'part_entry_size',
-                    'id_part_entry_number', 'id_part_entry_offset', 'id_part_entry_size',
-                    'minimum_io_size', 'physical_sector_size', 'logical_sector_size',
-                    'id_iolimit_minimum_io_size', 'id_iolimit_physical_sector_size',
-                    'id_iolimit_logical_sector_size']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

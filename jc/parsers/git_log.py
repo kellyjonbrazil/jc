@@ -153,7 +153,7 @@ changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insert
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`git log` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -176,7 +176,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = ['files_changed', 'insertions', 'deletions']
+    int_list = {'files_changed', 'insertions', 'deletions'}
 
     for entry in proc_data:
         if 'date' in entry:
@@ -188,6 +188,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             for key in entry['stats']:
                 if key in int_list:
                     entry['stats'][key] = jc.utils.convert_to_int(entry['stats'][key])
+
     return proc_data
 
 

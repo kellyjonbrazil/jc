@@ -77,7 +77,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ls` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -100,7 +100,8 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = ['links', 'size']
+    int_list = {'links', 'size'}
+
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])

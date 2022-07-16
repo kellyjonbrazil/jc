@@ -227,7 +227,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`acpi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -250,9 +250,9 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    int_list = ['id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity',
-                'last_full_capacity_percent']
-    float_list = ['temperature']
+    int_list = {'id', 'charge_percent', 'design_capacity_mah', 'last_full_capacity',
+                'last_full_capacity_percent'}
+    float_list = {'temperature'}
 
     for entry in proc_data:
         for key in entry:
