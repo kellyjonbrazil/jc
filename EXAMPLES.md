@@ -2197,6 +2197,24 @@ lsusb -v | jc --lsusb -p          # or: jc -p lsusb -v
   }
 ]
 ```
+### M3U and M3U8
+```bash
+cat playlist.m3u | jc --m3u -p
+```
+```json
+[
+  {
+    "runtime": 105,
+    "display": "Example artist - Example title",
+    "path": "C:\\Files\\My Music\\Example.mp3"
+  },
+  {
+    "runtime": 321,
+    "display": "Example Artist2 - Example title2",
+    "path": "C:\\Files\\My Music\\Favorites\\Example2.ogg"
+  }
+]
+```
 ### mount
 ```bash
 mount | jc --mount -p          # or:  jc -p mount
