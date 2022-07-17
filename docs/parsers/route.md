@@ -131,4 +131,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

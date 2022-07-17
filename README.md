@@ -200,6 +200,7 @@ option.
 | `        --lsmod` | `lsmod` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod)          |
 | `         --lsof` | `lsof` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof)           |
 | `        --lsusb` | `lsusb` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb)          |
+| `          --m3u` | M3U and M3U8 file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/m3u)            |
 | `        --mount` | `mount` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mount)          |
 | `       --mpstat` | `mpstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat)         |
 | `     --mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |

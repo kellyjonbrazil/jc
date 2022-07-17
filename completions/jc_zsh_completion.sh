@@ -94,7 +94,7 @@ _jc() {
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --iptables --iw-scan --jar-manifest --jobs --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --iptables --iw-scan --jar-manifest --jobs --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -148,6 +148,7 @@ _jc() {
         '--lsmod:`lsmod` command parser'
         '--lsof:`lsof` command parser'
         '--lsusb:`lsusb` command parser'
+        '--m3u:M3U and M3U8 file parser'
         '--mount:`mount` command parser'
         '--mpstat:`mpstat` command parser'
         '--mpstat-s:`mpstat` command streaming parser'

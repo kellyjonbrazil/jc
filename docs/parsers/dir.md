@@ -143,4 +143,4 @@ Returns:
 ### Parser Information
 Compatibility:  win32
 
-Version 1.5 by Rasheed Elsaleh (rasheed@rebelliondefense.com)
+Version 1.6 by Rasheed Elsaleh (rasheed@rebelliondefense.com)
