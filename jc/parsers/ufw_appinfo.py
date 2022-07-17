@@ -138,7 +138,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ufw app info [application]` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -161,10 +161,10 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    int_list = {'start', 'end'}
+
     for profile in proc_data:
         # convert to ints
-        int_list = ['start', 'end']
-
         if 'tcp_list' in profile:
             profile['tcp_list'] = [int(p) for p in profile['tcp_list']]
 

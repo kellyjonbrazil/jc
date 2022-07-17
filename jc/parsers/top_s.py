@@ -141,7 +141,7 @@ Examples:
     {"time":"11:24:50","uptime":"2 min","users":"2","load_1m":"0.23","lo...}
     ...
 """
-from typing import List, Dict, Iterable, Union
+from typing import List, Dict, Set, Iterable, Union
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -153,7 +153,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`top -b` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -257,7 +257,7 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
         'Z': 'zombie'
     }
 
-    int_list: List = [
+    int_list: Set = {
         'uptime', 'users', 'tasks_total', 'tasks_running', 'tasks_sleeping', 'tasks_stopped',
         'tasks_zombie', 'pid', 'priority', 'nice', 'parent_pid', 'uid', 'real_uid', 'saved_uid',
         'gid', 'pgrp', 'tty_process_gid', 'session_id', 'thread_count', 'last_used_processor',
@@ -267,14 +267,14 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
         'user_namespace_inode', 'nts_namespace_inode', 'numa_node', 'out_of_mem_adjustment',
         'out_of_mem_score', 'resident_anon_mem', 'resident_file_backed_mem', 'resident_locked_mem',
         'resident_shared_mem'
-    ]
+    }
 
-    float_list: List = [
+    float_list: Set = {
         'load_1m', 'load_5m', 'load_15m', 'cpu_user', 'cpu_sys', 'cpu_nice', 'cpu_idle', 'cpu_wait',
         'cpu_hardware', 'cpu_software', 'cpu_steal', 'percent_cpu', 'percent_mem', 'mem_total',
         'mem_free', 'mem_used', 'mem_buff_cache', 'swap_total', 'swap_free', 'swap_used',
         'mem_available', 'virtual_mem', 'resident_mem', 'shared_mem', 'swap', 'code', 'data', 'used'
-    ]
+    }
 
     for key in proc_data:
         # root truncation warnings

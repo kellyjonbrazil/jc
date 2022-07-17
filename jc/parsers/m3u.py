@@ -5,9 +5,6 @@ the extended fields cannot be successfully parsed, then an `unparsed_info`
 field will be added to the object. If not using `--quiet`, then a warning
 message also will be printed to `STDERR`.
 
-Parsing issues with extended field information will usually occur with lines
-that include punctuation like single quotes.
-
 Usage (cli):
 
     $ cat playlist.m3u | jc --m3u

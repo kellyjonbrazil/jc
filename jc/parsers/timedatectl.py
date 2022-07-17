@@ -64,7 +64,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -87,8 +87,9 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    bool_list = ['ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
-                 'system_clock_synchronized', 'systemd-timesyncd.service_active']
+    bool_list = {'ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
+                 'system_clock_synchronized', 'systemd-timesyncd.service_active'}
+
     for key in proc_data:
         if key in bool_list:
             proc_data[key] = jc.utils.convert_to_bool(proc_data[key])

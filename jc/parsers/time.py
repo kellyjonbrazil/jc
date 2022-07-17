@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`/usr/bin/time` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -154,6 +154,18 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
+    int_list = {
+        'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size',
+        'average_unshared_stack_size', 'average_shared_memory_size', 'maximum_resident_set_size',
+        'block_input_operations', 'block_output_operations', 'major_pagefaults', 'minor_pagefaults',
+        'swaps', 'page_reclaims', 'page_faults', 'messages_sent', 'messages_received',
+        'signals_received', 'voluntary_context_switches', 'involuntary_context_switches',
+        'average_stack_size', 'average_total_size', 'average_resident_set_size',
+        'signals_delivered', 'page_size', 'exit_status'
+    }
+
+    float_list = {'real_time', 'user_time', 'system_time'}
+
     if 'command_being_timed' in proc_data:
         proc_data['command_being_timed'] = proc_data['command_being_timed'][1:-1]
 
@@ -174,19 +186,10 @@ def _process(proc_data):
                                                   (proc_data['elapsed_time_centiseconds'] / 100)
 
     # convert ints and floats
-    int_list = [
-        'cpu_percent', 'average_shared_text_size', 'average_unshared_data_size',
-        'average_unshared_stack_size', 'average_shared_memory_size', 'maximum_resident_set_size',
-        'block_input_operations', 'block_output_operations', 'major_pagefaults', 'minor_pagefaults',
-        'swaps', 'page_reclaims', 'page_faults', 'messages_sent', 'messages_received',
-        'signals_received', 'voluntary_context_switches', 'involuntary_context_switches',
-        'average_stack_size', 'average_total_size', 'average_resident_set_size',
-        'signals_delivered', 'page_size', 'exit_status'
-    ]
-    float_list = ['real_time', 'user_time', 'system_time']
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+
         if key in float_list:
             proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 

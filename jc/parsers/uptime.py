@@ -65,7 +65,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`uptime` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -88,6 +88,9 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
+    int_list = {'users'}
+    float_list = {'load_1m', 'load_5m', 'load_15m'}
+
     if 'time' in proc_data:
         time_list = proc_data['time'].split(':')
         proc_data['time_hour'] = jc.utils.convert_to_int(time_list[0])
@@ -128,11 +131,10 @@ def _process(proc_data):
         proc_data['uptime_total_seconds'] = uptime_total_seconds
 
     # integer and float conversions
-    int_list = ['users']
-    float_list = ['load_1m', 'load_5m', 'load_15m']
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+
         if key in float_list:
             proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 

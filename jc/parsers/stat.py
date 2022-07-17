@@ -171,7 +171,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -195,17 +195,17 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        int_list = ['size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid',
-                    'unix_device', 'rdev', 'block_size']
-        for key in entry:
+        int_list = {'size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid',
+                    'unix_device', 'rdev', 'block_size'}
+
+        null_list = {'access_time', 'modify_time', 'change_time', 'birth_time'}
+
+        for key in entry.copy():
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
-    # turn - into null for time fields and add calculated timestamp fields
-    for entry in proc_data:
-        null_list = ['access_time', 'modify_time', 'change_time', 'birth_time']
-        for key in null_list:
-            if key in entry:
+            # turn - into null for time fields and add calculated timestamp fields
+            if key in null_list:
                 if entry[key] == '-':
                     entry[key] = None
                 ts = jc.utils.timestamp(entry[key], format_hint=(7100, 7200))

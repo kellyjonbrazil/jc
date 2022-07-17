@@ -203,7 +203,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`sfdisk` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -226,12 +226,13 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = [
+    int_list = {
         'cylinders', 'heads', 'sectors_per_track', 'start', 'end', 'cyls', 'mib', 'blocks',
         'sectors', 'bytes', 'logical_sector_size', 'physical_sector_size', 'min_io_size',
         'optimal_io_size', 'free_bytes', 'free_sectors'
-    ]
-    bool_list = ['boot']
+    }
+
+    bool_list = {'boot'}
 
     for entry in proc_data:
         for key in entry:
@@ -249,6 +250,7 @@ def _process(proc_data):
                     # normal conversions
                     if key in int_list:
                         p[key] = jc.utils.convert_to_int(p[key].replace('-', ''))
+
                     if key in bool_list:
                         p[key] = jc.utils.convert_to_bool(p[key])
 

@@ -202,7 +202,7 @@ import ipaddress
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ufw status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -225,7 +225,7 @@ def _process(proc_data):
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = ['index', 'to_ip_prefix', 'from_ip_prefix']
+    int_list = {'index', 'to_ip_prefix', 'from_ip_prefix'}
 
     if 'rules' in proc_data:
         for i, item in enumerate(proc_data['rules']):
