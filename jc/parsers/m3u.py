@@ -130,8 +130,7 @@ def parse(
 
             # extended info fields
             if line.lstrip().startswith('#EXTINF:'):
-                newline = line.replace("'", "�")  # single quotes break shlex split
-                splitline = newline.strip().split(':', maxsplit=1)
+                splitline = line.strip().split(':', maxsplit=1)
 
                 # best-effort to parse additional extended fields
                 # if a parsing error occurs, a warning message will be
@@ -140,6 +139,7 @@ def parse(
                     extline = shlex.shlex(splitline[1], posix=True)
                     extline.whitespace_split = True
                     extline.whitespace = ', '  # add comma to whitespace detection
+                    extline.quotes = '"'  # remove single quotes
                     extline_list = list(extline)
                     runtime = extline_list.pop(0)
                     display_list = []
@@ -152,7 +152,7 @@ def parse(
                         else:
                             display_list.append(item)
 
-                    display = ' '.join(display_list).replace("�", "'")
+                    display = ' '.join(display_list)
                     output_line.update({
                         'runtime': runtime,
                         'display': display
