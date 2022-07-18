@@ -119,6 +119,39 @@ Schema:
           }
         }
 
+        Subject Alternative Name:
+        {
+          "extn_id":                          "subject_alt_name",
+          "critical":                         boolean,
+          "extn_value": [
+                                              string
+          ]
+        }
+
+        Certificate Policies:
+        {
+          "extn_id":                          "certificate_policies",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "policy_identifier":            string,
+              "policy_qualifiers": [          array or null
+                {
+                  "policy_qualifier_id":      string,
+                  "qualifier":                string
+                }
+              ]
+            }
+          ]
+        }
+
+        Signed Certificate Timestamp List
+        {
+          "extn_id":                    "signed_certificate_timestamp_list",
+          "critical":                   boolean,
+          "extn_value":                 string  # [0]
+        }
+
 Examples:
 
     $ cat entrust-ec1.pem | jc --x509-cert -p
