@@ -60,7 +60,7 @@ Use `help(jc.lib)` for details.
 
     parse(
         parser_module_name: str,
-        data: str | Iterable
+        data: str | bytes | Iterable
     ) -> dict | list[dict] | Iterable[dict]
 
 High-level API to easily access the parser. This API will find both
