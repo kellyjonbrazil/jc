@@ -29,6 +29,7 @@ parsers = [
     'dmidecode',
     'dpkg-l',
     'du',
+    'email-address',
     'env',
     'file',
     'finger',
