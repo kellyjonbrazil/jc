@@ -14,11 +14,15 @@ Schema:
     {
       "scheme":               string,
       "netloc":               string,
-      "path":                 string,
+      "path":                 string or null,
       "query": {              object or null,
         <query-key>:          string
       },
-      "fragment":             string or null
+      "fragment":             string or null,
+      "username":             string or null,
+      "password":             string or null,
+      "hostname":             string or null,
+      "port":                 integer or null
     }
 
 Examples:
@@ -32,7 +36,11 @@ Examples:
         "q1": "foo",
         "q2": "bar"
       },
-      "fragment": "frag"
+      "fragment": "frag",
+      "username": null,
+      "password": null,
+      "hostname": "example.com",
+      "port": null
     }
 
     $ echo "ftp://localhost/filepath" | jc --url -p
@@ -41,7 +49,11 @@ Examples:
       "netloc": "localhost",
       "path": "/filepath",
       "query": null,
-      "fragment": null
+      "fragment": null,
+      "username": null,
+      "password": null,
+      "hostname": "localhost",
+      "port": null
     }
 """
 from urllib.parse import urlparse
@@ -117,7 +129,11 @@ def parse(
             'netloc': parts.netloc or None,
             'path': parts.path or None,
             'query': query or None,
-            'fragment': parts.fragment or None
+            'fragment': parts.fragment or None,
+            'username': parts.username,
+            'password': parts.password,
+            'hostname': parts.hostname,
+            'port': parts.port
         }
 
     return raw_output if raw else _process(raw_output)
