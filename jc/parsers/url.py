@@ -1,4 +1,4 @@
-"""jc - JSON Convert URL parser
+"""jc - JSON Convert URL string parser
 
 Usage (cli):
 
@@ -64,7 +64,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'URL parser'
+    description = 'URL string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
