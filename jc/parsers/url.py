@@ -27,7 +27,7 @@ Schema:
 
 Examples:
 
-    % echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url -p
+    $ echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url -p
     {
       "scheme": "http",
       "netloc": "example.com",
@@ -57,7 +57,7 @@ Examples:
     }
 """
 from urllib.parse import urlparse
-from typing import List, Dict
+from typing import Dict
 import jc.utils
 
 
