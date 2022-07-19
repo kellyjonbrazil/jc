@@ -2,6 +2,8 @@ jc changelog
 
 20220705 v1.20.3
 - Add URL string parser
+- Add Email Address string parser
+- Add JWT string parser
 - Add m3u/m3u8 file parser
 - Add pager functionality to help (parser documentation only)
 - Minor parser performance optimizations

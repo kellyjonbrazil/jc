@@ -54,6 +54,7 @@ parsers = [
     'iw-scan',
     'jar-manifest',
     'jobs',
+    'jwt',
     'kv',
     'last',
     'ls',
