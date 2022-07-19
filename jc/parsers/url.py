@@ -84,13 +84,18 @@ def parse(
 
     if jc.utils.has_data(data):
         parts = urlparse(data)
+        query_list = parts.query.split('&')
+        query: Dict = {}
+
+        for q in query_list:
+            k, v = q.split('=')
+            query.update({k: v})
 
         raw_output = {
             'scheme': parts.scheme,
             'netloc': parts.netloc,
             'path': parts.path,
-            'params': parts.params,
-            'query': parts.query,
+            'query': query,
             'fragment': parts.fragment
         }
 
