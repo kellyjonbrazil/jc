@@ -21,8 +21,17 @@ Schema:
 
 Examples:
 
-    $ echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url -p
-    []
+    % echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url -p
+    {
+      "scheme": "http",
+      "netloc": "example.com",
+      "path": "/test/path",
+      "query": {
+        "q1": "foo",
+        "q2": "bar"
+      },
+      "fragment": "frag"
+    }
 
     $ FTP example, etc.
     []
@@ -84,19 +93,23 @@ def parse(
 
     if jc.utils.has_data(data):
         parts = urlparse(data)
-        query_list = parts.query.split('&')
-        query: Dict = {}
+        query = {}
+        query_list = []
 
-        for q in query_list:
-            k, v = q.split('=')
-            query.update({k: v})
+        if parts.query:
+            query_list = parts.query.split('&')
+
+        if query_list:
+            for q in query_list:
+                k, v = q.split('=')
+                query.update({k: v})
 
         raw_output = {
-            'scheme': parts.scheme,
-            'netloc': parts.netloc,
-            'path': parts.path,
-            'query': query,
-            'fragment': parts.fragment
+            'scheme': parts.scheme or None,
+            'netloc': parts.netloc or None,
+            'path': parts.path or None,
+            'query': query or None,
+            'fragment': parts.fragment or None
         }
 
     return raw_output if raw else _process(raw_output)
