@@ -168,6 +168,7 @@ option.
 | `    --dmidecode` | `dmidecode` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dmidecode)      |
 | `       --dpkg-l` | `dpkg -l` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dpkg_l)         |
 | `           --du` | `du` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/du)             |
+| `--email-address` | Email Address string parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/email_address)  |
 | `          --env` | `env` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/env)            |
 | `         --file` | `file` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/file)           |
 | `       --finger` | `finger` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/finger)         |
@@ -244,6 +245,7 @@ option.
 | ` --update-alt-q` | `update-alternatives --query` command parser            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q)   |
 | `       --upower` | `upower` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upower)         |
 | `       --uptime` | `uptime` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime)         |
+| `          --url` | URL string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/url)            |
 | `       --vmstat` | `vmstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat)         |
 | `     --vmstat-s` | `vmstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s)       |
 | `            --w` | `w` command parser                                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/w)              |
