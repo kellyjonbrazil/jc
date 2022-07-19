@@ -105,6 +105,7 @@ parsers = [
     'update-alt-q',
     'upower',
     'uptime',
+    'url',
     'vmstat',
     'vmstat-s',
     'w',
