@@ -11,13 +11,15 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "url":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+    {
+      "scheme":               string,
+      "netloc":               string,
+      "path":                 string,
+      "query": {              object or null,
+        <query-key>:          string
+      },
+      "fragment":             string or null
+    }
 
 Examples:
 
@@ -33,8 +35,14 @@ Examples:
       "fragment": "frag"
     }
 
-    $ FTP example, etc.
-    []
+    $ echo "ftp://localhost/filepath" | jc --url -p
+    {
+      "scheme": "ftp",
+      "netloc": "localhost",
+      "path": "/filepath",
+      "query": null,
+      "fragment": null
+    }
 """
 from urllib.parse import urlparse
 from typing import List, Dict
