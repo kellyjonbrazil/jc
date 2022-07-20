@@ -1,5 +1,12 @@
 """jc - JSON Convert URL string parser
 
+This parser will work with naked and wrapped URL strings:
+
+- `scheme://host/path`
+- `URL:scheme://host/path`
+- `<scheme://host/path>`
+- `<URL:scheme://host/path>`
+
 Usage (cli):
 
     $ echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url
@@ -12,12 +19,22 @@ Usage (module):
 Schema:
 
     {
+      "quoted":               string,
+      'unquoted":             string,
       "scheme":               string,
       "netloc":               string,
       "path":                 string or null,
-      "query": {              object or null,
-        <query-key>:          string
+      "path_list": [          array or null
+                              string
+      ],
+      "query": {              object or null
+        <query-key>: [        linst or null
+                              string
+        ]
       },
+      "query_list": [         array or null
+        <query-key>:          string
+      ],
       "fragment":             string or null,
       "username":             string or null,
       "password":             string or null,
@@ -48,6 +65,7 @@ Examples:
       "scheme": "ftp",
       "netloc": "localhost",
       "path": "/filepath",
+      "path_list": ['filepath'],
       "query": null,
       "fragment": null,
       "username": null,
@@ -56,7 +74,11 @@ Examples:
       "port": null
     }
 """
-from urllib.parse import urlparse
+import re
+from urllib.parse import (
+    urlsplit, unwrap, parse_qs, parse_qsl, urlunsplit, quote, quote_plus,
+    unquote, unquote_plus
+)
 from typing import Dict
 import jc.utils
 
@@ -112,23 +134,42 @@ def parse(
     raw_output: Dict = {}
 
     if jc.utils.has_data(data):
-        parts = urlparse(data)
-        query = {}
-        query_list = []
+        parts = urlsplit(unwrap(data))
+        normalized = urlsplit(urlunsplit(parts))
 
-        if parts.query:
-            query_list = parts.query.split('&')
+        quoted = normalized._replace(path=quote(normalized.path),
+                                     query=quote_plus(normalized.query)).geturl()
 
-        if query_list:
-            for q in query_list:
-                k, v = q.split('=')
-                query.update({k: v})
+        unquoted = normalized._replace(path=unquote(normalized.path),
+                                       query=unquote_plus(normalized.query)).geturl()
+
+        unquoted_parts = urlsplit(unwrap(unquoted))
+
+        my_path = None
+        path_list = None
+
+        if unquoted_parts.path:
+            # normalize the path by removing any duplicate `/` chars
+            my_path = re.sub(r'/+', '/', unquoted_parts.path)
+
+            # remove first '/' and split
+            path_list = my_path.replace('/', '', 1).split('/')
+            if path_list == ['']:
+                path_list = None
+
+        if unquoted_parts.query:
+            query_obj = parse_qs(unquoted_parts.query)
+            query_list = parse_qsl(unquoted_parts.query)
 
         raw_output = {
+            'quoted': quoted or None,
+            'unquoted': unquoted or None,
             'scheme': parts.scheme or None,
             'netloc': parts.netloc or None,
-            'path': parts.path or None,
-            'query': query or None,
+            'path': my_path or None,
+            'path_list': path_list or None,
+            'query': query_obj or None,
+            'query_list': query_list or None,
             'fragment': parts.fragment or None,
             'username': parts.username,
             'password': parts.password,
