@@ -33,7 +33,7 @@ Schema:
         ]
       },
       "query_list": [         array or null
-        <query-key>:          string
+                              string
       ],
       "fragment":             string or null,
       "username":             string or null,
