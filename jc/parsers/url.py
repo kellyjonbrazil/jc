@@ -7,6 +7,11 @@ This parser will work with naked and wrapped URL strings:
 - `<scheme://host/path>`
 - `<URL:scheme://host/path>`
 
+Two query representations are available and documented in the schema.
+
+Normalized quoted and unquoted versions of the original URL are also
+included.
+
 Usage (cli):
 
     $ echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url
