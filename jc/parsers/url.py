@@ -147,6 +147,8 @@ def parse(
 
         my_path = None
         path_list = None
+        query_obj = None
+        query_list = None
 
         if unquoted_parts.path:
             # normalize the path by removing any duplicate `/` chars
