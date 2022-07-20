@@ -11,6 +11,11 @@ You can convert other certificate formats (e.g. PKCS #7, PKCS #12, etc.) by
 processing them through a program like `openssl` and sending the output to
 `jc`. (See examples below)
 
+> Note: `jc` does not verify the integrity of the certificate, which
+> requires calculating the hash of the certificate body and comparing it to
+> the the hash in the certificate's signature after it is decrypted with the
+> issuer certificate's public key.
+
 Usage (cli):
 
     $ cat certificate.pem | jc --x509-cert
