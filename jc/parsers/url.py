@@ -28,7 +28,7 @@ Schema:
                               string
       ],
       "query": {              object or null
-        <query-key>: [        linst or null
+        <query-key>: [        array or null
                               string
         ]
       },
