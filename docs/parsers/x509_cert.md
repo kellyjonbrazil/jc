@@ -11,6 +11,11 @@ You can convert other certificate formats (e.g. PKCS #7, PKCS #12, etc.) by
 processing them through a program like `openssl` and sending the output to
 `jc`. (See examples below)
 
+> Note: `jc` does not verify the integrity of the certificate, which
+> requires calculating the hash of the certificate body and comparing it to
+> the the hash in the certificate's signature after it is decrypted with the
+> issuer certificate's public key.
+
 Usage (cli):
 
     $ cat certificate.pem | jc --x509-cert
@@ -122,6 +127,39 @@ Schema:
             "authority_cert_issuer":          string/null,
             "authority_cert_serial_number":   string/null
           }
+        }
+
+        Subject Alternative Name:
+        {
+          "extn_id":                          "subject_alt_name",
+          "critical":                         boolean,
+          "extn_value": [
+                                              string
+          ]
+        }
+
+        Certificate Policies:
+        {
+          "extn_id":                          "certificate_policies",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "policy_identifier":            string,
+              "policy_qualifiers": [          array or null
+                {
+                  "policy_qualifier_id":      string,
+                  "qualifier":                string
+                }
+              ]
+            }
+          ]
+        }
+
+        Signed Certificate Timestamp List
+        {
+          "extn_id":                    "signed_certificate_timestamp_list",
+          "critical":                   boolean,
+          "extn_value":                 string  # [0]
         }
 
 Examples:
