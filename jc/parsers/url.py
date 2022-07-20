@@ -143,7 +143,7 @@ def parse(
         unquoted = normalized._replace(path=unquote(normalized.path),
                                        query=unquote_plus(normalized.query)).geturl()
 
-        unquoted_parts = urlsplit(unwrap(unquoted))
+        unquoted_parts = urlsplit(unquoted)
 
         my_path = None
         path_list = None
