@@ -31,8 +31,10 @@ Schema:
       "day_of_year":        integer,
       "week_of_year":       integer,
       "iso":                string,
-      "timestamp":          integer
+      "timestamp":          integer  # [0]
     }
+
+    [0] timezone aware UNIX timestamp expressed in UTC
 
 Examples:
 
@@ -302,7 +304,6 @@ def parse(data, raw=False, quiet=False):
             'day_of_year': int(dt.strftime('%j')),
             'week_of_year': int(dt.strftime('%W')),
             'iso': dt.isoformat(),
-            # TODO: Check that timestamp is always based on UTC (aware)
             'timestamp': int(dt.timestamp())
         }
 

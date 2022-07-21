@@ -36,8 +36,10 @@ Schema:
       "day_of_year":        integer,
       "week_of_year":       integer,
       "iso":                string,
-      "timestamp":          integer
+      "timestamp":          integer  # [0]
     }
+
+    [0] timezone aware UNIX timestamp expressed in UTC
 
 Examples:
 
