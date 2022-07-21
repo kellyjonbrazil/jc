@@ -15,6 +15,8 @@ This parser will work with naked and wrapped URL strings:
 Normalized encoded and decoded versions of the original URL and URL parts
 are included in the output.
 
+> Note: Do not use the encoded fields for a URL that is already encoded.
+
 Usage (cli):
 
     $ echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url

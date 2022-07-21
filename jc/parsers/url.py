@@ -10,6 +10,8 @@ This parser will work with naked and wrapped URL strings:
 Normalized encoded and decoded versions of the original URL and URL parts
 are included in the output.
 
+> Note: Do not use the encoded fields for a URL that is already encoded.
+
 Usage (cli):
 
     $ echo "http://example.com/test/path?q1=foo&q2=bar#frag" | jc --url
@@ -182,15 +184,36 @@ def parse(
 
     raw_output: Dict = {}
 
+    # Best-effort to find safe characters in each URL part. Python
+    # urllib.parse.quote will always treat the following as safe: `_.-~`
+    # https://docs.python.org/3/library/urllib.parse.html#urllib.parse.quote
+    #
+    # Below are additional safe chars per URL part:
+
+    # https://datatracker.ietf.org/doc/html/rfc3986#section-3.1 (scheme)
+    SCHEME_SAFE = '+'
+
+    # https://datatracker.ietf.org/doc/html/rfc3986#section-3.2 (netloc)
+    NETLOC_SAFE = '+@:[]'
+
+    # https://datatracker.ietf.org/doc/html/rfc3986#section-3.3 (path)
+    PATH_SAFE = '+/@:;,='
+
+    # https://datatracker.ietf.org/doc/html/rfc3986#section-3.4 (query)
+    QUERY_SAFE = '+/@:;,=&?'
+
+    # https://datatracker.ietf.org/doc/html/rfc3986#section-3.5 (fragment)
+    FRAGMENT_SAFE = '+/@:;,=&?'
+
     if jc.utils.has_data(data):
         parts = urlsplit(unwrap(data))
         normalized = urlsplit(urlunsplit(parts))
 
-        quoted = normalized._replace(scheme=quote(normalized.scheme),
-                                     netloc=quote(normalized.netloc, safe='/?#@:[]'),
-                                     path=quote(normalized.path),
-                                     query=quote_plus(normalized.query, safe='+'),
-                                     fragment=quote(normalized.fragment)).geturl()
+        quoted = normalized._replace(scheme=quote(normalized.scheme, safe=SCHEME_SAFE),
+                                     netloc=quote(normalized.netloc, safe=NETLOC_SAFE),
+                                     path=quote(normalized.path, safe=PATH_SAFE),
+                                     query=quote_plus(normalized.query, safe=QUERY_SAFE),
+                                     fragment=quote(normalized.fragment, safe=FRAGMENT_SAFE)).geturl()
 
         unquoted = normalized._replace(scheme=unquote(normalized.scheme),
                                        netloc=unquote(normalized.netloc),
@@ -225,16 +248,16 @@ def parse(
             query_obj = parse_qs(unquoted_parts.query)
 
         if unquoted_parts.username:
-            encoded_username = quote(unquoted_parts.username, safe='/?#@:[]')
+            encoded_username = quote(unquoted_parts.username, safe=NETLOC_SAFE)
 
         if unquoted_parts.password:
-            encoded_password = quote(unquoted_parts.password, safe='/?#@:[]')
+            encoded_password = quote(unquoted_parts.password, safe=NETLOC_SAFE)
 
         if unquoted_parts.hostname:
-            encoded_hostname = quote(unquoted_parts.hostname, safe='/?#@:[]')
+            encoded_hostname = quote(unquoted_parts.hostname, safe=NETLOC_SAFE)
 
         if unquoted_parts.port:
-            encoded_port = quote(str(unquoted_parts.port), safe='/?#@:[]')
+            encoded_port = quote(str(unquoted_parts.port), safe=NETLOC_SAFE)
 
         raw_output = {
             'url': unquoted or None,
