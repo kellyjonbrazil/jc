@@ -7,10 +7,8 @@ This parser will work with naked and wrapped URL strings:
 - `<scheme://host/path>`
 - `<URL:scheme://host/path>`
 
-Two query representations are available and documented in the schema.
-
-Normalized quoted and unquoted versions of the original URL are also
-included.
+Normalized quoted and unquoted versions of the original URL and URL parts
+are included in the output.
 
 Usage (cli):
 
@@ -45,9 +43,13 @@ Schema:
       "fragment":                  string or null,
       "fragment_encoded":          string or null,
       "username":                  string or null,
+      "username_encoded":          string or null,
       "password":                  string or null,
+      "password_encoded":          string or null,
       "hostname":                  string or null,
+      "hostname_encoded":          string or null,
       "port":                      integer or null,
+      "port_encoded":              string or null
     }
 
     [0] Duplicate query-keys will have their values consolidated into the
@@ -84,9 +86,13 @@ Examples:
       "fragment": "frag",
       "fragment_encoded": "frag",
       "username": null,
+      "username_encoded": null,
       "password": null,
+      "password_encoded": null,
       "hostname": "example.com",
-      "port": null
+      "hostname_encoded": "example.com",
+      "port": null,
+      "port_encoded": null
     }
 
     $ echo "ftp://localhost/filepath" | jc --url -p
@@ -108,9 +114,13 @@ Examples:
       "fragment": null,
       "fragment_encoded": null,
       "username": null,
+      "username_encoded": null,
       "password": null,
+      "password_encoded": null,
       "hostname": "localhost",
-      "port": null
+      "hostname_encoded": "localhost",
+      "port": null,
+      "port_encoded": null
     }
 """
 import re
@@ -176,17 +186,17 @@ def parse(
         parts = urlsplit(unwrap(data))
         normalized = urlsplit(urlunsplit(parts))
 
-        quoted = normalized._replace(scheme=quote_plus(normalized.scheme),
-                                     netloc=quote_plus(normalized.netloc),
+        quoted = normalized._replace(scheme=quote(normalized.scheme),
+                                     netloc=quote(normalized.netloc, safe='/?#@:[]'),
                                      path=quote(normalized.path),
                                      query=quote_plus(normalized.query, safe='+'),
-                                     fragment=quote_plus(normalized.fragment)).geturl()
+                                     fragment=quote(normalized.fragment)).geturl()
 
-        unquoted = normalized._replace(scheme=unquote_plus(normalized.scheme),
-                                       netloc=unquote_plus(normalized.netloc),
+        unquoted = normalized._replace(scheme=unquote(normalized.scheme),
+                                       netloc=unquote(normalized.netloc),
                                        path=unquote(normalized.path),
                                        query=unquote_plus(normalized.query),
-                                       fragment=unquote_plus(normalized.fragment)).geturl()
+                                       fragment=unquote(normalized.fragment)).geturl()
 
         quoted_parts = urlsplit(quoted)
         unquoted_parts = urlsplit(unquoted)
@@ -195,6 +205,10 @@ def parse(
         encoded_path = None
         path_list = None
         query_obj = None
+        encoded_username = None
+        encoded_password = None
+        encoded_hostname = None
+        encoded_port = None
 
         if unquoted_parts.path:
             # normalize the path by removing any duplicate `/` chars
@@ -209,6 +223,18 @@ def parse(
 
         if unquoted_parts.query:
             query_obj = parse_qs(unquoted_parts.query)
+
+        if unquoted_parts.username:
+            encoded_username = quote(unquoted_parts.username, safe='/?#@:[]')
+
+        if unquoted_parts.password:
+            encoded_password = quote(unquoted_parts.password, safe='/?#@:[]')
+
+        if unquoted_parts.hostname:
+            encoded_hostname = quote(unquoted_parts.hostname, safe='/?#@:[]')
+
+        if unquoted_parts.port:
+            encoded_port = quote(str(unquoted_parts.port), safe='/?#@:[]')
 
         raw_output = {
             'url': unquoted or None,
@@ -226,9 +252,13 @@ def parse(
             'fragment': unquoted_parts.fragment or None,
             'fragment_encoded': quoted_parts.fragment or None,
             'username': unquoted_parts.username or None,
+            'username_encoded': encoded_username or None,
             'password': unquoted_parts.password or None,
+            'password_encoded': encoded_password or None,
             'hostname': unquoted_parts.hostname or None,
+            'hostname_encoded': encoded_hostname or None,
             'port': unquoted_parts.port or None,
+            'port_encoded': encoded_port or None
         }
 
     return raw_output if raw else _process(raw_output)
