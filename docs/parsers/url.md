@@ -12,7 +12,7 @@ This parser will work with naked and wrapped URL strings:
 - `<scheme://host/path>`
 - `<URL:scheme://host/path>`
 
-Normalized quoted and unquoted versions of the original URL and URL parts
+Normalized encoded and decoded versions of the original URL and URL parts
 are included in the output.
 
 Usage (cli):
