@@ -51,6 +51,7 @@ parsers = [
     'iostat',
     'iostat-s',
     'iptables',
+    'iso-datetime',
     'iw-scan',
     'jar-manifest',
     'jobs',
