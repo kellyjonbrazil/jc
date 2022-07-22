@@ -27,7 +27,7 @@ Schema:
 
     {
       "url":                       string,
-      "scheme":                    string,
+      "scheme":                    string or null,
       "netloc":                    string or null,
       "path":                      string or null,
       "path_list": [               array or null
@@ -46,7 +46,7 @@ Schema:
       "port":                      integer or null,  # [1]
       "encoded": {
         "url":                     string,
-        "scheme":                  string,
+        "scheme":                  string or null,
         "netloc":                  string or null,
         "path":                    string or null,
         "path_list": [             array or null
@@ -61,7 +61,7 @@ Schema:
       },
       "decoded": {
         "url":                     string,
-        "scheme":                  string,
+        "scheme":                  string or null,
         "netloc":                  string or null,
         "path":                    string or null,
         "path_list": [             array or null
