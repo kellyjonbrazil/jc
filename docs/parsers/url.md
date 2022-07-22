@@ -12,10 +12,12 @@ This parser will work with naked and wrapped URL strings:
 - `<scheme://host/path>`
 - `<URL:scheme://host/path>`
 
-Normalized encoded and decoded versions of the original URL and URL parts
+Normalized, Encoded, and Decoded versions of the original URL and URL parts
 are included in the output.
 
-> Note: Do not use the encoded fields for a URL that is already encoded.
+> Note: Do not use the encoded fields for a URL that has already been
+> encoded. Similarly, do not use the decoded fields for a URL that has
+> already been decoded.
 
 Usage (cli):
 
@@ -30,33 +32,53 @@ Schema:
 
     {
       "url":                       string,
-      'url_encoded":               string,
       "scheme":                    string,
-      "scheme_encoded":            string,
       "netloc":                    string,
-      "netloc_encoded":            string,
       "path":                      string or null,
-      "path_encoded":              string or null,
       "path_list": [               array or null
                                    string
       ],
-      "query":                     string or Null,
-      "query_encoded":             string or Null,
+      "query":                     string or null,
       "query_obj": {               object or null
         <query-key>: [             array or null
           <query-value>            string             # [0]
         ]
       },
       "fragment":                  string or null,
-      "fragment_encoded":          string or null,
       "username":                  string or null,
-      "username_encoded":          string or null,
       "password":                  string or null,
-      "password_encoded":          string or null,
       "hostname":                  string or null,
-      "hostname_encoded":          string or null,
       "port":                      integer or null,
-      "port_encoded":              string or null
+      "encoded": {
+        "url":                     string,
+        "scheme":                  string,
+        "netloc":                  string,
+        "path":                    string or null,
+        "path_list": [             array or null
+                                   string
+        ],
+        "query":                   string or null,
+        "fragment":                string or null,
+        "username":                string or null,
+        "password":                string or null,
+        "hostname":                string or null,
+        "port":                    string or null,
+      },
+      "decoded": {
+        "url":                     string,
+        "scheme":                  string,
+        "netloc":                  string,
+        "path":                    string or null,
+        "path_list": [             array or null
+                                   string
+        ],
+        "query":                   string or null,
+        "fragment":                string or null,
+        "username":                string or null,
+        "password":                string or null,
+        "hostname":                string or null,
+        "port":                    string or null,
+      }
     }
 
     [0] Duplicate query-keys will have their values consolidated into the
@@ -68,19 +90,14 @@ Examples:
            | jc --url -p
     {
       "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
-      "url_encoded": "http://example.com/test/path?q1%3Dfoo%26q1%3Dbar%26q2%3Dbaz#frag",
       "scheme": "http",
-      "scheme_encoded": "http",
       "netloc": "example.com",
-      "netloc_encoded": "example.com",
       "path": "/test/path",
-      "path_encoded": "/test/path",
       "path_list": [
         "test",
         "path"
       ],
       "query": "q1=foo&q1=bar&q2=baz",
-      "query_encoded": "q1%3Dfoo%26q1%3Dbar%26q2%3Dbaz",
       "query_obj": {
         "q1": [
           "foo",
@@ -91,43 +108,90 @@ Examples:
         ]
       },
       "fragment": "frag",
-      "fragment_encoded": "frag",
       "username": null,
-      "username_encoded": null,
       "password": null,
-      "password_encoded": null,
       "hostname": "example.com",
-      "hostname_encoded": "example.com",
       "port": null,
-      "port_encoded": null
+      "encoded": {
+        "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+        "scheme": "http",
+        "netloc": "example.com",
+        "path": "/test/path",
+        "path_list": [
+          "test",
+          "path"
+        ],
+        "query": "q1=foo&q1=bar&q2=baz",
+        "fragment": "frag",
+        "username": null,
+        "password": null,
+        "hostname": "example.com",
+        "port": null
+      },
+      "decoded": {
+        "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+        "scheme": "http",
+        "netloc": "example.com",
+        "path": "/test/path",
+        "path_list": [
+          "test",
+          "path"
+        ],
+        "query": "q1=foo&q1=bar&q2=baz",
+        "fragment": "frag",
+        "username": null,
+        "password": null,
+        "hostname": "example.com",
+        "port": null
+      }
     }
 
     $ echo "ftp://localhost/filepath" | jc --url -p
     {
       "url": "ftp://localhost/filepath",
-      "url_encoded": "ftp://localhost/filepath",
       "scheme": "ftp",
-      "scheme_encoded": "ftp",
       "netloc": "localhost",
-      "netloc_encoded": "localhost",
       "path": "/filepath",
-      "path_encoded": "/filepath",
       "path_list": [
         "filepath"
       ],
       "query": null,
-      "query_encoded": null,
       "query_obj": null,
       "fragment": null,
-      "fragment_encoded": null,
       "username": null,
-      "username_encoded": null,
       "password": null,
-      "password_encoded": null,
       "hostname": "localhost",
-      "hostname_encoded": "localhost",
       "port": null,
-      "port_encoded": null
+      "encoded": {
+        "url": "ftp://localhost/filepath",
+        "scheme": "ftp",
+        "netloc": "localhost",
+        "path": "/filepath",
+        "path_list": [
+          "filepath"
+        ],
+        "query": null,
+        "fragment": null,
+        "username": null,
+        "password": null,
+        "hostname": "localhost",
+        "port": null
+      },
+      "decoded": {
+        "url": "ftp://localhost/filepath",
+        "scheme": "ftp",
+        "netloc": "localhost",
+        "path": "/filepath",
+        "path_list": [
+          "filepath"
+        ],
+        "query": null,
+        "fragment": null,
+        "username": null,
+        "password": null,
+        "hostname": "localhost",
+        "port": null
+      }
     }
 
 <a id="jc.parsers.url.parse"></a>

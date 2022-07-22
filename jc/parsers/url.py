@@ -7,10 +7,12 @@ This parser will work with naked and wrapped URL strings:
 - `<scheme://host/path>`
 - `<URL:scheme://host/path>`
 
-Normalized encoded and decoded versions of the original URL and URL parts
+Normalized, Encoded, and Decoded versions of the original URL and URL parts
 are included in the output.
 
-> Note: Do not use the encoded fields for a URL that is already encoded.
+> Note: Do not use the encoded fields for a URL that has already been
+> encoded. Similarly, do not use the decoded fields for a URL that has
+> already been decoded.
 
 Usage (cli):
 
@@ -25,33 +27,53 @@ Schema:
 
     {
       "url":                       string,
-      'url_encoded":               string,
       "scheme":                    string,
-      "scheme_encoded":            string,
       "netloc":                    string,
-      "netloc_encoded":            string,
       "path":                      string or null,
-      "path_encoded":              string or null,
       "path_list": [               array or null
                                    string
       ],
-      "query":                     string or Null,
-      "query_encoded":             string or Null,
+      "query":                     string or null,
       "query_obj": {               object or null
         <query-key>: [             array or null
           <query-value>            string             # [0]
         ]
       },
       "fragment":                  string or null,
-      "fragment_encoded":          string or null,
       "username":                  string or null,
-      "username_encoded":          string or null,
       "password":                  string or null,
-      "password_encoded":          string or null,
       "hostname":                  string or null,
-      "hostname_encoded":          string or null,
       "port":                      integer or null,
-      "port_encoded":              string or null
+      "encoded": {
+        "url":                     string,
+        "scheme":                  string,
+        "netloc":                  string,
+        "path":                    string or null,
+        "path_list": [             array or null
+                                   string
+        ],
+        "query":                   string or null,
+        "fragment":                string or null,
+        "username":                string or null,
+        "password":                string or null,
+        "hostname":                string or null,
+        "port":                    string or null,
+      },
+      "decoded": {
+        "url":                     string,
+        "scheme":                  string,
+        "netloc":                  string,
+        "path":                    string or null,
+        "path_list": [             array or null
+                                   string
+        ],
+        "query":                   string or null,
+        "fragment":                string or null,
+        "username":                string or null,
+        "password":                string or null,
+        "hostname":                string or null,
+        "port":                    string or null,
+      }
     }
 
     [0] Duplicate query-keys will have their values consolidated into the
@@ -63,19 +85,14 @@ Examples:
            | jc --url -p
     {
       "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
-      "url_encoded": "http://example.com/test/path?q1%3Dfoo%26q1%3Dbar%26q2%3Dbaz#frag",
       "scheme": "http",
-      "scheme_encoded": "http",
       "netloc": "example.com",
-      "netloc_encoded": "example.com",
       "path": "/test/path",
-      "path_encoded": "/test/path",
       "path_list": [
         "test",
         "path"
       ],
       "query": "q1=foo&q1=bar&q2=baz",
-      "query_encoded": "q1%3Dfoo%26q1%3Dbar%26q2%3Dbaz",
       "query_obj": {
         "q1": [
           "foo",
@@ -86,43 +103,90 @@ Examples:
         ]
       },
       "fragment": "frag",
-      "fragment_encoded": "frag",
       "username": null,
-      "username_encoded": null,
       "password": null,
-      "password_encoded": null,
       "hostname": "example.com",
-      "hostname_encoded": "example.com",
       "port": null,
-      "port_encoded": null
+      "encoded": {
+        "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+        "scheme": "http",
+        "netloc": "example.com",
+        "path": "/test/path",
+        "path_list": [
+          "test",
+          "path"
+        ],
+        "query": "q1=foo&q1=bar&q2=baz",
+        "fragment": "frag",
+        "username": null,
+        "password": null,
+        "hostname": "example.com",
+        "port": null
+      },
+      "decoded": {
+        "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+        "scheme": "http",
+        "netloc": "example.com",
+        "path": "/test/path",
+        "path_list": [
+          "test",
+          "path"
+        ],
+        "query": "q1=foo&q1=bar&q2=baz",
+        "fragment": "frag",
+        "username": null,
+        "password": null,
+        "hostname": "example.com",
+        "port": null
+      }
     }
 
     $ echo "ftp://localhost/filepath" | jc --url -p
     {
       "url": "ftp://localhost/filepath",
-      "url_encoded": "ftp://localhost/filepath",
       "scheme": "ftp",
-      "scheme_encoded": "ftp",
       "netloc": "localhost",
-      "netloc_encoded": "localhost",
       "path": "/filepath",
-      "path_encoded": "/filepath",
       "path_list": [
         "filepath"
       ],
       "query": null,
-      "query_encoded": null,
       "query_obj": null,
       "fragment": null,
-      "fragment_encoded": null,
       "username": null,
-      "username_encoded": null,
       "password": null,
-      "password_encoded": null,
       "hostname": "localhost",
-      "hostname_encoded": "localhost",
       "port": null,
-      "port_encoded": null
+      "encoded": {
+        "url": "ftp://localhost/filepath",
+        "scheme": "ftp",
+        "netloc": "localhost",
+        "path": "/filepath",
+        "path_list": [
+          "filepath"
+        ],
+        "query": null,
+        "fragment": null,
+        "username": null,
+        "password": null,
+        "hostname": "localhost",
+        "port": null
+      },
+      "decoded": {
+        "url": "ftp://localhost/filepath",
+        "scheme": "ftp",
+        "netloc": "localhost",
+        "path": "/filepath",
+        "path_list": [
+          "filepath"
+        ],
+        "query": null,
+        "fragment": null,
+        "username": null,
+        "password": null,
+        "hostname": "localhost",
+        "port": null
+      }
     }
 """
 import re
@@ -226,62 +290,115 @@ def parse(
 
         my_path = None
         encoded_path = None
+        decoded_path = None
         path_list = None
+        encoded_path_list = None
+        decoded_path_list = None
         query_obj = None
         encoded_username = None
+        decoded_username = None
         encoded_password = None
+        decoded_password = None
         encoded_hostname = None
+        decoded_hostname = None
+        normalized_port = None
         encoded_port = None
+        decoded_port = None
 
-        if unquoted_parts.path:
+        if normalized.path:
             # normalize the path by removing any duplicate `/` chars
-            my_path = re.sub(r'/+', '/', unquoted_parts.path)
+            my_path = re.sub(r'/+', '/', normalized.path)
             encoded_path = re.sub(r'/+', '/', quoted_parts.path)
+            decoded_path = re.sub(r'/+', '/', unquoted_parts.path)
 
             # remove first '/' and split
             path_list = my_path.replace('/', '', 1).split('/')
+            encoded_path_list = encoded_path.replace('/', '', 1).split('/')
+            decoded_path_list = decoded_path.replace('/', '', 1).split('/')
 
             if path_list == ['']:
                 path_list = None
 
-        if unquoted_parts.query:
-            query_obj = parse_qs(unquoted_parts.query)
+            if encoded_path_list == ['']:
+                encoded_path_list = None
 
-        if unquoted_parts.username:
-            encoded_username = quote(unquoted_parts.username, safe=NETLOC_SAFE)
+            if decoded_path_list == ['']:
+                decoded_path_list = None
 
-        if unquoted_parts.password:
-            encoded_password = quote(unquoted_parts.password, safe=NETLOC_SAFE)
+        if normalized.query:
+            query_obj = parse_qs(normalized.query)
 
-        if unquoted_parts.hostname:
-            encoded_hostname = quote(unquoted_parts.hostname, safe=NETLOC_SAFE)
+        if normalized.username:
+            encoded_username = quote(normalized.username, safe=NETLOC_SAFE)
+            decoded_username = unquote(normalized.username)
 
-        if unquoted_parts.port:
-            encoded_port = quote(str(unquoted_parts.port), safe=NETLOC_SAFE)
+        if normalized.password:
+            encoded_password = quote(normalized.password, safe=NETLOC_SAFE)
+            decoded_password = unquote(normalized.password)
+
+        if normalized.hostname:
+            encoded_hostname = quote(normalized.hostname, safe=NETLOC_SAFE)
+            decoded_hostname = unquote(normalized.hostname)
+
+        # handle port differently since an encoded port can cause a ValueError
+        try:
+            if normalized.port:
+                normalized_port = normalized.port
+                encoded_port = quote(str(normalized.port), safe=NETLOC_SAFE)
+                decoded_port = unquote(str(normalized.port))
+
+        except ValueError:
+            # Non-integer decoded port values can also cause a ValueError
+            try:
+                if unquoted_parts.port:
+                    normalized_port = unquote(str(unquoted_parts.port))  # type: ignore
+                    encoded_port = quote(str(unquoted_parts.port), safe=NETLOC_SAFE)
+                    decoded_port = unquote(str(unquoted_parts.port))
+
+            except ValueError:
+                normalized_port = None
+                encoded_port = None
+                decoded_port = None
 
         raw_output = {
-            'url': unquoted or None,
-            'url_encoded': quoted or None,
-            'scheme': unquoted_parts.scheme or None,
-            'scheme_encoded': quoted_parts.scheme or None,
-            'netloc': unquoted_parts.netloc or None,
-            'netloc_encoded': quoted_parts.netloc or None,
+            'url': normalized.geturl() or None,
+            'scheme': normalized.scheme or None,
+            'netloc': normalized.netloc or None,
             'path': my_path or None,
-            'path_encoded': encoded_path or None,
             'path_list': path_list or None,
-            'query': unquoted_parts.query or None,
-            'query_encoded': quoted_parts.query or None,
+            'query': normalized.query or None,
             'query_obj': query_obj or None,
-            'fragment': unquoted_parts.fragment or None,
-            'fragment_encoded': quoted_parts.fragment or None,
-            'username': unquoted_parts.username or None,
-            'username_encoded': encoded_username or None,
-            'password': unquoted_parts.password or None,
-            'password_encoded': encoded_password or None,
-            'hostname': unquoted_parts.hostname or None,
-            'hostname_encoded': encoded_hostname or None,
-            'port': unquoted_parts.port or None,
-            'port_encoded': encoded_port or None
+            'fragment': normalized.fragment or None,
+            'username': normalized.username or None,
+            'password': normalized.password or None,
+            'hostname': normalized.hostname or None,
+            'port': normalized_port or None,
+            'encoded': {
+                'url': quoted or None,
+                'scheme': quoted_parts.scheme or None,
+                'netloc': quoted_parts.netloc or None,
+                'path': encoded_path or None,
+                'path_list': encoded_path_list or None,
+                'query': quoted_parts.query or None,
+                'fragment': quoted_parts.fragment or None,
+                'username': encoded_username or None,
+                'password': encoded_password or None,
+                'hostname': encoded_hostname or None,
+                'port': encoded_port or None,
+            },
+            'decoded': {
+                'url': unquoted or None,
+                'scheme': unquoted_parts.scheme or None,
+                'netloc': unquoted_parts.netloc or None,
+                'path': decoded_path or None,
+                'path_list': decoded_path_list or None,
+                'query': unquoted_parts.query or None,
+                'fragment': unquoted_parts.fragment or None,
+                'username': decoded_username or None,
+                'password': decoded_password or None,
+                'hostname': decoded_hostname or None,
+                'port': decoded_port or None,
+            }
         }
 
     return raw_output if raw else _process(raw_output)
