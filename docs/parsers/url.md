@@ -33,7 +33,7 @@ Schema:
     {
       "url":                       string,
       "scheme":                    string,
-      "netloc":                    string,
+      "netloc":                    string or null,
       "path":                      string or null,
       "path_list": [               array or null
                                    string
@@ -52,7 +52,7 @@ Schema:
       "encoded": {
         "url":                     string,
         "scheme":                  string,
-        "netloc":                  string,
+        "netloc":                  string or null,
         "path":                    string or null,
         "path_list": [             array or null
                                    string
@@ -67,7 +67,7 @@ Schema:
       "decoded": {
         "url":                     string,
         "scheme":                  string,
-        "netloc":                  string,
+        "netloc":                  string or null,
         "path":                    string or null,
         "path_list": [             array or null
                                    string
