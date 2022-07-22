@@ -11,7 +11,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('iso_datetime', iso_8601_output)
+    result = jc.parse('iso_datetime', iso_8601_string)
 
 Schema:
 
