@@ -36,7 +36,7 @@ Schema:
       "query":                     string or null,
       "query_obj": {               object or null
         <query-key>: [             array or null
-          <query-value>            string             # [0]
+          <query-value>            string            # [0]
         ]
       },
       "fragment":                  string or null,
