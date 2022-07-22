@@ -194,8 +194,7 @@ Examples:
 """
 import re
 from urllib.parse import (
-    urlsplit, unwrap, parse_qs, parse_qsl, urlunsplit, quote, quote_plus,
-    unquote, unquote_plus
+    urlsplit, unwrap, parse_qs, urlunsplit, quote, quote_plus, unquote, unquote_plus
 )
 from typing import Dict
 import jc.utils
