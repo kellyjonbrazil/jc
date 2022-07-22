@@ -5,19 +5,19 @@
 
 jc - JSON Convert URL string parser
 
+Normalized, Encoded, and Decoded versions of the original URL and URL parts
+are included in the output. Encoding and Decoding is best effort.
+
+> Note: Do not use the Encoded fields for a URL that has already been
+> Encoded. Similarly, do not use the Decoded fields for a URL that has
+> already been Decoded.
+
 This parser will work with naked and wrapped URL strings:
 
 - `scheme://host/path`
 - `URL:scheme://host/path`
 - `<scheme://host/path>`
 - `<URL:scheme://host/path>`
-
-Normalized, Encoded, and Decoded versions of the original URL and URL parts
-are included in the output.
-
-> Note: Do not use the encoded fields for a URL that has already been
-> encoded. Similarly, do not use the decoded fields for a URL that has
-> already been decoded.
 
 Usage (cli):
 
@@ -48,7 +48,7 @@ Schema:
       "username":                  string or null,
       "password":                  string or null,
       "hostname":                  string or null,
-      "port":                      integer or null,
+      "port":                      integer or null,  # [1]
       "encoded": {
         "url":                     string,
         "scheme":                  string,
@@ -62,7 +62,7 @@ Schema:
         "username":                string or null,
         "password":                string or null,
         "hostname":                string or null,
-        "port":                    string or null,
+        "port":                    integer or null,  # [1]
       },
       "decoded": {
         "url":                     string,
@@ -77,12 +77,15 @@ Schema:
         "username":                string or null,
         "password":                string or null,
         "hostname":                string or null,
-        "port":                    string or null,
+        "port":                    integer or null,  # [1]
       }
     }
 
     [0] Duplicate query-keys will have their values consolidated into the
         array of query-values
+
+    [1] Invalid port values will be converted to null/None and a warning
+        message will be printed to `STDERR` if quiet=False
 
 Examples:
 
