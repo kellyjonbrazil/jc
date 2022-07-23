@@ -92,5 +92,32 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
+    def test_http_path_ends_in_slash(self):
+        """
+        Test HTTP URL with a forward slash as the last part of the path
+        """
+        data = r'https://pypi.org/project/jc/1.20.3/'
+        expected = json.loads(r'''{"url":"https://pypi.org/project/jc/1.20.3/","scheme":"https","netloc":"pypi.org","path":"/project/jc/1.20.3/","path_list":["project","jc","1.20.3"],"query":null,"query_obj":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null,"encoded":{"url":"https://pypi.org/project/jc/1.20.3/","scheme":"https","netloc":"pypi.org","path":"/project/jc/1.20.3/","path_list":["project","jc","1.20.3"],"query":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null},"decoded":{"url":"https://pypi.org/project/jc/1.20.3/","scheme":"https","netloc":"pypi.org","path":"/project/jc/1.20.3/","path_list":["project","jc","1.20.3"],"query":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null}}''')
+        self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
+
+
+    def test_http_path_only_slash(self):
+        """
+        Test HTTP URL with a forward slash as the last only part of the path
+        """
+        data = r'https://pypi.org/'
+        expected = json.loads(r'''{"url":"https://pypi.org/","scheme":"https","netloc":"pypi.org","path":"/","path_list":null,"query":null,"query_obj":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null,"encoded":{"url":"https://pypi.org/","scheme":"https","netloc":"pypi.org","path":"/","path_list":null,"query":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null},"decoded":{"url":"https://pypi.org/","scheme":"https","netloc":"pypi.org","path":"/","path_list":null,"query":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null}}''')
+        self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
+
+
+    def test_http_path_no_end_slash(self):
+        """
+        Test HTTP URL with no forward slash at the end
+        """
+        data = r'https://pypi.org'
+        expected = json.loads(r'''{"url":"https://pypi.org","scheme":"https","netloc":"pypi.org","path":null,"path_list":null,"query":null,"query_obj":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null,"encoded":{"url":"https://pypi.org","scheme":"https","netloc":"pypi.org","path":null,"path_list":null,"query":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null},"decoded":{"url":"https://pypi.org","scheme":"https","netloc":"pypi.org","path":null,"path_list":null,"query":null,"fragment":null,"username":null,"password":null,"hostname":"pypi.org","port":null}}''')
+        self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
