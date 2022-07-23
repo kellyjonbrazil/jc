@@ -318,14 +318,14 @@ def parse(
             encoded_path_list = encoded_path.replace('/', '', 1).split('/')
             decoded_path_list = decoded_path.replace('/', '', 1).split('/')
 
-            if path_list == ['']:
-                path_list = None
+            if path_list[-1] == '':
+                path_list.pop()
 
-            if encoded_path_list == ['']:
-                encoded_path_list = None
+            if encoded_path_list[-1] == '':
+                encoded_path_list.pop()
 
-            if decoded_path_list == ['']:
-                decoded_path_list = None
+            if decoded_path_list[-1] == '':
+                decoded_path_list.pop()
 
         if normalized.query:
             query_obj = parse_qs(normalized.query)
