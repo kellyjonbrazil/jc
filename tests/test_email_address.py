@@ -16,7 +16,7 @@ class MyTests(unittest.TestCase):
         Test simple email address
         """
         data = r'fred@example.com'
-        expected = json.loads(r'''{"domain":"example.com","local":"fred","local_plus_prefix":null,"local_plus_suffix":null}''')
+        expected = json.loads(r'''{"username":"fred","domain":"example.com","local":"fred","local_plus_suffix":null}''')
         self.assertEqual(jc.parsers.email_address.parse(data, quiet=True), expected)
 
 
@@ -25,7 +25,7 @@ class MyTests(unittest.TestCase):
         Test email address with plus syntax
         """
         data = r'fred+spam@example.com'
-        expected = json.loads(r'''{"domain":"example.com","local":"fred+spam","local_plus_prefix":"fred","local_plus_suffix":"spam"}''')
+        expected = json.loads(r'''{"username":"fred","domain":"example.com","local":"fred+spam","local_plus_suffix":"spam"}''')
         self.assertEqual(jc.parsers.email_address.parse(data, quiet=True), expected)
 
 
