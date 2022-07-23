@@ -21,7 +21,7 @@ class MyTests(unittest.TestCase):
 
     def test_13_digit_timestamp(self):
         """
-        Test 13 digit timestamp string (with microseconds)
+        Test 13 digit timestamp string (with milliseconds)
         """
         data = r'1658604427154'
         expected = json.loads(r"""{"naive":{"year":2022,"month":"Jul","month_num":7,"day":23,"weekday":"Sat","weekday_num":6,"hour":12,"hour_24":12,"minute":27,"second":7,"period":"PM","day_of_year":204,"week_of_year":29,"iso":"2022-07-23T12:27:07"},"utc":{"year":2022,"month":"Jul","month_num":7,"day":23,"weekday":"Sat","weekday_num":6,"hour":7,"hour_24":19,"minute":27,"second":7,"period":"PM","utc_offset":"+0000","day_of_year":204,"week_of_year":29,"iso":"2022-07-23T19:27:07+00:00"}}""")
