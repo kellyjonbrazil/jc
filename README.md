@@ -236,6 +236,7 @@ option.
 | `   --systeminfo` | `systeminfo` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo)     |
 | `         --time` | `/usr/bin/time` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/time)           |
 | `  --timedatectl` | `timedatectl status` command parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl)    |
+| `    --timestamp` | UNIX Epoch Timestamp string parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timestamp)      |
 | `          --top` | `top -b` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top)            |
 | `        --top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 | `    --tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |

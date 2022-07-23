@@ -3599,6 +3599,47 @@ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
   "epoch_utc": 1583888001
 }
 ```
+### Timestamp strings (UNIX Epoch)
+```bash
+echo '1658599410' | jc --timestamp -p
+```
+```json
+{
+  "naive": {
+    "year": 2022,
+    "month": "Jul",
+    "month_num": 7,
+    "day": 23,
+    "weekday": "Sat",
+    "weekday_num": 6,
+    "hour": 11,
+    "hour_24": 11,
+    "minute": 3,
+    "second": 30,
+    "period": "AM",
+    "day_of_year": 204,
+    "week_of_year": 29,
+    "iso": "2022-07-23T11:03:30"
+  },
+  "utc": {
+    "year": 2022,
+    "month": "Jul",
+    "month_num": 7,
+    "day": 23,
+    "weekday": "Sat",
+    "weekday_num": 6,
+    "hour": 6,
+    "hour_24": 18,
+    "minute": 3,
+    "second": 30,
+    "period": "PM",
+    "utc_offset": "+0000",
+    "day_of_year": 204,
+    "week_of_year": 29,
+    "iso": "2022-07-23T18:03:30+00:00"
+  }
+}
+```
 ### tob -b
 ```bash
 top -b -n 1 | jc --top -p          # or jc -p tob -b -n 1

@@ -5,6 +5,7 @@ jc changelog
 - Add Email Address string parser
 - Add JWT string parser
 - Add ISO 8601 Datetime string parser
+- Add UNIX Epoch Timestamp string parser
 - Add m3u/m3u8 file parser
 - Add pager functionality to help (parser documentation only)
 - Minor parser performance optimizations
