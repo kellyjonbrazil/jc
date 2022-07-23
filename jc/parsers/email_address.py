@@ -2,7 +2,7 @@
 
 Usage (cli):
 
-    $ echo "johndoe@example.com" | jc --email-address
+    $ echo "username@example.com" | jc --email-address
 
 Usage (module):
 
@@ -12,9 +12,9 @@ Usage (module):
 Schema:
 
     {
+      "username":             string,
       "domain":               string,
       "local":                string,
-      "local_plus_prefix":    string or null,
       "local_plus_suffix":    string or null
     }
 
@@ -22,17 +22,17 @@ Examples:
 
     $ echo 'joe.user@gmail.com' | jc --email-address -p
     {
+      "username": "joe.user",
       "domain": "gmail.com",
       "local": "joe.user",
-      "local_plus_prefix": null,
       "local_plus_suffix": null
     }
 
     $ echo 'joe.user+spam@gmail.com' | jc --email-address -p
     {
+      "username": "joe.user",
       "domain": "gmail.com",
       "local": "joe.user+spam",
-      "local_plus_prefix": "joe.user",
       "local_plus_suffix": "spam"
     }
 """
@@ -104,9 +104,9 @@ def parse(
             pass
 
         raw_output = {
+            'username': local_plus_prefix or local,
             'domain': domain,
             'local': local,
-            'local_plus_prefix': local_plus_prefix,
             'local_plus_suffix': local_plus_suffix
         }
 
