@@ -84,7 +84,7 @@ Schema:
 
 Examples:
 
-    % echo "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag" \\
+    $ echo "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag" \\
            | jc --url -p
     {
       "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
