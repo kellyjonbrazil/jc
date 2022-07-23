@@ -1,5 +1,15 @@
 jc changelog
 
+20220723 v1.20.3
+- Add URL string parser
+- Add Email Address string parser
+- Add JWT string parser
+- Add ISO 8601 Datetime string parser
+- Add UNIX Epoch Timestamp string parser
+- Add M3U/M3U8 file parser
+- Add pager functionality to help (parser documentation only)
+- Minor parser performance optimizations
+
 20220705 v1.20.2
 - Add `gpg --with-colons` parser tested on linux
 - Add DER and PEM encoded X.509 Certificate parser

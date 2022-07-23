@@ -161,7 +161,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -184,9 +184,9 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    for entry in proc_data:
+    int_list = {'epoch', 'size'}
 
-        int_list = ['epoch', 'size']
+    for entry in proc_data:
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

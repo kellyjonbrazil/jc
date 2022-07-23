@@ -131,4 +131,4 @@ Returns:
 ### Parser Information
 Compatibility:  darwin
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

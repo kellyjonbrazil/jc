@@ -104,7 +104,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`w` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -127,8 +127,9 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    null_list = {'user', 'tty', 'from', 'login_at', 'idle', 'what'}
+
     for entry in proc_data:
-        null_list = ['user', 'tty', 'from', 'login_at', 'idle', 'what']
         for key in entry:
             if key in null_list:
                 if entry[key] == '-':

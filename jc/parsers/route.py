@@ -109,7 +109,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`route` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -132,8 +132,21 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    int_list = {'metric', 'ref', 'use', 'mss', 'window', 'irtt'}
+
+    flag_map = {
+        'U': 'UP',
+        'H': 'HOST',
+        'G': 'GATEWAY',
+        'R': 'REINSTATE',
+        'D': 'DYNAMIC',
+        'M': 'MODIFIED',
+        'A': 'ADDRCONF',
+        'C': 'CACHE',
+        '!': 'REJECT'
+      }
+
     for entry in proc_data:
-        int_list = ['metric', 'ref', 'use', 'mss', 'window', 'irtt']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
@@ -141,18 +154,6 @@ def _process(proc_data):
         # add flags_pretty
         # Flag mapping from https://www.man7.org/linux/man-pages/man8/route.8.html
         if 'flags' in entry:
-            flag_map = {
-                'U': 'UP',
-                'H': 'HOST',
-                'G': 'GATEWAY',
-                'R': 'REINSTATE',
-                'D': 'DYNAMIC',
-                'M': 'MODIFIED',
-                'A': 'ADDRCONF',
-                'C': 'CACHE',
-                '!': 'REJECT'
-            }
-
             pretty_flags = []
 
             for flag in entry['flags']:

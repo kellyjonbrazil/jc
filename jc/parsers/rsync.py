@@ -137,7 +137,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`rsync` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -160,16 +160,18 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = [
+    int_list = {
         'process', 'sent', 'received', 'total_size', 'matches', 'hash_hits',
         'false_alarms', 'data'
-    ]
-    float_list = ['bytes_sec', 'speedup']
+    }
+
+    float_list = {'bytes_sec', 'speedup'}
 
     for item in proc_data:
         for key in item['summary']:
             if key in int_list:
                 item['summary'][key] = jc.utils.convert_to_int(item['summary'][key])
+
             if key in float_list:
                 item['summary'][key] = jc.utils.convert_to_float(item['summary'][key])
 

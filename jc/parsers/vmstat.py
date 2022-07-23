@@ -126,7 +126,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`vmstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,14 +149,15 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    int_list = [
+    int_list = {
         'runnable_procs', 'uninterruptible_sleeping_procs', 'virtual_mem_used', 'free_mem',
         'buffer_mem', 'cache_mem', 'inactive_mem', 'active_mem', 'swap_in', 'swap_out', 'blocks_in',
         'blocks_out', 'interrupts', 'context_switches', 'user_time', 'system_time', 'idle_time',
         'io_wait_time', 'stolen_time', 'total_reads', 'merged_reads', 'sectors_read', 'reading_ms',
         'total_writes', 'merged_writes', 'sectors_written', 'writing_ms', 'current_io', 'io_seconds'
-    ]
+    }
+
+    fmt_hint = (7250, 7255)
 
     for entry in proc_data:
         for key in entry:
@@ -164,7 +165,6 @@ def _process(proc_data):
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
         if entry['timestamp']:
-            fmt_hint = (7250, 7255)
             ts = jc.utils.timestamp(f'{entry["timestamp"]} {entry["timezone"]}', format_hint=fmt_hint)
             entry['epoch'] = ts.naive
             entry['epoch_utc'] = ts.utc

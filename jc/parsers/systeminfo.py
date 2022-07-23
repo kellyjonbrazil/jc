@@ -212,7 +212,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.2"
+    version = "1.3"
     description = "`systeminfo` command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
@@ -240,6 +240,25 @@ def _process(proc_data):
         a system already running hyper-v will have an empty
         "hyperv_requirements" object.
     """
+    int_list = {
+        "total_physical_memory_mb",
+        "available_physical_memory_mb",
+        "virtual_memory_max_size_mb",
+        "virtual_memory_available_mb",
+        "virtual_memory_in_use_mb",
+    }
+
+    dt_list = {"original_install_date", "system_boot_time"}
+
+    hyperv_key = "hyperv_requirements"
+
+    hyperv_subkey_list = {
+        "vm_monitor_mode_extensions",
+        "virtualization_enabled_in_firmware",
+        "second_level_address_translation",
+        "data_execution_prevention_available",
+    }
+
     # convert empty strings to None/null
     for item in proc_data:
         if isinstance(proc_data[item], str) and not proc_data[item]:
@@ -255,17 +274,9 @@ def _process(proc_data):
             if isinstance(nic[item], str) and not nic[item]:
                 proc_data["network_cards"][i][item] = None
 
-    int_list = [
-        "total_physical_memory_mb",
-        "available_physical_memory_mb",
-        "virtual_memory_max_size_mb",
-        "virtual_memory_available_mb",
-        "virtual_memory_in_use_mb",
-    ]
     for key in int_list:
         proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
-    dt_list = ["original_install_date", "system_boot_time"]
     for key in dt_list:
         tz = proc_data.get("time_zone", "")
         if tz:
@@ -279,13 +290,6 @@ def _process(proc_data):
         proc_data[key + '_epoch'] = ts.naive
         proc_data[key + '_epoch_utc'] = ts.utc
 
-    hyperv_key = "hyperv_requirements"
-    hyperv_subkey_list = [
-        "vm_monitor_mode_extensions",
-        "virtualization_enabled_in_firmware",
-        "second_level_address_translation",
-        "data_execution_prevention_available",
-    ]
     if hyperv_key in proc_data:
         for key in hyperv_subkey_list:
             if key in proc_data[hyperv_key]:

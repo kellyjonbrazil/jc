@@ -922,6 +922,18 @@ du /usr | jc --du -p          # or:  jc -p du /usr
   }
 ]
 ```
+### Email Address string
+```bash
+echo 'joe.user@gmail.com' | jc --email-address -p
+```
+```json
+{
+  "username": "joe.user",
+  "domain": "gmail.com",
+  "local": "joe.user",
+  "local_plus_suffix": null
+}
+```
 ### env
 ```bash
 env | jc --env -p          # or:  jc -p env
@@ -1715,6 +1727,31 @@ iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p ip
   }
 ]
 ```
+### ISO Datetime string
+```bash
+echo "2022-07-20T14:52:45Z" | jc --iso-datetime -p
+```
+```json
+{
+  "year": 2022,
+  "month": "Jul",
+  "month_num": 7,
+  "day": 20,
+  "weekday": "Wed",
+  "weekday_num": 3,
+  "hour": 2,
+  "hour_24": 14,
+  "minute": 52,
+  "second": 45,
+  "microsecond": 0,
+  "period": "PM",
+  "utc_offset": "+0000",
+  "day_of_year": 201,
+  "week_of_year": 29,
+  "iso": "2022-07-20T14:52:45+00:00",
+  "timestamp": 1658328765
+}
+```
 ### iw dev `device` scan
 ```bash
 iw dev wlan0 scan | jc --iw-scan -p          # or:  jc -p iw dev wlan0 scan
@@ -1860,6 +1897,24 @@ jobs -l | jc --jobs -p
     "command": "sleep 10112 &"
   }
 ]
+```
+### JWT string
+```bash
+echo 'eyJhbGciOiJIUzI1N...' | jc --jwt -p
+```
+```json
+{
+  "header": {
+    "alg": "HS256",
+    "typ": "JWT"
+  },
+  "payload": {
+    "sub": "1234567890",
+    "name": "John Doe",
+    "iat": 1516239022
+  },
+  "signature": "49:f9:4a:c7:04:49:48:c7:8a:28:5d:90:4f:87:f0:a4:c7..."
+}
 ```
 ### Key/Value files
 ```bash
@@ -2197,6 +2252,24 @@ lsusb -v | jc --lsusb -p          # or: jc -p lsusb -v
   }
 ]
 ```
+### M3U and M3U8 files
+```bash
+cat playlist.m3u | jc --m3u -p
+```
+```json
+[
+  {
+    "runtime": 105,
+    "display": "Example artist - Example title",
+    "path": "C:\\Files\\My Music\\Example.mp3"
+  },
+  {
+    "runtime": 321,
+    "display": "Example Artist2 - Example title2",
+    "path": "C:\\Files\\My Music\\Favorites\\Example2.ogg"
+  }
+]
+```
 ### mount
 ```bash
 mount | jc --mount -p          # or:  jc -p mount
@@ -2509,40 +2582,40 @@ nmcli connection show ens33 | jc --nmcli -p          # or jc -p nmcli connection
 ```
 ```json
 [
-      {
-        "connection_id": "ens33",
-        "connection_uuid": "d92ece08-9e02-47d5-b2d2-92c80e155744",
-        "connection_stable_id": null,
-        "connection_type": "802-3-ethernet",
-        "connection_interface_name": "ens33",
-        "connection_autoconnect": "yes",
-        "ip4_address_1": "192.168.71.180/24",
-        "ip4_gateway": "192.168.71.2",
-        "ip4_route_1": {
-          "dst": "0.0.0.0/0",
-          "nh": "192.168.71.2",
-          "mt": 100
-        },
-        "ip4_route_2": {
-          "dst": "192.168.71.0/24",
-          "nh": "0.0.0.0",
-          "mt": 100
-        },
-        "ip4_dns_1": "192.168.71.2",
-        "ip4_domain_1": "localdomain",
-        "dhcp4_option_1": {
-          "name": "broadcast_address",
-          "value": "192.168.71.255"
-        },
-        "ip6_address_1": "fe80::c1cb:715d:bc3e:b8a0/64",
-        "ip6_gateway": null,
-        "ip6_route_1": {
-          "dst": "fe80::/64",
-          "nh": "::",
-          "mt": 100
-        }
-      }
-    ]
+  {
+    "connection_id": "ens33",
+    "connection_uuid": "d92ece08-9e02-47d5-b2d2-92c80e155744",
+    "connection_stable_id": null,
+    "connection_type": "802-3-ethernet",
+    "connection_interface_name": "ens33",
+    "connection_autoconnect": "yes",
+    "ip4_address_1": "192.168.71.180/24",
+    "ip4_gateway": "192.168.71.2",
+    "ip4_route_1": {
+      "dst": "0.0.0.0/0",
+      "nh": "192.168.71.2",
+      "mt": 100
+    },
+    "ip4_route_2": {
+      "dst": "192.168.71.0/24",
+      "nh": "0.0.0.0",
+      "mt": 100
+    },
+    "ip4_dns_1": "192.168.71.2",
+    "ip4_domain_1": "localdomain",
+    "dhcp4_option_1": {
+      "name": "broadcast_address",
+      "value": "192.168.71.255"
+    },
+    "ip6_address_1": "fe80::c1cb:715d:bc3e:b8a0/64",
+    "ip6_gateway": null,
+    "ip6_route_1": {
+      "dst": "fe80::/64",
+      "nh": "::",
+      "mt": 100
+    }
+  }
+]
 ```
 ### ntpq
 ```bash
@@ -3526,6 +3599,47 @@ timedatectl | jc --timedatectl -p          # or: jc -p timedatectl
   "epoch_utc": 1583888001
 }
 ```
+### Timestamp strings (UNIX Epoch)
+```bash
+echo '1658599410' | jc --timestamp -p
+```
+```json
+{
+  "naive": {
+    "year": 2022,
+    "month": "Jul",
+    "month_num": 7,
+    "day": 23,
+    "weekday": "Sat",
+    "weekday_num": 6,
+    "hour": 11,
+    "hour_24": 11,
+    "minute": 3,
+    "second": 30,
+    "period": "AM",
+    "day_of_year": 204,
+    "week_of_year": 29,
+    "iso": "2022-07-23T11:03:30"
+  },
+  "utc": {
+    "year": 2022,
+    "month": "Jul",
+    "month_num": 7,
+    "day": 23,
+    "weekday": "Sat",
+    "weekday_num": 6,
+    "hour": 6,
+    "hour_24": 18,
+    "minute": 3,
+    "second": 30,
+    "period": "PM",
+    "utc_offset": "+0000",
+    "day_of_year": 204,
+    "week_of_year": 29,
+    "iso": "2022-07-23T18:03:30+00:00"
+  }
+}
+```
 ### tob -b
 ```bash
 top -b -n 1 | jc --top -p          # or jc -p tob -b -n 1
@@ -4012,6 +4126,70 @@ uptime | jc --uptime -p          # or:  jc -p uptime
   "uptime_hours": 4,
   "uptime_minutes": 3,
   "uptime_total_seconds": 273780
+}
+```
+### URL string
+```bash
+echo "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag" \\
+     | jc --url -p
+```
+```json
+{
+  "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+  "scheme": "http",
+  "netloc": "example.com",
+  "path": "/test/path",
+  "path_list": [
+    "test",
+    "path"
+  ],
+  "query": "q1=foo&q1=bar&q2=baz",
+  "query_obj": {
+    "q1": [
+      "foo",
+      "bar"
+    ],
+    "q2": [
+      "baz"
+    ]
+  },
+  "fragment": "frag",
+  "username": null,
+  "password": null,
+  "hostname": "example.com",
+  "port": null,
+  "encoded": {
+    "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+    "scheme": "http",
+    "netloc": "example.com",
+    "path": "/test/path",
+    "path_list": [
+      "test",
+      "path"
+    ],
+    "query": "q1=foo&q1=bar&q2=baz",
+    "fragment": "frag",
+    "username": null,
+    "password": null,
+    "hostname": "example.com",
+    "port": null
+  },
+  "decoded": {
+    "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
+    "scheme": "http",
+    "netloc": "example.com",
+    "path": "/test/path",
+    "path_list": [
+      "test",
+      "path"
+    ],
+    "query": "q1=foo&q1=bar&q2=baz",
+    "fragment": "frag",
+    "username": null,
+    "password": null,
+    "hostname": "example.com",
+    "port": null
+  }
 }
 ```
 ### w

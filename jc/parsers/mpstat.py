@@ -116,7 +116,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`mpstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -139,14 +139,15 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    float_list = [
+    float_list = {
         "percent_usr", "percent_nice", "percent_sys", "percent_iowait", "percent_irq",
         "percent_soft", "percent_steal", "percent_guest", "percent_gnice", "percent_idle", "intr_s",
         "nmi_s", "loc_s", "spu_s", "pmi_s", "iwi_s", "rtr_s", "res_s", "cal_s", "tlb_s", "trm_s",
         "thr_s", "dfr_s", "mce_s", "mcp_s", "err_s", "mis_s", "pin_s", "npi_s", "piw_s", "hi_s",
         "timer_s", "net_tx_s", "net_rx_s", "block_s", "irq_poll_s", "block_iopoll_s", "tasklet_s",
         "sched_s", "hrtimer_s", "rcu_s"
-    ]
+    }
+
     for entry in proc_data:
         for key in entry:
             if (key in float_list or (key[0].isdigit() and key.endswith('_s'))):

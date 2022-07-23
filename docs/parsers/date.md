@@ -100,4 +100,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 2.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

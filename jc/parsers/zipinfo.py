@@ -77,7 +77,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`zipinfo` command parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
@@ -100,14 +100,16 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    int_list = {'bytes_compressed', 'bytes_uncompressed', 'number_entries',
+                'number_files', 'size', 'filesize'}
+
+    float_list = {'percent_compressed'}
 
     for entry in proc_data:
-        int_list = ['bytes_compressed', 'bytes_uncompressed', 'number_entries',
-                    'number_files', 'size', 'filesize']
-        float_list = ['percent_compressed']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+
             if key in float_list:
                 entry[key] = jc.utils.convert_to_float(entry[key])
 

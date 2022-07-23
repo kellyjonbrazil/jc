@@ -1,0 +1,20 @@
+#EXTM3U
+ 
+#EXTINF:111, Sample artist name - line between extinf and path
+
+C:\Music\SampleMusic - line between extinf and path.mp3
+ 
+#EXTINF:222,Example Artist name - Example track title
+C:\Music\ExampleMusic.mp3
+
+#UNSUPPORTED_EXTENSION:123,abc
+mp3/unsupported-extension-file-path.mp3
+
+file with no extended info.mp3
+another file with no extended info.mp3
+
+#EXTINF:111, Sample artist name - Sample track title
+C:\Music\SampleMusic2.mp3
+mp3/file_with_no_extended_info_right_after_one_that_has_it.mp3
+#EXTINF:-1, Song after no extended
+mp3/song after no extended.mp3

@@ -99,7 +99,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,6 +122,8 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema:
     """
+    int_list = {'used', 'available', 'use_percent', 'capacity_percent', 'ifree',
+                    'iused', 'iused_percent'}
 
     for entry in proc_data:
         # change 'avail' to 'available'
@@ -155,9 +157,7 @@ def _process(proc_data):
         if 'iused_percent' in entry:
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
 
-        # change used, available, use_percent, capacity_percent, ifree, iused, iused_percent to int
-        int_list = ['used', 'available', 'use_percent', 'capacity_percent', 'ifree',
-                    'iused', 'iused_percent']
+        # convert integers
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

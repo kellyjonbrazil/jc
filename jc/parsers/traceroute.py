@@ -122,7 +122,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`traceroute` and `traceroute6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -331,8 +331,8 @@ def _process(proc_data):
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = ['hop', 'asn']
-    float_list = ['rtt']
+    int_list = {'hop', 'asn'}
+    float_list = {'rtt'}
 
     if 'hops' in proc_data:
         for entry in proc_data['hops']:

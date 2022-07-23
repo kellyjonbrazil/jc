@@ -100,7 +100,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`vmstat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -123,13 +123,13 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = [
+    int_list = {
         'runnable_procs', 'uninterruptible_sleeping_procs', 'virtual_mem_used', 'free_mem',
         'buffer_mem', 'cache_mem', 'inactive_mem', 'active_mem', 'swap_in', 'swap_out', 'blocks_in',
         'blocks_out', 'interrupts', 'context_switches', 'user_time', 'system_time', 'idle_time',
         'io_wait_time', 'stolen_time', 'total_reads', 'merged_reads', 'sectors_read', 'reading_ms',
         'total_writes', 'merged_writes', 'sectors_written', 'writing_ms', 'current_io', 'io_seconds'
-    ]
+    }
 
     for key in proc_data:
         if key in int_list:

@@ -132,7 +132,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`dpkg -l` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -155,48 +155,41 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema:
     """
+    desired_map = {
+        'u': 'unknown',
+        'i': 'install',
+        'r': 'remove',
+        'p': 'purge',
+        'h': 'hold'
+    }
+
+    status_map = {
+        'n': 'not installed',
+        'i': 'installed',
+        'c': 'config-files',
+        'u': 'unpacked',
+        'f': 'failed config',
+        'h': 'half installed',
+        'w': 'trigger await',
+        't': 'trigger pending'
+    }
+
+    err_map = {
+        'r': 'reinstall required'
+    }
+
     for entry in proc_data:
         if 'codes' in entry:
-            desired, status, *err = list(entry['codes'])
+            desired, status, *err = list(entry['codes'].lower())
 
-            desired_map = {
-                'u': 'unknown',
-                'i': 'install',
-                'r': 'remove',
-                'p': 'purge',
-                'h': 'hold'
-            }
+            if desired in desired_map:
+                entry['desired'] = desired_map[desired]
 
-            for key, value in desired_map.items():
-                if desired.lower() == key:
-                    entry['desired'] = value
-                    break
+            if status in status_map:
+                entry['status'] = status_map[status]
 
-            status_map = {
-                'n': 'not installed',
-                'i': 'installed',
-                'c': 'config-files',
-                'u': 'unpacked',
-                'f': 'failed config',
-                'h': 'half installed',
-                'w': 'trigger await',
-                't': 'trigger pending'
-            }
-
-            for key, value in status_map.items():
-                if status.lower() == key:
-                    entry['status'] = value
-                    break
-
-            if err:
-                err_map = {
-                    'r': 'reinstall required'
-                }
-
-                for key, value in err_map.items():
-                    if err[0].lower() == key:
-                        entry['error'] = value
-                        break
+            if err and err[0] in err_map:
+                entry['error'] = err_map[err[0]]
 
     return proc_data
 

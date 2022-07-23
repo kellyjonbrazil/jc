@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.20.2'
+__version__ = '1.20.3'
 
 parsers = [
     'acpi',
@@ -29,6 +29,7 @@ parsers = [
     'dmidecode',
     'dpkg-l',
     'du',
+    'email-address',
     'env',
     'file',
     'finger',
@@ -50,9 +51,11 @@ parsers = [
     'iostat',
     'iostat-s',
     'iptables',
+    'iso-datetime',
     'iw-scan',
     'jar-manifest',
     'jobs',
+    'jwt',
     'kv',
     'last',
     'ls',
@@ -61,6 +64,7 @@ parsers = [
     'lsmod',
     'lsof',
     'lsusb',
+    'm3u',
     'mount',
     'mpstat',
     'mpstat-s',
@@ -93,6 +97,7 @@ parsers = [
     'systeminfo',
     'time',
     'timedatectl',
+    'timestamp',
     'top',
     'top-s',
     'tracepath',
@@ -104,6 +109,7 @@ parsers = [
     'update-alt-q',
     'upower',
     'uptime',
+    'url',
     'vmstat',
     'vmstat-s',
     'w',
@@ -170,7 +176,7 @@ def _parser_is_streaming(parser):
 
 def parse(
     parser_mod_name: str,
-    data: Union[str, Iterable[str]],
+    data: Union[str, bytes, Iterable[str]],
     quiet: bool = False,
     raw: bool = False,
     ignore_exceptions: bool = None,
@@ -215,9 +221,9 @@ def parse(
                                          cli-name, and --argument-name
                                          variants of the module name.
 
-        data:               (string or   data to parse (string for normal
-                            iterable)    parsers, iterable of strings for
-                                         streaming parsers)
+        data:               (string or   data to parse (string or bytes for
+                            bytes or     standard parsers, iterable of
+                            iterable)    strings for streaming parsers)
 
         raw:                (boolean)    output preprocessed JSON if True
 

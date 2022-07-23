@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -156,11 +156,13 @@ def _process(proc_data):
         Dictionary. Structured data to conform to the schema.
     """
     # convert ints and floats
-    int_list = ['pmtu', 'forward_hops', 'return_hops', 'ttl', 'asymmetric_difference']
-    float_list = ['reply_ms']
+    int_list = {'pmtu', 'forward_hops', 'return_hops', 'ttl', 'asymmetric_difference'}
+    float_list = {'reply_ms'}
+
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+
         if key in float_list:
             proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 

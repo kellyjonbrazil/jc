@@ -85,7 +85,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`/etc/fstab` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -107,8 +107,9 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    int_list = {'fs_freq', 'fs_passno'}
+
     for entry in proc_data:
-        int_list = ['fs_freq', 'fs_passno']
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])

@@ -78,7 +78,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.4'
+    version = '2.5'
     description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,7 +128,7 @@ def parse(data, raw=False, quiet=False):
 
         # find the timezone no matter where it is in the string
         # from https://www.timeanddate.com/time/zones/
-        tz_abbr = [
+        tz_abbr = {
             'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
             'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
             'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
@@ -154,7 +154,7 @@ def parse(data, raw=False, quiet=False):
             'UTC+0400', 'UTC+0430', 'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630',
             'UTC+0700', 'UTC+0800', 'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100',
             'UTC+1200', 'UTC+1300', 'UTC+1345', 'UTC+1400'
-        ]
+        }
         tz = None
         for term in data.replace('(', '').replace(')', '').split():
             if term in tz_abbr:

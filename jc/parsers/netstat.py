@@ -355,7 +355,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`netstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -378,20 +378,23 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
+    int_list = {
+        'recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class', 'osx_flags',
+        'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes', 'route_refs', 'use',
+        'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts', 'ierrs', 'opkts', 'oerrs', 'coll',
+        'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr', 'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop',
+        'ibytes', 'obytes', 'r_mbuf', 's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa',
+        'r_lowa', 's_lowa', 'r_bcnt', 's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win'
+    }
+
+    float_list = {'rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime'}
+
     for entry in proc_data:
-        # integer and float conversions
-        int_list = [
-            'recv_q', 'send_q', 'pid', 'refcnt', 'inode', 'unit', 'vendor', 'class', 'osx_flags',
-            'subcla', 'pcbcount', 'rcvbuf', 'sndbuf', 'rxbytes', 'txbytes', 'route_refs', 'use',
-            'mtu', 'mss', 'window', 'irtt', 'metric', 'ipkts', 'ierrs', 'opkts', 'oerrs', 'coll',
-            'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr', 'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr', 'idrop',
-            'ibytes', 'obytes', 'r_mbuf', 's_mbuf', 'r_clus', 's_clus', 'r_hiwa', 's_hiwa',
-            'r_lowa', 's_lowa', 'r_bcnt', 's_bcnt', 'r_bmax', 's_bmax', 'rexmit', 'ooorcv', '0_win'
-        ]
-        float_list = ['rexmt', 'persist', 'keep', '2msl', 'delack', 'rcvtime']
+        # ints and floats
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+
             if key in float_list:
                 entry[key] = jc.utils.convert_to_float(entry[key])
 

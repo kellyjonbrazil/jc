@@ -160,7 +160,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`iostat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -183,9 +183,8 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
     for entry in proc_data:
-        float_list = [
+        float_list = {
             'percent_user', 'percent_nice', 'percent_system', 'percent_iowait',
             'percent_steal', 'percent_idle', 'tps', 'kb_read_s', 'mb_read_s', 'kb_wrtn_s',
             'mb_wrtn_s', 'rrqm_s', 'wrqm_s', 'r_s', 'w_s', 'rmb_s', 'rkb_s', 'wmb_s',
@@ -193,8 +192,10 @@ def _process(proc_data):
             'percent_util', 'percent_rrqm', 'percent_wrqm', 'aqu_sz', 'rareq_sz', 'wareq_sz',
             'd_s', 'dkb_s', 'dmb_s', 'drqm_s', 'percent_drqm', 'd_await', 'dareq_sz',
             'f_s', 'f_await', 'kb_dscd_s', 'mb_dscd_s'
-        ]
-        int_list = ['kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn', 'kb_dscd', 'mb_dscd']
+        }
+
+        int_list = {'kb_read', 'mb_read', 'kb_wrtn', 'mb_wrtn', 'kb_dscd', 'mb_dscd'}
+
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
@@ -204,14 +205,17 @@ def _process(proc_data):
 
     return proc_data
 
+
 def _normalize_headers(line):
     return line.replace('%', 'percent_').replace('/', '_').replace('-', '_').lower()
+
 
 def _create_obj_list(section_list, section_name):
     output_list = jc.parsers.universal.simple_table_parse(section_list)
     for item in output_list:
         item['type'] = section_name
     return output_list
+
 
 def parse(data, raw=False, quiet=False):
     """

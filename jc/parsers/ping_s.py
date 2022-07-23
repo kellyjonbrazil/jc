@@ -85,7 +85,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -108,14 +108,15 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = [
+    int_list = {
         'sent_bytes', 'packets_transmitted', 'packets_received', 'response_bytes', 'icmp_seq',
         'ttl', 'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks'
-    ]
-    float_list = [
+    }
+
+    float_list = {
         'packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
         'round_trip_ms_stddev', 'timestamp', 'time_ms'
-    ]
+    }
 
     for key in proc_data:
         if key in int_list:

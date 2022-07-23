@@ -57,7 +57,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`chage --list` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -80,8 +80,8 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = ['min_days_between_password_change', 'max_days_between_password_change',
-                'warning_days_before_password_expires']
+    int_list = {'min_days_between_password_change', 'max_days_between_password_change',
+                'warning_days_before_password_expires'}
 
     for key in proc_data:
         if key in int_list:
