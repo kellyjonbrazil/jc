@@ -27,7 +27,7 @@ Examples:
     $ ip_address | jc --ip_address -p -r
     []
 """
-from typing import List, Dict
+from typing import Dict
 import binascii
 import ipaddress
 from collections import deque
@@ -100,21 +100,21 @@ def parse(
 
         interface = ipaddress.ip_interface(data.strip())
         network_string = str(interface.network).split('/')[0]
-        network_cidr = str(interface.with_prefixlen).split('/')[1]
+        network_cidr = int(str(interface.with_prefixlen).split('/')[1])
         network = ipaddress.ip_network(f'{network_string}/{network_cidr}')
         bare_ip_string = str(interface.ip)
         bare_ip = ipaddress.ip_address(bare_ip_string)
         ip_ptr = bare_ip.reverse_pointer
 
-        first_host = next(network.hosts())
+        first_host = str(next(network.hosts()))
 
         # hack to speed up iterating through large ipv6 subnets
         # only do last_host for masks >= /16 (ipv4) or >= /120 (ipv6)
         last_host = None
 
         if any((
-            int(interface.version) == 4 and int(network_cidr) >= 16,
-            int(interface.version) == 6 and int(network_cidr) >= 120,
+            int(interface.version) == 4 and network_cidr >= 16,
+            int(interface.version) == 6 and network_cidr >= 120,
         )):
             dd = deque(network.hosts(), maxlen=1)
             last_host = str(dd.pop())
@@ -130,8 +130,8 @@ def parse(
             'broadcast': str(network.broadcast_address),
             'hostmask': str(interface.with_hostmask).split('/')[1],
             'netmask': str(interface.with_netmask).split('/')[1],
-            'cidr_netmask': int(network_cidr),
-            'first_host': str(first_host),
+            'cidr_netmask': network_cidr,
+            'first_host': first_host,
             'last_host': last_host,           # None if netmask is too small
             'is_multicast': interface.is_multicast,
             'is_private': interface.is_private,
