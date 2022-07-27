@@ -98,26 +98,49 @@ def parse(
     if jc.utils.has_data(data):
 
         interface = ipaddress.ip_interface(data.strip())
+        network_string = str(interface.network).split('/')[0]
+        network_cidr = str(interface.with_prefixlen).split('/')[1]
+        network = ipaddress.ip_network(f'{network_string}/{network_cidr}')
 
         raw_output = {
             'version': int(interface.version),
+            'max_prefix_length': int(interface.max_prefixlen),
             'ip': str(interface.ip),
             'ip_compressed': str(interface.compressed),
             'ip_exploded': str(interface.exploded),
-            'ip_hex': _b2a(interface.packed),
             'dns_ptr': str(interface.reverse_pointer),
-            'network': str(interface.network).split('/')[0],
-            'netmask': str(interface.with_netmask).split('/')[1],
-            'cidr_netmask': str(interface.with_prefixlen).split('/')[1],
+            'network': network_string,
+            'broadcast': str(network.broadcast_address),
             'hostmask': str(interface.with_hostmask).split('/')[1],
-            'max_prefix_length': int(interface.max_prefixlen),
+            'netmask': str(interface.with_netmask).split('/')[1],
+            'cidr_netmask': network_cidr,
+            'first_host': 1,     # implement
+            'last_host': 2,      # implement
             'is_multicast': interface.is_multicast,
             'is_private': interface.is_private,
             'is_global': interface.is_global,
             'is_link_local': interface.is_link_local,
             'is_loopback': interface.is_loopback,
             'is_reserved': interface.is_reserved,
-            'is_unspecified': interface.is_unspecified
+            'is_unspecified': interface.is_unspecified,
+            'hex': {
+                'ip': _b2a(interface.packed),
+                'network': 1,       # implement
+                'broadcast': 2,     # implement
+                'hostmask': 3,      # implement
+                'netmask': 4,       # implement
+                'first_host': 1,     # implement
+                'last_host': 2,      # implement
+            },
+            'bin': {
+                'ip': 1,            # implement
+                'network': 1,       # implement
+                'broadcast': 2,     # implement
+                'hostmask': 3,      # implement
+                'netmask': 4,       # implement
+                'first_host': 1,     # implement
+                'last_host': 2,      # implement
+            }
         }
 
     return raw_output if raw else _process(raw_output)
