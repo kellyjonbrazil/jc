@@ -108,18 +108,31 @@ def parse(
         bare_ip = ipaddress.ip_address(bare_ip_string)
         ip_ptr = bare_ip.reverse_pointer
 
+        # fix for ipv6-only attributes
+        scope_id = None
+        ipv4_mapped = None
+        sixtofour = None
+        teredo_client = None
+        teredo_server = None
+        if interface.version == 6:
+            scope_id = interface.scope_id
+            ipv4_mapped = str(interface.ipv4_mapped) if interface.ipv4_mapped else None
+            sixtofour = str(interface.sixtofour) if interface.sixtofour else None
+            teredo_client = str(interface.teredo[1]) if interface.teredo else None
+            teredo_server = str(interface.teredo[0]) if interface.teredo else None
+
         # Find first and last host IPs. Fix for /31, /32, /127, /128
         if any((
-            int(interface.version) == 4 and network_cidr == 31,
-            int(interface.version) == 6 and network_cidr == 127
+            interface.version == 4 and network_cidr == 31,
+            interface.version == 6 and network_cidr == 127
         )):
             first_host = str(ipaddress.ip_address(network_string))
             last_host = str(ipaddress.ip_address(broadcast_string))
             hosts = 2
 
         elif any((
-            int(interface.version) == 4 and network_cidr == 32,
-            int(interface.version) == 6 and network_cidr == 128
+            interface.version == 4 and network_cidr == 32,
+            interface.version == 6 and network_cidr == 128
         )):
             first_host = bare_ip_string
             last_host = bare_ip_string
@@ -132,10 +145,15 @@ def parse(
 
         raw_output = {
             'version': int(interface.version),
-            'max_prefix_length': int(interface.max_prefixlen),
+            'max_prefix_length': interface.max_prefixlen,
             'ip': bare_ip_string,
             'ip_compressed': str(interface.compressed),
             'ip_exploded': str(interface.exploded),
+            'scope_id': scope_id,
+            'ipv4_mapped': ipv4_mapped,
+            'six_to_four': sixtofour,
+            'teredo_client': teredo_client,
+            'teredo_server': teredo_server,
             'dns_ptr': ip_ptr,
             'network': network_string,
             'broadcast': broadcast_string,
