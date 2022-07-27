@@ -322,15 +322,16 @@ Local plugins may override default parsers.
 
 #### Locale
 
-For best results set the `LANG` locale environment variable to `C` or
-`en_US.UTF-8`. For example, either by setting directly on the command-line:
+For best results set the locale environment variables to `C` or
+`en_US.UTF-8` by modifying the `LC_ALL` variable:
 ```
-$ LANG=C date | jc --date
+$ LC_ALL=C date | jc --date
 ```
 
-or by exporting to the environment before running commands:
+You can also set the locale variables individually:
 ```
 $ export LANG=C
+$ export LC_NUMERIC=C
 ```
 
 On some older systems UTF-8 output will be downgraded to ASCII with `\\u`

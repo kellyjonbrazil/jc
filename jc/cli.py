@@ -638,7 +638,7 @@ def main():
 
         utils.error_message([
             f'Parser issue with {parser_name}:', f'{e.__class__.__name__}: {e}',
-            'If this is the correct parser, try setting the locale to C (LANG=C).',
+            'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
             f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
@@ -654,7 +654,7 @@ def main():
         utils.error_message([
             f'{parser_name} parser could not parse the input data.',
             f'{streaming_msg}',
-            'If this is the correct parser, try setting the locale to C (LANG=C).',
+            'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
             f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
