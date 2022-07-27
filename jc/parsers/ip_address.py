@@ -30,6 +30,7 @@ Examples:
 from typing import List, Dict
 import binascii
 import ipaddress
+from collections import deque
 import jc.utils
 
 
@@ -101,21 +102,37 @@ def parse(
         network_string = str(interface.network).split('/')[0]
         network_cidr = str(interface.with_prefixlen).split('/')[1]
         network = ipaddress.ip_network(f'{network_string}/{network_cidr}')
+        bare_ip_string = str(interface.ip)
+        bare_ip = ipaddress.ip_address(bare_ip_string)
+        ip_ptr = bare_ip.reverse_pointer
+
+        first_host = next(network.hosts())
+
+        # hack to speed up iterating through large ipv6 subnets
+        # only do last_host for masks >= /16 (ipv4) or >= /120 (ipv6)
+        last_host = None
+
+        if any((
+            int(interface.version) == 4 and int(network_cidr) >= 16,
+            int(interface.version) == 6 and int(network_cidr) >= 120,
+        )):
+            dd = deque(network.hosts(), maxlen=1)
+            last_host = str(dd.pop())
 
         raw_output = {
             'version': int(interface.version),
             'max_prefix_length': int(interface.max_prefixlen),
-            'ip': str(interface.ip),
+            'ip': bare_ip_string,
             'ip_compressed': str(interface.compressed),
             'ip_exploded': str(interface.exploded),
-            'dns_ptr': str(interface.reverse_pointer),
+            'dns_ptr': ip_ptr,
             'network': network_string,
             'broadcast': str(network.broadcast_address),
             'hostmask': str(interface.with_hostmask).split('/')[1],
             'netmask': str(interface.with_netmask).split('/')[1],
-            'cidr_netmask': network_cidr,
-            'first_host': 1,     # implement
-            'last_host': 2,      # implement
+            'cidr_netmask': int(network_cidr),
+            'first_host': str(first_host),
+            'last_host': last_host,           # None if netmask is too small
             'is_multicast': interface.is_multicast,
             'is_private': interface.is_private,
             'is_global': interface.is_global,
@@ -124,7 +141,7 @@ def parse(
             'is_reserved': interface.is_reserved,
             'is_unspecified': interface.is_unspecified,
             'hex': {
-                'ip': _b2a(interface.packed),
+                'ip': _b2a(bare_ip.packed),
                 'network': 1,       # implement
                 'broadcast': 2,     # implement
                 'hostmask': 3,      # implement
