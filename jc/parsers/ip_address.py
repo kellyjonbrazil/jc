@@ -102,22 +102,14 @@ def parse(
         network_string = str(interface.network).split('/')[0]
         network_cidr = int(str(interface.with_prefixlen).split('/')[1])
         network = ipaddress.ip_network(f'{network_string}/{network_cidr}')
+        broadcast_string = str(network.broadcast_address)
         bare_ip_string = str(interface.ip)
         bare_ip = ipaddress.ip_address(bare_ip_string)
         ip_ptr = bare_ip.reverse_pointer
 
-        first_host = str(next(network.hosts()))
-
-        # hack to speed up iterating through large ipv6 subnets
-        # only do last_host for masks >= /16 (ipv4) or >= /120 (ipv6)
-        last_host = None
-
-        if any((
-            int(interface.version) == 4 and network_cidr >= 16,
-            int(interface.version) == 6 and network_cidr >= 120,
-        )):
-            dd = deque(network.hosts(), maxlen=1)
-            last_host = str(dd.pop())
+        # TODO: fix for /30, /31, /32, etc.
+        first_host = str(ipaddress.ip_address(network_string) + 1)
+        last_host = str(ipaddress.ip_address(broadcast_string) - 1)
 
         raw_output = {
             'version': int(interface.version),
@@ -127,12 +119,12 @@ def parse(
             'ip_exploded': str(interface.exploded),
             'dns_ptr': ip_ptr,
             'network': network_string,
-            'broadcast': str(network.broadcast_address),
+            'broadcast': broadcast_string,
             'hostmask': str(interface.with_hostmask).split('/')[1],
             'netmask': str(interface.with_netmask).split('/')[1],
             'cidr_netmask': network_cidr,
             'first_host': first_host,
-            'last_host': last_host,           # None if netmask is too small
+            'last_host': last_host,
             'is_multicast': interface.is_multicast,
             'is_private': interface.is_private,
             'is_global': interface.is_global,
