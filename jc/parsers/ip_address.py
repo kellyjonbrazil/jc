@@ -30,7 +30,6 @@ Examples:
 from typing import Dict
 import binascii
 import ipaddress
-from collections import deque
 import jc.utils
 
 
@@ -107,9 +106,27 @@ def parse(
         bare_ip = ipaddress.ip_address(bare_ip_string)
         ip_ptr = bare_ip.reverse_pointer
 
-        # TODO: fix for /30, /31, /32, etc.
-        first_host = str(ipaddress.ip_address(network_string) + 1)
-        last_host = str(ipaddress.ip_address(broadcast_string) - 1)
+        # Find first and last host IPs. Fix for /31, /32, /127, /128
+        if any((
+            int(interface.version) == 4 and network_cidr == 31,
+            int(interface.version) == 6 and network_cidr == 127
+        )):
+            first_host = str(ipaddress.ip_address(network_string))
+            last_host = str(ipaddress.ip_address(broadcast_string))
+            hosts = 2
+
+        elif any((
+            int(interface.version) == 4 and network_cidr == 32,
+            int(interface.version) == 6 and network_cidr == 128
+        )):
+            first_host = bare_ip_string
+            last_host = bare_ip_string
+            hosts = 1
+
+        else:
+            first_host = str(ipaddress.ip_address(network_string) + 1)
+            last_host = str(ipaddress.ip_address(broadcast_string) - 1)
+            hosts = int(ipaddress.ip_address(broadcast_string) - 1) - int(ipaddress.ip_address(network_string) + 1) + 1
 
         raw_output = {
             'version': int(interface.version),
@@ -123,6 +140,7 @@ def parse(
             'hostmask': str(interface.with_hostmask).split('/')[1],
             'netmask': str(interface.with_netmask).split('/')[1],
             'cidr_netmask': network_cidr,
+            'hosts': hosts,
             'first_host': first_host,
             'last_host': last_host,
             'is_multicast': interface.is_multicast,
