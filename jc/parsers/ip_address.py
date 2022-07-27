@@ -102,6 +102,8 @@ def parse(
         network_cidr = int(str(interface.with_prefixlen).split('/')[1])
         network = ipaddress.ip_network(f'{network_string}/{network_cidr}')
         broadcast_string = str(network.broadcast_address)
+        hostmask_string = str(interface.with_hostmask).split('/')[1]
+        netmask_string = str(interface.with_netmask).split('/')[1]
         bare_ip_string = str(interface.ip)
         bare_ip = ipaddress.ip_address(bare_ip_string)
         ip_ptr = bare_ip.reverse_pointer
@@ -137,8 +139,8 @@ def parse(
             'dns_ptr': ip_ptr,
             'network': network_string,
             'broadcast': broadcast_string,
-            'hostmask': str(interface.with_hostmask).split('/')[1],
-            'netmask': str(interface.with_netmask).split('/')[1],
+            'hostmask': hostmask_string,
+            'netmask': netmask_string,
             'cidr_netmask': network_cidr,
             'hosts': hosts,
             'first_host': first_host,
@@ -152,21 +154,21 @@ def parse(
             'is_unspecified': interface.is_unspecified,
             'hex': {
                 'ip': _b2a(bare_ip.packed),
-                'network': 1,       # implement
-                'broadcast': 2,     # implement
-                'hostmask': 3,      # implement
-                'netmask': 4,       # implement
-                'first_host': 1,     # implement
-                'last_host': 2,      # implement
+                'network': _b2a(ipaddress.ip_address(network_string).packed),
+                'broadcast': _b2a(ipaddress.ip_address(broadcast_string).packed),
+                'hostmask': _b2a(ipaddress.ip_address(hostmask_string).packed),
+                'netmask': _b2a(ipaddress.ip_address(netmask_string).packed),
+                'first_host': _b2a(ipaddress.ip_address(first_host).packed),
+                'last_host': _b2a(ipaddress.ip_address(last_host).packed)
             },
             'bin': {
-                'ip': 1,            # implement
-                'network': 1,       # implement
-                'broadcast': 2,     # implement
-                'hostmask': 3,      # implement
-                'netmask': 4,       # implement
-                'first_host': 1,     # implement
-                'last_host': 2,      # implement
+                'ip': format(int(bare_ip), '0>' + str(interface.max_prefixlen) +'b'),
+                'network': format(int(ipaddress.ip_address(network_string)), '0>' + str(interface.max_prefixlen) +'b'),
+                'broadcast': format(int(ipaddress.ip_address(broadcast_string)), '0>' + str(interface.max_prefixlen) +'b'),
+                'hostmask': format(int(ipaddress.ip_address(hostmask_string)), '0>' + str(interface.max_prefixlen) +'b'),
+                'netmask': format(int(ipaddress.ip_address(netmask_string)), '0>' + str(interface.max_prefixlen) +'b'),
+                'first_host': format(int(ipaddress.ip_address(first_host)), '0>' + str(interface.max_prefixlen) +'b'),
+                'last_host': format(int(ipaddress.ip_address(last_host)), '0>' + str(interface.max_prefixlen) +'b'),
             }
         }
 
