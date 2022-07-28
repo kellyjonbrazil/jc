@@ -663,8 +663,8 @@ def parse(
             },
             'bin': {
                 'ip': _bin_format(bare_ip, interface.max_prefixlen),
-                'network':  _bin_format(network_ipobj, interface.max_prefixlen),
-                'broadcast':  _bin_format(broadcast_ipobj, interface.max_prefixlen),
+                'network': _bin_format(network_ipobj, interface.max_prefixlen),
+                'broadcast': _bin_format(broadcast_ipobj, interface.max_prefixlen),
                 'hostmask': _bin_format(hostmask_ipobj, interface.max_prefixlen),
                 'netmask': _bin_format(netmask_ipobj, interface.max_prefixlen),
                 'first_host': _bin_format(first_host_ipobj, interface.max_prefixlen),
