@@ -459,7 +459,7 @@ Examples:
       }
     }
 """
-from typing import Dict
+from typing import Dict, Union
 import binascii
 import ipaddress
 import jc.utils
@@ -468,7 +468,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'IP Address string parser'
+    description = 'IPv4 and IPv6 Address string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
@@ -504,6 +504,10 @@ def _b2a(byte_string: bytes) -> str:
       return colon_seperated
 
 
+def _bin_format(ip: Union[ipaddress.IPv4Address,ipaddress.IPv6Address], length: int) -> str:
+    return format(int(ip), '0>' + str(length) +'b')
+
+
 def parse(
     data: str,
     raw: bool = False,
@@ -536,12 +540,21 @@ def parse(
           data = data.strip()
 
         interface = ipaddress.ip_interface(data)
+
         network_string = str(interface.network).split('/')[0]
         network_cidr = int(str(interface.with_prefixlen).split('/')[1])
         network = ipaddress.ip_network(f'{network_string}/{network_cidr}')
+        network_ipobj = ipaddress.ip_address(network_string)
+
         broadcast_string = str(network.broadcast_address)
+        broadcast_ipobj = ipaddress.ip_address(broadcast_string)
+
         hostmask_string = str(interface.with_hostmask).split('/')[1]
+        hostmask_ipobj = ipaddress.ip_address(hostmask_string)
+
         netmask_string = str(interface.with_netmask).split('/')[1]
+        netmask_ipobj = ipaddress.ip_address(netmask_string)
+
         bare_ip_string = str(interface.ip)
         bare_ip = ipaddress.ip_address(bare_ip_string)
         ip_ptr = bare_ip.reverse_pointer
@@ -564,8 +577,8 @@ def parse(
             interface.version == 4 and network_cidr == 31,
             interface.version == 6 and network_cidr == 127
         )):
-            first_host = str(ipaddress.ip_address(network_string))
-            last_host = str(ipaddress.ip_address(broadcast_string))
+            first_host = network_string
+            last_host = broadcast_string
             hosts = 2
 
         elif any((
@@ -577,12 +590,15 @@ def parse(
             hosts = 1
 
         else:
-            first_host = str(ipaddress.ip_address(network_string) + 1)
-            last_host = str(ipaddress.ip_address(broadcast_string) - 1)
-            hosts = int(ipaddress.ip_address(broadcast_string) - 1) - int(ipaddress.ip_address(network_string) + 1) + 1
+            first_host = str(network_ipobj + 1)
+            last_host = str(broadcast_ipobj - 1)
+            hosts = int(broadcast_ipobj - 1) - int(network_ipobj + 1) + 1
+
+        first_host_ipobj = ipaddress.ip_address(first_host)
+        last_host_ipobj = ipaddress.ip_address(last_host)
 
         raw_output = {
-            'version': int(interface.version),
+            'version': interface.version,
             'max_prefix_length': interface.max_prefixlen,
             'ip': bare_ip_string,
             'ip_compressed': bare_ip.compressed,
@@ -610,28 +626,28 @@ def parse(
             'is_unspecified': interface.is_unspecified,
             'int': {
                 'ip': int(interface),
-                'network': int(ipaddress.ip_address(network_string)),
-                'broadcast': int(ipaddress.ip_address(broadcast_string)),
-                'first_host': int(ipaddress.ip_address(first_host)),
-                'last_host': int(ipaddress.ip_address(last_host))
+                'network': int(network_ipobj),
+                'broadcast': int(broadcast_ipobj),
+                'first_host': int(first_host_ipobj),
+                'last_host': int(last_host_ipobj)
             },
             'hex': {
                 'ip': _b2a(bare_ip.packed),
-                'network': _b2a(ipaddress.ip_address(network_string).packed),
-                'broadcast': _b2a(ipaddress.ip_address(broadcast_string).packed),
-                'hostmask': _b2a(ipaddress.ip_address(hostmask_string).packed),
-                'netmask': _b2a(ipaddress.ip_address(netmask_string).packed),
-                'first_host': _b2a(ipaddress.ip_address(first_host).packed),
-                'last_host': _b2a(ipaddress.ip_address(last_host).packed)
+                'network': _b2a(network_ipobj.packed),
+                'broadcast': _b2a(broadcast_ipobj.packed),
+                'hostmask': _b2a(hostmask_ipobj.packed),
+                'netmask': _b2a(netmask_ipobj.packed),
+                'first_host': _b2a(first_host_ipobj.packed),
+                'last_host': _b2a(last_host_ipobj.packed)
             },
             'bin': {
-                'ip': format(int(bare_ip), '0>' + str(interface.max_prefixlen) +'b'),
-                'network': format(int(ipaddress.ip_address(network_string)), '0>' + str(interface.max_prefixlen) +'b'),
-                'broadcast': format(int(ipaddress.ip_address(broadcast_string)), '0>' + str(interface.max_prefixlen) +'b'),
-                'hostmask': format(int(ipaddress.ip_address(hostmask_string)), '0>' + str(interface.max_prefixlen) +'b'),
-                'netmask': format(int(ipaddress.ip_address(netmask_string)), '0>' + str(interface.max_prefixlen) +'b'),
-                'first_host': format(int(ipaddress.ip_address(first_host)), '0>' + str(interface.max_prefixlen) +'b'),
-                'last_host': format(int(ipaddress.ip_address(last_host)), '0>' + str(interface.max_prefixlen) +'b'),
+                'ip': _bin_format(bare_ip, interface.max_prefixlen),
+                'network':  _bin_format(network_ipobj, interface.max_prefixlen),
+                'broadcast':  _bin_format(broadcast_ipobj, interface.max_prefixlen),
+                'hostmask': _bin_format(hostmask_ipobj, interface.max_prefixlen),
+                'netmask': _bin_format(netmask_ipobj, interface.max_prefixlen),
+                'first_host': _bin_format(first_host_ipobj, interface.max_prefixlen),
+                'last_host': _bin_format(last_host_ipobj, interface.max_prefixlen)
             }
         }
 
