@@ -460,6 +460,7 @@ Examples:
     }
 """
 from typing import Dict, Union
+import re
 import binascii
 import ipaddress
 import jc.utils
@@ -539,7 +540,12 @@ def parse(
         except Exception:
           data = data.strip()
 
-        interface = ipaddress.ip_interface(data)
+        # python versions < 3.9 do not handle the ipv6 scope, so remove it if parsing fails
+        try:
+            interface = ipaddress.ip_interface(data)
+        except ValueError:
+            data = re.sub(r'%[a-zA-Z0-9]*[^/]', data)
+            interface = ipaddress.ip_interface(data)
 
         network_string = str(interface.network).split('/')[0]
         network_cidr = int(str(interface.with_prefixlen).split('/')[1])
@@ -566,7 +572,12 @@ def parse(
         teredo_client = None
         teredo_server = None
         if interface.version == 6:
-            scope_id = interface.scope_id
+            # scope_id not available in python version < 3.9
+            try:
+                scope_id = interface.scope_id
+            except AttributeError:
+                pass
+
             ipv4_mapped = str(interface.ipv4_mapped) if interface.ipv4_mapped else None
             sixtofour = str(interface.sixtofour) if interface.sixtofour else None
             teredo_client = str(interface.teredo[1]) if interface.teredo else None
