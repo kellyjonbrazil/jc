@@ -504,7 +504,7 @@ def _b2a(byte_string: bytes) -> str:
       return colon_seperated
 
 
-def _bin_format(ip: Union[ipaddress.IPv4Address,ipaddress.IPv6Address], length: int) -> str:
+def _bin_format(ip: Union[ipaddress.IPv4Address, ipaddress.IPv6Address], length: int) -> str:
     return format(int(ip), '0>' + str(length) +'b')
 
 
