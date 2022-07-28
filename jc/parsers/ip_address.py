@@ -534,17 +534,25 @@ def parse(
 
     if jc.utils.has_data(data):
 
+        SCOPE_PATTERN = re.compile(r'%[a-zA-Z0-9]*[^/]')
+
         # Accept IPs entered as integer notation
         try:
           data = int(data)  # type: ignore
         except Exception:
           data = data.strip()
 
-        # python versions < 3.9 do not handle the ipv6 scope, so remove it if parsing fails
+        # python versions < 3.9 do not handle the ipv6 scope, so pop it
+        # and use instead of ipaddress.scope_id if parsing fails
+        scope_string = None
         try:
             interface = ipaddress.ip_interface(data)
         except ValueError:
-            data = re.sub(r'%[a-zA-Z0-9]*[^/]', '', data)
+            scope_match = re.match(SCOPE_PATTERN, data)
+            if scope_match:
+                scope_string = scope_match.group(0)
+
+            data = re.sub(SCOPE_PATTERN, '', data)
             interface = ipaddress.ip_interface(data)
 
         network_string = str(interface.network).split('/')[0]
@@ -576,7 +584,7 @@ def parse(
             try:
                 scope_id = interface.scope_id
             except AttributeError:
-                pass
+                scope_id = scope_string
 
             ipv4_mapped = str(interface.ipv4_mapped) if interface.ipv4_mapped else None
             sixtofour = str(interface.sixtofour) if interface.sixtofour else None
