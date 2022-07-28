@@ -545,12 +545,14 @@ def parse(
         # python versions < 3.9 do not handle the ipv6 scope, so pop it
         # and use instead of ipaddress.scope_id if parsing fails
         scope_string = None
+
         try:
             interface = ipaddress.ip_interface(data)
+
         except ValueError:
-            scope_match = re.match(SCOPE_PATTERN, data)
+            scope_match = re.search(SCOPE_PATTERN, data)
             if scope_match:
-                scope_string = scope_match.group(0)
+                scope_string = scope_match.group(0)[1:]
 
             data = re.sub(SCOPE_PATTERN, '', data)
             interface = ipaddress.ip_interface(data)
