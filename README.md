@@ -189,6 +189,7 @@ option.
 | `          --ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
 | `       --iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |
 | `     --iostat-s` | `iostat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s)       |
+| `   --ip-address` | IP Address string parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_address)     |
 | `     --iptables` | `iptables` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables)       |
 | ` --iso-datetime` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iso_datetime)   |
 | `      --iw-scan` | `iw dev [device] scan` command parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan)        |
@@ -432,15 +433,16 @@ Local plugins may override default parsers.
 
 #### Locale
 
-For best results set the `LANG` locale environment variable to `C` or
-`en_US.UTF-8`. For example, either by setting directly on the command-line:
+For best results set the locale environment variables to `C` or
+`en_US.UTF-8` by modifying the `LC_ALL` variable:
 ```
-$ LANG=C date | jc --date
+$ LC_ALL=C date | jc --date
 ```
 
-or by exporting to the environment before running commands:
+You can also set the locale variables individually:
 ```
 $ export LANG=C
+$ export LC_NUMERIC=C
 ```
 
 On some older systems UTF-8 output will be downgraded to ASCII with `\\u`
