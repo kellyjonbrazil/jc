@@ -404,7 +404,7 @@ Examples:
     }
 
     # Teredo Address
-    % echo 2001:0000:4136:e378:8000:63bf:3fff:fdd2 | jc --ip-address -p
+    $ echo 2001:0000:4136:e378:8000:63bf:3fff:fdd2 | jc --ip-address -p
     {
       "version": 6,
       "max_prefix_length": 128,

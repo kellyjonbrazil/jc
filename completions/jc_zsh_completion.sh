@@ -137,7 +137,7 @@ _jc() {
         '--ini:INI file parser'
         '--iostat:`iostat` command parser'
         '--iostat-s:`iostat` command streaming parser'
-        '--ip-address:IP Address string parser'
+        '--ip-address:IPv4 and IPv6 Address string parser'
         '--iptables:`iptables` command parser'
         '--iso-datetime:ISO 8601 Datetime string parser'
         '--iw-scan:`iw dev [device] scan` command parser'
