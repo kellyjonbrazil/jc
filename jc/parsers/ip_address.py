@@ -544,7 +544,7 @@ def parse(
         try:
             interface = ipaddress.ip_interface(data)
         except ValueError:
-            data = re.sub(r'%[a-zA-Z0-9]*[^/]', data)
+            data = re.sub(r'%[a-zA-Z0-9]*[^/]', '', data)
             interface = ipaddress.ip_interface(data)
 
         network_string = str(interface.network).split('/')[0]
