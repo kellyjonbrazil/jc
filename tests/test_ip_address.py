@@ -30,6 +30,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.ip_address.parse(data, quiet=True), expected)
 
 
+    def test_ip_address_ipv4_dotnetmask(self):
+        """
+        Test ipv4 address with a dotted netmask string
+        """
+        data = r'192.168.0.1/255.255.128.0'
+        expected = json.loads(r'''{"version":4,"max_prefix_length":32,"ip":"192.168.0.1","ip_compressed":"192.168.0.1","ip_exploded":"192.168.0.1","scope_id":null,"ipv4_mapped":null,"six_to_four":null,"teredo_client":null,"teredo_server":null,"dns_ptr":"1.0.168.192.in-addr.arpa","network":"192.168.0.0","broadcast":"192.168.127.255","hostmask":"0.0.127.255","netmask":"255.255.128.0","cidr_netmask":17,"hosts":32766,"first_host":"192.168.0.1","last_host":"192.168.127.254","is_multicast":false,"is_private":true,"is_global":false,"is_link_local":false,"is_loopback":false,"is_reserved":false,"is_unspecified":false,"int":{"ip":3232235521,"network":3232235520,"broadcast":3232268287,"first_host":3232235521,"last_host":3232268286},"hex":{"ip":"c0:a8:00:01","network":"c0:a8:00:00","broadcast":"c0:a8:7f:ff","hostmask":"00:00:7f:ff","netmask":"ff:ff:80:00","first_host":"c0:a8:00:01","last_host":"c0:a8:7f:fe"},"bin":{"ip":"11000000101010000000000000000001","network":"11000000101010000000000000000000","broadcast":"11000000101010000111111111111111","hostmask":"00000000000000000111111111111111","netmask":"11111111111111111000000000000000","first_host":"11000000101010000000000000000001","last_host":"11000000101010000111111111111110"}}''')
+        self.assertEqual(jc.parsers.ip_address.parse(data, quiet=True), expected)
+
+
     def test_ip_address_ipv4_integer(self):
         """
         Test ipv4 address integer string
