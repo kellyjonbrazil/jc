@@ -2,6 +2,7 @@ jc changelog
 
 xxxxxxxx v1.20.5
 - Add IP Address string parser
+- Fix `lsusb` command parser for output containing a `Device Qualifier` section
 - Change LANG=C to LC_ALL=C in locale instructions
 
 20220723 v1.20.4
