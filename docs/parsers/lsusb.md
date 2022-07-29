@@ -134,6 +134,12 @@ Schema:
             }
           }
         },
+        "device_qualifier": {
+          "<item>": {
+            "value":                          string,
+            "description":                    string
+          }
+        },
         "device_status": {
           "value":                            string,
           "description":                      string
