@@ -329,6 +329,7 @@ class _LsUsb():
         self.report_descriptors_list = []
         self.hub_descriptor_list = []
         self.hub_port_status_list = []
+        self.device_qualifier_list = []
         self.device_status_list = []
 
     @staticmethod
@@ -484,7 +485,8 @@ class _LsUsb():
             '        HID Device Descriptor:': 'hid_device_descriptor',
             '         Report Descriptors:': 'report_descriptors',
             'Hub Descriptor:': 'hub_descriptor',
-            ' Hub Port Status:': 'hub_port_status'
+            ' Hub Port Status:': 'hub_port_status',
+            'Device Qualifier (for other device speed):': 'device_qualifier'
         }
 
         for sec_string, section_val in string_section_map.items():
@@ -508,7 +510,8 @@ class _LsUsb():
             'hid_device_descriptor': self.hid_device_descriptor_list,
             'report_descriptors': self.report_descriptors_list,
             'endpoint_descriptor': self.endpoint_descriptor_list,
-            'hub_descriptor': self.hub_descriptor_list
+            'hub_descriptor': self.hub_descriptor_list,
+            'device_qualifier': self.device_qualifier_list
         }
 
         for sec in section_list_map:
@@ -545,6 +548,7 @@ class _LsUsb():
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0] = {}
         ['hub_descriptor'] = {}
         ['hub_descriptor']['hub_port_status'] = {}
+        ['device_qualifier'] = {}
         ['device_status'] = {}
         """
         for idx, item in enumerate(self.bus_list):
@@ -795,6 +799,12 @@ class _LsUsb():
                 if '_state' in hps[keyname] and hps[keyname]['_state']['bus_idx'] == idx:
                     self.output_line['hub_descriptor']['hub_port_status'].update(hps)
                     del self.output_line['hub_descriptor']['hub_port_status'][keyname]['_state']
+
+            for dq in self.device_qualifier_list:
+                keyname = tuple(dq.keys())[0]
+                if '_state' in dq[keyname] and dq[keyname]['_state']['bus_idx'] == idx:
+                    self.output_line['device_qualifier'].update(dq)
+                    del self.output_line['device_qualifier'][keyname]['_state']
 
             for ds in self.device_status_list:
                 if '_state' in ds and ds['_state']['bus_idx'] == idx:
