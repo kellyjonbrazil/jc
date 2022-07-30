@@ -492,7 +492,8 @@ class _LsUsb():
             '         Report Descriptors:': 'report_descriptors',
             'Hub Descriptor:': 'hub_descriptor',
             ' Hub Port Status:': 'hub_port_status',
-            'Device Qualifier (for other device speed):': 'device_qualifier'
+            'Device Qualifier (for other device speed):': 'device_qualifier',
+            'Binary Object Store Descriptor:': None   # not implemented
         }
 
         for sec_string, section_val in string_section_map.items():
