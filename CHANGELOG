@@ -4,7 +4,7 @@ xxxxxxxx v1.20.5
 - Add IP Address string parser
 - Fix `lsusb` command parser for output containing a `Device Qualifier` and
   `Binary Object Store Descriptor` sections
-- Change LANG=C to LC_ALL=C in locale instructions
+- Change `LANG=C` to `LC_ALL=C` in locale instructions
 - Add `__main__.py` to package allowing `python -m jc` usage
 
 20220723 v1.20.4

@@ -203,19 +203,23 @@ Note: The application data directory follows the XDG Base Directory Specificatio
 .SH CAVEATS
 \fBLocale\fP
 
-For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
+For best results set the locale environment variables to \fBC\fP or
+\fBen_US.UTF-8\fP by modifying the \fBLC_ALL\fP variable:
 
 .RS
-$ LANG=C date | jc \fB--date\fP
+$ LC_ALL=C date | jc \fB--date\fP
 .RE
 
-or by exporting to the environment before running commands:
+You can also set the locale variables individually:
 
 .RS
 $ export LANG=C
+
+$ export LC_NUMERIC=C
 .RE
 
-On some older systems UTF-8 output will be downgraded to ASCII with \fB\\u\fP escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
+On some older systems UTF-8 output will be downgraded to ASCII with \fB\\u\fP
+escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
 
 \fBTimezones\fP
 
