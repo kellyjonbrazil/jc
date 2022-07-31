@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aDate</key>
+	<date>2022-07-31T16:34:30Z</date>
+	<key>aDict</key>
+	<dict>
+		<key>aFalseValue</key>
+		<false/>
+		<key>aThirdString</key>
+		<string>Mässig, Maß</string>
+		<key>aTrueValue</key>
+		<true/>
+		<key>anotherString</key>
+		<string>&lt;hello &amp; hi there!&gt;</string>
+	</dict>
+	<key>aFloat</key>
+	<real>0.1</real>
+	<key>aList</key>
+	<array>
+		<string>A</string>
+		<string>B</string>
+		<integer>12</integer>
+		<real>32.1</real>
+		<array>
+			<integer>1</integer>
+			<integer>2</integer>
+			<integer>3</integer>
+		</array>
+	</array>
+	<key>aString</key>
+	<string>Doodah</string>
+	<key>anInt</key>
+	<integer>728</integer>
+	<key>someData</key>
+	<data>
+	PGJpbmFyeSBndW5rPg==
+	</data>
+	<key>someMoreData</key>
+	<data>
+	PGxvdHMgb2YgYmluYXJ5IGd1bms+PGxvdHMgb2YgYmluYXJ5IGd1bms+PGxvdHMgb2Yg
+	YmluYXJ5IGd1bms+PGxvdHMgb2YgYmluYXJ5IGd1bms+PGxvdHMgb2YgYmluYXJ5IGd1
+	bms+PGxvdHMgb2YgYmluYXJ5IGd1bms+PGxvdHMgb2YgYmluYXJ5IGd1bms+PGxvdHMg
+	b2YgYmluYXJ5IGd1bms+PGxvdHMgb2YgYmluYXJ5IGd1bms+PGxvdHMgb2YgYmluYXJ5
+	IGd1bms+
+	</data>
+</dict>
+</plist>
