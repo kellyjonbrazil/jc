@@ -79,6 +79,7 @@ parsers = [
     'ping-s',
     'pip-list',
     'pip-show',
+    'plist',
     'postconf',
     'ps',
     'route',

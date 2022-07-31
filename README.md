@@ -218,6 +218,7 @@ option.
 | `       --ping-s` | `ping` and `ping6` command streaming parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s)         |
 | `     --pip-list` | `pip list` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)       |
 | `     --pip-show` | `pip show` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)       |
+| `        --plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 | `     --postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
 | `           --ps` | `ps` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)             |
 | `        --route` | `route` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/route)          |
