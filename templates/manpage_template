@@ -9,7 +9,7 @@ or "Magic" syntax:
 \fBjc\fP [OPTIONS] COMMAND
 
 .SH DESCRIPTION
-\fBjc\fP JSONifies the output of many CLI tools and file-types for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
+\fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
 
 .SH OPTIONS
 .B

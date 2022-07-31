@@ -13,9 +13,9 @@ for an example.
 # JC
 JSON Convert
 
-`jc` JSONifies the output of many CLI tools and file-types for easier parsing in
-scripts. See the [**Parsers**](#parsers) section for supported commands and
-file-types.
+`jc` JSONifies the output of many CLI tools, file-types, and common strings
+for easier parsing in scripts. See the [**Parsers**](#parsers) section for
+supported commands, file-types, and strings.
 ```bash
 dig example.com | jc --dig
 ```
