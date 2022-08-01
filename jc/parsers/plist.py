@@ -145,7 +145,11 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        raw_output = plistlib.loads(data)
+        try:
+            raw_output = plistlib.loads(data)
+        except plistlib.InvalidFileException:
+            pass
+
         raw_output = _fix_objects(raw_output)
 
     return raw_output if raw else _process(raw_output)
