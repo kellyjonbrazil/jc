@@ -93,6 +93,7 @@ Use Cases:
 - [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 - [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/parsing-command-output-in-saltstack-with-jc/)
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
+- [FortiSOAR command output parsing](https://docs.fortinet.com/document/fortisoar/1.0.0/jc-parse-command-output/323/jc-parse-command-output-v1-0-0)
 
 ## Installation
 There are several ways to get `jc`. You can install via `pip`, OS package
