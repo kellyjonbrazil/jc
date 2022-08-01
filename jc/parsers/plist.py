@@ -138,18 +138,14 @@ def parse(
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
 
-    if isinstance(data, str):
-        data = bytes(data, 'utf-8')
-
     raw_output: Dict = {}
 
     if jc.utils.has_data(data):
 
-        try:
-            raw_output = plistlib.loads(data)
-        except plistlib.InvalidFileException:
-            pass
+        if isinstance(data, str):
+            data = bytes(data, 'utf-8')
 
+        raw_output = plistlib.loads(data)
         raw_output = _fix_objects(raw_output)
 
     return raw_output if raw else _process(raw_output)
