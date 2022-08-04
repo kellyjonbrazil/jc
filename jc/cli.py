@@ -442,21 +442,21 @@ def combined_exit_code(program_exit=0, jc_exit=0):
 
 def add_timestamp_to(list_or_dict, runtime, magic_exit_code):
     """This function mutates a list or dict in place"""
-    run_iso = runtime.isoformat()
     run_timestamp = runtime.timestamp()
-    timestamp_obj = {
-        '_jc_meta': {
-            'run_timestamp': run_timestamp,
-            'run_iso': run_iso
-        }
-    }
+    timestamp_obj = {'timestamp': run_timestamp}
 
     if isinstance(list_or_dict, dict):
-        list_or_dict.update(timestamp_obj)
+        if '_jc_meta' in list_or_dict:
+            list_or_dict['_jc_meta'].update(timestamp_obj)
+        else:
+            list_or_dict['_jc_meta'] = timestamp_obj
 
     elif isinstance(list_or_dict, list):
         for item in list_or_dict:
-            item.update(timestamp_obj)
+            if '_jc_meta' in item:
+                item['_jc_meta'].update(timestamp_obj)
+            else:
+                item['_jc_meta'] = timestamp_obj
 
     else:
         utils.error_message(['Parser returned an unsupported object type.'])
@@ -545,9 +545,6 @@ def main():
         utils._safe_print(zsh_completion())
         sys.exit(0)
 
-    if timestamp:
-        run_dt_utc = datetime.now(timezone.utc)
-
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
     if run_command:
@@ -623,7 +620,12 @@ def main():
                                   raw=raw,
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
+
             for line in result:
+                if timestamp:
+                    run_dt_utc = datetime.now(timezone.utc)
+                    add_timestamp_to(line, run_dt_utc, magic_exit_code)
+
                 safe_print_out(line,
                                pretty=pretty,
                                env_colors=jc_colors,
@@ -650,6 +652,7 @@ def main():
                                   quiet=quiet)
 
             if timestamp:
+                run_dt_utc = datetime.now(timezone.utc)
                 add_timestamp_to(result, run_dt_utc, magic_exit_code)
 
             safe_print_out(result,
