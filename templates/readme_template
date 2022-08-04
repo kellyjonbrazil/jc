@@ -164,6 +164,7 @@ option.
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
 | `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
 | `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
+| `-t`  | `--time-out`    | Add UTC Unix timestamp information to output                                                                        |
 | `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
 | `-v`  | `--version`     | Version information                                                                                                 |
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |

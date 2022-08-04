@@ -186,7 +186,7 @@ _jc() {
         '--systeminfo:`systeminfo` command parser'
         '--time:`/usr/bin/time` command parser'
         '--timedatectl:`timedatectl status` command parser'
-        '--timestamp:UNIX Epoch Timestamp string parser'
+        '--timestamp:Unix Epoch Timestamp string parser'
         '--top:`top -b` command parser'
         '--top-s:`top -b` command streaming parser'
         '--tracepath:`tracepath` and `tracepath6` command parser'
@@ -210,7 +210,7 @@ _jc() {
         '--yaml:YAML file parser'
         '--zipinfo:`zipinfo` command parser'
     )
-    jc_options=(--force-color -C --debug -d --monochrome -m --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
+    jc_options=(--force-color -C --debug -d --monochrome -m --pretty -p --quiet -q --raw -r --time-out -t --unbuffer -u --yaml-out -y)
     jc_options_describe=(
         '--force-color:force color output even when using pipes (overrides -m)'
         '-C:force color output even when using pipes (overrides -m)'
@@ -224,6 +224,8 @@ _jc() {
         '-q:suppress warnings (double to ignore streaming errors)'
         '--raw:raw output'
         '-r:raw output'
+        '--time-out:add UTC Unix timestamp information to output'
+        '-t:add UTC Unix timestamp information to output'
         '--unbuffer:unbuffer output'
         '-u:unbuffer output'
         '--yaml-out:YAML output'

@@ -1,4 +1,4 @@
-.TH jc 1 2022-07-31 1.20.5 "JSON Convert"
+.TH jc 1 2022-08-04 1.20.5 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -470,7 +470,7 @@ PLIST file parser
 .TP
 .B
 \fB--timestamp\fP
-UNIX Epoch Timestamp string parser
+Unix Epoch Timestamp string parser
 
 .TP
 .B
@@ -621,6 +621,10 @@ Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming pars
 .B
 \fB-r\fP, \fB--raw\fP
 Raw output. Provides more literal output, typically with string values and no additional semantic processing
+.TP
+.B
+\fB-t\fP, \fB--time-out\fP
+Add UTC Unix timestamp information to output
 .TP
 .B
 \fB-u\fP, \fB--unbuffer\fP

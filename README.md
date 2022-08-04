@@ -240,7 +240,7 @@ option.
 | `   --systeminfo` | `systeminfo` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo)     |
 | `         --time` | `/usr/bin/time` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/time)           |
 | `  --timedatectl` | `timedatectl status` command parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl)    |
-| `    --timestamp` | UNIX Epoch Timestamp string parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timestamp)      |
+| `    --timestamp` | Unix Epoch Timestamp string parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timestamp)      |
 | `          --top` | `top -b` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top)            |
 | `        --top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 | `    --tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
@@ -276,6 +276,7 @@ option.
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
 | `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
 | `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
+| `-t`  | `--time-out`    | Add UTC Unix timestamp information to output                                                                        |
 | `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
 | `-v`  | `--version`     | Version information                                                                                                 |
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |

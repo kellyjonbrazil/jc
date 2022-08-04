@@ -63,6 +63,10 @@ Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming pars
 Raw output. Provides more literal output, typically with string values and no additional semantic processing
 .TP
 .B
+\fB-t\fP, \fB--time-out\fP
+Add UTC Unix timestamp information to output
+.TP
+.B
 \fB-u\fP, \fB--unbuffer\fP
 Unbuffer output (useful for slow streaming data with streaming parsers)
 .TP

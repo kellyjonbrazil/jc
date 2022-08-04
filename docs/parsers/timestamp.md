@@ -3,7 +3,7 @@
 
 # jc.parsers.timestamp
 
-jc - JSON Convert UNIX Epoch Timestamp string parser
+jc - JSON Convert Unix Epoch Timestamp string parser
 
 The naive fields are based on the local time of the system the parser is
 run on.
