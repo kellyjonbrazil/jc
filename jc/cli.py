@@ -5,11 +5,11 @@ JC cli module
 import io
 import sys
 import os
+from datetime import datetime, timezone
 import textwrap
 import signal
 import shlex
 import subprocess
-from typing import List, Dict
 from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _get_parser, _parser_is_streaming, standard_parser_mod_list,
                   plugin_parser_mod_list, streaming_parser_mod_list)
@@ -440,6 +440,29 @@ def combined_exit_code(program_exit=0, jc_exit=0):
     return exit_code
 
 
+def add_timestamp_to(list_or_dict, runtime, magic_exit_code):
+    """This function mutates a list or dict in place"""
+    run_iso = runtime.isoformat()
+    run_timestamp = runtime.timestamp()
+    timestamp_obj = {
+        '_jc_meta': {
+            'run_timestamp': run_timestamp,
+            'run_iso': run_iso
+        }
+    }
+
+    if isinstance(list_or_dict, dict):
+        list_or_dict.update(timestamp_obj)
+
+    elif isinstance(list_or_dict, list):
+        for item in list_or_dict:
+            item.update(timestamp_obj)
+
+    else:
+        utils.error_message(['Parser returned an unsupported object type.'])
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+
 def main():
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
@@ -484,6 +507,7 @@ def main():
     quiet = 'q' in options
     ignore_exceptions = options.count('q') > 1
     raw = 'r' in options
+    timestamp = 't' in options
     unbuffer = 'u' in options
     version_info = 'v' in options
     yaml_out = 'y' in options
@@ -520,6 +544,9 @@ def main():
     if zsh_comp:
         utils._safe_print(zsh_completion())
         sys.exit(0)
+
+    if timestamp:
+        run_dt_utc = datetime.now(timezone.utc)
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
@@ -621,6 +648,9 @@ def main():
             result = parser.parse(data,
                                   raw=raw,
                                   quiet=quiet)
+
+            if timestamp:
+                add_timestamp_to(result, run_dt_utc, magic_exit_code)
 
             safe_print_out(result,
                            pretty=pretty,

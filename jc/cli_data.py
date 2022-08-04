@@ -10,6 +10,7 @@ long_options_map: Dict[str, List[str]] = {
     '--pretty': ['p', 'pretty print output'],
     '--quiet': ['q', 'suppress warnings (double to ignore streaming errors)'],
     '--raw': ['r', 'raw output'],
+    '--timestamp': ['t', 'add timestamp information to output'],
     '--unbuffer': ['u', 'unbuffer output'],
     '--version': ['v', 'version info'],
     '--yaml-out': ['y', 'YAML output'],
