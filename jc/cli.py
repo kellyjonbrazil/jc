@@ -253,17 +253,22 @@ def yaml_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
     warning message to STDERR"""
     # make ruamel.yaml import optional
     try:
-        from ruamel.yaml import YAML
+        from ruamel.yaml import YAML, representer
         YAML_INSTALLED = True
     except Exception:
         YAML_INSTALLED = False
 
     if YAML_INSTALLED:
         y_string_buf = io.BytesIO()
+
         # monkey patch to disable plugins since we don't use them and in
         # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
         # plugin code is incompatible with the pyoxidizer packager
         YAML.official_plug_ins = lambda a: []
+
+        # monkey patch to disable aliases
+        representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True
+
         yaml = YAML()
         yaml.default_flow_style = False
         yaml.explicit_start = True
