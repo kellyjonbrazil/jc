@@ -1,4 +1,4 @@
-"""jc - JSON Convert UNIX Epoch Timestamp string parser
+"""jc - JSON Convert Unix Epoch Timestamp string parser
 
 The naive fields are based on the local time of the system the parser is
 run on.
@@ -98,7 +98,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'UNIX Epoch Timestamp string parser'
+    description = 'Unix Epoch Timestamp string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
