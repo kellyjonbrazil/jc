@@ -1665,6 +1665,65 @@ $ iostat | jc --iostat -p          # or:  jc -p iostat
   }
 ]
 ```
+### IP Address strings
+```bash
+echo 192.168.2.10/24 | jc --ip-address -p
+```
+```json
+{
+  "version": 4,
+  "max_prefix_length": 32,
+  "ip": "192.168.2.10",
+  "ip_compressed": "192.168.2.10",
+  "ip_exploded": "192.168.2.10",
+  "scope_id": null,
+  "ipv4_mapped": null,
+  "six_to_four": null,
+  "teredo_client": null,
+  "teredo_server": null,
+  "dns_ptr": "10.2.168.192.in-addr.arpa",
+  "network": "192.168.2.0",
+  "broadcast": "192.168.2.255",
+  "hostmask": "0.0.0.255",
+  "netmask": "255.255.255.0",
+  "cidr_netmask": 24,
+  "hosts": 254,
+  "first_host": "192.168.2.1",
+  "last_host": "192.168.2.254",
+  "is_multicast": false,
+  "is_private": true,
+  "is_global": false,
+  "is_link_local": false,
+  "is_loopback": false,
+  "is_reserved": false,
+  "is_unspecified": false,
+  "int": {
+    "ip": 3232236042,
+    "network": 3232236032,
+    "broadcast": 3232236287,
+    "first_host": 3232236033,
+    "last_host": 3232236286
+  },
+  "hex": {
+    "ip": "c0:a8:02:0a",
+    "network": "c0:a8:02:00",
+    "broadcast": "c0:a8:02:ff",
+    "hostmask": "00:00:00:ff",
+    "netmask": "ff:ff:ff:00",
+    "first_host": "c0:a8:02:01",
+    "last_host": "c0:a8:02:fe"
+  },
+  "bin": {
+    "ip": "11000000101010000000001000001010",
+    "network": "11000000101010000000001000000000",
+    "broadcast": "11000000101010000000001011111111",
+    "hostmask": "00000000000000000000000011111111",
+    "netmask": "11111111111111111111111100000000",
+    "first_host": "11000000101010000000001000000001",
+    "last_host": "11000000101010000000001011111110"
+  }
+}
+```
 ### iptables
 ```bash
 iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
@@ -2831,6 +2890,31 @@ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt whe
     "required_by": null
   }
 ]
+```
+### PLIST files
+```bash
+cat info.plist | jc --plist -p
+```
+```json
+{
+  "NSAppleScriptEnabled": true,
+  "LSMultipleInstancesProhibited": true,
+  "CFBundleInfoDictionaryVersion": "6.0",
+  "DTPlatformVersion": "GM",
+  "CFBundleIconFile": "GarageBand.icns",
+  "CFBundleName": "GarageBand",
+  "DTSDKName": "macosx10.13internal",
+  "NSSupportsAutomaticGraphicsSwitching": true,
+  "RevisionDate": "2018-12-03_14:10:56",
+  "UTImportedTypeDeclarations": [
+    {
+      "UTTypeConformsTo": [
+        "public.data",
+        "public.content"
+      ]
+    }
+  ]
+}
 ```
 ### postconf -M
 ```bash

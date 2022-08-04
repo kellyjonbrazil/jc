@@ -20,25 +20,34 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('plist', plist_command_output)
+    result = jc.parse('plist', plist_file_output)
 
 Schema:
 
-    [
-      {
-        "plist":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+    {
+      "<key>":            string/integer/float/boolean/object/array/null
+    }
 
 Examples:
 
-    $ plist | jc --plist -p
-    []
-
-    $ plist | jc --plist -p -r
-    []
+    $ cat info.plist | jc --plist -p
+    {
+      "NSAppleScriptEnabled": true,
+      "LSMultipleInstancesProhibited": true,
+      "CFBundleInfoDictionaryVersion": "6.0",
+      "DTPlatformVersion": "GM",
+      "CFBundleIconFile": "GarageBand.icns",
+      "CFBundleName": "GarageBand",
+      "DTSDKName": "macosx10.13internal",
+      "NSSupportsAutomaticGraphicsSwitching": true,
+      "RevisionDate": "2018-12-03_14:10:56",
+      "UTImportedTypeDeclarations": [
+        {
+          "UTTypeConformsTo": [
+            "public.data",
+            "public.content"
+      ...
+    }
 
 <a id="jc.parsers.plist.parse"></a>
 
