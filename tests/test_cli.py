@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime, timezone
 import pygments
 from pygments.token import (Name, Number, String, Keyword)
 import jc.cli
@@ -253,6 +254,42 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.cli.about_jc()['name'], 'jc')
         self.assertGreaterEqual(jc.cli.about_jc()['parser_count'], 55)
         self.assertEqual(jc.cli.about_jc()['parser_count'], len(jc.cli.about_jc()['parsers']))
+
+    def test_add_timestamp_to_simple_dict(self):
+        list_or_dict = {'a': 1, 'b': 2}
+        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        magic_exit_code = 0
+        expected = {'a': 1, 'b': 2, '_jc_meta': {'timestamp': 1659659829.273349}}
+        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+
+        self.assertEqual(list_or_dict, expected)
+
+    def test_add_timestamp_to_simple_list(self):
+        list_or_dict = [{'a': 1, 'b': 2},{'a': 3, 'b': 4}]
+        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        magic_exit_code = 0
+        expected = [{'a': 1, 'b': 2, '_jc_meta': {'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'timestamp': 1659659829.273349}}]
+        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+
+        self.assertEqual(list_or_dict, expected)
+
+    def test_add_timestamp_to_dict_existing_meta(self):
+        list_or_dict = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}}
+        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        magic_exit_code = 0
+        expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'timestamp': 1659659829.273349}}
+        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+
+        self.assertEqual(list_or_dict, expected)
+
+    def test_add_timestamp_to_list_existing_meta(self):
+        list_or_dict = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}},{'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar'}}]
+        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        magic_exit_code = 0
+        expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'timestamp': 1659659829.273349}}]
+        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+
+        self.assertEqual(list_or_dict, expected)
 
 if __name__ == '__main__':
     unittest.main()
