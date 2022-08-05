@@ -446,22 +446,27 @@ def combined_exit_code(program_exit=0, jc_exit=0):
 
 
 def add_timestamp_to(list_or_dict, runtime, magic_exit_code):
-    """This function mutates a list or dict in place"""
+    """
+    This function mutates a list or dict in place. If the _jc_meta field
+    does not already exist, it will be created with the timestamp field. If
+    the _jc_meta field already exists, the timestamp will be added to the
+    existing object.
+    """
     run_timestamp = runtime.timestamp()
     timestamp_obj = {'timestamp': run_timestamp}
 
     if isinstance(list_or_dict, dict):
-        if '_jc_meta' in list_or_dict:
-            list_or_dict['_jc_meta'].update(timestamp_obj)
-        else:
-            list_or_dict['_jc_meta'] = timestamp_obj
+        if '_jc_meta' not in list_or_dict:
+            list_or_dict['_jc_meta'] = {}
+
+        list_or_dict['_jc_meta'].update(timestamp_obj)
 
     elif isinstance(list_or_dict, list):
         for item in list_or_dict:
-            if '_jc_meta' in item:
-                item['_jc_meta'].update(timestamp_obj)
-            else:
-                item['_jc_meta'] = timestamp_obj
+            if '_jc_meta' not in item:
+                item['_jc_meta'] = {}
+
+            item['_jc_meta'].update(timestamp_obj)
 
     else:
         utils.error_message(['Parser returned an unsupported object type.'])
