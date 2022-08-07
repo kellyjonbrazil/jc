@@ -67,7 +67,8 @@ def _process(proc_data: Dict) -> Dict:
                 'active_devices', 'working_devices', 'failed_devices', 'spare_devices',
                 'events', 'number', 'major', 'minor', 'raid_device', 'avail_dev_size_num',
                 'data_offset', 'super_offset', 'unused_space_before', 'unused_space_after',
-                'chunk_size', 'preferred_minor', 'check_status_percent', 'resync_status_percent'}
+                'chunk_size', 'preferred_minor', 'check_status_percent', 'resync_status_percent',
+                'rebuild_status_percent'}
 
     array_state_map = {
         'A': 'active',
@@ -103,6 +104,9 @@ def _process(proc_data: Dict) -> Dict:
     if 'name' in proc_data:
         proc_data['name_val'] = proc_data['name'].split(maxsplit=1)[0]
 
+    if 'uuid' in proc_data:
+        proc_data['uuid_val'] = proc_data['uuid'].split(maxsplit=1)[0]
+
     if 'checksum' in proc_data:
         proc_data['checksum_val'] = proc_data['checksum'].split(maxsplit=1)[0]
         proc_data['checksum_state'] = proc_data['checksum'].split()[-1]
@@ -128,6 +132,9 @@ def _process(proc_data: Dict) -> Dict:
 
     if 'check_status' in proc_data:
         proc_data['check_status_percent'] = proc_data['check_status'].split('%')[0]
+
+    if 'rebuild_status' in proc_data:
+        proc_data['rebuild_status_percent'] = proc_data['rebuild_status'].split('%')[0]
 
     # add timestamp fields
     if 'creation_time' in proc_data:
@@ -215,8 +222,12 @@ def parse(
                 if 'RaidDevice' in item:
                     item['raid_device'] = item.pop('RaidDevice')
 
-            raw_output['device_table'] = d_table
+                if 'device' in item and item['device']:
+                    if not item['device'].startswith('/'):
+                        flags, dev = item['device'].rsplit(maxsplit=1)
+                        item['device'] = dev
+                        item['state'] = item['state'] + ' ' + flags
 
-
+            raw_output['device_table'] = d_table    # type: ignore
 
     return raw_output if raw else _process(raw_output)
