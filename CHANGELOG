@@ -9,6 +9,7 @@ xxxxxxxx v1.20.5
   `Binary Object Store Descriptor` sections
 - Change `LANG=C` to `LC_ALL=C` in locale instructions
 - Add `__main__.py` to package allowing `python -m jc` usage
+- Add an enclosing top-level folder inside the windows.zip package
 
 20220723 v1.20.4
 - Fix URL string parser path list for URLs ending in a forward slash
