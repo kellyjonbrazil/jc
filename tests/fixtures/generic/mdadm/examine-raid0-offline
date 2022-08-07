@@ -1,0 +1,26 @@
+/dev/vda1:
+          Magic : a92b4efc
+        Version : 1.2
+    Feature Map : 0x0
+     Array UUID : 7e81a856:abb9c1c2:4b71237a:9778cc66
+           Name : sysrescue:0  (local to host sysrescue)
+  Creation Time : Sun Aug  7 20:56:52 2022
+     Raid Level : raid0
+   Raid Devices : 2
+
+ Avail Dev Size : 200704 sectors (98.00 MiB 102.76 MB)
+    Data Offset : 4096 sectors
+   Super Offset : 8 sectors
+   Unused Space : before=4016 sectors, after=0 sectors
+          State : clean
+    Device UUID : a49d96f1:8e86ca03:5ff499ec:8cdd42bb
+
+    Update Time : Sun Aug  7 20:56:52 2022
+  Bad Block Log : 512 entries available at offset 8 sectors
+       Checksum : eeb6cbe3 - correct
+         Events : 0
+
+     Chunk Size : 512K
+
+   Device Role : Active device 0
+   Array State : AA ('A' == active, '.' == missing, 'R' == replacing)

@@ -1,0 +1,28 @@
+/dev/md0:
+           Version : 1.1
+     Creation Time : Tue Apr 13 23:22:16 2010
+        Raid Level : raid1
+        Array Size : 5860520828 (5.46 TiB 6.00 TB)
+     Used Dev Size : 5860520828 (5.46 TiB 6.00 TB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+     Intent Bitmap : Internal
+
+       Update Time : Tue Jul 26 20:16:31 2022
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
+
+Consistency Policy : bitmap
+
+              Name : virttest:0
+              UUID : 85c5b164:d58a5ada:14f5fe07:d642e843
+            Events : 2193679
+
+    Number   Major   Minor   RaidDevice State
+       3       8       17        0      active sync   /dev/sdb1
+       2       8       33        1      active sync   /dev/sdc1
