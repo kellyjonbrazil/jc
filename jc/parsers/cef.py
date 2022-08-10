@@ -6,7 +6,9 @@ CEF input, you can copy this parser code to the `jc` pluggin directory for
 your system and modify it to suit your needs.
 
 This parser will accept a single CEF string or multiple CEF string lines.
-Any text before "CEF" will be ignored.
+Any text before "CEF" will be ignored. Syslog and CEF escaped characters
+(`\\`, `\\"`, `\\]`, `\\|`, `\\n`, `\\r`) are unescaped. To preserve
+escaping, use the `--raw` or `raw=True` option in the `parse()` function.
 
 Usage (cli):
 
@@ -171,12 +173,16 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # fix escape chars specified in syslog RFC 5424
+    # fix escape chars specified in syslog RFC 5424 and CEF spec
     # https://www.rfc-editor.org/rfc/rfc5424.html#section-6
     escape_map = {
         r'\\': '\\',
         r'\"': r'"',
-        r'\]': r']'
+        r'\]': r']',
+        r'\|': r'|',
+        r'\=': r'=',
+        r'\n': '\n',
+        r'\r': '\r'
     }
 
     for item in proc_data:
