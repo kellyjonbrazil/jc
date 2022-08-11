@@ -94,6 +94,8 @@ parsers = [
     'stat',
     'stat-s',
     'sysctl',
+    'syslog-3164',
+    'syslog-5424',
     'systemctl',
     'systemctl-lj',
     'systemctl-ls',

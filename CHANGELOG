@@ -2,6 +2,7 @@ jc changelog
 
 xxxxxxxx v1.20.5
 - Add IP Address string parser
+- Add Syslog string parsers (RFC 3164 and RFC 5424)
 - Add CEF string parser
 - Add PLIST file parser (XML and binary support)
 - Add `mdadm` command parser tested on linux (IN PROGRESS)
