@@ -1,4 +1,4 @@
-.TH jc 1 2022-08-06 1.20.5 "JSON Convert"
+.TH jc 1 2022-08-12 1.20.5 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -51,6 +51,11 @@ multi-line ASCII and Unicode table parser
 .B
 \fB--blkid\fP
 `blkid` command parser
+
+.TP
+.B
+\fB--cef\fP
+CEF string parser
 
 .TP
 .B
@@ -304,6 +309,11 @@ M3U and M3U8 file parser
 
 .TP
 .B
+\fB--mdadm\fP
+`mdadm` command parser
+
+.TP
+.B
 \fB--mount\fP
 `mount` command parser
 
@@ -431,6 +441,16 @@ PLIST file parser
 .B
 \fB--sysctl\fP
 `sysctl` command parser
+
+.TP
+.B
+\fB--syslog-bsd\fP
+Syslog RFC 3164 string parser
+
+.TP
+.B
+\fB--syslog\fP
+Syslog RFC 5424 string parser
 
 .TP
 .B

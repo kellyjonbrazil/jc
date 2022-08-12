@@ -157,6 +157,7 @@ option.
 | `   --asciitable` | ASCII and Unicode table parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable)     |
 | ` --asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
 | `        --blkid` | `blkid` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid)          |
+| `          --cef` | CEF string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef)            |
 | `        --chage` | `chage --list` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/chage)          |
 | `        --cksum` | `cksum` and `sum` command parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum)          |
 | `      --crontab` | `crontab` command and file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab)        |
@@ -207,6 +208,7 @@ option.
 | `         --lsof` | `lsof` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof)           |
 | `        --lsusb` | `lsusb` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb)          |
 | `          --m3u` | M3U and M3U8 file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/m3u)            |
+| `        --mdadm` | `mdadm` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mdadm)          |
 | `        --mount` | `mount` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mount)          |
 | `       --mpstat` | `mpstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat)         |
 | `     --mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |
@@ -233,6 +235,8 @@ option.
 | `         --stat` | `stat` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat)           |
 | `       --stat-s` | `stat` command streaming parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s)         |
 | `       --sysctl` | `sysctl` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl)         |
+| `   --syslog-bsd` | Syslog RFC 3164 string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog_bsd)     |
+| `       --syslog` | Syslog RFC 5424 string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog)         |
 | `    --systemctl` | `systemctl` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl)      |
 | ` --systemctl-lj` | `systemctl list-jobs` command parser                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj)   |
 | ` --systemctl-ls` | `systemctl list-sockets` command parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls)   |

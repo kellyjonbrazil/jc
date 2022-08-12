@@ -4,7 +4,7 @@
 
 Usage (cli):
 
-    $ syslog-3164 | jc --syslog-3164
+    $ syslogstring | jc --syslog-bsd
 
     or
 
@@ -13,7 +13,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('syslog_3164', syslog_command_output)
+    result = jc.parse('syslog_bsd', syslog_command_output)
 
 Schema:
 

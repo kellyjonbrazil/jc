@@ -9,7 +9,7 @@ _jc() {
              jc_help_options jc_help_options_describe \
              jc_special_options jc_special_options_describe
 
-    jc_commands=(acpi airport arp blkid chage cksum crontab date df dig dmidecode dpkg du env file finger free git gpg hciconfig id ifconfig iostat iptables iw jobs last lastb ls lsblk lsmod lsof lsusb md5 md5sum mount mpstat netstat nmcli ntpq pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
+    jc_commands=(acpi airport arp blkid chage cksum crontab date df dig dmidecode dpkg du env file finger free git gpg hciconfig id ifconfig iostat iptables iw jobs last lastb ls lsblk lsmod lsof lsusb md5 md5sum mdadm mount mpstat netstat nmcli ntpq pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
     jc_commands_describe=(
         'acpi:run "acpi" command with magic syntax.'
         'airport:run "airport" command with magic syntax.'
@@ -46,6 +46,7 @@ _jc() {
         'lsusb:run "lsusb" command with magic syntax.'
         'md5:run "md5" command with magic syntax.'
         'md5sum:run "md5sum" command with magic syntax.'
+        'mdadm:run "mdadm" command with magic syntax.'
         'mount:run "mount" command with magic syntax.'
         'mpstat:run "mpstat" command with magic syntax.'
         'netstat:run "netstat" command with magic syntax.'
@@ -94,7 +95,7 @@ _jc() {
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog-bsd --syslog --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -103,6 +104,7 @@ _jc() {
         '--asciitable:ASCII and Unicode table parser'
         '--asciitable-m:multi-line ASCII and Unicode table parser'
         '--blkid:`blkid` command parser'
+        '--cef:CEF string parser'
         '--chage:`chage --list` command parser'
         '--cksum:`cksum` and `sum` command parser'
         '--crontab:`crontab` command and file parser'
@@ -153,6 +155,7 @@ _jc() {
         '--lsof:`lsof` command parser'
         '--lsusb:`lsusb` command parser'
         '--m3u:M3U and M3U8 file parser'
+        '--mdadm:`mdadm` command parser'
         '--mount:`mount` command parser'
         '--mpstat:`mpstat` command parser'
         '--mpstat-s:`mpstat` command streaming parser'
@@ -179,6 +182,8 @@ _jc() {
         '--stat:`stat` command parser'
         '--stat-s:`stat` command streaming parser'
         '--sysctl:`sysctl` command parser'
+        '--syslog-bsd:Syslog RFC 3164 string parser'
+        '--syslog:Syslog RFC 5424 string parser'
         '--systemctl:`systemctl` command parser'
         '--systemctl-lj:`systemctl list-jobs` command parser'
         '--systemctl-ls:`systemctl list-sockets` command parser'

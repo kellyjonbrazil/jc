@@ -4,7 +4,7 @@
 
 Usage (cli):
 
-    $ syslog-5424 | jc --syslog-5424
+    $ syslogstring | jc --syslog
 
     or
 
@@ -13,7 +13,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('syslog_5424', syslog_command_output)
+    result = jc.parse('syslog', syslog_command_output)
 
 Schema:
 
@@ -61,11 +61,45 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    # fix escape chars specified in syslog RFC 5424
+    # https://www.rfc-editor.org/rfc/rfc5424.html#section-6
+    escape_map = {
+        r'\\': '\\',
+        r'\"': r'"',
+        r'\]': r']'
+    }
 
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
+    structured = re.compile(r'''
+        (?P<STRUCTUREDDATA>\[
+            (?P<ident>[^\[\=\x22\]\x20]{1,32})\s
+            (?P<keyval>[^\[\=\x22\x20]{1,32}=\x22.+\x22\s?)+\]
+        )
+    ''', re.VERBOSE
+    )
+
+    each_struct = r'''(?P<eachstruct>\[.+?(?<!\\)\])'''
+
+    ident = r'''\[(?P<ident>[^\[\=\x22\]\x20]{1,32})\s'''
+
+    key_vals = r'''(?P<key>\w+)=(?P<val>\"[^\"]*\")'''
+
+    for item in proc_data:
+        for key, value in item.copy().items():
+            # remove any spaces around values
+            if item[key]:
+                item[key] = value.strip()
+
+            # fixup escaped characters
+            for esc, esc_sub in escape_map.items():
+                if item[key]:
+                    item[key] = item[key].replace(esc, esc_sub)
+
+            # parse identity and key value pairs in the structured data section
+            # if proc_data['structured_data']:
+            #     struct_match = structured.match(proc_data['structured_data'])
+            #     if struct_match:
+            #         struct_dict = struct_match.groupdict()
+
 
     return proc_data
 
@@ -92,7 +126,7 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
-    syslog_dict = {}
+    syslog_out = {}
 
     # inspired by https://regex101.com/library/Wgbxn2
     syslog = re.compile(r'''
@@ -120,23 +154,29 @@ def parse(
         for line in filter(None, data.splitlines()):
             syslog_match = syslog.match(line)
             if syslog_match:
-                priority = None
-                if syslog_match.group('priority'):
-                    priority = syslog_match.group('priority')[1:-1]
+                syslog_dict = syslog_match.groupdict()
+                for item in syslog_dict:
+                    if syslog_dict[item] == '-':
+                        syslog_dict[item] = None
 
-                syslog_dict = {
+                priority = None
+
+                if syslog_dict['priority']:
+                    priority = syslog_dict['priority'][1:-1]
+
+                syslog_out = {
                     'priority': priority,
-                    'version': syslog_match.group('version'),
-                    'timestamp': syslog_match.group('timestamp'),
-                    'hostname': syslog_match.group('hostname'),
-                    'appname': syslog_match.group('appname'),
-                    'proc_id': syslog_match.group('procid'),
-                    'msg_id': syslog_match.group('msgid'),
-                    'struct': syslog_match.group('structureddata'),
-                    'message': syslog_match.group('msg')
+                    'version': syslog_dict['version'],
+                    'timestamp': syslog_dict['timestamp'],
+                    'hostname': syslog_dict['hostname'],
+                    'appname': syslog_dict['appname'],
+                    'proc_id': syslog_dict['procid'],
+                    'msg_id': syslog_dict['msgid'],
+                    'structured_data': syslog_dict['structureddata'],
+                    'message': syslog_dict['msg']
                 }
 
-            if syslog_dict:
-                raw_output.append(syslog_dict)
+            if syslog_out:
+                raw_output.append(syslog_out)
 
     return raw_output if raw else _process(raw_output)
