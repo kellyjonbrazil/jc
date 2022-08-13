@@ -1,6 +1,6 @@
 jc changelog
 
-xxxxxxxx v1.20.5
+xxxxxxxx v1.21.0
 - Add IP Address string parser
 - Add Syslog string parsers (RFC 3164 and RFC 5424)
 - Add CEF string parser
