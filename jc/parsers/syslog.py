@@ -38,6 +38,8 @@ Schema:
       }
     ]
 
+    Blank values will be null/None
+
 Examples:
 
     $ syslog-5424 | jc --syslog-5424 -p
@@ -133,7 +135,6 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 item['message'] = item['message'].replace(esc, esc_sub)
 
         # parse identity and key value pairs in the structured data section
-        structs = None
         if item['structured_data']:
             structs_list = []
             structs = _extract_structs(item['structured_data'])
@@ -184,7 +185,8 @@ def parse(
     syslog = re.compile(r'''
         (?P<priority><(\d|\d{2}|1[1-8]\d|19[01])>)?
         (?P<version>\d{1,2})?\s*
-        (?P<timestamp>-|(?P<fullyear>[12]\d{3})-
+        (?P<timestamp>-|
+            (?P<fullyear>[12]\d{3})-
             (?P<month>0\d|[1][012])-
             (?P<mday>[012]\d|3[01])T
             (?P<hour>[01]\d|2[0-4]):
