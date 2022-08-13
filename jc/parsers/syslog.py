@@ -34,7 +34,7 @@ Examples:
     []
 """
 import re
-from typing import List, Dict
+from typing import List, Dict, Optional
 import jc.utils
 
 
@@ -47,6 +47,39 @@ class info():
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
 __version__ = info.version
+
+
+def _extract_structs(structs_string: str) -> List[str]:
+    struct_match = re.compile(r'(?P<eachstruct>\[.+?(?<!\\)\])')
+    each_struct = struct_match.findall(structs_string)
+    my_structs = []
+
+    if each_struct:
+        for structured in each_struct:
+            my_structs.append(structured)
+
+    return my_structs
+
+
+def _extract_ident(struct_string) -> Optional[str]:
+    ident = re.compile(r'''\[(?P<ident>[^\[\=\x22\]\x20]{1,32})\s''')
+    ident_match = ident.search(struct_string)
+    if ident_match:
+        return ident_match.group('ident')
+    return None
+
+
+def _extract_kv(struct_string) -> List[Dict]:
+    key_vals = re.compile(r'''(?P<key>\w+)=(?P<val>\"[^\"]*\")''')
+    key_vals_match = key_vals.findall(struct_string)
+    kv_list = []
+
+    if key_vals_match:
+        for kv in key_vals_match:
+            key, val = kv
+            kv_list.append({key: val[1:-1]})
+
+    return kv_list
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -69,37 +102,37 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         r'\]': r']'
     }
 
-    structured = re.compile(r'''
-        (?P<STRUCTUREDDATA>\[
-            (?P<ident>[^\[\=\x22\]\x20]{1,32})\s
-            (?P<keyval>[^\[\=\x22\x20]{1,32}=\x22.+\x22\s?)+\]
-        )
-    ''', re.VERBOSE
-    )
-
-    each_struct = r'''(?P<eachstruct>\[.+?(?<!\\)\])'''
-
-    ident = r'''\[(?P<ident>[^\[\=\x22\]\x20]{1,32})\s'''
-
-    key_vals = r'''(?P<key>\w+)=(?P<val>\"[^\"]*\")'''
-
     for item in proc_data:
-        for key, value in item.copy().items():
+        for key, value in item.items():
             # remove any spaces around values
             if item[key]:
                 item[key] = value.strip()
 
             # fixup escaped characters
             for esc, esc_sub in escape_map.items():
-                if item[key]:
+                if item[key] and isinstance(item[key], str):
                     item[key] = item[key].replace(esc, esc_sub)
 
-            # parse identity and key value pairs in the structured data section
-            # if proc_data['structured_data']:
-            #     struct_match = structured.match(proc_data['structured_data'])
-            #     if struct_match:
-            #         struct_dict = struct_match.groupdict()
+        # parse identity and key value pairs in the structured data section
+        structs = None
+        if item['structured_data']:
+            structs_list = []
+            structs = _extract_structs(item['structured_data'])
 
+            for a_struct in structs:
+                struct_obj = {
+                    'identity': _extract_ident(a_struct)
+                }
+
+                my_values = {}
+
+                for val_obj in _extract_kv(a_struct):
+                    my_values.update(val_obj)
+
+                struct_obj.update({'values': my_values})  # type: ignore
+                structs_list.append(struct_obj)
+
+            item['structured_data'] = structs_list
 
     return proc_data
 
