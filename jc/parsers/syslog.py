@@ -19,9 +19,22 @@ Schema:
 
     [
       {
-        "syslog-5424":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "priority":                   integer,
+        "version":                    integer,
+        "timestamp":                  string,          # add epoch fields
+        "hostname":                   string,
+        "appname":                    string,
+        "proc_id":                    integer,
+        "msg_id":                     string,
+        "structured_data": [
+          {
+            "identity":               string,
+            "values": {
+              "<key>":                string
+            }
+          }
+        ],
+        "message":                    string
       }
     ]
 
@@ -49,6 +62,15 @@ class info():
 __version__ = info.version
 
 
+# fix escape chars specified in syslog RFC 5424
+# https://www.rfc-editor.org/rfc/rfc5424.html#section-6
+escape_map = {
+    r'\\': '\\',
+    r'\"': r'"',
+    r'\]': r']'
+}
+
+
 def _extract_structs(structs_string: str) -> List[str]:
     struct_match = re.compile(r'(?P<eachstruct>\[.+?(?<!\\)\])')
     each_struct = struct_match.findall(structs_string)
@@ -62,7 +84,7 @@ def _extract_structs(structs_string: str) -> List[str]:
 
 
 def _extract_ident(struct_string) -> Optional[str]:
-    ident = re.compile(r'''\[(?P<ident>[^\[\=\x22\]\x20]{1,32})\s''')
+    ident = re.compile(r'\[(?P<ident>[^\[\=\x22\]\x20]{1,32})\s')
     ident_match = ident.search(struct_string)
     if ident_match:
         return ident_match.group('ident')
@@ -70,13 +92,18 @@ def _extract_ident(struct_string) -> Optional[str]:
 
 
 def _extract_kv(struct_string) -> List[Dict]:
-    key_vals = re.compile(r'''(?P<key>\w+)=(?P<val>\"[^\"]*\")''')
+    key_vals = re.compile(r'(?P<key>\w+)=(?P<val>\"[^\"]*\")')
     key_vals_match = key_vals.findall(struct_string)
     kv_list = []
 
     if key_vals_match:
         for kv in key_vals_match:
             key, val = kv
+
+            # fixup escaped characters
+            for esc, esc_sub in escape_map.items():
+                val = val.replace(esc, esc_sub)
+
             kv_list.append({key: val[1:-1]})
 
     return kv_list
@@ -94,24 +121,16 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # fix escape chars specified in syslog RFC 5424
-    # https://www.rfc-editor.org/rfc/rfc5424.html#section-6
-    escape_map = {
-        r'\\': '\\',
-        r'\"': r'"',
-        r'\]': r']'
-    }
-
     for item in proc_data:
         for key, value in item.items():
             # remove any spaces around values
             if item[key]:
                 item[key] = value.strip()
 
-            # fixup escaped characters
+        # fixup escaped characters
+        if item['message']:
             for esc, esc_sub in escape_map.items():
-                if item[key] and isinstance(item[key], str):
-                    item[key] = item[key].replace(esc, esc_sub)
+                item['message'] = item['message'].replace(esc, esc_sub)
 
         # parse identity and key value pairs in the structured data section
         structs = None
