@@ -129,6 +129,13 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if item[key]:
                 item[key] = value.strip()
 
+        # add timestamp fields
+        if item['timestamp']:
+            format = (1300, 1310)
+            dt = jc.utils.timestamp(item['timestamp'], format)
+            item['timestamp_epoch'] = dt.naive
+            item['timestamp_epoch_utc'] = dt.utc
+
         # fixup escaped characters
         if item['message']:
             for esc, esc_sub in escape_map.items():
