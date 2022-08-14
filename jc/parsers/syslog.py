@@ -1,5 +1,8 @@
 """jc - JSON Convert Syslog RFC 5424 string parser
 
+This parser accepts a single syslog line string or multiple syslog lines
+separated by newlines.
+
 The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
 the local time of the system the parser is run on)
 
@@ -8,16 +11,12 @@ is only available if the timezone field is UTC.
 
 Usage (cli):
 
-    $ syslogstring | jc --syslog
-
-    or
-
-    $ jc syslog-5424
+    $ echo <165>1 2003-08-24T05:14:15.000003-07:00 192.0.2... | jc --syslog
 
 Usage (module):
 
     import jc
-    result = jc.parse('syslog', syslog_command_output)
+    result = jc.parse('syslog', syslog_string)
 
 Schema:
 Blank values converted to `null`/`None`
@@ -92,7 +91,7 @@ Examples:
         "appname": "evntslog",
         "proc_id": null,
         "msg_id": "ID47",
-        "structured_data": "[exampleSDID@32473 iut=\"3\" eventSource=\...",
+        "structured_data": "[exampleSDID@32473 iut=\\"3\\" eventSource...",
         "message": "unauthorized attempt"
       }
     ]
