@@ -1,6 +1,10 @@
 """jc - JSON Convert Syslog RFC 5424 string parser
 
-<<Short syslog-5424 description and caveats>>
+The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
+the local time of the system the parser is run on)
+
+The `timestamp_epoch_utc` calculated timestamp field is timezone-aware and
+is only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -16,12 +20,15 @@ Usage (module):
     result = jc.parse('syslog', syslog_command_output)
 
 Schema:
+Blank values converted to `null`/`None`
 
     [
       {
         "priority":                   integer,
         "version":                    integer,
-        "timestamp":                  string,          # add epoch fields
+        "timestamp":                  string,
+        "timestamp_epoch":            integer,  # [0]
+        "timestamp_epoch_utc":        integer,  # [1]
         "hostname":                   string,
         "appname":                    string,
         "proc_id":                    integer,
@@ -38,15 +45,57 @@ Schema:
       }
     ]
 
-    Blank values will be null/None
+    [0] naive timestamp if "timestamp" field is parsable, else null
+    [1] timezone aware timestamp availabe for UTC, else null
 
 Examples:
 
-    $ syslog-5424 | jc --syslog-5424 -p
-    []
+    $ cat syslog.txt| jc --syslog -p
+    [
+      {
+        "priority": 35,
+        "version": 1,
+        "timestamp": "2003-10-11T22:14:15.003Z",
+        "hostname": "mymachine.example.com",
+        "appname": "evntslog",
+        "proc_id": null,
+        "msg_id": "ID47",
+        "structured_data": [
+          {
+            "identity": "exampleSDID@32473",
+            "values": {
+              "iut": "3",
+              "eventSource": "Application",
+              "eventID": "1011"
+            }
+          },
+          {
+            "identity": "examplePriority@32473",
+            "values": {
+              "class": "high"
+            }
+          }
+        ],
+        "message": "unauthorized attempt",
+        "timestamp_epoch": 1065935655,
+        "timestamp_epoch_utc": 1065910455
+      }
+    ]
 
-    $ syslog-5424 | jc --syslog-5424 -p -r
-    []
+    $ cat syslog.txt| jc --syslog -p -r
+    [
+      {
+        "priority": "35",
+        "version": "1",
+        "timestamp": "2003-10-11T22:14:15.003Z",
+        "hostname": "mymachine.example.com",
+        "appname": "evntslog",
+        "proc_id": null,
+        "msg_id": "ID47",
+        "structured_data": "[exampleSDID@32473 iut=\"3\" eventSource=\...",
+        "message": "unauthorized attempt"
+      }
+    ]
 """
 import re
 from typing import List, Dict, Optional
@@ -123,6 +172,8 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    int_list = {'priority', 'version', 'proc_id'}
+
     for item in proc_data:
         for key, value in item.items():
             # remove any spaces around values
@@ -160,6 +211,11 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 structs_list.append(struct_obj)
 
             item['structured_data'] = structs_list
+
+        # integer conversions
+        for key in item:
+            if key in int_list:
+                item[key] = jc.utils.convert_to_int(item[key])
 
     return proc_data
 
