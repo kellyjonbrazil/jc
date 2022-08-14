@@ -35,7 +35,7 @@ Blank values converted to `null`/`None`
         "structured_data": [
           {
             "identity":               string,
-            "values": {
+            "parameters": {
               "<key>":                string
             }
           }
@@ -62,7 +62,7 @@ Examples:
         "structured_data": [
           {
             "identity": "exampleSDID@32473",
-            "values": {
+            "parameters": {
               "iut": "3",
               "eventSource": "Application",
               "eventID": "1011"
@@ -70,7 +70,7 @@ Examples:
           },
           {
             "identity": "examplePriority@32473",
-            "values": {
+            "parameters": {
               "class": "high"
             }
           }
@@ -206,7 +206,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 for val_obj in _extract_kv(a_struct):
                     my_values.update(val_obj)
 
-                struct_obj.update({'values': my_values})  # type: ignore
+                struct_obj.update({'parameters': my_values})  # type: ignore
                 structs_list.append(struct_obj)
 
             item['structured_data'] = structs_list

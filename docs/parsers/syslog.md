@@ -40,7 +40,7 @@ Blank values converted to `null`/`None`
         "structured_data": [
           {
             "identity":               string,
-            "values": {
+            "parameters": {
               "<key>":                string
             }
           }
@@ -67,7 +67,7 @@ Examples:
         "structured_data": [
           {
             "identity": "exampleSDID@32473",
-            "values": {
+            "parameters": {
               "iut": "3",
               "eventSource": "Application",
               "eventID": "1011"
@@ -75,7 +75,7 @@ Examples:
           },
           {
             "identity": "examplePriority@32473",
-            "values": {
+            "parameters": {
               "class": "high"
             }
           }
