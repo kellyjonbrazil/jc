@@ -11,7 +11,7 @@ Usage (cli):
 
     $ airport -s | jc --airport-s
 
-    or
+or
 
     $ jc airport -s
 

@@ -8,7 +8,7 @@ Usage (cli):
 
     $ cksum file.txt | jc --cksum
 
-    or
+or
 
     $ jc cksum file.txt
 

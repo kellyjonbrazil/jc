@@ -14,7 +14,7 @@ Usage (cli):
 
     $ dpkg -l | jc --dpkg-l
 
-    or
+or
 
     $ jc dpkg -l
 

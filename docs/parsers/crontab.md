@@ -12,7 +12,7 @@ Usage (cli):
 
     $ crontab -l | jc --crontab
 
-    or
+or
 
     $ jc crontab -l
 

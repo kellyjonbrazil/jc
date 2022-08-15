@@ -6,7 +6,7 @@ Usage (cli):
 
     $ sudo iptables -L -t nat | jc --iptables
 
-    or
+or
 
     $ jc iptables -L -t nat
 

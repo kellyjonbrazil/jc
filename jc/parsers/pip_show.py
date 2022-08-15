@@ -4,7 +4,7 @@ Usage (cli):
 
     $ pip show | jc --pip-show
 
-    or
+or
 
     $ jc pip show
 

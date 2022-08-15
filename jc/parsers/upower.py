@@ -10,7 +10,7 @@ Usage (cli):
 
     $ upower -d | jc --upower
 
-    or
+or
 
     $ jc upower -d
 

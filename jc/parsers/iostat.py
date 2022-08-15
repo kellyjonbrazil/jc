@@ -6,7 +6,7 @@ Usage (cli):
 
     $ iostat | jc --iostat
 
-    or
+or
 
     $ jc iostat
 

@@ -12,7 +12,7 @@ Usage (cli):
 
     $ rpm -qia | jc --rpm-qi
 
-    or
+or
 
     $ jc rpm -qia
 

@@ -4,7 +4,7 @@ Usage (cli):
 
     $ df | jc --df
 
-    or
+or
 
     $ jc df
 

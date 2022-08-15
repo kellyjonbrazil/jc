@@ -4,7 +4,7 @@ Usage (cli):
 
     $ blkid | jc --blkid
 
-    or
+or
 
     $ jc blkid
 

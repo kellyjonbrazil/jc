@@ -10,7 +10,7 @@ Usage (cli):
 
     $ systemctl list-unit-files | jc --systemctl-luf
 
-    or
+or
 
     $ jc systemctl list-unit-files
 

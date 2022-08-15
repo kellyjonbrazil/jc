@@ -175,12 +175,15 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     # fix escape chars specified in syslog RFC 5424 and CEF spec
     # https://www.rfc-editor.org/rfc/rfc5424.html#section-6
+    # https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-8.3/cef-implementation-standard/Content/CEF/Chapter%201%20What%20is%20CEF.htm?tocpath=_____2#_Toc494359738
     escape_map = {
         r'\\': '\\',
-        r'\"': r'"',
-        r'\]': r']',
-        r'\|': r'|',
-        r'\=': r'=',
+        r'\"': '"',
+        r'\]': ']',
+        r'\|': '|',
+        r'\=': '=',
+        r'\%': '%',
+        r'\#': '#',
         r'\n': '\n',
         r'\r': '\r'
     }

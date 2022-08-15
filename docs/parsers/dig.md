@@ -20,7 +20,7 @@ Usage (cli):
 
     $ dig example.com | jc --dig
 
-    or
+or
 
     $ jc dig example.com
 

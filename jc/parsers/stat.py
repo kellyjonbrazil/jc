@@ -10,7 +10,7 @@ Usage (cli):
 
     $ stat * | jc --stat
 
-    or
+or
 
     $ jc stat *
 

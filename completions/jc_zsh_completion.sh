@@ -143,7 +143,7 @@ _jc() {
         '--iptables:`iptables` command parser'
         '--iso-datetime:ISO 8601 Datetime string parser'
         '--iw-scan:`iw dev [device] scan` command parser'
-        '--jar-manifest:MANIFEST.MF file parser'
+        '--jar-manifest:Java MANIFEST.MF file parser'
         '--jobs:`jobs` command parser'
         '--jwt:JWT string parser'
         '--kv:Key/Value file parser'

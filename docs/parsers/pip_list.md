@@ -9,7 +9,7 @@ Usage (cli):
 
     $ pip list | jc --pip-list
 
-    or
+or
 
     $ jc pip list
 

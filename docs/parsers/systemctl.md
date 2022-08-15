@@ -9,7 +9,7 @@ Usage (cli):
 
     $ systemctl | jc --systemctl
 
-    or
+or
 
     $ jc systemctl
 

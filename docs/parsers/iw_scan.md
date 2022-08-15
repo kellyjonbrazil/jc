@@ -12,7 +12,7 @@ Usage (cli):
 
     $ iw dev wlan0 scan | jc --iw-scan
 
-    or
+or
 
     $ jc iw dev wlan0 scan
 

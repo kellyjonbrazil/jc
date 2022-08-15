@@ -11,7 +11,7 @@ Usage (cli):
 
     $ lsusb -v | jc --lsusb
 
-    or
+or
 
     $ jc lsusb -v
 

@@ -6,7 +6,7 @@ Usage (cli):
 
     $ tracepath 1.2.3.4 | jc --tracepath
 
-    or
+or
 
     $ jc tracepath 1.2.3.4
 

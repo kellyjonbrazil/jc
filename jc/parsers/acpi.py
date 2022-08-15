@@ -4,7 +4,7 @@ Usage (cli):
 
     $ acpi -V | jc --acpi
 
-    or
+or
 
     $ jc acpi -V
 

@@ -6,7 +6,7 @@ Usage (cli):
 
     $ uname -a | jc --uname
 
-    or
+or
 
     $ jc uname -a
 

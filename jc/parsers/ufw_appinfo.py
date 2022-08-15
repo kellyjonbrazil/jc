@@ -12,7 +12,7 @@ Usage (cli):
 
     $ ufw app info OpenSSH | jc --ufw-appinfo
 
-    or
+or
 
     $ jc ufw app info OpenSSH
 

@@ -13,7 +13,7 @@ Usage (cli):
 
     $ traceroute 1.2.3.4 | jc --traceroute
 
-    or
+or
 
     $ jc traceroute 1.2.3.4
 

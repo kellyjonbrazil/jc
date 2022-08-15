@@ -4,7 +4,7 @@ Usage (cli):
 
     $ xrandr | jc --xrandr
 
-    or
+or
 
     $ jc xrandr
 

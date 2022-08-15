@@ -6,7 +6,7 @@ Usage (cli):
 
     $ finger | jc --finger
 
-    or
+or
 
     $ jc finger
 

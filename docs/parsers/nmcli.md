@@ -18,7 +18,7 @@ Usage (cli):
 
     $ nmcli device show lo | jc --nmcli
 
-    or
+or
 
     $ jc nmcli device show lo
 

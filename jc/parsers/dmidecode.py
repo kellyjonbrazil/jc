@@ -4,7 +4,7 @@ Usage (cli):
 
     $ dmidecode | jc --dmidecode
 
-    or
+or
 
     $ jc dmidecode
 

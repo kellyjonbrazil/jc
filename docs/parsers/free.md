@@ -9,7 +9,7 @@ Usage (cli):
 
     $ free | jc --free
 
-    or
+or
 
     $ jc free
 

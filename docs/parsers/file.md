@@ -9,7 +9,7 @@ Usage (cli):
 
     $ file * | jc --file
 
-    or
+or
 
     $ jc file *
 

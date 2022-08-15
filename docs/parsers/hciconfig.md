@@ -9,7 +9,7 @@ Usage (cli):
 
     $ hciconfig | jc --hciconfig
 
-    or
+or
 
     $ jc hciconfig
 

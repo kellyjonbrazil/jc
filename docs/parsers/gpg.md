@@ -9,7 +9,7 @@ Usage (cli):
 
     $ gpg --with-colons --show-keys file.gpg | jc --gpg
 
-    or
+or
 
     $ jc gpg --with-colons --show-keys file.gpg
 

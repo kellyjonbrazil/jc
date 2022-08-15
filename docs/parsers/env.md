@@ -14,7 +14,7 @@ Usage (cli):
 
     $ env | jc --env
 
-    or
+or
 
     $ jc env
 

@@ -6,7 +6,7 @@ Usage (cli):
 
     $ syslogstring | jc --syslog-bsd
 
-    or
+or
 
     $ jc syslog-3164
 

@@ -12,7 +12,7 @@ Usage (cli):
 
     $ vmstat | jc --vmstat
 
-    or
+or
 
     $ jc vmstat
 

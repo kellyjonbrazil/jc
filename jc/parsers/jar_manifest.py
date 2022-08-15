@@ -1,4 +1,4 @@
-"""jc - JSON Convert `MANIFEST.MF` file parser
+"""jc - JSON Convert Java `MANIFEST.MF` file parser
 
 Usage (cli):
 
@@ -79,7 +79,7 @@ import re
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '0.01'
-    description = 'MANIFEST.MF file parser'
+    description = 'Java MANIFEST.MF file parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']

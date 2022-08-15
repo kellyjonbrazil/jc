@@ -21,7 +21,7 @@ Usage (cli):
 
     $ git log | jc --git-log
 
-    or
+or
 
     $ jc git log
 

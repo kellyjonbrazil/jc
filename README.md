@@ -196,7 +196,7 @@ option.
 | `     --iptables` | `iptables` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables)       |
 | ` --iso-datetime` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iso_datetime)   |
 | `      --iw-scan` | `iw dev [device] scan` command parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan)        |
-| ` --jar-manifest` | MANIFEST.MF file parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest)   |
+| ` --jar-manifest` | Java MANIFEST.MF file parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest)   |
 | `         --jobs` | `jobs` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs)           |
 | `          --jwt` | JWT string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jwt)            |
 | `           --kv` | Key/Value file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |

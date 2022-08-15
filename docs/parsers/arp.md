@@ -11,7 +11,7 @@ Usage (cli):
 
     $ arp | jc --arp
 
-    or
+or
 
     $ jc arp
 
