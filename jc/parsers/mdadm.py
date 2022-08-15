@@ -367,7 +367,7 @@ def parse(
 
             # key/value lines
             if ' : ' in line:
-                key, value = line.split(' : ')
+                key, value = line.split(' : ', maxsplit=1)
                 key = key.strip().lower().replace(' ', '_')
                 value = value.strip()
                 raw_output[key] = value
