@@ -1,7 +1,8 @@
 """jc - JSON Convert Syslog RFC 5424 string parser
 
 This parser accepts a single syslog line string or multiple syslog lines
-separated by newlines.
+separated by newlines. A warning message to `STDERR` will be printed if an
+unparsable line is found.
 
 The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
 the local time of the system the parser is run on)
@@ -40,12 +41,15 @@ Blank values converted to `null`/`None`
             }
           }
         ],
-        "message":                    string
+        "message":                    string,
+        "unparsable":                 string  # [2]
       }
     ]
 
     [0] naive timestamp if "timestamp" field is parsable, else null
     [1] timezone aware timestamp availabe for UTC, else null
+    [2] this field exists if the syslog line is not parsable. The value
+        is the original syslog line.
 
 Examples:
 
@@ -180,19 +184,19 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 item[key] = value.strip()
 
         # add timestamp fields
-        if item['timestamp']:
+        if 'timestamp' in item and item['timestamp']:
             format = (1300, 1310)
             dt = jc.utils.timestamp(item['timestamp'], format)
             item['timestamp_epoch'] = dt.naive
             item['timestamp_epoch_utc'] = dt.utc
 
         # fixup escaped characters
-        if item['message']:
+        if 'message' in item and item['message']:
             for esc, esc_sub in escape_map.items():
                 item['message'] = item['message'].replace(esc, esc_sub)
 
         # parse identity and key value pairs in the structured data section
-        if item['structured_data']:
+        if 'structured_data' in item and item['structured_data']:
             structs_list = []
             structs = _extract_structs(item['structured_data'])
 
@@ -291,6 +295,16 @@ def parse(
                     'structured_data': syslog_dict['structureddata'],
                     'message': syslog_dict['msg']
                 }
+
+            else:
+                syslog_out = {
+                    'unparsable': line
+                }
+
+                if not quiet:
+                    jc.utils.warning_message(
+                        [f'Unparsable line found: {line}']
+                    )
 
             if syslog_out:
                 raw_output.append(syslog_out)

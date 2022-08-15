@@ -6,7 +6,8 @@
 jc - JSON Convert Syslog RFC 5424 string parser
 
 This parser accepts a single syslog line string or multiple syslog lines
-separated by newlines.
+separated by newlines. A warning message to `STDERR` will be printed if an
+unparsable line is found.
 
 The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
 the local time of the system the parser is run on)
@@ -45,12 +46,15 @@ Blank values converted to `null`/`None`
             }
           }
         ],
-        "message":                    string
+        "message":                    string,
+        "unparsable":                 string  # [2]
       }
     ]
 
     [0] naive timestamp if "timestamp" field is parsable, else null
     [1] timezone aware timestamp availabe for UTC, else null
+    [2] this field exists if the syslog line is not parsable. The value
+        is the original syslog line.
 
 Examples:
 
