@@ -1,14 +1,22 @@
 """jc - JSON Convert `mdadm` command output parser
 
-<<Short mdadm description and caveats>>
+Supports the `--query` and `--examine` options in `mdadm`.
 
 Usage (cli):
 
-    $ mdadm | jc --mdadm
+    $ mdadm --query --detail /dev/md0 | jc --mdadm
 
-    or
+or
 
-    $ jc mdadm
+    $ mdadm --examine -E /dev/sdb1 | jc --mdadm
+
+or
+
+    $ jc mdadm --query --detail /dev/md0
+
+or
+
+    $ jc mdadm --examine -E /dev/sdb1
 
 Usage (module):
 
@@ -17,23 +25,183 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "mdadm":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+    {
+      "device":                       string,
+      "magic":                        string,
+      "version":                      string,
+      "feature_map":                  string,
+      "array_uuid":                   string,
+      "name":                         string,
+      "name_val":                     string,
+      "uuid":                         string,
+      "uuid_val":                     string,
+      "creation_time":                string,
+      "creation_time_epoch":          integer,  # naive timestamp
+      "raid_level":                   string,
+      "array_size":                   string,
+      "array_size_num":               integer,
+      "used_dev_size":                string,
+      "used_dev_size_num":            integer,
+      "raid_devices":                 integer,
+      "avail_dev_size":               string,
+      "avail_dev_size_num":           integer,
+      "data_offset":                  integer,
+      "super_offset":                 integer,
+      "unused_space":                 string,
+      "unused_space_before":          integer,
+      "unused_space_after":           integer,
+      "state":                        string,
+      "state_list": [
+                                      string
+      ],
+      "device_uuid":                  string,
+      "flags":                        string,
+      "flag_list": [
+                                      string
+      ],
+      "update_time":                  string,
+      "update_time_epoch":            integer,  # naive timestamp
+      "bad_block_log":                string,
+      "checksum":                     string,
+      "checksum_val":                 string,
+      "checksum_state":               string,
+      "events":                       integer,
+      "chunk_size":                   integer,
+      "device_role":                  string,
+      "array_state":                  string,
+      "array_state_list": [
+                                      string
+      ],
+      "consistency_policy":           string,
+      "rebuild_status":               string,
+      "rebuild_status_percent":       integer,
+      "resync_status":                string,
+      "resync_status_percent":        integer,
+      "check_status":                 string,
+      "check_status_percent":         integer,
+      "total_devices":                integer,
+      "preferred_minor":              integer,
+      "persistence":                  string,
+      "active_devices":               integer,
+      "working_devices":              integer,
+      "failed_devices":               integer,
+      "spare_devices":                integer,
+      "device_table": [
+        {
+          "number":                   integer/null,
+          "major":                    integer/null,
+          "minor":                    integer/null,
+          "state": [
+                                      string
+          ],
+          "device":                   string,
+          "raid_device":              integer/null
+        }
+      ]
+    }
 
 Examples:
 
-    $ mdadm | jc --mdadm -p
-    []
+    $ mdadm --query --detail /dev/md0 | jc --mdadm -p
+    {
+      "device": "/dev/md0",
+      "version": "1.1",
+      "creation_time": "Tue Apr 13 23:22:16 2010",
+      "raid_level": "raid1",
+      "array_size": "5860520828 (5.46 TiB 6.00 TB)",
+      "used_dev_size": "5860520828 (5.46 TiB 6.00 TB)",
+      "raid_devices": 2,
+      "total_devices": 2,
+      "persistence": "Superblock is persistent",
+      "intent_bitmap": "Internal",
+      "update_time": "Tue Jul 26 20:16:31 2022",
+      "state": "clean",
+      "active_devices": 2,
+      "working_devices": 2,
+      "failed_devices": 0,
+      "spare_devices": 0,
+      "consistency_policy": "bitmap",
+      "name": "virttest:0",
+      "uuid": "85c5b164:d58a5ada:14f5fe07:d642e843",
+      "events": 2193679,
+      "device_table": [
+        {
+          "number": 3,
+          "major": 8,
+          "minor": 17,
+          "state": [
+            "active",
+            "sync"
+          ],
+          "device": "/dev/sdb1",
+          "raid_device": 0
+        },
+        {
+          "number": 2,
+          "major": 8,
+          "minor": 33,
+          "state": [
+            "active",
+            "sync"
+          ],
+          "device": "/dev/sdc1",
+          "raid_device": 1
+        }
+      ],
+      "array_size_num": 5860520828,
+      "used_dev_size_num": 5860520828,
+      "name_val": "virttest:0",
+      "uuid_val": "85c5b164:d58a5ada:14f5fe07:d642e843",
+      "state_list": [
+        "clean"
+      ],
+      "creation_time_epoch": 1271226136,
+      "update_time_epoch": 1658891791
+    }
 
-    $ mdadm | jc --mdadm -p -r
-    []
+    $ mdadm --query --detail /dev/md0 | jc --mdadm -p -r
+    {
+      "device": "/dev/md0",
+      "version": "1.1",
+      "creation_time": "Tue Apr 13 23:22:16 2010",
+      "raid_level": "raid1",
+      "array_size": "5860520828 (5.46 TiB 6.00 TB)",
+      "used_dev_size": "5860520828 (5.46 TiB 6.00 TB)",
+      "raid_devices": "2",
+      "total_devices": "2",
+      "persistence": "Superblock is persistent",
+      "intent_bitmap": "Internal",
+      "update_time": "Tue Jul 26 20:16:31 2022",
+      "state": "clean",
+      "active_devices": "2",
+      "working_devices": "2",
+      "failed_devices": "0",
+      "spare_devices": "0",
+      "consistency_policy": "bitmap",
+      "name": "virttest:0",
+      "uuid": "85c5b164:d58a5ada:14f5fe07:d642e843",
+      "events": "2193679",
+      "device_table": [
+        {
+          "number": "3",
+          "major": "8",
+          "minor": "17",
+          "state": "active sync",
+          "device": "/dev/sdb1",
+          "raid_device": "0"
+        },
+        {
+          "number": "2",
+          "major": "8",
+          "minor": "33",
+          "state": "active sync",
+          "device": "/dev/sdc1",
+          "raid_device": "1"
+        }
+      ]
+    }
 """
-from typing import List, Dict
+from typing import Dict
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
 
@@ -57,11 +225,11 @@ def _process(proc_data: Dict) -> Dict:
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
-        List of Dictionaries. Structured to conform to the schema.
+        Dictionary. Structured to conform to the schema.
     """
     int_list = {'array_size_num', 'used_dev_size_num', 'raid_devices', 'total_devices',
                 'active_devices', 'working_devices', 'failed_devices', 'spare_devices',
@@ -180,7 +348,7 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
