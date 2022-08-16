@@ -5,15 +5,13 @@
 
 jc - JSON Convert Syslog RFC 3164 string parser
 
-<<Short syslog-3164 description and caveats>>
+This parser accepts a single syslog line string or multiple syslog lines
+separated by newlines. A warning message to `STDERR` will be printed if an
+unparsable line is found.
 
 Usage (cli):
 
-    $ syslogstring | jc --syslog-bsd
-
-or
-
-    $ jc syslog-3164
+    $ echo '<34>Oct 11 22:14:15 mymachine su: su root...' | jc --syslog-bsd
 
 Usage (module):
 
@@ -24,19 +22,41 @@ Schema:
 
     [
       {
-        "syslog-3164":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "priority":                   integer/null,
+        "date":                       string,
+        "hostname":                   string,
+        "tag":                        string,
+        "content":                    string,
+        "unparsable":                 string,  # [0]
       }
     ]
 
+    [0] this field exists if the syslog line is not parsable. The value
+        is the original syslog line.
+
 Examples:
 
-    $ syslog-3164 | jc --syslog-3164 -p
-    []
+    $ cat syslog.txt | jc --syslog-bsd -p
+    [
+      {
+        "priority": 34,
+        "date": "Oct 11 22:14:15",
+        "hostname": "mymachine",
+        "tag": "su",
+        "content": "'su root' failed for lonvick on /dev/pts/8"
+      }
+    ]
 
-    $ syslog-3164 | jc --syslog-3164 -p -r
-    []
+    $ cat syslog.txt | jc --syslog-bsd -p -r
+    [
+      {
+        "priority": "34",
+        "date": "Oct 11 22:14:15",
+        "hostname": "mymachine",
+        "tag": "su",
+        "content": "'su root' failed for lonvick on /dev/pts/8"
+      }
+    ]
 
 <a id="jc.parsers.syslog_bsd.parse"></a>
 
