@@ -139,7 +139,7 @@ def parse(
                 syslog_dict = {
                     'priority': priority,
                     'date': syslog_match.group('date'),
-                    'hostname': syslog_match.group('host'),
+                    'hostname': syslog_match.group('host').rstrip(':'),
                     # 'raw_msg': syslog_match.group('msg'),
                     'tag': syslog_match.group('tag'),
                     'content': syslog_match.group('content').lstrip(' :').rstrip()
