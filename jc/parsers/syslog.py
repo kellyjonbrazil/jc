@@ -2,7 +2,7 @@
 
 This parser accepts a single syslog line string or multiple syslog lines
 separated by newlines. A warning message to `STDERR` will be printed if an
-unparsable line is found.
+unparsable line is found unless `--quiet` or `quiet=True` is used.
 
 The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
 the local time of the system the parser is run on)
