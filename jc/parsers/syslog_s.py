@@ -263,6 +263,11 @@ def parse(
                     'unparsable': line
                 }
 
+                if not quiet:
+                    jc.utils.warning_message(
+                        [f'Unparsable line found: {line}']
+                    )
+
             if output_line:
                 yield output_line if raw else _process(output_line)
 
