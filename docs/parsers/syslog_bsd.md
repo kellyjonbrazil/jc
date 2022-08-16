@@ -7,7 +7,7 @@ jc - JSON Convert Syslog RFC 3164 string parser
 
 This parser accepts a single syslog line string or multiple syslog lines
 separated by newlines. A warning message to `STDERR` will be printed if an
-unparsable line is found.
+unparsable line is found unless `--quiet` or `quiet=True` is used.
 
 Usage (cli):
 
@@ -25,7 +25,7 @@ Schema:
         "priority":                   integer/null,
         "date":                       string,
         "hostname":                   string,
-        "tag":                        string,
+        "tag":                        string/null,
         "content":                    string,
         "unparsable":                 string,  # [0]
       }

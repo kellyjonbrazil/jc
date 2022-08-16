@@ -2,7 +2,7 @@
 
 This parser accepts a single syslog line string or multiple syslog lines
 separated by newlines. A warning message to `STDERR` will be printed if an
-unparsable line is found.
+unparsable line is found unless `--quiet` or `quiet=True` is used.
 
 Usage (cli):
 
@@ -20,7 +20,7 @@ Schema:
         "priority":                   integer/null,
         "date":                       string,
         "hostname":                   string,
-        "tag":                        string,
+        "tag":                        string/null,
         "content":                    string,
         "unparsable":                 string,  # [0]
       }
@@ -136,13 +136,23 @@ def parse(
                 if syslog_match.group('priority'):
                     priority = syslog_match.group('priority')[1:-1]
 
+                # check for missing tag
+                hostname = syslog_match.group('host')
+                tag = syslog_match.group('tag')
+                content = syslog_match.group('content')
+                if hostname:
+                    if hostname.endswith(':'):
+                        content = tag + content
+                        tag = None
+                        hostname = hostname[:-1]
+
                 syslog_dict = {
                     'priority': priority,
                     'date': syslog_match.group('date'),
-                    'hostname': syslog_match.group('host').rstrip(':'),
+                    'hostname': hostname,
                     # 'raw_msg': syslog_match.group('msg'),
-                    'tag': syslog_match.group('tag'),
-                    'content': syslog_match.group('content').lstrip(' :').rstrip()
+                    'tag': tag,
+                    'content': content.lstrip(' :').rstrip()
                 }
 
             else:
