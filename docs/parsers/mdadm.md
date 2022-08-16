@@ -40,6 +40,15 @@ Schema:
       "name_val":                     string,
       "uuid":                         string,
       "uuid_val":                     string,
+      "homehost":                     string,
+      "container":                    string,
+      "container_dev":                string,
+      "container_member":             integer,
+      "controller_guid":              string,
+      "container_guid":               string,
+      "seq":                          string,
+      "redundant_hdr":                string,
+      "virtual_disks":                integer,
       "creation_time":                string,
       "creation_time_epoch":          integer,  # naive timestamp
       "raid_level":                   string,
@@ -70,11 +79,19 @@ Schema:
       "checksum":                     string,
       "checksum_val":                 string,
       "checksum_state":               string,
-      "events":                       integer,
-      "chunk_size":                   integer,
+      "events":                       string,
+      "events_num":                   integer,
+      "events_maj":                   integer,
+      "events_min":                   integer,
+      "chunk_size":                   string,
+      "chunk_size_num":               integer,
       "device_role":                  string,
       "array_state":                  string,
       "array_state_list": [
+                                      string
+      ],
+      "member_arrays":                string,
+      "member_arrays_list": [
                                       string
       ],
       "consistency_policy":           string,
@@ -91,6 +108,7 @@ Schema:
       "working_devices":              integer,
       "failed_devices":               integer,
       "spare_devices":                integer,
+      "physical_disks":               integer,
       "device_table": [
         {
           "number":                   integer/null,
@@ -104,6 +122,8 @@ Schema:
         }
       ]
     }
+
+    Any fields unspecified above will be string type.
 
 Examples:
 
