@@ -117,7 +117,7 @@ def parse(
 
     # inspired by https://gist.github.com/miticojo/b16bb13e78572c2d2fac82d9516d5c32
     syslog = re.compile(r'''
-        (?P<priority><\d*>)?
+        (?P<priority><\d{1,3}>)?
         (?P<date>[A-Z][a-z][a-z]\s{1,2}\d{1,2}\s\d{2}?:\d{2}:\d{2})?\s
         (?P<host>[\w][\w\d\.:@-]*)?\s
         (?P<msg>

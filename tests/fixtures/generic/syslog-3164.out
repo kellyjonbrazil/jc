@@ -1,4 +1,5 @@
 <34>Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8
+<3444>Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8
 Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8
 <35>Oct 12 22:14:15 client_machine su: 'su root' failed for joe on /dev/pts/2
 <35>Mar  7 04:02:16 avas clamd[11165]: /var/amavis/amavis-20040307T033734-10329/parts/part-00003: Worm.Mydoom.F FOUND 
