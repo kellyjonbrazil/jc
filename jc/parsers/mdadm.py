@@ -35,6 +35,15 @@ Schema:
       "name_val":                     string,
       "uuid":                         string,
       "uuid_val":                     string,
+      "homehost":                     string,
+      "container":                    string,
+      "container_dev":                string,
+      "container_member":             integer,
+      "controller_guid":              string,
+      "container_guid":               string,
+      "seq":                          string,
+      "redundant_hdr":                string,
+      "virtual_disks":                integer,
       "creation_time":                string,
       "creation_time_epoch":          integer,  # naive timestamp
       "raid_level":                   string,
@@ -65,11 +74,19 @@ Schema:
       "checksum":                     string,
       "checksum_val":                 string,
       "checksum_state":               string,
-      "events":                       integer,
-      "chunk_size":                   integer,
+      "events":                       string,
+      "events_num":                   integer,
+      "events_maj":                   integer,
+      "events_min":                   integer,
+      "chunk_size":                   string,
+      "chunk_size_num":               integer,
       "device_role":                  string,
       "array_state":                  string,
       "array_state_list": [
+                                      string
+      ],
+      "member_arrays":                string,
+      "member_arrays_list": [
                                       string
       ],
       "consistency_policy":           string,
@@ -86,6 +103,7 @@ Schema:
       "working_devices":              integer,
       "failed_devices":               integer,
       "spare_devices":                integer,
+      "physical_disks":               integer,
       "device_table": [
         {
           "number":                   integer/null,
@@ -99,6 +117,8 @@ Schema:
         }
       ]
     }
+
+    Any fields unspecified above will be string type.
 
 Examples:
 
@@ -202,6 +222,7 @@ Examples:
     }
 """
 from typing import Dict
+import re
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
 
@@ -231,12 +252,12 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = {'array_size_num', 'used_dev_size_num', 'raid_devices', 'total_devices',
-                'active_devices', 'working_devices', 'failed_devices', 'spare_devices',
-                'events', 'number', 'major', 'minor', 'raid_device', 'avail_dev_size_num',
+    int_list = {'array_size_num', 'used_dev_size_num', 'raid_devices', 'total_devices', 'Number',
+                'active_devices', 'working_devices', 'failed_devices', 'spare_devices', 'physical_disks',
+                'number', 'major', 'minor', 'raid_device', 'avail_dev_size_num', 'virtual_disks',
                 'data_offset', 'super_offset', 'unused_space_before', 'unused_space_after',
-                'chunk_size', 'preferred_minor', 'check_status_percent', 'resync_status_percent',
-                'rebuild_status_percent'}
+                'chunk_size_num', 'preferred_minor', 'check_status_percent', 'resync_status_percent',
+                'rebuild_status_percent', 'events_num', 'events_maj', 'events_min', 'container_member'}
 
     array_state_map = {
         'A': 'active',
@@ -271,9 +292,29 @@ def _process(proc_data: Dict) -> Dict:
 
     if 'name' in proc_data:
         proc_data['name_val'] = proc_data['name'].split(maxsplit=1)[0]
+        if proc_data['name'].endswith(')'):
+            proc_data['homehost'] = proc_data['name'].rsplit(maxsplit=1)[1][0:-1]
 
     if 'uuid' in proc_data:
         proc_data['uuid_val'] = proc_data['uuid'].split(maxsplit=1)[0]
+        if proc_data['uuid'].endswith(')'):
+            proc_data['homehost'] = proc_data['uuid'].rsplit(maxsplit=1)[1][0:-1]
+
+    if 'container' in proc_data:
+        if ', member ' in proc_data['container']:
+            proc_data['container_dev'] = proc_data['container'].split(',')[0]
+            proc_data['container_member'] = proc_data['container'].rsplit(maxsplit=1)[-1]
+
+    if 'chunk_size' in proc_data:
+        proc_data['chunk_size_num'] = proc_data['chunk_size']
+
+    if 'events' in proc_data:
+        if '.' in proc_data['events']:
+            events_maj, events_min = proc_data['events'].split('.', maxsplit=1)
+            proc_data['events_maj'] = events_maj
+            proc_data['events_min'] = events_min
+        else:
+            proc_data['events_num'] = proc_data['events']
 
     if 'checksum' in proc_data:
         proc_data['checksum_val'] = proc_data['checksum'].split(maxsplit=1)[0]
@@ -285,6 +326,9 @@ def _process(proc_data: Dict) -> Dict:
 
     if 'flags' in proc_data:
         proc_data['flag_list'] = proc_data['flags'].split()
+
+    if 'member_arrays' in proc_data:
+        proc_data['member_arrays_list'] = proc_data['member_arrays'].split()
 
     if 'array_state' in proc_data:
         array_state_list = []
@@ -313,7 +357,7 @@ def _process(proc_data: Dict) -> Dict:
         dt = jc.utils.timestamp(proc_data['update_time'], format_hint=(1000,))
         proc_data['update_time_epoch'] = dt.naive
 
-    # convert ints
+    # convert ints/floats
     for key in proc_data:
         if key in int_list:
             proc_data[key] = jc .utils.convert_to_int(proc_data[key])
@@ -368,7 +412,9 @@ def parse(
             # key/value lines
             if ' : ' in line:
                 key, value = line.split(' : ', maxsplit=1)
-                key = key.strip().lower().replace(' ', '_')
+                key = key.strip().lower()
+                key = re.sub(r'[^a-z0-9]', '_', key)
+                key = key.strip('_')
                 value = value.strip()
                 raw_output[key] = value
                 continue
@@ -376,6 +422,16 @@ def parse(
             # device table header
             if '    Number   Major   Minor   RaidDevice State' in line:
                 device_table_list.append('    number   major   minor   RaidDevice state         device')
+                device_table = True
+                continue
+
+            elif '    Number   Major   Minor   RaidDevice' in line:
+                device_table_list.append('    number   major   minor   RaidDevice device')
+                device_table = True
+                continue
+
+            elif '      Number    RefNo      Size       Device      Type/State' in line:
+                device_table_list.append('      Number    RefNo      Size       Device      Type/State')
                 device_table = True
                 continue
 
