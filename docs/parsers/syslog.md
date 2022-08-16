@@ -58,7 +58,7 @@ Blank values converted to `null`/`None`
 
 Examples:
 
-    $ cat syslog.txt| jc --syslog -p
+    $ cat syslog.txt | jc --syslog -p
     [
       {
         "priority": 35,
@@ -90,7 +90,7 @@ Examples:
       }
     ]
 
-    $ cat syslog.txt| jc --syslog -p -r
+    $ cat syslog.txt | jc --syslog -p -r
     [
       {
         "priority": "35",
