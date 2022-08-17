@@ -260,12 +260,12 @@ def parse(
 
             else:
                 output_line = {
-                    'unparsable': line
+                    'unparsable': line.rstrip()
                 }
 
                 if not quiet:
                     jc.utils.warning_message(
-                        [f'Unparsable line found: {line}']
+                        [f'Unparsable line found: {line.rstrip()}']
                     )
 
             if output_line:
