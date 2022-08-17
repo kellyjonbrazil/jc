@@ -29,24 +29,24 @@ Schema:
 
     {
       "priority":                   integer,
-        "version":                    integer,
-        "timestamp":                  string,
-        "timestamp_epoch":            integer,  # [0]
-        "timestamp_epoch_utc":        integer,  # [1]
-        "hostname":                   string,
-        "appname":                    string,
-        "proc_id":                    integer,
-        "msg_id":                     string,
-        "structured_data": [
-          {
-            "identity":               string,
-            "parameters": {
-              "<key>":                string
-            }
+      "version":                    integer,
+      "timestamp":                  string,
+      "timestamp_epoch":            integer,  # [0]
+      "timestamp_epoch_utc":        integer,  # [1]
+      "hostname":                   string,
+      "appname":                    string,
+      "proc_id":                    integer,
+      "msg_id":                     string,
+      "structured_data": [
+        {
+          "identity":               string,
+          "parameters": {
+            "<key>":                string
           }
-        ],
-        "message":                    string,
-        "unparsable":                 string  # [2]
+        }
+      ],
+      "message":                    string,
+      "unparsable":                 string  # [2]
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
