@@ -33,7 +33,25 @@ Usage (module):
 Schema:
 
     {
-      "foo":            string,
+      "priority":                   integer,
+        "version":                    integer,
+        "timestamp":                  string,
+        "timestamp_epoch":            integer,  # [0]
+        "timestamp_epoch_utc":        integer,  # [1]
+        "hostname":                   string,
+        "appname":                    string,
+        "proc_id":                    integer,
+        "msg_id":                     string,
+        "structured_data": [
+          {
+            "identity":               string,
+            "parameters": {
+              "<key>":                string
+            }
+          }
+        ],
+        "message":                    string,
+        "unparsable":                 string  # [2]
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
@@ -42,6 +60,11 @@ Schema:
         "line":         string       # exists if "success" is false
       }
     }
+
+    [0] naive timestamp if "timestamp" field is parsable, else null
+    [1] timezone aware timestamp availabe for UTC, else null
+    [2] this field exists if the syslog line is not parsable. The value
+        is the original syslog line.
 
 Examples:
 
