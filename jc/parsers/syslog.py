@@ -20,7 +20,8 @@ Usage (module):
     result = jc.parse('syslog', syslog_string)
 
 Schema:
-Blank values converted to `null`/`None`
+
+Blank values converted to `null`/`None`.
 
     [
       {

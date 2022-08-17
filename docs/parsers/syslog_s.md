@@ -32,6 +32,8 @@ Usage (module):
 
 Schema:
 
+Blank values converted to `null`/`None`.
+
     {
       "priority":                   integer,
       "version":                    integer,
