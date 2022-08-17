@@ -197,10 +197,11 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             for esc, esc_sub in escape_map.items():
                 item[key] = item[key].replace(esc, esc_sub)
 
-            # remove any quotation marks from key names
-            if '"' in key:
-                new_key = key.replace('"', '')
-                item[new_key] = item.pop(key)
+            # normalize keynames
+            new_key = key.strip()
+            new_key = re.sub(r'[^a-zA-Z0-9]', '_', new_key)
+            new_key = new_key.strip('_')
+            item[new_key] = item.pop(key)
 
     return proc_data
 
