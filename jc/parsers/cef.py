@@ -23,6 +23,8 @@ Schema:
 
 See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-8.3/cef-implementation-standard/Content/CEF/Chapter%201%20What%20is%20CEF.htm
 
+> Note: Special characters in key names will be converted to underscores.
+
     [
       {
         "deviceVendor":                   string,
@@ -155,46 +157,6 @@ def _pycef_parse(str_input):
             # Split the tuples and put them into the dictionary
             values[i[0]] = i[1]
 
-        # set defined types for extended fields
-        # see https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-8.3/cef-implementation-standard/#CEF/Chapter%202%20ArcSight%20Extension.htm
-        extended_ints = {
-            'spid', 'customerKey', 'deviceTranslatedZoneKey', 'oldFileSize',
-            'destination TranslatedPort', 'cn3', 'source TranslatedPort', 'in', 'fsize', 'slat',
-            'dpid', 'cnt', 'agentZoneKey', 'out', 'type', 'eventId', 'dlong', 'cn2',
-            'deviceDirection', 'spt', 'agentTranslatedZoneKey', 'sTranslatedZoneKey', 'cn1',
-            'slong', 'dZoneKey', 'deviceZoneKey', 'dvcpid', 'dpt', 'dTranslatedZoneKey', 'dlat',
-            'sZoneKey'
-        }
-
-        extended_floats = {
-            'cfp1', 'cfp2', 'cfp3', 'cfp4'
-        }
-
-        for k, v in values.items():
-            if k in extended_ints:
-                try:
-                    values[k] = int(v)
-                except Exception:
-                    pass
-
-            if k in extended_floats:
-                try:
-                    values[k] = float(v)
-                except Exception:
-                    pass
-
-        # Process custom field labels
-        for key in list(values.keys()):
-            # If the key string ends with Label, replace it in the appropriate
-            # custom field
-            if key[-5:] == "Label":
-                customlabel = key[:-5]
-                # Find the corresponding customfield and replace with the label
-                for customfield in list(values.keys()):
-                    if customfield == customlabel:
-                        values[values[key]] = values[customfield]
-                        del values[customfield]
-                        del values[key]
     else:
         raise ParseError('Could not parse record. Is it valid CEF format?')
 
@@ -249,7 +211,59 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
     severity_set = {'unknown', 'low', 'medium', 'high', 'very-high'}
 
+    # set defined types for extended fields
+    # see https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-8.3/cef-implementation-standard/#CEF/Chapter%202%20ArcSight%20Extension.htm
+    extended_ints = {
+        'spid', 'customerKey', 'deviceTranslatedZoneKey', 'oldFileSize',
+        'destinationTranslatedPort', 'cn3', 'sourceTranslatedPort', 'in', 'fsize', 'slat',
+        'dpid', 'cnt', 'agentZoneKey', 'out', 'type', 'eventId', 'dlong', 'cn2',
+        'deviceDirection', 'spt', 'agentTranslatedZoneKey', 'sTranslatedZoneKey', 'cn1',
+        'slong', 'dZoneKey', 'deviceZoneKey', 'dvcpid', 'dpt', 'dTranslatedZoneKey', 'dlat',
+        'sZoneKey'
+    }
+
+    extended_floats = {
+        'cfp1', 'cfp2', 'cfp3', 'cfp4'
+    }
+
+    extended_dt = {
+        'deviceCustomDate1', 'deviceCustomDate2', 'end', 'fileCreateTime',
+        'fileModificationTime', 'flexDate1', 'oldFileCreateTime', 'oldFileModificationTime',
+        'rt', 'start', 'art'
+    }
+
     for item in proc_data:
+        for key, value in item.copy().items():
+            if key in extended_ints:
+                try:
+                    item[key] = int(value)
+                except Exception:
+                    pass
+
+            if key in extended_floats:
+                try:
+                    item[key] = float(value)
+                except Exception:
+                    pass
+
+            if key in extended_dt:
+                dt = jc.utils.timestamp(item[key])
+                item[key + '_epoch'] = dt.naive
+                item[key + '_epoch_utc'] = dt.utc
+
+        # Process custom field labels (from pycef library)
+        for key in list(item.keys()):
+            # If the key string ends with Label, replace it in the appropriate
+            # custom field
+            if key[-5:] == "Label":
+                customlabel = key[:-5]
+                # Find the corresponding customfield and replace with the label
+                for customfield in list(item.keys()):
+                    if customfield == customlabel:
+                        item[item[key]] = item[customfield]
+                        del item[customfield]
+                        del item[key]
+
         for key, value in item.copy().items():
             if isinstance(item[key], str):
                 # remove any spaces around values
