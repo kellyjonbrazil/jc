@@ -12,7 +12,8 @@ needs.
 
 This parser will accept a single CEF string or multiple CEF string lines.
 Any text before "CEF" will be ignored. Syslog and CEF escaped characters
-(`\\`, `\\"`, `\\]`, `\\|`, `\\n`, `\\r`) are unescaped.
+(`\\`, `\\"`, `\\]`, `\\|`, `\\=`, `\\%`, ``\\#, `\\n`, `\\r`) are
+unescaped.
 
 Extended fields, as defined in the CEF specification, are relabeled
 and the values are converted to their respective types. Extra naive and
