@@ -1,14 +1,20 @@
 """jc - JSON Convert CEF string parser
 
-This is a best-effort parser since there are so many variations to CEF
-formatting from different vendors. If you require special handling for your
-CEF input, you can copy this parser code to the `jc` pluggin directory for
-your system and modify it to suit your needs.
+This parser conforms to the Microfocus Arcsight CEF specification. If you
+require special handling for your CEF input, you can copy this parser code
+to the `jc` pluggin directory for your system and modify it to suit your
+needs.
 
 This parser will accept a single CEF string or multiple CEF string lines.
 Any text before "CEF" will be ignored. Syslog and CEF escaped characters
-(`\\`, `\\"`, `\\]`, `\\|`, `\\n`, `\\r`) are unescaped. To preserve
-escaping, use the `--raw` or `raw=True` option in the `parse()` function.
+(`\\`, `\\"`, `\\]`, `\\|`, `\\n`, `\\r`) are unescaped.
+
+Extended fields, as defined in the CEF specification, are relabeled
+and the values are converted to their respective types. Extra naive and
+UTC epoch timestamps are added where appropriate per the CEF specification.
+
+To preserve escaping, original keynames, and value types use the `--raw` or
+`raw=True` option in the `parse()` function.
 
 Usage (cli):
 
@@ -37,6 +43,8 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
         "agentSeverityNum":               integer,
         "CEF_Version":                    integer,
         <extended fields>                 string/integer/float,  # [0]
+        <extended fields>"_epoch":        integer,  # [1]
+        <extended fields>"_epoch_utc":    integer,  # [2]
         <custom fields>                   string
       }
     ]
@@ -44,14 +52,62 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
     [0] Will attempt to convert extended fields to the type specified in the
         CEF specification. If conversion fails, then the field will remain
         a string.
+    [1] Naive calculated epoch timestamp
+    [2] Timezone-aware calculated epoch timestamp. (UTC only) This value
+        will be null if a UTC timezone cannot be extracted from the original
+        timestamp string value.
 
 Examples:
 
     $ cef | jc --cef -p
-    []
+    [
+      {
+        "deviceVendor": "Trend Micro",
+        "deviceProduct": "Deep Security Agent",
+        "deviceVersion": "<DSA version>",
+        "deviceEventClassId": "4000000",
+        "name": "Eicar_test_file",
+        "agentSeverity": 6,
+        "CEF_Version": 0,
+        "dvchost": "hostname",
+        "string": "hello \"world\"!",
+        "start": "Nov 08 2020 12:30:00.111 UTC",
+        "start_epoch": 1604867400,
+        "start_epoch_utc": 1604838600,
+        "Host_ID": 1,
+        "Quarantine": 205,
+        "myDate": "Nov 08 2022 12:30:00.111",
+        "myDate_epoch": 1667939400,
+        "myDate_epoch_utc": null,
+        "myFloat": 3.14,
+        "agentSeverityString": "Medium",
+        "agentSeverityNum": 6
+      }
+    ]
 
     $ cef | jc --cef -p -r
-    []
+    [
+      {
+        "deviceVendor": "Trend Micro",
+        "deviceProduct": "Deep Security Agent",
+        "deviceVersion": "<DSA version>",
+        "deviceEventClassId": "4000000",
+        "name": "Eicar_test_file",
+        "agentSeverity": "6",
+        "CEF_Version": "0",
+        "cn1": "1",
+        "cn1Label": "Host ID",
+        "dvchost": "hostname",
+        "cn2": "205",
+        "cn2Label": "Quarantine",
+        "string": "hello \\\"world\\\"!",
+        "start": "Nov 08 2020 12:30:00.111 UTC",
+        "deviceCustomDate1": "Nov 08 2022 12:30:00.111",
+        "deviceCustomDate1Label": "myDate",
+        "cfp1": "3.14",
+        "cfp1Label": "myFloat"
+      }
+    ]
 """
 from typing import List, Dict
 import re
