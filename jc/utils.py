@@ -375,6 +375,10 @@ class timestamp:
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
             {'id': 1300, 'format': '%Y-%m-%dT%H:%M:%S.%f%Z', 'locale': None}, # ISO Format with UTC (found in syslog 5424): 2003-10-11T22:14:15.003Z
             {'id': 1310, 'format': '%Y-%m-%dT%H:%M:%S.%f', 'locale': None}, # ISO Format without TZ (found in syslog 5424): 2003-10-11T22:14:15.003
+            {'id': 1400, 'format': '%b %d %Y %H:%M:%S.%f UTC', 'locale': None}, # CEF Format with UTC: Nov 08 2022 12:30:00.111 UTC
+            {'id': 1410, 'format': '%b %d %Y %H:%M:%S.%f', 'locale': None}, # CEF Format without TZ: Nov 08 2022 12:30:00.111
+            {'id': 1420, 'format': '%b %d %Y %H:%M:%S UTC', 'locale': None}, # CEF Format with UTC without microseconds: Nov 08 2022 12:30:00 UTC
+            {'id': 1430, 'format': '%b %d %Y %H:%M:%S', 'locale': None}, # CEF Format without TZ or microseconds: Nov 08 2022 12:30:00
             {'id': 1500, 'format': '%Y-%m-%d %H:%M', 'locale': None},  # en_US.UTF-8 local format (found in who cli output): 2021-03-23 00:14
             {'id': 1600, 'format': '%m/%d/%Y %I:%M %p', 'locale': None},  # Windows english format (found in dir cli output): 12/07/2019 02:09 AM
             {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
