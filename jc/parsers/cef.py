@@ -251,19 +251,33 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 item[key + '_epoch'] = dt.naive
                 item[key + '_epoch_utc'] = dt.utc
 
-        # Process custom field labels (from pycef library)
-        for key in list(item.keys()):
-            # If the key string ends with Label, replace it in the appropriate
-            # custom field
-            if key[-5:] == "Label":
+        # Process custom field labels (adapted from pycef library)
+        cleanup_list = []
+        custom_fields = list(item.keys())
+        for key in custom_fields:
+            if key.endswith('Label'):
                 customlabel = key[:-5]
-                # Find the corresponding customfield and replace with the label
-                for customfield in list(item.keys()):
+                for customfield in custom_fields:
+                    # check for normal custom fields
                     if customfield == customlabel:
                         item[item[key]] = item[customfield]
-                        del item[customfield]
-                        del item[key]
+                        cleanup_list.append(customfield)
+                        cleanup_list.append(key)
 
+                    # check for datetime objects
+                    if customfield == customlabel + '_epoch':
+                        item[item[key] + '_epoch'] = item[customfield]
+                        cleanup_list.append(customfield)
+
+                    if customfield == customlabel + '_epoch_utc':
+                        item[item[key] + '_epoch_utc'] = item[customfield]
+                        cleanup_list.append(customfield)
+
+        # cleanup extra custom fields
+        for key in cleanup_list:
+            del item[key]
+
+        # more normalization
         for key, value in item.copy().items():
             if isinstance(item[key], str):
                 # remove any spaces around values
