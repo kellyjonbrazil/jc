@@ -1,9 +1,6 @@
 """jc - JSON Convert CEF string parser
 
-This parser conforms to the Microfocus Arcsight CEF specification. If you
-require special handling for your CEF input, you can copy this parser code
-to the `jc` pluggin directory for your system and modify it to suit your
-needs.
+This parser conforms to the Microfocus Arcsight CEF specification.
 
 This parser will accept a single CEF string or multiple CEF string lines.
 Any text before "CEF" will be ignored. Syslog and CEF escaped characters
@@ -14,8 +11,8 @@ Extended fields, as defined in the CEF specification, are relabeled
 and the values are converted to their respective types. Extra naive and
 UTC epoch timestamps are added where appropriate per the CEF specification.
 
-To preserve escaping, original keynames, and value types use the `--raw` or
-`raw=True` option in the `parse()` function.
+To preserve escaping and original keynames and to prevent type conversions
+use the `--raw` or `raw=True` option in the `parse()` function.
 
 Usage (cli):
 
@@ -42,7 +39,7 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
         "agentSeverity":                  string/integer,
         "agentSeverityString":            string,
         "agentSeverityNum":               integer,
-        "CEF_Version":                    integer,
+        "CEFVersion":                     integer,
         <extended fields>                 string/integer/float,  # [0]
         <extended fields>"_epoch":        integer,  # [1]
         <extended fields>"_epoch_utc":    integer,  # [2]
@@ -69,7 +66,7 @@ Examples:
         "deviceEventClassId": "4000000",
         "name": "Eicar_test_file",
         "agentSeverity": 6,
-        "CEF_Version": 0,
+        "CEFVersion": 0,
         "dvchost": "hostname",
         "string": "hello \"world\"!",
         "start": "Nov 08 2020 12:30:00.111 UTC",
@@ -95,7 +92,7 @@ Examples:
         "deviceEventClassId": "4000000",
         "name": "Eicar_test_file",
         "agentSeverity": "6",
-        "CEF_Version": "0",
+        "CEFVersion": "0",
         "cn1": "1",
         "cn1Label": "Host ID",
         "dvchost": "hostname",
@@ -203,7 +200,7 @@ def _pycef_parse(str_input):
         if cef_start == -1:
             raise ParseError('Invalid CEF string.')
         (cef, version) = spl[0][cef_start:].split(':')
-        values["CEF_Version"] = version
+        values["CEFVersion"] = version
 
         # The ugly, gnarly regex here finds a single key=value pair,
         # taking into account multiple whitespaces, escaped '=' and '|'
@@ -249,7 +246,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         r'\r': '\r'
     }
 
-    int_list = {'CEF_Version'}
+    int_list = {'CEFVersion'}
 
     severity_map = {
         None: 'Unknown',
@@ -304,7 +301,8 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                     pass
 
             if key in extended_dt:
-                dt = jc.utils.timestamp(item[key])
+                formats = (1400, 1410, 1420, 1430)
+                dt = jc.utils.timestamp(item[key], formats)
                 item[key + '_epoch'] = dt.naive
                 item[key + '_epoch_utc'] = dt.utc
 
@@ -315,19 +313,20 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if key.endswith('Label'):
                 customlabel = key[:-5]
                 for customfield in custom_fields:
+                    new_name = item[key]
                     # check for normal custom fields
                     if customfield == customlabel:
-                        item[item[key]] = item[customfield]
+                        item[new_name] = item[customfield]
                         cleanup_list.append(customfield)
                         cleanup_list.append(key)
 
                     # check for datetime objects
                     if customfield == customlabel + '_epoch':
-                        item[item[key] + '_epoch'] = item[customfield]
+                        item[new_name + '_epoch'] = item[customfield]
                         cleanup_list.append(customfield)
 
                     if customfield == customlabel + '_epoch_utc':
-                        item[item[key] + '_epoch_utc'] = item[customfield]
+                        item[new_name + '_epoch_utc'] = item[customfield]
                         cleanup_list.append(customfield)
 
         # cleanup extra custom fields
