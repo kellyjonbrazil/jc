@@ -165,6 +165,7 @@ SOFTWARE.
 RE_HEADER = re.compile(r'(\S+)\s+\((\d+\.\d+\.\d+\.\d+|[0-9a-fA-F:]+)\)')
 RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+)\)+')
 RE_PROBE_IP_ONLY = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+([^\(])')
+RE_PROBE_IPV6_ONLY = re.compile(r'(([a-f0-9:]+:+)+[a-f0-9]+)')
 RE_PROBE_BSD_IPV6 = re.compile(r'\b(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}\b')
 RE_HOP = re.compile(r'^\s*(\d+)?\s+(.+)$')
 RE_PROBE_ASN = re.compile(r'\[AS(\d+)\]')
@@ -277,6 +278,7 @@ def _loads(data):
         probe_name_ip_match = RE_PROBE_NAME_IP.search(hop_string)
         probe_ip_only_match = RE_PROBE_IP_ONLY.search(hop_string)
         probe_bsd_ipv6_match = RE_PROBE_BSD_IPV6.search(hop_string)
+        probe_ipv6_only_match = RE_PROBE_IPV6_ONLY.search(hop_string)
         if probe_ip_only_match:
             probe_name = None
             probe_ip = probe_ip_only_match.group(1)
@@ -286,6 +288,9 @@ def _loads(data):
         elif probe_bsd_ipv6_match:
             probe_name = None
             probe_ip = probe_bsd_ipv6_match.group(0)
+        elif probe_ipv6_only_match:
+            probe_name = None
+            probe_ip = probe_ipv6_only_match.group(1)
         else:
             probe_name = None
             probe_ip = None
