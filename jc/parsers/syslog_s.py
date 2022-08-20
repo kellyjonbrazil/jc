@@ -99,8 +99,8 @@ __version__ = info.version
 # https://www.rfc-editor.org/rfc/rfc5424.html#section-6
 escape_map = {
     r'\\': '\\',
-    r'\"': r'"',
-    r'\]': r']'
+    r'\"': '"',
+    r'\]': ']'
 }
 
 
