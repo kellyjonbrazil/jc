@@ -5,7 +5,8 @@ xxxxxxxx v1.21.0
 - Add Syslog string parsers (RFC 3164 and RFC 5424)
 - Add CEF string parser
 - Add PLIST file parser (XML and binary support)
-- Add `mdadm` command parser tested on linux (IN PROGRESS)
+- Add `-n` support to the `traceroute` parser
+- Add `mdadm` command parser tested on linux
 - Add `--time-out` or `-t` option to add a UTC timestamp to the JSON output
 - Fix `lsusb` command parser for output containing a `Device Qualifier` and
   `Binary Object Store Descriptor` sections

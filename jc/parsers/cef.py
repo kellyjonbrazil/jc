@@ -12,7 +12,7 @@ and the values are converted to their respective types. Extra naive and
 UTC epoch timestamps are added where appropriate per the CEF specification.
 
 To preserve escaping and original keynames and to prevent type conversions
-use the `--raw` or `raw=True` option in the `parse()` function.
+use the `--raw` CLI option or `raw=True` param in the `parse()` function.
 
 Usage (cli):
 
