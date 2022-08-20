@@ -101,6 +101,7 @@ class info():
     description = 'CEF string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    details = 'Using the pycef library at https://github.com/DavidJBianco/pycef/releases/tag/v1.11-2'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     streaming = True
 
