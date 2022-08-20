@@ -11,6 +11,9 @@ Extended fields, as defined in the CEF specification, are relabeled
 and the values are converted to their respective types. Extra naive and
 UTC epoch timestamps are added where appropriate per the CEF specification.
 
+A warning message to `STDERR` will be printed if an unparsable line is found
+unless `--quiet` or `quiet=True` is used.
+
 To preserve escaping and original keynames and to prevent type conversions
 use the `--raw` CLI option or `raw=True` param in the `parse()` function.
 
@@ -35,15 +38,17 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
         "deviceProduct":                  string,
         "deviceVersion":                  string,
         "deviceEventClassId":             string,
+        "deviceEventClassIdNum":          integer/null,
         "name":                           string,
         "agentSeverity":                  string/integer,
         "agentSeverityString":            string,
-        "agentSeverityNum":               integer,
+        "agentSeverityNum":               integer/null,
         "CEFVersion":                     integer,
         <extended fields>                 string/integer/float,  # [0]
-        <extended fields>"_epoch":        integer,  # [1]
-        <extended fields>"_epoch_utc":    integer,  # [2]
-        <custom fields>                   string
+        <extended fields>"_epoch":        integer/null,  # [1]
+        <extended fields>"_epoch_utc":    integer/null,  # [2]
+        <custom fields>                   string,
+        "unparsable":                     string  # [3]
       }
     ]
 
@@ -54,6 +59,8 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
     [2] Timezone-aware calculated epoch timestamp. (UTC only) This value
         will be null if a UTC timezone cannot be extracted from the original
         timestamp string value.
+    [3] this field exists if the CEF line is not parsable. The value
+        is the original syslog line.
 
 Examples:
 
@@ -357,15 +364,21 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if key in int_list:
                 item[key] = jc.utils.convert_to_int(item[key])
 
-        # set SeverityString and SeverityNum:
+        # set agentSeverityString and agentSeverityNum:
         if 'agentSeverity' in item:
-            if isinstance(item['agentSeverity'], str) and item['agentSeverity'].lower() in severity_set:
+            if item['agentSeverity'].lower() in severity_set:
                 item['agentSeverityString'] = item['agentSeverity']
                 item['agentSeverityNum'] = None
             else:
-                item['agentSeverity'] = int(item['agentSeverity'])
-                item['agentSeverityString'] = severity_map[item['agentSeverity']]
-                item['agentSeverityNum'] = item['agentSeverity']
+                try:
+                    item['agentSeverityString'] = severity_map[int(item['agentSeverity'])]
+                    item['agentSeverityNum'] = int(item['agentSeverity'])
+                except Exception:
+                    pass
+
+        # set deviceEventClassIdNum:
+        if 'deviceEventClassId' in item:
+            item['deviceEventClassIdNum'] = jc.utils.convert_to_int(item['deviceEventClassId'])
 
     return proc_data
 
@@ -395,6 +408,13 @@ def parse(
 
     if jc.utils.has_data(data):
         for line in filter(None, data.splitlines()):
-            raw_output.append(_pycef_parse(line))
+            try:
+                raw_output.append(_pycef_parse(line))
+            except Exception:
+                if not quiet:
+                    jc.utils.warning_message(
+                        [f'Unparsable CEF line found: {line}']
+                    )
+                raw_output.append({"unparsable": line})
 
     return raw_output if raw else _process(raw_output)

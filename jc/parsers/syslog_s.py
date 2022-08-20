@@ -67,10 +67,12 @@ Examples:
 
     $ cat syslog.txt | jc --syslog-s -p
     {"priority":165,"version":1,"timestamp":"2003-08-24T05:14:15.000003-...}
+    {"priority":165,"version":1,"timestamp":"2003-08-24T05:14:16.000003-...}
     ...
 
     $ cat syslog.txt | jc --syslog-s -p -r
     {"priority":"165","version":"1","timestamp":"2003-08-24T05:14:15.000...}
+    {"priority":"165","version":"1","timestamp":"2003-08-24T05:15:15.000...}
     ...
 """
 from typing import List, Dict, Iterable, Union, Optional

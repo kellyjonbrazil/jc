@@ -44,10 +44,12 @@ Examples:
 
     $ cat syslog.txt | jc --syslog-bsd-s -p
     {"priority":34,"date":"Oct 11 22:14:15","hostname":"mymachine","t...}
+    {"priority":34,"date":"Oct 11 22:14:16","hostname":"mymachine","t...}
     ...
 
     $ cat syslog.txt | jc --syslog-bsd-s -p -r
     {"priority":"34","date":"Oct 11 22:14:15","hostname":"mymachine","...}
+    {"priority":"34","date":"Oct 11 22:14:16","hostname":"mymachine","...}
     ...
 """
 from typing import Dict, Iterable, Union
