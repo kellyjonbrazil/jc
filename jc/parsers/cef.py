@@ -301,10 +301,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                     pass
 
             if key in extended_dt:
-                formats = (1400, 1410, 1420, 1430)
-                dt = jc.utils.timestamp(item[key], formats)
-                item[key + '_epoch'] = dt.naive
-                item[key + '_epoch_utc'] = dt.utc
+                if re.match(r'\d{10,13}', item[key]):
+                    item[key + '_epoch'] = int(item[key][:10])
+                    item[key + '_epoch_utc'] = None
+                else:
+                    formats = (1400, 1410, 1420, 1430)
+                    dt = jc.utils.timestamp(item[key], formats)
+                    item[key + '_epoch'] = dt.naive
+                    item[key + '_epoch_utc'] = dt.utc
 
         # Process custom field labels (adapted from pycef library)
         cleanup_list = []
