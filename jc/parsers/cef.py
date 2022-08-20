@@ -64,7 +64,7 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
 
 Examples:
 
-    $ cef | jc --cef -p
+    $ cat cef.log | jc --cef -p
     [
       {
         "deviceVendor": "Trend Micro",
@@ -91,7 +91,7 @@ Examples:
       }
     ]
 
-    $ cef | jc --cef -p -r
+    $ cat cef.log | jc --cef -p -r
     [
       {
         "deviceVendor": "Trend Micro",

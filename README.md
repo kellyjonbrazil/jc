@@ -158,6 +158,7 @@ option.
 | ` --asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
 | `        --blkid` | `blkid` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid)          |
 | `          --cef` | CEF string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef)            |
+| `        --cef-s` | CEF string streaming parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef_s)          |
 | `        --chage` | `chage --list` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/chage)          |
 | `        --cksum` | `cksum` and `sum` command parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum)          |
 | `      --crontab` | `crontab` command and file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab)        |
