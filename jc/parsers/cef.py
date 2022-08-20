@@ -59,7 +59,7 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
     [2] Timezone-aware calculated epoch timestamp. (UTC only) This value
         will be null if a UTC timezone cannot be extracted from the original
         timestamp string value.
-    [3] this field exists if the CEF line is not parsable. The value
+    [3] This field exists if the CEF line is not parsable. The value
         is the original syslog line.
 
 Examples:
@@ -85,6 +85,7 @@ Examples:
         "myDate_epoch": 1667939400,
         "myDate_epoch_utc": null,
         "myFloat": 3.14,
+        "deviceEventClassIdNum": 4000000
         "agentSeverityString": "Medium",
         "agentSeverityNum": 6
       }
