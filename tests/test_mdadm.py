@@ -91,6 +91,45 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid1-syncing.out'), 'r', encoding='utf-8') as f:
             self.mdadm_query_raid1_syncing = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-container1.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_container1 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-container2-dev1.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_container2_dev1 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-container2-dev2.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_container2_dev2 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid5-homehost.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_raid5_homehost = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid5-meta09.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_raid5_meta09 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid5-ok.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_raid5_ok = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container1-member.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container1_member = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container1-root.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container1_root = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container2-member.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container2_member = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container2-root.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container2_root = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid5-homehost.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_raid5_homehost = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid5-meta09.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_raid5_meta09 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid5-ok.out'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_raid5_ok = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid0-offline.json'), 'r', encoding='utf-8') as f:
             self.mdadm_examine_raid0_offline_json = json.loads(f.read())
@@ -172,6 +211,45 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid1-syncing.json'), 'r', encoding='utf-8') as f:
             self.mdadm_query_raid1_syncing_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-container1.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_container1_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-container2-dev1.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_container2_dev1_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-container2-dev2.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_container2_dev2_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid5-homehost.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_raid5_homehost_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid5-meta09.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_raid5_meta09_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-examine-raid5-ok.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_examine_raid5_ok_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container1-member.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container1_member_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container1-root.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container1_root_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container2-member.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container2_member_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-container2-root.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_container2_root_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid5-homehost.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_raid5_homehost_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid5-meta09.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_raid5_meta09_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid5-ok.json'), 'r', encoding='utf-8') as f:
+            self.mdadm_query_raid5_ok_json = json.loads(f.read())
 
 
     def test_mdadm_nodata(self):
@@ -368,6 +446,97 @@ class MyTests(unittest.TestCase):
         Test 'mdadm --query' on syncing RAID
         """
         self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_raid1_syncing, quiet=True), self.mdadm_query_raid1_syncing_json)
+
+
+    def test_mdadm_examine_container1(self):
+        """
+        Test 'mdadm --examine' on container 1
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_examine_container1, quiet=True), self.mdadm_examine_container1_json)
+
+
+    def test_mdadm_examine_container2_dev1(self):
+        """
+        Test 'mdadm --examine' on container 1 dev 1
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_examine_container2_dev1, quiet=True), self.mdadm_examine_container2_dev1_json)
+
+
+    def test_mdadm_examine_container2_dev2(self):
+        """
+        Test 'mdadm --examine' on container 1 dev 2
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_examine_container2_dev2, quiet=True), self.mdadm_examine_container2_dev2_json)
+
+
+    def test_mdadm_examine_raid5_homehost(self):
+        """
+        Test 'mdadm --examine' on RAID5 homehost
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_examine_raid5_homehost, quiet=True), self.mdadm_examine_raid5_homehost_json)
+
+
+    def test_mdadm_examine_raid5_meta09(self):
+        """
+        Test 'mdadm --examine' on RAID5 on v0.9
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_examine_raid5_meta09, quiet=True), self.mdadm_examine_raid5_meta09_json)
+
+
+    def test_mdadm_examine_raid5_ok(self):
+        """
+        Test 'mdadm --examine' on ok RAID5
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_examine_raid5_ok, quiet=True), self.mdadm_examine_raid5_ok_json)
+
+
+    def test_mdadm_query_container1_member(self):
+        """
+        Test 'mdadm --query' container1 member
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_container1_member, quiet=True), self.mdadm_query_container1_member_json)
+
+
+    def test_mdadm_query_container1_root(self):
+        """
+        Test 'mdadm --query' container1 root
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_container1_root, quiet=True), self.mdadm_query_container1_root_json)
+
+
+    def test_mdadm_query_container2_member(self):
+        """
+        Test 'mdadm --query' container2 member
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_container2_member, quiet=True), self.mdadm_query_container2_member_json)
+
+
+    def test_mdadm_query_container2_root(self):
+        """
+        Test 'mdadm --query' container2 root
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_container2_root, quiet=True), self.mdadm_query_container2_root_json)
+
+
+    def test_mdadm_query_raid5_homehost(self):
+        """
+        Test 'mdadm --query' RAID5 with homehost
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_raid5_homehost, quiet=True), self.mdadm_query_raid5_homehost_json)
+
+
+    def test_mdadm_query_raid5_meta09(self):
+        """
+        Test 'mdadm --query' RAID5 on v0.9
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_raid5_meta09, quiet=True), self.mdadm_query_raid5_meta09_json)
+
+
+    def test_mdadm_query_raid5_ok(self):
+        """
+        Test 'mdadm --query' on ok RAID5
+        """
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_raid5_ok, quiet=True), self.mdadm_query_raid5_ok_json)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,30 @@
+/dev/vda1:
+          Magic : a92b4efc
+        Version : 0.90.00
+           UUID : 4de9c6a6:ce05eada:96fc04a8:108a4af7 (local to host sysrescue)
+  Creation Time : Tue Aug 16 17:05:02 2022
+     Raid Level : raid5
+  Used Dev Size : 204288 (199.50 MiB 209.19 MB)
+     Array Size : 408576 (399.00 MiB 418.38 MB)
+   Raid Devices : 3
+  Total Devices : 3
+Preferred Minor : 0
+
+    Update Time : Tue Aug 16 17:05:06 2022
+          State : clean
+ Active Devices : 3
+Working Devices : 3
+ Failed Devices : 0
+  Spare Devices : 0
+       Checksum : 32a3d70f - correct
+         Events : 19
+
+         Layout : left-symmetric
+     Chunk Size : 512K
+
+      Number   Major   Minor   RaidDevice State
+this     0     254        1        0      active sync   /dev/vda1
+
+   0     0     254        1        0      active sync   /dev/vda1
+   1     1     254        2        1      active sync   /dev/vda2
+   2     2     254        3        2      active sync   /dev/vda3

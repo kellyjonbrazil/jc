@@ -1,0 +1,23 @@
+/dev/md126:
+         Container : /dev/md0, member 1
+        Raid Level : raid1
+        Array Size : 1024
+     Used Dev Size : 1024
+      Raid Devices : 2
+     Total Devices : 2
+
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+
+Consistency Policy : resync
+
+    Container GUID : 4C696E75:782D4D44:DEADBEEF:00000000:502D04BE:255CF1BB
+                  (Linux-MD 08/16/22 16:33:34)
+               Seq : 0000000e
+     Virtual Disks : 2
+
+    Number   Major   Minor   RaidDevice State
+       0     254       16        0      active sync   /dev/vdb
+       1     254        0        1      active sync   /dev/vda
