@@ -64,6 +64,16 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute8.out'), 'r', encoding='utf-8') as f:
             self.generic_traceroute8 = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv4.out'), 'r', encoding='utf-8') as f:
+            self.generic_traceroute_n_ipv4 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-q1-ipv4.out'), 'r', encoding='utf-8') as f:
+            self.generic_traceroute_n_q1_ipv4 = f.read()
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.out'), 'r', encoding='utf-8') as f:
+            self.generic_traceroute_n_ipv6 = f.read()
+
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.json'), 'r', encoding='utf-8') as f:
             self.osx_10_14_6_traceroute_no_header_json = json.loads(f.read())
@@ -118,6 +128,16 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute8.json'), 'r', encoding='utf-8') as f:
             self.generic_traceroute8_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv4.json'), 'r', encoding='utf-8') as f:
+            self.generic_traceroute_n_ipv4_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-q1-ipv4.json'), 'r', encoding='utf-8') as f:
+            self.generic_traceroute_n_q1_ipv4_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.json'), 'r', encoding='utf-8') as f:
+            self.generic_traceroute_n_ipv6_json = json.loads(f.read())
+
 
     def test_traceroute_nodata(self):
         """
@@ -232,6 +252,24 @@ class MyTests(unittest.TestCase):
         Test 'traceroute'
         """
         self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute8, quiet=True), self.generic_traceroute8_json)
+
+    def test_traceroute_n_ipv4(self):
+        """
+        Test 'traceroute -n x.x.x.x'
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_n_ipv4, quiet=True), self.generic_traceroute_n_ipv4_json)
+
+    def test_traceroute_n_q1_ipv4(self):
+        """
+        Test 'traceroute -q1 -n x.x.x.x'
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_n_q1_ipv4, quiet=True), self.generic_traceroute_n_q1_ipv4_json)
+
+    def test_traceroute_n_ipv6(self):
+        """
+        Test 'traceroute6 -n x::x'
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_n_ipv6, quiet=True), self.generic_traceroute_n_ipv6_json)
 
 
 if __name__ == '__main__':
