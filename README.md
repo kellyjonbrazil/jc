@@ -280,10 +280,10 @@ option.
 | `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
 | `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                            |
 | `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
+| `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.               |                                                                        |
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
 | `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
 | `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
-| `-t`  | `--time-out`    | Add UTC Unix timestamp information to output                                                                        |
 | `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
 | `-v`  | `--version`     | Version information                                                                                                 |
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |

@@ -218,7 +218,7 @@ _jc() {
         '--yaml:YAML file parser'
         '--zipinfo:`zipinfo` command parser'
     )
-    jc_options=(--force-color -C --debug -d --monochrome -m --pretty -p --quiet -q --raw -r --time-out -t --unbuffer -u --yaml-out -y)
+    jc_options=(--force-color -C --debug -d --monochrome -m --meta-out -M --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
     jc_options_describe=(
         '--force-color:force color output even when using pipes (overrides -m)'
         '-C:force color output even when using pipes (overrides -m)'
@@ -226,14 +226,14 @@ _jc() {
         '-d:debug (double for verbose debug)'
         '--monochrome:monochrome output'
         '-m:monochrome output'
+        '--meta-out:add metadata to output including timestamp, etc.'
+        '-M:add metadata to output including timestamp, etc.'
         '--pretty:pretty print output'
         '-p:pretty print output'
         '--quiet:suppress warnings (double to ignore streaming errors)'
         '-q:suppress warnings (double to ignore streaming errors)'
         '--raw:raw output'
         '-r:raw output'
-        '--time-out:add UTC Unix timestamp information to output'
-        '-t:add UTC Unix timestamp information to output'
         '--unbuffer:unbuffer output'
         '-u:unbuffer output'
         '--yaml-out:YAML output'

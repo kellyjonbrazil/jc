@@ -445,28 +445,41 @@ def combined_exit_code(program_exit=0, jc_exit=0):
     return exit_code
 
 
-def add_timestamp_to(list_or_dict, runtime, magic_exit_code):
+def add_metadata_to(list_or_dict,
+                    runtime=None,
+                    run_command=None,
+                    magic_exit_code=None,
+                    parser_name=None):
     """
     This function mutates a list or dict in place. If the _jc_meta field
-    does not already exist, it will be created with the timestamp field. If
-    the _jc_meta field already exists, the timestamp will be added to the
-    existing object.
+    does not already exist, it will be created with the metadata fields. If
+    the _jc_meta field already exists, the metadata fields will be added to
+    the existing object.
     """
     run_timestamp = runtime.timestamp()
-    timestamp_obj = {'timestamp': run_timestamp}
+
+    if not run_command:
+        magic_exit_code = None
+
+    meta_obj = {
+        'parser': parser_name,
+        'magic_command': run_command,
+        'magic_command_exit': magic_exit_code,
+        'timestamp': run_timestamp
+    }
 
     if isinstance(list_or_dict, dict):
         if '_jc_meta' not in list_or_dict:
             list_or_dict['_jc_meta'] = {}
 
-        list_or_dict['_jc_meta'].update(timestamp_obj)
+        list_or_dict['_jc_meta'].update(meta_obj)
 
     elif isinstance(list_or_dict, list):
         for item in list_or_dict:
             if '_jc_meta' not in item:
                 item['_jc_meta'] = {}
 
-            item['_jc_meta'].update(timestamp_obj)
+            item['_jc_meta'].update(meta_obj)
 
     else:
         utils.error_message(['Parser returned an unsupported object type.'])
@@ -517,7 +530,7 @@ def main():
     quiet = 'q' in options
     ignore_exceptions = options.count('q') > 1
     raw = 'r' in options
-    timestamp = 't' in options
+    meta_out = 'M' in options
     unbuffer = 'u' in options
     version_info = 'v' in options
     yaml_out = 'y' in options
@@ -632,9 +645,9 @@ def main():
                                   ignore_exceptions=ignore_exceptions)
 
             for line in result:
-                if timestamp:
+                if meta_out:
                     run_dt_utc = datetime.now(timezone.utc)
-                    add_timestamp_to(line, run_dt_utc, magic_exit_code)
+                    add_metadata_to(line, run_dt_utc, run_command, magic_exit_code, parser_name)
 
                 safe_print_out(line,
                                pretty=pretty,
@@ -661,9 +674,9 @@ def main():
                                   raw=raw,
                                   quiet=quiet)
 
-            if timestamp:
+            if meta_out:
                 run_dt_utc = datetime.now(timezone.utc)
-                add_timestamp_to(result, run_dt_utc, magic_exit_code)
+                add_metadata_to(result, run_dt_utc, run_command, magic_exit_code, parser_name)
 
             safe_print_out(result,
                            pretty=pretty,

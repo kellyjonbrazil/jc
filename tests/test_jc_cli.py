@@ -255,39 +255,47 @@ class MyTests(unittest.TestCase):
         self.assertGreaterEqual(jc.cli.about_jc()['parser_count'], 55)
         self.assertEqual(jc.cli.about_jc()['parser_count'], len(jc.cli.about_jc()['parsers']))
 
-    def test_add_timestamp_to_simple_dict(self):
+    def test_add_meta_to_simple_dict(self):
         list_or_dict = {'a': 1, 'b': 2}
         runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 0
-        expected = {'a': 1, 'b': 2, '_jc_meta': {'timestamp': 1659659829.273349}}
-        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+        magic_exit_code = 2
+        run_command = ['ping', '-c3', '192.168.1.123']
+        parser_name = 'ping'
+        expected = {'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}
+        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
 
         self.assertEqual(list_or_dict, expected)
 
-    def test_add_timestamp_to_simple_list(self):
+    def test_add_meta_to_simple_list(self):
         list_or_dict = [{'a': 1, 'b': 2},{'a': 3, 'b': 4}]
         runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 0
-        expected = [{'a': 1, 'b': 2, '_jc_meta': {'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'timestamp': 1659659829.273349}}]
-        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+        magic_exit_code = 2
+        run_command = ['ping', '-c3', '192.168.1.123']
+        parser_name = 'ping'
+        expected = [{'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}]
+        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
 
         self.assertEqual(list_or_dict, expected)
 
-    def test_add_timestamp_to_dict_existing_meta(self):
+    def test_add_meta_to_dict_existing_meta(self):
         list_or_dict = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}}
         runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 0
-        expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'timestamp': 1659659829.273349}}
-        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+        magic_exit_code = 2
+        run_command = ['ping', '-c3', '192.168.1.123']
+        parser_name = 'ping'
+        expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}
+        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
 
         self.assertEqual(list_or_dict, expected)
 
-    def test_add_timestamp_to_list_existing_meta(self):
+    def test_add_meta_to_list_existing_meta(self):
         list_or_dict = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}},{'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar'}}]
         runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 0
-        expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'timestamp': 1659659829.273349}}]
-        jc.cli.add_timestamp_to(list_or_dict, runtime, magic_exit_code)
+        magic_exit_code = 2
+        run_command = ['ping', '-c3', '192.168.1.123']
+        parser_name = 'ping'
+        expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}]
+        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
 
         self.assertEqual(list_or_dict, expected)
 

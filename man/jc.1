@@ -1,4 +1,4 @@
-.TH jc 1 2022-08-20 1.21.0 "JSON Convert"
+.TH jc 1 2022-08-21 1.21.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -646,6 +646,10 @@ Help (\fB--help --parser_name\fP for parser documentation)
 Monochrome output
 .TP
 .B
+\fB-M\fP, \fB--meta-out\fP
+Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.
+.TP
+.B
 \fB-p\fP, \fB--pretty\fP
 Pretty print output
 .TP
@@ -656,10 +660,6 @@ Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming pars
 .B
 \fB-r\fP, \fB--raw\fP
 Raw output. Provides more literal output, typically with string values and no additional semantic processing
-.TP
-.B
-\fB-t\fP, \fB--time-out\fP
-Add UTC Unix timestamp information to output
 .TP
 .B
 \fB-u\fP, \fB--unbuffer\fP
