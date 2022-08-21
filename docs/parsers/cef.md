@@ -90,7 +90,7 @@ Examples:
         "myDate_epoch": 1667939400,
         "myDate_epoch_utc": null,
         "myFloat": 3.14,
-        "deviceEventClassIdNum": 4000000
+        "deviceEventClassIdNum": 4000000,
         "agentSeverityString": "Medium",
         "agentSeverityNum": 6
       }

@@ -1,13 +1,14 @@
 jc changelog
 
-xxxxxxxx v1.21.0
+20220821 v1.21.0
 - Add IP Address string parser
-- Add Syslog string parsers (RFC 3164 and RFC 5424)
-- Add CEF string parser
+- Add Syslog standard and streaming string parsers (RFC 3164 and RFC 5424)
+- Add CEF standard and streaming string parser
 - Add PLIST file parser (XML and binary support)
 - Add `-n` support to the `traceroute` parser
 - Add `mdadm` command parser tested on linux
-- Add `--time-out` or `-t` option to add a UTC timestamp to the JSON output
+- Add `--meta-out` or `-M` option to add metadata to the JSON output, including
+  a UTC timestamp, parser name, magic command, and magic command exit code
 - Fix `lsusb` command parser for output containing a `Device Qualifier` and
   `Binary Object Store Descriptor` sections
 - Change `LANG=C` to `LC_ALL=C` in locale instructions

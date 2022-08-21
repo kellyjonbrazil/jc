@@ -265,6 +265,37 @@ blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev 
   }
 ]
 ```
+### CEF strings
+```bash
+cat cef.log | jc --cef -p
+```
+```json
+[
+  {
+    "deviceVendor": "Trend Micro",
+    "deviceProduct": "Deep Security Agent",
+    "deviceVersion": "<DSA version>",
+    "deviceEventClassId": "4000000",
+    "name": "Eicar_test_file",
+    "agentSeverity": 6,
+    "CEFVersion": 0,
+    "dvchost": "hostname",
+    "string": "hello \"world\"!",
+    "start": "Nov 08 2020 12:30:00.111 UTC",
+    "start_epoch": 1604867400,
+    "start_epoch_utc": 1604838600,
+    "Host_ID": 1,
+    "Quarantine": 205,
+    "myDate": "Nov 08 2022 12:30:00.111",
+    "myDate_epoch": 1667939400,
+    "myDate_epoch_utc": null,
+    "myFloat": 3.14,
+    "deviceEventClassIdNum": 4000000,
+    "agentSeverityString": "Medium",
+    "agentSeverityNum": 6
+  }
+]
+```
 ### chage --list
 ```bash
 chage --list joeuser | jc --chage -p          # or:  jc -p chage --list joeuser
@@ -3465,6 +3496,57 @@ sysctl -a | jc --sysctl -p          # or:  jc -p sysctl -a
   "user.coll_weights_max": 2,
   "user.expr_nest_max": 32
 }
+```
+### Syslog strings (RFC 5424)
+```bash
+cat syslog.txt | jc --syslog -p
+```
+```json
+[
+  {
+    "priority": 35,
+    "version": 1,
+    "timestamp": "2003-10-11T22:14:15.003Z",
+    "hostname": "mymachine.example.com",
+    "appname": "evntslog",
+    "proc_id": null,
+    "msg_id": "ID47",
+    "structured_data": [
+      {
+        "identity": "exampleSDID@32473",
+        "parameters": {
+          "iut": "3",
+          "eventSource": "Application",
+          "eventID": "1011"
+        }
+      },
+      {
+        "identity": "examplePriority@32473",
+        "parameters": {
+          "class": "high"
+        }
+      }
+    ],
+    "message": "unauthorized attempt",
+    "timestamp_epoch": 1065935655,
+    "timestamp_epoch_utc": 1065910455
+  }
+]
+```
+### Syslog strings (RFC 3164)
+```bash
+cat syslog.txt | jc --syslog-bsd -p
+```
+```json
+[
+  {
+    "priority": 34,
+    "date": "Oct 11 22:14:15",
+    "hostname": "mymachine",
+    "tag": "su",
+    "content": "'su root' failed for lonvick on /dev/pts/8"
+  }
+]
 ```
 ### systemctl
 ```bash
