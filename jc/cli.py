@@ -458,15 +458,14 @@ def add_metadata_to(list_or_dict,
     """
     run_timestamp = runtime.timestamp()
 
-    if not run_command:
-        magic_exit_code = None
-
     meta_obj = {
         'parser': parser_name,
-        'magic_command': run_command,
-        'magic_command_exit': magic_exit_code,
         'timestamp': run_timestamp
     }
+
+    if run_command:
+        meta_obj['magic_command'] = run_command
+        meta_obj['magic_command_exit'] = magic_exit_code
 
     if isinstance(list_or_dict, dict):
         if '_jc_meta' not in list_or_dict:
