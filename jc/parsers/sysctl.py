@@ -9,7 +9,7 @@ Usage (cli):
 
     $ sysctl -a | jc --sysctl
 
-    or
+or
 
     $ jc sysctl -a
 

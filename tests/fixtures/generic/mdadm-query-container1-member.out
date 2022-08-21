@@ -1,0 +1,23 @@
+/dev/md127:
+         Container : /dev/md0, member 0
+        Raid Level : raid1
+        Array Size : 786432 (768.00 MiB 805.31 MB)
+     Used Dev Size : 786432 (768.00 MiB 805.31 MB)
+      Raid Devices : 2
+     Total Devices : 2
+
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+
+Consistency Policy : resync
+
+    Container GUID : 4C696E75:782D4D44:DEADBEEF:00000000:502D01BA:FB6D4FCB
+                  (Linux-MD 08/16/22 16:20:42)
+               Seq : 00000008
+     Virtual Disks : 1
+
+    Number   Major   Minor   RaidDevice State
+       0     254       16        0      active sync   /dev/vdb
+       1     254        0        1      active sync   /dev/vda

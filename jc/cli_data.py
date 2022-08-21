@@ -7,6 +7,7 @@ long_options_map: Dict[str, List[str]] = {
     '--debug': ['d', 'debug (double for verbose debug)'],
     '--help': ['h', 'help (--help --parser_name for parser documentation)'],
     '--monochrome': ['m', 'monochrome output'],
+    '--meta-out': ['M', 'add metadata to output including timestamp, etc.'],
     '--pretty': ['p', 'pretty print output'],
     '--quiet': ['q', 'suppress warnings (double to ignore streaming errors)'],
     '--raw': ['r', 'raw output'],

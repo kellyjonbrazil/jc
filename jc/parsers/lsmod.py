@@ -4,7 +4,7 @@ Usage (cli):
 
     $ lsmod | jc --lsmod
 
-    or
+or
 
     $ jc lsmod
 

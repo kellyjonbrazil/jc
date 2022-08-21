@@ -9,7 +9,7 @@ Usage (cli):
 
     $ update-alternatives --get-selections | jc --update-alt-gs
 
-    or
+or
 
     $ jc update-alternatives --get-selections
 

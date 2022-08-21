@@ -11,7 +11,7 @@ Usage (cli):
 
     $ lsusb -v | jc --lsusb
 
-    or
+or
 
     $ jc lsusb -v
 
@@ -132,6 +132,12 @@ Schema:
                                               string
               ]
             }
+          }
+        },
+        "device_qualifier": {
+          "<item>": {
+            "value":                          string,
+            "description":                    string
           }
         },
         "device_status": {
@@ -284,4 +290,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

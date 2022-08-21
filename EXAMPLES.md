@@ -265,6 +265,37 @@ blkid -o udev -ip /dev/sda2 | jc --blkid -p          # or:  jc -p blkid -o udev 
   }
 ]
 ```
+### CEF strings
+```bash
+cat cef.log | jc --cef -p
+```
+```json
+[
+  {
+    "deviceVendor": "Trend Micro",
+    "deviceProduct": "Deep Security Agent",
+    "deviceVersion": "<DSA version>",
+    "deviceEventClassId": "4000000",
+    "name": "Eicar_test_file",
+    "agentSeverity": 6,
+    "CEFVersion": 0,
+    "dvchost": "hostname",
+    "string": "hello \"world\"!",
+    "start": "Nov 08 2020 12:30:00.111 UTC",
+    "start_epoch": 1604867400,
+    "start_epoch_utc": 1604838600,
+    "Host_ID": 1,
+    "Quarantine": 205,
+    "myDate": "Nov 08 2022 12:30:00.111",
+    "myDate_epoch": 1667939400,
+    "myDate_epoch_utc": null,
+    "myFloat": 3.14,
+    "deviceEventClassIdNum": 4000000,
+    "agentSeverityString": "Medium",
+    "agentSeverityNum": 6
+  }
+]
+```
 ### chage --list
 ```bash
 chage --list joeuser | jc --chage -p          # or:  jc -p chage --list joeuser
@@ -1665,6 +1696,65 @@ $ iostat | jc --iostat -p          # or:  jc -p iostat
   }
 ]
 ```
+### IP Address strings
+```bash
+echo 192.168.2.10/24 | jc --ip-address -p
+```
+```json
+{
+  "version": 4,
+  "max_prefix_length": 32,
+  "ip": "192.168.2.10",
+  "ip_compressed": "192.168.2.10",
+  "ip_exploded": "192.168.2.10",
+  "scope_id": null,
+  "ipv4_mapped": null,
+  "six_to_four": null,
+  "teredo_client": null,
+  "teredo_server": null,
+  "dns_ptr": "10.2.168.192.in-addr.arpa",
+  "network": "192.168.2.0",
+  "broadcast": "192.168.2.255",
+  "hostmask": "0.0.0.255",
+  "netmask": "255.255.255.0",
+  "cidr_netmask": 24,
+  "hosts": 254,
+  "first_host": "192.168.2.1",
+  "last_host": "192.168.2.254",
+  "is_multicast": false,
+  "is_private": true,
+  "is_global": false,
+  "is_link_local": false,
+  "is_loopback": false,
+  "is_reserved": false,
+  "is_unspecified": false,
+  "int": {
+    "ip": 3232236042,
+    "network": 3232236032,
+    "broadcast": 3232236287,
+    "first_host": 3232236033,
+    "last_host": 3232236286
+  },
+  "hex": {
+    "ip": "c0:a8:02:0a",
+    "network": "c0:a8:02:00",
+    "broadcast": "c0:a8:02:ff",
+    "hostmask": "00:00:00:ff",
+    "netmask": "ff:ff:ff:00",
+    "first_host": "c0:a8:02:01",
+    "last_host": "c0:a8:02:fe"
+  },
+  "bin": {
+    "ip": "11000000101010000000001000001010",
+    "network": "11000000101010000000001000000000",
+    "broadcast": "11000000101010000000001011111111",
+    "hostmask": "00000000000000000000000011111111",
+    "netmask": "11111111111111111111111100000000",
+    "first_host": "11000000101010000000001000000001",
+    "last_host": "11000000101010000000001011111110"
+  }
+}
+```
 ### iptables
 ```bash
 iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p iptables --line-numbers -v -L -t nat
@@ -2832,6 +2922,31 @@ pip show wrapt wheel | jc --pip-show -p          # or:  jc -p pip show wrapt whe
   }
 ]
 ```
+### PLIST files
+```bash
+cat info.plist | jc --plist -p
+```
+```json
+{
+  "NSAppleScriptEnabled": true,
+  "LSMultipleInstancesProhibited": true,
+  "CFBundleInfoDictionaryVersion": "6.0",
+  "DTPlatformVersion": "GM",
+  "CFBundleIconFile": "GarageBand.icns",
+  "CFBundleName": "GarageBand",
+  "DTSDKName": "macosx10.13internal",
+  "NSSupportsAutomaticGraphicsSwitching": true,
+  "RevisionDate": "2018-12-03_14:10:56",
+  "UTImportedTypeDeclarations": [
+    {
+      "UTTypeConformsTo": [
+        "public.data",
+        "public.content"
+      ]
+    }
+  ]
+}
+```
 ### postconf -M
 ```bash
 postconf -M | jc --postconf -p          # or jc -p postconf -M
@@ -3381,6 +3496,57 @@ sysctl -a | jc --sysctl -p          # or:  jc -p sysctl -a
   "user.coll_weights_max": 2,
   "user.expr_nest_max": 32
 }
+```
+### Syslog strings (RFC 5424)
+```bash
+cat syslog.txt | jc --syslog -p
+```
+```json
+[
+  {
+    "priority": 35,
+    "version": 1,
+    "timestamp": "2003-10-11T22:14:15.003Z",
+    "hostname": "mymachine.example.com",
+    "appname": "evntslog",
+    "proc_id": null,
+    "msg_id": "ID47",
+    "structured_data": [
+      {
+        "identity": "exampleSDID@32473",
+        "parameters": {
+          "iut": "3",
+          "eventSource": "Application",
+          "eventID": "1011"
+        }
+      },
+      {
+        "identity": "examplePriority@32473",
+        "parameters": {
+          "class": "high"
+        }
+      }
+    ],
+    "message": "unauthorized attempt",
+    "timestamp_epoch": 1065935655,
+    "timestamp_epoch_utc": 1065910455
+  }
+]
+```
+### Syslog strings (RFC 3164)
+```bash
+cat syslog.txt | jc --syslog-bsd -p
+```
+```json
+[
+  {
+    "priority": 34,
+    "date": "Oct 11 22:14:15",
+    "hostname": "mymachine",
+    "tag": "su",
+    "content": "'su root' failed for lonvick on /dev/pts/8"
+  }
+]
 ```
 ### systemctl
 ```bash

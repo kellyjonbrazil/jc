@@ -9,7 +9,7 @@ Usage (cli):
 
     $ ntpq -p | jc --ntpq
 
-    or
+or
 
     $ jc ntpq -p
 

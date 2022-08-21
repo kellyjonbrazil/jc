@@ -8,11 +8,11 @@ Usage (cli):
 
     $ rsync -i -a source/ dest | jc --rsync
 
-    or
+or
 
     $ jc rsync -i -a source/ dest
 
-    or
+or
 
     $ cat rsync-backup.log | jc --rsync
 

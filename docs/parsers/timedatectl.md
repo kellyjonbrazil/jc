@@ -12,7 +12,7 @@ Usage (cli):
 
     $ timedatectl | jc --timedatectl
 
-    or
+or
 
     $ jc timedatectl
 

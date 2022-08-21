@@ -18,7 +18,7 @@ Usage (cli):
 
     $ traceroute 1.2.3.4 | jc --traceroute
 
-    or
+or
 
     $ jc traceroute 1.2.3.4
 
@@ -143,4 +143,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -14,7 +14,7 @@ Usage (cli):
 
     $ netstat | jc --netstat
 
-    or
+or
 
     $ jc netstat
 

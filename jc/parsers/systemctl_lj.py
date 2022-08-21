@@ -4,7 +4,7 @@ Usage (cli):
 
     $ systemctl list-jobs | jc --systemctl-lj
 
-    or
+or
 
     $ jc systemctl list-jobs
 

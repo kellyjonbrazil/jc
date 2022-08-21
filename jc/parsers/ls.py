@@ -21,7 +21,7 @@ Usage (cli):
 
     $ ls | jc --ls
 
-    or
+or
 
     $ jc ls
 

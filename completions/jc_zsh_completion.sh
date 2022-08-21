@@ -9,7 +9,7 @@ _jc() {
              jc_help_options jc_help_options_describe \
              jc_special_options jc_special_options_describe
 
-    jc_commands=(acpi airport arp blkid chage cksum crontab date df dig dmidecode dpkg du env file finger free git gpg hciconfig id ifconfig iostat iptables iw jobs last lastb ls lsblk lsmod lsof lsusb md5 md5sum mount mpstat netstat nmcli ntpq pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
+    jc_commands=(acpi airport arp blkid chage cksum crontab date df dig dmidecode dpkg du env file finger free git gpg hciconfig id ifconfig iostat iptables iw jobs last lastb ls lsblk lsmod lsof lsusb md5 md5sum mdadm mount mpstat netstat nmcli ntpq pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
     jc_commands_describe=(
         'acpi:run "acpi" command with magic syntax.'
         'airport:run "airport" command with magic syntax.'
@@ -46,6 +46,7 @@ _jc() {
         'lsusb:run "lsusb" command with magic syntax.'
         'md5:run "md5" command with magic syntax.'
         'md5sum:run "md5sum" command with magic syntax.'
+        'mdadm:run "mdadm" command with magic syntax.'
         'mount:run "mount" command with magic syntax.'
         'mpstat:run "mpstat" command with magic syntax.'
         'netstat:run "netstat" command with magic syntax.'
@@ -94,7 +95,7 @@ _jc() {
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -103,6 +104,8 @@ _jc() {
         '--asciitable:ASCII and Unicode table parser'
         '--asciitable-m:multi-line ASCII and Unicode table parser'
         '--blkid:`blkid` command parser'
+        '--cef:CEF string parser'
+        '--cef-s:CEF string streaming parser'
         '--chage:`chage --list` command parser'
         '--cksum:`cksum` and `sum` command parser'
         '--crontab:`crontab` command and file parser'
@@ -137,10 +140,11 @@ _jc() {
         '--ini:INI file parser'
         '--iostat:`iostat` command parser'
         '--iostat-s:`iostat` command streaming parser'
+        '--ip-address:IPv4 and IPv6 Address string parser'
         '--iptables:`iptables` command parser'
         '--iso-datetime:ISO 8601 Datetime string parser'
         '--iw-scan:`iw dev [device] scan` command parser'
-        '--jar-manifest:MANIFEST.MF file parser'
+        '--jar-manifest:Java MANIFEST.MF file parser'
         '--jobs:`jobs` command parser'
         '--jwt:JWT string parser'
         '--kv:Key/Value file parser'
@@ -152,6 +156,7 @@ _jc() {
         '--lsof:`lsof` command parser'
         '--lsusb:`lsusb` command parser'
         '--m3u:M3U and M3U8 file parser'
+        '--mdadm:`mdadm` command parser'
         '--mount:`mount` command parser'
         '--mpstat:`mpstat` command parser'
         '--mpstat-s:`mpstat` command streaming parser'
@@ -165,6 +170,7 @@ _jc() {
         '--ping-s:`ping` and `ping6` command streaming parser'
         '--pip-list:`pip list` command parser'
         '--pip-show:`pip show` command parser'
+        '--plist:PLIST file parser'
         '--postconf:`postconf -M` command parser'
         '--ps:`ps` command parser'
         '--route:`route` command parser'
@@ -177,6 +183,10 @@ _jc() {
         '--stat:`stat` command parser'
         '--stat-s:`stat` command streaming parser'
         '--sysctl:`sysctl` command parser'
+        '--syslog:Syslog RFC 5424 string parser'
+        '--syslog-s:Syslog RFC 5424 string streaming parser'
+        '--syslog-bsd:Syslog RFC 3164 string parser'
+        '--syslog-bsd-s:Syslog RFC 3164 string streaming parser'
         '--systemctl:`systemctl` command parser'
         '--systemctl-lj:`systemctl list-jobs` command parser'
         '--systemctl-ls:`systemctl list-sockets` command parser'
@@ -184,7 +194,7 @@ _jc() {
         '--systeminfo:`systeminfo` command parser'
         '--time:`/usr/bin/time` command parser'
         '--timedatectl:`timedatectl status` command parser'
-        '--timestamp:UNIX Epoch Timestamp string parser'
+        '--timestamp:Unix Epoch Timestamp string parser'
         '--top:`top -b` command parser'
         '--top-s:`top -b` command streaming parser'
         '--tracepath:`tracepath` and `tracepath6` command parser'
@@ -208,7 +218,7 @@ _jc() {
         '--yaml:YAML file parser'
         '--zipinfo:`zipinfo` command parser'
     )
-    jc_options=(--force-color -C --debug -d --monochrome -m --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
+    jc_options=(--force-color -C --debug -d --monochrome -m --meta-out -M --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
     jc_options_describe=(
         '--force-color:force color output even when using pipes (overrides -m)'
         '-C:force color output even when using pipes (overrides -m)'
@@ -216,6 +226,8 @@ _jc() {
         '-d:debug (double for verbose debug)'
         '--monochrome:monochrome output'
         '-m:monochrome output'
+        '--meta-out:add metadata to output including timestamp, etc.'
+        '-M:add metadata to output including timestamp, etc.'
         '--pretty:pretty print output'
         '-p:pretty print output'
         '--quiet:suppress warnings (double to ignore streaming errors)'

@@ -11,7 +11,7 @@ Usage (cli):
 
     $ ifconfig | jc --ifconfig
 
-    or
+or
 
     $ jc ifconfig
 

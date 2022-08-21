@@ -4,7 +4,7 @@ Usage (cli):
 
     $ postconf -M | jc --postconf
 
-    or
+or
 
     $ jc postconf -M
 

@@ -7,7 +7,7 @@ Usage (cli):
 
     $ ss | jc --ss
 
-    or
+or
 
     $ jc ss
 

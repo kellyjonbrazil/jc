@@ -9,7 +9,7 @@ or "Magic" syntax:
 \fBjc\fP [OPTIONS] COMMAND
 
 .SH DESCRIPTION
-\fBjc\fP JSONifies the output of many CLI tools and file-types for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
+\fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
 
 .SH OPTIONS
 .B
@@ -49,6 +49,10 @@ Help (\fB--help --parser_name\fP for parser documentation)
 .B
 \fB-m\fP, \fB--monochrome\fP
 Monochrome output
+.TP
+.B
+\fB-M\fP, \fB--meta-out\fP
+Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.
 .TP
 .B
 \fB-p\fP, \fB--pretty\fP
@@ -203,19 +207,23 @@ Note: The application data directory follows the XDG Base Directory Specificatio
 .SH CAVEATS
 \fBLocale\fP
 
-For best results set the \fBLANG\fP locale environment variable to \fBC\fP or \fBen_US.UTF-8\fP. For example, either by setting directly on the command-line:
+For best results set the locale environment variables to \fBC\fP or
+\fBen_US.UTF-8\fP by modifying the \fBLC_ALL\fP variable:
 
 .RS
-$ LANG=C date | jc \fB--date\fP
+$ LC_ALL=C date | jc \fB--date\fP
 .RE
 
-or by exporting to the environment before running commands:
+You can also set the locale variables individually:
 
 .RS
 $ export LANG=C
+
+$ export LC_NUMERIC=C
 .RE
 
-On some older systems UTF-8 output will be downgraded to ASCII with \fB\\u\fP escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
+On some older systems UTF-8 output will be downgraded to ASCII with \fB\\u\fP
+escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
 
 \fBTimezones\fP
 

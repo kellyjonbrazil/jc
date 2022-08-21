@@ -11,7 +11,7 @@ Usage (cli):
 
     $ rsync -i -a source/ dest | jc --rsync-s
 
-    or
+or
 
     $ cat rsync-backup.log | jc --rsync-s
 

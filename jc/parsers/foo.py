@@ -6,7 +6,7 @@ Usage (cli):
 
     $ foo | jc --foo
 
-    or
+or
 
     $ jc foo
 

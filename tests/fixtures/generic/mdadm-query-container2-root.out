@@ -1,0 +1,18 @@
+/dev/md0:
+           Version : ddf
+        Raid Level : container
+     Total Devices : 2
+
+   Working Devices : 2
+
+    Container GUID : 4C696E75:782D4D44:DEADBEEF:00000000:502D04BE:255CF1BB
+                  (Linux-MD 08/16/22 16:33:34)
+               Seq : 0000000e
+     Virtual Disks : 2
+
+     Member Arrays : /dev/md/vol0 /dev/md/vol1
+
+    Number   Major   Minor   RaidDevice
+
+       -     254        0        -        /dev/vda
+       -     254       16        -        /dev/vdb

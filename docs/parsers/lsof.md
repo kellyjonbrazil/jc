@@ -9,7 +9,7 @@ Usage (cli):
 
     $ lsof | jc --lsof
 
-    or
+or
 
     $ jc lsof
 

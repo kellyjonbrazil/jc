@@ -13,7 +13,7 @@ Usage (cli):
 
     $ ps | jc --ps
 
-    or
+or
 
     $ jc ps
 

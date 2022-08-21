@@ -1,0 +1,27 @@
+/dev/vda:
+          Magic : de11de11
+        Version : 01.02.00
+Controller GUID : 4C696E75:782D4D44:20202020:20202073:79737265:73637565
+                  (Linux-MD       sysrescue)
+ Container GUID : 4C696E75:782D4D44:DEADBEEF:00000000:502D01BA:FB6D4FCB
+                  (Linux-MD 08/16/22 16:20:42)
+            Seq : 00000008
+  Redundant hdr : yes
+  Virtual Disks : 1
+
+      VD GUID[0] : 4C696E75:782D4D44:DEADBEEF:00000000:502D01DF:DBFB2605
+                  (Linux-MD 08/16/22 16:21:19)
+         unit[0] : 127
+        state[0] : Optimal, Consistent
+   init state[0] : Fully Initialised
+       access[0] : Read/Write
+         Name[0] : vol0
+ Raid Devices[0] : 2 (1@0K 0@0K)
+   Raid Level[0] : RAID1
+  Device Size[0] : 786432
+   Array Size[0] : 786432
+
+ Physical Disks : 1023
+      Number    RefNo      Size       Device      Type/State
+         0    d32b14d7    786432K /dev/vda        active/Online
+         1    886a9f58    913408K                 active/Online

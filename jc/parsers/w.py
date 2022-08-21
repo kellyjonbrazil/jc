@@ -4,7 +4,7 @@ Usage (cli):
 
     $ w | jc --w
 
-    or
+or
 
     $ jc w
 

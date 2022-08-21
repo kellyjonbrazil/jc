@@ -3,7 +3,7 @@
 
 # jc.parsers.timestamp
 
-jc - JSON Convert UNIX Epoch Timestamp string parser
+jc - JSON Convert Unix Epoch Timestamp string parser
 
 The naive fields are based on the local time of the system the parser is
 run on.
@@ -12,7 +12,7 @@ The utc fields are timezone-aware, based on the UTC timezone.
 
 Usage (cli):
 
-    $ echo "2022-07-20T14:52:45Z" | jc --timestamp
+    $ echo 1658599410 | jc --timestamp
 
 Usage (module):
 
@@ -59,7 +59,7 @@ Schema:
 
 Examples:
 
-    $ echo '1658599410' | jc --timestamp -p
+    $ echo 1658599410 | jc --timestamp -p
     {
       "naive": {
         "year": 2022,

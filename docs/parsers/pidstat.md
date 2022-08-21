@@ -12,7 +12,7 @@ Usage (cli):
 
     $ pidstat -h | jc --pidstat
 
-    or
+or
 
     $ jc pidstat -h
 

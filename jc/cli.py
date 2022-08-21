@@ -5,11 +5,11 @@ JC cli module
 import io
 import sys
 import os
+from datetime import datetime, timezone
 import textwrap
 import signal
 import shlex
 import subprocess
-from typing import List, Dict
 from .lib import (__version__, parser_info, all_parser_info, parsers,
                   _get_parser, _parser_is_streaming, standard_parser_mod_list,
                   plugin_parser_mod_list, streaming_parser_mod_list)
@@ -253,17 +253,22 @@ def yaml_out(data, pretty=False, env_colors=None, mono=False, piped_out=False, a
     warning message to STDERR"""
     # make ruamel.yaml import optional
     try:
-        from ruamel.yaml import YAML
+        from ruamel.yaml import YAML, representer
         YAML_INSTALLED = True
     except Exception:
         YAML_INSTALLED = False
 
     if YAML_INSTALLED:
         y_string_buf = io.BytesIO()
+
         # monkey patch to disable plugins since we don't use them and in
         # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
         # plugin code is incompatible with the pyoxidizer packager
         YAML.official_plug_ins = lambda a: []
+
+        # monkey patch to disable aliases
+        representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True
+
         yaml = YAML()
         yaml.default_flow_style = False
         yaml.explicit_start = True
@@ -440,6 +445,46 @@ def combined_exit_code(program_exit=0, jc_exit=0):
     return exit_code
 
 
+def add_metadata_to(list_or_dict,
+                    runtime=None,
+                    run_command=None,
+                    magic_exit_code=None,
+                    parser_name=None):
+    """
+    This function mutates a list or dict in place. If the _jc_meta field
+    does not already exist, it will be created with the metadata fields. If
+    the _jc_meta field already exists, the metadata fields will be added to
+    the existing object.
+    """
+    run_timestamp = runtime.timestamp()
+
+    meta_obj = {
+        'parser': parser_name,
+        'timestamp': run_timestamp
+    }
+
+    if run_command:
+        meta_obj['magic_command'] = run_command
+        meta_obj['magic_command_exit'] = magic_exit_code
+
+    if isinstance(list_or_dict, dict):
+        if '_jc_meta' not in list_or_dict:
+            list_or_dict['_jc_meta'] = {}
+
+        list_or_dict['_jc_meta'].update(meta_obj)
+
+    elif isinstance(list_or_dict, list):
+        for item in list_or_dict:
+            if '_jc_meta' not in item:
+                item['_jc_meta'] = {}
+
+            item['_jc_meta'].update(meta_obj)
+
+    else:
+        utils.error_message(['Parser returned an unsupported object type.'])
+        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+
 def main():
     # break on ctrl-c keyboard interrupt
     signal.signal(signal.SIGINT, ctrlc)
@@ -484,6 +529,7 @@ def main():
     quiet = 'q' in options
     ignore_exceptions = options.count('q') > 1
     raw = 'r' in options
+    meta_out = 'M' in options
     unbuffer = 'u' in options
     version_info = 'v' in options
     yaml_out = 'y' in options
@@ -596,7 +642,12 @@ def main():
                                   raw=raw,
                                   quiet=quiet,
                                   ignore_exceptions=ignore_exceptions)
+
             for line in result:
+                if meta_out:
+                    run_dt_utc = datetime.now(timezone.utc)
+                    add_metadata_to(line, run_dt_utc, run_command, magic_exit_code, parser_name)
+
                 safe_print_out(line,
                                pretty=pretty,
                                env_colors=jc_colors,
@@ -622,6 +673,10 @@ def main():
                                   raw=raw,
                                   quiet=quiet)
 
+            if meta_out:
+                run_dt_utc = datetime.now(timezone.utc)
+                add_metadata_to(result, run_dt_utc, run_command, magic_exit_code, parser_name)
+
             safe_print_out(result,
                            pretty=pretty,
                            env_colors=jc_colors,
@@ -638,7 +693,7 @@ def main():
 
         utils.error_message([
             f'Parser issue with {parser_name}:', f'{e.__class__.__name__}: {e}',
-            'If this is the correct parser, try setting the locale to C (LANG=C).',
+            'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
             f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
@@ -654,7 +709,7 @@ def main():
         utils.error_message([
             f'{parser_name} parser could not parse the input data.',
             f'{streaming_msg}',
-            'If this is the correct parser, try setting the locale to C (LANG=C).',
+            'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
             f'For details use the -d or -dd option. Use "jc -h --{parser_name}" for help.'
         ])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))

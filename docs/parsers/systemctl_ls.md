@@ -10,7 +10,7 @@ Usage (cli):
 
     $ systemctl list-sockets | jc --systemctl-ls
 
-    or
+or
 
     $ jc systemctl list-sockets
 

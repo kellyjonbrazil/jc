@@ -11,7 +11,7 @@ Usage (cli):
 
     $ top -b -n 3 | jc --top
 
-    or
+or
 
     $ jc top -b -n 3
 

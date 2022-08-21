@@ -10,7 +10,7 @@ Usage (cli):
 
     $ last | jc --last
 
-    or
+or
 
     $ jc last
 

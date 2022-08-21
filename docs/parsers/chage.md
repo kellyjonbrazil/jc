@@ -11,7 +11,7 @@ Usage (cli):
 
     $ chage -l johndoe | jc --chage
 
-    or
+or
 
     $ jc chage -l johndoe
 

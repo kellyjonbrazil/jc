@@ -14,7 +14,7 @@ Usage (cli):
 
     $ who | jc --who
 
-    or
+or
 
     $ jc who
 

@@ -4,7 +4,7 @@ Usage (cli):
 
     $ ufw status | jc --ufw
 
-    or
+or
 
     $ jc ufw status
 

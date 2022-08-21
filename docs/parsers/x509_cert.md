@@ -155,7 +155,7 @@ Schema:
           ]
         }
 
-        Signed Certificate Timestamp List
+        Signed Certificate Timestamp List:
         {
           "extn_id":                    "signed_certificate_timestamp_list",
           "critical":                   boolean,

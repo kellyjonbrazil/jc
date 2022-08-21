@@ -4,7 +4,7 @@ Usage (cli):
 
     $ lsblk | jc --lsblk
 
-    or
+or
 
     $ jc lsblk
 

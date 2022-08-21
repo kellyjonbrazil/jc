@@ -9,7 +9,7 @@ Usage (cli):
 
     $ id | jc --id
 
-    or
+or
 
     $ jc id
 

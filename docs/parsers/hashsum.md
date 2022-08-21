@@ -19,7 +19,7 @@ Usage (cli):
 
     $ md5sum file.txt | jc --hashsum
 
-    or
+or
 
     $ jc md5sum file.txt
 

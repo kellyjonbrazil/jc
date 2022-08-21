@@ -13,9 +13,9 @@ for an example.
 # JC
 JSON Convert
 
-`jc` JSONifies the output of many CLI tools and file-types for easier parsing in
-scripts. See the [**Parsers**](#parsers) section for supported commands and
-file-types.
+`jc` JSONifies the output of many CLI tools, file-types, and common strings
+for easier parsing in scripts. See the [**Parsers**](#parsers) section for
+supported commands, file-types, and strings.
 ```bash
 dig example.com | jc --dig
 ```
@@ -93,6 +93,7 @@ Use Cases:
 - [Ansible command output parsing](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 - [Saltstack command output parsing](https://blog.kellybrazil.com/2020/09/15/parsing-command-output-in-saltstack-with-jc/)
 - [Nornir command output parsing](https://blog.kellybrazil.com/2020/12/09/parsing-command-output-in-nornir-with-jc/)
+- [FortiSOAR command output parsing](https://docs.fortinet.com/document/fortisoar/1.0.0/jc-parse-command-output/323/jc-parse-command-output-v1-0-0)
 
 ## Installation
 There are several ways to get `jc`. You can install via `pip`, OS package
@@ -120,6 +121,7 @@ pip3 install jc
 | macOS                                | `brew install jc`                                                             |
 | FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
+| FortiSOAR connector                  | Install from FortiSOAR Connector Marketplace                                  |
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 
@@ -155,6 +157,8 @@ option.
 | `   --asciitable` | ASCII and Unicode table parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable)     |
 | ` --asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
 | `        --blkid` | `blkid` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid)          |
+| `          --cef` | CEF string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef)            |
+| `        --cef-s` | CEF string streaming parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef_s)          |
 | `        --chage` | `chage --list` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/chage)          |
 | `        --cksum` | `cksum` and `sum` command parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum)          |
 | `      --crontab` | `crontab` command and file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab)        |
@@ -189,10 +193,11 @@ option.
 | `          --ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
 | `       --iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |
 | `     --iostat-s` | `iostat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s)       |
+| `   --ip-address` | IPv4 and IPv6 Address string parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_address)     |
 | `     --iptables` | `iptables` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables)       |
 | ` --iso-datetime` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iso_datetime)   |
 | `      --iw-scan` | `iw dev [device] scan` command parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan)        |
-| ` --jar-manifest` | MANIFEST.MF file parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest)   |
+| ` --jar-manifest` | Java MANIFEST.MF file parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest)   |
 | `         --jobs` | `jobs` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs)           |
 | `          --jwt` | JWT string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jwt)            |
 | `           --kv` | Key/Value file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |
@@ -204,6 +209,7 @@ option.
 | `         --lsof` | `lsof` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof)           |
 | `        --lsusb` | `lsusb` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb)          |
 | `          --m3u` | M3U and M3U8 file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/m3u)            |
+| `        --mdadm` | `mdadm` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mdadm)          |
 | `        --mount` | `mount` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mount)          |
 | `       --mpstat` | `mpstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat)         |
 | `     --mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |
@@ -217,6 +223,7 @@ option.
 | `       --ping-s` | `ping` and `ping6` command streaming parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s)         |
 | `     --pip-list` | `pip list` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)       |
 | `     --pip-show` | `pip show` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)       |
+| `        --plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 | `     --postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
 | `           --ps` | `ps` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)             |
 | `        --route` | `route` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/route)          |
@@ -229,6 +236,10 @@ option.
 | `         --stat` | `stat` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat)           |
 | `       --stat-s` | `stat` command streaming parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s)         |
 | `       --sysctl` | `sysctl` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl)         |
+| `       --syslog` | Syslog RFC 5424 string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog)         |
+| `     --syslog-s` | Syslog RFC 5424 string streaming parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog_s)       |
+| `   --syslog-bsd` | Syslog RFC 3164 string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog_bsd)     |
+| ` --syslog-bsd-s` | Syslog RFC 3164 string streaming parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog_bsd_s)   |
 | `    --systemctl` | `systemctl` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl)      |
 | ` --systemctl-lj` | `systemctl list-jobs` command parser                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj)   |
 | ` --systemctl-ls` | `systemctl list-sockets` command parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls)   |
@@ -236,7 +247,7 @@ option.
 | `   --systeminfo` | `systeminfo` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo)     |
 | `         --time` | `/usr/bin/time` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/time)           |
 | `  --timedatectl` | `timedatectl status` command parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl)    |
-| `    --timestamp` | UNIX Epoch Timestamp string parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timestamp)      |
+| `    --timestamp` | Unix Epoch Timestamp string parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timestamp)      |
 | `          --top` | `top -b` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top)            |
 | `        --top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 | `    --tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
@@ -269,6 +280,7 @@ option.
 | `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
 | `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                            |
 | `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
+| `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.               |                                                                        |
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
 | `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
 | `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
@@ -432,15 +444,16 @@ Local plugins may override default parsers.
 
 #### Locale
 
-For best results set the `LANG` locale environment variable to `C` or
-`en_US.UTF-8`. For example, either by setting directly on the command-line:
+For best results set the locale environment variables to `C` or
+`en_US.UTF-8` by modifying the `LC_ALL` variable:
 ```
-$ LANG=C date | jc --date
+$ LC_ALL=C date | jc --date
 ```
 
-or by exporting to the environment before running commands:
+You can also set the locale variables individually:
 ```
 $ export LANG=C
+$ export LC_NUMERIC=C
 ```
 
 On some older systems UTF-8 output will be downgraded to ASCII with `\\u`

@@ -1,0 +1,35 @@
+<34>Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8
+<3444>Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8
+Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8
+<35>Oct 12 22:14:15 client_machine su: 'su root' failed for joe on /dev/pts/2
+<35>Mar  7 04:02:16 avas clamd[11165]: /var/amavis/amavis-20040307T033734-10329/parts/part-00003: Worm.Mydoom.F FOUND 
+Mar  7 04:05:55 avas clamd[11240]: /var/amavis/amavis-20040307T035901-10615/parts/part-00002: Worm.SomeFool.Gen-1 FOUND 
+<5>Mar  7 09:00:51 avas clamd[27173]: SelfCheck: Database status OK.
+Mar  7 05:59:02 avas clamd[27173]: Database correctly reloaded (20400 viruses) 
+Mar  7 04:02:16 avas clamd[11165]: /var/amavis/amavis-20040307T033734-10329/parts/part-00003: Worm.Mydoom.F FOUND 
+Mar  7 04:05:55 avas clamd[11240]: /var/amavis/amavis-20040307T035901-10615/parts/part-00002: Worm.SomeFool.Gen-1 FOUND 
+Mar  7 09:00:51 avas clamd[27173]: SelfCheck: Database status OK.
+Mar  7 05:59:02 avas clamd[27173]: Database correctly reloaded (20400 viruses) 
+Mar  7 11:14:35 avas dccd[13284]: 21 requests/sec are too many from anonymous 205.201.1.56,2246
+Mar  8 00:22:57 avas dccifd[9933]: write(MTA socket,4): Broken pipe
+Mar  7 21:23:22 avas dccifd[6191]: missing message body
+Mar  9 16:05:17 avas named[12045]: zone PLNet/IN: refresh: non-authoritative answer from master 10.0.0.253#53
+Mar 10 00:38:16 avas dccifd[23069]: continue not asking DCC 17 seconds after failure
+
+
+Mar 10 09:42:11 avas named: client 127.0.0.1#55524: query: 23.68.27.142.sa-trusted.bondedsender.org IN TXT
+Mar  9 03:48:07 avas dccd[145]: automatic dbclean; starting `dbclean -DPq -i 1189 -L info,local5.notice -L error,local5.err`
+Mar  9 11:58:18 avas kernel: i810_audio: Connection 0 with codec id 2
+Mar  9 19:41:13 avas dccd[3004]: "packet length 44 too small for REPORT" sent to client 1 at 194.63.250.215,47577
+Mar  8 09:01:07 avas sshd(pam_unix)[21839]: session opened for user tom by (uid=35567)
+
+Mar  8 03:52:04 avas dccd[13284]: 1.2.32 database /home/dcc/dcc_db reopened with 997 MByte window
+Mar  8 16:05:26 avas arpwatch: listening on eth0
+Mar 10 10:00:06 avas named[6986]: zone PLNet/IN: refresh: non-authoritative answer from master 192.75.26.21#53
+Mar 10 10:00:10 avas named[6986]: client 127.0.0.1#55867: query: mail.canfor.ca IN MX
+Mar  8 15:18:40 avas: last message repeated 11 times
+Mar  8 15:18:40 127:0:ab::1 sshd: unauthorized request
+Mar  8 15:18:40 server.example.com sshd: unauthorized request
+Mar  8 15:18:40 192.168.1.1 sshd: unauthorized request
+<35>Mar  8 15:18:40 server.example.com sshd: unauthorized request
+<7>unparsable line

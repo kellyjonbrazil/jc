@@ -18,7 +18,7 @@ Usage (cli):
 
     # sfdisk -l | jc --sfdisk
 
-    or
+or
 
     # jc sfdisk -l
 

@@ -15,7 +15,7 @@ Usage (cli):
 
     $ date | jc --date
 
-    or
+or
 
     $ jc date
 

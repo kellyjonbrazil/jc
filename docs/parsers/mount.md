@@ -9,7 +9,7 @@ Usage (cli):
 
     $ mount | jc --mount
 
-    or
+or
 
     $ jc mount
 

@@ -3,7 +3,7 @@
 
 # jc.parsers.jar\_manifest
 
-jc - JSON Convert `MANIFEST.MF` file parser
+jc - JSON Convert Java `MANIFEST.MF` file parser
 
 Usage (cli):
 

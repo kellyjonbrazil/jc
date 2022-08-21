@@ -11,7 +11,7 @@ Usage (cli):
 
     $ zipinfo <archive> | jc --zipinfo
 
-    or
+or
 
     $ jc zipinfo
 

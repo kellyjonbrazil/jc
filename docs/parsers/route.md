@@ -9,7 +9,7 @@ Usage (cli):
 
     $ route | jc --route
 
-    or
+or
 
     $ jc route
 

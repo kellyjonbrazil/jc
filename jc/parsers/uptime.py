@@ -4,7 +4,7 @@ Usage (cli):
 
     $ uptime | jc --uptime
 
-    or
+or
 
     $ jc uptime
 

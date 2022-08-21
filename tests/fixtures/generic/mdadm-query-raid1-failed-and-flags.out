@@ -1,0 +1,28 @@
+/dev/md127:
+           Version : 1.2
+     Creation Time : Sun Aug  7 21:15:49 2022
+        Raid Level : raid1
+        Array Size : 101376 (99.00 MiB 103.81 MB)
+     Used Dev Size : 101376 (99.00 MiB 103.81 MB)
+      Raid Devices : 2
+     Total Devices : 3
+       Persistence : Superblock is persistent
+
+       Update Time : Sun Aug  7 21:48:58 2022
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 1
+     Spare Devices : 0
+
+Consistency Policy : resync
+
+              Name : sysrescue:126  (local to host sysrescue)
+              UUID : e054553a:fbccdcfe:0ae80bc8:9379377a
+            Events : 78
+
+    Number   Major   Minor   RaidDevice State
+       0     254        1        0      active sync   /dev/vda1
+       2     254        2        1      active sync writemostly failfast   /dev/vda2
+
+       3     254        4        -      faulty   /dev/vda4

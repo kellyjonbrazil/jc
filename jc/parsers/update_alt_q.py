@@ -4,7 +4,7 @@ Usage (cli):
 
     $ update-alternatives --query | jc --update-alt-q
 
-    or
+or
 
     $ jc update-alternatives --query
 

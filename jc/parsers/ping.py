@@ -9,7 +9,7 @@ Usage (cli):
 
     $ ping -c 3 1.2.3.4 | jc --ping
 
-    or
+or
 
     $ jc ping -c 3 1.2.3.4
 

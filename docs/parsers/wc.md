@@ -9,7 +9,7 @@ Usage (cli):
 
     $ wc file.txt | jc --wc
 
-    or
+or
 
     $ jc wc file.txt
 

@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.20.4'
+__version__ = '1.21.0'
 
 parsers = [
     'acpi',
@@ -16,6 +16,8 @@ parsers = [
     'asciitable',
     'asciitable-m',
     'blkid',
+    'cef',
+    'cef-s',
     'chage',
     'cksum',
     'crontab',
@@ -50,6 +52,7 @@ parsers = [
     'ini',
     'iostat',
     'iostat-s',
+    'ip-address',
     'iptables',
     'iso-datetime',
     'iw-scan',
@@ -65,6 +68,7 @@ parsers = [
     'lsof',
     'lsusb',
     'm3u',
+    'mdadm',
     'mount',
     'mpstat',
     'mpstat-s',
@@ -78,6 +82,7 @@ parsers = [
     'ping-s',
     'pip-list',
     'pip-show',
+    'plist',
     'postconf',
     'ps',
     'route',
@@ -90,6 +95,10 @@ parsers = [
     'stat',
     'stat-s',
     'sysctl',
+    'syslog',
+    'syslog-s',
+    'syslog-bsd',
+    'syslog-bsd-s',
     'systemctl',
     'systemctl-lj',
     'systemctl-ls',

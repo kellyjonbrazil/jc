@@ -9,7 +9,7 @@ Usage (cli):
 
     $ du | jc --du
 
-    or
+or
 
     $ jc du
 

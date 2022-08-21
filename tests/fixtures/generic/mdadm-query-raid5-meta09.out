@@ -1,0 +1,30 @@
+/dev/md0:
+           Version : 0.90
+     Creation Time : Tue Aug 16 17:05:02 2022
+        Raid Level : raid5
+        Array Size : 408576 (399.00 MiB 418.38 MB)
+     Used Dev Size : 204288 (199.50 MiB 209.19 MB)
+      Raid Devices : 3
+     Total Devices : 3
+   Preferred Minor : 0
+       Persistence : Superblock is persistent
+
+       Update Time : Tue Aug 16 17:05:06 2022
+             State : clean 
+    Active Devices : 3
+   Working Devices : 3
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              UUID : 4de9c6a6:ce05eada:96fc04a8:108a4af7 (local to host sysrescue)
+            Events : 0.19
+
+    Number   Major   Minor   RaidDevice State
+       0     254        1        0      active sync   /dev/vda1
+       1     254        2        1      active sync   /dev/vda2
+       2     254        3        2      active sync   /dev/vda3

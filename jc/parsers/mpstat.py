@@ -6,7 +6,7 @@ Usage (cli):
 
     $ mpstat | jc --mpstat
 
-    or
+or
 
     $ jc mpstat
 

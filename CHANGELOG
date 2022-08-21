@@ -1,5 +1,20 @@
 jc changelog
 
+20220821 v1.21.0
+- Add IP Address string parser
+- Add Syslog standard and streaming string parsers (RFC 3164 and RFC 5424)
+- Add CEF standard and streaming string parser
+- Add PLIST file parser (XML and binary support)
+- Add `-n` support to the `traceroute` parser
+- Add `mdadm` command parser tested on linux
+- Add `--meta-out` or `-M` option to add metadata to the JSON output, including
+  a UTC timestamp, parser name, magic command, and magic command exit code
+- Fix `lsusb` command parser for output containing a `Device Qualifier` and
+  `Binary Object Store Descriptor` sections
+- Change `LANG=C` to `LC_ALL=C` in locale instructions
+- Add `__main__.py` to package allowing `python -m jc` usage
+- Add an enclosing top-level folder inside the windows.zip package
+
 20220723 v1.20.4
 - Fix URL string parser path list for URLs ending in a forward slash
 
