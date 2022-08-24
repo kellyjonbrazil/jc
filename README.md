@@ -292,7 +292,9 @@ option.
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
-exit code will be `0`. When using the "magic" syntax (e.g. `jc ifconfig eth0`),
+exit code will be `0`.
+
+When using the "magic" syntax (e.g. `jc ifconfig eth0`),
 `jc` will store the exit code of the program being parsed and add it to the `jc`
 exit code. This way it is easier to determine if an error was from the parsed
 program or `jc`.
@@ -306,6 +308,42 @@ Consider the following examples using `ifconfig`:
 | `0`                  | `100`          | `100`              | Error in  `jc`                     |
 | `1`                  | `100`          | `101`              | Error in  both `ifconfig` and `jc` |
 
+When using the "magic" syntax you can also retrieve the exit code of the called
+program by using the `--meta-out` or `-M` option. This will append a `_jc_meta`
+object to the output that will include the magic command information, including
+the exit code.
+
+Here is an example with `ping`:
+```json
+$ jc --meta-out -p ping -c2 192.168.1.252
+{
+  "destination_ip": "192.168.1.252",
+  "data_bytes": 56,
+  "pattern": null,
+  "destination": "192.168.1.252",
+  "packets_transmitted": 2,
+  "packets_received": 0,
+  "packet_loss_percent": 100.0,
+  "duplicates": 0,
+  "responses": [
+    {
+      "type": "timeout",
+      "icmp_seq": 0,
+      "duplicate": false
+    }
+  ],
+  "_jc_meta": {
+    "parser": "ping",
+    "timestamp": 1661357115.27949,
+    "magic_command": [
+      "ping",
+      "-c2",
+      "192.168.1.252"
+    ],
+    "magic_command_exit": 2
+  }
+}
+```
 
 ### Setting Custom Colors via Environment Variable
 You can specify custom colors via the `JC_COLORS` environment variable. The
