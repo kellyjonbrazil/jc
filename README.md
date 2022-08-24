@@ -314,7 +314,7 @@ object to the output that will include the magic command information, including
 the exit code.
 
 Here is an example with `ping`:
-```json
+```bash
 $ jc --meta-out -p ping -c2 192.168.1.252
 {
   "destination_ip": "192.168.1.252",
@@ -343,6 +343,8 @@ $ jc --meta-out -p ping -c2 192.168.1.252
     "magic_command_exit": 2
   }
 }
+$ echo $?
+2
 ```
 
 ### Setting Custom Colors via Environment Variable
