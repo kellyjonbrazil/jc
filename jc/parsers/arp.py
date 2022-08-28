@@ -119,7 +119,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -221,13 +221,24 @@ def parse(
         else:
             for line in cleandata:
                 splitline = line.split()
-                output_line = {
-                    'name': splitline[0],
-                    'address': splitline[1].lstrip('(').rstrip(')'),
-                    'hwtype': splitline[4].lstrip('[').rstrip(']'),
-                    'hwaddress': splitline[3],
-                    'iface': splitline[6],
-                }
+                if '<incomplete>' not in splitline:
+                    output_line = {
+                        'name': splitline[0],
+                        'address': splitline[1].lstrip('(').rstrip(')'),
+                        'hwtype': splitline[4].lstrip('[').rstrip(']'),
+                        'hwaddress': splitline[3],
+                        'iface': splitline[6],
+                    }
+
+                else:
+                    output_line = {
+                        'name': splitline[0],
+                        'address': splitline[1].lstrip('(').rstrip(')'),
+                        'hwtype': None,
+                        'hwaddress': None,
+                        'iface': splitline[5],
+                    }
+
                 raw_output.append(output_line)
 
     return raw_output if raw else _process(raw_output)
