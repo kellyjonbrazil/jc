@@ -468,7 +468,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'IPv4 and IPv6 Address string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -565,7 +565,12 @@ def parse(
         broadcast_string = str(network.broadcast_address)
         broadcast_ipobj = ipaddress.ip_address(broadcast_string)
 
-        hostmask_string = str(interface.with_hostmask).split('/')[1]
+        # older versions of python (e.g. 3.6) don't provide hostmask when a decimal IP is entered
+        try:
+            hostmask_string = str(interface.hostmask)
+        except AttributeError:
+            hostmask_string = '0.0.0.0'
+
         hostmask_ipobj = ipaddress.ip_address(hostmask_string)
 
         netmask_string = str(interface.with_netmask).split('/')[1]
