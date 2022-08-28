@@ -11,12 +11,17 @@ and file-types to dictionaries and lists of dictionaries.
 
 ## Interactive Documentation
 
+Using `jc` in your python programs:
+
     >>> help('jc')
     >>> help('jc.lib')
+    >>> jc.get_help('parser_module_name')
+
+Developing `jc` parsers:
+
     >>> help('jc.utils')
     >>> help('jc.streaming')
     >>> help('jc.parsers.universal')
-    >>> jc.get_help('parser_module_name')
 
 ## Online Documentation
 
