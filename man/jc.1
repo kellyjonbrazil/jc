@@ -1,4 +1,4 @@
-.TH jc 1 2022-08-21 1.21.0 "JSON Convert"
+.TH jc 1 2022-08-24 1.21.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -682,7 +682,9 @@ Generate Bash shell completion script
 Generate Zsh shell completion script
 
 .SH EXIT CODES
-Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP. When using the "Magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.
+Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP.
+
+When using the "magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.
 
 Consider the following examples using \fBifconfig\fP:
 
@@ -694,6 +696,47 @@ ifconfig exit code = \fB1\fP, jc exit code = \fB0\fP, combined exit code = \fB1\
 ifconfig exit code = \fB0\fP, jc exit code = \fB100\fP, combined exit code = \fB100\fP (error in jc)
 
 ifconfig exit code = \fB1\fP, jc exit code = \fB100\fP, combined exit code = \fB101\fP (error in both ifconfig and jc)
+.RE
+
+When using the "magic" syntax you can also retrieve the exit code of the called
+program by using the \fB--meta-out\fP or \fB-M\fP option. This will append a \fB_jc_meta\fP
+object to the output that will include the magic command information, including
+the exit code.
+
+Here is an example with \fBping\fP:
+.RS
+.nf
+$ jc --meta-out -p ping -c2 192.168.1.252
+{
+  "destination_ip": "192.168.1.252",
+  "data_bytes": 56,
+  "pattern": null,
+  "destination": "192.168.1.252",
+  "packets_transmitted": 2,
+  "packets_received": 0,
+  "packet_loss_percent": 100.0,
+  "duplicates": 0,
+  "responses": [
+    {
+      "type": "timeout",
+      "icmp_seq": 0,
+      "duplicate": false
+    }
+  ],
+  "_jc_meta": {
+    "parser": "ping",
+    "timestamp": 1661357115.27949,
+    "magic_command": [
+      "ping",
+      "-c2",
+      "192.168.1.252"
+    ],
+    "magic_command_exit": 2
+  }
+}
+$ echo $?
+2
+.fi
 .RE
 
 .SH ENVIRONMENT

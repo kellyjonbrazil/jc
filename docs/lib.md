@@ -34,11 +34,22 @@ Parse the string data using the supplied parser module.
 This function provides a high-level API to simplify parser use. This
 function will call built-in parsers and custom plugin parsers.
 
-Example:
+Example (standard parsers):
 
     >>> import jc
-    >>> jc.parse('date', 'Tue Jan 18 10:23:07 PST 2022')
-    {'year': 2022, 'month': 'Jan', 'month_num': 1, 'day'...}
+    >>> date_obj = jc.parse('date', 'Tue Jan 18 10:23:07 PST 2022')
+    >>> print(f'The year is: {date_obj["year"]}')
+    The year is: 2022
+
+Example (streaming parsers):
+
+    >>> import jc
+    >>> ping_gen = jc.parse('ping_s', ping_output.splitlines())
+    >>> for item in ping_gen:
+    >>>     print(f'Response time: {item["time_ms"]} ms')
+    Response time: 102 ms
+    Response time: 109 ms
+    ...
 
 To get a list of available parser module names, use `parser_mod_list()`.
 
