@@ -573,7 +573,12 @@ def parse(
 
         hostmask_ipobj = ipaddress.ip_address(hostmask_string)
 
-        netmask_string = str(interface.with_netmask).split('/')[1]
+        # older versions of python (e.g. 3.6) don't provide netmask when a decimal IP is entered
+        try:
+            netmask_string = str(interface.netmask)
+        except AttributeError:
+            netmask_string = '255.255.255.255'
+
         netmask_ipobj = ipaddress.ip_address(netmask_string)
 
         bare_ip_string = str(interface.ip)
