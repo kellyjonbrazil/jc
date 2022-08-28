@@ -40,6 +40,9 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/arp-a.out'), 'r', encoding='utf-8') as f:
             self.freebsd_arp_a = f.read()
 
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/arp-a.out'), 'r', encoding='utf-8') as f:
+            self.centos8_arp_a = f.read()
+
         # output
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/arp.json'), 'r', encoding='utf-8') as f:
             self.centos_7_7_arp_json = json.loads(f.read())
@@ -70,6 +73,9 @@ class MyTests(unittest.TestCase):
 
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/arp-a.json'), 'r', encoding='utf-8') as f:
             self.freebsd12_arp_a_json = json.loads(f.read())
+
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/arp-a.json'), 'r', encoding='utf-8') as f:
+            self.centos8_arp_a_json = json.loads(f.read())
 
     def test_arp_nodata(self):
         """
@@ -136,6 +142,12 @@ class MyTests(unittest.TestCase):
         Test 'arp -a' on FreeBSD12
         """
         self.assertEqual(jc.parsers.arp.parse(self.freebsd_arp_a, quiet=True), self.freebsd12_arp_a_json)
+
+    def test_arp_a_centos8(self):
+        """
+        Test 'arp -a' on CentOS 8 with incomplete hw addresses
+        """
+        self.assertEqual(jc.parsers.arp.parse(self.centos8_arp_a, quiet=True), self.centos8_arp_a_json)
 
 
 if __name__ == '__main__':
