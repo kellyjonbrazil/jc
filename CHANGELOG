@@ -1,8 +1,12 @@
 jc changelog
 
+20220829 v1.21.2
+- Fix IP Address string parser for older python versions that don't cleanly
+  accept decimal input format - IPv6 fix (e.g. python 3.6)
+
 20220828 v1.21.1
 - Fix IP Address string parser for older python versions that don't cleanly
-  accept decimal input format (e.g. python 3.6)
+  accept decimal input format - IPv4 fix (e.g. python 3.6)
 - Fix `arp -a` parser for cases where incomplete hardware addresses are found
   in the arp table on linux
 

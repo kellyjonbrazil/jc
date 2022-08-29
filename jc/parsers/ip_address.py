@@ -468,7 +468,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'IPv4 and IPv6 Address string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -569,7 +569,10 @@ def parse(
         try:
             hostmask_string = str(interface.hostmask)
         except AttributeError:
-            hostmask_string = '0.0.0.0'
+            if interface.version == 4:
+                hostmask_string = '0.0.0.0'
+            if interface.version == 6:
+                hostmask_string = '::'
 
         hostmask_ipobj = ipaddress.ip_address(hostmask_string)
 
@@ -577,7 +580,10 @@ def parse(
         try:
             netmask_string = str(interface.netmask)
         except AttributeError:
-            netmask_string = '255.255.255.255'
+            if interface.version == 4:
+                netmask_string = '255.255.255.255'
+            if interface.version == 6:
+                netmask_string = 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'
 
         netmask_ipobj = ipaddress.ip_address(netmask_string)
 
