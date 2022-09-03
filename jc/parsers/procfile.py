@@ -198,6 +198,21 @@ def _parse_net_if_inet6():
 def _parse_net_ipv6_route():
     print('net ipv6_route')
 
+def _parse_net_netlink():
+    print('net netlink')
+
+def _parse_net_netstat():
+    print('net netstat')
+
+def _parse_net_packet():
+    print('net packet')
+
+def _parse_net_protocols():
+    print('net protocols')
+
+def _parse_net_route():
+    print('net route')
+
 ####
 
 
@@ -299,6 +314,11 @@ def parse(
         net_igmp6_p = re.compile(r'^\d+\s+\w+\s+[0-9a-f]{32}\s+\d+\s+[0-9A-F]{8}\s+\d+')
         net_if_inet6_p = re.compile(r'^[0-9a-f]{32} \d\d \d\d \d\d \d\d\s+\w+')
         net_ipv6_route_p = re.compile(r'^[0-9a-f]{32} \d\d [0-9a-f]{32} \d\d [0-9a-f]{32} (?:[0-9a-f]{8} ){4}\s+\w+')
+        net_netlink_p = re.compile(r'^sk\s+Eth Pid\s+Groups\s+Rmem\s+Wmem')
+        net_netstat_p = re.compile(r'^TcpExt: SyncookiesSent SyncookiesRecv SyncookiesFailed')
+        net_packet_p = re.compile(r'^sk       RefCnt Type Proto  Iface R Rmem   User   Inode\n')
+        net_protocols_p = re.compile(r'^protocol  size sockets  memory press maxhdr  slab module     cl co di ac io in de sh ss gs se re sp bi br ha uh gp em\n')
+        net_route_p = re.compile(r'^Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT\s+\n')
 
         pid_status_p = re.compile(r'^Name:\t.+\nUmask:\t\d+\nState:\t.+\nTgid:\t\d+\n')
         pid_statm_p = re.compile(r'^\d+ \d+ \d+\s\d+\s\d+\s\d+\s\d+$')
@@ -347,6 +367,11 @@ def parse(
             net_igmp_p: _parse_net_igmp,
             net_igmp6_p: _parse_net_igmp6,
             net_if_inet6_p: _parse_net_if_inet6,
+            net_netlink_p: _parse_net_netlink,
+            net_netstat_p: _parse_net_netstat,
+            net_packet_p: _parse_net_packet,
+            net_protocols_p: _parse_net_protocols,
+            net_route_p: _parse_net_route,
 
             pid_status_p: _parse_pid_status,
             pid_statm_p: _parse_pid_statm,
