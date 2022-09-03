@@ -99,6 +99,22 @@ def _parse_filesystems():
     print('filesystems')
 
 
+def _parse_interrupts():
+    print('interrupts')
+
+
+def _parse_buddyinfo():
+    print('buddyinfo')
+
+
+def _parse_pagetypeinfo():
+    print('pagetypinfo')
+
+
+def _parse_vmallocinfo():
+    print('vmallocinfo')
+
+
 def _parse_pid_status():
     print('pid status')
 
@@ -157,6 +173,10 @@ def parse(
         crypto_p = re.compile(r'^name\s+:.*\ndriver\s+:.*\nmodule\s+:.*\n')
         diskstats_p = re.compile(r'^\s*\d+\s+\d\s\w+\s(?:\d+\s){16}\d\n')
         filesystems_p = re.compile(r'^(?:(?:nodev\t|\t)\w+\n){3}')
+        interrupts_p = re.compile(r'^\s+(?:CPU\d+ +)+\n\s*\d+:\s+\d+')
+        buddyinfo_p = re.compile(r'^Node \d+, zone\s+\w+\s+(?:\d+\s+){11}\n')
+        pagetypeinfo_p = re.compile(r'^Page block order:\s+\d+\nPages per block:\s+\d+\n\n')
+        vmallocinfo_p = re.compile(r'^0x[0-9a-f]{16}-0x[0-9a-f]{16}\s+\d+ \w+\+\w+/\w+ ')
         pid_status_p = re.compile(r'^Name:\t.+\nUmask:\t\d+\nState:\t.+\nTgid:\t\d+\n')
         pid_statm_p = re.compile(r'^\d+ \d+ \d+\s\d+\s\d+\s\d+\s\d+$')
         pid_stat_p = re.compile(r'^\d+ \(.{1,16}\) \w \d+ \d+ \d+ \d+ -?\d+ (?:\d+ ){43}\d+$')
@@ -173,6 +193,10 @@ def parse(
             crypto_p: _parse_crypto,
             diskstats_p: _parse_diskstats,
             filesystems_p: _parse_filesystems,
+            interrupts_p: _parse_interrupts,
+            buddyinfo_p: _parse_buddyinfo,
+            pagetypeinfo_p: _parse_pagetypeinfo,
+            vmallocinfo_p: _parse_vmallocinfo,
             pid_status_p: _parse_pid_status,
             pid_statm_p: _parse_pid_statm,
             pid_stat_p: _parse_pid_stat,
