@@ -84,7 +84,7 @@ parsers = [
     'pip-show',
     'plist',
     'postconf',
-    'procfile',
+    'proc',
     'ps',
     'route',
     'rpm-qi',
