@@ -85,6 +85,8 @@ parsers = [
     'plist',
     'postconf',
     'proc',
+    'proc-meminfo',
+    'proc-modules',
     'ps',
     'route',
     'rpm-qi',
@@ -340,7 +342,9 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
 
     return info_dict
 
-def all_parser_info(documentation: bool = False) -> List[Dict]:
+def all_parser_info(documentation: bool = False,
+                    show_hidden: bool = False
+) -> List[Dict]:
     """
     Returns a list of dictionaries that includes metadata for all parser
     modules.
@@ -348,8 +352,22 @@ def all_parser_info(documentation: bool = False) -> List[Dict]:
     Parameters:
 
         documentation:      (boolean)    include parser docstrings if True
+        show_hidden:        (boolean)    also show parsers marked as hidden
+                                         in their info metadata.
     """
-    return [parser_info(p, documentation=documentation) for p in parsers]
+    temp_list = [parser_info(p, documentation=documentation) for p in parsers]
+
+    p_list = []
+    if show_hidden:
+        p_list = temp_list
+
+    else:
+        for item in temp_list:
+            if not item.get('hidden', None):
+                p_list.append(item)
+
+    return p_list
+
 
 def get_help(parser_mod_name: str) -> None:
     """
