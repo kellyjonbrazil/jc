@@ -149,7 +149,7 @@ option.
 ### Parsers
 
 | Argument          | Command or Filetype                                     | Documentation                                                              |
-|-------------------|---------------------------------------------------------|----------------------------------------------------------------------------|{% for parser in jc.parsers %}
+|-------------------|---------------------------------------------------------|----------------------------------------------------------------------------|{% for parser in parsers %}
 | `{{ "{:>15}".format(parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<74}".format("[details](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
 
 ### Options
@@ -159,7 +159,7 @@ option.
 | `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                             |
 | `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                           |
 | `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
-| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                            |
+| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation. Use twice to show hidden parsers (e.g. `-hh`)             |
 | `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
 | `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.               |                                                                        |
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
@@ -1104,4 +1104,4 @@ cat istio.yaml | jc --yaml -p
 ]
 ```
 
-{{ jc.copyright }}
+{{ info.copyright }}

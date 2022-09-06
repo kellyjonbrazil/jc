@@ -1,4 +1,4 @@
-.TH jc 1 2022-08-29 1.21.2 "JSON Convert"
+.TH jc 1 2022-09-06 1.21.2 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
 .SH SYNOPSIS
@@ -394,6 +394,21 @@ PLIST file parser
 
 .TP
 .B
+\fB--proc\fP
+`/proc/` file parser
+
+.TP
+.B
+\fB--proc-meminfo\fP
+`/proc/meminfo` command parser
+
+.TP
+.B
+\fB--proc-modules\fP
+`/proc/modules` command parser
+
+.TP
+.B
 \fB--ps\fP
 `ps` command parser
 
@@ -639,7 +654,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP, \fB--help\fP
-Help (\fB--help --parser_name\fP for parser documentation)
+Help (\fB--help --parser_name\fP for parser documentation). Use twice to show hidden parsers (e.g. \fB-hh\fP)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP

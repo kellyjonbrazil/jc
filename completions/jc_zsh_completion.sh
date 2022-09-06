@@ -95,7 +95,7 @@ _jc() {
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -172,6 +172,7 @@ _jc() {
         '--pip-show:`pip show` command parser'
         '--plist:PLIST file parser'
         '--postconf:`postconf -M` command parser'
+        '--proc:`/proc/` file parser'
         '--ps:`ps` command parser'
         '--route:`route` command parser'
         '--rpm-qi:`rpm -qi` command parser'

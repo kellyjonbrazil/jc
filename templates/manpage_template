@@ -44,7 +44,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP, \fB--help\fP
-Help (\fB--help --parser_name\fP for parser documentation)
+Help (\fB--help --parser_name\fP for parser documentation). Use twice to show hidden parsers (e.g. \fB-hh\fP)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP

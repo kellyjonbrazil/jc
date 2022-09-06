@@ -225,6 +225,7 @@ option.
 | `     --pip-show` | `pip show` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)       |
 | `        --plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 | `     --postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
+| `         --proc` | `/proc/` file parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/proc)           |
 | `           --ps` | `ps` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)             |
 | `        --route` | `route` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/route)          |
 | `       --rpm-qi` | `rpm -qi` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi)         |
@@ -278,7 +279,7 @@ option.
 | `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                             |
 | `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                           |
 | `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
-| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation                                                            |
+| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation. Use twice to show hidden parsers (e.g. `-hh`)             |
 | `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
 | `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.               |                                                                        |
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |

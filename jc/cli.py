@@ -11,8 +11,9 @@ import signal
 import shlex
 import subprocess
 from .lib import (__version__, parser_info, all_parser_info, parsers,
-                  _get_parser, _parser_is_streaming, standard_parser_mod_list,
-                  plugin_parser_mod_list, streaming_parser_mod_list)
+                  _get_parser, _parser_is_streaming, parser_mod_list,
+                  standard_parser_mod_list, plugin_parser_mod_list,
+                  streaming_parser_mod_list)
 from . import utils
 from .cli_data import long_options_map, new_pygments_colors, old_pygments_colors
 from .shell_completions import bash_completion, zsh_completion
@@ -120,11 +121,11 @@ def parser_shortname(parser_arg):
     return parser_arg[2:]
 
 
-def parsers_text(indent=0, pad=0):
+def parsers_text(indent=0, pad=0, show_hidden=False):
     """Return the argument and description information from each parser"""
     ptext = ''
     padding_char = ' '
-    for p in all_parser_info():
+    for p in all_parser_info(show_hidden=show_hidden):
         parser_arg = p.get('argument', 'UNKNOWN')
         padding = pad - len(parser_arg)
         parser_desc = p.get('description', 'No description available.')
@@ -164,17 +165,17 @@ def about_jc():
         'license': info.license,
         'python_version': '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro))),
         'python_path': sys.executable,
-        'parser_count': len(all_parser_info()),
+        'parser_count': len(parser_mod_list()),
         'standard_parser_count': len(standard_parser_mod_list()),
         'streaming_parser_count': len(streaming_parser_mod_list()),
         'plugin_parser_count': len(plugin_parser_mod_list()),
-        'parsers': all_parser_info()
+        'parsers': all_parser_info(show_hidden=True)
     }
 
 
-def helptext():
+def helptext(show_hidden=False):
     """Return the help text with the list of parsers"""
-    parsers_string = parsers_text(indent=4, pad=20)
+    parsers_string = parsers_text(indent=4, pad=20, show_hidden=show_hidden)
     options_string = options_text(indent=4, pad=20)
 
     helptext_string = f'''\
@@ -205,7 +206,7 @@ Examples:
     return helptext_string
 
 
-def help_doc(options):
+def help_doc(options, show_hidden=False):
     """
     Returns the parser documentation if a parser is found in the arguments,
     otherwise the general help text is returned.
@@ -228,7 +229,7 @@ def help_doc(options):
             utils._safe_pager(doc_text)
             return
 
-    utils._safe_print(helptext())
+    utils._safe_print(helptext(show_hidden=show_hidden))
     return
 
 
@@ -525,6 +526,7 @@ def main():
     force_color = 'C' in options
     mono = ('m' in options or bool(os.getenv('NO_COLOR'))) and not force_color
     help_me = 'h' in options
+    verbose_help = options.count('h') > 1
     pretty = 'p' in options
     quiet = 'q' in options
     ignore_exceptions = options.count('q') > 1
@@ -552,7 +554,7 @@ def main():
         sys.exit(0)
 
     if help_me:
-        help_doc(sys.argv)
+        help_doc(sys.argv, show_hidden=verbose_help)
         sys.exit(0)
 
     if version_info:
