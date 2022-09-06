@@ -85,6 +85,7 @@ parsers = [
     'plist',
     'postconf',
     'proc',
+    'proc-buddyinfo',
     'proc-meminfo',
     'proc-modules',
     'ps',
