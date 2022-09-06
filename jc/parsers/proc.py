@@ -1,25 +1,42 @@
 """jc - JSON Convert Proc file output parser
 
-<<Short procfile description and caveats>>
+This parser automatically identifies the Proc file and calls the
+corresponding parser to peform the parsing. The specific parsers can also
+be called directly, if desired and have a naming convention of
+`proc-<name>` (cli) or `proc_<name>` (module).
 
 Usage (cli):
 
-    $ cat /proc/<file> | jc --procfile
+    $ cat /proc/meminfo | jc --proc
+
+or
+
+    $ cat /proc/meminfo | jc --proc-memifno
 
 Usage (module):
 
     import jc
-    result = jc.parse('procfile', proc_file)
+    result = jc.parse('proc', proc_file)
 
 Schema:
 
-    [
-      {
-        "procfile":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+See the specific Proc parser for the schema:
+
+    $ jc --help --proc-<name>
+
+For example:
+
+    $ jc --help --proc-meminfo
+
+Specific Proc file parser names can be found with `jc -hh` or `jc -a`.
+
+Schemas can also be found online at:
+
+    https://kellyjonbrazil.github.io/jc/docs/parsers/proc_<name>
+
+For example:
+
+    https://kellyjonbrazil.github.io/jc/docs/parsers/proc_meminfo
 
 Examples:
 
@@ -139,7 +156,7 @@ def parse(
             ioports_p: 'proc_ioports',
             loadavg_p: 'proc_loadavg',
             locks_p: 'proc_locks',
-            meminfo_p: 'proc_meminfo',                     #######
+            meminfo_p: 'proc_meminfo',
             modules_p: 'proc_modules',
             mtrr_p: 'proc_mtrr',
             pagetypeinfo_p: 'proc_pagetypeinfo',

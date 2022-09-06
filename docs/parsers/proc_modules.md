@@ -5,13 +5,20 @@
 
 jc - JSON Convert `/proc/modules` command output parser
 
-<<Short proc_modules description and caveats>>
-
 Usage (cli):
 
     $ cat /proc/modules | jc --proc
 
+or
+
+    $ cat /proc/modules | jc --proc-modules
+
 Usage (module):
+
+    import jc
+    result = jc.parse('proc', proc_modules_file)
+
+or
 
     import jc
     result = jc.parse('proc_modules', proc_modules_file)
