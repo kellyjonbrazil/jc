@@ -86,6 +86,7 @@ parsers = [
     'postconf',
     'proc',
     'proc-buddyinfo',
+    'proc-consoles',
     'proc-meminfo',
     'proc-modules',
     'ps',
