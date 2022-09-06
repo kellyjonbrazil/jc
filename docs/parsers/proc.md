@@ -45,11 +45,67 @@ For example:
 
 Examples:
 
-    $ procfile | jc --procfile -p
-    []
+    $ cat /proc/modules | jc --proc -p
+    [
+      {
+        "module": "binfmt_misc",
+        "size": 24576,
+        "used": 1,
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc0ab4000"
+      },
+      {
+        "module": "vsock_loopback",
+        "size": 16384,
+        "used": 0,
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc0a14000"
+      },
+      {
+        "module": "vmw_vsock_virtio_transport_common",
+        "size": 36864,
+        "used": 1,
+        "used_by": [
+          "vsock_loopback"
+        ],
+        "status": "Live",
+        "location": "0xffffffffc0a03000"
+      },
+      ...
+    ]
 
-    $ procfile | jc --procfile -p -r
-    []
+    $ proc_modules | jc --proc_modules -p -r
+    [
+      {
+        "module": "binfmt_misc",
+        "size": "24576",
+        "used": "1",
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc0ab4000"
+      },
+      {
+        "module": "vsock_loopback",
+        "size": "16384",
+        "used": "0",
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc0a14000"
+      },
+      {
+        "module": "vmw_vsock_virtio_transport_common",
+        "size": "36864",
+        "used": "1",
+        "used_by": [
+          "vsock_loopback"
+        ],
+        "status": "Live",
+        "location": "0xffffffffc0a03000"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.proc.parse"></a>
 
