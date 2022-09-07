@@ -185,11 +185,11 @@ Usage:
 
     Standard syntax:
 
-        COMMAND | jc PARSER [OPTIONS]
+        COMMAND | jc [OPTIONS] PARSER
 
-        cat FILE | jc PARSER [OPTIONS]
+        cat FILE | jc [OPTIONS] PARSER
 
-        echo STRING | jc PARSER [OPTIONS]
+        echo STRING | jc [OPTIONS] PARSER
 
     Magic syntax:
 
@@ -203,8 +203,8 @@ Options:
 {options_string}
 Examples:
     Standard Syntax:
-        $ dig www.google.com | jc --dig --pretty
-        $ cat /proc/meminfo | jc --proc --pretty
+        $ dig www.google.com | jc --pretty --dig
+        $ cat /proc/meminfo | jc --pretty --proc
 
     Magic Syntax:
         $ jc --pretty dig www.google.com
