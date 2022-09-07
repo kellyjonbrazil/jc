@@ -434,9 +434,11 @@ def magic_parser(args):
         options                             # jc options to preserve
     )
 
+
 def open_text_file(path_string):
     with open(path_string, 'r') as f:
         return f.read()
+
 
 def run_user_command(command):
     """
@@ -597,8 +599,28 @@ def main():
             run_command_str = ' '.join(run_command)        # older python versions
 
     if run_command_str.startswith('/proc'):
-        magic_found_parser = 'proc'
-        magic_stdout = open_text_file(run_command_str)
+        try:
+            magic_found_parser = 'proc'
+            magic_stdout = open_text_file(run_command_str)
+
+        except OSError as e:
+            if debug:
+                raise
+
+            error_msg = os.strerror(e.errno)
+            utils.error_message([
+                f'"{run_command_str}" file could not be opened: {error_msg}.'
+            ])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        except Exception:
+            if debug:
+                raise
+
+            utils.error_message([
+                f'"{run_command_str}" file could not be opened. For details use the -d or -dd option.'
+            ])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
     elif valid_command:
         try:
