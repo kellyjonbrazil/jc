@@ -1,12 +1,25 @@
 .TH jc 1 2022-09-07 1.21.2 "JSON Convert"
 .SH NAME
-\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
+\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
 .SH SYNOPSIS
-COMMAND | jc PARSER [OPTIONS]
 
-or "Magic" syntax:
+Standard syntax:
 
+.RS
+COMMAND | \fBjc\fP [OPTIONS] PARSER
+
+cat FILE | \fBjc\fP [OPTIONS] PARSER
+
+echo STRING | \fBjc\fP [OPTIONS] PARSER
+.RE
+
+Magic syntax:
+
+.RS
 \fBjc\fP [OPTIONS] COMMAND
+
+\fBjc\fP [OPTIONS] /proc/<path-to-file>
+.RE
 
 .SH DESCRIPTION
 \fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
@@ -912,17 +925,21 @@ If a UTC timezone can be detected in the text of the command output, the timesta
 .SH EXAMPLES
 Standard Syntax:
 .RS
-$ dig www.google.com | jc \fB--dig\fP \fB-p\fP
+$ dig www.google.com | jc \fB-p\fP \fB--dig\fP
+
+$ cat /proc/meminfo | jc \fB--pretty\fP \fB--proc\fP
 .RE
 
 Magic Syntax:
 .RS
-$ jc \fB-p\fP dig www.google.com
+$ jc \fB--pretty\fP dig www.google.com
+
+$ jc \fB--pretty\fP /proc/meminfo
 .RE
 
 For parser documentation:
 .RS
-$ jc \fB-h\fP \fB--dig\fP
+$ jc \fB--help\fP \fB--dig\fP
 .RE
 .SH AUTHOR
 Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -215,7 +215,6 @@ Examples:
 
     Show Hidden Parsers:
         $ jc -hh
-        $ jc --about --pretty
 '''
 
     return helptext_string

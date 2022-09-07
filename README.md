@@ -133,7 +133,9 @@ on Github.
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the
 previous command's output to `STDOUT`.
 ```bash
-COMMAND | jc PARSER [OPTIONS]
+COMMAND | jc [OPTIONS] PARSER
+cat FILE | jc [OPTIONS] PARSER
+echo STRING | jc [OPTIONS] PARSER
 ```
 
 Alternatively, the "magic" syntax can be used by prepending `jc` to the command
@@ -141,6 +143,7 @@ to be converted. Options can be passed to `jc` immediately before the command is
 given. (Note: command aliases and shell builtins are not supported)
 ```bash
 jc [OPTIONS] COMMAND
+jc [OPTIONS] /proc/<path-to-file>
 ```
 
 The JSON output can be compact (default) or pretty formatted with the `-p`
@@ -538,12 +541,12 @@ that case you can suppress the warning message with the `-q` cli option or the
 
 macOS:
 ```bash
-cat lsof.out | jc --lsof -q
+cat lsof.out | jc -q --lsof
 ```
 
 or Windows:
 ```bash
-type lsof.out | jc --lsof -q
+type lsof.out | jc -q --lsof
 ```
 
 Tested on:
@@ -587,7 +590,7 @@ documentation.
 
 ### arp
 ```bash
-arp | jc --arp -p          # or:  jc -p arp
+arp | jc -p --arp          # or:  jc -p arp
 ```
 ```json
 [
@@ -626,7 +629,7 @@ cat homes.csv
 ...
 ```
 ```bash
-cat homes.csv | jc --csv -p
+cat homes.csv | jc -p --csv
 ```
 ```json
 [
@@ -667,7 +670,7 @@ cat homes.csv | jc --csv -p
 ```
 ### /etc/hosts file
 ```bash
-cat /etc/hosts | jc --hosts -p
+cat /etc/hosts | jc -p --hosts
 ```
 ```json
 [
@@ -694,7 +697,7 @@ cat /etc/hosts | jc --hosts -p
 ```
 ### ifconfig
 ```bash
-ifconfig | jc --ifconfig -p          # or:  jc -p ifconfig
+ifconfig | jc -p --ifconfig          # or:  jc -p ifconfig
 ```
 ```json
 [
@@ -752,7 +755,7 @@ Port = 50022
 ForwardX11 = no
 ```
 ```bash
-cat example.ini | jc --ini -p
+cat example.ini | jc -p --ini
 ```
 ```json
 {
@@ -774,7 +777,7 @@ cat example.ini | jc --ini -p
 ```
 ### ls
 ```bash
-$ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
+$ ls -l /usr/bin | jc -p --ls          # or:  jc -p ls -l /usr/bin
 ```
 ```json
 [
@@ -810,7 +813,7 @@ $ ls -l /usr/bin | jc --ls -p          # or:  jc -p ls -l /usr/bin
 ```
 ### netstat
 ```bash
-netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
+netstat -apee | jc -p --netstat          # or:  jc -p netstat -apee
 ```
 ```json
 [
@@ -898,7 +901,7 @@ netstat -apee | jc --netstat -p          # or:  jc -p netstat -apee
 ```
 ### /etc/passwd file
 ```bash
-cat /etc/passwd | jc --passwd -p
+cat /etc/passwd | jc -p --passwd
 ```
 ```json
 [
@@ -924,7 +927,7 @@ cat /etc/passwd | jc --passwd -p
 ```
 ### ping
 ```bash
-ping 8.8.8.8 -c 3 | jc --ping -p          # or:  jc -p ping 8.8.8.8 -c 3
+ping 8.8.8.8 -c 3 | jc -p --ping          # or:  jc -p ping 8.8.8.8 -c 3
 ```
 ```json
 {
@@ -977,7 +980,7 @@ ping 8.8.8.8 -c 3 | jc --ping -p          # or:  jc -p ping 8.8.8.8 -c 3
 ```
 ### ps
 ```bash
-ps axu | jc --ps -p          # or:  jc -p ps axu
+ps axu | jc -p --ps          # or:  jc -p ps axu
 ```
 ```json
 [
@@ -1024,7 +1027,7 @@ ps axu | jc --ps -p          # or:  jc -p ps axu
 ```
 ### traceroute
 ```bash
-traceroute -m 2 8.8.8.8 | jc --traceroute -p
+traceroute -m 2 8.8.8.8 | jc -p --traceroute
 # or:  jc -p traceroute -m 2 8.8.8.8
 ```
 ```json
@@ -1089,7 +1092,7 @@ traceroute -m 2 8.8.8.8 | jc --traceroute -p
 ```
 ### uptime
 ```bash
-uptime | jc --uptime -p          # or:  jc -p uptime
+uptime | jc -p --uptime          # or:  jc -p uptime
 ```
 ```json
 {
@@ -1134,7 +1137,7 @@ cat cd_catalog.xml
   ...
 ```
 ```bash
-cat cd_catalog.xml | jc --xml -p
+cat cd_catalog.xml | jc -p --xml
 ```
 ```json
 {
@@ -1186,7 +1189,7 @@ spec:
       mode: ISTIO_MUTUAL
 ```
 ```bash
-cat istio.yaml | jc --yaml -p
+cat istio.yaml | jc -p --yaml
 ```
 ```json
 [
