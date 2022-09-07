@@ -3,7 +3,7 @@
 
 # jc.parsers.proc\_modules
 
-jc - JSON Convert `/proc/modules` command output parser
+jc - JSON Convert `/proc/modules` file parser
 
 Usage (cli):
 

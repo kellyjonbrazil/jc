@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/consoles` command output parser
+"""jc - JSON Convert `/proc/consoles` file parser
 
 Usage (cli):
 

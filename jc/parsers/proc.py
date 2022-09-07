@@ -145,7 +145,7 @@ def parse(
         # signatures
         buddyinfo_p = re.compile(r'^Node \d+, zone\s+\w+\s+(?:\d+\s+){11}\n')
         consoles_p = re.compile(r'^\w+\s+[\-WUR]{3} \([ECBpba ]+\)\s+\d+:\d+\n')
-        cpuinfo_p = re.compile(r'^processor\s+:.*\nvendor_id\s+:.*\ncpu family\s+:.*\n')
+        cpuinfo_p = re.compile(r'^processor\t+: \d+.*bogomips\t+: \d+.\d\d\n', re.DOTALL)
         crypto_p = re.compile(r'^name\s+:.*\ndriver\s+:.*\nmodule\s+:.*\n')
         devices_p = re.compile(r'^Character devices:\n\s+\d+ .*\n')
         diskstats_p = re.compile(r'^\s*\d+\s+\d\s\w+\s(?:\d+\s){16}\d\n')
