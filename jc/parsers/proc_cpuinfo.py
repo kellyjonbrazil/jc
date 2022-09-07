@@ -245,8 +245,6 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {'size', 'used'}
-
     for entry in proc_data:
         for key in entry:
             if entry[key] == '':
@@ -327,7 +325,7 @@ def parse(
             key, val = line.split(':', maxsplit=1)
             output_line[key.strip()] = val.strip()
 
-    if output_line:
-        raw_output.append(output_line)
+        if output_line:
+            raw_output.append(output_line)
 
     return raw_output if raw else _process(raw_output)

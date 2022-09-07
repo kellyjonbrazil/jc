@@ -88,6 +88,7 @@ parsers = [
     'proc-buddyinfo',
     'proc-consoles',
     'proc-cpuinfo',
+    'proc-crypto',
     'proc-meminfo',
     'proc-modules',
     'ps',
