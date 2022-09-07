@@ -6,13 +6,22 @@
 jc - JSON Convert Proc file output parser
 
 This parser automatically identifies the Proc file and calls the
-corresponding parser to peform the parsing. The specific parsers can also
-be called directly, if desired and have a naming convention of
-`proc-<name>` (cli) or `proc_<name>` (module).
+corresponding parser to peform the parsing.
+
+Magic syntax for converting `/proc` files is also supported by running
+`jc /proc/<path to file>`. Any `jc` options must be specified before the
+`/proc` path.
+
+specific Proc file parsers can also be called directly, if desired and have
+a naming convention of `proc-<name>` (cli) or `proc_<name>` (module).
 
 Usage (cli):
 
     $ cat /proc/meminfo | jc --proc
+
+or
+
+    $ jc /proc/meminfo
 
 or
 

@@ -11,6 +11,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/consoles
+
+or
+
     $ cat /proc/consoles | jc --proc-consoles
 
 Usage (module):

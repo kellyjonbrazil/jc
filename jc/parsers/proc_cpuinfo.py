@@ -6,6 +6,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/cpuinfo
+
+or
+
     $ cat /proc/cpuinfo | jc --proc-cpuinfo
 
 Usage (module):

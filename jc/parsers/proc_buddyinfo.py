@@ -6,6 +6,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/buddyinfo
+
+or
+
     $ cat /proc/buddyinfo | jc --proc-buddyinfo
 
 Usage (module):

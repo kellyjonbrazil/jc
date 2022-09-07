@@ -11,6 +11,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/crypto
+
+or
+
     $ cat /proc/crypto | jc --proc-crypto
 
 Usage (module):

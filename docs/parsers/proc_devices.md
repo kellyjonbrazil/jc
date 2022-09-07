@@ -11,6 +11,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/devices
+
+or
+
     $ cat /proc/devices | jc --proc-devices
 
 Usage (module):

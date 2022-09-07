@@ -11,6 +11,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/modules
+
+or
+
     $ cat /proc/modules | jc --proc-modules
 
 Usage (module):

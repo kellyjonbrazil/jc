@@ -179,14 +179,23 @@ def helptext(show_hidden=False):
     options_string = options_text(indent=4, pad=20)
 
     helptext_string = f'''\
-jc converts the output of many commands and file-types to JSON or YAML
+jc converts the output of many commands, file-types, and strings to JSON or YAML
 
 Usage:
-    COMMAND | jc PARSER [OPTIONS]
 
-    or magic syntax:
+    Standard syntax:
 
-    jc [OPTIONS] COMMAND
+        COMMAND | jc PARSER [OPTIONS]
+
+        cat FILE | jc PARSER [OPTIONS]
+
+        echo STRING | jc PARSER [OPTIONS]
+
+    Magic syntax:
+
+        jc [OPTIONS] COMMAND
+
+        jc [OPTIONS] /proc/<path-to-file>
 
 Parsers:
 {parsers_string}
@@ -195,12 +204,18 @@ Options:
 Examples:
     Standard Syntax:
         $ dig www.google.com | jc --dig --pretty
+        $ cat /proc/meminfo | jc --proc --pretty
 
     Magic Syntax:
         $ jc --pretty dig www.google.com
+        $ jc --pretty /proc/meminfo
 
     Parser Documentation:
         $ jc --help --dig
+
+    Show Hidden Parsers:
+        $ jc -hh
+        $ jc --about --pretty
 '''
 
     return helptext_string
@@ -584,7 +599,6 @@ def main():
     if run_command_str.startswith('/proc'):
         magic_found_parser = 'proc'
         magic_stdout = open_text_file(run_command_str)
-        print(f'this is a procfile. Magic parser={magic_found_parser}, runstring={run_command_str}')
 
     elif valid_command:
         try:

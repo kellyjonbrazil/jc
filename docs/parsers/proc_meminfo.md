@@ -11,6 +11,10 @@ Usage (cli):
 
 or
 
+    $ jc /proc/meminfo
+
+or
+
     $ cat /proc/meminfo | jc --proc-meminfo
 
 Usage (module):
