@@ -419,6 +419,9 @@ def magic_parser(args):
         options                             # jc options to preserve
     )
 
+def open_text_file(path_string):
+    with open(path_string, 'r') as f:
+        return f.read()
 
 def run_user_command(command):
     """
@@ -571,13 +574,19 @@ def main():
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    run_command_str = ''
     if run_command:
         try:
             run_command_str = shlex.join(run_command)      # python 3.8+
         except AttributeError:
             run_command_str = ' '.join(run_command)        # older python versions
 
-    if valid_command:
+    if run_command_str.startswith('/proc'):
+        magic_found_parser = 'proc'
+        magic_stdout = open_text_file(run_command_str)
+        print(f'this is a procfile. Magic parser={magic_found_parser}, runstring={run_command_str}')
+
+    elif valid_command:
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
@@ -625,12 +634,7 @@ def main():
             utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    # check for input errors (pipe vs magic)
-    if not sys.stdin.isatty() and magic_stdout:
-        utils.error_message(['Piped data and Magic syntax used simultaneously. Use "jc -h" for help.'])
-        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    elif sys.stdin.isatty() and magic_stdout is None:
+    if sys.stdin.isatty() and magic_stdout is None:
         utils.error_message(['Missing piped data. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
