@@ -47,12 +47,10 @@ option.
         "cache size":                 string,
         "cache_size_num":             integer,
         "cache_size_unit":            string,
-        "flags":                      string,
-        "flag_list": [
+        "flags": [
                                       string
         ],
-        "bugs":                       string,
-        "bug_list": [
+        "bugs": [
                                       string
         ],
         "bogomips":                   float,
@@ -83,8 +81,6 @@ Examples:
         "fpu_exception": true,
         "cpuid level": 22,
         "wp": true,
-        "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr ...",
-        "bugs": "cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass ...",
         "bogomips": 4800.0,
         "clflush size": 64,
         "cache_alignment": 64,
@@ -94,7 +90,7 @@ Examples:
         "address_size_virtual": 48,
         "cache_size_num": 6144,
         "cache_size_unit": "KB",
-        "flag_list": [
+        "flags": [
           "fpu",
           "vme",
           "de",
@@ -178,7 +174,7 @@ Examples:
           "flush_l1d",
           "arch_capabilities"
         ],
-        "bug_list": [
+        "bugs": [
           "cpu_meltdown",
           "spectre_v1",
           "spectre_v2",

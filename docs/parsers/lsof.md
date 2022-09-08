@@ -140,6 +140,6 @@ Returns:
     List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
-Compatibility:  linux
+Compatibility:  linux, darwin, aix, freebsd
 
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
