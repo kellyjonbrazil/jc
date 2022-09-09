@@ -173,6 +173,7 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
+from jc.parsers.universal import simple_table_parse
 
 
 class info():
@@ -233,37 +234,15 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
-
-            split_line = line.split()
-
-            output_line = {
-                'maj': split_line[0],
-                'min': split_line[1],
-                'device': split_line[2],
-                'reads_completed': split_line[3],
-                'reads_merged': split_line[4],
-                'sectors_read': split_line[5],
-                'read_time_ms': split_line[6],
-                'writes_completed': split_line[7],
-                'writes_merged': split_line[8],
-                'sectors_written': split_line[9],
-                'write_time_ms': split_line[10],
-                'io_in_progress': split_line[11],
-                'io_time_ms': split_line[12],
-                'weighted_io_time_ms': split_line[13]
-            }
-
-            if len(split_line) > 14:
-                output_line['discards_completed_successfully'] = split_line[14]
-                output_line['discards_merged'] = split_line[15]
-                output_line['sectors_discarded'] = split_line[16]
-                output_line['discarding_time_ms'] = split_line[17]
-
-            if len(split_line) > 18:
-                output_line['flush_requests_completed_successfully'] = split_line[18]
-                output_line['flushing_time_ms'] = split_line[19]
-
-            raw_output.append(output_line)
+        header = (
+            'maj min device reads_completed reads_merged sectors_read read_time_ms '
+            'writes_completed writes_merged sectors_written write_time_ms io_in_progress '
+            'io_time_ms weighted_io_time_ms discards_completed_successfully discards_merged '
+            'sectors_discarded discarding_time_ms flush_requests_completed_successfully '
+            'flushing_time_ms\n'
+        )
+        data = header + data
+        cleandata = filter(None, data.splitlines())
+        raw_output = simple_table_parse(cleandata)
 
     return raw_output if raw else _process(raw_output)
