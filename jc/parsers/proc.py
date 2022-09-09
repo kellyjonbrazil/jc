@@ -157,7 +157,7 @@ def parse(
         cpuinfo_p = re.compile(r'^processor\t+: \d+.*bogomips\t+: \d+.\d\d\n', re.DOTALL)
         crypto_p = re.compile(r'^name\s+:.*\ndriver\s+:.*\nmodule\s+:.*\n')
         devices_p = re.compile(r'^Character devices:\n\s+\d+ .*\n')
-        diskstats_p = re.compile(r'^\s*\d+\s+\d\s\w+\s(?:\d+\s){16}\d\n')
+        diskstats_p = re.compile(r'^\s*\d+\s+\d\s\w+\s(?:\d+\s){10,16}\d+\n')
         filesystems_p = re.compile(r'^(?:(?:nodev\t|\t)\w+\n){3}')
         interrupts_p = re.compile(r'^\s+(?:CPU\d+ +)+\n\s*\d+:\s+\d+')
         iomem_p = re.compile(r'^00000000-[0-9a-f]{8} : .*\n[0-9a-f]{8}-[0-9a-f]{8} : ')
