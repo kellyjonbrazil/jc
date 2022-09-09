@@ -91,6 +91,7 @@ parsers = [
     'proc-crypto',
     'proc-devices',
     'proc-diskstats',
+    'proc-driver-rtc',
     'proc-meminfo',
     'proc-modules',
     'ps',
