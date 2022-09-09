@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/driver-rtc` file parser
+"""jc - JSON Convert `/proc/driver_rtc` file parser
 
 Usage (cli):
 
