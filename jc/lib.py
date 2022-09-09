@@ -90,6 +90,7 @@ parsers = [
     'proc-cpuinfo',
     'proc-crypto',
     'proc-devices',
+    'proc-diskstats',
     'proc-meminfo',
     'proc-modules',
     'ps',
