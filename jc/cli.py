@@ -195,7 +195,7 @@ Usage:
 
         jc [OPTIONS] COMMAND
 
-        jc [OPTIONS] /proc/<path-to-file>
+        jc [OPTIONS] /proc/<path-to-procfile>
 
 Parsers:
 {parsers_string}

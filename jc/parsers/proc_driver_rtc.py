@@ -24,8 +24,8 @@ or
 
 Schema:
 
-"yes" and "no" values are converted to true/false. Integer conversions are
-attempted. If you do not want this behavior, then use `--raw` (CLI) or
+"yes" and "no" values are converted to `true`/`false`. Integer conversions
+are attempted. If you do not want this behavior, then use `--raw` (cli) or
 `raw=True` (module).
 
     {

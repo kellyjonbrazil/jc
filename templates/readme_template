@@ -70,7 +70,7 @@ values are converted, and, in some cases, additional semantic context fields are
 added.
 
 To access the raw, pre-processed JSON, use the `-r` cli option or the `raw=True`
-function parameter in `parse()`.
+function parameter in `parse()` when using `jc` as a python library.
 
 Schemas for each parser can be found at the documentation link beside each
 [**Parser**](#parsers) below.
@@ -139,11 +139,12 @@ echo STRING | jc [OPTIONS] PARSER
 ```
 
 Alternatively, the "magic" syntax can be used by prepending `jc` to the command
-to be converted. Options can be passed to `jc` immediately before the command is
-given. (Note: command aliases and shell builtins are not supported)
+to be converted or in front of the absolute path for Proc files. Options can be
+passed to `jc` immediately before the command or Proc file path is given.
+(Note: command aliases and shell builtins are not supported)
 ```bash
 jc [OPTIONS] COMMAND
-jc [OPTIONS] /proc/<path-to-file>
+jc [OPTIONS] /proc/<path-to-procfile>
 ```
 
 The JSON output can be compact (default) or pretty formatted with the `-p`

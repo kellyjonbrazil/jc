@@ -18,7 +18,7 @@ Magic syntax:
 .RS
 \fBjc\fP [OPTIONS] COMMAND
 
-\fBjc\fP [OPTIONS] /proc/<path-to-file>
+\fBjc\fP [OPTIONS] /proc/<path-to-procfile>
 .RE
 
 .SH DESCRIPTION
