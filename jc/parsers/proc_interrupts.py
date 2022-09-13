@@ -197,9 +197,6 @@ def parse(
                 interrupt_type = ' '.join(split_line)
                 interrupt_info = []
 
-
-            print(f'{cpu_num=}, {irq=}, {interrupts=}, {interrupt_type=}, {interrupt_info=}')
-
             raw_output.append(
                 {
                     'irq': irq,
