@@ -94,6 +94,7 @@ parsers = [
     'proc-driver-rtc',
     'proc-filesystems',
     'proc-interrupts',
+    'proc-iomem',
     'proc-meminfo',
     'proc-modules',
     'ps',
