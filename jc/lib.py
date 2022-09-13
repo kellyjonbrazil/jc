@@ -93,6 +93,7 @@ parsers = [
     'proc-diskstats',
     'proc-driver-rtc',
     'proc-filesystems',
+    'proc-interrupts',
     'proc-meminfo',
     'proc-modules',
     'ps',
