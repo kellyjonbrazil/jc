@@ -97,6 +97,7 @@ parsers = [
     'proc-iomem',
     'proc-ioports',
     'proc-loadavg',
+    'proc-locks',
     'proc-meminfo',
     'proc-modules',
     'ps',
