@@ -26,14 +26,15 @@ Schema:
 
     [
       {
-        "module":                   string,
-        "size":                     integer,
-        "used":                     integer,
-        "used_by": [
-                                    string
+        "irq":                      string,
+        "cpu_num":                  integer,
+        "interrupts": [
+                                    integer
         ],
-        "status":                   string,
-        "location":                 string
+        "type":                     string,
+        "device": [
+                                    string
+        ]
       }
     ]
 
@@ -42,30 +43,30 @@ Examples:
     $ cat /proc/interrupts | jc --proc -p
     [
       {
-        "module": "binfmt_misc",
-        "size": 24576,
-        "used": 1,
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0ab4000"
-      },
-      {
-        "module": "vsock_loopback",
-        "size": 16384,
-        "used": 0,
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0a14000"
-      },
-      {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": 36864,
-        "used": 1,
-        "used_by": [
-          "vsock_loopback"
+        "irq": "0",
+        "cpu_num": 2,
+        "interrupts": [
+          18,
+          0
         ],
-        "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "type": "IO-APIC",
+        "device": [
+          "2-edge",
+          "timer"
+        ]
+      },
+      {
+        "irq": "1",
+        "cpu_num": 2,
+        "interrupts": [
+          0,
+          73
+        ],
+        "type": "IO-APIC",
+        "device": [
+          "1-edge",
+          "i8042"
+        ]
       },
       ...
     ]
@@ -73,30 +74,30 @@ Examples:
     $ proc_interrupts | jc --proc_interrupts -p -r
     [
       {
-        "module": "binfmt_misc",
-        "size": "24576",
-        "used": "1",
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0ab4000"
-      },
-      {
-        "module": "vsock_loopback",
-        "size": "16384",
-        "used": "0",
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0a14000"
-      },
-      {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": "36864",
-        "used": "1",
-        "used_by": [
-          "vsock_loopback"
+        "irq": "0",
+        "cpu_num": 2,
+        "interrupts": [
+          "18",
+          "0"
         ],
-        "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "type": "IO-APIC",
+        "device": [
+          "2-edge",
+          "timer"
+        ]
+      },
+      {
+        "irq": "1",
+        "cpu_num": 2,
+        "interrupts": [
+          "0",
+          "73"
+        ],
+        "type": "IO-APIC",
+        "device": [
+          "1-edge",
+          "i8042"
+        ]
       },
       ...
     ]
@@ -130,12 +131,8 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {'size', 'used'}
-
     for entry in proc_data:
-        for key in entry:
-            if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
+        entry['interrupts'] = [int(x) for x in entry['interrupts']]
 
     return proc_data
 
@@ -188,22 +185,22 @@ def parse(
                     interrupts.append(split_line.pop(0))
 
                 interrupt_type = split_line.pop(0)
-                interrupt_info = split_line
+                device = split_line
 
             else:
                 for _ in range(cpu_num):
                     interrupts.append(split_line.pop(0))
 
                 interrupt_type = ' '.join(split_line)
-                interrupt_info = []
+                device = []
 
             raw_output.append(
                 {
                     'irq': irq,
                     'cpu_num': cpu_num,
                     'interrupts': interrupts,
-                    'interrupt_type': interrupt_type,
-                    'interrupt_info': interrupt_info or None
+                    'type': interrupt_type,
+                    'device': device or None
                 }
             )
 
