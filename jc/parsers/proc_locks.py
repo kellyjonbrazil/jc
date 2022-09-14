@@ -26,14 +26,16 @@ Schema:
 
     [
       {
-        "module":                   string,
-        "size":                     integer,
-        "used":                     integer,
-        "used_by": [
-                                    string
-        ],
-        "status":                   string,
-        "location":                 string
+        "id":                   integer,
+        "class":                string,
+        "type":                 string,
+        "access":               string,
+        "pid":                  integer,
+        "maj":                  string,
+        "min":                  string,
+        "inode":                integer,
+        "start":                string,
+        "end":                  string
       }
     ]
 
@@ -42,30 +44,28 @@ Examples:
     $ cat /proc/locks | jc --proc -p
     [
       {
-        "module": "binfmt_misc",
-        "size": 24576,
-        "used": 1,
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "id": 1,
+        "class": "POSIX",
+        "type": "ADVISORY",
+        "access": "WRITE",
+        "pid": 877,
+        "maj": "00",
+        "min": "19",
+        "inode": 812,
+        "start": "0",
+        "end": "EOF"
       },
       {
-        "module": "vsock_loopback",
-        "size": 16384,
-        "used": 0,
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0a14000"
-      },
-      {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": 36864,
-        "used": 1,
-        "used_by": [
-          "vsock_loopback"
-        ],
-        "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "id": 2,
+        "class": "FLOCK",
+        "type": "ADVISORY",
+        "access": "WRITE",
+        "pid": 854,
+        "maj": "00",
+        "min": "19",
+        "inode": 805,
+        "start": "0",
+        "end": "EOF"
       },
       ...
     ]
@@ -73,30 +73,28 @@ Examples:
     $ proc_locks | jc --proc_locks -p -r
     [
       {
-        "module": "binfmt_misc",
-        "size": "24576",
-        "used": "1",
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "id": "1",
+        "class": "POSIX",
+        "type": "ADVISORY",
+        "access": "WRITE",
+        "pid": "877",
+        "maj": "00",
+        "min": "19",
+        "inode": "812",
+        "start": "0",
+        "end": "EOF"
       },
       {
-        "module": "vsock_loopback",
-        "size": "16384",
-        "used": "0",
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0a14000"
-      },
-      {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": "36864",
-        "used": "1",
-        "used_by": [
-          "vsock_loopback"
-        ],
-        "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "id": "2",
+        "class": "FLOCK",
+        "type": "ADVISORY",
+        "access": "WRITE",
+        "pid": "854",
+        "maj": "00",
+        "min": "19",
+        "inode": "805",
+        "start": "0",
+        "end": "EOF"
       },
       ...
     ]
@@ -130,12 +128,12 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {'size', 'used'}
+    int_list = {'id', 'pid', 'inode'}
 
     for entry in proc_data:
         for key in entry:
             if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
+                entry[key] = int(entry[key])
 
     return proc_data
 
