@@ -43,6 +43,30 @@ class MyTests(unittest.TestCase):
             {'uid': {'id': 1000, 'name': 'user'}, 'gid': {'id': 1000, 'name': None}, 'groups': [{'id': 1000, 'name': None}, {'id': 10, 'name': 'wheel'}]}
         )
 
+    def test_id_space(self):
+        """
+        Test 'id' with with space in name
+        """
+        self.assertEqual(
+            jc.parsers.id.parse('uid=1000(user 1) gid=1000 groups=1000,10(wheel)', quiet=True),
+            {'uid': {'id': 1000, 'name': 'user 1'}, 'gid': {'id': 1000, 'name': None}, 'groups': [{'id': 1000, 'name': None}, {'id': 10, 'name': 'wheel'}]}
+        )
+
+        self.assertEqual(
+            jc.parsers.id.parse('uid=1000(user) gid=1000(group 1) groups=1000,10(wheel)', quiet=True),
+            {'uid': {'id': 1000, 'name': 'user'}, 'gid': {'id': 1000, 'name': 'group 1'}, 'groups': [{'id': 1000, 'name': None}, {'id': 10, 'name': 'wheel'}]}
+        )
+
+        self.assertEqual(
+            jc.parsers.id.parse('uid=1000(user) gid=1000 groups=1000,10(wheel 1)', quiet=True),
+            {'uid': {'id': 1000, 'name': 'user'}, 'gid': {'id': 1000, 'name': None}, 'groups': [{'id': 1000, 'name': None}, {'id': 10, 'name': 'wheel 1'}]}
+        )
+
+        self.assertEqual(
+            jc.parsers.id.parse('uid=1000(user 1) gid=1000(group 1) groups=1000,10(wheel 1)', quiet=True),
+            {'uid': {'id': 1000, 'name': 'user 1'}, 'gid': {'id': 1000, 'name': 'group 1'}, 'groups': [{'id': 1000, 'name': None}, {'id': 10, 'name': 'wheel 1'}]}
+        )
+
     def test_id_centos_7_7(self):
         """
         Test 'id' on Centos 7.7
