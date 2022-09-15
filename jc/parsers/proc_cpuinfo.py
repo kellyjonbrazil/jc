@@ -184,7 +184,7 @@ Examples:
       ...
     ]
 
-    $ proc_cpuinfo | jc --proc_cpuinfo -p -r
+    $ cat /proc/cpuinfo | jc --proc_cpuinfo -p -r
     [
       {
         "processor": "0",

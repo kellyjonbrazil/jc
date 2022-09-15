@@ -100,6 +100,7 @@ parsers = [
     'proc-locks',
     'proc-meminfo',
     'proc-modules',
+    'proc-mtrr',
     'ps',
     'route',
     'rpm-qi',

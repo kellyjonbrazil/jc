@@ -71,7 +71,7 @@ Examples:
       ...
     ]
 
-    $ proc_interrupts | jc --proc_interrupts -p -r
+    $ cat /proc/interrupts | jc --proc_interrupts -p -r
     [
       {
         "irq": "0",

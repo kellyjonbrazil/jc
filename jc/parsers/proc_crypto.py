@@ -73,7 +73,7 @@ Examples:
       ...
     ]
 
-    $ proc_crypto | jc --proc_crypto -p -r
+    $ cat /proc/crypto | jc --proc_crypto -p -r
     [
       {
         "name": "ecdh",

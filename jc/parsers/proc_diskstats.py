@@ -100,7 +100,7 @@ Examples:
       ...
     ]
 
-    $ proc_diskstats | jc --proc_diskstats -p -r
+    $ cat /proc/diskstats | jc --proc_diskstats -p -r
     [
       {
         "maj": "7",
