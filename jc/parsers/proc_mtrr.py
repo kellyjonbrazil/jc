@@ -179,5 +179,4 @@ def parse(
             output_line.update(kv_dict)
             raw_output.append(output_line)
 
-
     return raw_output if raw else _process(raw_output)

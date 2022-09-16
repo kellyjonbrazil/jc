@@ -101,6 +101,7 @@ parsers = [
     'proc-meminfo',
     'proc-modules',
     'proc-mtrr',
+    'proc-pid-numa-maps',
     'ps',
     'route',
     'rpm-qi',
