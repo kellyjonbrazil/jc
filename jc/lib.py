@@ -107,6 +107,7 @@ parsers = [
     'proc-softirqs',
     'proc-stat',
     'proc-swaps',
+    'proc-uptime',
     'proc-pid-numa-maps',
     'ps',
     'route',
