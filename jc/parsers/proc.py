@@ -171,7 +171,7 @@ def parse(
         partitions_p = re.compile(r'^major minor  #blocks  name\n\n\s*\d+\s+\d+\s+\d+ \w+\n')
         slabinfo_p = re.compile(r'^slabinfo - version: \d+.\d+\n')
         softirqs_p = re.compile(r'^\s+(CPU\d+\s+)+\n\s+HI:\s+\d')
-        stat_p = re.compile(r'^cpu\s+(?: \d+){10}.*intr ', re.DOTALL)
+        stat_p = re.compile(r'^cpu\s+(?: \d+){7,10}.*intr ', re.DOTALL)
         swaps_p = re.compile(r'^Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n')
         uptime_p = re.compile(r'^\d+.\d\d \d+.\d\d$')
         version_p = re.compile(r'^.+\sversion\s[^\n]+$')
