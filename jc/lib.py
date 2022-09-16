@@ -102,6 +102,7 @@ parsers = [
     'proc-modules',
     'proc-mtrr',
     'proc-pagetypeinfo',
+    'proc-partitions',
     'proc-pid-numa-maps',
     'ps',
     'route',
