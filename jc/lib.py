@@ -106,6 +106,7 @@ parsers = [
     'proc-slabinfo',
     'proc-softirqs',
     'proc-stat',
+    'proc-swaps',
     'proc-pid-numa-maps',
     'ps',
     'route',
