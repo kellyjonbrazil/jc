@@ -38,7 +38,7 @@ Schema:
           "zone":                     string,
           "type":                     string,
           "free": [
-                                      integer
+                                      integer  # [0]
           ]
       ],
       "num_blocks_type": [
@@ -54,6 +54,8 @@ Schema:
       ]
     }
 
+    [0] array index correlates to the Order number.
+        E.g. free[0] is the value for Order 0
 
 Examples:
 
