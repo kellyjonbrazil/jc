@@ -168,7 +168,6 @@ def parse(
             caller = ''
             options: List = []
 
-
             if details == 'unpurged vm_area':
                 caller = 'unpurged vm_area'
 
