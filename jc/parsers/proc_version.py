@@ -1,7 +1,7 @@
 """jc - JSON Convert `/proc/version` file parser
 
 > Note: This parser will parse `/proc/version` files that follow the
-> common format used by most popular distributions.
+> common format used by most popular linux distributions.
 
 Usage (cli):
 
