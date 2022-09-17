@@ -110,6 +110,7 @@ parsers = [
     'proc-uptime',
     'proc-version',
     'proc-vmallocinfo',
+    'proc-vmstat',
     'proc-pid-numa-maps',
     'ps',
     'route',
