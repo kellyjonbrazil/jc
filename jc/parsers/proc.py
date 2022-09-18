@@ -233,8 +233,8 @@ def parse(
             uptime_p: 'proc_uptime',
             version_p: 'proc_version',
             vmallocinfo_p: 'proc_vmallocinfo',
-            vmstat_p: 'proc_vmstat',
-            zoneinfo_p: 'proc_zoneinfo',
+            zoneinfo_p: 'proc_zoneinfo',  # before vmstat
+            vmstat_p: 'proc_vmstat',      # after zoneinfo
 
             driver_rtc_p: 'proc_driver_rtc',
 
