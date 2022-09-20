@@ -145,9 +145,7 @@ def parse(
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
-            split_line = line.split(':', maxsplit=1)
-            key = split_line[0]
-            val = int(split_line[1].rsplit(maxsplit=1)[0])
-            raw_output[key] = val
+            key, val, *_ = line.replace(':', '').split()
+            raw_output[key] = int(val)
 
     return raw_output if raw else _process(raw_output)
