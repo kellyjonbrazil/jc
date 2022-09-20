@@ -7,15 +7,15 @@ jc - JSON Convert `/proc/<pid>/io` file parser
 
 Usage (cli):
 
-    $ cat /proc/<pid>/io | jc --proc
+    $ cat /proc/1/io | jc --proc
 
 or
 
-    $ jc /proc/<pid>/io
+    $ jc /proc/1/io
 
 or
 
-    $ cat /proc/<pid>/io | jc --proc-pid-io
+    $ cat /proc/1/io | jc --proc-pid-io
 
 Usage (module):
 
