@@ -1,5 +1,9 @@
 jc changelog
 
+20220915 v1.22.0
+- Add /proc file parsers
+- Fix `id` command parser to allow usernames and groupnames with spaces
+
 20220829 v1.21.2
 - Fix IP Address string parser for older python versions that don't cleanly
   accept decimal input format - IPv6 fix (e.g. python 3.6)

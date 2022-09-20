@@ -53,6 +53,11 @@ class MyTests(unittest.TestCase):
     def test_lib_all_parser_info_length(self):
         self.assertGreaterEqual(len(jc.lib.all_parser_info()), 80)
 
+    def test_lib_all_parser_hidden_length(self):
+        reg_length = len(jc.lib.all_parser_info())
+        hidden_length = len(jc.lib.all_parser_info(show_hidden=True))
+        self.assertGreater(hidden_length, reg_length)
+
     def test_lib_plugin_parser_mod_list_is_list(self):
         self.assertIsInstance(jc.lib.plugin_parser_mod_list(), list)
 

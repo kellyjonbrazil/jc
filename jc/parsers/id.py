@@ -100,12 +100,13 @@ Examples:
       }
     }
 """
+import re
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -170,28 +171,28 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = {}
 
-    # Clear any blank lines
-    cleandata = list(filter(None, data.split()))
+    # re.split produces first element empty
+    cleandata = re.split(r' ?(uid|gid|groups|context)=', data.strip())[1:]
 
     if jc.utils.has_data(data):
 
-        for section in cleandata:
-            if section.startswith('uid'):
-                uid_parsed = section.replace('(', '=').replace(')', '=')
+        for key, value in zip(cleandata[0::2], cleandata[1::2]):
+            if key == 'uid':
+                uid_parsed = value.replace('(', '=').replace(')', '=')
                 uid_parsed = uid_parsed.split('=')
                 raw_output['uid'] = {}
-                raw_output['uid']['id'] = uid_parsed[1]
-                raw_output['uid']['name'] = _get_item(uid_parsed, 2)
+                raw_output['uid']['id'] = uid_parsed[0]
+                raw_output['uid']['name'] = _get_item(uid_parsed, 1)
 
-            if section.startswith('gid'):
-                gid_parsed = section.replace('(', '=').replace(')', '=')
+            if key == 'gid':
+                gid_parsed = value.replace('(', '=').replace(')', '=')
                 gid_parsed = gid_parsed.split('=')
                 raw_output['gid'] = {}
-                raw_output['gid']['id'] = gid_parsed[1]
-                raw_output['gid']['name'] = _get_item(gid_parsed, 2)
+                raw_output['gid']['id'] = gid_parsed[0]
+                raw_output['gid']['name'] = _get_item(gid_parsed, 1)
 
-            if section.startswith('groups'):
-                groups_parsed = section.replace('(', '=').replace(')', '=')
+            if key == 'groups':
+                groups_parsed = value.replace('(', '=').replace(')', '=')
                 groups_parsed = groups_parsed.replace('groups=', '')
                 groups_parsed = groups_parsed.split(',')
                 raw_output['groups'] = []
@@ -203,9 +204,8 @@ def parse(data, raw=False, quiet=False):
                     group_dict['name'] = _get_item(grp_parsed, 1)
                     raw_output['groups'].append(group_dict)
 
-            if section.startswith('context'):
-                context_parsed = section.replace('context=', '')
-                context_parsed = context_parsed.split(':', maxsplit=3)
+            if key == 'context':
+                context_parsed = value.split(':', maxsplit=3)
                 raw_output['context'] = {}
                 raw_output['context']['user'] = context_parsed[0]
                 raw_output['context']['role'] = context_parsed[1]
