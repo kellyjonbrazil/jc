@@ -171,7 +171,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     for entry in proc_data:
         for key in entry:
             if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
+                entry[key] = int(entry[key])
 
         if 'mount_options' in entry:
             entry['mount_options'] = entry['mount_options'].split(',')
