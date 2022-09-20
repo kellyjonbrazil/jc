@@ -41,7 +41,7 @@ Schema:
                                     string
         ],
         "optional_fields": {                   # [0]
-          "<key>":                  integer
+          "<key>":                  integer    # [1]
         },
         "fs_type":                  string,
         "mount_source":             string,
@@ -54,7 +54,8 @@ Schema:
       }
     ]
 
-    [0] if empty, then unbindable
+    [0] if empty, then private mount
+    [1] unbindable will always have a value of 0
 
 Examples:
 

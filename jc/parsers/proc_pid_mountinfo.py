@@ -36,7 +36,7 @@ Schema:
                                     string
         ],
         "optional_fields": {                   # [0]
-          "<key>":                  integer
+          "<key>":                  integer    # [1]
         },
         "fs_type":                  string,
         "mount_source":             string,
@@ -49,7 +49,8 @@ Schema:
       }
     ]
 
-    [0] if empty, then unbindable
+    [0] if empty, then private mount
+    [1] unbindable will always have a value of 0
 
 Examples:
 
@@ -177,7 +178,10 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             entry['mount_options'] = entry['mount_options'].split(',')
 
         if 'optional_fields' in entry:
-            entry['optional_fields'] = {x.split(':')[0]: int(x.split(':')[1]) for x in entry['optional_fields'].split()}
+            if 'unbindable' in  entry['optional_fields']:
+                entry['optional_fields'] = {'unbindable': 0}
+            else:
+                entry['optional_fields'] = {x.split(':')[0]: int(x.split(':')[1]) for x in entry['optional_fields'].split()}
 
         if 'super_options' in entry:
             if entry['super_options']:
@@ -237,7 +241,8 @@ def parse(
             (?P<root>\S+)\s
             (?P<mount_point>\S+)\s
             (?P<mount_options>\S+)\s?
-            (?P<optional_fields>(?:\s?\S+:\S+\s?)*)\s?-\s
+            # (?P<optional_fields>(?:\s?\S+:\S+\s?)*)\s?-\s
+            (?P<optional_fields>(?:\s?(?:\S+:\S+|unbindable)\s?)*)\s?-\s
             (?P<fs_type>\S+)\s
             (?P<mount_source>\S+)\s
             (?P<super_options>\S+)?
