@@ -26,46 +26,81 @@ Schema:
 
     [
       {
-        "module":                   string,
-        "size":                     integer,
-        "used":                     integer,
-        "used_by": [
+        "mount_id":                 integer,
+        "parent_id":                integer,
+        "maj":                      integer,
+        "min":                      integer,
+        "root":                     string,
+        "mount_point":              string,
+        "mount_options": [
                                     string
         ],
-        "status":                   string,
-        "location":                 string
+        "optional_fields": {                   # [0]
+          "<key>":                  integer
+        },
+        "fs_type":                  string,
+        "mount_source":             string,
+        "super_options": [
+                                    string
+        ],
+        "super_options_fields": {
+          "<key>":                  string
+        }
       }
     ]
+
+    [0] if empty, then unbindable
 
 Examples:
 
     $ cat /proc/1/mountinfo | jc --proc -p
     [
       {
-        "module": "binfmt_misc",
-        "size": 24576,
-        "used": 1,
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0ab4000"
-      },
-      {
-        "module": "vsock_loopback",
-        "size": 16384,
-        "used": 0,
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0a14000"
-      },
-      {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": 36864,
-        "used": 1,
-        "used_by": [
-          "vsock_loopback"
+        "mount_id": 24,
+        "parent_id": 30,
+        "maj": 0,
+        "min": 22,
+        "root": "/",
+        "mount_point": "/sys",
+        "mount_options": [
+          "rw",
+          "nosuid",
+          "nodev",
+          "noexec",
+          "relatime"
         ],
-        "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "optional_fields": {
+          "master": 1,
+          "shared": 7
+        },
+        "fs_type": "sysfs",
+        "mount_source": "sysfs",
+        "super_options": [
+          "rw"
+        ]
+      },
+      {
+        "mount_id": 25,
+        "parent_id": 30,
+        "maj": 0,
+        "min": 23,
+        "root": "/",
+        "mount_point": "/proc",
+        "mount_options": [
+          "rw",
+          "nosuid",
+          "nodev",
+          "noexec",
+          "relatime"
+        ],
+        "optional_fields": {
+          "shared": 14
+        },
+        "fs_type": "proc",
+        "mount_source": "proc",
+        "super_options": [
+          "rw"
+        ]
       },
       ...
     ]
@@ -73,30 +108,30 @@ Examples:
     $ cat /proc/1/mountinfo | jc --proc_pid-mountinfo -p -r
     [
       {
-        "module": "binfmt_misc",
-        "size": "24576",
-        "used": "1",
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "mount_id": "24",
+        "parent_id": "30",
+        "maj": "0",
+        "min": "22",
+        "root": "/",
+        "mount_point": "/sys",
+        "mount_options": "rw,nosuid,nodev,noexec,relatime",
+        "optional_fields": "master:1 shared:7 ",
+        "fs_type": "sysfs",
+        "mount_source": "sysfs",
+        "super_options": "rw"
       },
       {
-        "module": "vsock_loopback",
-        "size": "16384",
-        "used": "0",
-        "used_by": [],
-        "status": "Live",
-        "location": "0xffffffffc0a14000"
-      },
-      {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": "36864",
-        "used": "1",
-        "used_by": [
-          "vsock_loopback"
-        ],
-        "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "mount_id": "25",
+        "parent_id": "30",
+        "maj": "0",
+        "min": "23",
+        "root": "/",
+        "mount_point": "/proc",
+        "mount_options": "rw,nosuid,nodev,noexec,relatime",
+        "optional_fields": "shared:14 ",
+        "fs_type": "proc",
+        "mount_source": "proc",
+        "super_options": "rw"
       },
       ...
     ]
@@ -131,7 +166,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {'size', 'used'}
+    int_list = {'mount_id', 'parent_id', 'maj', 'min'}
 
     for entry in proc_data:
         for key in entry:
@@ -142,7 +177,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             entry['mount_options'] = entry['mount_options'].split(',')
 
         if 'optional_fields' in entry:
-            entry['optional_fields'] = {x.split(':')[0]: x.split(':')[1] for x in entry['optional_fields'].split()}
+            entry['optional_fields'] = {x.split(':')[0]: int(x.split(':')[1]) for x in entry['optional_fields'].split()}
 
         if 'super_options' in entry:
             if entry['super_options']:
@@ -162,6 +197,9 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                     for field in s_options_fields:
                         key, val = field.split('=')
                         entry['super_options_fields'][key] = val
+
+            else:
+                del entry['super_options']
 
     return proc_data
 
