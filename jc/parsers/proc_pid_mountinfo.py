@@ -138,6 +138,31 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
+        if 'mount_options' in entry:
+            entry['mount_options'] = entry['mount_options'].split(',')
+
+        if 'optional_fields' in entry:
+            entry['optional_fields'] = {x.split(':')[0]: x.split(':')[1] for x in entry['optional_fields'].split()}
+
+        if 'super_options' in entry:
+            if entry['super_options']:
+                super_options_split = entry['super_options'].split(',')
+                s_options = [x for x in super_options_split if '=' not in x]
+                s_options_fields = [x for x in super_options_split if '=' in x]
+
+                if s_options:
+                    entry['super_options'] = s_options
+                else:
+                    del entry['super_options']
+
+                if s_options_fields:
+                    if not 'super_options_fields' in entry:
+                        entry['super_options_fields'] = {}
+
+                    for field in s_options_fields:
+                        key, val = field.split('=')
+                        entry['super_options_fields'][key] = val
+
     return proc_data
 
 
@@ -177,7 +202,7 @@ def parse(
             (?P<optional_fields>(?:\s?\S+:\S+\s?)*)\s?-\s
             (?P<fs_type>\S+)\s
             (?P<mount_source>\S+)\s
-            (?P<super_options>\S+)
+            (?P<super_options>\S+)?
             ''', re.VERBOSE
         )
 
