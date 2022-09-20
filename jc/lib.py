@@ -114,6 +114,7 @@ parsers = [
     'proc-zoneinfo',
     'proc-pid-fdinfo',
     'proc-pid-io',
+    'proc-pid-maps',
     'proc-pid-numa-maps',
     'ps',
     'route',
