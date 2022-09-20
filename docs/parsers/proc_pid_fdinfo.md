@@ -3,7 +3,7 @@
 
 # jc.parsers.proc\_pid\_fdinfo
 
-jc - JSON Convert `/proc/<pid>/fdinfo` file parser
+jc - JSON Convert `/proc/<pid>/fdinfo/<fd>` file parser
 
 Usage (cli):
 
