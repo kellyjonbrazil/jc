@@ -165,7 +165,7 @@ _jc() {
         '--ntpq:`ntpq -p` command parser'
         '--passwd:`/etc/passwd` file parser'
         '--pidstat:`pidstat -H` command parser'
-        '--pidstat-s:`pidstat -h` command streaming parser'
+        '--pidstat-s:`pidstat -H` command streaming parser'
         '--ping:`ping` and `ping6` command parser'
         '--ping-s:`ping` and `ping6` command streaming parser'
         '--pip-list:`pip list` command parser'

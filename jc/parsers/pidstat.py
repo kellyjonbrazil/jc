@@ -5,11 +5,11 @@ All other `pidstat` options are supported in combination with this option.
 
 Usage (cli):
 
-    $ pidstat -h | jc --pidstat
+    $ pidstat -H | jc --pidstat
 
 or
 
-    $ jc pidstat -h
+    $ jc pidstat -H
 
 Usage (module):
 
