@@ -2,6 +2,7 @@ jc changelog
 
 20220915 v1.22.0
 - Add /proc file parsers
+- Enhance `free` parser to support `-w` option integer conversions
 - Fix `id` command parser to allow usernames and groupnames with spaces
 
 20220829 v1.21.2
