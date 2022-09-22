@@ -41,7 +41,7 @@ Schema:
         "fs_type":                  string,
         "mount_source":             string,
         "super_options": [
-                                    string
+                                    integer    # [2]
         ],
         "super_options_fields": {
           "<key>":                  string
@@ -51,6 +51,8 @@ Schema:
 
     [0] if empty, then private mount
     [1] unbindable will always have a value of 0
+    [2] integer conversions are attempted. Use --raw or raw=True for
+        original string values.
 
 Examples:
 
@@ -200,7 +202,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
                     for field in s_options_fields:
                         key, val = field.split('=')
-                        entry['super_options_fields'][key] = val
+                        entry['super_options_fields'][key] = jc.utils.convert_to_int(val)
 
             else:
                 del entry['super_options']
