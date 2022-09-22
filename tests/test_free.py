@@ -77,13 +77,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.free.parse(self.ubuntu_18_4_free_h, quiet=True), self.ubuntu_18_4_free_h_json)
 
-    def test_free_h_centos_7_7(self):
+    def test_free_w_centos_7_7(self):
         """
         Test 'free -w' on Centos 7.7
         """
         self.assertEqual(jc.parsers.free.parse(self.centos_7_7_free_w, quiet=True), self.centos_7_7_free_w_json)
 
-    def test_free_h_ubuntu_18_4(self):
+    def test_free_w_ubuntu_18_4(self):
         """
         Test 'free -w' on Ubuntu 18.4
         """
