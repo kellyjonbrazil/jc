@@ -70,7 +70,7 @@ import configparser
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,6 +145,10 @@ def parse(data, raw=False, quiet=False):
         ini = configparser.ConfigParser(allow_no_value=True,
                                         interpolation=None,
                                         strict=False)
+
+        # don't convert keys to lower-case:
+        ini.optionxform = lambda option: option
+
         try:
             ini.read_string(data)
             raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
