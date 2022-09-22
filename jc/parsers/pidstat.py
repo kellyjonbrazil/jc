@@ -1,7 +1,7 @@
-"""jc - JSON Convert `pidstat -h` command output parser
+"""jc - JSON Convert `pidstat -H` command output parser
 
-Must use the `-h` option in `pidstat`. All other `pidstat` options are
-supported in combination with `-h`.
+Must use the `-H` (or `-h`, if `-H` is not available) option in `pidstat`.
+All other `pidstat` options are supported in combination with this option.
 
 Usage (cli):
 
@@ -46,7 +46,7 @@ Schema:
 
 Examples:
 
-    $ pidstat -hl | jc --pidstat -p
+    $ pidstat -Hl | jc --pidstat -p
     [
       {
         "time": 1646859134,
@@ -83,7 +83,7 @@ Examples:
       }
     ]
 
-    $ pidstat -hl | jc --pidstat -p -r
+    $ pidstat -Hl | jc --pidstat -p -r
     [
       {
         "time": "1646859134",
@@ -129,7 +129,7 @@ from jc.exceptions import ParseError
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.1'
-    description = '`pidstat -h` command parser'
+    description = '`pidstat -H` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
@@ -210,7 +210,7 @@ def parse(
                                    .replace('%', 'percent_')\
                                    .lower()
 
-        # remove remaining header lines (e.g. pidstat -h 2 5)
+        # remove remaining header lines (e.g. pidstat -H 2 5)
         data_list = [i for i in data_list if not i.startswith('#')]
 
         raw_output = simple_table_parse(data_list)
