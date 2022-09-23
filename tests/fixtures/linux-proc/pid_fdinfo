@@ -1,0 +1,6 @@
+pos:	0
+flags:	02004002
+mnt_id:	9
+scm_fds: 0
+ino:    63107
+lock:       1: FLOCK  ADVISORY  WRITE 359 00:13:11691 0 EOF

@@ -1,0 +1,7 @@
+Attached devices:
+Host: scsi0 Channel: 00 Id: 00 Lun: 00
+  Vendor: IBM      Model: DGHS09U          Rev: 03E0
+  Type:   Direct-Access                    ANSI SCSI revision: 03
+Host: scsi0 Channel: 00 Id: 06 Lun: 00
+  Vendor: PIONEER  Model: CD-ROM DR-U06S   Rev: 1.04
+  Type:   CD-ROM                           ANSI SCSI revision: 02

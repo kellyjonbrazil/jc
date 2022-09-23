@@ -1,0 +1,1 @@
+[{"device":"tty0","operations":"-WU","operations_list":["write","unblank"],"flags":"ECp","flags_list":["enabled","preferred","printk buffer"],"major":4,"minor":7},{"device":"ttyS0","operations":"-W-","operations_list":["write"],"flags":"Ep","flags_list":["enabled","printk buffer"],"major":4,"minor":64}]

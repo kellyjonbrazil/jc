@@ -1,0 +1,46 @@
+24 30 0:22 / /sys rw,nosuid,nodev,noexec,relatime master:1 shared:7 - sysfs sysfs rw
+25 30 0:23 / /proc rw,nosuid,nodev,noexec,relatime shared:14 - proc proc rw
+26 30 0:5 / /dev rw,nosuid,noexec,relatime - devtmpfs udev rw,size=1951480k,nr_inodes=487870,mode=755
+27 26 0:24 / /dev/pts rw,nosuid,noexec,relatime shared:3 - devpts devpts rw,gid=5,mode=620,ptmxmode=000
+28 30 0:25 / /run rw,nosuid,nodev,noexec,relatime shared:5 - tmpfs tmpfs rw,size=399728k,mode=755
+30 1 253:0 / / rw,relatime shared:1 - ext4 /dev/mapper/ubuntu--vg-ubuntu--lv 
+31 24 0:6 / /sys/kernel/security rw,nosuid,nodev,noexec,relatime unbindable - securityfs securityfs rw
+32 26 0:27 / /dev/shm rw,nosuid,nodev shared:4 - tmpfs tmpfs rw
+33 28 0:28 / /run/lock rw,nosuid,nodev,noexec,relatime shared:6 - tmpfs tmpfs rw,size=5120k
+34 24 0:29 / /sys/fs/cgroup ro,nosuid,nodev,noexec shared:9 - tmpfs tmpfs ro,size=4096k,nr_inodes=1024,mode=755
+35 34 0:30 / /sys/fs/cgroup/unified rw,nosuid,nodev,noexec,relatime shared:10 - cgroup2 cgroup2 rw,nsdelegate
+36 34 0:31 / /sys/fs/cgroup/systemd rw,nosuid,nodev,noexec,relatime shared:11 - cgroup cgroup rw,xattr,name=systemd
+37 24 0:32 / /sys/fs/pstore rw,nosuid,nodev,noexec,relatime shared:12 - pstore pstore rw
+38 24 0:33 / /sys/fs/bpf rw,nosuid,nodev,noexec,relatime shared:13 - bpf none rw,mode=700
+39 34 0:34 / /sys/fs/cgroup/hugetlb rw,nosuid,nodev,noexec,relatime shared:15 - cgroup cgroup rw,hugetlb
+40 34 0:35 / /sys/fs/cgroup/net_cls,net_prio rw,nosuid,nodev,noexec,relatime shared:16 - cgroup cgroup rw,net_cls,net_prio
+41 34 0:36 / /sys/fs/cgroup/pids rw,nosuid,nodev,noexec,relatime shared:17 - cgroup cgroup rw,pids
+42 34 0:37 / /sys/fs/cgroup/blkio rw,nosuid,nodev,noexec,relatime shared:18 - cgroup cgroup rw,blkio
+43 34 0:38 / /sys/fs/cgroup/memory rw,nosuid,nodev,noexec,relatime shared:19 - cgroup cgroup rw,memory
+44 34 0:39 / /sys/fs/cgroup/devices rw,nosuid,nodev,noexec,relatime shared:20 - cgroup cgroup rw,devices
+45 34 0:40 / /sys/fs/cgroup/cpu,cpuacct rw,nosuid,nodev,noexec,relatime shared:21 - cgroup cgroup rw,cpu,cpuacct
+46 34 0:41 / /sys/fs/cgroup/rdma rw,nosuid,nodev,noexec,relatime shared:22 - cgroup cgroup rw,rdma
+47 34 0:42 / /sys/fs/cgroup/perf_event rw,nosuid,nodev,noexec,relatime shared:23 - cgroup cgroup rw,perf_event
+48 34 0:43 / /sys/fs/cgroup/freezer rw,nosuid,nodev,noexec,relatime shared:24 - cgroup cgroup rw,freezer
+49 34 0:44 / /sys/fs/cgroup/cpuset rw,nosuid,nodev,noexec,relatime shared:25 - cgroup cgroup rw,cpuset
+50 25 0:45 / /proc/sys/fs/binfmt_misc rw,relatime shared:26 - autofs systemd-1 rw,fd=28,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=29773
+51 26 0:46 / /dev/hugepages rw,relatime shared:27 - hugetlbfs hugetlbfs rw,pagesize=2M
+52 26 0:20 / /dev/mqueue rw,nosuid,nodev,noexec,relatime shared:28 - mqueue mqueue rw
+53 24 0:7 / /sys/kernel/debug rw,nosuid,nodev,noexec,relatime shared:29 - debugfs debugfs rw
+54 24 0:11 / /sys/kernel/tracing rw,nosuid,nodev,noexec,relatime shared:30 - tracefs tracefs rw
+55 24 0:47 / /sys/fs/fuse/connections rw,nosuid,nodev,noexec,relatime shared:31 - fusectl fusectl rw
+56 24 0:21 / /sys/kernel/config rw,nosuid,nodev,noexec,relatime shared:32 - configfs configfs rw
+125 30 8:2 / /boot rw,relatime shared:67 - ext4 /dev/sda2 rw
+131 30 7:0 / /snap/core18/2538 ro,nodev,relatime shared:71 - squashfs /dev/loop0 ro
+134 30 7:1 / /snap/core18/2409 ro,nodev,relatime shared:73 - squashfs /dev/loop1 ro
+137 30 7:3 / /snap/core20/1587 ro,nodev,relatime shared:75 - squashfs /dev/loop3 ro
+140 30 7:5 / /snap/snapd/16292 ro,nodev,relatime shared:77 - squashfs /dev/loop5 ro
+146 30 7:7 / /snap/lxd/23339 ro,nodev,relatime shared:81 - squashfs /dev/loop7 ro
+149 30 7:6 / /snap/snapd/16010 ro,nodev,relatime shared:83 - squashfs /dev/loop6 ro
+466 28 0:25 /snapd/ns /run/snapd/ns rw,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=399728k,mode=755
+832 28 0:52 / /run/user/1000 rw,nosuid,nodev,relatime shared:426 - tmpfs tmpfs rw,size=399724k,nr_inodes=99931,mode=700,uid=1000,gid=1000
+849 30 7:8 / /snap/core20/1611 ro,nodev,relatime shared:434 - squashfs /dev/loop8 ro
+128 30 7:2 / /snap/lxd/23537 ro,nodev,relatime shared:69 - squashfs /dev/loop2 ro
+481 466 0:4 mnt:[4026532641] /run/snapd/ns/lxd.mnt rw - nsfs nsfs rw
+143 50 0:53 / /proc/sys/fs/binfmt_misc rw,nosuid,nodev,noexec,relatime shared:70 - binfmt_misc binfmt_misc rw
+493 53 0:11 / /sys/kernel/debug/tracing rw,nosuid,nodev,noexec,relatime shared:265 - tracefs tracefs rw
