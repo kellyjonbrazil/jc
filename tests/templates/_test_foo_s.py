@@ -1,6 +1,7 @@
 import os
 import json
 import unittest
+from typing import Dict
 import jc.parsers.foo_s
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -10,14 +11,24 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+    f_in: Dict = {}
+    f_json: Dict = {}
 
-    # input
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/foo.out'), 'r', encoding='utf-8') as f:
-        centos_7_7_foo = f.read()
+    @classmethod
+    def setUpClass(cls):
+        fixtures = {
+            'centos_7_7_foo': (
+                'fixtures/centos-7.7/foo.out',
+                'fixtures/centos-7.7/foo-streaming.json')
+        }
 
-    # output
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/foo-streaming.json'), 'r', encoding='utf-8') as f:
-        centos_7_7_foo_streaming_json = json.loads(f.read())
+        for file, filepaths in fixtures.items():
+            with open(os.path.join(THIS_DIR, filepaths[0]), 'r', encoding='utf-8') as f:
+                cls.f_in[file] = f.read()
+
+            with open(os.path.join(THIS_DIR, filepaths[1]), 'r', encoding='utf-8') as f:
+                cls.f_json[file] = json.loads(f.read())
+
 
     def test_foo_s_nodata(self):
         """
@@ -29,7 +40,8 @@ class MyTests(unittest.TestCase):
         """
         Test 'foo' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.foo_s.parse(self.centos_7_7_foo.splitlines(), quiet=True)), self.centos_7_7_foo_streaming_json)
+        self.assertEqual(list(jc.parsers.foo_s.parse(self.f_in['centos_7_7_foo'].splitlines(), quiet=True)),
+                                                     self.f_json['centos_7_7_foo'])
 
 
 if __name__ == '__main__':
