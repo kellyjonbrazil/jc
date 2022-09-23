@@ -8,26 +8,26 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dmidecode.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dmidecode = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dmidecode.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_dmidecode = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dmidecode.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dmidecode = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dmidecode.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dmidecode = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/dmidecode.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_dmidecode = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/dmidecode.out'), 'r', encoding='utf-8') as f:
+        fedora32_dmidecode = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dmidecode.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dmidecode_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dmidecode.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_dmidecode_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dmidecode.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dmidecode_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dmidecode.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dmidecode_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/dmidecode.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_dmidecode_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/dmidecode.json'), 'r', encoding='utf-8') as f:
+        fedora32_dmidecode_json = json.loads(f.read())
+
 
     def test_dmidecode_nodata(self):
         """

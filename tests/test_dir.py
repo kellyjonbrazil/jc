@@ -15,58 +15,58 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir.json'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-ODTC.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_ODTC = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-ODTC.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_ODTC = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-ODTC.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_ODTC_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-ODTC.json'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_ODTC_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-C.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_C = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-C.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_C = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-mix.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_mix = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-mix.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_mix = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-mix.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_mix_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-mix.json'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_mix_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-files.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_files = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-files.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_files = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-files.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_files_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-files.json'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_files_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-dirs.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_dirs = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-dirs.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_dirs = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-dirs.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_dirs_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-dirs.json'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_dirs_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.out'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_S = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.out'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_S = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.json'),
-                  'r', encoding='utf-8') as f:
-            self.windows_10_dir_S_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows-10/dir-S.json'),
+                'r', encoding='utf-8') as f:
+        windows_10_dir_S_json = json.loads(f.read())
+
 
     def test_dir_error(self):
         self.assertEqual(jc.parsers.dir.parse("Access is denied.", quiet=True), [])

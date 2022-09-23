@@ -8,26 +8,26 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dpkg_l = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dpkg_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-columns500.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dpkg_l_columns500 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-columns500.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dpkg_l_columns500 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-codes.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dpkg_l_codes = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-codes.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dpkg_l_codes = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dpkg_l_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dpkg_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-columns500.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dpkg_l_columns500_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-columns500.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dpkg_l_columns500_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-codes.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dpkg_l_codes_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dpkg-l-codes.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dpkg_l_codes_json = json.loads(f.read())
+
 
     def test_dpkg_l_nodata(self):
         """

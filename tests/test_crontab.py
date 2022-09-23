@@ -8,14 +8,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_crontab = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_crontab = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_crontab_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_crontab_json = json.loads(f.read())
+
 
     def test_crontab_nodata(self):
         """

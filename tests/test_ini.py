@@ -34,6 +34,7 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-single-quote.json'), 'r', encoding='utf-8') as f:
         generic_ini_single_quote_json = json.loads(f.read())
 
+
     def test_ini_nodata(self):
         """
         Test the test ini file with no data

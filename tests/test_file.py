@@ -8,38 +8,38 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/file.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_file = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/file.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_file = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/file.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_file = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/file.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_file = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_file = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_file = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_file2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_file2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file3.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_file3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file3.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_file3 = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/file.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_file_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/file.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_file_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/file.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_file_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/file.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_file_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_file_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_file_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_file2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file2.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_file2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file3.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_file3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/file3.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_file3_json = json.loads(f.read())
+
 
     def test_file_nodata(self):
         """

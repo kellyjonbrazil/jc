@@ -15,38 +15,38 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.out'), 'r', encoding='utf-8') as f:
-            self.generic_date = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.out'), 'r', encoding='utf-8') as f:
+        generic_date = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-before-midnight.out'), 'r', encoding='utf-8') as f:
-            self.generic_date_before_midnight = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-before-midnight.out'), 'r', encoding='utf-8') as f:
+        generic_date_before_midnight = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-after-midnight.out'), 'r', encoding='utf-8') as f:
-            self.generic_date_after_midnight = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-after-midnight.out'), 'r', encoding='utf-8') as f:
+        generic_date_after_midnight = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_04_date = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_04_date = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date2.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_04_date2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date2.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_04_date2 = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.json'), 'r', encoding='utf-8') as f:
-            self.generic_date_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.json'), 'r', encoding='utf-8') as f:
+        generic_date_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-before-midnight.json'), 'r', encoding='utf-8') as f:
-            self.generic_date_before_midnight_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-before-midnight.json'), 'r', encoding='utf-8') as f:
+        generic_date_before_midnight_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-after-midnight.json'), 'r', encoding='utf-8') as f:
-            self.generic_date_after_midnight_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date-after-midnight.json'), 'r', encoding='utf-8') as f:
+        generic_date_after_midnight_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_04_date_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_04_date_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date2.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_04_date2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date2.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_04_date2_json = json.loads(f.read())
+
 
     def test_date_nodata(self):
         """

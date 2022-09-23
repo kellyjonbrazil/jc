@@ -8,14 +8,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/gpg.out'), 'r', encoding='utf-8') as f:
-            self.gpg = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/gpg.out'), 'r', encoding='utf-8') as f:
+        gpg = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/gpg.json'), 'r', encoding='utf-8') as f:
-            self.gpg_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/gpg.json'), 'r', encoding='utf-8') as f:
+        gpg_json = json.loads(f.read())
 
 
     def test_gpg_nodata(self):

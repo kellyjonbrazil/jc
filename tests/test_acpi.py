@@ -8,38 +8,37 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V.out'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V.out'), 'r', encoding='utf-8') as f:
+        generic_acpi_V = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V2.out'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V2.out'), 'r', encoding='utf-8') as f:
+        generic_acpi_V2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V3.out'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V3.out'), 'r', encoding='utf-8') as f:
+        generic_acpi_V3 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V4.out'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V4 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V4.out'), 'r', encoding='utf-8') as f:
+        generic_acpi_V4 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/acpi-V.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_acpi_V = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/acpi-V.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_acpi_V = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V.json'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V.json'), 'r', encoding='utf-8') as f:
+        generic_acpi_V_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V2.json'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V2.json'), 'r', encoding='utf-8') as f:
+        generic_acpi_V2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V3.json'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V3.json'), 'r', encoding='utf-8') as f:
+        generic_acpi_V3_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V4.json'), 'r', encoding='utf-8') as f:
-            self.generic_acpi_V4_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V4.json'), 'r', encoding='utf-8') as f:
+        generic_acpi_V4_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/acpi-V.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_acpi_V_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/acpi-V.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_acpi_V_json = json.loads(f.read())
 
     def test_acpi_nodata(self):
         """

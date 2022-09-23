@@ -8,14 +8,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/chage.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_chage = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/chage.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_chage = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/chage.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_chage_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/chage.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_chage_json = json.loads(f.read())
 
 
     def test_chage_nodata(self):

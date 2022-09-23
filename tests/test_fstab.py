@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/fstab.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_fstab = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/fstab.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_fstab = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/fstab.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_fstab = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/fstab.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_fstab = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/fstab.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_fstab_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/fstab.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_fstab_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/fstab.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_fstab_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/fstab.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_fstab_json = json.loads(f.read())
+
 
     def test_fstab_nodata(self):
         """
