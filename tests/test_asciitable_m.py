@@ -362,7 +362,7 @@ class MyTests(unittest.TestCase):
             }
         ]
 
-        self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=False), expected)
+        self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
     def test_asciitable_m_markdown(self):
         """

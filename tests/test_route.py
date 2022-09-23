@@ -8,50 +8,50 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_route = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_route = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_route = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-vn.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_vn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-vn.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_vn = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route-vn.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_route_vn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route-vn.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_route_vn = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.out'), 'r', encoding='utf-8') as f:
-            self.nixos_route_ee = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.out'), 'r', encoding='utf-8') as f:
+        nixos_route_ee = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_6 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_6 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_6_n = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_6_n = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_route_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_route_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-vn.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_vn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-vn.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_vn_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route-vn.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_route_vn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/route-vn.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_route_vn_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.json'), 'r', encoding='utf-8') as f:
-            self.nixos_route_ee_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/route-ee.json'), 'r', encoding='utf-8') as f:
+        nixos_route_ee_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_6_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_6_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_route_6_n_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_route_6_n_json = json.loads(f.read())
+
 
     def test_route_nodata(self):
         """

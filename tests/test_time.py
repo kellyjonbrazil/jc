@@ -8,56 +8,56 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time2.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time2.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-verbose.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time_verbose = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-verbose.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time_verbose = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-l.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_l = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-l.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-p.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-p.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-lp.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_lp = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-lp.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_lp = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time2.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time2.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-p.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time_p_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-p.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time_p_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-verbose.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_time_verbose_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/time-verbose.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_time_verbose_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-l.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_l_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-l.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-p.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_p_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-p.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_p_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-lp.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_time_lp_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/time-lp.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_time_lp_json = json.loads(f.read())
+
 
     def test_time_nodata(self):
         """

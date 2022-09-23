@@ -8,21 +8,19 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query.out'), 'r', encoding='utf-8') as f:
-            self.update_alternatives_query = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query.out'), 'r', encoding='utf-8') as f:
+        update_alternatives_query = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query2.out'), 'r', encoding='utf-8') as f:
-            self.update_alternatives_query2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query2.out'), 'r', encoding='utf-8') as f:
+        update_alternatives_query2 = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query.json'), 'r', encoding='utf-8') as f:
-            self.update_alternatives_query_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query.json'), 'r', encoding='utf-8') as f:
+        update_alternatives_query_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query2.json'), 'r', encoding='utf-8') as f:
-            self.update_alternatives_query2_json = json.loads(f.read())
-
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-query2.json'), 'r', encoding='utf-8') as f:
+        update_alternatives_query2_json = json.loads(f.read())
 
 
     def test_update_alt_q_nodata(self):

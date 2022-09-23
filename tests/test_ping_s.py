@@ -13,385 +13,385 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
+    # input
 
-        # centos
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O = f.read()
+    # centos
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O_D = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_O_D = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_hostname_O = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_hostname_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_hostname_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_hostname_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_hostname_O_D_p_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_hostname_O_D_p_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-unparsable.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_O_p_unparsable = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-unparsable.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_O_p_unparsable = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_O_D_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_O_D_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_hostname_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_hostname_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_hostname_O_D_p_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_hostname_O_D_p_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_dup = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_dup = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_dup = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_dup = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O_unparsedlines = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_O_unparsedlines = f.read()
 
-        # ubuntu
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_ip_O = f.read()
+    # ubuntu
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_ip_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_ip_O_D = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_ip_O_D = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_hostname_O = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_hostname_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_hostname_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_hostname_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_hostname_O_D_p_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_hostname_O_D_p_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_ip_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_ip_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_ip_O_D_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_ip_O_D_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_hostname_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_hostname_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_hostname_O_D_p_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_hostname_O_D_p_s = f.read()
 
-        # fedora
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_ip_O = f.read()
+    # fedora
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping_ip_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_ip_O_D = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping_ip_O_D = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_hostname_O = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping_hostname_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_hostname_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping_hostname_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_hostname_O_D_p_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping_hostname_O_D_p_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_ip_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_ip_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_ip_O_D_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_ip_O_D_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_hostname_O_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_hostname_O_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_hostname_O_D_p_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_hostname_O_D_p_s = f.read()
 
-        # freebsd
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-p.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_hostname_p = f.read()
+    # freebsd
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-p.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_hostname_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-s.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_hostname_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-s.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_hostname_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_hostname = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-p.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_ip_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-p.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_ip_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-s.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_ip_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-s.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_ip_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_ip = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_hostname_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_hostname_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-s.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_hostname_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-s.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_hostname_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_hostname = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-p.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_ip_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-p.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_ip_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-s.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_ip_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-s.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_ip_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_ip = f.read()
 
-        # osx
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_hostname_p = f.read()
+    # osx
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_hostname_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-s.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_hostname_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-s.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_hostname_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_hostname = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-p.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-p.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-s.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-s.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_unreachable = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_unreachable = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unknown-errors.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_unknown_errors = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unknown-errors.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_unknown_errors = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_hostname_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_hostname_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-s.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_hostname_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-s.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_hostname_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_hostname = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-p.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-p.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-s.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_s = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-s.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_s = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-unparsable.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_unparsable = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-unparsable.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_unparsable = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_dup = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_dup = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_dup = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_dup = f.read()
 
-        # raspberry pi
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O.out'), 'r', encoding='utf-8') as f:
-            self.pi_ping_ip_O = f.read()
+    # raspberry pi
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O.out'), 'r', encoding='utf-8') as f:
+        pi_ping_ip_O = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
-            self.pi_ping_ip_O_D = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D.out'), 'r', encoding='utf-8') as f:
+        pi_ping_ip_O_D = f.read()
 
-        # output
+    # output
 
-        # centos
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O_streaming_json = json.loads(f.read())
+    # centos
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O_streaming_ignore_exceptions_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_O_streaming_ignore_exceptions_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_O_D_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_O_D_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_hostname_O_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_hostname_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_hostname_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_hostname_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_hostname_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_hostname_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping_ip_dup_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_ip_dup_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ping6_ip_dup_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping6-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping6_ip_dup_streaming_json = json.loads(f.read())
 
-        # ubunutu
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_ip_O_streaming_json = json.loads(f.read())
+    # ubunutu
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_ip_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_ip_O_D_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_ip_O_D_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_hostname_O_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_hostname_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_hostname_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_hostname_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_ip_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_ip_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_hostname_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_hostname_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        # fedora
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_ip_O_streaming_json = json.loads(f.read())
+    # fedora
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping_ip_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_ip_O_D_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping_ip_O_D_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_hostname_O_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping_hostname_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_hostname_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping_hostname_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_ip_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_ip_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-ip-O-D-p-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_ip_O_D_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_hostname_O_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-p-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_hostname_O_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
+        fedora32_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
 
-        # freebsd
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_hostname_p_streaming_json = json.loads(f.read())
+    # freebsd
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_hostname_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_hostname_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_hostname_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_hostname_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_ip_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_ip_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_ip_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_ip_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping_ip_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping_ip_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_hostname_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_hostname_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_hostname_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_hostname_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_hostname_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_ip_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_ip_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_ip_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_ip_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-streaming.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ping6_ip_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ping6-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ping6_ip_streaming_json = json.loads(f.read())
 
-        # osx:
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_hostname_p_streaming_json = json.loads(f.read())
+    # osx:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_hostname_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_hostname_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_hostname_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_hostname_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_unreachable_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-unreachable-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_unreachable_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_hostname_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-p-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_hostname_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_hostname_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-s-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_hostname_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_hostname_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_p_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-p-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_p_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_s_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-s-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_s_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping_ip_dup_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping_ip_dup_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ping6_ip_dup_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ping6-ip-dup-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ping6_ip_dup_streaming_json = json.loads(f.read())
 
-        # raspberry pi
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
-            self.pi_ping_ip_O_streaming_json = json.loads(f.read())
+    # raspberry pi
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
+        pi_ping_ip_O_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
-            self.pi_ping_ip_O_D_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/pi/ping-ip-O-D-streaming.json'), 'r', encoding='utf-8') as f:
+        pi_ping_ip_O_D_streaming_json = json.loads(f.read())
+
 
     def test_ping_s_nodata(self):
         """

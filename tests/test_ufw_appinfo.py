@@ -8,38 +8,38 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_ufw_appinfo_all = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_ufw_appinfo_all = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_test = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_test = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test2.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_test2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test2.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_test2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test3.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_test3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test3.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_test3 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-msn.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_msn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-msn.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_msn = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_ufw_appinfo_all_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_ufw_appinfo_all_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_test_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_test_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test2.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_test2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test2.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_test2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test3.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_test3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-test3.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_test3_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-msn.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_appinfo_msn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-msn.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_msn_json = json.loads(f.read())
+
 
     def test_ufw_appinfo_nodata(self):
         """

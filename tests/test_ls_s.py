@@ -20,84 +20,84 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-al.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls_al = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-al.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls_al = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-al.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_al = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-al.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_al = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/ls-al.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_ls_al = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/ls-al.out'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_ls_al = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-al.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_al = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-al.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_al = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alh.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls_alh = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alh.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls_alh = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alh.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_alh = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alh.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_alh = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/ls-alh.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_ls_alh = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/ls-alh.out'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_ls_alh = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alh.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_alh = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alh.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_alh = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alR.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls_alR = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alR.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls_alR = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alR.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_alR = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alR.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_alR = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alR.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_alR = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alR.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_alR = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_lR_empty_folder = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_lR_empty_folder = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_l_iso = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_l_iso = f.read()
 
-        # output
+    # output
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls_al_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls_al_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_al_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_al_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_al_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_al_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alh-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls_alh_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alh-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls_alh_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alh-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_alh_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alh-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_alh_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alh-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_alh_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alh-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_alh_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alR-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ls_alR_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-alR-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ls_alR_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alR-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_alR_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-alR-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_alR_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alR-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_alR_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-alR-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_alR_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder-streaming.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_ls_lR_empty_folder_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/ls-lR-empty-folder-streaming.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_ls_lR_empty_folder_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ls_l_iso_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ls_l_iso_streaming_json = json.loads(f.read())
+
 
     def test_ls_s_empty_dir(self):
         """

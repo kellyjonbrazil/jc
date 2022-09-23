@@ -8,93 +8,92 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_l = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l-multi.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_l_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l-multi.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_l_multi = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_d = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_d = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d-multi.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_d_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d-multi.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_d_multi = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luB.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_luB = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luB.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_luB = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luM.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_luM = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luM.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_luM = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luS.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_luS = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luS.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_luS = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-l.out'), 'r', encoding='utf-8') as f:
-            self.centos_8_sfdisk_l = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-l.out'), 'r', encoding='utf-8') as f:
+        centos_8_sfdisk_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-F.out'), 'r', encoding='utf-8') as f:
-            self.centos_8_sfdisk_F = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-F.out'), 'r', encoding='utf-8') as f:
+        centos_8_sfdisk_F = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l.out'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_l = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l.out'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l2.out'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_l2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l2.out'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_l2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l3.out'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_l3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l3.out'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_l3 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F.out'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_F = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F.out'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_F = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F2.out'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_F2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F2.out'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_F2 = f.read()
 
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_l_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l-multi.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_l_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-l-multi.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_l_multi_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_d_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_d_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d-multi.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_d_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-d-multi.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_d_multi_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luB.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_luB_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luB.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_luB_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luM.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_luM_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luM.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_luM_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luS.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sfdisk_luS_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sfdisk-luS.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sfdisk_luS_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-l.json'), 'r', encoding='utf-8') as f:
-            self.centos_8_sfdisk_l_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-l.json'), 'r', encoding='utf-8') as f:
+        centos_8_sfdisk_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-F.json'), 'r', encoding='utf-8') as f:
-            self.centos_8_sfdisk_F_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/sfdisk-F.json'), 'r', encoding='utf-8') as f:
+        centos_8_sfdisk_F_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l.json'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_l_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l.json'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l2.json'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_l2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l2.json'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_l2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l3.json'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_l3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-l3.json'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_l3_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F.json'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_F_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F.json'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_F_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F2.json'), 'r', encoding='utf-8') as f:
-            self.debian_10_sfdisk_F2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/sfdisk-F2.json'), 'r', encoding='utf-8') as f:
+        debian_10_sfdisk_F2_json = json.loads(f.read())
 
 
     def test_sfdisk_nodata(self):

@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_tracepath = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_tracepath = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath6.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_tracepath6 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath6.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_tracepath6 = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_tracepath_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_tracepath_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath6.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_tracepath6_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/tracepath6.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_tracepath6_json = json.loads(f.read())
+
 
     def test_tracepath_nodata(self):
         """

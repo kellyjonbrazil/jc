@@ -15,44 +15,44 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_who = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_who = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_who = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_who = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_who = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_who = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who-a.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_who_a = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who-a.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_who_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who-a.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_who_a = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who-a.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_who_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_who_a = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_who_a = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_who_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_who_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_who_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_who_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_who_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_who_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who-a.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_who_a_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who-a.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_who_a_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who-a.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_who_a_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/who-a.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_who_a_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_who_a_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_who_a_json = json.loads(f.read())
+
 
     def test_who_nodata(self):
         """

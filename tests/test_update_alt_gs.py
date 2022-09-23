@@ -8,14 +8,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-get-selections.out'), 'r', encoding='utf-8') as f:
-            self.update_alternatives_get_selections = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-get-selections.out'), 'r', encoding='utf-8') as f:
+        update_alternatives_get_selections = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-get-selections.json'), 'r', encoding='utf-8') as f:
-            self.update_alternatives_get_selections_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/update-alternatives-get-selections.json'), 'r', encoding='utf-8') as f:
+        update_alternatives_get_selections_json = json.loads(f.read())
 
 
     def test_update_alt_gs_nodata(self):

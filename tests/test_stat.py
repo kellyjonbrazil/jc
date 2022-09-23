@@ -15,38 +15,38 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/stat.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_stat = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/stat.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/stat.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/stat.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat-filename-with-spaces.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_stat_filename_with_spaces = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat-filename-with-spaces.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_stat_filename_with_spaces = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.out'), 'r', encoding='utf-8') as f:
+        freebsd12_stat = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/stat.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_stat_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/stat.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_stat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/stat.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_stat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/stat.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_stat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_stat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_stat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat-filename-with-spaces.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_stat_filename_with_spaces_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/stat-filename-with-spaces.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_stat_filename_with_spaces_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_stat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.json'), 'r', encoding='utf-8') as f:
+        freebsd12_stat_json = json.loads(f.read())
+
 
     def test_stat_nodata(self):
         """

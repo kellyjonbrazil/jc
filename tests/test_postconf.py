@@ -8,14 +8,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/postconf-M.out'), 'r', encoding='utf-8') as f:
-            self.generic_postconf_m = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/postconf-M.out'), 'r', encoding='utf-8') as f:
+        generic_postconf_m = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/postconf-M.json'), 'r', encoding='utf-8') as f:
-            self.generic_postconf_m_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/postconf-M.json'), 'r', encoding='utf-8') as f:
+        generic_postconf_m_json = json.loads(f.read())
 
 
     def test_postconf_nodata(self):
