@@ -20,11 +20,10 @@ class MyTests(unittest.TestCase):
         }
 
         for file, filepaths in fixtures.items():
-            with open(os.path.join(THIS_DIR, filepaths[0]), 'r', encoding='utf-8') as f:
-                cls.f_in[file] = f.read()
-
-            with open(os.path.join(THIS_DIR, filepaths[1]), 'r', encoding='utf-8') as f:
-                cls.f_json[file] = json.loads(f.read())
+            with open(os.path.join(THIS_DIR, filepaths[0]), 'r', encoding='utf-8') as a, \
+                 open(os.path.join(THIS_DIR, filepaths[1]), 'r', encoding='utf-8') as b:
+                cls.f_in[file] = a.read()
+                cls.f_json[file] = json.loads(b.read())
 
 
     def test_foo_nodata(self):
