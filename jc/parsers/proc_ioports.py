@@ -108,6 +108,6 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: List = proc_iomem.parse(data)
+    raw_output: List = proc_iomem.parse(data, quiet=True, raw=raw)
 
     return raw_output if raw else _process(raw_output)
