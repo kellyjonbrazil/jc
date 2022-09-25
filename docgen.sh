@@ -112,23 +112,25 @@ do
     parsers+=("$value")
 done < <(jc -a | jq -c '.parsers[] | select(.plugin != true)')
 
-for parser in "${parsers[@]}"
-do (
-    parser_name=$(jq -r '.name' <<< "$parser")
-    compatible=$(jq -r '.compatible | join(", ")' <<< "$parser")
-    version=$(jq -r '.version' <<< "$parser")
-    author=$(jq -r '.author' <<< "$parser")
-    author_email=$(jq -r '.author_email' <<< "$parser")
+for parser in "${parsers[@]}"; do
+    (
+        parser_name=$(jq -r '.name' <<< "$parser")
+        if ! git diff --exit-code -- "jc/parsers/${parser_name}.py"; then
+            compatible=$(jq -r '.compatible | join(", ")' <<< "$parser")
+            version=$(jq -r '.version' <<< "$parser")
+            author=$(jq -r '.author' <<< "$parser")
+            author_email=$(jq -r '.author_email' <<< "$parser")
 
-    echo "Building docs for: ${parser_name}"
-    echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
-    pydoc-markdown -m jc.parsers."${parser_name}" "${parser_config}" >> ../docs/parsers/"${parser_name}".md
-    echo "### Parser Information" >> ../docs/parsers/"${parser_name}".md
-    echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
-    echo >> ../docs/parsers/"${parser_name}".md
-    echo "Version ${version} by ${author} (${author_email})" >> ../docs/parsers/"${parser_name}".md
-    echo "+++ ${parser_name} docs complete"
-) &
+            echo "Building docs for: ${parser_name}"
+            echo "[Home](https://kellyjonbrazil.github.io/jc/)" > ../docs/parsers/"${parser_name}".md
+            pydoc-markdown -m jc.parsers."${parser_name}" "${parser_config}" >> ../docs/parsers/"${parser_name}".md
+            echo "### Parser Information" >> ../docs/parsers/"${parser_name}".md
+            echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
+            echo >> ../docs/parsers/"${parser_name}".md
+            echo "Version ${version} by ${author} (${author_email})" >> ../docs/parsers/"${parser_name}".md
+            echo "+++ ${parser_name} docs complete"
+        fi
+    ) &
 done
 wait
 echo "Document Generation Complete"
