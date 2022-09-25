@@ -124,6 +124,7 @@ parsers = [
     'proc-net-arp',
     'proc-net-dev',
     'proc-net-dev-mcast',
+    'proc-net-if-inet6',
     'ps',
     'route',
     'rpm-qi',
