@@ -117,6 +117,8 @@ parsers = [
     'proc-pid-maps',
     'proc-pid-mountinfo',
     'proc-pid-numa-maps',
+    'proc-pid-smaps',
+    'proc-pid-stat',
     'ps',
     'route',
     'rpm-qi',

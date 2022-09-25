@@ -1,4 +1,4 @@
-.TH jc 1 2022-09-22 1.21.2 "JSON Convert"
+.TH jc 1 2022-09-24 1.21.2 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
 .SH SYNOPSIS
@@ -569,6 +569,16 @@ PLIST file parser
 .B
 \fB--proc-pid-numa-maps\fP
 `/proc/<pid>/numa_maps` file parser
+
+.TP
+.B
+\fB--proc-pid-smaps\fP
+`/proc/<pid>/smaps` file parser
+
+.TP
+.B
+\fB--proc-pid-stat\fP
+`/proc/<pid>/stat` file parser
 
 .TP
 .B
