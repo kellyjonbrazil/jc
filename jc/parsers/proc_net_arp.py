@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/arp3` file parser
+"""jc - JSON Convert `/proc/net/arp` file parser
 
 Usage (cli):
 
