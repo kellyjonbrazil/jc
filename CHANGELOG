@@ -5,6 +5,7 @@ jc changelog
 - Enhance `free` parser to support `-w` option integer conversions
 - Fix `ini` and `kv` parsers so they don't change keynames to lower case
 - Fix `id` command parser to allow usernames and groupnames with spaces
+- Optimize tests
 
 20220829 v1.21.2
 - Fix IP Address string parser for older python versions that don't cleanly
