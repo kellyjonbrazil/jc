@@ -1,4 +1,9 @@
-"""jc - JSON Convert `/proc/net/dev1` file parser
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.proc_net_dev"></a>
+
+# jc.parsers.proc\_net\_dev
+
+jc - JSON Convert `/proc/net/dev1` file parser
 
 Usage (cli):
 
@@ -95,79 +100,28 @@ Examples:
       },
       ...
     ]
-"""
-from typing import List, Dict
-import jc.utils
-from jc.parsers.universal import simple_table_parse
 
+<a id="jc.parsers.proc_net_dev.parse"></a>
 
-class info():
-    """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = '`/proc/net/dev` file parser'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux']
-    hidden = True
+### parse
 
+```python
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
+```
 
-__version__ = info.version
+Main text parsing function
 
+Parameters:
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
-    """
-    Final processing to conform to the schema.
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-    Parameters:
+Returns:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+    List of Dictionaries. Raw or processed structured data.
 
-    Returns:
+### Parser Information
+Compatibility:  linux
 
-        List of Dictionaries. Structured to conform to the schema.
-    """
-    for item in proc_data:
-        if 'interface' in item:
-            item['interface'] = item['interface'][:-1]
-
-        for key, val in item.items():
-            try:
-                item[key] = int(val)
-            except Exception:
-                pass
-
-    return proc_data
-
-
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> List[Dict]:
-    """
-    Main text parsing function
-
-    Parameters:
-
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
-
-    Returns:
-
-        List of Dictionaries. Raw or processed structured data.
-    """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    raw_output: List = []
-
-    if jc.utils.has_data(data):
-
-        header = 'interface r_bytes r_packets r_errs r_drop r_fifo r_frame r_compressed r_multicast t_bytes t_packets t_errs t_drop t_fifo t_colls t_carrier t_compressed'
-        data_splitlines = data.splitlines()
-        data_splitlines.pop(0)
-        data_splitlines[0] = header
-        raw_output = simple_table_parse(data_splitlines)
-
-    return raw_output if raw else _process(raw_output)
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
