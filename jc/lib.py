@@ -123,6 +123,7 @@ parsers = [
     'proc-pid-status',
     'proc-net-arp',
     'proc-net-dev',
+    'proc-net-dev-mcast',
     'ps',
     'route',
     'rpm-qi',
