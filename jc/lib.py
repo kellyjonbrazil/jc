@@ -119,6 +119,7 @@ parsers = [
     'proc-pid-numa-maps',
     'proc-pid-smaps',
     'proc-pid-stat',
+    'proc-pid-statm',
     'ps',
     'route',
     'rpm-qi',
