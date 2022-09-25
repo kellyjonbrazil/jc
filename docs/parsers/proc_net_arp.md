@@ -3,7 +3,7 @@
 
 # jc.parsers.proc\_net\_arp
 
-jc - JSON Convert `/proc/net/arp` file parser
+jc - JSON Convert `/proc/net/arp3` file parser
 
 Usage (cli):
 

@@ -113,9 +113,9 @@ do
 done < <(jc -a | jq -c '.parsers[] | select(.plugin != true)')
 
 for parser in "${parsers[@]}"; do
-    (
-        parser_name=$(jq -r '.name' <<< "$parser")
-        if ! git diff --exit-code -- "jc/parsers/${parser_name}.py"; then
+    parser_name=$(jq -r '.name' <<< "$parser")
+    if ! git diff --quiet --exit-code -- "parsers/${parser_name}.py"; then
+        {
             compatible=$(jq -r '.compatible | join(", ")' <<< "$parser")
             version=$(jq -r '.version' <<< "$parser")
             author=$(jq -r '.author' <<< "$parser")
@@ -129,8 +129,8 @@ for parser in "${parsers[@]}"; do
             echo >> ../docs/parsers/"${parser_name}".md
             echo "Version ${version} by ${author} (${author_email})" >> ../docs/parsers/"${parser_name}".md
             echo "+++ ${parser_name} docs complete"
-        fi
-    ) &
+        } &
+    fi
 done
 wait
 echo "Document Generation Complete"
