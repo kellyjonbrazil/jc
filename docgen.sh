@@ -1,6 +1,9 @@
 #!/bin/bash
 # Generate docs.md
 # requires pydoc-markdown 4.6.1
+
+# use ./docgen all to generate all docs
+
 readme_config=$(cat <<'EOF'
 {
     "processors": [
@@ -115,7 +118,7 @@ done < <(jc -a | jq -c '.parsers[] | select(.plugin != true)')
 for parser in "${parsers[@]}"; do
     parser_name=$(jq -r '.name' <<< "$parser")
         {
-            if ! git diff --quiet --exit-code HEAD -- "parsers/${parser_name}.py"; then
+            if [[ $1 == "all" ]] || ! git diff --quiet --exit-code HEAD -- "parsers/${parser_name}.py"; then
                 compatible=$(jq -r '.compatible | join(", ")' <<< "$parser")
                 version=$(jq -r '.version' <<< "$parser")
                 author=$(jq -r '.author' <<< "$parser")
