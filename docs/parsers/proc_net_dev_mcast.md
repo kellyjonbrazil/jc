@@ -32,7 +32,7 @@ Schema:
     [
       {
         "index":                      integer,
-        "interface_name":             string,
+        "interface":                  string,
         "dmi_u":                      integer,
         "dmi_g":                      integer,
         "dmi_address":                string
@@ -45,14 +45,14 @@ Examples:
     [
       {
         "index": 2,
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": 1,
         "dmi_g": 0,
         "dmi_address": "333300000001"
       },
       {
         "index": 2,
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": 1,
         "dmi_g": 0,
         "dmi_address": "01005e000001"
@@ -64,14 +64,14 @@ Examples:
     [
       {
         "index": "2",
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": "1",
         "dmi_g": "0",
         "dmi_address": "333300000001"
       },
       {
         "index": "2",
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": "1",
         "dmi_g": "0",
         "dmi_address": "01005e000001"

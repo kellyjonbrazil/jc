@@ -27,7 +27,7 @@ Schema:
     [
       {
         "index":                      integer,
-        "interface_name":             string,
+        "interface":                  string,
         "dmi_u":                      integer,
         "dmi_g":                      integer,
         "dmi_address":                string
@@ -40,14 +40,14 @@ Examples:
     [
       {
         "index": 2,
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": 1,
         "dmi_g": 0,
         "dmi_address": "333300000001"
       },
       {
         "index": 2,
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": 1,
         "dmi_g": 0,
         "dmi_address": "01005e000001"
@@ -59,14 +59,14 @@ Examples:
     [
       {
         "index": "2",
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": "1",
         "dmi_g": "0",
         "dmi_address": "333300000001"
       },
       {
         "index": "2",
-        "interface_name": "ens33",
+        "interface": "ens33",
         "dmi_u": "1",
         "dmi_g": "0",
         "dmi_address": "01005e000001"
@@ -142,7 +142,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        header = 'index interface_name  dmi_u dmi_g dmi_address\n'
+        header = 'index interface dmi_u dmi_g dmi_address\n'
         data = header + data
         data_splitlines = data.splitlines()
         raw_output = simple_table_parse(data_splitlines)
