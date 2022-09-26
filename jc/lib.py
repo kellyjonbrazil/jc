@@ -128,6 +128,7 @@ parsers = [
     'proc-net-igmp',
     'proc-net-igmp6',
     'proc-net-ipv6-route',
+    'proc-net-netlink',
     'ps',
     'route',
     'rpm-qi',
