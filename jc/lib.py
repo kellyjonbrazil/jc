@@ -126,6 +126,7 @@ parsers = [
     'proc-net-dev-mcast',
     'proc-net-if-inet6',
     'proc-net-igmp',
+    'proc-net-igmp6',
     'ps',
     'route',
     'rpm-qi',
