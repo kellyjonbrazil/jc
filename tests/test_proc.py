@@ -47,9 +47,6 @@ class MyTests(unittest.TestCase):
             'proc_diskstats': (
                 'fixtures/linux-proc/diskstats',
                 'fixtures/linux-proc/diskstats.json'),
-            'proc_driver_rtc': (
-                'fixtures/linux-proc/driver_rtc',
-                'fixtures/linux-proc/driver_rtc.json'),
             'proc_filesystems': (
                 'fixtures/linux-proc/filesystems',
                 'fixtures/linux-proc/filesystems.json'),
@@ -122,6 +119,10 @@ class MyTests(unittest.TestCase):
             'proc_zoneinfo2': (
                 'fixtures/linux-proc/zoneinfo2',
                 'fixtures/linux-proc/zoneinfo2.json'),
+
+            'proc_driver_rtc': (
+                'fixtures/linux-proc/driver_rtc',
+                'fixtures/linux-proc/driver_rtc.json'),
 
             'proc_net_arp': (
                 'fixtures/linux-proc/net_arp',

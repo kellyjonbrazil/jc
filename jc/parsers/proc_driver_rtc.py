@@ -1,16 +1,16 @@
-"""jc - JSON Convert `/proc/driver_rtc` file parser
+"""jc - JSON Convert `/proc/driver/rtc` file parser
 
 Usage (cli):
 
-    $ cat /proc/driver_rtc | jc --proc
+    $ cat /proc/driver/rtc | jc --proc
 
 or
 
-    $ jc /proc/driver_rtc
+    $ jc /proc/driver/rtc
 
 or
 
-    $ cat /proc/driver_rtc | jc --proc-driver-rtc
+    $ cat /proc/driver/rtc | jc --proc-driver-rtc
 
 Usage (module):
 
@@ -51,7 +51,7 @@ are attempted. If you do not want this behavior, then use `--raw` (cli) or
 
 Examples:
 
-    $ cat /proc/driver_rtc | jc --proc -p
+    $ cat /proc/driver/rtc | jc --proc -p
     {
       "rtc_time": "16:09:21",
       "rtc_date": "2022-09-03",
@@ -73,7 +73,7 @@ Examples:
       "batt_status": "okay"
     }
 
-    $ cat /proc/driver_rtc | jc --proc -p -r
+    $ cat /proc/driver/rtc | jc --proc -p -r
     {
       "rtc_time": "16:09:21",
       "rtc_date": "2022-09-03",
@@ -102,7 +102,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`/proc/driver_rtc` file parser'
+    description = '`/proc/driver/rtc` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
