@@ -99,37 +99,37 @@ Examples:
 
     $ cat /proc/net/protocols | jc --proc -p -r
     [
-    {
-      "protocol": "AF_VSOCK",
-      "size": "1216",
-      "sockets": "0",
-      "memory": "-1",
-      "press": "NI",
-      "maxhdr": "0",
-      "slab": "yes",
-      "module": "vsock",
-      "cl": "n",
-      "co": "n",
-      "di": "n",
-      "ac": "n",
-      "io": "n",
-      "in": "n",
-      "de": "n",
-      "sh": "n",
-      "ss": "n",
-      "gs": "n",
-      "se": "n",
-      "re": "n",
-      "sp": "n",
-      "bi": "n",
-      "br": "n",
-      "ha": "n",
-      "uh": "n",
-      "gp": "n",
-      "em": "n"
-    },
-    ...
-  ]
+      {
+        "protocol": "AF_VSOCK",
+        "size": "1216",
+        "sockets": "0",
+        "memory": "-1",
+        "press": "NI",
+        "maxhdr": "0",
+        "slab": "yes",
+        "module": "vsock",
+        "cl": "n",
+        "co": "n",
+        "di": "n",
+        "ac": "n",
+        "io": "n",
+        "in": "n",
+        "de": "n",
+        "sh": "n",
+        "ss": "n",
+        "gs": "n",
+        "se": "n",
+        "re": "n",
+        "sp": "n",
+        "bi": "n",
+        "br": "n",
+        "ha": "n",
+        "uh": "n",
+        "gp": "n",
+        "em": "n"
+      },
+      ...
+    ]
 
 <a id="jc.parsers.proc_net_protocols.parse"></a>
 
