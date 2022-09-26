@@ -205,8 +205,8 @@ def parse(
         pid_statm_p = re.compile(r'^\d+ \d+ \d+\s\d+\s\d+\s\d+\s\d+$')
         pid_status_p = re.compile(r'^Name:\t.+\nUmask:\t\d+\nState:\t.+\nTgid:\t\d+\n')
 
-        scsi_device_info = re.compile(r"^'\w+' '.+' 0x\d+")
-        scsi_scsi_p = re.compile(r'^Attached devices:\nHost: \w+ ')
+        # scsi_device_info = re.compile(r"^'\w+' '.+' 0x\d+")
+        # scsi_scsi_p = re.compile(r'^Attached devices:\nHost: \w+ ')
 
         procmap = {
             buddyinfo_p: 'proc_buddyinfo',
@@ -262,8 +262,8 @@ def parse(
             pid_smaps_p: 'proc_pid_smaps',  # before pid_maps
             pid_maps_p: 'proc_pid_maps',    # after pid_smaps
 
-            scsi_device_info: 'proc_scsi_device_info',
-            scsi_scsi_p: 'proc_scsi_scsi'
+            # scsi_device_info: 'proc_scsi_device_info',
+            # scsi_scsi_p: 'proc_scsi_scsi'
         }
 
         for reg_pattern, parse_mod in procmap.items():

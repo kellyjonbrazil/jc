@@ -75,6 +75,12 @@ _jc()
         fi
     done
 
+    # if "/proc" (magic for Procfile parsers) is found anywhere in the line, complete with files/directories in the path
+    if [[ "$${words[@]::$${#words[@]}-1}" =~ "/proc" ]]; then
+        _filedir
+        return 0
+    fi
+
     # if a parser arg is found anywhere in the line, only show options and help options
     for i in "$${words[@]::$${#words[@]}-1}"; do
         if [[ " $${jc_parsers[*]} " =~ " $${i} " ]]; then
@@ -190,6 +196,13 @@ _jc() {
         fi
     done
 
+    # if "/proc" (magic for Procfile parsers) is found anywhere in the line, complete with files/directories in the path
+    if (( $${words:0:-1}[(Ie)/proc] )); then
+        # run files completion
+        _files
+        return 0
+    fi
+
     # if a parser arg is found anywhere in the line, only show options and help options
     for i in $${words:0:-1}; do
         if (( $$jc_parsers[(Ie)$${i}] )); then
@@ -230,7 +243,7 @@ def get_options():
 
 def get_parsers():
     p_list = []
-    for cmd in all_parser_info():
+    for cmd in all_parser_info(show_hidden=True):
         if 'argument' in cmd:
             p_list.append(cmd['argument'])
 
@@ -239,7 +252,7 @@ def get_parsers():
 
 def get_parsers_descriptions():
     pd_list = []
-    for p in all_parser_info():
+    for p in all_parser_info(show_hidden=True):
         if 'description' in p:
             pd_list.append(f"'{p['argument']}:{p['description']}'")
 
