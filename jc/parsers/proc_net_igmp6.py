@@ -10,7 +10,7 @@ or
 
 or
 
-    $ cat /proc/net/igmp6 | jc --proc-net-if-inet6
+    $ cat /proc/net/igmp6 | jc --proc-net-igmp6
 
 Usage (module):
 
