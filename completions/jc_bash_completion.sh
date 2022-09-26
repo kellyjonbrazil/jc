@@ -67,8 +67,8 @@ _jc()
         fi
     done
 
-    # if "/proc" (magic for Procfile parsers) is found anywhere in the line, complete with files/directories in the path
-    if [[ "${words[@]::${#words[@]}-1}" =~ "/proc" ]]; then
+    # if "/pr[oc]" (magic for Procfile parsers) is in the current word, complete with files/directories in the path
+    if [[ "${cur}" =~ "/pr" ]]; then
         _filedir
         return 0
     fi
