@@ -160,6 +160,9 @@ class MyTests(unittest.TestCase):
             'proc_net_protocols': (
                 'fixtures/linux-proc/net_protocols',
                 'fixtures/linux-proc/net_protocols.json'),
+            'proc_net_route': (
+                'fixtures/linux-proc/net_route',
+                'fixtures/linux-proc/net_route.json'),
 
             'proc_pid_fdinfo': (
                 'fixtures/linux-proc/pid_fdinfo',

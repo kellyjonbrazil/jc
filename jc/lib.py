@@ -132,6 +132,7 @@ parsers = [
     'proc-net-netstat',
     'proc-net-packet',
     'proc-net-protocols',
+    'proc-net-route',
     'ps',
     'route',
     'rpm-qi',
