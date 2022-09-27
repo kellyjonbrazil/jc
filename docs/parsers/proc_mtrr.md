@@ -64,7 +64,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/mtrr | jc --proc_mtrr -p -r
+    $ cat /proc/mtrr | jc --proc-mtrr -p -r
     [
       {
         "register": "reg00",

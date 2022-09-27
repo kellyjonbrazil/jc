@@ -60,7 +60,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/route | jc --proc -p -r
+    $ cat /proc/net/route | jc --proc-net-route -p -r
     [
       {
         "Iface": "ens33",

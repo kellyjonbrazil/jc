@@ -15,7 +15,7 @@ or
 
 or
 
-    $ cat /proc/1/statm | jc --proc-pid_statm
+    $ cat /proc/1/statm | jc --proc-pid-statm
 
 Usage (module):
 

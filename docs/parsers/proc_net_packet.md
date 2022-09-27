@@ -56,7 +56,7 @@ Examples:
       "Inode": 34754
     }
 
-    $ cat /proc/net/packet | jc --proc -p -r
+    $ cat /proc/net/packet | jc --proc-net-packet -p -r
     {
       "sk": "ffff9b61b56c1800",
       "RefCnt": "3",

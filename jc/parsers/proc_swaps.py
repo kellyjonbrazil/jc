@@ -48,7 +48,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/swaps | jc --proc_swaps -p -r
+    $ cat /proc/swaps | jc --proc-swaps -p -r
     [
       {
         "filename": "/swap.img",

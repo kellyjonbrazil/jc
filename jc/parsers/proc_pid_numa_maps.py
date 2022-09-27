@@ -14,17 +14,17 @@ or
 
 or
 
-    $ cat /proc/1/numa_maps | jc --proc-numa-maps
+    $ cat /proc/1/numa_maps | jc --proc-pid-numa-maps
 
 Usage (module):
 
     import jc
-    result = jc.parse('proc', proc_numa_maps_file)
+    result = jc.parse('proc', proc_pid_numa_maps_file)
 
 or
 
     import jc
-    result = jc.parse('proc_numa_maps', proc_numa_maps_file)
+    result = jc.parse('proc_pid_numa_maps', proc_pid_numa_maps_file)
 
 Schema:
 
@@ -70,7 +70,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/1/numa_maps | jc --proc_numa_maps -p -r
+    $ cat /proc/1/numa_maps | jc --proc-pid-numa-maps -p -r
     [
       {
         "address": "7f53b5083000",

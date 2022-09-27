@@ -75,7 +75,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/locks | jc --proc_locks -p -r
+    $ cat /proc/locks | jc --proc-locks -p -r
     [
       {
         "id": "1",

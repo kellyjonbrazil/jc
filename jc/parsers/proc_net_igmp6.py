@@ -66,7 +66,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/igmp6 | jc --proc -p -r
+    $ cat /proc/net/igmp6 | jc --proc-net-igmp6 -p -r
     [
       {
         "index": "1",

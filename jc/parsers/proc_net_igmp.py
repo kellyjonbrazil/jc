@@ -82,7 +82,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/igmp | jc --proc -p -r
+    $ cat /proc/net/igmp | jc --proc-net-igmp -p -r
     [
       {
         "index": "0",

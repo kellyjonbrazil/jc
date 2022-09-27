@@ -10,7 +10,7 @@ or
 
 or
 
-    $ cat /proc/1/status | jc --proc-pid_status
+    $ cat /proc/1/status | jc --proc-pid-status
 
 Usage (module):
 
@@ -205,7 +205,7 @@ Examples:
       "SigQ_limit": 15245
     }
 
-    $ cat /proc/1/status | jc --proc -p -r
+    $ cat /proc/1/status | jc --proc-pid-status -p -r
     {
       "Name": "systemd",
       "Umask": "0000",

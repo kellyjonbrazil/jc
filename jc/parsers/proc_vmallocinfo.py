@@ -70,7 +70,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/vmallocinfo | jc --proc -p -r
+    $ cat /proc/vmallocinfo | jc --proc-vmallocinfo -p -r
     [
       {
         "start": "0xffffb3c1c0000000",

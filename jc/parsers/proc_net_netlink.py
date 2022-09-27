@@ -70,7 +70,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/netlink | jc --proc -p -r
+    $ cat /proc/net/netlink | jc --proc-net-netlink -p -r
     [
       {
         "sk": "ffff9b61adaff000",

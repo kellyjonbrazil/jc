@@ -52,7 +52,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/partitions | jc --proc_partitions -p -r
+    $ cat /proc/partitions | jc --proc-partitions -p -r
     [
       {
         "major": "7",

@@ -164,7 +164,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/netstat | jc --proc -p -r
+    $ cat /proc/net/netstat | jc --proc-net-netstat -p -r
     [
       {
         "SyncookiesSent": "0",

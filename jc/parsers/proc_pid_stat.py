@@ -10,7 +10,7 @@ or
 
 or
 
-    $ cat /proc/1/stat | jc --proc-pid_stat
+    $ cat /proc/1/stat | jc --proc-pid-stat
 
 Usage (module):
 
@@ -139,7 +139,7 @@ Examples:
       "state_pretty": "Sleeping in an interruptible wait"
     }
 
-    $ cat /proc/1/stat | jc --proc -p -r
+    $ cat /proc/1/stat | jc --proc-pid-stat -p -r
     {
       "pid": 1,
       "comm": "systemd",

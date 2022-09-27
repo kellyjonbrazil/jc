@@ -108,7 +108,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/1/mountinfo | jc --proc_pid-mountinfo -p -r
+    $ cat /proc/1/mountinfo | jc --proc-pid-mountinfo -p -r
     [
       {
         "mount_id": "24",

@@ -54,7 +54,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/unix | jc --proc -p -r
+    $ cat /proc/net/unix | jc --proc-net-unix -p -r
     [
       {
         "Num": "ffff9b61ac49c400:",

@@ -10,7 +10,7 @@ or
 
 or
 
-    $ cat /proc/net/dev_mcast | jc --proc-net-dev_mcast
+    $ cat /proc/net/dev_mcast | jc --proc-net-dev-mcast
 
 Usage (module):
 
@@ -55,7 +55,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/dev_mcast | jc --proc -p -r
+    $ cat /proc/net/dev_mcast | jc --proc-net-dev-mcast -p -r
     [
       {
         "index": "2",

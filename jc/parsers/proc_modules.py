@@ -70,7 +70,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/modules | jc --proc_modules -p -r
+    $ cat /proc/modules | jc --proc-modules -p -r
     [
       {
         "module": "binfmt_misc",

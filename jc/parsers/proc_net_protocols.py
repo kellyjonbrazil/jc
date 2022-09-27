@@ -92,7 +92,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/protocols | jc --proc -p -r
+    $ cat /proc/net/protocols | jc --proc-net-protocols -p -r
     [
       {
         "protocol": "AF_VSOCK",

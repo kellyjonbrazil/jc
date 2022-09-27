@@ -72,7 +72,7 @@ Examples:
       ...
     ]
 
-    $ cat /proc/net/dev | jc --proc -p -r
+    $ cat /proc/net/dev | jc --proc-net-dev -p -r
     [
       {
         "interface": "lo:",
