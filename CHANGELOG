@@ -52,6 +52,7 @@ jc changelog
   `/proc/<pid>/statm`
   `/proc/<pid>/status`
 - Magic syntax support for `/proc` files
+- Enhance bash and zsh autocompletions for `/proc` files
 - Enhance `free` parser to support `-w` option integer conversions
 - Fix `ini` and `kv` parsers so they don't change keynames to lower case
   NOTE: This can be a breaking change in your scripts
