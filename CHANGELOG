@@ -1,11 +1,62 @@
 jc changelog
 
-20220915 v1.22.0
-- Add /proc file parsers
+20220926 v1.22.0
+- Add /proc file parsers for linux. Support for the following files:
+  `/proc/buddyinfo`
+  `/proc/consoles`
+  `/proc/cpuinfo`
+  `/proc/crypto`
+  `/proc/devices`
+  `/proc/diskstats`
+  `/proc/filesystems`
+  `/proc/interrupts`
+  `/proc/iomem`
+  `/proc/ioports`
+  `/proc/loadavg`
+  `/proc/locks`
+  `/proc/meminfo`
+  `/proc/modules`
+  `/proc/mtrr`
+  `/proc/pagetypeinfo`
+  `/proc/partitions`
+  `/proc/slabinfo`
+  `/proc/softirqs`
+  `/proc/stat`
+  `/proc/swaps`
+  `/proc/uptime`
+  `/proc/version`
+  `/proc/vmallocinfo`
+  `/proc/vmstat`
+  `/proc/zoneinfo`
+  `/proc/driver/rtc`
+  `/proc/net/arp`
+  `/proc/net/dev`
+  `/proc/net/dev_mcast`
+  `/proc/net/if_inet6`
+  `/proc/net/igmp`
+  `/proc/net/igmp6`
+  `/proc/net/ipv6_route`
+  `/proc/net/netlink`
+  `/proc/net/netstat`
+  `/proc/net/packet`
+  `/proc/net/protocols`
+  `/proc/net/route`
+  `/proc/net/unix`
+  `/proc/<pid>/fdinfo/<fd>`
+  `/proc/<pid>/io`
+  `/proc/<pid>/maps`
+  `/proc/<pid>/mountinfo`
+  `/proc/<pid>/numa_maps`
+  `/proc/<pid>/smaps`
+  `/proc/<pid>/stat`
+  `/proc/<pid>/statm`
+  `/proc/<pid>/status`
 - Enhance `free` parser to support `-w` option integer conversions
 - Fix `ini` and `kv` parsers so they don't change keynames to lower case
+  NOTE: This can be a breaking change in your scripts
 - Fix `id` command parser to allow usernames and groupnames with spaces
 - Optimize tests
+- Optimize documentation build script
 
 20220829 v1.21.2
 - Fix IP Address string parser for older python versions that don't cleanly
