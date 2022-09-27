@@ -475,6 +475,10 @@ def add_metadata_to(list_or_dict,
     does not already exist, it will be created with the metadata fields. If
     the _jc_meta field already exists, the metadata fields will be added to
     the existing object.
+
+    In the case of an empty list (no data), a dictionary with a _jc_meta
+    object will be added to the list. This way you always get metadata,
+    even if there are no results.
     """
     run_timestamp = runtime.timestamp()
 
@@ -494,6 +498,9 @@ def add_metadata_to(list_or_dict,
         list_or_dict['_jc_meta'].update(meta_obj)
 
     elif isinstance(list_or_dict, list):
+        if not list_or_dict:
+            list_or_dict.append({})
+
         for item in list_or_dict:
             if '_jc_meta' not in item:
                 item['_jc_meta'] = {}
