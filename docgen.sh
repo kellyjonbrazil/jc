@@ -118,7 +118,7 @@ done < <(jc -a | jq -c '.parsers[] | select(.plugin != true)')
 for parser in "${parsers[@]}"; do
     parser_name=$(jq -r '.name' <<< "$parser")
         {
-            if [[ $1 == "all" ]] || ! git diff --quiet --exit-code HEAD -- "parsers/${parser_name}.py"; then
+            if [[ $1 == "all" ]] || ! git diff --quiet --exit-code HEAD~5 -- "parsers/${parser_name}.py"; then
                 compatible=$(jq -r '.compatible | join(", ")' <<< "$parser")
                 version=$(jq -r '.version' <<< "$parser")
                 author=$(jq -r '.author' <<< "$parser")
