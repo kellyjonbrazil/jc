@@ -95,7 +95,7 @@ _jc() {
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iso-datetime --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -164,14 +164,64 @@ _jc() {
         '--nmcli:`nmcli` command parser'
         '--ntpq:`ntpq -p` command parser'
         '--passwd:`/etc/passwd` file parser'
-        '--pidstat:`pidstat -h` command parser'
-        '--pidstat-s:`pidstat -h` command streaming parser'
+        '--pidstat:`pidstat -H` command parser'
+        '--pidstat-s:`pidstat -H` command streaming parser'
         '--ping:`ping` and `ping6` command parser'
         '--ping-s:`ping` and `ping6` command streaming parser'
         '--pip-list:`pip list` command parser'
         '--pip-show:`pip show` command parser'
         '--plist:PLIST file parser'
         '--postconf:`postconf -M` command parser'
+        '--proc:`/proc/` file parser'
+        '--proc-buddyinfo:`/proc/buddyinfo` file parser'
+        '--proc-consoles:`/proc/consoles` file parser'
+        '--proc-cpuinfo:`/proc/cpuinfo` file parser'
+        '--proc-crypto:`/proc/crypto` file parser'
+        '--proc-devices:`/proc/devices` file parser'
+        '--proc-diskstats:`/proc/diskstats` file parser'
+        '--proc-filesystems:`/proc/filesystems` file parser'
+        '--proc-interrupts:`/proc/interrupts` file parser'
+        '--proc-iomem:`/proc/iomem` file parser'
+        '--proc-ioports:`/proc/ioports` file parser'
+        '--proc-loadavg:`/proc/loadavg` file parser'
+        '--proc-locks:`/proc/locks` file parser'
+        '--proc-meminfo:`/proc/meminfo` file parser'
+        '--proc-modules:`/proc/modules` file parser'
+        '--proc-mtrr:`/proc/mtrr` file parser'
+        '--proc-pagetypeinfo:`/proc/pagetypeinfo` file parser'
+        '--proc-partitions:`/proc/partitions` file parser'
+        '--proc-slabinfo:`/proc/slabinfo` file parser'
+        '--proc-softirqs:`/proc/softirqs` file parser'
+        '--proc-stat:`/proc/stat` file parser'
+        '--proc-swaps:`/proc/swaps` file parser'
+        '--proc-uptime:`/proc/uptime` file parser'
+        '--proc-version:`/proc/version` file parser'
+        '--proc-vmallocinfo:`/proc/vmallocinfo` file parser'
+        '--proc-vmstat:`/proc/vmstat` file parser'
+        '--proc-zoneinfo:`/proc/zoneinfo` file parser'
+        '--proc-driver-rtc:`/proc/driver/rtc` file parser'
+        '--proc-net-arp:`/proc/net/arp` file parser'
+        '--proc-net-dev:`/proc/net/dev` file parser'
+        '--proc-net-dev-mcast:`/proc/net/dev_mcast` file parser'
+        '--proc-net-if-inet6:`/proc/net/if_inet6` file parser'
+        '--proc-net-igmp:`/proc/net/igmp` file parser'
+        '--proc-net-igmp6:`/proc/net/igmp6` file parser'
+        '--proc-net-ipv6-route:`/proc/net/ipv6_route` file parser'
+        '--proc-net-netlink:`/proc/net/netlink` file parser'
+        '--proc-net-netstat:`/proc/net/netstat` file parser'
+        '--proc-net-packet:`/proc/net/packet` file parser'
+        '--proc-net-protocols:`/proc/net/protocols` file parser'
+        '--proc-net-route:`/proc/net/route` file parser'
+        '--proc-net-unix:`/proc/net/unix` file parser'
+        '--proc-pid-fdinfo:`/proc/<pid>/fdinfo/<fd>` file parser'
+        '--proc-pid-io:`/proc/<pid>/io` file parser'
+        '--proc-pid-maps:`/proc/<pid>/maps` file parser'
+        '--proc-pid-mountinfo:`/proc/<pid>/mountinfo` file parser'
+        '--proc-pid-numa-maps:`/proc/<pid>/numa_maps` file parser'
+        '--proc-pid-smaps:`/proc/<pid>/smaps` file parser'
+        '--proc-pid-stat:`/proc/<pid>/stat` file parser'
+        '--proc-pid-statm:`/proc/<pid>/statm` file parser'
+        '--proc-pid-status:`/proc/<pid>/status` file parser'
         '--ps:`ps` command parser'
         '--route:`route` command parser'
         '--rpm-qi:`rpm -qi` command parser'
@@ -326,6 +376,13 @@ _jc() {
             return 0
         fi
     done
+
+    # if "/pr[oc]" (magic for Procfile parsers) is in the current word, complete with files/directories in the path
+    if [[ "${words[-1]}" =~ "/pr" ]]; then
+        # run files completion
+        _files
+        return 0
+    fi
 
     # if a parser arg is found anywhere in the line, only show options and help options
     for i in ${words:0:-1}; do

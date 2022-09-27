@@ -8,38 +8,38 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/md5sum.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_md5sum = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/md5sum.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_md5sum = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha256sum.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sha256sum = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha256sum.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sha256sum = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha384sum.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sha384sum = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha384sum.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sha384sum = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/md5.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_md5 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/md5.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_md5 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/shasum.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_shasum = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/shasum.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_shasum = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/md5sum.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_md5sum_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/md5sum.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_md5sum_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha256sum.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sha256sum_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha256sum.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sha256sum_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha384sum.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sha384sum_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sha384sum.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sha384sum_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/md5.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_md5_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/md5.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_md5_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/shasum.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_shasum_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/shasum.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_shasum_json = json.loads(f.read())
+
 
     def test_hashsum_nodata(self):
         """

@@ -15,80 +15,80 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_last = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_last = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_last = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/last.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_last = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/last.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_last = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lastb.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_lastb = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lastb.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_lastb = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lastb.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_lastb = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lastb.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_lastb = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-w.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_w = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-w.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_w = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last-w.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_last_w = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last-w.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_last_w = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/last.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_last = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/last.out'), 'r', encoding='utf-8') as f:
+        fedora32_last = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_last = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.out'), 'r', encoding='utf-8') as f:
+        freebsd12_last = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/last-F.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_4_last_F = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/last-F.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_last_F = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-crash.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_crash = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-crash.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_crash = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_wF = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_wF = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_last_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_last_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/last.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_last_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/last.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_last_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lastb.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_lastb_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lastb.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_lastb_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lastb.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_lastb_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lastb.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_lastb_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-w.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_w_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-w.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_w_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last-w.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_last_w_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/last-w.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_last_w_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/last.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_last_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/last.json'), 'r', encoding='utf-8') as f:
+        fedora32_last_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_last_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/last.json'), 'r', encoding='utf-8') as f:
+        freebsd12_last_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/last-F.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_4_last_F_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/last-F.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_last_F_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-crash.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_crash_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-crash.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_crash_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_last_wF_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_wF_json = json.loads(f.read())
+
 
     def test_last_nodata(self):
         """

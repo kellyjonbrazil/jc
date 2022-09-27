@@ -11,8 +11,9 @@ import signal
 import shlex
 import subprocess
 from .lib import (__version__, parser_info, all_parser_info, parsers,
-                  _get_parser, _parser_is_streaming, standard_parser_mod_list,
-                  plugin_parser_mod_list, streaming_parser_mod_list)
+                  _get_parser, _parser_is_streaming, parser_mod_list,
+                  standard_parser_mod_list, plugin_parser_mod_list,
+                  streaming_parser_mod_list)
 from . import utils
 from .cli_data import long_options_map, new_pygments_colors, old_pygments_colors
 from .shell_completions import bash_completion, zsh_completion
@@ -120,11 +121,11 @@ def parser_shortname(parser_arg):
     return parser_arg[2:]
 
 
-def parsers_text(indent=0, pad=0):
+def parsers_text(indent=0, pad=0, show_hidden=False):
     """Return the argument and description information from each parser"""
     ptext = ''
     padding_char = ' '
-    for p in all_parser_info():
+    for p in all_parser_info(show_hidden=show_hidden):
         parser_arg = p.get('argument', 'UNKNOWN')
         padding = pad - len(parser_arg)
         parser_desc = p.get('description', 'No description available.')
@@ -164,28 +165,37 @@ def about_jc():
         'license': info.license,
         'python_version': '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro))),
         'python_path': sys.executable,
-        'parser_count': len(all_parser_info()),
+        'parser_count': len(parser_mod_list()),
         'standard_parser_count': len(standard_parser_mod_list()),
         'streaming_parser_count': len(streaming_parser_mod_list()),
         'plugin_parser_count': len(plugin_parser_mod_list()),
-        'parsers': all_parser_info()
+        'parsers': all_parser_info(show_hidden=True)
     }
 
 
-def helptext():
+def helptext(show_hidden=False):
     """Return the help text with the list of parsers"""
-    parsers_string = parsers_text(indent=4, pad=20)
+    parsers_string = parsers_text(indent=4, pad=20, show_hidden=show_hidden)
     options_string = options_text(indent=4, pad=20)
 
     helptext_string = f'''\
-jc converts the output of many commands and file-types to JSON or YAML
+jc converts the output of many commands, file-types, and strings to JSON or YAML
 
 Usage:
-    COMMAND | jc PARSER [OPTIONS]
 
-    or magic syntax:
+    Standard syntax:
 
-    jc [OPTIONS] COMMAND
+        COMMAND | jc [OPTIONS] PARSER
+
+        cat FILE | jc [OPTIONS] PARSER
+
+        echo STRING | jc [OPTIONS] PARSER
+
+    Magic syntax:
+
+        jc [OPTIONS] COMMAND
+
+        jc [OPTIONS] /proc/<path-to-procfile>
 
 Parsers:
 {parsers_string}
@@ -193,19 +203,24 @@ Options:
 {options_string}
 Examples:
     Standard Syntax:
-        $ dig www.google.com | jc --dig --pretty
+        $ dig www.google.com | jc --pretty --dig
+        $ cat /proc/meminfo | jc --pretty --proc
 
     Magic Syntax:
         $ jc --pretty dig www.google.com
+        $ jc --pretty /proc/meminfo
 
     Parser Documentation:
         $ jc --help --dig
+
+    Show Hidden Parsers:
+        $ jc -hh
 '''
 
     return helptext_string
 
 
-def help_doc(options):
+def help_doc(options, show_hidden=False):
     """
     Returns the parser documentation if a parser is found in the arguments,
     otherwise the general help text is returned.
@@ -228,7 +243,7 @@ def help_doc(options):
             utils._safe_pager(doc_text)
             return
 
-    utils._safe_print(helptext())
+    utils._safe_print(helptext(show_hidden=show_hidden))
     return
 
 
@@ -419,6 +434,11 @@ def magic_parser(args):
     )
 
 
+def open_text_file(path_string):
+    with open(path_string, 'r') as f:
+        return f.read()
+
+
 def run_user_command(command):
     """
     Use subprocess to run the user's command. Returns the STDOUT, STDERR,
@@ -455,6 +475,10 @@ def add_metadata_to(list_or_dict,
     does not already exist, it will be created with the metadata fields. If
     the _jc_meta field already exists, the metadata fields will be added to
     the existing object.
+
+    In the case of an empty list (no data), a dictionary with a _jc_meta
+    object will be added to the list. This way you always get metadata,
+    even if there are no results.
     """
     run_timestamp = runtime.timestamp()
 
@@ -474,6 +498,9 @@ def add_metadata_to(list_or_dict,
         list_or_dict['_jc_meta'].update(meta_obj)
 
     elif isinstance(list_or_dict, list):
+        if not list_or_dict:
+            list_or_dict.append({})
+
         for item in list_or_dict:
             if '_jc_meta' not in item:
                 item['_jc_meta'] = {}
@@ -525,6 +552,7 @@ def main():
     force_color = 'C' in options
     mono = ('m' in options or bool(os.getenv('NO_COLOR'))) and not force_color
     help_me = 'h' in options
+    verbose_help = options.count('h') > 1
     pretty = 'p' in options
     quiet = 'q' in options
     ignore_exceptions = options.count('q') > 1
@@ -552,7 +580,7 @@ def main():
         sys.exit(0)
 
     if help_me:
-        help_doc(sys.argv)
+        help_doc(sys.argv, show_hidden=verbose_help)
         sys.exit(0)
 
     if version_info:
@@ -569,13 +597,38 @@ def main():
 
     # if magic syntax used, try to run the command and error if it's not found, etc.
     magic_stdout, magic_stderr, magic_exit_code = None, None, 0
+    run_command_str = ''
     if run_command:
         try:
             run_command_str = shlex.join(run_command)      # python 3.8+
         except AttributeError:
             run_command_str = ' '.join(run_command)        # older python versions
 
-    if valid_command:
+    if run_command_str.startswith('/proc'):
+        try:
+            magic_found_parser = 'proc'
+            magic_stdout = open_text_file(run_command_str)
+
+        except OSError as e:
+            if debug:
+                raise
+
+            error_msg = os.strerror(e.errno)
+            utils.error_message([
+                f'"{run_command_str}" file could not be opened: {error_msg}.'
+            ])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+        except Exception:
+            if debug:
+                raise
+
+            utils.error_message([
+                f'"{run_command_str}" file could not be opened. For details use the -d or -dd option.'
+            ])
+            sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
+
+    elif valid_command:
         try:
             magic_stdout, magic_stderr, magic_exit_code = run_user_command(run_command)
             if magic_stderr:
@@ -623,12 +676,7 @@ def main():
             utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
             sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 
-    # check for input errors (pipe vs magic)
-    if not sys.stdin.isatty() and magic_stdout:
-        utils.error_message(['Piped data and Magic syntax used simultaneously. Use "jc -h" for help.'])
-        sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
-
-    elif sys.stdin.isatty() and magic_stdout is None:
+    if sys.stdin.isatty() and magic_stdout is None:
         utils.error_message(['Missing piped data. Use "jc -h" for help.'])
         sys.exit(combined_exit_code(magic_exit_code, JC_ERROR_EXIT))
 

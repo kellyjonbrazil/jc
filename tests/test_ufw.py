@@ -8,44 +8,44 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-verbose.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_ufw_verbose = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-verbose.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_ufw_verbose = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-numbered.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_ufw_numbered = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-numbered.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_ufw_numbered = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw.out'), 'r', encoding='utf-8') as f:
+        generic_ufw = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_numbered = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_numbered = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered2.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_numbered2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered2.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_numbered2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.out'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_inactive = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_inactive = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-verbose.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_ufw_verbose_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-verbose.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_ufw_verbose_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-numbered.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_ufw_numbered_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-numbered.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_ufw_numbered_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_numbered_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_numbered_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered2.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_numbered2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-numbered2.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_numbered2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.json'), 'r', encoding='utf-8') as f:
-            self.generic_ufw_inactive_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_inactive_json = json.loads(f.read())
+
 
     def test_ufw_nodata(self):
         """

@@ -124,7 +124,7 @@ class info():
     description = '`lsof` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux']
+    compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['lsof']
 
 

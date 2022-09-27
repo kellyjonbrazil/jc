@@ -162,7 +162,8 @@ Parameters:
 ### all\_parser\_info
 
 ```python
-def all_parser_info(documentation: bool = False) -> List[Dict]
+def all_parser_info(documentation: bool = False,
+                    show_hidden: bool = False) -> List[Dict]
 ```
 
 Returns a list of dictionaries that includes metadata for all parser
@@ -171,6 +172,8 @@ modules.
 Parameters:
 
     documentation:      (boolean)    include parser docstrings if True
+    show_hidden:        (boolean)    also show parsers marked as hidden
+                                     in their info metadata.
 
 <a id="jc.lib.get_help"></a>
 

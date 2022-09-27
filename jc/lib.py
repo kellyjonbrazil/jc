@@ -6,7 +6,7 @@ import importlib
 from typing import Dict, List, Iterable, Union, Iterator
 from jc import appdirs
 
-__version__ = '1.21.2'
+__version__ = '1.22.0'
 
 parsers = [
     'acpi',
@@ -84,6 +84,56 @@ parsers = [
     'pip-show',
     'plist',
     'postconf',
+    'proc',
+    'proc-buddyinfo',
+    'proc-consoles',
+    'proc-cpuinfo',
+    'proc-crypto',
+    'proc-devices',
+    'proc-diskstats',
+    'proc-filesystems',
+    'proc-interrupts',
+    'proc-iomem',
+    'proc-ioports',
+    'proc-loadavg',
+    'proc-locks',
+    'proc-meminfo',
+    'proc-modules',
+    'proc-mtrr',
+    'proc-pagetypeinfo',
+    'proc-partitions',
+    'proc-slabinfo',
+    'proc-softirqs',
+    'proc-stat',
+    'proc-swaps',
+    'proc-uptime',
+    'proc-version',
+    'proc-vmallocinfo',
+    'proc-vmstat',
+    'proc-zoneinfo',
+    'proc-driver-rtc',
+    'proc-net-arp',
+    'proc-net-dev',
+    'proc-net-dev-mcast',
+    'proc-net-if-inet6',
+    'proc-net-igmp',
+    'proc-net-igmp6',
+    'proc-net-ipv6-route',
+    'proc-net-netlink',
+    'proc-net-netstat',
+    'proc-net-packet',
+    'proc-net-protocols',
+    'proc-net-route',
+    'proc-net-unix',
+    'proc-pid-fdinfo',
+    'proc-pid-io',
+    'proc-pid-maps',
+    'proc-pid-mountinfo',
+    'proc-pid-numa-maps',
+    'proc-pid-smaps',
+    'proc-pid-stat',
+    'proc-pid-statm',
+    'proc-pid-status',
     'ps',
     'route',
     'rpm-qi',
@@ -339,7 +389,9 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
 
     return info_dict
 
-def all_parser_info(documentation: bool = False) -> List[Dict]:
+def all_parser_info(documentation: bool = False,
+                    show_hidden: bool = False
+) -> List[Dict]:
     """
     Returns a list of dictionaries that includes metadata for all parser
     modules.
@@ -347,8 +399,22 @@ def all_parser_info(documentation: bool = False) -> List[Dict]:
     Parameters:
 
         documentation:      (boolean)    include parser docstrings if True
+        show_hidden:        (boolean)    also show parsers marked as hidden
+                                         in their info metadata.
     """
-    return [parser_info(p, documentation=documentation) for p in parsers]
+    temp_list = [parser_info(p, documentation=documentation) for p in parsers]
+
+    p_list = []
+    if show_hidden:
+        p_list = temp_list
+
+    else:
+        for item in temp_list:
+            if not item.get('hidden', None):
+                p_list.append(item)
+
+    return p_list
+
 
 def get_help(parser_mod_name: str) -> None:
     """

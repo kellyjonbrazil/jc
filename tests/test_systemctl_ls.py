@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-ls.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_systemctl_ls = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-ls.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_systemctl_ls = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-ls.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_systemctl_ls = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-ls.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_systemctl_ls = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-ls.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_systemctl_ls_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/systemctl-ls.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_systemctl_ls_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-ls.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_systemctl_ls_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-ls.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_systemctl_ls_json = json.loads(f.read())
+
 
     def test_systemctl_ls_nodata(self):
         """

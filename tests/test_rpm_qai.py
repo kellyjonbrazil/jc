@@ -15,20 +15,20 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qai.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_rpm_qai = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qai.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_rpm_qai = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qi-package.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_rpm_qi_package = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qi-package.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_rpm_qi_package = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qai.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_rpm_qai_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qai.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_rpm_qai_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qi-package.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_rpm_qi_package_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rpm-qi-package.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_rpm_qi_package_json = json.loads(f.read())
+
 
     def test_rpm_qi_nodata(self):
         """

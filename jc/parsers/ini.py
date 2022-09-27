@@ -49,18 +49,18 @@ Examples:
     $ cat example.ini | jc --ini -p
     {
       "bitbucket.org": {
-        "serveraliveinterval": "45",
-        "compression": "yes",
-        "compressionlevel": "9",
-        "forwardx11": "yes",
-        "user": "hg"
+        "ServerAliveInterval": "45",
+        "Compression": "yes",
+        "CompressionLevel": "9",
+        "ForwardX11": "yes",
+        "User": "hg"
       },
       "topsecret.server.com": {
-        "serveraliveinterval": "45",
-        "compression": "yes",
-        "compressionlevel": "9",
-        "forwardx11": "no",
-        "port": "50022"
+        "ServerAliveInterval": "45",
+        "Compression": "yes",
+        "CompressionLevel": "9",
+        "ForwardX11": "no",
+        "Port": "50022"
       }
     }
 """
@@ -70,7 +70,7 @@ import configparser
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,6 +145,10 @@ def parse(data, raw=False, quiet=False):
         ini = configparser.ConfigParser(allow_no_value=True,
                                         interpolation=None,
                                         strict=False)
+
+        # don't convert keys to lower-case:
+        ini.optionxform = lambda option: option
+
         try:
             ini.read_string(data)
             raw_output = {s: dict(ini.items(s)) for s in ini.sections()}

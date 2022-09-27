@@ -8,20 +8,19 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-example.m3u'), 'r', encoding='utf-8') as f:
-            self.m3u_example = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-example.m3u'), 'r', encoding='utf-8') as f:
+        m3u_example = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-dirty.m3u'), 'r', encoding='utf-8') as f:
-            self.m3u_dirty = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-dirty.m3u'), 'r', encoding='utf-8') as f:
+        m3u_dirty = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-example.json'), 'r', encoding='utf-8') as f:
-            self.m3u_example_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-example.json'), 'r', encoding='utf-8') as f:
+        m3u_example_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-dirty.json'), 'r', encoding='utf-8') as f:
-            self.m3u_dirty_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/m3u-dirty.json'), 'r', encoding='utf-8') as f:
+        m3u_dirty_json = json.loads(f.read())
 
 
     def test_m3u_nodata(self):

@@ -8,38 +8,38 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pip-show.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pip_show = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pip-show.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_pip_show = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/pip-show.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_pip_show = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/pip-show.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_pip_show = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/pip-show.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_pip_show = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/pip-show.out'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_pip_show = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/pip-show.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_pip_show = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/pip-show.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_pip_show = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license.out'), 'r', encoding='utf-8') as f:
-            self.generic_pip_show_multiline_license = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license.out'), 'r', encoding='utf-8') as f:
+        generic_pip_show_multiline_license = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pip-show.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pip_show_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pip-show.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_pip_show_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/pip-show.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_pip_show_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/pip-show.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_pip_show_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/pip-show.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_pip_show_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/pip-show.json'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_pip_show_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/pip-show.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_pip_show_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/pip-show.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_pip_show_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license.json'), 'r', encoding='utf-8') as f:
-            self.generic_pip_show_multiline_license_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license.json'), 'r', encoding='utf-8') as f:
+        generic_pip_show_multiline_license_json = json.loads(f.read())
+
 
     def test_pip_show_nodata(self):
         """

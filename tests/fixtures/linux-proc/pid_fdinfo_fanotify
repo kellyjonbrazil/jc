@@ -1,0 +1,7 @@
+pos:	0
+flags:	02
+mnt_id:	9
+ino:	63107
+fanotify flags:10 event-flags:0
+fanotify mnt_id:12 mflags:40 mask:38 ignored_mask:40000003
+fanotify ino:4f969 sdev:800013 mflags:0 mask:3b ignored_mask:40000000 fhandle-bytes:8 fhandle-type:1 f_handle:69f90400c275b5b4

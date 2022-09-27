@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-cd_catalog.xml'), 'r', encoding='utf-8') as f:
-            self.generic_xml_cd_catalog = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-cd_catalog.xml'), 'r', encoding='utf-8') as f:
+        generic_xml_cd_catalog = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-foodmenu.xml'), 'r', encoding='utf-8') as f:
-            self.generic_xml_foodmenu = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-foodmenu.xml'), 'r', encoding='utf-8') as f:
+        generic_xml_foodmenu = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-cd_catalog.json'), 'r', encoding='utf-8') as f:
-            self.generic_xml_cd_catalog_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-cd_catalog.json'), 'r', encoding='utf-8') as f:
+        generic_xml_cd_catalog_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-foodmenu.json'), 'r', encoding='utf-8') as f:
-            self.generic_xml_foodmenu_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-foodmenu.json'), 'r', encoding='utf-8') as f:
+        generic_xml_foodmenu_json = json.loads(f.read())
+
 
     def test_xml_nodata(self):
         """

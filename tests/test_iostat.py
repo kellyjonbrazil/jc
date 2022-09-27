@@ -8,92 +8,92 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-m.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_m = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-m.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_m = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-x.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-x.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-mx.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_mx = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-mx.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_mx = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-1.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_1 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-1.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_1 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-m.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_m = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-m.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_m = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-x.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-x.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-mx.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_mx = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-mx.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_mx = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-1.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_1 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-1.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_1 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-m.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_m = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-m.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_m = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-x.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-x.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-mx.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_mx = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-mx.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_mx = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-m.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_m_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-m.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_m_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-x.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-x.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-mx.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_mx_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-mx.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_mx_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-1.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_iostat_1_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat-1.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_iostat_1_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-m.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_m_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-m.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_m_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-x.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-x.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-mx.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_mx_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-mx.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_mx_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-1.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_iostat_1_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iostat-1.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_iostat_1_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-m.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_m_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-m.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_m_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-x.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-x.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-mx.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_iostat_mx_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iostat-mx.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iostat_mx_json = json.loads(f.read())
+
 
     def test_iostat_nodata(self):
         """

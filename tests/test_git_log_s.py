@@ -12,119 +12,119 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log.out'), 'r', encoding='utf-8') as f:
+        generic_git_log = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_short = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_short = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_short_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-shortstat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_short_shortstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-shortstat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_shortstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_medium = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_medium = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-stat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_medium_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-stat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_medium_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-shortstat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_medium_shortstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-shortstat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_medium_shortstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_full = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_full = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-stat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_full_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-stat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_full_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-shortstat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_full_shortstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-shortstat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_full_shortstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_shortstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_shortstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_oneline = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_oneline = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-stat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_oneline_stat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-stat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_oneline_stat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_oneline_shortstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_oneline_shortstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_hash_in_message_fix = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_hash_in_message_fix = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix.out'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_is_hash_regex_fix = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_is_hash_regex_fix = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_streaming_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_short_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_short_stat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_stat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_short_shortstat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_shortstat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_medium_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_medium_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-stat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_medium_stat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_medium_stat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_medium_shortstat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-medium-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_medium_shortstat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_full_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_full_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-stat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_full_stat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_full_stat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_full_shortstat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-full-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_full_shortstat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_stat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_stat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_shortstat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_shortstat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_oneline_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_oneline_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-stat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_oneline_stat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_oneline_stat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_oneline_shortstat_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline-shortstat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_oneline_shortstat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_streaming_ignore_exceptions_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming-ignore-exceptions.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_streaming_ignore_exceptions_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_hash_in_message_fix_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-hash-in-message-fix-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_hash_in_message_fix_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix-streaming.json'), 'r', encoding='utf-8') as f:
-            self.generic_git_log_fuller_is_hash_regex_fix_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_fuller_is_hash_regex_fix_streaming_json = json.loads(f.read())
+
 
     def test_git_log_s_nodata(self):
         """

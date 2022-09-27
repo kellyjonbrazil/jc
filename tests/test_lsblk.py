@@ -8,32 +8,32 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_lsblk = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_lsblk = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_lsblk = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_lsblk = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk-allcols.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_lsblk_allcols = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk-allcols.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_lsblk_allcols = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk-allcols.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_lsblk_allcols = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk-allcols.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_lsblk_allcols = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_lsblk_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_lsblk_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_lsblk_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_lsblk_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk-allcols.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_lsblk_allcols_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsblk-allcols.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_lsblk_allcols_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk-allcols.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_lsblk_allcols_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk-allcols.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_lsblk_allcols_json = json.loads(f.read())
+
 
     def test_lsblk_nodata(self):
         """

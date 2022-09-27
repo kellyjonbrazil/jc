@@ -8,230 +8,230 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        #
-        # input
-        #
+    #
+    # input
+    #
 
-        # netstat
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat = f.read()
+    # netstat
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-l.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_l = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-l.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-l.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_l = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-l.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_l = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-p.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-p.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-lnp.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_sudo_lnp = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-lnp.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_sudo_lnp = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_sudo_lnp = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_sudo_lnp = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-aeep.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_sudo_aeep = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-aeep.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_sudo_aeep = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-aeep.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_sudo_aeep = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-aeep.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_sudo_aeep = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.out'), 'r', encoding='utf-8') as f:
-            self.fedora32_netstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.out'), 'r', encoding='utf-8') as f:
+        fedora32_netstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat.out'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat.out'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-An.out'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_An = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-An.out'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_An = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.out'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_Abn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.out'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_Abn = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aa.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_Aa = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aa.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_Aa = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_an = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_an = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AanP.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_AanP = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AanP.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_AanP = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AaT.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_AaT = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AaT.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_AaT = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aax.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_Aax = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aax.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_Aax = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_aT = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_aT = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.out'), 'r', encoding='utf-8') as f:
-            self.generic_netstat_old = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_old = f.read()
 
-        # netstat -r
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_r = f.read()
+    # netstat -r
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_r = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rne.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_rne = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rne.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_rne = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rnee.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_rnee = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rnee.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_rnee = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-r.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_r = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-r.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_r = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rne.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_rne = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rne.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_rne = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rnee.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_rnee = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rnee.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_rnee = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-r.out'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_r = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-r.out'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_r = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.out'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_rnl = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.out'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_rnl = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-r.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_r = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-r.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_r = f.read()
 
-        # netstat -i
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_i = f.read()
+    # netstat -i
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_i = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-i.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_i = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-i.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_i = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.out'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_i = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.out'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_i = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-i.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_i = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-i.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_i = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_ib = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.out'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_ib = f.read()
 
-        #
-        # output
-        #
+    #
+    # output
+    #
 
-        # netstat
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_json = json.loads(f.read())
+    # netstat
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-l.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_l_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-l.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-l.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_l_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-l.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_l_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-p.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_p_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-p.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_p_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-p.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_p_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-p.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_p_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-lnp.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_sudo_lnp_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-lnp.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_sudo_lnp_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_sudo_lnp_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_sudo_lnp_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-aeep.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_sudo_aeep_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-aeep.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_sudo_aeep_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-aeep.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_sudo_aeep_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-aeep.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_sudo_aeep_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.json'), 'r', encoding='utf-8') as f:
-            self.fedora32_netstat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/netstat.json'), 'r', encoding='utf-8') as f:
+        fedora32_netstat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat.json'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat.json'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-An.json'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_An_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-An.json'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_An_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.json'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_Abn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-Abn.json'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_Abn_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aa.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_Aa_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aa.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_Aa_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AanP.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_AanP_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AanP.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_AanP_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AaT.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_AaT_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-AaT.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_AaT_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aax.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_Aax_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-Aax.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_Aax_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_aT_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-aT.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_aT_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_an_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-an.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_an_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.json'), 'r', encoding='utf-8') as f:
-            self.generic_netstat_old_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_old_json = json.loads(f.read())
 
-        # netsat -r
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_r_json = json.loads(f.read())
+    # netsat -r
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_r_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rne.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_rne_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rne.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_rne_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rnee.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_rnee_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-rnee.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_rnee_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-r.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_r_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-r.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_r_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rne.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_rne_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rne.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_rne_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rnee.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_rnee_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-rnee.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_rnee_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-r.json'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_r_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-r.json'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_r_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.json'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_rnl_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-rnl.json'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_rnl_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-r.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_r_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-r.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_r_json = json.loads(f.read())
 
-        # netstat -i
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_netstat_i_json = json.loads(f.read())
+    # netstat -i
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-i.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_netstat_i_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-i.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_netstat_i_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-i.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_i_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.json'), 'r', encoding='utf-8') as f:
-            self.osx_14_6_netstat_i_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/netstat-i.json'), 'r', encoding='utf-8') as f:
+        osx_14_6_netstat_i_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-i.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_i_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-i.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_i_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_netstat_ib_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.json'), 'r', encoding='utf-8') as f:
+        freebsd12_netstat_ib_json = json.loads(f.read())
+
 
     def test_netstat_nodata(self):
         """

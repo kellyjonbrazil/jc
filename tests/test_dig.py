@@ -15,146 +15,146 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-x.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-x.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-x.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-x.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-aaaa.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_aaaa = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-aaaa.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_aaaa = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-aaaa.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_aaaa = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-aaaa.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_aaaa = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-axfr.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_axfr = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-axfr.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_axfr = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-axfr.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_axfr = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-axfr.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_axfr = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_dig = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig.out'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_dig = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-x.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_dig_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-x.out'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_dig_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-aaaa.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_dig_aaaa = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-aaaa.out'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_dig_aaaa = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-x.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_x = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-x.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_x = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-aaaa.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_aaaa = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-aaaa.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_aaaa = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_axfr = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_axfr = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-noall-answer.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_noall_answer = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-noall-answer.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_noall_answer = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_answer_spaces = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.out'), 'r', encoding='utf-8') as f:
+        generic_dig_answer_spaces = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_additional = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.out'), 'r', encoding='utf-8') as f:
+        generic_dig_additional = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional2.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_additional2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional2.out'), 'r', encoding='utf-8') as f:
+        generic_dig_additional2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional3.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_additional3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional3.out'), 'r', encoding='utf-8') as f:
+        generic_dig_additional3 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_edns = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns.out'), 'r', encoding='utf-8') as f:
+        generic_dig_edns = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns2.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_edns2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns2.out'), 'r', encoding='utf-8') as f:
+        generic_dig_edns2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.out'), 'r', encoding='utf-8') as f:
-            self.generic_dig_edns3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.out'), 'r', encoding='utf-8') as f:
+        generic_dig_edns3 = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-x.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-x.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-x.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-x.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-aaaa.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_aaaa_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-aaaa.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_aaaa_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-aaaa.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_aaaa_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-aaaa.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_aaaa_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-axfr.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_dig_axfr_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig-axfr.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_dig_axfr_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-axfr.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_dig_axfr_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/dig-axfr.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_dig_axfr_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_dig_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig.json'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_dig_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-x.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_dig_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-x.json'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_dig_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-aaaa.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_11_6_dig_aaaa_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.11.6/dig-aaaa.json'), 'r', encoding='utf-8') as f:
+        osx_10_11_6_dig_aaaa_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-x.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_x_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-x.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_x_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-aaaa.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_aaaa_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-aaaa.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_aaaa_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_axfr_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-axfr.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_axfr_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-noall-answer.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_dig_noall_answer_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/dig-noall-answer.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_dig_noall_answer_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_answer_spaces_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-spaces.json'), 'r', encoding='utf-8') as f:
+        generic_dig_answer_spaces_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_additional_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional.json'), 'r', encoding='utf-8') as f:
+        generic_dig_additional_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional2.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_additional2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional2.json'), 'r', encoding='utf-8') as f:
+        generic_dig_additional2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional3.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_additional3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-additional3.json'), 'r', encoding='utf-8') as f:
+        generic_dig_additional3_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_edns_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns.json'), 'r', encoding='utf-8') as f:
+        generic_dig_edns_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns2.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_edns2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns2.json'), 'r', encoding='utf-8') as f:
+        generic_dig_edns2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.json'), 'r', encoding='utf-8') as f:
-            self.generic_dig_edns3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.json'), 'r', encoding='utf-8') as f:
+        generic_dig_edns3_json = json.loads(f.read())
+
 
     def test_dig_nodata(self):
         """

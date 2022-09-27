@@ -12,38 +12,38 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n3.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_top_b_n3 = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n3.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_top_b_n3 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_top_b_n1_gib = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_top_b_n1_gib = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib-allfields-w.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_top_b_n1_gib_allfields_w = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib-allfields-w.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_top_b_n1_gib_allfields_w = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-n1.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_top_b_n1 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-n1.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_top_b_n1 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-allfields.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_top_b_allfields = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-allfields.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_top_b_allfields = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n3-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_top_b_n3_streaming_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n3-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_top_b_n3_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_top_b_n1_gib_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_top_b_n1_gib_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib-allfields-w-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_top_b_n1_gib_allfields_w_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/top-b-n1-gib-allfields-w-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_top_b_n1_gib_allfields_w_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-n1-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_top_b_n1_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-n1-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_top_b_n1_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-allfields-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_10_top_b_allfields_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/top-b-allfields-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_top_b_allfields_streaming_json = json.loads(f.read())
+
 
     def test_top_s_nodata(self):
         """

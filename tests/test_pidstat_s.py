@@ -11,29 +11,29 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hl.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat_hl = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hl.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat_hl = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat_hdlrsuw = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat_hdlrsuw = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat_hdlrsuw_2_5 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat_hdlrsuw_2_5 = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hl-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat_hl_streaming_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hl-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat_hl_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat_hdlrsuw_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat_hdlrsuw_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_pidstat_hdlrsuw_2_5_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_pidstat_hdlrsuw_2_5_streaming_json = json.loads(f.read())
+
 
     def test_pidstat_s_nodata(self):
         """

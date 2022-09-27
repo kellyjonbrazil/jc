@@ -8,32 +8,31 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/cksum.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_cksum = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/cksum.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_cksum = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sum.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sum = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sum.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_sum = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/cksum.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_cksum = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/cksum.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_cksum = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/sum.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_sum = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/sum.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_sum = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/cksum.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_cksum_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/cksum.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_cksum_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sum.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_sum_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/sum.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_sum_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/cksum.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_cksum_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/cksum.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_cksum_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/sum.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_sum_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/sum.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_sum_json = json.loads(f.read())
 
     def test_cksum_nodata(self):
         """

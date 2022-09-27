@@ -73,7 +73,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`free` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -96,7 +96,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    int_list = {'total', 'used', 'free', 'shared', 'buff_cache', 'available'}
+    int_list = {'total', 'used', 'free', 'shared', 'buff_cache', 'buffers', 'cache', 'available'}
 
     for entry in proc_data:
         for key in entry:

@@ -3,18 +3,18 @@
 
 # jc.parsers.pidstat
 
-jc - JSON Convert `pidstat -h` command output parser
+jc - JSON Convert `pidstat -H` command output parser
 
-Must use the `-h` option in `pidstat`. All other `pidstat` options are
-supported in combination with `-h`.
+Must use the `-H` (or `-h`, if `-H` is not available) option in `pidstat`.
+All other `pidstat` options are supported in combination with this option.
 
 Usage (cli):
 
-    $ pidstat -h | jc --pidstat
+    $ pidstat -H | jc --pidstat
 
 or
 
-    $ jc pidstat -h
+    $ jc pidstat -H
 
 Usage (module):
 
@@ -51,7 +51,7 @@ Schema:
 
 Examples:
 
-    $ pidstat -hl | jc --pidstat -p
+    $ pidstat -Hl | jc --pidstat -p
     [
       {
         "time": 1646859134,
@@ -88,7 +88,7 @@ Examples:
       }
     ]
 
-    $ pidstat -hl | jc --pidstat -p -r
+    $ pidstat -Hl | jc --pidstat -p -r
     [
       {
         "time": "1646859134",

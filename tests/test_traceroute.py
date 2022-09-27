@@ -8,135 +8,134 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/traceroute.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_traceroute = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/traceroute.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_traceroute = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_noheader = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_noheader = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-asn.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_asn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-asn.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_asn = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-mult-addresses.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_mult_addresses = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-mult-addresses.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_mult_addresses = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-q.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_q = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-q.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_q = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6-mult-addresses.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute6_mult_addresses = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6-mult-addresses.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute6_mult_addresses = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute6 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute6 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_traceroute = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute.out'), 'r', encoding='utf-8') as f:
+        freebsd12_traceroute = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute6.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_traceroute6 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute6.out'), 'r', encoding='utf-8') as f:
+        freebsd12_traceroute6 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute1.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute1 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute1.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute1 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute2.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute2.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute3.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute3 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute3.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute3 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute4.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute4 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute4.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute4 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute5.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute5 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute5.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute5 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute6.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute6 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute6.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute6 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute7.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute7 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute7.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute7 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute8.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute8 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute8.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute8 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv4.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute_n_ipv4 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv4.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute_n_ipv4 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-q1-ipv4.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute_n_q1_ipv4 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-q1-ipv4.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute_n_q1_ipv4 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.out'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute_n_ipv6 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute_n_ipv6 = f.read()
 
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_no_header_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_no_header_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/traceroute.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_traceroute_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/traceroute.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_traceroute_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-asn.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_asn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-asn.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_asn_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-mult-addresses.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_mult_addresses_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-mult-addresses.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_mult_addresses_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-q.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_q_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-q.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_q_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6-mult-addresses.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute6_mult_addresses_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6-mult-addresses.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute6_mult_addresses_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_traceroute6_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute6.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_traceroute6_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_traceroute_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute.json'), 'r', encoding='utf-8') as f:
+        freebsd12_traceroute_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute6.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_traceroute6_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/traceroute6.json'), 'r', encoding='utf-8') as f:
+        freebsd12_traceroute6_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute1.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute1_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute1.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute1_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute2.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute2.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute3.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute3_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute3.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute3_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute4.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute4_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute4.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute4_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute5.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute5_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute5.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute5_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute6.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute6_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute6.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute6_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute7.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute7_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute7.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute7_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute8.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute8_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute8.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute8_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv4.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute_n_ipv4_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv4.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute_n_ipv4_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-q1-ipv4.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute_n_q1_ipv4_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-q1-ipv4.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute_n_q1_ipv4_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.json'), 'r', encoding='utf-8') as f:
-            self.generic_traceroute_n_ipv6_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute_n_ipv6_json = json.loads(f.read())
 
 
     def test_traceroute_nodata(self):

@@ -8,14 +8,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hash.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_hash = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hash.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_hash = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hash.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_hash_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hash.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_hash_json = json.loads(f.read())
+
 
     def test_hash_nodata(self):
         """

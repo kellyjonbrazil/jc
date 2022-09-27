@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sc.yaml'), 'r', encoding='utf-8') as f:
-            self.generic_yaml_istio_sc = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sc.yaml'), 'r', encoding='utf-8') as f:
+        generic_yaml_istio_sc = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.yaml'), 'r', encoding='utf-8') as f:
-            self.generic_yaml_istio_sidecar = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.yaml'), 'r', encoding='utf-8') as f:
+        generic_yaml_istio_sidecar = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sc.json'), 'r', encoding='utf-8') as f:
-            self.generic_yaml_istio_sc_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sc.json'), 'r', encoding='utf-8') as f:
+        generic_yaml_istio_sc_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.json'), 'r', encoding='utf-8') as f:
-            self.generic_yaml_istio_sidecar_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.json'), 'r', encoding='utf-8') as f:
+        generic_yaml_istio_sidecar_json = json.loads(f.read())
+
 
     def test_yaml_nodata(self):
         """

@@ -8,14 +8,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/airport-I.out'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_airport_I = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/airport-I.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_airport_I = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/airport-I.json'), 'r', encoding='utf-8') as f:
-            self.osx_10_14_6_airport_I_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/airport-I.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_airport_I_json = json.loads(f.read())
 
     def test_airport_I_nodata(self):
         """

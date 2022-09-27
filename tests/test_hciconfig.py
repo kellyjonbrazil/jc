@@ -8,32 +8,32 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_hciconfig = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_hciconfig = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig-a.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_hciconfig_a = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig-a.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_hciconfig_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_4_hciconfig = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_hciconfig = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig-a.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_4_hciconfig_a = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig-a.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_hciconfig_a = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_hciconfig_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_hciconfig_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig-a.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_hciconfig_a_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/hciconfig-a.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_hciconfig_a_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_4_hciconfig_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_hciconfig_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig-a.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_20_4_hciconfig_a_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/hciconfig-a.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_hciconfig_a_json = json.loads(f.read())
+
 
     def test_hciconfig_nodata(self):
         """

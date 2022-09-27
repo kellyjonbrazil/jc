@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.out'), 'r', encoding='utf-8') as f:
-            self.rhel_8_manifest_mf = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.out'), 'r', encoding='utf-8') as f:
+        rhel_8_manifest_mf = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.MULTI.out'), 'r', encoding='utf-8') as f:
-            self.rhel_8_manifest_mf_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.MULTI.out'), 'r', encoding='utf-8') as f:
+        rhel_8_manifest_mf_multi = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.json'), 'r', encoding='utf-8') as f:
-            self.rhel_8_manifest_mf_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.json'), 'r', encoding='utf-8') as f:
+        rhel_8_manifest_mf_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.MULTI.json'), 'r', encoding='utf-8') as f:
-            self.rhel_8_manifest_mf_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.MULTI.json'), 'r', encoding='utf-8') as f:
+        rhel_8_manifest_mf_multi_json = json.loads(f.read())
+
 
     def test_jar_manifest_nodata(self):
         """

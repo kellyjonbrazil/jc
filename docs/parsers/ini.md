@@ -54,18 +54,18 @@ Examples:
     $ cat example.ini | jc --ini -p
     {
       "bitbucket.org": {
-        "serveraliveinterval": "45",
-        "compression": "yes",
-        "compressionlevel": "9",
-        "forwardx11": "yes",
-        "user": "hg"
+        "ServerAliveInterval": "45",
+        "Compression": "yes",
+        "CompressionLevel": "9",
+        "ForwardX11": "yes",
+        "User": "hg"
       },
       "topsecret.server.com": {
-        "serveraliveinterval": "45",
-        "compression": "yes",
-        "compressionlevel": "9",
-        "forwardx11": "no",
-        "port": "50022"
+        "ServerAliveInterval": "45",
+        "Compression": "yes",
+        "CompressionLevel": "9",
+        "ForwardX11": "no",
+        "Port": "50022"
       }
     }
 
@@ -92,4 +92,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -8,44 +8,44 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-p.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ntpq_p = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-p.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ntpq_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ntpq_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ntpq_p = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-pn.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ntpq_pn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-pn.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ntpq_pn = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-pn.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ntpq_pn = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-pn.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ntpq_pn = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p2.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ntpq_p2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p2.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ntpq_p2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ntpq-p.out'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ntpq_p = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ntpq-p.out'), 'r', encoding='utf-8') as f:
+        freebsd12_ntpq_p = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-p.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ntpq_p_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-p.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ntpq_p_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ntpq_p_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ntpq_p_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-pn.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_ntpq_pn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ntpq-pn.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ntpq_pn_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-pn.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ntpq_pn_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-pn.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ntpq_pn_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p2.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_ntpq_p2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ntpq-p2.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ntpq_p2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ntpq-p.json'), 'r', encoding='utf-8') as f:
-            self.freebsd12_ntpq_p_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ntpq-p.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ntpq_p_json = json.loads(f.read())
+
 
     def test_ntpq_p_nodata(self):
         """

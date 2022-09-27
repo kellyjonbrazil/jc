@@ -8,20 +8,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue.txt'), 'r', encoding='utf-8') as f:
-            self.generic_ini_keyvalue = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue.txt'), 'r', encoding='utf-8') as f:
+        generic_ini_keyvalue = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue-ifcfg.txt'), 'r', encoding='utf-8') as f:
-            self.generic_ini_keyvalue_ifcfg = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue-ifcfg.txt'), 'r', encoding='utf-8') as f:
+        generic_ini_keyvalue_ifcfg = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue.json'), 'r', encoding='utf-8') as f:
-            self.generic_ini_keyvalue_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue.json'), 'r', encoding='utf-8') as f:
+        generic_ini_keyvalue_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue-ifcfg.json'), 'r', encoding='utf-8') as f:
-            self.generic_ini_keyvalue_ifcfg_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/keyvalue-ifcfg.json'), 'r', encoding='utf-8') as f:
+        generic_ini_keyvalue_ifcfg_json = json.loads(f.read())
+
 
     def test_kv_nodata(self):
         """

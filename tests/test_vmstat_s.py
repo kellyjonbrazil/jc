@@ -20,56 +20,56 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-a.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_a = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-a.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_a = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-w.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_w = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-w.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_w = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-at-5-10.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_at_5_10 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-at-5-10.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_at_5_10 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-awt.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_awt = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-awt.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_awt = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-d.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_d = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-d.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_d = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-dt.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_dt = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-dt.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_dt = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_vmstat_1_long = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_vmstat_1_long = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_streaming_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-a-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_a_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-a-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_a_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-w-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_w_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-w-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_w_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-at-5-10-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_at_5_10_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-at-5-10-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_at_5_10_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-awt-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_awt_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-awt-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_awt_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-d-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_d_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-d-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_d_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-dt-streaming.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_vmstat_dt_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/vmstat-dt-streaming.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_vmstat_dt_streaming_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long-streaming.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_04_vmstat_1_long_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/vmstat-1-long-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_04_vmstat_1_long_streaming_json = json.loads(f.read())
+
 
     def test_vmstat_s_nodata(self):
         """

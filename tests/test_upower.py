@@ -15,44 +15,44 @@ if not sys.platform.startswith('win32'):
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-i.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_upower_i = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-i.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_upower_i = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_upower_d = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_upower_d = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d-clocale.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_upower_d_clocale = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d-clocale.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_upower_d_clocale = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-utc.out'), 'r', encoding='utf-8') as f:
-            self.generic_upower_i_utc = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-utc.out'), 'r', encoding='utf-8') as f:
+        generic_upower_i_utc = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-non-utc.out'), 'r', encoding='utf-8') as f:
-            self.generic_upower_i_non_utc = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-non-utc.out'), 'r', encoding='utf-8') as f:
+        generic_upower_i_non_utc = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-c-locale.out'), 'r', encoding='utf-8') as f:
-            self.generic_upower_i_c_locale = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-c-locale.out'), 'r', encoding='utf-8') as f:
+        generic_upower_i_c_locale = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-i.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_upower_i_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-i.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_upower_i_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_upower_d_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_upower_d_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d-clocale.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_upower_d_clocale_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/upower-d-clocale.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_upower_d_clocale_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-utc.json'), 'r', encoding='utf-8') as f:
-            self.generic_upower_i_utc_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-utc.json'), 'r', encoding='utf-8') as f:
+        generic_upower_i_utc_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-non-utc.json'), 'r', encoding='utf-8') as f:
-            self.generic_upower_i_non_utc_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-non-utc.json'), 'r', encoding='utf-8') as f:
+        generic_upower_i_non_utc_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-c-locale.json'), 'r', encoding='utf-8') as f:
-            self.generic_upower_i_c_locale_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/upower-i-c-locale.json'), 'r', encoding='utf-8') as f:
+        generic_upower_i_c_locale_json = json.loads(f.read())
+
 
     def test_upower_nodata(self):
         """

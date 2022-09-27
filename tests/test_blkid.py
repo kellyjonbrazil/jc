@@ -8,68 +8,67 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-sda2.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_sda2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-sda2.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_sda2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-sda2.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_sda2 = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-sda2.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_sda2 = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_ip_udev = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_ip_udev = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_ip_udev = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_ip_udev = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-multi.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_ip_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-multi.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_ip_multi = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-multi.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_ip_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-multi.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_ip_multi = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev-multi.out'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_ip_udev_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev-multi.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_ip_udev_multi = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_ip_udev_multi = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_ip_udev_multi = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-sda2.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_sda2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-sda2.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_sda2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-sda2.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_sda2_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-sda2.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_sda2_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_ip_udev_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_ip_udev_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_ip_udev_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_ip_udev_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-multi.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_ip_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-multi.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_ip_multi_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-multi.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_ip_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-multi.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_ip_multi_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev-multi.json'), 'r', encoding='utf-8') as f:
-            self.centos_7_7_blkid_ip_udev_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid-ip-udev-multi.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_blkid_ip_udev_multi_json = json.loads(f.read())
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_blkid_ip_udev_multi_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_blkid_ip_udev_multi_json = json.loads(f.read())
 
     def test_blkid_nodata(self):
         """

@@ -1,12 +1,25 @@
-.TH jc 1 2022-08-29 1.21.2 "JSON Convert"
+.TH jc 1 2022-09-26 1.22.0 "JSON Convert"
 .SH NAME
-\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools and file-types
+\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
 .SH SYNOPSIS
-COMMAND | jc PARSER [OPTIONS]
 
-or "Magic" syntax:
+Standard syntax:
 
+.RS
+COMMAND | \fBjc\fP [OPTIONS] PARSER
+
+cat FILE | \fBjc\fP [OPTIONS] PARSER
+
+echo STRING | \fBjc\fP [OPTIONS] PARSER
+.RE
+
+Magic syntax:
+
+.RS
 \fBjc\fP [OPTIONS] COMMAND
+
+\fBjc\fP [OPTIONS] /proc/<path-to-procfile>
+.RE
 
 .SH DESCRIPTION
 \fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
@@ -355,12 +368,12 @@ M3U and M3U8 file parser
 .TP
 .B
 \fB--pidstat\fP
-`pidstat -h` command parser
+`pidstat -H` command parser
 
 .TP
 .B
 \fB--pidstat-s\fP
-`pidstat -h` command streaming parser
+`pidstat -H` command streaming parser
 
 .TP
 .B
@@ -391,6 +404,256 @@ PLIST file parser
 .B
 \fB--postconf\fP
 `postconf -M` command parser
+
+.TP
+.B
+\fB--proc\fP
+`/proc/` file parser
+
+.TP
+.B
+\fB--proc-buddyinfo\fP
+`/proc/buddyinfo` file parser
+
+.TP
+.B
+\fB--proc-consoles\fP
+`/proc/consoles` file parser
+
+.TP
+.B
+\fB--proc-cpuinfo\fP
+`/proc/cpuinfo` file parser
+
+.TP
+.B
+\fB--proc-crypto\fP
+`/proc/crypto` file parser
+
+.TP
+.B
+\fB--proc-devices\fP
+`/proc/devices` file parser
+
+.TP
+.B
+\fB--proc-diskstats\fP
+`/proc/diskstats` file parser
+
+.TP
+.B
+\fB--proc-filesystems\fP
+`/proc/filesystems` file parser
+
+.TP
+.B
+\fB--proc-interrupts\fP
+`/proc/interrupts` file parser
+
+.TP
+.B
+\fB--proc-iomem\fP
+`/proc/iomem` file parser
+
+.TP
+.B
+\fB--proc-ioports\fP
+`/proc/ioports` file parser
+
+.TP
+.B
+\fB--proc-loadavg\fP
+`/proc/loadavg` file parser
+
+.TP
+.B
+\fB--proc-locks\fP
+`/proc/locks` file parser
+
+.TP
+.B
+\fB--proc-meminfo\fP
+`/proc/meminfo` file parser
+
+.TP
+.B
+\fB--proc-modules\fP
+`/proc/modules` file parser
+
+.TP
+.B
+\fB--proc-mtrr\fP
+`/proc/mtrr` file parser
+
+.TP
+.B
+\fB--proc-pagetypeinfo\fP
+`/proc/pagetypeinfo` file parser
+
+.TP
+.B
+\fB--proc-partitions\fP
+`/proc/partitions` file parser
+
+.TP
+.B
+\fB--proc-slabinfo\fP
+`/proc/slabinfo` file parser
+
+.TP
+.B
+\fB--proc-softirqs\fP
+`/proc/softirqs` file parser
+
+.TP
+.B
+\fB--proc-stat\fP
+`/proc/stat` file parser
+
+.TP
+.B
+\fB--proc-swaps\fP
+`/proc/swaps` file parser
+
+.TP
+.B
+\fB--proc-uptime\fP
+`/proc/uptime` file parser
+
+.TP
+.B
+\fB--proc-version\fP
+`/proc/version` file parser
+
+.TP
+.B
+\fB--proc-vmallocinfo\fP
+`/proc/vmallocinfo` file parser
+
+.TP
+.B
+\fB--proc-vmstat\fP
+`/proc/vmstat` file parser
+
+.TP
+.B
+\fB--proc-zoneinfo\fP
+`/proc/zoneinfo` file parser
+
+.TP
+.B
+\fB--proc-driver-rtc\fP
+`/proc/driver/rtc` file parser
+
+.TP
+.B
+\fB--proc-net-arp\fP
+`/proc/net/arp` file parser
+
+.TP
+.B
+\fB--proc-net-dev\fP
+`/proc/net/dev` file parser
+
+.TP
+.B
+\fB--proc-net-dev-mcast\fP
+`/proc/net/dev_mcast` file parser
+
+.TP
+.B
+\fB--proc-net-if-inet6\fP
+`/proc/net/if_inet6` file parser
+
+.TP
+.B
+\fB--proc-net-igmp\fP
+`/proc/net/igmp` file parser
+
+.TP
+.B
+\fB--proc-net-igmp6\fP
+`/proc/net/igmp6` file parser
+
+.TP
+.B
+\fB--proc-net-ipv6-route\fP
+`/proc/net/ipv6_route` file parser
+
+.TP
+.B
+\fB--proc-net-netlink\fP
+`/proc/net/netlink` file parser
+
+.TP
+.B
+\fB--proc-net-netstat\fP
+`/proc/net/netstat` file parser
+
+.TP
+.B
+\fB--proc-net-packet\fP
+`/proc/net/packet` file parser
+
+.TP
+.B
+\fB--proc-net-protocols\fP
+`/proc/net/protocols` file parser
+
+.TP
+.B
+\fB--proc-net-route\fP
+`/proc/net/route` file parser
+
+.TP
+.B
+\fB--proc-net-unix\fP
+`/proc/net/unix` file parser
+
+.TP
+.B
+\fB--proc-pid-fdinfo\fP
+`/proc/<pid>/fdinfo/<fd>` file parser
+
+.TP
+.B
+\fB--proc-pid-io\fP
+`/proc/<pid>/io` file parser
+
+.TP
+.B
+\fB--proc-pid-maps\fP
+`/proc/<pid>/maps` file parser
+
+.TP
+.B
+\fB--proc-pid-mountinfo\fP
+`/proc/<pid>/mountinfo` file parser
+
+.TP
+.B
+\fB--proc-pid-numa-maps\fP
+`/proc/<pid>/numa_maps` file parser
+
+.TP
+.B
+\fB--proc-pid-smaps\fP
+`/proc/<pid>/smaps` file parser
+
+.TP
+.B
+\fB--proc-pid-stat\fP
+`/proc/<pid>/stat` file parser
+
+.TP
+.B
+\fB--proc-pid-statm\fP
+`/proc/<pid>/statm` file parser
+
+.TP
+.B
+\fB--proc-pid-status\fP
+`/proc/<pid>/status` file parser
 
 .TP
 .B
@@ -639,7 +902,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP, \fB--help\fP
-Help (\fB--help --parser_name\fP for parser documentation)
+Help (\fB--help --parser_name\fP for parser documentation). Use twice to show hidden parsers (e.g. \fB-hh\fP)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP
@@ -872,17 +1135,21 @@ If a UTC timezone can be detected in the text of the command output, the timesta
 .SH EXAMPLES
 Standard Syntax:
 .RS
-$ dig www.google.com | jc \fB--dig\fP \fB-p\fP
+$ dig www.google.com | jc \fB-p\fP \fB--dig\fP
+
+$ cat /proc/meminfo | jc \fB--pretty\fP \fB--proc\fP
 .RE
 
 Magic Syntax:
 .RS
-$ jc \fB-p\fP dig www.google.com
+$ jc \fB--pretty\fP dig www.google.com
+
+$ jc \fB--pretty\fP /proc/meminfo
 .RE
 
 For parser documentation:
 .RS
-$ jc \fB-h\fP \fB--dig\fP
+$ jc \fB--help\fP \fB--dig\fP
 .RE
 .SH AUTHOR
 Kelly Brazil (kellyjonbrazil@gmail.com)

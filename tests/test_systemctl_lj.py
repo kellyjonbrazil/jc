@@ -8,14 +8,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-lj.out'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_systemctl_lj = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-lj.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_systemctl_lj = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-lj.json'), 'r', encoding='utf-8') as f:
-            self.ubuntu_18_4_systemctl_lj_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/systemctl-lj.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_systemctl_lj_json = json.loads(f.read())
+
 
     def test_systemctl_lj_nodata(self):
         """

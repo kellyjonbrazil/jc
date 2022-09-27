@@ -3,17 +3,17 @@
 
 # jc.parsers.pidstat\_s
 
-jc - JSON Convert `pidstat -h` command output streaming parser
+jc - JSON Convert `pidstat -H` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)
 
-Must use the `-h` option in `pidstat`. All other `pidstat` options are
-supported in combination with `-h`.
+Must use the `-H` (or `-h`, if `-H` is not available) option in `pidstat`.
+All other `pidstat` options are supported in combination with this option.
 
 Usage (cli):
 
-    $ pidstat | jc --pidstat-s
+    $ pidstat -H | jc --pidstat-s
 
 > Note: When piping `jc` converted `pidstat` output to other processes it
 > may appear the output is hanging due to the OS pipe buffers. This is
@@ -65,13 +65,13 @@ Schema:
 
 Examples:
 
-    $ pidstat -hl | jc --pidstat-s
+    $ pidstat -Hl | jc --pidstat-s
     {"time":1646859134,"uid":0,"pid":1,"percent_usr":0.0,"percent_syste...}
     {"time":1646859134,"uid":0,"pid":6,"percent_usr":0.0,"percent_syste...}
     {"time":1646859134,"uid":0,"pid":9,"percent_usr":0.0,"percent_syste...}
     ...
 
-    $ pidstat -hl | jc --pidstat-s -r
+    $ pidstat -Hl | jc --pidstat-s -r
     {"time":"1646859134","uid":"0","pid":"1","percent_usr":"0.00","perc...}
     {"time":"1646859134","uid":"0","pid":"6","percent_usr":"0.00","perc...}
     {"time":"1646859134","uid":"0","pid":"9","percent_usr":"0.00","perc...}

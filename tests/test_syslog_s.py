@@ -11,14 +11,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    def setUp(self):
-        # input
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424.out'), 'r', encoding='utf-8') as f:
-            self.syslog = f.read()
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424.out'), 'r', encoding='utf-8') as f:
+        syslog = f.read()
 
-        # output
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424-streaming.json'), 'r', encoding='utf-8') as f:
-            self.syslog_streaming_json = json.loads(f.read())
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424-streaming.json'), 'r', encoding='utf-8') as f:
+        syslog_streaming_json = json.loads(f.read())
+
 
     def test_syslog_s_nodata(self):
         """
