@@ -203,6 +203,9 @@ class MyTests(unittest.TestCase):
             'proc_pid_stat': (
                 'fixtures/linux-proc/pid_stat',
                 'fixtures/linux-proc/pid_stat.json'),
+            'pid_stat_w_space_and_nl_in_comm': (
+                'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm',
+                'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm.json'),
             'proc_pid_statm': (
                 'fixtures/linux-proc/pid_statm',
                 'fixtures/linux-proc/pid_statm.json'),
