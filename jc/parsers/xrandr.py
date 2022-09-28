@@ -219,9 +219,9 @@ except ImportError:
 
 _screen_pattern = (
     r"Screen (?P<screen_number>\d+): "
-    + "minimum (?P<minimum_width>\d+) x (?P<minimum_height>\d+), "
-    + "current (?P<current_width>\d+) x (?P<current_height>\d+), "
-    + "maximum (?P<maximum_width>\d+) x (?P<maximum_height>\d+)"
+    + r"minimum (?P<minimum_width>\d+) x (?P<minimum_height>\d+), "
+    + r"current (?P<current_width>\d+) x (?P<current_height>\d+), "
+    + r"maximum (?P<maximum_width>\d+) x (?P<maximum_height>\d+)"
 )
 
 
@@ -250,13 +250,13 @@ def _parse_screen(next_lines: List[str]) -> Optional[Screen]:
 # regex101 demo link
 _device_pattern = (
     r"(?P<device_name>.+) "
-    + "(?P<is_connected>(connected|disconnected)) ?"
-    + "(?P<is_primary> primary)? ?"
-    + "((?P<resolution_width>\d+)x(?P<resolution_height>\d+)"
-    + "\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
-    + "(?P<rotation>(inverted|left|right))? ?"
-    + "\(normal left inverted right x axis y axis\)"
-    + "( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
+    + r"(?P<is_connected>(connected|disconnected)) ?"
+    + r"(?P<is_primary> primary)? ?"
+    + r"((?P<resolution_width>\d+)x(?P<resolution_height>\d+)"
+    + r"\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
+    + r"(?P<rotation>(inverted|left|right))? ?"
+    + r"\(normal left inverted right x axis y axis\)"
+    + r"( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
 
 
