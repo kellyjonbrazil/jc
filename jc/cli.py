@@ -96,12 +96,11 @@ class JcCli():
         self.bash_comp = False
         self.zsh_comp = False
 
-        # Magic options
-        self.valid_command = False
-        self.run_command = None
-        self.run_command_str = ''
+        # magic variables
         self.magic_found_parser = None
         self.magic_options: List[str] = []
+        self.magic_run_command = None
+        self.magic_run_command_str = ''
         self.magic_stdout = None
         self.magic_stderr = None
         self.magic_returncode = 0
@@ -442,15 +441,12 @@ Examples:
             magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
 
         # find the command and parser
+        self.magic_run_command = args_given
         one_word_command = args_given[0]
         two_word_command = ' '.join(args_given[0:2])
 
         # try to get a parser for two_word_command, otherwise get one for one_word_command
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
-
-        # set the instance variables
-        self.valid_command = bool(self.magic_found_parser)
-        self.run_command = args_given
 
     def open_text_file(self):
         with open(self.path_string, 'r') as f:
@@ -461,7 +457,7 @@ Examples:
         Use subprocess to run the user's command. Returns the STDOUT, STDERR,
         and the Exit Code as a tuple.
         """
-        proc = subprocess.Popen(self.run_command,
+        proc = subprocess.Popen(self.magic_run_command,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 close_fds=False,            # Allows inheriting file descriptors;
@@ -492,8 +488,8 @@ Examples:
             'timestamp': self.run_timestamp.timestamp()
         }
 
-        if self.run_command:
-            meta_obj['magic_command'] = self.run_command
+        if self.magic_run_command:
+            meta_obj['magic_command'] = self.magic_run_command
             meta_obj['magic_command_exit'] = self.magic_returncode
 
         if isinstance(self.data_out, dict):
@@ -539,21 +535,20 @@ Examples:
         self.args = sys.argv
         self.magic_parser()
 
-        # set colors
-        self.env_colors = os.getenv('JC_COLORS')
-
         # set magic options if magic syntax was found
         if self.magic_found_parser:
             self.options.extend(self.magic_options)
 
         # find options if magic_parser did not find a command
-        if not self.valid_command:
+        if not self.magic_found_parser:
             for opt in self.args:
                 if opt in long_options_map:
                     self.options.extend(long_options_map[opt][0])
 
                 if opt.startswith('-') and not opt.startswith('--'):
                     self.options.extend(opt[1:])
+
+        self.env_colors = os.getenv('JC_COLORS')
 
         self.about = 'a' in self.options
         self.debug = 'd' in self.options
@@ -604,13 +599,13 @@ Examples:
             sys.exit(0)
 
         # if magic syntax used, try to run the command and error if it's not found, etc.
-        if self.run_command:
+        if self.magic_run_command:
             try:
-                self.run_command_str = shlex.join(self.run_command)      # python 3.8+
+                self.magic_run_command_str = shlex.join(self.magic_run_command)      # python 3.8+
             except AttributeError:
-                self.run_command_str = ' '.join(self.run_command)        # older python versions
+                self.magic_run_command_str = ' '.join(self.magic_run_command)        # older python versions
 
-        if self.run_command_str.startswith('/proc'):
+        if self.magic_run_command_str.startswith('/proc'):
             try:
                 self.magic_found_parser = 'proc'
                 self.magic_stdout = self.open_text_file()
@@ -621,7 +616,7 @@ Examples:
 
                 error_msg = os.strerror(e.errno)
                 utils.error_message([
-                    f'"{self.run_command_str}" file could not be opened: {error_msg}.'
+                    f'"{self.magic_run_command_str}" file could not be opened: {error_msg}.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
@@ -631,12 +626,12 @@ Examples:
                     raise
 
                 utils.error_message([
-                    f'"{self.run_command_str}" file could not be opened. For details use the -d or -dd option.'
+                    f'"{self.magic_run_command_str}" file could not be opened. For details use the -d or -dd option.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
-        elif self.valid_command:
+        elif self.magic_found_parser:
             try:
                 self.run_user_command()
                 if self.magic_stderr:
@@ -648,7 +643,7 @@ Examples:
 
                 error_msg = os.strerror(e.errno)
                 utils.error_message([
-                    f'"{self.run_command_str}" command could not be run: {error_msg}.'
+                    f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
@@ -658,13 +653,13 @@ Examples:
                     raise
 
                 utils.error_message([
-                    f'"{self.run_command_str}" command could not be run. For details use the -d or -dd option.'
+                    f'"{self.magic_run_command_str}" command could not be run. For details use the -d or -dd option.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
-        elif self.run_command is not None:
-            utils.error_message([f'"{self.run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
+        elif self.magic_run_command is not None:
+            utils.error_message([f'"{self.magic_run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
             sys.exit(self.combined_exit_code())
 
         # find the correct parser
