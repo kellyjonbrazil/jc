@@ -2,38 +2,42 @@ import unittest
 from datetime import datetime, timezone
 import pygments
 from pygments.token import (Name, Number, String, Keyword)
-import jc.cli
+from jc.cli import JcCli
 
 
 class MyTests(unittest.TestCase):
     def test_cli_magic_parser(self):
         commands = {
-            'jc -p systemctl list-sockets': (True, ['systemctl', 'list-sockets'], '--systemctl-ls', ['p']),
-            'jc -p systemctl list-unit-files': (True, ['systemctl', 'list-unit-files'], '--systemctl-luf', ['p']),
-            'jc -p pip list': (True, ['pip', 'list'], '--pip-list', ['p']),
-            'jc -p pip3 list': (True, ['pip3', 'list'], '--pip-list', ['p']),
-            'jc -p pip show jc': (True, ['pip', 'show', 'jc'], '--pip-show', ['p']),
-            'jc -p pip3 show jc': (True, ['pip3', 'show', 'jc'], '--pip-show', ['p']),
-            'jc -prd last': (True, ['last'], '--last', ['p', 'r', 'd']),
-            'jc -prdd lastb': (True, ['lastb'], '--last', ['p', 'r', 'd', 'd']),
-            'jc -p airport -I': (True, ['airport', '-I'], '--airport', ['p']),
-            'jc -p -r airport -I': (True, ['airport', '-I'], '--airport', ['p', 'r']),
-            'jc -prd airport -I': (True, ['airport', '-I'], '--airport', ['p', 'r', 'd']),
-            'jc -p nonexistent command': (False, ['nonexistent', 'command'], None, ['p']),
-            'jc -ap': (False, None, None, []),
-            'jc -a arp -a': (False, None, None, []),
-            'jc -v': (False, None, None, []),
-            'jc -h': (False, None, None, []),
-            'jc -h --arp': (False, None, None, []),
-            'jc -h arp': (False, None, None, []),
-            'jc -h arp -a': (False, None, None, []),
-            'jc --pretty dig': (True, ['dig'], '--dig', ['p']),
-            'jc --pretty --monochrome --quiet --raw dig': (True, ['dig'], '--dig', ['p', 'm', 'q', 'r']),
-            'jc --about --yaml-out': (False, None, None, [])
+            'jc -p systemctl list-sockets': ('--systemctl-ls', ['p'], ['systemctl', 'list-sockets']),
+            'jc -p systemctl list-unit-files': ('--systemctl-luf', ['p'], ['systemctl', 'list-unit-files']),
+            'jc -p pip list': ('--pip-list', ['p'], ['pip', 'list']),
+            'jc -p pip3 list': ('--pip-list', ['p'], ['pip3', 'list']),
+            'jc -p pip show jc': ('--pip-show', ['p'], ['pip', 'show', 'jc']),
+            'jc -p pip3 show jc': ('--pip-show', ['p'], ['pip3', 'show', 'jc']),
+            'jc -prd last': ('--last', ['p', 'r', 'd'], ['last']),
+            'jc -prdd lastb': ('--last', ['p', 'r', 'd', 'd'], ['lastb']),
+            'jc -p airport -I': ('--airport', ['p'], ['airport', '-I']),
+            'jc -p -r airport -I': ('--airport', ['p', 'r'], ['airport', '-I']),
+            'jc -prd airport -I': ('--airport', ['p', 'r', 'd'], ['airport', '-I']),
+            'jc -p nonexistent command': (None, ['p'], ['nonexistent', 'command']),
+            'jc -ap': (None, ['a', 'p'], None),
+            'jc -a arp -a': (None, ['a'], None),
+            'jc -v': (None, ['v'], None),
+            'jc -h': (None, ['h'], None),
+            'jc -h --arp': (None, ['h'], None),
+            'jc -h arp': (None, ['h'], None),
+            'jc -h arp -a': (None, ['h'], None),
+            'jc --pretty dig': ('--dig', ['p'], ['dig']),
+            'jc --pretty --monochrome --quiet --raw dig': ('--dig', ['p', 'm', 'q', 'r'], ['dig']),
+            'jc --about --yaml-out': (None, ['a', 'y'], None)
         }
 
-        for command, expected_command in commands.items():
-            self.assertEqual(jc.cli.magic_parser(command.split(' ')), expected_command)
+        for command, expected in commands.items():
+            cli = JcCli()
+            cli.args = command.split()
+            cli.magic_parser()
+            resulting_attributes = (cli.magic_found_parser, cli.magic_options, cli.magic_run_command)
+            self.assertEqual(expected, resulting_attributes)
 
     def test_cli_set_env_colors(self):
         if pygments.__version__.startswith('2.3.'):
@@ -128,7 +132,10 @@ class MyTests(unittest.TestCase):
             }
 
         for jc_colors, expected_colors in env.items():
-            self.assertEqual(jc.cli.set_env_colors(jc_colors), expected_colors)
+            cli = JcCli()
+            cli.env_colors = jc_colors
+            cli.set_custom_colors()
+            self.assertEqual(cli.custom_colors, expected_colors)
 
     def test_cli_json_out(self):
         test_input = [
@@ -157,7 +164,10 @@ class MyTests(unittest.TestCase):
             ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
-            self.assertEqual(jc.cli.json_out(test_dict), expected_json)
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.data_out = test_dict
+            self.assertEqual(cli.json_out(), expected_json)
 
     def test_cli_json_out_mono(self):
         test_input = [
@@ -177,7 +187,11 @@ class MyTests(unittest.TestCase):
         ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
-            self.assertEqual(jc.cli.json_out(test_dict, mono=True), expected_json)
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_dict
+            self.assertEqual(cli.json_out(), expected_json)
 
     def test_cli_json_out_pretty(self):
         test_input = [
@@ -197,7 +211,11 @@ class MyTests(unittest.TestCase):
             ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
-            self.assertEqual(jc.cli.json_out(test_dict, pretty=True), expected_json)
+            cli = JcCli()
+            cli.pretty = True
+            cli.set_custom_colors()
+            cli.data_out = test_dict
+            self.assertEqual(cli.json_out(), expected_json)
 
     def test_cli_yaml_out(self):
         test_input = [
@@ -226,7 +244,10 @@ class MyTests(unittest.TestCase):
             ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
-            self.assertEqual(jc.cli.yaml_out(test_dict), expected_json)
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.data_out = test_dict
+            self.assertEqual(cli.yaml_out(), expected_json)
 
     def test_cli_yaml_out_mono(self):
         test_input = [
@@ -248,56 +269,61 @@ class MyTests(unittest.TestCase):
         ]
 
         for test_dict, expected_json in zip(test_input, expected_output):
-            self.assertEqual(jc.cli.yaml_out(test_dict, mono=True), expected_json)
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_dict
+            self.assertEqual(cli.yaml_out(), expected_json)
 
     def test_cli_about_jc(self):
-        self.assertEqual(jc.cli.about_jc()['name'], 'jc')
-        self.assertGreaterEqual(jc.cli.about_jc()['parser_count'], 55)
-        self.assertEqual(jc.cli.about_jc()['parser_count'], len(jc.cli.about_jc()['parsers']))
+        cli = JcCli()
+        self.assertEqual(cli.about_jc()['name'], 'jc')
+        self.assertGreaterEqual(cli.about_jc()['parser_count'], 55)
+        self.assertEqual(cli.about_jc()['parser_count'], len(cli.about_jc()['parsers']))
 
     def test_add_meta_to_simple_dict(self):
-        list_or_dict = {'a': 1, 'b': 2}
-        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 2
-        run_command = ['ping', '-c3', '192.168.1.123']
-        parser_name = 'ping'
+        cli = JcCli()
+        cli.data_out = {'a': 1, 'b': 2}
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.magic_returncode = 2
+        cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
+        cli.parser_name = 'ping'
         expected = {'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}
-        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
-
-        self.assertEqual(list_or_dict, expected)
+        cli.add_metadata_to_output()
+        self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_simple_list(self):
-        list_or_dict = [{'a': 1, 'b': 2},{'a': 3, 'b': 4}]
-        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 2
-        run_command = ['ping', '-c3', '192.168.1.123']
-        parser_name = 'ping'
+        cli = JcCli()
+        cli.data_out = [{'a': 1, 'b': 2},{'a': 3, 'b': 4}]
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.magic_returncode = 2
+        cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
+        cli.parser_name = 'ping'
         expected = [{'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}]
-        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
-
-        self.assertEqual(list_or_dict, expected)
+        cli.add_metadata_to_output()
+        self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_dict_existing_meta(self):
-        list_or_dict = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}}
-        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 2
-        run_command = ['ping', '-c3', '192.168.1.123']
-        parser_name = 'ping'
+        cli = JcCli()
+        cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
+        cli.magic_returncode = 2
+        cli.data_out = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}}
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'ping'
         expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}
-        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
-
-        self.assertEqual(list_or_dict, expected)
+        cli.add_metadata_to_output()
+        self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_list_existing_meta(self):
-        list_or_dict = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}},{'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar'}}]
-        runtime = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
-        magic_exit_code = 2
-        run_command = ['ping', '-c3', '192.168.1.123']
-        parser_name = 'ping'
+        cli = JcCli()
+        cli.data_out = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}},{'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar'}}]
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.magic_returncode = 2
+        cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
+        cli.parser_name = 'ping'
         expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}]
-        jc.cli.add_metadata_to(list_or_dict, runtime, run_command, magic_exit_code, parser_name)
-
-        self.assertEqual(list_or_dict, expected)
+        cli.add_metadata_to_output()
+        self.assertEqual(cli.data_out, expected)
 
 if __name__ == '__main__':
     unittest.main()
