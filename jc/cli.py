@@ -430,8 +430,9 @@ Examples:
             else:
                 break
 
-        # if -h, -a, or -v found in options, then bail out
+        # if -h, -a, or -v found in options, then clear options and bail out
         if 'h' in self.magic_options or 'a' in self.magic_options or 'v' in self.magic_options:
+            self.magic_options = []
             return
 
         # all options popped and no command found - for case like 'jc -x'
@@ -538,9 +539,8 @@ Examples:
         self.args = sys.argv
         self.magic_parser()
 
-        # set magic options if magic syntax was found
-        if self.magic_found_parser:
-            self.options.extend(self.magic_options)
+        # add magic options to regular options
+        self.options.extend(self.magic_options)
 
         # find options if magic_parser did not find a command
         if not self.magic_found_parser:

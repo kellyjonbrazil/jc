@@ -20,16 +20,16 @@ class MyTests(unittest.TestCase):
             'jc -p -r airport -I': ('--airport', ['p', 'r'], ['airport', '-I']),
             'jc -prd airport -I': ('--airport', ['p', 'r', 'd'], ['airport', '-I']),
             'jc -p nonexistent command': (None, ['p'], ['nonexistent', 'command']),
-            'jc -ap': (None, ['a', 'p'], None),
-            'jc -a arp -a': (None, ['a'], None),
-            'jc -v': (None, ['v'], None),
-            'jc -h': (None, ['h'], None),
+            'jc -ap': (None, [], None),
+            'jc -a arp -a': (None, [], None),
+            'jc -v': (None, [], None),
+            'jc -h': (None, [], None),
             'jc -h --arp': (None, ['h'], None),
-            'jc -h arp': (None, ['h'], None),
-            'jc -h arp -a': (None, ['h'], None),
+            'jc -h arp': (None, [], None),
+            'jc -h arp -a': (None, [], None),
             'jc --pretty dig': ('--dig', ['p'], ['dig']),
             'jc --pretty --monochrome --quiet --raw dig': ('--dig', ['p', 'm', 'q', 'r'], ['dig']),
-            'jc --about --yaml-out': (None, ['a', 'y'], None)
+            'jc --about --yaml-out': (None, [], None)
         }
 
         for command, expected in commands.items():
