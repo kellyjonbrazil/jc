@@ -694,9 +694,9 @@ Examples:
             if _parser_is_streaming(self.parser_module):
                 self.data_in = sys.stdin
                 result = self.parser_module.parse(self.data_in,
-                                                raw=self.raw,
-                                                quiet=self.quiet,
-                                                ignore_exceptions=self.ignore_exceptions)
+                                                  raw=self.raw,
+                                                  quiet=self.quiet,
+                                                  ignore_exceptions=self.ignore_exceptions)
 
                 for line in result:
                     self.data_out = line
