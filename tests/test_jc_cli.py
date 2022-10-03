@@ -24,7 +24,7 @@ class MyTests(unittest.TestCase):
             'jc -a arp -a': (None, [], None),
             'jc -v': (None, [], None),
             'jc -h': (None, [], None),
-            'jc -h --arp': (None, ['h'], None),
+            'jc -h --arp': (None, [], None),
             'jc -h arp': (None, [], None),
             'jc -h arp -a': (None, [], None),
             'jc --pretty dig': ('--dig', ['p'], ['dig']),

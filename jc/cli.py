@@ -419,6 +419,7 @@ Examples:
 
             # parser found - use standard syntax
             if arg.startswith('--'):
+                self.magic_options = []
                 return
 
             # option found - populate option list
