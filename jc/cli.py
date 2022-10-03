@@ -58,7 +58,6 @@ class JcCli():
     def __init__(self) -> None:
         self.data_in = None
         self.data_out = None
-        self.current_out_line = None
         self.options: List[str] = []
         self.args: List[str] = []
         self.parser_module = None
@@ -108,7 +107,7 @@ class JcCli():
         self.magic_options: List[str] = []
         self.magic_stdout = None
         self.magic_stderr = None
-        self.magic_returncode = None
+        self.magic_returncode = 0
 
 
     def set_custom_colors(self):
@@ -520,7 +519,7 @@ Examples:
 
         else:
             utils.error_message(['Parser returned an unsupported object type.'])
-            self.jc_error = self.JC_ERROR_EXIT
+            self.jc_exit = self.JC_ERROR_EXIT
             sys.exit(self.combined_exit_code())
 
     def ctrlc(self, signum, frame):
@@ -629,7 +628,7 @@ Examples:
                 utils.error_message([
                     f'"{self.run_command_str}" file could not be opened: {error_msg}.'
                 ])
-                self.jc_error = self.JC_ERROR_EXIT
+                self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
             except Exception:
@@ -639,7 +638,7 @@ Examples:
                 utils.error_message([
                     f'"{self.run_command_str}" file could not be opened. For details use the -d or -dd option.'
                 ])
-                self.jc_error = self.JC_ERROR_EXIT
+                self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
         elif self.valid_command:
@@ -656,7 +655,7 @@ Examples:
                 utils.error_message([
                     f'"{self.run_command_str}" command could not be run: {error_msg}.'
                 ])
-                self.jc_error = self.JC_ERROR_EXIT
+                self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
             except Exception:
@@ -666,7 +665,7 @@ Examples:
                 utils.error_message([
                     f'"{self.run_command_str}" command could not be run. For details use the -d or -dd option.'
                 ])
-                self.jc_error = self.JC_ERROR_EXIT
+                self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
         elif self.run_command is not None:
@@ -690,12 +689,12 @@ Examples:
 
             if not found:
                 utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
-                self.jc_error = self.JC_ERROR_EXIT
+                self.jc_exit = self.JC_ERROR_EXIT
                 sys.exit(self.combined_exit_code())
 
         if sys.stdin.isatty() and self.magic_stdout is None:
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
-            self.jc_error = self.JC_ERROR_EXIT
+            self.jc_exit = self.JC_ERROR_EXIT
             sys.exit(self.combined_exit_code())
 
         # parse and print to stdout
@@ -752,7 +751,7 @@ Examples:
                 'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                 f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
             ])
-            self.jc_error = self.JC_ERROR_EXIT
+            self.jc_exit = self.JC_ERROR_EXIT
             sys.exit(self.combined_exit_code())
 
         except Exception:
@@ -769,7 +768,7 @@ Examples:
                 'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                 f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
             ])
-            self.jc_error = self.JC_ERROR_EXIT
+            self.jc_exit = self.JC_ERROR_EXIT
             sys.exit(self.combined_exit_code())
 
 
