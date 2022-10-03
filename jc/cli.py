@@ -66,7 +66,6 @@ class JcCli():
         self.pad = 0
         self.env_colors = None
         self.custom_colors: Dict = {}
-        self.documentation = False
         self.show_hidden = False
         self.piped_out = False
         self.ascii_only = False
@@ -77,7 +76,6 @@ class JcCli():
         self.jc_exit = 0
         self.JC_ERROR_EXIT = 100
         self.exit_code = 0
-        # self.runtime = None
         self.run_timestamp = None
 
         # cli options
@@ -87,7 +85,6 @@ class JcCli():
         self.force_color = False
         self.mono = False
         self.help_me = False
-        self.verbose_help = False
         self.pretty = False
         self.quiet = False
         self.ignore_exceptions = False
@@ -274,12 +271,11 @@ Examples:
         Returns the parser documentation if a parser is found in the arguments,
         otherwise the general help text is returned.
         """
-        for arg in self.options:
+        for arg in self.args:
             parser_name = self.parser_shortname(arg)
 
             if parser_name in parsers:
-                self.documentation = True
-                p_info = parser_info()
+                p_info = parser_info(parser_name, documentation=True)
                 compatible = ', '.join(p_info.get('compatible', ['unknown']))
                 docs = p_info.get('documentation', 'No documentation available.')
                 version = p_info.get('version', 'unknown')
@@ -426,6 +422,7 @@ Examples:
             # option found - populate option list
             if arg.startswith('-'):
                 self.magic_options.extend(args_given.pop(0)[1:])
+                continue
 
             # command found if iterator didn't already stop - stop iterating
             else:
@@ -525,7 +522,6 @@ Examples:
             sys.exit(self.JC_ERROR_EXIT)
 
     def run(self):
-
         # break on ctrl-c keyboard interrupt
         signal.signal(signal.SIGINT, self.ctrlc)
 
@@ -546,8 +542,9 @@ Examples:
         # set colors
         self.env_colors = os.getenv('JC_COLORS')
 
-        # set options
-        self.options.extend(self.magic_options)
+        # set magic options if magic syntax was found
+        if self.magic_found_parser:
+            self.options.extend(self.magic_options)
 
         # find options if magic_parser did not find a command
         if not self.valid_command:
@@ -564,7 +561,7 @@ Examples:
         self.force_color = 'C' in self.options
         self.mono = ('m' in self.options or bool(os.getenv('NO_COLOR'))) and not self.force_color
         self.help_me = 'h' in self.options
-        self.verbose_help = self.options.count('h') > 1
+        self.show_hidden = self.options.count('h') > 1   # verbose help
         self.pretty = 'p' in self.options
         self.quiet = 'q' in self.options
         self.ignore_exceptions = self.options.count('q') > 1
