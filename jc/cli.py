@@ -67,7 +67,6 @@ class JcCli():
         self.env_colors = None
         self.custom_colors: Dict = {}
         self.show_hidden = False
-        self.piped_out = False
         self.ascii_only = False
         self.flush = False
         self.json_separators = (',', ':')
@@ -96,7 +95,7 @@ class JcCli():
         self.bash_comp = False
         self.zsh_comp = False
 
-        # magic variables
+        # magic attributes
         self.magic_found_parser = None
         self.magic_options: List[str] = []
         self.magic_run_command = None
@@ -108,7 +107,7 @@ class JcCli():
 
     def set_custom_colors(self):
         """
-        Return a dictionary to be used in Pygments custom style class.
+        Sets the custom_colors dictionary to be used in Pygments custom style class.
 
         Grab custom colors from JC_COLORS environment variable. JC_COLORS env
         variable takes 4 comma separated string values and should be in the
@@ -153,14 +152,23 @@ class JcCli():
             String: PYGMENT_COLOR[color_list[3]] if color_list[3] != 'default' else PYGMENT_COLOR['green']                         # strings
         }
 
-    def set_piped_out(self):
+    def set_mono(self):
         """
-        Return False if `STDOUT` is a TTY. True if output is being piped to
+        Sets mono attribute based on CLI options.
+
+        Then set to False if `STDOUT` is a TTY. True if output is being piped to
         another program and foce_color is True. This allows forcing of ANSI
         color codes even when using pipes.
+
+        Also set mono to True if Pygments is not installed.
         """
+        self.mono = ('m' in self.options or bool(os.getenv('NO_COLOR'))) and not self.force_color
+
         if not sys.stdout.isatty() and not self.force_color:
-            self.piped_out = True
+            self.mono = True
+
+        if not PYGMENTS_INSTALLED:
+            self.mono = True
 
     @staticmethod
     def parser_shortname(parser_arg):
@@ -337,7 +345,7 @@ Examples:
             yaml.dump(self.data_out, y_string_buf)
             y_string = y_string_buf.getvalue().decode('utf-8')[:-1]
 
-            if not self.mono and not self.piped_out:
+            if not self.mono:
                 # set colors
                 class JcStyle(Style):
                     styles = self.custom_colors
@@ -365,7 +373,7 @@ Examples:
                               separators=self.json_separators,
                               ensure_ascii=self.ascii_only)
 
-        if not self.mono and not self.piped_out:
+        if not self.mono:
             # set colors
             class JcStyle(Style):
                 styles = self.custom_colors
@@ -392,13 +400,8 @@ Examples:
 
     def magic_parser(self):
         """
-        Parse command arguments for magic syntax: jc -p ls -al
-
-        Return a tuple:
-            valid_command (bool)  is this a valid cmd? (exists in magic dict)
-            run_command   (list)  list of the user's cmd to run. None if no cmd.
-            jc_parser     (str)   parser to use for this user's cmd.
-            jc_options    (list)  list of jc options
+        Parse command arguments for magic syntax: `jc -p ls -al` and set the
+        magic attributes.
         """
         # bail immediately if there are no args or a parser is defined
         if len(self.args) <= 1 or (self.args[1].startswith('--') and self.args[1] not in long_options_map):
@@ -554,7 +557,6 @@ Examples:
         self.debug = 'd' in self.options
         self.verbose_debug = self.options.count('d') > 1
         self.force_color = 'C' in self.options
-        self.mono = ('m' in self.options or bool(os.getenv('NO_COLOR'))) and not self.force_color
         self.help_me = 'h' in self.options
         self.show_hidden = self.options.count('h') > 1   # verbose help
         self.pretty = 'p' in self.options
@@ -568,14 +570,11 @@ Examples:
         self.bash_comp = 'B' in self.options
         self.zsh_comp = 'Z' in self.options
 
-        self.set_piped_out()
+        self.set_mono()
         self.set_custom_colors()
 
         if self.verbose_debug:
             tracebackplus.enable(context=11)
-
-        if not PYGMENTS_INSTALLED:
-            self.mono = True
 
         if self.about:
             self.data_out = self.about_jc()
