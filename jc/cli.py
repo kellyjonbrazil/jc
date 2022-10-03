@@ -77,7 +77,7 @@ class JcCli():
         self.jc_exit = 0
         self.JC_ERROR_EXIT = 100
         self.exit_code = 0
-        self.runtime: datetime = datetime.now()
+        # self.runtime = None
         self.run_timestamp = None
 
         # cli options
@@ -490,11 +490,9 @@ Examples:
         object will be added to the list. This way you always get metadata,
         even if there are no results.
         """
-        self.run_timestamp = self.runtime.timestamp()
-
         meta_obj = {
             'parser': self.parser_name,
-            'timestamp': self.run_timestamp
+            'timestamp': self.run_timestamp.timestamp()
         }
 
         if self.run_command:
