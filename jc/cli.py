@@ -314,7 +314,6 @@ class JcCli():
             y_string = y_string_buf.getvalue().decode('utf-8')[:-1]
 
             if not self.mono:
-                # set colors
                 class JcStyle(Style):
                     styles = self.custom_colors
 
@@ -344,7 +343,6 @@ class JcCli():
         )
 
         if not self.mono:
-            # set colors
             class JcStyle(Style):
                 styles = self.custom_colors
 
@@ -408,6 +406,7 @@ class JcCli():
 
         # all options popped and no command found - for case like 'jc -x'
         if len(args_given) == 0:
+            self.magic_options = []
             return
 
         # create a dictionary of magic_commands to their respective parsers.
@@ -632,8 +631,8 @@ class JcCli():
             self.compute_exit_code_and_quit()
 
     def ctrlc(self, signum, frame):
-        """Exit with error on SIGINT"""
-        sys.exit(self.JC_ERROR_EXIT)
+        """Exit on SIGINT"""
+        self.compute_exit_code_and_quit()
 
     def run(self):
         # break on ctrl-c keyboard interrupt
@@ -665,8 +664,6 @@ class JcCli():
                 if opt.startswith('-') and not opt.startswith('--'):
                     self.options.extend(opt[1:])
 
-        self.env_colors = os.getenv('JC_COLORS')
-
         self.about = 'a' in self.options
         self.debug = 'd' in self.options
         self.verbose_debug = self.options.count('d') > 1
@@ -685,6 +682,7 @@ class JcCli():
         self.zsh_comp = 'Z' in self.options
 
         self.set_mono()
+        self.env_colors = os.getenv('JC_COLORS')
         self.set_custom_colors()
 
         if self.verbose_debug:
@@ -693,28 +691,28 @@ class JcCli():
         if self.about:
             self.data_out = self.about_jc()
             self.safe_print_out()
-            sys.exit(0)
+            self.compute_exit_code_and_quit()
 
         if self.help_me:
             self.help_doc()
-            sys.exit(0)
+            self.compute_exit_code_and_quit()
 
         if self.version_info:
             utils._safe_print(self.versiontext())
-            sys.exit(0)
+            self.compute_exit_code_and_quit()
 
         if self.bash_comp:
             utils._safe_print(bash_completion())
-            sys.exit(0)
+            self.compute_exit_code_and_quit()
 
         if self.zsh_comp:
             utils._safe_print(zsh_completion())
-            sys.exit(0)
+            self.compute_exit_code_and_quit()
 
-        # if magic syntax used, try to run the command and error if it's not found, etc.
+        # if magic syntax used, try to run the command and set the magic attributes
         self.do_magic()
 
-        # find the correct parser
+        # find the correct parser from magic_parser or user-supplied
         self.find_parser()
 
         # parse and print to stdout
