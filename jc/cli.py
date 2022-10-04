@@ -68,7 +68,6 @@ class JcCli():
         self.custom_colors: Dict = {}
         self.show_hidden = False
         self.ascii_only = False
-        self.flush = False
         self.json_separators = (',', ':')
         self.json_indent = None
         self.path_string = None
@@ -386,17 +385,17 @@ Examples:
         """Safely prints JSON or YAML output in both UTF-8 and ASCII systems"""
         if self.yaml_output:
             try:
-                print(self.yaml_out(), flush=self.flush)
+                print(self.yaml_out(), flush=self.unbuffer)
             except UnicodeEncodeError:
                 self.ascii_only = True
-                print(self.yaml_out(), flush=self.flush)
+                print(self.yaml_out(), flush=self.unbuffer)
 
         else:
             try:
-                print(self.json_out(), flush=self.flush)
+                print(self.json_out(), flush=self.unbuffer)
             except UnicodeEncodeError:
                 self.ascii_only = True
-                print(self.json_out(), flush=self.flush)
+                print(self.json_out(), flush=self.unbuffer)
 
     def magic_parser(self):
         """
