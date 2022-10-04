@@ -620,10 +620,11 @@ class JcCli():
                 self.data_out.append({})
 
             for item in self.data_out:
-                if '_jc_meta' not in item:
-                    item['_jc_meta'] = {}
+                if isinstance(item, dict):
+                    if '_jc_meta' not in item:
+                        item['_jc_meta'] = {}
 
-                item['_jc_meta'].update(meta_obj)
+                    item['_jc_meta'].update(meta_obj)
 
         else:
             utils.error_message(['Parser returned an unsupported object type.'])
