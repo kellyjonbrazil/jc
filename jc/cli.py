@@ -60,7 +60,7 @@ class JcCli():
     __slots__ = (
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
         'env_colors', 'custom_colors', 'show_hidden', 'ascii_only', 'json_separators',
-        'json_indent', 'jc_exit', 'JC_ERROR_EXIT', 'exit_code', 'run_timestamp', 'about', 'debug',
+        'json_indent', 'jc_exit', 'JC_ERROR_EXIT', 'run_timestamp', 'about', 'debug',
         'verbose_debug', 'force_color', 'mono', 'help_me', 'pretty', 'quiet', 'ignore_exceptions',
         'raw', 'meta_out', 'unbuffer', 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp',
         'magic_found_parser', 'magic_options', 'magic_run_command', 'magic_run_command_str',
@@ -84,7 +84,6 @@ class JcCli():
         self.json_indent = None
         self.jc_exit = 0
         self.JC_ERROR_EXIT = 100
-        self.exit_code = 0
         self.run_timestamp = None
 
         # cli options
@@ -337,10 +336,12 @@ class JcCli():
             self.json_indent = 2
             self.json_separators = None
 
-        j_string = json.dumps(self.data_out,
-                              indent=self.json_indent,
-                              separators=self.json_separators,
-                              ensure_ascii=self.ascii_only)
+        j_string = json.dumps(
+            self.data_out,
+            indent=self.json_indent,
+            separators=self.json_separators,
+            ensure_ascii=self.ascii_only
+        )
 
         if not self.mono:
             # set colors
@@ -432,14 +433,16 @@ class JcCli():
         Use subprocess to run the user's command. Returns the STDOUT, STDERR,
         and the Exit Code as a tuple.
         """
-        proc = subprocess.Popen(self.magic_run_command,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                close_fds=False,            # Allows inheriting file descriptors;
-                                universal_newlines=True,    #     useful for process substitution
-                                encoding='UTF-8')
-        self.magic_stdout, self.magic_stderr = proc.communicate()
+        proc = subprocess.Popen(
+            self.magic_run_command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            close_fds=False,           # Allows inheriting file descriptors
+            universal_newlines=True,   # which is useful for process substitution
+            encoding='UTF-8'
+        )
 
+        self.magic_stdout, self.magic_stderr = proc.communicate()
         self.magic_stdout = self.magic_stdout or '\n'
         self.magic_returncode = proc.returncode
 
@@ -452,9 +455,11 @@ class JcCli():
         """
         if self.magic_run_command:
             try:
-                self.magic_run_command_str = shlex.join(self.magic_run_command)      # python 3.8+
+                # python 3.8+
+                self.magic_run_command_str = shlex.join(self.magic_run_command)
             except AttributeError:
-                self.magic_run_command_str = ' '.join(self.magic_run_command)        # older python versions
+                # older python versions
+                self.magic_run_command_str = ' '.join(self.magic_run_command)
 
         if self.magic_run_command_str.startswith('/proc'):
             try:
@@ -470,7 +475,7 @@ class JcCli():
                     f'"{self.magic_run_command_str}" file could not be opened: {error_msg}.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
+                self.compute_exit_code_and_quit()
 
             except Exception:
                 if self.debug:
@@ -480,7 +485,7 @@ class JcCli():
                     f'"{self.magic_run_command_str}" file could not be opened. For details use the -d or -dd option.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
+                self.compute_exit_code_and_quit()
 
         elif self.magic_found_parser:
             try:
@@ -497,7 +502,7 @@ class JcCli():
                     f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
+                self.compute_exit_code_and_quit()
 
             except Exception:
                 if self.debug:
@@ -507,11 +512,12 @@ class JcCli():
                     f'"{self.magic_run_command_str}" command could not be run. For details use the -d or -dd option.'
                 ])
                 self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
+                self.compute_exit_code_and_quit()
 
         elif self.magic_run_command is not None:
             utils.error_message([f'"{self.magic_run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
-            sys.exit(self.combined_exit_code())
+            self.jc_exit = self.JC_ERROR_EXIT
+            self.compute_exit_code_and_quit()
 
     def find_parser(self):
         if self.magic_found_parser:
@@ -531,12 +537,12 @@ class JcCli():
             if not found:
                 utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
                 self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
+                self.compute_exit_code_and_quit()
 
         if sys.stdin.isatty() and self.magic_stdout is None:
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
             self.jc_exit = self.JC_ERROR_EXIT
-            sys.exit(self.combined_exit_code())
+            self.compute_exit_code_and_quit()
 
     def streaming_parse_and_print(self):
         """only supports UTF-8 string data for now"""
@@ -555,8 +561,6 @@ class JcCli():
                 self.add_metadata_to_output()
 
             self.safe_print_out()
-
-        sys.exit(self.combined_exit_code())
 
     def standard_parse_and_print(self):
         """supports binary and UTF-8 string data"""
@@ -580,15 +584,15 @@ class JcCli():
             self.add_metadata_to_output()
 
         self.safe_print_out()
-        sys.exit(self.combined_exit_code())
 
-    def combined_exit_code(self):
-        self.exit_code = self.magic_returncode + self.jc_exit
-        self.exit_code = min(self.exit_code, 255)
+    def compute_exit_code_and_quit(self):
+        exit_code = self.magic_returncode + self.jc_exit
+        exit_code = min(exit_code, 255)
+        sys.exit(exit_code)
 
     def add_metadata_to_output(self):
         """
-        This function mutates a list or dict in place. If the _jc_meta field
+        This function mutates data_out in place. If the _jc_meta field
         does not already exist, it will be created with the metadata fields. If
         the _jc_meta field already exists, the metadata fields will be added to
         the existing object.
@@ -625,7 +629,7 @@ class JcCli():
         else:
             utils.error_message(['Parser returned an unsupported object type.'])
             self.jc_exit = self.JC_ERROR_EXIT
-            sys.exit(self.combined_exit_code())
+            self.compute_exit_code_and_quit()
 
     def ctrlc(self, signum, frame):
         """Exit with error on SIGINT"""
@@ -717,9 +721,11 @@ class JcCli():
         try:
             if _parser_is_streaming(self.parser_module):
                 self.streaming_parse_and_print()
+                self.compute_exit_code_and_quit()
 
             else:
                 self.standard_parse_and_print()
+                self.compute_exit_code_and_quit()
 
         except (ParseError, LibraryNotInstalled) as e:
             if self.debug:
@@ -731,7 +737,7 @@ class JcCli():
                 f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
             ])
             self.jc_exit = self.JC_ERROR_EXIT
-            sys.exit(self.combined_exit_code())
+            self.compute_exit_code_and_quit()
 
         except Exception:
             if self.debug:
@@ -748,7 +754,7 @@ class JcCli():
                 f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
             ])
             self.jc_exit = self.JC_ERROR_EXIT
-            sys.exit(self.combined_exit_code())
+            self.compute_exit_code_and_quit()
 
 
 def main():
