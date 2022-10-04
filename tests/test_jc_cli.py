@@ -1,3 +1,4 @@
+import os
 import unittest
 from datetime import datetime, timezone
 import pygments
@@ -133,7 +134,7 @@ class MyTests(unittest.TestCase):
 
         for jc_colors, expected_colors in env.items():
             cli = JcCli()
-            cli.env_colors = jc_colors
+            os.environ["JC_COLORS"] = jc_colors
             cli.set_custom_colors()
             self.assertEqual(cli.custom_colors, expected_colors)
 
@@ -165,6 +166,7 @@ class MyTests(unittest.TestCase):
 
         for test_dict, expected_json in zip(test_input, expected_output):
             cli = JcCli()
+            os.environ["JC_COLORS"] = "default,default,default,default"
             cli.set_custom_colors()
             cli.data_out = test_dict
             self.assertEqual(cli.json_out(), expected_json)
@@ -245,6 +247,7 @@ class MyTests(unittest.TestCase):
 
         for test_dict, expected_json in zip(test_input, expected_output):
             cli = JcCli()
+            os.environ["JC_COLORS"] = "default,default,default,default"
             cli.set_custom_colors()
             cli.data_out = test_dict
             self.assertEqual(cli.yaml_out(), expected_json)
