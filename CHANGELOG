@@ -1,7 +1,8 @@
 jc changelog
 
-20220928 v1.22.1
+20221004 v1.22.1
 - fix proc-pid-stat parser for command names with spaces and newlines
+- refactor cli module
 
 20220926 v1.22.0
 - Add /proc file parsers for linux. Support for the following files:
