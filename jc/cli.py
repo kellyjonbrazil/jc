@@ -60,11 +60,11 @@ class JcCli():
     __slots__ = (
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
         'env_colors', 'custom_colors', 'show_hidden', 'ascii_only', 'json_separators',
-        'json_indent', 'path_string', 'jc_exit', 'JC_ERROR_EXIT', 'exit_code', 'run_timestamp',
-        'about', 'debug', 'verbose_debug', 'force_color', 'mono', 'help_me', 'pretty', 'quiet',
-        'ignore_exceptions', 'raw', 'meta_out', 'unbuffer', 'version_info', 'yaml_output',
-        'bash_comp', 'zsh_comp', 'magic_found_parser', 'magic_options', 'magic_run_command',
-        'magic_run_command_str', 'magic_stdout', 'magic_stderr', 'magic_returncode'
+        'json_indent', 'jc_exit', 'JC_ERROR_EXIT', 'exit_code', 'run_timestamp', 'about', 'debug',
+        'verbose_debug', 'force_color', 'mono', 'help_me', 'pretty', 'quiet', 'ignore_exceptions',
+        'raw', 'meta_out', 'unbuffer', 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp',
+        'magic_found_parser', 'magic_options', 'magic_run_command', 'magic_run_command_str',
+        'magic_stdout', 'magic_stderr', 'magic_returncode'
     )
 
     def __init__(self) -> None:
@@ -82,7 +82,6 @@ class JcCli():
         self.ascii_only = False
         self.json_separators = (',', ':')
         self.json_indent = None
-        self.path_string = None
         self.jc_exit = 0
         self.JC_ERROR_EXIT = 100
         self.exit_code = 0
@@ -246,8 +245,8 @@ class JcCli():
 
     def help_doc(self):
         """
-        Returns the parser documentation if a parser is found in the arguments,
-        otherwise the general help text is returned.
+        Pages the parser documentation if a parser is found in the arguments,
+        otherwise the general help text is printed.
         """
         for arg in self.args:
             parser_name = self.parser_shortname(arg)
@@ -423,8 +422,9 @@ class JcCli():
         # try to get a parser for two_word_command, otherwise get one for one_word_command
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
-    def open_text_file(self):
-        with open(self.path_string, 'r') as f:
+    @staticmethod
+    def open_text_file(path_string):
+        with open(path_string, 'r') as f:
             return f.read()
 
     def run_user_command(self):
@@ -459,7 +459,7 @@ class JcCli():
         if self.magic_run_command_str.startswith('/proc'):
             try:
                 self.magic_found_parser = 'proc'
-                self.magic_stdout = self.open_text_file()
+                self.magic_stdout = self.open_text_file(self.magic_run_command_str)
 
             except OSError as e:
                 if self.debug:
