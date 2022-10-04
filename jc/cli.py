@@ -123,14 +123,12 @@ class JcCli():
         JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 
         Where colors are: black, red, green, yellow, blue, magenta, cyan, gray,
-                        brightblack, brightred, brightgreen, brightyellow,
-                        brightblue, brightmagenta, brightcyan, white, default
+        brightblack, brightred, brightgreen, brightyellow, brightblue, brightmagenta,
+        brightcyan, white, default
 
         Default colors:
-
-            JC_COLORS=blue,brightblack,magenta,green
-        or
-            JC_COLORS=default,default,default,default
+        JC_COLORS=blue,brightblack,magenta,green
+        JC_COLORS=default,default,default,default
         """
         input_error = False
         env_colors = os.getenv('JC_COLORS')
