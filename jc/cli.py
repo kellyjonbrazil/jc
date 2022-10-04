@@ -59,15 +59,17 @@ if PYGMENTS_INSTALLED:
 class JcCli():
     __slots__ = (
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
-        'custom_colors', 'show_hidden', 'ascii_only', 'json_separators', 'json_indent', 'jc_exit',
-        'JC_ERROR_EXIT', 'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono',
-        'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer',
-        'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
+        'custom_colors', 'show_hidden', 'ascii_only', 'json_separators', 'json_indent',
+        'JC_CLEAN_EXIT', 'JC_ERROR_EXIT', 'run_timestamp', 'about', 'debug', 'verbose_debug',
+        'force_color', 'mono', 'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out',
+        'unbuffer', 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
         'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
         'magic_stderr', 'magic_returncode'
     )
 
     def __init__(self) -> None:
+        self.JC_CLEAN_EXIT = 0
+        self.JC_ERROR_EXIT = 100
         self.data_in = None
         self.data_out = None
         self.options: List[str] = []
@@ -81,8 +83,6 @@ class JcCli():
         self.ascii_only = False
         self.json_separators = (',', ':')
         self.json_indent = None
-        self.jc_exit = 0
-        self.JC_ERROR_EXIT = 100
         self.run_timestamp = None
 
         # cli options
@@ -471,8 +471,7 @@ class JcCli():
                 utils.error_message([
                     f'"{self.magic_run_command_str}" file could not be opened: {error_msg}.'
                 ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                self.compute_exit_code_and_quit()
+                self.exit_error()
 
             except Exception:
                 if self.debug:
@@ -481,8 +480,7 @@ class JcCli():
                 utils.error_message([
                     f'"{self.magic_run_command_str}" file could not be opened. For details use the -d or -dd option.'
                 ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                self.compute_exit_code_and_quit()
+                self.exit_error()
 
         elif self.magic_found_parser:
             try:
@@ -498,8 +496,7 @@ class JcCli():
                 utils.error_message([
                     f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
                 ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                self.compute_exit_code_and_quit()
+                self.exit_error()
 
             except Exception:
                 if self.debug:
@@ -508,15 +505,13 @@ class JcCli():
                 utils.error_message([
                     f'"{self.magic_run_command_str}" command could not be run. For details use the -d or -dd option.'
                 ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                self.compute_exit_code_and_quit()
+                self.exit_error()
 
         elif self.magic_run_command is not None:
             utils.error_message([f'"{self.magic_run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
-            self.jc_exit = self.JC_ERROR_EXIT
-            self.compute_exit_code_and_quit()
+            self.exit_error()
 
-    def find_parser(self):
+    def set_parser_module_and_parser_name(self):
         if self.magic_found_parser:
             self.parser_module = _get_parser(self.magic_found_parser)
             self.parser_name = self.parser_shortname(self.magic_found_parser)
@@ -533,13 +528,11 @@ class JcCli():
 
             if not found:
                 utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
-                self.jc_exit = self.JC_ERROR_EXIT
-                self.compute_exit_code_and_quit()
+                self.exit_error()
 
         if sys.stdin.isatty() and self.magic_stdout is None:
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
-            self.jc_exit = self.JC_ERROR_EXIT
-            self.compute_exit_code_and_quit()
+            self.exit_error()
 
     def streaming_parse_and_print(self):
         """only supports UTF-8 string data for now"""
@@ -582,8 +575,13 @@ class JcCli():
 
         self.safe_print_out()
 
-    def compute_exit_code_and_quit(self):
-        exit_code = self.magic_returncode + self.jc_exit
+    def exit_clean(self):
+        exit_code = self.magic_returncode + self.JC_CLEAN_EXIT
+        exit_code = min(exit_code, 255)
+        sys.exit(exit_code)
+
+    def exit_error(self):
+        exit_code = self.magic_returncode + self.JC_ERROR_EXIT
         exit_code = min(exit_code, 255)
         sys.exit(exit_code)
 
@@ -626,12 +624,11 @@ class JcCli():
 
         else:
             utils.error_message(['Parser returned an unsupported object type.'])
-            self.jc_exit = self.JC_ERROR_EXIT
-            self.compute_exit_code_and_quit()
+            self.exit_error()
 
     def ctrlc(self, signum, frame):
         """Exit on SIGINT"""
-        self.compute_exit_code_and_quit()
+        self.exit_clean()
 
     def run(self):
         # break on ctrl-c keyboard interrupt
@@ -689,39 +686,39 @@ class JcCli():
         if self.about:
             self.data_out = self.about_jc()
             self.safe_print_out()
-            self.compute_exit_code_and_quit()
+            self.exit_clean()
 
         if self.help_me:
             self.help_doc()
-            self.compute_exit_code_and_quit()
+            self.exit_clean()
 
         if self.version_info:
             utils._safe_print(self.versiontext())
-            self.compute_exit_code_and_quit()
+            self.exit_clean()
 
         if self.bash_comp:
             utils._safe_print(bash_completion())
-            self.compute_exit_code_and_quit()
+            self.exit_clean()
 
         if self.zsh_comp:
             utils._safe_print(zsh_completion())
-            self.compute_exit_code_and_quit()
+            self.exit_clean()
 
         # if magic syntax used, try to run the command and set the magic attributes
         self.do_magic()
 
-        # find the correct parser from magic_parser or user-supplied
-        self.find_parser()
+        # set parser_module and parser_name based on magic parser or user-supplied
+        self.set_parser_module_and_parser_name()
 
         # parse and print to stdout
         try:
             if _parser_is_streaming(self.parser_module):
                 self.streaming_parse_and_print()
-                self.compute_exit_code_and_quit()
+                self.exit_clean()
 
             else:
                 self.standard_parse_and_print()
-                self.compute_exit_code_and_quit()
+                self.exit_clean()
 
         except (ParseError, LibraryNotInstalled) as e:
             if self.debug:
@@ -732,8 +729,7 @@ class JcCli():
                 'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                 f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
             ])
-            self.jc_exit = self.JC_ERROR_EXIT
-            self.compute_exit_code_and_quit()
+            self.exit_error()
 
         except Exception:
             if self.debug:
@@ -749,8 +745,7 @@ class JcCli():
                 'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                 f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
             ])
-            self.jc_exit = self.JC_ERROR_EXIT
-            self.compute_exit_code_and_quit()
+            self.exit_error()
 
 
 def main():
