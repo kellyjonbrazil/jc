@@ -59,12 +59,12 @@ if PYGMENTS_INSTALLED:
 class JcCli():
     __slots__ = (
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
-        'env_colors', 'custom_colors', 'show_hidden', 'ascii_only', 'json_separators',
-        'json_indent', 'jc_exit', 'JC_ERROR_EXIT', 'run_timestamp', 'about', 'debug',
-        'verbose_debug', 'force_color', 'mono', 'help_me', 'pretty', 'quiet', 'ignore_exceptions',
-        'raw', 'meta_out', 'unbuffer', 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp',
-        'magic_found_parser', 'magic_options', 'magic_run_command', 'magic_run_command_str',
-        'magic_stdout', 'magic_stderr', 'magic_returncode'
+        'custom_colors', 'show_hidden', 'ascii_only', 'json_separators', 'json_indent', 'jc_exit',
+        'JC_ERROR_EXIT', 'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono',
+        'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer',
+        'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
+        'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
+        'magic_stderr', 'magic_returncode'
     )
 
     def __init__(self) -> None:
@@ -76,7 +76,6 @@ class JcCli():
         self.parser_name = None
         self.indent = 0
         self.pad = 0
-        self.env_colors = None
         self.custom_colors: Dict = {}
         self.show_hidden = False
         self.ascii_only = False
@@ -134,9 +133,10 @@ class JcCli():
             JC_COLORS=default,default,default,default
         """
         input_error = False
+        env_colors = os.getenv('JC_COLORS')
 
-        if self.env_colors:
-            color_list = self.env_colors.split(',')
+        if env_colors:
+            color_list = env_colors.split(',')
         else:
             color_list = ['default', 'default', 'default', 'default']
 
@@ -682,7 +682,6 @@ class JcCli():
         self.zsh_comp = 'Z' in self.options
 
         self.set_mono()
-        self.env_colors = os.getenv('JC_COLORS')
         self.set_custom_colors()
 
         if self.verbose_debug:
