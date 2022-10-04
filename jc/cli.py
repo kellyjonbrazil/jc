@@ -414,12 +414,20 @@ class JcCli():
         for entry in all_parser_info():
             magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
 
-        # find the command and parser
+        # set the command list and string
         self.magic_run_command = args_given
-        one_word_command = args_given[0]
-        two_word_command = ' '.join(args_given[0:2])
+
+        if self.magic_run_command:
+            try:
+                # python 3.8+
+                self.magic_run_command_str = shlex.join(self.magic_run_command)
+            except AttributeError:
+                # older python versions
+                self.magic_run_command_str = ' '.join(self.magic_run_command)
 
         # try to get a parser for two_word_command, otherwise get one for one_word_command
+        one_word_command = self.magic_run_command[0]
+        two_word_command = ' '.join(self.magic_run_command[0:2])
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     @staticmethod
@@ -452,14 +460,6 @@ class JcCli():
         Supports running magic commands or opening /proc files to set the
         output to magic_stdout.
         """
-        if self.magic_run_command:
-            try:
-                # python 3.8+
-                self.magic_run_command_str = shlex.join(self.magic_run_command)
-            except AttributeError:
-                # older python versions
-                self.magic_run_command_str = ' '.join(self.magic_run_command)
-
         if self.magic_run_command_str.startswith('/proc'):
             try:
                 self.magic_found_parser = 'proc'
