@@ -11,12 +11,15 @@ import signal
 import shlex
 import subprocess
 from typing import List, Dict
-from .lib import (__version__, parser_info, all_parser_info, parsers,
-                  _get_parser, _parser_is_streaming, parser_mod_list,
-                  standard_parser_mod_list, plugin_parser_mod_list,
-                  streaming_parser_mod_list)
+from .lib import (
+    __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
+    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
+)
 from . import utils
-from .cli_data import long_options_map, new_pygments_colors, old_pygments_colors
+from .cli_data import (
+    long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
+    helptext_end_string
+)
 from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
@@ -54,15 +57,15 @@ if PYGMENTS_INSTALLED:
 
 
 class JcCli():
-    __slots__ = [
-        'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name',
-        'indent', 'pad', 'env_colors', 'custom_colors', 'show_hidden', 'ascii_only', 'json_separators',
+    __slots__ = (
+        'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
+        'env_colors', 'custom_colors', 'show_hidden', 'ascii_only', 'json_separators',
         'json_indent', 'path_string', 'jc_exit', 'JC_ERROR_EXIT', 'exit_code', 'run_timestamp',
         'about', 'debug', 'verbose_debug', 'force_color', 'mono', 'help_me', 'pretty', 'quiet',
         'ignore_exceptions', 'raw', 'meta_out', 'unbuffer', 'version_info', 'yaml_output',
         'bash_comp', 'zsh_comp', 'magic_found_parser', 'magic_options', 'magic_run_command',
         'magic_run_command_str', 'magic_stdout', 'magic_stderr', 'magic_returncode'
-    ]
+    )
 
     def __init__(self) -> None:
         self.data_in = None
@@ -238,46 +241,7 @@ class JcCli():
         self.pad = 20
         parsers_string = self.parsers_text()
         options_string = self.options_text()
-
-        helptext_string = f'''\
-jc converts the output of many commands, file-types, and strings to JSON or YAML
-
-Usage:
-
-    Standard syntax:
-
-        COMMAND | jc [OPTIONS] PARSER
-
-        cat FILE | jc [OPTIONS] PARSER
-
-        echo STRING | jc [OPTIONS] PARSER
-
-    Magic syntax:
-
-        jc [OPTIONS] COMMAND
-
-        jc [OPTIONS] /proc/<path-to-procfile>
-
-Parsers:
-{parsers_string}
-Options:
-{options_string}
-Examples:
-    Standard Syntax:
-        $ dig www.google.com | jc --pretty --dig
-        $ cat /proc/meminfo | jc --pretty --proc
-
-    Magic Syntax:
-        $ jc --pretty dig www.google.com
-        $ jc --pretty /proc/meminfo
-
-    Parser Documentation:
-        $ jc --help --dig
-
-    Show Hidden Parsers:
-        $ jc -hh
-'''
-
+        helptext_string = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
         return helptext_string
 
     def help_doc(self):
@@ -479,6 +443,145 @@ Examples:
         self.magic_stdout = self.magic_stdout or '\n'
         self.magic_returncode = proc.returncode
 
+    def do_magic(self):
+        """
+        Try to run the command and error if it's not found, executable, etc.
+
+        Supports running magic commands or opening /proc files to set the
+        output to magic_stdout.
+        """
+        if self.magic_run_command:
+            try:
+                self.magic_run_command_str = shlex.join(self.magic_run_command)      # python 3.8+
+            except AttributeError:
+                self.magic_run_command_str = ' '.join(self.magic_run_command)        # older python versions
+
+        if self.magic_run_command_str.startswith('/proc'):
+            try:
+                self.magic_found_parser = 'proc'
+                self.magic_stdout = self.open_text_file()
+
+            except OSError as e:
+                if self.debug:
+                    raise
+
+                error_msg = os.strerror(e.errno)
+                utils.error_message([
+                    f'"{self.magic_run_command_str}" file could not be opened: {error_msg}.'
+                ])
+                self.jc_exit = self.JC_ERROR_EXIT
+                sys.exit(self.combined_exit_code())
+
+            except Exception:
+                if self.debug:
+                    raise
+
+                utils.error_message([
+                    f'"{self.magic_run_command_str}" file could not be opened. For details use the -d or -dd option.'
+                ])
+                self.jc_exit = self.JC_ERROR_EXIT
+                sys.exit(self.combined_exit_code())
+
+        elif self.magic_found_parser:
+            try:
+                self.run_user_command()
+                if self.magic_stderr:
+                    utils._safe_print(self.magic_stderr[:-1], file=sys.stderr)
+
+            except OSError as e:
+                if self.debug:
+                    raise
+
+                error_msg = os.strerror(e.errno)
+                utils.error_message([
+                    f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
+                ])
+                self.jc_exit = self.JC_ERROR_EXIT
+                sys.exit(self.combined_exit_code())
+
+            except Exception:
+                if self.debug:
+                    raise
+
+                utils.error_message([
+                    f'"{self.magic_run_command_str}" command could not be run. For details use the -d or -dd option.'
+                ])
+                self.jc_exit = self.JC_ERROR_EXIT
+                sys.exit(self.combined_exit_code())
+
+        elif self.magic_run_command is not None:
+            utils.error_message([f'"{self.magic_run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
+            sys.exit(self.combined_exit_code())
+
+    def find_parser(self):
+        if self.magic_found_parser:
+            self.parser_module = _get_parser(self.magic_found_parser)
+            self.parser_name = self.parser_shortname(self.magic_found_parser)
+
+        else:
+            found = False
+            for arg in self.args:
+                self.parser_name = self.parser_shortname(arg)
+
+                if self.parser_name in parsers:
+                    self.parser_module = _get_parser(arg)
+                    found = True
+                    break
+
+            if not found:
+                utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
+                self.jc_exit = self.JC_ERROR_EXIT
+                sys.exit(self.combined_exit_code())
+
+        if sys.stdin.isatty() and self.magic_stdout is None:
+            utils.error_message(['Missing piped data. Use "jc -h" for help.'])
+            self.jc_exit = self.JC_ERROR_EXIT
+            sys.exit(self.combined_exit_code())
+
+    def streaming_parse_and_print(self):
+        """only supports UTF-8 string data for now"""
+        self.data_in = sys.stdin
+        result = self.parser_module.parse(
+            self.data_in,
+            raw=self.raw,
+            quiet=self.quiet,
+            ignore_exceptions=self.ignore_exceptions
+        )
+
+        for line in result:
+            self.data_out = line
+            if self.meta_out:
+                self.run_timestamp = datetime.now(timezone.utc)
+                self.add_metadata_to_output()
+
+            self.safe_print_out()
+
+        sys.exit(self.combined_exit_code())
+
+    def standard_parse_and_print(self):
+        """supports binary and UTF-8 string data"""
+        self.data_in = self.magic_stdout or sys.stdin.buffer.read()
+
+        # convert to UTF-8, if possible. Otherwise, leave as bytes
+        try:
+            if isinstance(self.data_in, bytes):
+                self.data_in = self.data_in.decode('utf-8')
+        except UnicodeDecodeError:
+            pass
+
+        self.data_out = self.parser_module.parse(
+            self.data_in,
+            raw=self.raw,
+            quiet=self.quiet
+        )
+
+        if self.meta_out:
+            self.run_timestamp = datetime.now(timezone.utc)
+            self.add_metadata_to_output()
+
+        self.safe_print_out()
+        sys.exit(self.combined_exit_code())
+
     def combined_exit_code(self):
         self.exit_code = self.magic_returncode + self.jc_exit
         self.exit_code = min(self.exit_code, 255)
@@ -525,8 +628,8 @@ Examples:
             sys.exit(self.combined_exit_code())
 
     def ctrlc(self, signum, frame):
-            """Exit with error on SIGINT"""
-            sys.exit(self.JC_ERROR_EXIT)
+        """Exit with error on SIGINT"""
+        sys.exit(self.JC_ERROR_EXIT)
 
     def run(self):
         # break on ctrl-c keyboard interrupt
@@ -605,138 +708,18 @@ Examples:
             sys.exit(0)
 
         # if magic syntax used, try to run the command and error if it's not found, etc.
-        if self.magic_run_command:
-            try:
-                self.magic_run_command_str = shlex.join(self.magic_run_command)      # python 3.8+
-            except AttributeError:
-                self.magic_run_command_str = ' '.join(self.magic_run_command)        # older python versions
-
-        if self.magic_run_command_str.startswith('/proc'):
-            try:
-                self.magic_found_parser = 'proc'
-                self.magic_stdout = self.open_text_file()
-
-            except OSError as e:
-                if self.debug:
-                    raise
-
-                error_msg = os.strerror(e.errno)
-                utils.error_message([
-                    f'"{self.magic_run_command_str}" file could not be opened: {error_msg}.'
-                ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
-
-            except Exception:
-                if self.debug:
-                    raise
-
-                utils.error_message([
-                    f'"{self.magic_run_command_str}" file could not be opened. For details use the -d or -dd option.'
-                ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
-
-        elif self.magic_found_parser:
-            try:
-                self.run_user_command()
-                if self.magic_stderr:
-                    utils._safe_print(self.magic_stderr[:-1], file=sys.stderr)
-
-            except OSError as e:
-                if self.debug:
-                    raise
-
-                error_msg = os.strerror(e.errno)
-                utils.error_message([
-                    f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
-                ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
-
-            except Exception:
-                if self.debug:
-                    raise
-
-                utils.error_message([
-                    f'"{self.magic_run_command_str}" command could not be run. For details use the -d or -dd option.'
-                ])
-                self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
-
-        elif self.magic_run_command is not None:
-            utils.error_message([f'"{self.magic_run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
-            sys.exit(self.combined_exit_code())
+        self.do_magic()
 
         # find the correct parser
-        if self.magic_found_parser:
-            self.parser_module = _get_parser(self.magic_found_parser)
-            self.parser_name = self.parser_shortname(self.magic_found_parser)
-
-        else:
-            found = False
-            for arg in self.args:
-                self.parser_name = self.parser_shortname(arg)
-
-                if self.parser_name in parsers:
-                    self.parser_module = _get_parser(arg)
-                    found = True
-                    break
-
-            if not found:
-                utils.error_message(['Missing or incorrect arguments. Use "jc -h" for help.'])
-                self.jc_exit = self.JC_ERROR_EXIT
-                sys.exit(self.combined_exit_code())
-
-        if sys.stdin.isatty() and self.magic_stdout is None:
-            utils.error_message(['Missing piped data. Use "jc -h" for help.'])
-            self.jc_exit = self.JC_ERROR_EXIT
-            sys.exit(self.combined_exit_code())
+        self.find_parser()
 
         # parse and print to stdout
         try:
-            # differentiate between regular and streaming parsers
-
-            # streaming (only supports UTF-8 string data for now)
             if _parser_is_streaming(self.parser_module):
-                self.data_in = sys.stdin
-                result = self.parser_module.parse(self.data_in,
-                                                  raw=self.raw,
-                                                  quiet=self.quiet,
-                                                  ignore_exceptions=self.ignore_exceptions)
+                self.streaming_parse_and_print()
 
-                for line in result:
-                    self.data_out = line
-                    if self.meta_out:
-                        self.run_timestamp = datetime.now(timezone.utc)
-                        self.add_metadata_to_output()
-
-                    self.safe_print_out()
-
-                sys.exit(self.combined_exit_code())
-
-            # regular (supports binary and UTF-8 string data)
             else:
-                self.data_in = self.magic_stdout or sys.stdin.buffer.read()
-
-                # convert to UTF-8, if possible. Otherwise, leave as bytes
-                try:
-                    if isinstance(self.data_in, bytes):
-                        self.data_in = self.data_in.decode('utf-8')
-                except UnicodeDecodeError:
-                    pass
-
-                self.data_out = self.parser_module.parse(self.data_in,
-                                                         raw=self.raw,
-                                                         quiet=self.quiet)
-
-                if self.meta_out:
-                    self.run_timestamp = datetime.now(timezone.utc)
-                    self.add_metadata_to_output()
-
-                self.safe_print_out()
-
-            sys.exit(self.combined_exit_code())
+                self.standard_parse_and_print()
 
         except (ParseError, LibraryNotInstalled) as e:
             if self.debug:

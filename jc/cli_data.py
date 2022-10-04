@@ -55,3 +55,42 @@ old_pygments_colors = {
     'brightcyan': '#ansiturquoise',
     'white': '#ansiwhite',
 }
+
+helptext_preamble_string = f'''\
+jc converts the output of many commands, file-types, and strings to JSON or YAML
+
+Usage:
+
+    Standard syntax:
+
+        COMMAND | jc [OPTIONS] PARSER
+
+        cat FILE | jc [OPTIONS] PARSER
+
+        echo STRING | jc [OPTIONS] PARSER
+
+    Magic syntax:
+
+        jc [OPTIONS] COMMAND
+
+        jc [OPTIONS] /proc/<path-to-procfile>
+
+Parsers:
+'''
+
+helptext_end_string = '''\
+Examples:
+    Standard Syntax:
+        $ dig www.google.com | jc --pretty --dig
+        $ cat /proc/meminfo | jc --pretty --proc
+
+    Magic Syntax:
+        $ jc --pretty dig www.google.com
+        $ jc --pretty /proc/meminfo
+
+    Parser Documentation:
+        $ jc --help --dig
+
+    Show Hidden Parsers:
+        $ jc -hh
+'''
