@@ -36,6 +36,10 @@ try:
 except Exception:
     PYGMENTS_INSTALLED = False
 
+JC_CLEAN_EXIT = 0
+JC_ERROR_EXIT = 100
+MAX_EXIT = 255
+
 
 class info():
     version = __version__
@@ -60,16 +64,14 @@ class JcCli():
     __slots__ = (
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
         'custom_colors', 'show_hidden', 'ascii_only', 'json_separators', 'json_indent',
-        'JC_CLEAN_EXIT', 'JC_ERROR_EXIT', 'run_timestamp', 'about', 'debug', 'verbose_debug',
-        'force_color', 'mono', 'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out',
-        'unbuffer', 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
-        'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
-        'magic_stderr', 'magic_returncode'
+        'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono', 'help_me',
+        'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer', 'version_info',
+        'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser', 'magic_options',
+        'magic_run_command', 'magic_run_command_str', 'magic_stdout', 'magic_stderr',
+        'magic_returncode'
     )
 
     def __init__(self) -> None:
-        self.JC_CLEAN_EXIT = 0
-        self.JC_ERROR_EXIT = 100
         self.data_in = None
         self.data_out = None
         self.options: List[str] = []
@@ -576,13 +578,13 @@ class JcCli():
         self.safe_print_out()
 
     def exit_clean(self):
-        exit_code = self.magic_returncode + self.JC_CLEAN_EXIT
-        exit_code = min(exit_code, 255)
+        exit_code = self.magic_returncode + JC_CLEAN_EXIT
+        exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
     def exit_error(self):
-        exit_code = self.magic_returncode + self.JC_ERROR_EXIT
-        exit_code = min(exit_code, 255)
+        exit_code = self.magic_returncode + JC_ERROR_EXIT
+        exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
     def add_metadata_to_output(self):
