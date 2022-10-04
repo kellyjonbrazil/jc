@@ -54,6 +54,15 @@ if PYGMENTS_INSTALLED:
 
 
 class JcCli():
+    __slots__ = [
+        'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name',
+        'indent', 'pad', 'env_colors', 'custom_colors', 'show_hidden', 'ascii_only', 'json_separators',
+        'json_indent', 'path_string', 'jc_exit', 'JC_ERROR_EXIT', 'exit_code', 'run_timestamp',
+        'about', 'debug', 'verbose_debug', 'force_color', 'mono', 'help_me', 'pretty', 'quiet',
+        'ignore_exceptions', 'raw', 'meta_out', 'unbuffer', 'version_info', 'yaml_output',
+        'bash_comp', 'zsh_comp', 'magic_found_parser', 'magic_options', 'magic_run_command',
+        'magic_run_command_str', 'magic_stdout', 'magic_stderr', 'magic_returncode'
+    ]
 
     def __init__(self) -> None:
         self.data_in = None
@@ -102,7 +111,6 @@ class JcCli():
         self.magic_stdout = None
         self.magic_stderr = None
         self.magic_returncode = 0
-
 
     def set_custom_colors(self):
         """
@@ -311,7 +319,6 @@ Examples:
         {info.copyright}
         '''
         return textwrap.dedent(versiontext_string)
-
 
     def yaml_out(self):
         """
