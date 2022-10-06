@@ -73,7 +73,15 @@ class MyTests(unittest.TestCase):
         }
 
         for input_string, expected_output in datetime_map.items():
-            self.assertEqual(jc.utils.timestamp(input_string).__dict__, expected_output)
+            ts = jc.utils.timestamp(input_string)
+            ts_dict = {
+                'string': ts.string,
+                'format': ts.format,
+                'naive': ts.naive,
+                'utc': ts.utc
+            }
+
+            self.assertEqual(ts_dict, expected_output)
 
     def test_utils_convert_to_int(self):
         io_map = {

@@ -273,6 +273,8 @@ def input_type_check(data: str) -> None:
 
 
 class timestamp:
+    __slots__ = ('string', 'format', 'naive', 'utc')
+
     def __init__(self,
                  datetime_string: str,
                  format_hint: Optional[Iterable] = None
