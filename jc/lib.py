@@ -77,6 +77,7 @@ parsers = [
     'nmcli',
     'ntpq',
     'passwd',
+    'pci-ids',
     'pidstat',
     'pidstat-s',
     'ping',
