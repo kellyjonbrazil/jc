@@ -161,6 +161,7 @@ parsers = [
     'top-s',
     'tracepath',
     'traceroute',
+    'udevadm',
     'ufw',
     'ufw-appinfo',
     'uname',
