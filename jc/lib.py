@@ -66,6 +66,7 @@ parsers = [
     'lsblk',
     'lsmod',
     'lsof',
+    'lspci',
     'lsusb',
     'm3u',
     'mdadm',
