@@ -211,6 +211,7 @@ option.
 | `        --lsblk` | `lsblk` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk)          |
 | `        --lsmod` | `lsmod` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod)          |
 | `         --lsof` | `lsof` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof)           |
+| `        --lspci` | `lspci -mmv` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lspci)          |
 | `        --lsusb` | `lsusb` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsusb)          |
 | `          --m3u` | M3U and M3U8 file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/m3u)            |
 | `        --mdadm` | `mdadm` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mdadm)          |
@@ -221,6 +222,7 @@ option.
 | `        --nmcli` | `nmcli` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli)          |
 | `         --ntpq` | `ntpq -p` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq)           |
 | `       --passwd` | `/etc/passwd` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd)         |
+| `      --pci-ids` | `pci.ids` file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pci_ids)        |
 | `      --pidstat` | `pidstat -H` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat)        |
 | `    --pidstat-s` | `pidstat -H` command streaming parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat_s)      |
 | `         --ping` | `ping` and `ping6` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping)           |
@@ -257,6 +259,7 @@ option.
 | `        --top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 | `    --tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
 | `   --traceroute` | `traceroute` and `traceroute6` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute)     |
+| `      --udevadm` | `udevadm info` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/udevadm)        |
 | `          --ufw` | `ufw status` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw)            |
 | `  --ufw-appinfo` | `ufw app info [application]` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo)    |
 | `        --uname` | `uname -a` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uname)          |
