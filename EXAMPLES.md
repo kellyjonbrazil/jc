@@ -1819,7 +1819,7 @@ iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p ip
 ```
 ### ISO Datetime string
 ```bash
-echo "2022-07-20T14:52:45Z" | jc --iso-datetime -p
+echo "2022-07-20T14:52:45Z" | jc --datetime-iso -p
 ```
 ```json
 {
