@@ -25,6 +25,7 @@ parsers = [
     'csv',
     'csv-s',
     'date',
+    'datetime-iso',
     'df',
     'dig',
     'dir',

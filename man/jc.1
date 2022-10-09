@@ -1,4 +1,4 @@
-.TH jc 1 2022-10-08 1.22.1 "JSON Convert"
+.TH jc 1 2022-10-09 1.22.1 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
 .SH SYNOPSIS
@@ -109,6 +109,11 @@ CSV file streaming parser
 .B
 \fB--date\fP
 `date` command parser
+
+.TP
+.B
+\fB--datetime-iso\fP
+ISO 8601 Datetime string parser
 
 .TP
 .B
@@ -258,7 +263,7 @@ IPv4 and IPv6 Address string parser
 .TP
 .B
 \fB--iso-datetime\fP
-ISO 8601 Datetime string parser
+Deprecated - please use datetime-iso
 
 .TP
 .B

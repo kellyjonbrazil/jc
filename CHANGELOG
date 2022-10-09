@@ -1,7 +1,9 @@
 jc changelog
 
 20221004 v1.22.1
-- fix proc-pid-stat parser for command names with spaces and newlines
+- fix `proc-pid-stat` parser for command names with spaces and newlines
+- rename `iso-datetime` parser to `datetime-iso`. A deprecation warning will
+  display until `iso-datetime` is removed in a future version.
 - refactor cli module
 - optimize timestamps
 
