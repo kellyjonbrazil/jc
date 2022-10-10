@@ -187,7 +187,7 @@ class JcCli():
         """Return the argument and description information from each parser"""
         ptext = ''
         padding_char = ' '
-        for p in all_parser_info(show_hidden=self.show_hidden):
+        for p in all_parser_info(show_hidden=self.show_hidden, show_deprecated=False):
             parser_arg = p.get('argument', 'UNKNOWN')
             padding = self.pad - len(parser_arg)
             parser_desc = p.get('description', 'No description available.')
@@ -230,7 +230,7 @@ class JcCli():
             'standard_parser_count': len(standard_parser_mod_list()),
             'streaming_parser_count': len(streaming_parser_mod_list()),
             'plugin_parser_count': len(plugin_parser_mod_list()),
-            'parsers': all_parser_info(show_hidden=True)
+            'parsers': all_parser_info(show_hidden=True, show_deprecated=True)
         }
 
     def helptext(self):

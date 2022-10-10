@@ -99,7 +99,8 @@ Returns:
 ### parser\_mod\_list
 
 ```python
-def parser_mod_list() -> List[str]
+def parser_mod_list(show_hidden: bool = True,
+                    show_deprecated: bool = True) -> List[str]
 ```
 
 Returns a list of all available parser module names.
@@ -109,7 +110,8 @@ Returns a list of all available parser module names.
 ### plugin\_parser\_mod\_list
 
 ```python
-def plugin_parser_mod_list() -> List[str]
+def plugin_parser_mod_list(show_hidden: bool = True,
+                           show_deprecated: bool = True) -> List[str]
 ```
 
 Returns a list of plugin parser module names. This function is a
@@ -120,7 +122,8 @@ subset of `parser_mod_list()`.
 ### standard\_parser\_mod\_list
 
 ```python
-def standard_parser_mod_list() -> List[str]
+def standard_parser_mod_list(show_hidden: bool = True,
+                             show_deprecated: bool = True) -> List[str]
 ```
 
 Returns a list of standard parser module names. This function is a
@@ -132,7 +135,8 @@ parsers.
 ### streaming\_parser\_mod\_list
 
 ```python
-def streaming_parser_mod_list() -> List[str]
+def streaming_parser_mod_list(show_hidden: bool = True,
+                              show_deprecated: bool = True) -> List[str]
 ```
 
 Returns a list of streaming parser module names. This function is a
@@ -163,17 +167,21 @@ Parameters:
 
 ```python
 def all_parser_info(documentation: bool = False,
-                    show_hidden: bool = False) -> List[Dict]
+                    show_hidden: bool = False,
+                    show_deprecated: bool = False) -> List[Dict]
 ```
 
 Returns a list of dictionaries that includes metadata for all parser
-modules.
+modules. By default only non-hidden, non-deprecated parsers are
+returned.
 
 Parameters:
 
     documentation:      (boolean)    include parser docstrings if True
     show_hidden:        (boolean)    also show parsers marked as hidden
                                      in their info metadata.
+    show_deprecated:    (boolean)    also show parsers marked as
+                                     deprecated in their info metadata.
 
 <a id="jc.lib.get_help"></a>
 

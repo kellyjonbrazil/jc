@@ -237,6 +237,28 @@ def _parser_is_streaming(parser):
 
     return False
 
+def _parser_is_hidden(parser):
+    """
+    Returns True if this is a hidden parser, else False
+
+    parser is a parser module object.
+    """
+    if getattr(parser.info, 'hidden', None):
+        return True
+
+    return False
+
+def _parser_is_deprecated(parser):
+    """
+    Returns True if this is a deprecated parser, else False
+
+    parser is a parser module object.
+    """
+    if getattr(parser.info, 'deprecated', None):
+        return True
+
+    return False
+
 def parse(
     parser_mod_name: str,
     data: Union[str, bytes, Iterable[str]],
@@ -319,18 +341,51 @@ def parse(
 
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
-def parser_mod_list() -> List[str]:
+def parser_mod_list(
+    show_hidden: bool = True,
+    show_deprecated: bool = True
+) -> List[str]:
     """Returns a list of all available parser module names."""
-    return [_cliname_to_modname(p) for p in parsers]
+    plist = []
+    for p in parsers:
+        parser = _get_parser(p)
 
-def plugin_parser_mod_list() -> List[str]:
+        if not show_hidden and _parser_is_hidden(parser):
+            continue
+
+        if not show_deprecated and _parser_is_deprecated(parser):
+            continue
+
+        plist.append(_cliname_to_modname(p))
+
+    return plist
+
+def plugin_parser_mod_list(
+    show_hidden: bool = True,
+    show_deprecated: bool = True
+) -> List[str]:
     """
     Returns a list of plugin parser module names. This function is a
     subset of `parser_mod_list()`.
     """
-    return [_cliname_to_modname(p) for p in local_parsers]
+    plist = []
+    for p in local_parsers:
+        parser = _get_parser(p)
 
-def standard_parser_mod_list() -> List[str]:
+        if not show_hidden and _parser_is_hidden(parser):
+            continue
+
+        if not show_deprecated and _parser_is_deprecated(parser):
+            continue
+
+        plist.append(_cliname_to_modname(p))
+
+    return plist
+
+def standard_parser_mod_list(
+    show_hidden: bool = True,
+    show_deprecated: bool = True
+) -> List[str]:
     """
     Returns a list of standard parser module names. This function is a
     subset of `parser_mod_list()` and does not contain any streaming
@@ -339,11 +394,23 @@ def standard_parser_mod_list() -> List[str]:
     plist = []
     for p in parsers:
         parser = _get_parser(p)
+
         if not _parser_is_streaming(parser):
+
+            if not show_hidden and _parser_is_hidden(parser):
+                continue
+
+            if not show_deprecated and _parser_is_deprecated(parser):
+                continue
+
             plist.append(_cliname_to_modname(p))
+
     return plist
 
-def streaming_parser_mod_list() -> List[str]:
+def streaming_parser_mod_list(
+    show_hidden: bool = True,
+    show_deprecated: bool = True
+) -> List[str]:
     """
     Returns a list of streaming parser module names. This function is a
     subset of `parser_mod_list()`.
@@ -351,8 +418,17 @@ def streaming_parser_mod_list() -> List[str]:
     plist = []
     for p in parsers:
         parser = _get_parser(p)
+
         if _parser_is_streaming(parser):
+
+            if not show_hidden and _parser_is_hidden(parser):
+                continue
+
+            if not show_deprecated and _parser_is_deprecated(parser):
+                continue
+
             plist.append(_cliname_to_modname(p))
+
     return plist
 
 def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
@@ -393,32 +469,39 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
 
     return info_dict
 
-def all_parser_info(documentation: bool = False,
-                    show_hidden: bool = False
+def all_parser_info(
+    documentation: bool = False,
+    show_hidden: bool = False,
+    show_deprecated: bool = False
 ) -> List[Dict]:
     """
     Returns a list of dictionaries that includes metadata for all parser
-    modules.
+    modules. By default only non-hidden, non-deprecated parsers are
+    returned.
 
     Parameters:
 
         documentation:      (boolean)    include parser docstrings if True
         show_hidden:        (boolean)    also show parsers marked as hidden
                                          in their info metadata.
+        show_deprecated:    (boolean)    also show parsers marked as
+                                         deprecated in their info metadata.
     """
-    temp_list = [parser_info(p, documentation=documentation) for p in parsers]
+    plist = []
+    for p in parsers:
+        parser = _get_parser(p)
 
-    p_list = []
-    if show_hidden:
-        p_list = temp_list
+        if not show_hidden and _parser_is_hidden(parser):
+            continue
 
-    else:
-        for item in temp_list:
-            if not item.get('hidden', None):
-                p_list.append(item)
+        if not show_deprecated and _parser_is_deprecated(parser):
+            continue
 
-    return p_list
+        plist.append(_cliname_to_modname(p))
 
+    p_info_list = [parser_info(p, documentation=documentation) for p in plist]
+
+    return p_info_list
 
 def get_help(parser_mod_name: str) -> None:
     """

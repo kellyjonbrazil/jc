@@ -11,13 +11,14 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Deprecated - please use datetime-iso'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Deprecated - please use datetime-iso'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
     hidden = True
+    deprecated = True
 
 
 __version__ = info.version

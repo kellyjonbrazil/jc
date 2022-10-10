@@ -34,4 +34,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

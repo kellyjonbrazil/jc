@@ -7,6 +7,7 @@ jc changelog
   display until `iso-datetime` is removed in a future version.
 - refactor cli module
 - optimize timestamps
+- add support for deprecating parsers
 
 20220926 v1.22.0
 - Add /proc file parsers for linux. Support for the following files:
