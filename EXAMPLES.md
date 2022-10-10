@@ -1707,6 +1707,12 @@ echo 192.168.2.10/24 | jc --ip-address -p
   "ip": "192.168.2.10",
   "ip_compressed": "192.168.2.10",
   "ip_exploded": "192.168.2.10",
+  "ip_split": [
+    "192",
+    "168",
+    "2",
+    "10"
+  ],
   "scope_id": null,
   "ipv4_mapped": null,
   "six_to_four": null,
