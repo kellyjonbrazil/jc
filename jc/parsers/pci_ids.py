@@ -129,20 +129,20 @@ def parse(
                     raw_output['vendors'][vendor_id] = vdc_obj[vendor_id]
                     vdc_obj = {}
 
-                vendor_id = vdc_header.groupdict()['vendor_id']
+                vendor_id = '_' + vdc_header.groupdict()['vendor_id']
                 vdc_obj[vendor_id] = {}
                 vdc_obj[vendor_id]['vendor_name'] = vdc_header.groupdict()['vendor_name']
                 continue
 
             if vdc_device:
-                device_id = vdc_device.groupdict()['device_id']
+                device_id = '_' + vdc_device.groupdict()['device_id']
                 vdc_obj[vendor_id][device_id] = {}
                 vdc_obj[vendor_id][device_id]['device_name'] = vdc_device.groupdict()['device_name']
                 continue
 
             if vdc_subvendor:
-                subvendor = vdc_subvendor.groupdict()['subvendor']
-                subdevice = vdc_subvendor.groupdict()['subdevice']
+                subvendor = '_' + vdc_subvendor.groupdict()['subvendor']
+                subdevice = '_' + vdc_subvendor.groupdict()['subdevice']
                 vdc_obj[vendor_id][device_id][subvendor] = {}
                 vdc_obj[vendor_id][device_id][subvendor][subdevice] = {}
                 vdc_obj[vendor_id][device_id][subvendor][subdevice]['subsystem_name'] = vdc_subvendor.groupdict()['subsystem_name']
@@ -164,19 +164,19 @@ def parse(
                     raw_output['classes'][class_id] = class_obj[class_id]
                     class_obj = {}
 
-                class_id = class_header.groupdict()['class_id']
+                class_id = '_' + class_header.groupdict()['class_id']
                 class_obj[class_id] = {}
                 class_obj[class_id]['class_name'] = class_header.groupdict()['class_name']
                 continue
 
             if class_sub:
-                subclass_id = class_sub.groupdict()['subclass_id']
+                subclass_id = '_' + class_sub.groupdict()['subclass_id']
                 class_obj[class_id][subclass_id] = {}
                 class_obj[class_id][subclass_id]['subclass_name'] = class_sub.groupdict()['subclass_name']
                 continue
 
             if class_progif:
-                prog_if_id = class_progif.groupdict()['prog_if_id']
+                prog_if_id = '_' + class_progif.groupdict()['prog_if_id']
                 class_obj[class_id][subclass_id][prog_if_id] = class_progif.groupdict()['prog_if_name']
                 continue
 
