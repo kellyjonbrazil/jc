@@ -399,8 +399,9 @@ class JcCli():
             else:
                 break
 
-        # if -h, -a, or -v found in options, then clear options and bail out
-        if 'h' in self.magic_options or 'a' in self.magic_options or 'v' in self.magic_options:
+        # if -a, -h, or -v found in options, then clear options and bail out
+        bail_opts = ('a', 'h', 'v')
+        if len({*bail_opts} & {*self.magic_options}):
             self.magic_options = []
             return
 
