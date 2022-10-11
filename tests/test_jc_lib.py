@@ -82,8 +82,6 @@ class MyTests(unittest.TestCase):
 
         # mock data
         class mock_parser_info:
-            name = "deprecated"
-            argument = "--deprecated"
             version = "1.1"
             description = "`deprecated` command parser"
             author = "nobody"
@@ -112,8 +110,6 @@ class MyTests(unittest.TestCase):
 
         # mock data
         class mock_parser_info:
-            name = "deprecated"
-            argument = "--deprecated"
             version = "1.1"
             description = "`deprecated` command parser"
             author = "nobody"
