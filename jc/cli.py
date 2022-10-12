@@ -399,12 +399,6 @@ class JcCli():
             else:
                 break
 
-        # if -a, -h, or -v found in options, then clear options and bail out
-        bail_opts = ('a', 'h', 'v')
-        if len({*bail_opts} & {*self.magic_options}):
-            self.magic_options = []
-            return
-
         # all options popped and no command found - for case like 'jc -x'
         if len(args_given) == 0:
             self.magic_options = []
