@@ -103,11 +103,11 @@ def parse(
                     raw_output.append(device_output)
                     device_output = {}
 
-                device_output['Slot'] = line.split()[1]
+                device_output['slot'] = line.split()[1]
                 continue
 
             key, val = line.split(maxsplit=1)
-            key = key[:-1]
+            key = key[:-1].lower()
 
             # numeric only (-nmmv)
             if item_id_p.match(val):
