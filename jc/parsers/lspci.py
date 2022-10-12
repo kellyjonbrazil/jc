@@ -104,6 +104,20 @@ def parse(
                     device_output = {}
 
                 device_output['slot'] = line.split()[1]
+
+                slot_info = line.split()[1]
+                *domain, bus, dev_fun = slot_info.split(':')
+
+                if domain:
+                    dom = domain[0]
+                else:
+                    dom = None
+
+                dev, fun = dev_fun.split('.')
+                device_output['domain'] = dom
+                device_output['bus'] = bus
+                device_output['dev'] = dev
+                device_output['function'] = fun
                 continue
 
             key, val = line.split(maxsplit=1)

@@ -303,3 +303,12 @@ SDevice:	SATA AHCI controller [07e0]
 PhySlot:	37
 ProgIf:	01
 
+Slot:   ff:02:05.0
+Class:  SATA controller [0106]
+Vendor: VMware [15ad]
+Device: SATA AHCI controller [07e0]
+SVendor:        VMware [15ad]
+SDevice:        SATA AHCI controller [07e0]
+PhySlot:        37
+ProgIf: 01
+
