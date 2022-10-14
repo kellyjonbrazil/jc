@@ -260,7 +260,7 @@ def _parser_is_deprecated(parser: ModuleType) -> bool:
     return False
 
 def parse(
-    parser_mod_name: str,
+    parser_mod_name: Union[str, ModuleType],
     data: Union[str, bytes, Iterable[str]],
     quiet: bool = False,
     raw: bool = False,
@@ -268,7 +268,7 @@ def parse(
     **kwargs
 ) -> Union[Dict, List[Dict], Iterator[Dict]]:
     """
-    Parse the string data using the supplied parser module.
+    Parse the string or bytes data using the supplied parser module.
 
     This function provides a high-level API to simplify parser use. This
     function will call built-in parsers and custom plugin parsers.
@@ -292,6 +292,14 @@ def parse(
 
     To get a list of available parser module names, use `parser_mod_list()`.
 
+    Alternatively, a parser module object can be supplied:
+
+        >>> import jc
+        >>> import jc.parsers.date as jc_date
+        >>> date_obj = jc.parse(jc_date, 'Tue Jan 18 10:23:07 PST 2022')
+        >>> print(f'The year is: {date_obj["year"]}')
+        The year is: 2022
+
     You can also use the lower-level parser modules directly:
 
         >>> import jc.parsers.date
@@ -312,10 +320,13 @@ def parse(
 
     Parameters:
 
-        parser_mod_name:    (string)     name of the parser module. This
-                                         function will accept module_name,
+        parser_mod_name:    (string or)  name of the parser module. This
+                            Module)      function will accept module_name,
                                          cli-name, and --argument-name
                                          variants of the module name.
+
+                                         A Module object can also be passed
+                                         directly or via _get_parser()
 
         data:               (string or   data to parse (string or bytes for
                             bytes or     standard parsers, iterable of
@@ -333,7 +344,10 @@ def parse(
         Standard Parsers:   Dictionary or List of Dictionaries
         Streaming Parsers:  Generator Object containing Dictionaries
     """
-    jc_parser = _get_parser(parser_mod_name)
+    if isinstance(parser_mod_name, ModuleType):
+        jc_parser = parser_mod_name
+    else:
+        jc_parser = _get_parser(parser_mod_name)
 
     if ignore_exceptions is not None:
         return jc_parser.parse(data, quiet=quiet, raw=raw,
