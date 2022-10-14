@@ -320,7 +320,7 @@ def parse(
 
     Parameters:
 
-        parser_mod_name:    (string or)  name of the parser module. This
+        parser_mod_name:    (string or   name of the parser module. This
                             Module)      function will accept module_name,
                                          cli-name, and --argument-name
                                          variants of the module name.
