@@ -4,11 +4,12 @@ import os
 import re
 import importlib
 from typing import Dict, List, Iterable, Union, Iterator
+from types import ModuleType
 from jc import appdirs
 
 __version__ = '1.22.1'
 
-parsers = [
+parsers: List = [
     'acpi',
     'airport',
     'airport-s',
@@ -185,11 +186,11 @@ parsers = [
     'zipinfo'
 ]
 
-def _cliname_to_modname(parser_cli_name):
+def _cliname_to_modname(parser_cli_name: str) -> str:
     """Return real module name (dashes converted to underscores)"""
     return parser_cli_name.replace('--', '').replace('-', '_')
 
-def _modname_to_cliname(parser_mod_name):
+def _modname_to_cliname(parser_mod_name: str) -> str:
     """Return module's cli name (underscores converted to dashes)"""
     return parser_mod_name.replace('_', '-')
 
@@ -212,12 +213,12 @@ if os.path.isdir(local_parsers_dir):
     except Exception:
         pass
 
-def _parser_argument(parser_mod_name):
+def _parser_argument(parser_mod_name:str) -> str:
     """Return short name of the parser with dashes and with -- prefix"""
     parser = _modname_to_cliname(parser_mod_name)
     return f'--{parser}'
 
-def _get_parser(parser_mod_name):
+def _get_parser(parser_mod_name: str) -> ModuleType:
     """Return the parser module object"""
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
@@ -226,7 +227,7 @@ def _get_parser(parser_mod_name):
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
-def _parser_is_streaming(parser):
+def _parser_is_streaming(parser: ModuleType) -> bool:
     """
     Returns True if this is a streaming parser, else False
 
@@ -237,7 +238,7 @@ def _parser_is_streaming(parser):
 
     return False
 
-def _parser_is_hidden(parser):
+def _parser_is_hidden(parser: ModuleType) -> bool:
     """
     Returns True if this is a hidden parser, else False
 
@@ -248,7 +249,7 @@ def _parser_is_hidden(parser):
 
     return False
 
-def _parser_is_deprecated(parser):
+def _parser_is_deprecated(parser: ModuleType) -> bool:
     """
     Returns True if this is a deprecated parser, else False
 
