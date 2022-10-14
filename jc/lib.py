@@ -222,7 +222,6 @@ def _get_parser(parser_mod_name: str) -> ModuleType:
     """Return the parser module object"""
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
-
     parser_cli_name = _modname_to_cliname(parser_mod_name)
     modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
