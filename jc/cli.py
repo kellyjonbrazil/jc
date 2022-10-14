@@ -10,7 +10,8 @@ import textwrap
 import signal
 import shlex
 import subprocess
-from typing import List, Dict
+from typing import List, Dict, Union, Optional, TextIO
+from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
@@ -72,49 +73,49 @@ class JcCli():
     )
 
     def __init__(self) -> None:
-        self.data_in = None
-        self.data_out = None
+        self.data_in: Optional[Union[str, bytes,TextIO]] = None
+        self.data_out: Optional[Union[List[Dict], Dict]] = None
         self.options: List[str] = []
         self.args: List[str] = []
-        self.parser_module = None
-        self.parser_name = None
-        self.indent = 0
-        self.pad = 0
+        self.parser_module: Optional[ModuleType] = None
+        self.parser_name: Optional[str] = None
+        self.indent: int = 0
+        self.pad: int = 0
         self.custom_colors: Dict = {}
-        self.show_hidden = False
-        self.ascii_only = False
-        self.json_separators = (',', ':')
-        self.json_indent = None
-        self.run_timestamp = None
+        self.show_hidden: bool = False
+        self.ascii_only: bool = False
+        self.json_separators: Optional[tuple[str, str]] = (',', ':')
+        self.json_indent: Optional[int] = None
+        self.run_timestamp: Optional[datetime] = None
 
         # cli options
-        self.about = False
-        self.debug = False
-        self.verbose_debug = False
-        self.force_color = False
-        self.mono = False
-        self.help_me = False
-        self.pretty = False
-        self.quiet = False
-        self.ignore_exceptions = False
-        self.raw = False
-        self.meta_out = False
-        self.unbuffer = False
-        self.version_info = False
-        self.yaml_output = False
-        self.bash_comp = False
-        self.zsh_comp = False
+        self.about: bool = False
+        self.debug: bool = False
+        self.verbose_debug: bool = False
+        self.force_color: bool = False
+        self.mono: bool = False
+        self.help_me: bool = False
+        self.pretty: bool = False
+        self.quiet: bool = False
+        self.ignore_exceptions: bool = False
+        self.raw: bool = False
+        self.meta_out: bool = False
+        self.unbuffer: bool = False
+        self.version_info: bool = False
+        self.yaml_output: bool = False
+        self.bash_comp: bool = False
+        self.zsh_comp: bool = False
 
         # magic attributes
-        self.magic_found_parser = None
+        self.magic_found_parser: Optional[str] = None
         self.magic_options: List[str] = []
-        self.magic_run_command = None
-        self.magic_run_command_str = ''
-        self.magic_stdout = None
-        self.magic_stderr = None
-        self.magic_returncode = 0
+        self.magic_run_command: Optional[List[str]] = None
+        self.magic_run_command_str: str = ''
+        self.magic_stdout: Optional[str] = None
+        self.magic_stderr: Optional[str] = None
+        self.magic_returncode: int = 0
 
-    def set_custom_colors(self):
+    def set_custom_colors(self) -> None:
         """
         Sets the custom_colors dictionary to be used in Pygments custom style class.
 
@@ -160,7 +161,7 @@ class JcCli():
             String: PYGMENT_COLOR[color_list[3]] if color_list[3] != 'default' else PYGMENT_COLOR['green']                         # strings
         }
 
-    def set_mono(self):
+    def set_mono(self) -> None:
         """
         Sets mono attribute based on CLI options.
 
@@ -179,11 +180,11 @@ class JcCli():
             self.mono = True
 
     @staticmethod
-    def parser_shortname(parser_arg):
+    def parser_shortname(parser_arg: str) -> str:
         """Return short name of the parser with dashes and no -- prefix"""
         return parser_arg[2:]
 
-    def parsers_text(self):
+    def parsers_text(self) -> str:
         """Return the argument and description information from each parser"""
         ptext = ''
         padding_char = ' '
@@ -197,7 +198,7 @@ class JcCli():
 
         return ptext
 
-    def options_text(self):
+    def options_text(self) -> str:
         """Return the argument and description information from each option"""
         otext = ''
         padding_char = ' '
@@ -213,7 +214,7 @@ class JcCli():
         return otext
 
     @staticmethod
-    def about_jc():
+    def about_jc() -> Dict[str, Union[str, int, List]]:
         """Return jc info and the contents of each parser.info as a dictionary"""
         return {
             'name': 'jc',
@@ -233,7 +234,7 @@ class JcCli():
             'parsers': all_parser_info(show_hidden=True, show_deprecated=True)
         }
 
-    def helptext(self):
+    def helptext(self) -> str:
         """Return the help text with the list of parsers"""
         self.indent = 4
         self.pad = 20
@@ -242,7 +243,7 @@ class JcCli():
         helptext_string = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
         return helptext_string
 
-    def help_doc(self):
+    def help_doc(self) -> None:
         """
         Pages the parser documentation if a parser is found in the arguments,
         otherwise the general help text is printed.
@@ -269,7 +270,7 @@ class JcCli():
         return
 
     @staticmethod
-    def versiontext():
+    def versiontext() -> str:
         """Return the version text"""
         py_ver = '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)))
         versiontext_string = f'''\
@@ -282,7 +283,7 @@ class JcCli():
         '''
         return textwrap.dedent(versiontext_string)
 
-    def yaml_out(self):
+    def yaml_out(self) -> str:
         """
         Return a YAML formatted string. String may include color codes. If the
         YAML library is not installed, output will fall back to JSON with a
@@ -300,14 +301,14 @@ class JcCli():
             # monkey patch to disable plugins since we don't use them and in
             # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
             # plugin code is incompatible with the pyoxidizer packager
-            YAML.official_plug_ins = lambda a: []
+            YAML.official_plug_ins = lambda a: []  # type: ignore
 
             # monkey patch to disable aliases
-            representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True
+            representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True  # type: ignore
 
             yaml = YAML()
             yaml.default_flow_style = False
-            yaml.explicit_start = True
+            yaml.explicit_start = True  # type: ignore
             yaml.allow_unicode = not self.ascii_only
             yaml.encoding = 'utf-8'
             yaml.dump(self.data_out, y_string_buf)
@@ -324,7 +325,7 @@ class JcCli():
         utils.warning_message(['YAML Library not installed. Reverting to JSON output.'])
         return self.json_out()
 
-    def json_out(self):
+    def json_out(self) -> str:
         """
         Return a JSON formatted string. String may include color codes or be
         pretty printed.
@@ -350,7 +351,7 @@ class JcCli():
 
         return j_string
 
-    def safe_print_out(self):
+    def safe_print_out(self) -> None:
         """Safely prints JSON or YAML output in both UTF-8 and ASCII systems"""
         if self.yaml_output:
             try:
@@ -366,7 +367,7 @@ class JcCli():
                 self.ascii_only = True
                 print(self.json_out(), flush=self.unbuffer)
 
-    def magic_parser(self):
+    def magic_parser(self) -> None:
         """
         Parse command arguments for magic syntax: `jc -p ls -al` and set the
         magic attributes.
@@ -426,29 +427,30 @@ class JcCli():
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     @staticmethod
-    def open_text_file(path_string):
+    def open_text_file(path_string: str) -> str:
         with open(path_string, 'r') as f:
             return f.read()
 
-    def run_user_command(self):
+    def run_user_command(self) -> None:
         """
-        Use subprocess to run the user's command. Returns the STDOUT, STDERR,
-        and the Exit Code as a tuple.
+        Use subprocess to run the user's command.
+        Updates magic_stdout, magic_stderr, and magic_returncode.
         """
-        proc = subprocess.Popen(
-            self.magic_run_command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            close_fds=False,           # Allows inheriting file descriptors
-            universal_newlines=True,   # which is useful for process substitution
-            encoding='UTF-8'
-        )
+        if self.magic_run_command:
+            proc = subprocess.Popen(
+                self.magic_run_command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                close_fds=False,           # Allows inheriting file descriptors
+                universal_newlines=True,   # which is useful for process substitution
+                encoding='UTF-8'
+            )
 
-        self.magic_stdout, self.magic_stderr = proc.communicate()
-        self.magic_stdout = self.magic_stdout or '\n'
-        self.magic_returncode = proc.returncode
+            self.magic_stdout, self.magic_stderr = proc.communicate()
+            self.magic_stdout = self.magic_stdout or '\n'
+            self.magic_returncode = proc.returncode
 
-    def do_magic(self):
+    def do_magic(self) -> None:
         """
         Try to run the command and error if it's not found, executable, etc.
 
@@ -508,7 +510,7 @@ class JcCli():
             utils.error_message([f'"{self.magic_run_command_str}" cannot be used with Magic syntax. Use "jc -h" for help.'])
             self.exit_error()
 
-    def set_parser_module_and_parser_name(self):
+    def set_parser_module_and_parser_name(self) -> None:
         if self.magic_found_parser:
             self.parser_module = _get_parser(self.magic_found_parser)
             self.parser_name = self.parser_shortname(self.magic_found_parser)
@@ -531,25 +533,26 @@ class JcCli():
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
             self.exit_error()
 
-    def streaming_parse_and_print(self):
+    def streaming_parse_and_print(self) -> None:
         """only supports UTF-8 string data for now"""
         self.data_in = sys.stdin
-        result = self.parser_module.parse(
-            self.data_in,
-            raw=self.raw,
-            quiet=self.quiet,
-            ignore_exceptions=self.ignore_exceptions
-        )
+        if self.parser_module:
+            result = self.parser_module.parse(
+                self.data_in,
+                raw=self.raw,
+                quiet=self.quiet,
+                ignore_exceptions=self.ignore_exceptions
+            )
 
-        for line in result:
-            self.data_out = line
-            if self.meta_out:
-                self.run_timestamp = datetime.now(timezone.utc)
-                self.add_metadata_to_output()
+            for line in result:
+                self.data_out = line
+                if self.meta_out:
+                    self.run_timestamp = datetime.now(timezone.utc)
+                    self.add_metadata_to_output()
 
-            self.safe_print_out()
+                self.safe_print_out()
 
-    def standard_parse_and_print(self):
+    def standard_parse_and_print(self) -> None:
         """supports binary and UTF-8 string data"""
         self.data_in = self.magic_stdout or sys.stdin.buffer.read()
 
@@ -560,29 +563,30 @@ class JcCli():
         except UnicodeDecodeError:
             pass
 
-        self.data_out = self.parser_module.parse(
-            self.data_in,
-            raw=self.raw,
-            quiet=self.quiet
-        )
+        if self.parser_module:
+            self.data_out = self.parser_module.parse(
+                self.data_in,
+                raw=self.raw,
+                quiet=self.quiet
+            )
 
-        if self.meta_out:
-            self.run_timestamp = datetime.now(timezone.utc)
-            self.add_metadata_to_output()
+            if self.meta_out:
+                self.run_timestamp = datetime.now(timezone.utc)
+                self.add_metadata_to_output()
 
-        self.safe_print_out()
+            self.safe_print_out()
 
-    def exit_clean(self):
+    def exit_clean(self) -> None:
         exit_code = self.magic_returncode + JC_CLEAN_EXIT
         exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
-    def exit_error(self):
+    def exit_error(self) -> None:
         exit_code = self.magic_returncode + JC_ERROR_EXIT
         exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
-    def add_metadata_to_output(self):
+    def add_metadata_to_output(self) -> None:
         """
         This function mutates data_out in place. If the _jc_meta field
         does not already exist, it will be created with the metadata fields. If
@@ -593,41 +597,42 @@ class JcCli():
         object will be added to the list. This way you always get metadata,
         even if there are no results.
         """
-        meta_obj = {
-            'parser': self.parser_name,
-            'timestamp': self.run_timestamp.timestamp()
-        }
+        if self.run_timestamp:
+            meta_obj: Dict[str, Optional[Union[str, int, float, List[str], datetime]]] = {
+                'parser': self.parser_name,
+                'timestamp': self.run_timestamp.timestamp()
+            }
 
-        if self.magic_run_command:
-            meta_obj['magic_command'] = self.magic_run_command
-            meta_obj['magic_command_exit'] = self.magic_returncode
+            if self.magic_run_command:
+                meta_obj['magic_command'] = self.magic_run_command
+                meta_obj['magic_command_exit'] = self.magic_returncode
 
-        if isinstance(self.data_out, dict):
-            if '_jc_meta' not in self.data_out:
-                self.data_out['_jc_meta'] = {}
+            if isinstance(self.data_out, dict):
+                if '_jc_meta' not in self.data_out:
+                    self.data_out['_jc_meta'] = {}
 
-            self.data_out['_jc_meta'].update(meta_obj)
+                self.data_out['_jc_meta'].update(meta_obj)
 
-        elif isinstance(self.data_out, list):
-            if not self.data_out:
-                self.data_out.append({})
+            elif isinstance(self.data_out, list):
+                if not self.data_out:
+                    self.data_out.append({})
 
-            for item in self.data_out:
-                if isinstance(item, dict):
-                    if '_jc_meta' not in item:
-                        item['_jc_meta'] = {}
+                for item in self.data_out:
+                    if isinstance(item, dict):
+                        if '_jc_meta' not in item:
+                            item['_jc_meta'] = {}
 
-                    item['_jc_meta'].update(meta_obj)
+                        item['_jc_meta'].update(meta_obj)
 
-        else:
-            utils.error_message(['Parser returned an unsupported object type.'])
-            self.exit_error()
+            else:
+                utils.error_message(['Parser returned an unsupported object type.'])
+                self.exit_error()
 
-    def ctrlc(self, signum, frame):
+    def ctrlc(self, signum, frame) -> None:
         """Exit on SIGINT"""
         self.exit_clean()
 
-    def run(self):
+    def run(self) -> None:
         # break on ctrl-c keyboard interrupt
         signal.signal(signal.SIGINT, self.ctrlc)
 
@@ -708,41 +713,42 @@ class JcCli():
         self.set_parser_module_and_parser_name()
 
         # parse and print to stdout
-        try:
-            if _parser_is_streaming(self.parser_module):
-                self.streaming_parse_and_print()
-                self.exit_clean()
+        if self.parser_module:
+            try:
+                if _parser_is_streaming(self.parser_module):
+                    self.streaming_parse_and_print()
+                    self.exit_clean()
 
-            else:
-                self.standard_parse_and_print()
-                self.exit_clean()
+                else:
+                    self.standard_parse_and_print()
+                    self.exit_clean()
 
-        except (ParseError, LibraryNotInstalled) as e:
-            if self.debug:
-                raise
+            except (ParseError, LibraryNotInstalled) as e:
+                if self.debug:
+                    raise
 
-            utils.error_message([
-                f'Parser issue with {self.parser_name}:', f'{e.__class__.__name__}: {e}',
-                'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
-                f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
-            ])
-            self.exit_error()
+                utils.error_message([
+                    f'Parser issue with {self.parser_name}:', f'{e.__class__.__name__}: {e}',
+                    'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
+                    f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
+                ])
+                self.exit_error()
 
-        except Exception:
-            if self.debug:
-                raise
+            except Exception:
+                if self.debug:
+                    raise
 
-            streaming_msg = ''
-            if _parser_is_streaming(self.parser_module):
-                streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
+                streaming_msg = ''
+                if _parser_is_streaming(self.parser_module):
+                    streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
-            utils.error_message([
-                f'{self.parser_name} parser could not parse the input data.',
-                f'{streaming_msg}',
-                'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
-                f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
-            ])
-            self.exit_error()
+                utils.error_message([
+                    f'{self.parser_name} parser could not parse the input data.',
+                    f'{streaming_msg}',
+                    'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
+                    f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
+                ])
+                self.exit_error()
 
 
 def main():

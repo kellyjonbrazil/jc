@@ -18,7 +18,7 @@ long_options_map: Dict[str, List[str]] = {
     '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"']
 }
 
-new_pygments_colors = {
+new_pygments_colors: Dict[str, str] = {
     'black': 'ansiblack',
     'red': 'ansired',
     'green': 'ansigreen',
@@ -37,7 +37,7 @@ new_pygments_colors = {
     'white': 'ansiwhite',
 }
 
-old_pygments_colors = {
+old_pygments_colors: Dict[str, str] = {
     'black': '#ansiblack',
     'red': '#ansidarkred',
     'green': '#ansidarkgreen',
@@ -56,7 +56,7 @@ old_pygments_colors = {
     'white': '#ansiwhite',
 }
 
-helptext_preamble_string = f'''\
+helptext_preamble_string: str = f'''\
 jc converts the output of many commands, file-types, and strings to JSON or YAML
 
 Usage:
@@ -78,7 +78,7 @@ Usage:
 Parsers:
 '''
 
-helptext_end_string = '''\
+helptext_end_string: str = '''\
 Examples:
     Standard Syntax:
         $ dig www.google.com | jc --pretty --dig
