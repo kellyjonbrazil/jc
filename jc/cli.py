@@ -31,6 +31,7 @@ MetadataType = Dict[
 ]
 
 # make pygments import optional
+PYGMENTS_INSTALLED: bool = False
 try:
     import pygments
     from pygments import highlight
@@ -40,21 +41,21 @@ try:
     from pygments.formatters import Terminal256Formatter
     PYGMENTS_INSTALLED = True
 except Exception:
-    PYGMENTS_INSTALLED = False
+    pass
 
-JC_CLEAN_EXIT = 0
-JC_ERROR_EXIT = 100
-MAX_EXIT = 255
+JC_CLEAN_EXIT: int = 0
+JC_ERROR_EXIT: int = 100
+MAX_EXIT: int = 255
 
 
 class info():
-    version = __version__
-    description = 'JSON Convert'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
-    website = 'https://github.com/kellyjonbrazil/jc'
-    copyright = '© 2019-2022 Kelly Brazil'
-    license = 'MIT License'
+    version: str = __version__
+    description: str = 'JSON Convert'
+    author: str = 'Kelly Brazil'
+    author_email: str = 'kellyjonbrazil@gmail.com'
+    website: str = 'https://github.com/kellyjonbrazil/jc'
+    copyright: str = '© 2019-2022 Kelly Brazil'
+    license: str = 'MIT License'
 
 
 # We only support 2.3.0+, pygments changed color names in 2.4.0.
