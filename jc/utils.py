@@ -6,16 +6,20 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Dict, Iterable, Union, Optional, TypedDict, TextIO
+from typing import List, Dict, Iterable, Union, Optional, TextIO
 
-TSFormatType = TypedDict(
-    'TSFormatType',
-    {
-        'id': int,
-        'format': str,
-        'locale': Optional[str]
-    }
-)
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+    TSFormatType = TypedDict(
+        'TSFormatType',
+        {
+            'id': int,
+            'format': str,
+            'locale': Optional[str]
+        }
+    )
+else:
+    TSFormatType = Dict
 
 
 def _asciify(string: str) -> str:
