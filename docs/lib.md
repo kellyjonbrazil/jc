@@ -31,7 +31,8 @@ def parse(
 ) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]
 ```
 
-Parse the string or bytes data using the supplied parser module.
+Parse the data (string or bytes) using the supplied parser (string or
+module object).
 
 This function provides a high-level API to simplify parser use. This
 function will call built-in parsers and custom plugin parsers.
