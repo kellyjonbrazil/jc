@@ -296,7 +296,7 @@ class timestamp:
 
     def __init__(self,
                  datetime_string: str,
-                 format_hint: Optional[Iterable] = None
+                 format_hint: Optional[Iterable[int]] = None
     ) -> None:
         """
         Input a datetime text string of several formats and convert to a
@@ -501,7 +501,7 @@ class timestamp:
 
         # normalize the timezone by taking out any timezone reference, except UTC
         cleandata = data.replace('(', '').replace(')', '')
-        normalized_datetime_list = []
+        normalized_datetime_list: List[str] = []
         for term in cleandata.split():
             if term not in tz_abbr:
                 normalized_datetime_list.append(term)
@@ -519,7 +519,7 @@ class timestamp:
         normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
 
         # try format hints first, then fall back to brute-force method
-        hint_obj_list = []
+        hint_obj_list: List[TSFormatType] = []
         for fmt_id in format_hint:
             for fmt in formats:
                 if fmt_id == fmt['id']:
