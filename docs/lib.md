@@ -21,12 +21,14 @@ jc - JSON Convert lib module
 ### parse
 
 ```python
-def parse(parser_mod_name: Union[str, ModuleType],
-          data: Union[str, bytes, Iterable[str]],
-          quiet: bool = False,
-          raw: bool = False,
-          ignore_exceptions: bool = None,
-          **kwargs) -> Union[Dict, List[Dict], Iterator[Dict]]
+def parse(
+    parser_mod_name: Union[str, ModuleType],
+    data: Union[str, bytes, Iterable[str]],
+    quiet: bool = False,
+    raw: bool = False,
+    ignore_exceptions: bool = None,
+    **kwargs
+) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]
 ```
 
 Parse the string or bytes data using the supplied parser module.
@@ -158,7 +160,8 @@ subset of `parser_mod_list()`.
 ### parser\_info
 
 ```python
-def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict
+def parser_info(parser_mod_name: str,
+                documentation: bool = False) -> JSONDictType
 ```
 
 Returns a dictionary that includes the parser module metadata.
@@ -179,7 +182,7 @@ Parameters:
 ```python
 def all_parser_info(documentation: bool = False,
                     show_hidden: bool = False,
-                    show_deprecated: bool = False) -> List[Dict]
+                    show_deprecated: bool = False) -> List[JSONDictType]
 ```
 
 Returns a list of dictionaries that includes metadata for all parser

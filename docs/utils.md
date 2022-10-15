@@ -64,7 +64,7 @@ Returns:
 ### is\_compatible
 
 ```python
-def is_compatible(compatible: List) -> bool
+def is_compatible(compatible: List[str]) -> bool
 ```
 
 Returns True if the parser is compatible with the running OS platform.
@@ -75,7 +75,7 @@ Returns True if the parser is compatible with the running OS platform.
 
 ```python
 def compatibility(mod_name: str,
-                  compatible: List,
+                  compatible: List[str],
                   quiet: bool = False) -> None
 ```
 
@@ -202,7 +202,7 @@ class timestamp()
 
 ```python
 def __init__(datetime_string: str,
-             format_hint: Optional[Iterable] = None) -> None
+             format_hint: Optional[Iterable[int]] = None) -> None
 ```
 
 Input a datetime text string of several formats and convert to a
