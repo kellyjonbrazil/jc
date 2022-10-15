@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Iterable, Union, Optional
+from typing import List, Dict, Iterable, Union, Optional, TextIO
 
 
 def _asciify(string: str) -> str:
@@ -21,7 +21,13 @@ def _asciify(string: str) -> str:
     return string
 
 
-def _safe_print(string: str, sep=' ', end='\n', file=sys.stdout, flush=False) -> None:
+def _safe_print(
+    string: str,
+    sep: str = ' ',
+    end: str = '\n',
+    file: TextIO = sys.stdout,
+    flush: bool = False
+) -> None:
     """Output for both UTF-8 and ASCII encoding systems"""
     try:
         print(string, sep=sep, end=end, file=file, flush=flush)
@@ -320,12 +326,15 @@ class timestamp:
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
 
     @staticmethod
     @lru_cache(maxsize=512)
-    def _parse_dt(dt_string, format_hint=None):
+    def _parse_dt(
+        dt_string: str,
+        format_hint: Optional[Iterable[int]] = None
+    ) -> Dict[str, Optional[int]]:
         """
         Input a datetime text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
@@ -372,7 +381,7 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        formats = (
+        formats: tuple[Dict[str, Union[int, str, None]], ...] = (
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
             {'id': 1300, 'format': '%Y-%m-%dT%H:%M:%S.%f%Z', 'locale': None}, # ISO Format with UTC (found in syslog 5424): 2003-10-11T22:14:15.003Z
@@ -407,7 +416,7 @@ class timestamp:
 
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC timezone and added known non-UTC offsets
-        tz_abbr = {
+        tz_abbr: set[str] = {
             'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
             'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
             'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
@@ -435,7 +444,7 @@ class timestamp:
             'UTC+1345', 'UTC+1400'
         }
 
-        offset_suffixes = (
+        offset_suffixes: tuple[str, ...] = (
             '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
             '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
             '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
@@ -444,19 +453,18 @@ class timestamp:
             '+13:45', '+14:00'
         )
 
-        data = dt_string or ''
-        normalized_datetime = ''
-        utc_tz = False
-        dt = None
-        dt_utc = None
-        timestamp_naive = None
-        timestamp_utc = None
-        timestamp_obj = {
+        data: str = dt_string or ''
+        normalized_datetime: str = ''
+        utc_tz: bool = False
+        dt: Optional[datetime] = None
+        dt_utc: Optional[datetime] = None
+        timestamp_naive: Optional[int] = None
+        timestamp_utc: Optional[int] = None
+        timestamp_obj: Dict[str, Optional[int]] = {
             'format': None,
             'timestamp_naive': None,
             'timestamp_utc': None
         }
-        utc_tz = False
 
         # convert format_hint to a tuple so it is hashable (for lru_cache)
         if not format_hint:
@@ -509,10 +517,10 @@ class timestamp:
 
         for fmt in optimized_formats:
             try:
-                locale.setlocale(locale.LC_TIME, fmt['locale'])
-                dt = datetime.strptime(normalized_datetime, fmt['format'])
+                locale.setlocale(locale.LC_TIME, fmt['locale'])  # type: ignore
+                dt = datetime.strptime(normalized_datetime, fmt['format'])  # type: ignore
                 timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
-                timestamp_obj['format'] = fmt['id']
+                timestamp_obj['format'] = fmt['id']  # type: ignore
                 locale.setlocale(locale.LC_TIME, None)
                 break
             except Exception:
