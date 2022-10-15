@@ -125,7 +125,7 @@ def error_message(message_lines: List[str]) -> None:
         _safe_print(message, file=sys.stderr)
 
 
-def is_compatible(compatible: List) -> bool:
+def is_compatible(compatible: List[str]) -> bool:
     """
     Returns True if the parser is compatible with the running OS platform.
     """
@@ -139,7 +139,7 @@ def is_compatible(compatible: List) -> bool:
     return platform_found
 
 
-def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
+def compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS platform and
     prints a warning message to `STDERR` if not compatible and
