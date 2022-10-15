@@ -25,6 +25,11 @@ from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
+MetadataType = Dict[
+    str,
+    Optional[Union[str, int, float, List[str], datetime]]
+]
+
 # make pygments import optional
 try:
     import pygments
@@ -598,7 +603,7 @@ class JcCli():
         even if there are no results.
         """
         if self.run_timestamp:
-            meta_obj: Dict[str, Optional[Union[str, int, float, List[str], datetime]]] = {
+            meta_obj: MetadataType = {
                 'parser': self.parser_name,
                 'timestamp': self.run_timestamp.timestamp()
             }
