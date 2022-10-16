@@ -39,8 +39,9 @@ try:
     from pygments.lexers.data import JsonLexer, YamlLexer
     from pygments.formatters import Terminal256Formatter
     PYGMENTS_INSTALLED = True
+    CustomColorType = Dict[Union[Name.Tag, Number, String, Keyword], str]
 except Exception:
-    pass
+    CustomColorType = Dict  # type: ignore
 
 JC_CLEAN_EXIT: int = 0
 JC_ERROR_EXIT: int = 100
@@ -86,7 +87,7 @@ class JcCli():
         self.parser_name: Optional[str] = None
         self.indent: int = 0
         self.pad: int = 0
-        self.custom_colors: Dict = {}
+        self.custom_colors: CustomColorType = {}
         self.show_hidden: bool = False
         self.ascii_only: bool = False
         self.json_separators: Optional[tuple[str, str]] = (',', ':')
