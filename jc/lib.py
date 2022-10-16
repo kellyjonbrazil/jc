@@ -7,6 +7,30 @@ from typing import Dict, List, Iterable, Union, Iterator
 from types import ModuleType
 from jc import appdirs
 
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+    ParserInfoType = TypedDict(
+        'ParserInfoType',
+        {
+            "name": str,
+            "argument": str,
+            "version": str,
+            "description": str,
+            "author": str,
+            "author_email": str,
+            "compatible": List[str],
+            "magic_commands": List[str],
+            "documentation": str,
+            "streaming": bool,
+            "plugin": bool,
+            "hidden": bool,
+            "deprecated": bool
+        },
+        total=False
+    )
+else:
+    ParserInfoType = Dict
+
 JSONDictType = Dict[str, Union[str, int, float, bool, List, Dict, None]]
 
 __version__ = '1.22.1'
@@ -453,7 +477,7 @@ def streaming_parser_mod_list(
 
     return plist
 
-def parser_info(parser_mod_name: str, documentation: bool = False) -> JSONDictType:
+def parser_info(parser_mod_name: str, documentation: bool = False) -> ParserInfoType:
     """
     Returns a dictionary that includes the parser module metadata.
 
@@ -469,7 +493,7 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> JSONDictTy
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
     parser_mod = _get_parser(parser_mod_name)
-    info_dict: JSONDictType = {}
+    info_dict: ParserInfoType = {}
 
     if hasattr(parser_mod, 'info'):
         info_dict['name'] = parser_mod_name
@@ -478,7 +502,7 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> JSONDictTy
 
         for k, v in parser_entry.items():
             if not k.startswith('__'):
-                info_dict[k] = v
+                info_dict[k] = v  # type: ignore
 
         if _modname_to_cliname(parser_mod_name) in local_parsers:
             info_dict['plugin'] = True
@@ -495,7 +519,7 @@ def all_parser_info(
     documentation: bool = False,
     show_hidden: bool = False,
     show_deprecated: bool = False
-) -> List[JSONDictType]:
+) -> List[ParserInfoType]:
     """
     Returns a list of dictionaries that includes metadata for all parser
     modules. By default only non-hidden, non-deprecated parsers are
@@ -521,7 +545,7 @@ def all_parser_info(
 
         plist.append(_cliname_to_modname(p))
 
-    p_info_list: List[JSONDictType] = [parser_info(p, documentation=documentation) for p in plist]
+    p_info_list: List[ParserInfoType] = [parser_info(p, documentation=documentation) for p in plist]
 
     return p_info_list
 

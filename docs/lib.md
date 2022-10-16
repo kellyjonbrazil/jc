@@ -162,7 +162,7 @@ subset of `parser_mod_list()`.
 
 ```python
 def parser_info(parser_mod_name: str,
-                documentation: bool = False) -> JSONDictType
+                documentation: bool = False) -> ParserInfoType
 ```
 
 Returns a dictionary that includes the parser module metadata.
@@ -183,7 +183,7 @@ Parameters:
 ```python
 def all_parser_info(documentation: bool = False,
                     show_hidden: bool = False,
-                    show_deprecated: bool = False) -> List[JSONDictType]
+                    show_deprecated: bool = False) -> List[ParserInfoType]
 ```
 
 Returns a list of dictionaries that includes metadata for all parser

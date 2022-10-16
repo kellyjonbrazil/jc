@@ -14,7 +14,8 @@ from typing import List, Dict, Union, Optional, TextIO
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
-    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
+    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
+    JSONDictType
 )
 from . import utils
 from .cli_data import (
@@ -25,10 +26,8 @@ from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
-MetadataType = Dict[
-    str,
-    Optional[Union[str, int, float, List[str], datetime]]
-]
+MetadataType = Dict[str, Optional[Union[str, int, float, List[str], datetime]]]
+AboutJCType = Dict[str, Union[str, int, List[str]]]
 
 # make pygments import optional
 PYGMENTS_INSTALLED: bool = False
@@ -79,8 +78,8 @@ class JcCli():
     )
 
     def __init__(self) -> None:
-        self.data_in: Optional[Union[str, bytes,TextIO]] = None
-        self.data_out: Optional[Union[List[Dict], Dict]] = None
+        self.data_in: Optional[Union[str, bytes, TextIO]] = None
+        self.data_out: Optional[Union[List[JSONDictType], JSONDictType, AboutJCType]] = None
         self.options: List[str] = []
         self.args: List[str] = []
         self.parser_module: Optional[ModuleType] = None
@@ -195,11 +194,11 @@ class JcCli():
         ptext = ''
         padding_char = ' '
         for p in all_parser_info(show_hidden=self.show_hidden, show_deprecated=False):
-            parser_arg = p.get('argument', 'UNKNOWN')
-            padding = self.pad - len(parser_arg)
-            parser_desc = p.get('description', 'No description available.')
-            indent_text = padding_char * self.indent
-            padding_text = padding_char * padding
+            parser_arg: str = p.get('argument', 'UNKNOWN')
+            padding: int = self.pad - len(parser_arg)
+            parser_desc: str = p.get('description', 'No description available.')
+            indent_text: str = padding_char * self.indent
+            padding_text: str = padding_char * padding
             ptext += indent_text + parser_arg + padding_text + parser_desc + '\n'
 
         return ptext
@@ -615,9 +614,9 @@ class JcCli():
 
             if isinstance(self.data_out, dict):
                 if '_jc_meta' not in self.data_out:
-                    self.data_out['_jc_meta'] = {}
+                    self.data_out['_jc_meta'] = {}  # type: ignore
 
-                self.data_out['_jc_meta'].update(meta_obj)
+                self.data_out['_jc_meta'].update(meta_obj)  # type: ignore
 
             elif isinstance(self.data_out, list):
                 if not self.data_out:
@@ -628,7 +627,7 @@ class JcCli():
                         if '_jc_meta' not in item:
                             item['_jc_meta'] = {}
 
-                        item['_jc_meta'].update(meta_obj)
+                        item['_jc_meta'].update(meta_obj)  # type: ignore
 
             else:
                 utils.error_message(['Parser returned an unsupported object type.'])
