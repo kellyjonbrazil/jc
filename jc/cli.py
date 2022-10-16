@@ -15,7 +15,7 @@ from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
-    JSONDictType
+    JSONDictType, ParserInfoType
 )
 from . import utils
 from .cli_data import (
@@ -27,7 +27,7 @@ from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
 MetadataType = Dict[str, Optional[Union[str, int, float, List[str], datetime]]]
-AboutJCType = Dict[str, Union[str, int, List[str]]]
+AboutJCType = Dict[str, Union[str, int, List[ParserInfoType]]]
 
 # make pygments import optional
 PYGMENTS_INSTALLED: bool = False
@@ -220,7 +220,7 @@ class JcCli():
         return otext
 
     @staticmethod
-    def about_jc() -> Dict[str, Union[str, int, List]]:
+    def about_jc() -> AboutJCType:
         """Return jc info and the contents of each parser.info as a dictionary"""
         return {
             'name': 'jc',
