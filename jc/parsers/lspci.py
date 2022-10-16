@@ -109,15 +109,15 @@ def parse(
                 *domain, bus, dev_fun = slot_info.split(':')
 
                 if domain:
-                    dom = domain[0]
+                    dom = int(domain[0], 16)
                 else:
-                    dom = None
+                    dom = 0
 
                 dev, fun = dev_fun.split('.')
                 device_output['domain'] = dom
-                device_output['bus'] = bus
-                device_output['dev'] = dev
-                device_output['function'] = fun
+                device_output['bus'] = int(bus, 16)
+                device_output['dev'] = int(dev, 16)
+                device_output['function'] = int(fun, 16)
                 continue
 
             key, val = line.split(maxsplit=1)
