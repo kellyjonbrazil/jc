@@ -1,7 +1,7 @@
 """jc - JSON Convert streaming utils"""
 
 from functools import wraps
-from typing import Dict, Union, Iterable
+from typing import Dict, Tuple, Union, Iterable
 from .jc_types import JSONDictType, MetadataType
 
 
@@ -104,7 +104,7 @@ def raise_or_yield(
     ignore_exceptions: bool,
     e: BaseException,
     line: str
-) -> tuple[BaseException, str]:
+) -> Tuple[BaseException, str]:
     """
     Return the exception object and line string if ignore_exceptions is
     True. Otherwise, re-raise the exception from the exception object with
