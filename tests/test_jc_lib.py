@@ -94,7 +94,7 @@ class MyTests(unittest.TestCase):
             info = mock_parser_info
 
         jc.lib.parsers = ['deprecated']
-        jc.lib._get_parser = lambda x: mock_parser
+        jc.lib._get_parser = lambda x: mock_parser  # type: ignore
         result = jc.lib.all_parser_info(show_deprecated=True)
 
         # reset
@@ -122,7 +122,7 @@ class MyTests(unittest.TestCase):
             info = mock_parser_info
 
         jc.lib.parsers = ['deprecated']
-        jc.lib._get_parser = lambda x: mock_parser
+        jc.lib._get_parser = lambda x: mock_parser  # type: ignore
         result = jc.lib.all_parser_info(show_hidden=True)
 
         # reset
