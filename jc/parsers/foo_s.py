@@ -40,7 +40,7 @@ Examples:
     {example output}
     ...
 """
-from typing import Dict, Iterable, Union
+from typing import Iterable
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -64,7 +64,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: Dict) -> Dict:
+def _process(proc_data: JSONDictType) -> JSONDictType:
     """
     Final processing to conform to the schema.
 
