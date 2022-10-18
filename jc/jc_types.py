@@ -2,11 +2,11 @@
 
 import sys
 from datetime import datetime
-from typing import Dict, List, Iterator, Optional, Union
+from typing import Dict, List, Tuple, Iterator, Optional, Union
 
 JSONDictType = Dict[str, Union[str, int, float, bool, List, Dict, None]]
 MetadataType = Dict[str, Optional[Union[str, int, float, List[str], datetime]]]
-StreamingOutputType = Iterator[Union[JSONDictType, tuple[BaseException, str]]]
+StreamingOutputType = Iterator[Union[JSONDictType, Tuple[BaseException, str]]]
 
 if sys.version_info >= (3, 8):
     from typing import TypedDict
