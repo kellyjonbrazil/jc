@@ -17,7 +17,6 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Deprecated - please use datetime-iso'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
-    hidden = True
     deprecated = True
 
 
