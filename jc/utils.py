@@ -179,7 +179,7 @@ def has_data(data: Union[str, bytes]) -> bool:
     return bool(data)
 
 
-def convert_to_int(value: Union[str, float]) -> Optional[int]:
+def convert_to_int(value: object) -> Optional[int]:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
@@ -209,7 +209,7 @@ def convert_to_int(value: Union[str, float]) -> Optional[int]:
         return None
 
 
-def convert_to_float(value: Union[str, int]) -> Optional[float]:
+def convert_to_float(value: object) -> Optional[float]:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
@@ -235,7 +235,7 @@ def convert_to_float(value: Union[str, int]) -> Optional[float]:
         return None
 
 
-def convert_to_bool(value: Union[str, int, float]) -> bool:
+def convert_to_bool(value: object) -> bool:
     """
     Converts string, integer, or float input to boolean by checking
     for 'truthy' values.
@@ -283,7 +283,7 @@ class timestamp:
     __slots__ = ('string', 'format', 'naive', 'utc')
 
     def __init__(self,
-                 datetime_string: str,
+                 datetime_string: Optional[str],
                  format_hint: Optional[Iterable[int]] = None
     ) -> None:
         """
@@ -333,7 +333,7 @@ class timestamp:
     @staticmethod
     @lru_cache(maxsize=512)
     def _parse_dt(
-        dt_string: str,
+        dt_string: Optional[str],
         format_hint: Optional[Iterable[int]] = None
     ) -> Dict[str, Optional[int]]:
         """
