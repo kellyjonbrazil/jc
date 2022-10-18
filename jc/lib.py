@@ -388,8 +388,8 @@ def parse(
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
 def parser_mod_list(
-    show_hidden: bool = True,
-    show_deprecated: bool = True
+    show_hidden: bool = False,
+    show_deprecated: bool = False
 ) -> List[str]:
     """Returns a list of all available parser module names."""
     plist: List[str] = []
@@ -407,8 +407,8 @@ def parser_mod_list(
     return plist
 
 def plugin_parser_mod_list(
-    show_hidden: bool = True,
-    show_deprecated: bool = True
+    show_hidden: bool = False,
+    show_deprecated: bool = False
 ) -> List[str]:
     """
     Returns a list of plugin parser module names. This function is a
@@ -429,8 +429,8 @@ def plugin_parser_mod_list(
     return plist
 
 def standard_parser_mod_list(
-    show_hidden: bool = True,
-    show_deprecated: bool = True
+    show_hidden: bool = False,
+    show_deprecated: bool = False
 ) -> List[str]:
     """
     Returns a list of standard parser module names. This function is a
@@ -454,8 +454,8 @@ def standard_parser_mod_list(
     return plist
 
 def streaming_parser_mod_list(
-    show_hidden: bool = True,
-    show_deprecated: bool = True
+    show_hidden: bool = False,
+    show_deprecated: bool = False
 ) -> List[str]:
     """
     Returns a list of streaming parser module names. This function is a

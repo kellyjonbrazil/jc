@@ -233,10 +233,10 @@ class JcCli():
             'license': info.license,
             'python_version': '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro))),
             'python_path': sys.executable,
-            'parser_count': len(parser_mod_list()),
-            'standard_parser_count': len(standard_parser_mod_list()),
-            'streaming_parser_count': len(streaming_parser_mod_list()),
-            'plugin_parser_count': len(plugin_parser_mod_list()),
+            'parser_count': len(parser_mod_list(show_hidden=True, show_deprecated=True)),
+            'standard_parser_count': len(standard_parser_mod_list(show_hidden=True, show_deprecated=True)),
+            'streaming_parser_count': len(streaming_parser_mod_list(show_hidden=True, show_deprecated=True)),
+            'plugin_parser_count': len(plugin_parser_mod_list(show_hidden=True, show_deprecated=True)),
             'parsers': all_parser_info(show_hidden=True, show_deprecated=True)
         }
 
