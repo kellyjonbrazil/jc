@@ -7,19 +7,7 @@ from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
 from typing import List, Dict, Iterable, Union, Optional, TextIO
-
-if sys.version_info >= (3, 8):
-    from typing import TypedDict
-    TSFormatType = TypedDict(
-        'TSFormatType',
-        {
-            'id': int,
-            'format': str,
-            'locale': Optional[str]
-        }
-    )
-else:
-    TSFormatType = Dict
+from .jc_types import TimeStampFormatType
 
 
 def _asciify(string: str) -> str:
@@ -394,7 +382,7 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        formats: tuple[TSFormatType, ...] = (
+        formats: tuple[TimeStampFormatType, ...] = (
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
             {'id': 1300, 'format': '%Y-%m-%dT%H:%M:%S.%f%Z', 'locale': None}, # ISO Format with UTC (found in syslog 5424): 2003-10-11T22:14:15.003Z
@@ -519,7 +507,7 @@ class timestamp:
         normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
 
         # try format hints first, then fall back to brute-force method
-        hint_obj_list: List[TSFormatType] = []
+        hint_obj_list: List[TimeStampFormatType] = []
         for fmt_id in format_hint:
             for fmt in formats:
                 if fmt_id == fmt['id']:

@@ -3,35 +3,11 @@ import sys
 import os
 import re
 import importlib
-from typing import Dict, List, Iterable, Union, Iterator
+from typing import List, Iterable, Union, Iterator
 from types import ModuleType
+from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
-if sys.version_info >= (3, 8):
-    from typing import TypedDict
-    ParserInfoType = TypedDict(
-        'ParserInfoType',
-        {
-            "name": str,
-            "argument": str,
-            "version": str,
-            "description": str,
-            "author": str,
-            "author_email": str,
-            "compatible": List[str],
-            "magic_commands": List[str],
-            "documentation": str,
-            "streaming": bool,
-            "plugin": bool,
-            "hidden": bool,
-            "deprecated": bool
-        },
-        total=False
-    )
-else:
-    ParserInfoType = Dict
-
-JSONDictType = Dict[str, Union[str, int, float, bool, List, Dict, None]]
 
 __version__ = '1.22.1'
 

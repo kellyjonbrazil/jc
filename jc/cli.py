@@ -10,13 +10,13 @@ import textwrap
 import signal
 import shlex
 import subprocess
-from typing import List, Dict, Union, Optional, TextIO
+from typing import List, Union, Optional, TextIO
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
-    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
-    JSONDictType, ParserInfoType
+    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
 )
+from .jc_types import JSONDictType, AboutJCType, MetadataType, CustomColorType
 from . import utils
 from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
@@ -25,9 +25,6 @@ from .cli_data import (
 from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
-
-MetadataType = Dict[str, Optional[Union[str, int, float, List[str], datetime]]]
-AboutJCType = Dict[str, Union[str, int, List[ParserInfoType]]]
 
 # make pygments import optional
 PYGMENTS_INSTALLED: bool = False
@@ -39,9 +36,8 @@ try:
     from pygments.lexers.data import JsonLexer, YamlLexer
     from pygments.formatters import Terminal256Formatter
     PYGMENTS_INSTALLED = True
-    CustomColorType = Dict[Union[Name.Tag, Number, String, Keyword], str]
 except Exception:
-    CustomColorType = Dict  # type: ignore
+    pass
 
 JC_CLEAN_EXIT: int = 0
 JC_ERROR_EXIT: int = 100
