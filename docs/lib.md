@@ -113,8 +113,8 @@ Returns:
 ### parser\_mod\_list
 
 ```python
-def parser_mod_list(show_hidden: bool = True,
-                    show_deprecated: bool = True) -> List[str]
+def parser_mod_list(show_hidden: bool = False,
+                    show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of all available parser module names.
@@ -124,8 +124,8 @@ Returns a list of all available parser module names.
 ### plugin\_parser\_mod\_list
 
 ```python
-def plugin_parser_mod_list(show_hidden: bool = True,
-                           show_deprecated: bool = True) -> List[str]
+def plugin_parser_mod_list(show_hidden: bool = False,
+                           show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of plugin parser module names. This function is a
@@ -136,8 +136,8 @@ subset of `parser_mod_list()`.
 ### standard\_parser\_mod\_list
 
 ```python
-def standard_parser_mod_list(show_hidden: bool = True,
-                             show_deprecated: bool = True) -> List[str]
+def standard_parser_mod_list(show_hidden: bool = False,
+                             show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of standard parser module names. This function is a
@@ -149,8 +149,8 @@ parsers.
 ### streaming\_parser\_mod\_list
 
 ```python
-def streaming_parser_mod_list(show_hidden: bool = True,
-                              show_deprecated: bool = True) -> List[str]
+def streaming_parser_mod_list(show_hidden: bool = False,
+                              show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of streaming parser module names. This function is a
