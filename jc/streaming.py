@@ -1,7 +1,7 @@
 """jc - JSON Convert streaming utils"""
 
 from functools import wraps
-from typing import Union, Iterable
+from typing import Dict, Union, Iterable
 from .jc_types import JSONDictType, MetadataType
 
 
@@ -28,7 +28,7 @@ def stream_success(output_line: JSONDictType, ignore_exceptions: bool) -> JSONDi
     return output_line
 
 
-def stream_error(e: BaseException, line: str) -> MetadataType:
+def stream_error(e: BaseException, line: str) -> Dict[str, MetadataType]:
     """
     Return an error `_jc_meta` field.
     """
