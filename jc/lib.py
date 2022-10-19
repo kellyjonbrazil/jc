@@ -200,7 +200,7 @@ def _modname_to_cliname(parser_mod_name: str) -> str:
 # override parsers from <user_data_dir>/jc/jcparsers/*.py.
 # Once this list is created, extend the parsers list with it.
 local_parsers: List[str] = []
-data_dir = appdirs.user_data_dir('jc', 'jc')
+data_dir = appdirs.user_data_dir('jc', 'jc')  # type: ignore
 local_parsers_dir = os.path.join(data_dir, 'jcparsers')
 if os.path.isdir(local_parsers_dir):
     sys.path.append(data_dir)

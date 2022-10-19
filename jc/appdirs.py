@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# type: ignore
 # Copyright (c) 2005-2010 ActiveState Software Inc.
 # Copyright (c) 2013 Eddy Petrișor
 

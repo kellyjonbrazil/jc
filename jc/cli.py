@@ -685,7 +685,7 @@ class JcCli():
         self.set_custom_colors()
 
         if self.verbose_debug:
-            tracebackplus.enable(context=11)
+            tracebackplus.enable(context=11)  # type: ignore
 
         if self.about:
             self.data_out = self.about_jc()

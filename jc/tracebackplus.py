@@ -1,3 +1,5 @@
+# type: ignore
+
 """More comprehensive traceback formatting for Python scripts.
 To enable this module, do:
     import tracebackplus; tracebackplus.enable()
@@ -69,7 +71,6 @@ products or services of Licensee, or any third party.
 agrees to be bound by the terms and conditions of this License
 Agreement.
 '''
-
 import inspect
 import keyword
 import linecache
