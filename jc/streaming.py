@@ -1,8 +1,11 @@
 """jc - JSON Convert streaming utils"""
 
 from functools import wraps
-from typing import Dict, Tuple, Union, Iterable
+from typing import Dict, Tuple, Union, Iterable, Callable, TypeVar, cast, Any
 from .jc_types import JSONDictType, MetadataType
+
+
+F = TypeVar('F', bound=Callable[..., Any])
 
 
 def streaming_input_type_check(data: Iterable[Union[str, bytes]]) -> None:
@@ -42,7 +45,7 @@ def stream_error(e: BaseException, line: str) -> Dict[str, MetadataType]:
     }
 
 
-def add_jc_meta(func):
+def add_jc_meta(func: F) -> F:
     """
     Decorator for streaming parsers to add stream_success and stream_error
     objects. This simplifies the yield lines in the streaming parsers.
@@ -97,7 +100,7 @@ def add_jc_meta(func):
                 line = value[1]
                 yield stream_error(exception_obj, line)
 
-    return wrapper
+    return cast(F, wrapper)
 
 
 def raise_or_yield(
