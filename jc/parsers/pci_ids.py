@@ -32,7 +32,8 @@ Examples:
     []
 """
 import re
-from typing import List, Dict
+from typing import Dict
+from jc.jc_types import JSONDictType
 import jc.utils
 
 
@@ -48,7 +49,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: Dict) -> Dict:
+def _process(proc_data: JSONDictType) -> JSONDictType:
     """
     Final processing to conform to the schema.
 
@@ -67,7 +68,7 @@ def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> Dict:
+) -> JSONDictType:
     """
     Main text parsing function
 

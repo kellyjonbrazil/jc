@@ -33,7 +33,7 @@ Examples:
     $ foo | jc --foo -p -r
     []
 """
-from typing import List
+from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -96,7 +96,7 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: List[JSONDictType] = []
+    raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
 

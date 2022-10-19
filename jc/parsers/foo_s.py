@@ -40,7 +40,7 @@ Examples:
     {example output}
     ...
 """
-from typing import Iterable
+from typing import Dict, Iterable
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -115,7 +115,7 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
-            output_line: JSONDictType = {}
+            output_line: Dict = {}
 
             # parse the content here
             # check out helper functions in jc.utils

@@ -44,6 +44,7 @@ else:
     ParserInfoType = Dict
     TimeStampFormatType = Dict
 
+
 AboutJCType = Dict[str, Union[str, int, List[ParserInfoType]]]
 
 

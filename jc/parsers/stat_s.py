@@ -77,7 +77,7 @@ import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
-from typing import Iterable
+from typing import Dict, Iterable
 from jc.jc_types import JSONDictType, StreamingOutputType
 from jc.exceptions import ParseError
 
@@ -156,7 +156,7 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)
 
-    output_line: JSONDictType = {}
+    output_line: Dict = {}
     os_type = ''
 
     for line in data:
@@ -184,16 +184,14 @@ def parse(
                     output_line['file'] = line_list[1]
 
                     # populate link_to field if -> found
-                    file_string = output_line['file']
-                    if isinstance(file_string, str):
-                        if ' -> ' in file_string:
-                            filename = file_string.split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                            link = file_string.split(' -> ')[1].strip('\u2018').rstrip('\u2019')
-                            output_line['file'] = filename
-                            output_line['link_to'] = link
-                        else:
-                            filename = file_string.split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                            output_line['file'] = filename
+                    if ' -> ' in output_line['file']:
+                        filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
+                        link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
+                        output_line['file'] = filename
+                        output_line['link_to'] = link
+                    else:
+                        filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
+                        output_line['file'] = filename
 
                     continue
 
