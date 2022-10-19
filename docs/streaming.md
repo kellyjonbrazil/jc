@@ -61,7 +61,7 @@ Return an error `_jc_meta` field.
 ### add\_jc\_meta
 
 ```python
-def add_jc_meta(func)
+def add_jc_meta(func: F) -> F
 ```
 
 Decorator for streaming parsers to add stream_success and stream_error
