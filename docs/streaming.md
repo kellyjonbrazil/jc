@@ -19,7 +19,7 @@ jc - JSON Convert streaming utils
 ### streaming\_input\_type\_check
 
 ```python
-def streaming_input_type_check(data: Iterable) -> None
+def streaming_input_type_check(data: Iterable[Union[str, bytes]]) -> None
 ```
 
 Ensure input data is an iterable, but not a string or bytes. Raises
@@ -40,7 +40,8 @@ Ensure each line is a string. Raises `TypeError` if not.
 ### stream\_success
 
 ```python
-def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict
+def stream_success(output_line: JSONDictType,
+                   ignore_exceptions: bool) -> JSONDictType
 ```
 
 Add `_jc_meta` object to output line if `ignore_exceptions=True`
@@ -50,7 +51,7 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 ### stream\_error
 
 ```python
-def stream_error(e: BaseException, line: str) -> Dict
+def stream_error(e: BaseException, line: str) -> Dict[str, MetadataType]
 ```
 
 Return an error `_jc_meta` field.
@@ -106,7 +107,7 @@ In all cases above:
 
 ```python
 def raise_or_yield(ignore_exceptions: bool, e: BaseException,
-                   line: str) -> tuple
+                   line: str) -> Tuple[BaseException, str]
 ```
 
 Return the exception object and line string if ignore_exceptions is
