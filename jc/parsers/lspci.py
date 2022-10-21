@@ -38,6 +38,7 @@ Examples:
 """
 import re
 from typing import List, Dict
+from jc.jc_types import JSONDictType
 import jc.utils
 
 
@@ -54,7 +55,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
@@ -66,14 +67,29 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    return proc_data
+    int_list: set[str] = {
+        'domain', 'bus', 'dev', 'function', 'class_id', 'vendor_id', 'device_id',
+        'svendor_id', 'sdevice_id', 'physlot', 'progif'
+    }
+
+    new_list: List[JSONDictType] = []
+
+    for item in proc_data:
+        output: Dict = {}
+        for key, val in item.items():
+            output[key] = val
+            if key in int_list:
+                output[key + '_int'] = int(val, 16)  # type: ignore
+        new_list.append(output)
+
+    return new_list
 
 
 def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> List[Dict]:
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -111,7 +127,7 @@ def parse(
                 if domain:
                     dom = domain[0]
                 else:
-                    dom = None
+                    dom = "00"
 
                 dev, fun = dev_fun.split('.')
                 device_output['domain'] = dom
