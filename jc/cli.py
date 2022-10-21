@@ -16,7 +16,7 @@ from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
 )
-from .jc_types import JSONDictType, AboutJCType, MetadataType, CustomColorType
+from .jc_types import JSONDictType, AboutJCType, MetadataType, CustomColorType, ParserInfoType
 from . import utils
 from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
@@ -26,7 +26,6 @@ from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
-# make pygments import optional
 PYGMENTS_INSTALLED: bool = False
 try:
     import pygments
@@ -188,8 +187,8 @@ class JcCli():
 
     def parsers_text(self) -> str:
         """Return the argument and description information from each parser"""
-        ptext = ''
-        padding_char = ' '
+        ptext: str = ''
+        padding_char: str = ' '
         for p in all_parser_info(show_hidden=self.show_hidden, show_deprecated=False):
             parser_arg: str = p.get('argument', 'UNKNOWN')
             padding: int = self.pad - len(parser_arg)
@@ -202,15 +201,15 @@ class JcCli():
 
     def options_text(self) -> str:
         """Return the argument and description information from each option"""
-        otext = ''
-        padding_char = ' '
+        otext: str = ''
+        padding_char: str = ' '
         for option in long_options_map:
-            o_short = '-' + long_options_map[option][0]
-            o_desc = long_options_map[option][1]
-            o_combined = o_short + ',  ' + option
-            padding = self.pad - len(o_combined)
-            indent_text = padding_char * self.indent
-            padding_text = padding_char * padding
+            o_short: str = '-' + long_options_map[option][0]
+            o_desc: str = long_options_map[option][1]
+            o_combined: str = o_short + ',  ' + option
+            padding: int = self.pad - len(o_combined)
+            indent_text: str = padding_char * self.indent
+            padding_text: str = padding_char * padding
             otext += indent_text + o_combined + padding_text + o_desc + '\n'
 
         return otext
@@ -240,9 +239,9 @@ class JcCli():
         """Return the help text with the list of parsers"""
         self.indent = 4
         self.pad = 20
-        parsers_string = self.parsers_text()
-        options_string = self.options_text()
-        helptext_string = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
+        parsers_string: str = self.parsers_text()
+        options_string: str = self.options_text()
+        helptext_string: str = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
         return helptext_string
 
     def help_doc(self) -> None:
@@ -251,16 +250,16 @@ class JcCli():
         otherwise the general help text is printed.
         """
         for arg in self.args:
-            parser_name = self.parser_shortname(arg)
+            parser_name: str = self.parser_shortname(arg)
 
             if parser_name in parsers:
-                p_info = parser_info(parser_name, documentation=True)
-                compatible = ', '.join(p_info.get('compatible', ['unknown']))
-                docs = p_info.get('documentation', 'No documentation available.')
-                version = p_info.get('version', 'unknown')
-                author = p_info.get('author', 'unknown')
-                author_email = p_info.get('author_email', 'unknown')
-                doc_text = \
+                p_info: ParserInfoType = parser_info(parser_name, documentation=True)
+                compatible: str = ', '.join(p_info.get('compatible', ['unknown']))
+                docs: str = p_info.get('documentation', 'No documentation available.')
+                version: str = p_info.get('version', 'unknown')
+                author: str = p_info.get('author', 'unknown')
+                author_email: str = p_info.get('author_email', 'unknown')
+                doc_text: str = \
                     f'{docs}\n'\
                     f'Compatibility:  {compatible}\n\n'\
                     f'Version {version} by {author} ({author_email})\n'
@@ -274,8 +273,8 @@ class JcCli():
     @staticmethod
     def versiontext() -> str:
         """Return the version text"""
-        py_ver = '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)))
-        versiontext_string = f'''\
+        py_ver: str = '.'.join((str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)))
+        versiontext_string: str = f'''\
         jc version:  {info.version}
         python interpreter version:  {py_ver}
         python path:  {sys.executable}
@@ -318,7 +317,7 @@ class JcCli():
 
             if not self.mono:
                 class JcStyle(Style):
-                    styles = self.custom_colors
+                    styles: CustomColorType = self.custom_colors
 
                 return str(highlight(y_string, YamlLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
@@ -347,7 +346,7 @@ class JcCli():
 
         if not self.mono:
             class JcStyle(Style):
-                styles = self.custom_colors
+                styles: CustomColorType = self.custom_colors
 
             return str(highlight(j_string, JsonLexer(), Terminal256Formatter(style=JcStyle))[0:-1])
 
@@ -378,7 +377,7 @@ class JcCli():
         if len(self.args) <= 1 or (self.args[1].startswith('--') and self.args[1] not in long_options_map):
             return
 
-        args_given = self.args[1:]
+        args_given: List[str] = self.args[1:]
 
         # find the options
         for arg in list(args_given):
@@ -424,8 +423,8 @@ class JcCli():
                 self.magic_run_command_str = ' '.join(self.magic_run_command)
 
         # try to get a parser for two_word_command, otherwise get one for one_word_command
-        one_word_command = self.magic_run_command[0]
-        two_word_command = ' '.join(self.magic_run_command[0:2])
+        one_word_command: str = self.magic_run_command[0]
+        two_word_command: str = ' '.join(self.magic_run_command[0:2])
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     @staticmethod
@@ -579,12 +578,12 @@ class JcCli():
             self.safe_print_out()
 
     def exit_clean(self) -> None:
-        exit_code = self.magic_returncode + JC_CLEAN_EXIT
+        exit_code: int = self.magic_returncode + JC_CLEAN_EXIT
         exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
     def exit_error(self) -> None:
-        exit_code = self.magic_returncode + JC_ERROR_EXIT
+        exit_code: int = self.magic_returncode + JC_ERROR_EXIT
         exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
