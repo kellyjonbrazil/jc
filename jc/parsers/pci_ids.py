@@ -4,6 +4,28 @@ This parser converts the pci.ids database file.
 
 https://raw.githubusercontent.com/pciutils/pciids/master/pci.ids
 
+A nested schema allows straightforward queries with tools like `jq`. Hex id
+numbers are prefixed with an underscore (`_`) so bracket notation is not
+necessary when referencing. For example:
+
+    $ cat pci.ids | jc --pci-ids | jq '.vendors._9005._0053._9005._ffff.subsystem_name'
+    "AIC-7896 SCSI Controller mainboard implementation"
+
+Here are the vendor and class mappings:
+
+    jq '.vendors._001c._0001._001c._0005.subsystem_name'
+                  |     |     |     |
+                  |     |     |     subdevice
+                  |     |     subvendor
+                  |     device
+                  vendor
+
+    jq '.classes._0c._03._40'
+                  |   |   |
+                  |   |   prog_if
+                  |   subclass
+                  class
+
 Usage (cli):
 
     $ cat pci.ids | jc --pci-ids
@@ -15,21 +37,36 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "pci-id":     string,
-        "bar":     boolean,
-        "baz":     integer
+    {
+      "vendors": {
+        "_<vendor_id>": {
+          "vendor_name":                 string,
+          "_<device_id>": {
+            "device_name":               string,
+            "_<subvendor_id>": {
+              "_<subdevice_id":          string
+            }
+          }
+        }
+      },
+      "classes": {
+        "_<class_id>": {
+          "class_name":                  string,
+          "_<subclass_id>": {
+            "subclass_name":             string,
+            "_<prog_if>":                string
+          }
+        }
       }
-    ]
+    }
 
 Examples:
 
-    $ cat pci.ids | jc --pci-id -p
-    []
+    $ cat pci.ids | jc --pci-ids | jq '.vendors._001c._0001._001c._0005.subsystem_name'
+    "2 Channel CAN Bus SJC1000 (Optically Isolated)"
 
-    $ cat pci.ids | jc --pci-id -p -r
-    []
+    $ cat pci.ids | jc --pci-ids | jq '.classes._0c._03._40'
+    "USB4 Host Interface"
 """
 import re
 from typing import Dict
