@@ -1,5 +1,19 @@
 jc changelog
 
+20221024 v1.22.1
+- add `udevadm` command parser
+- add `lspci` command parser
+- add `pci.ids` file parser
+- fix `proc-pid-stat` parser for command names with spaces and newlines
+- enhance `ip-address` parser to add `ip_split` field
+- rename `iso-datetime` parser to `datetime-iso`. A deprecation warning will
+  display until `iso-datetime` is removed in a future version.
+- refactor cli module
+- optimize performance of calculated timestamps
+- add more type annotations
+- add support for deprecating parsers
+- move jc-web demo site from heroku to render.com
+
 20220926 v1.22.0
 - Add /proc file parsers for linux. Support for the following files:
   `/proc/buddyinfo`

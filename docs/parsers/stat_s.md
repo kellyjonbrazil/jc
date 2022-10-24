@@ -83,7 +83,10 @@ Examples:
 
 ```python
 @add_jc_meta
-def parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(data: Iterable[str],
+          raw: bool = False,
+          quiet: bool = False,
+          ignore_exceptions: bool = False) -> StreamingOutputType
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -104,4 +107,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

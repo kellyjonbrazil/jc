@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_pid_stat': (
                 'fixtures/linux-proc/pid_stat',
-                'fixtures/linux-proc/pid_stat.json')
+                'fixtures/linux-proc/pid_stat.json'),
+            'pid_stat_w_space_and_nl_in_comm': (
+                'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm',
+                'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -38,6 +41,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_stat.parse(self.f_in['proc_pid_stat'], quiet=True),
                                                         self.f_json['proc_pid_stat'])
+
+    def test_proc_pid_stat_w_space_and_nl(self):
+        """
+        Test '/proc/<pid>/stat' with command with spaces and newline
+        """
+        self.assertEqual(jc.parsers.proc_pid_stat.parse(self.f_in['pid_stat_w_space_and_nl_in_comm'], quiet=True),
+                                                        self.f_json['pid_stat_w_space_and_nl_in_comm'])
 
 
 if __name__ == '__main__':

@@ -34,6 +34,7 @@ Examples:
     []
 """
 from typing import List, Dict
+from jc.jc_types import JSONDictType
 import jc.utils
 
 
@@ -53,7 +54,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
@@ -78,7 +79,7 @@ def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> List[Dict]:
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -95,7 +96,7 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: List = []
+    raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
 

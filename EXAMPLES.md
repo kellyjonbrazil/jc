@@ -1707,6 +1707,12 @@ echo 192.168.2.10/24 | jc --ip-address -p
   "ip": "192.168.2.10",
   "ip_compressed": "192.168.2.10",
   "ip_exploded": "192.168.2.10",
+  "ip_split": [
+    "192",
+    "168",
+    "2",
+    "10"
+  ],
   "scope_id": null,
   "ipv4_mapped": null,
   "six_to_four": null,
@@ -1819,7 +1825,7 @@ iptables --line-numbers -v -L -t nat | jc --iptables -p          # or:  jc -p ip
 ```
 ### ISO Datetime string
 ```bash
-echo "2022-07-20T14:52:45Z" | jc --iso-datetime -p
+echo "2022-07-20T14:52:45Z" | jc --datetime-iso -p
 ```
 ```json
 {

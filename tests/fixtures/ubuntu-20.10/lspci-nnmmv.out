@@ -1,0 +1,314 @@
+Slot:	00:00.0
+Class:	Host bridge [0600]
+Vendor:	Intel Corporation [8086]
+Device:	440BX/ZX/DX - 82443BX/ZX/DX Host bridge [7190]
+SVendor:	VMware [15ad]
+SDevice:	Virtual Machine Chipset [1976]
+Rev:	01
+
+Slot:	00:01.0
+Class:	PCI bridge [0604]
+Vendor:	Intel Corporation [8086]
+Device:	440BX/ZX/DX - 82443BX/ZX/DX AGP bridge [7191]
+Rev:	01
+
+Slot:	00:07.0
+Class:	ISA bridge [0601]
+Vendor:	Intel Corporation [8086]
+Device:	82371AB/EB/MB PIIX4 ISA [7110]
+SVendor:	VMware [15ad]
+SDevice:	Virtual Machine Chipset [1976]
+Rev:	08
+
+Slot:	00:07.1
+Class:	IDE interface [0101]
+Vendor:	Intel Corporation [8086]
+Device:	82371AB/EB/MB PIIX4 IDE [7111]
+SVendor:	VMware [15ad]
+SDevice:	Virtual Machine Chipset [1976]
+Rev:	01
+ProgIf:	8a
+
+Slot:	00:07.3
+Class:	Bridge [0680]
+Vendor:	Intel Corporation [8086]
+Device:	82371AB/EB/MB PIIX4 ACPI [7113]
+SVendor:	VMware [15ad]
+SDevice:	Virtual Machine Chipset [1976]
+Rev:	08
+
+Slot:	00:07.7
+Class:	System peripheral [0880]
+Vendor:	VMware [15ad]
+Device:	Virtual Machine Communication Interface [0740]
+SVendor:	VMware [15ad]
+SDevice:	Virtual Machine Communication Interface [0740]
+Rev:	10
+
+Slot:	00:0f.0
+Class:	VGA compatible controller [0300]
+Vendor:	VMware [15ad]
+Device:	SVGA II Adapter [0405]
+SVendor:	VMware [15ad]
+SDevice:	SVGA II Adapter [0405]
+
+Slot:	00:10.0
+Class:	SCSI storage controller [0100]
+Vendor:	Broadcom / LSI [1000]
+Device:	53c1030 PCI-X Fusion-MPT Dual Ultra320 SCSI [0030]
+SVendor:	VMware [15ad]
+SDevice:	LSI Logic Parallel SCSI Controller [1976]
+Rev:	01
+
+Slot:	00:11.0
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI bridge [0790]
+Rev:	02
+ProgIf:	01
+
+Slot:	00:15.0
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.1
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.2
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.3
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.4
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.5
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.6
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:15.7
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.0
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.1
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.2
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.3
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.4
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.5
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.6
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:16.7
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.0
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.1
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.2
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.3
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.4
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.5
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.6
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:17.7
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.0
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.1
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.2
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.3
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.4
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.5
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.6
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	00:18.7
+Class:	PCI bridge [0604]
+Vendor:	VMware [15ad]
+Device:	PCI Express Root Port [07a0]
+Rev:	01
+
+Slot:	02:00.0
+Class:	USB controller [0c03]
+Vendor:	VMware [15ad]
+Device:	USB1.1 UHCI Controller [0774]
+SVendor:	VMware [15ad]
+SDevice:	USB1.1 UHCI Controller [1976]
+PhySlot:	32
+
+Slot:	02:01.0
+Class:	Ethernet controller [0200]
+Vendor:	Intel Corporation [8086]
+Device:	82545EM Gigabit Ethernet Controller (Copper) [100f]
+SVendor:	VMware [15ad]
+SDevice:	PRO/1000 MT Single Port Adapter [0750]
+PhySlot:	33
+Rev:	01
+
+Slot:	02:02.0
+Class:	Multimedia audio controller [0401]
+Vendor:	Ensoniq [1274]
+Device:	ES1371/ES1373 / Creative Labs CT2518 [1371]
+SVendor:	Ensoniq [1274]
+SDevice:	Audio PCI 64V/128/5200 / Creative CT4810/CT5803/CT5806 [Sound Blaster PCI] [1371]
+PhySlot:	34
+Rev:	02
+
+Slot:	02:03.0
+Class:	USB controller [0c03]
+Vendor:	VMware [15ad]
+Device:	USB2 EHCI Controller [0770]
+SVendor:	VMware [15ad]
+SDevice:	USB2 EHCI Controller [0770]
+PhySlot:	35
+ProgIf:	20
+
+Slot:	02:05.0
+Class:	SATA controller [0106]
+Vendor:	VMware [15ad]
+Device:	SATA AHCI controller [07e0]
+SVendor:	VMware [15ad]
+SDevice:	SATA AHCI controller [07e0]
+PhySlot:	37
+ProgIf:	01
+
+Slot:   ff:02:05.0
+Class:  SATA controller [0106]
+Vendor: VMware [15ad]
+Device: SATA AHCI controller [07e0]
+SVendor:        VMware [15ad]
+SDevice:        SATA AHCI controller [07e0]
+PhySlot:        37
+ProgIf: 01
+

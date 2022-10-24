@@ -6,7 +6,8 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Iterable, Union, Optional
+from typing import List, Dict, Iterable, Union, Optional, TextIO
+from .jc_types import TimeStampFormatType
 
 
 def _asciify(string: str) -> str:
@@ -21,7 +22,13 @@ def _asciify(string: str) -> str:
     return string
 
 
-def _safe_print(string: str, sep=' ', end='\n', file=sys.stdout, flush=False) -> None:
+def _safe_print(
+    string: str,
+    sep: str = ' ',
+    end: str = '\n',
+    file: TextIO = sys.stdout,
+    flush: bool = False
+) -> None:
     """Output for both UTF-8 and ASCII encoding systems"""
     try:
         print(string, sep=sep, end=end, file=file, flush=flush)
@@ -106,7 +113,7 @@ def error_message(message_lines: List[str]) -> None:
         _safe_print(message, file=sys.stderr)
 
 
-def is_compatible(compatible: List) -> bool:
+def is_compatible(compatible: List[str]) -> bool:
     """
     Returns True if the parser is compatible with the running OS platform.
     """
@@ -120,7 +127,7 @@ def is_compatible(compatible: List) -> bool:
     return platform_found
 
 
-def compatibility(mod_name: str, compatible: List, quiet: bool = False) -> None:
+def compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> None:
     """
     Checks for the parser's compatibility with the running OS platform and
     prints a warning message to `STDERR` if not compatible and
@@ -172,7 +179,7 @@ def has_data(data: Union[str, bytes]) -> bool:
     return bool(data)
 
 
-def convert_to_int(value: Union[str, float]) -> Optional[int]:
+def convert_to_int(value: object) -> Optional[int]:
     """
     Converts string and float input to int. Strips all non-numeric
     characters from strings.
@@ -202,7 +209,7 @@ def convert_to_int(value: Union[str, float]) -> Optional[int]:
         return None
 
 
-def convert_to_float(value: Union[str, int]) -> Optional[float]:
+def convert_to_float(value: object) -> Optional[float]:
     """
     Converts string and int input to float. Strips all non-numeric
     characters from strings.
@@ -228,7 +235,7 @@ def convert_to_float(value: Union[str, int]) -> Optional[float]:
         return None
 
 
-def convert_to_bool(value: Union[str, int, float]) -> bool:
+def convert_to_bool(value: object) -> bool:
     """
     Converts string, integer, or float input to boolean by checking
     for 'truthy' values.
@@ -273,9 +280,11 @@ def input_type_check(data: str) -> None:
 
 
 class timestamp:
+    __slots__ = ('string', 'format', 'naive', 'utc')
+
     def __init__(self,
-                 datetime_string: str,
-                 format_hint: Optional[Iterable] = None
+                 datetime_string: Optional[str],
+                 format_hint: Optional[Iterable[int]] = None
     ) -> None:
         """
         Input a datetime text string of several formats and convert to a
@@ -318,12 +327,15 @@ class timestamp:
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
 
     @staticmethod
     @lru_cache(maxsize=512)
-    def _parse_dt(dt_string, format_hint=None):
+    def _parse_dt(
+        dt_string: Optional[str],
+        format_hint: Optional[Iterable[int]] = None
+    ) -> Dict[str, Optional[int]]:
         """
         Input a datetime text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
@@ -370,7 +382,7 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        formats = (
+        formats: tuple[TimeStampFormatType, ...] = (
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
             {'id': 1300, 'format': '%Y-%m-%dT%H:%M:%S.%f%Z', 'locale': None}, # ISO Format with UTC (found in syslog 5424): 2003-10-11T22:14:15.003Z
@@ -405,7 +417,7 @@ class timestamp:
 
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC timezone and added known non-UTC offsets
-        tz_abbr = {
+        tz_abbr: set[str] = {
             'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
             'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
             'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
@@ -433,7 +445,7 @@ class timestamp:
             'UTC+1345', 'UTC+1400'
         }
 
-        offset_suffixes = (
+        offset_suffixes: tuple[str, ...] = (
             '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
             '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
             '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
@@ -442,19 +454,18 @@ class timestamp:
             '+13:45', '+14:00'
         )
 
-        data = dt_string or ''
-        normalized_datetime = ''
-        utc_tz = False
-        dt = None
-        dt_utc = None
-        timestamp_naive = None
-        timestamp_utc = None
-        timestamp_obj = {
+        data: str = dt_string or ''
+        normalized_datetime: str = ''
+        utc_tz: bool = False
+        dt: Optional[datetime] = None
+        dt_utc: Optional[datetime] = None
+        timestamp_naive: Optional[int] = None
+        timestamp_utc: Optional[int] = None
+        timestamp_obj: Dict[str, Optional[int]] = {
             'format': None,
             'timestamp_naive': None,
             'timestamp_utc': None
         }
-        utc_tz = False
 
         # convert format_hint to a tuple so it is hashable (for lru_cache)
         if not format_hint:
@@ -478,7 +489,7 @@ class timestamp:
 
         # normalize the timezone by taking out any timezone reference, except UTC
         cleandata = data.replace('(', '').replace(')', '')
-        normalized_datetime_list = []
+        normalized_datetime_list: List[str] = []
         for term in cleandata.split():
             if term not in tz_abbr:
                 normalized_datetime_list.append(term)
@@ -496,7 +507,7 @@ class timestamp:
         normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
 
         # try format hints first, then fall back to brute-force method
-        hint_obj_list = []
+        hint_obj_list: List[TimeStampFormatType] = []
         for fmt_id in format_hint:
             for fmt in formats:
                 if fmt_id == fmt['id']:

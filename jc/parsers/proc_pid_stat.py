@@ -195,13 +195,14 @@ Examples:
       "exit_code": 0
     }
 """
+import re
 from typing import Dict
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/<pid>/stat` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -242,6 +243,12 @@ def _process(proc_data: Dict) -> Dict:
     if 'state' in proc_data:
         proc_data['state_pretty'] = state_map[proc_data['state']]
 
+    for key, val in proc_data.items():
+        try:
+            proc_data[key] = int(val)
+        except Exception:
+            pass
+
     return proc_data
 
 
@@ -270,74 +277,65 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        split_line = data.split()
-        raw_output = {
-            'pid': int(split_line[0]),
-            'comm': split_line[1].strip('()'),
-            'state': split_line[2],
-            'ppid': int(split_line[3]),
-            'pgrp': int(split_line[4]),
-            'session': int(split_line[5]),
-            'tty_nr': int(split_line[6]),
-            'tpg_id': int(split_line[7]),
-            'flags': int(split_line[8]),
-            'minflt': int(split_line[9]),
-            'cminflt': int(split_line[10]),
-            'majflt': int(split_line[11]),
-            'cmajflt': int(split_line[12]),
-            'utime': int(split_line[13]),
-            'stime': int(split_line[14]),
-            'cutime': int(split_line[15]),
-            'cstime': int(split_line[16]),
-            'priority': int(split_line[17]),
-            'nice': int(split_line[18]),
-            'num_threads': int(split_line[19]),
-            'itrealvalue': int(split_line[20]),
-            'starttime': int(split_line[21]),
-            'vsize': int(split_line[22]),
-            'rss': int(split_line[23]),
-            'rsslim': int(split_line[24]),
-            'startcode': int(split_line[25]),
-            'endcode': int(split_line[26]),
-            'startstack': int(split_line[27]),
-            'kstkeep': int(split_line[28]),
-            'kstkeip': int(split_line[29]),
-            'signal': int(split_line[30]),
-            'blocked': int(split_line[31]),
-            'sigignore': int(split_line[32]),
-            'sigcatch': int(split_line[33]),
-            'wchan': int(split_line[34]),
-            'nswap': int(split_line[35]),
-            'cnswap': int(split_line[36])
-        }
+        line_re = re.compile(r'''
+            ^(?P<pid>\d+)\s
+            \((?P<comm>.+)\)\s
+            (?P<state>\S)\s
+            (?P<ppid>\d+)\s
+            (?P<pgrp>\d+)\s
+            (?P<session>\d+)\s
+            (?P<tty_nr>\d+)\s
+            (?P<tpg_id>-?\d+)\s
+            (?P<flags>\d+)\s
+            (?P<minflt>\d+)\s
+            (?P<cminflt>\d+)\s
+            (?P<majflt>\d+)\s
+            (?P<cmajflt>\d+)\s
+            (?P<utime>\d+)\s
+            (?P<stime>\d+)\s
+            (?P<cutime>\d+)\s
+            (?P<cstime>\d+)\s
+            (?P<priority>\d+)\s
+            (?P<nice>\d+)\s
+            (?P<num_threads>\d+)\s
+            (?P<itrealvalue>\d+)\s
+            (?P<starttime>\d+)\s
+            (?P<vsize>\d+)\s
+            (?P<rss>\d+)\s
+            (?P<rsslim>\d+)\s
+            (?P<startcode>\d+)\s
+            (?P<endcode>\d+)\s
+            (?P<startstack>\d+)\s
+            (?P<kstkeep>\d+)\s
+            (?P<kstkeip>\d+)\s
+            (?P<signal>\d+)\s
+            (?P<blocked>\d+)\s
+            (?P<sigignore>\d+)\s
+            (?P<sigcatch>\d+)\s
+            (?P<wchan>\d+)\s
+            (?P<nswap>\d+)\s
+            (?P<cnswap>\d+)\s
+            (?P<exit_signal>\d+)\s
+            (?P<processor>\d+)\s
+            (?P<rt_priority>\d+)\s
+            (?P<policy>\d+)\s
+            (?P<delayacct_blkio_ticks>\d+)\s
+            (?P<guest_time>\d+)\s
+            (?P<cguest_time>\d+)\s
+            (?P<start_data>\d+)\s
+            (?P<end_data>\d+)\s
+            (?P<start_brk>\d+)\s
+            (?P<arg_start>\d+)\s
+            (?P<arg_end>\d+)\s
+            (?P<env_start>\d+)\s
+            (?P<env_end>\d+)\s
+            (?P<exit_code>\d+)
+        ''', re.VERBOSE | re.DOTALL
+        )
 
-        if len(split_line) > 37:
-            raw_output['exit_signal'] = int(split_line[37])
+        line_match = line_re.search(data)
 
-        if len(split_line) > 38:
-            raw_output['processor'] = int(split_line[38])
-
-        if len(split_line) > 39:
-            raw_output['rt_priority'] = int(split_line[39])
-            raw_output['policy'] = int(split_line[40])
-
-        if len(split_line) > 41:
-            raw_output['delayacct_blkio_ticks'] = int(split_line[41])
-
-        if len(split_line) > 42:
-            raw_output['guest_time'] = int(split_line[42])
-            raw_output['cguest_time'] = int(split_line[43])
-
-        if len(split_line) > 44:
-            raw_output['start_data'] = int(split_line[44])
-            raw_output['end_data'] = int(split_line[45])
-            raw_output['start_brk'] = int(split_line[46])
-
-        if len(split_line) > 47:
-            raw_output['arg_start'] = int(split_line[47])
-            raw_output['arg_end'] = int(split_line[48])
-            raw_output['env_start'] = int(split_line[49])
-            raw_output['env_end'] = int(split_line[50])
-            raw_output['exit_code'] = int(split_line[51])
+        if line_match:
+            raw_output = line_match.groupdict()
 
     return raw_output if raw else _process(raw_output)

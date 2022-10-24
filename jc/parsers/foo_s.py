@@ -40,11 +40,12 @@ Examples:
     {example output}
     ...
 """
-from typing import Dict, Iterable, Union
+from typing import Dict, Iterable
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
+from jc.jc_types import JSONDictType, StreamingOutputType
 from jc.exceptions import ParseError
 
 
@@ -63,7 +64,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: Dict) -> Dict:
+def _process(proc_data: JSONDictType) -> JSONDictType:
     """
     Final processing to conform to the schema.
 
@@ -90,7 +91,7 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Union[Iterable[Dict], tuple]:
+) -> StreamingOutputType:
     """
     Main text parsing generator function. Returns an iterable object.
 

@@ -8,7 +8,7 @@ file_loader = FileSystemLoader('templates')
 env = Environment(loader=file_loader)
 template = env.get_template('manpage_template')
 output = template.render(today=date.today(),
-                         jc=jc.cli.about_jc())
+                         jc=jc.cli.JcCli.about_jc())
 
 with open('man/jc.1', 'w') as f:
     f.write(output)

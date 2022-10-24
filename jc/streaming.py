@@ -1,10 +1,14 @@
 """jc - JSON Convert streaming utils"""
 
 from functools import wraps
-from typing import Dict, Iterable
+from typing import Dict, Tuple, Union, Iterable, Callable, TypeVar, cast, Any
+from .jc_types import JSONDictType, MetadataType
 
 
-def streaming_input_type_check(data: Iterable) -> None:
+F = TypeVar('F', bound=Callable[..., Any])
+
+
+def streaming_input_type_check(data: Iterable[Union[str, bytes]]) -> None:
     """
     Ensure input data is an iterable, but not a string or bytes. Raises
     `TypeError` if not.
@@ -19,7 +23,7 @@ def streaming_line_input_type_check(line: str) -> None:
         raise TypeError("Input line must be a 'str' object.")
 
 
-def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict:
+def stream_success(output_line: JSONDictType, ignore_exceptions: bool) -> JSONDictType:
     """Add `_jc_meta` object to output line if `ignore_exceptions=True`"""
     if ignore_exceptions:
         output_line.update({'_jc_meta': {'success': True}})
@@ -27,7 +31,7 @@ def stream_success(output_line: Dict, ignore_exceptions: bool) -> Dict:
     return output_line
 
 
-def stream_error(e: BaseException, line: str) -> Dict:
+def stream_error(e: BaseException, line: str) -> Dict[str, MetadataType]:
     """
     Return an error `_jc_meta` field.
     """
@@ -41,7 +45,7 @@ def stream_error(e: BaseException, line: str) -> Dict:
     }
 
 
-def add_jc_meta(func):
+def add_jc_meta(func: F) -> F:
     """
     Decorator for streaming parsers to add stream_success and stream_error
     objects. This simplifies the yield lines in the streaming parsers.
@@ -96,14 +100,14 @@ def add_jc_meta(func):
                 line = value[1]
                 yield stream_error(exception_obj, line)
 
-    return wrapper
+    return cast(F, wrapper)
 
 
 def raise_or_yield(
     ignore_exceptions: bool,
     e: BaseException,
     line: str
-) -> tuple:
+) -> Tuple[BaseException, str]:
     """
     Return the exception object and line string if ignore_exceptions is
     True. Otherwise, re-raise the exception from the exception object with

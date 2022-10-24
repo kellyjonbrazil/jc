@@ -3,12 +3,15 @@ import sys
 import os
 import re
 import importlib
-from typing import Dict, List, Iterable, Union, Iterator
+from typing import List, Iterable, Union, Iterator
+from types import ModuleType
+from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
-__version__ = '1.22.0'
 
-parsers = [
+__version__ = '1.22.1'
+
+parsers: List[str] = [
     'acpi',
     'airport',
     'airport-s',
@@ -25,6 +28,7 @@ parsers = [
     'csv',
     'csv-s',
     'date',
+    'datetime-iso',
     'df',
     'dig',
     'dir',
@@ -66,6 +70,7 @@ parsers = [
     'lsblk',
     'lsmod',
     'lsof',
+    'lspci',
     'lsusb',
     'm3u',
     'mdadm',
@@ -76,6 +81,7 @@ parsers = [
     'nmcli',
     'ntpq',
     'passwd',
+    'pci-ids',
     'pidstat',
     'pidstat-s',
     'ping',
@@ -161,6 +167,7 @@ parsers = [
     'top-s',
     'tracepath',
     'traceroute',
+    'udevadm',
     'ufw',
     'ufw-appinfo',
     'uname',
@@ -181,19 +188,19 @@ parsers = [
     'zipinfo'
 ]
 
-def _cliname_to_modname(parser_cli_name):
+def _cliname_to_modname(parser_cli_name: str) -> str:
     """Return real module name (dashes converted to underscores)"""
     return parser_cli_name.replace('--', '').replace('-', '_')
 
-def _modname_to_cliname(parser_mod_name):
+def _modname_to_cliname(parser_mod_name: str) -> str:
     """Return module's cli name (underscores converted to dashes)"""
     return parser_mod_name.replace('_', '-')
 
 # Create the local_parsers list. This is a list of custom or
 # override parsers from <user_data_dir>/jc/jcparsers/*.py.
 # Once this list is created, extend the parsers list with it.
-local_parsers = []
-data_dir = appdirs.user_data_dir('jc', 'jc')
+local_parsers: List[str] = []
+data_dir = appdirs.user_data_dir('jc', 'jc')  # type: ignore
 local_parsers_dir = os.path.join(data_dir, 'jcparsers')
 if os.path.isdir(local_parsers_dir):
     sys.path.append(data_dir)
@@ -208,21 +215,20 @@ if os.path.isdir(local_parsers_dir):
     except Exception:
         pass
 
-def _parser_argument(parser_mod_name):
+def _parser_argument(parser_mod_name: str) -> str:
     """Return short name of the parser with dashes and with -- prefix"""
     parser = _modname_to_cliname(parser_mod_name)
     return f'--{parser}'
 
-def _get_parser(parser_mod_name):
+def _get_parser(parser_mod_name: str) -> ModuleType:
     """Return the parser module object"""
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
-
     parser_cli_name = _modname_to_cliname(parser_mod_name)
-    modpath = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
+    modpath: str = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
-def _parser_is_streaming(parser):
+def _parser_is_streaming(parser: ModuleType) -> bool:
     """
     Returns True if this is a streaming parser, else False
 
@@ -233,16 +239,39 @@ def _parser_is_streaming(parser):
 
     return False
 
+def _parser_is_hidden(parser: ModuleType) -> bool:
+    """
+    Returns True if this is a hidden parser, else False
+
+    parser is a parser module object.
+    """
+    if getattr(parser.info, 'hidden', None):
+        return True
+
+    return False
+
+def _parser_is_deprecated(parser: ModuleType) -> bool:
+    """
+    Returns True if this is a deprecated parser, else False
+
+    parser is a parser module object.
+    """
+    if getattr(parser.info, 'deprecated', None):
+        return True
+
+    return False
+
 def parse(
-    parser_mod_name: str,
+    parser_mod_name: Union[str, ModuleType],
     data: Union[str, bytes, Iterable[str]],
     quiet: bool = False,
     raw: bool = False,
     ignore_exceptions: bool = None,
     **kwargs
-) -> Union[Dict, List[Dict], Iterator[Dict]]:
+) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]:
     """
-    Parse the string data using the supplied parser module.
+    Parse the data (string or bytes) using the supplied parser (string or
+    module object).
 
     This function provides a high-level API to simplify parser use. This
     function will call built-in parsers and custom plugin parsers.
@@ -266,6 +295,14 @@ def parse(
 
     To get a list of available parser module names, use `parser_mod_list()`.
 
+    Alternatively, a parser module object can be supplied:
+
+        >>> import jc
+        >>> import jc.parsers.date as jc_date
+        >>> date_obj = jc.parse(jc_date, 'Tue Jan 18 10:23:07 PST 2022')
+        >>> print(f'The year is: {date_obj["year"]}')
+        The year is: 2022
+
     You can also use the lower-level parser modules directly:
 
         >>> import jc.parsers.date
@@ -286,10 +323,13 @@ def parse(
 
     Parameters:
 
-        parser_mod_name:    (string)     name of the parser module. This
-                                         function will accept module_name,
+        parser_mod_name:    (string or   name of the parser module. This
+                            Module)      function will accept module_name,
                                          cli-name, and --argument-name
                                          variants of the module name.
+
+                                         A Module object can also be passed
+                                         directly or via _get_parser()
 
         data:               (string or   data to parse (string or bytes for
                             bytes or     standard parsers, iterable of
@@ -307,51 +347,113 @@ def parse(
         Standard Parsers:   Dictionary or List of Dictionaries
         Streaming Parsers:  Generator Object containing Dictionaries
     """
-    jc_parser = _get_parser(parser_mod_name)
+    if isinstance(parser_mod_name, ModuleType):
+        jc_parser = parser_mod_name
+    else:
+        jc_parser = _get_parser(parser_mod_name)
 
     if ignore_exceptions is not None:
-        return jc_parser.parse(data, quiet=quiet, raw=raw,
-                               ignore_exceptions=ignore_exceptions, **kwargs)
+        return jc_parser.parse(
+            data,
+            quiet=quiet,
+            raw=raw,
+            ignore_exceptions=ignore_exceptions,
+            **kwargs
+        )
 
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
-def parser_mod_list() -> List[str]:
+def parser_mod_list(
+    show_hidden: bool = False,
+    show_deprecated: bool = False
+) -> List[str]:
     """Returns a list of all available parser module names."""
-    return [_cliname_to_modname(p) for p in parsers]
+    plist: List[str] = []
+    for p in parsers:
+        parser = _get_parser(p)
 
-def plugin_parser_mod_list() -> List[str]:
+        if not show_hidden and _parser_is_hidden(parser):
+            continue
+
+        if not show_deprecated and _parser_is_deprecated(parser):
+            continue
+
+        plist.append(_cliname_to_modname(p))
+
+    return plist
+
+def plugin_parser_mod_list(
+    show_hidden: bool = False,
+    show_deprecated: bool = False
+) -> List[str]:
     """
     Returns a list of plugin parser module names. This function is a
     subset of `parser_mod_list()`.
     """
-    return [_cliname_to_modname(p) for p in local_parsers]
+    plist: List[str] = []
+    for p in local_parsers:
+        parser = _get_parser(p)
 
-def standard_parser_mod_list() -> List[str]:
+        if not show_hidden and _parser_is_hidden(parser):
+            continue
+
+        if not show_deprecated and _parser_is_deprecated(parser):
+            continue
+
+        plist.append(_cliname_to_modname(p))
+
+    return plist
+
+def standard_parser_mod_list(
+    show_hidden: bool = False,
+    show_deprecated: bool = False
+) -> List[str]:
     """
     Returns a list of standard parser module names. This function is a
     subset of `parser_mod_list()` and does not contain any streaming
     parsers.
     """
-    plist = []
+    plist: List[str] = []
     for p in parsers:
         parser = _get_parser(p)
+
         if not _parser_is_streaming(parser):
+
+            if not show_hidden and _parser_is_hidden(parser):
+                continue
+
+            if not show_deprecated and _parser_is_deprecated(parser):
+                continue
+
             plist.append(_cliname_to_modname(p))
+
     return plist
 
-def streaming_parser_mod_list() -> List[str]:
+def streaming_parser_mod_list(
+    show_hidden: bool = False,
+    show_deprecated: bool = False
+) -> List[str]:
     """
     Returns a list of streaming parser module names. This function is a
     subset of `parser_mod_list()`.
     """
-    plist = []
+    plist: List[str] = []
     for p in parsers:
         parser = _get_parser(p)
+
         if _parser_is_streaming(parser):
+
+            if not show_hidden and _parser_is_hidden(parser):
+                continue
+
+            if not show_deprecated and _parser_is_deprecated(parser):
+                continue
+
             plist.append(_cliname_to_modname(p))
+
     return plist
 
-def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
+def parser_info(parser_mod_name: str, documentation: bool = False) -> ParserInfoType:
     """
     Returns a dictionary that includes the parser module metadata.
 
@@ -367,7 +469,7 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
     # ensure parser_mod_name is a true module name and not a cli name
     parser_mod_name = _cliname_to_modname(parser_mod_name)
     parser_mod = _get_parser(parser_mod_name)
-    info_dict: Dict = {}
+    info_dict: ParserInfoType = {}
 
     if hasattr(parser_mod, 'info'):
         info_dict['name'] = parser_mod_name
@@ -376,7 +478,7 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
 
         for k, v in parser_entry.items():
             if not k.startswith('__'):
-                info_dict[k] = v
+                info_dict[k] = v  # type: ignore
 
         if _modname_to_cliname(parser_mod_name) in local_parsers:
             info_dict['plugin'] = True
@@ -389,32 +491,39 @@ def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict:
 
     return info_dict
 
-def all_parser_info(documentation: bool = False,
-                    show_hidden: bool = False
-) -> List[Dict]:
+def all_parser_info(
+    documentation: bool = False,
+    show_hidden: bool = False,
+    show_deprecated: bool = False
+) -> List[ParserInfoType]:
     """
     Returns a list of dictionaries that includes metadata for all parser
-    modules.
+    modules. By default only non-hidden, non-deprecated parsers are
+    returned.
 
     Parameters:
 
         documentation:      (boolean)    include parser docstrings if True
         show_hidden:        (boolean)    also show parsers marked as hidden
                                          in their info metadata.
+        show_deprecated:    (boolean)    also show parsers marked as
+                                         deprecated in their info metadata.
     """
-    temp_list = [parser_info(p, documentation=documentation) for p in parsers]
+    plist: List[str] = []
+    for p in parsers:
+        parser = _get_parser(p)
 
-    p_list = []
-    if show_hidden:
-        p_list = temp_list
+        if not show_hidden and _parser_is_hidden(parser):
+            continue
 
-    else:
-        for item in temp_list:
-            if not item.get('hidden', None):
-                p_list.append(item)
+        if not show_deprecated and _parser_is_deprecated(parser):
+            continue
 
-    return p_list
+        plist.append(_cliname_to_modname(p))
 
+    p_info_list: List[ParserInfoType] = [parser_info(p, documentation=documentation) for p in plist]
+
+    return p_info_list
 
 def get_help(parser_mod_name: str) -> None:
     """

@@ -64,7 +64,7 @@ Returns:
 ### is\_compatible
 
 ```python
-def is_compatible(compatible: List) -> bool
+def is_compatible(compatible: List[str]) -> bool
 ```
 
 Returns True if the parser is compatible with the running OS platform.
@@ -75,7 +75,7 @@ Returns True if the parser is compatible with the running OS platform.
 
 ```python
 def compatibility(mod_name: str,
-                  compatible: List,
+                  compatible: List[str],
                   quiet: bool = False) -> None
 ```
 
@@ -125,7 +125,7 @@ Returns:
 ### convert\_to\_int
 
 ```python
-def convert_to_int(value: Union[str, float]) -> Optional[int]
+def convert_to_int(value: object) -> Optional[int]
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -144,7 +144,7 @@ Returns:
 ### convert\_to\_float
 
 ```python
-def convert_to_float(value: Union[str, int]) -> Optional[float]
+def convert_to_float(value: object) -> Optional[float]
 ```
 
 Converts string and int input to float. Strips all non-numeric
@@ -163,7 +163,7 @@ Returns:
 ### convert\_to\_bool
 
 ```python
-def convert_to_bool(value: Union[str, int, float]) -> bool
+def convert_to_bool(value: object) -> bool
 ```
 
 Converts string, integer, or float input to boolean by checking
@@ -201,8 +201,8 @@ class timestamp()
 ### \_\_init\_\_
 
 ```python
-def __init__(datetime_string: str,
-             format_hint: Optional[Iterable] = None) -> None
+def __init__(datetime_string: Optional[str],
+             format_hint: Optional[Iterable[int]] = None) -> None
 ```
 
 Input a datetime text string of several formats and convert to a

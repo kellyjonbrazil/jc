@@ -1,0 +1,305 @@
+Slot:	00:00.0
+Class:	0600
+Vendor:	8086
+Device:	7190
+SVendor:	15ad
+SDevice:	1976
+Rev:	01
+
+Slot:	00:01.0
+Class:	0604
+Vendor:	8086
+Device:	7191
+Rev:	01
+
+Slot:	00:07.0
+Class:	0601
+Vendor:	8086
+Device:	7110
+SVendor:	15ad
+SDevice:	1976
+Rev:	08
+
+Slot:	00:07.1
+Class:	0101
+Vendor:	8086
+Device:	7111
+SVendor:	15ad
+SDevice:	1976
+Rev:	01
+ProgIf:	8a
+
+Slot:	00:07.3
+Class:	0680
+Vendor:	8086
+Device:	7113
+SVendor:	15ad
+SDevice:	1976
+Rev:	08
+
+Slot:	00:07.7
+Class:	0880
+Vendor:	15ad
+Device:	0740
+SVendor:	15ad
+SDevice:	0740
+Rev:	10
+
+Slot:	00:0f.0
+Class:	0300
+Vendor:	15ad
+Device:	0405
+SVendor:	15ad
+SDevice:	0405
+
+Slot:	00:10.0
+Class:	0100
+Vendor:	1000
+Device:	0030
+SVendor:	15ad
+SDevice:	1976
+Rev:	01
+
+Slot:	00:11.0
+Class:	0604
+Vendor:	15ad
+Device:	0790
+Rev:	02
+ProgIf:	01
+
+Slot:	00:15.0
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.1
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.2
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.3
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.4
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.5
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.6
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:15.7
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.0
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.1
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.2
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.3
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.4
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.5
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.6
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:16.7
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.0
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.1
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.2
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.3
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.4
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.5
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.6
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:17.7
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.0
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.1
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.2
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.3
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.4
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.5
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.6
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	00:18.7
+Class:	0604
+Vendor:	15ad
+Device:	07a0
+Rev:	01
+
+Slot:	02:00.0
+Class:	0c03
+Vendor:	15ad
+Device:	0774
+SVendor:	15ad
+SDevice:	1976
+PhySlot:	32
+
+Slot:	02:01.0
+Class:	0200
+Vendor:	8086
+Device:	100f
+SVendor:	15ad
+SDevice:	0750
+PhySlot:	33
+Rev:	01
+
+Slot:	02:02.0
+Class:	0401
+Vendor:	1274
+Device:	1371
+SVendor:	1274
+SDevice:	1371
+PhySlot:	34
+Rev:	02
+
+Slot:	02:03.0
+Class:	0c03
+Vendor:	15ad
+Device:	0770
+SVendor:	15ad
+SDevice:	0770
+PhySlot:	35
+ProgIf:	20
+
+Slot:	02:05.0
+Class:	0106
+Vendor:	15ad
+Device:	07e0
+SVendor:	15ad
+SDevice:	07e0
+PhySlot:	37
+ProgIf:	01
+

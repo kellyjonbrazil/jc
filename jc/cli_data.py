@@ -18,7 +18,7 @@ long_options_map: Dict[str, List[str]] = {
     '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"']
 }
 
-new_pygments_colors = {
+new_pygments_colors: Dict[str, str] = {
     'black': 'ansiblack',
     'red': 'ansired',
     'green': 'ansigreen',
@@ -37,7 +37,7 @@ new_pygments_colors = {
     'white': 'ansiwhite',
 }
 
-old_pygments_colors = {
+old_pygments_colors: Dict[str, str] = {
     'black': '#ansiblack',
     'red': '#ansidarkred',
     'green': '#ansidarkgreen',
@@ -55,3 +55,42 @@ old_pygments_colors = {
     'brightcyan': '#ansiturquoise',
     'white': '#ansiwhite',
 }
+
+helptext_preamble_string: str = f'''\
+jc converts the output of many commands, file-types, and strings to JSON or YAML
+
+Usage:
+
+    Standard syntax:
+
+        COMMAND | jc [OPTIONS] PARSER
+
+        cat FILE | jc [OPTIONS] PARSER
+
+        echo STRING | jc [OPTIONS] PARSER
+
+    Magic syntax:
+
+        jc [OPTIONS] COMMAND
+
+        jc [OPTIONS] /proc/<path-to-procfile>
+
+Parsers:
+'''
+
+helptext_end_string: str = '''\
+Examples:
+    Standard Syntax:
+        $ dig www.google.com | jc --pretty --dig
+        $ cat /proc/meminfo | jc --pretty --proc
+
+    Magic Syntax:
+        $ jc --pretty dig www.google.com
+        $ jc --pretty /proc/meminfo
+
+    Parser Documentation:
+        $ jc --help --dig
+
+    Show Hidden Parsers:
+        $ jc -hh
+'''

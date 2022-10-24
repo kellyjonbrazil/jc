@@ -1,0 +1,305 @@
+Slot:	00:00.0
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	440BX/ZX/DX - 82443BX/ZX/DX Host bridge
+SVendor:	VMware
+SDevice:	Virtual Machine Chipset
+Rev:	01
+
+Slot:	00:01.0
+Class:	PCI bridge
+Vendor:	Intel Corporation
+Device:	440BX/ZX/DX - 82443BX/ZX/DX AGP bridge
+Rev:	01
+
+Slot:	00:07.0
+Class:	ISA bridge
+Vendor:	Intel Corporation
+Device:	82371AB/EB/MB PIIX4 ISA
+SVendor:	VMware
+SDevice:	Virtual Machine Chipset
+Rev:	08
+
+Slot:	00:07.1
+Class:	IDE interface
+Vendor:	Intel Corporation
+Device:	82371AB/EB/MB PIIX4 IDE
+SVendor:	VMware
+SDevice:	Virtual Machine Chipset
+Rev:	01
+ProgIf:	8a
+
+Slot:	00:07.3
+Class:	Bridge
+Vendor:	Intel Corporation
+Device:	82371AB/EB/MB PIIX4 ACPI
+SVendor:	VMware
+SDevice:	Virtual Machine Chipset
+Rev:	08
+
+Slot:	00:07.7
+Class:	System peripheral
+Vendor:	VMware
+Device:	Virtual Machine Communication Interface
+SVendor:	VMware
+SDevice:	Virtual Machine Communication Interface
+Rev:	10
+
+Slot:	00:0f.0
+Class:	VGA compatible controller
+Vendor:	VMware
+Device:	SVGA II Adapter
+SVendor:	VMware
+SDevice:	SVGA II Adapter
+
+Slot:	00:10.0
+Class:	SCSI storage controller
+Vendor:	Broadcom / LSI
+Device:	53c1030 PCI-X Fusion-MPT Dual Ultra320 SCSI
+SVendor:	VMware
+SDevice:	LSI Logic Parallel SCSI Controller
+Rev:	01
+
+Slot:	00:11.0
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI bridge
+Rev:	02
+ProgIf:	01
+
+Slot:	00:15.0
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.1
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.2
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.3
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.4
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.5
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.6
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:15.7
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.0
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.1
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.2
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.3
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.4
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.5
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.6
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:16.7
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.0
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.1
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.2
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.3
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.4
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.5
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.6
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:17.7
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.0
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.1
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.2
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.3
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.4
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.5
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.6
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	00:18.7
+Class:	PCI bridge
+Vendor:	VMware
+Device:	PCI Express Root Port
+Rev:	01
+
+Slot:	02:00.0
+Class:	USB controller
+Vendor:	VMware
+Device:	USB1.1 UHCI Controller
+SVendor:	VMware
+SDevice:	USB1.1 UHCI Controller
+PhySlot:	32
+
+Slot:	02:01.0
+Class:	Ethernet controller
+Vendor:	Intel Corporation
+Device:	82545EM Gigabit Ethernet Controller (Copper)
+SVendor:	VMware
+SDevice:	PRO/1000 MT Single Port Adapter
+PhySlot:	33
+Rev:	01
+
+Slot:	02:02.0
+Class:	Multimedia audio controller
+Vendor:	Ensoniq
+Device:	ES1371/ES1373 / Creative Labs CT2518
+SVendor:	Ensoniq
+SDevice:	Audio PCI 64V/128/5200 / Creative CT4810/CT5803/CT5806 [Sound Blaster PCI]
+PhySlot:	34
+Rev:	02
+
+Slot:	02:03.0
+Class:	USB controller
+Vendor:	VMware
+Device:	USB2 EHCI Controller
+SVendor:	VMware
+SDevice:	USB2 EHCI Controller
+PhySlot:	35
+ProgIf:	20
+
+Slot:	02:05.0
+Class:	SATA controller
+Vendor:	VMware
+Device:	SATA AHCI controller
+SVendor:	VMware
+SDevice:	SATA AHCI controller
+PhySlot:	37
+ProgIf:	01
+

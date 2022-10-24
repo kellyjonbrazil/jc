@@ -21,15 +21,18 @@ jc - JSON Convert lib module
 ### parse
 
 ```python
-def parse(parser_mod_name: str,
-          data: Union[str, bytes, Iterable[str]],
-          quiet: bool = False,
-          raw: bool = False,
-          ignore_exceptions: bool = None,
-          **kwargs) -> Union[Dict, List[Dict], Iterator[Dict]]
+def parse(
+    parser_mod_name: Union[str, ModuleType],
+    data: Union[str, bytes, Iterable[str]],
+    quiet: bool = False,
+    raw: bool = False,
+    ignore_exceptions: bool = None,
+    **kwargs
+) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]
 ```
 
-Parse the string data using the supplied parser module.
+Parse the data (string or bytes) using the supplied parser (string or
+module object).
 
 This function provides a high-level API to simplify parser use. This
 function will call built-in parsers and custom plugin parsers.
@@ -53,6 +56,14 @@ Example (streaming parsers):
 
 To get a list of available parser module names, use `parser_mod_list()`.
 
+Alternatively, a parser module object can be supplied:
+
+    >>> import jc
+    >>> import jc.parsers.date as jc_date
+    >>> date_obj = jc.parse(jc_date, 'Tue Jan 18 10:23:07 PST 2022')
+    >>> print(f'The year is: {date_obj["year"]}')
+    The year is: 2022
+
 You can also use the lower-level parser modules directly:
 
     >>> import jc.parsers.date
@@ -73,10 +84,13 @@ parsers without this API:
 
 Parameters:
 
-    parser_mod_name:    (string)     name of the parser module. This
-                                     function will accept module_name,
+    parser_mod_name:    (string or   name of the parser module. This
+                        Module)      function will accept module_name,
                                      cli-name, and --argument-name
                                      variants of the module name.
+
+                                     A Module object can also be passed
+                                     directly or via _get_parser()
 
     data:               (string or   data to parse (string or bytes for
                         bytes or     standard parsers, iterable of
@@ -99,7 +113,8 @@ Returns:
 ### parser\_mod\_list
 
 ```python
-def parser_mod_list() -> List[str]
+def parser_mod_list(show_hidden: bool = False,
+                    show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of all available parser module names.
@@ -109,7 +124,8 @@ Returns a list of all available parser module names.
 ### plugin\_parser\_mod\_list
 
 ```python
-def plugin_parser_mod_list() -> List[str]
+def plugin_parser_mod_list(show_hidden: bool = False,
+                           show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of plugin parser module names. This function is a
@@ -120,7 +136,8 @@ subset of `parser_mod_list()`.
 ### standard\_parser\_mod\_list
 
 ```python
-def standard_parser_mod_list() -> List[str]
+def standard_parser_mod_list(show_hidden: bool = False,
+                             show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of standard parser module names. This function is a
@@ -132,7 +149,8 @@ parsers.
 ### streaming\_parser\_mod\_list
 
 ```python
-def streaming_parser_mod_list() -> List[str]
+def streaming_parser_mod_list(show_hidden: bool = False,
+                              show_deprecated: bool = False) -> List[str]
 ```
 
 Returns a list of streaming parser module names. This function is a
@@ -143,7 +161,8 @@ subset of `parser_mod_list()`.
 ### parser\_info
 
 ```python
-def parser_info(parser_mod_name: str, documentation: bool = False) -> Dict
+def parser_info(parser_mod_name: str,
+                documentation: bool = False) -> ParserInfoType
 ```
 
 Returns a dictionary that includes the parser module metadata.
@@ -163,17 +182,21 @@ Parameters:
 
 ```python
 def all_parser_info(documentation: bool = False,
-                    show_hidden: bool = False) -> List[Dict]
+                    show_hidden: bool = False,
+                    show_deprecated: bool = False) -> List[ParserInfoType]
 ```
 
 Returns a list of dictionaries that includes metadata for all parser
-modules.
+modules. By default only non-hidden, non-deprecated parsers are
+returned.
 
 Parameters:
 
     documentation:      (boolean)    include parser docstrings if True
     show_hidden:        (boolean)    also show parsers marked as hidden
                                      in their info metadata.
+    show_deprecated:    (boolean)    also show parsers marked as
+                                     deprecated in their info metadata.
 
 <a id="jc.lib.get_help"></a>
 
