@@ -1,6 +1,6 @@
 jc changelog
 
-20221021 v1.22.1
+20221024 v1.22.1
 - add `udevadm` command parser
 - add `lspci` command parser
 - add `pci.ids` file parser
@@ -9,7 +9,7 @@ jc changelog
 - rename `iso-datetime` parser to `datetime-iso`. A deprecation warning will
   display until `iso-datetime` is removed in a future version.
 - refactor cli module
-- optimize timestamps
+- optimize performance of calculated timestamps
 - add more type annotations
 - add support for deprecating parsers
 
