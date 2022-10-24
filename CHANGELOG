@@ -12,6 +12,7 @@ jc changelog
 - optimize performance of calculated timestamps
 - add more type annotations
 - add support for deprecating parsers
+- move jc-web demo site from heroku to render.com
 
 20220926 v1.22.0
 - Add /proc file parsers for linux. Support for the following files:
