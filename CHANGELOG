@@ -1,5 +1,8 @@
 jc changelog
 
+20221025 v1.22.2
+- fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
+
 20221024 v1.22.1
 - add `udevadm` command parser
 - add `lspci` command parser
