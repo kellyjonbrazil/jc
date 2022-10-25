@@ -72,6 +72,8 @@ Examples:
       ...
     ]
 """
+from typing import List, Union, Type
+from jc.jc_types import JSONDictType
 import jc.utils
 import csv
 
@@ -89,7 +91,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
@@ -107,7 +109,11 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False):
+def parse(
+    data: Union[str, bytes],
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -138,7 +144,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        dialect = 'excel'  # default in csv module
+        dialect: Union[str, Type[csv.Dialect]]  = 'excel'  # default in csv module
         try:
             dialect = csv.Sniffer().sniff(data[:1024])
             if '""' in data:
