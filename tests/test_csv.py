@@ -39,6 +39,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.csv'), 'r', encoding='utf-8') as f:
         generic_csv_doubleqouted = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_utf8_bom = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.json'), 'r', encoding='utf-8') as f:
         generic_csv_biostats_json = json.loads(f.read())
@@ -69,6 +72,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.json'), 'r', encoding='utf-8') as f:
         generic_csv_doubleqouted_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.json'), 'r', encoding='utf-8') as f:
+        generic_csv_utf8_bom_json = json.loads(f.read())
 
 
     def test_csv_nodata(self):
@@ -131,11 +137,17 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.csv.parse(self.generic_csv_insurance, quiet=True), self.generic_csv_insurance_json)
 
-    def test_doubleqouted(self):
+    def test_csv_doubleqouted(self):
         """
         Test 'csv-doubleqouted.csv' file
         """
         self.assertEqual(jc.parsers.csv.parse(self.generic_csv_doubleqouted, quiet=True), self.generic_csv_doubleqouted_json)
+
+    def test_csv_utf8_bom(self):
+        """
+        Test 'csv-utf-8-bom.csv' file to ensure the first column is correct if UTF-8 BOM bytes are present
+        """
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_utf8_bom, quiet=True), self.generic_csv_utf8_bom_json)
 
 
 if __name__ == '__main__':
