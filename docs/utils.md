@@ -183,7 +183,7 @@ Returns:
 ### input\_type\_check
 
 ```python
-def input_type_check(data: str) -> None
+def input_type_check(data: object) -> None
 ```
 
 Ensure input data is a string. Raises `TypeError` if not.

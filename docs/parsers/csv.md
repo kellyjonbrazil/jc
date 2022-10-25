@@ -82,7 +82,9 @@ Examples:
 ### parse
 
 ```python
-def parse(data, raw=False, quiet=False)
+def parse(data: Union[str, bytes],
+          raw: bool = False,
+          quiet: bool = False) -> List[JSONDictType]
 ```
 
 Main text parsing function
