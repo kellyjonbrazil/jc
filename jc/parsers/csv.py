@@ -78,7 +78,7 @@ import csv
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -123,6 +123,12 @@ def parse(data, raw=False, quiet=False):
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
+
+    # remove BOM bytes, if present
+    if isinstance(data, str):
+        data = data.encode('utf-8')
+
+    data = data.decode('utf-8-sig')
 
     raw_output = []
     cleandata = data.splitlines()
