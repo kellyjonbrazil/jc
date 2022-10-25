@@ -36,8 +36,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r', encoding='utf-8') as f:
         generic_csv_insurance = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.csv'), 'r', encoding='utf-8') as f:
-        generic_csv_doubleqouted = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_doublequoted = f.read()
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom = f.read()
@@ -70,8 +70,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.json'), 'r', encoding='utf-8') as f:
         generic_csv_insurance_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.json'), 'r', encoding='utf-8') as f:
-        generic_csv_doubleqouted_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.json'), 'r', encoding='utf-8') as f:
+        generic_csv_doublequoted_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.json'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom_json = json.loads(f.read())
@@ -137,11 +137,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.csv.parse(self.generic_csv_insurance, quiet=True), self.generic_csv_insurance_json)
 
-    def test_csv_doubleqouted(self):
+    def test_csv_doublequoted(self):
         """
-        Test 'csv-doubleqouted.csv' file
+        Test 'csv-doublequoted.csv' file
         """
-        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_doubleqouted, quiet=True), self.generic_csv_doubleqouted_json)
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_doublequoted, quiet=True), self.generic_csv_doublequoted_json)
 
     def test_csv_utf8_bom(self):
         """

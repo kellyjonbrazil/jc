@@ -41,8 +41,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-10k-sales-records.csv'), 'r', encoding='utf-8') as f:
         generic_csv_10k_sales_records = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted.csv'), 'r', encoding='utf-8') as f:
-        generic_csv_doubleqouted = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_doublequoted = f.read()
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom = f.read()
@@ -75,7 +75,7 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-10k-sales-records-streaming.json'), 'r', encoding='utf-8') as f:
         generic_csv_10k_sales_records_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doubleqouted-streaming.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted-streaming.json'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted_streaming_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom-streaming.json'), 'r', encoding='utf-8') as f:
@@ -157,7 +157,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'doublequoted.csv' file
         """
-        self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_doubleqouted.splitlines(), quiet=True)), self.generic_csv_doublequoted_streaming_json)
+        self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_doublequoted.splitlines(), quiet=True)), self.generic_csv_doublequoted_streaming_json)
 
     def test_csv_s_utf8_bom(self):
         """
