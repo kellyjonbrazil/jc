@@ -2,6 +2,7 @@ jc changelog
 
 20221025 v1.22.2
 - fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
+- add python 3.11 tests to github actions
 
 20221024 v1.22.1
 - add `udevadm` command parser
