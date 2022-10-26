@@ -157,7 +157,4 @@ def parse(
         for row in reader:
             raw_output.append(row)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
