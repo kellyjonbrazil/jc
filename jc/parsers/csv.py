@@ -158,3 +158,4 @@ def parse(
             raw_output.append(row)
 
     return raw_output if raw else _process(raw_output)
+
