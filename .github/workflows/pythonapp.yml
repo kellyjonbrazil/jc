@@ -17,7 +17,7 @@ jobs:
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: "Set up timezone to America/Los_Angeles"
       uses: szenius/set-timezone@v1.0
       with:
@@ -25,7 +25,7 @@ jobs:
         timezoneMacos: "America/Los_Angeles"
         timezoneWindows: "Pacific Standard Time"
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
