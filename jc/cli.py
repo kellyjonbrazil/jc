@@ -631,7 +631,9 @@ class JcCli():
 
     def ctrlc(self, signum, frame) -> None:
         """Exit on SIGINT"""
-        self.exit_clean()
+        signame = signal.Signals(signum).name
+        utils.error_message([f'Exit on {signame}'])
+        self.exit_error()
 
     def run(self) -> None:
         # break on ctrl-c keyboard interrupt
