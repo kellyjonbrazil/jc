@@ -7,7 +7,6 @@ import sys
 import os
 from datetime import datetime, timezone
 import textwrap
-import signal
 import shlex
 import subprocess
 from typing import List, Union, Optional, TextIO
@@ -629,22 +628,7 @@ class JcCli():
                 utils.error_message(['Parser returned an unsupported object type.'])
                 self.exit_error()
 
-    def ctrlc(self, signum, frame) -> None:
-        """Exit on SIGINT"""
-        signame = signal.Signals(signum).name
-        utils.error_message([f'Exit on {signame}'])
-        self.exit_error()
-
-    def run(self) -> None:
-        # break on ctrl-c keyboard interrupt
-        signal.signal(signal.SIGINT, self.ctrlc)
-
-        # break on pipe error. need try/except for windows compatibility
-        try:
-            signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-        except AttributeError:
-            pass
-
+    def _run(self) -> None:
         # enable colors for Windows cmd.exe terminal
         if sys.platform.startswith('win32'):
             os.system('')
@@ -726,12 +710,16 @@ class JcCli():
                     self.standard_parse_and_print()
                     self.exit_clean()
 
+            except BrokenPipeError:
+                sys.stdout = None  # type: ignore
+
             except (ParseError, LibraryNotInstalled) as e:
                 if self.debug:
                     raise
 
                 utils.error_message([
-                    f'Parser issue with {self.parser_name}:', f'{e.__class__.__name__}: {e}',
+                    f'Parser issue with {self.parser_name}:',
+                    f'{e.__class__.__name__}: {e}',
                     'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                     f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
                 ])
@@ -752,6 +740,23 @@ class JcCli():
                     f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
                 ])
                 self.exit_error()
+
+    def run(self) -> None:
+        try:
+            self._run()
+
+        except KeyboardInterrupt:
+            utils.error_message(['Exit due to SIGINT.'])
+            self.exit_error()
+
+        except Exception as e:
+            utils.error_message(
+                [
+                    'Exit due to unexpected error:',
+                    f'{e.__class__.__name__}: {e}'
+                ]
+            )
+            self.exit_error()
 
 
 def main():
