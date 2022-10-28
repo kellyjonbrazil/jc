@@ -1,4 +1,4 @@
-"""jc - JSON Convert `sshd -T` command output parser
+"""jc - JSON Convert sshd configuration file and `sshd -T` command output parser
 
 <<Short sshd_conf description and caveats>>
 
@@ -10,10 +10,14 @@ or
 
     $ jc sshd -T
 
+or
+
+    $ cat sshd_conf | jc --sshd-conf
+
 Usage (module):
 
     import jc
-    result = jc.parse('sshd_conf', sshd_command_output)
+    result = jc.parse('sshd_conf', sshd_conf_output)
 
 Schema:
 
@@ -41,7 +45,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`sshd -T` command parser'
+    description = 'sshd config file and `sshd -T` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
@@ -57,11 +61,11 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
-        List of Dictionaries. Structured to conform to the schema.
+        Dictionary. Structured to conform to the schema.
     """
     split_fields_space: Set[str] = {
         'authorizedkeysfile', 'include', 'ipqos', 'permitlisten', 'permitopen'
@@ -112,10 +116,10 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
             continue
 
         if key == 'subsystem':
-            rekey_split = val.split(maxsplit=1)  # type: ignore
-            proc_data[key] = rekey_split[0]
-            if len(rekey_split) > 1:
-                proc_data[key + '_command'] = rekey_split[1]
+            sub_split = val.split(maxsplit=1)  # type: ignore
+            proc_data[key] = sub_split[0]
+            if len(sub_split) > 1:
+                proc_data[key + '_command'] = sub_split[1]
             continue
 
         if key in split_fields_space:
@@ -149,16 +153,20 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
     raw_output: Dict = {}
+
     multi_fields: Set[str] = {'acceptenv', 'hostkey', 'listenaddress', 'port'}
-    modified_fields: Set[str] = {'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
+
+    modified_fields: Set[str] = {
+        'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
         'kexalgorithms', 'macs', 'pubkeyacceptedalgorithms'
     }
+
     modifiers: Set[str] = {'+', '-', '^'}
 
     if jc.utils.has_data(data):
