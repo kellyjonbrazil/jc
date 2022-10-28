@@ -750,6 +750,9 @@ class JcCli():
             self.exit_error()
 
         except Exception as e:
+            if self.debug:
+                raise
+
             utils.error_message(
                 [
                     'Exit due to unexpected error:',
