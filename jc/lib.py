@@ -148,6 +148,7 @@ parsers: List[str] = [
     'sfdisk',
     'shadow',
     'ss',
+    'sshd-conf',
     'stat',
     'stat-s',
     'sysctl',
