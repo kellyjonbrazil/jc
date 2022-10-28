@@ -169,6 +169,8 @@ def parse(
 
     modifiers: Set[str] = {'+', '-', '^'}
 
+    match_block_found = False
+
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
@@ -176,7 +178,21 @@ def parse(
             if line.strip().startswith('#'):
                 continue
 
+            # support configuration file by ignoring all lines between
+            # Match xxx and Match any
+            if line.strip().startswith('Match all'):
+                match_block_found = False
+                continue
+
+            if line.strip().startswith('Match'):
+                match_block_found = True
+                continue
+
+            if match_block_found:
+                continue
+
             key, val = line.split(maxsplit=1)
+
             # support configuration file by converting to lower case
             key = key.lower()
 

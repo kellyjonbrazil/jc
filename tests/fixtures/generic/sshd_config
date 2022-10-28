@@ -14,14 +14,27 @@
 # SELinux about this change.
 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
 #
-#Port 22
-#AddressFamily any
-#ListenAddress 0.0.0.0
-#ListenAddress ::
+Port 22
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+Match group chroot
+    this should be ignored
+    this line too should be ignored
+
+	keep ignoring
+Match all
 
 HostKey /etc/ssh/ssh_host_rsa_key
 #HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
+
+Match group anything
+	ignore this
+        don't look at this
+Match all
+
 HostKey /etc/ssh/ssh_host_ed25519_key
 
 # Ciphers and keying
