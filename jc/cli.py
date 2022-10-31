@@ -753,12 +753,10 @@ class JcCli():
             if self.debug:
                 raise
 
-            utils.error_message(
-                [
-                    'Exit due to unexpected error:',
-                    f'{e.__class__.__name__}: {e}'
-                ]
-            )
+            utils.error_message([
+                'Exit due to unexpected error:',
+                f'{e.__class__.__name__}: {e}'
+            ])
             self.exit_error()
 
 
