@@ -240,6 +240,7 @@ option.
 | `       --sfdisk` | `sfdisk` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk)         |
 | `       --shadow` | `/etc/shadow` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow)         |
 | `           --ss` | `ss` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ss)             |
+| `    --sshd-conf` | sshd config file and `sshd -T` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sshd_conf)      |
 | `         --stat` | `stat` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat)           |
 | `       --stat-s` | `stat` command streaming parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s)         |
 | `       --sysctl` | `sysctl` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl)         |

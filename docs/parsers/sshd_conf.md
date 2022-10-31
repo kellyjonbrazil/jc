@@ -1,4 +1,9 @@
-"""jc - JSON Convert sshd configuration file and `sshd -T` command output parser
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.sshd_conf"></a>
+
+# jc.parsers.sshd\_conf
+
+jc - JSON Convert sshd configuration file and `sshd -T` command output parser
 
 This parser will work with `sshd` configuration files or the output of
 `sshd -T`. Any `Match` blocks in the `sshd` configuration file will be
@@ -472,178 +477,28 @@ Examples:
       "x11uselocalhost": "yes",
       "xauthlocation": "/usr/bin/xauth"
     }
-"""
-from typing import Set, List, Dict
-from jc.jc_types import JSONDictType
-import jc.utils
 
+<a id="jc.parsers.sshd_conf.parse"></a>
 
-class info():
-    """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = 'sshd config file and `sshd -T` command parser'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux', 'darwin', 'freebsd']
-    magic_commands = ['sshd -T']
+### parse
 
+```python
+def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+```
 
-__version__ = info.version
+Main text parsing function
 
+Parameters:
 
-def _process(proc_data: JSONDictType) -> JSONDictType:
-    """
-    Final processing to conform to the schema.
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-    Parameters:
+Returns:
 
-        proc_data:   (Dictionary) raw structured data to process
+    Dictionary. Raw or processed structured data.
 
-    Returns:
+### Parser Information
+Compatibility:  linux, darwin, freebsd
 
-        Dictionary. Structured to conform to the schema.
-    """
-    split_fields_space: Set[str] = {
-        'authorizedkeysfile', 'include', 'ipqos', 'permitlisten', 'permitopen'
-    }
-
-    split_fields_comma: Set[str] = {
-        'casignaturealgorithms', 'ciphers', 'gssapikexalgorithms', 'hostbasedacceptedalgorithms',
-        'hostbasedacceptedkeytypes', 'hostkeyalgorithms', 'kexalgorithms', 'macs',
-        'pubkeyacceptedalgorithms', 'pubkeyacceptedkeytypes'
-    }
-
-    int_list: Set[str] = {'clientalivecountmax', 'clientaliveinterval', 'logingracetime',
-        'maxauthtries', 'maxsessions', 'maxstartups', 'maxstartups_rate', 'maxstartups_full',
-        'rekeylimit', 'rekeylimit_time', 'x11displayoffset', 'x11maxdisplays'
-    }
-
-    dict_copy = proc_data.copy()
-    for key, val in dict_copy.items():
-        # this is a list value
-        if key == 'acceptenv':
-            new_list: List[str] = []
-            for item in val:  # type: ignore
-                new_list.extend(item.split())
-            proc_data[key] = new_list
-            continue
-
-        if key == 'maxstartups':
-            maxstart_split = val.split(':', maxsplit=2)  # type: ignore
-            proc_data[key] = maxstart_split[0]
-            if len(maxstart_split) > 1:
-                proc_data[key + '_rate'] = maxstart_split[1]
-            if len(maxstart_split) > 2:
-                proc_data[key + '_full'] = maxstart_split[2]
-            continue
-
-        if key == 'port':
-            port_list: List[int] = []
-            for item in val:  # type: ignore
-                port_list.append(int(item))
-            proc_data[key] = port_list
-            continue
-
-        if key == 'rekeylimit':
-            rekey_split = val.split(maxsplit=1)  # type: ignore
-            proc_data[key] = rekey_split[0]
-            if len(rekey_split) > 1:
-                proc_data[key + '_time'] = rekey_split[1]
-            continue
-
-        if key == 'subsystem':
-            sub_split = val.split(maxsplit=1)  # type: ignore
-            proc_data[key] = sub_split[0]
-            if len(sub_split) > 1:
-                proc_data[key + '_command'] = sub_split[1]
-            continue
-
-        if key in split_fields_space:
-            proc_data[key] = val.split()  # type: ignore
-            continue
-
-        if key in split_fields_comma:
-            proc_data[key] = val.split(',')  # type: ignore
-            continue
-
-    for key, val in proc_data.items():
-        if key in int_list:
-            proc_data[key] = jc.utils.convert_to_int(val)
-
-    return proc_data
-
-
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> JSONDictType:
-    """
-    Main text parsing function
-
-    Parameters:
-
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
-
-    Returns:
-
-        Dictionary. Raw or processed structured data.
-    """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    raw_output: Dict = {}
-
-    multi_fields: Set[str] = {'acceptenv', 'hostkey', 'listenaddress', 'port'}
-
-    modified_fields: Set[str] = {
-        'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
-        'kexalgorithms', 'macs', 'pubkeyacceptedalgorithms'
-    }
-
-    modifiers: Set[str] = {'+', '-', '^'}
-
-    match_block_found = False
-
-    if jc.utils.has_data(data):
-
-        for line in filter(None, data.splitlines()):
-            # support configuration file by skipping commented lines
-            if line.strip().startswith('#'):
-                continue
-
-            # support configuration file by ignoring all lines between
-            # Match xxx and Match any
-            if line.strip().startswith('Match all'):
-                match_block_found = False
-                continue
-
-            if line.strip().startswith('Match'):
-                match_block_found = True
-                continue
-
-            if match_block_found:
-                continue
-
-            key, val = line.split(maxsplit=1)
-
-            # support configuration file by converting to lower case
-            key = key.lower()
-
-            if key in multi_fields:
-                if key not in raw_output:
-                    raw_output[key] = []
-                raw_output[key].append(val)
-                continue
-
-            if key in modified_fields and val[0] in modifiers:
-                raw_output[key] = val[1:]
-                raw_output[key + '_strategy'] = val[0]
-                continue
-
-            raw_output[key] = val
-            continue
-
-    return raw_output if raw else _process(raw_output)
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
