@@ -121,10 +121,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-
-
         for line in filter(None, data.splitlines()):
-
             # remove initial drawing characters
             line = re.sub(r'^([│ ├─└─|`-]+)/', _replace, line, count=1)
             table.append(line)
