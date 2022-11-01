@@ -19,19 +19,69 @@ Schema:
 
     [
       {
-        "findmnt":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
+        "target":                   string,
+        "source":                   string,
+        "fstype":                   string,
+        "options": [
+                                    string
+        ],
+        "kv_options": {
+          "<key_name>":             string
+        }
     ]
 
 Examples:
 
     $ findmnt | jc --findmnt -p
-    []
+    [
+      {
+        "target": "/",
+        "source": "/dev/mapper/centos-root",
+        "fstype": "xfs",
+        "options": [
+          "rw",
+          "relatime",
+          "seclabel",
+          "attr2",
+          "inode64",
+          "noquota"
+        ]
+      },
+      {
+        "target": "/sys/fs/cgroup",
+        "source": "tmpfs",
+        "fstype": "tmpfs",
+        "options": [
+          "ro",
+          "nosuid",
+          "nodev",
+          "noexec",
+          "seclabel"
+        ],
+        "kv_options": {
+          "mode": "755"
+        }
+      },
+      ...
+    ]
+
 
     $ findmnt | jc --findmnt -p -r
-    []
+    [
+      {
+        "target": "/",
+        "source": "/dev/mapper/centos-root",
+        "fstype": "xfs",
+        "options": "rw,relatime,seclabel,attr2,inode64,noquota"
+      },
+      {
+        "target": "/sys/fs/cgroup",
+        "source": "tmpfs",
+        "fstype": "tmpfs",
+        "options": "ro,nosuid,nodev,noexec,seclabel,mode=755"
+      },
+      ...
+    ]
 """
 import re
 from typing import List, Dict
