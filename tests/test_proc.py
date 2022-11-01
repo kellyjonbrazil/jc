@@ -221,11 +221,11 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
-    def test_foo_nodata(self):
+    def test_proc_nodata(self):
         """
-        Test 'foo' with no data
+        Test proc parser with no data
         """
-        self.assertRaises(ParseError, jc.parsers.proc.parse, '')
+        self.assertRaises(ParseError, jc.parsers.proc.parse, '', quiet=True)
 
     def test_proc_file_signature_detection(self):
         """

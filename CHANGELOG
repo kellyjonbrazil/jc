@@ -1,7 +1,8 @@
 jc changelog
 
-20221025 v1.22.2
+20221101 v1.22.2
 - add `sshd_conf` parser
+- add `findmnt` parser
 - fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
 - fix exit code to be non-zero on interrupt
 - allow parser module objects to be used as arguments to `jc.get_help()` and `jc.parser_info()`
