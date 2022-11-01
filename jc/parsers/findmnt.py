@@ -1,6 +1,8 @@
 """jc - JSON Convert `findmnt` command output parser
 
-<<Short findmnt description and caveats>>
+Supports `-a`, `-l`, or no `findmnt` options.
+
+> Note: Newer versions of `findmnt` have a JSON output option.
 
 Usage (cli):
 
