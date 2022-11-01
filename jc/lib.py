@@ -38,6 +38,7 @@ parsers: List[str] = [
     'email-address',
     'env',
     'file',
+    'findmnt',
     'finger',
     'free',
     'fstab',
