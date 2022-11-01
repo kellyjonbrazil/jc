@@ -89,10 +89,11 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _replace(matchobj):
+def _replace(matchobj: re.Match) -> str:
     if matchobj:
         matchlen = len(matchobj.group(1))
         return ' ' * matchlen + '/'
+    return ''
 
 
 def parse(
