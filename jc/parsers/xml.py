@@ -1,5 +1,10 @@
 """jc - JSON Convert `XML` file parser
 
+This parser adds a `@` prefix to attributes by default. This can be changed
+to a `_` prefix by using the `-r` (cli) or `raw=True` (module) option.
+
+Text values for nodes will have the key-name of `#text`.
+
 Usage (cli):
 
     $ cat foo.xml | jc --xml
@@ -68,10 +73,15 @@ Examples:
 import jc.utils
 from jc.exceptions import LibraryNotInstalled
 
+try:
+    import xmltodict
+except Exception:
+    raise LibraryNotInstalled('The xmltodict library is not installed.')
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -82,7 +92,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data, has_data=False):
     """
     Final processing to conform to the schema.
 
@@ -94,9 +104,13 @@ def _process(proc_data):
 
         Dictionary representing an XML document.
     """
+    raw_output = []
 
-    # No further processing
-    return proc_data
+    if has_data:
+        # standard output with @ prefix for attributes
+        raw_output = xmltodict.parse(proc_data)
+
+    return raw_output
 
 
 def parse(data, raw=False, quiet=False):
@@ -113,22 +127,19 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
-    # check if xml library is installed and fail gracefully if it is not
-    try:
-        import xmltodict
-    except Exception:
-        raise LibraryNotInstalled('The xmltodict library is not installed.')
-
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
     raw_output = []
+    has_data = False
 
     if jc.utils.has_data(data):
+        has_data = True
 
-        raw_output = xmltodict.parse(data)
+        # modified output with _ prefix for attributes
+        raw_output = xmltodict.parse(data, attr_prefix='_')
 
     if raw:
         return raw_output
     else:
-        return _process(raw_output)
+        return _process(data, has_data)

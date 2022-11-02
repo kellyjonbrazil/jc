@@ -5,6 +5,11 @@
 
 jc - JSON Convert `XML` file parser
 
+This parser adds a `@` prefix to attributes by default. This can be changed
+to a `_` prefix by using the `-r` (cli) or `raw=True` (module) option.
+
+Text values for nodes will have the key-name of `#text`.
+
 Usage (cli):
 
     $ cat foo.xml | jc --xml
@@ -93,4 +98,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
