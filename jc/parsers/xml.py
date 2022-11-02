@@ -136,10 +136,11 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         has_data = True
 
-        # modified output with _ prefix for attributes
-        raw_output = xmltodict.parse(data, attr_prefix='_')
-
     if raw:
+        if has_data:
+            # modified output with _ prefix for attributes
+            raw_output = xmltodict.parse(data, attr_prefix='_')
+
         return raw_output
-    else:
-        return _process(data, has_data)
+
+    return _process(data, has_data)
