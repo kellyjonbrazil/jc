@@ -2,7 +2,7 @@ import os
 import json
 import unittest
 from typing import Dict
-import jc.parsers.foo_s
+from jc.parsers.foo_s import parse
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -33,14 +33,17 @@ class MyTests(unittest.TestCase):
         """
         Test 'foo' with no data
         """
-        self.assertEqual(list(jc.parsers.foo_s.parse([], quiet=True)), [])
+        self.assertEqual(list(parse([], quiet=True)), [])
+
 
     def test_foo_s_centos_7_7(self):
         """
         Test 'foo' on Centos 7.7
         """
-        self.assertEqual(list(jc.parsers.foo_s.parse(self.f_in['centos_7_7_foo'].splitlines(), quiet=True)),
-                                                     self.f_json['centos_7_7_foo'])
+        self.assertEqual(
+            list(parse(self.f_in['centos_7_7_foo'].splitlines(), quiet=True)),
+            self.f_json['centos_7_7_foo']
+        )
 
 
 if __name__ == '__main__':

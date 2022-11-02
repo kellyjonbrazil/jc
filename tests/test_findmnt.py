@@ -2,7 +2,7 @@ import os
 import unittest
 import json
 from typing import Dict
-import jc.parsers.findmnt
+from jc.parsers.findmnt import parse
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -36,28 +36,34 @@ class MyTests(unittest.TestCase):
         """
         Test 'findmnt' with no data
         """
-        self.assertEqual(jc.parsers.findmnt.parse('', quiet=True), [])
+        self.assertEqual(parse('', quiet=True), [])
 
     def test_findmnt_centos_7_7(self):
         """
         Test 'findmnt' on Centos 7.7
         """
-        self.assertEqual(jc.parsers.findmnt.parse(self.f_in['centos_7_7_findmnt'], quiet=True),
-                                                  self.f_json['centos_7_7_findmnt'])
+        self.assertEqual(
+            parse(self.f_in['centos_7_7_findmnt'], quiet=True),
+            self.f_json['centos_7_7_findmnt']
+        )
 
     def test_findmnt_a_centos_7_7(self):
         """
         Test 'findmnt -a' on Centos 7.7
         """
-        self.assertEqual(jc.parsers.findmnt.parse(self.f_in['centos_7_7_findmnt_a'], quiet=True),
-                                                  self.f_json['centos_7_7_findmnt_a'])
+        self.assertEqual(
+            parse(self.f_in['centos_7_7_findmnt_a'], quiet=True),
+            self.f_json['centos_7_7_findmnt_a']
+        )
 
     def test_findmnt_l_centos_7_7(self):
         """
         Test 'findmnt -l' on Centos 7.7
         """
-        self.assertEqual(jc.parsers.findmnt.parse(self.f_in['centos_7_7_findmnt_l'], quiet=True),
-                                                  self.f_json['centos_7_7_findmnt_l'])
+        self.assertEqual(
+            parse(self.f_in['centos_7_7_findmnt_l'], quiet=True),
+            self.f_json['centos_7_7_findmnt_l']
+        )
 
 
 if __name__ == '__main__':
