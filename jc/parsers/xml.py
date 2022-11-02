@@ -108,7 +108,7 @@ def _process(proc_data, has_data=False):
 
     if has_data:
         # standard output with @ prefix for attributes
-        raw_output = xmltodict.parse(proc_data)
+        raw_output = xmltodict.parse(proc_data, dict_constructor=dict)
 
     return raw_output
 
@@ -139,7 +139,7 @@ def parse(data, raw=False, quiet=False):
     if raw:
         if has_data:
             # modified output with _ prefix for attributes
-            raw_output = xmltodict.parse(data, attr_prefix='_')
+            raw_output = xmltodict.parse(data, dict_constructor=dict, attr_prefix='_')
 
         return raw_output
 

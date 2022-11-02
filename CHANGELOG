@@ -1,8 +1,13 @@
 jc changelog
 
-20221101 v1.22.2
+20221102 v1.22.2
 - add `sshd_conf` parser
 - add `findmnt` parser
+- enhance `xml` parser with optional `_` prefix for attributes instead of
+  `@` by using the `--raw` option. This can make it easier to filter the
+  JSON output in some tools.
+- fix the `xml` parser to output a normal Dictionary instead of OrderdDict.
+  This cleans up YAML output. (No `!!omap` comments)
 - fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
 - fix exit code to be non-zero on interrupt
 - allow parser module objects to be used as arguments to `jc.get_help()` and `jc.parser_info()`
