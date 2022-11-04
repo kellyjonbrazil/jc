@@ -238,6 +238,7 @@ option.
 | `       --rpm-qi` | `rpm -qi` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi)         |
 | `        --rsync` | `rsync` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync)          |
 | `      --rsync-s` | `rsync` command streaming parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync_s)        |
+| `       --semver` | Semantic Version string parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/semver)         |
 | `       --sfdisk` | `sfdisk` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk)         |
 | `       --shadow` | `/etc/shadow` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow)         |
 | `           --ss` | `ss` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ss)             |

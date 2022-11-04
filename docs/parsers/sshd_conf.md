@@ -84,6 +84,9 @@ Schema:
       ],
       "ignorerhosts":                             string,
       "ignoreuserknownhosts":                     string,
+      "include": [
+                                                  string
+      ],
       "ipqos": [
                                                   string
       ],

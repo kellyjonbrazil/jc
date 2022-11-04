@@ -13,8 +13,8 @@ Usage (module):
 
 Schema:
 
-Strings that do not strictly conform to the specification will return a
-blank object.
+Strings that do not strictly conform to the specification will return an
+empty object.
 
     {
       "major":                  integer,
