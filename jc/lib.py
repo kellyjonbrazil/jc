@@ -146,6 +146,7 @@ parsers: List[str] = [
     'rpm-qi',
     'rsync',
     'rsync-s',
+    'semver',
     'sfdisk',
     'shadow',
     'ss',
