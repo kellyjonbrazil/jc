@@ -1,6 +1,13 @@
 """jc - JSON Convert `ifconfig` command output parser
 
-> Note: No `ifconfig` options are supported.
+No `ifconfig` options are supported.
+
+Consider using the `ip` command instead of `ifconfig` as it supports native
+JSON output and provides more detailed output than the `ifconfig` parser.
+(e.g. support for multiple IPv4 and IPv6 addresses.)
+
+> Note: This parser will only output the last IPv4 and IPv6 address for
+> each interface in the command output.
 
 Usage (cli):
 
