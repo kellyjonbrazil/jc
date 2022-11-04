@@ -79,6 +79,9 @@ Schema:
       ],
       "ignorerhosts":                             string,
       "ignoreuserknownhosts":                     string,
+      "include": [
+                                                  string
+      ],
       "ipqos": [
                                                   string
       ],
@@ -528,6 +531,14 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
             proc_data[key] = new_list
             continue
 
+        # this is a list value
+        if key == 'include':
+            new_list = []
+            for item in val:  # type: ignore
+                new_list.extend(item.split())
+            proc_data[key] = new_list
+            continue
+
         if key == 'maxstartups':
             maxstart_split = val.split(':', maxsplit=2)  # type: ignore
             proc_data[key] = maxstart_split[0]
@@ -596,7 +607,7 @@ def parse(
 
     raw_output: Dict = {}
 
-    multi_fields: Set[str] = {'acceptenv', 'hostkey', 'listenaddress', 'port'}
+    multi_fields: Set[str] = {'acceptenv', 'hostkey', 'include', 'listenaddress', 'port'}
 
     modified_fields: Set[str] = {
         'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
