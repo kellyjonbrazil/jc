@@ -56,36 +56,42 @@ class MyTests(unittest.TestCase):
         """
         Test 'ifconfig' on Centos 7.7
         """
+        self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.centos_7_7_ifconfig, quiet=True), self.centos_7_7_ifconfig_json)
 
     def test_ifconfig_ubuntu_18_4(self):
         """
         Test 'ifconfig' on Ubuntu 18.4
         """
+        self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.ubuntu_18_4_ifconfig, quiet=True), self.ubuntu_18_4_ifconfig_json)
 
     def test_ifconfig_osx_10_11_6(self):
         """
         Test 'ifconfig' on OSX 10.11.6
         """
+        self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_10_11_6_ifconfig, quiet=True), self.osx_10_11_6_ifconfig_json)
 
     def test_ifconfig_osx_10_11_6_2(self):
         """
         Test 'ifconfig' on OSX 10.11.6
         """
+        self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_10_11_6_ifconfig2, quiet=True), self.osx_10_11_6_ifconfig2_json)
 
     def test_ifconfig_osx_10_14_6(self):
         """
         Test 'ifconfig' on OSX 10.14.6
         """
+        self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_10_14_6_ifconfig, quiet=True), self.osx_10_14_6_ifconfig_json)
 
     def test_ifconfig_osx_10_14_6_2(self):
         """
         Test 'ifconfig' on OSX 10.14.6
         """
+        self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_10_14_6_ifconfig2, quiet=True), self.osx_10_14_6_ifconfig2_json)
 
 
