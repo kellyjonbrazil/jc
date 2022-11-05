@@ -54,7 +54,6 @@ parsers: List[str] = [
     'hosts',
     'id',
     'ifconfig',
-    'ifconfig2',
     'ini',
     'iostat',
     'iostat-s',

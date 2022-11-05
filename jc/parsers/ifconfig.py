@@ -1,37 +1,181 @@
 """jc - JSON Convert `foo` command output parser
 
-<<Short foo description and caveats>>
+No `ifconfig` options are supported.
+
+Consider using the `ip` command instead of `ifconfig` as it supports native
+JSON output.
 
 Usage (cli):
 
-    $ foo | jc --foo
+    $ ifconfig | jc --ifconfig
 
 or
 
-    $ jc foo
+    $ jc ifconfig
 
 Usage (module):
 
     import jc
-    result = jc.parse('foo', foo_command_output)
+    result = jc.parse('ifconfig', ifconfig_command_output)
 
 Schema:
 
     [
       {
-        "foo":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "name":             string,
+        "type":             string,
+        "metric":           integer
+        "flags":            integer,
+        "state": [
+                            string
+        ],
+        "mtu":              integer,
+        "mac_addr":         string,
+        "ipv4_addr":        string,    # [0]
+        "ipv4_mask":        string,    # [0]
+        "ipv4_bcast":       string,    # [0]
+        "ipv6_addr":        string,    # [0]
+        "ipv6_mask":        integer,   # [0]
+        "ipv6_scope":       string,    # [0]
+        "ipv6_type":        string,    # [0]
+        "rx_packets":       integer,
+        "rx_bytes":         integer,
+        "rx_errors":        integer,
+        "rx_dropped":       integer,
+        "rx_overruns":      integer,
+        "rx_frame":         integer,
+        "tx_packets":       integer,
+        "tx_bytes":         integer,
+        "tx_errors":        integer,
+        "tx_dropped":       integer,
+        "tx_overruns":      integer,
+        "tx_carrier":       integer,
+        "tx_collisions":    integer,
+        "ipv4": [
+          {
+            "address":      string,
+            "mask":         string,
+            "broadcast":    string
+          }
+        ],
+        "ipv6: [
+          {
+            "address":      string,
+            "mask":         integer,
+            "scope":        string,
+            "type":         string
+          }
+        ]
       }
     ]
 
+    [0] these fields only pick up the last IP address in the interface
+        output and are here for backwards compatibility. For information on
+        all IP addresses, use the `ipv4` and `ipv6` objects which contain an
+        array of IP address objects.
+
 Examples:
 
-    $ foo | jc --foo -p
-    []
+    $ ifconfig ens33 | jc --ifconfig -p
+    [
+      {
+        "name": "ens33",
+        "flags": 4163,
+        "state": [
+          "UP",
+          "BROADCAST",
+          "RUNNING",
+          "MULTICAST"
+        ],
+        "mtu": 1500,
+        "type": "Ethernet",
+        "mac_addr": "00:0c:29:3b:58:0e",
+        "ipv4_addr": "192.168.71.137",
+        "ipv4_mask": "255.255.255.0",
+        "ipv4_bcast": "192.168.71.255",
+        "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
+        "ipv6_mask": 64,
+        "ipv6_scope": "0x20",
+        "ipv6_type": "link",
+        "metric": null,
+        "rx_packets": 8061,
+        "rx_errors": 0,
+        "rx_dropped": 0,
+        "rx_overruns": 0,
+        "rx_frame": 0,
+        "tx_packets": 4502,
+        "tx_errors": 0,
+        "tx_dropped": 0,
+        "tx_overruns": 0,
+        "tx_carrier": 0,
+        "tx_collisions": 0,
+        "rx_bytes": 1514413,
+        "tx_bytes": 866622,
+        "ipv4": [
+          {
+            "address": "192.168.71.137",
+            "mask": "255.255.255.0",
+            "broadcast": "192.168.71.255"
+          }
+        ],
+        "ipv6": [
+          {
+            "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "mask": 64,
+            "scope": "0x20",
+            "type": "link"
+          }
+        ]
+      }
+    ]
 
-    $ foo | jc --foo -p -r
-    []
+    $ ifconfig ens33 | jc --ifconfig -p -r
+    [
+      {
+        "name": "ens33",
+        "flags": "4163",
+        "state": "UP,BROADCAST,RUNNING,MULTICAST",
+        "mtu": "1500",
+        "type": "Ethernet",
+        "mac_addr": "00:0c:29:3b:58:0e",
+        "ipv4_addr": "192.168.71.137",
+        "ipv4_mask": "255.255.255.0",
+        "ipv4_bcast": "192.168.71.255",
+        "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
+        "ipv6_mask": "64",
+        "ipv6_scope": "0x20",
+        "ipv6_type": "link",
+        "metric": null,
+        "rx_packets": "8061",
+        "rx_errors": "0",
+        "rx_dropped": "0",
+        "rx_overruns": "0",
+        "rx_frame": "0",
+        "tx_packets": "4502",
+        "tx_errors": "0",
+        "tx_dropped": "0",
+        "tx_overruns": "0",
+        "tx_carrier": "0",
+        "tx_collisions": "0",
+        "rx_bytes": "1514413",
+        "tx_bytes": "866622",
+        "ipv4": [
+          {
+            "address": "192.168.71.137",
+            "mask": "255.255.255.0",
+            "broadcast": "192.168.71.255"
+          }
+        ],
+        "ipv6": [
+          {
+            "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "mask": "64",
+            "scope": "0x20",
+            "type": "link"
+          }
+        ]
+      }
+    ]
 """
 import re
 from typing import List, Dict
@@ -45,7 +189,6 @@ class info():
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using ifconfig-parser from https://github.com/KnightWhoSayNi/ifconfig-parser'
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['ifconfig']
 
@@ -149,9 +292,67 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
-    interface_item: Dict = {}
+
+    # for backwards compatibility, preset all fields to None
+    interface_obj: Dict = {
+        "name": None,
+        "flags": None,
+        "state": None,
+        "mtu": None,
+        "type": None,
+        "mac_addr": None,
+        "ipv4_addr": None,
+        "ipv4_mask": None,
+        "ipv4_bcast": None,
+        "ipv6_addr": None,
+        "ipv6_mask": None,
+        "ipv6_scope": None,
+        "ipv6_type": None,
+        "metric": None,
+        "rx_packets": None,
+        "rx_errors": None,
+        "rx_dropped": None,
+        "rx_overruns": None,
+        "rx_frame": None,
+        "tx_packets": None,
+        "tx_errors": None,
+        "tx_dropped": None,
+        "tx_overruns": None,
+        "tx_carrier": None,
+        "tx_collisions": None,
+        "rx_bytes": None,
+        "tx_bytes": None
+    }
+
+    interface_item: Dict = interface_obj.copy()
     ipv4_info: List = []
     ipv6_info: List = []
+
+    # Below regular expression patterns are based off of the work of:
+    # https://github.com/KnightWhoSayNi/ifconfig-parser
+    # Author: threeheadedknight@protonmail.com
+
+    # MIT License
+
+    # Copyright (c) 2018 threeheadedknight@protonmail.com
+
+    # Permission is hereby granted, free of charge, to any person obtaining a copy
+    # of this software and associated documentation files (the "Software"), to deal
+    # in the Software without restriction, including without limitation the rights
+    # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    # copies of the Software, and to permit persons to whom the Software is
+    # furnished to do so, subject to the following conditions:
+
+    # The above copyright notice and this permission notice shall be included in all
+    # copies or substantial portions of the Software.
+
+    # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    # SOFTWARE.
 
     # Linux syntax
     re_linux_interface = re.compile(
@@ -178,6 +379,7 @@ def parse(
     re_linux_bytes = re.compile(r"\W+RX bytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+TX bytes:(?P<tx_bytes>\d+)\s+\(.*\)", re.I)
     re_linux_tx_stats = re.compile(r"collisions:(?P<tx_collisions>[0-9]+)\s+txqueuelen:[0-9]+", re.I)
 
+
     # OpenBSD syntax
     re_openbsd_interface = re.compile(
         r"(?P<name>[a-zA-Z0-9:._-]+):\s+flags=(?P<flags>[0-9]+)<(?P<state>\S+)?>\s+mtu\s+(?P<mtu>[0-9]+)",
@@ -202,8 +404,7 @@ def parse(
         r"TX errors (?P<tx_errors>[0-9]+)\s+dropped\s+(?P<tx_dropped>[0-9]+)\s+overruns\s+"
         r"(?P<tx_overruns>[0-9]+)\s+carrier\s+(?P<tx_carrier>[0-9]+)\s+collisions\s+(?P<tx_collisions>[0-9]+)",
         re.I)
-    re_openbsd = [re_openbsd_interface, re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
-                    re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats]
+
 
     # FreeBSD syntax
     re_freebsd_interface = re.compile(
@@ -238,13 +439,13 @@ def parse(
             # Find new interface lines
             interface_match = _bundle_match(interface_patterns, line)
             if interface_match:
-                if interface_item:
+                if interface_item['name'] is not None:
                     if ipv4_info:
                         interface_item['ipv4'] = ipv4_info
                     if ipv6_info:
                         interface_item['ipv6'] = ipv6_info
                     raw_output.append(interface_item)
-                    interface_item = {}
+                    interface_item = interface_obj.copy()
                     ipv4_info = []
                     ipv6_info = []
 
@@ -304,7 +505,7 @@ def parse(
                 interface_item.update(other_match.groupdict())
                 continue
 
-        if interface_item:
+        if interface_item['name'] is not None:
             if ipv4_info:
                 interface_item['ipv4'] = ipv4_info
             if ipv6_info:

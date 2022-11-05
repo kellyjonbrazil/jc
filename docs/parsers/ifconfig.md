@@ -3,16 +3,12 @@
 
 # jc.parsers.ifconfig
 
-jc - JSON Convert `ifconfig` command output parser
+jc - JSON Convert `foo` command output parser
 
 No `ifconfig` options are supported.
 
 Consider using the `ip` command instead of `ifconfig` as it supports native
-JSON output and provides more detailed output than the `ifconfig` parser.
-(e.g. support for multiple IPv4 and IPv6 addresses.)
-
-> Note: This parser will only output the last IPv4 and IPv6 address for
-> each interface in the command output.
+JSON output.
 
 Usage (cli):
 
@@ -32,19 +28,21 @@ Schema:
     [
       {
         "name":             string,
+        "type":             string,
+        "metric":           integer
         "flags":            integer,
         "state": [
                             string
         ],
         "mtu":              integer,
-        "ipv4_addr":        string,
-        "ipv4_mask":        string,
-        "ipv4_bcast":       string,
-        "ipv6_addr":        string,
-        "ipv6_mask":        integer,
-        "ipv6_scope":       string,
         "mac_addr":         string,
-        "type":             string,
+        "ipv4_addr":        string,    # [0]
+        "ipv4_mask":        string,    # [0]
+        "ipv4_bcast":       string,    # [0]
+        "ipv6_addr":        string,    # [0]
+        "ipv6_mask":        integer,   # [0]
+        "ipv6_scope":       string,    # [0]
+        "ipv6_type":        string,    # [0]
         "rx_packets":       integer,
         "rx_bytes":         integer,
         "rx_errors":        integer,
@@ -58,13 +56,32 @@ Schema:
         "tx_overruns":      integer,
         "tx_carrier":       integer,
         "tx_collisions":    integer,
-        "metric":           integer
+        "ipv4": [
+          {
+            "address":      string,
+            "mask":         string,
+            "broadcast":    string
+          }
+        ],
+        "ipv6: [
+          {
+            "address":      string,
+            "mask":         integer,
+            "scope":        string,
+            "type":         string
+          }
+        ]
       }
     ]
 
+    [0] these fields only pick up the last IP address in the interface
+        output and are here for backwards compatibility. For information on
+        all IP addresses, use the `ipv4` and `ipv6` objects which contain an
+        array of IP address objects.
+
 Examples:
 
-    $ ifconfig | jc --ifconfig -p
+    $ ifconfig ens33 | jc --ifconfig -p
     [
       {
         "name": "ens33",
@@ -76,120 +93,92 @@ Examples:
           "MULTICAST"
         ],
         "mtu": 1500,
+        "type": "Ethernet",
+        "mac_addr": "00:0c:29:3b:58:0e",
         "ipv4_addr": "192.168.71.137",
         "ipv4_mask": "255.255.255.0",
         "ipv4_bcast": "192.168.71.255",
         "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
         "ipv6_mask": 64,
         "ipv6_scope": "0x20",
-        "mac_addr": "00:0c:29:3b:58:0e",
-        "type": "Ethernet",
+        "ipv6_type": "link",
+        "metric": null,
         "rx_packets": 8061,
-        "rx_bytes": 1514413,
         "rx_errors": 0,
         "rx_dropped": 0,
         "rx_overruns": 0,
         "rx_frame": 0,
         "tx_packets": 4502,
+        "tx_errors": 0,
+        "tx_dropped": 0,
+        "tx_overruns": 0,
+        "tx_carrier": 0,
+        "tx_collisions": 0,
+        "rx_bytes": 1514413,
         "tx_bytes": 866622,
-        "tx_errors": 0,
-        "tx_dropped": 0,
-        "tx_overruns": 0,
-        "tx_carrier": 0,
-        "tx_collisions": 0,
-        "metric": null
-      },
-      {
-        "name": "lo",
-        "flags": 73,
-        "state": [
-          "UP",
-          "LOOPBACK",
-          "RUNNING"
+        "ipv4": [
+          {
+            "address": "192.168.71.137",
+            "mask": "255.255.255.0",
+            "broadcast": "192.168.71.255"
+          }
         ],
-        "mtu": 65536,
-        "ipv4_addr": "127.0.0.1",
-        "ipv4_mask": "255.0.0.0",
-        "ipv4_bcast": null,
-        "ipv6_addr": "::1",
-        "ipv6_mask": 128,
-        "ipv6_scope": "0x10",
-        "mac_addr": null,
-        "type": "Local Loopback",
-        "rx_packets": 73,
-        "rx_bytes": 6009,
-        "rx_errors": 0,
-        "rx_dropped": 0,
-        "rx_overruns": 0,
-        "rx_frame": 0,
-        "tx_packets": 73,
-        "tx_bytes": 6009,
-        "tx_errors": 0,
-        "tx_dropped": 0,
-        "tx_overruns": 0,
-        "tx_carrier": 0,
-        "tx_collisions": 0,
-        "metric": null
+        "ipv6": [
+          {
+            "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "mask": 64,
+            "scope": "0x20",
+            "type": "link"
+          }
+        ]
       }
     ]
 
-    $ ifconfig | jc --ifconfig -p -r
+    $ ifconfig ens33 | jc --ifconfig -p -r
     [
       {
         "name": "ens33",
         "flags": "4163",
         "state": "UP,BROADCAST,RUNNING,MULTICAST",
         "mtu": "1500",
+        "type": "Ethernet",
+        "mac_addr": "00:0c:29:3b:58:0e",
         "ipv4_addr": "192.168.71.137",
         "ipv4_mask": "255.255.255.0",
         "ipv4_bcast": "192.168.71.255",
         "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
         "ipv6_mask": "64",
         "ipv6_scope": "0x20",
-        "mac_addr": "00:0c:29:3b:58:0e",
-        "type": "Ethernet",
+        "ipv6_type": "link",
+        "metric": null,
         "rx_packets": "8061",
-        "rx_bytes": "1514413",
         "rx_errors": "0",
         "rx_dropped": "0",
         "rx_overruns": "0",
         "rx_frame": "0",
         "tx_packets": "4502",
+        "tx_errors": "0",
+        "tx_dropped": "0",
+        "tx_overruns": "0",
+        "tx_carrier": "0",
+        "tx_collisions": "0",
+        "rx_bytes": "1514413",
         "tx_bytes": "866622",
-        "tx_errors": "0",
-        "tx_dropped": "0",
-        "tx_overruns": "0",
-        "tx_carrier": "0",
-        "tx_collisions": "0",
-        "metric": null
-      },
-      {
-        "name": "lo",
-        "flags": "73",
-        "state": "UP,LOOPBACK,RUNNING",
-        "mtu": "65536",
-        "ipv4_addr": "127.0.0.1",
-        "ipv4_mask": "255.0.0.0",
-        "ipv4_bcast": null,
-        "ipv6_addr": "::1",
-        "ipv6_mask": "128",
-        "ipv6_scope": "0x10",
-        "mac_addr": null,
-        "type": "Local Loopback",
-        "rx_packets": "73",
-        "rx_bytes": "6009",
-        "rx_errors": "0",
-        "rx_dropped": "0",
-        "rx_overruns": "0",
-        "rx_frame": "0",
-        "tx_packets": "73",
-        "tx_bytes": "6009",
-        "tx_errors": "0",
-        "tx_dropped": "0",
-        "tx_overruns": "0",
-        "tx_carrier": "0",
-        "tx_collisions": "0",
-        "metric": null
+        "ipv4": [
+          {
+            "address": "192.168.71.137",
+            "mask": "255.255.255.0",
+            "broadcast": "192.168.71.255"
+          }
+        ],
+        "ipv6": [
+          {
+            "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "mask": "64",
+            "scope": "0x20",
+            "type": "link"
+          }
+        ]
       }
     ]
 
@@ -198,7 +187,9 @@ Examples:
 ### parse
 
 ```python
-def parse(data, raw=False, quiet=False)
+def parse(data: str,
+          raw: bool = False,
+          quiet: bool = False) -> List[JSONDictType]
 ```
 
 Main text parsing function
@@ -216,4 +207,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
-Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
