@@ -355,69 +355,135 @@ def parse(
     # SOFTWARE.
 
     # Linux syntax
-    re_linux_interface = re.compile(
-        r"(?P<name>[a-zA-Z0-9:._-]+)\s+Link encap:(?P<type>\S+\s?\S+)(\s+HWaddr\s+\b"
-        r"(?P<mac_addr>[0-9A-Fa-f:?]+))?",
-        re.I)
-    re_linux_ipv4 = re.compile(
-        r"inet addr:(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+Bcast:"
-        r"(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?\s+Mask:(?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})",
-        re.I)
-    re_linux_ipv6 = re.compile(
-        r"inet6 addr:\s+(?P<address>\S+)/(?P<mask>[0-9]+)\s+Scope:(?P<scope>Link|Host)",
-        re.I)
-    re_linux_state = re.compile(
-        r"\W+(?P<state>(?:\w+\s)+)(?:\s+)?MTU:(?P<mtu>[0-9]+)\s+Metric:(?P<metric>[0-9]+)", re.I)
-    re_linux_rx = re.compile(
-        r"RX packets:(?P<rx_packets>[0-9]+)\s+errors:(?P<rx_errors>[0-9]+)\s+dropped:"
-        r"(?P<rx_dropped>[0-9]+)\s+overruns:(?P<rx_overruns>[0-9]+)\s+frame:(?P<rx_frame>[0-9]+)",
-        re.I)
-    re_linux_tx = re.compile(
-        r"TX packets:(?P<tx_packets>[0-9]+)\s+errors:(?P<tx_errors>[0-9]+)\s+dropped:"
-        r"(?P<tx_dropped>[0-9]+)\s+overruns:(?P<tx_overruns>[0-9]+)\s+carrier:(?P<tx_carrier>[0-9]+)",
-        re.I)
-    re_linux_bytes = re.compile(r"\W+RX bytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+TX bytes:(?P<tx_bytes>\d+)\s+\(.*\)", re.I)
-    re_linux_tx_stats = re.compile(r"collisions:(?P<tx_collisions>[0-9]+)\s+txqueuelen:[0-9]+", re.I)
-
+    re_linux_interface = re.compile(r'''
+        (?P<name>[a-zA-Z0-9:._-]+)\s+
+        Link encap:(?P<type>\S+\s?\S+)
+        (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_ipv4 = re.compile(r'''
+        inet addr:(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+
+        Bcast:(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?\s+
+        Mask:(?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_ipv6 = re.compile(r'''
+        inet6 addr:\s+(?P<address>\S+)/
+        (?P<mask>[0-9]+)\s+
+        Scope:(?P<scope>Link|Host)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_state = re.compile(r'''
+        \W+(?P<state>(?:\w+\s)+)(?:\s+)?
+        MTU:(?P<mtu>[0-9]+)\s+
+        Metric:(?P<metric>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_rx = re.compile(r'''
+        RX packets:(?P<rx_packets>[0-9]+)\s+
+        errors:(?P<rx_errors>[0-9]+)\s+
+        dropped:(?P<rx_dropped>[0-9]+)\s+
+        overruns:(?P<rx_overruns>[0-9]+)\s+
+        frame:(?P<rx_frame>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_tx = re.compile(r'''
+        TX packets:(?P<tx_packets>[0-9]+)\s+
+        errors:(?P<tx_errors>[0-9]+)\s+
+        dropped:(?P<tx_dropped>[0-9]+)\s+
+        overruns:(?P<tx_overruns>[0-9]+)\s+
+        carrier:(?P<tx_carrier>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_bytes = re.compile(r'''
+        \W+RX bytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
+        TX bytes:(?P<tx_bytes>\d+)\s+\(.*\)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_tx_stats = re.compile(r'''
+        collisions:(?P<tx_collisions>[0-9]+)\s+
+        txqueuelen:[0-9]+
+        ''', re.IGNORECASE | re.VERBOSE
+    )
 
     # OpenBSD syntax
-    re_openbsd_interface = re.compile(
-        r"(?P<name>[a-zA-Z0-9:._-]+):\s+flags=(?P<flags>[0-9]+)<(?P<state>\S+)?>\s+mtu\s+(?P<mtu>[0-9]+)",
-        re.I)
-    re_openbsd_ipv4 = re.compile(
-        r"inet (?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+netmask\s+"
-        r"(?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+broadcast\s+"
-        r"(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?",
-        re.I)
-    re_openbsd_ipv6 = re.compile(
-        r'inet6\s+(?P<address>\S+)\s+prefixlen\s+(?P<mask>[0-9]+)\s+scopeid\s+(?P<scope>\w+x\w+)<(?P<type>link|host|global)>',
-        re.I)
-    re_openbsd_details = re.compile(
-        r"\S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?txqueuelen\s+[0-9]+\s+\((?P<type>\S+\s?\S+)\)", re.I)
-    re_openbsd_rx = re.compile(r"RX packets (?P<rx_packets>[0-9]+)\s+bytes\s+(?P<rx_bytes>\d+)\s+.*", re.I)
-    re_openbsd_rx_stats = re.compile(
-        r"RX errors (?P<rx_errors>[0-9]+)\s+dropped\s+(?P<rx_dropped>[0-9]+)\s+overruns\s+"
-        r"(?P<rx_overruns>[0-9]+)\s+frame\s+(?P<rx_frame>[0-9]+)",
-        re.I)
-    re_openbsd_tx = re.compile(r"TX packets (?P<tx_packets>[0-9]+)\s+bytes\s+(?P<tx_bytes>\d+)\s+.*", re.I)
-    re_openbsd_tx_stats = re.compile(
-        r"TX errors (?P<tx_errors>[0-9]+)\s+dropped\s+(?P<tx_dropped>[0-9]+)\s+overruns\s+"
-        r"(?P<tx_overruns>[0-9]+)\s+carrier\s+(?P<tx_carrier>[0-9]+)\s+collisions\s+(?P<tx_collisions>[0-9]+)",
-        re.I)
-
+    re_openbsd_interface = re.compile(r'''
+        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        flags=(?P<flags>[0-9]+)
+        <(?P<state>\S+)?>\s+
+        mtu\s+(?P<mtu>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_ipv4 = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+netmask\s+
+        (?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+broadcast\s+
+        (?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_ipv6 = re.compile(r'''
+        inet6\s+(?P<address>\S+)\s+
+        prefixlen\s+(?P<mask>[0-9]+)\s+
+        scopeid\s+(?P<scope>\w+x\w+)
+        <(?P<type>link|host|global)>
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_details = re.compile(r'''
+        \S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
+        txqueuelen\s+[0-9]+\s+
+        \((?P<type>\S+\s?\S+)\)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_rx = re.compile(r'''
+        RX\spackets\s(?P<rx_packets>[0-9]+)\s+
+        bytes\s+(?P<rx_bytes>\d+)\s+.*
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_rx_stats = re.compile(r'''
+        RX\serrors\s(?P<rx_errors>[0-9]+)\s+
+        dropped\s+(?P<rx_dropped>[0-9]+)\s+
+        overruns\s+(?P<rx_overruns>[0-9]+)\s+
+        frame\s+(?P<rx_frame>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_tx = re.compile(r'''
+        TX\spackets\s(?P<tx_packets>[0-9]+)\s+
+        bytes\s+(?P<tx_bytes>\d+)\s+.*
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_tx_stats = re.compile(r'''
+        TX\serrors\s(?P<tx_errors>[0-9]+)\s+
+        dropped\s+(?P<tx_dropped>[0-9]+)\s+
+        overruns\s+(?P<tx_overruns>[0-9]+)\s+
+        carrier\s+(?P<tx_carrier>[0-9]+)\s+
+        collisions\s+(?P<tx_collisions>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
 
     # FreeBSD syntax
-    re_freebsd_interface = re.compile(
-        r"(?P<name>[a-zA-Z0-9:._-]+):\s+flags=(?P<flags>[0-9]+)<(?P<state>\S+)>\s+metric\s+"
-        r"(?P<metric>[0-9]+)\s+mtu\s+(?P<mtu>[0-9]+)",
-        re.I)
-    re_freebsd_ipv4 = re.compile(
-        r"inet (?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+netmask\s+(?P<mask>0x\S+)(\s+broadcast\s+"
-        r"(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?",
-        re.I)
-    re_freebsd_ipv6 = re.compile(r"\s?inet6\s(?P<address>.*)(?:\%\w+\d+)\sprefixlen\s(?P<mask>\d+)(?:\s\w+)?\sscopeid\s(?P<scope>\w+x\w+)", re.I)
-    re_freebsd_details = re.compile(r"ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)", re.I)
-
+    re_freebsd_interface = re.compile(r'''
+        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        flags=(?P<flags>[0-9]+)
+        <(?P<state>\S+)>\s+
+        metric\s+(?P<metric>[0-9]+)\s+
+        mtu\s+(?P<mtu>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_ipv4 = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+
+        netmask\s+(?P<mask>0x\S+)(\s+
+        broadcast\s+(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_ipv6 = re.compile(r'''
+        \s?inet6\s(?P<address>.*)(?:\%\w+\d+)\s
+        prefixlen\s(?P<mask>\d+)(?:\s\w+)?\s
+        scopeid\s(?P<scope>\w+x\w+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_details = re.compile(r'''
+        ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
+    ''', re.IGNORECASE | re.VERBOSE
+    )
 
     re_linux = [
         re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
