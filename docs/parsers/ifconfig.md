@@ -27,48 +27,65 @@ Schema:
 
     [
       {
-        "name":             string,
-        "type":             string,
-        "metric":           integer
-        "flags":            integer,
+        "name":                     string,
+        "type":                     string,
+        "metric":                   integer
+        "flags":                    integer,
         "state": [
-                            string
+                                    string
         ],
-        "mtu":              integer,
-        "mac_addr":         string,
-        "ipv4_addr":        string,    # [0]
-        "ipv4_mask":        string,    # [0]
-        "ipv4_bcast":       string,    # [0]
-        "ipv6_addr":        string,    # [0]
-        "ipv6_mask":        integer,   # [0]
-        "ipv6_scope":       string,    # [0]
-        "ipv6_type":        string,    # [0]
-        "rx_packets":       integer,
-        "rx_bytes":         integer,
-        "rx_errors":        integer,
-        "rx_dropped":       integer,
-        "rx_overruns":      integer,
-        "rx_frame":         integer,
-        "tx_packets":       integer,
-        "tx_bytes":         integer,
-        "tx_errors":        integer,
-        "tx_dropped":       integer,
-        "tx_overruns":      integer,
-        "tx_carrier":       integer,
-        "tx_collisions":    integer,
+        "mtu":                      integer,
+        "mac_addr":                 string,
+        "ipv4_addr":                string,    # [0]
+        "ipv4_mask":                string,    # [0]
+        "ipv4_bcast":               string,    # [0]
+        "ipv6_addr":                string,    # [0]
+        "ipv6_mask":                integer,   # [0]
+        "ipv6_scope":               string,    # [0]
+        "ipv6_type":                string,    # [0]
+        "rx_packets":               integer,
+        "rx_bytes":                 integer,
+        "rx_errors":                integer,
+        "rx_dropped":               integer,
+        "rx_overruns":              integer,
+        "rx_frame":                 integer,
+        "tx_packets":               integer,
+        "tx_bytes":                 integer,
+        "tx_errors":                integer,
+        "tx_dropped":               integer,
+        "tx_overruns":              integer,
+        "tx_carrier":               integer,
+        "tx_collisions":            integer,
+        "status":                   string,
+        "hw_address":               string,
+        "media":                    string,
+        "media_flags": [
+                                    string
+        ],
+        "nd6_options":              integer,
+        "nd6_flags": [
+                                    string
+        ],
+        "plugged":                  string,
+        "vendor":                   string,
+        "vendor_pn":                string,
+        "vendor_sn":                string,
+        "vendor_date":              string,
+        "module_temperature":       string,
+        "module_voltage":           string
         "ipv4": [
           {
-            "address":      string,
-            "mask":         string,
-            "broadcast":    string
+            "address":              string,
+            "mask":                 string,
+            "broadcast":            string
           }
         ],
         "ipv6: [
           {
-            "address":      string,
-            "mask":         integer,
-            "scope":        string,
-            "type":         string
+            "address":              string,
+            "mask":                 integer,
+            "scope":                string,
+            "type":                 string
           }
         ]
       }

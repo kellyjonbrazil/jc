@@ -22,49 +22,65 @@ Schema:
 
     [
       {
-        "name":             string,
-        "type":             string,
-        "metric":           integer
-        "flags":            integer,
+        "name":                     string,
+        "type":                     string,
+        "metric":                   integer
+        "flags":                    integer,
         "state": [
-                            string
+                                    string
         ],
-        "mtu":              integer,
-        "mac_addr":         string,
-        "ipv4_addr":        string,    # [0]
-        "ipv4_mask":        string,    # [0]
-        "ipv4_bcast":       string,    # [0]
-        "ipv6_addr":        string,    # [0]
-        "ipv6_mask":        integer,   # [0]
-        "ipv6_scope":       string,    # [0]
-        "ipv6_type":        string,    # [0]
-        "rx_packets":       integer,
-        "rx_bytes":         integer,
-        "rx_errors":        integer,
-        "rx_dropped":       integer,
-        "rx_overruns":      integer,
-        "rx_frame":         integer,
-        "tx_packets":       integer,
-        "tx_bytes":         integer,
-        "tx_errors":        integer,
-        "tx_dropped":       integer,
-        "tx_overruns":      integer,
-        "tx_carrier":       integer,
-        "tx_collisions":    integer,
-        "status":           string,
+        "mtu":                      integer,
+        "mac_addr":                 string,
+        "ipv4_addr":                string,    # [0]
+        "ipv4_mask":                string,    # [0]
+        "ipv4_bcast":               string,    # [0]
+        "ipv6_addr":                string,    # [0]
+        "ipv6_mask":                integer,   # [0]
+        "ipv6_scope":               string,    # [0]
+        "ipv6_type":                string,    # [0]
+        "rx_packets":               integer,
+        "rx_bytes":                 integer,
+        "rx_errors":                integer,
+        "rx_dropped":               integer,
+        "rx_overruns":              integer,
+        "rx_frame":                 integer,
+        "tx_packets":               integer,
+        "tx_bytes":                 integer,
+        "tx_errors":                integer,
+        "tx_dropped":               integer,
+        "tx_overruns":              integer,
+        "tx_carrier":               integer,
+        "tx_collisions":            integer,
+        "status":                   string,
+        "hw_address":               string,
+        "media":                    string,
+        "media_flags": [
+                                    string
+        ],
+        "nd6_options":              integer,
+        "nd6_flags": [
+                                    string
+        ],
+        "plugged":                  string,
+        "vendor":                   string,
+        "vendor_pn":                string,
+        "vendor_sn":                string,
+        "vendor_date":              string,
+        "module_temperature":       string,
+        "module_voltage":           string
         "ipv4": [
           {
-            "address":      string,
-            "mask":         string,
-            "broadcast":    string
+            "address":              string,
+            "mask":                 string,
+            "broadcast":            string
           }
         ],
         "ipv6: [
           {
-            "address":      string,
-            "mask":         integer,
-            "scope":        string,
-            "type":         string
+            "address":              string,
+            "mask":                 integer,
+            "scope":                string,
+            "type":                 string
           }
         ]
       }
@@ -212,7 +228,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     int_list = {
         'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
         'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric'
+        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options'
     }
 
     for entry in proc_data:
@@ -257,6 +273,13 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             for ip_address in entry['ipv6']:  # type: ignore
                 if 'mask' in ip_address:
                     ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])  # type: ignore
+
+        # final conversions
+        if entry.get('media_flags', None):
+            entry['media_flags'] = entry['media_flags'].split(',')
+
+        if entry.get('nd6_flags', None):
+            entry['nd6_flags'] = entry['nd6_flags'].split(',')
 
     return proc_data
 
@@ -521,6 +544,11 @@ def parse(
         voltage:\s(?P<module_voltage>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # RX: 0.52 mW (-2.82 dBm) TX: 0.00 mW (-40.00 dBm)
+    re_freebsd_tx_rx_power = re.compile(r'''
+        RX:\s+(?P<rx_power>.+)\s+TX:\s(?P<tx_pwer>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
 
     re_linux = [
         re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
@@ -533,7 +561,7 @@ def parse(
     re_freebsd = [
         re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv6, re_freebsd_details, re_freebsd_status,
         re_freebsd_nd6_options, re_freebsd_plugged, re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts,
-        re_freebsd_hwaddr, re_freebsd_media
+        re_freebsd_hwaddr, re_freebsd_media, re_freebsd_tx_rx_power
     ]
 
     interface_patterns = [re_linux_interface, re_openbsd_interface, re_freebsd_interface]

@@ -100,5 +100,8 @@ class MyTests(unittest.TestCase):
     def test_ifconfig_freebsd_extra_fields2(self):
         pass
 
+    def test_ifconfig_freebsd_extra_fields3(self):
+        pass
+
 if __name__ == '__main__':
     unittest.main()
