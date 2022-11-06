@@ -51,6 +51,7 @@ Schema:
         "tx_overruns":      integer,
         "tx_carrier":       integer,
         "tx_collisions":    integer,
+        "status":           string,
         "ipv4": [
           {
             "address":      string,
@@ -482,7 +483,43 @@ def parse(
     )
     re_freebsd_details = re.compile(r'''
         ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
-    ''', re.IGNORECASE | re.VERBOSE
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_status = re.compile(r'''
+        status:\s(?P<status>\w+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_hwaddr = re.compile(r'''
+        hwaddr\s(?P<hw_address>[0-9A-Fa-f:?]+)
+        (?:\s+media:\s(?P<media>.+)\s
+        <(?P<media_flags>.+)>)?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_media = re.compile(r'''
+        media:\s(?P<media>.+)
+        (?:\s+?<(?P<media_flags>.+)>)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_nd6_options = re.compile(r'''
+        nd6\soptions=(?P<nd6_options>\d+)
+        <(?P<nd6_flags>\S+)>
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_plugged = re.compile(r'''
+        plugged:\s(?P<plugged>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_vendor_pn_sn_date = re.compile(r'''
+        vendor:\s(?P<vendor>.+)\s
+        PN:\s(?P<vendor_pn>.+)\s
+        SN:\s(?P<vendor_sn>.+)\s
+        DATE:\s(?P<vendor_date>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_temp_volts = re.compile(r'''
+        module\stemperature:\s(?P<module_temperature>.+)\s
+        voltage:\s(?P<module_voltage>.+)
+        ''', re.IGNORECASE | re.VERBOSE
     )
 
     re_linux = [
@@ -493,7 +530,11 @@ def parse(
         re_openbsd_interface, re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
         re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats
     ]
-    re_freebsd = [re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv6, re_freebsd_details]
+    re_freebsd = [
+        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv6, re_freebsd_details, re_freebsd_status,
+        re_freebsd_nd6_options, re_freebsd_plugged, re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts,
+        re_freebsd_hwaddr, re_freebsd_media
+    ]
 
     interface_patterns = [re_linux_interface, re_openbsd_interface, re_freebsd_interface]
     ipv4_patterns = [re_linux_ipv4, re_openbsd_ipv4, re_freebsd_ipv4]

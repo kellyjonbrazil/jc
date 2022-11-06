@@ -1,8 +1,10 @@
 jc changelog
 
-20221102 v1.22.2
+20221105 v1.22.2
 - add `sshd_conf` parser
 - add `findmnt` parser
+- enhance the `ifconfig` parser so it can output multiple IPv4 and IPv6 addresses
+- enhance the `ifconfig` parser so it can output additional fields common on BSD
 - enhance `xml` parser with optional `_` prefix for attributes instead of
   `@` by using the `--raw` option. This can make it easier to filter the
   JSON output in some tools.

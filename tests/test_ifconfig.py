@@ -94,6 +94,11 @@ class MyTests(unittest.TestCase):
         self.maxDiff = None
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_10_14_6_ifconfig2, quiet=True), self.osx_10_14_6_ifconfig2_json)
 
+    def test_ifconfig_freebsd_extra_fields(self):
+        pass
+
+    def test_ifconfig_freebsd_extra_fields2(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()

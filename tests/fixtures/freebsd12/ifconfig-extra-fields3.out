@@ -1,0 +1,10 @@
+cxl3: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+     options=6ec07bb<RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU,VLAN_HWCSUM,TSO4,TSO6,LRO,VLAN_HWTSO,LINKSTATE,RXCSUM_IPV6,TXCSUM_IPV6,HWRXTSTMP,NOMAP>
+     ether 00:07:43:3d:b7:70
+     hwaddr 00:07:43:3d:b7:88
+     status: active
+     nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
+     plugged: SFP/SFP+/SFP28 10G Base-LR (LC)
+     vendor: INNOLIGHT PN: TR-PX13L-N00 SN: INJBL0431986 DATE: 2020-01-04
+     module temperature: 21.20 C voltage: 3.16 Volts
+     lane 1: RX power: 0.49 mW (-3.10 dBm) TX bias: 23.85 mA
