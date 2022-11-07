@@ -186,6 +186,7 @@ option.
 | `        --fstab` | `/etc/fstab` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab)          |
 | `      --git-log` | `git log` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log)        |
 | `    --git-log-s` | `git log` command streaming parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log_s)      |
+| `--git-ls-remote` | `git ls-remote` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_ls_remote)  |
 | `          --gpg` | `gpg --with-colons` command parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/gpg)            |
 | `        --group` | `/etc/group` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/group)          |
 | `      --gshadow` | `/etc/gshadow` file parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/gshadow)        |

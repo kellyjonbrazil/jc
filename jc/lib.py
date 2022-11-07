@@ -44,6 +44,7 @@ parsers: List[str] = [
     'fstab',
     'git-log',
     'git-log-s',
+    'git-ls-remote',
     'gpg',
     'group',
     'gshadow',
