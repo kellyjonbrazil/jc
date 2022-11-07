@@ -56,6 +56,10 @@ Schema:
         "tx_overruns":              integer,
         "tx_carrier":               integer,
         "tx_collisions":            integer,
+        "options":                  string,
+        "options_flags": [
+                                    string
+        ],
         "status":                   string,
         "hw_address":               string,
         "media":                    string,

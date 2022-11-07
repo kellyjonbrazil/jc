@@ -1,8 +1,9 @@
 jc changelog
 
-20221105 v1.22.2
-- add `sshd_conf` parser
-- add `findmnt` parser
+20221107 v1.22.2
+- add `sshd_conf` parser for `sshd` configuration files and `sshd -T` output
+- add `findmnt` command parser
+- add SemVer string parser
 - enhance the `ifconfig` parser so it can output multiple IPv4 and IPv6 addresses
 - enhance the `ifconfig` parser so it can output additional fields common on BSD
 - enhance `xml` parser with optional `_` prefix for attributes instead of
