@@ -82,6 +82,7 @@ parsers: List[str] = [
     'netstat',
     'nmcli',
     'ntpq',
+    'os-prober',
     'passwd',
     'pci-ids',
     'pidstat',
