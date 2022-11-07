@@ -51,6 +51,10 @@ Schema:
         "tx_overruns":              integer,
         "tx_carrier":               integer,
         "tx_collisions":            integer,
+        "options":                  string,
+        "options_flags": [
+                                    string
+        ],
         "status":                   string,
         "hw_address":               string,
         "media":                    string,
@@ -195,6 +199,7 @@ Examples:
     ]
 """
 import re
+from ipaddress import IPv4Network
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -211,6 +216,10 @@ class info():
 
 
 __version__ = info.version
+
+
+def _convert_cidr_to_quad(string):
+    return str(IPv4Network('0.0.0.0/' + string).netmask)
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -247,6 +256,10 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             except (ValueError, TypeError, AttributeError):
                 pass
 
+            # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
+            if entry['ipv4_mask'] and not '.' in entry['ipv4_mask']:  # type: ignore
+                entry['ipv4_mask'] = _convert_cidr_to_quad(entry['ipv4_mask'])
+
         # convert state value to an array
         if 'state' in entry:
             try:
@@ -268,6 +281,10 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                     except (ValueError, TypeError, AttributeError):
                         pass
 
+                    # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
+                    if ip_address['mask'] and not '.' in ip_address['mask']:  # type: ignore
+                        ip_address['mask'] = _convert_cidr_to_quad(ip_address['mask'])  # type: ignore
+
         # conversions for list of ipv6 addresses
         if 'ipv6' in entry:
             for ip_address in entry['ipv6']:  # type: ignore
@@ -276,10 +293,13 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         # final conversions
         if entry.get('media_flags', None):
-            entry['media_flags'] = entry['media_flags'].split(',')
+            entry['media_flags'] = entry['media_flags'].split(',')  # type: ignore
 
         if entry.get('nd6_flags', None):
-            entry['nd6_flags'] = entry['nd6_flags'].split(',')
+            entry['nd6_flags'] = entry['nd6_flags'].split(',')  # type: ignore
+
+        if entry.get('options_flags', None):
+            entry['options_flags'] = entry['options_flags'].split(',')  # type: ignore
 
     return proc_data
 
@@ -498,6 +518,12 @@ def parse(
         broadcast\s+(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
         ''', re.IGNORECASE | re.VERBOSE
     )
+    re_freebsd_ipv4_v2 = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\/
+        (?P<mask>\d+)(\s+
+        broadcast\s+(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
     re_freebsd_ipv6 = re.compile(r'''
         \s?inet6\s(?P<address>.*)(?:\%\w+\d+)\s
         prefixlen\s(?P<mask>\d+)(?:\s\w+)?\s
@@ -544,9 +570,14 @@ def parse(
         voltage:\s(?P<module_voltage>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
-    # RX: 0.52 mW (-2.82 dBm) TX: 0.00 mW (-40.00 dBm)
     re_freebsd_tx_rx_power = re.compile(r'''
-        RX:\s+(?P<rx_power>.+)\s+TX:\s(?P<tx_pwer>.+)
+        RX:\s+(?P<rx_power>.+)\s+
+        TX:\s(?P<tx_pwer>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_options = re.compile(r'''
+        options=(?P<options>[0-9A-Fa-f]+)
+        <(?P<options_flags>.+)>
         ''', re.IGNORECASE | re.VERBOSE
     )
 
@@ -559,13 +590,14 @@ def parse(
         re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats
     ]
     re_freebsd = [
-        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv6, re_freebsd_details, re_freebsd_status,
-        re_freebsd_nd6_options, re_freebsd_plugged, re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts,
-        re_freebsd_hwaddr, re_freebsd_media, re_freebsd_tx_rx_power
+        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv6,
+        re_freebsd_details, re_freebsd_status, re_freebsd_nd6_options, re_freebsd_plugged,
+        re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts, re_freebsd_hwaddr, re_freebsd_media,
+        re_freebsd_tx_rx_power, re_freebsd_options
     ]
 
     interface_patterns = [re_linux_interface, re_openbsd_interface, re_freebsd_interface]
-    ipv4_patterns = [re_linux_ipv4, re_openbsd_ipv4, re_freebsd_ipv4]
+    ipv4_patterns = [re_linux_ipv4, re_openbsd_ipv4, re_freebsd_ipv4, re_freebsd_ipv4_v2]
     ipv6_patterns = [re_linux_ipv6, re_openbsd_ipv6, re_freebsd_ipv6]
 
     if jc.utils.has_data(data):
