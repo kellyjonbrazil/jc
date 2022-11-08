@@ -72,7 +72,6 @@ Examples:
       ...
     ]
 
-
     $ findmnt | jc --findmnt -p -r
     [
       {
