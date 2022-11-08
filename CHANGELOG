@@ -3,6 +3,8 @@ jc changelog
 20221107 v1.22.2
 - add `sshd_conf` parser for `sshd` configuration files and `sshd -T` output
 - add `findmnt` command parser
+- add `git ls-remote` command parser
+- add `os-prober` command parser
 - add SemVer string parser
 - enhance the `ifconfig` parser so it can output multiple IPv4 and IPv6 addresses
 - enhance the `ifconfig` parser so it can output additional fields common on BSD
