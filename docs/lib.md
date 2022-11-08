@@ -161,7 +161,7 @@ subset of `parser_mod_list()`.
 ### parser\_info
 
 ```python
-def parser_info(parser_mod_name: str,
+def parser_info(parser_mod_name: Union[str, ModuleType],
                 documentation: bool = False) -> ParserInfoType
 ```
 
@@ -169,10 +169,11 @@ Returns a dictionary that includes the parser module metadata.
 
 Parameters:
 
-    parser_mod_name:    (string)     name of the parser module. This
-                                     function will accept module_name,
+    parser_mod_name:    (string or   name of the parser module. This
+                        Module)      function will accept module_name,
                                      cli-name, and --argument-name
-                                     variants of the module name.
+                                     variants of the module name as well
+                                     as a parser module object.
 
     documentation:      (boolean)    include parser docstring if True
 
@@ -203,11 +204,12 @@ Parameters:
 ### get\_help
 
 ```python
-def get_help(parser_mod_name: str) -> None
+def get_help(parser_mod_name: Union[str, ModuleType]) -> None
 ```
 
 Show help screen for the selected parser.
 
 This function will accept **module_name**, **cli-name**, and
-**--argument-name** variants of the module name string.
+**--argument-name** variants of the module name string as well as a
+parser module object.
 

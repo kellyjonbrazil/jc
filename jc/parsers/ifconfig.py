@@ -1,6 +1,9 @@
-"""jc - JSON Convert `ifconfig` command output parser
+"""jc - JSON Convert `foo` command output parser
 
-> Note: No `ifconfig` options are supported.
+No `ifconfig` options are supported.
+
+Consider using the `ip` command instead of `ifconfig` as it supports native
+JSON output.
 
 Usage (cli):
 
@@ -19,40 +22,82 @@ Schema:
 
     [
       {
-        "name":             string,
-        "flags":            integer,
+        "name":                     string,
+        "type":                     string,
+        "metric":                   integer
+        "flags":                    integer,
         "state": [
-                            string
+                                    string
         ],
-        "mtu":              integer,
-        "ipv4_addr":        string,
-        "ipv4_mask":        string,
-        "ipv4_bcast":       string,
-        "ipv6_addr":        string,
-        "ipv6_mask":        integer,
-        "ipv6_scope":       string,
-        "mac_addr":         string,
-        "type":             string,
-        "rx_packets":       integer,
-        "rx_bytes":         integer,
-        "rx_errors":        integer,
-        "rx_dropped":       integer,
-        "rx_overruns":      integer,
-        "rx_frame":         integer,
-        "tx_packets":       integer,
-        "tx_bytes":         integer,
-        "tx_errors":        integer,
-        "tx_dropped":       integer,
-        "tx_overruns":      integer,
-        "tx_carrier":       integer,
-        "tx_collisions":    integer,
-        "metric":           integer
+        "mtu":                      integer,
+        "mac_addr":                 string,
+        "ipv4_addr":                string,    # [0]
+        "ipv4_mask":                string,    # [0]
+        "ipv4_bcast":               string,    # [0]
+        "ipv6_addr":                string,    # [0]
+        "ipv6_mask":                integer,   # [0]
+        "ipv6_scope":               string,    # [0]
+        "ipv6_type":                string,    # [0]
+        "rx_packets":               integer,
+        "rx_bytes":                 integer,
+        "rx_errors":                integer,
+        "rx_dropped":               integer,
+        "rx_overruns":              integer,
+        "rx_frame":                 integer,
+        "tx_packets":               integer,
+        "tx_bytes":                 integer,
+        "tx_errors":                integer,
+        "tx_dropped":               integer,
+        "tx_overruns":              integer,
+        "tx_carrier":               integer,
+        "tx_collisions":            integer,
+        "options":                  string,
+        "options_flags": [
+                                    string
+        ],
+        "status":                   string,
+        "hw_address":               string,
+        "media":                    string,
+        "media_flags": [
+                                    string
+        ],
+        "nd6_options":              integer,
+        "nd6_flags": [
+                                    string
+        ],
+        "plugged":                  string,
+        "vendor":                   string,
+        "vendor_pn":                string,
+        "vendor_sn":                string,
+        "vendor_date":              string,
+        "module_temperature":       string,
+        "module_voltage":           string
+        "ipv4": [
+          {
+            "address":              string,
+            "mask":                 string,
+            "broadcast":            string
+          }
+        ],
+        "ipv6: [
+          {
+            "address":              string,
+            "mask":                 integer,
+            "scope":                string,
+            "type":                 string
+          }
+        ]
       }
     ]
 
+    [0] these fields only pick up the last IP address in the interface
+        output and are here for backwards compatibility. For information on
+        all IP addresses, use the `ipv4` and `ipv6` objects which contain an
+        array of IP address objects.
+
 Examples:
 
-    $ ifconfig | jc --ifconfig -p
+    $ ifconfig ens33 | jc --ifconfig -p
     [
       {
         "name": "ens33",
@@ -64,135 +109,108 @@ Examples:
           "MULTICAST"
         ],
         "mtu": 1500,
+        "type": "Ethernet",
+        "mac_addr": "00:0c:29:3b:58:0e",
         "ipv4_addr": "192.168.71.137",
         "ipv4_mask": "255.255.255.0",
         "ipv4_bcast": "192.168.71.255",
         "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
         "ipv6_mask": 64,
         "ipv6_scope": "0x20",
-        "mac_addr": "00:0c:29:3b:58:0e",
-        "type": "Ethernet",
+        "ipv6_type": "link",
+        "metric": null,
         "rx_packets": 8061,
-        "rx_bytes": 1514413,
         "rx_errors": 0,
         "rx_dropped": 0,
         "rx_overruns": 0,
         "rx_frame": 0,
         "tx_packets": 4502,
+        "tx_errors": 0,
+        "tx_dropped": 0,
+        "tx_overruns": 0,
+        "tx_carrier": 0,
+        "tx_collisions": 0,
+        "rx_bytes": 1514413,
         "tx_bytes": 866622,
-        "tx_errors": 0,
-        "tx_dropped": 0,
-        "tx_overruns": 0,
-        "tx_carrier": 0,
-        "tx_collisions": 0,
-        "metric": null
-      },
-      {
-        "name": "lo",
-        "flags": 73,
-        "state": [
-          "UP",
-          "LOOPBACK",
-          "RUNNING"
+        "ipv4": [
+          {
+            "address": "192.168.71.137",
+            "mask": "255.255.255.0",
+            "broadcast": "192.168.71.255"
+          }
         ],
-        "mtu": 65536,
-        "ipv4_addr": "127.0.0.1",
-        "ipv4_mask": "255.0.0.0",
-        "ipv4_bcast": null,
-        "ipv6_addr": "::1",
-        "ipv6_mask": 128,
-        "ipv6_scope": "0x10",
-        "mac_addr": null,
-        "type": "Local Loopback",
-        "rx_packets": 73,
-        "rx_bytes": 6009,
-        "rx_errors": 0,
-        "rx_dropped": 0,
-        "rx_overruns": 0,
-        "rx_frame": 0,
-        "tx_packets": 73,
-        "tx_bytes": 6009,
-        "tx_errors": 0,
-        "tx_dropped": 0,
-        "tx_overruns": 0,
-        "tx_carrier": 0,
-        "tx_collisions": 0,
-        "metric": null
+        "ipv6": [
+          {
+            "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "mask": 64,
+            "scope": "0x20",
+            "type": "link"
+          }
+        ]
       }
     ]
 
-    $ ifconfig | jc --ifconfig -p -r
+    $ ifconfig ens33 | jc --ifconfig -p -r
     [
       {
         "name": "ens33",
         "flags": "4163",
         "state": "UP,BROADCAST,RUNNING,MULTICAST",
         "mtu": "1500",
+        "type": "Ethernet",
+        "mac_addr": "00:0c:29:3b:58:0e",
         "ipv4_addr": "192.168.71.137",
         "ipv4_mask": "255.255.255.0",
         "ipv4_bcast": "192.168.71.255",
         "ipv6_addr": "fe80::c1cb:715d:bc3e:b8a0",
         "ipv6_mask": "64",
         "ipv6_scope": "0x20",
-        "mac_addr": "00:0c:29:3b:58:0e",
-        "type": "Ethernet",
+        "ipv6_type": "link",
+        "metric": null,
         "rx_packets": "8061",
-        "rx_bytes": "1514413",
         "rx_errors": "0",
         "rx_dropped": "0",
         "rx_overruns": "0",
         "rx_frame": "0",
         "tx_packets": "4502",
+        "tx_errors": "0",
+        "tx_dropped": "0",
+        "tx_overruns": "0",
+        "tx_carrier": "0",
+        "tx_collisions": "0",
+        "rx_bytes": "1514413",
         "tx_bytes": "866622",
-        "tx_errors": "0",
-        "tx_dropped": "0",
-        "tx_overruns": "0",
-        "tx_carrier": "0",
-        "tx_collisions": "0",
-        "metric": null
-      },
-      {
-        "name": "lo",
-        "flags": "73",
-        "state": "UP,LOOPBACK,RUNNING",
-        "mtu": "65536",
-        "ipv4_addr": "127.0.0.1",
-        "ipv4_mask": "255.0.0.0",
-        "ipv4_bcast": null,
-        "ipv6_addr": "::1",
-        "ipv6_mask": "128",
-        "ipv6_scope": "0x10",
-        "mac_addr": null,
-        "type": "Local Loopback",
-        "rx_packets": "73",
-        "rx_bytes": "6009",
-        "rx_errors": "0",
-        "rx_dropped": "0",
-        "rx_overruns": "0",
-        "rx_frame": "0",
-        "tx_packets": "73",
-        "tx_bytes": "6009",
-        "tx_errors": "0",
-        "tx_dropped": "0",
-        "tx_overruns": "0",
-        "tx_carrier": "0",
-        "tx_collisions": "0",
-        "metric": null
+        "ipv4": [
+          {
+            "address": "192.168.71.137",
+            "mask": "255.255.255.0",
+            "broadcast": "192.168.71.255"
+          }
+        ],
+        "ipv6": [
+          {
+            "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "mask": "64",
+            "scope": "0x20",
+            "type": "link"
+          }
+        ]
       }
     ]
 """
 import re
-from collections import namedtuple
+from ipaddress import IPv4Network
+from typing import List, Dict
+from jc.jc_types import JSONDictType
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '2.0'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using ifconfig-parser from https://github.com/KnightWhoSayNi/ifconfig-parser'
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['ifconfig']
 
@@ -200,11 +218,163 @@ class info():
 __version__ = info.version
 
 
-class _IfconfigParser(object):
-    """ifconfig parser module written by threeheadedknight@protonmail.com"""
+def _convert_cidr_to_quad(string):
+    return str(IPv4Network('0.0.0.0/' + string).netmask)
+
+
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
+    """
+    Final processing to conform to the schema.
+
+    Parameters:
+
+        proc_data:   (List of Dictionaries) raw structured data to process
+
+    Returns:
+
+        List of Dictionaries. Structured to conform to the schema.
+    """
+    int_list = {
+        'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
+        'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
+        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options'
+    }
+
+    for entry in proc_data:
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
+
+        # convert OSX-style subnet mask to dotted quad
+        if 'ipv4_mask' in entry:
+            try:
+                if entry['ipv4_mask'].startswith('0x'):  # type: ignore
+                    new_mask = entry['ipv4_mask']
+                    new_mask = new_mask.lstrip('0x')  # type: ignore
+                    new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
+                    entry['ipv4_mask'] = new_mask
+            except (ValueError, TypeError, AttributeError):
+                pass
+
+            # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
+            if entry['ipv4_mask'] and not '.' in entry['ipv4_mask']:  # type: ignore
+                entry['ipv4_mask'] = _convert_cidr_to_quad(entry['ipv4_mask'])
+
+        # convert state value to an array
+        if 'state' in entry:
+            try:
+                new_state = entry['state'].split(',')  # type: ignore
+                entry['state'] = new_state
+            except (ValueError, TypeError, AttributeError):
+                pass
+
+        # conversions for list of ipv4 addresses
+        if 'ipv4' in entry:
+            for ip_address in entry['ipv4']:  # type: ignore
+                if 'mask' in ip_address:
+                    try:
+                        if ip_address['mask'].startswith('0x'):  # type: ignore
+                            new_mask = ip_address['mask']  # type: ignore
+                            new_mask = new_mask.lstrip('0x')
+                            new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
+                            ip_address['mask'] = new_mask  # type: ignore
+                    except (ValueError, TypeError, AttributeError):
+                        pass
+
+                    # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
+                    if ip_address['mask'] and not '.' in ip_address['mask']:  # type: ignore
+                        ip_address['mask'] = _convert_cidr_to_quad(ip_address['mask'])  # type: ignore
+
+        # conversions for list of ipv6 addresses
+        if 'ipv6' in entry:
+            for ip_address in entry['ipv6']:  # type: ignore
+                if 'mask' in ip_address:
+                    ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])  # type: ignore
+
+        # final conversions
+        if entry.get('media_flags', None):
+            entry['media_flags'] = entry['media_flags'].split(',')  # type: ignore
+
+        if entry.get('nd6_flags', None):
+            entry['nd6_flags'] = entry['nd6_flags'].split(',')  # type: ignore
+
+        if entry.get('options_flags', None):
+            entry['options_flags'] = entry['options_flags'].split(',')  # type: ignore
+
+    return proc_data
+
+
+def _bundle_match(pattern_list, string):
+    """Returns a match object if a string matches one of a list of patterns.
+    If no match is found, returns None"""
+    for pattern in pattern_list:
+        match = re.search(pattern, string)
+        if match:
+            return match
+    return None
+
+
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
+    """
+    Main text parsing function
+
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) unprocessed output if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        List of Dictionaries. Raw or processed structured data.
+    """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
+    raw_output: List[Dict] = []
+
+    # for backwards compatibility, preset all fields to None
+    interface_obj: Dict = {
+        "name": None,
+        "flags": None,
+        "state": None,
+        "mtu": None,
+        "type": None,
+        "mac_addr": None,
+        "ipv4_addr": None,
+        "ipv4_mask": None,
+        "ipv4_bcast": None,
+        "ipv6_addr": None,
+        "ipv6_mask": None,
+        "ipv6_scope": None,
+        "ipv6_type": None,
+        "metric": None,
+        "rx_packets": None,
+        "rx_errors": None,
+        "rx_dropped": None,
+        "rx_overruns": None,
+        "rx_frame": None,
+        "tx_packets": None,
+        "tx_errors": None,
+        "tx_dropped": None,
+        "tx_overruns": None,
+        "tx_carrier": None,
+        "tx_collisions": None,
+        "rx_bytes": None,
+        "tx_bytes": None
+    }
+
+    interface_item: Dict = interface_obj.copy()
+    ipv4_info: List = []
+    ipv6_info: List = []
+
+    # Below regular expression patterns are based off of the work of:
+    # https://github.com/KnightWhoSayNi/ifconfig-parser
     # Author: threeheadedknight@protonmail.com
-    # Date created: 30.06.2018 17:03
-    # Python Version: 3.7
 
     # MIT License
 
@@ -228,272 +398,285 @@ class _IfconfigParser(object):
     # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     # SOFTWARE.
 
-    attributes = [
-        'name', 'type', 'mac_addr', 'ipv4_addr', 'ipv4_bcast', 'ipv4_mask', 'ipv6_addr',
-        'ipv6_mask', 'ipv6_scope', 'state', 'mtu', 'metric', 'rx_packets', 'rx_errors',
-        'rx_dropped', 'rx_overruns', 'rx_frame', 'tx_packets', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'rx_bytes', 'tx_bytes'
+    # Linux syntax
+    re_linux_interface = re.compile(r'''
+        (?P<name>[a-zA-Z0-9:._-]+)\s+
+        Link encap:(?P<type>\S+\s?\S+)
+        (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_ipv4 = re.compile(r'''
+        inet addr:(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+
+        Bcast:(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?\s+
+        Mask:(?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_ipv6 = re.compile(r'''
+        inet6 addr:\s+(?P<address>\S+)/
+        (?P<mask>[0-9]+)\s+
+        Scope:(?P<scope>Link|Host)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_state = re.compile(r'''
+        \W+(?P<state>(?:\w+\s)+)(?:\s+)?
+        MTU:(?P<mtu>[0-9]+)\s+
+        Metric:(?P<metric>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_rx = re.compile(r'''
+        RX packets:(?P<rx_packets>[0-9]+)\s+
+        errors:(?P<rx_errors>[0-9]+)\s+
+        dropped:(?P<rx_dropped>[0-9]+)\s+
+        overruns:(?P<rx_overruns>[0-9]+)\s+
+        frame:(?P<rx_frame>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_tx = re.compile(r'''
+        TX packets:(?P<tx_packets>[0-9]+)\s+
+        errors:(?P<tx_errors>[0-9]+)\s+
+        dropped:(?P<tx_dropped>[0-9]+)\s+
+        overruns:(?P<tx_overruns>[0-9]+)\s+
+        carrier:(?P<tx_carrier>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_bytes = re.compile(r'''
+        \W+RX bytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
+        TX bytes:(?P<tx_bytes>\d+)\s+\(.*\)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_linux_tx_stats = re.compile(r'''
+        collisions:(?P<tx_collisions>[0-9]+)\s+
+        txqueuelen:[0-9]+
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+
+    # OpenBSD syntax
+    re_openbsd_interface = re.compile(r'''
+        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        flags=(?P<flags>[0-9]+)
+        <(?P<state>\S+)?>\s+
+        mtu\s+(?P<mtu>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_ipv4 = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+netmask\s+
+        (?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+broadcast\s+
+        (?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_ipv6 = re.compile(r'''
+        inet6\s+(?P<address>\S+)\s+
+        prefixlen\s+(?P<mask>[0-9]+)\s+
+        scopeid\s+(?P<scope>\w+x\w+)
+        <(?P<type>link|host|global)>
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_details = re.compile(r'''
+        \S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
+        txqueuelen\s+[0-9]+\s+
+        \((?P<type>\S+\s?\S+)\)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_rx = re.compile(r'''
+        RX\spackets\s(?P<rx_packets>[0-9]+)\s+
+        bytes\s+(?P<rx_bytes>\d+)\s+.*
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_rx_stats = re.compile(r'''
+        RX\serrors\s(?P<rx_errors>[0-9]+)\s+
+        dropped\s+(?P<rx_dropped>[0-9]+)\s+
+        overruns\s+(?P<rx_overruns>[0-9]+)\s+
+        frame\s+(?P<rx_frame>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_tx = re.compile(r'''
+        TX\spackets\s(?P<tx_packets>[0-9]+)\s+
+        bytes\s+(?P<tx_bytes>\d+)\s+.*
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_openbsd_tx_stats = re.compile(r'''
+        TX\serrors\s(?P<tx_errors>[0-9]+)\s+
+        dropped\s+(?P<tx_dropped>[0-9]+)\s+
+        overruns\s+(?P<tx_overruns>[0-9]+)\s+
+        carrier\s+(?P<tx_carrier>[0-9]+)\s+
+        collisions\s+(?P<tx_collisions>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+
+    # FreeBSD syntax
+    re_freebsd_interface = re.compile(r'''
+        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        flags=(?P<flags>[0-9]+)
+        <(?P<state>\S+)>\s+
+        metric\s+(?P<metric>[0-9]+)\s+
+        mtu\s+(?P<mtu>[0-9]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_ipv4 = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+
+        netmask\s+(?P<mask>0x\S+)(\s+
+        broadcast\s+(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_ipv4_v2 = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\/
+        (?P<mask>\d+)(\s+
+        broadcast\s+(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_ipv6 = re.compile(r'''
+        \s?inet6\s(?P<address>.*)(?:\%\w+\d+)\s
+        prefixlen\s(?P<mask>\d+)(?:\s\w+)?\s
+        scopeid\s(?P<scope>\w+x\w+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_details = re.compile(r'''
+        ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_status = re.compile(r'''
+        status:\s(?P<status>\w+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_hwaddr = re.compile(r'''
+        hwaddr\s(?P<hw_address>[0-9A-Fa-f:?]+)
+        (?:\s+media:\s(?P<media>.+)\s
+        <(?P<media_flags>.+)>)?
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_media = re.compile(r'''
+        media:\s(?P<media>.+)
+        (?:\s+?<(?P<media_flags>.+)>)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_nd6_options = re.compile(r'''
+        nd6\soptions=(?P<nd6_options>\d+)
+        <(?P<nd6_flags>\S+)>
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_plugged = re.compile(r'''
+        plugged:\s(?P<plugged>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_vendor_pn_sn_date = re.compile(r'''
+        vendor:\s(?P<vendor>.+)\s
+        PN:\s(?P<vendor_pn>.+)\s
+        SN:\s(?P<vendor_sn>.+)\s
+        DATE:\s(?P<vendor_date>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_temp_volts = re.compile(r'''
+        module\stemperature:\s(?P<module_temperature>.+)\s
+        voltage:\s(?P<module_voltage>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_tx_rx_power = re.compile(r'''
+        RX:\s+(?P<rx_power>.+)\s+
+        TX:\s(?P<tx_pwer>.+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    re_freebsd_options = re.compile(r'''
+        options=(?P<options>[0-9A-Fa-f]+)
+        <(?P<options_flags>.+)>
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+
+    re_linux = [
+        re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
+        re_linux_bytes, re_linux_tx_stats
+    ]
+    re_openbsd = [
+        re_openbsd_interface, re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
+        re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats
+    ]
+    re_freebsd = [
+        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv6,
+        re_freebsd_details, re_freebsd_status, re_freebsd_nd6_options, re_freebsd_plugged,
+        re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts, re_freebsd_hwaddr, re_freebsd_media,
+        re_freebsd_tx_rx_power, re_freebsd_options
     ]
 
-    def __init__(self, console_output):
-        """
-        :param console_output:
-        """
-
-        if isinstance(console_output, list):
-            source_data = " ".join(console_output)
-        else:
-            source_data = console_output.replace("\n", " ")
-        self.interfaces = self.parser(source_data=source_data)
-
-    def list_interfaces(self):
-        """
-        :return:
-        """
-        return sorted(self.interfaces.keys())
-
-    def count_interfaces(self):
-        """
-        :return:
-        """
-        return len(self.interfaces.keys())
-
-    def filter_interfaces(self, **kwargs):
-        """
-        :param kwargs:
-        :return:
-        """
-        for attr in kwargs.keys():
-            if attr not in _IfconfigParser.attributes:
-                raise ValueError("Attribute [{}] not supported.".format(attr))
-
-        filtered_interfaces = []
-        for name, details in self.interfaces.items():
-
-            if all(getattr(details, attr) == kwargs[attr] for attr in kwargs.keys()):
-                filtered_interfaces.append(name)
-
-        return sorted(filtered_interfaces)
-
-    def get_interface(self, name):
-        """
-        :param name:
-        :return:
-        """
-        if name in self.list_interfaces():
-            return self.interfaces[name]
-        else:
-            raise InterfaceNotFound("Interface [{}] not found.".format(name))
-
-    def get_interfaces(self):
-        """
-        :return:
-        """
-        return self.interfaces
-
-    def is_available(self, name):
-        """
-        :param name:
-        :return:
-        """
-        return name in self.interfaces
-
-    def parser(self, source_data):
-        """
-        :param source_data:
-        :return:
-        """
-
-        # Linux syntax
-        re_linux_interface = re.compile(
-            r"(?P<name>[a-zA-Z0-9:._-]+)\s+Link encap:(?P<type>\S+\s?\S+)(\s+HWaddr\s+\b"
-            r"(?P<mac_addr>[0-9A-Fa-f:?]+))?",
-            re.I)
-        re_linux_ipv4 = re.compile(
-            r"inet addr:(?P<ipv4_addr>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+Bcast:"
-            r"(?P<ipv4_bcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?\s+Mask:(?P<ipv4_mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})",
-            re.I)
-        re_linux_ipv6 = re.compile(
-            r"inet6 addr:\s+(?P<ipv6_addr>\S+)/(?P<ipv6_mask>[0-9]+)\s+Scope:(?P<ipv6_scope>Link|Host)",
-            re.I)
-        re_linux_state = re.compile(
-            r"\W+(?P<state>(?:\w+\s)+)(?:\s+)?MTU:(?P<mtu>[0-9]+)\s+Metric:(?P<metric>[0-9]+)", re.I)
-        re_linux_rx = re.compile(
-            r"RX packets:(?P<rx_packets>[0-9]+)\s+errors:(?P<rx_errors>[0-9]+)\s+dropped:"
-            r"(?P<rx_dropped>[0-9]+)\s+overruns:(?P<rx_overruns>[0-9]+)\s+frame:(?P<rx_frame>[0-9]+)",
-            re.I)
-        re_linux_tx = re.compile(
-            r"TX packets:(?P<tx_packets>[0-9]+)\s+errors:(?P<tx_errors>[0-9]+)\s+dropped:"
-            r"(?P<tx_dropped>[0-9]+)\s+overruns:(?P<tx_overruns>[0-9]+)\s+carrier:(?P<tx_carrier>[0-9]+)",
-            re.I)
-        re_linux_bytes = re.compile(r"\W+RX bytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+TX bytes:(?P<tx_bytes>\d+)\s+\(.*\)", re.I)
-        re_linux_tx_stats = re.compile(r"collisions:(?P<tx_collisions>[0-9]+)\s+txqueuelen:[0-9]+", re.I)
-        re_linux = [re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
-                    re_linux_bytes, re_linux_tx_stats]
-
-        # OpenBSD syntax
-        re_openbsd_interface = re.compile(
-            r"(?P<name>[a-zA-Z0-9:._-]+):\s+flags=(?P<flags>[0-9]+)<(?P<state>\S+)?>\s+mtu\s+(?P<mtu>[0-9]+)",
-            re.I)
-        re_openbsd_ipv4 = re.compile(
-            r"inet (?P<ipv4_addr>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+netmask\s+"
-            r"(?P<ipv4_mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+broadcast\s+"
-            r"(?P<ipv4_bcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?",
-            re.I)
-        re_openbsd_ipv6 = re.compile(
-            r"inet6\s+(?P<ipv6_addr>\S+)\s+prefixlen\s+(?P<ipv6_mask>[0-9]+)\s+scopeid\s+(?P<ipv6_scope>\w+x\w+)<"
-            r"(?:link|host)>",
-            re.I)
-        re_openbsd_details = re.compile(
-            r"\S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?txqueuelen\s+[0-9]+\s+\((?P<type>\S+\s?\S+)\)", re.I)
-        re_openbsd_rx = re.compile(r"RX packets (?P<rx_packets>[0-9]+)\s+bytes\s+(?P<rx_bytes>\d+)\s+.*", re.I)
-        re_openbsd_rx_stats = re.compile(
-            r"RX errors (?P<rx_errors>[0-9]+)\s+dropped\s+(?P<rx_dropped>[0-9]+)\s+overruns\s+"
-            r"(?P<rx_overruns>[0-9]+)\s+frame\s+(?P<rx_frame>[0-9]+)",
-            re.I)
-        re_openbsd_tx = re.compile(r"TX packets (?P<tx_packets>[0-9]+)\s+bytes\s+(?P<tx_bytes>\d+)\s+.*", re.I)
-        re_openbsd_tx_stats = re.compile(
-            r"TX errors (?P<tx_errors>[0-9]+)\s+dropped\s+(?P<tx_dropped>[0-9]+)\s+overruns\s+"
-            r"(?P<tx_overruns>[0-9]+)\s+carrier\s+(?P<tx_carrier>[0-9]+)\s+collisions\s+(?P<tx_collisions>[0-9]+)",
-            re.I)
-        re_openbsd = [re_openbsd_interface, re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
-                      re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats]
-
-        # FreeBSD syntax
-        re_freebsd_interface = re.compile(
-            r"(?P<name>[a-zA-Z0-9:._-]+):\s+flags=(?P<flags>[0-9]+)<(?P<state>\S+)>\s+metric\s+"
-            r"(?P<metric>[0-9]+)\s+mtu\s+(?P<mtu>[0-9]+)",
-            re.I)
-        re_freebsd_ipv4 = re.compile(
-            r"inet (?P<ipv4_addr>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s+netmask\s+(?P<ipv4_mask>0x\S+)(\s+broadcast\s+"
-            r"(?P<ipv4_bcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?",
-            re.I)
-        re_freebsd_ipv6 = re.compile(r"\s?inet6\s(?P<ipv6_addr>.*)(?:\%\w+\d+)\sprefixlen\s(?P<ipv6_mask>\d+)(?:\s\w+)?\sscopeid\s(?P<ipv6_scope>\w+x\w+)", re.I)
-        re_freebsd_details = re.compile(r"ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)", re.I)
-        re_freebsd = [re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv6, re_freebsd_details]
-
-        available_interfaces = dict()
-
-        for pattern in [re_linux_interface, re_openbsd_interface, re_freebsd_interface]:
-            network_interfaces = re.finditer(pattern, source_data)
-            positions = []
-            while True:
-                try:
-                    pos = next(network_interfaces)
-                    positions.append(max(pos.start() - 1, 0))
-                except StopIteration:
-                    break
-            if positions:
-                positions.append(len(source_data))
-                break
-
-        if not positions:
-            return available_interfaces
-
-        for l, r in zip(positions, positions[1:]):
-            chunk = source_data[l:r]
-            _interface = dict()
-            for pattern in re_linux + re_openbsd + re_freebsd:
-                match = re.search(pattern, chunk.replace('\t', '\n'))
-                if match:
-                    details = match.groupdict()
-                    for k, v in details.items():
-                        if isinstance(v, str):
-                            details[k] = v.strip()
-                    _interface.update(details)
-            if _interface is not None:
-                available_interfaces[_interface['name']] = self.update_interface_details(_interface)
-
-        return available_interfaces
-
-    @staticmethod
-    def update_interface_details(interface):
-        for attr in _IfconfigParser.attributes:
-            if attr not in interface:
-                interface[attr] = None
-        return namedtuple('Interface', interface.keys())(**interface)
-
-
-class InterfaceNotFound(Exception):
-    pass
-
-
-def _process(proc_data):
-    """
-    Final processing to conform to the schema.
-
-    Parameters:
-
-        proc_data:   (List of Dictionaries) raw structured data to process
-
-    Returns:
-
-        List of Dictionaries. Structured data to conform to the schema.
-    """
-    int_list = {
-        'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
-        'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric'
-    }
-
-    for entry in proc_data:
-        for key in entry:
-            if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
-
-        # convert OSX-style subnet mask to dotted quad
-        if 'ipv4_mask' in entry:
-            try:
-                if entry['ipv4_mask'].startswith('0x'):
-                    new_mask = entry['ipv4_mask']
-                    new_mask = new_mask.lstrip('0x')
-                    new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
-                    entry['ipv4_mask'] = new_mask
-            except (ValueError, TypeError, AttributeError):
-                pass
-
-        # convert state value to an array
-        if 'state' in entry:
-            try:
-                new_state = entry['state'].split(',')
-                entry['state'] = new_state
-            except (ValueError, TypeError, AttributeError):
-                pass
-
-    return proc_data
-
-
-def parse(data, raw=False, quiet=False):
-    """
-    Main text parsing function
-
-    Parameters:
-
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
-
-    Returns:
-
-        List of Dictionaries. Raw or processed structured data.
-    """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    raw_output = []
+    interface_patterns = [re_linux_interface, re_openbsd_interface, re_freebsd_interface]
+    ipv4_patterns = [re_linux_ipv4, re_openbsd_ipv4, re_freebsd_ipv4, re_freebsd_ipv4_v2]
+    ipv6_patterns = [re_linux_ipv6, re_openbsd_ipv6, re_freebsd_ipv6]
 
     if jc.utils.has_data(data):
+        for line in filter(None, data.splitlines()):
 
-        parsed = _IfconfigParser(console_output=data)
-        interfaces = parsed.get_interfaces()
+            # Find new interface lines
+            interface_match = _bundle_match(interface_patterns, line)
+            if interface_match:
+                if interface_item['name'] is not None:
+                    if ipv4_info:
+                        interface_item['ipv4'] = ipv4_info
+                    if ipv6_info:
+                        interface_item['ipv6'] = ipv6_info
+                    raw_output.append(interface_item)
+                    interface_item = interface_obj.copy()
+                    ipv4_info = []
+                    ipv6_info = []
 
-        # convert ifconfigparser output to a dictionary
-        for iface in interfaces:
-            d = interfaces[iface]._asdict()
-            dct = dict(d)
-            raw_output.append(dct)
+                interface_item.update(interface_match.groupdict())
+                continue
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+            ### for backwards compatibility!
+            # add in old ipv4/ipv6 address fields in root of object.
+            # this will only keep the last ip address in the interface output.
+            # old fieldnames: ipv4_addr, ipv4_mask, ipv4_bcast, ipv6_addr, ipv6_mask, ipv6_scope
+            ipv4_match_legacy = _bundle_match(ipv4_patterns, line)
+            if ipv4_match_legacy:
+                ipv4_dict = ipv4_match_legacy.groupdict()
+                # rename to legacy names
+                name_map = {
+                    'address': 'ipv4_addr',
+                    'mask': 'ipv4_mask',
+                    'broadcast': 'ipv4_bcast'
+                }
+                for k, v in ipv4_dict.copy().items():
+                    ipv4_dict[name_map[k]] = v
+                    del ipv4_dict[k]
+                interface_item.update(ipv4_dict)
+
+            ipv6_match_legacy = _bundle_match(ipv6_patterns, line)
+            if ipv6_match_legacy:
+                ipv6_dict = ipv6_match_legacy.groupdict()
+                # rename to legacy names
+                name_map = {
+                    'address': 'ipv6_addr',
+                    'mask': 'ipv6_mask',
+                    'broadcast': 'ipv6_bcast',
+                    'scope': 'ipv6_scope',
+                    'type': 'ipv6_type'
+                }
+                for k, v in ipv6_dict.copy().items():
+                    ipv6_dict[name_map[k]] = v
+                    del ipv6_dict[k]
+                interface_item.update(ipv6_dict)
+            ### Backwards compatibility end
+
+            # ipv4 information lines
+            ipv4_match = _bundle_match(ipv4_patterns, line)
+            if ipv4_match:
+                ipv4_info.append(ipv4_match.groupdict())
+                continue
+
+            # ipv6 information lines
+            ipv6_match = _bundle_match(ipv6_patterns, line)
+            if ipv6_match:
+                ipv6_info.append(ipv6_match.groupdict())
+                continue
+
+            # All other lines
+            other_match = _bundle_match(re_linux + re_openbsd + re_freebsd, line)
+            if other_match:
+                interface_item.update(other_match.groupdict())
+                continue
+
+        if interface_item['name'] is not None:
+            if ipv4_info:
+                interface_item['ipv4'] = ipv4_info
+            if ipv6_info:
+                interface_item['ipv6'] = ipv6_info
+            raw_output.append(interface_item)
+
+    return raw_output if raw else _process(raw_output)

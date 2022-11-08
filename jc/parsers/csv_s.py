@@ -63,7 +63,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -127,7 +127,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     if len(temp_list) == 1:
         raise ParseError('Unable to detect line endings. Please try the non-streaming CSV parser instead.')
 
-    sniffdata = '\n'.join(temp_list)[:1024]
+    # remove BOM bytes from first row, if present
+    if temp_list:
+        if isinstance(temp_list[0], str):
+            temp_list[0] = temp_list[0].encode('utf-8')
+
+        temp_list[0] = temp_list[0].decode('utf-8-sig')
+
+    sniffdata = '\r\n'.join(temp_list)[:1024]
     dialect = 'excel'  # default in csv module
 
     try:

@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.22.1'
+__version__ = '1.22.2'
 
 parsers: List[str] = [
     'acpi',
@@ -38,11 +38,13 @@ parsers: List[str] = [
     'email-address',
     'env',
     'file',
+    'findmnt',
     'finger',
     'free',
     'fstab',
     'git-log',
     'git-log-s',
+    'git-ls-remote',
     'gpg',
     'group',
     'gshadow',
@@ -80,6 +82,7 @@ parsers: List[str] = [
     'netstat',
     'nmcli',
     'ntpq',
+    'os-prober',
     'passwd',
     'pci-ids',
     'pidstat',
@@ -145,9 +148,11 @@ parsers: List[str] = [
     'rpm-qi',
     'rsync',
     'rsync-s',
+    'semver',
     'sfdisk',
     'shadow',
     'ss',
+    'sshd-conf',
     'stat',
     'stat-s',
     'sysctl',
@@ -453,22 +458,31 @@ def streaming_parser_mod_list(
 
     return plist
 
-def parser_info(parser_mod_name: str, documentation: bool = False) -> ParserInfoType:
+def parser_info(
+    parser_mod_name: Union[str, ModuleType],
+    documentation: bool = False
+) -> ParserInfoType:
     """
     Returns a dictionary that includes the parser module metadata.
 
     Parameters:
 
-        parser_mod_name:    (string)     name of the parser module. This
-                                         function will accept module_name,
+        parser_mod_name:    (string or   name of the parser module. This
+                            Module)      function will accept module_name,
                                          cli-name, and --argument-name
-                                         variants of the module name.
+                                         variants of the module name as well
+                                         as a parser module object.
 
         documentation:      (boolean)    include parser docstring if True
     """
-    # ensure parser_mod_name is a true module name and not a cli name
-    parser_mod_name = _cliname_to_modname(parser_mod_name)
-    parser_mod = _get_parser(parser_mod_name)
+    if isinstance(parser_mod_name, ModuleType):
+        parser_mod = parser_mod_name
+        parser_mod_name = parser_mod.__name__.split('.')[-1]
+    else:
+        # ensure parser_mod_name is a true module name and not a cli name
+        parser_mod_name = _cliname_to_modname(parser_mod_name)
+        parser_mod = _get_parser(parser_mod_name)
+
     info_dict: ParserInfoType = {}
 
     if hasattr(parser_mod, 'info'):
@@ -525,11 +539,17 @@ def all_parser_info(
 
     return p_info_list
 
-def get_help(parser_mod_name: str) -> None:
+def get_help(parser_mod_name: Union[str, ModuleType]) -> None:
     """
     Show help screen for the selected parser.
 
     This function will accept **module_name**, **cli-name**, and
-    **--argument-name** variants of the module name string.
+    **--argument-name** variants of the module name string as well as a
+    parser module object.
     """
-    help(_get_parser(parser_mod_name))
+    if isinstance(parser_mod_name, ModuleType):
+        jc_parser = parser_mod_name
+    else:
+        jc_parser = _get_parser(parser_mod_name)
+
+    help(jc_parser)

@@ -5,6 +5,10 @@
 
 jc - JSON Convert `du` command output parser
 
+The `du -h` option is not supported with the default output. If you
+would like to use `du -h` or other options that change the output, be sure
+to use `jc --raw` (cli) or `raw=True` (module).
+
 Usage (cli):
 
     $ du | jc --du

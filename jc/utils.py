@@ -273,7 +273,7 @@ def convert_to_bool(value: object) -> bool:
     return False
 
 
-def input_type_check(data: str) -> None:
+def input_type_check(data: object) -> None:
     """Ensure input data is a string. Raises `TypeError` if not."""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")

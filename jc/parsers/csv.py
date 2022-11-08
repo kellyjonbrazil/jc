@@ -72,13 +72,15 @@ Examples:
       ...
     ]
 """
+from typing import List, Union, Type
+from jc.jc_types import JSONDictType
 import jc.utils
 import csv
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -89,7 +91,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data):
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
@@ -107,7 +109,11 @@ def _process(proc_data):
     return proc_data
 
 
-def parse(data, raw=False, quiet=False):
+def parse(
+    data: Union[str, bytes],
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -124,6 +130,12 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
+    # remove BOM bytes, if present
+    if isinstance(data, str):
+        data = data.encode('utf-8')
+
+    data = data.decode('utf-8-sig')
+
     raw_output = []
     cleandata = data.splitlines()
 
@@ -132,7 +144,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        dialect = 'excel'  # default in csv module
+        dialect: Union[str, Type[csv.Dialect]]  = 'excel'  # default in csv module
         try:
             dialect = csv.Sniffer().sniff(data[:1024])
             if '""' in data:
@@ -145,7 +157,4 @@ def parse(data, raw=False, quiet=False):
         for row in reader:
             raw_output.append(row)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

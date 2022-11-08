@@ -11,7 +11,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse('', quiet=True), {})
 
 
-    def test_mailto(self):
+    def test_url_mailto(self):
         """
         Test mailto URL
         """
@@ -20,7 +20,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_ftp(self):
+    def test_url_ftp(self):
         """
         Test ftp URL
         """
@@ -29,7 +29,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_ipv4(self):
+    def test_url_http_ipv4(self):
         """
         Test HTTP URL with encodable characters (ipv4 host)
         """
@@ -38,7 +38,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_ipv6(self):
+    def test_url_http_ipv6(self):
         """
         Test HTTP URL with encodable characters (ipv6 host)
         """
@@ -47,7 +47,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_domain(self):
+    def test_url_http_domain(self):
         """
         Test HTTP URL with encodable characters (domain name host)
         """
@@ -56,7 +56,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_encoded(self):
+    def test_url_http_encoded(self):
         """
         Test HTTP URL with encoded characters
         """
@@ -65,7 +65,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_encodable_host_and_port(self):
+    def test_url_http_encodable_host_and_port(self):
         """
         Test HTTP URL with encodable characters in the hostname and port
         """
@@ -74,7 +74,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_encoded_host_and_port(self):
+    def test_url_http_encoded_host_and_port(self):
         """
         Test HTTP URL with encoded characters in the hostname and port
         """
@@ -83,7 +83,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_encoded_host_and_invalid_port(self):
+    def test_url_http_encoded_host_and_invalid_port(self):
         """
         Test HTTP URL with encoded characters in the hostname and an invalid encoded port
         """
@@ -92,7 +92,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_path_ends_in_slash(self):
+    def test_url_http_path_ends_in_slash(self):
         """
         Test HTTP URL with a forward slash as the last part of the path
         """
@@ -101,7 +101,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_path_only_slash(self):
+    def test_url_http_path_only_slash(self):
         """
         Test HTTP URL with a forward slash as the last only part of the path
         """
@@ -110,7 +110,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
-    def test_http_path_no_end_slash(self):
+    def test_url_http_path_no_end_slash(self):
         """
         Test HTTP URL with no forward slash at the end
         """

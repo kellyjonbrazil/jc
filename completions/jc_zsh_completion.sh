@@ -9,7 +9,7 @@ _jc() {
              jc_help_options jc_help_options_describe \
              jc_special_options jc_special_options_describe
 
-    jc_commands=(acpi airport arp blkid chage cksum crontab date df dig dmidecode dpkg du env file finger free git gpg hciconfig id ifconfig iostat iptables iw jobs last lastb ls lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat netstat nmcli ntpq pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 udevadm ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
+    jc_commands=(acpi airport arp blkid chage cksum crontab date df dig dmidecode dpkg du env file findmnt finger free git gpg hciconfig id ifconfig iostat iptables iw jobs last lastb ls lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat netstat nmcli ntpq os-prober pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss sshd stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 udevadm ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
     jc_commands_describe=(
         'acpi:run "acpi" command with magic syntax.'
         'airport:run "airport" command with magic syntax.'
@@ -26,6 +26,7 @@ _jc() {
         'du:run "du" command with magic syntax.'
         'env:run "env" command with magic syntax.'
         'file:run "file" command with magic syntax.'
+        'findmnt:run "findmnt" command with magic syntax.'
         'finger:run "finger" command with magic syntax.'
         'free:run "free" command with magic syntax.'
         'git:run "git" command with magic syntax.'
@@ -53,6 +54,7 @@ _jc() {
         'netstat:run "netstat" command with magic syntax.'
         'nmcli:run "nmcli" command with magic syntax.'
         'ntpq:run "ntpq" command with magic syntax.'
+        'os-prober:run "os-prober" command with magic syntax.'
         'pidstat:run "pidstat" command with magic syntax.'
         'ping:run "ping" command with magic syntax.'
         'ping6:run "ping6" command with magic syntax.'
@@ -72,6 +74,7 @@ _jc() {
         'sha512sum:run "sha512sum" command with magic syntax.'
         'shasum:run "shasum" command with magic syntax.'
         'ss:run "ss" command with magic syntax.'
+        'sshd:run "sshd" command with magic syntax.'
         'stat:run "stat" command with magic syntax.'
         'sum:run "sum" command with magic syntax.'
         'sysctl:run "sysctl" command with magic syntax.'
@@ -97,7 +100,7 @@ _jc() {
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --datetime-iso --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --finger --free --fstab --git-log --git-log-s --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --passwd --pci-ids --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --route --rpm-qi --rsync --rsync-s --sfdisk --shadow --ss --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cef --cef-s --chage --cksum --crontab --crontab-u --csv --csv-s --date --datetime-iso --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --findmnt --finger --free --fstab --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --iostat --iostat-s --ip-address --iptables --iw-scan --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --os-prober --passwd --pci-ids --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --route --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --ss --sshd-conf --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --top --top-s --tracepath --traceroute --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -125,11 +128,13 @@ _jc() {
         '--email-address:Email Address string parser'
         '--env:`env` command parser'
         '--file:`file` command parser'
+        '--findmnt:`findmnt` command parser'
         '--finger:`finger` command parser'
         '--free:`free` command parser'
         '--fstab:`/etc/fstab` file parser'
         '--git-log:`git log` command parser'
         '--git-log-s:`git log` command streaming parser'
+        '--git-ls-remote:`git ls-remote` command parser'
         '--gpg:`gpg --with-colons` command parser'
         '--group:`/etc/group` file parser'
         '--gshadow:`/etc/gshadow` file parser'
@@ -166,6 +171,7 @@ _jc() {
         '--netstat:`netstat` command parser'
         '--nmcli:`nmcli` command parser'
         '--ntpq:`ntpq -p` command parser'
+        '--os-prober:`os-prober` command parser'
         '--passwd:`/etc/passwd` file parser'
         '--pci-ids:`pci.ids` file parser'
         '--pidstat:`pidstat -H` command parser'
@@ -231,9 +237,11 @@ _jc() {
         '--rpm-qi:`rpm -qi` command parser'
         '--rsync:`rsync` command parser'
         '--rsync-s:`rsync` command streaming parser'
+        '--semver:Semantic Version string parser'
         '--sfdisk:`sfdisk` command parser'
         '--shadow:`/etc/shadow` file parser'
         '--ss:`ss` command parser'
+        '--sshd-conf:sshd config file and `sshd -T` command parser'
         '--stat:`stat` command parser'
         '--stat-s:`stat` command streaming parser'
         '--sysctl:`sysctl` command parser'

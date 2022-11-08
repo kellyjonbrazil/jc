@@ -1,5 +1,25 @@
 jc changelog
 
+20221107 v1.22.2
+- add `sshd_conf` parser for `sshd` configuration files and `sshd -T` output
+- add `findmnt` command parser
+- add `git ls-remote` command parser
+- add `os-prober` command parser
+- add SemVer string parser
+- enhance the `ifconfig` parser so it can output multiple IPv4 and IPv6 addresses
+- enhance the `ifconfig` parser so it can output additional fields common on BSD
+- enhance `xml` parser with optional `_` prefix for attributes instead of
+  `@` by using the `--raw` option. This can make it easier to filter the
+  JSON output in some tools.
+- fix the `xml` parser to output a normal Dictionary instead of OrderdDict.
+  This cleans up YAML output. (No `!!omap` comments)
+- fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
+- fix exit code to be non-zero on interrupt
+- allow parser module objects to be used as arguments to `jc.get_help()` and `jc.parser_info()`
+- catch unexpected exceptions in the CLI
+- add error message on interrupt to STDERR
+- add python 3.11 tests to github actions
+
 20221024 v1.22.1
 - add `udevadm` command parser
 - add `lspci` command parser
