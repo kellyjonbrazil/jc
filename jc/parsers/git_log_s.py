@@ -75,6 +75,7 @@ Examples:
 import re
 from typing import List, Dict, Iterable, Union
 import jc.utils
+from jc.parsers.git_log import _parse_name_email
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
@@ -215,9 +216,7 @@ def parse(
                 continue
 
             if line.startswith('Author: '):
-                values = line_list[1].rsplit(maxsplit=1)
-                output_line['author'] = values[0]
-                output_line['author_email'] = values[1].strip('<').strip('>')
+                output_line['author'], output_line['author_email'] = _parse_name_email(line_list[1])
                 continue
 
             if line.startswith('Date: '):
@@ -233,9 +232,7 @@ def parse(
                 continue
 
             if line.startswith('Commit: '):
-                values = line_list[1].rsplit(maxsplit=1)
-                output_line['commit_by'] = values[0]
-                output_line['commit_by_email'] = values[1].strip('<').strip('>')
+                output_line['commit_by'], output_line['commit_by_email'] = _parse_name_email(line_list[1])
                 continue
 
             if line.startswith('    '):
