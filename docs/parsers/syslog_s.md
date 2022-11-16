@@ -64,7 +64,7 @@ Blank values converted to `null`/`None`.
     }
 
     [0] naive timestamp if "timestamp" field is parsable, else null
-    [1] timezone aware timestamp availabe for UTC, else null
+    [1] timezone aware timestamp available for UTC, else null
     [2] this field exists if the syslog line is not parsable. The value
         is the original syslog line.
 

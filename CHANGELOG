@@ -581,7 +581,7 @@ jc changelog
 
 20200211 v1.7.3
 - Add alternative 'magic' syntax: e.g. `jc ls -al`
-- Options can now be condensed (e.g. -prq is equivalant to -p -r -q)
+- Options can now be condensed (e.g. -prq is equivalent to -p -r -q)
 
 20200208 v1.7.2
 - Include test fixtures in wheel and sdist

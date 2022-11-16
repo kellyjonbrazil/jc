@@ -91,7 +91,7 @@ Parameters:
                   the parser. compatible options:
                   linux, darwin, cygwin, win32, aix, freebsd
 
-    quiet:        (bool) supress compatibility message if True
+    quiet:        (bool) suppress compatibility message if True
 
 Returns:
 

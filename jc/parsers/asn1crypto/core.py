@@ -247,7 +247,7 @@ class Asn1Value(object):
 
         :param no_explicit:
             If explicit tagging info should be removed from this instance.
-            Used internally to allow contructing the underlying value that
+            Used internally to allow constructing the underlying value that
             has been wrapped in an explicit tag.
 
         :param tag_type:
@@ -697,7 +697,7 @@ class Castable(object):
         if other_class.tag != self.__class__.tag:
             raise TypeError(unwrap(
                 '''
-                Can not covert a value from %s object to %s object since they
+                Can not convert a value from %s object to %s object since they
                 use different tags: %d versus %d
                 ''',
                 type_name(other_class),
@@ -1349,7 +1349,7 @@ class Choice(Asn1Value):
 
 class Concat(object):
     """
-    A class that contains two or more encoded child values concatentated
+    A class that contains two or more encoded child values concatenated
     together. THIS IS NOT PART OF THE ASN.1 SPECIFICATION! This exists to handle
     the x509.TrustedCertificate() class for OpenSSL certificates containing
     extra information.
@@ -3757,7 +3757,7 @@ class Sequence(Asn1Value):
 
     def _make_value(self, field_name, field_spec, value_spec, field_params, value):
         """
-        Contructs an appropriate Asn1Value object for a field
+        Constructs an appropriate Asn1Value object for a field
 
         :param field_name:
             A unicode string of the field name
@@ -3766,7 +3766,7 @@ class Sequence(Asn1Value):
             An Asn1Value class that is the field spec
 
         :param value_spec:
-            An Asn1Value class that is the vaue spec
+            An Asn1Value class that is the value spec
 
         :param field_params:
             None or a dict of params for the field spec

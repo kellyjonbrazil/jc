@@ -228,7 +228,7 @@ def _normalize_header(keyname: str) -> str:
 def _add_text_kv(key: str, value: Optional[str]) -> Optional[Dict]:
     """
     Add keys with _text suffix if there is a text description inside
-    paranthesis at the end of a value. The value of the _text field will
+    parenthesis at the end of a value. The value of the _text field will
     only be the text inside the parenthesis. This allows cleanup of the
     original field (convert to int/float/etc) without losing information.
     """
