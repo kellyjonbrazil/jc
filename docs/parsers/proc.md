@@ -6,7 +6,7 @@
 jc - JSON Convert Proc file output parser
 
 This parser automatically identifies the Proc file and calls the
-corresponding parser to peform the parsing.
+corresponding parser to perform the parsing.
 
 Magic syntax for converting `/proc` files is also supported by running
 `jc /proc/<path to file>`. Any `jc` options must be specified before the

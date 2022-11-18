@@ -161,7 +161,7 @@ def parse(
                 continue
 
             if not line.startswith('#') and not found_first_hash:
-                # skip preample lines before header row
+                # skip preamble lines before header row
                 continue
 
             if line.startswith('#') and not found_first_hash:

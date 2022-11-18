@@ -567,7 +567,7 @@ class DSASignature(Sequence):
     @classmethod
     def from_p1363(cls, data):
         """
-        Reads a signature from a byte string encoding accordint to IEEE P1363,
+        Reads a signature from a byte string encoding according to IEEE P1363,
         which is used by Microsoft's BCryptSignHash() function.
 
         :param data:

@@ -78,7 +78,7 @@ def _process(proc_data: Dict) -> Dict:
 
 def _b2a(byte_string: bytes) -> str:
     """Convert a byte string to a colon-delimited hex ascii string"""
-    # need try/except since seperator was only introduced in python 3.8.
+    # need try/except since separator was only introduced in python 3.8.
     # provides compatibility for python 3.6 and 3.7.
     try:
       return binascii.hexlify(byte_string, ':').decode('utf-8')
