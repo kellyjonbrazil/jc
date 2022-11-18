@@ -16,11 +16,14 @@ Usage (module):
 Schema:
 
     {
-      'partition':              string,
-      'name':                   string,
-      'short_name':             string,
-      'type':                   string
+      "partition":              string,
+      "efi_bootmgr":            string,  # [0]
+      "name":                   string,
+      "short_name":             string,
+      "type":                   string
     }
+
+    [0] only exists if an EFI boot manager is detected
 
 Examples:
 
@@ -39,7 +42,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`os-prober` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -62,6 +65,12 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
         Dictionary. Structured to conform to the schema.
     """
+    # check for EFI partition@boot-manager and split/add fields
+    if 'partition' in proc_data and '@' in proc_data['partition']:  # type: ignore
+        new_part, efi_bootmgr = proc_data['partition'].split('@')  # type: ignore
+        proc_data['partition'] = new_part
+        proc_data['efi_bootmgr'] = efi_bootmgr
+
     return proc_data
 
 

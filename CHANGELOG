@@ -1,7 +1,8 @@
 jc changelog
 
-20221117 v1.22.3
+20221118 v1.22.3
 - Fix `git-log` and `git-log-s` parsers for failure on empty author name
+- Update `os-prober` parser with split EFI partition fields
 - Fix several documentation typos
 
 20221107 v1.22.2

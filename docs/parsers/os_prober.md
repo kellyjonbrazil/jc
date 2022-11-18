@@ -21,11 +21,14 @@ Usage (module):
 Schema:
 
     {
-      'partition':              string,
-      'name':                   string,
-      'short_name':             string,
-      'type':                   string
+      "partition":              string,
+      "efi_bootmgr":            string,  # [0]
+      "name":                   string,
+      "short_name":             string,
+      "type":                   string
     }
+
+    [0] only exists if an EFI boot manager is detected
 
 Examples:
 
@@ -60,4 +63,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

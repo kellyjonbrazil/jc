@@ -19,8 +19,8 @@ class MyTests(unittest.TestCase):
         """
         Test 'os_prober' 1
         """
-        self.assertEqual(parse(
-            '/dev/sda1:Windows 7 (loader):Windows:chain', quiet=True),
+        self.assertEqual(
+            parse('/dev/sda1:Windows 7 (loader):Windows:chain', quiet=True),
             {"partition":"/dev/sda1","name":"Windows 7 (loader)","short_name":"Windows","type":"chain"}
         )
 
@@ -28,8 +28,8 @@ class MyTests(unittest.TestCase):
         """
         Test 'os_prober' 2
         """
-        self.assertEqual(parse(
-            '/dev/sda1:Windows 10:Windows:chain', quiet=True),
+        self.assertEqual(
+            parse('/dev/sda1:Windows 10:Windows:chain', quiet=True),
             {"partition":"/dev/sda1","name":"Windows 10","short_name":"Windows","type":"chain"}
         )
 
@@ -37,8 +37,17 @@ class MyTests(unittest.TestCase):
         """
         Test 'os_prober' 3
         """
-        self.assertEqual(parse(
-            '/dev/sda1@/efi/Microsoft/Boot/bootmgfw.efi:Windows Boot Manager:Windows:efi', quiet=True),
+        self.assertEqual(
+            parse('/dev/sda1@/efi/Microsoft/Boot/bootmgfw.efi:Windows Boot Manager:Windows:efi', quiet=True),
+            {"partition":"/dev/sda1","efi_bootmgr":"/efi/Microsoft/Boot/bootmgfw.efi","name":"Windows Boot Manager","short_name":"Windows","type":"efi"}
+        )
+
+    def test_os_prober_3_raw(self):
+        """
+        Test 'os_prober' 3 with raw output
+        """
+        self.assertEqual(
+            parse('/dev/sda1@/efi/Microsoft/Boot/bootmgfw.efi:Windows Boot Manager:Windows:efi', quiet=True, raw=True),
             {"partition":"/dev/sda1@/efi/Microsoft/Boot/bootmgfw.efi","name":"Windows Boot Manager","short_name":"Windows","type":"efi"}
         )
 
