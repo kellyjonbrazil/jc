@@ -6,7 +6,7 @@
 jc - JSON Convert ISO 8601 Datetime string parser
 
 This parser supports standard ISO 8601 strings that include both date and
-time. If no timezone or offset information is available in the sring, then
+time. If no timezone or offset information is available in the string, then
 UTC timezone is used.
 
 Usage (cli):

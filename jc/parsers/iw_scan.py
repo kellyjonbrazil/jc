@@ -180,7 +180,7 @@ def _post_parse(data):
         ssid = {k: v for k, v in ssid.items() if v}
         cleandata.append(ssid)
 
-    # remove asterisks from begining of values
+    # remove asterisks from beginning of values
     for ssid in cleandata:
         for key in ssid:
             if ssid[key].startswith('*'):

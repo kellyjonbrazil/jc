@@ -185,7 +185,7 @@ def _pycef_parse(str_input):
 
         # If the input entry had any blanks in the required headers, that's wrong
         # and we should return.  Note we explicitly don't check the last item in the
-        # split list becuase the header ends in a '|' which means the last item
+        # split list because the header ends in a '|' which means the last item
         # will always be an empty string (it doesn't exist, but the delimiter does).
         if "" in spl[0:-1]:
             raise ParseError('Blank field(s) in CEF header. Is it valid CEF format?')

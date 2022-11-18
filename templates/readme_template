@@ -262,7 +262,7 @@ option.
 ### Streaming Parsers
 Most parsers load all of the data from `STDIN`, parse it, then output the entire
 JSON document serially. There are some streaming parsers (e.g. `ls-s` and
-`ping-s`) that immediately start processing and outputing the data line-by-line
+`ping-s`) that immediately start processing and outputting the data line-by-line
 as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while
 it is being received from `STDIN`. This can significantly reduce the amount of
 memory required to parse large amounts of command output (e.g. `ls -lR /`) and

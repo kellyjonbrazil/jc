@@ -68,7 +68,7 @@ Schema:
     }
 
     [0] naive timestamp if "date" field is parsable, else null
-    [1] timezone aware timestamp availabe for UTC, else null
+    [1] timezone aware timestamp available for UTC, else null
 
 Examples:
 
