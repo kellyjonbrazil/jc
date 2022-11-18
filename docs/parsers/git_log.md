@@ -40,13 +40,13 @@ Schema:
     [
       {
         "commit":               string,
-        "author":               string,
-        "author_email":         string,
+        "author":               string/null,
+        "author_email":         string/null,
         "date":                 string,
         "epoch":                integer,  # [0]
         "epoch_utc":            integer,  # [1]
-        "commit_by":            string,
-        "commit_by_email":      string,
+        "commit_by":            string/null,
+        "commit_by_email":      string/null,
         "commit_by_date":       string,
         "message":              string,
         "stats" : {
@@ -172,4 +172,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

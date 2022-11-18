@@ -36,13 +36,13 @@ Schema:
 
     {
       "commit":               string,
-      "author":               string,
-      "author_email":         string,
+      "author":               string/null,
+      "author_email":         string/null,
       "date":                 string,
       "epoch":                integer,  # [0]
       "epoch_utc":            integer,  # [1]
-      "commit_by":            string,
-      "commit_by_email":      string,
+      "commit_by":            string/null,
+      "commit_by_email":      string/null,
       "commit_by_date":       string,
       "message":              string,
       "stats" : {
@@ -88,7 +88,7 @@ changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insert
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
