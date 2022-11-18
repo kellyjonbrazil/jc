@@ -202,6 +202,28 @@ def _is_commit_hash(hash_string: str) -> bool:
 
     return False
 
+def _parse_name_email(line):
+    values = line.rsplit(maxsplit=1)
+    name = None
+    email = None
+
+    if len(values) == 2:
+        name = values[0]
+        if values[1].startswith('<') and values[1].endswith('>'):
+            email = values[1][1:-1]
+    else:
+        if values[0].lstrip().startswith('<') and values[0].endswith('>'):
+            email = values[0].lstrip()[1:-1]
+        else:
+            name = values[0]
+
+    if not name:
+        name = None
+    if not email:
+        email = None # covers '<>' case turning into null, not ''
+
+    return name, email
+
 
 def parse(
     data: str,
@@ -271,9 +293,7 @@ def parse(
                 continue
 
             if line.startswith('Author: '):
-                values = line_list[1].rsplit(maxsplit=1)
-                output_line['author'] = values[0]
-                output_line['author_email'] = values[1].strip('<').strip('>')
+                output_line['author'], output_line['author_email'] = _parse_name_email(line_list[1])
                 continue
 
             if line.startswith('Date: '):
@@ -289,9 +309,7 @@ def parse(
                 continue
 
             if line.startswith('Commit: '):
-                values = line_list[1].rsplit(maxsplit=1)
-                output_line['commit_by'] = values[0]
-                output_line['commit_by_email'] = values[1].strip('<').strip('>')
+                output_line['commit_by'], output_line['commit_by_email'] = _parse_name_email(line_list[1])
                 continue
 
             if line.startswith('    '):
