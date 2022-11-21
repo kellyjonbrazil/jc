@@ -13,6 +13,9 @@ Combined Log Format is also supported. (Referer and User Agent fields added)
 Extra fields may be present and will be enclosed in the `extra` field as
 a single string.
 
+If a log line cannot be parsed, an object with an `unparsable` field will
+be present with a value of the original line.
+
 The `epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
 
@@ -56,11 +59,13 @@ Empty strings and `-` values are converted to `null`/`None`.
         "extra":                        string,
         "epoch":                        integer,  # [0]
         "epoch_utc":                    integer   # [1]
+        "unparsable":                   string    # [2]
       }
     ]
 
     [0] naive timestamp
     [1] timezone-aware timestamp. Only available if timezone field is UTC
+    [2] exists if the line was not able to be parsed
 
 Examples:
 
