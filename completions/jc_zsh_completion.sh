@@ -113,7 +113,7 @@ _jc() {
         '--cef-s:CEF string streaming parser'
         '--chage:`chage --list` command parser'
         '--cksum:`cksum` and `sum` command parser'
-        '--clf:Common Log Format file parser'
+        '--clf:Common and Combined Log Format file parser'
         '--crontab:`crontab` command and file parser'
         '--crontab-u:`crontab` file parser with user support'
         '--csv:CSV file parser'

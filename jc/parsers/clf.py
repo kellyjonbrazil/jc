@@ -139,6 +139,8 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
+    output_line: Dict = {}
+
     clf_pattern = re.compile(r'''
         ^(?P<host>-|\S+)\s
         (?P<ident>-|\S+)\s
@@ -154,23 +156,37 @@ def parse(
             (?P<tz>\S+)
         )
         \]\s
-        \"(?P<request>
-            (?P<request_method>\S+)\s
-            (?P<request_url>.*?(?=\sHTTPS?/|\"))\s?  # positive lookahead for HTTP or quote mark
-            (?P<request_version>HTTPS?/\d\.\d)?)\"\s
+        \"(?P<request>.*?)\"\s
         (?P<status>-|\d\d\d)\s
         (?P<bytes>-|\d+)\s?
-        \"(?P<referer>.*?)\"\s?
-        \"(?P<user_agent>.*?)\"\s?
+        (?:\"(?P<referer>.*?)\"\s?)?
+        (?:\"(?P<user_agent>.*?)\"\s?)?
         (?P<extra>.*)
         ''', re.VERBOSE
+    )
+
+    request_pattern = re.compile(r'''
+        (?P<request_method>\S+)\s
+        (?P<request_url>.*?(?=\sHTTPS?/|$))\s?  # positive lookahead for HTTP(S)/ or end of string
+        (?P<request_version>HTTPS?/[\d\.]+)?
+    ''', re.VERBOSE
     )
 
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
+            output_line = {}
             clf_match = re.match(clf_pattern, line)
+
             if clf_match:
-                raw_output.append(clf_match.groupdict())
+                output_line = clf_match.groupdict()
+
+                if clf_match.groupdict().get('request', None):
+                    request_string = clf_match.groupdict()['request']
+                    request_match = re.match(request_pattern, request_string)
+                    if request_match:
+                         output_line.update(request_match.groupdict())
+
+                raw_output.append(output_line)
 
     return raw_output if raw else _process(raw_output)

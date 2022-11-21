@@ -7,8 +7,17 @@ jc - JSON Convert Common Log Format file parser
 
 This parser will handle the Common Log Format standard as specified at
 https://www.w3.org/Daemon/User/Config/Logging.html#common-logfile-format.
+
+Combined Log Format is also supported. (Referer and User Agent fields added)
+
 Extra fields may be present and will be enclosed in the `extra` field as
 a single string.
+
+The `epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -20,6 +29,8 @@ Usage (module):
     result = jc.parse('clf', common_log_file_output)
 
 Schema:
+
+Empty strings and `-` values are converted to `null`/`None`.
 
     [
       {
@@ -40,6 +51,8 @@ Schema:
         "request_version":              string,
         "status":                       integer,
         "bytes":                        integer,
+        "referer":                      string,
+        "user_agent":                   string,
         "extra":                        string,
         "epoch":                        integer,  # [0]
         "epoch_utc":                    integer   # [1]
