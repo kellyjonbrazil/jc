@@ -53,7 +53,7 @@ Empty strings and `-` values are converted to `null`/`None`.
         "user_agent":                   string,
         "extra":                        string,
         "epoch":                        integer,  # [0]
-        "epoch_utc":                    integer   # [1]
+        "epoch_utc":                    integer,  # [1]
         "unparsable":                   string    # [2]
       }
     ]
