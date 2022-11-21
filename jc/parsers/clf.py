@@ -2,8 +2,17 @@
 
 This parser will handle the Common Log Format standard as specified at
 https://www.w3.org/Daemon/User/Config/Logging.html#common-logfile-format.
+
+Combined Log Format is also supported. (Referer and User Agent fields added)
+
 Extra fields may be present and will be enclosed in the `extra` field as
 a single string.
+
+The `epoch` calculated timestamp field is naive. (i.e. based on the
+local time of the system the parser is run on)
+
+The `epoch_utc` calculated timestamp field is timezone-aware and is
+only available if the timezone field is UTC.
 
 Usage (cli):
 
@@ -15,6 +24,8 @@ Usage (module):
     result = jc.parse('clf', common_log_file_output)
 
 Schema:
+
+Empty strings and `-` values are converted to `null`/`None`.
 
     [
       {
@@ -35,6 +46,8 @@ Schema:
         "request_version":              string,
         "status":                       integer,
         "bytes":                        integer,
+        "referer":                      string,
+        "user_agent":                   string,
         "extra":                        string,
         "epoch":                        integer,  # [0]
         "epoch_utc":                    integer   # [1]
@@ -61,7 +74,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'Common Log Format file parser'
+    description = 'Common and Combined Log Format file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
@@ -86,8 +99,20 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
     for log in proc_data:
         for key, val in log.items():
+
+            # integer conversions
             if key in int_list:
-                log[key] = int(val)
+                log[key] = jc.utils.convert_to_int(val)
+
+            # convert `-` and blank values to None
+            if val == '-' or val == '':
+                log[key] = None
+
+        # add unix timestamps
+        if 'date' in log:
+            ts = jc.utils.timestamp(log['date'], format_hint=(1800,))  # type: ignore
+            log['epoch'] = ts.naive
+            log['epoch_utc'] = ts.utc
 
     return proc_data
 
@@ -135,6 +160,8 @@ def parse(
             (?P<request_version>HTTPS?/\d\.\d)?)\"\s
         (?P<status>-|\d\d\d)\s
         (?P<bytes>-|\d+)\s?
+        \"(?P<referer>.*?)\"\s?
+        \"(?P<user_agent>.*?)\"\s?
         (?P<extra>.*)
         ''', re.VERBOSE
     )
