@@ -165,6 +165,7 @@ option.
 | `        --cef-s` | CEF string streaming parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef_s)          |
 | `        --chage` | `chage --list` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/chage)          |
 | `        --cksum` | `cksum` and `sum` command parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum)          |
+| `          --clf` | Common Log Format file parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/clf)            |
 | `      --crontab` | `crontab` command and file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab)        |
 | `    --crontab-u` | `crontab` file parser with user support                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u)      |
 | `          --csv` | CSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv)            |
