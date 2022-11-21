@@ -23,6 +23,7 @@ parsers: List[str] = [
     'cef-s',
     'chage',
     'cksum',
+    'clf',
     'crontab',
     'crontab-u',
     'csv',
