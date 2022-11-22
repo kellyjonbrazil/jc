@@ -108,7 +108,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`iostat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -196,7 +196,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             output_line = {}
 
             # ignore blank lines and header line
-            if line == '\n' or line == '' or line.startswith('Linux'):
+            if not line.strip() or line.startswith('Linux'):
                 continue
 
             if line.startswith('avg-cpu:'):

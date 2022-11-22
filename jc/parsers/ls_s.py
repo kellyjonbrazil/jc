@@ -77,7 +77,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ls` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -148,7 +148,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 continue
 
             # skip blank lines
-            if line.strip() == '':
+            if not line.strip():
                 continue
 
             # Look for parent line if glob or -R is used

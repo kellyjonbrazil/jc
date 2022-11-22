@@ -84,7 +84,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`stat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -165,7 +165,7 @@ def parse(
             line = line.rstrip()
 
             # ignore blank lines
-            if line == '':
+            if not line.strip():
                 continue
 
             # linux output

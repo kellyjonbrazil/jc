@@ -117,6 +117,10 @@ def parse(
             streaming_line_input_type_check(line)
             output_line: Dict = {}
 
+            # skip blank lines
+            if not line.strip():
+                continue
+
             # parse the content here
             # check out helper functions in jc.utils
             # and jc.parsers.universal

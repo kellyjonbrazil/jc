@@ -88,7 +88,7 @@ from jc.streaming import (
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`rsync` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -267,7 +267,7 @@ def parse(
             output_line: Dict = {}
 
             # ignore blank lines
-            if line == '':
+            if not line.strip():
                 continue
 
             file_line = file_line_re.match(line)
