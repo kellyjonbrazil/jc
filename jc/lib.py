@@ -24,6 +24,7 @@ parsers: List[str] = [
     'chage',
     'cksum',
     'clf',
+    'clf-s',
     'crontab',
     'crontab-u',
     'csv',
