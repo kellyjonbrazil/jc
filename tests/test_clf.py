@@ -37,8 +37,8 @@ class MyTests(unittest.TestCase):
         """
         Test 'clf' with various log lines
         """
-        self.assertEqual(parse(
-            self.f_in['clf'], quiet=True),
+        self.assertEqual(
+            parse(self.f_in['clf'], quiet=True),
             self.f_json['clf']
         )
 

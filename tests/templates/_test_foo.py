@@ -37,8 +37,8 @@ class MyTests(unittest.TestCase):
         """
         Test 'foo' on Centos 7.7
         """
-        self.assertEqual(parse(
-            self.f_in['centos_7_7_foo'], quiet=True),
+        self.assertEqual(
+            parse(self.f_in['centos_7_7_foo'], quiet=True),
             self.f_json['centos_7_7_foo']
         )
 
