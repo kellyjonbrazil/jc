@@ -197,7 +197,7 @@ def parse(
             streaming_line_input_type_check(line)
             output_line: Dict = {}
 
-            if line == '' or line == '\n':
+            if not line.strip():
                 continue
 
             clf_match = re.match(clf_pattern, line)
