@@ -282,8 +282,8 @@ def parse(
             if clf_match:
                 output_line = clf_match.groupdict()
 
-                if clf_match.groupdict().get('request', None):
-                    request_string = clf_match.groupdict()['request']
+                if output_line.get('request', None):
+                    request_string = output_line['request']
                     request_match = re.match(request_pattern, request_string)
                     if request_match:
                          output_line.update(request_match.groupdict())

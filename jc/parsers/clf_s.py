@@ -205,8 +205,8 @@ def parse(
             if clf_match:
                 output_line = clf_match.groupdict()
 
-                if clf_match.groupdict().get('request', None):
-                    request_string = clf_match.groupdict()['request']
+                if output_line.get('request', None):
+                    request_string = output_line['request']
                     request_match = re.match(request_pattern, request_string)
                     if request_match:
                          output_line.update(request_match.groupdict())
@@ -217,7 +217,7 @@ def parse(
             if output_line:
                 yield output_line if raw else _process(output_line)
             else:
-                raise ParseError('Not clf data')
+                raise ParseError('Not Common Log Format data')
 
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
