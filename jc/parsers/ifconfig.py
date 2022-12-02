@@ -525,9 +525,10 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_ipv6 = re.compile(r'''
-        \s?inet6\s(?P<address>.*)(?:\%\w+\d+)\s
-        prefixlen\s(?P<mask>\d+)(?:\s\w+)?\s
-        scopeid\s(?P<scope>\w+x\w+)
+        \s?inet6\s(?P<address>.*?)
+        (?:\%(?P<scope_id>\w+\d+))?\s
+        prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)
+        (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_details = re.compile(r'''
@@ -646,6 +647,7 @@ def parse(
                     'mask': 'ipv6_mask',
                     'broadcast': 'ipv6_bcast',
                     'scope': 'ipv6_scope',
+                    'scope_id': 'ipv6_scope_id',
                     'type': 'ipv6_type'
                 }
                 for k, v in ipv6_dict.copy().items():
