@@ -37,6 +37,7 @@ Schema:
         "ipv6_addr":                string,    # [0]
         "ipv6_mask":                integer,   # [0]
         "ipv6_scope":               string,    # [0]
+        "ipv6_scope_id":            string,    # [0]
         "ipv6_type":                string,    # [0]
         "rx_packets":               integer,
         "rx_bytes":                 integer,
@@ -82,9 +83,18 @@ Schema:
         "ipv6: [
           {
             "address":              string,
+            "scope_id":             string,
             "mask":                 integer,
             "scope":                string,
             "type":                 string
+          }
+        ],
+        "lanes": [
+          {
+            "lane":                 integer,
+            "rx_power_mw":          float,
+            "rx_power_dbm":         float,
+            "tx_bias_ma":           float
           }
         ]
       }
@@ -142,6 +152,7 @@ Examples:
         "ipv6": [
           {
             "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "scope_id": null,
             "mask": 64,
             "scope": "0x20",
             "type": "link"
@@ -190,6 +201,7 @@ Examples:
         "ipv6": [
           {
             "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "scope_id": null,
             "mask": "64",
             "scope": "0x20",
             "type": "link"
@@ -207,7 +219,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
+    version = '2.1'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -237,8 +249,9 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     int_list = {
         'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
         'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options'
+        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options', 'lane'
     }
+    float_list = {'rx_power_mw', 'rx_power_dbm', 'tx_bias_ma'}
 
     for entry in proc_data:
         for key in entry:
@@ -290,6 +303,15 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             for ip_address in entry['ipv6']:  # type: ignore
                 if 'mask' in ip_address:
                     ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])  # type: ignore
+
+        # conversions for list of lanes
+        if 'lanes' in entry:
+            for lane_item in entry['lanes']:  # type: ignore
+                for key in lane_item:
+                    if key in int_list:
+                        lane_item[key] = jc.utils.convert_to_int(lane_item[key])  # type: ignore
+                    if key in float_list:
+                        lane_item[key] = jc.utils.convert_to_float(lane_item[key])  # type: ignore
 
         # final conversions
         if entry.get('media_flags', None):
@@ -371,6 +393,7 @@ def parse(
     interface_item: Dict = interface_obj.copy()
     ipv4_info: List = []
     ipv6_info: List = []
+    lane_info: List = []
 
     # Below regular expression patterns are based off of the work of:
     # https://github.com/KnightWhoSayNi/ifconfig-parser
@@ -527,7 +550,7 @@ def parse(
     re_freebsd_ipv6 = re.compile(r'''
         \s?inet6\s(?P<address>.*?)
         (?:\%(?P<scope_id>\w+\d+))?\s
-        prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)
+        prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)  # positive lookahead for scopeid or end of line
         (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
     )
@@ -582,6 +605,15 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
 
+    # this pattern is special since it is used to build the lane_info list
+    re_freebsd_lane = re.compile(r'''
+        lane\s(?P<lane>\d+):\s
+        RX\spower:\s(?P<rx_power_mw>\S+)\smW\s
+        \((?P<rx_power_dbm>\S+)\sdBm\)\s
+        TX\sbias:\s(?P<tx_bias_ma>\S+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+
     re_linux = [
         re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
         re_linux_bytes, re_linux_tx_stats
@@ -612,10 +644,13 @@ def parse(
                         interface_item['ipv4'] = ipv4_info
                     if ipv6_info:
                         interface_item['ipv6'] = ipv6_info
+                    if lane_info:
+                        interface_item['lanes'] = lane_info
                     raw_output.append(interface_item)
                     interface_item = interface_obj.copy()
                     ipv4_info = []
                     ipv6_info = []
+                    lane_info = []
 
                 interface_item.update(interface_match.groupdict())
                 continue
@@ -668,6 +703,12 @@ def parse(
                 ipv6_info.append(ipv6_match.groupdict())
                 continue
 
+            # lane information lines
+            lane_match = re.search(re_freebsd_lane, line)
+            if lane_match:
+                lane_info.append(lane_match.groupdict())
+                continue
+
             # All other lines
             other_match = _bundle_match(re_linux + re_openbsd + re_freebsd, line)
             if other_match:
@@ -679,6 +720,8 @@ def parse(
                 interface_item['ipv4'] = ipv4_info
             if ipv6_info:
                 interface_item['ipv6'] = ipv6_info
+            if lane_info:
+                interface_item['lanes'] = lane_info
             raw_output.append(interface_item)
 
     return raw_output if raw else _process(raw_output)

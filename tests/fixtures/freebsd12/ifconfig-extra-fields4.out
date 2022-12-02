@@ -1,0 +1,16 @@
+mce0: flags=8863<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+        options RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU,VLAN_HWCSUM,TSO4,TSO6,LRO,VLAN_HWFILTER,VLAN_HWTSO,LINKSTATE,RXCSUM_IPV6,TXCSUM_IPV6,HWSTATS,TXRTLMT,HWRXTSTMP,MEXTPG,TXTLS4,TXTLS6,VXLAN_HWCSUM,VXLAN_HWTSO,TXTLS_RTLMT,RXTLS4,RXTLS6
+        ether 0c:42:a1:2b:03:74
+        inet 23.246.26.130 netmask 0xffffff80 broadcast 23.246.26.255
+        inet6 fe80::e42:a1ff:fe2b:374%mce0 prefixlen 64 scopeid 0x4
+        inet6 2a00:86c0:1026:1026::130 prefixlen 64
+        media: Ethernet 100GBase-SR4 <full-duplex,rxpause,txpause>
+        status: active
+        nd6 options=21<PERFORMNUD,AUTO_LINKLOCAL>
+        plugged: QSFP28 Unknown (MPO 1x12 Parallel Optic)
+        vendor: INNOLIGHT PN: TR-FC85S-N00 SN: INKAT2930248 DATE: 2020-05-20
+        module temperature: 49.41 C voltage: 3.29 Volts
+        lane 1: RX power: 0.98 mW (-0.11 dBm) TX bias: 7.60 mA
+        lane 2: RX power: 0.98 mW (-0.07 dBm) TX bias: 7.60 mA
+        lane 3: RX power: 1.01 mW (0.03 dBm) TX bias: 7.60 mA
+        lane 4: RX power: 0.92 mW (-0.34 dBm) TX bias: 7.60 mA
