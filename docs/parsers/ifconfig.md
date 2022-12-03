@@ -3,7 +3,7 @@
 
 # jc.parsers.ifconfig
 
-jc - JSON Convert `foo` command output parser
+jc - JSON Convert `ifconfig` command output parser
 
 No `ifconfig` options are supported.
 
