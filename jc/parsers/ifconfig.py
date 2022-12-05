@@ -212,7 +212,7 @@ Examples:
 """
 import re
 from ipaddress import IPv4Network
-from typing import List, Dict
+from typing import List, Dict, Optional
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -230,7 +230,7 @@ class info():
 __version__ = info.version
 
 
-def _convert_cidr_to_quad(string):
+def _convert_cidr_to_quad(string: str) -> str:
     return str(IPv4Network('0.0.0.0/' + string).netmask)
 
 
@@ -261,72 +261,72 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         # convert OSX-style subnet mask to dotted quad
         if 'ipv4_mask' in entry:
             try:
-                if entry['ipv4_mask'].startswith('0x'):  # type: ignore
+                if entry['ipv4_mask'].startswith('0x'):
                     new_mask = entry['ipv4_mask']
-                    new_mask = new_mask.lstrip('0x')  # type: ignore
+                    new_mask = new_mask.lstrip('0x')
                     new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
                     entry['ipv4_mask'] = new_mask
             except (ValueError, TypeError, AttributeError):
                 pass
 
             # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
-            if entry['ipv4_mask'] and not '.' in entry['ipv4_mask']:  # type: ignore
+            if entry['ipv4_mask'] and not '.' in entry['ipv4_mask']:
                 entry['ipv4_mask'] = _convert_cidr_to_quad(entry['ipv4_mask'])
 
         # convert state value to an array
         if 'state' in entry:
             try:
-                new_state = entry['state'].split(',')  # type: ignore
+                new_state = entry['state'].split(',')
                 entry['state'] = new_state
             except (ValueError, TypeError, AttributeError):
                 pass
 
         # conversions for list of ipv4 addresses
         if 'ipv4' in entry:
-            for ip_address in entry['ipv4']:  # type: ignore
+            for ip_address in entry['ipv4']:
                 if 'mask' in ip_address:
                     try:
-                        if ip_address['mask'].startswith('0x'):  # type: ignore
-                            new_mask = ip_address['mask']  # type: ignore
+                        if ip_address['mask'].startswith('0x'):
+                            new_mask = ip_address['mask']
                             new_mask = new_mask.lstrip('0x')
                             new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
-                            ip_address['mask'] = new_mask  # type: ignore
+                            ip_address['mask'] = new_mask
                     except (ValueError, TypeError, AttributeError):
                         pass
 
                     # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
-                    if ip_address['mask'] and not '.' in ip_address['mask']:  # type: ignore
-                        ip_address['mask'] = _convert_cidr_to_quad(ip_address['mask'])  # type: ignore
+                    if ip_address['mask'] and not '.' in ip_address['mask']:
+                        ip_address['mask'] = _convert_cidr_to_quad(ip_address['mask'])
 
         # conversions for list of ipv6 addresses
         if 'ipv6' in entry:
-            for ip_address in entry['ipv6']:  # type: ignore
+            for ip_address in entry['ipv6']:
                 if 'mask' in ip_address:
-                    ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])  # type: ignore
+                    ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])
 
         # conversions for list of lanes
         if 'lanes' in entry:
-            for lane_item in entry['lanes']:  # type: ignore
+            for lane_item in entry['lanes']:
                 for key in lane_item:
                     if key in int_list:
-                        lane_item[key] = jc.utils.convert_to_int(lane_item[key])  # type: ignore
+                        lane_item[key] = jc.utils.convert_to_int(lane_item[key])
                     if key in float_list:
-                        lane_item[key] = jc.utils.convert_to_float(lane_item[key])  # type: ignore
+                        lane_item[key] = jc.utils.convert_to_float(lane_item[key])
 
         # final conversions
         if entry.get('media_flags', None):
-            entry['media_flags'] = entry['media_flags'].split(',')  # type: ignore
+            entry['media_flags'] = entry['media_flags'].split(',')
 
         if entry.get('nd6_flags', None):
-            entry['nd6_flags'] = entry['nd6_flags'].split(',')  # type: ignore
+            entry['nd6_flags'] = entry['nd6_flags'].split(',')
 
         if entry.get('options_flags', None):
-            entry['options_flags'] = entry['options_flags'].split(',')  # type: ignore
+            entry['options_flags'] = entry['options_flags'].split(',')
 
     return proc_data
 
 
-def _bundle_match(pattern_list, string):
+def _bundle_match(pattern_list: List[re.Pattern], string: str) -> Optional[re.Match]:
     """Returns a match object if a string matches one of a list of patterns.
     If no match is found, returns None"""
     for pattern in pattern_list:

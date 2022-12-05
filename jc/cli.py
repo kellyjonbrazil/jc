@@ -15,7 +15,7 @@ from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
 )
-from .jc_types import JSONDictType, AboutJCType, MetadataType, CustomColorType, ParserInfoType
+from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
 from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
@@ -74,7 +74,7 @@ class JcCli():
 
     def __init__(self) -> None:
         self.data_in: Optional[Union[str, bytes, TextIO]] = None
-        self.data_out: Optional[Union[List[JSONDictType], JSONDictType, AboutJCType]] = None
+        self.data_out: Optional[Union[List[JSONDictType], JSONDictType]] = None
         self.options: List[str] = []
         self.args: List[str] = []
         self.parser_module: Optional[ModuleType] = None
@@ -214,7 +214,7 @@ class JcCli():
         return otext
 
     @staticmethod
-    def about_jc() -> AboutJCType:
+    def about_jc() -> JSONDictType:
         """Return jc info and the contents of each parser.info as a dictionary"""
         return {
             'name': 'jc',
@@ -598,7 +598,7 @@ class JcCli():
         even if there are no results.
         """
         if self.run_timestamp:
-            meta_obj: MetadataType = {
+            meta_obj: JSONDictType = {
                 'parser': self.parser_name,
                 'timestamp': self.run_timestamp.timestamp()
             }
@@ -609,9 +609,9 @@ class JcCli():
 
             if isinstance(self.data_out, dict):
                 if '_jc_meta' not in self.data_out:
-                    self.data_out['_jc_meta'] = {}  # type: ignore
+                    self.data_out['_jc_meta'] = {}
 
-                self.data_out['_jc_meta'].update(meta_obj)  # type: ignore
+                self.data_out['_jc_meta'].update(meta_obj)
 
             elif isinstance(self.data_out, list):
                 if not self.data_out:
@@ -622,7 +622,7 @@ class JcCli():
                         if '_jc_meta' not in item:
                             item['_jc_meta'] = {}
 
-                        item['_jc_meta'].update(meta_obj)  # type: ignore
+                        item['_jc_meta'].update(meta_obj)
 
             else:
                 utils.error_message(['Parser returned an unsupported object type.'])

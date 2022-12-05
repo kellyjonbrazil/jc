@@ -2,7 +2,7 @@
 
 from functools import wraps
 from typing import Dict, Tuple, Union, Iterable, Callable, TypeVar, cast, Any
-from .jc_types import JSONDictType, MetadataType
+from .jc_types import JSONDictType
 
 
 F = TypeVar('F', bound=Callable[..., Any])
@@ -31,7 +31,7 @@ def stream_success(output_line: JSONDictType, ignore_exceptions: bool) -> JSONDi
     return output_line
 
 
-def stream_error(e: BaseException, line: str) -> Dict[str, MetadataType]:
+def stream_error(e: BaseException, line: str) -> JSONDictType:
     """
     Return an error `_jc_meta` field.
     """

@@ -51,7 +51,7 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 ### stream\_error
 
 ```python
-def stream_error(e: BaseException, line: str) -> Dict[str, MetadataType]
+def stream_error(e: BaseException, line: str) -> JSONDictType
 ```
 
 Return an error `_jc_meta` field.
