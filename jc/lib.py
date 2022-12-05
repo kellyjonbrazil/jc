@@ -87,6 +87,7 @@ parsers: List[str] = [
     'os-prober',
     'passwd',
     'pci-ids',
+    'pgpass',
     'pidstat',
     'pidstat-s',
     'ping',
