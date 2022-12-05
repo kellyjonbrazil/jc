@@ -71,7 +71,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> Union[JSONDictType, List[JSONDictType]]
 ```
 
 Main text parsing function
