@@ -1,7 +1,5 @@
 """jc - JSON Convert PostgreSQL password file parser
 
-<<Short pgpass description and caveats>>
-
 Usage (cli):
 
     $ cat /var/lib/postgresql/.pgpass | jc --pgpass
@@ -15,16 +13,34 @@ Schema:
 
     [
       {
-        "pgpass":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "hostname":               string,
+        "port":                   string,
+        "database":               string,
+        "username":               string,
+        "password":               string
       }
     ]
 
 Examples:
 
     $ cat /var/lib/postgresql/.pgpass | jc --pgpass -p
-    []
+    [
+      {
+        "hostname": "dbserver",
+        "port": "*",
+        "database": "db1",
+        "username": "dbuser",
+        "password": "pwd123"
+      },
+      {
+        "hostname": "dbserver2",
+        "port": "8888",
+        "database": "inventory",
+        "username": "joe:user",
+        "password": "abc123"
+      },
+      ...
+    ]
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
@@ -94,7 +110,6 @@ def parse(
             line = line.replace('\\\\', '\\')
             line = line.replace('\\\u2063', ':')
 
-            # split on \u2063
             hostname, port, database, username, password = line.split('\u2063')
 
             raw_output.append(

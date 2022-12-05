@@ -6,4 +6,5 @@ dbserver3:8888:inventory:joeuser:abc123
 # comment
 
 localhost:5555:table\\1:user\:w\:colon:password123
-hostname:port:database:username:password
+    # anther comment
+hostname:*:database:username:password
