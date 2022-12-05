@@ -66,8 +66,8 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
         Dictionary. Structured to conform to the schema.
     """
     # check for EFI partition@boot-manager and split/add fields
-    if 'partition' in proc_data and '@' in proc_data['partition']:  # type: ignore
-        new_part, efi_bootmgr = proc_data['partition'].split('@', maxsplit=1)  # type: ignore
+    if 'partition' in proc_data and '@' in proc_data['partition']:
+        new_part, efi_bootmgr = proc_data['partition'].split('@', maxsplit=1)
         proc_data['partition'] = new_part
         proc_data['efi_bootmgr'] = efi_bootmgr
 

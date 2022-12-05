@@ -526,7 +526,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
         # this is a list value
         if key == 'acceptenv':
             new_list: List[str] = []
-            for item in val:  # type: ignore
+            for item in val:
                 new_list.extend(item.split())
             proc_data[key] = new_list
             continue
@@ -534,13 +534,13 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
         # this is a list value
         if key == 'include':
             new_list = []
-            for item in val:  # type: ignore
+            for item in val:
                 new_list.extend(item.split())
             proc_data[key] = new_list
             continue
 
         if key == 'maxstartups':
-            maxstart_split = val.split(':', maxsplit=2)  # type: ignore
+            maxstart_split = val.split(':', maxsplit=2)
             proc_data[key] = maxstart_split[0]
             if len(maxstart_split) > 1:
                 proc_data[key + '_rate'] = maxstart_split[1]
@@ -550,31 +550,31 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
         if key == 'port':
             port_list: List[int] = []
-            for item in val:  # type: ignore
+            for item in val:
                 port_list.append(int(item))
             proc_data[key] = port_list
             continue
 
         if key == 'rekeylimit':
-            rekey_split = val.split(maxsplit=1)  # type: ignore
+            rekey_split = val.split(maxsplit=1)
             proc_data[key] = rekey_split[0]
             if len(rekey_split) > 1:
                 proc_data[key + '_time'] = rekey_split[1]
             continue
 
         if key == 'subsystem':
-            sub_split = val.split(maxsplit=1)  # type: ignore
+            sub_split = val.split(maxsplit=1)
             proc_data[key] = sub_split[0]
             if len(sub_split) > 1:
                 proc_data[key + '_command'] = sub_split[1]
             continue
 
         if key in split_fields_space:
-            proc_data[key] = val.split()  # type: ignore
+            proc_data[key] = val.split()
             continue
 
         if key in split_fields_comma:
-            proc_data[key] = val.split(',')  # type: ignore
+            proc_data[key] = val.split(',')
             continue
 
     for key, val in proc_data.items():

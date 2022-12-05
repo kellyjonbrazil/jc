@@ -158,7 +158,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         for key, val in item.items():
             output[key] = val
             if key in int_list:
-                output[key + '_int'] = int(val, 16)  # type: ignore
+                output[key + '_int'] = int(val, 16)
         new_list.append(output)
 
     return new_list

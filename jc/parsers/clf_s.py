@@ -127,7 +127,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
     # add unix timestamps
     if 'date' in proc_data:
-        ts = jc.utils.timestamp(proc_data['date'], format_hint=(1800,))  # type: ignore
+        ts = jc.utils.timestamp(proc_data['date'], format_hint=(1800,))
         proc_data['epoch'] = ts.naive
         proc_data['epoch_utc'] = ts.utc
 
