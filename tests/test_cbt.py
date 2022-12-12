@@ -1,3 +1,4 @@
+import json
 import os
 import unittest
 from jc.exceptions import ParseError
@@ -7,6 +8,26 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-single.out'), 'r', encoding='utf-8') as f:
+        single = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-multiple-columns.out'), 'r', encoding='utf-8') as f:
+        multiple_columns = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-multiple-rows.out'), 'r', encoding='utf-8') as f:
+        multiple_rows = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-single.json'), 'r', encoding='utf-8') as f:
+        single_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-multiple-columns.json'), 'r', encoding='utf-8') as f:
+        multiple_columns_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-multiple-rows.json'), 'r', encoding='utf-8') as f:
+        multiple_rows_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-multiple-rows-raw.json'), 'r', encoding='utf-8') as f:
+        multiple_rows_raw_json = json.loads(f.read())
 
     def test_cbt_nodata(self):
         """
@@ -18,127 +39,25 @@ class MyTests(unittest.TestCase):
         """
         Test 'cbt' with a single row
         """
-        input = '''
-----------------------------------------
-foo
-  foo:bar                                  @ 1970/01/01-01:00:00.000000
-    "baz"
-        '''
-        expected = [
-            {
-                "key": "foo",
-                "cells": {
-                    "foo": {
-                        "bar": "baz"
-                    }
-                }
-            }
-        ]
-        self.assertEqual(jc.parsers.cbt.parse(input, quiet=True), expected)
+        self.assertEqual(jc.parsers.cbt.parse(self.single, quiet=True), self.single_json)
 
     def test_cbt_multiple_column_families(self):
         """
-        Test 'cbt' with multiple column families
+        Test 'cbt' with multiple columns from multiple column families
         """
-        input = '''
-----------------------------------------
-foo
-  foo:bar1                                 @ 1970/01/01-01:00:00.000000
-    "baz1"
-  foo:bar2                                 @ 1970/01/01-01:00:00.000000
-    "baz2"
-  bat:bar                                  @ 1970/01/01-01:00:00.000000
-    "baz"
-            '''
-        expected = [
-            {
-                "key": "foo",
-                "cells": {
-                    "foo": {
-                        "bar1": "baz1",
-                        "bar2": "baz2",
-                    },
-                    "bat": {
-                        "bar": "baz"
-                    }
-                }
-            }
-        ]
-        self.assertEqual(jc.parsers.cbt.parse(input, quiet=True), expected)
+        self.assertEqual(jc.parsers.cbt.parse(self.multiple_columns, quiet=True), self.multiple_columns_json)
 
     def test_cbt_multiple_rows(self):
         """
         Test 'cbt' with multiple rows
         """
-        input = '''
-----------------------------------------
-foo
-  foo:bar                                  @ 1970/01/01-01:00:00.000000
-    "baz1"
-----------------------------------------
-bar
-  foo:bar                                  @ 1970/01/01-01:00:00.000000
-    "baz2"
-            '''
-        expected = [
-            {
-                "key": "foo",
-                "cells": {
-                    "foo": {
-                        "bar": "baz1",
-                    }
-                }
-            },
-            {
-                "key": "bar",
-                "cells": {
-                    "foo": {
-                        "bar": "baz2",
-                    }
-                }
-            }
-        ]
-        self.assertEqual(jc.parsers.cbt.parse(input, quiet=True), expected)
+        self.assertEqual(jc.parsers.cbt.parse(self.multiple_rows, quiet=True), self.multiple_rows_json)
 
     def test_cbt_multiple_rows_raw(self):
         """
         Test 'cbt' with multiple rows raw
         """
-        input = '''
-----------------------------------------
-foo
-  foo:bar                                  @ 1970/01/01-01:00:00.000000
-    "baz1"
-----------------------------------------
-bar
-  foo:bar                                  @ 1970/01/01-01:00:00.000000
-    "baz2"
-            '''
-        expected = [
-            {
-                "key": "foo",
-                "cells": [
-                    {
-                        "column_family": "foo",
-                        "column": "bar",
-                        "timestamp": "1970-01-01T01:00:00",
-                        "value": "baz1",
-                    }
-                ]
-            },
-            {
-                "key": "bar",
-                "cells": [
-                    {
-                        "column_family": "foo",
-                        "column": "bar",
-                        "timestamp": "1970-01-01T01:00:00",
-                        "value": "baz2",
-                    }
-                ]
-            }
-        ]
-        self.assertEqual(jc.parsers.cbt.parse(input, quiet=True, raw=True), expected)
+        self.assertEqual(jc.parsers.cbt.parse(self.multiple_rows, quiet=True, raw=True), self.multiple_rows_raw_json)
 
 
 if __name__ == '__main__':
