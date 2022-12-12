@@ -35,6 +35,22 @@ Schema:
       }
     ]
 
+Schema (raw):
+
+    [
+      {
+        "key": string,
+        "cells": [
+          {
+            "column_family": string,
+            "column": string,
+            "timestamp": string,
+            "value": string
+          }
+        ]
+      }
+    ]
+
 Examples:
 
     $ cbt -project=$PROJECT -instance=$INSTANCE lookup $TABLE foo | jc --cbt -p
