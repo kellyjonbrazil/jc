@@ -1,6 +1,6 @@
-"""jc - JSON Convert `foo` command output parser
+"""jc - JSON Convert `cbt` command output parser
 
-Parses the human-, but not machine-, readable output of the cbt command (for Google's BigTable).
+Parses the human-, but not machine-, friendly output of the cbt command (for Google's BigTable).
 
 No effort is made to convert the data types of the values in the cells.
 
