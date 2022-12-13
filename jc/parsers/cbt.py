@@ -5,11 +5,17 @@ Google's BigTable).
 
 No effort is made to convert the data types of the values in the cells.
 
-The timestamps of the cells are converted to Python's isoformat.
+The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
+the local time of the system the parser is run on)
 
-Raw output contains all cells for each column (including timestamps in
-converted to Python's isoformat), while the normal output contains only the
-latest value for each column.
+The `timestamp_epoch_utc` calculated timestamp field is timezone-aware and
+is only available if the timestamp has a UTC timezone.
+
+The `timestamp_iso` calculated timestamp field will only include UTC
+timezone information if the timestamp has a UTC timezone.
+
+Raw output contains all cells for each column (including timestamps), while
+the normal output contains only the latest value for each column.
 
 Usage (cli):
 
@@ -120,7 +126,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         key_func = lambda cell: (cell["column_family"], cell["column"])
         all_cells = sorted(row["cells"], key=key_func)
         for (column_family, column), group in groupby(all_cells, key=key_func):
-            group_list = sorted(group, key=lambda cell: cell["timestamp"], reverse=True)
+            group_list = sorted(group, key=lambda cell: cell["timestamp_iso"], reverse=True)
             if column_family not in cells:
                 cells[column_family] = {}
             cells[column_family][column] = group_list[0]["value"]
@@ -165,10 +171,14 @@ def parse(
                 if field.startswith(" " * 4):
                     value = field.strip(' "')
                     if value_next:
+                        dt = jc.utils.timestamp(timestamp)
                         cells.append({
                             "column_family": column_name.split(":", 1)[0],
                             "column": column_name.split(":", 1)[1],
-                            "timestamp": datetime.datetime.strptime(timestamp, "%Y/%m/%d-%H:%M:%S.%f").isoformat(),
+                            # "timestamp": datetime.datetime.strptime(timestamp, "%Y/%m/%d-%H:%M:%S.%f").isoformat(),
+                            "timestamp_iso": dt.iso,
+                            "timestamp_epoch": dt.naive,
+                            "timestamp_epoch_utc": dt.utc,
                             "value": value
                         })
                 elif field.startswith(" " * 2):
