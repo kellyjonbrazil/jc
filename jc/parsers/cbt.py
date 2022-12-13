@@ -1,13 +1,15 @@
-"""jc - JSON Convert `cbt` command output parser
+"""jc - JSON Convert `cbt` command output parser (Google Big Table)
 
-Parses the human-, but not machine-, friendly output of the cbt command (for Google's BigTable).
+Parses the human-, but not machine-, friendly output of the cbt command (for
+Google's BigTable).
 
 No effort is made to convert the data types of the values in the cells.
 
 The timestamps of the cells are converted to Python's isoformat.
 
-Raw output contains all cells for each column (including timestamps in converted to Python's isoformat),
-while the normal output contains only the latest value for each column.
+Raw output contains all cells for each column (including timestamps in
+converted to Python's isoformat), while the normal output contains only the
+latest value for each column.
 
 Usage (cli):
 
@@ -26,11 +28,11 @@ Schema:
 
     [
       {
-        "key":     string,
+        "key":                      string,
         "cells": {
-            string: {
-                string: string
-            }
+          string: {
+            string:                 string
+          }
         }
       }
     ]
@@ -39,13 +41,13 @@ Schema (raw):
 
     [
       {
-        "key": string,
+        "key":                      string,
         "cells": [
           {
-            "column_family": string,
-            "column": string,
-            "timestamp": string,
-            "value": string
+            "column_family":        string,
+            "column":               string,
+            "timestamp":            string,
+            "value":                string
           }
         ]
       }
@@ -55,29 +57,29 @@ Examples:
 
     $ cbt -project=$PROJECT -instance=$INSTANCE lookup $TABLE foo | jc --cbt -p
     [
-        {
-            "key": "foo",
-            "cells": {
-                "foo": {
-                    "bar": "baz"
-                }
-            }
+      {
+        "key": "foo",
+        "cells": {
+          "foo": {
+            "bar": "baz"
+          }
         }
+      }
     ]
 
     $ cbt -project=$PROJECT -instance=$INSTANCE lookup $TABLE foo | jc --cbt -p -r
     [
-        {
-            "key": "foo",
-            "cells": [
-                {
-                    "column_family": "foo",
-                    "column": "bar",
-                    "timestamp": "1970-01-01T01:00:00",
-                    "value": "baz"
-                }
-            ]
-        }
+      {
+        "key": "foo",
+        "cells": [
+          {
+            "column_family": "foo",
+            "column": "bar",
+            "timestamp": "1970-01-01T01:00:00",
+            "value": "baz"
+          }
+        ]
+      }
     ]
 """
 import datetime
@@ -90,12 +92,9 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`cbt` command parser'
+    description = '`cbt` (Google Big Table) command parser'
     author = 'Andreas Weiden'
     author_email = 'andreas.weiden@gmail.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     magic_commands = ['cbt']
 
@@ -115,21 +114,16 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
-    # process the data here
-    # rebuild output for added semantic information
-    # use helper functions in jc.utils for int, float, bool
-    # conversions and timestamps
     out_data = []
     for row in proc_data:
-        cells = {}
+        cells: Dict = {}
         key_func = lambda cell: (cell["column_family"], cell["column"])
         all_cells = sorted(row["cells"], key=key_func)
         for (column_family, column), group in groupby(all_cells, key=key_func):
-            group = sorted(group, key=lambda cell: cell["timestamp"], reverse=True)
+            group_list = sorted(group, key=lambda cell: cell["timestamp"], reverse=True)
             if column_family not in cells:
                 cells[column_family] = {}
-            cells[column_family][column] = group[0]["value"]
+            cells[column_family][column] = group_list[0]["value"]
         row["cells"] = cells
         out_data.append(row)
     return out_data
@@ -160,13 +154,10 @@ def parse(
 
     if jc.utils.has_data(data):
         for line in filter(None, data.split("-" * 40)):
-            # parse the content here
-            # check out helper functions in jc.utils
-            # and jc.parsers.universal
             key = None
             cells = []
             column_name = ""
-            timestamp = None
+            timestamp = ""
             value_next = False
             for field in line.splitlines():
                 if not field.strip():
