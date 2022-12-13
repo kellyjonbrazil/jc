@@ -19,6 +19,7 @@ parsers: List[str] = [
     'asciitable',
     'asciitable-m',
     'blkid',
+    'cbt',
     'cef',
     'cef-s',
     'chage',

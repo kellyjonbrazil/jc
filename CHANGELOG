@@ -3,6 +3,7 @@ jc changelog
 20221118 v1.22.3
 - Add Common Log Format and Combined Log Format file parser (standard and streaming)
 - Add PostgreSQL password file parser
+- Add `cbt` command parser (Google Big Table)
 - Enhance `ifconfig` parser with interface lane information on BSD
 - Enhance `ifconfig` parser with additional IPv6 `scope_id` info for BSD
 - Fix `ifconfig` parser to capture some IPv6 addresses missed on BSD
