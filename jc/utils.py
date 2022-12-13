@@ -406,6 +406,8 @@ class timestamp:
             {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
             {'id': 1705, 'format': '%m/%d/%Y, %I:%M:%S %p %Z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC)
             {'id': 1710, 'format': '%m/%d/%Y, %I:%M:%S %p UTC%z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC+0000)
+            {'id': 1750, 'format': '%Y/%m/%d-%H:%M:%S.%f', 'locale': None},  # Google Big Table format with no timezone: 1970/01/01-01:00:00.000000
+            {'id': 1755, 'format': '%Y/%m/%d-%H:%M:%S.%f%z', 'locale': None},  # Google Big Table format with timezone: 1970/01/01-01:00:00.000000+00:00
             {'id': 1800, 'format': '%d/%b/%Y:%H:%M:%S %z', 'locale': None},  # Common Log Format: 10/Oct/2000:13:55:36 -0700
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
@@ -497,7 +499,10 @@ class timestamp:
             if 'UTC+' in data or 'UTC-' in data:
                 utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
 
-        elif '+0000' in data or '-0000' in data:
+        elif '+0000' in data \
+             or '-0000' in data \
+             or '+00:00' in data \
+             or '-00:00' in data:
             utc_tz = True
 
         # normalize the timezone by taking out any timezone reference, except UTC
