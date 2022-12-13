@@ -45,9 +45,9 @@ class MyTests(unittest.TestCase):
             # Windows english format with UTC tz (found in systeminfo cli output)
             '3/22/2021, 1:15:51 PM (UTC+0000)': {'string': '3/22/2021, 1:15:51 PM (UTC+0000)', 'format': 1710, 'naive': 1616444151, 'utc': 1616418951},
             # Google Big Table format with no timezone:
-            '1970/01/01-01:00:00.000000': {'string': '1970/01/01-01:00:00.000000', 'format': 1750, 'naive': 32400, 'utc': None},
+            '2000/01/01-01:00:00.000000': {'string': '2000/01/01-01:00:00.000000', 'format': 1750, 'naive': 946717200, 'utc': None},
             # Google Big Table format with timezone:
-            '1970/01/01-01:00:00.000000+00:00': {'string': '1970/01/01-01:00:00.000000+00:00', 'format': 1755, 'naive': 32400, 'utc': 3600},
+            '2000/01/01-01:00:00.000000+00:00': {'string': '2000/01/01-01:00:00.000000+00:00', 'format': 1755, 'naive': 946717200, 'utc': 946688400},
             # Common Log Format
             '10/Oct/2000:13:55:36 -0700': {'string': '10/Oct/2000:13:55:36 -0700', 'format': 1800, 'naive': 971211336, 'utc': None},
             '10/Oct/2000:13:55:36 -0000': {'string': '10/Oct/2000:13:55:36 -0000', 'format': 1800, 'naive': 971211336, 'utc': 971186136},
