@@ -36,8 +36,8 @@ Schema:
       {
         "key":                      string,
         "cells": {
-          string: {
-            string:                 string
+          <string>: {                         # column family
+            <string>:               string    # column: value
           }
         }
       }
@@ -52,8 +52,10 @@ Schema (raw):
           {
             "column_family":        string,
             "column":               string,
-            "timestamp":            string,
-            "value":                string
+            "value":                string,
+            "timestamp_iso":        string,
+            "timestamp_epoch":      integer,
+            "timestamp_epoch_utc":  integer
           }
         ]
       }
@@ -81,14 +83,15 @@ Examples:
           {
             "column_family": "foo",
             "column": "bar",
-            "timestamp": "1970-01-01T01:00:00",
-            "value": "baz"
+            "value": "baz1",
+            "timestamp_iso": "1970-01-01T01:00:00",
+            "timestamp_epoch": 32400,
+            "timestamp_epoch_utc": null
           }
         ]
       }
     ]
 """
-import datetime
 from itertools import groupby
 from typing import List, Dict
 from jc.jc_types import JSONDictType
@@ -171,15 +174,14 @@ def parse(
                 if field.startswith(" " * 4):
                     value = field.strip(' "')
                     if value_next:
-                        dt = jc.utils.timestamp(timestamp)
+                        dt = jc.utils.timestamp(timestamp, format_hint=(1750, 1755))
                         cells.append({
                             "column_family": column_name.split(":", 1)[0],
                             "column": column_name.split(":", 1)[1],
-                            # "timestamp": datetime.datetime.strptime(timestamp, "%Y/%m/%d-%H:%M:%S.%f").isoformat(),
+                            "value": value,
                             "timestamp_iso": dt.iso,
                             "timestamp_epoch": dt.naive,
-                            "timestamp_epoch_utc": dt.utc,
-                            "value": value
+                            "timestamp_epoch_utc": dt.utc
                         })
                 elif field.startswith(" " * 2):
                     column_name, timestamp = map(str.strip, field.split("@"))

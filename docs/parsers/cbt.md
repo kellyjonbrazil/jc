@@ -41,8 +41,8 @@ Schema:
       {
         "key":                      string,
         "cells": {
-          string: {
-            string:                 string
+          <string>: {                         # column family
+            <string>:               string    # column: value
           }
         }
       }
@@ -57,8 +57,10 @@ Schema (raw):
           {
             "column_family":        string,
             "column":               string,
-            "timestamp":            string,
-            "value":                string
+            "value":                string,
+            "timestamp_iso":        string,
+            "timestamp_epoch":      integer,
+            "timestamp_epoch_utc":  integer
           }
         ]
       }
@@ -86,8 +88,10 @@ Examples:
           {
             "column_family": "foo",
             "column": "bar",
-            "timestamp": "1970-01-01T01:00:00",
-            "value": "baz"
+            "value": "baz1",
+            "timestamp_iso": "1970-01-01T01:00:00",
+            "timestamp_epoch": 32400,
+            "timestamp_epoch_utc": null
           }
         ]
       }
