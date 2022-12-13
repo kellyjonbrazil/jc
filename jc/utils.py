@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Dict, Iterable, Union, Optional, TextIO
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO
 from .jc_types import TimeStampFormatType
 
 
@@ -280,7 +280,7 @@ def input_type_check(data: object) -> None:
 
 
 class timestamp:
-    __slots__ = ('string', 'format', 'naive', 'utc')
+    __slots__ = ('string', 'format', 'naive', 'utc', 'iso')
 
     def __init__(self,
                  datetime_string: Optional[str],
@@ -314,6 +314,9 @@ class timestamp:
 
             utc  (int | None):  aware timestamp only if UTC timezone
                 detected in datetime string. None if conversion fails.
+
+            iso (str | None):  ISO string - timezone information is output
+                only if UTC timezone is detected in the datetime string.
         """
         self.string = datetime_string
 
@@ -326,16 +329,17 @@ class timestamp:
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
+        self.iso = dt['iso']
 
     def __repr__(self) -> str:
-        return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
+        return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc}, iso={self.iso!r})'
 
     @staticmethod
-    @lru_cache(maxsize=512)
+    @lru_cache(maxsize=2048)
     def _parse_dt(
         dt_string: Optional[str],
         format_hint: Optional[Iterable[int]] = None
-    ) -> Dict[str, Optional[int]]:
+    ) -> Dict[str, Any]:
         """
         Input a datetime text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
@@ -366,6 +370,9 @@ class timestamp:
                     # aware timestamp only if UTC timezone detected.
                     # None if conversion fails.
                     "timestamp_utc":        int
+
+                    # ISO string. None if conversion fails.
+                    "iso":                  str
                 }
 
                 The `format` integer denotes which date_time format
@@ -379,6 +386,9 @@ class timestamp:
                 an aware conversion cannot be performed (e.g. the UTC
                 timezone is not found in the date-time string), then this
                 field will be None.
+
+                The `iso` string will only have timezone information if the
+                UTC timezone is detected in `dt_string`.
 
                 If the conversion completely fails, all fields will be None.
         """
@@ -462,10 +472,12 @@ class timestamp:
         dt_utc: Optional[datetime] = None
         timestamp_naive: Optional[int] = None
         timestamp_utc: Optional[int] = None
-        timestamp_obj: Dict[str, Optional[int]] = {
+        iso_string: Optional[str] = None
+        timestamp_obj: Dict[str, Any] = {
             'format': None,
             'timestamp_naive': None,
-            'timestamp_utc': None
+            'timestamp_utc': None,
+            'iso': None
         }
 
         # convert format_hint to a tuple so it is hashable (for lru_cache)
@@ -521,8 +533,9 @@ class timestamp:
             try:
                 locale.setlocale(locale.LC_TIME, fmt['locale'])
                 dt = datetime.strptime(normalized_datetime, fmt['format'])
-                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
                 timestamp_obj['format'] = fmt['id']
+                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
+                iso_string = dt.replace(tzinfo=None).isoformat()
                 locale.setlocale(locale.LC_TIME, None)
                 break
             except Exception:
@@ -532,9 +545,11 @@ class timestamp:
         if dt and utc_tz:
             dt_utc = dt.replace(tzinfo=timezone.utc)
             timestamp_utc = int(dt_utc.timestamp())
+            iso_string = dt_utc.isoformat()
 
         if timestamp_naive:
             timestamp_obj['timestamp_naive'] = timestamp_naive
             timestamp_obj['timestamp_utc'] = timestamp_utc
+            timestamp_obj['iso'] = iso_string
 
         return timestamp_obj
