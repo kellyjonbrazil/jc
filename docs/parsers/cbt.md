@@ -10,11 +10,17 @@ Google's BigTable).
 
 No effort is made to convert the data types of the values in the cells.
 
-The timestamps of the cells are converted to Python's isoformat.
+The `timestamp_epoch` calculated timestamp field is naive. (i.e. based on
+the local time of the system the parser is run on)
 
-Raw output contains all cells for each column (including timestamps in
-converted to Python's isoformat), while the normal output contains only the
-latest value for each column.
+The `timestamp_epoch_utc` calculated timestamp field is timezone-aware and
+is only available if the timestamp has a UTC timezone.
+
+The `timestamp_iso` calculated timestamp field will only include UTC
+timezone information if the timestamp has a UTC timezone.
+
+Raw output contains all cells for each column (including timestamps), while
+the normal output contains only the latest value for each column.
 
 Usage (cli):
 

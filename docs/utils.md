@@ -233,3 +233,6 @@ Returns a timestamp object with the following attributes:
     utc  (int | None):  aware timestamp only if UTC timezone
         detected in datetime string. None if conversion fails.
 
+    iso (str | None):  ISO string - timezone information is output
+        only if UTC timezone is detected in the datetime string.
+
