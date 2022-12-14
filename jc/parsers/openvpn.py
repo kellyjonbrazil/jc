@@ -3,9 +3,6 @@
 The `*_epoch` calculated timestamp fields are naive. (i.e. based on
 the local time of the system the parser is run on)
 
-The `*_epoch_utc` calculated timestamp fields are timezone-aware and
-is only available if the timestamp has a UTC timezone.
-
 Usage (cli):
 
     $ cat openvpn-status.log | jc --openvpn
@@ -22,30 +19,35 @@ Schema:
         {
           "common_name":                        string,
           "real_address":                       string,
+          "real_address_prefix":                integer,  # [0]
+          "real_address_port":                  integer,  # [0]
           "bytes_received":                     integer,
           "bytes_sent":                         integer,
           "connected_since":                    string,
-          "updated":                            string,
           "connected_since_epoch":              integer,
-          "connected_since_epoch_utc":          integer,
+          "updated":                            string,
           "updated_epoch":                      integer,
-          "updated_epoch_utc":                  integer
         }
       ],
       "routing_table": [
         {
           "virtual_address":                    string,
+          "virtual_address_prefix":             integer,  # [0]
+          "virtual_address_port":               integer,  # [0]
           "common_name":                        string,
           "real_address":                       string,
+          "real_address_prefix":                integer,  # [0]
+          "real_address_port":                  integer,  # [0]
           "last_reference":                     string,
           "last_reference_epoch":               integer,
-          "last_reference_epoch_utc":           integer
         }
       ],
       "global_stats": {
         "max_bcast_mcast_queue_len":            integer
       }
     }
+
+    [0] null/None if not found
 
 Examples:
 
@@ -54,45 +56,51 @@ Examples:
       "clients": [
         {
           "common_name": "foo@example.com",
-          "real_address": "10.10.10.10:49502",
+          "real_address": "10.10.10.10",
           "bytes_received": 334948,
           "bytes_sent": 1973012,
           "connected_since": "Thu Jun 18 04:23:03 2015",
           "updated": "Thu Jun 18 08:12:15 2015",
+          "real_address_prefix": null,
+          "real_address_port": 49502,
           "connected_since_epoch": 1434626583,
-          "connected_since_epoch_utc": null,
-          "updated_epoch": 1434640335,
-          "updated_epoch_utc": null
+          "updated_epoch": 1434640335
         },
         {
           "common_name": "foo@example.com",
-          "real_address": "10.10.10.10:49503",
+          "real_address": "10.10.10.10",
           "bytes_received": 334948,
           "bytes_sent": 1973012,
           "connected_since": "Thu Jun 18 04:23:03 2015",
           "updated": "Thu Jun 18 08:12:15 2015",
+          "real_address_prefix": null,
+          "real_address_port": 49503,
           "connected_since_epoch": 1434626583,
-          "connected_since_epoch_utc": null,
-          "updated_epoch": 1434640335,
-          "updated_epoch_utc": null
+          "updated_epoch": 1434640335
         }
       ],
       "routing_table": [
         {
           "virtual_address": "192.168.255.118",
           "common_name": "baz@example.com",
-          "real_address": "10.10.10.10:63414",
+          "real_address": "10.10.10.10",
           "last_reference": "Thu Jun 18 08:12:09 2015",
-          "last_reference_epoch": 1434640329,
-          "last_reference_epoch_utc": null
+          "virtual_address_prefix": null,
+          "virtual_address_port": null,
+          "real_address_prefix": null,
+          "real_address_port": 63414,
+          "last_reference_epoch": 1434640329
         },
         {
-          "virtual_address": "10.200.0.0/16",
+          "virtual_address": "10.200.0.0",
           "common_name": "baz@example.com",
-          "real_address": "10.10.10.10:63414",
+          "real_address": "10.10.10.10",
           "last_reference": "Thu Jun 18 08:12:09 2015",
-          "last_reference_epoch": 1434640329,
-          "last_reference_epoch_utc": null
+          "virtual_address_prefix": 16,
+          "virtual_address_port": null,
+          "real_address_prefix": null,
+          "real_address_port": 63414,
+          "last_reference_epoch": 1434640329
         }
       ],
       "global_stats": {
@@ -139,7 +147,9 @@ Examples:
       }
     }
 """
-from typing import List, Dict
+import re
+import ipaddress
+from typing import List, Dict, Tuple
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -156,6 +166,34 @@ class info():
 __version__ = info.version
 
 
+def _split_addr(addr_str: str) -> Tuple:
+    """Check the type of address (v4, v6, mac) and split out the address,
+    prefix, and port. Values are None if they don't exist."""
+    address = possible_addr = prefix = port = possible_port = None
+
+    try:
+        address, prefix = addr_str.rsplit('/', maxsplit=1)
+    except Exception:
+        address = addr_str
+
+    # is this a mac address? then stop
+    if re.match(r'(?:\S\S\:){5}\S\S', address):
+        return address, prefix, port
+
+    # is it an ipv4 with port or just ipv6?
+    if ':' in address:
+        try:
+            possible_addr, possible_port = address.rsplit(':', maxsplit=1)
+            _ = ipaddress.IPv4Address(possible_addr)
+            address = possible_addr
+            port = possible_port
+        # assume it was an IPv6 address
+        except Exception:
+            pass
+
+    return address, prefix, port
+
+
 def _process(proc_data: JSONDictType) -> JSONDictType:
     """
     Final processing to conform to the schema.
@@ -170,6 +208,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
     """
     int_list = {'bytes_received', 'bytes_sent', 'max_bcast_mcast_queue_len'}
     date_fields = {'connected_since', 'updated', 'last_reference'}
+    addr_fields = {'real_address', 'virtual_address'}
 
     if 'clients' in proc_data:
         for item in proc_data['clients']:
@@ -180,7 +219,12 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
                 if k in date_fields:
                     dt = jc.utils.timestamp(item[k], format_hint=(1000,))
                     item[k + '_epoch'] = dt.naive
-                    item[k + '_epoch_utc'] = dt.utc
+
+                if k in addr_fields:
+                    addr, prefix, port = _split_addr(v)
+                    item[k] = addr
+                    item[k + '_prefix'] = jc.utils.convert_to_int(prefix)
+                    item[k + '_port'] = jc.utils.convert_to_int(port)
 
     if 'routing_table' in proc_data:
         for item in proc_data['routing_table']:
@@ -188,7 +232,12 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
                 if k in date_fields:
                     dt = jc.utils.timestamp(item[k], format_hint=(1000,))
                     item[k + '_epoch'] = dt.naive
-                    item[k + '_epoch_utc'] = dt.utc
+
+                if k in addr_fields:
+                    addr, prefix, port = _split_addr(v)
+                    item[k] = addr
+                    item[k + '_prefix'] = jc.utils.convert_to_int(prefix)
+                    item[k + '_port'] = jc.utils.convert_to_int(port)
 
     if 'global_stats' in proc_data:
         for k, v in proc_data['global_stats'].items():
