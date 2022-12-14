@@ -1,0 +1,26 @@
+OpenVPN CLIENT LIST
+Updated,Thu Jun 18 08:12:15 2015
+Common Name,Real Address,Bytes Received,Bytes Sent,Connected Since
+foo@example.com,10.10.10.10:49502,334948,1973012,Thu Jun 18 04:23:03 2015
+foo@example.com,10.10.10.10:49503,334948,1973012,Thu Jun 18 04:23:03 2015
+bar@example.com,10.10.10.10:64169,1817262,28981224,Thu Jun 18 04:08:39 2015
+baz@example.com,10.10.10.10:63414,111183,1202203,Thu Jun 18 07:57:25 2015
+tap@example.com,10.0.0.100:55712,0,0,Thu Oct 19 20:14:19 2017
+baz@example.com,10.10.10.10,111183,1202203,Thu Jun 18 07:57:25 2015
+ROUTING TABLE
+Virtual Address,Common Name,Real Address,Last Ref
+192.168.255.118,baz@example.com,10.10.10.10:63414,Thu Jun 18 08:12:09 2015
+10.200.0.0/16,baz@example.com,10.10.10.10:63414,Thu Jun 18 08:12:09 2015
+2001:db8::1000/124,baz@example.com,10.10.10.10:63414,Thu Jun 18 08:12:09 2015
+192.168.255.134,foo@example.com,10.10.10.10:49502,Thu Jun 18 08:12:09 2015
+192.168.255.135,foo@example.com,10.10.10.10:49503,Thu Jun 18 08:12:09 2015
+192.168.255.126,bar@example.com,10.10.10.10:64169,Thu Jun 18 08:11:55 2015
+22:1d:63:bf:62:38,tap@example.com,10.0.0.100:55712,Thu Oct 19 20:14:19 2017
+192.168.255.126C,bar@example.com,10.10.10.10:64169,Thu Jun 18 08:11:55 2015
+192.168.255.16C,bar@example.com,10.10.10.10:64169,Thu Jun 18 08:11:55 2015
+192.168.255.1C,bar@example.com,10.10.10.10:64169,Thu Jun 18 08:11:55 2015
+192.168.255.1,baz@example.com,10.10.10.10,Thu Jun 18 08:11:55 2015
+GLOBAL STATS
+Max bcast/mcast queue length,0
+END
+
