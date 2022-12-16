@@ -110,7 +110,7 @@ _jc() {
         '--asciitable:ASCII and Unicode table parser'
         '--asciitable-m:multi-line ASCII and Unicode table parser'
         '--blkid:`blkid` command parser'
-        '--cbt:`cbt` (Google Big Table) command parser'
+        '--cbt:`cbt` (Google Bigtable) command parser'
         '--cef:CEF string parser'
         '--cef-s:CEF string streaming parser'
         '--chage:`chage --list` command parser'

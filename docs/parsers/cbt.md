@@ -3,10 +3,10 @@
 
 # jc.parsers.cbt
 
-jc - JSON Convert `cbt` command output parser (Google Big Table)
+jc - JSON Convert `cbt` command output parser (Google Bigtable)
 
 Parses the human-, but not machine-, friendly output of the cbt command (for
-Google's BigTable).
+Google's Bigtable).
 
 No effort is made to convert the data types of the values in the cells.
 

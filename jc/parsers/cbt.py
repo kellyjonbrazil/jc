@@ -1,7 +1,7 @@
-"""jc - JSON Convert `cbt` command output parser (Google Big Table)
+"""jc - JSON Convert `cbt` command output parser (Google Bigtable)
 
 Parses the human-, but not machine-, friendly output of the cbt command (for
-Google's BigTable).
+Google's Bigtable).
 
 No effort is made to convert the data types of the values in the cells.
 
@@ -101,7 +101,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`cbt` (Google Big Table) command parser'
+    description = '`cbt` (Google Bigtable) command parser'
     author = 'Andreas Weiden'
     author_email = 'andreas.weiden@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']

@@ -1,6 +1,6 @@
 jc changelog
 
-20221213 v1.22.3
+20221216 v1.22.3
 - Add Common Log Format and Combined Log Format file parser (standard and streaming)
 - Add PostgreSQL password file parser
 - Add openvpn-status.log file parser
