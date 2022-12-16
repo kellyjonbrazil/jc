@@ -1,11 +1,9 @@
 """jc - JSON Convert lib module"""
 
 import sys
-from datetime import datetime
-from typing import Dict, List, Tuple, Iterator, Optional, Union
+from typing import Any, Dict, List, Tuple, Iterator, Optional, Union
 
-JSONDictType = Dict[str, Union[str, int, float, bool, List, Dict, None]]
-MetadataType = Dict[str, Optional[Union[str, int, float, List[str], datetime]]]
+JSONDictType = Dict[str, Any]
 StreamingOutputType = Iterator[Union[JSONDictType, Tuple[BaseException, str]]]
 
 if sys.version_info >= (3, 8):
@@ -43,9 +41,6 @@ if sys.version_info >= (3, 8):
 else:
     ParserInfoType = Dict
     TimeStampFormatType = Dict
-
-
-AboutJCType = Dict[str, Union[str, int, List[ParserInfoType]]]
 
 
 try:

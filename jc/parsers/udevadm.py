@@ -143,7 +143,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
         List of Dictionaries. Structured to conform to the schema.
     """
     if 'L' in proc_data:
-        proc_data['L'] = int(proc_data['L'])  # type: ignore
+        proc_data['L'] = int(proc_data['L'])
 
     return proc_data
 

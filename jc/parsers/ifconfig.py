@@ -1,4 +1,4 @@
-"""jc - JSON Convert `foo` command output parser
+"""jc - JSON Convert `ifconfig` command output parser
 
 No `ifconfig` options are supported.
 
@@ -37,6 +37,7 @@ Schema:
         "ipv6_addr":                string,    # [0]
         "ipv6_mask":                integer,   # [0]
         "ipv6_scope":               string,    # [0]
+        "ipv6_scope_id":            string,    # [0]
         "ipv6_type":                string,    # [0]
         "rx_packets":               integer,
         "rx_bytes":                 integer,
@@ -82,9 +83,18 @@ Schema:
         "ipv6: [
           {
             "address":              string,
+            "scope_id":             string,
             "mask":                 integer,
             "scope":                string,
             "type":                 string
+          }
+        ],
+        "lanes": [
+          {
+            "lane":                 integer,
+            "rx_power_mw":          float,
+            "rx_power_dbm":         float,
+            "tx_bias_ma":           float
           }
         ]
       }
@@ -142,6 +152,7 @@ Examples:
         "ipv6": [
           {
             "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "scope_id": null,
             "mask": 64,
             "scope": "0x20",
             "type": "link"
@@ -190,6 +201,7 @@ Examples:
         "ipv6": [
           {
             "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "scope_id": null,
             "mask": "64",
             "scope": "0x20",
             "type": "link"
@@ -200,14 +212,14 @@ Examples:
 """
 import re
 from ipaddress import IPv4Network
-from typing import List, Dict
+from typing import List, Dict, Optional
 from jc.jc_types import JSONDictType
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
+    version = '2.1'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -218,7 +230,7 @@ class info():
 __version__ = info.version
 
 
-def _convert_cidr_to_quad(string):
+def _convert_cidr_to_quad(string: str) -> str:
     return str(IPv4Network('0.0.0.0/' + string).netmask)
 
 
@@ -237,8 +249,9 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     int_list = {
         'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
         'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options'
+        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options', 'lane'
     }
+    float_list = {'rx_power_mw', 'rx_power_dbm', 'tx_bias_ma'}
 
     for entry in proc_data:
         for key in entry:
@@ -248,63 +261,72 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         # convert OSX-style subnet mask to dotted quad
         if 'ipv4_mask' in entry:
             try:
-                if entry['ipv4_mask'].startswith('0x'):  # type: ignore
+                if entry['ipv4_mask'].startswith('0x'):
                     new_mask = entry['ipv4_mask']
-                    new_mask = new_mask.lstrip('0x')  # type: ignore
+                    new_mask = new_mask.lstrip('0x')
                     new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
                     entry['ipv4_mask'] = new_mask
             except (ValueError, TypeError, AttributeError):
                 pass
 
             # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
-            if entry['ipv4_mask'] and not '.' in entry['ipv4_mask']:  # type: ignore
+            if entry['ipv4_mask'] and not '.' in entry['ipv4_mask']:
                 entry['ipv4_mask'] = _convert_cidr_to_quad(entry['ipv4_mask'])
 
         # convert state value to an array
         if 'state' in entry:
             try:
-                new_state = entry['state'].split(',')  # type: ignore
+                new_state = entry['state'].split(',')
                 entry['state'] = new_state
             except (ValueError, TypeError, AttributeError):
                 pass
 
         # conversions for list of ipv4 addresses
         if 'ipv4' in entry:
-            for ip_address in entry['ipv4']:  # type: ignore
+            for ip_address in entry['ipv4']:
                 if 'mask' in ip_address:
                     try:
-                        if ip_address['mask'].startswith('0x'):  # type: ignore
-                            new_mask = ip_address['mask']  # type: ignore
+                        if ip_address['mask'].startswith('0x'):
+                            new_mask = ip_address['mask']
                             new_mask = new_mask.lstrip('0x')
                             new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
-                            ip_address['mask'] = new_mask  # type: ignore
+                            ip_address['mask'] = new_mask
                     except (ValueError, TypeError, AttributeError):
                         pass
 
                     # for new-style freebsd output convert CIDR mask to dotted-quad to match other output
-                    if ip_address['mask'] and not '.' in ip_address['mask']:  # type: ignore
-                        ip_address['mask'] = _convert_cidr_to_quad(ip_address['mask'])  # type: ignore
+                    if ip_address['mask'] and not '.' in ip_address['mask']:
+                        ip_address['mask'] = _convert_cidr_to_quad(ip_address['mask'])
 
         # conversions for list of ipv6 addresses
         if 'ipv6' in entry:
-            for ip_address in entry['ipv6']:  # type: ignore
+            for ip_address in entry['ipv6']:
                 if 'mask' in ip_address:
-                    ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])  # type: ignore
+                    ip_address['mask'] = jc.utils.convert_to_int(ip_address['mask'])
+
+        # conversions for list of lanes
+        if 'lanes' in entry:
+            for lane_item in entry['lanes']:
+                for key in lane_item:
+                    if key in int_list:
+                        lane_item[key] = jc.utils.convert_to_int(lane_item[key])
+                    if key in float_list:
+                        lane_item[key] = jc.utils.convert_to_float(lane_item[key])
 
         # final conversions
         if entry.get('media_flags', None):
-            entry['media_flags'] = entry['media_flags'].split(',')  # type: ignore
+            entry['media_flags'] = entry['media_flags'].split(',')
 
         if entry.get('nd6_flags', None):
-            entry['nd6_flags'] = entry['nd6_flags'].split(',')  # type: ignore
+            entry['nd6_flags'] = entry['nd6_flags'].split(',')
 
         if entry.get('options_flags', None):
-            entry['options_flags'] = entry['options_flags'].split(',')  # type: ignore
+            entry['options_flags'] = entry['options_flags'].split(',')
 
     return proc_data
 
 
-def _bundle_match(pattern_list, string):
+def _bundle_match(pattern_list: List[re.Pattern], string: str) -> Optional[re.Match]:
     """Returns a match object if a string matches one of a list of patterns.
     If no match is found, returns None"""
     for pattern in pattern_list:
@@ -371,6 +393,7 @@ def parse(
     interface_item: Dict = interface_obj.copy()
     ipv4_info: List = []
     ipv6_info: List = []
+    lane_info: List = []
 
     # Below regular expression patterns are based off of the work of:
     # https://github.com/KnightWhoSayNi/ifconfig-parser
@@ -525,9 +548,10 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_ipv6 = re.compile(r'''
-        \s?inet6\s(?P<address>.*)(?:\%\w+\d+)\s
-        prefixlen\s(?P<mask>\d+)(?:\s\w+)?\s
-        scopeid\s(?P<scope>\w+x\w+)
+        \s?inet6\s(?P<address>.*?)
+        (?:\%(?P<scope_id>\w+\d+))?\s
+        prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)  # positive lookahead for scopeid or end of line
+        (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_details = re.compile(r'''
@@ -581,6 +605,15 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
 
+    # this pattern is special since it is used to build the lane_info list
+    re_freebsd_lane = re.compile(r'''
+        lane\s(?P<lane>\d+):\s
+        RX\spower:\s(?P<rx_power_mw>\S+)\smW\s
+        \((?P<rx_power_dbm>\S+)\sdBm\)\s
+        TX\sbias:\s(?P<tx_bias_ma>\S+)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+
     re_linux = [
         re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
         re_linux_bytes, re_linux_tx_stats
@@ -611,10 +644,13 @@ def parse(
                         interface_item['ipv4'] = ipv4_info
                     if ipv6_info:
                         interface_item['ipv6'] = ipv6_info
+                    if lane_info:
+                        interface_item['lanes'] = lane_info
                     raw_output.append(interface_item)
                     interface_item = interface_obj.copy()
                     ipv4_info = []
                     ipv6_info = []
+                    lane_info = []
 
                 interface_item.update(interface_match.groupdict())
                 continue
@@ -646,6 +682,7 @@ def parse(
                     'mask': 'ipv6_mask',
                     'broadcast': 'ipv6_bcast',
                     'scope': 'ipv6_scope',
+                    'scope_id': 'ipv6_scope_id',
                     'type': 'ipv6_type'
                 }
                 for k, v in ipv6_dict.copy().items():
@@ -666,6 +703,12 @@ def parse(
                 ipv6_info.append(ipv6_match.groupdict())
                 continue
 
+            # lane information lines
+            lane_match = re.search(re_freebsd_lane, line)
+            if lane_match:
+                lane_info.append(lane_match.groupdict())
+                continue
+
             # All other lines
             other_match = _bundle_match(re_linux + re_openbsd + re_freebsd, line)
             if other_match:
@@ -677,6 +720,8 @@ def parse(
                 interface_item['ipv4'] = ipv4_info
             if ipv6_info:
                 interface_item['ipv6'] = ipv6_info
+            if lane_info:
+                interface_item['lanes'] = lane_info
             raw_output.append(interface_item)
 
     return raw_output if raw else _process(raw_output)

@@ -161,10 +161,13 @@ option.
 | `   --asciitable` | ASCII and Unicode table parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable)     |
 | ` --asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
 | `        --blkid` | `blkid` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid)          |
+| `          --cbt` | `cbt` (Google Bigtable) command parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cbt)            |
 | `          --cef` | CEF string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef)            |
 | `        --cef-s` | CEF string streaming parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cef_s)          |
 | `        --chage` | `chage --list` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/chage)          |
 | `        --cksum` | `cksum` and `sum` command parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cksum)          |
+| `          --clf` | Common and Combined Log Format file parser              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/clf)            |
+| `        --clf-s` | Common and Combined Log Format file streaming parser    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/clf_s)          |
 | `      --crontab` | `crontab` command and file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab)        |
 | `    --crontab-u` | `crontab` file parser with user support                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u)      |
 | `          --csv` | CSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv)            |
@@ -223,9 +226,11 @@ option.
 | `      --netstat` | `netstat` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat)        |
 | `        --nmcli` | `nmcli` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli)          |
 | `         --ntpq` | `ntpq -p` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq)           |
+| `      --openvpn` | openvpn-status.log file parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/openvpn)        |
 | `    --os-prober` | `os-prober` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_prober)      |
 | `       --passwd` | `/etc/passwd` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd)         |
 | `      --pci-ids` | `pci.ids` file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pci_ids)        |
+| `       --pgpass` | PostgreSQL password file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pgpass)         |
 | `      --pidstat` | `pidstat -H` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat)        |
 | `    --pidstat-s` | `pidstat -H` command streaming parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat_s)      |
 | `         --ping` | `ping` and `ping6` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping)           |
@@ -390,7 +395,7 @@ option.
 ### Streaming Parsers
 Most parsers load all of the data from `STDIN`, parse it, then output the entire
 JSON document serially. There are some streaming parsers (e.g. `ls-s` and
-`ping-s`) that immediately start processing and outputing the data line-by-line
+`ping-s`) that immediately start processing and outputting the data line-by-line
 as [JSON Lines](https://jsonlines.org/) (aka [NDJSON](http://ndjson.org/)) while
 it is being received from `STDIN`. This can significantly reduce the amount of
 memory required to parse large amounts of command output (e.g. `ls -lR /`) and

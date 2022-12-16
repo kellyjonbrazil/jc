@@ -1,0 +1,21 @@
+127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTPS/1.0" 200 2326
+1.1.1.2 - - [11/Nov/2016:03:04:55 +0100] "GET /" 200 83 "-" "-" - 9221 1.1.1.1
+127.0.0.1 - - [11/Nov/2016:14:24:21 +0100] "GET /uno dos" 404 298 "-" "-" - 400233 1.1.1.1
+127.0.0.1 - - [11/Nov/2016:14:23:37 +0100] "GET /uno dos HTTP/1.0" 404 298 "-" "-" - 385111 1.1.1.1
+1.1.1.1 - - [11/Nov/2016:00:00:11 +0100] "GET /icc HTTP/1.1" 302 - "-" "XXX XXX XXX" - 6160 11.1.1.1
+1.1.1.1 - - [11/Nov/2016:00:00:11 +0100] "GET /icc/ HTTP/1.1" 302 - "-" "XXX XXX XXX" - 2981 1.1.1.1
+unparsable line
+tarpon.gulf.net - - [12/Jan/1996:20:37:55 +0000] "GET index.htm HTTP/1.0" 200 215
+tarpon.gulf.net - - [12/Jan/1996:20:37:56 +0000] "POST products.htm HTTP/1.0" 200 215
+tarpon.gulf.net - - [12/Jan/1996:20:37:57 +0000] "PUT sales.htm HTTP/1.0" 200 215
+tarpon.gulf.net - - [12/Jan/1996:20:37:58 +0000] "GET /images/log.gif HTTP/1.0" 200 215
+tarpon.gulf.net - - [12/Jan/1996:20:37:59 +0000] "GET /buttons/form.gif HTTP/1.0" 200 215
+66.249.66.1 - - [01/Jan/2017:09:00:00 +0000] "GET /contact.html HTTP/1.1" 200 250
+
+another unparsable line
+
+66.249.66.1 - - [01/Jan/2017:09:00:00 +0000] "GET /contact.html HTTP/1.1" 200 250 "http://www.example.com/" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 "http://www.example.com/start.html" "Mozilla/4.08 [en] (Win98; I ;Nav)"
+jay.bird.com - fred [25/Dec/1998:17:45:35 +0000] "GET /~sret1/ HTTP/1.0" 200 1243
+127.0.0.1 - peter [9/Feb/2017:10:34:12 -0700] "GET /sample-image.png HTTP/2" 200 1479
+10.1.2.3 - rehg [10/Nov/2021:19:22:12 -0000] "GET /sematext.png HTTP/1.1" 200 3423

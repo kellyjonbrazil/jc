@@ -78,7 +78,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
     for item in int_list:
         if item in proc_data:
-            proc_data[item] = int(proc_data[item])  # type: ignore
+            proc_data[item] = int(proc_data[item])
 
     return proc_data
 

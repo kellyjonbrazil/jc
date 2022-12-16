@@ -67,7 +67,6 @@ Examples:
       ...
     ]
 
-
     $ findmnt | jc --findmnt -p -r
     [
       {
@@ -123,7 +122,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         kv_options = {}
 
         if 'options' in item:
-            opt_list = item['options'].split(',')  # type: ignore
+            opt_list = item['options'].split(',')
 
             for option in opt_list:
                 if '=' in option:

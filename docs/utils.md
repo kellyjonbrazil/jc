@@ -91,7 +91,7 @@ Parameters:
                   the parser. compatible options:
                   linux, darwin, cygwin, win32, aix, freebsd
 
-    quiet:        (bool) supress compatibility message if True
+    quiet:        (bool) suppress compatibility message if True
 
 Returns:
 
@@ -232,4 +232,7 @@ Returns a timestamp object with the following attributes:
 
     utc  (int | None):  aware timestamp only if UTC timezone
         detected in datetime string. None if conversion fails.
+
+    iso (str | None):  ISO string - timezone information is output
+        only if UTC timezone is detected in the datetime string.
 

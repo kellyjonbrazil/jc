@@ -59,7 +59,7 @@ Examples:
       ...
     ]
 """
-from typing import List, Dict
+from typing import List, Union
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -94,7 +94,7 @@ def _process(proc_data: List[JSONDictType]) -> JSONDictType:
     for item in proc_data:
         new_dict.update(
             {
-                item['reference']: item['commit']  # type: ignore
+                item['reference']: item['commit']
             }
         )
 
@@ -105,7 +105,7 @@ def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> List[JSONDictType]:
+) -> Union[JSONDictType, List[JSONDictType]]:
     """
     Main text parsing function
 
@@ -122,7 +122,8 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: List[Dict] = []
+    raw_output: List[JSONDictType] = []
+    output_line: JSONDictType = {}
 
     if jc.utils.has_data(data):
 
@@ -135,4 +136,4 @@ def parse(
             }
             raw_output.append(output_line)
 
-    return raw_output if raw else _process(raw_output)  # type: ignore
+    return raw_output if raw else _process(raw_output)

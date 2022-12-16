@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import List, Dict, Iterable, Union, Optional, TextIO
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO
 from .jc_types import TimeStampFormatType
 
 
@@ -141,7 +141,7 @@ def compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> 
                       the parser. compatible options:
                       linux, darwin, cygwin, win32, aix, freebsd
 
-        quiet:        (bool) supress compatibility message if True
+        quiet:        (bool) suppress compatibility message if True
 
     Returns:
 
@@ -280,7 +280,7 @@ def input_type_check(data: object) -> None:
 
 
 class timestamp:
-    __slots__ = ('string', 'format', 'naive', 'utc')
+    __slots__ = ('string', 'format', 'naive', 'utc', 'iso')
 
     def __init__(self,
                  datetime_string: Optional[str],
@@ -314,6 +314,9 @@ class timestamp:
 
             utc  (int | None):  aware timestamp only if UTC timezone
                 detected in datetime string. None if conversion fails.
+
+            iso (str | None):  ISO string - timezone information is output
+                only if UTC timezone is detected in the datetime string.
         """
         self.string = datetime_string
 
@@ -326,16 +329,17 @@ class timestamp:
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
+        self.iso = dt['iso']
 
     def __repr__(self) -> str:
-        return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc})'
+        return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc}, iso={self.iso!r})'
 
     @staticmethod
-    @lru_cache(maxsize=512)
+    @lru_cache(maxsize=2048)
     def _parse_dt(
         dt_string: Optional[str],
         format_hint: Optional[Iterable[int]] = None
-    ) -> Dict[str, Optional[int]]:
+    ) -> Dict[str, Any]:
         """
         Input a datetime text string of several formats and convert to
         a naive or timezone-aware epoch timestamp in UTC.
@@ -366,6 +370,9 @@ class timestamp:
                     # aware timestamp only if UTC timezone detected.
                     # None if conversion fails.
                     "timestamp_utc":        int
+
+                    # ISO string. None if conversion fails.
+                    "iso":                  str
                 }
 
                 The `format` integer denotes which date_time format
@@ -379,6 +386,9 @@ class timestamp:
                 an aware conversion cannot be performed (e.g. the UTC
                 timezone is not found in the date-time string), then this
                 field will be None.
+
+                The `iso` string will only have timezone information if the
+                UTC timezone is detected in `dt_string`.
 
                 If the conversion completely fails, all fields will be None.
         """
@@ -396,6 +406,9 @@ class timestamp:
             {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
             {'id': 1705, 'format': '%m/%d/%Y, %I:%M:%S %p %Z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC)
             {'id': 1710, 'format': '%m/%d/%Y, %I:%M:%S %p UTC%z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC+0000)
+            {'id': 1750, 'format': '%Y/%m/%d-%H:%M:%S.%f', 'locale': None},  # Google Big Table format with no timezone: 1970/01/01-01:00:00.000000
+            {'id': 1755, 'format': '%Y/%m/%d-%H:%M:%S.%f%z', 'locale': None},  # Google Big Table format with timezone: 1970/01/01-01:00:00.000000+00:00
+            {'id': 1800, 'format': '%d/%b/%Y:%H:%M:%S %z', 'locale': None},  # Common Log Format: 10/Oct/2000:13:55:36 -0700
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
@@ -461,10 +474,12 @@ class timestamp:
         dt_utc: Optional[datetime] = None
         timestamp_naive: Optional[int] = None
         timestamp_utc: Optional[int] = None
-        timestamp_obj: Dict[str, Optional[int]] = {
+        iso_string: Optional[str] = None
+        timestamp_obj: Dict[str, Any] = {
             'format': None,
             'timestamp_naive': None,
-            'timestamp_utc': None
+            'timestamp_utc': None,
+            'iso': None
         }
 
         # convert format_hint to a tuple so it is hashable (for lru_cache)
@@ -484,7 +499,10 @@ class timestamp:
             if 'UTC+' in data or 'UTC-' in data:
                 utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
 
-        elif '+0000' in data or '-0000' in data:
+        elif '+0000' in data \
+             or '-0000' in data \
+             or '+00:00' in data \
+             or '-00:00' in data:
             utc_tz = True
 
         # normalize the timezone by taking out any timezone reference, except UTC
@@ -520,8 +538,9 @@ class timestamp:
             try:
                 locale.setlocale(locale.LC_TIME, fmt['locale'])
                 dt = datetime.strptime(normalized_datetime, fmt['format'])
-                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
                 timestamp_obj['format'] = fmt['id']
+                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
+                iso_string = dt.replace(tzinfo=None).isoformat()
                 locale.setlocale(locale.LC_TIME, None)
                 break
             except Exception:
@@ -531,9 +550,11 @@ class timestamp:
         if dt and utc_tz:
             dt_utc = dt.replace(tzinfo=timezone.utc)
             timestamp_utc = int(dt_utc.timestamp())
+            iso_string = dt_utc.isoformat()
 
         if timestamp_naive:
             timestamp_obj['timestamp_naive'] = timestamp_naive
             timestamp_obj['timestamp_utc'] = timestamp_utc
+            timestamp_obj['iso'] = iso_string
 
         return timestamp_obj

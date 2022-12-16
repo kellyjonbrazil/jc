@@ -35,13 +35,13 @@ Schema:
     [
       {
         "commit":               string,
-        "author":               string,
-        "author_email":         string,
+        "author":               string/null,
+        "author_email":         string/null,
         "date":                 string,
         "epoch":                integer,  # [0]
         "epoch_utc":            integer,  # [1]
-        "commit_by":            string,
-        "commit_by_email":      string,
+        "commit_by":            string/null,
+        "commit_by_email":      string/null,
         "commit_by_date":       string,
         "message":              string,
         "stats" : {
@@ -56,7 +56,7 @@ Schema:
     ]
 
     [0] naive timestamp if "date" field is parsable, else null
-    [1] timezone aware timestamp availabe for UTC, else null
+    [1] timezone aware timestamp available for UTC, else null
 
 Examples:
 
@@ -153,7 +153,7 @@ changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insert
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`git log` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -201,6 +201,28 @@ def _is_commit_hash(hash_string: str) -> bool:
         return True
 
     return False
+
+def _parse_name_email(line):
+    values = line.rsplit(maxsplit=1)
+    name = None
+    email = None
+
+    if len(values) == 2:
+        name = values[0]
+        if values[1].startswith('<') and values[1].endswith('>'):
+            email = values[1][1:-1]
+    else:
+        if values[0].lstrip().startswith('<') and values[0].endswith('>'):
+            email = values[0].lstrip()[1:-1]
+        else:
+            name = values[0]
+
+    if not name:
+        name = None
+    if not email:
+        email = None # covers '<>' case turning into null, not ''
+
+    return name, email
 
 
 def parse(
@@ -271,9 +293,7 @@ def parse(
                 continue
 
             if line.startswith('Author: '):
-                values = line_list[1].rsplit(maxsplit=1)
-                output_line['author'] = values[0]
-                output_line['author_email'] = values[1].strip('<').strip('>')
+                output_line['author'], output_line['author_email'] = _parse_name_email(line_list[1])
                 continue
 
             if line.startswith('Date: '):
@@ -289,9 +309,7 @@ def parse(
                 continue
 
             if line.startswith('Commit: '):
-                values = line_list[1].rsplit(maxsplit=1)
-                output_line['commit_by'] = values[0]
-                output_line['commit_by_email'] = values[1].strip('<').strip('>')
+                output_line['commit_by'], output_line['commit_by_email'] = _parse_name_email(line_list[1])
                 continue
 
             if line.startswith('    '):

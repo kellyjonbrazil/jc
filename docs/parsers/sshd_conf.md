@@ -161,7 +161,7 @@ Schema:
 
 Examples:
 
-    $ sshd -T | jc --sshd_conf -p
+    $ sshd -T | jc --sshd-conf -p
     {
       "acceptenv": [
         "LANG",
@@ -376,7 +376,7 @@ Examples:
       "subsystem_command": "/usr/lib/openssh/sftp-server"
     }
 
-    $ sshd -T | jc --sshd_conf -p -r
+    $ sshd -T | jc --sshd-conf -p -r
     {
       "acceptenv": [
         "LANG",

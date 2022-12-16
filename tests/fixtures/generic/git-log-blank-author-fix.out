@@ -1,0 +1,17 @@
+commit 096fffdb79807d34b99985b38df0a3df7f6a86c7
+Author:  <foo@example.com>
+Date:   Wed Apr 20 10:03:36 2022 -0400
+
+    commit by an author with a blank name
+
+commit 728d882ed007b3c8b785018874a0eb06e1143b66
+Author:  <>
+Date:   Wed Apr 20 09:50:19 2022 -0400
+
+    this author has a blank name and an empty email
+
+commit b53e42aca623181aa9bc72194e6eeef1e9a3a237
+Author: Bob Committer <>
+Date:   Wed Apr 20 09:44:42 2022 -0400
+
+    this author has a name, but no email

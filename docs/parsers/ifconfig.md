@@ -3,7 +3,7 @@
 
 # jc.parsers.ifconfig
 
-jc - JSON Convert `foo` command output parser
+jc - JSON Convert `ifconfig` command output parser
 
 No `ifconfig` options are supported.
 
@@ -42,6 +42,7 @@ Schema:
         "ipv6_addr":                string,    # [0]
         "ipv6_mask":                integer,   # [0]
         "ipv6_scope":               string,    # [0]
+        "ipv6_scope_id":            string,    # [0]
         "ipv6_type":                string,    # [0]
         "rx_packets":               integer,
         "rx_bytes":                 integer,
@@ -87,9 +88,18 @@ Schema:
         "ipv6: [
           {
             "address":              string,
+            "scope_id":             string,
             "mask":                 integer,
             "scope":                string,
             "type":                 string
+          }
+        ],
+        "lanes": [
+          {
+            "lane":                 integer,
+            "rx_power_mw":          float,
+            "rx_power_dbm":         float,
+            "tx_bias_ma":           float
           }
         ]
       }
@@ -147,6 +157,7 @@ Examples:
         "ipv6": [
           {
             "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "scope_id": null,
             "mask": 64,
             "scope": "0x20",
             "type": "link"
@@ -195,6 +206,7 @@ Examples:
         "ipv6": [
           {
             "address": "fe80::c1cb:715d:bc3e:b8a0",
+            "scope_id": null,
             "mask": "64",
             "scope": "0x20",
             "type": "link"
@@ -228,4 +240,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
-Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

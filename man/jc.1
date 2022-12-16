@@ -1,4 +1,4 @@
-.TH jc 1 2022-11-08 1.22.2 "JSON Convert"
+.TH jc 1 2022-12-16 1.22.3 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
 .SH SYNOPSIS
@@ -67,6 +67,11 @@ multi-line ASCII and Unicode table parser
 
 .TP
 .B
+\fB--cbt\fP
+`cbt` (Google Bigtable) command parser
+
+.TP
+.B
 \fB--cef\fP
 CEF string parser
 
@@ -84,6 +89,16 @@ CEF string streaming parser
 .B
 \fB--cksum\fP
 `cksum` and `sum` command parser
+
+.TP
+.B
+\fB--clf\fP
+Common and Combined Log Format file parser
+
+.TP
+.B
+\fB--clf-s\fP
+Common and Combined Log Format file streaming parser
 
 .TP
 .B
@@ -382,6 +397,11 @@ M3U and M3U8 file parser
 
 .TP
 .B
+\fB--openvpn\fP
+openvpn-status.log file parser
+
+.TP
+.B
 \fB--os-prober\fP
 `os-prober` command parser
 
@@ -394,6 +414,11 @@ M3U and M3U8 file parser
 .B
 \fB--pci-ids\fP
 `pci.ids` file parser
+
+.TP
+.B
+\fB--pgpass\fP
+PostgreSQL password file parser
 
 .TP
 .B
@@ -1072,7 +1097,7 @@ JC_COLORS=default,default,default,default
 You can set the \fBNO_COLOR\fP environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
 
 .SH STREAMING PARSERS
-Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP, \fBping-s\fP, etc.) that immediately start processing and outputing the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP, \fBping-s\fP, etc.) that immediately start processing and outputting the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
 
 .RS
 Note: Streaming parsers cannot be used with the "magic" syntax

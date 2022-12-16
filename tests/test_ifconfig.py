@@ -36,6 +36,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ifconfig-extra-fields3.out'), 'r', encoding='utf-8') as f:
         osx_freebsd12_ifconfig_extra_fields3 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ifconfig-extra-fields4.out'), 'r', encoding='utf-8') as f:
+        osx_freebsd12_ifconfig_extra_fields4 = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ifconfig.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ifconfig_json = json.loads(f.read())
@@ -63,6 +66,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ifconfig-extra-fields3.json'), 'r', encoding='utf-8') as f:
         freebsd12_ifconfig_extra_fields3_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ifconfig-extra-fields4.json'), 'r', encoding='utf-8') as f:
+        freebsd12_ifconfig_extra_fields4_json = json.loads(f.read())
 
     def test_ifconfig_nodata(self):
         """
@@ -123,6 +129,12 @@ class MyTests(unittest.TestCase):
         Test 'ifconfig' on freebsd12 with other extra fields
         """
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields3, quiet=True), self.freebsd12_ifconfig_extra_fields3_json)
+
+    def test_ifconfig_freebsd_extra_fields4(self):
+        """
+        Test 'ifconfig' on freebsd12 with lane fields
+        """
+        self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
 
 if __name__ == '__main__':
     unittest.main()

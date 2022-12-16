@@ -67,6 +67,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix.out'), 'r', encoding='utf-8') as f:
         generic_git_log_fuller_is_hash_regex_fix = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-blank-author-fix.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_blank_author_fix = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-streaming.json'), 'r', encoding='utf-8') as f:
         generic_git_log_streaming_json = json.loads(f.read())
@@ -124,6 +127,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-is-hash-regex-fix-streaming.json'), 'r', encoding='utf-8') as f:
         generic_git_log_fuller_is_hash_regex_fix_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-blank-author-fix-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_blank_author_fix_streaming_json = json.loads(f.read())
 
 
     def test_git_log_s_nodata(self):
@@ -261,6 +267,13 @@ class MyTests(unittest.TestCase):
         contains a line that evaluated as true to an older _is_hash regex
         """
         self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_fuller_is_hash_regex_fix.splitlines(), quiet=True)), self.generic_git_log_fuller_is_hash_regex_fix_streaming_json)
+
+    def test_git_log_blank_author_fix(self):
+        """
+        Test 'git_log' fix for when a commit author has a blank name,
+        empty email, or both
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_blank_author_fix.splitlines(), quiet=True)), self.generic_git_log_blank_author_fix_streaming_json)
 
 
 if __name__ == '__main__':

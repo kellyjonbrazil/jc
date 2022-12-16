@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.22.2'
+__version__ = '1.22.3'
 
 parsers: List[str] = [
     'acpi',
@@ -19,10 +19,13 @@ parsers: List[str] = [
     'asciitable',
     'asciitable-m',
     'blkid',
+    'cbt',
     'cef',
     'cef-s',
     'chage',
     'cksum',
+    'clf',
+    'clf-s',
     'crontab',
     'crontab-u',
     'csv',
@@ -82,9 +85,11 @@ parsers: List[str] = [
     'netstat',
     'nmcli',
     'ntpq',
+    'openvpn',
     'os-prober',
     'passwd',
     'pci-ids',
+    'pgpass',
     'pidstat',
     'pidstat-s',
     'ping',

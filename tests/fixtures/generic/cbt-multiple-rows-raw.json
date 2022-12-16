@@ -1,0 +1,1 @@
+[{"key":"foo","cells":[{"column_family":"foo","column":"bar","value":"baz1","timestamp_iso":"2000-01-01T01:00:00","timestamp_epoch":946717200,"timestamp_epoch_utc":null}]},{"key":"bar","cells":[{"column_family":"foo","column":"bar","value":"baz2","timestamp_iso":"2000-01-01T01:00:00","timestamp_epoch":946717200,"timestamp_epoch_utc":null}]}]

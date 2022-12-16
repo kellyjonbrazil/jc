@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Genereate README.md from jc metadata using jinja2 templates
+# Generate README.md from jc metadata using jinja2 templates
 import jc.cli
 import jc.lib
 from jinja2 import Environment, FileSystemLoader
