@@ -56,12 +56,16 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {
-        'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
-        'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options', 'lane'
-    }
-    float_list = {'rx_power_mw', 'rx_power_dbm', 'tx_bias_ma'}
+    int_list = ['signal_level', 'rx_invalid_nwid', 'rx_invalid_crypt', 'rx_invalid_frag', 
+        'tx_excessive_retries', 'invalid_misc', 'missed_beacon', 'tx_power', 'retry_short_limit']
+    float_list = ['frequency', 'bit_rate']
+    bool_list = ['rts_threshold', 'fragment_threshold', 'power_management']
+
+
+    proc_data = [ { key: int(value) if key in int_list else value for key, value in proc_data_item.items() } for proc_data_item in proc_data ]
+    proc_data = [ { key: float(value) if key in float_list else value for key, value in proc_data_item.items() } for proc_data_item in proc_data ]
+    proc_data = [ { key: value == 'on' if key in bool_list else value for key, value in proc_data_item .items() } for proc_data_item in proc_data ]
+
     return proc_data
 
 def parse(
