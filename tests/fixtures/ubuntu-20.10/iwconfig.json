@@ -8,22 +8,21 @@
         "frequency_unit": "GHz",
         "access_point": "E6:63:DA:16:50:BF",
         "bit_rate": "6",
+        "bit_rate_unit": "Mb/s",
         "tx_power": "30",
         "tx_power_unit": "dBm",
         "retry_short_limit": "7",
         "rts_threshold": "off",
         "fragment_threshold": "off",
-        "poser_management": null,
-        "link_quality": null,
+        "power_management": "on",
+        "link_quality": "58/70",
         "signal_level": "-52",
+        "signal_level_unit": "dBm",
         "rx_invalid_nwid": "0",
         "rx_invalid_crypt": "0",
         "rx_invalid_frag": "0",
         "tx_excessive_retries": "0",
         "invalid_misc": "1766",
-        "missed_beacon": "0",
-        "bit_rate_unit": "Mb/s",
-        "power_management": "58/70",
-        "signal_level_unit": "dBm"
+        "missed_beacon": "0"
     }
 ]

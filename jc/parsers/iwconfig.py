@@ -97,14 +97,16 @@ def parse(
         "frequency_unit": None,
         "access_point": None,
         "bit_rate": None,
+        "bit_rate_unit": None,
         "tx_power": None,
         "tx_power_unit": None,
         "retry_short_limit": None,
         "rts_threshold": None,
         "fragment_threshold": None,
-        "poser_management": None,
+        "power_management": None,
         "link_quality": None,
         "signal_level": None,
+        "signal_level_unit": None,
         "rx_invalid_nwid": None,
         "rx_invalid_crypt": None,
         "rx_invalid_frag": None,
@@ -125,7 +127,7 @@ def parse(
     re_rts_threshold = re.compile(r'RTS thr:(?P<rts_threshold>(off|on))')
     re_fragment_threshold = re.compile(r'Fragment thr:(?P<fragment_threshold>(off|on))')
     re_power_management = re.compile(r'Power Management:(?P<power_management>(off|on))')
-    re_link_quality = re.compile(r'Link Quality=(?P<power_management>[0-9\/]+)')
+    re_link_quality = re.compile(r'Link Quality=(?P<link_quality>[0-9\/]+)')
     re_signal_level = re.compile(r'Signal level=(?P<signal_level>[-0-9]+)\s(?P<signal_level_unit>[\w]+)')
     re_rx_invalid_nwid = re.compile(r'Rx invalid nwid:(?P<rx_invalid_nwid>[-0-9]+)')
     re_rx_invalid_crypt = re.compile(r'Rx invalid crypt:(?P<rx_invalid_crypt>[-0-9]+)')
