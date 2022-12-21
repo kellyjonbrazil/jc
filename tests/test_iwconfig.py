@@ -9,15 +9,15 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 class iwconfigTests(unittest.TestCase):
 
     # input
-    with open(os.path.join(THIS_DIR, 'fixtures/ubuntu-20.10/iwconfig.out'), 'r', encoding='utf-8') as f:
-        ubuntu_20_10_iwconfig= f.read()
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig.out'), 'r', encoding='utf-8') as f:
+        iwconfig_output = f.read()
 
     # output
-    with open(os.path.join(THIS_DIR, 'fixtures/ubuntu-20.10/iwconfig.json'), 'r', encoding='utf-8') as f:
-        ubuntu_20_10_iwconfig_json= json.loads(f.read())
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig.json'), 'r', encoding='utf-8') as f:
+        iwconfig_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, 'fixtures/ubuntu-20.10/iwconfig-raw.json'), 'r', encoding='utf-8') as f:
-        ubuntu_20_10_iwconfig_raw_json= json.loads(f.read())
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-raw.json'), 'r', encoding='utf-8') as f:
+        iwconfig_raw_json = json.loads(f.read())
 
 
     def test_iwconfig_nodata(self):
@@ -26,17 +26,17 @@ class iwconfigTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.iwconfig.parse('', quiet=True), [])
 
-    def test_iwconfig_ubuntu_20_04(self):
+    def test_iwconfig_raw(self):
         """
-        Test 'iwconfig' raw on Ubuntu 20.10
+        Test 'iwconfig' raw
         """
-        self.assertEqual(jc.parsers.iwconfig.parse(self.ubuntu_20_10_iwconfig, quiet=True, raw=True), self.ubuntu_20_10_iwconfig_raw_json)
+        self.assertEqual(jc.parsers.iwconfig.parse(self.iwconfig_output, quiet=True, raw=True), self.iwconfig_raw_json)
 
-    def test_iwconfig_ubuntu_20_04(self):
+    def test_iwconfig(self):
         """
-        Test 'iwconfig' on Ubuntu 20.10
+        Test 'iwconfig'
         """
-        self.assertEqual(jc.parsers.iwconfig.parse(self.ubuntu_20_10_iwconfig, quiet=True), self.ubuntu_20_10_iwconfig_json)
+        self.assertEqual(jc.parsers.iwconfig.parse(self.iwconfig_output, quiet=True), self.iwconfig_json)
 
 if __name__ == '__main__':
     unittest.main()

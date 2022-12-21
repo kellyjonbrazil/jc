@@ -18,6 +18,32 @@ Usage (module):
 Schema:
 
     [
+        {
+            "name": string,
+            "protocol": string,
+            "essid": string,
+            "mode": string,
+            "frequency": float,
+            "frequency_unit": string,
+            "access_point": string,
+            "bit_rate": float,
+            "bit_rate_unit": string,
+            "tx_power": integer,
+            "tx_power_unit": string,
+            "retry_short_limit": integer,
+            "rts_threshold": boolean,
+            "fragment_threshold": boolean,
+            "power_management": boolean,
+            "link_quality": string,
+            "signal_level": integer,
+            "signal_level_unit": string,
+            "rx_invalid_nwid": integer,
+            "rx_invalid_crypt": integer,
+            "rx_invalid_frag": integer,
+            "tx_excessive_retries": integer,
+            "invalid_misc": integer,
+            "missed_beacon": integer
+        }
     ]
 
 
@@ -90,36 +116,7 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
-
-    # for backwards compatibility, preset all fields to None
-    wireless_extension_obj: Dict = {
-        "name": None,
-        "protocol": None,
-        "essid": None,
-        "mode": None,
-        "frequency": None,
-        "frequency_unit": None,
-        "access_point": None,
-        "bit_rate": None,
-        "bit_rate_unit": None,
-        "tx_power": None,
-        "tx_power_unit": None,
-        "retry_short_limit": None,
-        "rts_threshold": None,
-        "fragment_threshold": None,
-        "power_management": None,
-        "link_quality": None,
-        "signal_level": None,
-        "signal_level_unit": None,
-        "rx_invalid_nwid": None,
-        "rx_invalid_crypt": None,
-        "rx_invalid_frag": None,
-        "tx_excessive_retries": None,
-        "invalid_misc": None,
-        "missed_beacon": None
-    }
-
-    interface_item: Dict = wireless_extension_obj.copy()
+    wireless_extension_obj: Dict = {}
 
     re_interface = re.compile(r'^(?P<name>[a-zA-Z0-9:._-]+)\s+(?P<protocol>([a-zA-Z0-9]+\s)*[a-zA-Z0-9.]+)\s+ESSID:\"(?P<essid>[a-zA-Z0-9:._\s]+)\"')
     re_mode = re.compile(r'Mode:(?P<mode>\w+)')
@@ -147,21 +144,22 @@ def parse(
         re_rx_invalid_frag, re_tx_excessive_retries, re_invalid_misc, re_missed_beacon
     ]
 
+    interface_item = None
     if jc.utils.has_data(data):
         for line in filter(None, data.splitlines()):
 
             # Find new interface lines
             interface_match = re.search(re_interface, line)
             if interface_match:
-                if interface_item['name'] is not None:
+                if interface_item is not None:
                     raw_output.append(interface_item)
-                    interface_item = wireless_extension_obj.copy()
 
+                interface_item = dict()
                 interface_item.update(interface_match.groupdict())
                 continue
             
-            # we do not  have any interface yet continue to search for it --> next line
-            if interface_item['name'] is None:
+            # we do not have any interface yet continue to search for it --> next line
+            if interface_item is None:
                 continue   
 
             # Filling interface with whatever we can find
@@ -170,7 +168,7 @@ def parse(
                 if match:
                     interface_item.update(match.groupdict())
 
-    if interface_item['name'] is not None:
+    if interface_item is not None:
         raw_output.append(interface_item)
 
     return raw_output if raw else _process(raw_output)
