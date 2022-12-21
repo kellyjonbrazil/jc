@@ -12,12 +12,18 @@ class iwconfigTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig.out'), 'r', encoding='utf-8') as f:
         iwconfig_output = f.read()
 
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-many.out'), 'r', encoding='utf-8') as f:
+        iwconfig_many_output = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig.json'), 'r', encoding='utf-8') as f:
         iwconfig_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-raw.json'), 'r', encoding='utf-8') as f:
         iwconfig_raw_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-many.json'), 'r', encoding='utf-8') as f:
+        iwconfig_many_json = json.loads(f.read())    
 
 
     def test_iwconfig_nodata(self):
@@ -37,6 +43,12 @@ class iwconfigTests(unittest.TestCase):
         Test 'iwconfig'
         """
         self.assertEqual(jc.parsers.iwconfig.parse(self.iwconfig_output, quiet=True), self.iwconfig_json)
+
+    def test_iwconfig_many(self):
+        """
+        Test 'iwconfig' many interface
+        """
+        self.assertEqual(jc.parsers.iwconfig.parse(self.iwconfig_many_output, quiet=True), self.iwconfig_many_json)
 
 if __name__ == '__main__':
     unittest.main()
