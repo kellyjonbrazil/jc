@@ -49,7 +49,35 @@ Schema:
 
 Examples:
 
-    $ iwconfig | jc --ifconfig -p
+    $  iwconfig 2> /dev/null | jc --iwconfig -p
+    [
+      {
+        "name": "wlp5s0",
+        "protocol": "IEEE 802.11",
+        "essid": "BLABLABLA",
+        "mode": "Managed",
+        "frequency": 5.18,
+        "frequency_unit": "GHz",
+        "access_point": "E6:64:DA:16:51:BF",
+        "bit_rate": 6.0,
+        "bit_rate_unit": "Mb/s",
+        "tx_power": 30,
+        "tx_power_unit": "dBm",
+        "retry_short_limit": 7,
+        "rts_threshold": false,
+        "fragment_threshold": false,
+        "power_management": true,
+        "link_quality": "61/70",
+        "signal_level": -49,
+        "signal_level_unit": "dBm",
+        "rx_invalid_nwid": 0,
+        "rx_invalid_crypt": 0,
+        "rx_invalid_frag": 0,
+        "tx_excessive_retries": 0,
+        "invalid_misc": 2095,
+        "missed_beacon": 0
+      }
+    ]
 
 """
 import re
