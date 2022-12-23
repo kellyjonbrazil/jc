@@ -201,7 +201,7 @@ def parse(
         pid_mountinfo_p = re.compile(r'^\d+ \d+ \d+:\d+ /.+\n')
         pid_numa_maps_p = re.compile(r'^[a-f0-9]{12} default [^\n]+\n')
         pid_smaps_p = re.compile(r'^[0-9a-f]{12}-[0-9a-f]{12} [rwxsp\-]{4} [0-9a-f]{8} [0-9a-f]{2}:[0-9a-f]{2} \d+ [^\n]+\nSize:\s+\d+ \S\S\n')
-        pid_stat_p = re.compile(r'^\d+ \(.{1,15}\) \S \d+ \d+ \d+ \d+ -?\d+ (?:\d+ ){43}\d+$', re.DOTALL)
+        pid_stat_p = re.compile(r'^\d+ \(.+\) \S \d+ \d+ \d+ \d+ -?\d+ (?:\d+ ){43}\d+$', re.DOTALL)
         pid_statm_p = re.compile(r'^\d+ \d+ \d+\s\d+\s\d+\s\d+\s\d+$')
         pid_status_p = re.compile(r'^Name:\t.+\nUmask:\t\d+\nState:\t.+\nTgid:\t\d+\n')
 
