@@ -19,37 +19,37 @@ Schema:
 
     [
         {
-            "name": string,
-            "protocol": string,
-            "essid": string,
-            "mode": string,
-            "frequency": float,
-            "frequency_unit": string,
-            "access_point": string,
-            "bit_rate": float,
-            "bit_rate_unit": string,
-            "tx_power": integer,
-            "tx_power_unit": string,
-            "retry_short_limit": integer,
-            "rts_threshold": boolean,
-            "fragment_threshold": boolean,
-            "power_management": boolean,
-            "link_quality": string,
-            "signal_level": integer,
-            "signal_level_unit": string,
-            "rx_invalid_nwid": integer,
-            "rx_invalid_crypt": integer,
-            "rx_invalid_frag": integer,
-            "tx_excessive_retries": integer,
-            "invalid_misc": integer,
-            "missed_beacon": integer
+            "name":                         string,
+            "protocol":                     string,
+            "essid":                        string,
+            "mode":                         string,
+            "frequency":                    float,
+            "frequency_unit":               string,
+            "access_point":                 string,
+            "bit_rate":                     float,
+            "bit_rate_unit":                string,
+            "tx_power":                     integer,
+            "tx_power_unit":                string,
+            "retry_short_limit":            integer,
+            "rts_threshold":                boolean,
+            "fragment_threshold":           boolean,
+            "power_management":             boolean,
+            "link_quality":                 string,
+            "signal_level":                 integer,
+            "signal_level_unit":            string,
+            "rx_invalid_nwid":              integer,
+            "rx_invalid_crypt":             integer,
+            "rx_invalid_frag":              integer,
+            "tx_excessive_retries":         integer,
+            "invalid_misc":                 integer,
+            "missed_beacon":                integer
         }
     ]
 
 
 Examples:
 
-    $  iwconfig 2> /dev/null | jc --iwconfig -p
+    $  iwconfig | jc --iwconfig -p
     [
       {
         "name": "wlp5s0",
@@ -110,17 +110,19 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = ['signal_level', 'rx_invalid_nwid', 'rx_invalid_crypt', 'rx_invalid_frag', 
-        'tx_excessive_retries', 'invalid_misc', 'missed_beacon', 'tx_power', 'retry_short_limit']
+    int_list = [
+        'signal_level', 'rx_invalid_nwid', 'rx_invalid_crypt', 'rx_invalid_frag',
+        'tx_excessive_retries', 'invalid_misc', 'missed_beacon', 'tx_power', 'retry_short_limit'
+    ]
     float_list = ['frequency', 'bit_rate']
     bool_list = ['rts_threshold', 'fragment_threshold', 'power_management']
-
 
     proc_data = [ { key: int(value) if key in int_list else value for key, value in proc_data_item.items() } for proc_data_item in proc_data ]
     proc_data = [ { key: float(value) if key in float_list else value for key, value in proc_data_item.items() } for proc_data_item in proc_data ]
     proc_data = [ { key: value == 'on' if key in bool_list else value for key, value in proc_data_item .items() } for proc_data_item in proc_data ]
 
     return proc_data
+
 
 def parse(
     data: str,
@@ -144,7 +146,6 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
-    wireless_extension_obj: Dict = {}
 
     re_interface = re.compile(r'^(?P<name>[a-zA-Z0-9:._-]+)\s+(?P<protocol>([a-zA-Z0-9]+\s)*[a-zA-Z0-9.]+)\s+ESSID:\"(?P<essid>[a-zA-Z0-9:._\s]+)\"')
     re_mode = re.compile(r'Mode:(?P<mode>\w+)')
@@ -185,10 +186,10 @@ def parse(
                 interface_item = dict()
                 interface_item.update(interface_match.groupdict())
                 continue
-            
+
             # we do not have any interface yet continue to search for it --> next line
             if interface_item is None:
-                continue   
+                continue
 
             # Filling interface with whatever we can find
             for re_entry in re_all:
