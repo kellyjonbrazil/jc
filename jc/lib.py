@@ -65,6 +65,7 @@ parsers: List[str] = [
     'iptables',
     'iso-datetime',
     'iw-scan',
+    'iwconfig',
     'jar-manifest',
     'jobs',
     'jwt',
