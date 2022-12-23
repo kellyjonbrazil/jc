@@ -2,6 +2,9 @@ jc changelog
 
 20221223 v1.23.4
 - Add `iwconfig` command parser
+- Fix `proc` parser magic signature detection for `/proc/pid/stat` hacks
+- Fix python 3.6-related issues
+- Add python 3.6 to automated tests
 
 20221216 v1.22.3
 - Add Common Log Format and Combined Log Format file parser (standard and streaming)
