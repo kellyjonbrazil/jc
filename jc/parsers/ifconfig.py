@@ -326,7 +326,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _bundle_match(pattern_list: List[re.Pattern], string: str) -> Optional[re.Match]:
+def _bundle_match(pattern_list, string):
     """Returns a match object if a string matches one of a list of patterns.
     If no match is found, returns None"""
     for pattern in pattern_list:

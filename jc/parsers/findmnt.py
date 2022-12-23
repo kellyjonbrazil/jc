@@ -140,7 +140,6 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-
 def _replace(matchobj):
     if matchobj:
         matchlen = len(matchobj.group(1))
