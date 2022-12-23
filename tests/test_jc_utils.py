@@ -79,6 +79,14 @@ class MyTests(unittest.TestCase):
             None: {'string': None, 'format': None, 'naive': None, 'utc': None}
         }
 
+        # fixup for change in behavior after python 3.6:
+        # Changed in version 3.7: When the %z directive is provided to the strptime() method,
+        # the UTC offsets can have a colon as a separator between hours, minutes and seconds.
+        # For example, '+01:00:00' will be parsed as an offset of one hour. In addition,
+        # providing 'Z' is identical to '+00:00'.
+        if sys.version_info < (3, 7, 0):
+            del datetime_map['2000/01/01-01:00:00.000000+00:00']
+
         for input_string, expected_output in datetime_map.items():
             ts = jc.utils.timestamp(input_string)
             ts_dict = {
