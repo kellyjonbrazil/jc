@@ -99,6 +99,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['jobs']
+    tags = ['command']
 
 
 __version__ = info.version

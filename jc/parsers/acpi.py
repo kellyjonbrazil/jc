@@ -233,6 +233,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['acpi']
+    tags = ['command']
 
 
 __version__ = info.version

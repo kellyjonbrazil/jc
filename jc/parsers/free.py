@@ -79,6 +79,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['free']
+    tags = ['command']
 
 
 __version__ = info.version

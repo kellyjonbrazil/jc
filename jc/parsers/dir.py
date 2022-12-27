@@ -126,6 +126,7 @@ class info():
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
     compatible = ['win32']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -103,6 +103,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the pycef library at https://github.com/DavidJBianco/pycef/releases/tag/v1.11-2'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string']
     streaming = True
 
 

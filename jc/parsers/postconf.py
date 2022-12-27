@@ -97,6 +97,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['postconf -M']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -86,6 +86,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['darwin']
     magic_commands = ['airport -I']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -58,6 +58,9 @@ class info():
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+
+    # tags options: generic, standard, file, string, binary, command
+    tags = ['command']
     streaming = True
 
 

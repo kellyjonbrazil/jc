@@ -138,6 +138,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['tracepath', 'tracepath6']
+    tags = ['command']
 
 
 __version__ = info.version

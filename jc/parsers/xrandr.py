@@ -141,15 +141,13 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-
     version = "1.1"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "lyter_git at sent.com"
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ["linux", "darwin", "cygwin", "aix", "freebsd"]
     magic_commands = ["xrandr"]
+    tags = ['command']
 
 
 __version__ = info.version

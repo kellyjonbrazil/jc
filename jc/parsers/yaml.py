@@ -93,6 +93,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the ruamel.yaml library at https://pypi.org/project/ruamel.yaml'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string']
 
 
 __version__ = info.version

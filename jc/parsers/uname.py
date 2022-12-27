@@ -54,6 +54,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['uname']
+    tags = ['command']
 
 
 __version__ = info.version

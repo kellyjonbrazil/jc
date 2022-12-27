@@ -91,6 +91,7 @@ Examples:
     Parser Documentation:
         $ jc --help --dig
 
-    Show Hidden Parsers:
-        $ jc -hh
+    More Help:
+        $ jc -hh        # show hidden parsers
+        $ jc -hhh       # list parsers by category
 '''

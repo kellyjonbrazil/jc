@@ -76,6 +76,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using configparser from the standard library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string']
 
 
 __version__ = info.version

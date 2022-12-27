@@ -275,6 +275,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['lsusb']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -93,6 +93,7 @@ class info():
     author_email = 'vrince@gmail.com'
     compatible = ['linux']
     magic_commands = ['iwconfig']
+    tags = ['command']
 
 
 __version__ = info.version

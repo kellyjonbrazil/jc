@@ -167,6 +167,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['rpm -qi', 'rpm -qia', 'rpm -qai']
+    tags = ['command']
 
 
 __version__ = info.version

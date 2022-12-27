@@ -92,6 +92,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
+    tags = ['file']
     hidden = True
 
 

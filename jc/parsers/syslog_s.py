@@ -91,6 +91,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string']
     streaming = True
 
 

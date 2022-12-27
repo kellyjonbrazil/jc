@@ -78,6 +78,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     magic_commands = ['env', 'printenv']
+    tags = ['command']
 
 
 __version__ = info.version

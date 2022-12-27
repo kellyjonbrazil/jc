@@ -180,6 +180,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['crontab']
+    tags = ['file', 'command']
 
 
 __version__ = info.version

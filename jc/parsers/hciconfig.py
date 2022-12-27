@@ -323,6 +323,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['hciconfig']
+    tags = ['command']
 
 
 __version__ = info.version

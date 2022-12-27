@@ -218,6 +218,7 @@ class info:
     author_email = "jon@rebelliondefense.com"
     compatible = ["win32"]
     magic_commands = ["systeminfo"]
+    tags = ['command']
 
 
 __version__ = info.version

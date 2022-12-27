@@ -414,6 +414,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the asn1crypto library at https://github.com/wbond/asn1crypto/releases/tag/1.5.1'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string', 'binary']
 
 
 __version__ = info.version

@@ -106,6 +106,7 @@ class info():
     author_email = 'andreas.weiden@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     magic_commands = ['cbt']
+    tags = ['command']
 
 
 __version__ = info.version

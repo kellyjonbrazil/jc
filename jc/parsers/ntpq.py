@@ -213,6 +213,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'freebsd']
     magic_commands = ['ntpq']
+    tags = ['command']
 
 
 __version__ = info.version

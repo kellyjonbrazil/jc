@@ -60,6 +60,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['cksum', 'sum']
+    tags = ['command']
 
 
 __version__ = info.version

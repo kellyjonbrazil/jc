@@ -143,6 +143,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['rsync -i', 'rsync --itemize-changes']
+    tags = ['command']
 
 
 __version__ = info.version

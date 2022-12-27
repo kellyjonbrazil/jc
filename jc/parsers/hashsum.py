@@ -76,6 +76,7 @@ class info():
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['md5sum', 'md5', 'shasum', 'sha1sum', 'sha224sum',
                       'sha256sum', 'sha384sum', 'sha512sum']
+    tags = ['command']
 
 
 __version__ = info.version

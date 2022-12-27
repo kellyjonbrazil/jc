@@ -52,6 +52,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['update-alternatives --get-selections']
+    tags = ['command']
 
 
 __version__ = info.version

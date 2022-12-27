@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Union, Optional, TextIO
+from typing import List, Dict, Union, Optional, TextIO
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
@@ -64,12 +64,12 @@ if PYGMENTS_INSTALLED:
 class JcCli():
     __slots__ = (
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
-        'custom_colors', 'show_hidden', 'ascii_only', 'json_separators', 'json_indent',
-        'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono', 'help_me',
-        'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer', 'version_info',
-        'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser', 'magic_options',
-        'magic_run_command', 'magic_run_command_str', 'magic_stdout', 'magic_stderr',
-        'magic_returncode'
+        'custom_colors', 'show_hidden', 'show_categories', 'ascii_only', 'json_separators',
+        'json_indent', 'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono',
+        'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer',
+        'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
+        'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
+        'magic_stderr', 'magic_returncode'
     )
 
     def __init__(self) -> None:
@@ -83,6 +83,7 @@ class JcCli():
         self.pad: int = 0
         self.custom_colors: CustomColorType = {}
         self.show_hidden: bool = False
+        self.show_categories: bool = False
         self.ascii_only: bool = False
         self.json_separators: Optional[tuple[str, str]] = (',', ':')
         self.json_indent: Optional[int] = None
@@ -198,6 +199,41 @@ class JcCli():
 
         return ptext
 
+    def parser_categories_text(self) -> str:
+        """Return lists of parsers by category"""
+        category_text: str = ''
+        padding_char: str = ' '
+        all_parsers = all_parser_info(show_hidden=True, show_deprecated=False)
+        generic = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'generic' in x['tags']]
+        standard = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'standard' in x['tags']]
+        command = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'command' in x['tags']]
+        file_str_bin = [
+            {'arg': x['argument'], 'desc': x['description']} for x in all_parsers
+                if 'file' in x['tags'] or
+                'string' in x['tags'] or
+                'binary' in x['tags']
+        ]
+        streaming = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if x.get('streaming')]
+        categories: Dict = {
+            'Generic Parsers:': generic,
+            'Standard Spec Parsers:': standard,
+            'File/String/Binary Parsers:': file_str_bin,
+            'Streaming Parsers:': streaming,
+            'Command Parsers:': command
+        }
+
+        for cat, cat_objs in categories.items():
+            category_text += f'{cat}  ({len(cat_objs)})\n'
+            for p in cat_objs:
+                parser_arg: str = p.get('arg', 'UNKNOWN')
+                parser_desc: str = p.get('desc', 'No description available.')
+                padding: int = self.pad - len(parser_arg)
+                padding_text: str = padding_char * padding
+                category_text += f'{parser_arg}{padding_text}{parser_desc}\n'
+            category_text += '\n'
+
+        return category_text[:-1]
+
     def options_text(self) -> str:
         """Return the argument and description information from each option"""
         otext: str = ''
@@ -236,8 +272,6 @@ class JcCli():
 
     def helptext(self) -> str:
         """Return the help text with the list of parsers"""
-        self.indent = 4
-        self.pad = 20
         parsers_string: str = self.parsers_text()
         options_string: str = self.options_text()
         helptext_string: str = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
@@ -248,6 +282,13 @@ class JcCli():
         Pages the parser documentation if a parser is found in the arguments,
         otherwise the general help text is printed.
         """
+        self.indent = 4
+        self.pad = 20
+
+        if self.show_categories:
+            utils._safe_print(self.parser_categories_text())
+            return
+
         for arg in self.args:
             parser_name: str = self.parser_shortname(arg)
 
@@ -655,6 +696,7 @@ class JcCli():
         self.force_color = 'C' in self.options
         self.help_me = 'h' in self.options
         self.show_hidden = self.options.count('h') > 1   # verbose help
+        self.show_categories = self.options.count('h') > 2
         self.pretty = 'p' in self.options
         self.quiet = 'q' in self.options
         self.ignore_exceptions = self.options.count('q') > 1

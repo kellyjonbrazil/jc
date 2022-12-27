@@ -170,6 +170,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['ping', 'ping6']
+    tags = ['command']
 
 
 __version__ = info.version

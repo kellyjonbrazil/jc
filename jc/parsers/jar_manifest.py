@@ -83,6 +83,7 @@ class info():
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['file']
 
 
 __version__ = info.version

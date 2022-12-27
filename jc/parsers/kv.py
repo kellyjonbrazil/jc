@@ -1,4 +1,4 @@
-"""jc - JSON Convert `Key/Value` file parser
+"""jc - JSON Convert `Key/Value` file and string parser
 
 Supports files containing simple key/value pairs.
 
@@ -55,11 +55,12 @@ Examples:
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.2'
-    description = 'Key/Value file parser'
+    description = 'Key/Value file and string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'This is a wrapper for the INI parser'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['generic', 'file', 'string']
 
 
 __version__ = info.version

@@ -87,6 +87,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the xmltodict library at https://github.com/martinblech/xmltodict'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string']
 
 
 __version__ = info.version
