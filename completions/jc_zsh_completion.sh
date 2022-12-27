@@ -160,7 +160,7 @@ _jc() {
         '--jar-manifest:Java MANIFEST.MF file parser'
         '--jobs:`jobs` command parser'
         '--jwt:JWT string parser'
-        '--kv:Key/Value file parser'
+        '--kv:Key/Value file and string parser'
         '--last:`last` and `lastb` command parser'
         '--ls:`ls` command parser'
         '--ls-s:`ls` command streaming parser'

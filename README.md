@@ -210,7 +210,7 @@ option.
 | ` --jar-manifest` | Java MANIFEST.MF file parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest)   |
 | `         --jobs` | `jobs` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs)           |
 | `          --jwt` | JWT string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jwt)            |
-| `           --kv` | Key/Value file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |
+| `           --kv` | Key/Value file and string parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |
 | `         --last` | `last` and `lastb` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/last)           |
 | `           --ls` | `ls` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls)             |
 | `         --ls-s` | `ls` command streaming parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s)           |

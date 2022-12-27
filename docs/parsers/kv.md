@@ -3,7 +3,7 @@
 
 # jc.parsers.kv
 
-jc - JSON Convert `Key/Value` file parser
+jc - JSON Convert `Key/Value` file and string parser
 
 Supports files containing simple key/value pairs.
 
