@@ -291,8 +291,8 @@ _jc() {
     )
     jc_options=(--force-color -C --debug -d --monochrome -m --meta-out -M --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
     jc_options_describe=(
-        '--force-color:force color output even when using pipes (overrides -m)'
-        '-C:force color output even when using pipes (overrides -m)'
+        '--force-color:force color output (overrides -m)'
+        '-C:force color output (overrides -m)'
         '--debug:debug (double for verbose debug)'
         '-d:debug (double for verbose debug)'
         '--monochrome:monochrome output'
@@ -323,8 +323,8 @@ _jc() {
         '-y:YAML output'
         '--monochrome:monochrome output'
         '-m:monochrome output'
-        '--force-color:force color output even when using pipes (overrides -m)'
-        '-C:force color output even when using pipes (overrides -m)'
+        '--force-color:force color output (overrides -m)'
+        '-C:force color output (overrides -m)'
     )
     jc_help_options=(--help -h)
     jc_help_options_describe=(
