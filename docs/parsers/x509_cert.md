@@ -32,6 +32,7 @@ Schema:
         "tbs_certificate": {
           "version":                      string,
           "serial_number":                string,  # [0]
+          "serial_number_str":            string,
           "signature": {
             "algorithm":                  string,
             "parameters":                 string/null,
@@ -43,7 +44,9 @@ Schema:
             "organization_name":          array/string,
             "organizational_unit_name":   array/string,
             "common_name":                string,
-            "email_address":              string
+            "email_address":              string,
+            "serial_number":              string,   # [0]
+            "serial_number_str":          string
           },
           "validity": {
             "not_before":                 integer,  # [1]
@@ -58,7 +61,9 @@ Schema:
             "organization_name":          array/string,
             "organizational_unit_name":   array/string,
             "common_name":                string,
-            "email_address":              string
+            "email_address":              string,
+            "serial_number":              string,   # [0]
+            "serial_number_str":          string
           },
           "subject_public_key_info": {
             "algorithm": {

@@ -21,6 +21,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-multi-cert.pem'), 'r', encoding='utf-8') as f:
         x509_multi_cert = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-string-serialnumber.der'), 'rb') as f:
+        x509_string_serialnumber = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-ca-cert.json'), 'r', encoding='utf-8') as f:
         x509_ca_cert_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-multi-cert.json'), 'r', encoding='utf-8') as f:
         x509_multi_cert_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-string-serialnumber.json'), 'r', encoding='utf-8') as f:
+        x509_string_serialnumber_json = json.loads(f.read())
 
 
     def test_x509_cert_nodata(self):
@@ -63,7 +69,13 @@ class MyTests(unittest.TestCase):
         """
         Test 'cat x509-multi-cert.pem' (PEM file with multiple certificates)
         """
-        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_letsencrypt, quiet=True), self.x509_letsencrypt_json)
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_multi_cert, quiet=True), self.x509_multi_cert_json)
+
+    def test_x509_string_serialnumber(self):
+        """
+        Test 'cat x509-string-serialnumber.der' (DER file with string serial numbers)
+        """
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_multi_cert, quiet=True), self.x509_multi_cert_json)
 
 
 if __name__ == '__main__':

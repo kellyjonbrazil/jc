@@ -27,6 +27,7 @@ Schema:
         "tbs_certificate": {
           "version":                      string,
           "serial_number":                string,  # [0]
+          "serial_number_str":            string,
           "signature": {
             "algorithm":                  string,
             "parameters":                 string/null,
@@ -38,7 +39,9 @@ Schema:
             "organization_name":          array/string,
             "organizational_unit_name":   array/string,
             "common_name":                string,
-            "email_address":              string
+            "email_address":              string,
+            "serial_number":              string,   # [0]
+            "serial_number_str":          string
           },
           "validity": {
             "not_before":                 integer,  # [1]
@@ -53,7 +56,9 @@ Schema:
             "organization_name":          array/string,
             "organizational_unit_name":   array/string,
             "common_name":                string,
-            "email_address":              string
+            "email_address":              string,
+            "serial_number":              string,   # [0]
+            "serial_number_str":          string
           },
           "subject_public_key_info": {
             "algorithm": {
@@ -466,7 +471,19 @@ def _fix_objects(obj):
     if isinstance(obj, dict):
         for k, v in obj.copy().items():
             if k == 'serial_number':
-                obj.update({k: _b2a(_i2b(v))})
+                # according to the spec this field can be string or integer
+                if isinstance(v, int):
+                    v_str = str(v)
+                    v_hex = _b2a(_i2b(v))
+                else:
+                    v_str = str(v)
+                    v_hex = _b2a(v_str.encode())
+                obj.update(
+                    {
+                        k: v_hex,
+                        f'{k}_str': v_str
+                    }
+                )
                 continue
 
             if k == 'modulus':
