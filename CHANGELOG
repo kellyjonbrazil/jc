@@ -1,8 +1,9 @@
 jc changelog
 
-20221227 v1.23.4
+20221229 v1.23.4
 - Add `iwconfig` command parser
 - Fix `proc` parser magic signature detection for `/proc/pid/stat` hacks
+- Fix `x509-cert` parser for string serial numbers
 - Add category tags to parser metadata
 - Add "list parsers by category" view to help
 - Fix python 3.6-related issues
