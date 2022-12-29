@@ -514,7 +514,7 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, list):
-                newlist =[]
+                newlist = []
                 for i in v:
                     newlist.append(_fix_objects(i))
                 obj.update({k: newlist})
