@@ -166,7 +166,7 @@ def parse(
             # Try parsing as an old-style NeXTSTEP Plist format
             # pbPlist library only works on file paths, not strings :(
             import tempfile
-            with tempfile.NamedTemporaryFile(mode='w+b') as plist_file:
+            with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as plist_file:
                 plist_file.write(data)
                 plist_file.seek(0)
                 parsed_plist = PBPlist(plist_file.name)
