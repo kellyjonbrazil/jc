@@ -48,7 +48,6 @@ from typing import Dict, Union
 import plistlib
 import binascii
 from datetime import datetime
-from jc.parsers.pbPlist.pbPlist import PBPlist
 import jc.utils
 
 
@@ -165,6 +164,7 @@ def parse(
         except Exception:
             # Try parsing as an old-style NeXTSTEP Plist format
             # pbPlist library only works on file paths, not strings :(
+            from jc.parsers.pbPlist.pbPlist import PBPlist
             import tempfile
             import os
 
