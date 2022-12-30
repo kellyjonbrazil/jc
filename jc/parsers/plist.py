@@ -166,11 +166,19 @@ def parse(
             # Try parsing as an old-style NeXTSTEP Plist format
             # pbPlist library only works on file paths, not strings :(
             import tempfile
+            import os
+
+            # use delete=False for windows compatibility
             with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as plist_file:
+                plist_file_name = plist_file.name
                 plist_file.write(data)
                 plist_file.seek(0)
-                parsed_plist = PBPlist(plist_file.name)
+                parsed_plist = PBPlist(plist_file_name)
                 raw_output = parsed_plist.root.nativeType()
+
+            # try to delete the temp file
+            if os.path.exists(plist_file_name):
+                os.remove(plist_file_name)
 
         raw_output = _fix_objects(raw_output)
 
