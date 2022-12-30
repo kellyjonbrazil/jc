@@ -93,6 +93,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
+    tags = ['command']
     streaming = True
 
 

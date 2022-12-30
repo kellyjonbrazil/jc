@@ -19,7 +19,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/pid_stat.json'),
             'pid_stat_w_space_and_nl_in_comm': (
                 'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm',
-                'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm.json')
+                'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm.json'),
+            'pid_stat_hack': (
+                'fixtures/linux-proc/pid_stat_hack',
+                'fixtures/linux-proc/pid_stat_hack.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -48,6 +51,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_stat.parse(self.f_in['pid_stat_w_space_and_nl_in_comm'], quiet=True),
                                                         self.f_json['pid_stat_w_space_and_nl_in_comm'])
+
+    def test_proc_pid_stat_hack(self):
+        """
+        Test '/proc/<pid>/stat' with evil command hack
+        """
+        self.assertEqual(jc.parsers.proc_pid_stat.parse(self.f_in['pid_stat_hack'], quiet=True),
+                                                        self.f_json['pid_stat_hack'])
 
 
 if __name__ == '__main__':

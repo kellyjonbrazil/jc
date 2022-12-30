@@ -27,6 +27,7 @@ Schema:
         "tbs_certificate": {
           "version":                      string,
           "serial_number":                string,  # [0]
+          "serial_number_str":            string,
           "signature": {
             "algorithm":                  string,
             "parameters":                 string/null,
@@ -38,7 +39,9 @@ Schema:
             "organization_name":          array/string,
             "organizational_unit_name":   array/string,
             "common_name":                string,
-            "email_address":              string
+            "email_address":              string,
+            "serial_number":              string,   # [0]
+            "serial_number_str":          string
           },
           "validity": {
             "not_before":                 integer,  # [1]
@@ -53,7 +56,9 @@ Schema:
             "organization_name":          array/string,
             "organizational_unit_name":   array/string,
             "common_name":                string,
-            "email_address":              string
+            "email_address":              string,
+            "serial_number":              string,   # [0]
+            "serial_number_str":          string
           },
           "subject_public_key_info": {
             "algorithm": {
@@ -408,12 +413,13 @@ from jc.parsers.asn1crypto import pem, x509
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the asn1crypto library at https://github.com/wbond/asn1crypto/releases/tag/1.5.1'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string', 'binary']
 
 
 __version__ = info.version
@@ -465,7 +471,19 @@ def _fix_objects(obj):
     if isinstance(obj, dict):
         for k, v in obj.copy().items():
             if k == 'serial_number':
-                obj.update({k: _b2a(_i2b(v))})
+                # according to the spec this field can be string or integer
+                if isinstance(v, int):
+                    v_str = str(v)
+                    v_hex = _b2a(_i2b(v))
+                else:
+                    v_str = str(v)
+                    v_hex = _b2a(v_str.encode())
+                obj.update(
+                    {
+                        k: v_hex,
+                        f'{k}_str': v_str
+                    }
+                )
                 continue
 
             if k == 'modulus':
@@ -496,7 +514,7 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, list):
-                newlist =[]
+                newlist = []
                 for i in v:
                     newlist.append(_fix_objects(i))
                 obj.update({k: newlist})

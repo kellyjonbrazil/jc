@@ -69,6 +69,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Optimizations by https://github.com/philippeitis'
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -126,6 +126,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['lsof']
+    tags = ['command']
 
 
 __version__ = info.version

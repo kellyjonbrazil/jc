@@ -69,6 +69,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the python standard csv library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string']
     streaming = True
 
 

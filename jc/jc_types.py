@@ -20,6 +20,7 @@ if sys.version_info >= (3, 8):
             "author_email": str,
             "compatible": List[str],
             "magic_commands": List[str],
+            "tags": List[str],
             "documentation": str,
             "streaming": bool,
             "plugin": bool,

@@ -1,0 +1,17 @@
+wlp5s0    IEEE 802.11  ESSID:"BLABLABLA"  
+          Mode:Managed  Frequency:5.18 GHz  Access Point: E6:63:DA:16:50:BF   
+          Bit Rate=6 Mb/s   Tx-Power=30 dBm   
+          Retry short limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
+          Link Quality=58/70  Signal level=-52 dBm  
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:1766   Missed beacon:0
+
+wlp5s02   IEEE 802.11  ESSID:"BLABLABLA2"  
+          Mode:Managed  Frequency:5.18 GHz  Access Point: E6:63:DA:16:50:BF   
+          Bit Rate=6 Mb/s   Tx-Power=30 dBm   
+          Retry short limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
+          Link Quality=58/70  Signal level=-53 dBm  
+          Rx invalid nwid:41  Rx invalid crypt:42  Rx invalid frag:43
+          Tx excessive retries:44 Invalid misc:1766   Missed beacon:0

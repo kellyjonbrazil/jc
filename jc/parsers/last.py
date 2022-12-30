@@ -113,6 +113,7 @@ class info():
     details = 'Enhancements by https://github.com/zerolagtime'
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['last', 'lastb']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -219,12 +219,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.1'
+    version = '2.2'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['ifconfig']
+    tags = ['command']
 
 
 __version__ = info.version
@@ -326,7 +327,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _bundle_match(pattern_list: List[re.Pattern], string: str) -> Optional[re.Match]:
+def _bundle_match(pattern_list, string):
     """Returns a match object if a string matches one of a list of patterns.
     If no match is found, returns None"""
     for pattern in pattern_list:

@@ -99,6 +99,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
+    tags = ['file']
 
 
 __version__ = info.version

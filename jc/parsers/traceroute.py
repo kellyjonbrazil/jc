@@ -129,6 +129,7 @@ class info():
     details = 'Using the trparse library by Luis Benitez at https://github.com/lbenitez000/trparse'
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['traceroute', 'traceroute6']
+    tags = ['command']
 
 
 __version__ = info.version

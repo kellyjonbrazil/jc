@@ -328,6 +328,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
     magic_commands = ['dig']
+    tags = ['command']
 
 
 __version__ = info.version

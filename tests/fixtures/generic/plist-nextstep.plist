@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		15D488AC1BD3D6C700EC46B1 /* Lemon Setup */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 15D488AD1BD3D6C700EC46B1 /* Build configuration list for PBXAggregateTarget "Lemon Setup" */;
+			buildPhases = (
+				15D488B01BD3D6D000EC46B1 /* make distclean ; ./autogen.sh ; ./configure */,
+			);
+			dependencies = (
+			);
+			name = "Lemon Setup";
+			productName = "Lemon Setup";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		15D488BB1BD3D7A900EC46B1 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D488BA1BD3D7A900EC46B1 /* AppKit.framework */; };
+		15D488BD1BD3D7A900EC46B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D488BC1BD3D7A900EC46B1 /* Foundation.framework */; };
+		15D488C41BD3D7A900EC46B1 /* CitrusPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D488C31BD3D7A900EC46B1 /* CitrusPlugin.m */; };
+		15D488C71BD3D7A900EC46B1 /* NSObject_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D488C61BD3D7A900EC46B1 /* NSObject_Extension.m */; };
+		15D488D01BD3D9CD00EC46B1 /* Lemon.pbfilespec in Resources */ = {isa = PBXBuildFile; fileRef = 15D488CC1BD3D9CD00EC46B1 /* Lemon.pbfilespec */; };
+		15D488D11BD3D9CD00EC46B1 /* Lemon.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15D488CD1BD3D9CD00EC46B1 /* Lemon.strings */; };
+		15D488D21BD3D9CD00EC46B1 /* Lemon.xcspec in Resources */ = {isa = PBXBuildFile; fileRef = 15D488CE1BD3D9CD00EC46B1 /* Lemon.xcspec */; };
+		15D488D71BD3DA8800EC46B1 /* lemon in Resources */ = {isa = PBXBuildFile; fileRef = 15D488D61BD3DA8800EC46B1 /* lemon */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		15D488B11BD3D6F400EC46B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15D488951BD3D59200EC46B1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 15D488AC1BD3D6C700EC46B1;
+			remoteInfo = "Lemon Setup";
+		};
+		15D488D81BD3DA9C00EC46B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15D488951BD3D59200EC46B1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 15D488991BD3D59200EC46B1;
+			remoteInfo = Lemon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		158E53E61BD3E6A600F75AAD /* PluginUsage.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PluginUsage.md; sourceTree = "<group>"; };
+		15D488A01BD3D62C00EC46B1 /* autogen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		15D488A11BD3D62C00EC46B1 /* citrus.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citrus.pc.in; sourceTree = "<group>"; };
+		15D488A21BD3D62C00EC46B1 /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		15D488A31BD3D62C00EC46B1 /* lemon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lemon.c; sourceTree = "<group>"; };
+		15D488A41BD3D62C00EC46B1 /* lempar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lempar.c; sourceTree = "<group>"; };
+		15D488A51BD3D62C00EC46B1 /* lempar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lempar.h; sourceTree = "<group>"; };
+		15D488A61BD3D62C00EC46B1 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		15D488A71BD3D62C00EC46B1 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		15D488A81BD3D62C00EC46B1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		15D488A91BD3D62C00EC46B1 /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
+		15D488AA1BD3D62C00EC46B1 /* version.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = version.h.in; sourceTree = "<group>"; };
+		15D488B71BD3D7A900EC46B1 /* CitrusPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CitrusPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		15D488BA1BD3D7A900EC46B1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		15D488BC1BD3D7A900EC46B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		15D488C01BD3D7A900EC46B1 /* CitrusPlugin.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = CitrusPlugin.xcscheme; path = CitrusPlugin.xcodeproj/xcshareddata/xcschemes/CitrusPlugin.xcscheme; sourceTree = SOURCE_ROOT; };
+		15D488C21BD3D7A900EC46B1 /* CitrusPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitrusPlugin.h; sourceTree = "<group>"; };
+		15D488C31BD3D7A900EC46B1 /* CitrusPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CitrusPlugin.m; sourceTree = "<group>"; };
+		15D488C51BD3D7A900EC46B1 /* NSObject_Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObject_Extension.h; sourceTree = "<group>"; };
+		15D488C61BD3D7A900EC46B1 /* NSObject_Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSObject_Extension.m; sourceTree = "<group>"; };
+		15D488C81BD3D7A900EC46B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15D488CC1BD3D9CD00EC46B1 /* Lemon.pbfilespec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.pbfilespec; path = Lemon.pbfilespec; sourceTree = "<group>"; };
+		15D488CD1BD3D9CD00EC46B1 /* Lemon.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Lemon.strings; sourceTree = "<group>"; };
+		15D488CE1BD3D9CD00EC46B1 /* Lemon.xcspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xcspec; path = Lemon.xcspec; sourceTree = "<group>"; };
+		15D488D61BD3DA8800EC46B1 /* lemon */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = lemon; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		15D488B51BD3D7A900EC46B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15D488BB1BD3D7A900EC46B1 /* AppKit.framework in Frameworks */,
+				15D488BD1BD3D7A900EC46B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		15D488941BD3D59200EC46B1 = {
+			isa = PBXGroup;
+			children = (
+				158E53E61BD3E6A600F75AAD /* PluginUsage.md */,
+				15D4889F1BD3D5D500EC46B1 /* lemon */,
+				15D488BE1BD3D7A900EC46B1 /* CitrusPlugin */,
+				15D488B91BD3D7A900EC46B1 /* Frameworks */,
+				15D488B81BD3D7A900EC46B1 /* Products */,
+				15D488D61BD3DA8800EC46B1 /* lemon */,
+			);
+			sourceTree = "<group>";
+		};
+		15D4889F1BD3D5D500EC46B1 /* lemon */ = {
+			isa = PBXGroup;
+			children = (
+				15D488A01BD3D62C00EC46B1 /* autogen.sh */,
+				15D488A11BD3D62C00EC46B1 /* citrus.pc.in */,
+				15D488A21BD3D62C00EC46B1 /* configure.ac */,
+				15D488A31BD3D62C00EC46B1 /* lemon.c */,
+				15D488A41BD3D62C00EC46B1 /* lempar.c */,
+				15D488A51BD3D62C00EC46B1 /* lempar.h */,
+				15D488A61BD3D62C00EC46B1 /* LICENSE */,
+				15D488A71BD3D62C00EC46B1 /* Makefile.am */,
+				15D488A81BD3D62C00EC46B1 /* README.md */,
+				15D488A91BD3D62C00EC46B1 /* VERSION */,
+				15D488AA1BD3D62C00EC46B1 /* version.h.in */,
+			);
+			name = lemon;
+			sourceTree = "<group>";
+		};
+		15D488B81BD3D7A900EC46B1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15D488B71BD3D7A900EC46B1 /* CitrusPlugin.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		15D488B91BD3D7A900EC46B1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15D488BA1BD3D7A900EC46B1 /* AppKit.framework */,
+				15D488BC1BD3D7A900EC46B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		15D488BE1BD3D7A900EC46B1 /* CitrusPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				15D488D41BD3D9D000EC46B1 /* Resources */,
+				15D488C21BD3D7A900EC46B1 /* CitrusPlugin.h */,
+				15D488C31BD3D7A900EC46B1 /* CitrusPlugin.m */,
+				15D488C51BD3D7A900EC46B1 /* NSObject_Extension.h */,
+				15D488C61BD3D7A900EC46B1 /* NSObject_Extension.m */,
+				15D488C81BD3D7A900EC46B1 /* Info.plist */,
+				15D488BF1BD3D7A900EC46B1 /* Supporting Files */,
+			);
+			path = CitrusPlugin;
+			sourceTree = "<group>";
+		};
+		15D488BF1BD3D7A900EC46B1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				15D488C01BD3D7A900EC46B1 /* CitrusPlugin.xcscheme */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		15D488D41BD3D9D000EC46B1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				15D488CC1BD3D9CD00EC46B1 /* Lemon.pbfilespec */,
+				15D488CD1BD3D9CD00EC46B1 /* Lemon.strings */,
+				15D488CE1BD3D9CD00EC46B1 /* Lemon.xcspec */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		15D488991BD3D59200EC46B1 /* Lemon */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "${ACTION}";
+			buildConfigurationList = 15D4889C1BD3D59200EC46B1 /* Build configuration list for PBXLegacyTarget "Lemon" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "$(PROJECT_DIR)";
+			dependencies = (
+				15D488B21BD3D6F400EC46B1 /* PBXTargetDependency */,
+			);
+			name = Lemon;
+			passBuildSettingsInEnvironment = 1;
+			productName = CitrusPlugin;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXNativeTarget section */
+		15D488B61BD3D7A900EC46B1 /* CitrusPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15D488C91BD3D7A900EC46B1 /* Build configuration list for PBXNativeTarget "CitrusPlugin" */;
+			buildPhases = (
+				15D488B31BD3D7A900EC46B1 /* Sources */,
+				15D488B41BD3D7A900EC46B1 /* Resources */,
+				15D488B51BD3D7A900EC46B1 /* Frameworks */,
+				15D488DC1BD3DBBB00EC46B1 /* Copying default template into bundle because Xcode has a bug */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				15D488D91BD3DA9C00EC46B1 /* PBXTargetDependency */,
+			);
+			name = CitrusPlugin;
+			productName = CitrusPlugin;
+			productReference = 15D488B71BD3D7A900EC46B1 /* CitrusPlugin.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		15D488951BD3D59200EC46B1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Samantha Marshall";
+				TargetAttributes = {
+					15D488991BD3D59200EC46B1 = {
+						CreatedOnToolsVersion = 7.0.1;
+					};
+					15D488AC1BD3D6C700EC46B1 = {
+						CreatedOnToolsVersion = 7.0.1;
+					};
+					15D488B61BD3D7A900EC46B1 = {
+						CreatedOnToolsVersion = 7.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 15D488981BD3D59200EC46B1 /* Build configuration list for PBXProject "CitrusPlugin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 15D488941BD3D59200EC46B1;
+			productRefGroup = 15D488B81BD3D7A900EC46B1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				15D488AC1BD3D6C700EC46B1 /* Lemon Setup */,
+				15D488991BD3D59200EC46B1 /* Lemon */,
+				15D488B61BD3D7A900EC46B1 /* CitrusPlugin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		15D488B41BD3D7A900EC46B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15D488D71BD3DA8800EC46B1 /* lemon in Resources */,
+				15D488D01BD3D9CD00EC46B1 /* Lemon.pbfilespec in Resources */,
+				15D488D11BD3D9CD00EC46B1 /* Lemon.strings in Resources */,
+				15D488D21BD3D9CD00EC46B1 /* Lemon.xcspec in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15D488B01BD3D6D000EC46B1 /* make distclean ; ./autogen.sh ; ./configure */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "make distclean ; ./autogen.sh ; ./configure";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${PROJECT_DIR}\n\nif [ -e Makefile ]; then\n\tmake distclean\nfi\n\n./autogen.sh\n./configure";
+		};
+		15D488DC1BD3DBBB00EC46B1 /* Copying default template into bundle because Xcode has a bug */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copying default template into bundle because Xcode has a bug";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp ${PROJECT_DIR}/lempar.c ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Resources\ncp ${PROJECT_DIR}/lempar.h ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Resources";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		15D488B31BD3D7A900EC46B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15D488C41BD3D7A900EC46B1 /* CitrusPlugin.m in Sources */,
+				15D488C71BD3D7A900EC46B1 /* NSObject_Extension.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		15D488B21BD3D6F400EC46B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 15D488AC1BD3D6C700EC46B1 /* Lemon Setup */;
+			targetProxy = 15D488B11BD3D6F400EC46B1 /* PBXContainerItemProxy */;
+		};
+		15D488D91BD3DA9C00EC46B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 15D488991BD3D59200EC46B1 /* Lemon */;
+			targetProxy = 15D488D81BD3DA9C00EC46B1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		15D4889A1BD3D59200EC46B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		15D4889B1BD3D59200EC46B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		15D4889D1BD3D59200EC46B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		15D4889E1BD3D59200EC46B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		15D488AE1BD3D6C700EC46B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		15D488AF1BD3D6C700EC46B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		15D488CA1BD3D7A900EC46B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application: Samantha Marshall (329DAD2G44)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				INFOPLIST_FILE = CitrusPlugin/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.samdmarshall.CitrusPlugin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		15D488CB1BD3D7A900EC46B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application: Samantha Marshall (329DAD2G44)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				INFOPLIST_FILE = CitrusPlugin/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.samdmarshall.CitrusPlugin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15D488981BD3D59200EC46B1 /* Build configuration list for PBXProject "CitrusPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15D4889A1BD3D59200EC46B1 /* Debug */,
+				15D4889B1BD3D59200EC46B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15D4889C1BD3D59200EC46B1 /* Build configuration list for PBXLegacyTarget "Lemon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15D4889D1BD3D59200EC46B1 /* Debug */,
+				15D4889E1BD3D59200EC46B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15D488AD1BD3D6C700EC46B1 /* Build configuration list for PBXAggregateTarget "Lemon Setup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15D488AE1BD3D6C700EC46B1 /* Debug */,
+				15D488AF1BD3D6C700EC46B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15D488C91BD3D7A900EC46B1 /* Build configuration list for PBXNativeTarget "CitrusPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15D488CA1BD3D7A900EC46B1 /* Debug */,
+				15D488CB1BD3D7A900EC46B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 15D488951BD3D59200EC46B1 /* Project object */;
+}

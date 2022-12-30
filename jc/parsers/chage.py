@@ -63,6 +63,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['chage --list', 'chage -l']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -1,6 +1,6 @@
 """jc - JSON Convert PLIST file parser
 
-Converts binary and XML PLIST files.
+Converts binary, XML, and NeXTSTEP PLIST files.
 
 Binary values are converted into an ASCII hex representation.
 
@@ -53,11 +53,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'PLIST file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    details = 'Using the pbPlist library from https://github.com/samdmarshall/pbPlist/releases/tag/v1.0.4 for NeXTSTEP support'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['standard', 'file', 'string', 'binary']
 
 
 __version__ = info.version
@@ -69,11 +71,11 @@ def _process(proc_data: Dict) -> Dict:
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
-        List of Dictionaries. Structured to conform to the schema.
+        Dictionary. Structured to conform to the schema.
     """
     return proc_data
 
@@ -114,7 +116,7 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, list):
-                newlist =[]
+                newlist = []
                 for i in v:
                     newlist.append(_fix_objects(i))
                 obj.update({k: newlist})
@@ -145,7 +147,7 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
 
@@ -156,7 +158,28 @@ def parse(
         if isinstance(data, str):
             data = bytes(data, 'utf-8')
 
-        raw_output = plistlib.loads(data)
+        try:
+            raw_output = plistlib.loads(data)
+
+        except Exception:
+            # Try parsing as an old-style NeXTSTEP Plist format
+            # pbPlist library only works on file paths, not strings :(
+            from jc.parsers.pbPlist.pbPlist import PBPlist
+            import tempfile
+            import os
+
+            # use delete=False for windows compatibility
+            with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as plist_file:
+                plist_file_name = plist_file.name
+                plist_file.write(data)
+                plist_file.seek(0)
+                parsed_plist = PBPlist(plist_file_name)
+                raw_output = parsed_plist.root.nativeType()
+
+            # try to delete the temp file
+            if os.path.exists(plist_file_name):
+                os.remove(plist_file_name)
+
         raw_output = _fix_objects(raw_output)
 
     return raw_output if raw else _process(raw_output)

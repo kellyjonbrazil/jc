@@ -125,6 +125,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'aix', 'freebsd', 'darwin']
     magic_commands = ['arp']
+    tags = ['command']
 
 
 __version__ = info.version

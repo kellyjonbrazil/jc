@@ -102,6 +102,7 @@ class info():
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
+    tags = ['standard', 'string']
 
 
 __version__ = info.version

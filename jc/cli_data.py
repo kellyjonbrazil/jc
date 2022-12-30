@@ -3,7 +3,7 @@ from typing import List, Dict
 
 long_options_map: Dict[str, List[str]] = {
     '--about': ['a', 'about jc'],
-    '--force-color': ['C', 'force color output even when using pipes (overrides -m)'],
+    '--force-color': ['C', 'force color output (overrides -m)'],
     '--debug': ['d', 'debug (double for verbose debug)'],
     '--help': ['h', 'help (--help --parser_name for parser documentation)'],
     '--monochrome': ['m', 'monochrome output'],
@@ -91,6 +91,7 @@ Examples:
     Parser Documentation:
         $ jc --help --dig
 
-    Show Hidden Parsers:
-        $ jc -hh
+    More Help:
+        $ jc -hh          # show hidden parsers
+        $ jc -hhh         # list parsers by category tags
 '''

@@ -75,6 +75,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the pyiso8601 library from https://github.com/micktwomey/pyiso8601/releases/tag/1.0.2'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
+    tags = ['standard', 'string']
 
 
 __version__ = info.version

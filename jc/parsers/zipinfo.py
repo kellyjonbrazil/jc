@@ -83,6 +83,7 @@ class info():
     author_email = 'https://github.com/listuser'
     compatible = ['linux', 'darwin']
     magic_commands = ['zipinfo']
+    tags = ['command']
 
 
 __version__ = info.version

@@ -129,6 +129,7 @@ class info():
     details = 'Enhancements by Philipp Schmitt (https://pschmitt.dev/)'
     compatible = ['linux']
     magic_commands = ['iw dev']
+    tags = ['command']
 
 
 __version__ = info.version

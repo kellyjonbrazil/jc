@@ -489,6 +489,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['sshd -T']
+    tags = ['file']
 
 
 __version__ = info.version

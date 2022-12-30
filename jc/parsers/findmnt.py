@@ -93,12 +93,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`findmnt` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['findmnt']
+    tags = ['command']
 
 
 __version__ = info.version
@@ -140,7 +141,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _replace(matchobj: re.Match) -> str:
+def _replace(matchobj):
     if matchobj:
         matchlen = len(matchobj.group(1))
         return ' ' * matchlen + '/'

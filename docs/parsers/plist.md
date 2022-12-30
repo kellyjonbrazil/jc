@@ -5,7 +5,7 @@
 
 jc - JSON Convert PLIST file parser
 
-Converts binary and XML PLIST files.
+Converts binary, XML, and NeXTSTEP PLIST files.
 
 Binary values are converted into an ASCII hex representation.
 
@@ -69,9 +69,9 @@ Parameters:
 
 Returns:
 
-    List of Dictionaries. Raw or processed structured data.
+    Dictionary. Raw or processed structured data.
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
