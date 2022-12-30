@@ -36,11 +36,13 @@ class PBPlist(object):
 
     def __init__(self, file_path):
         self.root = None
-        if self.__checkFile(file_path) is True:
-            parser = PBParser(self.file_path)
-            self.root = parser.read()
-            self.string_encoding = parser.string_encoding
-            self.file_type = parser.file_type
+        # don't use __checkFile since we can only open the file once in Windows
+        # if self.__checkFile(file_path) is True:
+        self.file_path = file_path
+        parser = PBParser(self.file_path)
+        self.root = parser.read()
+        self.string_encoding = parser.string_encoding
+        self.file_type = parser.file_type
 
     def write(self, file_path=None):
         if file_path is None:
