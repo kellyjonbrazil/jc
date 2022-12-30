@@ -1,6 +1,6 @@
 jc changelog
 
-20221229 v1.22.4
+20221230 v1.22.4
 - Add `iwconfig` command parser
 - Add NeXTSTEP format support to the PLIST file parser
 - Fix `proc` parser magic signature detection for `/proc/pid/stat` hacks
