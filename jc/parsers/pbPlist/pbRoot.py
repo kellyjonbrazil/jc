@@ -28,7 +28,14 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import sys
 from functools import cmp_to_key
+
+# for python 3.10+ compatibility
+if sys.version_info.major == 3 and sys.version_info.minor >= 10:
+    import collections
+    setattr(collections, "MutableMapping", collections.abc.MutableMapping)
+
 import collections
 from .         import pbItem
 
