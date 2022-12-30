@@ -1,6 +1,6 @@
 """jc - JSON Convert PLIST file parser
 
-Converts binary and XML PLIST files.
+Converts binary, XML, and NeXTSTEP PLIST files.
 
 Binary values are converted into an ASCII hex representation.
 
@@ -48,15 +48,17 @@ from typing import Dict, Union
 import plistlib
 import binascii
 from datetime import datetime
+from jc.parsers.pbPlist.pbPlist import PBPlist
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'PLIST file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
+    details = 'Using the pbPlist library from https://github.com/samdmarshall/pbPlist/releases/tag/v1.0.4 for NeXTSTEP support'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['standard', 'file', 'string', 'binary']
 
@@ -157,7 +159,20 @@ def parse(
         if isinstance(data, str):
             data = bytes(data, 'utf-8')
 
-        raw_output = plistlib.loads(data)
+        try:
+            raw_output = plistlib.loads(data)
+
+        except Exception:
+            # Try parsing as an old-style NeXTSTEP Plist format
+            # pbPlist library only works on file paths, not strings :(
+            import tempfile
+            with tempfile.NamedTemporaryFile(mode='w+') as plist_file:
+                data = data.decode()
+                plist_file.write(data)
+                plist_file.seek(0)
+                parsed_plist = PBPlist(plist_file.name)
+                raw_output = parsed_plist.root.nativeType()
+
         raw_output = _fix_objects(raw_output)
 
     return raw_output if raw else _process(raw_output)

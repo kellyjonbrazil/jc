@@ -1,10 +1,11 @@
 jc changelog
 
-20221229 v1.23.4
+20221229 v1.22.4
 - Add `iwconfig` command parser
+- Add NeXTSTEP format support to the PLIST file parser
 - Fix `proc` parser magic signature detection for `/proc/pid/stat` hacks
 - Fix `x509-cert` parser for string serial numbers
-- Add category tags to parser metadata
+- Add category tags to parser metadata: generic, standard, file, string, binary, command
 - Add "list parsers by category" view to help
 - Fix python 3.6-related issues
 - Add python 3.6 to automated tests
