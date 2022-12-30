@@ -69,7 +69,7 @@ Parameters:
 
 Returns:
 
-    List of Dictionaries. Raw or processed structured data.
+    Dictionary. Raw or processed structured data.
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

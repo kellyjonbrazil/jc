@@ -72,11 +72,11 @@ def _process(proc_data: Dict) -> Dict:
 
     Parameters:
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (Dictionary) raw structured data to process
 
     Returns:
 
-        List of Dictionaries. Structured to conform to the schema.
+        Dictionary. Structured to conform to the schema.
     """
     return proc_data
 
@@ -148,7 +148,7 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
 
