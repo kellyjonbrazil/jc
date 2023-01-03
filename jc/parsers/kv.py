@@ -50,15 +50,17 @@ Examples:
       "occupation": "Engineer"
     }
 """
+import jc.utils
+import configparser
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '2.0'
     description = 'Key/Value file and string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'This is a wrapper for the INI parser'
+    details = 'Using configparser from the python standard library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['generic', 'file', 'string']
 
@@ -66,11 +68,49 @@ class info():
 __version__ = info.version
 
 
+def _process(proc_data):
+    """
+    Final processing to conform to the schema.
+
+    Parameters:
+
+        proc_data:   (Dictionary) raw structured data to process
+
+    Returns:
+
+        Dictionary representing an ini or simple key/value pair document.
+    """
+    # remove quotation marks from beginning and end of values
+    for heading in proc_data:
+        # standard ini files with headers
+        if isinstance(proc_data[heading], dict):
+            for key, value in proc_data[heading].items():
+                if value is not None and value.startswith('"') and value.endswith('"'):
+                    proc_data[heading][key] = value.lstrip('"').rstrip('"')
+
+                elif value is not None and value.startswith("'") and value.endswith("'"):
+                    proc_data[heading][key] = value.lstrip("'").rstrip("'")
+
+                elif value is None:
+                    proc_data[heading][key] = ''
+
+        # simple key/value files with no headers
+        else:
+            if proc_data[heading] is not None and proc_data[heading].startswith('"') and proc_data[heading].endswith('"'):
+                proc_data[heading] = proc_data[heading].lstrip('"').rstrip('"')
+
+            elif proc_data[heading] is not None and proc_data[heading].startswith("'") and proc_data[heading].endswith("'"):
+                proc_data[heading] = proc_data[heading].lstrip("'").rstrip("'")
+
+            elif proc_data[heading] is None:
+                proc_data[heading] = ''
+
+    return proc_data
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
-
-        Note: this is just a wrapper for jc.parsers.ini
 
     Parameters:
 
@@ -80,7 +120,35 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary representing the key/value file
+        Dictionary representing the ini file
     """
-    import jc.parsers.ini
-    return jc.parsers.ini.parse(data, raw=raw, quiet=quiet)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
+    raw_output = {}
+
+    if jc.utils.has_data(data):
+
+        ini = configparser.ConfigParser(allow_no_value=True,
+                                        interpolation=None,
+                                        strict=False)
+
+        # don't convert keys to lower-case:
+        ini.optionxform = lambda option: option
+
+        try:
+            ini.read_string(data)
+            raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
+
+        except configparser.MissingSectionHeaderError:
+            data = '[data]\n' + data
+            ini.read_string(data)
+            output_dict = {s: dict(ini.items(s)) for s in ini.sections()}
+            for key, value in output_dict['data'].items():
+                raw_output[key] = value
+
+    if raw:
+        return raw_output
+    else:
+        return _process(raw_output)
+

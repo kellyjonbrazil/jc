@@ -58,11 +58,12 @@ class MyTests(unittest.TestCase):
         Test input that contains duplicate keys. Only the last value should be used.
         """
         data = '''
+[section]
 duplicate_key: value1
 another_key = foo
 duplicate_key = value2
 '''
-        expected = {'duplicate_key': 'value2', 'another_key': 'foo'}
+        expected = {'section': {'duplicate_key': 'value2', 'another_key': 'foo'}}
         self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
 
     def test_ini_doublequote(self):

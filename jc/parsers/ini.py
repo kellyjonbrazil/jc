@@ -70,11 +70,11 @@ import configparser
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '2.0'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using configparser from the standard library'
+    details = 'Using configparser from the python standard library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['standard', 'file', 'string']
 
@@ -155,11 +155,9 @@ def parse(data, raw=False, quiet=False):
             raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
 
         except configparser.MissingSectionHeaderError:
-            data = '[data]\n' + data
+            data = '[_top_level_section_]\n' + data
             ini.read_string(data)
-            output_dict = {s: dict(ini.items(s)) for s in ini.sections()}
-            for key, value in output_dict['data'].items():
-                raw_output[key] = value
+            raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
 
     if raw:
         return raw_output
