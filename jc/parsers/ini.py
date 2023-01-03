@@ -139,21 +139,23 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        ini = configparser.ConfigParser(allow_no_value=True,
-                                        interpolation=None,
-                                        strict=False)
+        ini_parser = configparser.ConfigParser(
+            allow_no_value=True,
+            interpolation=None,
+            strict=False
+        )
 
         # don't convert keys to lower-case:
-        ini.optionxform = lambda option: option
+        ini_parser.optionxform = lambda option: option
 
         try:
-            ini.read_string(data)
-            raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
+            ini_parser.read_string(data)
+            raw_output = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
 
         except configparser.MissingSectionHeaderError:
             data = '[_top_level_section_]\n' + data
-            ini.read_string(data)
-            raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
+            ini_parser.read_string(data)
+            raw_output = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
 
     if raw:
         return raw_output
