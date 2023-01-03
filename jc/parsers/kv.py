@@ -115,9 +115,11 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        kv_parser = configparser.ConfigParser(allow_no_value=True,
-                                        interpolation=None,
-                                        strict=False)
+        kv_parser = configparser.ConfigParser(
+            allow_no_value=True,
+            interpolation=None,
+            strict=False
+        )
 
         # don't convert keys to lower-case:
         kv_parser.optionxform = lambda option: option
