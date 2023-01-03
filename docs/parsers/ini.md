@@ -5,11 +5,19 @@
 
 jc - JSON Convert `INI` file parser
 
-Parses standard `INI` files and files containing simple key/value pairs.
+Parses standard `INI` files.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
 - If duplicate keys are found, only the last value will be used.
+
+> Note: If there is no top-level section identifier, then this parser will
+> add a key named `_top_level_section_` with the top-level key/values
+> included.
+
+> Note: The section identifier `[DEFAULT]` is special and provides default
+> values for the following section keys. To disable this behavior you must
+> rename the `[DEFAULT]` section identifier to something else.
 
 > Note: Values starting and ending with double or single quotation marks
 > will have the marks removed. If you would like to keep the quotation
@@ -27,7 +35,7 @@ Usage (module):
 
 Schema:
 
-ini or key/value document converted to a dictionary - see the configparser
+ini document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
