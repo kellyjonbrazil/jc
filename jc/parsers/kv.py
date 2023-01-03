@@ -83,10 +83,10 @@ def _process(proc_data):
     # remove quotation marks from beginning and end of values
     for key in proc_data:
         if proc_data[key] is not None and proc_data[key].startswith('"') and proc_data[key].endswith('"'):
-            proc_data[key] = proc_data[key].lstrip('"').rstrip('"')
+            proc_data[key] = proc_data[key][1:-1]
 
         elif proc_data[key] is not None and proc_data[key].startswith("'") and proc_data[key].endswith("'"):
-            proc_data[key] = proc_data[key].lstrip("'").rstrip("'")
+            proc_data[key] = proc_data[key][1:-1]
 
         elif proc_data[key] is None:
             proc_data[key] = ''

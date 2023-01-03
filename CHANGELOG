@@ -3,6 +3,8 @@ jc changelog
 20230103 v1.22.5
 - Update copyright dates
 - Fix INI parser to include top-level values with no section header
+- Fix INI and Key/Value parsers to only remove one quotation mark from the
+  beginning and end of values.
 
 20221230 v1.22.4
 - Add `iwconfig` command parser

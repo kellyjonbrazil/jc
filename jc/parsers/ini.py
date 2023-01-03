@@ -107,10 +107,10 @@ def _process(proc_data):
     for heading in proc_data:
         for key, value in proc_data[heading].items():
             if value is not None and value.startswith('"') and value.endswith('"'):
-                proc_data[heading][key] = value.lstrip('"').rstrip('"')
+                proc_data[heading][key] = value[1:-1]
 
             elif value is not None and value.startswith("'") and value.endswith("'"):
-                proc_data[heading][key] = value.lstrip("'").rstrip("'")
+                proc_data[heading][key] = value[1:-1]
 
             elif value is None:
                 proc_data[heading][key] = ''
