@@ -78,7 +78,7 @@ def _process(proc_data):
 
     Returns:
 
-        Dictionary representing an ini or simple key/value pair document.
+        Dictionary representing a key/value pair document.
     """
     # remove quotation marks from beginning and end of values
     for key in proc_data:
@@ -106,7 +106,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary representing the ini file
+        Dictionary representing a Key/Value pair document.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
@@ -115,23 +115,18 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        ini = configparser.ConfigParser(allow_no_value=True,
+        kv_parser = configparser.ConfigParser(allow_no_value=True,
                                         interpolation=None,
                                         strict=False)
 
         # don't convert keys to lower-case:
-        ini.optionxform = lambda option: option
+        kv_parser.optionxform = lambda option: option
 
-        try:
-            ini.read_string(data)
-            raw_output = {s: dict(ini.items(s)) for s in ini.sections()}
-
-        except configparser.MissingSectionHeaderError:
-            data = '[data]\n' + data
-            ini.read_string(data)
-            output_dict = {s: dict(ini.items(s)) for s in ini.sections()}
-            for key, value in output_dict['data'].items():
-                raw_output[key] = value
+        data = '[data]\n' + data
+        kv_parser.read_string(data)
+        output_dict = {s: dict(kv_parser.items(s)) for s in kv_parser.sections()}
+        for key, value in output_dict['data'].items():
+            raw_output[key] = value
 
     if raw:
         return raw_output

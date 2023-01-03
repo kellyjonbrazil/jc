@@ -73,7 +73,7 @@ Parameters:
 
 Returns:
 
-    Dictionary representing the ini file
+    Dictionary representing a Key/Value pair document.
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
