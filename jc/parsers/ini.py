@@ -11,8 +11,9 @@ Parses standard `INI` files.
 > included.
 
 > Note: The section identifier `[DEFAULT]` is special and provides default
-> values for the following section keys. To disable this behavior you must
-> rename the `[DEFAULT]` section identifier to something else.
+> values for the section keys that follow. To disable this behavior you must
+> rename the `[DEFAULT]` section identifier to something else before
+> parsing.
 
 > Note: Values starting and ending with double or single quotation marks
 > will have the marks removed. If you would like to keep the quotation
