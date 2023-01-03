@@ -1,5 +1,9 @@
 jc changelog
 
+20230103 v1.22.5
+- Update copyright dates
+- Fix INI parser to include top-level values with no section header
+
 20221230 v1.22.4
 - Add `iwconfig` command parser
 - Add NeXTSTEP format support to the PLIST file parser
