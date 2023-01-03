@@ -21,8 +21,8 @@ Usage (module):
 
 Schema:
 
-key/value document converted to a dictionary - see the configparser standard
-library documentation for more details.
+Key/Value document converted to a dictionary - see the python configparser
+standard library documentation for more details.
 
     {
       "key1":       string,
@@ -78,7 +78,7 @@ def _process(proc_data):
 
     Returns:
 
-        Dictionary representing a key/value pair document.
+        Dictionary representing a Key/Value pair document.
     """
     # remove quotation marks from beginning and end of values
     for key in proc_data:

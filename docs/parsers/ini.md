@@ -36,7 +36,7 @@ Usage (module):
 
 Schema:
 
-ini document converted to a dictionary - see the python configparser
+INI document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
@@ -96,7 +96,7 @@ Parameters:
 
 Returns:
 
-    Dictionary representing the ini file
+    Dictionary representing the INI file.
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd

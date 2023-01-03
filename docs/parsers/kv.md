@@ -26,8 +26,8 @@ Usage (module):
 
 Schema:
 
-key/value document converted to a dictionary - see the configparser standard
-library documentation for more details.
+Key/Value document converted to a dictionary - see the python configparser
+standard library documentation for more details.
 
     {
       "key1":       string,

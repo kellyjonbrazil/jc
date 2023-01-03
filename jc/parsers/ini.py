@@ -31,7 +31,7 @@ Usage (module):
 
 Schema:
 
-ini document converted to a dictionary - see the python configparser
+INI document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
@@ -101,7 +101,7 @@ def _process(proc_data):
 
     Returns:
 
-        Dictionary representing an ini or simple key/value pair document.
+        Dictionary representing the INI file.
     """
     # remove quotation marks from beginning and end of values
     for heading in proc_data:
@@ -130,7 +130,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary representing the ini file
+        Dictionary representing the INI file.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
