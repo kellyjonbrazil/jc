@@ -53,6 +53,28 @@ duplicate_key = value2
         expected = {'duplicate_key': 'value2', 'another_key': 'foo'}
         self.assertEqual(jc.parsers.kv.parse(data, quiet=True), expected)
 
+    def test_kv_doublequote(self):
+        """
+        Test kv string with double quotes around a value
+        """
+        data = '''
+key1: "value1"
+key2: value2
+        '''
+        expected = {'key1': 'value1', 'key2': 'value2'}
+        self.assertEqual(jc.parsers.kv.parse(data, quiet=True), expected)
+
+    def test_kv_singlequote(self):
+        """
+        Test kv string with double quotes around a value
+        """
+        data = '''
+key1: 'value1'
+key2: value2
+        '''
+        expected = {'key1': 'value1', 'key2': 'value2'}
+        self.assertEqual(jc.parsers.kv.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

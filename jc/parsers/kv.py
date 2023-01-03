@@ -81,29 +81,15 @@ def _process(proc_data):
         Dictionary representing an ini or simple key/value pair document.
     """
     # remove quotation marks from beginning and end of values
-    for heading in proc_data:
-        # standard ini files with headers
-        if isinstance(proc_data[heading], dict):
-            for key, value in proc_data[heading].items():
-                if value is not None and value.startswith('"') and value.endswith('"'):
-                    proc_data[heading][key] = value.lstrip('"').rstrip('"')
+    for key in proc_data:
+        if proc_data[key] is not None and proc_data[key].startswith('"') and proc_data[key].endswith('"'):
+            proc_data[key] = proc_data[key].lstrip('"').rstrip('"')
 
-                elif value is not None and value.startswith("'") and value.endswith("'"):
-                    proc_data[heading][key] = value.lstrip("'").rstrip("'")
+        elif proc_data[key] is not None and proc_data[key].startswith("'") and proc_data[key].endswith("'"):
+            proc_data[key] = proc_data[key].lstrip("'").rstrip("'")
 
-                elif value is None:
-                    proc_data[heading][key] = ''
-
-        # simple key/value files with no headers
-        else:
-            if proc_data[heading] is not None and proc_data[heading].startswith('"') and proc_data[heading].endswith('"'):
-                proc_data[heading] = proc_data[heading].lstrip('"').rstrip('"')
-
-            elif proc_data[heading] is not None and proc_data[heading].startswith("'") and proc_data[heading].endswith("'"):
-                proc_data[heading] = proc_data[heading].lstrip("'").rstrip("'")
-
-            elif proc_data[heading] is None:
-                proc_data[heading] = ''
+        elif proc_data[key] is None:
+            proc_data[key] = ''
 
     return proc_data
 

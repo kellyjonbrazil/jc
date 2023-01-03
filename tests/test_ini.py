@@ -66,6 +66,28 @@ duplicate_key = value2
         expected = {'section': {'duplicate_key': 'value2', 'another_key': 'foo'}}
         self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
 
+    def test_ini_missing_top_section(self):
+        """
+        Test INI file missing top-level section header. Should output a fake
+        section header called `_top_level_section_`
+        """
+        data = '''
+key: value1
+another_key = foo
+[section2]
+key3: bar
+'''
+        expected = {
+            '_top_level_section_': {
+                'key': 'value1',
+                'another_key': 'foo'
+            },
+            'section2': {
+                'key3': 'bar'
+            }
+        }
+        self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
+
     def test_ini_doublequote(self):
         """
         Test ini file with double quotes around a value
