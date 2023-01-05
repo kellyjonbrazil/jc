@@ -4,10 +4,10 @@
 
 # from __future__ import annotations
 
-from collections.abc import Iterable
+from collections import namedtuple
 import string
-from types import MappingProxyType
-from typing import Any, BinaryIO, NamedTuple
+# from types import MappingProxyType
+# from typing import Any, BinaryIO, NamedTuple
 
 from ._re import (
     RE_DATETIME,
@@ -37,8 +37,7 @@ BARE_KEY_CHARS = frozenset(string.ascii_letters + string.digits + "-_")
 KEY_INITIAL_CHARS = BARE_KEY_CHARS | frozenset("\"'")
 HEXDIGIT_CHARS = frozenset(string.hexdigits)
 
-BASIC_STR_ESCAPE_REPLACEMENTS = MappingProxyType(
-    {
+BASIC_STR_ESCAPE_REPLACEMENTS = {
         "\\b": "\u0008",  # backspace
         "\\t": "\u0009",  # tab
         "\\n": "\u000A",  # linefeed
@@ -46,8 +45,7 @@ BASIC_STR_ESCAPE_REPLACEMENTS = MappingProxyType(
         "\\r": "\u000D",  # carriage return
         '\\"': "\u0022",  # quote
         "\\\\": "\u005C",  # backslash
-    }
-)
+}
 
 
 class TOMLDecodeError(ValueError):
@@ -191,9 +189,9 @@ class Flags:
 
 
 class NestedDict:
-    def __init__(self) -> None:
+    def __init__(self):
         # The parsed content of the TOML document
-        self.dict: dict[str, Any] = {}
+        self.dict = {}
 
     def get_or_create_nest(
         self,
@@ -201,7 +199,7 @@ class NestedDict:
         *,
         access_lists: bool = True,
     ) -> dict:
-        cont: Any = self.dict
+        cont = self.dict
         for k in key:
             if k not in cont:
                 cont[k] = {}
@@ -224,9 +222,11 @@ class NestedDict:
             cont[last_key] = [{}]
 
 
-class Output(NamedTuple):
-    data: NestedDict
-    flags: Flags
+# class Output(namedtuple):
+#     data: NestedDict
+#     flags: Flags
+
+Output = namedtuple('Output', ['data', 'flags'])
 
 
 def skip_chars(src: str, pos, chars):
@@ -682,7 +682,7 @@ def make_safe_parse_float(parse_float):
     if parse_float is float:
         return float
 
-    def safe_parse_float(float_str: str) -> Any:
+    def safe_parse_float(float_str):
         float_value = parse_float(float_str)
         if isinstance(float_value, (dict, list)):
             raise ValueError("parse_float must not return dicts or lists")
