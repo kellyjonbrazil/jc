@@ -71,6 +71,8 @@ Example:
     ]
 """
 import jc.utils
+import logging
+import platform
 
 
 class info():
@@ -79,7 +81,7 @@ class info():
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux', 'darwin', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd', 'aix']
     magic_commands = ['mount']
     tags = ['command']
 
@@ -147,6 +149,41 @@ def _linux_parse(data):
 
     return output
 
+def _aix_parse(data):
+    output = []
+
+    # AIX mount command starts with these headers:
+    #   node       mounted        mounted over    vfs       date        options      
+    # -------- ---------------  ---------------  ------ ------------ ---------------
+    # Remove them
+    data.pop(0)
+    data.pop(0)
+    
+    for entry in data:
+        output_line = {}
+        parsed_line = entry.split()
+
+        # AIX mount entries have the remote node as the zeroth element. If the
+        # mount is local, the zeroth element is the filesystem instead. We can
+        # detect this by the lenth of the list. For local mounts, length is 7,
+        # and for remote mounts, the length is 8. In the remote case, pop off
+        # the zeroth element. Then parsed_line has a consistent format.
+        if len(parsed_line) == 8:
+            parsed_line.pop(0)
+        
+        output_line['filesystem'] = parsed_line[0]
+        output_line['mount_point'] = parsed_line[1]
+        output_line['type'] = parsed_line[2]
+
+        # options = {}
+        options = parsed_line[6].lstrip('(').rstrip(')').split(',')
+
+        output_line['options'] = options
+
+        output.append(output_line)
+
+    return output
+
 
 def parse(data, raw=False, quiet=False):
     """
@@ -171,9 +208,12 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        # check for OSX output
+        # check for OSX and AIX output
         if ' type ' not in cleandata[0]:
-            raw_output = _osx_parse(cleandata)
+            if 'node' in cleandata[0]:
+                raw_output = _aix_parse(cleandata)
+            else:
+                raw_output = _osx_parse(cleandata)
 
         else:
             raw_output = _linux_parse(cleandata)
