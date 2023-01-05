@@ -77,7 +77,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`zipinfo` command parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
@@ -170,7 +170,8 @@ def parse(data, raw=False, quiet=False):
             # 1st line
             # Archive:  log4j-core-2.16.0.jar
             line = archive_item.pop(0)
-            _, archive = line.split()
+            # remove prefix but don't split on spaces for files/paths with spaces
+            archive = line.replace('Archive:  ', '', 1)
 
             # 2nd line
             # Zip file size: 1789565 bytes, number of entries: 1218
