@@ -21,6 +21,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.out'), 'r', encoding='utf-8') as f:
         osx_10_14_6_mount2 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/mount.out'), 'r', encoding='utf-8') as f:
+        aix_7_1_mount = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.json'), 'r', encoding='utf-8') as f:
         centos_7_7_mount_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/mount2.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_mount2_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/mount.json'), 'r', encoding='utf-8') as f:
+        aix_7_1_mount_json = json.loads(f.read())
 
 
     def test_mount_nodata(self):
@@ -64,6 +70,12 @@ class MyTests(unittest.TestCase):
         Test 'mount' on OSX 10.14.6 #2
         """
         self.assertEqual(jc.parsers.mount.parse(self.osx_10_14_6_mount2, quiet=True), self.osx_10_14_6_mount2_json)
+
+    def test_mount_aix_7_1(self):
+        """
+        Test 'mount' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.aix_7_1_mount, quiet=True), self.aix_7_1_mount_json)
 
 
 if __name__ == '__main__':

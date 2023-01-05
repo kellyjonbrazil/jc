@@ -1,0 +1,17 @@
+  node       mounted        mounted over    vfs       date        options      
+-------- ---------------  ---------------  ------ ------------ --------------- 
+         /dev/hd4         /                jfs2   Sep 06 11:46 rw,log=/dev/hd8 
+         /dev/hd2         /usr             jfs2   Sep 06 11:46 rw,log=/dev/hd8 
+         /dev/hd9var      /var             jfs2   Sep 06 11:46 rw,log=/dev/hd8 
+         /dev/hd3         /tmp             jfs2   Sep 06 11:46 rw,log=/dev/hd8 
+         /dev/hd1         /home            jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /dev/hd11admin   /admin           jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /proc            /proc            procfs Sep 06 11:47 rw              
+         /dev/hd10opt     /opt             jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /dev/livedump    /var/adm/ras/livedump jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /dev/lvvarlog    /var/log         jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /dev/lvafslogs   /usr/afs/logs    jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /dev/fslv00      /sandbox         jfs2   Sep 06 11:47 rw,log=/dev/sboxlv_log
+         /dev/ramdisk0    /usr/vice/cache  jfs    Sep 06 11:47 rw,nointegrity  
+         AFS              /afs             afs    Sep 06 11:47 rw              
+remote   /local           /remote          nfs3   Sep 06 11:49 hard,intr,vers=3,sec=sys,proto=tcp,grpid,rsize=65536,wsize=65536,biods=16,nosuid
