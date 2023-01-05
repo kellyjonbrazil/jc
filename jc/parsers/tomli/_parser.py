@@ -239,12 +239,12 @@ def skip_chars(src: str, pos, chars):
 
 
 def skip_until(
-    src: str,
+    src,
     pos,
-    expect: str,
+    expect,
     *,
-    error_on: frozenset[str],
-    error_on_eof: bool,
+    error_on,
+    error_on_eof,
 ):
     try:
         new_pos = src.index(expect, pos)
@@ -260,7 +260,7 @@ def skip_until(
     return new_pos
 
 
-def skip_comment(src: str, pos):
+def skip_comment(src, pos):
     try:
         char = src[pos]
     except IndexError:
@@ -321,7 +321,7 @@ def create_list_rule(src: str, pos, out):
 
 
 def key_value_rule(
-    src: str, pos, out, header, parse_float
+    src, pos, out, header, parse_float
 ):
     pos, key, value = parse_key_value_pair(src, pos, parse_float)
     key_parent, key_stem = key[:-1], key[-1]
@@ -355,7 +355,7 @@ def key_value_rule(
 
 
 def parse_key_value_pair(
-    src: str, pos, parse_float
+    src, pos, parse_float
 ):
     pos, key = parse_key(src, pos)
     try:
@@ -411,7 +411,7 @@ def parse_one_line_basic_str(src, pos):
 
 def parse_array(src, pos, parse_float):
     pos += 1
-    array: list = []
+    array = []
 
     pos = skip_comments_and_array_ws(src, pos)
     if src.startswith("]", pos):
