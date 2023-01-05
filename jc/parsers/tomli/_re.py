@@ -79,7 +79,7 @@ def match_to_datetime(match):
 
 
 @lru_cache(maxsize=None)
-def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+def cached_tz(hour_str, minute_str, sign_str):
     sign = 1 if sign_str == "+" else -1
     return timezone(
         timedelta(
@@ -89,7 +89,7 @@ def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
     )
 
 
-def match_to_localtime(match: re.Match) -> time:
+def match_to_localtime(match):
     hour_str, minute_str, sec_str, micros_str = match.groups()
     micros = int(micros_str.ljust(6, "0")) if micros_str else 0
     return time(int(hour_str), int(minute_str), int(sec_str), micros)
