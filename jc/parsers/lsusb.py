@@ -498,7 +498,7 @@ class _LsUsb():
         self.videocontrol_interface_descriptors = _descriptor_list('videocontrol_interface_descriptor')
         self.videostreaming_interface_descriptors = _descriptor_list('videostreaming_interface_descriptor')
         self.hid_device_descriptor = _descriptor_obj('hid_device_descriptor')
-        self.report_descriptors_list = []
+        # self.report_descriptors_list = []          # not implemented
         self.hub_descriptor = _root_obj('hub_descriptor')
         self.hub_port_status_list = []
         self.device_qualifier_list = []
@@ -711,7 +711,7 @@ class _LsUsb():
             'cdc_acm': self.cdc_acm.list,
             'cdc_union': self.cdc_union.list,
             'hid_device_descriptor': self.hid_device_descriptor.list,
-            'report_descriptors': self.report_descriptors_list,
+            # 'report_descriptors': self.report_descriptors_list,         # not implemented
             'videocontrol_interface_descriptor': self.videocontrol_interface_descriptors.list,
             'videostreaming_interface_descriptor': self.videostreaming_interface_descriptors.list,
             'endpoint_descriptor': self.endpoint_descriptors.list,
