@@ -1,6 +1,7 @@
 jc changelog
 
 20230103 v1.22.5
+- Add TOML parser
 - Update copyright dates
 - Fix INI parser to include top-level values with no section header
 - Fix INI and Key/Value parsers to only remove one quotation mark from the

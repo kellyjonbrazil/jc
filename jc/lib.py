@@ -174,6 +174,7 @@ parsers: List[str] = [
     'time',
     'timedatectl',
     'timestamp',
+    'toml',
     'top',
     'top-s',
     'tracepath',
