@@ -75,6 +75,7 @@ Examples:
 """
 import jc.utils
 import configparser
+import uuid
 
 
 class info():
@@ -91,6 +92,19 @@ class info():
 __version__ = info.version
 
 
+def _remove_quotes(value):
+    if value is not None and value.startswith('"') and value.endswith('"'):
+        value = value[1:-1]
+
+    elif value is not None and value.startswith("'") and value.endswith("'"):
+        value = value[1:-1]
+
+    elif value is None:
+        value = ''
+
+    return value
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -104,16 +118,13 @@ def _process(proc_data):
         Dictionary representing the INI file.
     """
     # remove quotation marks from beginning and end of values
-    for heading in proc_data:
-        for key, value in proc_data[heading].items():
-            if value is not None and value.startswith('"') and value.endswith('"'):
-                proc_data[heading][key] = value[1:-1]
+    for k, v in proc_data.items():
+        if isinstance(v, dict):
+            for key, value in v.items():
+                v[key] = _remove_quotes(value)
+            continue
 
-            elif value is not None and value.startswith("'") and value.endswith("'"):
-                proc_data[heading][key] = value[1:-1]
-
-            elif value is None:
-                proc_data[heading][key] = ''
+        proc_data[k] = _remove_quotes(v)
 
     return proc_data
 
@@ -153,11 +164,21 @@ def parse(data, raw=False, quiet=False):
             raw_output = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
 
         except configparser.MissingSectionHeaderError:
-            data = '[_top_level_section_]\n' + data
-            ini_parser.read_string(data)
-            raw_output = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
+            # find a top-level section name that will not collide with any existing ones
+            while True:
+                my_uuid = str(uuid.uuid4())
+                if my_uuid not in data:
+                    break
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+            data = f'[{my_uuid}]\n' + data
+            ini_parser.read_string(data)
+            temp_dict = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
+
+            # move items under fake top-level sections to the root
+            raw_output = temp_dict.pop(my_uuid)
+
+            # get the rest of the sections
+            raw_output.update(temp_dict)
+
+    return raw_output if raw else _process(raw_output)
+

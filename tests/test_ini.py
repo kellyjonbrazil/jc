@@ -76,14 +76,19 @@ key: value1
 another_key = foo
 [section2]
 key3: bar
+key4 =
+[section 3]
+key5 = "quoted"
 '''
         expected = {
-            '_top_level_section_': {
-                'key': 'value1',
-                'another_key': 'foo'
-            },
+            'key': 'value1',
+            'another_key': 'foo',
             'section2': {
-                'key3': 'bar'
+                'key3': 'bar',
+                'key4': ''
+            },
+            'section 3': {
+                'key5': 'quoted'
             }
         }
         self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
