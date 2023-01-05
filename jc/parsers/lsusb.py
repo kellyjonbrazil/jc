@@ -97,6 +97,28 @@ Schema:
                     ]
                   }
                 },
+                "videocontrol_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "videostreaming_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
                 "endpoint_descriptors": [
                   {
                     "<item>": {
@@ -477,7 +499,7 @@ class _LsUsb():
         self.videostreaming_interface_descriptors = _descriptor_list('videostreaming_interface_descriptor')
         self.hid_device_descriptor = _descriptor_obj('hid_device_descriptor')
         self.report_descriptors_list = []
-        self.hub_descriptor_list = []
+        self.hub_descriptor = _root_obj('hub_descriptor')
         self.hub_port_status_list = []
         self.device_qualifier_list = []
         self.device_status_list = []
@@ -693,7 +715,7 @@ class _LsUsb():
             'videocontrol_interface_descriptor': self.videocontrol_interface_descriptors.list,
             'videostreaming_interface_descriptor': self.videostreaming_interface_descriptors.list,
             'endpoint_descriptor': self.endpoint_descriptors.list,
-            'hub_descriptor': self.hub_descriptor_list,
+            'hub_descriptor': self.hub_descriptor.list,
             'device_qualifier': self.device_qualifier_list
         }
 
@@ -871,36 +893,27 @@ class _LsUsb():
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
 
-            for hd in self.hub_descriptor_list:
-                keyname = tuple(hd.keys())[0]
-                if '_state' in hd[keyname] and hd[keyname]['_state']['bus_idx'] == idx:
-
-                    # is this a top level value or an attribute?
-                    if hd[keyname]['_state']['attribute_value']:
-                        last_item = hd[keyname]['_state']['last_item']
-                        if 'attributes' not in self.output_line['hub_descriptor'][last_item]:
-                            self.output_line['hub_descriptor'][last_item]['attributes'] = []
-
-                        this_attribute = f'{keyname} {hd[keyname].get("value", "")} {hd[keyname].get("description", "")}'.strip()
-                        self.output_line['hub_descriptor'][last_item]['attributes'].append(this_attribute)
-                        continue
-
-                    self.output_line['hub_descriptor'].update(hd)
-                    del self.output_line['hub_descriptor'][keyname]['_state']
+            # add hub_descriptor key if it doesn't exist and there are
+            # entries for this interface_descriptor
+            if self.hub_descriptor._entries_for_this_bus_exist(idx):
+                self.hub_descriptor._update_output(idx, self.output_line)
 
             for hps in self.hub_port_status_list:
                 keyname = tuple(hps.keys())[0]
+
                 if '_state' in hps[keyname] and hps[keyname]['_state']['bus_idx'] == idx:
                     self.output_line['hub_descriptor']['hub_port_status'].update(hps)
                     del self.output_line['hub_descriptor']['hub_port_status'][keyname]['_state']
 
             for dq in self.device_qualifier_list:
                 keyname = tuple(dq.keys())[0]
+
                 if '_state' in dq[keyname] and dq[keyname]['_state']['bus_idx'] == idx:
                     self.output_line['device_qualifier'].update(dq)
                     del self.output_line['device_qualifier'][keyname]['_state']
 
             for ds in self.device_status_list:
+
                 if '_state' in ds and ds['_state']['bus_idx'] == idx:
                     self.output_line['device_status'].update(ds)
                     del self.output_line['device_status']['_state']
