@@ -71,8 +71,6 @@ Example:
     ]
 """
 import jc.utils
-import logging
-import platform
 
 
 class info():
