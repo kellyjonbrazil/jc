@@ -307,6 +307,40 @@ class _NestedDict(dict):
         return self.setdefault(key, _NestedDict())
 
 
+class _root_obj:
+    def __init__(self, name):
+        self.name = name
+        self.list = []
+
+    def _entries_for_this_bus_exist(self, bus_idx):
+        """Returns true if there are object entries for the corresponding bus index"""
+        for item in self.list:
+            keyname = tuple(item.keys())[0]
+            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:
+                return True
+        return False
+
+    def _update_output(self, bus_idx, output_line):
+        """modifies output_line dictionary for the corresponding bus index and interface index.
+        output_line is the self.output_line attribute from the _lsusb object."""
+        for item in self.list:
+            keyname = tuple(item.keys())[0]
+            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:
+
+                # is this a top level value or an attribute?
+                if item[keyname]['_state']['attribute_value']:
+                    last_item = item[keyname]['_state']['last_item']
+                    if 'attributes' not in output_line[f'{self.name}'][last_item]:
+                        output_line[f'{self.name}'][last_item]['attributes'] = []
+
+                    this_attribute = f'{keyname} {item[keyname].get("value", "")} {item[keyname].get("description", "")}'.strip()
+                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)
+                    continue
+
+                output_line[f'{self.name}'].update(item)
+                del output_line[f'{self.name}'][keyname]['_state']
+
+
 class _descriptor_obj:
     def __init__(self, name):
         self.name = name
@@ -379,9 +413,9 @@ class _LsUsb():
         self.attribute_value = False
 
         self.bus_list = []
-        self.device_descriptor_list = []
-        self.configuration_descriptor_list = []
-        self.interface_association_list = []
+        self.device_descriptor = _root_obj('device_descriptor')
+        self.configuration_descriptor = _root_obj('configuration_descriptor')
+        self.interface_association = _root_obj('interface_association')
         self.interface_descriptor_list = []
         self.interface_descriptor_attribute_list = []
         self.cdc_header_list = []
@@ -518,6 +552,8 @@ class _LsUsb():
             self.section = 'interface_descriptor'
             self.interface_descriptor_idx += 1
             self.endpoint_descriptor_idx = -1
+            self.videocontrol_interface_descriptor_idx = -1
+            self.videostreaming_interface_descriptor_idx = -1
             self.attribute_value = False
             return True
 
@@ -584,9 +620,9 @@ class _LsUsb():
 
     def _populate_lists(self, line):
         section_list_map = {
-            'device_descriptor': self.device_descriptor_list,
-            'configuration_descriptor': self.configuration_descriptor_list,
-            'interface_association': self.interface_association_list,
+            'device_descriptor': self.device_descriptor.list,
+            'configuration_descriptor': self.configuration_descriptor.list,
+            'interface_association': self.interface_association.list,
             'interface_descriptor': self.interface_descriptor_list,
             'cdc_header': self.cdc_header_list,
             'cdc_call_management': self.cdc_call_management_list,
@@ -651,56 +687,17 @@ class _LsUsb():
             del item['_state']
             self.output_line.update(item)
 
-            for dd in self.device_descriptor_list:
-                keyname = tuple(dd.keys())[0]
-                if '_state' in dd[keyname] and dd[keyname]['_state']['bus_idx'] == idx:
+            # add device_descriptor key
+            if self.device_descriptor._entries_for_this_bus_exist(idx):
+                self.device_descriptor._update_output(idx, self.output_line)
 
-                    # is this a top level value or an attribute?
-                    if dd[keyname]['_state']['attribute_value']:
-                        last_item = dd[keyname]['_state']['last_item']
-                        if 'attributes' not in self.output_line['device_descriptor'][last_item]:
-                            self.output_line['device_descriptor'][last_item]['attributes'] = []
+            # add configuration_descriptor key
+            if self.configuration_descriptor._entries_for_this_bus_exist(idx):
+                self.configuration_descriptor._update_output(idx, self.output_line['device_descriptor'])
 
-                        this_attribute = f'{keyname} {dd[keyname].get("value", "")} {dd[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor'][last_item]['attributes'].append(this_attribute)
-                        continue
-
-                    self.output_line['device_descriptor'].update(dd)
-                    del self.output_line['device_descriptor'][keyname]['_state']
-
-            for cd in self.configuration_descriptor_list:
-                keyname = tuple(cd.keys())[0]
-                if '_state' in cd[keyname] and cd[keyname]['_state']['bus_idx'] == idx:
-
-                    # is this a top level value or an attribute?
-                    if cd[keyname]['_state']['attribute_value']:
-                        last_item = cd[keyname]['_state']['last_item']
-                        if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor'][last_item]:
-                            self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'] = []
-
-                        this_attribute = f'{keyname} {cd[keyname].get("value", "")} {cd[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor']['configuration_descriptor'][last_item]['attributes'].append(this_attribute)
-                        continue
-
-                    self.output_line['device_descriptor']['configuration_descriptor'].update(cd)
-                    del self.output_line['device_descriptor']['configuration_descriptor'][keyname]['_state']
-
-            for ia in self.interface_association_list:
-                keyname = tuple(ia.keys())[0]
-                if '_state' in ia[keyname] and ia[keyname]['_state']['bus_idx'] == idx:
-
-                    # is this a top level value or an attribute?
-                    if ia[keyname]['_state']['attribute_value']:
-                        last_item = ia[keyname]['_state']['last_item']
-                        if 'attributes' not in self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_item]:
-                            self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_item]['attributes'] = []
-
-                        this_attribute = f'{keyname} {ia[keyname].get("value", "")} {ia[keyname].get("description", "")}'.strip()
-                        self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][last_item]['attributes'].append(this_attribute)
-                        continue
-
-                    self.output_line['device_descriptor']['configuration_descriptor']['interface_association'].update(ia)
-                    del self.output_line['device_descriptor']['configuration_descriptor']['interface_association'][keyname]['_state']
+            # add interface_association key
+            if self.interface_association._entries_for_this_bus_exist(idx):
+                self.interface_association._update_output(idx, self.output_line['device_descriptor']['configuration_descriptor'])
 
             # add interface_descriptor key if it doesn't exist and there are entries for this bus
             for iface_attrs in self.interface_descriptor_list:
