@@ -20,7 +20,7 @@ Schema:
         "filesystem":       string,
         "mount_point":      string,
         "type":             string,
-        "access": [
+        "options": [
                             string
         ]
       }
@@ -34,7 +34,7 @@ Example:
         "filesystem": "sysfs",
         "mount_point": "/sys",
         "type": "sysfs",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "nodev",
@@ -46,7 +46,7 @@ Example:
         "filesystem": "proc",
         "mount_point": "/proc",
         "type": "proc",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "nodev",
@@ -58,7 +58,7 @@ Example:
         "filesystem": "udev",
         "mount_point": "/dev",
         "type": "devtmpfs",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "relatime",
@@ -75,7 +75,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -138,10 +138,7 @@ def _linux_parse(data):
         output_line['filesystem'] = parsed_line[0]
         output_line['mount_point'] = parsed_line[2]
         output_line['type'] = parsed_line[4]
-
-        options = parsed_line[5].lstrip('(').rstrip(')').split(',')
-
-        output_line['options'] = options
+        output_line['options'] = parsed_line[5].lstrip('(').rstrip(')').split(',')
 
         output.append(output_line)
 
@@ -151,12 +148,12 @@ def _aix_parse(data):
     output = []
 
     # AIX mount command starts with these headers:
-    #   node       mounted        mounted over    vfs       date        options      
+    #   node       mounted        mounted over    vfs       date        options
     # -------- ---------------  ---------------  ------ ------------ ---------------
     # Remove them
     data.pop(0)
     data.pop(0)
-    
+
     for entry in data:
         output_line = {}
         parsed_line = entry.split()
@@ -168,15 +165,11 @@ def _aix_parse(data):
         # the zeroth element. Then parsed_line has a consistent format.
         if len(parsed_line) == 8:
             parsed_line.pop(0)
-        
+
         output_line['filesystem'] = parsed_line[0]
         output_line['mount_point'] = parsed_line[1]
         output_line['type'] = parsed_line[2]
-
-        # options = {}
-        options = parsed_line[6].lstrip('(').rstrip(')').split(',')
-
-        output_line['options'] = options
+        output_line['options'] = parsed_line[6].lstrip('(').rstrip(')').split(',')
 
         output.append(output_line)
 

@@ -25,7 +25,7 @@ Schema:
         "filesystem":       string,
         "mount_point":      string,
         "type":             string,
-        "access": [
+        "options": [
                             string
         ]
       }
@@ -39,7 +39,7 @@ Example:
         "filesystem": "sysfs",
         "mount_point": "/sys",
         "type": "sysfs",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "nodev",
@@ -51,7 +51,7 @@ Example:
         "filesystem": "proc",
         "mount_point": "/proc",
         "type": "proc",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "nodev",
@@ -63,7 +63,7 @@ Example:
         "filesystem": "udev",
         "mount_point": "/dev",
         "type": "devtmpfs",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "relatime",
@@ -96,6 +96,6 @@ Returns:
     List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
-Compatibility:  linux, darwin, freebsd
+Compatibility:  linux, darwin, freebsd, aix
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
