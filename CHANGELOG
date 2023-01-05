@@ -3,6 +3,8 @@ jc changelog
 20230103 v1.22.5
 - Add TOML parser
 - Update copyright dates
+- Fix `lsusb` parser when extra hub port status information is output
+- Refactor `lsusb` parser for more code reuse
 - Fix INI parser to include top-level values with no section header
 - Fix INI and Key/Value parsers to only remove one quotation mark from the
   beginning and end of values.
