@@ -248,7 +248,9 @@ def parse(
                         'hwtype': None,
                         'hwaddress': None,
                     }
-                    if len(splitline) >= 5:
+                    if 'permanent' in splitline:
+                        output_line['permanent'] = True
+                    elif len(splitline) >= 5:
                         output_line['iface'] = splitline[5]
 
                 raw_output.append(output_line)
