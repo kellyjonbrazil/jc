@@ -7,25 +7,48 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('toml', toml_file)
+    result = jc.parse('toml', toml_file_output)
 
 Schema:
 
-    [
-      {
-        "toml":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+TOML Document converted to a Dictionary.
+See https://toml.io/en/ for details.
+
+    {
+      "key1":     string/int/float/boolean/null/array/object,
+      "key2":     string/int/float/boolean/null/array/object
+    }
 
 Examples:
 
-    $ toml | jc --toml -p
-    []
+    $ cat file.toml
+    title = "TOML Example"
 
-    $ toml | jc --toml -p -r
-    []
+    [owner]
+    name = "Tom Preston-Werner"
+    dob = 1979-05-27T07:32:00-08:00
+
+    [database]
+    enabled = true
+    ports = [ 8000, 8001, 8002 ]
+
+    $ cat file.toml | jc --toml -p
+    {
+      "title": "TOML Example",
+      "owner": {
+        "name": "Tom Preston-Werner",
+        "dob": 296667120,
+        "dob_iso": "1979-05-27T07:32:00-08:00"
+      },
+      "database": {
+        "enabled": true,
+        "ports": [
+          8000,
+          8001,
+          8002
+        ]
+      }
+    }
 """
 from typing import Any
 from jc.jc_types import JSONDictType
