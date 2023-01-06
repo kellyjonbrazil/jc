@@ -229,7 +229,7 @@ def parse(
                 elif 'There' in splitline[0] and 'are' in splitline[1]:
                     continue
                     
-                elif '<incomplete>' not in splitline:
+                elif ('<incomplete>','(incomplete)') not in splitline:
                     output_line = {
                         'name': splitline[0],
                         'address': splitline[1].lstrip('(').rstrip(')'),
