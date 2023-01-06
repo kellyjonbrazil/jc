@@ -496,7 +496,6 @@ class _LsUsb():
         self.configuration_descriptor = _root_obj('configuration_descriptor')
         self.interface_association = _root_obj('interface_association')
         self.interface_descriptor_list = []
-        self.interface_descriptor_attribute_list = []
         self.cdc_header = _descriptor_obj('cdc_header')
         self.cdc_call_management = _descriptor_obj('cdc_call_management')
         self.cdc_acm = _descriptor_obj('cdc_acm')
