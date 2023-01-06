@@ -82,14 +82,14 @@ def _process(proc_data):
     """
     # remove quotation marks from beginning and end of values
     for key in proc_data:
-        if proc_data[key] is not None and proc_data[key].startswith('"') and proc_data[key].endswith('"'):
-            proc_data[key] = proc_data[key][1:-1]
-
-        elif proc_data[key] is not None and proc_data[key].startswith("'") and proc_data[key].endswith("'"):
-            proc_data[key] = proc_data[key][1:-1]
-
-        elif proc_data[key] is None:
+        if proc_data[key] is None:
             proc_data[key] = ''
+
+        elif proc_data[key].startswith('"') and proc_data[key].endswith('"'):
+            proc_data[key] = proc_data[key][1:-1]
+
+        elif proc_data[key].startswith("'") and proc_data[key].endswith("'"):
+            proc_data[key] = proc_data[key][1:-1]
 
     return proc_data
 
@@ -130,8 +130,5 @@ def parse(data, raw=False, quiet=False):
         for key, value in output_dict['data'].items():
             raw_output[key] = value
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
 
