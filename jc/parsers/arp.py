@@ -222,14 +222,24 @@ def parse(
         else:
             for line in cleandata:
                 splitline = line.split()
-                if '<incomplete>' not in splitline:
+
+                # Ignore AIX bucket information
+                if 'bucket:' in splitline[0]:
+                    continue
+                elif 'There' in splitline[0] and 'are' in splitline[1]:
+                    continue
+                    
+                elif '<incomplete>' not in splitline:
                     output_line = {
                         'name': splitline[0],
                         'address': splitline[1].lstrip('(').rstrip(')'),
                         'hwtype': splitline[4].lstrip('[').rstrip(']'),
                         'hwaddress': splitline[3],
-                        'iface': splitline[6],
                     }
+                    # AIX tells what bucket the entry is in, and no interface
+                    # information
+                    if 'in' not in splitline[6]:
+                        output_line['iface'] = splitline[6]
 
                 else:
                     output_line = {
