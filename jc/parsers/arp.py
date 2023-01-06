@@ -247,8 +247,9 @@ def parse(
                         'address': splitline[1].lstrip('(').rstrip(')'),
                         'hwtype': None,
                         'hwaddress': None,
-                        'iface': splitline[5],
                     }
+                    if len(splitline) >= 5:
+                        output_line['iface'] = splitline[5]
 
                 raw_output.append(output_line)
 
