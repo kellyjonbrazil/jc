@@ -93,14 +93,14 @@ __version__ = info.version
 
 
 def _remove_quotes(value):
-    if value is not None and value.startswith('"') and value.endswith('"'):
-        value = value[1:-1]
-
-    elif value is not None and value.startswith("'") and value.endswith("'"):
-        value = value[1:-1]
-
-    elif value is None:
+    if value is None:
         value = ''
+
+    elif value.startswith('"') and value.endswith('"'):
+        value = value[1:-1]
+
+    elif value.startswith("'") and value.endswith("'"):
+        value = value[1:-1]
 
     return value
 
