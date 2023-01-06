@@ -6,10 +6,6 @@ Parses standard `INI` files.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
 - If duplicate keys are found, only the last value will be used.
 
-> Note: If there is no top-level section identifier, then this parser will
-> add a key named `_top_level_section_` with the top-level key/values
-> included.
-
 > Note: The section identifier `[DEFAULT]` is special and provides default
 > values for the section keys that follow. To disable this behavior you must
 > rename the `[DEFAULT]` section identifier to something else before
@@ -42,34 +38,28 @@ standard library documentation for more details.
 Examples:
 
     $ cat example.ini
-    [DEFAULT]
-    ServerAliveInterval = 45
-    Compression = yes
-    CompressionLevel = 9
-    ForwardX11 = yes
+    foo = bar
+    baz = buz
 
-    [bitbucket.org]
-    User = hg
+    [section1]
+    key1 = value1
+    key2 = value2
 
-    [topsecret.server.com]
-    Port = 50022
-    ForwardX11 = no
+    [section2]
+    key1 = value1
+    key2 = value2
 
     $ cat example.ini | jc --ini -p
     {
-      "bitbucket.org": {
-        "ServerAliveInterval": "45",
-        "Compression": "yes",
-        "CompressionLevel": "9",
-        "ForwardX11": "yes",
-        "User": "hg"
+      "foo": "bar",
+      "baz": "buz",
+      "section1": {
+        "key1": "value1",
+        "key2": "value2"
       },
-      "topsecret.server.com": {
-        "ServerAliveInterval": "45",
-        "Compression": "yes",
-        "CompressionLevel": "9",
-        "ForwardX11": "no",
-        "Port": "50022"
+      "section2": {
+        "key1": "value1",
+        "key2": "value2"
       }
     }
 """
