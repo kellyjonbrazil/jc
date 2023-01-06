@@ -119,7 +119,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -228,7 +228,7 @@ def parse(
                     continue
                 elif 'There' in splitline[0] and 'are' in splitline[1]:
                     continue
-                    
+
                 # AIX uses (incomplete)
                 elif '<incomplete>' not in splitline and '(incomplete)' not in splitline:
                     output_line = {
