@@ -236,8 +236,7 @@ def parse(
                         'hwtype': splitline[4].lstrip('[').rstrip(']'),
                         'hwaddress': splitline[3],
                     }
-                    # AIX tells what bucket the entry is in, and no interface
-                    # information
+                    # Handle permanence and ignore interface in AIX
                     if 'permanent' in splitline:
                         output_line['permanent'] = True
                     elif 'in' not in splitline[6]:
