@@ -156,7 +156,8 @@ class MyTests(unittest.TestCase):
 
     def test_arp_a_aix_7_1(self):
         """
-        Test 'arp -a' on CentOS 8 with incomplete hw addresses
+        Test 'arp -a' on AIX 7.1 with incomplete hw addresses and permanent ARP
+        entries
         """
         self.assertEqual(jc.parsers.arp.parse(self.aix_7_1_arp_a, quiet=True), self.aix_7_1_arp_a_json)
 
