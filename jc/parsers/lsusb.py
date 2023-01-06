@@ -635,7 +635,7 @@ class _LsUsb():
             )
             return True
 
-        # This section is a list, so need to update indexes
+        # These sections are lists, so need to update indexes
         if line.startswith('    Interface Descriptor:'):
             self.section = 'interface_descriptor'
             self.interface_descriptor_idx += 1
@@ -645,21 +645,18 @@ class _LsUsb():
             self.attribute_value = False
             return True
 
-        # This section is a list, so need to update the index
         if line.startswith('      Endpoint Descriptor:'):
             self.section = 'endpoint_descriptor'
             self.endpoint_descriptor_idx += 1
             self.attribute_value = False
             return True
 
-        # This section is a list, so need to update the index
         if line.startswith('      VideoControl Interface Descriptor:'):
             self.section = 'videocontrol_interface_descriptor'
             self.videocontrol_interface_descriptor_idx += 1
             self.attribute_value = False
             return True
 
-        # This section is a list, so need to update the index
         if line.startswith('      VideoStreaming Interface Descriptor:'):
             self.section = 'videostreaming_interface_descriptor'
             self.videostreaming_interface_descriptor_idx += 1
@@ -778,17 +775,15 @@ class _LsUsb():
             del item['_state']
             self.output_line.update(item)
 
-            # add device_descriptor key
+            # add initial root-level keys
             if self.device_descriptor._entries_for_this_bus_exist(idx):
                 self.device_descriptor._update_output(idx, self.output_line)
 
-            # add configuration_descriptor key
             if self.configuration_descriptor._entries_for_this_bus_exist(idx):
                 self.configuration_descriptor._update_output(
                     idx, self.output_line['device_descriptor']
                 )
 
-            # add interface_association key
             if self.interface_association._entries_for_this_bus_exist(idx):
                 self.interface_association._update_output(
                     idx, self.output_line['device_descriptor']['configuration_descriptor']
