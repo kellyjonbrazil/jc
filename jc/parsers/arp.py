@@ -229,6 +229,7 @@ def parse(
                 elif 'There' in splitline[0] and 'are' in splitline[1]:
                     continue
                     
+                # AIX uses (incomplete)
                 elif '<incomplete>' not in splitline and '(incomplete)' not in splitline:
                     output_line = {
                         'name': splitline[0],
@@ -239,7 +240,7 @@ def parse(
                     # Handle permanence and ignore interface in AIX
                     if 'permanent' in splitline:
                         output_line['permanent'] = True
-                    elif 'in' not in splitline[6]:
+                    elif 'in' not in splitline[6]: # AIX doesn't show interface
                         output_line['iface'] = splitline[6]
 
                 else:
@@ -249,6 +250,7 @@ def parse(
                         'hwtype': None,
                         'hwaddress': None,
                     }
+                    # AIX doesn't show interface
                     if len(splitline) >= 5:
                         output_line['iface'] = splitline[5]
 
