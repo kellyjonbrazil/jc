@@ -341,6 +341,7 @@ class _root_obj:
 
             if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:
                 return True
+
         return False
 
     def _update_output(self, bus_idx, output_line):
@@ -370,7 +371,8 @@ class _descriptor_obj:
         self.list = []
 
     def _entries_for_this_bus_and_interface_idx_exist(self, bus_idx, iface_idx):
-        """Returns true if there are object entries for the corresponding bus index and interface index"""
+        """Returns true if there are object entries for the corresponding bus index
+        and interface index"""
         for item in self.list:
             keyname = tuple(item.keys())[0]
 
@@ -378,11 +380,12 @@ class _descriptor_obj:
                 and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
 
                 return True
+
         return False
 
     def _update_output(self, bus_idx, iface_idx, output_line):
-        """modifies output_line dictionary for the corresponding bus index and interface index.
-        output_line is the i_desc_obj object."""
+        """modifies output_line dictionary for the corresponding bus index and
+        interface index. output_line is the i_desc_obj object."""
         for item in self.list:
             keyname = tuple(item.keys())[0]
 
@@ -409,7 +412,8 @@ class _descriptor_list:
         self.list = []
 
     def _entries_for_this_bus_and_interface_idx_exist(self, bus_idx, iface_idx):
-        """Returns true if there are object entries for the corresponding bus index and interface index"""
+        """Returns true if there are object entries for the corresponding bus index
+        and interface index"""
         for item in self.list:
             keyname = tuple(item.keys())[0]
 
@@ -417,10 +421,12 @@ class _descriptor_list:
                 and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
 
                 return True
+
         return False
 
     def _get_objects_list(self, bus_idx, iface_idx):
-        """Returns a list of descriptor object dictionaries for the corresponding bus index and interface index"""
+        """Returns a list of descriptor object dictionaries for the corresponding
+        bus index and interface index"""
         object_collection = []
 
         # find max number of items in this object that match the bus_idx and iface_idx
@@ -458,6 +464,7 @@ class _descriptor_list:
                         del item[keyname]['_state']
 
                 object_collection.append(this_object)
+
         return object_collection
 
 
@@ -489,7 +496,6 @@ class _LsUsb():
         self.configuration_descriptor = _root_obj('configuration_descriptor')
         self.interface_association = _root_obj('interface_association')
         self.interface_descriptor_list = []
-        self.interface_descriptor_attribute_list = []
         self.cdc_header = _descriptor_obj('cdc_header')
         self.cdc_call_management = _descriptor_obj('cdc_call_management')
         self.cdc_acm = _descriptor_obj('cdc_acm')
@@ -498,7 +504,7 @@ class _LsUsb():
         self.videocontrol_interface_descriptors = _descriptor_list('videocontrol_interface_descriptor')
         self.videostreaming_interface_descriptors = _descriptor_list('videostreaming_interface_descriptor')
         self.hid_device_descriptor = _descriptor_obj('hid_device_descriptor')
-        self.report_descriptors_list = []
+        # self.report_descriptors_list = []          # not implemented
         self.hub_descriptor = _root_obj('hub_descriptor')
         self.hub_port_status_list = []
         self.device_qualifier_list = []
@@ -628,7 +634,7 @@ class _LsUsb():
             )
             return True
 
-        # This section is a list, so need to update indexes
+        # These sections are lists, so need to update indexes
         if line.startswith('    Interface Descriptor:'):
             self.section = 'interface_descriptor'
             self.interface_descriptor_idx += 1
@@ -638,21 +644,18 @@ class _LsUsb():
             self.attribute_value = False
             return True
 
-        # This section is a list, so need to update the index
         if line.startswith('      Endpoint Descriptor:'):
             self.section = 'endpoint_descriptor'
             self.endpoint_descriptor_idx += 1
             self.attribute_value = False
             return True
 
-        # This section is a list, so need to update the index
         if line.startswith('      VideoControl Interface Descriptor:'):
             self.section = 'videocontrol_interface_descriptor'
             self.videocontrol_interface_descriptor_idx += 1
             self.attribute_value = False
             return True
 
-        # This section is a list, so need to update the index
         if line.startswith('      VideoStreaming Interface Descriptor:'):
             self.section = 'videostreaming_interface_descriptor'
             self.videostreaming_interface_descriptor_idx += 1
@@ -711,7 +714,7 @@ class _LsUsb():
             'cdc_acm': self.cdc_acm.list,
             'cdc_union': self.cdc_union.list,
             'hid_device_descriptor': self.hid_device_descriptor.list,
-            'report_descriptors': self.report_descriptors_list,
+            # 'report_descriptors': self.report_descriptors_list,         # not implemented
             'videocontrol_interface_descriptor': self.videocontrol_interface_descriptors.list,
             'videostreaming_interface_descriptor': self.videostreaming_interface_descriptors.list,
             'endpoint_descriptor': self.endpoint_descriptors.list,
@@ -771,17 +774,15 @@ class _LsUsb():
             del item['_state']
             self.output_line.update(item)
 
-            # add device_descriptor key
+            # add initial root-level keys
             if self.device_descriptor._entries_for_this_bus_exist(idx):
                 self.device_descriptor._update_output(idx, self.output_line)
 
-            # add configuration_descriptor key
             if self.configuration_descriptor._entries_for_this_bus_exist(idx):
                 self.configuration_descriptor._update_output(
                     idx, self.output_line['device_descriptor']
                 )
 
-            # add interface_association key
             if self.interface_association._entries_for_this_bus_exist(idx):
                 self.interface_association._update_output(
                     idx, self.output_line['device_descriptor']['configuration_descriptor']
@@ -812,7 +813,6 @@ class _LsUsb():
                 for iface_idx in range(i_desc_iters + 1):
                     i_desc_obj = _NestedDict()
 
-                    ## interface_descriptor_list _root object?
                     for iface_attrs in self.interface_descriptor_list:
                         keyname = tuple(iface_attrs.keys())[0]
 
@@ -834,28 +834,19 @@ class _LsUsb():
                             del iface_attrs[keyname]['_state']
                             i_desc_obj.update(iface_attrs)
 
-                    # add cdc_header key if it doesn't exist and there are
-                    # entries for this interface_descriptor
+                    # add the rest of the interface descriptor keys to the object
                     if self.cdc_header._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.cdc_header._update_output(idx, iface_idx, i_desc_obj)
 
-                    # add cdc_call_management key if it doesn't exist and there are
-                    # entries for this interface_descriptor
                     if self.cdc_call_management._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.cdc_call_management._update_output(idx, iface_idx, i_desc_obj)
 
-                    # add cdc_acm key if it doesn't exist and there are entries for
-                    # this interface_descriptor
                     if self.cdc_acm._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.cdc_acm._update_output(idx, iface_idx, i_desc_obj)
 
-                    # add cdc_union key if it doesn't exist and there are entries for
-                    # this interface_descriptor
                     if self.cdc_union._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.cdc_union._update_output(idx, iface_idx, i_desc_obj)
 
-                    # add hid_device_descriptor key if it doesn't exist and there are
-                    # entries for this interface_descriptor
                     if self.hid_device_descriptor._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.hid_device_descriptor._update_output(idx, iface_idx, i_desc_obj)
 
@@ -866,24 +857,18 @@ class _LsUsb():
                     #         i_desc_obj['hid_device_descriptor']['report_descriptors'].update(rd)
                     #         del i_desc_obj['hid_device_descriptor']['report_descriptors'][keyname]['_state']
 
-                    # add videocontrol_interface_descriptors key if it doesn't exist
-                    # and there are entries for this interface_descriptor
                     if self.videocontrol_interface_descriptors._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         i_desc_obj['videocontrol_interface_descriptors'] = []
                         i_desc_obj['videocontrol_interface_descriptors'].extend(
                             self.videocontrol_interface_descriptors._get_objects_list(idx, iface_idx)
                         )
 
-                    # add videostreaming_interface_descriptors key if it doesn't exist
-                    # and there are entries for this interface_descriptor
                     if self.videostreaming_interface_descriptors._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         i_desc_obj['videostreaming_interface_descriptors'] = []
                         i_desc_obj['videostreaming_interface_descriptors'].extend(
                             self.videostreaming_interface_descriptors._get_objects_list(idx, iface_idx)
                         )
 
-                    # add endpoint_descriptors key if it doesn't exist and there are
-                    # entries for this interface_descriptor
                     if self.endpoint_descriptors._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         i_desc_obj['endpoint_descriptors'] = []
                         i_desc_obj['endpoint_descriptors'].extend(
@@ -893,8 +878,7 @@ class _LsUsb():
                     # add the object to the list of interface descriptors
                     self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
 
-            # add hub_descriptor key if it doesn't exist and there are
-            # entries for this interface_descriptor
+            # add final root-level keys
             if self.hub_descriptor._entries_for_this_bus_exist(idx):
                 self.hub_descriptor._update_output(idx, self.output_line)
 

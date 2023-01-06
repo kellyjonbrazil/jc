@@ -6,10 +6,6 @@ Parses standard `INI` files.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
 - If duplicate keys are found, only the last value will be used.
 
-> Note: If there is no top-level section identifier, then this parser will
-> add a key named `_top_level_section_` with the top-level key/values
-> included.
-
 > Note: The section identifier `[DEFAULT]` is special and provides default
 > values for the section keys that follow. To disable this behavior you must
 > rename the `[DEFAULT]` section identifier to something else before
@@ -42,39 +38,34 @@ standard library documentation for more details.
 Examples:
 
     $ cat example.ini
-    [DEFAULT]
-    ServerAliveInterval = 45
-    Compression = yes
-    CompressionLevel = 9
-    ForwardX11 = yes
+    foo = bar
+    baz = buz
 
-    [bitbucket.org]
-    User = hg
+    [section1]
+    key1 = value1
+    key2 = value2
 
-    [topsecret.server.com]
-    Port = 50022
-    ForwardX11 = no
+    [section2]
+    key1 = value1
+    key2 = value2
 
     $ cat example.ini | jc --ini -p
     {
-      "bitbucket.org": {
-        "ServerAliveInterval": "45",
-        "Compression": "yes",
-        "CompressionLevel": "9",
-        "ForwardX11": "yes",
-        "User": "hg"
+      "foo": "bar",
+      "baz": "buz",
+      "section1": {
+        "key1": "value1",
+        "key2": "value2"
       },
-      "topsecret.server.com": {
-        "ServerAliveInterval": "45",
-        "Compression": "yes",
-        "CompressionLevel": "9",
-        "ForwardX11": "no",
-        "Port": "50022"
+      "section2": {
+        "key1": "value1",
+        "key2": "value2"
       }
     }
 """
 import jc.utils
 import configparser
+import uuid
 
 
 class info():
@@ -91,6 +82,19 @@ class info():
 __version__ = info.version
 
 
+def _remove_quotes(value):
+    if value is None:
+        value = ''
+
+    elif value.startswith('"') and value.endswith('"'):
+        value = value[1:-1]
+
+    elif value.startswith("'") and value.endswith("'"):
+        value = value[1:-1]
+
+    return value
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -104,16 +108,13 @@ def _process(proc_data):
         Dictionary representing the INI file.
     """
     # remove quotation marks from beginning and end of values
-    for heading in proc_data:
-        for key, value in proc_data[heading].items():
-            if value is not None and value.startswith('"') and value.endswith('"'):
-                proc_data[heading][key] = value[1:-1]
+    for k, v in proc_data.items():
+        if isinstance(v, dict):
+            for key, value in v.items():
+                v[key] = _remove_quotes(value)
+            continue
 
-            elif value is not None and value.startswith("'") and value.endswith("'"):
-                proc_data[heading][key] = value[1:-1]
-
-            elif value is None:
-                proc_data[heading][key] = ''
+        proc_data[k] = _remove_quotes(v)
 
     return proc_data
 
@@ -153,11 +154,21 @@ def parse(data, raw=False, quiet=False):
             raw_output = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
 
         except configparser.MissingSectionHeaderError:
-            data = '[_top_level_section_]\n' + data
-            ini_parser.read_string(data)
-            raw_output = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
+            # find a top-level section name that will not collide with any existing ones
+            while True:
+                my_uuid = str(uuid.uuid4())
+                if my_uuid not in data:
+                    break
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+            data = f'[{my_uuid}]\n' + data
+            ini_parser.read_string(data)
+            temp_dict = {s: dict(ini_parser.items(s)) for s in ini_parser.sections()}
+
+            # move items under fake top-level sections to the root
+            raw_output = temp_dict.pop(my_uuid)
+
+            # get the rest of the sections
+            raw_output.update(temp_dict)
+
+    return raw_output if raw else _process(raw_output)
+
