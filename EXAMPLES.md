@@ -1636,21 +1636,21 @@ cat example.ini | jc --ini -p
 ```
 ```json
 {
-  "bitbucket.org": {
-    "ServeraLiveInterval": "45",
+  "DEFAULT": {
+    "ServerAliveInterval": "45",
     "Compression": "yes",
     "CompressionLevel": "9",
-    "ForwardX11": "yes",
+    "ForwardX11": "yes"
+  },
+  "bitbucket.org": {
     "User": "hg"
   },
   "topsecret.server.com": {
-    "ServeraLiveInterval": "45",
-    "Compression": "yes",
-    "CompressionLevel": "9",
-    "ForwardX11": "no",
-    "Port": "50022"
+    "Port": "50022",
+    "ForwardX11": "no"
   }
 }
+
 ```
 ### iostat
 ```bash

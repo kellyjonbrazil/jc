@@ -41,6 +41,7 @@ Examples:
     name = John Doe
     address=555 California Drive
     age: 34
+
     ; comments can include # or ;
     # delimiter can be = or :
     # quoted values have quotation marks stripped by default

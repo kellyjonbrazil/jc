@@ -1,12 +1,14 @@
 jc changelog
 
 20230105 v1.22.5
-- Add TOML parser
+- Add TOML file parser
+- Add AIX support for the `arp` command parser
 - Add AIX support for the `mount` command parser
-- Fix `lsusb` parser when extra hub port status information is output
-- Refactor `lsusb` parser for more code reuse
-- Fix INI parser to include top-level values with no section header
-- Fix INI and Key/Value parsers to only remove one quotation mark from the
+- Fix `lsusb` command parser when extra hub port status information is output
+- Refactor `lsusb` command parser for more code reuse
+- Fix INI file parser to include top-level values with no section header
+- Fix INI file parser to not specially handle the [DEFAULT] section
+- Fix INI file and Key/Value parsers to only remove one quotation mark from the
   beginning and end of values.
 - Update copyright dates
 
