@@ -1,7 +1,10 @@
 """jc - JSON Convert INI with duplicate key file parser
 
 Parses standard INI files and preserves duplicate values. All values are
-contained in lists/arrays. Multi-line values are not supported.
+contained in lists/arrays.
+
+If multi-line values are used, each line will be a separate item in the
+value list. Blank lines in multi-line values are not supported.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
@@ -183,9 +186,6 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-
-        # clean the data by removing blank lines and stripping leading whitespace
-        data = '\n'.join([x.lstrip() for x in data.splitlines() if x])
 
         ini_parser = configparser.ConfigParser(
             dict_type = MultiDict,
