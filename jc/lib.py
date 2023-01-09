@@ -59,6 +59,7 @@ parsers: List[str] = [
     'id',
     'ifconfig',
     'ini',
+    'ini-dup',
     'iostat',
     'iostat-s',
     'ip-address',

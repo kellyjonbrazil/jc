@@ -201,6 +201,7 @@ option.
 | `           --id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 | `     --ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
 | `          --ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
+| `      --ini-dup` | INI with duplicate key file parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini_dup)        |
 | `       --iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |
 | `     --iostat-s` | `iostat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s)       |
 | `   --ip-address` | IPv4 and IPv6 Address string parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_address)     |
@@ -757,39 +758,33 @@ ifconfig | jc -p --ifconfig          # or:  jc -p ifconfig
 cat example.ini
 ```
 ```
-[DEFAULT]
-ServerAliveInterval = 45
-Compression = yes
-CompressionLevel = 9
-ForwardX11 = yes
+foo = fiz
+bar = buz
 
-[bitbucket.org]
-User = hg
+[section1]
+fruit = apple
+color = blue
 
-[topsecret.server.com]
-Port = 50022
-ForwardX11 = no
+[section2]
+fruit = pear
+color = green
 ```
 ```bash
 cat example.ini | jc -p --ini
 ```
 ```json
 {
-  "DEFAULT": {
-    "ServerAliveInterval": "45",
-    "Compression": "yes",
-    "CompressionLevel": "9",
-    "ForwardX11": "yes"
+  "foo": "fiz",
+  "bar": "buz",
+  "section1": {
+    "fruit": "apple",
+    "color": "blue"
   },
-  "bitbucket.org": {
-    "User": "hg"
-  },
-  "topsecret.server.com": {
-    "Port": "50022",
-    "ForwardX11": "no"
+  "section2": {
+    "fruit": "pear",
+    "color": "green"
   }
 }
-
 ```
 ### ls
 ```bash

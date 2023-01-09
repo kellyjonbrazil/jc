@@ -3,9 +3,9 @@
 
 # jc.parsers.ini
 
-jc - JSON Convert `INI` file parser
+jc - JSON Convert INI file parser
 
-Parses standard `INI` files.
+Parses standard INI files.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
@@ -31,35 +31,43 @@ INI document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
-      "key1":       string,
-      "key2":       string
+      "<key1>":               string,
+      "<key2>":               string,
+      "<section1>": {
+        "<key1>":             string,
+        "<key2>":             string
+      },
+      "<section2>": {
+        "<key1>":             string,
+        "<key2>":             string
+      }
     }
 
 Examples:
 
     $ cat example.ini
-    foo = bar
-    baz = buz
+    foo = fiz
+    bar = buz
 
     [section1]
-    key1 = value1
-    key2 = value2
+    fruit = apple
+    color = blue
 
     [section2]
-    key1 = value1
-    key2 = value2
+    fruit = pear
+    color = green
 
     $ cat example.ini | jc --ini -p
     {
-      "foo": "bar",
-      "baz": "buz",
+      "foo": "fiz",
+      "bar": "buz",
       "section1": {
-        "key1": "value1",
-        "key2": "value2"
+        "fruit": "apple",
+        "color": "blue"
       },
       "section2": {
-        "key1": "value1",
-        "key2": "value2"
+        "fruit": "pear",
+        "color": "green"
       }
     }
 

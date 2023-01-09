@@ -1,6 +1,7 @@
-"""jc - JSON Convert INI file parser
+"""jc - JSON Convert INI with duplicate key file parser
 
-Parses standard INI files.
+Parses standard INI files and preserves duplicate values. All values are
+contained in lists/arrays. Multi-line values are not supported.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
@@ -26,15 +27,19 @@ INI document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
-      "<key1>":               string,
-      "<key2>":               string,
+      "<key1>": [
+                            string
+      ],
+      "<key2>": [
+                            string
+      ],
       "<section1>": {
-        "<key1>":             string,
-        "<key2>":             string
-      },
-      "<section2>": {
-        "<key1>":             string,
-        "<key2>":             string
+        "<key1>": [
+                            string
+        ],
+        "<key2>": [
+                            string
+        ]
       }
     }
 
@@ -47,22 +52,38 @@ Examples:
     [section1]
     fruit = apple
     color = blue
+    color = red
 
     [section2]
     fruit = pear
+    fruit = peach
     color = green
 
     $ cat example.ini | jc --ini -p
     {
-      "foo": "fiz",
-      "bar": "buz",
+      "foo": [
+        "fiz"
+      ],
+      "bar": [
+        "buz"
+      ],
       "section1": {
-        "fruit": "apple",
-        "color": "blue"
+        "fruit": [
+          "apple"
+        ],
+        "color": [
+          "blue",
+          "red"
+        ]
       },
       "section2": {
-        "fruit": "pear",
-        "color": "green"
+        "fruit": [
+          "pear",
+          "peach"
+        ],
+        "color": [
+          "green"
+        ]
       }
     }
 """
@@ -73,8 +94,8 @@ import uuid
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
-    description = 'INI file parser'
+    version = '1.0'
+    description = 'INI with duplicate key file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using configparser from the python standard library'
@@ -83,6 +104,20 @@ class info():
 
 
 __version__ = info.version
+
+
+class MultiDict(dict):
+    def __setitem__(self, key, value):
+        if key in self:
+            if isinstance(value, list):
+                self[key].extend(value)
+
+            elif isinstance(value, str):
+                if len(self[key])>1:
+                    return
+
+        else:
+            super().__setitem__(key, value)
 
 
 def _remove_quotes(value):
@@ -114,10 +149,17 @@ def _process(proc_data):
     for k, v in proc_data.items():
         if isinstance(v, dict):
             for key, value in v.items():
-                v[key] = _remove_quotes(value)
+                if isinstance(value, list):
+                    v[key] = [_remove_quotes(x) for x in value]
+                else:
+                    v[key] = _remove_quotes(value)
             continue
 
-        proc_data[k] = _remove_quotes(v)
+        elif isinstance(v, list):
+            proc_data[k] = [_remove_quotes(x) for x in v]
+
+        else:
+            proc_data[k] = _remove_quotes(v)
 
     return proc_data
 
@@ -143,10 +185,15 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
+        # clean the data by removing blank lines and stripping leading whitespace
+        data = '\n'.join([x.lstrip() for x in data.splitlines() if x])
+
         ini_parser = configparser.ConfigParser(
+            dict_type = MultiDict,
             allow_no_value=True,
             interpolation=None,
             default_section=None,
+            empty_lines_in_values=False,
             strict=False
         )
 
@@ -175,4 +222,3 @@ def parse(data, raw=False, quiet=False):
             raw_output.update(temp_dict)
 
     return raw_output if raw else _process(raw_output)
-
