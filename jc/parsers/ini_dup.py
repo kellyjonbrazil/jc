@@ -5,7 +5,6 @@ contained in lists/arrays. Multi-line values are not supported.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
-- If duplicate keys are found, only the last value will be used.
 
 > Note: Values starting and ending with double or single quotation marks
 > will have the marks removed. If you would like to keep the quotation
