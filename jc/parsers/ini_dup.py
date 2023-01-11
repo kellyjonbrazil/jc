@@ -109,6 +109,7 @@ __version__ = info.version
 
 
 class MultiDict(dict):
+    # https://stackoverflow.com/a/38286559/12303989
     def __setitem__(self, key, value):
         if key in self:
             if isinstance(value, list):

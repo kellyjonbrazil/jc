@@ -68,8 +68,7 @@ duplicate_key = value2
 
     def test_ini_missing_top_section(self):
         """
-        Test INI file missing top-level section header. Should output a fake
-        section header called `_top_level_section_`
+        Test INI file missing top-level section header.
         """
         data = '''
 key: value1
