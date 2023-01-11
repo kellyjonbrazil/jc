@@ -10,6 +10,8 @@ Parses standard INI files.
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
 - If duplicate keys are found, only the last value will be used.
+- If any section names have the same name as a top-level key, the top-level
+  key will be overwritten by the section data.
 
 > Note: Values starting and ending with double or single quotation marks
 > will have the marks removed. If you would like to keep the quotation

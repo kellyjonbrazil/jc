@@ -1,6 +1,6 @@
 jc changelog
 
-20230108 v1.22.5
+20230111 v1.22.5
 - Add TOML file parser
 - Add INI with duplicate key support file parser
 - Add AIX support for the `arp` command parser

@@ -8,11 +8,12 @@ jc - JSON Convert INI with duplicate key file parser
 Parses standard INI files and preserves duplicate values. All values are
 contained in lists/arrays.
 
-If multi-line values are used, each line will be a separate item in the
-value list. Blank lines in multi-line values are not supported.
-
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
+- If any section names have the same name as a top-level key, the top-level
+  key will be overwritten by the section data.
+- If multi-line values are used, each line will be a separate item in the
+  value list. Blank lines in multi-line values are not supported.
 
 > Note: Values starting and ending with double or single quotation marks
 > will have the marks removed. If you would like to keep the quotation
