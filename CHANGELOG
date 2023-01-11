@@ -1,5 +1,18 @@
 jc changelog
 
+20230111 v1.22.5
+- Add TOML file parser
+- Add INI with duplicate key support file parser
+- Add AIX support for the `arp` command parser
+- Add AIX support for the `mount` command parser
+- Fix `lsusb` command parser when extra hub port status information is output
+- Refactor `lsusb` command parser for more code reuse
+- Fix INI file parser to include top-level values with no section header
+- Fix INI file parser to not specially handle the [DEFAULT] section
+- Fix INI file and Key/Value parsers to only remove one quotation mark from the
+  beginning and end of values.
+- Update copyright dates
+
 20221230 v1.22.4
 - Add `iwconfig` command parser
 - Add NeXTSTEP format support to the PLIST file parser

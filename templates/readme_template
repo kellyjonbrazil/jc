@@ -622,37 +622,31 @@ ifconfig | jc -p --ifconfig          # or:  jc -p ifconfig
 cat example.ini
 ```
 ```
-[DEFAULT]
-ServerAliveInterval = 45
-Compression = yes
-CompressionLevel = 9
-ForwardX11 = yes
+foo = fiz
+bar = buz
 
-[bitbucket.org]
-User = hg
+[section1]
+fruit = apple
+color = blue
 
-[topsecret.server.com]
-Port = 50022
-ForwardX11 = no
+[section2]
+fruit = pear
+color = green
 ```
 ```bash
 cat example.ini | jc -p --ini
 ```
 ```json
 {
-  "bitbucket.org": {
-    "ServeraLiveInterval": "45",
-    "Compression": "yes",
-    "CompressionLevel": "9",
-    "ForwardX11": "yes",
-    "User": "hg"
+  "foo": "fiz",
+  "bar": "buz",
+  "section1": {
+    "fruit": "apple",
+    "color": "blue"
   },
-  "topsecret.server.com": {
-    "ServeraLiveInterval": "45",
-    "Compression": "yes",
-    "CompressionLevel": "9",
-    "ForwardX11": "no",
-    "Port": "50022"
+  "section2": {
+    "fruit": "pear",
+    "color": "green"
   }
 }
 ```

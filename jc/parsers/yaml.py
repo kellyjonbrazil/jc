@@ -13,8 +13,8 @@ Usage (module):
 
 Schema:
 
-    YAML Document converted to a Dictionary
-    See https://pypi.org/project/ruamel.yaml for details
+YAML Document converted to a Dictionary.
+See https://pypi.org/project/ruamel.yaml for details.
 
     [
       {
@@ -25,7 +25,7 @@ Schema:
 
 Examples:
 
-    $ cat istio-mtls-permissive.yaml
+    $ cat file.yaml
     apiVersion: "authentication.istio.io/v1alpha1"
     kind: "Policy"
     metadata:
@@ -46,7 +46,7 @@ Examples:
         tls:
           mode: ISTIO_MUTUAL
 
-    $ cat istio-mtls-permissive.yaml | jc --yaml -p
+    $ cat file.yaml | jc --yaml -p
     [
       {
         "apiVersion": "authentication.istio.io/v1alpha1",

@@ -1,17 +1,19 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-<a id="jc.parsers.ini"></a>
+<a id="jc.parsers.ini_dup"></a>
 
-# jc.parsers.ini
+# jc.parsers.ini\_dup
 
-jc - JSON Convert INI file parser
+jc - JSON Convert INI with duplicate key file parser
 
-Parses standard INI files.
+Parses standard INI files and preserves duplicate values. All values are
+contained in lists/arrays.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
-- If duplicate keys are found, only the last value will be used.
 - If any section names have the same name as a top-level key, the top-level
   key will be overwritten by the section data.
+- If multi-line values are used, each line will be a separate item in the
+  value list. Blank lines in multi-line values are not supported.
 
 > Note: Values starting and ending with double or single quotation marks
 > will have the marks removed. If you would like to keep the quotation
@@ -33,15 +35,19 @@ INI document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
-      "<key1>":               string,
-      "<key2>":               string,
+      "<key1>": [
+                            string
+      ],
+      "<key2>": [
+                            string
+      ],
       "<section1>": {
-        "<key1>":             string,
-        "<key2>":             string
-      },
-      "<section2>": {
-        "<key1>":             string,
-        "<key2>":             string
+        "<key1>": [
+                            string
+        ],
+        "<key2>": [
+                            string
+        ]
       }
     }
 
@@ -54,26 +60,42 @@ Examples:
     [section1]
     fruit = apple
     color = blue
+    color = red
 
     [section2]
     fruit = pear
+    fruit = peach
     color = green
 
     $ cat example.ini | jc --ini -p
     {
-      "foo": "fiz",
-      "bar": "buz",
+      "foo": [
+        "fiz"
+      ],
+      "bar": [
+        "buz"
+      ],
       "section1": {
-        "fruit": "apple",
-        "color": "blue"
+        "fruit": [
+          "apple"
+        ],
+        "color": [
+          "blue",
+          "red"
+        ]
       },
       "section2": {
-        "fruit": "pear",
-        "color": "green"
+        "fruit": [
+          "pear",
+          "peach"
+        ],
+        "color": [
+          "green"
+        ]
       }
     }
 
-<a id="jc.parsers.ini.parse"></a>
+<a id="jc.parsers.ini_dup.parse"></a>
 
 ### parse
 
@@ -96,4 +118,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

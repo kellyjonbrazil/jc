@@ -46,7 +46,6 @@ Schema:
         }
     ]
 
-
 Examples:
 
     $  iwconfig | jc --iwconfig -p
@@ -78,7 +77,6 @@ Examples:
         "missed_beacon": 0
       }
     ]
-
 """
 import re
 from typing import List, Dict

@@ -51,7 +51,6 @@ Schema:
         }
     ]
 
-
 Examples:
 
     $  iwconfig | jc --iwconfig -p

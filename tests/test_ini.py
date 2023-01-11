@@ -58,11 +58,38 @@ class MyTests(unittest.TestCase):
         Test input that contains duplicate keys. Only the last value should be used.
         """
         data = '''
+[section]
 duplicate_key: value1
 another_key = foo
 duplicate_key = value2
 '''
-        expected = {'duplicate_key': 'value2', 'another_key': 'foo'}
+        expected = {'section': {'duplicate_key': 'value2', 'another_key': 'foo'}}
+        self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
+
+    def test_ini_missing_top_section(self):
+        """
+        Test INI file missing top-level section header.
+        """
+        data = '''
+key: value1
+another_key = foo
+[section2]
+key3: bar
+key4 =
+[section 3]
+key5 = "quoted"
+'''
+        expected = {
+            'key': 'value1',
+            'another_key': 'foo',
+            'section2': {
+                'key3': 'bar',
+                'key4': ''
+            },
+            'section 3': {
+                'key5': 'quoted'
+            }
+        }
         self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
 
     def test_ini_doublequote(self):

@@ -34,6 +34,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-binary-object-store.out'), 'r', encoding='utf-8') as f:
         generic_lsusb_binary_object_store = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-extra-hub-port-status-info.out'), 'r', encoding='utf-8') as f:
+        generic_lsusb_extra_hub_port_status_info = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsusb.json'), 'r', encoding='utf-8') as f:
         centos_7_7_lsusb_json = json.loads(f.read())
@@ -55,6 +58,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-binary-object-store.json'), 'r', encoding='utf-8') as f:
         generic_lsusb_binary_object_store_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-extra-hub-port-status-info.json'), 'r', encoding='utf-8') as f:
+        generic_lsusb_extra_hub_port_status_info_json = json.loads(f.read())
 
 
     def test_lsusb_nodata(self):
@@ -110,6 +116,12 @@ class MyTests(unittest.TestCase):
         Test 'lsusb -v' with binary object store section
         """
         self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_binary_object_store, quiet=True), self.generic_lsusb_binary_object_store_json)
+
+    def test_lsusb_extra_hub_port_status_info(self):
+        """
+        Test 'lsusb -v' with extra information in the hub port status section
+        """
+        self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_extra_hub_port_status_info, quiet=True), self.generic_lsusb_extra_hub_port_status_info_json)
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.22.4'
+__version__ = '1.22.5'
 
 parsers: List[str] = [
     'acpi',
@@ -59,6 +59,7 @@ parsers: List[str] = [
     'id',
     'ifconfig',
     'ini',
+    'ini-dup',
     'iostat',
     'iostat-s',
     'ip-address',
@@ -174,6 +175,7 @@ parsers: List[str] = [
     'time',
     'timedatectl',
     'timestamp',
+    'toml',
     'top',
     'top-s',
     'tracepath',

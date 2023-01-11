@@ -99,4 +99,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin
 
-Version 1.1 by Matt J (https://github.com/listuser)
+Version 1.2 by Matt J (https://github.com/listuser)

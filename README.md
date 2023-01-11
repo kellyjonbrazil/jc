@@ -201,6 +201,7 @@ option.
 | `           --id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 | `     --ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
 | `          --ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
+| `      --ini-dup` | INI with duplicate key file parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini_dup)        |
 | `       --iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |
 | `     --iostat-s` | `iostat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s)       |
 | `   --ip-address` | IPv4 and IPv6 Address string parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_address)     |
@@ -266,6 +267,7 @@ option.
 | `         --time` | `/usr/bin/time` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/time)           |
 | `  --timedatectl` | `timedatectl status` command parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl)    |
 | `    --timestamp` | Unix Epoch Timestamp string parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timestamp)      |
+| `         --toml` | TOML file parser                                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/toml)           |
 | `          --top` | `top -b` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top)            |
 | `        --top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 | `    --tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
@@ -756,37 +758,31 @@ ifconfig | jc -p --ifconfig          # or:  jc -p ifconfig
 cat example.ini
 ```
 ```
-[DEFAULT]
-ServerAliveInterval = 45
-Compression = yes
-CompressionLevel = 9
-ForwardX11 = yes
+foo = fiz
+bar = buz
 
-[bitbucket.org]
-User = hg
+[section1]
+fruit = apple
+color = blue
 
-[topsecret.server.com]
-Port = 50022
-ForwardX11 = no
+[section2]
+fruit = pear
+color = green
 ```
 ```bash
 cat example.ini | jc -p --ini
 ```
 ```json
 {
-  "bitbucket.org": {
-    "ServeraLiveInterval": "45",
-    "Compression": "yes",
-    "CompressionLevel": "9",
-    "ForwardX11": "yes",
-    "User": "hg"
+  "foo": "fiz",
+  "bar": "buz",
+  "section1": {
+    "fruit": "apple",
+    "color": "blue"
   },
-  "topsecret.server.com": {
-    "ServeraLiveInterval": "45",
-    "Compression": "yes",
-    "CompressionLevel": "9",
-    "ForwardX11": "no",
-    "Port": "50022"
+  "section2": {
+    "fruit": "pear",
+    "color": "green"
   }
 }
 ```
@@ -1242,4 +1238,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-© 2019-2022 Kelly Brazil
+© 2019-2023 Kelly Brazil

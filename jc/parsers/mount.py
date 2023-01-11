@@ -20,7 +20,7 @@ Schema:
         "filesystem":       string,
         "mount_point":      string,
         "type":             string,
-        "access": [
+        "options": [
                             string
         ]
       }
@@ -34,7 +34,7 @@ Example:
         "filesystem": "sysfs",
         "mount_point": "/sys",
         "type": "sysfs",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "nodev",
@@ -46,7 +46,7 @@ Example:
         "filesystem": "proc",
         "mount_point": "/proc",
         "type": "proc",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "nodev",
@@ -58,7 +58,7 @@ Example:
         "filesystem": "udev",
         "mount_point": "/dev",
         "type": "devtmpfs",
-        "access": [
+        "options": [
           "rw",
           "nosuid",
           "relatime",
@@ -75,11 +75,11 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux', 'darwin', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd', 'aix']
     magic_commands = ['mount']
     tags = ['command']
 
@@ -138,10 +138,38 @@ def _linux_parse(data):
         output_line['filesystem'] = parsed_line[0]
         output_line['mount_point'] = parsed_line[2]
         output_line['type'] = parsed_line[4]
+        output_line['options'] = parsed_line[5].lstrip('(').rstrip(')').split(',')
 
-        options = parsed_line[5].lstrip('(').rstrip(')').split(',')
+        output.append(output_line)
 
-        output_line['options'] = options
+    return output
+
+def _aix_parse(data):
+    output = []
+
+    # AIX mount command starts with these headers:
+    #   node       mounted        mounted over    vfs       date        options
+    # -------- ---------------  ---------------  ------ ------------ ---------------
+    # Remove them
+    data.pop(0)
+    data.pop(0)
+
+    for entry in data:
+        output_line = {}
+        parsed_line = entry.split()
+
+        # AIX mount entries have the remote node as the zeroth element. If the
+        # mount is local, the zeroth element is the filesystem instead. We can
+        # detect this by the lenth of the list. For local mounts, length is 7,
+        # and for remote mounts, the length is 8. In the remote case, pop off
+        # the zeroth element. Then parsed_line has a consistent format.
+        if len(parsed_line) == 8:
+            parsed_line.pop(0)
+
+        output_line['filesystem'] = parsed_line[0]
+        output_line['mount_point'] = parsed_line[1]
+        output_line['type'] = parsed_line[2]
+        output_line['options'] = parsed_line[6].lstrip('(').rstrip(')').split(',')
 
         output.append(output_line)
 
@@ -171,9 +199,12 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        # check for OSX output
+        # check for OSX and AIX output
         if ' type ' not in cleandata[0]:
-            raw_output = _osx_parse(cleandata)
+            if 'node' in cleandata[0]:
+                raw_output = _aix_parse(cleandata)
+            else:
+                raw_output = _osx_parse(cleandata)
 
         else:
             raw_output = _linux_parse(cleandata)

@@ -26,8 +26,8 @@ Usage (module):
 
 Schema:
 
-key/value document converted to a dictionary - see the configparser standard
-library documentation for more details.
+Key/Value document converted to a dictionary - see the python configparser
+standard library documentation for more details.
 
     {
       "key1":       string,
@@ -41,6 +41,7 @@ Examples:
     name = John Doe
     address=555 California Drive
     age: 34
+
     ; comments can include # or ;
     # delimiter can be = or :
     # quoted values have quotation marks stripped by default
@@ -65,8 +66,6 @@ def parse(data, raw=False, quiet=False)
 
 Main text parsing function
 
-    Note: this is just a wrapper for jc.parsers.ini
-
 Parameters:
 
     data:        (string)  text data to parse
@@ -75,9 +74,9 @@ Parameters:
 
 Returns:
 
-    Dictionary representing the key/value file
+    Dictionary representing a Key/Value pair document.
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

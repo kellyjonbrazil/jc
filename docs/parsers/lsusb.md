@@ -102,6 +102,28 @@ Schema:
                     ]
                   }
                 },
+                "videocontrol_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "videostreaming_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
                 "endpoint_descriptors": [
                   {
                     "<item>": {
@@ -290,4 +312,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -21,8 +21,8 @@ Usage (module):
 
 Schema:
 
-key/value document converted to a dictionary - see the configparser standard
-library documentation for more details.
+Key/Value document converted to a dictionary - see the python configparser
+standard library documentation for more details.
 
     {
       "key1":       string,
@@ -36,6 +36,7 @@ Examples:
     name = John Doe
     address=555 California Drive
     age: 34
+
     ; comments can include # or ;
     # delimiter can be = or :
     # quoted values have quotation marks stripped by default
@@ -50,15 +51,17 @@ Examples:
       "occupation": "Engineer"
     }
 """
+import jc.utils
+import configparser
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '2.0'
     description = 'Key/Value file and string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'This is a wrapper for the INI parser'
+    details = 'Using configparser from the python standard library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['generic', 'file', 'string']
 
@@ -66,11 +69,35 @@ class info():
 __version__ = info.version
 
 
+def _process(proc_data):
+    """
+    Final processing to conform to the schema.
+
+    Parameters:
+
+        proc_data:   (Dictionary) raw structured data to process
+
+    Returns:
+
+        Dictionary representing a Key/Value pair document.
+    """
+    # remove quotation marks from beginning and end of values
+    for key in proc_data:
+        if proc_data[key] is None:
+            proc_data[key] = ''
+
+        elif proc_data[key].startswith('"') and proc_data[key].endswith('"'):
+            proc_data[key] = proc_data[key][1:-1]
+
+        elif proc_data[key].startswith("'") and proc_data[key].endswith("'"):
+            proc_data[key] = proc_data[key][1:-1]
+
+    return proc_data
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
-
-        Note: this is just a wrapper for jc.parsers.ini
 
     Parameters:
 
@@ -80,7 +107,30 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary representing the key/value file
+        Dictionary representing a Key/Value pair document.
     """
-    import jc.parsers.ini
-    return jc.parsers.ini.parse(data, raw=raw, quiet=quiet)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
+    raw_output = {}
+
+    if jc.utils.has_data(data):
+
+        kv_parser = configparser.ConfigParser(
+            allow_no_value=True,
+            interpolation=None,
+            default_section=None,
+            strict=False
+        )
+
+        # don't convert keys to lower-case:
+        kv_parser.optionxform = lambda option: option
+
+        data = '[data]\n' + data
+        kv_parser.read_string(data)
+        output_dict = {s: dict(kv_parser.items(s)) for s in kv_parser.sections()}
+        for key, value in output_dict['data'].items():
+            raw_output[key] = value
+
+    return raw_output if raw else _process(raw_output)
+
