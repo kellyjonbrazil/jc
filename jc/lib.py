@@ -3,7 +3,7 @@ import sys
 import os
 import re
 import importlib
-from typing import List, Iterable, Union, Iterator
+from typing import List, Iterable, Optional, Union, Iterator
 from types import ModuleType
 from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
@@ -159,6 +159,7 @@ parsers: List[str] = [
     'sfdisk',
     'shadow',
     'ss',
+    'ssh-conf',
     'sshd-conf',
     'stat',
     'stat-s',
@@ -279,7 +280,7 @@ def parse(
     data: Union[str, bytes, Iterable[str]],
     quiet: bool = False,
     raw: bool = False,
-    ignore_exceptions: bool = None,
+    ignore_exceptions: Optional[bool] = None,
     **kwargs
 ) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]:
     """
