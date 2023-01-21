@@ -1,5 +1,9 @@
 jc changelog
 
+20230121 v1.23.0
+- Add ssh_conf file parser
+- Add input slicing
+
 20230111 v1.22.5
 - Add TOML file parser
 - Add INI with duplicate key support file parser
