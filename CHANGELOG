@@ -1,8 +1,9 @@
 jc changelog
 
-20230121 v1.23.0
-- Add ssh_conf file parser
+20230122 v1.23.0
+- Add `ssh` configuration file parser
 - Add input slicing
+- Fix `acpi` command parser for "will never fully discharge" battery state
 
 20230111 v1.22.5
 - Add TOML file parser
