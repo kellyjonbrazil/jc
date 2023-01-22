@@ -1,4 +1,4 @@
-"""jc - JSON Convert ssh configuration file and `ssh -G` command output parser
+"""jc - JSON Convert `ssh` configuration file and `ssh -G` command output parser
 
 This parser will work with `ssh` configuration files or the output of
 `ssh -G`. Any `Match` blocks in the `ssh` configuration file will be
@@ -482,7 +482,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'ssh config file and `ssh -G` command parser'
+    description = '`ssh` config file and `ssh -G` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
