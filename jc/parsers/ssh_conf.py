@@ -87,7 +87,9 @@ def parse(
 
     if jc.utils.has_data(data):
         myconfig = sshconfig.from_text(data)
-        hostnames = myconfig.get_hostnames()
+        hostnames = sorted(myconfig.get_hostnames())
         raw_output = [myconfig.lookup(x) for x in hostnames]
+        for host, obj in zip(hostnames, raw_output.copy()):
+            obj.update({'host': host})
 
     return raw_output if raw else _process(raw_output)
