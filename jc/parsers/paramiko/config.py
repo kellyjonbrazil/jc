@@ -21,6 +21,8 @@
 Configuration file (aka ``ssh_config``) support.
 """
 
+# search jc_change for jc fixes
+
 import fnmatch
 import getpass
 import os
@@ -429,20 +431,20 @@ class SSHConfig:
         # The actual tokens!
         replacements = {
             # TODO: %%???
-            "%C": sha1(tohash.encode()).hexdigest(),
-            "%d": homedir,
+            # "%C": sha1(tohash.encode()).hexdigest(),  # jc_change
+            # "%d": homedir,  # jc_change
             "%h": configured_hostname,
             # TODO: %i?
-            "%L": local_hostname,
-            "%l": local_fqdn,
+            # "%L": local_hostname,  # jc_change
+            # "%l": local_fqdn,  # jc_change
             # also this is pseudo buggy when not in Match exec mode so document
             # that. also WHY is that the case?? don't we do all of this late?
             "%n": target_hostname,
             "%p": port,
             "%r": remoteuser,
             # TODO: %T? don't believe this is possible however
-            "%u": user,
-            "~": homedir,
+            # "%u": user,  # jc_change
+            # "~": homedir,  # jc_change
         }
         # Do the thing with the stuff
         tokenized = value
