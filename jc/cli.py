@@ -766,8 +766,6 @@ class JcCli():
                 if ':' in opt:
                     if SLICER_RE.match(opt):
                         self.slice_str = opt
-                    else:
-                        utils.warning_message(['Invalid slice syntax.'])
 
                 if opt in long_options_map:
                     self.options.extend(long_options_map[opt][0])
