@@ -42,6 +42,10 @@ except Exception:
 JC_CLEAN_EXIT: int = 0
 JC_ERROR_EXIT: int = 100
 MAX_EXIT: int = 255
+SLICER_PATTERN: str = r'-?[0-9]*\:-?[0-9]*$'
+SLICER_RE = re.compile(SLICER_PATTERN)
+NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
+NEWLINES_RE = re.compile(NEWLINES_PATTERN)
 
 
 class info():
@@ -71,7 +75,7 @@ class JcCli():
         'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer',
         'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
         'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
-        'magic_stderr', 'magic_returncode', 'slice_start', 'slice_end'
+        'magic_stderr', 'magic_returncode', 'slice_str', 'slice_start', 'slice_end'
     )
 
     def __init__(self) -> None:
@@ -92,6 +96,7 @@ class JcCli():
         self.run_timestamp: Optional[datetime] = None
 
         # slicer
+        self.slice_str: str = ''
         self.slice_start: Optional[int] = None
         self.slice_end: Optional[int] = None
 
@@ -438,6 +443,17 @@ class JcCli():
                 self.magic_options = []
                 return
 
+            # slicer found
+            if ':' in arg:
+                if SLICER_RE.match(arg):
+                    self.slice_str = arg
+                    args_given.pop(0)
+                    continue
+                else:
+                    utils.warning_message(['Invalid slice syntax.'])
+                    args_given.pop(0)
+                    continue
+
             # option found - populate option list
             if arg.startswith('-'):
                 self.magic_options.extend(args_given.pop(0)[1:])
@@ -625,7 +641,7 @@ class JcCli():
     @staticmethod
     def lazy_splitlines(text: str) -> Iterable[str]:
         start = 0
-        for m in re.finditer(r'(\r\n|\r|\n)', text):
+        for m in NEWLINES_RE.finditer(text):
             begin, end = m.span()
             if begin != start:
                 yield text[start:begin]
@@ -636,9 +652,12 @@ class JcCli():
 
     def slicer(self) -> None:
         """Slice input data lazily, if possible. Updates self.data_in"""
-
-        self.slice_start = -20001      # 5
-        self.slice_end = -20000     # -2 or 8
+        if self.slice_str:
+            slice_start_str, slice_end_str = self.slice_str.split(':', maxsplit=1)
+            if slice_start_str:
+                self.slice_start = int(slice_start_str)
+            if slice_end_str:
+                self.slice_end = int(slice_end_str)
 
         if not self.slice_start is None or not self.slice_end is None:
             # standard parsers UTF-8 input
@@ -744,6 +763,12 @@ class JcCli():
         # find options if magic_parser did not find a command
         if not self.magic_found_parser:
             for opt in self.args:
+                if ':' in opt:
+                    if SLICER_RE.match(opt):
+                        self.slice_str = opt
+                    else:
+                        utils.warning_message(['Invalid slice syntax.'])
+
                 if opt in long_options_map:
                     self.options.extend(long_options_map[opt][0])
 
