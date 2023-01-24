@@ -763,9 +763,8 @@ class JcCli():
         # find options if magic_parser did not find a command
         if not self.magic_found_parser:
             for opt in self.args:
-                if ':' in opt:
-                    if SLICER_RE.match(opt):
-                        self.slice_str = opt
+                if SLICER_RE.match(opt):
+                    self.slice_str = opt
 
                 if opt in long_options_map:
                     self.options.extend(long_options_map[opt][0])
