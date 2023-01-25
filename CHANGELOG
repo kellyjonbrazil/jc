@@ -1,8 +1,9 @@
 jc changelog
 
-20230122 v1.23.0
+20230125 v1.23.0
+- Add input slicing as a `jc` command-line option
 - Add `ssh` configuration file parser
-- Add input slicing
+- Add `ver` Version string parser
 - Fix `acpi` command parser for "will never fully discharge" battery state
 
 20230111 v1.22.5

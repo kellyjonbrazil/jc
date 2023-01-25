@@ -190,6 +190,7 @@ parsers: List[str] = [
     'upower',
     'uptime',
     'url',
+    'ver',
     'vmstat',
     'vmstat-s',
     'w',
