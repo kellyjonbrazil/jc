@@ -12,6 +12,8 @@ All other version strings will have a `strict` value of `false` and a
 `components` key will contain a list of detected parts of the version
 string.
 
+See Also: `semver` parser.
+
 Usage (cli):
 
     $ echo '1.2b' | jc --ver

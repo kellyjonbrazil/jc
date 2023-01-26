@@ -2,6 +2,8 @@
 
 This parser conforms to the specification at https://semver.org/
 
+See also: `ver` parser.
+
 Usage (cli):
 
     $ echo 1.2.3-rc.1+44837 | jc --semver
