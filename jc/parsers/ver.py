@@ -33,7 +33,7 @@ Schema:
       "prerelease_num":         integer,
       "components": [
                                 integer/string,
-      ]
+      ],
       "strict":                 boolean
     }
 
