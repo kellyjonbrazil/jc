@@ -81,13 +81,11 @@ def strict_parse(vstring):
     (major, minor, patch, prerelease, prerelease_num) = \
         match.group(1, 2, 4, 5, 6)
 
-    if patch:
-        version = tuple(map(int, [major, minor, patch]))
-    else:
-        version = tuple(map(int, [major, minor])) + (0,)
+    if not patch:
+        patch = '0'
 
     if prerelease:
-        prerelease = (prerelease[0], int(prerelease_num))
+        prerelease = prerelease[0]
     else:
         prerelease = None
 
