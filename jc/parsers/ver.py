@@ -16,7 +16,7 @@ See Also: `semver` parser.
 
 Usage (cli):
 
-    $ echo '1.2b' | jc --ver
+    $ echo 1.2a1 | jc --ver
 
 
 Usage (module):
@@ -36,8 +36,26 @@ Schema:
 
 Examples:
 
-    $ echo '1.2b' | jc --ver -p
-    []
+    $ echo 1.2a1 | jc --ver -p
+    {
+      "major": "1",
+      "minor": "2",
+      "patch": "0",
+      "prerelease": "a",
+      "prerelease_num": "1",
+      "strict": true
+    }
+
+    $ echo 1.2beta3 | jc --ver -p
+    {
+      "components": [
+        "1",
+        "2",
+        "beta",
+        "3"
+      ],
+      "strict": false
+    }
 """
 import re
 from typing import List, Dict
