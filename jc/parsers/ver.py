@@ -1,6 +1,6 @@
 """jc - JSON Convert Version string output parser
 
-Best effort attempt to parse various styles of version numbers. This parser
+Best-effort attempt to parse various styles of version numbers. This parser
 is based off of the version parser included in the CPython distutils
 libary.
 
@@ -25,17 +25,31 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "version":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+    {
+      "major":                  integer,
+      "minor":                  integer,
+      "patch":                  integer,
+      "prerelease":             string,
+      "prerelease_num":         integer,
+      "components": [
+                                integer/string,
+      ]
+      "strict":                 boolean
+    }
 
 Examples:
 
     $ echo 1.2a1 | jc --ver -p
+    {
+      "major": 1,
+      "minor": 2,
+      "patch": 0,
+      "prerelease": "a",
+      "prerelease_num": 1,
+      "strict": true
+    }
+
+    $ echo 1.2a1 | jc --ver -p -r
     {
       "major": "1",
       "minor": "2",
@@ -48,6 +62,17 @@ Examples:
     $ echo 1.2beta3 | jc --ver -p
     {
       "components": [
+        1,
+        2,
+        "beta",
+        3
+      ],
+      "strict": false
+    }
+
+    $ echo 1.2beta3 | jc --ver -p -r
+    {
+      "components": [
         "1",
         "2",
         "beta",
@@ -57,7 +82,7 @@ Examples:
     }
 """
 import re
-from typing import List, Dict
+from typing import Dict
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -68,7 +93,7 @@ class info():
     description = 'Version string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Based on distutils/version.py from CPython 3.9.5'
+    details = 'Based on distutils/version.py from CPython 3.9.5.'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['generic', 'string']
 
@@ -88,6 +113,22 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    int_list = {'major', 'minor', 'patch', 'prerelease', 'prerelease_num'}
+
+    for k, v in proc_data.items():
+        if k in int_list:
+            try:
+                proc_data[k] = int(v)
+            except Exception:
+                pass
+
+    if 'components' in proc_data:
+        for i, obj in enumerate(proc_data['components']):
+            try:
+                proc_data['components'][i] = int(obj)
+            except Exception:
+                pass
+
     return proc_data
 
 
