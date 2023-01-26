@@ -2,7 +2,7 @@
 
 This parser conforms to the specification at https://semver.org/
 
-See also: `ver` parser.
+See Also: `ver` parser.
 
 Usage (cli):
 
