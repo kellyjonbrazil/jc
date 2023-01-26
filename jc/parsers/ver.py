@@ -18,7 +18,6 @@ Usage (cli):
 
     $ echo 1.2a1 | jc --ver
 
-
 Usage (module):
 
     import jc
