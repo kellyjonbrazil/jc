@@ -153,6 +153,7 @@ option.
 ### Parsers
 
 <nobr>
+
 | Argument          | Command or Filetype                                     | Documentation                                                              |
 |-------------------|---------------------------------------------------------|----------------------------------------------------------------------------|
 | `         --acpi` | `acpi` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi)           |
@@ -313,6 +314,7 @@ option.
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |
 | `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))    |
 | `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))     |
+
 </nobr>
 
 ### Slice
