@@ -349,16 +349,17 @@ feature works.
 
 Here is a quick breakdown:
 
-| Slice           | Description                                                |
-|-----------------|------------------------------------------------------------|
-| `START:STOP`    | lines `START` through `STOP - 1`                           |
-| `START:`        | lines `START` through the rest of the output               |
-| `:STOP`         | lines from the beginning through `STOP - 1`                |
-| `-START:STOP`   | `START` lines from the end through `STOP - 1`              |
-| `START:-STOP`   | lines `START` through `STOP` lines from the end            |
-| `-START:`       | `START` lines from the end through the rest of the output  |
-| `:-STOP`        | lines from the beginning through `STOP` lines from the end |
-| `:`             | all lines                                                  |
+| Slice          | Description                                                  |
+|----------------|--------------------------------------------------------------|
+| `START:STOP`   | lines `START` through `STOP - 1`                             |
+| `START:`       | lines `START` through the rest of the output                 |
+| `:STOP`        | lines from the beginning through `STOP - 1`                  |
+| `-START:STOP`  | `START` lines from the end through `STOP - 1`                |
+| `START:-STOP`  | lines `START` through `STOP` lines from the end              |
+| `-START:-STOP` | `START` lines from the end through `STOP` lines from the end |
+| `-START:`      | `START` lines from the end through the rest of the output    |
+| `:-STOP`       | lines from the beginning through `STOP` lines from the end   |
+| `:`            | all lines                                                    |
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
