@@ -133,9 +133,9 @@ on Github.
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the
 previous command's output to `STDOUT`.
 ```bash
-COMMAND | jc [OPTIONS] PARSER
-cat FILE | jc [OPTIONS] PARSER
-echo STRING | jc [OPTIONS] PARSER
+COMMAND | jc [SLICE] [OPTIONS] PARSER
+cat FILE | jc [SLICE] [OPTIONS] PARSER
+echo STRING | jc [SLICE] [OPTIONS] PARSER
 ```
 
 Alternatively, the "magic" syntax can be used by prepending `jc` to the command
@@ -143,8 +143,8 @@ to be converted or in front of the absolute path for Proc files. Options can be
 passed to `jc` immediately before the command or Proc file path is given.
 (Note: command aliases and shell builtins are not supported)
 ```bash
-jc [OPTIONS] COMMAND
-jc [OPTIONS] /proc/<path-to-procfile>
+jc [SLICE] [OPTIONS] COMMAND
+jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
 ```
 
 The JSON output can be compact (default) or pretty formatted with the `-p`
@@ -282,6 +282,7 @@ option.
 | `       --upower` | `upower` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upower)         |
 | `       --uptime` | `uptime` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime)         |
 | `          --url` | URL string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/url)            |
+| `          --ver` | Version string parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ver)            |
 | `       --vmstat` | `vmstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat)         |
 | `     --vmstat-s` | `vmstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s)       |
 | `            --w` | `w` command parser                                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/w)              |
@@ -311,6 +312,51 @@ option.
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |
 | `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))    |
 | `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))     |
+
+### Slice
+Line slicing is supported using the `START:STOP` syntax similar to Python
+slicing. This allows you to skip lines at the beginning and/or end of the
+output you would like `jc` to convert.
+
+`START` and `STOP` can be positive or negative integers and allow you to
+specify how many lines to skip and how many lines to process. Positive
+slices are the most memory efficient. Any negative slices will use more
+memory.
+
+For example, to skip the first and last line of the following text, you
+could express the slice in a couple ways:
+
+```bash
+$ cat table.txt
+We want to skip this header information
+col1       col2
+foo        1
+bar        1
+We also want to skip this footer
+$ cat table.txt | jc 1:-1 --asciitable
+[{"col1":"foo","col2":"1"},{"col1":"bar","col2":"1"}]
+$ cat table.txt | jc 1:4 --asciitable
+[{"col1":"foo","col2":"1"},{"col1":"bar","col2":"1"}]
+```
+Notice how when using positive integers the index location of `STOP` is
+non-inclusive. Positive slices count from the first line of the output
+toward the end starting at `0` as the first line. Negative slices count from
+the last line toward the beginning starting at `-1` as the last line. This
+is also the way [Python's slicing](https://stackoverflow.com/questions/509211/understanding-slicing)
+feature works.
+
+Here is a quick breakdown:
+
+| Slice           | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `START:STOP`    | lines `START` through `STOP - 1`                           |
+| `START:`        | lines `START` through the rest of the output               |
+| `:STOP`         | lines from the beginning through `STOP - 1`                |
+| `-START:STOP`   | `START` lines from the end through `STOP - 1`              |
+| `START:-STOP`   | lines `START` through `STOP` lines from the end            |
+| `-START:`       | `START` lines from the end through the rest or the output  |
+| `:-STOP`        | lines from the beginning through `STOP` lines from the end |
+| `:`             | all lines                                                  |
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
