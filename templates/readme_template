@@ -3,7 +3,7 @@
 
 > Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
 
-> Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API demo](https://jc-api.onrender.com)
+> Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API](https://github.com/kellyjonbrazil/jc-restapi)
 
 > JC is [now available](https://galaxy.ansible.com/community/general) as an
 Ansible filter plugin in the `community.general` collection. See this
