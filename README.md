@@ -329,15 +329,17 @@ could express the slice in a couple ways:
 ```bash
 $ cat table.txt
 We want to skip this header information
-col1       col2
-foo        1
-bar        1
+  col1       col2
+  foo        1
+  bar        1
 We also want to skip this footer
 $ cat table.txt | jc 1:-1 --asciitable
 [{"col1":"foo","col2":"1"},{"col1":"bar","col2":"1"}]
 $ cat table.txt | jc 1:4 --asciitable
 [{"col1":"foo","col2":"1"},{"col1":"bar","col2":"1"}]
 ```
+In this example `1:-1` and `1:4` line slices provide the same output.
+
 Notice how when using positive integers the index location of `STOP` is
 non-inclusive. Positive slices count from the first line of the output
 toward the end starting at `0` as the first line. Negative slices count from
@@ -354,7 +356,7 @@ Here is a quick breakdown:
 | `:STOP`         | lines from the beginning through `STOP - 1`                |
 | `-START:STOP`   | `START` lines from the end through `STOP - 1`              |
 | `START:-STOP`   | lines `START` through `STOP` lines from the end            |
-| `-START:`       | `START` lines from the end through the rest or the output  |
+| `-START:`       | `START` lines from the end through the rest of the output  |
 | `:-STOP`        | lines from the beginning through `STOP` lines from the end |
 | `:`             | all lines                                                  |
 
