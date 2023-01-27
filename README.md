@@ -318,10 +318,10 @@ Line slicing is supported using the `START:STOP` syntax similar to Python
 slicing. This allows you to skip lines at the beginning and/or end of the
 output you would like `jc` to convert.
 
-`START` and `STOP` can be positive or negative integers and allow you to
-specify how many lines to skip and how many lines to process. Positive
-slices are the most memory efficient. Any negative slices will use more
-memory.
+`START` and `STOP` can be positive or negative integers or blank and allow
+you to specify how many lines to skip and how many lines to process.
+Positive and blank slices are the most memory efficient. Any negative
+integers in the slice will use more memory.
 
 For example, to skip the first and last line of the following text, you
 could express the slice in a couple ways:
