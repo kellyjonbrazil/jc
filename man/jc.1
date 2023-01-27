@@ -1,4 +1,4 @@
-.TH jc 1 2023-01-22 1.23.0 "JSON Convert"
+.TH jc 1 2023-01-27 1.23.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
 .SH SYNOPSIS
@@ -6,19 +6,19 @@
 Standard syntax:
 
 .RS
-COMMAND | \fBjc\fP [OPTIONS] PARSER
+COMMAND | \fBjc\fP [SLICE] [OPTIONS] PARSER
 
-cat FILE | \fBjc\fP [OPTIONS] PARSER
+cat FILE | \fBjc\fP [SLICE] [OPTIONS] PARSER
 
-echo STRING | \fBjc\fP [OPTIONS] PARSER
+echo STRING | \fBjc\fP [SLICE] [OPTIONS] PARSER
 .RE
 
 Magic syntax:
 
 .RS
-\fBjc\fP [OPTIONS] COMMAND
+\fBjc\fP [SLICE] [OPTIONS] COMMAND
 
-\fBjc\fP [OPTIONS] /proc/<path-to-procfile>
+\fBjc\fP [SLICE] [OPTIONS] /proc/<path-to-procfile>
 .RE
 
 .SH DESCRIPTION
@@ -922,6 +922,11 @@ URL string parser
 
 .TP
 .B
+\fB--ver\fP
+Version string parser
+
+.TP
+.B
 \fB--vmstat\fP
 `vmstat` command parser
 
@@ -1033,6 +1038,85 @@ Generate Bash shell completion script
 .B
 \fB-Z\fP, \fB--zsh-comp\fP
 Generate Zsh shell completion script
+
+.RE
+.PP
+.B
+Slice:
+.RS
+Line slicing is supported using the \fBSTART:STOP\fP syntax similar to Python
+slicing. This allows you to skip lines at the beginning and/or end of the
+\fBSTDIN\fP input you would like \fBjc\fP to convert.
+
+\fBSTART\fP and \fBSTOP\fP can be positive or negative integers or blank and allow
+you to specify how many lines to skip and how many lines to process.
+Positive and blank slices are the most memory efficient. Any negative
+integers in the slice will use more memory.
+
+For example, to skip the first and last line of the following text, you
+could express the slice in a couple ways:
+
+.RS
+.nf
+$ cat table.txt
+      ### We want to skip this header ###
+          col1       col2
+          foo        1
+          bar        2
+      ### We want to skip this footer ###
+$ cat table.txt | jc 1:-1 --asciitable
+[{"col1":"foo","col2":"1"},{"col1":"bar","col2":"2"}]
+$ cat table.txt | jc 1:4 --asciitable
+[{"col1":"foo","col2":"1"},{"col1":"bar","col2":"2"}]
+.fi
+.RE
+
+In this example \fB1:-1\fP and \fB1:4\fP line slices provide the same output.
+
+When using positive integers the index location of \fBSTOP\fP is non-inclusive.
+Positive slices count from the first line of the input toward the end
+starting at \fB0\fP as the first line. Negative slices count from the last line
+toward the beginning starting at \fB-1\fP as the last line. This is also the way
+Python's slicing feature works.
+
+Here is a breakdown of line slice options:
+
+.TP
+.B
+\fBSTART:STOP\fP
+lines \fBSTART\fP through \fBSTOP - 1\fP
+.TP
+.B
+\fBSTART:\fP
+lines \fBSTART\fP through the rest of the output
+.TP
+.B
+\fB:STOP\fP
+lines from the beginning through \fBSTOP - 1\fP
+.TP
+.B
+\fB-START:STOP\fP
+\fBSTART\fP lines from the end through \fBSTOP - 1\fP
+.TP
+.B
+\fBSTART:-STOP\fP
+lines \fBSTART\fP through \fBSTOP\fP lines from the end
+.TP
+.B
+\fB-START:-STOP\fP
+\fBSTART\fP lines from the end through \fBSTOP\fP lines from the end
+.TP
+.B
+\fB-START:\fP
+\fBSTART\fP lines from the end through the rest of the output
+.TP
+.B
+\fB:-STOP\fP
+lines from the beginning through \fBSTOP\fP lines from the end
+.TP
+.B
+\fB:\fP
+all lines
 
 .SH EXIT CODES
 Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP.

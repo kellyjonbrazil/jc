@@ -209,7 +209,7 @@ toward the beginning starting at `-1` as the last line. This is also the way
 [Python's slicing](https://stackoverflow.com/questions/509211/understanding-slicing)
 feature works.
 
-Here is a quick breakdown:
+Here is a breakdown of line slice options:
 
 | Slice Notation | Input Lines Processed                                        |
 |----------------|--------------------------------------------------------------|
