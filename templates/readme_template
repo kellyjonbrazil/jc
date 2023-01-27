@@ -211,7 +211,7 @@ feature works.
 
 Here is a quick breakdown:
 
-| Slice Notation | Input lines processed                                        |
+| Slice Notation | Input Lines Processed                                        |
 |----------------|--------------------------------------------------------------|
 | `START:STOP`   | lines `START` through `STOP - 1`                             |
 | `START:`       | lines `START` through the rest of the output                 |
