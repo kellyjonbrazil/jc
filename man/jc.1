@@ -1,6 +1,7 @@
 .TH jc 1 2023-01-27 1.23.0 "JSON Convert"
 .SH NAME
-\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types, and strings
+\fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
+and strings
 .SH SYNOPSIS
 
 Standard syntax:
@@ -22,7 +23,13 @@ Magic syntax:
 .RE
 
 .SH DESCRIPTION
-\fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and outputs a JSON representation of the previous command's output to \fBSTDOUT\fP. Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the command to be converted. Options can be passed to \fBjc\fP immediately before the command is given. (Note: "Magic" syntax does not support shell builtins or command aliases)
+\fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings
+for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and
+outputs a JSON representation of the previous command's output to \fBSTDOUT\fP.
+Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the
+command to be converted. Options can be passed to \fBjc\fP immediately before
+the command is given. (Note: "Magic" syntax does not support shell builtins or
+command aliases)
 
 .SH OPTIONS
 .B
@@ -989,7 +996,8 @@ About \fBjc\fP (JSON or YAML output)
 .TP
 .B
 \fB-C\fP, \fB--force-color\fP
-Force color output even when using pipes (overrides \fB-m\fP and the \fBNO_COLOR\fP env variable)
+Force color output even when using pipes (overrides \fB-m\fP and the
+\fBNO_COLOR\fP env variable)
 .TP
 .B
 \fB-d\fP, \fB--debug\fP
@@ -997,7 +1005,8 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .TP
 .B
 \fB-h\fP, \fB--help\fP
-Help (\fB--help --parser_name\fP for parser documentation). Use twice to show hidden parsers (e.g. \fB-hh\fP)
+Help (\fB--help --parser_name\fP for parser documentation). Use twice to show
+\hidden parsers (e.g. \fB-hh\fP)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP
@@ -1005,7 +1014,8 @@ Monochrome output
 .TP
 .B
 \fB-M\fP, \fB--meta-out\fP
-Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.
+Add metadata to output including timestamp, parser name, magic command, magic
+command exit code, etc.
 .TP
 .B
 \fB-p\fP, \fB--pretty\fP
@@ -1013,11 +1023,13 @@ Pretty print output
 .TP
 .B
 \fB-q\fP, \fB--quiet\fP
-Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming parser errors)
+Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming
+parser errors)
 .TP
 .B
 \fB-r\fP, \fB--raw\fP
-Raw output. Provides more literal output, typically with string values and no additional semantic processing
+Raw output. Provides more literal output, typically with string values and no
+additional semantic processing
 .TP
 .B
 \fB-u\fP, \fB--unbuffer\fP
@@ -1048,8 +1060,8 @@ Line slicing is supported using the \fBSTART:STOP\fP syntax similar to Python
 slicing. This allows you to skip lines at the beginning and/or end of the
 \fBSTDIN\fP input you would like \fBjc\fP to convert.
 
-\fBSTART\fP and \fBSTOP\fP can be positive or negative integers or blank and allow
-you to specify how many lines to skip and how many lines to process.
+\fBSTART\fP and \fBSTOP\fP can be positive or negative integers or blank and
+allow you to specify how many lines to skip and how many lines to process.
 Positive and blank slices are the most memory efficient. Any negative
 integers in the slice will use more memory.
 
@@ -1119,9 +1131,13 @@ lines from the beginning through \fBSTOP\fP lines from the end
 all lines
 
 .SH EXIT CODES
-Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP, otherwise the exit code will be \fB0\fP.
+Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP,
+otherwise the exit code will be \fB0\fP.
 
-When using the "magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store the exit code of the program being parsed and add it to the \fBjc\fP exit code. This way it is easier to determine if an error was from the parsed program or \fBjc\fP.
+When using the "magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store
+the exit code of the program being parsed and add it to the \fBjc\fP exit code.
+This way it is easier to determine if an error was from the parsed program or
+\fBjc\fP.
 
 Consider the following examples using \fBifconfig\fP:
 
@@ -1136,9 +1152,9 @@ ifconfig exit code = \fB1\fP, jc exit code = \fB100\fP, combined exit code = \fB
 .RE
 
 When using the "magic" syntax you can also retrieve the exit code of the called
-program by using the \fB--meta-out\fP or \fB-M\fP option. This will append a \fB_jc_meta\fP
-object to the output that will include the magic command information, including
-the exit code.
+program by using the \fB--meta-out\fP or \fB-M\fP option. This will append a
+\fB_jc_meta\fP object to the output that will include the magic command
+information, including the exit code.
 
 Here is an example with \fBping\fP:
 .RS
@@ -1180,11 +1196,16 @@ $ echo $?
 
 \fBCustom Colors\fP
 
-You can specify custom colors via the \fBJC_COLORS\fP environment variable. The \fBJC_COLORS\fP environment variable takes four comma separated string values in the following format:
+You can specify custom colors via the \fBJC_COLORS\fP environment variable. The
+\fBJC_COLORS\fP environment variable takes four comma separated string values in
+the following format:
 
 JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 
-Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP, \fBmagenta\fP, \fBcyan\fP, \fBgray\fP, \fBbrightblack\fP, \fBbrightred\fP, \fBbrightgreen\fP, \fBbrightyellow\fP, \fBbrightblue\fP, \fBbrightmagenta\fP, \fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP
+Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP,
+\fBmagenta\fP, \fBcyan\fP, \fBgray\fP, \fBbrightblack\fP, \fBbrightred\fP,
+\fBbrightgreen\fP, \fBbrightyellow\fP, \fBbrightblue\fP, \fBbrightmagenta\fP,
+\fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP
 
 For example, to set to the default colors:
 
@@ -1198,10 +1219,20 @@ JC_COLORS=default,default,default,default
 
 \fBDisable Color Output\fP
 
-You can set the \fBNO_COLOR\fP environment variable to any value to disable color output in \fBjc\fP. Note that using the \fB-C\fP option to force color output will override both the \fBNO_COLOR\fP environment variable and the \fB-m\fP option.
+You can set the \fBNO_COLOR\fP environment variable to any value to disable
+color output in \fBjc\fP. Note that using the \fB-C\fP option to force color
+output will override both the \fBNO_COLOR\fP environment variable and the
+\fB-m\fP option.
 
 .SH STREAMING PARSERS
-Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the entire JSON document serially. There are some streaming parsers (e.g. \fBls-s\fP, \fBping-s\fP, etc.) that immediately start processing and outputting the data line-by-line as JSON Lines (aka NDJSON) while it is being received from \fBSTDIN\fP. This can significantly reduce the amount of memory required to parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes process the data more quickly. Streaming parsers have slightly different behavior than standard parsers as outlined below.
+Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the
+entire JSON document serially. There are some streaming parsers (e.g.
+\fBls-s\fP, \fBping-s\fP, etc.) that immediately start processing and outputting
+the data line-by-line as JSON Lines (aka NDJSON) while it is being received from
+\fBSTDIN\fP. This can significantly reduce the amount of memory required to
+parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes
+process the data more quickly. Streaming parsers have slightly different
+behavior than standard parsers as outlined below.
 
 .RS
 Note: Streaming parsers cannot be used with the "magic" syntax
@@ -1209,7 +1240,14 @@ Note: Streaming parsers cannot be used with the "magic" syntax
 
 \fBIgnoring Errors\fP
 
-You may want to ignore parsing errors when using streaming parsers since these may be used in long-lived processing pipelines and errors can break the pipe. To ignore parsing errors, use the \fB-qq\fP cli option. This will add a \fB_jc_meta\fP object to the JSON output with a \fBsuccess\fP attribute. If \fBsuccess\fP is \fBtrue\fP, then there were no issues parsing the line. If \fBsuccess\fP is \fBfalse\fP, then a parsing issue was found and \fBerror\fP and \fBline\fP fields will be added to include a short error description and the contents of the unparsable line, respectively:
+You may want to ignore parsing errors when using streaming parsers since these
+may be used in long-lived processing pipelines and errors can break the pipe. To
+ignore parsing errors, use the \fB-qq\fP cli option. This will add a
+\fB_jc_meta\fP object to the JSON output with a \fBsuccess\fP attribute. If
+\fBsuccess\fP is \fBtrue\fP, then there were no issues parsing the line. If
+\fBsuccess\fP is \fBfalse\fP, then a parsing issue was found and \fBerror\fP and
+\fBline\fP fields will be added to include a short error description and the
+contents of the unparsable line, respectively:
 
 .RS
 Successfully parsed line with \fB-qq\fP option:
@@ -1240,7 +1278,11 @@ Unsuccessfully parsed line with \fB-qq\fP option:
 .RE
 \fBUnbuffering Output\fP
 
-Most operating systems will buffer output that is being piped from process to process. The buffer is usually around 4KB. When viewing the output in the terminal the OS buffer is not engaged so output is immediately displayed on the screen. When piping multiple processes together, though, it may seem as if the output is hanging when the input data is very slow (e.g. \fBping\fP):
+Most operating systems will buffer output that is being piped from process to
+process. The buffer is usually around 4KB. When viewing the output in the
+terminal the OS buffer is not engaged so output is immediately displayed on the
+screen. When piping multiple processes together, though, it may seem as if the
+output is hanging when the input data is very slow (e.g. \fBping\fP):
 
 .RS
 .nf
@@ -1249,7 +1291,9 @@ $ ping 1.1.1.1 | jc \fB--ping-s\fP | jq
 .fi
 .RE
 
-This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in this example. To display the data on the terminal in realtime, you can disable the buffer with the \fB-u\fP (unbuffer) cli option:
+This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in
+this example. To display the data on the terminal in realtime, you can disable
+the buffer with the \fB-u\fP (unbuffer) cli option:
 
 .RS
 .nf
@@ -1263,7 +1307,8 @@ Note: Unbuffered output can be slower for large data streams.
 .RE
 
 .SH CUSTOM PARSERS
-Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your local "App data directory":
+Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
+local "App data directory":
 
 .RS
 .nf
@@ -1273,11 +1318,16 @@ Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
 .fi
 .RE
 
-Local parser plugins are standard python module files. Use the \fBjc/parsers/foo.py\fP or \fBjc/parsers/foo_s.py\fP (streaming) parser as a template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
+Local parser plugins are standard python module files. Use the
+\fBjc/parsers/foo.py\fP or \fBjc/parsers/foo_s.py\fP (streaming) parser as a
+template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
 
-Local plugin filenames must be valid python module names and therefore must start with a letter and consist entirely of alphanumerics and underscores. Local plugins may override default parsers.
+Local plugin filenames must be valid python module names and therefore must
+start with a letter and consist entirely of alphanumerics and underscores. Local
+plugins may override default parsers.
 
-Note: The application data directory follows the XDG Base Directory Specification
+Note: The application data directory follows the \fBXDG Base Directory
+Specification\fP
 
 .SH CAVEATS
 \fBLocale\fP
@@ -1302,9 +1352,13 @@ escape sequences if the \fBC\fP locale does not support UTF-8 encoding.
 
 \fBTimezones\fP
 
-Some parsers have calculated epoch timestamp fields added to the output. Unless a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e. based on the local timezone of the system the \fBjc\fP parser was run on).
+Some parsers have calculated epoch timestamp fields added to the output. Unless
+a timestamp field name has a \fB_utc\fP suffix it is considered naive. (i.e.
+based on the local timezone of the system the \fBjc\fP parser was run on).
 
-If a UTC timezone can be detected in the text of the command output, the timestamp will be timezone aware and have a \fB_utc\fP suffix on the key name. (e.g. \fBepoch_utc\fP) No other timezones are supported for aware timestamps.
+If a UTC timezone can be detected in the text of the command output, the
+timestamp will be timezone aware and have a \fB_utc\fP suffix on the key name.
+(e.g. \fBepoch_utc\fP) No other timezones are supported for aware timestamps.
 
 .SH EXAMPLES
 Standard Syntax:
