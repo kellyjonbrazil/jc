@@ -154,7 +154,7 @@ option.
 
 | Argument          | Command or Filetype                                     | Documentation                                                              |
 |-------------------|---------------------------------------------------------|----------------------------------------------------------------------------|{% for parser in parsers %}
-| {{ "{:>16}".format("`" + parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<74}".format("[details](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
+| {{ "{:>17}".format("`" + parser.argument + "`") }} | {{ "{:<55}".format(parser.description) }} | {{ "{:<74}".format("[details](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
 
 ### Options
 
