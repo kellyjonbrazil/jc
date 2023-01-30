@@ -89,7 +89,7 @@ Examples:
         $ jc --pretty /proc/meminfo
 
     Line Slicing:
-        $ cat file.csv | jc :102 --csv    # parse first 100 records
+        $ cat file.csv | jc :101 --csv    # parse first 100 lines
 
     Parser Documentation:
         $ jc --help --dig
