@@ -610,7 +610,9 @@ class JcCli():
         if self.run_timestamp:
             meta_obj: JSONDictType = {
                 'parser': self.parser_name,
-                'timestamp': self.run_timestamp.timestamp()
+                'timestamp': self.run_timestamp.timestamp(),
+                'slice_start': self.slice_start,
+                'slice_end': self.slice_end
             }
 
             if self.magic_run_command:
