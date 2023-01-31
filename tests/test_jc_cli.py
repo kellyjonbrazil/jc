@@ -329,5 +329,129 @@ class MyTests(unittest.TestCase):
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
+    def test_slice_none_str(self):
+        cli = JcCli()
+        cli.slice_start = None
+        cli.slice_end = None
+        cli.data_in = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        expected = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_positive_str(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = 5
+        cli.data_in = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        expected = '''\
+        row1
+        row2
+        row3
+        row4'''
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_negative_str(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = -1
+        cli.data_in = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        expected = '''\
+        row1
+        row2
+        row3
+        row4'''
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_none_iter(self):
+        cli = JcCli()
+        cli.slice_start = None
+        cli.slice_end = None
+        cli.data_in = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        expected = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_positive_iter(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = 5
+        cli.data_in = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        expected = [
+            'row1',
+            'row2',
+            'row3',
+            'row4'
+        ]
+        cli.slicer()
+        self.assertEqual(list(cli.data_in), expected)
+
+    def test_slice_negative_iter(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = -1
+        cli.data_in = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        expected = [
+            'row1',
+            'row2',
+            'row3',
+            'row4'
+        ]
+        cli.slicer()
+        self.assertEqual(list(cli.data_in), expected)
+
 if __name__ == '__main__':
     unittest.main()
