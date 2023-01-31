@@ -1,0 +1,105 @@
+Host *
+     AddKeysToAgent ask
+     AddressFamily inet
+     BatchMode no
+     BindAddress 1.1.1.1
+     BindInterface en0
+     CanonicalDomains abc.com xyz.com
+     CanonicalizeFallbackLocal yes
+     CanonicalizeHostname none
+     CanonicalizeMaxDots 2
+     CanonicalizePermittedCNAMEs *.a.example.com:*.b.example.com,*.c.example.com
+     CASignatureAlgorithms ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com
+     CertificateFile ~/certificates/cert1.pem
+     CertificateFile ~/certificates/cert2.pem
+     CheckHostIP yes
+     Ciphers 3des-cbc,aes128-cbc,aes192-cbc
+     ClearAllForwardings yes
+     Compression yes
+     ConnectionAttempts 9
+     ConnectTimeout 30
+     ControlMaster ask
+     ControlPath none
+     ControlPersist yes
+     DynamicForward 1.1.1.1:443
+     EnableEscapeCommandline no
+     EnableSSHKeysign yes
+     EscapeChar none
+     ExitOnForwardFailure yes
+     FingerprintHash md5
+     ForkAfterAuthentication yes
+     ForwardAgent $mypath
+     ForwardX11 no
+     ForwardX11Timeout 500
+     ForwardX11Trusted yes
+     GatewayPorts yes
+     GlobalKnownHostsFile /etc/ssh/ssh_known_hosts /etc/ssh/ssh_known_hosts2
+     GSSAPIAuthentication yes
+     GSSAPIDelegateCredentials yes
+     HashKnownHosts yes
+     HostbasedAcceptedAlgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com
+     HostbasedAuthentication yes
+     HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com
+     HostKeyAlias foobar
+     Hostname localhost
+     IdentitiesOnly yes
+     IdentityAgent SSH_AUTH_SOCK
+     IdentityFile ~/.ssh/vps1.cyberciti.biz.key
+     IdentityFile ~/.ssh/vps2.cyberciti.biz.key
+     IgnoreUnknown helloworld
+     Include ~/.ssh/config-extras ~/foo/bar
+     Include ~/.ssh/config-extra-extras
+     IPQoS af11 af12
+     KbdInteractiveAuthentication yes
+     KbdInteractiveDevices bsdauth,pam,skey
+     KexAlgorithms +sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org
+     KnownHostsCommand ~/checkknownhosts
+     LocalCommand ~/mycommand
+     LocalForward 3128 127.0.0.1:3128
+     LocalForward 3129 127.0.0.1:3129
+     LogLevel INFO
+     LogVerbose kex.c:*:1000,*:kex_exchange_identification():*,packet.c:*
+     MACs ^umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com
+     NoHostAuthenticationForLocalhost yes
+     NumberOfPasswordPrompts 3
+     PasswordAuthentication yes
+     PermitLocalCommand yes
+     PermitRemoteOpen 1.1.1.1:443 2.2.2.2:443
+     PKCS11Provider ~/pkcs11provider
+     Port 22
+     PreferredAuthentications gssapi-with-mic,hostbased,publickey,keyboard-interactive,password
+     Protocol 2
+     ProxyCommand  ssh nixcraft@gateway.uk.cyberciti.biz nc %h %p 2> /dev/null
+     ProxyJump 1.1.1.1:22,2.2.2.2:22
+     ProxyUseFdpass yes
+     PubkeyAcceptedAlgorithms -ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com
+     PubkeyAuthentication unbound
+     RekeyLimit 4G
+     RemoteCommand ~/mycommand
+     RemoteForward 1.1.1.1:22 2.2.2.2:22
+     RequestTTY force
+     RequiredRSASize 2048
+     RevokedHostKeys ~/revokedkeyfile
+     SecurityKeyProvider ~/keyprovider
+     SendEnv ENV1 ENV2
+     SendEnv ENV3
+     ServerAliveCountMax 3
+     ServerAliveInterval 3
+     SessionType none
+     SetEnv ENV1 ENV2
+     SetEnv ENV3
+     StdinNull yes
+     StreamLocalBindMask 0000
+     StreamLocalBindUnlink yes
+     StrictHostKeyChecking ask
+     SyslogFacility USER
+     TCPKeepAlive yes
+     Tunnel ethernet
+     TunnelDevice tun1:tun2
+     UpdateHostKeys ask
+     User nixcraft
+     UserKnownHostsFile ~/.ssh/knownhosts1 ~/.ssh/knownhosts2
+     VerifyHostKeyDNS ask
+     VisualHostKey yes
+     XAuthLocation /usr/X11R6/bin/xauth
+
