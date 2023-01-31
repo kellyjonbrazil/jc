@@ -200,7 +200,8 @@ parsers: List[str] = [
     'xml',
     'xrandr',
     'yaml',
-    'zipinfo'
+    'zipinfo',
+    'zpool-iostat'
 ]
 
 def _cliname_to_modname(parser_cli_name: str) -> str:
