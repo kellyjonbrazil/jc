@@ -31,6 +31,9 @@ Schema:
     [
       {
         "host":                                       string,
+        "host_list": [
+                                                      string
+        ],
         "addkeystoagent":                             string,
         "addressfamily":                              string,
         "batchmode":                                  string,
@@ -369,6 +372,9 @@ Examples:
     [
       {
         "host": "server1",
+        "host_list": [
+          "server1"
+        ],
         "hostname": "server1.cyberciti.biz",
         "user": "nixcraft",
         "port": 4242,
@@ -378,6 +384,9 @@ Examples:
       },
       {
         "host": "nas01",
+        "host_list": [
+          "nas01"
+        ],
         "hostname": "192.168.1.100",
         "user": "root",
         "identityfile": [
@@ -386,6 +395,9 @@ Examples:
       },
       {
         "host": "aws.apache",
+        "host_list": [
+          "aws.apache"
+        ],
         "hostname": "1.2.3.4",
         "user": "wwwdata",
         "identityfile": [
@@ -394,12 +406,19 @@ Examples:
       },
       {
         "host": "uk.gw.lan uk.lan",
+        "host_list": [
+          "uk.gw.lan",
+          "uk.lan"
+        ],
         "hostname": "192.168.0.251",
         "user": "nixcraft",
         "proxycommand": "ssh nixcraft@gateway.uk.cyberciti.biz nc %h %p 2> /dev/null"
       },
       {
         "host": "proxyus",
+        "host_list": [
+          "proxyus"
+        ],
         "hostname": "vps1.cyberciti.biz",
         "user": "breakfree",
         "identityfile": [
@@ -411,6 +430,9 @@ Examples:
       },
       {
         "host": "*",
+        "host_list": [
+          "*"
+        ],
         "forwardagent": "no",
         "forwardx11": "no",
         "forwardx11trusted": "yes",
@@ -426,6 +448,9 @@ Examples:
     [
       {
         "host": "server1",
+        "host_list": [
+          "server1"
+        ],
         "hostname": "server1.cyberciti.biz",
         "user": "nixcraft",
         "port": "4242",
@@ -435,6 +460,9 @@ Examples:
       },
       {
         "host": "nas01",
+        "host_list": [
+          "nas01"
+        ],
         "hostname": "192.168.1.100",
         "user": "root",
         "identityfile": [
@@ -443,6 +471,9 @@ Examples:
       },
       {
         "host": "aws.apache",
+        "host_list": [
+          "aws.apache"
+        ],
         "hostname": "1.2.3.4",
         "user": "wwwdata",
         "identityfile": [
@@ -451,12 +482,19 @@ Examples:
       },
       {
         "host": "uk.gw.lan uk.lan",
+        "host_list": [
+          "uk.gw.lan",
+          "uk.lan"
+        ],
         "hostname": "192.168.0.251",
         "user": "nixcraft",
         "proxycommand": "ssh nixcraft@gateway.uk.cyberciti.biz nc %h %p 2> /dev/null"
       },
       {
         "host": "proxyus",
+        "host_list": [
+          "proxyus"
+        ],
         "hostname": "vps1.cyberciti.biz",
         "user": "breakfree",
         "identityfile": [
@@ -468,6 +506,9 @@ Examples:
       },
       {
         "host": "*",
+        "host_list": [
+          "*"
+        ],
         "forwardagent": "no",
         "forwardx11": "no",
         "forwardx11trusted": "yes",
