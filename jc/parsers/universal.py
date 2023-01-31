@@ -28,8 +28,7 @@ def simple_table_parse(data: Iterable[str]) -> List[Dict]:
                          underscore '_'. You should also ensure headers are
                          lowercase by using .lower().
 
-                         Also, ensure there are no blank lines (list items)
-                         in the data.
+                         Also, ensure there are no blank rows in the data.
 
     Returns:
 
