@@ -36,11 +36,61 @@ Schema:
 
 Examples:
 
-    $ zpool iostat | jc --zpool-iostat -p
-    []
+    $ zpool iostat -v | jc --zpool-iostat -p
+    [
+      {
+        "pool": "zhgstera6",
+        "cap_alloc": 2.89,
+        "cap_free": 2.2,
+        "ops_read": 0,
+        "ops_write": 2,
+        "bw_read": 349.0,
+        "bw_write": 448.0,
+        "cap_alloc_unit": "T",
+        "cap_free_unit": "T",
+        "bw_read_unit": "K",
+        "bw_write_unit": "K"
+      },
+      {
+        "pool": "726060ALE614-K8JAPRGN:10",
+        "parent": "zhgstera6",
+        "cap_alloc": 2.89,
+        "cap_free": 2.2,
+        "ops_read": 0,
+        "ops_write": 2,
+        "bw_read": 349.0,
+        "bw_write": 448.0,
+        "cap_alloc_unit": "T",
+        "cap_free_unit": "T",
+        "bw_read_unit": "K",
+        "bw_write_unit": "K"
+      },
+      ...
+    ]
 
     $ zpool iostat | jc --zpool-iostat -p -r
-    []
+    [
+      {
+        "pool": "zhgstera6",
+        "cap_alloc": "2.89T",
+        "cap_free": "2.20T",
+        "ops_read": "0",
+        "ops_write": "2",
+        "bw_read": "349K",
+        "bw_write": "448K"
+      },
+      {
+        "pool": "726060ALE614-K8JAPRGN:10",
+        "parent": "zhgstera6",
+        "cap_alloc": "2.89T",
+        "cap_free": "2.20T",
+        "ops_read": "0",
+        "ops_write": "2",
+        "bw_read": "349K",
+        "bw_write": "448K"
+      },
+      ...
+    ]
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
@@ -127,8 +177,8 @@ def parse(
             line_list = line.strip().split()
             if line.startswith(' '):
                 output_line = {
-                        "pool": line_list[0],
-                        "parent": pool_parent
+                    "pool": line_list[0],
+                    "parent": pool_parent
                 }
 
             else:

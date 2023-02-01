@@ -293,6 +293,7 @@ option.
 |        `--xrandr` | `xrandr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr)         |
 |          `--yaml` | YAML file parser                                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml)           |
 |       `--zipinfo` | `zipinfo` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/zipinfo)        |
+|  `--zpool-iostat` | `zpool iostat` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/zpool_iostat)   |
 
 ### Options
 
