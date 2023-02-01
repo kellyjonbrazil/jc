@@ -1,6 +1,6 @@
 """jc - JSON Convert `zpool iostat` command output parser
 
-<<Short zpool description and caveats>>
+Supports with or without the `-v` flag.
 
 Usage (cli):
 
@@ -19,9 +19,18 @@ Schema:
 
     [
       {
-        "zpool":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "pool":                     string,
+        "parent":                   string,
+        "cap_alloc":                float,
+        "cap_alloc_unit":           string,
+        "cap_free":                 float,
+        "cap_free_unit":            string,
+        "ops_read":                 integer,
+        "ops_write":                integer,
+        "bw_read":                  float,
+        "bw_read_unit":             string,
+        "bw_write":                 float,
+        "bw_write_unit":            string
       }
     ]
 
@@ -64,6 +73,18 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    unit_values = {'cap_alloc', 'cap_free', 'bw_read', 'bw_write'}
+    int_list = {'ops_read', 'ops_write'}
+
+    for obj in proc_data:
+        for k, v in obj.copy().items():
+            if k in unit_values:
+                obj[k + '_unit'] = v[-1]
+                obj[k] = jc.utils.convert_to_float(v[:-1])
+
+            if k in int_list:
+                obj[k] = jc.utils.convert_to_int(v)
+
     return proc_data
 
 
