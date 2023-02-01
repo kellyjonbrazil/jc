@@ -73,7 +73,7 @@ Examples:
       ...
     ]
 
-    $ zpool iostat | jc --zpool-iostat -p -r
+    $ zpool iostat -v | jc --zpool-iostat -p -r
     [
       {
         "pool": "zhgstera6",
