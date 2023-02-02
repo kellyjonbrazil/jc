@@ -4,6 +4,8 @@ jc changelog
 - Add input slicing as a `jc` command-line option
 - Add `ssh` configuration file parser
 - Add `ver` Version string parser
+- Add `zpool iostat` command parser
+- Add `zpool status` command parser
 - Fix `acpi` command parser for "will never fully discharge" battery state
 
 20230111 v1.22.5
