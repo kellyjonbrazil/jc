@@ -7,6 +7,8 @@ jc changelog
 - Add `zpool iostat` command parser
 - Add `zpool status` command parser
 - Fix `acpi` command parser for "will never fully discharge" battery state
+- Fix `xrandr` command parser for proper `is_current` output
+- Fix `xrandr` command parser for infinite loop with some device configurations
 
 20230111 v1.22.5
 - Add TOML file parser
