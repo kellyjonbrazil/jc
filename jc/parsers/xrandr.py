@@ -252,7 +252,7 @@ _device_pattern = (
     + r"(?P<is_primary> primary)? ?"
     + r"((?P<resolution_width>\d+)x(?P<resolution_height>\d+)"
     + r"\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
-    + r"(?P<rotation>(inverted|left|right))? ?"
+    + r"(?P<rotation>.*?)? ?"
     + r"\(normal left inverted right x axis y axis\)"
     + r"( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
