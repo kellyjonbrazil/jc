@@ -162,6 +162,15 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    int_list = {'read', 'write', 'checksum'}
+
+    for obj in proc_data:
+        if 'config' in obj:
+            for conf in obj['config']:
+                for k, v in conf.items():
+                    if k in int_list:
+                        conf[k] = jc.utils.convert_to_int(v)
+
     return proc_data
 
 
@@ -223,10 +232,17 @@ def parse(
                 pool_str += line + '\n'
                 continue
 
+            # preserve indentation in continuation lines
             if line.startswith('        '):
                 pool_str += line + '\n'
                 continue
 
+            # indent path lines for errors field
+            if line.startswith('/'):
+                pool_str += '  ' + line + '\n'
+                continue
+
+            # remove initial spaces from field start lines so we don't confuse line continuation
             pool_str += line.strip() + '\n'
 
     if pool_str:
