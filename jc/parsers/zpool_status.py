@@ -4,7 +4,7 @@ Works with or without the `-v` option.
 
 Usage (cli):
 
-    $ zpool status | jc --zpool_status
+    $ zpool status | jc --zpool-status
 
 or
 
@@ -42,7 +42,7 @@ Schema:
 
 Examples:
 
-    $ zpool status -v | jc --zpool status -p
+    $ zpool status -v | jc --zpool-status -p
     [
       {
         "pool": "tank",
@@ -86,7 +86,7 @@ Examples:
       }
     ]
 
-    $ zpool status -v | jc --zpool status -p -r
+    $ zpool status -v | jc --zpool-status -p -r
     [
       {
         "pool": "tank",
