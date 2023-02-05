@@ -1,6 +1,6 @@
 """jc - JSON Convert `zpool status` command output parser
 
-<<Short zpool status description and caveats>>
+Works with or without the `-v` option.
 
 Usage (cli):
 
@@ -19,19 +19,116 @@ Schema:
 
     [
       {
-        "zpool status":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "pool":                               string,
+        "state":                              string,
+        "status":                             string,
+        "action":                             string,
+        "see":                                string,
+        "scan":                               string,
+        "scrub":                              string,
+        "config": [
+          {
+            "name":                           string,
+            "state":                          string,
+            "read":                           integer,
+            "write":                          integer,
+            "checksum":                       integer,
+            "errors":                         string,
+          }
+        ],
+        "errors":                             string
       }
     ]
 
 Examples:
 
-    $ zpool status | jc --zpool status -p
-    []
+    $ zpool status -v | jc --zpool status -p
+    [
+      {
+        "pool": "tank",
+        "state": "DEGRADED",
+        "status": "One or more devices could not be opened.  Sufficient replicas exist for\nthe pool to continue functioning in a degraded state.",
+        "action": "Attach the missing device and online it using 'zpool online'.",
+        "see": "http://www.sun.com/msg/ZFS-8000-2Q",
+        "scrub": "none requested",
+        "config": [
+          {
+            "name": "tank",
+            "state": "DEGRADED",
+            "read": 0,
+            "write": 0,
+            "checksum": 0
+          },
+          {
+            "name": "mirror-0",
+            "state": "DEGRADED",
+            "read": 0,
+            "write": 0,
+            "checksum": 0
+          },
+          {
+            "name": "c1t0d0",
+            "state": "ONLINE",
+            "read": 0,
+            "write": 0,
+            "checksum": 0
+          },
+          {
+            "name": "c1t1d0",
+            "state": "UNAVAIL",
+            "read": 0,
+            "write": 0,
+            "checksum": 0,
+            "errors": "cannot open"
+          }
+        ],
+        "errors": "No known data errors"
+      }
+    ]
 
-    $ zpool status | jc --zpool status -p -r
-    []
+    $ zpool status -v | jc --zpool status -p -r
+    [
+      {
+        "pool": "tank",
+        "state": "DEGRADED",
+        "status": "One or more devices could not be opened.  Sufficient replicas exist for\nthe pool to continue functioning in a degraded state.",
+        "action": "Attach the missing device and online it using 'zpool online'.",
+        "see": "http://www.sun.com/msg/ZFS-8000-2Q",
+        "scrub": "none requested",
+        "config": [
+          {
+            "name": "tank",
+            "state": "DEGRADED",
+            "read": "0",
+            "write": "0",
+            "checksum": "0"
+          },
+          {
+            "name": "mirror-0",
+            "state": "DEGRADED",
+            "read": "0",
+            "write": "0",
+            "checksum": "0"
+          },
+          {
+            "name": "c1t0d0",
+            "state": "ONLINE",
+            "read": "0",
+            "write": "0",
+            "checksum": "0"
+          },
+          {
+            "name": "c1t1d0",
+            "state": "UNAVAIL",
+            "read": "0",
+            "write": "0",
+            "checksum": "0",
+            "errors": "cannot open"
+          }
+        ],
+        "errors": "No known data errors"
+      }
+    ]
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
