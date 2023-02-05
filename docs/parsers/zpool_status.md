@@ -52,8 +52,8 @@ Examples:
       {
         "pool": "tank",
         "state": "DEGRADED",
-        "status": "One or more devices could not be opened.  Sufficient replicas exist for\nthe pool to continue functioning in a degraded state.",
-        "action": "Attach the missing device and online it using 'zpool online'.",
+        "status": "One or more devices could not be opened.  Suffic...",
+        "action": "Attach the missing device and online it using 'zpool...",
         "see": "http://www.sun.com/msg/ZFS-8000-2Q",
         "scrub": "none requested",
         "config": [
@@ -96,8 +96,8 @@ Examples:
       {
         "pool": "tank",
         "state": "DEGRADED",
-        "status": "One or more devices could not be opened.  Sufficient replicas exist for\nthe pool to continue functioning in a degraded state.",
-        "action": "Attach the missing device and online it using 'zpool online'.",
+        "status": "One or more devices could not be opened.  Sufficient...",
+        "action": "Attach the missing device and online it using 'zpool...",
         "see": "http://www.sun.com/msg/ZFS-8000-2Q",
         "scrub": "none requested",
         "config": [
