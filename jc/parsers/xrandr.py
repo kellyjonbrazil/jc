@@ -141,7 +141,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.1"
+    version = "1.2"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "lyter_git at sent.com"
