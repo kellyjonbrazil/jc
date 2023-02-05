@@ -36,6 +36,7 @@ Examples:
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
+from jc.parsers.kv import parse as kv_parse
 
 
 class info():
@@ -67,6 +68,25 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
+def _build_config_list(string: str) -> List[Dict]:
+    config_list: List = []
+    for line in filter(None, string.splitlines()):
+        if line.strip().endswith('READ WRITE CKSUM'):
+            continue
+
+        line_list = line.strip().split(maxsplit=5)
+        config_obj: Dict = {}
+        config_obj['name'] = line_list[0]
+        config_obj['state'] = line_list[1]
+        config_obj['read'] = line_list[2]
+        config_obj['write'] = line_list[3]
+        config_obj['checksum'] = line_list[4]
+        if len(line_list) == 6:
+            config_obj['errors'] = line_list[5]
+        config_list.append(config_obj)
+
+    return config_list
+
 def parse(
     data: str,
     raw: bool = False,
@@ -89,66 +109,33 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
+    pool_str: str = ''
     pool_obj: Dict = {}
-    in_config: bool = False
-    parent: str = ''
-    config: List[Dict] = []
-    config_obj: Dict = {}
 
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
-            line_list = line.strip().split(maxsplit=1)
 
-            if line.startswith('  pool: '):
-                if pool_obj:
-                    if config:
-                        pool_obj['config'] = config
+            if line.lstrip().startswith('pool: '):
+                if pool_str:
+                    pool_obj = kv_parse(pool_str)
+                    if 'config' in pool_obj:
+                        pool_obj['config'] = _build_config_list(pool_obj['config'])
                     raw_output.append(pool_obj)
-
-                config_obj = {}
-                config = []
-                parent = ''
-                in_config = False
-                pool_obj = {
-                    "pool": line_list[1]
-                }
+                pool_str = ''
+                pool_str += line + '\n'
                 continue
 
-            if line.startswith(' state: ') \
-                or line.startswith('  scan: ') \
-                or line.startswith('errors: '):
-                pool_obj[line_list[0][:-1]] = line_list[1]
-                in_config = False
+            if line.startswith('        '):
+                pool_str += line + '\n'
                 continue
 
-            if line.startswith('config:'):
-                in_config = True
-                continue
+            pool_str += line.strip() + '\n'
 
-            if in_config and line.strip().endswith('READ WRITE CKSUM'):
-                continue
-
-            if in_config:
-                config_line = line.rstrip().split()
-                config_obj = {}
-                if line.startswith('          '):
-                    config_obj['parent'] = parent
-                    config_obj['name'] = config_line[0]
-                else:
-                    parent = config_line[0]
-                    config_obj['name'] = parent
-
-                config_obj['state'] = config_line[1]
-                config_obj['read'] = config_line[2]
-                config_obj['write'] = config_line[3]
-                config_obj['checksum'] = config_line[4]
-
-                config.append(config_obj)
-
-    if pool_obj:
-        if config:
-            pool_obj['config'] = config
+    if pool_str:
+        pool_obj = kv_parse(pool_str)
+        if 'config' in pool_obj:
+            pool_obj['config'] = _build_config_list(pool_obj['config'])
         raw_output.append(pool_obj)
 
     return raw_output if raw else _process(raw_output)
