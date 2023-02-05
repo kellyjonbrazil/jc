@@ -1,4 +1,4 @@
-.TH jc 1 2023-01-31 1.23.0 "JSON Convert"
+.TH jc 1 2023-02-05 1.23.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -987,6 +987,11 @@ YAML file parser
 \fB--zpool-iostat\fP
 `zpool iostat` command parser
 
+.TP
+.B
+\fB--zpool-status\fP
+`zpool status` command parser
+
 
 .RE
 .PP
@@ -1011,7 +1016,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .B
 \fB-h\fP, \fB--help\fP
 Help (\fB--help --parser_name\fP for parser documentation). Use twice to show
-\hidden parsers (e.g. \fB-hh\fP)
+hidden parsers (e.g. \fB-hh\fP)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP
@@ -1380,10 +1385,23 @@ $ jc \fB--pretty\fP dig www.google.com
 $ jc \fB--pretty\fP /proc/meminfo
 .RE
 
+Line Slicing:
+.RS
+$ cat file.csv | jc \fB:101\fP \fB--csv\fP    # parse first 100 lines
+.RE
+
 For parser documentation:
 .RS
 $ jc \fB--help\fP \fB--dig\fP
 .RE
+
+More Help:
+.RS
+$ jc \fB-hh\fP          # show hidden parsers
+
+$ jc \fB-hhh\fP         # list parsers by category tags
+.RE
+
 .SH AUTHOR
 Kelly Brazil (kellyjonbrazil@gmail.com)
 

@@ -162,4 +162,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.1 by Kevin Lyter (lyter_git at sent.com)
+Version 1.2 by Kevin Lyter (lyter_git at sent.com)

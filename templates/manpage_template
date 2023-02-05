@@ -66,7 +66,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .B
 \fB-h\fP, \fB--help\fP
 Help (\fB--help --parser_name\fP for parser documentation). Use twice to show
-\hidden parsers (e.g. \fB-hh\fP)
+hidden parsers (e.g. \fB-hh\fP)
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP
@@ -435,10 +435,23 @@ $ jc \fB--pretty\fP dig www.google.com
 $ jc \fB--pretty\fP /proc/meminfo
 .RE
 
+Line Slicing:
+.RS
+$ cat file.csv | jc \fB:101\fP \fB--csv\fP    # parse first 100 lines
+.RE
+
 For parser documentation:
 .RS
 $ jc \fB--help\fP \fB--dig\fP
 .RE
+
+More Help:
+.RS
+$ jc \fB-hh\fP          # show hidden parsers
+
+$ jc \fB-hhh\fP         # list parsers by category tags
+.RE
+
 .SH AUTHOR
 {{ jc.author }} ({{ jc.author_email }})
 
