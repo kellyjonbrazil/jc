@@ -109,7 +109,8 @@ Examples:
           "mw",
           "me",
           "dw",
-          "sd"
+          "sd",
+          "mp"
         ],
         "VmFlags_pretty": [
           "readable",
@@ -211,6 +212,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         'mw':  'may write',
         'me':  'may execute',
         'ms':  'may share',
+        'mp':  'MPX-specific VMA',
         'gd':  'stack segment growns down',
         'pf':  'pure PFN range',
         'dw':  'disabled write to the mapped file',
@@ -274,10 +276,10 @@ def parse(
 
     if jc.utils.has_data(data):
         map_line = re.compile(r'''
-            ^(?P<start>[0-9a-f]{12,16})-
-            (?P<end>[0-9a-f]{12,16})\s
+            ^(?P<start>[0-9a-f]{8,16})-
+            (?P<end>[0-9a-f]{8,16})\s
             (?P<perms>[rwxsp\-]{4})\s
-            (?P<offset>[0-9a-f]{8})\s
+            (?P<offset>[0-9a-f]{8,9})\s
             (?P<maj>[0-9a-f]{2}):
             (?P<min>[0-9a-f]{2})\s
             (?P<inode>\d+)\s+
