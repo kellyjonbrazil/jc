@@ -9,6 +9,8 @@ jc changelog
 - Fix `acpi` command parser for "will never fully discharge" battery state
 - Fix `xrandr` command parser for proper `is_current` output
 - Fix `xrandr` command parser for infinite loop with some device configurations
+- Add `reflection` key to `xrandr` parser schema
+- Add `MPX-specific VMA` support for VM Flags in `/proc/<pid>/smaps` parser
 
 20230111 v1.22.5
 - Add TOML file parser
