@@ -50,7 +50,8 @@ Schema:
           "offset_height":                     integer,
           "dimension_width":                   integer,
           "dimension_height":                  integer,
-          "rotation":                          string
+          "rotation":                          string,
+          "reflection":                        string
         }
       ],
       "unassociated_devices": [
@@ -127,7 +128,8 @@ Examples:
             "offset_height": 0,
             "dimension_width": 310,
             "dimension_height": 170,
-            "rotation": "normal"
+            "rotation": "normal",
+            "reflection": "normal"
           }
         }
       ],
@@ -185,6 +187,8 @@ try:
             "dimension_width": int,
             "dimension_height": int,
             "associated_modes": List[Mode],
+            "rotation": str,
+            "reflection": str,
         },
     )
     Screen = TypedDict(
@@ -252,7 +256,8 @@ _device_pattern = (
     + r"(?P<is_primary> primary)? ?"
     + r"((?P<resolution_width>\d+)x(?P<resolution_height>\d+)"
     + r"\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
-    + r"(?P<rotation>.*?)? ?"
+    + r"(?P<rotation>(normal|right|left|inverted)?) ?"
+    + r"(?P<reflection>(X axis|Y axis|X and Y axis)?) ?"
     + r"\(normal left inverted right x axis y axis\)"
     + r"( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
@@ -277,9 +282,10 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         and len(matches["is_primary"]) > 0,
         "device_name": matches["device_name"],
         "rotation": matches["rotation"] or "normal",
+        "reflection": matches["reflection"] or "normal",
     }
     for k, v in matches.items():
-        if k not in {"is_connected", "is_primary", "device_name", "rotation"}:
+        if k not in {"is_connected", "is_primary", "device_name", "rotation", "reflection"}:
             try:
                 if v:
                     device[k] = int(v)

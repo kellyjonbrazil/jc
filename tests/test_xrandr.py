@@ -32,6 +32,8 @@ class XrandrTests(unittest.TestCase):
             "eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 310mm x 170mm",
             "eDP-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 309mm x 174mm",
             "HDMI-0 connected 2160x3840+3840+0 right (normal left inverted right x axis y axis) 609mm x 349mm",
+            "LVDS-1 connected primary 1366x768+0+0 normal X axis (normal left inverted right x axis y axis) 609mm x 349mm",
+            "VGA-1 connected 1280x1024+0+0 left X and Y axis (normal left inverted right x axis y axis) 609mm x 349mm",
         ]
         for device in devices:
             self.assertIsNotNone(re.match(_device_pattern, device))
@@ -117,6 +119,30 @@ class XrandrTests(unittest.TestCase):
             self.assertEqual(
                 59.94, device["associated_modes"][12]["frequencies"][4]["frequency"]
             )
+
+    def test_device_with_reflect(self):
+        sample = "VGA-1 connected primary 1920x1080+0+0 left X and Y axis (normal left inverted right x axis y axis) 310mm x 170mm"
+        actual: Optional[Device] = _parse_device([sample])
+
+        expected = {
+            "device_name": "VGA-1",
+            "is_connected": True,
+            "is_primary": True,
+            "resolution_width": 1920,
+            "resolution_height": 1080,
+            "offset_width": 0,
+            "offset_height": 0,
+            "dimension_width": 310,
+            "dimension_height": 170,
+            "rotation": "left",
+            "reflection": "X and Y axis",
+        }
+
+        self.assertIsNotNone(actual)
+
+        if actual:
+            for k, v in expected.items():
+                self.assertEqual(v, actual[k], f"Devices regex failed on {k}")
 
     def test_mode(self):
         sample_1 = "1920x1080     60.03*+  59.93"
