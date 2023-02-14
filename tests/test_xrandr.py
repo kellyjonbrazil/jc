@@ -196,14 +196,21 @@ class XrandrTests(unittest.TestCase):
             txt = f.read()
         actual = parse(txt, quiet=True)
 
-        with open("tests/fixtures/generic/xrandr_simple.json", "w") as f:
-            json.dump(actual, f, indent=True)
-
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(0, len(actual["unassociated_devices"]))
         self.assertEqual(
             2, len(actual["screens"][0]["associated_device"]["associated_modes"])
         )
+
+    def test_infinite_loop_fix(self):
+        with open("tests/fixtures/generic/xrandr_fix_spaces.out", "r") as f:
+            txt = f.read()
+        actual = parse(txt, quiet=True)
+
+        with open("tests/fixtures/generic/xrandr_fix_spaces.json", "r") as f:
+            json_dict = json.loads(f.read())
+
+        self.assertEqual(actual, json_dict)
 
 if __name__ == '__main__':
     unittest.main()
