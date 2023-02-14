@@ -212,5 +212,15 @@ class XrandrTests(unittest.TestCase):
 
         self.assertEqual(actual, json_dict)
 
+    def test_is_current_fix(self):
+        with open("tests/fixtures/generic/xrandr_is_current_fix.out", "r") as f:
+            txt = f.read()
+        actual = parse(txt, quiet=True)
+
+        with open("tests/fixtures/generic/xrandr_is_current_fix.json", "r") as f:
+            json_dict = json.loads(f.read())
+
+        self.assertEqual(actual, json_dict)
+
 if __name__ == '__main__':
     unittest.main()
