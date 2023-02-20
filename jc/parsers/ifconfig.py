@@ -219,7 +219,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.2'
+    version = '2.3'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -425,18 +425,18 @@ def parse(
     # Linux syntax
     re_linux_interface = re.compile(r'''
         (?P<name>[a-zA-Z0-9:._-]+)\s+
-        Link encap:(?P<type>\S+\s?\S+)
+        Link\sencap:(?P<type>\S+\s?\S+)
         (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_ipv4 = re.compile(r'''
-        inet addr:(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+
+        inet\saddr:(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})(\s+
         Bcast:(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?\s+
         Mask:(?P<mask>(?:[0-9]{1,3}\.){3}[0-9]{1,3})
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_ipv6 = re.compile(r'''
-        inet6 addr:\s+(?P<address>\S+)/
+        inet6\saddr:\s+(?P<address>\S+)/
         (?P<mask>[0-9]+)\s+
         Scope:(?P<scope>Link|Host)
         ''', re.IGNORECASE | re.VERBOSE
@@ -448,7 +448,7 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_rx = re.compile(r'''
-        RX packets:(?P<rx_packets>[0-9]+)\s+
+        RX\spackets:(?P<rx_packets>[0-9]+)\s+
         errors:(?P<rx_errors>[0-9]+)\s+
         dropped:(?P<rx_dropped>[0-9]+)\s+
         overruns:(?P<rx_overruns>[0-9]+)\s+
@@ -456,7 +456,7 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_tx = re.compile(r'''
-        TX packets:(?P<tx_packets>[0-9]+)\s+
+        TX\spackets:(?P<tx_packets>[0-9]+)\s+
         errors:(?P<tx_errors>[0-9]+)\s+
         dropped:(?P<tx_dropped>[0-9]+)\s+
         overruns:(?P<tx_overruns>[0-9]+)\s+
@@ -464,8 +464,8 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_bytes = re.compile(r'''
-        \W+RX bytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
-        TX bytes:(?P<tx_bytes>\d+)\s+\(.*\)
+        \W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
+        TX\sbytes:(?P<tx_bytes>\d+)\s+\(.*\)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_tx_stats = re.compile(r'''
