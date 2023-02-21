@@ -1,0 +1,1 @@
+{"variables":[],"schedule":[{"occurrence":"daily","user":"root","command":"/bin/sh do_the_thing"}]}

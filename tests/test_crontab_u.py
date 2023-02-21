@@ -18,6 +18,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/crontab-u.out'), 'r', encoding='utf-8') as f:
         debian10_crontab_u = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-no-normal-entries.out'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_no_normal_entries = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_crontab_u_json = json.loads(f.read())
@@ -27,6 +30,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian10/crontab-u.json'), 'r', encoding='utf-8') as f:
         debian10_crontab_u_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-no-normal-entries.json'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_no_normal_entries_json = json.loads(f.read())
 
 
     def test_crontab_u_nodata(self):
@@ -53,6 +59,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.crontab_u.parse(self.debian10_crontab_u, quiet=True), self.debian10_crontab_u_json)
 
+    def test_crontab_u_no_normal_entries(self):
+        """
+        Test 'crontab' with no normal entries - only shortcut entries (has a user field)
+        """
+        self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_no_normal_entries, quiet=True), self.generic_crontab_u_no_normal_entries_json)
 
 if __name__ == '__main__':
     unittest.main()
