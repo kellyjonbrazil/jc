@@ -297,6 +297,7 @@ except ImportError:
     Device = Dict[str, Union[str, int, bool]]
     Frequency = Dict[str, Union[float, bool]]
     Mode = Dict[str, Union[int, bool, List[Frequency]]]
+    Model = Dict[str, str]
     Response = Dict[str, Union[Device, Mode, Screen]]
 
 
