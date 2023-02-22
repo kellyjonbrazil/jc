@@ -3,6 +3,7 @@
 Usage (cli):
 
     $ xrandr | jc --xrandr
+    $ xrandr --properties | jc --xrandr
 
 or
 
@@ -44,6 +45,9 @@ Schema:
           "is_connected":                      boolean,
           "is_primary":                        boolean,
           "device_name":                       string,
+          "model_name":                        string,
+          "product_id"                         string,
+          "serial_number":                     string,
           "resolution_width":                  integer,
           "resolution_height":                 integer,
           "offset_width":                      integer,
@@ -135,10 +139,75 @@ Examples:
       ],
       "unassociated_devices": []
     }
+
+    $ xrandr --properties | jc --xrandr -p
+    {
+      "screens": [
+        {
+          "screen_number": 0,
+          "minimum_width": 8,
+          "minimum_height": 8,
+          "current_width": 1920,
+          "current_height": 1080,
+          "maximum_width": 32767,
+          "maximum_height": 32767,
+          "associated_device": {
+            "associated_modes": [
+              {
+                "resolution_width": 1920,
+                "resolution_height": 1080,
+                "is_high_resolution": false,
+                "frequencies": [
+                  {
+                    "frequency": 60.03,
+                    "is_current": true,
+                    "is_preferred": true
+                  },
+                  {
+                    "frequency": 59.93,
+                    "is_current": false,
+                    "is_preferred": false
+                  }
+                ]
+              },
+              {
+                "resolution_width": 1680,
+                "resolution_height": 1050,
+                "is_high_resolution": false,
+                "frequencies": [
+                  {
+                    "frequency": 59.88,
+                    "is_current": false,
+                    "is_preferred": false
+                  }
+                ]
+              }
+            ],
+            "is_connected": true,
+            "is_primary": true,
+            "device_name": "eDP1",
+            "model_name": "ASUS VW193S",
+            "product_id": "54297",
+            "serial_number": "78L8021107",
+            "resolution_width": 1920,
+            "resolution_height": 1080,
+            "offset_width": 0,
+            "offset_height": 0,
+            "dimension_width": 310,
+            "dimension_height": 170,
+            "rotation": "normal",
+            "reflection": "normal"
+          }
+        }
+      ],
+      "unassociated_devices": []
+    }
 """
 import re
 from typing import Dict, List, Optional, Union
 import jc.utils
+from jc.parsers.pyedid.edid import Edid
+from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 
 
 class info:
@@ -147,6 +216,7 @@ class info:
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "lyter_git at sent.com"
+    details = 'Using parts of the pyedid library at https://github.com/jojonas/pyedid.'
     compatible = ["linux", "darwin", "cygwin", "aix", "freebsd"]
     magic_commands = ["xrandr"]
     tags = ['command']
@@ -174,10 +244,21 @@ try:
             "frequencies": List[Frequency],
         },
     )
+    Model = TypedDict(
+        "Model",
+        {
+            "name": str,
+            "product_id": str,
+            "serial_number": str,
+        },
+    )
     Device = TypedDict(
         "Device",
         {
             "device_name": str,
+            "model_name": str,
+            "product_id": str,
+            "serial_number": str,
             "is_connected": bool,
             "is_primary": bool,
             "resolution_width": int,
@@ -216,6 +297,7 @@ except ImportError:
     Device = Dict[str, Union[str, int, bool]]
     Frequency = Dict[str, Union[float, bool]]
     Mode = Dict[str, Union[int, bool, List[Frequency]]]
+    Model = Dict[str, str]
     Response = Dict[str, Union[Device, Mode, Screen]]
 
 
@@ -294,15 +376,67 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
                     [f"{next_line} : {k} - {v} is not int-able"]
                 )
 
+    model: Optional[Model] = _parse_model(next_lines, quiet)
+    if model:
+        device["model_name"] = model["name"]
+        device["product_id"] = model["product_id"]
+        device["serial_number"] = model["serial_number"]
+
     while next_lines:
         next_line = next_lines.pop()
         next_mode: Optional[Mode] = _parse_mode(next_line)
         if next_mode:
             device["associated_modes"].append(next_mode)
         else:
+            if re.match(_device_pattern, next_line):
+                next_lines.append(next_line)
+                break
+    return device
+
+
+# EDID:
+#      00ffffffffffff004ca3523100000000
+#      0014010380221378eac8959e57549226
+#      0f505400000001010101010101010101
+#      010101010101381d56d4500016303020
+#      250058c2100000190000000f00000000
+#      000000000025d9066a00000000fe0053
+#      414d53554e470a204ca34154000000fe
+#      004c544e313536415432343430310018
+_edid_head_pattern = r"\s*EDID:\s*"
+_edid_line_pattern = r"\s*(?P<edid_line>[0-9a-fA-F]{32})\s*"
+
+
+def _parse_model(next_lines: List[str], quiet: bool = False) -> Optional[Model]:
+    if not next_lines:
+        return None
+    
+    next_line = next_lines.pop()
+    if not re.match(_edid_head_pattern, next_line):
+        next_lines.append(next_line)
+        return None
+    
+    edid_hex_value = ""
+
+    while next_lines:
+        next_line = next_lines.pop()
+        result = re.match(_edid_line_pattern, next_line)
+        
+        if not result:
             next_lines.append(next_line)
             break
-    return device
+        
+        matches = result.groupdict()
+        edid_hex_value += matches["edid_line"]
+
+    edid = Edid(EdidHelper.hex2bytes(edid_hex_value))
+
+    model: Model = {
+        "name": edid.name or "Generic",
+        "product_id": str(edid.product),
+        "serial_number": str(edid.serial),
+    }
+    return model
 
 
 # 1920x1080i     60.03*+  59.93
