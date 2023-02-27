@@ -26,7 +26,7 @@ def parse(
     data: Union[str, bytes, Iterable[str]],
     quiet: bool = False,
     raw: bool = False,
-    ignore_exceptions: bool = None,
+    ignore_exceptions: Optional[bool] = None,
     **kwargs
 ) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]
 ```

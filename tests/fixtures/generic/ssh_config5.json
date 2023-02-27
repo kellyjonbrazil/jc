@@ -1,0 +1,1 @@
+[{"host":"*","host_list":["*"],"user":"something"},{"host":"svu","host_list":["svu"],"hostname":"www.svuniversity.ac.in","port":22,"proxycommand":"nc -w 300 -x localhost:9050 %h %p"}]

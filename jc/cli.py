@@ -5,11 +5,13 @@ JC cli module
 import io
 import sys
 import os
+import re
+from itertools import islice
 from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Dict, Union, Optional, TextIO
+from typing import List, Dict, Iterable, Union, Optional, TextIO
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
@@ -40,6 +42,10 @@ except Exception:
 JC_CLEAN_EXIT: int = 0
 JC_ERROR_EXIT: int = 100
 MAX_EXIT: int = 255
+SLICER_PATTERN: str = r'-?[0-9]*\:-?[0-9]*$'
+SLICER_RE = re.compile(SLICER_PATTERN)
+NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
+NEWLINES_RE = re.compile(NEWLINES_PATTERN)
 
 
 class info():
@@ -69,11 +75,11 @@ class JcCli():
         'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer',
         'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
         'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
-        'magic_stderr', 'magic_returncode'
+        'magic_stderr', 'magic_returncode', 'slice_str', 'slice_start', 'slice_end'
     )
 
     def __init__(self) -> None:
-        self.data_in: Optional[Union[str, bytes, TextIO]] = None
+        self.data_in: Optional[Union[str, bytes, TextIO, Iterable[str]]] = None
         self.data_out: Optional[Union[List[JSONDictType], JSONDictType]] = None
         self.options: List[str] = []
         self.args: List[str] = []
@@ -88,6 +94,11 @@ class JcCli():
         self.json_separators: Optional[tuple[str, str]] = (',', ':')
         self.json_indent: Optional[int] = None
         self.run_timestamp: Optional[datetime] = None
+
+        # slicer
+        self.slice_str: str = ''
+        self.slice_start: Optional[int] = None
+        self.slice_end: Optional[int] = None
 
         # cli options
         self.about: bool = False
@@ -432,6 +443,17 @@ class JcCli():
                 self.magic_options = []
                 return
 
+            # slicer found
+            if ':' in arg:
+                if SLICER_RE.match(arg):
+                    self.slice_str = arg
+                    args_given.pop(0)
+                    continue
+                else:
+                    utils.warning_message(['Invalid slice syntax.'])
+                    args_given.pop(0)
+                    continue
+
             # option found - populate option list
             if arg.startswith('-'):
                 self.magic_options.extend(args_given.pop(0)[1:])
@@ -574,59 +596,6 @@ class JcCli():
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
             self.exit_error()
 
-    def streaming_parse_and_print(self) -> None:
-        """only supports UTF-8 string data for now"""
-        self.data_in = sys.stdin
-        if self.parser_module:
-            result = self.parser_module.parse(
-                self.data_in,
-                raw=self.raw,
-                quiet=self.quiet,
-                ignore_exceptions=self.ignore_exceptions
-            )
-
-            for line in result:
-                self.data_out = line
-                if self.meta_out:
-                    self.run_timestamp = datetime.now(timezone.utc)
-                    self.add_metadata_to_output()
-
-                self.safe_print_out()
-
-    def standard_parse_and_print(self) -> None:
-        """supports binary and UTF-8 string data"""
-        self.data_in = self.magic_stdout or sys.stdin.buffer.read()
-
-        # convert to UTF-8, if possible. Otherwise, leave as bytes
-        try:
-            if isinstance(self.data_in, bytes):
-                self.data_in = self.data_in.decode('utf-8')
-        except UnicodeDecodeError:
-            pass
-
-        if self.parser_module:
-            self.data_out = self.parser_module.parse(
-                self.data_in,
-                raw=self.raw,
-                quiet=self.quiet
-            )
-
-            if self.meta_out:
-                self.run_timestamp = datetime.now(timezone.utc)
-                self.add_metadata_to_output()
-
-            self.safe_print_out()
-
-    def exit_clean(self) -> None:
-        exit_code: int = self.magic_returncode + JC_CLEAN_EXIT
-        exit_code = min(exit_code, MAX_EXIT)
-        sys.exit(exit_code)
-
-    def exit_error(self) -> None:
-        exit_code: int = self.magic_returncode + JC_ERROR_EXIT
-        exit_code = min(exit_code, MAX_EXIT)
-        sys.exit(exit_code)
-
     def add_metadata_to_output(self) -> None:
         """
         This function mutates data_out in place. If the _jc_meta field
@@ -641,7 +610,9 @@ class JcCli():
         if self.run_timestamp:
             meta_obj: JSONDictType = {
                 'parser': self.parser_name,
-                'timestamp': self.run_timestamp.timestamp()
+                'timestamp': self.run_timestamp.timestamp(),
+                'slice_start': self.slice_start,
+                'slice_end': self.slice_end
             }
 
             if self.magic_run_command:
@@ -669,6 +640,116 @@ class JcCli():
                 utils.error_message(['Parser returned an unsupported object type.'])
                 self.exit_error()
 
+    @staticmethod
+    def lazy_splitlines(text: str) -> Iterable[str]:
+        start = 0
+        for m in NEWLINES_RE.finditer(text):
+            begin, end = m.span()
+            if begin != start:
+                yield text[start:begin]
+            start = end
+
+        if text[start:]:
+            yield text[start:]
+
+    def slicer(self) -> None:
+        """Slice input data lazily, if possible. Updates self.data_in"""
+        if self.slice_str:
+            slice_start_str, slice_end_str = self.slice_str.split(':', maxsplit=1)
+            if slice_start_str:
+                self.slice_start = int(slice_start_str)
+            if slice_end_str:
+                self.slice_end = int(slice_end_str)
+
+        if not self.slice_start is None or not self.slice_end is None:
+            # standard parsers UTF-8 input
+            if isinstance(self.data_in, str):
+                data_in_iter = self.lazy_splitlines(self.data_in)
+
+                # positive slices
+                if (self.slice_start is None or self.slice_start >= 0) \
+                    and (self.slice_end is None or self.slice_end >= 0):
+
+                    self.data_in = '\n'.join(islice(data_in_iter, self.slice_start, self.slice_end))
+
+                # negative slices found (non-lazy, uses more memory)
+                else:
+                    self.data_in = '\n'.join(list(data_in_iter)[self.slice_start:self.slice_end])
+
+            # standard parsers bytes input
+            elif isinstance(self.data_in, bytes):
+                utils.warning_message(['Cannot slice bytes data.'])
+
+            # streaming parsers UTF-8 input
+            else:
+                # positive slices
+                if (self.slice_start is None or self.slice_start >= 0) \
+                    and (self.slice_end is None or self.slice_end >= 0) \
+                    and self.data_in:
+
+                    self.data_in = islice(self.data_in, self.slice_start, self.slice_end)
+
+                # negative slices found (non-lazy, uses more memory)
+                elif self.data_in:
+                    self.data_in = list(self.data_in)[self.slice_start:self.slice_end]
+
+    def streaming_parse_and_print(self) -> None:
+        """only supports UTF-8 string data for now"""
+        self.data_in = sys.stdin
+        self.slicer()
+
+        if self.parser_module:
+            result = self.parser_module.parse(
+                self.data_in,
+                raw=self.raw,
+                quiet=self.quiet,
+                ignore_exceptions=self.ignore_exceptions
+            )
+
+            for line in result:
+                self.data_out = line
+                if self.meta_out:
+                    self.run_timestamp = datetime.now(timezone.utc)
+                    self.add_metadata_to_output()
+
+                self.safe_print_out()
+
+    def standard_parse_and_print(self) -> None:
+        """supports binary and UTF-8 string data"""
+        self.data_in = self.magic_stdout or sys.stdin.buffer.read()
+
+        # convert to UTF-8, if possible. Otherwise, leave as bytes
+        try:
+            if isinstance(self.data_in, bytes):
+                self.data_in = self.data_in.decode('utf-8')
+        except UnicodeDecodeError:
+            pass
+
+        self.slicer()
+
+        if self.parser_module:
+            self.data_out = self.parser_module.parse(
+                self.data_in,
+                raw=self.raw,
+                quiet=self.quiet
+            )
+
+            if self.meta_out:
+                self.run_timestamp = datetime.now(timezone.utc)
+                self.add_metadata_to_output()
+
+            self.safe_print_out()
+
+    def exit_clean(self) -> None:
+        exit_code: int = self.magic_returncode + JC_CLEAN_EXIT
+        exit_code = min(exit_code, MAX_EXIT)
+        sys.exit(exit_code)
+
+    def exit_error(self) -> None:
+        exit_code: int = self.magic_returncode + JC_ERROR_EXIT
+        exit_code = min(exit_code, MAX_EXIT)
+        sys.exit(exit_code)
+
     def _run(self) -> None:
         # enable colors for Windows cmd.exe terminal
         if sys.platform.startswith('win32'):
@@ -684,6 +765,9 @@ class JcCli():
         # find options if magic_parser did not find a command
         if not self.magic_found_parser:
             for opt in self.args:
+                if SLICER_RE.match(opt):
+                    self.slice_str = opt
+
                 if opt in long_options_map:
                     self.options.extend(long_options_map[opt][0])
 

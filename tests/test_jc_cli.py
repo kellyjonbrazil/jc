@@ -292,7 +292,7 @@ class MyTests(unittest.TestCase):
         cli.magic_returncode = 2
         cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
         cli.parser_name = 'ping'
-        expected = {'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}
+        expected = {'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
@@ -303,7 +303,7 @@ class MyTests(unittest.TestCase):
         cli.magic_returncode = 2
         cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
         cli.parser_name = 'ping'
-        expected = [{'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}]
+        expected = [{'a': 1, 'b': 2, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}, {'a': 3, 'b': 4, '_jc_meta': {'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}]
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
@@ -314,7 +314,7 @@ class MyTests(unittest.TestCase):
         cli.data_out = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}}
         cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
         cli.parser_name = 'ping'
-        expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}
+        expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
@@ -325,9 +325,133 @@ class MyTests(unittest.TestCase):
         cli.magic_returncode = 2
         cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
         cli.parser_name = 'ping'
-        expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349}}]
+        expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}]
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
+
+    def test_slice_none_str(self):
+        cli = JcCli()
+        cli.slice_start = None
+        cli.slice_end = None
+        cli.data_in = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        expected = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_positive_str(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = 5
+        cli.data_in = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        expected = '''\
+        row1
+        row2
+        row3
+        row4'''
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_negative_str(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = -1
+        cli.data_in = '''\
+        row0
+        row1
+        row2
+        row3
+        row4
+        row5'''
+        expected = '''\
+        row1
+        row2
+        row3
+        row4'''
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_none_iter(self):
+        cli = JcCli()
+        cli.slice_start = None
+        cli.slice_end = None
+        cli.data_in = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        expected = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        cli.slicer()
+        self.assertEqual(cli.data_in, expected)
+
+    def test_slice_positive_iter(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = 5
+        cli.data_in = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        expected = [
+            'row1',
+            'row2',
+            'row3',
+            'row4'
+        ]
+        cli.slicer()
+        self.assertEqual(list(cli.data_in), expected)
+
+    def test_slice_negative_iter(self):
+        cli = JcCli()
+        cli.slice_start = 1
+        cli.slice_end = -1
+        cli.data_in = [
+            'row0',
+            'row1',
+            'row2',
+            'row3',
+            'row4',
+            'row5'
+        ]
+        expected = [
+            'row1',
+            'row2',
+            'row3',
+            'row4'
+        ]
+        cli.slicer()
+        self.assertEqual(list(cli.data_in), expected)
 
 if __name__ == '__main__':
     unittest.main()

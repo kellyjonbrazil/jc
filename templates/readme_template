@@ -3,7 +3,7 @@
 
 > Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
 
-> Try the `jc` [web demo](https://jc-web.onrender.com/)
+> Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API](https://github.com/kellyjonbrazil/jc-restapi)
 
 > JC is [now available](https://galaxy.ansible.com/community/general) as an
 Ansible filter plugin in the `community.general` collection. See this
@@ -44,8 +44,8 @@ $ jc dig example.com | jq -r '.[].answer[].data'
 93.184.216.34
 ```
 
-`jc` can also be used as a python library. In this case the output will be
-a python dictionary, a list of dictionaries, or even a
+`jc` can also be used as a python library. In this case the returned value
+will be a python dictionary, a list of dictionaries, or even a
 [lazy iterable of dictionaries](#using-streaming-parsers-as-python-modules)
 instead of JSON:
 ```python
@@ -133,9 +133,9 @@ on Github.
 `jc` accepts piped input from `STDIN` and outputs a JSON representation of the
 previous command's output to `STDOUT`.
 ```bash
-COMMAND | jc [OPTIONS] PARSER
-cat FILE | jc [OPTIONS] PARSER
-echo STRING | jc [OPTIONS] PARSER
+COMMAND | jc [SLICE] [OPTIONS] PARSER
+cat FILE | jc [SLICE] [OPTIONS] PARSER
+echo STRING | jc [SLICE] [OPTIONS] PARSER
 ```
 
 Alternatively, the "magic" syntax can be used by prepending `jc` to the command
@@ -143,8 +143,8 @@ to be converted or in front of the absolute path for Proc files. Options can be
 passed to `jc` immediately before the command or Proc file path is given.
 (Note: command aliases and shell builtins are not supported)
 ```bash
-jc [OPTIONS] COMMAND
-jc [OPTIONS] /proc/<path-to-procfile>
+jc [SLICE] [OPTIONS] COMMAND
+jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
 ```
 
 The JSON output can be compact (default) or pretty formatted with the `-p`
@@ -154,7 +154,7 @@ option.
 
 | Argument          | Command or Filetype                                     | Documentation                                                              |
 |-------------------|---------------------------------------------------------|----------------------------------------------------------------------------|{% for parser in parsers %}
-| `{{ "{:>15}".format(parser.argument) }}` | {{ "{:<55}".format(parser.description) }} | {{ "{:<74}".format("[details](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
+| {{ "{:>17}".format("`" + parser.argument + "`") }} | {{ "{:<55}".format(parser.description) }} | {{ "{:<74}".format("[details](https://kellyjonbrazil.github.io/jc/docs/parsers/" + parser.name + ")") }} |{% endfor %}
 
 ### Options
 
@@ -174,6 +174,54 @@ option.
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |
 | `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))    |
 | `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))     |
+
+### Slice
+Line slicing is supported using the `START:STOP` syntax similar to Python
+slicing. This allows you to skip lines at the beginning and/or end of the
+`STDIN` input you would like `jc` to convert.
+
+`START` and `STOP` can be positive or negative integers or blank and allow
+you to specify how many lines to skip and how many lines to process.
+Positive and blank slices are the most memory efficient. Any negative
+integers in the slice will use more memory.
+
+For example, to skip the first and last line of the following text, you
+could express the slice in a couple ways:
+
+```bash
+$ cat table.txt
+      ### We want to skip this header ###
+          col1       col2
+          foo        1
+          bar        2
+      ### We want to skip this footer ###
+$ cat table.txt | jc 1:-1 --asciitable
+[{"col1":"foo","col2":"1"},{"col1":"bar","col2":"2"}]
+$ cat table.txt | jc 1:4 --asciitable
+[{"col1":"foo","col2":"1"},{"col1":"bar","col2":"2"}]
+```
+In this example `1:-1` and `1:4` line slices provide the same output.
+
+When using positive integers the index location of `STOP` is non-inclusive.
+Positive slices count from the first line of the input toward the end
+starting at `0` as the first line. Negative slices count from the last line
+toward the beginning starting at `-1` as the last line. This is also the way
+[Python's slicing](https://stackoverflow.com/questions/509211/understanding-slicing)
+feature works.
+
+Here is a breakdown of line slice options:
+
+| Slice Notation | Input Lines Processed                                        |
+|----------------|--------------------------------------------------------------|
+| `START:STOP`   | lines `START` through `STOP - 1`                             |
+| `START:`       | lines `START` through the rest of the output                 |
+| `:STOP`        | lines from the beginning through `STOP - 1`                  |
+| `-START:STOP`  | `START` lines from the end through `STOP - 1`                |
+| `START:-STOP`  | lines `START` through `STOP` lines from the end              |
+| `-START:-STOP` | `START` lines from the end through `STOP` lines from the end |
+| `-START:`      | `START` lines from the end through the rest of the output    |
+| `:-STOP`       | lines from the beginning through `STOP` lines from the end   |
+| `:`            | all lines                                                    |
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the

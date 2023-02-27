@@ -1,0 +1,2 @@
+#this is a test for the jc module
+@daily root /bin/sh do_the_thing

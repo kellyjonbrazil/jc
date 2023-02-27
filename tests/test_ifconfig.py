@@ -12,6 +12,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ifconfig.out'), 'r', encoding='utf-8') as f:
         centos_7_7_ifconfig = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-16.04/ifconfig.out'), 'r', encoding='utf-8') as f:
+        ubuntu_16_4_ifconfig = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ifconfig.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ifconfig = f.read()
 
@@ -42,6 +45,9 @@ class MyTests(unittest.TestCase):
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ifconfig.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ifconfig_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-16.04/ifconfig.json'), 'r', encoding='utf-8') as f:
+        ubuntu_16_4_ifconfig_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ifconfig.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ifconfig_json = json.loads(f.read())
@@ -81,6 +87,12 @@ class MyTests(unittest.TestCase):
         Test 'ifconfig' on Centos 7.7
         """
         self.assertEqual(jc.parsers.ifconfig.parse(self.centos_7_7_ifconfig, quiet=True), self.centos_7_7_ifconfig_json)
+
+    def test_ifconfig_ubuntu_16_4(self):
+        """
+        Test 'ifconfig' on Ubuntu 16.4
+        """
+        self.assertEqual(jc.parsers.ifconfig.parse(self.ubuntu_16_4_ifconfig, quiet=True), self.ubuntu_16_4_ifconfig_json)
 
     def test_ifconfig_ubuntu_18_4(self):
         """

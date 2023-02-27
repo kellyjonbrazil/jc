@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/acpi-V.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_04_acpi_V = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V-never-fully-discharge.out'), 'r', encoding='utf-8') as f:
+        acpi_V_never_fully_discharge = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V.json'), 'r', encoding='utf-8') as f:
         generic_acpi_V_json = json.loads(f.read())
@@ -39,6 +42,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/acpi-V.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_04_acpi_V_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V-never-fully-discharge.json'), 'r', encoding='utf-8') as f:
+        acpi_V_never_fully_discharge_json = json.loads(f.read())
 
     def test_acpi_nodata(self):
         """
@@ -75,6 +81,12 @@ class MyTests(unittest.TestCase):
         Test 'acpi -V' on Ubuntu 18.04
         """
         self.assertEqual(jc.parsers.acpi.parse(self.ubuntu_18_04_acpi_V, quiet=True), self.ubuntu_18_04_acpi_V_json)
+
+    def test_acpi_V_never_fully_discharge(self):
+        """
+        Test 'acpi -V' with "never fully discharge" message
+        """
+        self.assertEqual(jc.parsers.acpi.parse(self.acpi_V_never_fully_discharge, quiet=True), self.acpi_V_never_fully_discharge_json)
 
 
 if __name__ == '__main__':

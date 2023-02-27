@@ -9,7 +9,7 @@ _jc() {
              jc_help_options jc_help_options_describe \
              jc_special_options jc_special_options_describe
 
-    jc_commands=(acpi airport arp blkid cbt chage cksum crontab date df dig dmidecode dpkg du env file findmnt finger free git gpg hciconfig id ifconfig iostat iptables iw iwconfig jobs last lastb ls lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat netstat nmcli ntpq os-prober pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss sshd stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 udevadm ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo)
+    jc_commands=(acpi airport arp blkid cbt chage cksum crontab date df dig dmidecode dpkg du env file findmnt finger free git gpg hciconfig id ifconfig iostat iptables iw iwconfig jobs last lastb ls lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat netstat nmcli ntpq os-prober pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss ssh sshd stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 udevadm ufw uname update-alternatives upower uptime vdir vmstat w wc who xrandr zipinfo zpool)
     jc_commands_describe=(
         'acpi:run "acpi" command with magic syntax.'
         'airport:run "airport" command with magic syntax.'
@@ -76,6 +76,7 @@ _jc() {
         'sha512sum:run "sha512sum" command with magic syntax.'
         'shasum:run "shasum" command with magic syntax.'
         'ss:run "ss" command with magic syntax.'
+        'ssh:run "ssh" command with magic syntax.'
         'sshd:run "sshd" command with magic syntax.'
         'stat:run "stat" command with magic syntax.'
         'sum:run "sum" command with magic syntax.'
@@ -101,8 +102,9 @@ _jc() {
         'who:run "who" command with magic syntax.'
         'xrandr:run "xrandr" command with magic syntax.'
         'zipinfo:run "zipinfo" command with magic syntax.'
+        'zpool:run "zpool" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cbt --cef --cef-s --chage --cksum --clf --clf-s --crontab --crontab-u --csv --csv-s --date --datetime-iso --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --findmnt --finger --free --fstab --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --ini-dup --iostat --iostat-s --ip-address --iptables --iw-scan --iwconfig --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --openvpn --os-prober --passwd --pci-ids --pgpass --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --route --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --ss --sshd-conf --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --toml --top --top-s --tracepath --traceroute --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo)
+    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --cbt --cef --cef-s --chage --cksum --clf --clf-s --crontab --crontab-u --csv --csv-s --date --datetime-iso --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --findmnt --finger --free --fstab --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --hosts --id --ifconfig --ini --ini-dup --iostat --iostat-s --ip-address --iptables --iw-scan --iwconfig --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --ntpq --openvpn --os-prober --passwd --pci-ids --pgpass --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --route --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --ss --ssh-conf --sshd-conf --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --toml --top --top-s --tracepath --traceroute --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --ver --vmstat --vmstat-s --w --wc --who --x509-cert --xml --xrandr --yaml --zipinfo --zpool-iostat --zpool-status)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -250,7 +252,8 @@ _jc() {
         '--sfdisk:`sfdisk` command parser'
         '--shadow:`/etc/shadow` file parser'
         '--ss:`ss` command parser'
-        '--sshd-conf:sshd config file and `sshd -T` command parser'
+        '--ssh-conf:`ssh` config file and `ssh -G` command parser'
+        '--sshd-conf:`sshd` config file and `sshd -T` command parser'
         '--stat:`stat` command parser'
         '--stat-s:`stat` command streaming parser'
         '--sysctl:`sysctl` command parser'
@@ -280,6 +283,7 @@ _jc() {
         '--upower:`upower` command parser'
         '--uptime:`uptime` command parser'
         '--url:URL string parser'
+        '--ver:Version string parser'
         '--vmstat:`vmstat` command parser'
         '--vmstat-s:`vmstat` command streaming parser'
         '--w:`w` command parser'
@@ -290,6 +294,8 @@ _jc() {
         '--xrandr:`xrandr` command parser'
         '--yaml:YAML file parser'
         '--zipinfo:`zipinfo` command parser'
+        '--zpool-iostat:`zpool iostat` command parser'
+        '--zpool-status:`zpool status` command parser'
     )
     jc_options=(--force-color -C --debug -d --monochrome -m --meta-out -M --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
     jc_options_describe=(

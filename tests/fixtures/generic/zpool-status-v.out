@@ -1,0 +1,24 @@
+  pool: zhgstera6
+ state: ONLINE
+  scan: scrub canceled on Fri Aug 19 15:33:19 2022
+config:
+        NAME                        STATE     READ WRITE CKSUM
+        zhgstera6                   ONLINE       0     0     0
+          726060ALE614-K8JAPRGN:10  ONLINE       0     0     0
+errors: No known data errors
+  pool: zint500
+ state: ONLINE
+  scan: scrub repaired 0 in 0 days 00:19:47 with 0 errors on Tue Aug 16 00:20:50 2022
+config:
+        NAME                      STATE     READ WRITE CKSUM
+        zint500                   ONLINE       0     0     0
+          ST3500418AS-5VMSTSSX:5  ONLINE       0     0     0
+errors: No known data errors
+  pool: zsam53
+ state: ONLINE
+  scan: scrub repaired 0 in 0 days 01:25:43 with 0 errors on Mon Aug 15 01:26:46 2022
+config:
+        NAME                                 STATE     READ WRITE CKSUM
+        zsam53                               ONLINE       0     0     0
+          Portable_SSD_T5-S49WNP0N120517B:8  ONLINE       0     0     0
+errors: No known data errors

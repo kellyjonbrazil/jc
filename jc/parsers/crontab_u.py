@@ -171,7 +171,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`crontab` file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -271,6 +271,9 @@ def parse(data, raw=False, quiet=False):
             raw_output['schedule'] = cron_list
 
         # Add shortcut entries back in
+        if 'schedule' not in raw_output:
+            raw_output['schedule'] = []
+
         for item in shortcut_list:
             raw_output['schedule'].append(item)
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert sshd configuration file and `sshd -T` command output parser
+"""jc - JSON Convert `sshd` configuration file and `sshd -T` command output parser
 
 This parser will work with `sshd` configuration files or the output of
 `sshd -T`. Any `Match` blocks in the `sshd` configuration file will be
@@ -483,13 +483,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = 'sshd config file and `sshd -T` command parser'
+    version = '1.1'
+    description = '`sshd` config file and `sshd -T` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'freebsd']
     magic_commands = ['sshd -T']
-    tags = ['file']
+    tags = ['command', 'file']
 
 
 __version__ = info.version
@@ -622,6 +622,10 @@ def parse(
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
+            # skip any lines with only whitespace
+            if not line.strip():
+                continue
+
             # support configuration file by skipping commented lines
             if line.strip().startswith('#'):
                 continue

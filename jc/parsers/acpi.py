@@ -227,7 +227,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`acpi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -336,7 +336,9 @@ def parse(data, raw=False, quiet=False):
                 if 'Charging' in line or 'Discharging' in line or 'Full' in line:
                     output_line['state'] = line.split()[2][:-1]
                     output_line['charge_percent'] = line.split()[3].rstrip('%,')
-                    if 'rate information unavailable' not in line:
+                    if 'will never fully discharge' in line:
+                        pass
+                    elif 'rate information unavailable' not in line:
                         if 'Charging' in line:
                             output_line['until_charged'] = line.split()[4]
                         if 'Discharging' in line:

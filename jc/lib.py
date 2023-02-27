@@ -3,13 +3,13 @@ import sys
 import os
 import re
 import importlib
-from typing import List, Iterable, Union, Iterator
+from typing import List, Iterable, Optional, Union, Iterator
 from types import ModuleType
 from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.22.5'
+__version__ = '1.23.0'
 
 parsers: List[str] = [
     'acpi',
@@ -159,6 +159,7 @@ parsers: List[str] = [
     'sfdisk',
     'shadow',
     'ss',
+    'ssh-conf',
     'sshd-conf',
     'stat',
     'stat-s',
@@ -189,6 +190,7 @@ parsers: List[str] = [
     'upower',
     'uptime',
     'url',
+    'ver',
     'vmstat',
     'vmstat-s',
     'w',
@@ -198,7 +200,9 @@ parsers: List[str] = [
     'xml',
     'xrandr',
     'yaml',
-    'zipinfo'
+    'zipinfo',
+    'zpool-iostat',
+    'zpool-status'
 ]
 
 def _cliname_to_modname(parser_cli_name: str) -> str:
@@ -279,7 +283,7 @@ def parse(
     data: Union[str, bytes, Iterable[str]],
     quiet: bool = False,
     raw: bool = False,
-    ignore_exceptions: bool = None,
+    ignore_exceptions: Optional[bool] = None,
     **kwargs
 ) -> Union[JSONDictType, List[JSONDictType], Iterator[JSONDictType]]:
     """

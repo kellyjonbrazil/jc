@@ -8,6 +8,7 @@ jc - JSON Convert `xrandr` command output parser
 Usage (cli):
 
     $ xrandr | jc --xrandr
+    $ xrandr --properties | jc --xrandr
 
 or
 
@@ -49,13 +50,17 @@ Schema:
           "is_connected":                      boolean,
           "is_primary":                        boolean,
           "device_name":                       string,
+          "model_name":                        string,
+          "product_id"                         string,
+          "serial_number":                     string,
           "resolution_width":                  integer,
           "resolution_height":                 integer,
           "offset_width":                      integer,
           "offset_height":                     integer,
           "dimension_width":                   integer,
           "dimension_height":                  integer,
-          "rotation":                          string
+          "rotation":                          string,
+          "reflection":                        string
         }
       ],
       "unassociated_devices": [
@@ -132,7 +137,71 @@ Examples:
             "offset_height": 0,
             "dimension_width": 310,
             "dimension_height": 170,
-            "rotation": "normal"
+            "rotation": "normal",
+            "reflection": "normal"
+          }
+        }
+      ],
+      "unassociated_devices": []
+    }
+
+    $ xrandr --properties | jc --xrandr -p
+    {
+      "screens": [
+        {
+          "screen_number": 0,
+          "minimum_width": 8,
+          "minimum_height": 8,
+          "current_width": 1920,
+          "current_height": 1080,
+          "maximum_width": 32767,
+          "maximum_height": 32767,
+          "associated_device": {
+            "associated_modes": [
+              {
+                "resolution_width": 1920,
+                "resolution_height": 1080,
+                "is_high_resolution": false,
+                "frequencies": [
+                  {
+                    "frequency": 60.03,
+                    "is_current": true,
+                    "is_preferred": true
+                  },
+                  {
+                    "frequency": 59.93,
+                    "is_current": false,
+                    "is_preferred": false
+                  }
+                ]
+              },
+              {
+                "resolution_width": 1680,
+                "resolution_height": 1050,
+                "is_high_resolution": false,
+                "frequencies": [
+                  {
+                    "frequency": 59.88,
+                    "is_current": false,
+                    "is_preferred": false
+                  }
+                ]
+              }
+            ],
+            "is_connected": true,
+            "is_primary": true,
+            "device_name": "eDP1",
+            "model_name": "ASUS VW193S",
+            "product_id": "54297",
+            "serial_number": "78L8021107",
+            "resolution_width": 1920,
+            "resolution_height": 1080,
+            "offset_width": 0,
+            "offset_height": 0,
+            "dimension_width": 310,
+            "dimension_height": 170,
+            "rotation": "normal",
+            "reflection": "normal"
           }
         }
       ],
@@ -162,4 +231,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.1 by Kevin Lyter (lyter_git at sent.com)
+Version 1.2 by Kevin Lyter (lyter_git at sent.com)

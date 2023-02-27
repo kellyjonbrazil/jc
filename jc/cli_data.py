@@ -63,17 +63,17 @@ Usage:
 
     Standard syntax:
 
-        COMMAND | jc [OPTIONS] PARSER
+        COMMAND | jc [SLICE] [OPTIONS] PARSER
 
-        cat FILE | jc [OPTIONS] PARSER
+        cat FILE | jc [SLICE] [OPTIONS] PARSER
 
-        echo STRING | jc [OPTIONS] PARSER
+        echo STRING | jc [SLICE] [OPTIONS] PARSER
 
     Magic syntax:
 
-        jc [OPTIONS] COMMAND
+        jc [SLICE] [OPTIONS] COMMAND
 
-        jc [OPTIONS] /proc/<path-to-procfile>
+        jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
 
 Parsers:
 '''
@@ -87,6 +87,9 @@ Examples:
     Magic Syntax:
         $ jc --pretty dig www.google.com
         $ jc --pretty /proc/meminfo
+
+    Line Slicing:
+        $ cat file.csv | jc :101 --csv    # parse first 100 lines
 
     Parser Documentation:
         $ jc --help --dig

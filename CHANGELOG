@@ -1,5 +1,21 @@
 jc changelog
 
+20230227 v1.23.0
+- Add input slicing as a `jc` command-line option
+- Add `ssh` configuration file parser
+- Add `ver` Version string parser
+- Add `zpool iostat` command parser
+- Add `zpool status` command parser
+- Fix `acpi` command parser for "will never fully discharge" battery state
+- Fix `crontab` and `crontab-u` command and file parsers for cases where only
+  shortcut schedule items exist
+- Fix `ifconfig` command parser for older-style linux output
+- Fix `xrandr` command parser for proper `is_current` output
+- Fix `xrandr` command parser for infinite loop with some device configurations
+- Add `reflection` key to `xrandr` parser schema
+- Add display model info from EDID to `xrandr` parser
+- Add `MPX-specific VMA` support for VM Flags in `/proc/<pid>/smaps` parser
+
 20230111 v1.22.5
 - Add TOML file parser
 - Add INI with duplicate key support file parser
