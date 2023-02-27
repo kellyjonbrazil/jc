@@ -1,0 +1,17 @@
+  pool: tank
+ state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas exist for
+        the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+   see: http://www.sun.com/msg/ZFS-8000-2Q
+ scrub: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        tank        DEGRADED     0     0     0
+          mirror-0  DEGRADED     0     0     0
+            c1t0d0  ONLINE       0     0     0
+            c1t1d0  UNAVAIL      0     0     0  cannot open
+
+errors: No known data errors
+

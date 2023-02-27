@@ -1,0 +1,7 @@
+              capacity     operations     bandwidth
+pool        alloc   free   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+zhgstera6   2.89T  2.20T      0      2   349K   448K
+zint500      230G  24.0G      0      9   112K   318K
+zsam53       211G  24.5G      0      0  14.7K  74.4K
+----------  -----  -----  -----  -----  -----  -----
