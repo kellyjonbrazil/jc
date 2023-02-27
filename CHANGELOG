@@ -1,6 +1,6 @@
 jc changelog
 
-20230125 v1.23.0
+20230227 v1.23.0
 - Add input slicing as a `jc` command-line option
 - Add `ssh` configuration file parser
 - Add `ver` Version string parser
@@ -13,6 +13,7 @@ jc changelog
 - Fix `xrandr` command parser for proper `is_current` output
 - Fix `xrandr` command parser for infinite loop with some device configurations
 - Add `reflection` key to `xrandr` parser schema
+- Add display model info from EDID to `xrandr` parser
 - Add `MPX-specific VMA` support for VM Flags in `/proc/<pid>/smaps` parser
 
 20230111 v1.22.5
