@@ -7,6 +7,8 @@ jc - JSON Convert Semantic Version string parser
 
 This parser conforms to the specification at https://semver.org/
 
+See Also: `ver` parser.
+
 Usage (cli):
 
     $ echo 1.2.3-rc.1+44837 | jc --semver

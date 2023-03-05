@@ -114,7 +114,8 @@ Examples:
           "mw",
           "me",
           "dw",
-          "sd"
+          "sd",
+          "mp"
         ],
         "VmFlags_pretty": [
           "readable",
