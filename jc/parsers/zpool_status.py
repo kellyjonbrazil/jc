@@ -138,7 +138,7 @@ from jc.parsers.kv import parse as kv_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`zpool status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -233,7 +233,7 @@ def parse(
                 continue
 
             # preserve indentation in continuation lines
-            if line.startswith('        '):
+            if line.startswith('        ') or line.startswith('\t'):
                 pool_str += line + '\n'
                 continue
 
