@@ -1,5 +1,8 @@
 jc changelog
 
+20230305 v1.23.1
+- Fix `zpool-status` command parser for lines that start with tab
+
 20230227 v1.23.0
 - Add input slicing as a `jc` command-line option
 - Add `ssh` configuration file parser
