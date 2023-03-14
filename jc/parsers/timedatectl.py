@@ -64,7 +64,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`timedatectl status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -120,15 +120,25 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = {}
+    valid_fields = [
+        'local time', 'universal time', 'rtc time', 'time zone', 'ntp enabled',
+        'ntp synchronized', 'rtc in local tz', 'dst active', 'system clock synchronized',
+        'ntp service', 'systemd-timesyncd.service active'
+    ]
 
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
-            linedata = line.split(':', maxsplit=1)
-            raw_output[linedata[0].strip().lower().replace(' ', '_')] = linedata[1].strip()
+            try:
+                key, val = line.split(':', maxsplit=1)
+                key = key.lower().strip()
+                val = val.strip()
+            except ValueError:
+                continue
 
-            if linedata[0].strip() == 'DST active':
-                break
+            if key in valid_fields:
+                keyname = key.replace(' ', '_')
+                raw_output[keyname] = val
 
     if raw:
         return raw_output
