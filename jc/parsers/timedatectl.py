@@ -1,5 +1,7 @@
 """jc - JSON Convert `timedatectl` command output parser
 
+Also supports the `timesync-status` option.
+
 The `epoch_utc` calculated timestamp field is timezone-aware and is only
 available if the `universal_time` field is available.
 
@@ -29,7 +31,20 @@ Schema:
       "system_clock_synchronized":         boolean,
       "systemd-timesyncd.service_active":  boolean,
       "rtc_in_local_tz":                   boolean,
-      "dst_active":                        boolean
+      "dst_active":                        boolean,
+      "server":                            string,
+      "poll_interval":                     string,
+      "leap":                              string,
+      "version":                           string,
+      "stratum":                           string,
+      "reference":                         string,
+      "precision":                         string,
+      "root_distance":                     string,
+      "offset":                            string,
+      "delay":                             string,
+      "jitter":                            string,
+      "packet_count":                      string,
+      "frequency":                         string
     }
 
 Examples:
@@ -120,11 +135,14 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = {}
-    valid_fields = [
+    valid_fields = {
         'local time', 'universal time', 'rtc time', 'time zone', 'ntp enabled',
-        'ntp synchronized', 'rtc in local tz', 'dst active', 'system clock synchronized',
-        'ntp service', 'systemd-timesyncd.service active'
-    ]
+        'ntp synchronized', 'rtc in local tz', 'dst active',
+        'system clock synchronized', 'ntp service',
+        'systemd-timesyncd.service active', 'server', 'poll interval', 'leap',
+        'version', 'stratum', 'reference', 'precision', 'root distance',
+        'offset', 'delay', 'jitter', 'packet count', 'frequency'
+    }
 
     if jc.utils.has_data(data):
 
@@ -140,7 +158,4 @@ def parse(data, raw=False, quiet=False):
                 keyname = key.replace(' ', '_')
                 raw_output[keyname] = val
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
