@@ -604,7 +604,7 @@ they are run on an unsupported platform. To see all parser information,
 including compatibility, run `jc -ap`.
 
 You may still use a parser on an unsupported platform - for example, you may
-want to parse a file with linux `lsof` output on an macOS or Windows laptop. In
+want to parse a file with linux `lsof` output on a macOS or Windows laptop. In
 that case you can suppress the warning message with the `-q` cli option or the
 `quiet=True` function parameter in `parse()`:
 
