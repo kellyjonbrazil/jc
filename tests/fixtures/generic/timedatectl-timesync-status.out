@@ -1,0 +1,13 @@
+       Server: 216.239.35.8 (time.google.com)
+Poll interval: 8min 32s (min: 32s; max 34min 8s)
+         Leap: normal
+      Version: 4
+      Stratum: 1
+    Reference: GOOG
+    Precision: 1us (-20)
+Root distance: 91us (max: 5s)
+       Offset: -5.224ms
+        Delay: 65.884ms
+       Jitter: 5.386ms
+ Packet count: 5
+    Frequency: +27.071ppm

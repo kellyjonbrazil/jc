@@ -35,16 +35,20 @@ Schema:
       "server":                            string,
       "poll_interval":                     string,
       "leap":                              string,
-      "version":                           string,
-      "stratum":                           string,
+      "version":                           integer,
+      "stratum":                           integer,
       "reference":                         string,
       "precision":                         string,
       "root_distance":                     string,
-      "offset":                            string,
-      "delay":                             string,
-      "jitter":                            string,
-      "packet_count":                      string,
-      "frequency":                         string
+      "offset":                            float,
+      "offset_unit":                       string,
+      "delay":                             float,
+      "delay_unit":                        string,
+      "jitter":                            float,
+      "jitter_unit":                       string,
+      "packet_count":                      integer,
+      "frequency":                         float,
+      "frequency_unit":                    string
     }
 
 Examples:
@@ -105,10 +109,25 @@ def _process(proc_data):
     """
     bool_list = {'ntp_enabled', 'ntp_synchronized', 'rtc_in_local_tz', 'dst_active',
                  'system_clock_synchronized', 'systemd-timesyncd.service_active'}
+    int_list = {'version', 'stratum', 'packet_count'}
+    float_list = {'offset', 'delay', 'jitter', 'frequency'}
+
+    for key in ['offset', 'delay', 'jitter']:
+        if key in proc_data:
+            proc_data[key + '_unit'] = proc_data[key][-2:]
+
+    if 'frequency' in proc_data:
+        proc_data['frequency_unit'] = proc_data['frequency'][-3:]
 
     for key in proc_data:
         if key in bool_list:
             proc_data[key] = jc.utils.convert_to_bool(proc_data[key])
+
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     if 'universal_time' in proc_data:
         ts = jc.utils.timestamp(proc_data['universal_time'], format_hint=(7300,))

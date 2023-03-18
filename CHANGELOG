@@ -2,6 +2,8 @@ jc changelog
 
 20230305 v1.23.1
 - Fix `zpool-status` command parser for lines that start with tab
+- Fix `timedatectl` command parser when RTC set to local
+- Add support for the `timesync-status` for the `timedatectl` command parser
 
 20230227 v1.23.0
 - Add input slicing as a `jc` command-line option
