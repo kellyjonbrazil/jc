@@ -124,6 +124,14 @@ Get a list of streaming parser module names to be used in
 `parse()`, `parser_info()`, and `get_help()`. This list is a subset of
 `parser_mod_list()`.
 """
-from .lib import (__version__, parse, parser_mod_list, plugin_parser_mod_list,
-                  standard_parser_mod_list, streaming_parser_mod_list,
-                  parser_info, all_parser_info, get_help)
+from .lib import (
+    __version__ as __version__,
+    parse as parse,
+    parser_mod_list as parser_mod_list,
+    plugin_parser_mod_list as plugin_parser_mod_list,
+    standard_parser_mod_list as standard_parser_mod_list,
+    streaming_parser_mod_list as streaming_parser_mod_list,
+    parser_info as parser_info,
+    all_parser_info as all_parser_info,
+    get_help as get_help
+)
