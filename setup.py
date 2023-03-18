@@ -20,6 +20,7 @@ setuptools.setup(
     python_requires='>=3.6',
     url='https://github.com/kellyjonbrazil/jc',
     packages=setuptools.find_packages(exclude=['*.tests', '*.tests.*', 'tests.*', 'tests']),
+    package_data={'jc': ['py.typed']},
     entry_points={
         'console_scripts': [
             'jc=jc.cli:main'
