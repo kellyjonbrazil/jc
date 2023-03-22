@@ -4,6 +4,7 @@ jc changelog
 - Fix `zpool-status` command parser for lines that start with tab
 - Fix `timedatectl` command parser when RTC set to local
 - Fix to ensure `py.typed` file is included in the package wheel
+- Fix `lsusb` command parser to support CDC MBIM and CDC MBIM Extended fields
 - Add support for the `timesync-status` for the `timedatectl` command parser
 
 20230227 v1.23.0
