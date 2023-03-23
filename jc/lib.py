@@ -213,6 +213,19 @@ def _modname_to_cliname(parser_mod_name: str) -> str:
     """Return module's cli name (underscores converted to dashes)"""
     return parser_mod_name.replace('_', '-')
 
+def _is_valid_parser_plugin(name: str, local_parsers_dir: str) -> bool:
+    if re.match(r'\w+\.py$', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
+        try:
+            parser_mod_name = _cliname_to_modname(name)[0:-3]
+            modpath = 'jcparsers.'
+            plugin =  importlib.import_module(f'{modpath}{parser_mod_name}')
+            if hasattr(plugin, 'info') and hasattr(plugin, 'parse'):
+                del plugin
+                return True
+        except Exception:
+            return False
+    return False
+
 # Create the local_parsers list. This is a list of custom or
 # override parsers from <user_data_dir>/jc/jcparsers/*.py.
 # Once this list is created, extend the parsers list with it.
@@ -222,7 +235,7 @@ local_parsers_dir = os.path.join(data_dir, 'jcparsers')
 if os.path.isdir(local_parsers_dir):
     sys.path.append(data_dir)
     for name in os.listdir(local_parsers_dir):
-        if re.match(r'\w+\.py$', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
+        if _is_valid_parser_plugin(name, local_parsers_dir):
             plugin_name = name[0:-3]
             local_parsers.append(_modname_to_cliname(plugin_name))
             if plugin_name not in parsers:

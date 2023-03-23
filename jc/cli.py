@@ -215,14 +215,14 @@ class JcCli():
         category_text: str = ''
         padding_char: str = ' '
         all_parsers = all_parser_info(show_hidden=True, show_deprecated=False)
-        generic = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'generic' in x['tags']]
-        standard = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'standard' in x['tags']]
-        command = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'command' in x['tags']]
+        generic = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'generic' in x.get('tags', [])]
+        standard = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'standard' in x.get('tags', [])]
+        command = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'command' in x.get('tags', [])]
         file_str_bin = [
             {'arg': x['argument'], 'desc': x['description']} for x in all_parsers
-                if 'file' in x['tags'] or
-                'string' in x['tags'] or
-                'binary' in x['tags']
+                if 'file' in x.get('tags', []) or
+                'string' in x.get('tags', []) or
+                'binary' in x.get('tags', [])
         ]
         streaming = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if x.get('streaming')]
         categories: Dict = {
