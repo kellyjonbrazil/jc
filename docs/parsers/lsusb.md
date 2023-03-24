@@ -102,6 +102,24 @@ Schema:
                     ]
                   }
                 },
+                "cdc_mbim": {
+                  "<item>": {
+                    "value":                  string,
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
+                  }
+                },
+                "cdc_mbim_extended": {
+                  "<item>": {
+                    "value":                  string,
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
+                  }
+                },
                 "videocontrol_descriptors": [
                   {
                     "<item>": {
@@ -312,4 +330,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

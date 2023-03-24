@@ -1,0 +1,21 @@
+  pool: pool1
+ state: ONLINE
+status: Some supported and requested features are not enabled on the pool.
+	The pool can still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+	the pool may no longer be accessible by software that does not support
+	the features. See zpool-features(7) for details.
+  scan: scrub repaired 0B in 11:16:03 with 0 errors on Sun Feb 12 11:40:04 2023
+config:
+
+	NAME                        STATE     READ WRITE CKSUM
+	pool1                       ONLINE       0     0     0
+	  mirror-0                  ONLINE       0     0     0
+	    wwn-0x5000c500c65ac66f  ONLINE       0     0     0
+	    wwn-0x5000c500c5eee542  ONLINE       0     0     0
+	  mirror-1                  ONLINE       0     0     0
+	    wwn-0x5000c500e39e8af6  ONLINE       0     0     0
+	    wwn-0x5000c500e3b3a41e  ONLINE       0     0     0
+
+errors: No known data errors
+

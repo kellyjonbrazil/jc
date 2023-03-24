@@ -97,6 +97,24 @@ Schema:
                     ]
                   }
                 },
+                "cdc_mbim": {
+                  "<item>": {
+                    "value":                  string,
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
+                  }
+                },
+                "cdc_mbim_extended": {
+                  "<item>": {
+                    "value":                  string,
+                    "description":            string,
+                    "attributes": [
+                                              string
+                    ]
+                  }
+                },
                 "videocontrol_descriptors": [
                   {
                     "<item>": {
@@ -291,7 +309,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`lsusb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -500,6 +518,8 @@ class _LsUsb():
         self.cdc_call_management = _descriptor_obj('cdc_call_management')
         self.cdc_acm = _descriptor_obj('cdc_acm')
         self.cdc_union = _descriptor_obj('cdc_union')
+        self.cdc_mbim = _descriptor_obj('cdc_mbim')
+        self.cdc_mbim_extended = _descriptor_obj('cdc_mbim_extended')
         self.endpoint_descriptors = _descriptor_list('endpoint_descriptor')
         self.videocontrol_interface_descriptors = _descriptor_list('videocontrol_interface_descriptor')
         self.videostreaming_interface_descriptors = _descriptor_list('videostreaming_interface_descriptor')
@@ -538,7 +558,8 @@ class _LsUsb():
         section_header = self.normal_section_header
 
         if self.section == 'videocontrol_interface_descriptor' \
-            or self.section == 'videostreaming_interface_descriptor':
+            or self.section == 'videostreaming_interface_descriptor' \
+            or self.section == 'cdc_mbim_extended':
 
             section_header = self.larger_section_header
 
@@ -689,6 +710,8 @@ class _LsUsb():
             '      CDC Union:': 'cdc_union',
             '        HID Device Descriptor:': 'hid_device_descriptor',
             '         Report Descriptors:': 'report_descriptors',
+            '      CDC MBIM:': 'cdc_mbim',
+            '      CDC MBIM Extended:': 'cdc_mbim_extended',
             'Hub Descriptor:': 'hub_descriptor',
             ' Hub Port Status:': 'hub_port_status',
             'Device Qualifier (for other device speed):': 'device_qualifier',
@@ -713,6 +736,8 @@ class _LsUsb():
             'cdc_call_management': self.cdc_call_management.list,
             'cdc_acm': self.cdc_acm.list,
             'cdc_union': self.cdc_union.list,
+            'cdc_mbim': self.cdc_mbim.list,
+            'cdc_mbim_extended': self.cdc_mbim_extended.list,
             'hid_device_descriptor': self.hid_device_descriptor.list,
             # 'report_descriptors': self.report_descriptors_list,         # not implemented
             'videocontrol_interface_descriptor': self.videocontrol_interface_descriptors.list,
@@ -757,6 +782,8 @@ class _LsUsb():
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_acm'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_mbim'] = {}
+        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_mbim_extended'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
         ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0] = {}
@@ -847,6 +874,12 @@ class _LsUsb():
                     if self.cdc_union._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.cdc_union._update_output(idx, iface_idx, i_desc_obj)
 
+                    if self.cdc_mbim._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
+                        self.cdc_mbim._update_output(idx, iface_idx, i_desc_obj)
+
+                    if self.cdc_mbim_extended._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
+                        self.cdc_mbim_extended._update_output(idx, iface_idx, i_desc_obj)
+
                     if self.hid_device_descriptor._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
                         self.hid_device_descriptor._update_output(idx, iface_idx, i_desc_obj)
 
@@ -923,6 +956,10 @@ def parse(data, raw=False, quiet=False):
     lsusb = _LsUsb()
 
     if jc.utils.has_data(data):
+
+        # fix known too-long field names
+        data = data.replace('bmNetworkCapabilities', 'bmNetworkCapabilit   ')
+
         for line in data.splitlines():
             # only -v option or no options are supported
             if line.startswith('/'):

@@ -1,4 +1,4 @@
-.TH jc 1 2023-02-27 1.23.0 "JSON Convert"
+.TH jc 1 2023-03-23 1.23.1 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -1316,8 +1316,8 @@ etc...
 Note: Unbuffered output can be slower for large data streams.
 .RE
 
-.SH CUSTOM PARSERS
-Custom local parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
+.SH PARSER PLUGINS
+Parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
 local "App data directory":
 
 .RS
@@ -1328,11 +1328,13 @@ local "App data directory":
 .fi
 .RE
 
-Local parser plugins are standard python module files. Use the
+Parser plugins are standard python module files. Use the
 \fBjc/parsers/foo.py\fP or \fBjc/parsers/foo_s.py\fP (streaming) parser as a
 template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
+Any dependencies can be placed in the \fBjc\fP folder above \fBjcparsers\fP
+and can be imported in the parser code.
 
-Local plugin filenames must be valid python module names and therefore must
+Parser plugin filenames must be valid python module names and therefore must
 start with a letter and consist entirely of alphanumerics and underscores. Local
 plugins may override default parsers.
 

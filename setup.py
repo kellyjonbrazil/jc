@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='jc',
-    version='1.23.0',
+    version='1.23.1',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
     description='Converts the output of popular command-line tools and file-types to JSON.',
@@ -20,6 +20,7 @@ setuptools.setup(
     python_requires='>=3.6',
     url='https://github.com/kellyjonbrazil/jc',
     packages=setuptools.find_packages(exclude=['*.tests', '*.tests.*', 'tests.*', 'tests']),
+    package_data={'jc': ['py.typed']},
     entry_points={
         'console_scripts': [
             'jc=jc.cli:main'

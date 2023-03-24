@@ -5,6 +5,8 @@
 
 jc - JSON Convert `timedatectl` command output parser
 
+Also supports the `timesync-status` option.
+
 The `epoch_utc` calculated timestamp field is timezone-aware and is only
 available if the `universal_time` field is available.
 
@@ -34,7 +36,24 @@ Schema:
       "system_clock_synchronized":         boolean,
       "systemd-timesyncd.service_active":  boolean,
       "rtc_in_local_tz":                   boolean,
-      "dst_active":                        boolean
+      "dst_active":                        boolean,
+      "server":                            string,
+      "poll_interval":                     string,
+      "leap":                              string,
+      "version":                           integer,
+      "stratum":                           integer,
+      "reference":                         string,
+      "precision":                         string,
+      "root_distance":                     string,
+      "offset":                            float,
+      "offset_unit":                       string,
+      "delay":                             float,
+      "delay_unit":                        string,
+      "jitter":                            float,
+      "jitter_unit":                       string,
+      "packet_count":                      integer,
+      "frequency":                         float,
+      "frequency_unit":                    string
     }
 
 Examples:
@@ -87,4 +106,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

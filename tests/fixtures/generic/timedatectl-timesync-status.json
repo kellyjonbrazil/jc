@@ -1,0 +1,1 @@
+{"server":"216.239.35.8 (time.google.com)","poll_interval":"8min 32s (min: 32s; max 34min 8s)","leap":"normal","version":4,"stratum":1,"reference":"GOOG","precision":"1us (-20)","root_distance":"91us (max: 5s)","offset":-5.224,"delay":65.884,"jitter":5.386,"packet_count":5,"frequency":27.071,"offset_unit":"ms","delay_unit":"ms","jitter_unit":"ms","frequency_unit":"ppm"}

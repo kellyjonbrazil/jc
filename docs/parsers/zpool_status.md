@@ -160,4 +160,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

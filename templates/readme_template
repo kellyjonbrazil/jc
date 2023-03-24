@@ -393,20 +393,22 @@ for item in result:
     print(item["filename"])
 ```
 
-### Custom Parsers
-Custom local parser plugins may be placed in a `jc/jcparsers` folder in your
-local **"App data directory"**:
+### Parser Plugins
+Parser plugins may be placed in a `jc/jcparsers` folder in your local
+**"App data directory"**:
 
 - Linux/unix: `$HOME/.local/share/jc/jcparsers`
 - macOS: `$HOME/Library/Application Support/jc/jcparsers`
 - Windows: `$LOCALAPPDATA\jc\jc\jcparsers`
 
-Local parser plugins are standard python module files. Use the
+Parser plugins are standard python module files. Use the
 [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py)
 or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py)
 parser as a template and simply place a `.py` file in the `jcparsers` subfolder.
+Any dependencies can be placed in the `jc` folder above `jcparsers` and can
+be imported in the parser code.
 
-Local plugin filenames must be valid python module names and therefore must
+Parser plugin filenames must be valid python module names and therefore must
 start with a letter and consist entirely of alphanumerics and underscores.
 Local plugins may override default parsers.
 
@@ -464,7 +466,7 @@ they are run on an unsupported platform. To see all parser information,
 including compatibility, run `jc -ap`.
 
 You may still use a parser on an unsupported platform - for example, you may
-want to parse a file with linux `lsof` output on an macOS or Windows laptop. In
+want to parse a file with linux `lsof` output on a macOS or Windows laptop. In
 that case you can suppress the warning message with the `-q` cli option or the
 `quiet=True` function parameter in `parse()`:
 
