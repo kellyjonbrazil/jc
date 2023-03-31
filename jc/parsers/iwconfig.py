@@ -146,7 +146,7 @@ def parse(
 
     raw_output: List[Dict] = []
 
-    re_interface = re.compile(r'^(?P<name>[a-zA-Z0-9:._-]+)\s+(?P<protocol>([a-zA-Z0-9]+\s)*[a-zA-Z0-9.]+)\s+ESSID:\"(?P<essid>[a-zA-Z0-9:._\s]+)\"')
+    re_interface = re.compile(r'^(?P<name>[a-zA-Z0-9:._-]+)\s+(?P<protocol>([a-zA-Z0-9]+\s)*[a-zA-Z0-9.]+)\s+ESSID:\"(?P<essid>[a-zA-Z0-9:._\s\-]+)\"')
     re_mode = re.compile(r'Mode:(?P<mode>\w+)')
     re_frequency = re.compile(r'Frequency:(?P<frequency>[0-9.]+)\s(?P<frequency_unit>\w+)')
     re_access_point = re.compile(r'Access Point:\s*(?P<access_point>[0-9A-F:]+)')
