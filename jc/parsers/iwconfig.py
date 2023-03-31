@@ -119,6 +119,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     proc_data = [ { key: int(value) if key in int_list else value for key, value in proc_data_item.items() } for proc_data_item in proc_data ]
     proc_data = [ { key: float(value) if key in float_list else value for key, value in proc_data_item.items() } for proc_data_item in proc_data ]
     proc_data = [ { key: value == 'on' if key in bool_list else value for key, value in proc_data_item .items() } for proc_data_item in proc_data ]
+    proc_data = [ { key: value.strip() if isinstance(value, str) else value for key, value in proc_data_item .items() } for proc_data_item in proc_data ]
 
     return proc_data
 
