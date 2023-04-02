@@ -21,6 +21,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-no-normal-entries.out'), 'r', encoding='utf-8') as f:
         generic_crontab_u_no_normal_entries = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-var-fix.out'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_var_fix = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_crontab_u_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-no-normal-entries.json'), 'r', encoding='utf-8') as f:
         generic_crontab_u_no_normal_entries_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-var-fix.json'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_var_fix_json = json.loads(f.read())
 
 
     def test_crontab_u_nodata(self):
@@ -64,6 +70,12 @@ class MyTests(unittest.TestCase):
         Test 'crontab' with no normal entries - only shortcut entries (has a user field)
         """
         self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_no_normal_entries, quiet=True), self.generic_crontab_u_no_normal_entries_json)
+
+    def test_crontab_u_var_fix(self):
+        """
+        Test 'crontab' with wildcard schedule should not generate variables from command line section
+        """
+        self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_var_fix, quiet=True), self.generic_crontab_u_var_fix_json)
 
 if __name__ == '__main__':
     unittest.main()
