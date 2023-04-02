@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.23.1'
+__version__ = '1.23.2'
 
 parsers: List[str] = [
     'acpi',
