@@ -108,4 +108,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.0 by Thomas Vincent (vrince@gmail.com)
+Version 1.1 by Thomas Vincent (vrince@gmail.com)
