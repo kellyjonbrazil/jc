@@ -17,7 +17,7 @@ or
 Usage (module):
 
     import jc
-    result = jc.parse('bluetootctl', bluetootctl_command_output)
+    result = jc.parse('bluetoothctl', bluetoothctl_command_output)
 
 Schema:
 
