@@ -59,8 +59,8 @@ a controller and a device but there might be fields corresponding to one entity.
             "blocked":              string,
             "connected":            string,
             "legacy_pairing":       string,
-            "rssi":                 string,
-            "txpower":              string,
+            "rssi":                 int,
+            "txpower":              int,
             "uuids":                array
         }
     ]
@@ -91,8 +91,8 @@ Examples:
                 "Headset                   (00001708-0000-1000-8000-00805f9b34fb)",
                 "Headset HS                (00001831-0000-1000-8000-00805f9b34fb)"
             ],
-            "rssi": "-52",
-            "txpower": "4"
+            "rssi": -52,
+            "txpower": 4
         }
     ]
 """
@@ -151,14 +151,14 @@ try:
             "blocked": str,
             "connected": str,
             "legacy_pairing": str,
-            "rssi": str,
-            "txpower": str,
+            "rssi": int,
+            "txpower": int,
             "uuids": List[str],
         },
     )
 except ImportError:
     Controller = Dict[str, Union[str, bool, List[str]]]
-    Device = Dict[str, Union[str, bool, List[str]]]
+    Device = Dict[str, Union[str, bool, int, List[str]]]
 
 
 _controller_head_pattern = r"Controller (?P<address>([0-9A-F]{2}:){5}[0-9A-F]{2}) (?P<name>.+)"
@@ -318,9 +318,17 @@ def _parse_device(next_lines: List[str]) -> Device:
         elif matches["modalias"]:
             device["modalias"] = matches["modalias"]
         elif matches["rssi"]:
-            device["rssi"] = matches["rssi"]
+            rssi = matches["rssi"]
+            try:
+                device["rssi"] = int(rssi)
+            except ValueError and not quiet:
+                jc.utils.warning_message([f"{next_line} : rssi - {rssi} is not int-able"])
         elif matches["txpower"]:
-            device["txpower"] = matches["txpower"]
+            txpower = matches["txpower"]
+            try:
+                device["txpower"] = int(txpower)
+            except ValueError and not quiet:
+                jc.utils.warning_message([f"{next_line} : txpower - {txpower} is not int-able"])
         elif matches["uuid"]:
             if not "uuids" in device:
                 device["uuids"] = []
