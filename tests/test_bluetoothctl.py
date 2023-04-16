@@ -173,15 +173,15 @@ class BluetoothctlTests(unittest.TestCase):
                 "Headset                   (00001108-0000-1000-8000-00805f9b34fb)",
                 "Headset HS                (00001131-0000-1000-8000-00805f9b34fb)"
             ],
-            "rssi": "-52",
-            "txpower": "4"
+            "rssi": -52,
+            "txpower": 4
         }
 
         if actual:
             for k, v in expected.items():
                 self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
 
-    def test_bluetoothctl_devicess(self):
+    def test_bluetoothctl_devices(self):
         """
         Test 'bluetoothctl' with devices
         """
