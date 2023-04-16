@@ -342,15 +342,15 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
         List of Dictionaries. Raw or processed structured data.
     """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    linedata = data.splitlines()
-    linedata.reverse()
-
     result: List[TypeDict] = []
 
     if jc.utils.has_data(data):
+        jc.utils.compatibility(__name__, info.compatible, quiet)
+        jc.utils.input_type_check(data)
+
+        linedata = data.splitlines()
+        linedata.reverse()
+
         while linedata:
             element = None
             if data.startswith("Controller"):
