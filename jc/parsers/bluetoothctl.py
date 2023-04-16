@@ -9,7 +9,7 @@ Supports the following `bluetoothctl` subcommands:
 
 Usage (cli):
 
-    $ bluetoothctl info <dev> | jc --bluetoothctl 
+    $ bluetoothctl info <dev> | jc --bluetoothctl
 or
 
     $ jc bluetoothctl info <dev>
@@ -21,8 +21,8 @@ Usage (module):
 
 Schema:
 
-Becasuse bluetoothctl is handling two main entities, controllers and devices,
-the schema is shared between them. The most of the fields are common between
+Because bluetoothctl is handling two main entities, controllers and devices,
+the schema is shared between them. Most of the fields are common between
 a controller and a device but there might be fields corresponding to one entity.
 
     Controller:
@@ -183,7 +183,7 @@ def _parse_controller(next_lines: List[str]) -> Controller:
     if not result:
         next_lines.append(next_line)
         return None
-    
+
     matches = result.groupdict()
 
     name = matches["name"]
@@ -202,7 +202,7 @@ def _parse_controller(next_lines: List[str]) -> Controller:
     if name.endswith("(public)"):
         controller["is_public"] = True
         name = name.replace("(public)", "")
-    
+
     controller["name"] = name.strip()
 
     while next_lines:
@@ -212,9 +212,9 @@ def _parse_controller(next_lines: List[str]) -> Controller:
         if not result:
             next_lines.append(next_line)
             return controller
-        
+
         matches = result.groupdict()
-        
+
         if matches["name"]:
             controller["name"] = matches["name"]
         elif matches["alias"]:
@@ -267,7 +267,7 @@ def _parse_device(next_lines: List[str]) -> Device:
     if not result:
         next_lines.append(next_line)
         return None
-    
+
     matches = result.groupdict()
 
     name = matches["name"]
@@ -282,7 +282,7 @@ def _parse_device(next_lines: List[str]) -> Device:
     if name.endswith("(public)"):
         device["is_public"] = True
         name = name.replace("(public)", "")
-    
+
     device["name"] = name.strip()
 
     while next_lines:
@@ -292,9 +292,9 @@ def _parse_device(next_lines: List[str]) -> Device:
         if not result:
             next_lines.append(next_line)
             return device
-        
+
         matches = result.groupdict()
-        
+
         if matches["name"]:
             device["name"] = matches["name"]
         elif matches["alias"]:
