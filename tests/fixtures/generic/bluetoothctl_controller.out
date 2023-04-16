@@ -1,0 +1,17 @@
+Controller CC:BB:AF:27:6A:E4 (public)
+        Name: arch
+        Alias: arch
+        Class: 0x006c010c
+        Powered: yes
+        Discoverable: no
+        DiscoverableTimeout: 0x000000b4
+        Pairable: no
+        UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
+        UUID: Audio Source              (0000110a-0000-1000-8000-00805f9b34fb)
+        UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+        UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+        UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+        UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+        UUID: Handsfree Audio Gateway   (0000111f-0000-1000-8000-00805f9b34fb)
+        Modalias: usb:v1D6Bp0246d0542
+        Discovering: no
