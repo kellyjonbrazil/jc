@@ -134,7 +134,7 @@ class BluetoothctlTests(unittest.TestCase):
         if actual:
             for k, v in expected[0].items():
                 self.assertEqual(v, actual[0][k], f"Controller regex failed on {k}")
-            
+
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Controller regex failed on {k}")
 
@@ -209,7 +209,7 @@ class BluetoothctlTests(unittest.TestCase):
         if actual:
             for k, v in expected[0].items():
                 self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
-            
+
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Device regex failed on {k}")
 

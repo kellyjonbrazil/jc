@@ -97,7 +97,7 @@ Examples:
     ]
 """
 import re
-from typing import List, Dict, Union
+from typing import List, Dict, Optional, Any
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -157,8 +157,8 @@ try:
         },
     )
 except ImportError:
-    Controller = Dict[str, Union[str, bool, List[str]]]
-    Device = Dict[str, Union[str, bool, int, List[str]]]
+    Controller = Dict[str, Any]  # type: ignore
+    Device = Dict[str, Any]  # type: ignore
 
 
 _controller_head_pattern = r"Controller (?P<address>([0-9A-F]{2}:){5}[0-9A-F]{2}) (?P<name>.+)"
@@ -176,7 +176,7 @@ _controller_line_pattern = (
     + r"|\s*UUID:\s*(?P<uuid>.+))"
 )
 
-def _parse_controller(next_lines: List[str]) -> Controller:
+def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
     next_line = next_lines.pop()
     result = re.match(_controller_head_pattern, next_line)
 
@@ -191,9 +191,21 @@ def _parse_controller(next_lines: List[str]) -> Controller:
     if name.endswith("not available"):
         return None
 
-    controller = Controller = {
-        "address": matches["address"],
-    }
+    controller: Controller = {
+            "name": '',
+            "is_default": False,
+            "is_public": False,
+            "address": matches["address"],
+            "alias": '',
+            "class": '',
+            "powered": '',
+            "discoverable": '',
+            "discoverable_timeout": '',
+            "pairable": '',
+            "modalias": '',
+            "discovering": '',
+            "uuids": [],
+        }
 
     if name.endswith("[default]"):
         controller["is_default"] = True
@@ -260,7 +272,7 @@ _device_line_pattern = (
 )
 
 
-def _parse_device(next_lines: List[str]) -> Device:
+def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
     next_line = next_lines.pop()
     result = re.match(_device_head_pattern, next_line)
 
@@ -275,8 +287,22 @@ def _parse_device(next_lines: List[str]) -> Device:
     if name.endswith("not available"):
         return None
 
-    device = Device = {
+    device: Device = {
+        "name": '',
+        "is_public": False,
         "address": matches["address"],
+        "alias": '',
+        "class": '',
+        "icon": '',
+        "paired": '',
+        "bonded": '',
+        "trusted": '',
+        "blocked": '',
+        "connected": '',
+        "legacy_pairing": '',
+        "rssi": 0,
+        "txpower": 0,
+        "uuids": [],
     }
 
     if name.endswith("(public)"):
@@ -315,20 +341,20 @@ def _parse_device(next_lines: List[str]) -> Device:
             device["connected"] = matches["connected"]
         elif matches["legacy_pairing"]:
             device["legacy_pairing"] = matches["legacy_pairing"]
-        elif matches["modalias"]:
-            device["modalias"] = matches["modalias"]
         elif matches["rssi"]:
             rssi = matches["rssi"]
             try:
                 device["rssi"] = int(rssi)
-            except ValueError and not quiet:
-                jc.utils.warning_message([f"{next_line} : rssi - {rssi} is not int-able"])
+            except ValueError:
+                if not quiet:
+                    jc.utils.warning_message([f"{next_line} : rssi - {rssi} is not int-able"])
         elif matches["txpower"]:
             txpower = matches["txpower"]
             try:
                 device["txpower"] = int(txpower)
-            except ValueError and not quiet:
-                jc.utils.warning_message([f"{next_line} : txpower - {txpower} is not int-able"])
+            except ValueError:
+                if not quiet:
+                    jc.utils.warning_message([f"{next_line} : txpower - {txpower} is not int-able"])
         elif matches["uuid"]:
             if not "uuids" in device:
                 device["uuids"] = []
@@ -350,7 +376,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
         List of Dictionaries. Raw or processed structured data.
     """
-    result: List[TypeDict] = []
+    result: List = []
 
     if jc.utils.has_data(data):
         jc.utils.compatibility(__name__, info.compatible, quiet)
@@ -364,7 +390,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             if data.startswith("Controller"):
                 element = _parse_controller(linedata)
             elif data.startswith("Device"):
-                element = _parse_device(linedata)
+                element = _parse_device(linedata, quiet)  # type: ignore
 
             if element:
                 result.append(element)
