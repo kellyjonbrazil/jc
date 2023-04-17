@@ -96,14 +96,14 @@ class PBParser(object):
         prefix = self.data[0:6]
         for case in Switch(prefix):
             if case('bplist'):
-                self.file_type = 'binary'
-                import biplist
-                parsed_plist = biplist.readPlist(self.file_path)
+                # self.file_type = 'binary'
+                # import biplist
+                # parsed_plist = biplist.readPlist(self.file_path)
                 break
             if case('<?xml '):
-                self.file_type = 'xml'
-                import plistlib
-                parsed_plist = plistlib.readPlist(self.file_path)
+                # self.file_type = 'xml'
+                # import plistlib
+                # parsed_plist = plistlib.readPlist(self.file_path)
                 break
             if case():
                 self.file_type = 'ascii'
@@ -111,7 +111,7 @@ class PBParser(object):
                 if self.data[0:2] == '//':
                     # this is to try to see if we can locate the desired string encoding of the file
                     import re
-                    result = re.search('^// !\$\*(.+?)\*\$!', self.data) # pylint: disable=anomalous-backslash-in-string
+                    result = re.search(r'^// !\$\*(.+?)\*\$!', self.data) # pylint: disable=anomalous-backslash-in-string
                     if result:
                         self.string_encoding = result.group(1)
                 #now return the parse

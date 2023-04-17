@@ -1,8 +1,10 @@
 jc changelog
 
-20230402 v1.23.2
+20230417 v1.23.2
+- Add `bluetoothctl` command parser
 - Fix `iwconfig` command parser for SSIDs with dashes in the name
 - Fix `crontab` command parsers for incorrect variable parsing in some cases
+- Fix pytest warnings
 
 20230323 v1.23.1
 - Fix `zpool-status` command parser for lines that start with tab
