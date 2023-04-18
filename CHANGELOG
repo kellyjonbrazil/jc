@@ -2,6 +2,7 @@ jc changelog
 
 20230417 v1.23.2
 - Add `bluetoothctl` command parser
+- Fix `acpi` command parser for "Not charging" battery status lines
 - Fix `iwconfig` command parser for SSIDs with dashes in the name
 - Fix `crontab` command parsers for incorrect variable parsing in some cases
 - Fix pytest warnings

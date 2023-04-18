@@ -27,6 +27,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V-never-fully-discharge.out'), 'r', encoding='utf-8') as f:
         acpi_V_never_fully_discharge = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-not-charging.out'), 'r', encoding='utf-8') as f:
+        acpi_not_charging = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V.json'), 'r', encoding='utf-8') as f:
         generic_acpi_V_json = json.loads(f.read())
@@ -45,6 +48,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-V-never-fully-discharge.json'), 'r', encoding='utf-8') as f:
         acpi_V_never_fully_discharge_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/acpi-not-charging.json'), 'r', encoding='utf-8') as f:
+        acpi_not_charging_json = json.loads(f.read())
 
     def test_acpi_nodata(self):
         """
@@ -87,6 +93,12 @@ class MyTests(unittest.TestCase):
         Test 'acpi -V' with "never fully discharge" message
         """
         self.assertEqual(jc.parsers.acpi.parse(self.acpi_V_never_fully_discharge, quiet=True), self.acpi_V_never_fully_discharge_json)
+
+    def test_acpi_not_charging(self):
+        """
+        Test 'acpi' with "Not charging" message
+        """
+        self.assertEqual(jc.parsers.acpi.parse(self.acpi_not_charging, quiet=True), self.acpi_not_charging_json)
 
 
 if __name__ == '__main__':
