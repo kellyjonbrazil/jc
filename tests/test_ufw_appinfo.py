@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-msn.out'), 'r', encoding='utf-8') as f:
         generic_ufw_appinfo_msn = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-multiline-description.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_multiline_description = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-appinfo-all.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_04_ufw_appinfo_all_json = json.loads(f.read())
@@ -39,6 +42,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-msn.json'), 'r', encoding='utf-8') as f:
         generic_ufw_appinfo_msn_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-appinfo-multiline-description.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_appinfo_multiline_description_json = json.loads(f.read())
 
 
     def test_ufw_appinfo_nodata(self):
@@ -76,6 +82,12 @@ class MyTests(unittest.TestCase):
         Test 'ufw app info MSN' sample
         """
         self.assertEqual(jc.parsers.ufw_appinfo.parse(self.generic_ufw_appinfo_msn, quiet=True), self.generic_ufw_appinfo_msn_json)
+
+    def test_ufw_appinfo_generic_multiline_description(self):
+        """
+        Test 'ufw app info all' with mult-line description field
+        """
+        self.assertEqual(jc.parsers.ufw_appinfo.parse(self.generic_ufw_appinfo_multiline_description, quiet=True), self.generic_ufw_appinfo_multiline_description_json)
 
 
 if __name__ == '__main__':

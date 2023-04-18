@@ -5,6 +5,7 @@ jc changelog
 - Fix `acpi` command parser for "Not charging" battery status lines
 - Fix `iwconfig` command parser for SSIDs with dashes in the name
 - Fix `crontab` command parsers for incorrect variable parsing in some cases
+- Fix `ufw-appinfo` command parser for parsing errors on multiline description fields
 - Fix pytest warnings
 
 20230323 v1.23.1
