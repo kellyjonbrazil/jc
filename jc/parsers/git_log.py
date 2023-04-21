@@ -149,7 +149,7 @@ from typing import List, Dict
 import jc.utils
 
 hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
-changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed),\s+(?P<insertions>\d+)\s(insertions?\(\+\))?(,\s+)?(?P<deletions>\d+)?(\s+deletions?\(\-\))?')
+changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<insertions>\d+)\s+(insertions?\(\+\)))?(?:,\s+(?P<deletions>\d+)\s+(deletions?\(\-\)))?')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
