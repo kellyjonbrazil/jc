@@ -124,6 +124,6 @@ Returns:
     List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
-Compatibility:  linux, darwin, cygwin, aix, freebsd
+Compatibility:  linux
 
 Version 1.0 by Jake Ob (iakopap at gmail.com)

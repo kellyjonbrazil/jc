@@ -108,7 +108,7 @@ class info():
     description = '`bluetoothctl` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
-    compatible = ["linux", "darwin", "cygwin", "aix", "freebsd"]
+    compatible = ["linux"]
     magic_commands = ["bluetoothctl"]
     tags = ['command']
 
