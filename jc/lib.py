@@ -23,6 +23,7 @@ parsers: List[str] = [
     'cbt',
     'cef',
     'cef-s',
+    'certbot',
     'chage',
     'cksum',
     'clf',

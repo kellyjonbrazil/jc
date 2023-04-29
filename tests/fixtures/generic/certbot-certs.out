@@ -1,0 +1,20 @@
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Found the following certs:
+  Certificate Name: example.com
+    Serial Number: 3f7axxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    Key Type: RSA
+    Domains: example.com www.example.com
+    Expiry Date: 2023-05-11 01:33:10+00:00 (VALID: 63 days)
+    Certificate Path: /etc/letsencrypt/live/example.com/fullchain.pem
+    Private Key Path: /etc/letsencrypt/live/example.com/privkey.pem
+  Certificate Name: example.org
+    Serial Number: 3bcyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+    Key Type: RSA
+    Domains: example.org www.example.org
+    Expiry Date: 2023-06-12 01:35:30+00:00 (VALID: 63 days)
+    Certificate Path: /etc/letsencrypt/live/example.org/fullchain.pem
+    Private Key Path: /etc/letsencrypt/live/example.org/privkey.pem
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
