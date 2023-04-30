@@ -1,5 +1,10 @@
 """jc - JSON Convert `certbot` command output parser
 
+Supports the following `certbot` commands:
+
+- `certbot show_account`
+- `certbot certificates`
+
 Verbose options are not supported.
 
 Usage (cli):
