@@ -505,6 +505,7 @@ class timestamp:
              or '+00:00' in data \
              or '-00:00' in data:
             utc_tz = True
+            data = data.replace('+00:00', '+0000')  # fix for python 3.6
 
         # normalize the timezone by taking out any timezone reference, except UTC
         cleandata = data.replace('(', '').replace(')', '')
