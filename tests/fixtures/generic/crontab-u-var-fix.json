@@ -1,0 +1,1 @@
+{"variables":[],"schedule":[{"minute":["*"],"hour":["*"],"day_of_month":["*"],"month":["*"],"day_of_week":["*"],"user":"root","command":"/bin/bash -l  -c \"python3 my_script.py --output-file=/opt/output.json\""}]}

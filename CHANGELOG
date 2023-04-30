@@ -1,5 +1,15 @@
 jc changelog
 
+20230429 v1.23.2
+- Add `bluetoothctl` command parser
+- Add `certbot` command parser for `certificates` and `show_account` options
+- Fix `acpi` command parser for "Not charging" battery status lines
+- Fix `iwconfig` command parser for SSIDs with dashes in the name
+- Fix `crontab` command parsers for incorrect variable parsing in some cases
+- Fix `git-log` and `git-log-s` command parsers for incorrect insertion/deletion parsing
+- Fix `ufw-appinfo` command parser for parsing errors on multiline description fields
+- Fix pytest warnings
+
 20230323 v1.23.1
 - Fix `zpool-status` command parser for lines that start with tab
 - Fix `timedatectl` command parser when RTC set to local

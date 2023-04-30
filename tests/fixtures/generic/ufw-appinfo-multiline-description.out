@@ -1,0 +1,428 @@
+Profile: AIM
+Title: AIM Talk
+Description: AIM talk protocol
+
+Port:
+  5190/tcp
+
+--
+
+Profile: Bonjour
+Title: Bonjour
+Description: Bonjour protocol
+
+Ports:
+  5353/udp
+  5298
+
+--
+
+Profile: CIFS
+Title: SMB/CIFS server
+Description: SMB/CIFS server
+
+Ports:
+  137,138/udp
+  139,445/tcp
+
+--
+
+Profile: DNS
+Title: Internet Domain Name Server
+Description: Internet Domain Name Server
+
+Port:
+  53
+
+--
+
+Profile: Deluge
+Title: Deluge
+Description: Deluge BitTorrent client
+
+Port:
+  6881:6891/tcp
+
+--
+
+Profile: IMAP
+Title: Mail server (IMAP)
+Description: Mail server (IMAP)
+
+Port:
+  143/tcp
+
+--
+
+Profile: IMAPS
+Title: Secure mail server (IMAPS)
+Description: Secure mail server (IMAPS)
+
+Port:
+  993/tcp
+
+--
+
+Profile: IPP
+Title: Cups server (IPP)
+Description: Cups server (IPP)
+
+Port:
+  631
+
+--
+
+Profile: Icinga
+Title: Icinga
+Description: Icinga monitoring
+
+Port:
+  5665/tcp
+
+--
+
+Profile: KTorrent
+Title: KTorrent
+Description: KTorrent BitTorrent client
+
+Ports:
+  6881/tcp
+  4444/udp
+
+--
+
+Profile: Kerberos Admin
+Title: Kerberos v5 admin
+Description: Kerberos v5 server
+
+Port:
+  749/tcp
+
+--
+
+Profile: Kerberos Full
+Title: Kerberos v5 server
+Description: Kerberos v5 server
+
+Ports:
+  88,749/tcp
+  464/udp
+
+--
+
+Profile: Kerberos KDC
+Title: Kerberos v5 KDC server
+Description: Kerberos v5 KDC server
+
+Port:
+  88
+
+--
+
+Profile: Kerberos Password
+Title: Kerberos v5 password
+Description: Kerberos v5 password
+
+Port:
+  464/udp
+
+--
+
+Profile: LDAP
+Title: LDAP server
+Description: LDAP server
+
+Port:
+  389/tcp
+
+--
+
+Profile: LDAPS
+Title: LDAP server (LDAPS)
+Description: LDAP server (LDAPS)
+
+Port:
+  636/tcp
+
+--
+
+Profile: LPD
+Title: LPD server
+Description: LPD server
+
+Port:
+  515/tcp
+
+--
+
+Profile: MSN
+Title: MSN Chat
+Description: MSN chat protocol (with file transfer and voice)
+
+Ports:
+  1863
+  6891:6900/tcp
+  6901
+
+--
+
+Profile: MSN SSL
+Title: MSN Chat (SSL)
+Description: MSN chat protocol (SSL)
+
+Port:
+  443/tcp
+
+--
+
+Profile: Mail submission
+Title: Mail server (Submission)
+Description: Mail server (Submission)
+
+Port:
+  587/tcp
+
+--
+
+Profile: Munin
+Title: Munin
+Description: Munin monitoring
+
+Port:
+  4949/tcp
+
+--
+
+Profile: NFS
+Title: NFS server
+Description: NFS and portmap server. Will also need access to mountd, statd
+and possibly others
+
+Ports:
+  2049,111/tcp
+  2049,111/udp
+
+--
+
+Profile: Nginx Full
+Title: Web Server (Nginx, HTTP + HTTPS)
+Description: Small, but very powerful and efficient web server
+
+Ports:
+  80,443/tcp
+
+--
+
+Profile: Nginx HTTP
+Title: Web Server (Nginx, HTTP)
+Description: Small, but very powerful and efficient web server
+
+Port:
+  80/tcp
+
+--
+
+Profile: Nginx HTTPS
+Title: Web Server (Nginx, HTTPS)
+Description: Small, but very powerful and efficient web server
+
+Port:
+  443/tcp
+
+--
+
+Profile: OpenSSH
+Title: Secure shell server, an rshd replacement
+Description: OpenSSH is a free implementation of the Secure Shell protocol.
+
+Port:
+  22/tcp
+
+--
+
+Profile: POP3
+Title: Mail server (POP3)
+Description: Mail server (POP3)
+
+Port:
+  110/tcp
+
+--
+
+Profile: POP3S
+Title: Secure mail server (POP3S)
+Description: Secure mail server (POP3S)
+
+Port:
+  995/tcp
+
+--
+
+Profile: PeopleNearby
+Title: People Nearby
+Description: People Nearby (Bonjour/Salut) functionality in Empathy
+
+Ports:
+  5353/udp
+  5298
+
+--
+
+Profile: RabbitMQ
+Title: RabbitMQ
+Description: RabbitMQ is the most widely deployed open source message
+broker.
+
+Ports:
+  4369/tcp
+  5671:5672/tcp
+  5551:5552/tcp
+  6000:6500/tcp
+  25672/tcp
+  35672:35682/tcp
+
+--
+
+Profile: SMTP
+Title: Mail server (SMTP)
+Description: Mail server (SMTP)
+
+Port:
+  25/tcp
+
+--
+
+Profile: SSH
+Title: SSH server
+Description: SSH server
+
+Port:
+  22/tcp
+
+--
+
+Profile: Socks
+Title: Socks proxy
+Description: Socks proxy
+
+Port:
+  1080/tcp
+
+--
+
+Profile: Telnet
+Title: Telnet server (insecure)
+Description: Telnet server (insecure)
+
+Port:
+  23/tcp
+
+--
+
+Profile: Transmission
+Title: Transmission
+Description: Transmission BitTorrent client
+
+Port:
+  51413
+
+--
+
+Profile: Transparent Proxy
+Title: Transparent proxy
+Description: Transparent proxy
+
+Port:
+  8081/tcp
+
+--
+
+Profile: Turnserver
+Title: Coturn Turnserver
+Description: Free open source implementation of TURN and STUN Server
+
+Ports:
+  3478,3479,5349,5350,49152:65535/tcp
+  3478,3479,5349,5350,49152:65535/udp
+
+--
+
+Profile: VNC
+Title: VNC server
+Description: VNC server
+
+Port:
+  5900/tcp
+
+--
+
+Profile: WWW
+Title: Web Server
+Description: Web server
+
+Port:
+  80/tcp
+
+--
+
+Profile: WWW Cache
+Title: Web Server (8080)
+Description: Web Server (8080)
+
+Port:
+  8080/tcp
+
+--
+
+Profile: WWW Full
+Title: Web Server (HTTP,HTTPS)
+Description: Web Server (HTTP,HTTPS)
+
+Ports:
+  80,443/tcp
+
+--
+
+Profile: WWW Secure
+Title: Web Server (HTTPS)
+Description: Web Server (HTTPS)
+
+Port:
+  443/tcp
+
+--
+
+Profile: XMPP
+Title: XMPP Chat
+Description: XMPP protocol (Jabber and Google Talk)
+
+Ports:
+  5222/tcp
+  5269/tcp
+
+--
+
+Profile: Yahoo
+Title: Yahoo Chat
+Description: Yahoo chat protocol
+
+Port:
+  5050
+
+--
+
+Profile: qBittorrent
+Title: qBittorrent
+Description: qBittorrent BitTorrent client
+
+Port:
+  6881/tcp
+
+--
+
+Profile: svnserve
+Title: Subversion server
+Description: Subversion server for access to Subversion repositories.
+
+Port:
+  3690/tcp

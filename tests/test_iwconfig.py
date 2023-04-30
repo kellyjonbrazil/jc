@@ -15,6 +15,9 @@ class iwconfigTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-many.out'), 'r', encoding='utf-8') as f:
         iwconfig_many_output = f.read()
 
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-space-dash-ssid.out'), 'r', encoding='utf-8') as f:
+        iwconfig_space_dash_ssid = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig.json'), 'r', encoding='utf-8') as f:
         iwconfig_json = json.loads(f.read())
@@ -23,7 +26,10 @@ class iwconfigTests(unittest.TestCase):
         iwconfig_raw_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-many.json'), 'r', encoding='utf-8') as f:
-        iwconfig_many_json = json.loads(f.read())    
+        iwconfig_many_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, 'fixtures/generic/iwconfig-space-dash-ssid.json'), 'r', encoding='utf-8') as f:
+        iwconfig_space_dash_ssid_json = json.loads(f.read())
 
 
     def test_iwconfig_nodata(self):
@@ -49,6 +55,12 @@ class iwconfigTests(unittest.TestCase):
         Test 'iwconfig' many interface
         """
         self.assertEqual(jc.parsers.iwconfig.parse(self.iwconfig_many_output, quiet=True), self.iwconfig_many_json)
+
+    def test_iwconfig_space_dash_ssid(self):
+        """
+        Test 'iwconfig' many spaces and dashes in the SSID
+        """
+        self.assertEqual(jc.parsers.iwconfig.parse(self.iwconfig_space_dash_ssid, quiet=True), self.iwconfig_space_dash_ssid_json)
 
 if __name__ == '__main__':
     unittest.main()

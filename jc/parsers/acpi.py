@@ -227,7 +227,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`acpi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -333,7 +333,14 @@ def parse(data, raw=False, quiet=False):
             if obj_type == 'Battery':
                 output_line['type'] = obj_type
                 output_line['id'] = obj_id
-                if 'Charging' in line or 'Discharging' in line or 'Full' in line:
+                if 'Not charging' in line:
+                    output_line['state'] = 'Not charging'
+                    output_line['charge_percent'] = line.split()[-1].rstrip('%,')
+
+                if 'Charging' in line \
+                    or 'Discharging' in line \
+                    or 'Full' in line:
+
                     output_line['state'] = line.split()[2][:-1]
                     output_line['charge_percent'] = line.split()[3].rstrip('%,')
                     if 'will never fully discharge' in line:
