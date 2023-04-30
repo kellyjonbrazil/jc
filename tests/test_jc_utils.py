@@ -48,6 +48,8 @@ class MyTests(unittest.TestCase):
             '2000/01/01-01:00:00.000000': {'string': '2000/01/01-01:00:00.000000', 'format': 1750, 'naive': 946717200, 'utc': None},
             # Google Big Table format with timezone:
             '2000/01/01-01:00:00.000000+00:00': {'string': '2000/01/01-01:00:00.000000+00:00', 'format': 1755, 'naive': 946717200, 'utc': 946688400},
+            # certbot format with timezone:
+            '2023-05-11 01:33:10+00:00': {'string': '2023-05-11 01:33:10+00:00', 'format': 1760, 'naive': 1683793990, 'utc': 1683768790},
             # Common Log Format
             '10/Oct/2000:13:55:36 -0700': {'string': '10/Oct/2000:13:55:36 -0700', 'format': 1800, 'naive': 971211336, 'utc': None},
             '10/Oct/2000:13:55:36 -0000': {'string': '10/Oct/2000:13:55:36 -0000', 'format': 1800, 'naive': 971211336, 'utc': 971186136},

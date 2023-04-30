@@ -138,7 +138,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`ufw app info [application]` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -289,6 +289,7 @@ def parse(data, raw=False, quiet=False):
             if line.startswith('--'):
                 if item_obj:
                     raw_output.append(item_obj)
+                    ports = False
                 item_obj = {}
                 continue
 

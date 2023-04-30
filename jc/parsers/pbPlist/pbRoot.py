@@ -57,7 +57,7 @@ def KeySorter(obj1, obj2):
         result = StringCmp(str(obj1), str(obj2))
     return result
 
-class pbRoot(collections.MutableMapping):
+class pbRoot(collections.abc.MutableMapping):
 
     def __init__(self, *args, **kwargs):
         self.store = dict()

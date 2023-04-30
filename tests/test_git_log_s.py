@@ -224,7 +224,7 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_fuller.splitlines(), quiet=True)), self.generic_git_log_fuller_streaming_json)
 
-    def test_git_log_fulerl_stat_s(self):
+    def test_git_log_fuller_stat_s(self):
         """
         Test 'git_log --format=fuller --stat'
         """

@@ -1,0 +1,5 @@
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Account details for server https://acme-staging-v02.api.letsencrypt.org/directory:
+  Account URL: https://acme-staging-v02.api.letsencrypt.org/acme/acct/12345679
+  Email contact: some@example.com
+

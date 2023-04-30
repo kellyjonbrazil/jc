@@ -1,0 +1,1 @@
+* * * * * /bin/bash -l  -c "python3 my_script.py --output-file=/opt/output.json"
