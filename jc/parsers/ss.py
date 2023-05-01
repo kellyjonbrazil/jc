@@ -403,6 +403,7 @@ def parse(data, raw=False, quiet=False):
         header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()
+        extra_opts = False
 
         for entry in cleandata[1:]:
             output_line = {}
@@ -411,7 +412,11 @@ def parse(data, raw=False, quiet=False):
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = re.split('[ ]{2,}',entry.strip())
+                entry_list = re.split('[ ]{1,}',entry.strip())
+
+                if len(entry_list) > len(header_list) or extra_opts == True:
+                  entry_list = re.split('[ ]{2,}',entry.strip())
+                  extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
                     l_field = entry_list[4].rsplit(':', maxsplit=1)
