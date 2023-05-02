@@ -1,5 +1,9 @@
 jc changelog
 
+20230430 v1.23.3
+- Fix `certbot` parser to be more robust with different line endings
+- Fix deprecated option is setup.cfg
+
 20230429 v1.23.2
 - Add `bluetoothctl` command parser
 - Add `certbot` command parser for `certificates` and `show_account` options
