@@ -1,8 +1,5 @@
 """jc - JSON Convert `ss` command output parser
 
-Extended information options like `-e` and `-p` are not supported and may
-cause parsing irregularities.
-
 Usage (cli):
 
     $ ss | jc --ss
@@ -23,21 +20,29 @@ field names
 
     [
       {
-        "netid":            string,
-        "state":            string,
-        "recv_q":           integer,
-        "send_q":           integer,
-        "local_address":    string,
-        "local_port":       string,
-        "local_port_num":   integer,
-        "peer_address":     string,
-        "peer_port":        string,
-        "peer_port_num":    integer,
-        "interface":        string,
-        "link_layer"        string,
-        "channel":          string,
-        "path":             string,
-        "pid":              integer
+        "netid":                      string,
+        "state":                      string,
+        "recv_q":                     integer,
+        "send_q":                     integer,
+        "local_address":              string,
+        "local_port":                 string,
+        "local_port_num":             integer,
+        "peer_address":               string,
+        "peer_port":                  string,
+        "peer_port_num":              integer,
+        "interface":                  string,
+        "link_layer"                  string,
+        "channel":                    string,
+        "path":                       string,
+        "pid":                        integer,
+        "opts": {
+          "process_id": {
+            "<process_id>": {
+              "user":                 string,
+              "file_descriptor":      string
+            }
+          }
+        }
       }
     ]
 
@@ -276,13 +281,14 @@ Examples:
       ]
 """
 import re
+import ast
 import string
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -340,33 +346,39 @@ def _parse_opts(proc_data):
     opts = {}
     for item in o_field:
         # -e option:
-        item = re.sub('uid','uid_number',re.sub('sk','cookie',re.sub('ino','inode_number',item)))
+        item = re.sub(
+            'uid', 'uid_number',
+            re.sub('sk', 'cookie', re.sub('ino', 'inode_number', item)))
         if ":" in item:
-            key,val = item.split(':')
+            key, val = item.split(':')
             # -o option
             if key == "timer":
-                val = val.replace('(','[').replace(')',']')
-                val = eval(re.sub('([a-z0-9\.]+)','"\\1"',val))
-                val = { 'timer_name': val[0], 'expire_time': val[1], 'retrans': val[2] }
+                val = val.replace('(', '[').replace(')', ']')
+                val = ast.literal_eval(re.sub(r'([a-z0-9\.]+)', '"\\1"', val))
+                val = {
+                    'timer_name': val[0],
+                    'expire_time': val[1],
+                    'retrans': val[2]
+                }
                 opts[key] = val
             # -p option
             if key == "users":
                 key = 'process_id'
-                val = val.replace('(','[').replace(')',']')
-                val = eval(re.sub('([a-z]+=[0-9]+)','"\\1"',val))
+                val = val.replace('(', '[').replace(')', ']')
+                val = ast.literal_eval(re.sub(r'([a-z]+=[0-9]+)', '"\\1"', val))
                 data = {}
                 for rec in val:
-                  params = {}
-                  params['user'] = rec[0]
-                  for i in [x for x in rec if '=' in x]:
-                      k,v = i.split('=')
-                      params[k] = v
-                  data.update({
-                      params['pid']: {
-                          'user': params['user'],
-                          'file_descriptor': params['fd']
-                      }
-                  })
+                    params = {}
+                    params['user'] = rec[0]
+                    for i in [x for x in rec if '=' in x]:
+                        k, v = i.split('=')
+                        params[k] = v
+                    data.update({
+                        params['pid']: {
+                            'user': params['user'],
+                            'file_descriptor': params['fd']
+                        }
+                    })
                 val = data
             opts[key] = val
     return opts
@@ -412,11 +424,11 @@ def parse(data, raw=False, quiet=False):
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = re.split('[ ]{1,}',entry.strip())
+                entry_list = re.split(r'[ ]{1,}',entry.strip())
 
                 if len(entry_list) > len(header_list) or extra_opts == True:
-                  entry_list = re.split('[ ]{2,}',entry.strip())
-                  extra_opts = True
+                    entry_list = re.split(r'[ ]{2,}',entry.strip())
+                    extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
                     l_field = entry_list[4].rsplit(':', maxsplit=1)
