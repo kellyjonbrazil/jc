@@ -1,0 +1,74 @@
+Netid State    Recv-Q   Send-Q       Local Address:Port      Peer Address:Port                                                                                  
+udp   UNCONN   0        0                  0.0.0.0:4789           0.0.0.0:*      ino:58296 sk:1 <->                                                             
+udp   UNCONN   0        0                  0.0.0.0:5353           0.0.0.0:*      users:(("avahi-daemon",pid=1510,fd=12)) uid:112 ino:25147 sk:2 <->             
+udp   UNCONN   0        0                  0.0.0.0:39996          0.0.0.0:*      users:(("snmpd",pid=1996,fd=12)) ino:42903 sk:3 <->                            
+udp   UNCONN   0        0                  0.0.0.0:7946           0.0.0.0:*      users:(("dockerd",pid=2840,fd=28)) ino:61138 sk:4 <->                          
+udp   UNCONN   0        0                  0.0.0.0:8125           0.0.0.0:*      users:(("dockerd",pid=2840,fd=104)) ino:78939 sk:5 <->                         
+udp   UNCONN   0        0            192.168.122.1:53             0.0.0.0:*      users:(("dnsmasq",pid=2783,fd=5)) ino:43666 sk:6 <->                           
+udp   UNCONN   0        0            127.0.0.53%lo:53             0.0.0.0:*      users:(("systemd-resolve",pid=1117,fd=12)) uid:101 ino:29400 sk:7 <->          
+udp   UNCONN   0        0           0.0.0.0%virbr0:67             0.0.0.0:*      users:(("dnsmasq",pid=2783,fd=3)) ino:43663 sk:8 <->                           
+udp   UNCONN   0        0                  0.0.0.0:68             0.0.0.0:*      users:(("dhclient",pid=4852,fd=6)) ino:55971 sk:9 <->                          
+udp   UNCONN   0        0                  0.0.0.0:68             0.0.0.0:*      users:(("dhclient",pid=4738,fd=6)) ino:46019 sk:a <->                          
+udp   UNCONN   0        0                  0.0.0.0:111            0.0.0.0:*      users:(("rpcbind",pid=1119,fd=6)) ino:24994 sk:b <->                           
+udp   UNCONN   0        0                  0.0.0.0:161            0.0.0.0:*      users:(("snmpd",pid=1996,fd=11)) ino:42905 sk:c <->                            
+udp   UNCONN   0        0                  0.0.0.0:631            0.0.0.0:*      users:(("cups-browsed",pid=1880,fd=7)) ino:46417 sk:d <->                      
+udp   UNCONN   0        0                  0.0.0.0:871            0.0.0.0:*      users:(("rpcbind",pid=1119,fd=7)) ino:34845 sk:e <->                           
+udp   UNCONN   0        0                  0.0.0.0:35059          0.0.0.0:*      users:(("avahi-daemon",pid=1510,fd=13)) uid:112 ino:37602 sk:f <->             
+tcp   LISTEN   0        4096               0.0.0.0:9187           0.0.0.0:*      users:(("prometheus-post",pid=1671,fd=3)) uid:128 ino:32721 sk:10 <->          
+tcp   LISTEN   0        4096               0.0.0.0:389            0.0.0.0:*      users:(("dockerd",pid=2840,fd=183)) ino:128462 sk:11 <->                       
+tcp   LISTEN   0        128                0.0.0.0:6566           0.0.0.0:*      users:(("systemd",pid=1,fd=62)) ino:35013 sk:12 <->                            
+tcp   LISTEN   0        4096               0.0.0.0:2023           0.0.0.0:*      users:(("dockerd",pid=2840,fd=97)) ino:78929 sk:13 <->                         
+tcp   LISTEN   0        4096               0.0.0.0:5000           0.0.0.0:*      users:(("dockerd",pid=2840,fd=214)) ino:138297 sk:14 <->                       
+tcp   LISTEN   0        4096               0.0.0.0:2024           0.0.0.0:*      users:(("dockerd",pid=2840,fd=99)) ino:75475 sk:15 <->                         
+tcp   LISTEN   0        4096               0.0.0.0:9000           0.0.0.0:*      users:(("dockerd",pid=2840,fd=66)) ino:71580 sk:16 <->                         
+tcp   LISTEN   0        10                 0.0.0.0:3689           0.0.0.0:*      users:(("rhythmbox",pid=6716,fd=19)) uid:1000 ino:150684 sk:17 <->             
+tcp   LISTEN   0        4096               0.0.0.0:27017          0.0.0.0:*      users:(("dockerd",pid=2840,fd=196)) ino:135216 sk:18 <->                       
+tcp   LISTEN   0        4096               0.0.0.0:2377           0.0.0.0:*      users:(("dockerd",pid=2840,fd=18)) ino:50423 sk:19 <->                         
+tcp   LISTEN   0        4096               0.0.0.0:7946           0.0.0.0:*      users:(("dockerd",pid=2840,fd=27)) ino:61137 sk:1a <->                         
+tcp   LISTEN   0        80                 0.0.0.0:3306           0.0.0.0:*      users:(("mysqld",pid=2367,fd=24)) uid:125 ino:47161 sk:1b <->                  
+tcp   LISTEN   0        4096               0.0.0.0:6443           0.0.0.0:*      users:(("dockerd",pid=2840,fd=149)) ino:83788 sk:1c <->                        
+tcp   LISTEN   0        4096               0.0.0.0:6379           0.0.0.0:*      users:(("dockerd",pid=2840,fd=33)) ino:74330 sk:1d <->                         
+tcp   LISTEN   0        4096               0.0.0.0:9100           0.0.0.0:*      users:(("prometheus-node",pid=1419,fd=3)) uid:128 ino:24436 sk:1e <->          
+tcp   LISTEN   0        4096               0.0.0.0:9133           0.0.0.0:*      users:(("fritzbox_export",pid=1951,fd=3)) uid:128 ino:42810 sk:1f <->          
+tcp   LISTEN   0        4096               0.0.0.0:2222           0.0.0.0:*      users:(("dockerd",pid=2840,fd=133)) ino:89671 sk:20 <->                        
+tcp   LISTEN   0        4096               0.0.0.0:2223           0.0.0.0:*      users:(("dockerd",pid=2840,fd=146)) ino:98624 sk:21 <->                        
+tcp   LISTEN   0        4096             127.0.0.1:40783          0.0.0.0:*      users:(("containerd",pid=2002,fd=14)) ino:42959 sk:22 <->                      
+tcp   LISTEN   0        128                0.0.0.0:111            0.0.0.0:*      users:(("rpcbind",pid=1119,fd=8)) ino:34846 sk:23 <->                          
+tcp   LISTEN   0        511                0.0.0.0:80             0.0.0.0:*      users:(("/usr/sbin/apach",pid=24795,fd=3),("/usr/sbin/apach",pid=2157,fd=3),("/usr/sbin/apach",pid=2156,fd=3),("/usr/sbin/apach",pid=2155,fd=3),("/usr/sbin/apach",pid=2154,fd=3),("/usr/sbin/apach",pid=2153,fd=3),("/usr/sbin/apach",pid=2079,fd=3)) ino:40480 sk:24 <->
+tcp   LISTEN   0        4096               0.0.0.0:9104           0.0.0.0:*      users:(("prometheus-mysq",pid=1587,fd=3)) uid:128 ino:24481 sk:25 <->          
+tcp   LISTEN   0        4096               0.0.0.0:8081           0.0.0.0:*      users:(("dockerd",pid=2840,fd=205)) ino:131957 sk:26 <->                       
+tcp   LISTEN   0        4096               0.0.0.0:8082           0.0.0.0:*      users:(("dockerd",pid=2840,fd=223)) ino:140597 sk:27 <->                       
+tcp   LISTEN   0        4096               0.0.0.0:2003           0.0.0.0:*      users:(("dockerd",pid=2840,fd=85)) ino:75383 sk:28 <->                         
+tcp   LISTEN   0        128              127.0.0.1:5939           0.0.0.0:*      users:(("teamviewerd",pid=4963,fd=12)) ino:59559 sk:29 <->                     
+tcp   LISTEN   0        4096               0.0.0.0:2004           0.0.0.0:*      users:(("dockerd",pid=2840,fd=96)) ino:71664 sk:2a <->                         
+tcp   LISTEN   0        500                0.0.0.0:8084           0.0.0.0:*      users:(("Main",pid=1799,fd=5)) uid:33 ino:44981 sk:2b <->                      
+tcp   LISTEN   0        4096               0.0.0.0:8085           0.0.0.0:*      users:(("dockerd",pid=2840,fd=100)) ino:77932 sk:2c <->                        
+tcp   LISTEN   0        32           192.168.122.1:53             0.0.0.0:*      users:(("dnsmasq",pid=2783,fd=6)) ino:43667 sk:2d <->                          
+tcp   LISTEN   0        128          127.0.0.53%lo:53             0.0.0.0:*      users:(("systemd-resolve",pid=1117,fd=13)) uid:101 ino:29401 sk:2e <->         
+tcp   LISTEN   0        4096               0.0.0.0:8086           0.0.0.0:*      users:(("dockerd",pid=2840,fd=98)) ino:75513 sk:2f <->                         
+tcp   LISTEN   0        128                0.0.0.0:22             0.0.0.0:*      users:(("sshd",pid=1998,fd=3)) ino:58511 sk:30 <->                             
+tcp   LISTEN   0        4096               0.0.0.0:8087           0.0.0.0:*      users:(("dockerd",pid=2840,fd=157)) ino:98633 sk:31 <->                        
+tcp   LISTEN   0        5                127.0.0.1:631            0.0.0.0:*      users:(("cupsd",pid=1410,fd=7)) ino:40509 sk:32 <->                            
+tcp   LISTEN   0        4096               0.0.0.0:9111           0.0.0.0:*      users:(("syno_exporter-0",pid=1941,fd=3)) uid:128 ino:25196 sk:33 <->          
+tcp   LISTEN   0        4096               0.0.0.0:3000           0.0.0.0:*      users:(("dockerd",pid=2840,fd=42)) ino:89081 sk:34 <->                         
+tcp   LISTEN   0        4096               0.0.0.0:5432           0.0.0.0:*      users:(("dockerd",pid=2840,fd=117)) ino:76497 sk:35 <->                        
+tcp   LISTEN   0        4096               0.0.0.0:3033           0.0.0.0:*      users:(("dockerd",pid=2840,fd=139)) ino:89680 sk:36 <->                        
+tcp   LISTEN   0        4096               0.0.0.0:8089           0.0.0.0:*      users:(("dockerd",pid=2840,fd=185)) ino:84656 sk:37 <->                        
+tcp   LISTEN   0        100              127.0.0.1:25             0.0.0.0:*      users:(("master",pid=5745,fd=13)) ino:57959 sk:38 <->                          
+tcp   LISTEN   0        4096               0.0.0.0:3003           0.0.0.0:*      users:(("dockerd",pid=2840,fd=23)) ino:90254 sk:39 <->                         
+tcp   LISTEN   0        4096               0.0.0.0:8091           0.0.0.0:*      users:(("dockerd",pid=2840,fd=144)) ino:84694 sk:3a <->                        
+tcp   LISTEN   0        511                0.0.0.0:443            0.0.0.0:*      users:(("/usr/sbin/apach",pid=24795,fd=4),("/usr/sbin/apach",pid=2157,fd=4),("/usr/sbin/apach",pid=2156,fd=4),("/usr/sbin/apach",pid=2155,fd=4),("/usr/sbin/apach",pid=2154,fd=4),("/usr/sbin/apach",pid=2153,fd=4),("/usr/sbin/apach",pid=2079,fd=4)) ino:40485 sk:3b <->
+tcp   LISTEN   0        100                0.0.0.0:1883           0.0.0.0:*      users:(("mosquitto",pid=1798,fd=4)) ino:38377 sk:3c <->                        
+tcp   LISTEN   0        4096               0.0.0.0:9115           0.0.0.0:*      users:(("prometheus-blac",pid=1651,fd=3)) uid:128 ino:25119 sk:3d <->          
+tcp   LISTEN   0        4096               0.0.0.0:636            0.0.0.0:*      users:(("dockerd",pid=2840,fd=187)) ino:125799 sk:3e <->                       
+tcp   LISTEN   0        4096               0.0.0.0:8092           0.0.0.0:*      users:(("dockerd",pid=2840,fd=37)) ino:87972 sk:3f <->                         
+tcp   LISTEN   0        4096               0.0.0.0:9116           0.0.0.0:*      users:(("snmp_exporter",pid=1928,fd=3)) uid:128 ino:45204 sk:40 <->            
+tcp   LISTEN   0        1024             127.0.0.1:2812           0.0.0.0:*      users:(("monit",pid=1806,fd=6)) ino:37711 sk:41 <->                            
+tcp   LISTEN   0        4096               0.0.0.0:446            0.0.0.0:*      users:(("dockerd",pid=2840,fd=143)) ino:98615 sk:42 <->                        
+tcp   LISTEN   0        4096               0.0.0.0:8126           0.0.0.0:*      users:(("dockerd",pid=2840,fd=105)) ino:77945 sk:43 <->                        
+tcp   LISTEN   0        100              127.0.0.1:49152          0.0.0.0:*      users:(("TabNine-deep-lo",pid=9583,fd=22)) uid:1000 ino:486863 sk:6ae <->      
+tcp   LISTEN   0        4096             127.0.0.1:46624          0.0.0.0:*      users:(("kited",pid=27494,fd=3)) uid:1000 ino:110003 sk:44 <->                 
+tcp   LISTEN   0        4096               0.0.0.0:8000           0.0.0.0:*      users:(("dockerd",pid=2840,fd=50)) ino:73647 sk:45 <->                         
+tcp   LISTEN   0        128                0.0.0.0:5665           0.0.0.0:*      users:(("icinga2",pid=5337,fd=16)) uid:136 ino:57169 sk:46 <->                 
+tcp   LISTEN   0        4096         192.168.178.5:10050          0.0.0.0:*      users:(("zabbix_agent2",pid=6359,fd=10)) uid:131 ino:64927 sk:47 <->           
+tcp   LISTEN   0        4096               0.0.0.0:9090           0.0.0.0:*      users:(("prometheus",pid=1543,fd=7)) uid:128 ino:32704 sk:48 <->               
