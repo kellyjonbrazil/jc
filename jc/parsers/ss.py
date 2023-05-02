@@ -275,6 +275,7 @@ Examples:
         }
       ]
 """
+import re
 import string
 import jc.utils
 
@@ -324,6 +325,51 @@ def _process(proc_data):
 
     return proc_data
 
+def _parse_opts(proc_data):
+    """ Process extra options -e, -o, -p
+
+    Parameters:
+
+        proc_data:   (List of Dictionaries) raw structured data to process
+
+    Returns:
+
+        Structured data dictionary for extra/optional headerless options.
+    """
+    o_field = proc_data.split(' ')
+    opts = {}
+    for item in o_field:
+        # -e option:
+        item = re.sub('uid','uid_number',re.sub('sk','cookie',re.sub('ino','inode_number',item)))
+        if ":" in item:
+            key,val = item.split(':')
+            # -o option
+            if key == "timer":
+                val = val.replace('(','[').replace(')',']')
+                val = eval(re.sub('([a-z0-9\.]+)','"\\1"',val))
+                val = { 'timer_name': val[0], 'expire_time': val[1], 'retrans': val[2] }
+                opts[key] = val
+            # -p option
+            if key == "users":
+                key = 'process_id'
+                val = val.replace('(','[').replace(')',']')
+                val = eval(re.sub('([a-z]+=[0-9]+)','"\\1"',val))
+                data = {}
+                for rec in val:
+                  params = {}
+                  params['user'] = rec[0]
+                  for i in [x for x in rec if '=' in x]:
+                      k,v = i.split('=')
+                      params[k] = v
+                  data.update({
+                      params['pid']: {
+                          'user': params['user'],
+                          'file_descriptor': params['fd']
+                      }
+                  })
+                val = data
+            opts[key] = val
+    return opts
 
 def parse(data, raw=False, quiet=False):
     """
@@ -357,15 +403,20 @@ def parse(data, raw=False, quiet=False):
         header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()
+        extra_opts = False
 
         for entry in cleandata[1:]:
             output_line = {}
             if entry[0] not in string.whitespace:
 
                 # fix weird ss bug where first two columns have no space between them sometimes
-                entry = entry[:5] + ' ' + entry[5:]
+                entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = entry.split()
+                entry_list = re.split('[ ]{1,}',entry.strip())
+
+                if len(entry_list) > len(header_list) or extra_opts == True:
+                  entry_list = re.split('[ ]{2,}',entry.strip())
+                  extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
                     l_field = entry_list[4].rsplit(':', maxsplit=1)
@@ -380,6 +431,10 @@ def parse(data, raw=False, quiet=False):
                     p_port = p_field[1]
                     entry_list[6] = p_address
                     entry_list.insert(7, p_port)
+
+                if re.search(r'ino:|uid:|sk:|users:|timer:',entry_list[-1]):
+                    header_list.append('opts')
+                    entry_list[-1] = _parse_opts(entry_list[-1])
 
             output_line = dict(zip(header_list, entry_list))
 

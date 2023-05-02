@@ -1,0 +1,1599 @@
+[
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "4789",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "inode_number": "58296",
+      "cookie": "1"
+    },
+    "local_port_num": 4789
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "5353",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1510": {
+          "user": "avahi-daemon",
+          "file_descriptor": "12"
+        }
+      },
+      "uid_number": "112",
+      "inode_number": "25147",
+      "cookie": "2"
+    },
+    "local_port_num": 5353
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "39996",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1996": {
+          "user": "snmpd",
+          "file_descriptor": "12"
+        }
+      },
+      "inode_number": "42903",
+      "cookie": "3"
+    },
+    "local_port_num": 39996
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "7946",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "28"
+        }
+      },
+      "inode_number": "61138",
+      "cookie": "4"
+    },
+    "local_port_num": 7946
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "8125",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "104"
+        }
+      },
+      "inode_number": "78939",
+      "cookie": "5"
+    },
+    "local_port_num": 8125
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "192.168.122.1",
+    "local_port": "53",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2783": {
+          "user": "dnsmasq",
+          "file_descriptor": "5"
+        }
+      },
+      "inode_number": "43666",
+      "cookie": "6"
+    },
+    "local_port_num": 53
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "127.0.0.53",
+    "local_port": "53",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1117": {
+          "user": "systemd-resolve",
+          "file_descriptor": "12"
+        }
+      },
+      "uid_number": "101",
+      "inode_number": "29400",
+      "cookie": "7"
+    },
+    "interface": "lo",
+    "local_port_num": 53
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "67",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2783": {
+          "user": "dnsmasq",
+          "file_descriptor": "3"
+        }
+      },
+      "inode_number": "43663",
+      "cookie": "8"
+    },
+    "interface": "virbr0",
+    "local_port_num": 67
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "68",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "4852": {
+          "user": "dhclient",
+          "file_descriptor": "6"
+        }
+      },
+      "inode_number": "55971",
+      "cookie": "9"
+    },
+    "local_port_num": 68
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "68",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "4738": {
+          "user": "dhclient",
+          "file_descriptor": "6"
+        }
+      },
+      "inode_number": "46019",
+      "cookie": "a"
+    },
+    "local_port_num": 68
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "111",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1119": {
+          "user": "rpcbind",
+          "file_descriptor": "6"
+        }
+      },
+      "inode_number": "24994",
+      "cookie": "b"
+    },
+    "local_port_num": 111
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "161",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1996": {
+          "user": "snmpd",
+          "file_descriptor": "11"
+        }
+      },
+      "inode_number": "42905",
+      "cookie": "c"
+    },
+    "local_port_num": 161
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "631",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1880": {
+          "user": "cups-browsed",
+          "file_descriptor": "7"
+        }
+      },
+      "inode_number": "46417",
+      "cookie": "d"
+    },
+    "local_port_num": 631
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "871",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1119": {
+          "user": "rpcbind",
+          "file_descriptor": "7"
+        }
+      },
+      "inode_number": "34845",
+      "cookie": "e"
+    },
+    "local_port_num": 871
+  },
+  {
+    "netid": "udp",
+    "state": "UNCONN",
+    "recv_q": 0,
+    "send_q": 0,
+    "local_address": "0.0.0.0",
+    "local_port": "35059",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1510": {
+          "user": "avahi-daemon",
+          "file_descriptor": "13"
+        }
+      },
+      "uid_number": "112",
+      "inode_number": "37602",
+      "cookie": "f"
+    },
+    "local_port_num": 35059
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9187",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1671": {
+          "user": "prometheus-post",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "32721",
+      "cookie": "10"
+    },
+    "local_port_num": 9187
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "389",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "183"
+        }
+      },
+      "inode_number": "128462",
+      "cookie": "11"
+    },
+    "local_port_num": 389
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "0.0.0.0",
+    "local_port": "6566",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1": {
+          "user": "systemd",
+          "file_descriptor": "62"
+        }
+      },
+      "inode_number": "35013",
+      "cookie": "12"
+    },
+    "local_port_num": 6566
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2023",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "97"
+        }
+      },
+      "inode_number": "78929",
+      "cookie": "13"
+    },
+    "local_port_num": 2023
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "5000",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "214"
+        }
+      },
+      "inode_number": "138297",
+      "cookie": "14"
+    },
+    "local_port_num": 5000
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2024",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "99"
+        }
+      },
+      "inode_number": "75475",
+      "cookie": "15"
+    },
+    "local_port_num": 2024
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9000",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "66"
+        }
+      },
+      "inode_number": "71580",
+      "cookie": "16"
+    },
+    "local_port_num": 9000
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 10,
+    "local_address": "0.0.0.0",
+    "local_port": "3689",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "6716": {
+          "user": "rhythmbox",
+          "file_descriptor": "19"
+        }
+      },
+      "uid_number": "1000",
+      "inode_number": "150684",
+      "cookie": "17"
+    },
+    "local_port_num": 3689
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "27017",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "196"
+        }
+      },
+      "inode_number": "135216",
+      "cookie": "18"
+    },
+    "local_port_num": 27017
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2377",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "18"
+        }
+      },
+      "inode_number": "50423",
+      "cookie": "19"
+    },
+    "local_port_num": 2377
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "7946",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "27"
+        }
+      },
+      "inode_number": "61137",
+      "cookie": "1a"
+    },
+    "local_port_num": 7946
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 80,
+    "local_address": "0.0.0.0",
+    "local_port": "3306",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2367": {
+          "user": "mysqld",
+          "file_descriptor": "24"
+        }
+      },
+      "uid_number": "125",
+      "inode_number": "47161",
+      "cookie": "1b"
+    },
+    "local_port_num": 3306
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "6443",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "149"
+        }
+      },
+      "inode_number": "83788",
+      "cookie": "1c"
+    },
+    "local_port_num": 6443
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "6379",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "33"
+        }
+      },
+      "inode_number": "74330",
+      "cookie": "1d"
+    },
+    "local_port_num": 6379
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9100",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1419": {
+          "user": "prometheus-node",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "24436",
+      "cookie": "1e"
+    },
+    "local_port_num": 9100
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9133",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1951": {
+          "user": "fritzbox_export",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "42810",
+      "cookie": "1f"
+    },
+    "local_port_num": 9133
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2222",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "133"
+        }
+      },
+      "inode_number": "89671",
+      "cookie": "20"
+    },
+    "local_port_num": 2222
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2223",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "146"
+        }
+      },
+      "inode_number": "98624",
+      "cookie": "21"
+    },
+    "local_port_num": 2223
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "127.0.0.1",
+    "local_port": "40783",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2002": {
+          "user": "containerd",
+          "file_descriptor": "14"
+        }
+      },
+      "inode_number": "42959",
+      "cookie": "22"
+    },
+    "local_port_num": 40783
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "0.0.0.0",
+    "local_port": "111",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1119": {
+          "user": "rpcbind",
+          "file_descriptor": "8"
+        }
+      },
+      "inode_number": "34846",
+      "cookie": "23"
+    },
+    "local_port_num": 111
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 511,
+    "local_address": "0.0.0.0",
+    "local_port": "80",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "24795": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        },
+        "2157": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        },
+        "2156": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        },
+        "2155": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        },
+        "2154": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        },
+        "2153": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        },
+        "2079": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "3"
+        }
+      },
+      "inode_number": "40480",
+      "cookie": "24"
+    },
+    "local_port_num": 80
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9104",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1587": {
+          "user": "prometheus-mysq",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "24481",
+      "cookie": "25"
+    },
+    "local_port_num": 9104
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8081",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "205"
+        }
+      },
+      "inode_number": "131957",
+      "cookie": "26"
+    },
+    "local_port_num": 8081
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8082",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "223"
+        }
+      },
+      "inode_number": "140597",
+      "cookie": "27"
+    },
+    "local_port_num": 8082
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2003",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "85"
+        }
+      },
+      "inode_number": "75383",
+      "cookie": "28"
+    },
+    "local_port_num": 2003
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "127.0.0.1",
+    "local_port": "5939",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "4963": {
+          "user": "teamviewerd",
+          "file_descriptor": "12"
+        }
+      },
+      "inode_number": "59559",
+      "cookie": "29"
+    },
+    "local_port_num": 5939
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "2004",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "96"
+        }
+      },
+      "inode_number": "71664",
+      "cookie": "2a"
+    },
+    "local_port_num": 2004
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 500,
+    "local_address": "0.0.0.0",
+    "local_port": "8084",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1799": {
+          "user": "Main",
+          "file_descriptor": "5"
+        }
+      },
+      "uid_number": "33",
+      "inode_number": "44981",
+      "cookie": "2b"
+    },
+    "local_port_num": 8084
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8085",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "100"
+        }
+      },
+      "inode_number": "77932",
+      "cookie": "2c"
+    },
+    "local_port_num": 8085
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 32,
+    "local_address": "192.168.122.1",
+    "local_port": "53",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2783": {
+          "user": "dnsmasq",
+          "file_descriptor": "6"
+        }
+      },
+      "inode_number": "43667",
+      "cookie": "2d"
+    },
+    "local_port_num": 53
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "127.0.0.53",
+    "local_port": "53",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1117": {
+          "user": "systemd-resolve",
+          "file_descriptor": "13"
+        }
+      },
+      "uid_number": "101",
+      "inode_number": "29401",
+      "cookie": "2e"
+    },
+    "interface": "lo",
+    "local_port_num": 53
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8086",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "98"
+        }
+      },
+      "inode_number": "75513",
+      "cookie": "2f"
+    },
+    "local_port_num": 8086
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "0.0.0.0",
+    "local_port": "22",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1998": {
+          "user": "sshd",
+          "file_descriptor": "3"
+        }
+      },
+      "inode_number": "58511",
+      "cookie": "30"
+    },
+    "local_port_num": 22
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8087",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "157"
+        }
+      },
+      "inode_number": "98633",
+      "cookie": "31"
+    },
+    "local_port_num": 8087
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 5,
+    "local_address": "127.0.0.1",
+    "local_port": "631",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1410": {
+          "user": "cupsd",
+          "file_descriptor": "7"
+        }
+      },
+      "inode_number": "40509",
+      "cookie": "32"
+    },
+    "local_port_num": 631
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9111",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1941": {
+          "user": "syno_exporter-0",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "25196",
+      "cookie": "33"
+    },
+    "local_port_num": 9111
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "3000",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "42"
+        }
+      },
+      "inode_number": "89081",
+      "cookie": "34"
+    },
+    "local_port_num": 3000
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "5432",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "117"
+        }
+      },
+      "inode_number": "76497",
+      "cookie": "35"
+    },
+    "local_port_num": 5432
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "3033",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "139"
+        }
+      },
+      "inode_number": "89680",
+      "cookie": "36"
+    },
+    "local_port_num": 3033
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8089",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "185"
+        }
+      },
+      "inode_number": "84656",
+      "cookie": "37"
+    },
+    "local_port_num": 8089
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 100,
+    "local_address": "127.0.0.1",
+    "local_port": "25",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "5745": {
+          "user": "master",
+          "file_descriptor": "13"
+        }
+      },
+      "inode_number": "57959",
+      "cookie": "38"
+    },
+    "local_port_num": 25
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "3003",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "23"
+        }
+      },
+      "inode_number": "90254",
+      "cookie": "39"
+    },
+    "local_port_num": 3003
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8091",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "144"
+        }
+      },
+      "inode_number": "84694",
+      "cookie": "3a"
+    },
+    "local_port_num": 8091
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 511,
+    "local_address": "0.0.0.0",
+    "local_port": "443",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "24795": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        },
+        "2157": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        },
+        "2156": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        },
+        "2155": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        },
+        "2154": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        },
+        "2153": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        },
+        "2079": {
+          "user": "/usr/sbin/apach",
+          "file_descriptor": "4"
+        }
+      },
+      "inode_number": "40485",
+      "cookie": "3b"
+    },
+    "local_port_num": 443
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 100,
+    "local_address": "0.0.0.0",
+    "local_port": "1883",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1798": {
+          "user": "mosquitto",
+          "file_descriptor": "4"
+        }
+      },
+      "inode_number": "38377",
+      "cookie": "3c"
+    },
+    "local_port_num": 1883
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9115",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1651": {
+          "user": "prometheus-blac",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "25119",
+      "cookie": "3d"
+    },
+    "local_port_num": 9115
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "636",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "187"
+        }
+      },
+      "inode_number": "125799",
+      "cookie": "3e"
+    },
+    "local_port_num": 636
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8092",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "37"
+        }
+      },
+      "inode_number": "87972",
+      "cookie": "3f"
+    },
+    "local_port_num": 8092
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9116",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1928": {
+          "user": "snmp_exporter",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "45204",
+      "cookie": "40"
+    },
+    "local_port_num": 9116
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 1024,
+    "local_address": "127.0.0.1",
+    "local_port": "2812",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1806": {
+          "user": "monit",
+          "file_descriptor": "6"
+        }
+      },
+      "inode_number": "37711",
+      "cookie": "41"
+    },
+    "local_port_num": 2812
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "446",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "143"
+        }
+      },
+      "inode_number": "98615",
+      "cookie": "42"
+    },
+    "local_port_num": 446
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8126",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "105"
+        }
+      },
+      "inode_number": "77945",
+      "cookie": "43"
+    },
+    "local_port_num": 8126
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 100,
+    "local_address": "127.0.0.1",
+    "local_port": "49152",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "9583": {
+          "user": "TabNine-deep-lo",
+          "file_descriptor": "22"
+        }
+      },
+      "uid_number": "1000",
+      "inode_number": "486863",
+      "cookie": "6ae"
+    },
+    "local_port_num": 49152
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "127.0.0.1",
+    "local_port": "46624",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "27494": {
+          "user": "kited",
+          "file_descriptor": "3"
+        }
+      },
+      "uid_number": "1000",
+      "inode_number": "110003",
+      "cookie": "44"
+    },
+    "local_port_num": 46624
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "8000",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "2840": {
+          "user": "dockerd",
+          "file_descriptor": "50"
+        }
+      },
+      "inode_number": "73647",
+      "cookie": "45"
+    },
+    "local_port_num": 8000
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 128,
+    "local_address": "0.0.0.0",
+    "local_port": "5665",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "5337": {
+          "user": "icinga2",
+          "file_descriptor": "16"
+        }
+      },
+      "uid_number": "136",
+      "inode_number": "57169",
+      "cookie": "46"
+    },
+    "local_port_num": 5665
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "192.168.178.5",
+    "local_port": "10050",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "6359": {
+          "user": "zabbix_agent2",
+          "file_descriptor": "10"
+        }
+      },
+      "uid_number": "131",
+      "inode_number": "64927",
+      "cookie": "47"
+    },
+    "local_port_num": 10050
+  },
+  {
+    "netid": "tcp",
+    "state": "LISTEN",
+    "recv_q": 0,
+    "send_q": 4096,
+    "local_address": "0.0.0.0",
+    "local_port": "9090",
+    "peer_address": "0.0.0.0",
+    "peer_port": "*",
+    "opts": {
+      "process_id": {
+        "1543": {
+          "user": "prometheus",
+          "file_descriptor": "7"
+        }
+      },
+      "uid_number": "128",
+      "inode_number": "32704",
+      "cookie": "48"
+    },
+    "local_port_num": 9090
+  }
+]
