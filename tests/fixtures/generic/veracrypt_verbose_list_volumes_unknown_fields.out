@@ -1,0 +1,35 @@
+Slot: 1
+Volume: /dev/sdb1
+Virtual Device: /dev/mapper/veracrypt1
+Mount Directory: /home/bob/mount/encrypt/sdb1
+Size: 498 MiB
+Type: Normal
+Read-Only: No
+Hidden Volume Protected: No
+Encryption Algorithm: AES
+Primary Key Size: 256 bits
+Secondary Key Size (XTS Mode): 256 bits
+Block Size: 128 bits
+Mode of Operation: XTS
+Label: bar
+PKCS-5 PRF: HMAC-SHA-512
+Volume Format Version: 2
+Embedded Backup Header: Yes
+
+Slot: 2
+Volume: /dev/sdb2
+Virtual Device: /dev/mapper/veracrypt2
+Mount Directory: /home/bob/mount/encrypt/sdb2
+Size: 522 MiB
+Type: Normal
+Read-Only: No
+Hidden Volume Protected: No
+Encryption Algorithm: AES
+Primary Key Size: 256 bits
+Secondary Key Size (XTS Mode): 256 bits
+Block Size: 128 bits
+Mode of Operation: XTS
+Label: foo
+PKCS-5 PRF: HMAC-SHA-512
+Volume Format Version: 2
+Embedded Backup Header: Yes
