@@ -1,9 +1,10 @@
 jc changelog
 
-20230430 v1.23.3
+20230510 v1.23.3
 - Enhance `ss` command parser to support extended options
 - Fix `certbot` parser to be more robust with different line endings
 - Fix deprecated option is setup.cfg
+- Clarify the compatibility warning message
 
 20230429 v1.23.2
 - Add `bluetoothctl` command parser
