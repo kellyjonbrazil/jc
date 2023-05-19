@@ -1,0 +1,36 @@
+
+Active Connections
+
+  Proto  Local Address          Foreign Address        State
+  TCP    127.0.0.1:1031         api:1032               ESTABLISHED
+  TCP    127.0.0.1:1032         api:1031               ESTABLISHED
+  TCP    127.0.0.1:1316         api:1317               ESTABLISHED
+  TCP    127.0.0.1:1317         api:1316               ESTABLISHED
+  TCP    127.0.0.1:1318         api:1319               ESTABLISHED
+  TCP    127.0.0.1:1319         api:1318               ESTABLISHED
+  TCP    127.0.0.1:1320         api:1321               ESTABLISHED
+  TCP    127.0.0.1:1321         api:1320               ESTABLISHED
+  TCP    127.0.0.1:1322         api:1323               ESTABLISHED
+  TCP    127.0.0.1:1323         api:1322               ESTABLISHED
+  TCP    127.0.0.1:2132         api:2133               ESTABLISHED
+  TCP    127.0.0.1:2133         api:2132               ESTABLISHED
+  TCP    127.0.0.1:3199         api:3200               ESTABLISHED
+  TCP    127.0.0.1:3200         api:3199               ESTABLISHED
+  TCP    127.0.0.1:5481         api:5482               ESTABLISHED
+  TCP    127.0.0.1:5482         api:5481               ESTABLISHED
+  TCP    127.0.0.1:30785        api:30786              ESTABLISHED
+  TCP    127.0.0.1:30786        api:30785              ESTABLISHED
+  TCP    127.0.0.1:30787        api:30788              ESTABLISHED
+  TCP    127.0.0.1:30788        api:30787              ESTABLISHED
+  TCP    127.0.0.1:30797        api:30798              ESTABLISHED
+  TCP    127.0.0.1:30798        api:30797              ESTABLISHED
+  TCP    127.0.0.1:30799        api:30800              ESTABLISHED
+  TCP    127.0.0.1:30800        api:30799              ESTABLISHED
+  TCP    127.0.0.1:30825        api:30826              ESTABLISHED
+  TCP    127.0.0.1:30826        api:30825              ESTABLISHED
+  TCP    127.0.0.1:30842        api:30843              ESTABLISHED
+  TCP    127.0.0.1:30843        api:30842              ESTABLISHED
+  TCP    127.0.0.1:31337        api:31338              ESTABLISHED
+  TCP    127.0.0.1:31338        api:31337              ESTABLISHED
+  TCP    127.0.0.1:49673        api:49674              ESTABLISHED
+  TCP    127.0.0.1:49674        api:49673              ESTABLISHED
