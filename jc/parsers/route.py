@@ -17,6 +17,13 @@ Schema:
 
     [
       {
+        "interfaces": [
+          {
+            "id": integer,
+            "mac": string,
+            "name": string,
+          }
+        ]
         "destination":        string,
         "gateway":            string,
         "genmask":            string,
@@ -109,11 +116,11 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`route` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux']
+    compatible = ['linux', 'win32']
     magic_commands = ['route']
     tags = ['command']
 
@@ -152,6 +159,14 @@ def _process(proc_data):
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
+        if 'interfaces' in entry:
+            interfaces = []
+            for interface in entry["interfaces"]:
+                # 00 ff 58 60 5f 61 -> 00:ff:58:60:5f:61
+                interface['mac'] = interface['mac'].replace(' ', ':').replace('.', '')
+                interfaces.append(interface)
+            entry["interfaces"] = interfaces
+
         # add flags_pretty
         # Flag mapping from https://www.man7.org/linux/man-pages/man8/route.8.html
         if 'flags' in entry:
@@ -165,6 +180,16 @@ def _process(proc_data):
 
     return proc_data
 
+def normalize_headers(headers: str):
+    # fixup header row for ipv6
+    if ' Next Hop ' in headers:
+      headers = headers.replace(' If', ' Iface')
+
+    headers = headers.replace(' Next Hop ', ' Next_Hop ')
+    headers = headers.replace(' Flag ', ' Flags ')
+    headers = headers.replace(' Met ', ' Metric ')
+    headers = headers.lower()
+    return headers
 
 def parse(data, raw=False, quiet=False):
     """
@@ -180,24 +205,22 @@ def parse(data, raw=False, quiet=False):
 
         List of Dictionaries. Raw or processed structured data.
     """
+    import jc.utils
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
-
-    cleandata = data.splitlines()[1:]
+    cleandata = data.splitlines()
 
     raw_output = []
 
     if jc.utils.has_data(data):
-
-        # fixup header row for ipv6
-        if ' Next Hop ' in cleandata[0]:
-            cleandata[0] = cleandata[0].replace(' If', ' Iface')
-        cleandata[0] = cleandata[0].replace(' Next Hop ', ' Next_Hop ')\
-                                   .replace(' Flag ', ' Flags ')\
-                                   .replace(' Met ', ' Metric ')
-
-        cleandata[0] = cleandata[0].lower()
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+        import jc.parsers.route_windows
+        if cleandata[0] in jc.parsers.route_windows.SEPERATORS:
+           raw_output = jc.parsers.route_windows.parse(cleandata)
+        else:
+          cleandata.pop(0)  # Removing "Kernel IP routing table".
+          cleandata[0] = normalize_headers(cleandata[0])
+          import jc.parsers.universal
+          raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output
