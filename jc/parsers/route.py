@@ -19,7 +19,7 @@ Schema:
       {
         "interfaces": [
           {
-            "id": integer,
+            "id": string,
             "mac": string,
             "name": string,
           }
