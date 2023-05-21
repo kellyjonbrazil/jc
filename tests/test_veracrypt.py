@@ -68,7 +68,7 @@ class VeracryptTests(unittest.TestCase):
         if actual:
             for k, v in expected[0].items():
                 self.assertEqual(v, actual[0][k], f"Volume regex failed on {k}")
-            
+
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Volume regex failed on {k}")
 
@@ -128,7 +128,7 @@ class VeracryptTests(unittest.TestCase):
         if actual:
             for k, v in expected[0].items():
                 self.assertEqual(v, actual[0][k], f"Volume regex failed on {k}")
-            
+
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Volume regex failed on {k}")
 
@@ -188,7 +188,7 @@ class VeracryptTests(unittest.TestCase):
         if actual:
             for k, v in expected[0].items():
                 self.assertEqual(v, actual[0][k], f"Volume regex failed on {k}")
-            
+
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Volume regex failed on {k}")
 
