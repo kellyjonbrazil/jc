@@ -1,0 +1,720 @@
+
+Active Connections
+
+  Proto  Local Address          Foreign Address        State           PID
+  TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       1712
+  RpcSs
+ [svchost.exe]
+  TCP    0.0.0.0:443            0.0.0.0:0              LISTENING       9396
+ [vmware-hostd.exe]
+  TCP    0.0.0.0:445            0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    0.0.0.0:902            0.0.0.0:0              LISTENING       7388
+ [vmware-authd.exe]
+  TCP    0.0.0.0:912            0.0.0.0:0              LISTENING       7388
+ [vmware-authd.exe]
+  TCP    0.0.0.0:1134           0.0.0.0:0              LISTENING       27696
+ [Spotify.exe]
+  TCP    0.0.0.0:2179           0.0.0.0:0              LISTENING       4032
+ [vmms.exe]
+  TCP    0.0.0.0:2869           0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    0.0.0.0:4325           0.0.0.0:0              LISTENING       5876
+  iphlpsvc
+ [svchost.exe]
+  TCP    0.0.0.0:5040           0.0.0.0:0              LISTENING       13528
+  CDPSvc
+ [svchost.exe]
+  TCP    0.0.0.0:7070           0.0.0.0:0              LISTENING       6608
+ [AnyDesk.exe]
+  TCP    0.0.0.0:7680           0.0.0.0:0              LISTENING       10404
+ Can not obtain ownership information
+  TCP    0.0.0.0:13656          0.0.0.0:0              LISTENING       1400
+ Can not obtain ownership information
+  TCP    0.0.0.0:49664          0.0.0.0:0              LISTENING       1428
+ [System]
+  TCP    0.0.0.0:49665          0.0.0.0:0              LISTENING       1036
+ Can not obtain ownership information
+  TCP    0.0.0.0:49666          0.0.0.0:0              LISTENING       2152
+  EventLog
+ [svchost.exe]
+  TCP    0.0.0.0:49667          0.0.0.0:0              LISTENING       2160
+  Schedule
+ [svchost.exe]
+  TCP    0.0.0.0:49668          0.0.0.0:0              LISTENING       3952
+  SessionEnv
+ [svchost.exe]
+  TCP    0.0.0.0:49681          0.0.0.0:0              LISTENING       6316
+ [spoolsv.exe]
+  TCP    0.0.0.0:57621          0.0.0.0:0              LISTENING       27696
+ [Spotify.exe]
+  TCP    127.0.0.1:1031         127.0.0.1:1032         ESTABLISHED     10644
+ [ProductAgentService.exe]
+  TCP    127.0.0.1:1032         127.0.0.1:1031         ESTABLISHED     10644
+ [ProductAgentService.exe]
+  TCP    127.0.0.1:1310         0.0.0.0:0              LISTENING       9328
+ [Code.exe]
+  TCP    127.0.0.1:1316         127.0.0.1:1317         ESTABLISHED     1112
+ [python.exe]
+  TCP    127.0.0.1:1317         127.0.0.1:1316         ESTABLISHED     1112
+ [python.exe]
+  TCP    127.0.0.1:1318         127.0.0.1:1319         ESTABLISHED     1112
+ [python.exe]
+  TCP    127.0.0.1:1319         127.0.0.1:1318         ESTABLISHED     1112
+ [python.exe]
+  TCP    127.0.0.1:1320         127.0.0.1:1321         ESTABLISHED     28104
+ [python.exe]
+  TCP    127.0.0.1:1321         127.0.0.1:1320         ESTABLISHED     28104
+ [python.exe]
+  TCP    127.0.0.1:1322         127.0.0.1:1323         ESTABLISHED     28104
+ [python.exe]
+  TCP    127.0.0.1:1323         127.0.0.1:1322         ESTABLISHED     28104
+ [python.exe]
+  TCP    127.0.0.1:2132         127.0.0.1:2133         ESTABLISHED     21952
+ [bdservicehost.exe]
+  TCP    127.0.0.1:2133         127.0.0.1:2132         ESTABLISHED     21952
+ [bdservicehost.exe]
+  TCP    127.0.0.1:3949         127.0.0.1:3950         ESTABLISHED     21952
+ [bdservicehost.exe]
+  TCP    127.0.0.1:3950         127.0.0.1:3949         ESTABLISHED     21952
+ [bdservicehost.exe]
+  TCP    127.0.0.1:5481         127.0.0.1:5482         ESTABLISHED     20136
+ [bdservicehost.exe]
+  TCP    127.0.0.1:5482         127.0.0.1:5481         ESTABLISHED     20136
+ [bdservicehost.exe]
+  TCP    127.0.0.1:5939         0.0.0.0:0              LISTENING       7340
+ [TeamViewer_Service.exe]
+  TCP    127.0.0.1:8307         0.0.0.0:0              LISTENING       9396
+ [vmware-hostd.exe]
+  TCP    127.0.0.1:8884         0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    127.0.0.1:29802        0.0.0.0:0              LISTENING       6372
+ [NVIDIA Web Helper.exe]
+  TCP    127.0.0.1:30776        0.0.0.0:0              LISTENING       30224
+ [Code.exe]
+  TCP    127.0.0.1:30785        127.0.0.1:30786        ESTABLISHED     25596
+ [python.exe]
+  TCP    127.0.0.1:30786        127.0.0.1:30785        ESTABLISHED     25596
+ [python.exe]
+  TCP    127.0.0.1:30787        127.0.0.1:30788        ESTABLISHED     25596
+ [python.exe]
+  TCP    127.0.0.1:30788        127.0.0.1:30787        ESTABLISHED     25596
+ [python.exe]
+  TCP    127.0.0.1:30797        127.0.0.1:30798        ESTABLISHED     20364
+ [python.exe]
+  TCP    127.0.0.1:30798        127.0.0.1:30797        ESTABLISHED     20364
+ [python.exe]
+  TCP    127.0.0.1:30799        127.0.0.1:30800        ESTABLISHED     20364
+ [python.exe]
+  TCP    127.0.0.1:30800        127.0.0.1:30799        ESTABLISHED     20364
+ [python.exe]
+  TCP    127.0.0.1:30825        127.0.0.1:30826        ESTABLISHED     22140
+ [bdvpnapp.exe]
+  TCP    127.0.0.1:30826        127.0.0.1:30825        ESTABLISHED     22140
+ [bdvpnapp.exe]
+  TCP    127.0.0.1:30842        127.0.0.1:30843        ESTABLISHED     23200
+ [bdagent.exe]
+  TCP    127.0.0.1:30843        127.0.0.1:30842        ESTABLISHED     23200
+ [bdagent.exe]
+  TCP    127.0.0.1:31337        127.0.0.1:31338        ESTABLISHED     18580
+ [bdwtxag.exe]
+  TCP    127.0.0.1:31338        127.0.0.1:31337        ESTABLISHED     18580
+ [bdwtxag.exe]
+  TCP    127.0.0.1:44440        0.0.0.0:0              LISTENING       6804
+ [FoxitConnectedPDFService.exe]
+  TCP    127.0.0.1:49673        127.0.0.1:49674        ESTABLISHED     4260
+ [bdvpnservice.exe]
+  TCP    127.0.0.1:49674        127.0.0.1:49673        ESTABLISHED     4260
+ [bdvpnservice.exe]
+  TCP    127.0.0.1:65001        0.0.0.0:0              LISTENING       7140
+ [nvcontainer.exe]
+  TCP    172.17.96.1:139        0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    172.26.240.1:139       0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    172.27.128.1:139       0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    192.168.24.1:139       0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    192.168.31.221:139     0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    192.168.31.221:1028    169.150.202.133:443    ESTABLISHED     6608
+ [AnyDesk.exe]
+  TCP    192.168.31.221:1053    66.102.1.188:5228      ESTABLISHED     19692
+ [chrome.exe]
+  TCP    192.168.31.221:1114    23.98.104.215:8883     ESTABLISHED     29992
+ [SupportAssistAgent.exe]
+  TCP    192.168.31.221:1135    104.199.65.124:4070    ESTABLISHED     27696
+ [Spotify.exe]
+  TCP    192.168.31.221:1143    35.186.224.47:443      ESTABLISHED     27696
+ [Spotify.exe]
+  TCP    192.168.31.221:1146    35.186.224.40:443      ESTABLISHED     20740
+ [Spotify.exe]
+  TCP    192.168.31.221:3405    149.154.167.91:443     ESTABLISHED     15276
+ [Telegram.exe]
+  TCP    192.168.31.221:3411    149.154.175.59:443     ESTABLISHED     15276
+ [Telegram.exe]
+  TCP    192.168.31.221:3504    40.84.185.67:9354      ESTABLISHED     35392
+ [ServiceHub.SettingsHost.exe]
+  TCP    192.168.31.221:3962    35.186.224.25:443      ESTABLISHED     20740
+ [Spotify.exe]
+  TCP    192.168.31.221:4215    34.120.68.241:443      ESTABLISHED     21952
+ [bdservicehost.exe]
+  TCP    192.168.31.221:4290    104.17.107.108:443     ESTABLISHED     18580
+ [bdwtxag.exe]
+  TCP    192.168.31.221:4582    140.82.112.26:443      ESTABLISHED     19692
+ [chrome.exe]
+  TCP    192.168.31.221:4604    82.102.152.152:443     CLOSE_WAIT      27568
+ [SearchApp.exe]
+  TCP    192.168.31.221:4605    82.102.152.152:443     CLOSE_WAIT      27568
+ [SearchApp.exe]
+  TCP    192.168.31.221:4607    192.229.221.95:80      CLOSE_WAIT      27568
+ [SearchApp.exe]
+  TCP    192.168.31.221:4608    82.102.152.161:443     CLOSE_WAIT      27568
+ [SearchApp.exe]
+  TCP    192.168.31.221:4611    82.102.152.179:443     CLOSE_WAIT      27568
+ [SearchApp.exe]
+  TCP    192.168.31.221:4612    82.102.152.179:443     CLOSE_WAIT      27568
+ [SearchApp.exe]
+  TCP    192.168.31.221:4630    35.186.224.18:443      ESTABLISHED     20740
+ [Spotify.exe]
+  TCP    192.168.31.221:4634    34.120.68.241:443      ESTABLISHED     18580
+ [bdwtxag.exe]
+  TCP    192.168.31.221:4670    104.17.108.108:443     ESTABLISHED     21952
+ [bdservicehost.exe]
+  TCP    192.168.31.221:4699    20.54.232.160:443      ESTABLISHED     17684
+  CDPUserSvc_46a8de2e
+ [svchost.exe]
+  TCP    192.168.31.221:4713    157.240.252.61:5222    TIME_WAIT       0
+  TCP    192.168.31.221:4714    212.199.140.34:443     ESTABLISHED     33968
+ [WhatsApp.exe]
+  TCP    192.168.31.221:4715    212.199.140.162:443    ESTABLISHED     33968
+ [WhatsApp.exe]
+  TCP    192.168.31.221:4716    31.13.69.60:443        ESTABLISHED     33968
+ [WhatsApp.exe]
+  TCP    192.168.31.221:4717    157.240.252.60:443     ESTABLISHED     33968
+ [WhatsApp.exe]
+  TCP    192.168.31.221:4718    192.168.31.99:53       TIME_WAIT       0
+  TCP    192.168.31.221:4719    192.168.31.99:53       TIME_WAIT       0
+  TCP    192.168.31.221:49472   20.199.120.151:443     ESTABLISHED     7920
+  WpnService
+ [svchost.exe]
+  TCP    192.168.216.1:139      0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    192.168.234.1:139      0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    192.168.255.1:139      0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information
+  TCP    [::]:135               [::]:0                 LISTENING       1712
+  RpcSs
+ [svchost.exe]
+  TCP    [::]:443               [::]:0                 LISTENING       9396
+ [vmware-hostd.exe]
+  TCP    [::]:445               [::]:0                 LISTENING       4
+ Can not obtain ownership information
+  TCP    [::]:2179              [::]:0                 LISTENING       4032
+ [vmms.exe]
+  TCP    [::]:2869              [::]:0                 LISTENING       4
+ Can not obtain ownership information
+  TCP    [::]:7680              [::]:0                 LISTENING       10404
+ Can not obtain ownership information
+  TCP    [::]:13656             [::]:0                 LISTENING       1400
+ Can not obtain ownership information
+  TCP    [::]:49664             [::]:0                 LISTENING       1428
+ [System]
+  TCP    [::]:49665             [::]:0                 LISTENING       1036
+ Can not obtain ownership information
+  TCP    [::]:49666             [::]:0                 LISTENING       2152
+  EventLog
+ [svchost.exe]
+  TCP    [::]:49667             [::]:0                 LISTENING       2160
+  Schedule
+ [svchost.exe]
+  TCP    [::]:49668             [::]:0                 LISTENING       3952
+  SessionEnv
+ [svchost.exe]
+  TCP    [::]:49681             [::]:0                 LISTENING       6316
+ [spoolsv.exe]
+  TCP    [::1]:1025             [::]:0                 LISTENING       6088
+ [jhi_service.exe]
+  TCP    [::1]:8307             [::]:0                 LISTENING       9396
+ [vmware-hostd.exe]
+  UDP    0.0.0.0:53             *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    0.0.0.0:53             *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    0.0.0.0:67             *:*                                    34064
+ [bdntwrk.exe]
+  UDP    0.0.0.0:500            *:*                                    6856
+  IKEEXT
+ [svchost.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:1900           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:3702           *:*                                    6952
+ [dashost.exe]
+  UDP    0.0.0.0:3702           *:*                                    6952
+ [dashost.exe]
+  UDP    0.0.0.0:4500           *:*                                    6856
+  IKEEXT
+ [svchost.exe]
+  UDP    0.0.0.0:5050           *:*                                    13528
+  CDPSvc
+ [svchost.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    3404
+  Dnscache
+ [svchost.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5353           *:*                                    14156
+ [chrome.exe]
+  UDP    0.0.0.0:5355           *:*                                    3404
+  Dnscache
+ [svchost.exe]
+  UDP    0.0.0.0:49376          *:*                                    7140
+ [nvcontainer.exe]
+  UDP    0.0.0.0:50001          *:*                                    6608
+ [AnyDesk.exe]
+  UDP    0.0.0.0:50157          *:*                                    20740
+ [Spotify.exe]
+  UDP    0.0.0.0:50531          *:*                                    21952
+ [bdservicehost.exe]
+  UDP    0.0.0.0:52304          *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    0.0.0.0:55981          *:*                                    20740
+ [Spotify.exe]
+  UDP    0.0.0.0:56621          *:*                                    21952
+ [bdservicehost.exe]
+  UDP    0.0.0.0:57621          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57752          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57753          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57754          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57755          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57756          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57757          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57758          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:57759          *:*                                    27696
+ [Spotify.exe]
+  UDP    0.0.0.0:59680          *:*                                    18580
+ [bdwtxag.exe]
+  UDP    0.0.0.0:59993          *:*                                    18580
+ [bdwtxag.exe]
+  UDP    0.0.0.0:62243          *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    0.0.0.0:62245          *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    0.0.0.0:62808          *:*                                    6952
+ [dashost.exe]
+  UDP    0.0.0.0:64105          *:*                                    20136
+ [bdservicehost.exe]
+  UDP    0.0.0.0:64544          *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    0.0.0.0:65042          *:*                                    21952
+ [bdservicehost.exe]
+  UDP    127.0.0.1:1900         *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    127.0.0.1:10250        *:*                                    6372
+ [NVIDIA Web Helper.exe]
+  UDP    127.0.0.1:49826        *:*                                    5876
+  iphlpsvc
+ [svchost.exe]
+  UDP    127.0.0.1:52299        *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    127.0.0.1:61810        *:*                                    27560
+ [nvcontainer.exe]
+  UDP    172.17.96.1:137        *:*                                    4
+ Can not obtain ownership information
+  UDP    172.17.96.1:138        *:*                                    4
+ Can not obtain ownership information
+  UDP    172.17.96.1:1900       *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    172.17.96.1:2177       *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    172.17.96.1:5353       *:*                                    7140
+ [nvcontainer.exe]
+  UDP    172.17.96.1:52300      *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    172.26.240.1:67        *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    172.26.240.1:68        *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    172.26.240.1:137       *:*                                    4
+ Can not obtain ownership information
+  UDP    172.26.240.1:138       *:*                                    4
+ Can not obtain ownership information
+  UDP    172.26.240.1:1900      *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    172.26.240.1:2177      *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    172.26.240.1:5353      *:*                                    7140
+ [nvcontainer.exe]
+  UDP    172.26.240.1:52292     *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    172.27.128.1:137       *:*                                    4
+ Can not obtain ownership information
+  UDP    172.27.128.1:138       *:*                                    4
+ Can not obtain ownership information
+  UDP    172.27.128.1:1900      *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    172.27.128.1:2177      *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    172.27.128.1:5353      *:*                                    7140
+ [nvcontainer.exe]
+  UDP    172.27.128.1:52293     *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.24.1:137       *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.24.1:138       *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.24.1:1900      *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.24.1:2177      *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    192.168.24.1:5353      *:*                                    7140
+ [nvcontainer.exe]
+  UDP    192.168.24.1:5353      *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    192.168.24.1:52298     *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.31.221:137     *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.31.221:138     *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.31.221:1900    *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.31.221:2177    *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    192.168.31.221:5353    *:*                                    7140
+ [nvcontainer.exe]
+  UDP    192.168.31.221:52294   *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.216.1:137      *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.216.1:138      *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.216.1:1900     *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.216.1:2177     *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    192.168.216.1:5353     *:*                                    7140
+ [nvcontainer.exe]
+  UDP    192.168.216.1:5353     *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    192.168.216.1:52295    *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.234.1:137      *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.234.1:138      *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.234.1:1900     *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.234.1:2177     *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    192.168.234.1:5353     *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    192.168.234.1:5353     *:*                                    7140
+ [nvcontainer.exe]
+  UDP    192.168.234.1:52297    *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.255.1:137      *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.255.1:138      *:*                                    4
+ Can not obtain ownership information
+  UDP    192.168.255.1:1900     *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    192.168.255.1:2177     *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    192.168.255.1:5353     *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    192.168.255.1:5353     *:*                                    7140
+ [nvcontainer.exe]
+  UDP    192.168.255.1:52296    *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [::]:500               *:*                                    6856
+  IKEEXT
+ [svchost.exe]
+  UDP    [::]:3702              *:*                                    6952
+ [dashost.exe]
+  UDP    [::]:3702              *:*                                    6952
+ [dashost.exe]
+  UDP    [::]:4500              *:*                                    6856
+  IKEEXT
+ [svchost.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    3404
+  Dnscache
+ [svchost.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    27696
+ [Spotify.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5353              *:*                                    14156
+ [chrome.exe]
+  UDP    [::]:5355              *:*                                    3404
+  Dnscache
+ [svchost.exe]
+  UDP    [::]:49377             *:*                                    7140
+ [nvcontainer.exe]
+  UDP    [::]:52305             *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    [::]:62244             *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    [::]:62246             *:*                                    4808
+  SharedAccess
+ [svchost.exe]
+  UDP    [::]:62809             *:*                                    6952
+ [dashost.exe]
+  UDP    [::1]:1900             *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [::1]:5353             *:*                                    7340
+ [TeamViewer_Service.exe]
+  UDP    [::1]:5353             *:*                                    7140
+ [nvcontainer.exe]
+  UDP    [::1]:52290            *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::244e:2f1e:2096:62b2%9]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::244e:2f1e:2096:62b2%9]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::244e:2f1e:2096:62b2%9]:52285  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::36de:3306:84b0:6717%21]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::36de:3306:84b0:6717%21]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::36de:3306:84b0:6717%21]:52289  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::8bd5:17a8:5e7d:9a50%52]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::8bd5:17a8:5e7d:9a50%52]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::8bd5:17a8:5e7d:9a50%52]:52183  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::a625:de92:858:a42a%57]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::a625:de92:858:a42a%57]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::a625:de92:858:a42a%57]:52291  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::af17:660e:b87c:eb22%22]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::af17:660e:b87c:eb22%22]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::af17:660e:b87c:eb22%22]:52286  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::d586:c72e:e178:1147%11]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::d586:c72e:e178:1147%11]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::d586:c72e:e178:1147%11]:52287  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::d8df:ceee:28ba:aad%14]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::d8df:ceee:28ba:aad%14]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::d8df:ceee:28ba:aad%14]:52288  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::f5d1:8bf7:c410:e325%64]:1900  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]
+  UDP    [fe80::f5d1:8bf7:c410:e325%64]:2177  *:*                                    28108
+  QWAVE
+ [svchost.exe]
+  UDP    [fe80::f5d1:8bf7:c410:e325%64]:52284  *:*                                    8844
+  SSDPSRV
+ [svchost.exe]

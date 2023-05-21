@@ -76,6 +76,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.out'), 'r', encoding='utf-8') as f:
         generic_netstat_old = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat.out'), 'r', encoding='utf-8') as f:
+        windows_netstat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat-an.out'), 'r', encoding='utf-8') as f:
+        windows_netstat_an = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat-aon.out'), 'r', encoding='utf-8') as f:
+        windows_netstat_aon = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat-aonb.out'), 'r', encoding='utf-8') as f:
+        windows_netstat_aonb = f.read()
+
     # netstat -r
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.out'), 'r', encoding='utf-8') as f:
         centos_7_7_netstat_r = f.read()
@@ -187,6 +199,18 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.json'), 'r', encoding='utf-8') as f:
         generic_netstat_old_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat.json'), 'r', encoding='utf-8') as f:
+        windows_netstat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat-an.json'), 'r', encoding='utf-8') as f:
+        windows_netstat_an_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat-aon.json'), 'r', encoding='utf-8') as f:
+        windows_netstat_aon_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat-aonb.json'), 'r', encoding='utf-8') as f:
+        windows_netstat_aonb_json = json.loads(f.read())
 
     # netsat -r
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-r.json'), 'r', encoding='utf-8') as f:
@@ -449,6 +473,29 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_ib, quiet=True), self.freebsd12_netstat_ib_json)
 
+    def test_netstat_windows(self):
+        """
+        Test 'netstat' on Windows
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.windows_netstat, quiet=True), self.windows_netstat_json)
+
+    def test_netstat_an_windows(self):
+        """
+        Test 'netstat -an' on Windows
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.windows_netstat_an, quiet=True), self.windows_netstat_an_json)
+
+    def test_netstat_aon_windows(self):
+        """
+        Test 'netstat -aon' on Windows
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.windows_netstat_aon, quiet=True), self.windows_netstat_aon_json)
+
+    def test_netstat_aonb_windows(self):
+        """
+        Test 'netstat -aonb' on Windows
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.windows_netstat_aonb, quiet=True), self.windows_netstat_aonb_json)
 
 if __name__ == '__main__':
     unittest.main()
