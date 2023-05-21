@@ -22,7 +22,7 @@ Schema:
     Volume:
     [
         {
-            "slot":                 int,
+            "slot":                 integer,
             "path":                 string,
             "device":               string,
             "mountpoint":           string,
@@ -36,7 +36,7 @@ Schema:
             "block_size":           string,
             "mode":                 string,
             "prf":                  string,
-            "format_version":       int,
+            "format_version":       integer,
             "backup_header":        string
         }
     ]
@@ -150,7 +150,7 @@ def _parse_volume(next_lines: List[str]) -> Optional[Volume]:
     # Parse and return the volume given as a single line (veracrypt -t --list)
     if result:
         matches = result.groupdict()
-        volume: Volume = {
+        volume: Volume = {  # type: ignore
             "slot": int(matches["slot"]),
             "path": matches["path"],
             "device": matches["device"],
@@ -162,7 +162,7 @@ def _parse_volume(next_lines: List[str]) -> Optional[Volume]:
         next_lines.append(next_line)
 
     # Otherwise parse the volume given in multiple lines (veracrypt -t --list -v)
-    volume: Volume = {}
+    volume: Volume = {}  # type: ignore
 
     while next_lines:
         next_line = next_lines.pop()

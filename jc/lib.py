@@ -193,6 +193,7 @@ parsers: List[str] = [
     'uptime',
     'url',
     'ver',
+    'veracrypt',
     'vmstat',
     'vmstat-s',
     'w',
