@@ -1,7 +1,9 @@
 jc changelog
 
-20230510 v1.23.3
+20230521 v1.23.3
 - Add `veracrypt` command parser
+- Enhance `route` command parser to add Windows support
+- Enhnace `netstat` command parser to add Windows support
 - Enhance `ss` command parser to support extended options
 - Fix `certbot` parser to be more robust with different line endings
 - Fix deprecated option is setup.cfg

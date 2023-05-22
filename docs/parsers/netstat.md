@@ -376,6 +376,6 @@ Returns:
     List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
-Compatibility:  linux, darwin, freebsd
+Compatibility:  linux, darwin, freebsd, win32
 
-Version 1.13 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.14 by Kelly Brazil (kellyjonbrazil@gmail.com)
