@@ -76,6 +76,7 @@ parsers: List[str] = [
     'last',
     'ls',
     'ls-s',
+    'lsattr',
     'lsblk',
     'lsmod',
     'lsof',
