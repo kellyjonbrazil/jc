@@ -65,8 +65,8 @@ class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
     description = '`lsattr` command parser'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
+    author = 'Mark Rotner'
+    author_email = 'rotner.mr@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['lsattr']
     tags = ['command']
