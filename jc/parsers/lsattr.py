@@ -57,7 +57,8 @@ Examples:
         }
       ]
 """
-
+from typing import List, Dict
+from jc.jc_types import JSONDictType
 import jc.utils
 
 
@@ -67,7 +68,7 @@ class info():
     description = '`lsattr` command parser'
     author = 'Mark Rotner'
     author_email = 'rotner.mr@gmail.com'
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    compatible = ['linux']
     magic_commands = ['lsattr']
     tags = ['command']
 
@@ -106,7 +107,11 @@ ATTRIBUTES = {
 }
 
 
-def parse(data: str, quiet: bool = False):
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -122,7 +127,7 @@ def parse(data: str, quiet: bool = False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    output = []
+    output: List = []
 
     cleandata = list(filter(None, data.splitlines()))
 
@@ -140,7 +145,7 @@ def parse(data: str, quiet: bool = False):
         if line.startswith(ERROR_PREFIX):
             continue
 
-        line_output = {}
+        line_output: Dict = {}
 
         # attributes file
         # --------------e----- /etc/passwd

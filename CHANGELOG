@@ -1,6 +1,7 @@
 jc changelog
 
 20230521 v1.23.3
+- Add `lsattr` command parser
 - Add `veracrypt` command parser
 - Enhance `route` command parser to add Windows support
 - Enhnace `netstat` command parser to add Windows support
