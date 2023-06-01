@@ -31,6 +31,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.out'), 'r', encoding='utf-8') as f:
         freebsd12_stat = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/stat-missing-data.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_stat_missing_data = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/stat.json'), 'r', encoding='utf-8') as f:
         centos_7_7_stat_json = json.loads(f.read())
@@ -47,6 +50,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat.json'), 'r', encoding='utf-8') as f:
         freebsd12_stat_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/stat-missing-data.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_stat_missing_data_json = json.loads(f.read())
 
     def test_stat_nodata(self):
         """
@@ -83,6 +88,12 @@ class MyTests(unittest.TestCase):
         Test 'stat /foo/*' on FreeBSD12
         """
         self.assertEqual(jc.parsers.stat.parse(self.freebsd12_stat, quiet=True), self.freebsd12_stat_json)
+
+    def test_stat_missing_data(self):
+        """
+        Test 'stat /etc/passwd' with missing data.
+        """
+        self.assertEqual(jc.parsers.stat.parse(self.ubuntu_20_4_stat_missing_data, quiet=True), self.ubuntu_20_4_stat_missing_data_json)
 
 
 if __name__ == '__main__':
