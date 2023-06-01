@@ -46,7 +46,7 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.lsattr.parse(self.ubuntu_20_4_lsattr_R, quiet=True), self.ubuntu_20_4_lsattr_R_json)
 
-    def test_lsattr_sudo_a_ubuntu_18_4(self):
+    def test_lsattr_ubuntu_20_4(self):
         """
         Test 'sudo lsattr' on Ubuntu 20.4
         """
