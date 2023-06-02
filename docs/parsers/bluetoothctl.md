@@ -126,4 +126,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.0 by Jake Ob (iakopap at gmail.com)
+Version 1.1 by Jake Ob (iakopap at gmail.com)

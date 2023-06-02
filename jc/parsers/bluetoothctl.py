@@ -104,12 +104,12 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`bluetoothctl` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
-    compatible = ["linux"]
-    magic_commands = ["bluetoothctl"]
+    compatible = ['linux']
+    magic_commands = ['bluetoothctl']
     tags = ['command']
 
 
@@ -376,12 +376,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
         List of Dictionaries. Raw or processed structured data.
     """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
     result: List = []
 
     if jc.utils.has_data(data):
-        jc.utils.compatibility(__name__, info.compatible, quiet)
-        jc.utils.input_type_check(data)
-
         linedata = data.splitlines()
         linedata.reverse()
 
