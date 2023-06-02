@@ -6,10 +6,10 @@ jc changelog
 - Enhance `route` command parser to add Windows support
 - Enhnace `netstat` command parser to add Windows support
 - Enhance `ss` command parser to support extended options
+- Enhance the compatibility warning message
 - Fix `certbot` command parser to be more robust with different line endings
 - Fix `stat` command parser for older versions that may not contain all fields
 - Fix deprecated option in `setup.cfg`
-- Clarify the compatibility warning message
 
 20230429 v1.23.2
 - Add `bluetoothctl` command parser
