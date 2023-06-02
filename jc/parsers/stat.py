@@ -269,7 +269,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # line #2
-            if line.find('Size:') == 2:
+            if line.startswith('  Size:'):
                 line_list = line.split(maxsplit=7)
                 output_line['size'] = line_list[1]
                 output_line['blocks'] = line_list[3]
@@ -316,7 +316,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             # line #8
-            if line.find('Birth:') == 1:
+            if line.startswith(' Birth:'):
                 line_list = line.split(maxsplit=1)
                 output_line['birth_time'] = line_list[1]
                 continue
@@ -349,7 +349,4 @@ def parse(data, raw=False, quiet=False):
 
             raw_output.append(output_line)
 
-    if raw:
-        return raw_output
-
-    return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
