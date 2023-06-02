@@ -171,7 +171,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -238,112 +238,118 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
 
-    if jc.utils.has_data(data):
+    if not jc.utils.has_data(data):
+        return raw_output
 
-        # linux output
-        if cleandata[0].startswith('  File: '):
-            # stats output contains 8 lines
-            for line in cleandata:
+    # linux output
+    if cleandata[0].startswith('  File: '):
+        output_line = {}
 
-                # line #1
-                if line.find('File:') == 2:
-                    output_line = {}
-                    line_list = line.split(maxsplit=1)
-                    output_line['file'] = line_list[1]
-
-                    # populate link_to field if -> found
-                    if ' -> ' in output_line['file']:
-                        filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                        link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
-                        output_line['file'] = filename
-                        output_line['link_to'] = link
-                    else:
-                        filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                        output_line['file'] = filename
-
-                    continue
-
-                # line #2
-                if line.find('Size:') == 2:
-                    line_list = line.split(maxsplit=7)
-                    output_line['size'] = line_list[1]
-                    output_line['blocks'] = line_list[3]
-                    output_line['io_blocks'] = line_list[6]
-                    output_line['type'] = line_list[7]
-                    continue
-
-                # line #3
-                if line.startswith('Device:'):
-                    line_list = line.split()
-                    output_line['device'] = line_list[1]
-                    output_line['inode'] = line_list[3]
-                    output_line['links'] = line_list[5]
-                    continue
-
-                # line #4
-                if line.startswith('Access: ('):
-                    line = line.replace('(', ' ').replace(')', ' ').replace('/', ' ')
-                    line_list = line.split()
-                    output_line['access'] = line_list[1]
-                    output_line['flags'] = line_list[2]
-                    output_line['uid'] = line_list[4]
-                    output_line['user'] = line_list[5]
-                    output_line['gid'] = line_list[7]
-                    output_line['group'] = line_list[8]
-                    continue
-
-                # line #5
-                if line.startswith('Access: 2'):
-                    line_list = line.split(maxsplit=1)
-                    output_line['access_time'] = line_list[1]
-                    continue
-
-                # line #6
-                if line.startswith('Modify:'):
-                    line_list = line.split(maxsplit=1)
-                    output_line['modify_time'] = line_list[1]
-                    continue
-
-                # line #7
-                if line.startswith('Change:'):
-                    line_list = line.split(maxsplit=1)
-                    output_line['change_time'] = line_list[1]
-                    continue
-
-                # line #8
-                if line.find('Birth:') == 1:
-                    line_list = line.split(maxsplit=1)
-                    output_line['birth_time'] = line_list[1]
-
+        # stats output contains 8 lines
+        for line in cleandata:
+            # line #1
+            if line.find('File:') == 2:
+                if output_line:  # Reached a new file stat info.
                     raw_output.append(output_line)
-                    continue
+                    output_line = {}
 
-        # FreeBSD/OSX output
-        else:
-            for line in cleandata:
-                value = shlex.split(line)
-                output_line = {
-                    'file': ' '.join(value[15:]),
-                    'unix_device': value[0],
-                    'inode': value[1],
-                    'flags': value[2],
-                    'links': value[3],
-                    'user': value[4],
-                    'group': value[5],
-                    'rdev': value[6],
-                    'size': value[7],
-                    'access_time': value[8],
-                    'modify_time': value[9],
-                    'change_time': value[10],
-                    'birth_time': value[11],
-                    'block_size': value[12],
-                    'blocks': value[13],
-                    'unix_flags': value[14]
-                }
+                line_list = line.split(maxsplit=1)
+                output_line['file'] = line_list[1]
 
-                raw_output.append(output_line)
+                # populate link_to field if -> found
+                if ' -> ' in output_line['file']:
+                    filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
+                    link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
+                    output_line['file'] = filename
+                    output_line['link_to'] = link
+                else:
+                    filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
+                    output_line['file'] = filename
+
+                continue
+
+            # line #2
+            if line.find('Size:') == 2:
+                line_list = line.split(maxsplit=7)
+                output_line['size'] = line_list[1]
+                output_line['blocks'] = line_list[3]
+                output_line['io_blocks'] = line_list[6]
+                output_line['type'] = line_list[7]
+                continue
+
+            # line #3
+            if line.startswith('Device:'):
+                line_list = line.split()
+                output_line['device'] = line_list[1]
+                output_line['inode'] = line_list[3]
+                output_line['links'] = line_list[5]
+                continue
+
+            # line #4
+            if line.startswith('Access: ('):
+                line = line.replace('(', ' ').replace(')', ' ').replace('/', ' ')
+                line_list = line.split()
+                output_line['access'] = line_list[1]
+                output_line['flags'] = line_list[2]
+                output_line['uid'] = line_list[4]
+                output_line['user'] = line_list[5]
+                output_line['gid'] = line_list[7]
+                output_line['group'] = line_list[8]
+                continue
+
+            # line #5
+            if line.startswith('Access: 2'):
+                line_list = line.split(maxsplit=1)
+                output_line['access_time'] = line_list[1]
+                continue
+
+            # line #6
+            if line.startswith('Modify:'):
+                line_list = line.split(maxsplit=1)
+                output_line['modify_time'] = line_list[1]
+                continue
+
+            # line #7
+            if line.startswith('Change:'):
+                line_list = line.split(maxsplit=1)
+                output_line['change_time'] = line_list[1]
+                continue
+
+            # line #8
+            if line.find('Birth:') == 1:
+                line_list = line.split(maxsplit=1)
+                output_line['birth_time'] = line_list[1]
+                continue
+
+        if output_line:
+            raw_output.append(output_line)
+
+    # FreeBSD/OSX output
+    else:
+        for line in cleandata:
+            value = shlex.split(line)
+            output_line = {
+                'file': ' '.join(value[15:]),
+                'unix_device': value[0],
+                'inode': value[1],
+                'flags': value[2],
+                'links': value[3],
+                'user': value[4],
+                'group': value[5],
+                'rdev': value[6],
+                'size': value[7],
+                'access_time': value[8],
+                'modify_time': value[9],
+                'change_time': value[10],
+                'birth_time': value[11],
+                'block_size': value[12],
+                'blocks': value[13],
+                'unix_flags': value[14]
+            }
+
+            raw_output.append(output_line)
 
     if raw:
         return raw_output
-    else:
-        return _process(raw_output)
+
+    return _process(raw_output)
