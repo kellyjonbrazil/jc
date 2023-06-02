@@ -1,6 +1,6 @@
 jc changelog
 
-20230521 v1.23.3
+20230602 v1.23.3
 - Add `lsattr` command parser
 - Add `veracrypt` command parser
 - Enhance `route` command parser to add Windows support
@@ -8,7 +8,7 @@ jc changelog
 - Enhance `ss` command parser to support extended options
 - Fix `certbot` command parser to be more robust with different line endings
 - Fix `stat` command parser for older versions that may not contain all fields
-- Fix deprecated option is setup.cfg
+- Fix deprecated option in `setup.cfg`
 - Clarify the compatibility warning message
 
 20230429 v1.23.2
