@@ -3,6 +3,7 @@ jc changelog
 20230602 v1.23.3
 - Add `lsattr` command parser
 - Add `veracrypt` command parser
+- Enhance `dig` command parser to support the +nsid option
 - Enhance `route` command parser to add Windows support
 - Enhnace `netstat` command parser to add Windows support
 - Enhance `ss` command parser to support extended options

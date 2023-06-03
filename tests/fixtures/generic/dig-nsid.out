@@ -1,0 +1,22 @@
+
+; <<>> DiG 9.10.6 <<>> +nsid @dns.google mail.google.com
+; (4 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 22691
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; NSID: 67 70 64 6e 73 2d 73 66 6f ("gpdns-sfo")
+;; QUESTION SECTION:
+;mail.google.com.		IN	A
+
+;; ANSWER SECTION:
+mail.google.com.	300	IN	A	142.250.189.197
+
+;; Query time: 189 msec
+;; SERVER: 2001:4860:4860::8888#53(2001:4860:4860::8888)
+;; WHEN: Sat Jun 03 12:37:43 PDT 2023
+;; MSG SIZE  rcvd: 73
+
