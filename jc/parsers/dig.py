@@ -4,6 +4,7 @@ Options supported:
 - `+noall +answer` options are supported in cases where only the answer
   information is desired.
 - `+axfr` option is supported on its own
+- `+nsid` option is supported
 
 The `when_epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -322,7 +323,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.4'
+    version = '2.5'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -427,6 +428,7 @@ def _parse_flags_line(flagsline):
 def _parse_opt_pseudosection(optline):
     # ;; OPT PSEUDOSECTION:
     # ; EDNS: version: 0, flags:; udp: 4096
+    # ; NSID: 67 70 64 6e 73 2d 73 66 6f ("gpdns-sfo")
     # ; COOKIE: 1cbc06703eaef210
     if optline.startswith('; EDNS:'):
         optline_list = optline.replace(',', ' ').split(';')
@@ -443,10 +445,17 @@ def _parse_opt_pseudosection(optline):
             }
         }
 
-    elif optline.startswith('; COOKIE:'):
+    if optline.startswith('; COOKIE:'):
         return {
             'cookie': optline.split()[2]
         }
+
+    if optline.startswith('; NSID:'):
+        return {
+            'nsid': optline.split('("')[-1].rstrip('")')
+        }
+
+    return {}
 
 
 def _parse_question(question):
