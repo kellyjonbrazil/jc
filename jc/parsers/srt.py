@@ -27,7 +27,7 @@ Schema:
                 "milliseconds": int,
                 "timestamp": string
             },
-            "text": string
+            "content": string
         },
     ]
 Examples:
@@ -61,7 +61,7 @@ Examples:
                 "milliseconds": 376,
                 "timestamp": "00:02:19,376"
             },
-            "text": "Senator, we're making\nour final approach into Coruscant.\n"
+            "content": "Senator, we're making\nour final approach into Coruscant."
         },
         {
             "index": 2,
@@ -79,13 +79,14 @@ Examples:
                 "milliseconds": 609,
                 "timestamp": "00:02:21,609"
             },
-            "text": "Very good, Lieutenant.\n"
+            "content": "Very good, Lieutenant."
         },
         ...
     ]
 """
 
 import jc.utils
+import re
 
 
 class info():
@@ -99,6 +100,63 @@ class info():
 
 
 __version__ = info.version
+
+# Taken from https://github.com/cdown/srt/blob/434d0c1c9d5c26d5c3fb1ce979fc05b478e9253c/srt.py#LL16C1.
+
+# The format: (int)index\n(timestamp)start --> (timestamp)end\n(str)content\n.
+# Example:
+# 1
+# 00:02:16,612 --> 00:02:19,376
+# Senator, we're making our final approach into Coruscant.
+
+# Start & End timestamp format: hours:minutes:seconds,millisecond.
+# "." is not technically valid as a delimiter, but many editors create SRT
+# files with this delimiter for whatever reason. Many editors and players
+# accept it, so we do too.
+RGX_TIMESTAMP_MAGNITUDE_DELIM = r"[,.:，．。：]"
+RGX_POSITIVE_INT = r"[0-9]+"
+RGX_POSITIVE_INT_OPTIONAL = r"[0-9]*"
+RGX_TIMESTAMP = '{field}{separator}{field}{separator}{field}{separator}?{optional_field}'.format(
+    separator=RGX_TIMESTAMP_MAGNITUDE_DELIM,
+    field=RGX_POSITIVE_INT,
+    optional_field=RGX_POSITIVE_INT_OPTIONAL
+)
+RGX_INDEX = r"-?[0-9]+\.?[0-9]*"  # int\float\negative.
+RGX_CONTENT = r".*?"  # Anything(except newline) but lazy.
+RGX_NEWLINE = r"\r?\n"  # Newline(CRLF\LF).
+SRT_REGEX = re.compile(
+    r"\s*(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?(?:{newline}|\Z)({content})"
+    # Many sub editors don't add a blank line to the end, and many editors and
+    # players accept that. We allow it to be missing in input.
+    #
+    # We also allow subs that are missing a double blank newline. This often
+    # happens on subs which were first created as a mixed language subtitle,
+    # for example chs/eng, and then were stripped using naive methods (such as
+    # ed/sed) that don't understand newline preservation rules in SRT files.
+    #
+    # This means that when you are, say, only keeping chs, and the line only
+    # contains english, you end up with not only no content, but also all of
+    # the content lines are stripped instead of retaining a newline.
+    r"(?:{newline}|\Z)(?:{newline}|\Z|(?=(?:{index}\s*{newline}{ts})))"
+    # Some SRT blocks, while this is technically invalid, have blank lines
+    # inside the subtitle content. We look ahead a little to check that the
+    # next lines look like an index and a timestamp as a best-effort
+    # solution to work around these.
+    r"(?=(?:(?:{index}\s*{newline})?{ts}|\Z))".format(
+        index=RGX_INDEX,
+        ts=RGX_TIMESTAMP,
+        content=RGX_CONTENT,
+        newline=RGX_NEWLINE,
+    ),
+    re.DOTALL,
+)
+TIMESTAMP_REGEX = re.compile(
+    '^({field}){separator}({field}){separator}({field}){separator}?({optional_field})$'.format(
+        separator=RGX_TIMESTAMP_MAGNITUDE_DELIM,
+        field=RGX_POSITIVE_INT,
+        optional_field=RGX_POSITIVE_INT_OPTIONAL
+    )
+)
 
 
 def _process(proc_data):
@@ -129,7 +187,8 @@ def _process(proc_data):
                 timestamp = entry[key]
                 for timestamp_key in timestamp:
                     if timestamp_key in timestamp_int_list:
-                        timestamp[timestamp_key] = jc.utils.convert_to_int(timestamp[timestamp_key])
+                        timestamp[timestamp_key] = jc.utils.convert_to_int(
+                            timestamp[timestamp_key])
 
     return proc_data
 
@@ -146,8 +205,7 @@ def parse_timestamp(timestamp: str):
     }
     """
 
-    hours, minutes, seconds_milliseconds = timestamp.split(':')
-    seconds, milliseconds = seconds_milliseconds.split(',')
+    hours, minutes, seconds, milliseconds = TIMESTAMP_REGEX.match(timestamp).groups()
     return {
         "hours": hours,
         "minutes": minutes,
@@ -178,27 +236,15 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
     if not jc.utils.has_data(data):
         return raw_output
 
-    subtitle = {}
-    lines = list(filter(None, data.splitlines()))
-    for line in lines:
-        line = line.strip()
-        if line.isdigit():  # Reached a new subtitle.
-            if subtitle:
-                raw_output.append(subtitle)
-                subtitle = {}
-            subtitle['index'] = line
-            continue
-
-        if '-->' in line:  # Start and end time of the subtitle separated by –> characters.
-            start, end = line.split('-->')
-            subtitle['start'] = parse_timestamp(start.strip())
-            subtitle['end'] = parse_timestamp(end.strip())
-            continue
-
-        subtitle.setdefault('text', '')
-        subtitle['text'] += line + '\n'
-
-    if subtitle:
-        raw_output.append(subtitle)
+    for subtitle in SRT_REGEX.finditer(data):
+        index, start, end, content = subtitle.groups()
+        raw_output.append(
+            {
+                "index": index,
+                "start": parse_timestamp(start),
+                "end": parse_timestamp(end),
+                "content": content.replace("\r\n", "\n")
+            }
+        )
 
     return raw_output if raw else _process(raw_output)

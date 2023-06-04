@@ -11,12 +11,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/srt-attack_of_the_clones.srt'), 'r', encoding='utf-8') as f:
         generic_attack_of_the_clones = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/srt-complex.srt'), 'r', encoding='utf-8') as f:
+        generic_complex = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/srt-attack_of_the_clones_raw.json'), 'r', encoding='utf-8') as f:
         generic_attack_of_the_clones_raw_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/srt-attack_of_the_clones.json'), 'r', encoding='utf-8') as f:
         generic_attack_of_the_clones_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/srt-complex.json'), 'r', encoding='utf-8') as f:
+        generic_complex_json = json.loads(f.read())
 
     def test_srt_nodata(self):
         """
@@ -42,6 +48,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.srt.parse(self.generic_attack_of_the_clones, quiet=True), self.generic_attack_of_the_clones_json)
 
+    def test_srt_complex(self):
+        """
+        Test a complex srt file
+        """
+        self.assertEqual(jc.parsers.srt.parse(self.generic_complex, quiet=True), self.generic_complex_json)
 
 if __name__ == '__main__':
     unittest.main()
