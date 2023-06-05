@@ -161,6 +161,7 @@ parsers: List[str] = [
     'semver',
     'sfdisk',
     'shadow',
+    'srt',
     'ss',
     'ssh-conf',
     'sshd-conf',

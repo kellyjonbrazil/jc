@@ -10,26 +10,28 @@ Usage (module):
     result = jc.parse('srt', srt_file_output)
 
 Schema:
+
     [
-        {
-            "index": int,
-            "start": {
-                "hours": int,
-                "minutes": int,
-                "seconds": int,
-                "milliseconds": int,
-                "timestamp": string
-            },
-            "end": {
-                "hours": int,
-                "minutes": int,
-                "seconds": int,
-                "milliseconds": int,
-                "timestamp": string
-            },
-            "content": string
+      {
+        "index":              int,
+        "start": {
+          "hours":            int,
+          "minutes":          int,
+          "seconds":          int,
+          "milliseconds":     int,
+          "timestamp":        string
         },
+        "end": {
+          "hours":            int,
+          "minutes":          int,
+          "seconds":          int,
+          "milliseconds":     int,
+          "timestamp":        string
+        },
+        "content":            string
+      }
     ]
+
 Examples:
 
     $ cat attack_of_the_clones.srt
@@ -84,9 +86,10 @@ Examples:
         ...
     ]
 """
-
 import jc.utils
 import re
+from typing import List, Dict
+from jc.jc_types import JSONDictType
 
 
 class info():
@@ -101,7 +104,29 @@ class info():
 
 __version__ = info.version
 
-# Taken from https://github.com/cdown/srt/blob/434d0c1c9d5c26d5c3fb1ce979fc05b478e9253c/srt.py#LL16C1.
+# Regex from https://github.com/cdown/srt/blob/434d0c1c9d5c26d5c3fb1ce979fc05b478e9253c/srt.py#LL16C1.
+
+# The MIT License
+
+# Copyright (c) 2014-present Christopher Down
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
 # The format: (int)index\n(timestamp)start --> (timestamp)end\n(str)content\n.
 # Example:
@@ -159,7 +184,7 @@ TIMESTAMP_REGEX = re.compile(
 )
 
 
-def _process(proc_data):
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
@@ -193,7 +218,7 @@ def _process(proc_data):
     return proc_data
 
 
-def parse_timestamp(timestamp: str):
+def parse_timestamp(timestamp: str) -> Dict:
     """
     timestamp: "hours:minutes:seconds,milliseconds" --->
     {
@@ -204,18 +229,24 @@ def parse_timestamp(timestamp: str):
         "timestamp": "hours:minutes:seconds,milliseconds"
     }
     """
+    ts_match = TIMESTAMP_REGEX.match(timestamp)
+    if ts_match:
+        hours, minutes, seconds, milliseconds = ts_match.groups()
+        return {
+            "hours": hours,
+            "minutes": minutes,
+            "seconds": seconds,
+            "milliseconds": milliseconds,
+            "timestamp": timestamp
+        }
+    return {}
 
-    hours, minutes, seconds, milliseconds = TIMESTAMP_REGEX.match(timestamp).groups()
-    return {
-        "hours": hours,
-        "minutes": minutes,
-        "seconds": seconds,
-        "milliseconds": milliseconds,
-        "timestamp": timestamp
-    }
 
-
-def parse(data: str, raw: bool = False, quiet: bool = False):
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -232,7 +263,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output = []
+    raw_output: List[Dict] = []
     if not jc.utils.has_data(data):
         return raw_output
 
