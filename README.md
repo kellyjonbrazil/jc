@@ -291,6 +291,7 @@ option.
 |            `--wc` | `wc` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/wc)             |
 |           `--who` | `who` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/who)            |
 |     `--x509-cert` | X.509 PEM and DER certificate file parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_cert)      |
+|      `--x509-csr` | X.509 PEM and DER certificate request file parser       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_csr)       |
 |           `--xml` | XML file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xml)            |
 |        `--xrandr` | `xrandr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr)         |
 |          `--yaml` | YAML file parser                                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml)           |

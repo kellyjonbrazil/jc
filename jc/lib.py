@@ -199,6 +199,7 @@ parsers: List[str] = [
     'wc',
     'who',
     'x509-cert',
+    'x509-csr',
     'xml',
     'xrandr',
     'yaml',
