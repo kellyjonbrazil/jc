@@ -1,4 +1,9 @@
-"""jc - JSON Convert X.509 Certificate Request format file parser
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.x509_csr"></a>
+
+# jc.parsers.x509\_csr
+
+jc - JSON Convert X.509 Certificate Request format file parser
 
 This parser will convert DER and PEM encoded X.509 certificate request files.
 
@@ -249,69 +254,29 @@ Examples:
         }
       ]
 
-"""
-# import binascii
-# from collections import OrderedDict
-# from datetime import datetime
-from typing import List, Dict, Union
-import jc.utils
-from jc.parsers.asn1crypto import pem, csr
-from jc.parsers.x509_cert import _fix_objects, _process
+<a id="jc.parsers.x509_csr.parse"></a>
 
+### parse
 
-class info():
-    """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = 'X.509 PEM and DER certificate request file parser'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the asn1crypto library at https://github.com/wbond/asn1crypto/releases/tag/1.5.1'
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    tags = ['standard', 'file', 'string', 'binary']
+```python
+def parse(data: Union[str, bytes],
+          raw: bool = False,
+          quiet: bool = False) -> List[Dict]
+```
 
+Main text parsing function
 
-__version__ = info.version
+Parameters:
 
+    data:        (string or bytes) text or binary data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-def parse(
-    data: Union[str, bytes],
-    raw: bool = False,
-    quiet: bool = False
-) -> List[Dict]:
-    """
-    Main text parsing function
+Returns:
 
-    Parameters:
+    List of Dictionaries. Raw or processed structured data.
 
-        data:        (string or bytes) text or binary data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
+### Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-    Returns:
-
-        List of Dictionaries. Raw or processed structured data.
-    """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-
-    raw_output: List = []
-
-    if jc.utils.has_data(data):
-        # convert to bytes, if not already, for PEM detection since that's
-        # what pem.detect() needs. (cli.py will auto-convert to UTF-8 if it can)
-        try:
-            der_bytes = bytes(data, 'utf-8')  # type: ignore
-        except TypeError:
-            der_bytes = data  # type: ignore
-
-        certs = []
-        if pem.detect(der_bytes):
-            for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
-                if type_name == 'CERTIFICATE REQUEST' or type_name == 'NEW CERTIFICATE REQUEST':
-                    certs.append(csr.CertificationRequest.load(der_bytes))
-
-        else:
-            certs.append(csr.CertificationRequest.load(der_bytes))
-
-        raw_output = [_fix_objects(cert.native) for cert in certs]
-
-    return raw_output if raw else _process(raw_output)
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
