@@ -306,7 +306,7 @@ def parse(
         certs = []
         if pem.detect(der_bytes):
             for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
-                if type_name == 'CERTIFICATE REQUEST':
+                if type_name == 'CERTIFICATE REQUEST' or type_name == 'NEW CERTIFICATE REQUEST':
                     certs.append(csr.CertificationRequest.load(der_bytes))
 
         else:
