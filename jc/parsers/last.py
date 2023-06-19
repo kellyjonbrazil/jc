@@ -111,7 +111,7 @@ LOGOUT_IGNORED_EVENTS = ['down', 'crash']
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`last` and `lastb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -226,6 +226,10 @@ def parse(data, raw=False, quiet=False):
         if linedata[0] == 'boot_time':
             linedata.insert(1, '-')
             linedata.insert(1, '~')
+
+        # Fix for last -x (runlevel).
+        if linedata[0] == 'runlevel' and  linedata[1] == '(to':
+            linedata[1] += f' {linedata.pop(2)} {linedata.pop(2)}'
 
         output_line['user'] = linedata[0]
         output_line['tty'] = linedata[1]
