@@ -1,0 +1,6 @@
+PING  (100.68.105.124) 56(84) bytes of data.
+64 bytes from 100.68.105.124 (100.68.105.124): icmp_seq=1 ttl=64 time=0.040 ms
+
+---  ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.040/0.040/0.040/0.000 ms

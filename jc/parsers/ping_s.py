@@ -85,7 +85,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -340,6 +340,8 @@ def _linux_parse(line, s):
 
         if s.ipv4 and line[5] not in string.digits:
             s.hostname = True
+            # fixup for missing hostname
+            line = line[:5] + 'nohost' + line[5:]
         elif s.ipv4 and line[5] in string.digits:
             s.hostname = False
         elif not s.ipv4 and ' (' in line:
