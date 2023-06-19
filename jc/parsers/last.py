@@ -103,6 +103,11 @@ Examples:
 import re
 import jc.utils
 
+DATE_RE = re.compile(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]')
+LAST_F_DATE_RE = re.compile(r'\d\d:\d\d:\d\d \d\d\d\d')
+LOGIN_LOGOUT_EPOCH_RE = re.compile(r'.*\d\d:\d\d:\d\d \d\d\d\d.*')
+LOGOUT_IGNORED_EVENTS = ['down', 'crash']
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -153,11 +158,11 @@ def _process(proc_data):
         if 'logout' in entry and entry['logout'] == 'gone_-_no_logout':
             entry['logout'] = 'gone - no logout'
 
-        if 'login' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*', entry['login']):
+        if 'login' in entry and LOGIN_LOGOUT_EPOCH_RE.match(entry['login']):
             timestamp = jc.utils.timestamp(entry['login'])
             entry['login_epoch'] = timestamp.naive
 
-        if 'logout' in entry and re.match(r'.*\d\d:\d\d:\d\d \d\d\d\d.*', entry['logout']):
+        if 'logout' in entry and LOGIN_LOGOUT_EPOCH_RE.match(entry['logout']):
             timestamp = jc.utils.timestamp(entry['logout'])
             entry['logout_epoch'] = timestamp.naive
 
@@ -194,66 +199,65 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
 
-    if jc.utils.has_data(data):
+    if not jc.utils.has_data(data):
+        return []
 
-        for entry in cleandata:
-            output_line = {}
+    for entry in cleandata:
+        output_line = {}
 
-            if (entry.startswith('wtmp begins ') or
-                entry.startswith('btmp begins ') or
-                entry.startswith('utx.log begins ')):
+        if any(
+            entry.startswith(f'{prefix} begins ')
+            for prefix in ['wtmp', 'btmp', 'utx.log']
+        ):
+            continue
 
-                continue
+        entry = entry.replace('system boot', 'system_boot')
+        entry = entry.replace('boot time', 'boot_time')
+        entry = entry.replace('  still logged in', '- still_logged_in')
+        entry = entry.replace('  gone - no logout', '- gone_-_no_logout')
 
-            entry = entry.replace('system boot', 'system_boot')
-            entry = entry.replace('boot time', 'boot_time')
-            entry = entry.replace('  still logged in', '- still_logged_in')
-            entry = entry.replace('  gone - no logout', '- gone_-_no_logout')
+        linedata = entry.split()
 
-            linedata = entry.split()
-            if re.match(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]', ' '.join(linedata[2:4])):
-                linedata.insert(2, '-')
+        # Adding "-" before the date part.
+        if DATE_RE.match(' '.join(linedata[2:4])):
+            linedata.insert(2, '-')
 
-            # freebsd fix
-            if linedata[0] == 'boot_time':
-                linedata.insert(1, '-')
-                linedata.insert(1, '~')
+        # freebsd fix
+        if linedata[0] == 'boot_time':
+            linedata.insert(1, '-')
+            linedata.insert(1, '~')
 
-            output_line['user'] = linedata[0]
-            output_line['tty'] = linedata[1]
-            output_line['hostname'] = linedata[2]
+        output_line['user'] = linedata[0]
+        output_line['tty'] = linedata[1]
+        output_line['hostname'] = linedata[2]
 
-            # last -F support
-            if re.match(r'\d\d:\d\d:\d\d \d\d\d\d', ' '.join(linedata[6:8])):
-                output_line['login'] = ' '.join(linedata[3:8])
+        # last -F support
+        if LAST_F_DATE_RE.match(' '.join(linedata[6:8])):
+            output_line['login'] = ' '.join(linedata[3:8])
 
-                if len(linedata) > 9 and linedata[9] != 'crash' and linedata[9] != 'down':
+            if len(linedata) > 9:
+                if linedata[9] not in LOGOUT_IGNORED_EVENTS:
                     output_line['logout'] = ' '.join(linedata[9:14])
-
-                if len(linedata) > 9 and (linedata[9] == 'crash' or linedata[9] == 'down'):
+                else:
                     output_line['logout'] = linedata[9]
                     # add more items to the list to line up duration
-                    linedata.insert(10, '-')
-                    linedata.insert(10, '-')
-                    linedata.insert(10, '-')
-                    linedata.insert(10, '-')
+                    for _ in range(4):
+                        linedata.insert(10, '-')
 
-                if len(linedata) > 14:
-                    output_line['duration'] = linedata[14].replace('(', '').replace(')', '')
+            if len(linedata) > 14:
+                output_line['duration'] = linedata[14].replace('(', '').replace(')', '')
+        else: # normal last support
+            output_line['login'] = ' '.join(linedata[3:7])
 
-            # normal last support
-            else:
-                output_line['login'] = ' '.join(linedata[3:7])
+            if len(linedata) > 8:
+                output_line['logout'] = linedata[8]
 
-                if len(linedata) > 8:
-                    output_line['logout'] = linedata[8]
+            if len(linedata) > 9:
+                output_line['duration'] = linedata[9].replace('(', '').replace(')', '')
 
-                if len(linedata) > 9:
-                    output_line['duration'] = linedata[9].replace('(', '').replace(')', '')
-
-            raw_output.append(output_line)
+        raw_output.append(output_line)
 
     if raw:
         return raw_output
-    else:
-        return _process(raw_output)
+
+    return _process(raw_output)
