@@ -1,0 +1,19 @@
+1
+00:02:16,612 --> 00:02:19,376
+--> --> --> -->
+
+2
+00:02:19.482 --> 00:02:21.609
+This subtitle has . as a delimiter in the timestamp.
+
+3
+00:03:13,336 --> 00:03:15,167
+4
+
+4
+00:03:18,608 --> 00:03:20,371
+The previous subtitle has a number.
+
+5
+00:03:20,476 --> 00:03:22,671
+This is a valid subtitle.
