@@ -1,11 +1,12 @@
 jc changelog
 
-20230606 v1.23.3
+20230619 v1.23.3
 - Add `lsattr` command parser
 - Add `srt` file parser
 - Add `veracrypt` command parser
 - Add X509 Certificate Request file parser
-- Enhance `dig` command parser to support the +nsid option
+- Enhance `dig` command parser to support the `+nsid` option
+- Enhance `last` and `lastb` command parser to support the `-x` option
 - Enhance `route` command parser to add Windows support
 - Enhnace `netstat` command parser to add Windows support
 - Enhance `ss` command parser to support extended options
