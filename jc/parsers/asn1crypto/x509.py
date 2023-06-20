@@ -256,8 +256,8 @@ class EmailAddress(IA5String):
                 try:
                     self._unicode = mailbox.decode('cp1252') + '@' + hostname.decode('idna')
                 except UnicodeDecodeError:
-                    ascii_mailbox = str(mailbox)[2:-1]
-                    ascii_hostname = str(hostname)[2:-1]
+                    ascii_mailbox = mailbox.decode('ascii', errors='backslashreplace')
+                    ascii_hostname = hostname.decode('ascii', errors='backslashreplace')
                     print(f'Invalid email address found: {ascii_mailbox}@{ascii_hostname}', file=sys.stderr)
                     self._unicode = ascii_mailbox + '@' + ascii_hostname
         return self._unicode
