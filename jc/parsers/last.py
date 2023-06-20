@@ -143,9 +143,6 @@ def _process(proc_data):
         if 'tty' in entry and entry['tty'] == '~':
             entry['tty'] = None
 
-        if 'tty' in entry and entry['tty'] == 'system_boot':
-            entry['tty'] = 'system boot'
-
         if 'hostname' in entry and entry['hostname'] == '-':
             entry['hostname'] = None
 
@@ -211,7 +208,6 @@ def parse(data, raw=False, quiet=False):
         ):
             continue
 
-        entry = entry.replace('system boot', 'system_boot')
         entry = entry.replace('boot time', 'boot_time')
         entry = entry.replace('  still logged in', '- still_logged_in')
         entry = entry.replace('  gone - no logout', '- gone_-_no_logout')
@@ -227,11 +223,14 @@ def parse(data, raw=False, quiet=False):
             linedata.insert(1, '-')
             linedata.insert(1, '~')
 
-        # Fix for last -x (runlevel).
-        if linedata[0] == 'runlevel' and  linedata[1] == '(to':
-            linedata[1] += f' {linedata.pop(2)} {linedata.pop(2)}'
-
         output_line['user'] = linedata[0]
+
+        # Fix for last -x (runlevel).
+        if output_line['user'] == 'runlevel' and  linedata[1] == '(to':
+            linedata[1] += f' {linedata.pop(2)} {linedata.pop(2)}'
+        elif output_line['user'] in ['reboot', 'shutdown'] and linedata[1] == 'system':  # system down\system boot
+            linedata[1] += f' {linedata.pop(2)}'
+
         output_line['tty'] = linedata[1]
         output_line['hostname'] = linedata[2]
 
