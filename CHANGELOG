@@ -1,6 +1,6 @@
 jc changelog
 
-20230619 v1.23.3
+20230621 v1.23.3
 - Add `lsattr` command parser
 - Add `srt` file parser
 - Add `veracrypt` command parser
@@ -12,6 +12,7 @@ jc changelog
 - Enhnace `netstat` command parser to add Windows support
 - Enhance `ss` command parser to support extended options
 - Enhance the compatibility warning message
+- Fix `bluetoothctl` command parser for some mouse devices
 - Fix `certbot` command parser to be more robust with different line endings
 - Fix `ping` command parsers for output with missing hostname
 - Fix `stat` command parser for older versions that may not contain all fields
