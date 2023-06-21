@@ -259,7 +259,9 @@ class EmailAddress(IA5String):
                     ascii_mailbox = mailbox.decode('ascii', errors='backslashreplace')
                     ascii_hostname = hostname.decode('ascii', errors='backslashreplace')
                     from jc.utils import warning_message
-                    warning_message([f'Invalid email address found: {ascii_mailbox}@{ascii_hostname}'])
+                    import jc.parsers.asn1crypto.jc_global as jc_global
+                    if not jc_global.quiet:
+                        warning_message([f'Invalid email address found: {ascii_mailbox}@{ascii_hostname}'])
                     self._unicode = ascii_mailbox + '@' + ascii_hostname
         return self._unicode
 

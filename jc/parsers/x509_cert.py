@@ -408,7 +408,7 @@ from collections import OrderedDict
 from datetime import datetime
 from typing import List, Dict, Union
 import jc.utils
-from jc.parsers.asn1crypto import pem, x509
+from jc.parsers.asn1crypto import pem, x509, jc_global
 
 
 class info():
@@ -555,6 +555,7 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc_global.quiet = quiet  # to inject quiet setting into asn1crypto library
 
     raw_output: List = []
 

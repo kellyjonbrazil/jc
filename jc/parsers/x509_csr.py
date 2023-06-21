@@ -255,7 +255,7 @@ Examples:
 # from datetime import datetime
 from typing import List, Dict, Union
 import jc.utils
-from jc.parsers.asn1crypto import pem, csr
+from jc.parsers.asn1crypto import pem, csr, jc_global
 from jc.parsers.x509_cert import _fix_objects, _process
 
 
@@ -292,6 +292,7 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc_global.quiet = quiet  # to inject quiet setting into asn1crypto library
 
     raw_output: List = []
 
