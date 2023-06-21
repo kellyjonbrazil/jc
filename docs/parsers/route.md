@@ -22,6 +22,13 @@ Schema:
 
     [
       {
+        "interfaces": [
+          {
+            "id": string,
+            "mac": string,
+            "name": string,
+          }
+        ]
         "destination":        string,
         "gateway":            string,
         "genmask":            string,
@@ -129,6 +136,6 @@ Returns:
     List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
-Compatibility:  linux
+Compatibility:  linux, win32
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

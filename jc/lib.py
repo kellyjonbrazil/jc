@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.23.2'
+__version__ = '1.23.3'
 
 parsers: List[str] = [
     'acpi',
@@ -76,6 +76,7 @@ parsers: List[str] = [
     'last',
     'ls',
     'ls-s',
+    'lsattr',
     'lsblk',
     'lsmod',
     'lsof',
@@ -160,6 +161,7 @@ parsers: List[str] = [
     'semver',
     'sfdisk',
     'shadow',
+    'srt',
     'ss',
     'ssh-conf',
     'sshd-conf',
@@ -193,12 +195,14 @@ parsers: List[str] = [
     'uptime',
     'url',
     'ver',
+    'veracrypt',
     'vmstat',
     'vmstat-s',
     'w',
     'wc',
     'who',
     'x509-cert',
+    'x509-csr',
     'xml',
     'xrandr',
     'yaml',

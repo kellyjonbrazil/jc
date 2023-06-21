@@ -4551,6 +4551,57 @@ cat entrust.pem | jc --x509-cert -p
   }
 ]
 ```
+### X.509 PEM and DER certificate request files
+```bash
+cat myserver.csr | jc --x509-csr -p
+```
+```json
+[
+  {
+    "certification_request_info": {
+      "version": "v1",
+      "subject": {
+        "common_name": "myserver.for.example"
+      },
+      "subject_pk_info": {
+        "algorithm": {
+          "algorithm": "ec",
+          "parameters": "secp256r1"
+        },
+        "public_key": "04:40:33:c0:91:8f:e9:46:ea:d0:dc:d0:f9:63:2c:a4:35:1f:0f:54:c8:a9:9b:e3:9e:d4:f3:64:b8:60:cc:7f:39:75:dd:a7:61:31:02:7c:9e:89:c6:db:45:15:f2:5f:b0:65:29:0b:42:d2:6e:c2:ea:a6:23:bd:fc:65:e5:7d:4e"
+      },
+      "attributes": [
+        {
+          "type": "extension_request",
+          "values": [
+            [
+              {
+                "extn_id": "extended_key_usage",
+                "critical": false,
+                "extn_value": [
+                  "server_auth"
+                ]
+              },
+              {
+                "extn_id": "subject_alt_name",
+                "critical": false,
+                "extn_value": [
+                  "myserver.for.example"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "signature_algorithm": {
+      "algorithm": "sha384_ecdsa",
+      "parameters": null
+    },
+    "signature": "30:45:02:20:77:ac:5b:51:bf:c5:f5:43:02:52:ae:66:8a:fe:95:98:98:98:a9:45:34:31:08:ff:2c:cc:92:d9:1c:70:28:74:02:21:00:97:79:7b:e7:45:18:76:cf:d7:3b:79:34:56:d2:69:b5:73:41:9b:8a:b7:ad:ec:80:23:c1:2f:64:da:e5:28:19"
+  }
+]
+```
 ### XML files
 ```bash
 cat cd_catalog.xml

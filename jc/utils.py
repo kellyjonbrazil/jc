@@ -151,8 +151,9 @@ def compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> 
         mod = mod_name.split('.')[-1]
         compat_list = ', '.join(compatible)
         warning_message([
-            f'{mod} parser is not compatible with your OS ({sys.platform}).',
-            f'Compatible platforms: {compat_list}'
+            f'`{mod}` command output from this OS ({sys.platform}) is not supported.',
+            f'`{mod}` command output from the following platforms is supported: {compat_list}',
+            'Disregard this warning if you are processing output that came from a supported platform. (Use the -q option to suppress this warning)'
         ])
 
 

@@ -5,10 +5,12 @@
 
 > Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API](https://github.com/kellyjonbrazil/jc-restapi)
 
-> JC is [now available](https://galaxy.ansible.com/community/general) as an
+> `jc` is [now available](https://galaxy.ansible.com/community/general) as an
 Ansible filter plugin in the `community.general` collection. See this
 [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 for an example.
+
+> Looking for something like `jc` but lower-level? Check out [regex2json](https://gitlab.com/tozd/regex2json).
 
 # JC
 JSON Convert
@@ -217,6 +219,7 @@ option.
 |          `--last` | `last` and `lastb` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/last)           |
 |            `--ls` | `ls` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls)             |
 |          `--ls-s` | `ls` command streaming parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s)           |
+|        `--lsattr` | `lsattr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsattr)         |
 |         `--lsblk` | `lsblk` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk)          |
 |         `--lsmod` | `lsmod` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod)          |
 |          `--lsof` | `lsof` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof)           |
@@ -252,6 +255,7 @@ option.
 |        `--semver` | Semantic Version string parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/semver)         |
 |        `--sfdisk` | `sfdisk` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sfdisk)         |
 |        `--shadow` | `/etc/shadow` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/shadow)         |
+|           `--srt` | SRT file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/srt)            |
 |            `--ss` | `ss` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ss)             |
 |      `--ssh-conf` | `ssh` config file and `ssh -G` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ssh_conf)       |
 |     `--sshd-conf` | `sshd` config file and `sshd -T` command parser         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sshd_conf)      |
@@ -285,12 +289,14 @@ option.
 |        `--uptime` | `uptime` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime)         |
 |           `--url` | URL string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/url)            |
 |           `--ver` | Version string parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ver)            |
+|     `--veracrypt` | `veracrypt` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/veracrypt)      |
 |        `--vmstat` | `vmstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat)         |
 |      `--vmstat-s` | `vmstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s)       |
 |             `--w` | `w` command parser                                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/w)              |
 |            `--wc` | `wc` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/wc)             |
 |           `--who` | `who` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/who)            |
 |     `--x509-cert` | X.509 PEM and DER certificate file parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_cert)      |
+|      `--x509-csr` | X.509 PEM and DER certificate request file parser       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_csr)       |
 |           `--xml` | XML file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xml)            |
 |        `--xrandr` | `xrandr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr)         |
 |          `--yaml` | YAML file parser                                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/yaml)           |

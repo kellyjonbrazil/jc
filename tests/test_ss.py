@@ -15,6 +15,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ss-sudo-a.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ss_sudo_a = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ss-sudo-tulpen.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ss_sudo_tulpen = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ss_sudo_a_json = json.loads(f.read())
@@ -22,6 +25,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ss_sudo_a_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ss-sudo-tulpen.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_ss_sudo_tulpen_json = json.loads(f.read())
 
     def test_ss_nodata(self):
         """
@@ -41,6 +46,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ss.parse(self.ubuntu_18_4_ss_sudo_a, quiet=True), self.ubuntu_18_4_ss_sudo_a_json)
 
+    def test_ss_sudo_tulpen_ubuntu_18_4(self):
+        """
+        Test 'sudo ss -tulpen' on Ubuntu 18.4
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ubuntu_18_4_ss_sudo_tulpen, quiet=True), self.ubuntu_18_4_ss_sudo_tulpen_json)
 
 if __name__ == '__main__':
     unittest.main()

@@ -9,6 +9,7 @@ Options supported:
 - `+noall +answer` options are supported in cases where only the answer
   information is desired.
 - `+axfr` option is supported on its own
+- `+nsid` option is supported
 
 The `when_epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -345,4 +346,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
-Version 2.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

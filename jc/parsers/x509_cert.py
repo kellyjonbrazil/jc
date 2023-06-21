@@ -408,12 +408,12 @@ from collections import OrderedDict
 from datetime import datetime
 from typing import List, Dict, Union
 import jc.utils
-from jc.parsers.asn1crypto import pem, x509
+from jc.parsers.asn1crypto import pem, x509, jc_global
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -462,6 +462,9 @@ def _fix_objects(obj):
     Recursively traverse the nested dictionary or list and convert objects
     into JSON serializable types.
     """
+    if isinstance(obj, tuple):
+        obj = list(obj)
+
     if isinstance(obj, set):
         obj = sorted(list(obj))
 
@@ -500,6 +503,10 @@ def _fix_objects(obj):
                 v = _b2a(v)
                 obj.update({k: v})
                 continue
+
+            if isinstance(v, tuple):
+                v = list(v)
+                obj.update({k: v})
 
             if isinstance(v, set):
                 v = sorted(list(v))
@@ -548,6 +555,7 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc_global.quiet = quiet  # to inject quiet setting into asn1crypto library
 
     raw_output: List = []
 

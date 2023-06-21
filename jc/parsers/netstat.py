@@ -355,17 +355,18 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`netstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    compatible = ['linux', 'darwin', 'freebsd']
+    compatible = ['linux', 'darwin', 'freebsd', 'win32']
     magic_commands = ['netstat']
     tags = ['command']
 
 
 __version__ = info.version
 
+WINDOWS_NETSTAT_HEADER = "Active Connections"
 
 def _process(proc_data):
     """
@@ -450,9 +451,10 @@ def parse(data, raw=False, quiet=False):
 
             import jc.parsers.netstat_freebsd_osx
             raw_output = jc.parsers.netstat_freebsd_osx.parse(cleandata)
-
-        # use linux parser
-        else:
+        elif cleandata[0] == WINDOWS_NETSTAT_HEADER:  # use windows parser.
+            import jc.parsers.netstat_windows
+            raw_output = jc.parsers.netstat_windows.parse(cleandata)
+        else:  # use linux parser.
             import jc.parsers.netstat_linux
             raw_output = jc.parsers.netstat_linux.parse(cleandata)
 

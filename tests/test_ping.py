@@ -50,6 +50,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.out'), 'r', encoding='utf-8') as f:
         centos_7_7_ping_ip_O_unparsedlines = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-missing-hostname.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_missing_hostname = f.read()
+
     # ubuntu
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ping_ip_O = f.read()
@@ -250,6 +253,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-ip-O-unparsedlines.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ping_ip_O_unparsedlines_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-missing-hostname.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_ping_missing_hostname_json = json.loads(f.read())
 
     # ubunutu
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.json'), 'r', encoding='utf-8') as f:
@@ -800,6 +806,12 @@ class MyTests(unittest.TestCase):
         Test 'ping <hostname>' on alpine linux
         """
         self.assertEqual(jc.parsers.ping.parse(self.alpine_linux_3_13_ping_hostname, quiet=True), self.alpine_linux_3_13_ping_hostname_json)
+
+    def test_ping_missing_hostname(self):
+        """
+        Test 'ping' with missing hostname on linux
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_missing_hostname, quiet=True), self.centos_7_7_ping_missing_hostname_json)
 
 
 if __name__ == '__main__':

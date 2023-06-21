@@ -52,6 +52,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.out'), 'r', encoding='utf-8') as f:
         centos_7_7_last_wF = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wixF.out'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_wixF = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last.json'), 'r', encoding='utf-8') as f:
         centos_7_7_last_json = json.loads(f.read())
@@ -88,6 +91,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wF.json'), 'r', encoding='utf-8') as f:
         centos_7_7_last_wF_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/last-wixF.json'), 'r', encoding='utf-8') as f:
+        centos_7_7_last_wixF_json = json.loads(f.read())
 
 
     def test_last_nodata(self):
@@ -167,6 +173,12 @@ class MyTests(unittest.TestCase):
         Test 'last -wF' on Centos 7.7
         """
         self.assertEqual(jc.parsers.last.parse(self.centos_7_7_last_wF, quiet=True), self.centos_7_7_last_wF_json)
+
+    def test_last_wixF_centos_7_7(self):
+        """
+        Test 'last -wixF' on Centos 7.7
+        """
+        self.assertEqual(jc.parsers.last.parse(self.centos_7_7_last_wixF, quiet=True), self.centos_7_7_last_wixF_json)
 
 
 if __name__ == '__main__':
