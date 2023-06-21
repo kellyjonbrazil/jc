@@ -252,13 +252,14 @@ class EmailAddress(IA5String):
             else:
                 mailbox, hostname = contents.rsplit(b'@', 1)
 
-                # fix to allow incorrectly encoded email addresses to fail gracefully
+                # fix to allow incorrectly encoded email addresses to succeed with warning
                 try:
                     self._unicode = mailbox.decode('cp1252') + '@' + hostname.decode('idna')
                 except UnicodeDecodeError:
                     ascii_mailbox = mailbox.decode('ascii', errors='backslashreplace')
                     ascii_hostname = hostname.decode('ascii', errors='backslashreplace')
-                    print(f'Invalid email address found: {ascii_mailbox}@{ascii_hostname}', file=sys.stderr)
+                    from jc.utils import warning_message
+                    warning_message([f'Invalid email address found: {ascii_mailbox}@{ascii_hostname}'])
                     self._unicode = ascii_mailbox + '@' + ascii_hostname
         return self._unicode
 
