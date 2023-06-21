@@ -36,6 +36,7 @@ a controller and a device but there might be fields corresponding to one entity.
             "name":                 string,
             "is_default":           boolean,
             "is_public":            boolean,
+            "is_random":            boolean,
             "address":              string,
             "alias":                string,
             "class":                string,
@@ -54,8 +55,10 @@ a controller and a device but there might be fields corresponding to one entity.
         {
             "name":                 string,
             "is_public":            boolean,
+            "is_random":            boolean,
             "address":              string,
             "alias":                string,
+            "appearance":           string,
             "class":                string,
             "icon":                 string,
             "paired":               string,
@@ -66,7 +69,8 @@ a controller and a device but there might be fields corresponding to one entity.
             "legacy_pairing":       string,
             "rssi":                 int,
             "txpower":              int,
-            "uuids":                array
+            "uuids":                array,
+            "modalias":             string
         }
     ]
 
