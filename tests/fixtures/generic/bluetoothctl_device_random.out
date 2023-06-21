@@ -1,0 +1,18 @@
+Device DF:1C:C3:B4:1A:1F (random)
+	Name: M585/M590
+	Alias: M585/M590
+	Appearance: 0x03c2
+	Icon: input-mouse
+	Paired: yes
+	Bonded: yes
+	Trusted: no
+	Blocked: no
+	Connected: no
+	LegacyPairing: no
+	UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+	UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)
+	UUID: Battery Service           (0000180f-0000-1000-8000-00805f9b34fb)
+	UUID: Human Interface Device    (00001812-0000-1000-8000-00805f9b34fb)
+	UUID: Vendor specific           (00010000-0000-1000-8000-011f2000046d)
+	Modalias: usb:v046DpB01Bd0011
