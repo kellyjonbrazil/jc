@@ -31,6 +31,7 @@ a controller and a device but there might be fields corresponding to one entity.
             "name":                 string,
             "is_default":           boolean,
             "is_public":            boolean,
+            "is_random":            boolean,
             "address":              string,
             "alias":                string,
             "class":                string,
@@ -49,8 +50,10 @@ a controller and a device but there might be fields corresponding to one entity.
         {
             "name":                 string,
             "is_public":            boolean,
+            "is_random":            boolean,
             "address":              string,
             "alias":                string,
+            "appearance":           string,
             "class":                string,
             "icon":                 string,
             "paired":               string,
@@ -61,7 +64,8 @@ a controller and a device but there might be fields corresponding to one entity.
             "legacy_pairing":       string,
             "rssi":                 int,
             "txpower":              int,
-            "uuids":                array
+            "uuids":                array,
+            "modalias":             string
         }
     ]
 
@@ -124,6 +128,7 @@ try:
             "name": str,
             "is_default": bool,
             "is_public": bool,
+            "is_random": bool,
             "address": str,
             "alias": str,
             "class": str,
@@ -141,8 +146,10 @@ try:
         {
             "name": str,
             "is_public": bool,
+            "is_random": bool,
             "address": str,
             "alias": str,
+            "appearance": str,
             "class": str,
             "icon": str,
             "paired": str,
@@ -154,6 +161,7 @@ try:
             "rssi": int,
             "txpower": int,
             "uuids": List[str],
+            "modalias": str
         },
     )
 except ImportError:
@@ -195,6 +203,7 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
             "name": '',
             "is_default": False,
             "is_public": False,
+            "is_random": False,
             "address": matches["address"],
             "alias": '',
             "class": '',
@@ -210,10 +219,12 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
     if name.endswith("[default]"):
         controller["is_default"] = True
         name = name.replace("[default]", "")
-
-    if name.endswith("(public)"):
+    elif name.endswith("(public)"):
         controller["is_public"] = True
         name = name.replace("(public)", "")
+    elif name.endswith("(random)"):
+        controller["is_random"] = True
+        name = name.replace("(random)", "")
 
     controller["name"] = name.strip()
 
@@ -257,6 +268,7 @@ _device_head_pattern = r"Device (?P<address>([0-9A-F]{2}:){5}[0-9A-F]{2}) (?P<na
 _device_line_pattern = (
     r"(\s*Name:\s*(?P<name>.+)"
     + r"|\s*Alias:\s*(?P<alias>.+)"
+    + r"|\s*Appearance:\s*(?P<appearance>.+)"
     + r"|\s*Class:\s*(?P<class>.+)"
     + r"|\s*Icon:\s*(?P<icon>.+)"
     + r"|\s*Paired:\s*(?P<paired>.+)"
@@ -290,8 +302,10 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
     device: Device = {
         "name": '',
         "is_public": False,
+        "is_random": False,
         "address": matches["address"],
         "alias": '',
+        "appearance": '',
         "class": '',
         "icon": '',
         "paired": '',
@@ -303,11 +317,15 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
         "rssi": 0,
         "txpower": 0,
         "uuids": [],
+        "modalias": ''
     }
 
     if name.endswith("(public)"):
         device["is_public"] = True
         name = name.replace("(public)", "")
+    elif name.endswith("(random)"):
+        device["is_random"] = True
+        name = name.replace("(random)", "")
 
     device["name"] = name.strip()
 
@@ -325,6 +343,8 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
             device["name"] = matches["name"]
         elif matches["alias"]:
             device["alias"] = matches["alias"]
+        elif matches["appearance"]:
+            device["appearance"] = matches["appearance"]
         elif matches["class"]:
             device["class"] = matches["class"]
         elif matches["icon"]:
@@ -359,6 +379,8 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
             if not "uuids" in device:
                 device["uuids"] = []
             device["uuids"].append(matches["uuid"])
+        elif matches["modalias"]:
+            device["modalias"] = matches["modalias"]
 
     return device
 
