@@ -26,7 +26,7 @@ class MyTests(unittest.TestCase):
 
     def test_ip_route_nodata(self):
         """
-        Test 'ip_route' with no data
+        Test  'ip_route' with no data
         """
         self.assertEqual(jc.parsers.ip_route.parse('', quiet=True), [])
 
