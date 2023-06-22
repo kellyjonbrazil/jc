@@ -192,6 +192,7 @@ def convert_to_int(value: object) -> Optional[int]:
     Returns:
 
         integer/None   Integer if successful conversion, otherwise None
+        :rtype: object
     """
     if isinstance(value, str):
         str_val = re.sub(r'[^0-9\-\.]', '', value)

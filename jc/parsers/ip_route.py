@@ -2,16 +2,16 @@
 
 Usage (cli):
 
-    $ ip route | jc --ip_route
+    $ ip route | jc --ip-route
 
 or
 
-    $ jc ip_route
+    $ jc ip-route
 
 Usage (module):
 
     import jc
-    result = jc.parse('ip route', ip_route_command_output)
+    result = jc.parse('ip route', ip-route_command_output)
 
 Schema:
 
@@ -20,7 +20,7 @@ Schema:
         "ip":        string,
         "via":       string,
         "dev":       string,
-        "metric":    string,
+        "metric":    int,
         "proto":     string,
         "scope":     string,
         "src":       string,
@@ -31,7 +31,7 @@ Schema:
 
 Examples:
 
-    $ ip route  | jc --ip_route
+    $ ip route  | jc --ip-route
     [
       {
         "ip": "10.0.2.0/24",
@@ -46,6 +46,9 @@ Examples:
 
 
 """
+from typing import Dict
+
+import jc.utils
 
 
 class info:
@@ -63,8 +66,6 @@ __version__ = info.version
 
 
 def parse(data, raw=False, quiet=False):
-    if data == '':
-        return []
     """
     Main text parsing function
 
@@ -88,47 +89,49 @@ def parse(data, raw=False, quiet=False):
     for line in lines:
         temp = line.split(" ")
         for word in temp:
-            match word:
-                case 'via':
-                    y = {'via': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'dev':
-                    y = {'dev': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'metric':
+            if word == 'via':
+                y = {'via': temp[place + 1]}
+                place += 1
+                structure.update(y)
+            elif word == 'dev':
+                y = {'dev': temp[place + 1]}
+                place += 1
+                structure.update(y)
+            elif word == 'metric':
+                if raw:
                     y = {'metric': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'proto':
-                    y = {'proto': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'scope':
-                    y = {'scope': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'src':
-                    y = {'src': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'status':
-                    y = {'status': temp[place + 1]}
-                    place += 1
-                    structure.update(y)
-                case 'default':
-                    y = {'ip': 'default'}
-                    place += 1
-                    structure.update(y)
-                case 'linkdown':
-                    y = {'status': 'linkdown'}
-                    place += 1
-                    structure.update(y)
-                case _:
-                    y = {'ip': temp[0]}
-                    place += 1
-                    structure.update(y)
+                else:
+                    y = {'metric': jc.utils.convert_to_int(temp[place+1])}
+                place += 1
+                structure.update(y)
+            elif word == 'proto':
+                y = {'proto': temp[place + 1]}
+                place += 1
+                structure.update(y)
+            elif word == 'scope':
+                y = {'scope': temp[place + 1]}
+                place += 1
+                structure.update(y)
+            elif word == 'src':
+                y = {'src': temp[place + 1]}
+                place += 1
+                structure.update(y)
+            elif word == 'status':
+                y = {'status': temp[place + 1]}
+                place += 1
+                structure.update(y)
+            elif word == 'default':
+                y = {'ip': 'default'}
+                place += 1
+                structure.update(y)
+            elif word == 'linkdown':
+                y = {'status': 'linkdown'}
+                place += 1
+                structure.update(y)
+            else:
+                y = {'ip': temp[0]}
+                place += 1
+                structure.update(y)
         if y.get("ip") != "":
             items.append(structure)
         structure = {}
@@ -136,7 +139,11 @@ def parse(data, raw=False, quiet=False):
         index += 1
         inc += 1
 
-    if raw:
-        return raw_data
-    else:
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
+    if not jc.utils.has_data(data):
+        return []
+
+    elif jc.utils.has_data(data):
         return items
