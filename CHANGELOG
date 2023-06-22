@@ -1,5 +1,8 @@
 jc changelog
 
+20230621 v1.23.4
+- Fix `certbot` command parser to be more robust with different line endings
+
 20230621 v1.23.3
 - Add `lsattr` command parser
 - Add `srt` file parser
