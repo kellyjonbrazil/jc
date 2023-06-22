@@ -78,7 +78,7 @@ def parse(data, raw=False, quiet=False):
     """
     structure = {}
     items = []
-    lines = data.split("\n")
+    lines = data.splitlines()
     index = 0
     place = 0
     inc = 0
