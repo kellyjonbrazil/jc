@@ -1,0 +1,8 @@
+.
+./
+./jc
+./jc/tests
+./jc/tests/test_find.py
+./jc/tests/test_history.py
+./jc/tests/test_hosts.py
+./jc/anotherdirectory
