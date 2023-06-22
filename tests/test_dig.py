@@ -85,6 +85,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.out'), 'r', encoding='utf-8') as f:
         generic_dig_edns3 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-nsid.out'), 'r', encoding='utf-8') as f:
+        generic_dig_nsid = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.json'), 'r', encoding='utf-8') as f:
         centos_7_7_dig_json = json.loads(f.read())
@@ -154,6 +157,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-edns3.json'), 'r', encoding='utf-8') as f:
         generic_dig_edns3_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-nsid.json'), 'r', encoding='utf-8') as f:
+        generic_dig_nsid_json = json.loads(f.read())
 
 
     def test_dig_nodata(self):
@@ -299,6 +305,12 @@ class MyTests(unittest.TestCase):
         Test 'dig' with edns info
         """
         self.assertEqual(jc.parsers.dig.parse(self.generic_dig_edns3, quiet=True), self.generic_dig_edns3_json)
+
+    def test_dig_nsid(self):
+        """
+        Test 'dig' with nsid info
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_nsid, quiet=True), self.generic_dig_nsid_json)
 
 
 if __name__ == '__main__':

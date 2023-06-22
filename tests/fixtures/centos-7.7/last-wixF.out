@@ -1,0 +1,9 @@
+root     pts/0        192.168.255.1    Mon Jun 19 14:18:13 2023   still logged in
+mark     pts/0        192.168.255.1    Mon Jun 19 14:15:57 2023 - Mon Jun 19 14:18:00 2023  (00:02)
+mark     pts/0        192.168.255.1    Mon Jun 19 14:15:45 2023 - Mon Jun 19 14:15:52 2023  (00:00)
+mark     tty1         0.0.0.0          Mon Jun 19 16:59:57 2023   still logged in
+runlevel (to lvl 3)   0.0.0.0          Mon Jun 19 16:59:39 2023 - Mon Jun 19 14:35:00 2023  (-2:-24)
+reboot   system boot  0.0.0.0          Mon Jun 19 16:59:20 2023 - Mon Jun 19 14:35:00 2023  (-2:-24)
+shutdown system down  0.0.0.0          Fri Apr 14 13:46:46 2023 - Fri Apr 14 13:47:12 2023  (00:00)
+
+wtmp begins Mon Jun 19 16:59:20 2023

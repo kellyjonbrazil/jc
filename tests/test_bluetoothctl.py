@@ -181,6 +181,47 @@ class BluetoothctlTests(unittest.TestCase):
             for k, v in expected.items():
                 self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
 
+    def test_bluetoothctl_device_random(self):
+        """
+        Test 'bluetoothctl' with device random
+        """
+
+        with open("tests/fixtures/generic/bluetoothctl_device_random.out", "r") as f:
+            output = f.read()
+
+        actual = parse(output, quiet=True)
+
+        self.assertIsNotNone(actual)
+        self.assertIsNotNone(actual[0])
+
+        expected = {
+            "address": "DF:1C:C3:B4:1A:1F",
+            "is_random": True,
+            "name": "M585/M590",
+            "alias": "M585/M590",
+            "appearance": "0x03c2",
+            "icon": "input-mouse",
+            "paired": "yes",
+            "bonded": "yes",
+            "trusted": "no",
+            "blocked": "no",
+            "connected": "no",
+            "legacy_pairing": "no",
+            "uuids": [
+                "Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)",
+                "Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)",
+                "Device Information        (0000180a-0000-1000-8000-00805f9b34fb)",
+                "Battery Service           (0000180f-0000-1000-8000-00805f9b34fb)",
+                "Human Interface Device    (00001812-0000-1000-8000-00805f9b34fb)",
+                "Vendor specific           (00010000-0000-1000-8000-011f2000046d)"
+            ],
+            "modalias": "usb:v046DpB01Bd0011"
+        }
+
+        if actual:
+            for k, v in expected.items():
+                self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
+
     def test_bluetoothctl_devices(self):
         """
         Test 'bluetoothctl' with devices

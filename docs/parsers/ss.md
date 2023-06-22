@@ -5,9 +5,6 @@
 
 jc - JSON Convert `ss` command output parser
 
-Extended information options like `-e` and `-p` are not supported and may
-cause parsing irregularities.
-
 Usage (cli):
 
     $ ss | jc --ss
@@ -28,21 +25,29 @@ field names
 
     [
       {
-        "netid":            string,
-        "state":            string,
-        "recv_q":           integer,
-        "send_q":           integer,
-        "local_address":    string,
-        "local_port":       string,
-        "local_port_num":   integer,
-        "peer_address":     string,
-        "peer_port":        string,
-        "peer_port_num":    integer,
-        "interface":        string,
-        "link_layer"        string,
-        "channel":          string,
-        "path":             string,
-        "pid":              integer
+        "netid":                      string,
+        "state":                      string,
+        "recv_q":                     integer,
+        "send_q":                     integer,
+        "local_address":              string,
+        "local_port":                 string,
+        "local_port_num":             integer,
+        "peer_address":               string,
+        "peer_port":                  string,
+        "peer_port_num":              integer,
+        "interface":                  string,
+        "link_layer"                  string,
+        "channel":                    string,
+        "path":                       string,
+        "pid":                        integer,
+        "opts": {
+          "process_id": {
+            "<process_id>": {
+              "user":                 string,
+              "file_descriptor":      string
+            }
+          }
+        }
       }
     ]
 
@@ -303,4 +308,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

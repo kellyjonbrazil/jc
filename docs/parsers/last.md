@@ -5,7 +5,7 @@
 
 jc - JSON Convert `last` and `lastb` command output parser
 
-Supports `-w` and `-F` options.
+Supports `-w`, `-F`, and `-x` options.
 
 Calculated epoch time fields are naive (i.e. based on the local time of the
 system the parser is run on) since there is no timezone information in the
@@ -127,4 +127,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

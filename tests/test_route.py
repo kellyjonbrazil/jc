@@ -30,6 +30,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.out'), 'r', encoding='utf-8') as f:
         centos_7_7_route_6_n = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/route.out'), 'r', encoding='utf-8') as f:
+        windows_route = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route.json'), 'r', encoding='utf-8') as f:
         centos_7_7_route_json = json.loads(f.read())
@@ -52,6 +55,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/route-6-n.json'), 'r', encoding='utf-8') as f:
         centos_7_7_route_6_n_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/route.json'), 'r', encoding='utf-8') as f:
+        windows_route_route_json = json.loads(f.read())
 
     def test_route_nodata(self):
         """
@@ -100,6 +105,12 @@ class MyTests(unittest.TestCase):
         Test 'route -6 -n' on Centos 7.7
         """
         self.assertEqual(jc.parsers.route.parse(self.centos_7_7_route_6_n, quiet=True), self.centos_7_7_route_6_n_json)
+
+    def test_route_windows(self):
+        """
+        Test 'route print' on Windows
+        """
+        self.assertEqual(jc.parsers.route.parse(self.windows_route, quiet=True), self.windows_route_route_json)
 
 
 if __name__ == '__main__':

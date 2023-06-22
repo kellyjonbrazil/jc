@@ -130,6 +130,7 @@ Examples:
       }
     }
 """
+import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -137,7 +138,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.2'
     description = '`certbot` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -200,7 +201,9 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        if 'Found the following certs:\n' in data:
+        cert_pattern = re.compile(r'^Found the following certs:\r?$', re.MULTILINE)
+
+        if re.search(cert_pattern, data):
             cmd_option = 'certificates'
         else:
             cmd_option = 'account'
