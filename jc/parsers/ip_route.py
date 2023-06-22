@@ -11,7 +11,7 @@ or
 Usage (module):
 
     import jc
-    result = jc.parse('ip route', ip-route_command_output)
+    result = jc.parse('ip_route', ip_route_command_output)
 
 Schema:
 
@@ -20,7 +20,7 @@ Schema:
         "ip":        string,
         "via":       string,
         "dev":       string,
-        "metric":    int,
+        "metric":    integer,
         "proto":     string,
         "scope":     string,
         "src":       string,
@@ -31,7 +31,7 @@ Schema:
 
 Examples:
 
-    $ ip route  | jc --ip-route
+    $ ip route  | jc --ip-route -p
     [
       {
         "ip": "10.0.2.0/24",
@@ -40,11 +40,8 @@ Examples:
         "scope": "link",
         "src": "10.0.2.15",
         "metric": 100
-        ]
       }
     ]
-
-
 """
 from typing import Dict
 
@@ -53,7 +50,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.0'
     description = '`ip route` command parser'
     author = 'Julian Jackson'
     author_email = 'jackson.julian55@yahoo.com'
@@ -81,11 +78,11 @@ def parse(data, raw=False, quiet=False):
     """
     structure = {}
     items = []
-    raw_data = data.split("\n")
     lines = data.split("\n")
     index = 0
     place = 0
     inc = 0
+
     for line in lines:
         temp = line.split(" ")
         for word in temp:
@@ -145,5 +142,4 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return []
 
-    elif jc.utils.has_data(data):
-        return items
+    return items

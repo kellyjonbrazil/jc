@@ -7,13 +7,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
-    maxDiff = None
     # INPUT
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ip_route.out'), 'r',
               encoding='utf-8') as f:
         ubuntu_18_4_ip_route = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ip_route.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ip_route.out'), 'r',
+              encoding='utf-8') as f:
         centos_7_7_ip_route = f.read()
 
     # OUTPUT
@@ -21,7 +21,8 @@ class MyTests(unittest.TestCase):
               encoding='utf-8') as f:
         ubuntu_18_4_ip_route_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ip_route.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ip_route.json'), 'r',
+              encoding='utf-8') as f:
         centos_7_7_ip_route_json = json.loads(f.read())
 
     def test_ip_route_nodata(self):
@@ -41,7 +42,8 @@ class MyTests(unittest.TestCase):
         """
         Test 'history' on Centos 7.7
         """
-        self.assertEqual(jc.parsers.ip_route.parse(self.centos_7_7_ip_route, quiet=True), self.centos_7_7_ip_route_json)
+        self.assertEqual(jc.parsers.ip_route.parse(self.centos_7_7_ip_route, quiet=True),
+                         self.centos_7_7_ip_route_json)
 
 
 if __name__ == '__main__':
