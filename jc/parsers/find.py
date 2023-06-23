@@ -1,5 +1,8 @@
 """jc - JSON Convert `find` command output parser
 
+This parser returns a list of objects by default and a list of strings if
+the `--raw` option is used.
+
 Usage (cli):
 
     $ find | jc --find
@@ -69,7 +72,7 @@ def _process(proc_data):
 
     Parameters:
 
-        proc_data:   (Dictionary) raw structured data to process
+        proc_data: (List of Strings) raw structured data to process
 
     Returns:
 
@@ -117,7 +120,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary of raw structured data or
+        List of raw strings or
         List of Dictionaries of processed structured data
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)

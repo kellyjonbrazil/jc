@@ -5,6 +5,9 @@
 
 jc - JSON Convert `find` command output parser
 
+This parser returns a list of objects by default and a list of strings if
+the `--raw` option is used.
+
 Usage (cli):
 
     $ find | jc --find
@@ -70,7 +73,7 @@ Parameters:
 
 Returns:
 
-    Dictionary of raw structured data or
+    List of raw strings or
     List of Dictionaries of processed structured data
 
 ### Parser Information
