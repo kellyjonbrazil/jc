@@ -7,3 +7,7 @@
 ./jc/tests/test_hosts.py
 ./jc/anotherdirectory
 find: './inaccessible': Permission denied
+./jc/directory2
+./jc/directory2/file.txt
+./jc/directory2/file2.txt
+./newfile.txt

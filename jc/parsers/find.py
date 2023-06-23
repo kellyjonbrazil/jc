@@ -14,7 +14,7 @@ Schema:
     [
       {
         "path":     string,
-        "node":     string
+        "node":     string,
         "error":    string
       }
     ]
