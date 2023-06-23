@@ -7,6 +7,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
     # INPUT
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ip_route.out'), 'r',
               encoding='utf-8') as f:
