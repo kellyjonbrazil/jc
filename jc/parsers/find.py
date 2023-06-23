@@ -26,13 +26,16 @@ Examples:
         {
           "path": "./directory"
           "node": "filename"
-          "error": ""
         },
         {
           "path": "./anotherdirectory"
           "node": "anotherfile"
-          "error": ""
         },
+        {
+          "path":   null
+          "node":   null
+          "error":  "find: './inaccessible': Permission denied"
+        }
         ...
     ]
 
@@ -76,9 +79,10 @@ def _process(proc_data):
     processed = []
     for index in proc_data:
         path, node, error = "", "", ""
+
         if (index == "."):
             node = "."
-        elif (index[:4] == "find"):
+        elif index.startswith('find: '):
             error = index
         else:
             try:
@@ -87,10 +91,13 @@ def _process(proc_data):
                 pass
         
         proc_line = {
-            'path': path,
-            'node': node,
-            'error': error
+            'path': path if path else None,
+            'node': node if node else None
         }
+        if error:
+            proc_line.update(
+                {'error': error}
+            )
         
         processed.append(proc_line)
     return processed
