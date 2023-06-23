@@ -84,7 +84,7 @@ def parse(data, raw=False, quiet=False):
     inc = 0
 
     for line in lines:
-        temp = line.split(" ")
+        temp = line.split()
         for word in temp:
             if word == 'via':
                 y = {'via': temp[place + 1]}
