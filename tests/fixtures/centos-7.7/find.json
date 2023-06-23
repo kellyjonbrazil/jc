@@ -1,4 +1,9 @@
-[{"directory path": "./jc/tests/","file or empty directory": "test_find.py"},
-{"directory path": "./jc/tests/","file or empty directory": "test_history.py"},
-{"directory path": "./jc/tests/","file or empty directory": "test_hosts.py"},
-{"directory path": "./jc/","file or empty directory": "anotherdirectory"}]
+[{"path": "","node": ".","error":""},
+{"path":".","node":"","error":""},
+{"path": ".","node": "jc","error":""},
+{"path": "./jc","node": "tests","error":""},
+{"path": "./jc/tests","node": "test_find.py","error":""},
+{"path": "./jc/tests","node": "test_history.py","error":""},
+{"path": "./jc/tests","node": "test_hosts.py","error":""},
+{"path": "./jc","node": "anotherdirectory","error":""},
+{"path": "","node": "","error":"find: './inaccessible': Permission denied"}]

@@ -6,3 +6,4 @@
 ./jc/tests/test_history.py
 ./jc/tests/test_hosts.py
 ./jc/anotherdirectory
+find: './inaccessible': Permission denied

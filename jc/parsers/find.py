@@ -13,8 +13,9 @@ Schema:
 
     [
       {
-        "directory path":           string,
-        "file or empty directory:   string
+        "path":     string,
+        "node":     string
+        "error":    string
       }
     ]
 
@@ -23,23 +24,25 @@ Examples:
     $ find | jc --find -p
     [
         {
-          "directory path": "./directory"
-          "file or empty directory": "filename"
+          "path": "./directory"
+          "node": "filename"
+          "error": ""
         },
         {
-          "directory path": "./anotherdirectory"
-          "file or empty directory": "anotherfile"
+          "path": "./anotherdirectory"
+          "node": "anotherfile"
+          "error": ""
         },
         ...
     ]
 
     $ find | jc --find -p -r
-    {
+    [
       "./templates/readme_template",
       "./templates/manpage_template",
       "./.github/workflows/pythonapp.yml",
       ...
-    }
+    ]
 """
 import jc.utils
 
@@ -71,14 +74,22 @@ def _process(proc_data):
     """
 
     processed = []
-    for i in proc_data:
-        try:
-            temp = str(i).rindex("/")
-        except ValueError:
-            pass
+    for index in proc_data:
+        path, node, error = "", "", ""
+        if (index == "."):
+            node = "."
+        elif (index[:4] == "find"):
+            error = index
+        else:
+            try:
+                path, node = index.rsplit('/', maxsplit=1)
+            except ValueError:
+                pass
+        
         proc_line = {
-            'directory path': i[:temp + 1],
-            'file or empty directory': i[temp + 1:]
+            'path': path,
+            'node': node,
+            'error': error
         }
         
         processed.append(proc_line)
@@ -107,13 +118,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
     
     if jc.utils.has_data(data):
-        previous = ""
-        new_line = data.split("\n")
-        for index in new_line:
-            if (index[:len(previous)] != previous):
-                raw_output.append(previous)
-            previous = index
-        raw_output.append(previous)
+        raw_output = data.splitlines()
 
     if raw:
         return raw_output
