@@ -75,12 +75,12 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-
     processed = []
+
     for index in proc_data:
         path, node, error = "", "", ""
 
-        if (index == "."):
+        if index == ".":
             node = "."
         elif index.startswith('find: '):
             error = index
@@ -89,19 +89,20 @@ def _process(proc_data):
                 path, node = index.rsplit('/', maxsplit=1)
             except ValueError:
                 pass
-        
+
         proc_line = {
             'path': path if path else None,
             'node': node if node else None
         }
+
         if error:
             proc_line.update(
                 {'error': error}
             )
-        
+
         processed.append(proc_line)
+
     return processed
-    
 
 
 def parse(data, raw=False, quiet=False):
@@ -123,7 +124,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = []
-    
+
     if jc.utils.has_data(data):
         raw_output = data.splitlines()
 
