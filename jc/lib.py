@@ -145,6 +145,7 @@ parsers: List[str] = [
     'proc-net-packet',
     'proc-net-protocols',
     'proc-net-route',
+    'proc-net-tcp',
     'proc-net-unix',
     'proc-pid-fdinfo',
     'proc-pid-io',
