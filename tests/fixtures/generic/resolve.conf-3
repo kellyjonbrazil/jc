@@ -1,0 +1,7 @@
+
+;
+; /etc/resolv.conf file for dnsmaster (sirius)
+;
+domain           doc.com
+nameserver       0.0.0.0
+nameserver       111.22.3.5
