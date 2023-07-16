@@ -15,7 +15,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_net_tcp': (
                 'fixtures/linux-proc/net_tcp',
-                'fixtures/linux-proc/net_tcp.json')
+                'fixtures/linux-proc/net_tcp.json'),
+            'proc_net_tcp6': (
+                'fixtures/linux-proc/net_tcp6',
+                'fixtures/linux-proc/net_tcp6.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -37,6 +40,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_net_tcp.parse(self.f_in['proc_net_tcp'], quiet=True),
                                                        self.f_json['proc_net_tcp'])
+
+    def test_proc_net_tcp6(self):
+        """
+        Test '/proc/net/tcp6'
+        """
+        self.assertEqual(jc.parsers.proc_net_tcp.parse(self.f_in['proc_net_tcp6'], quiet=True),
+                                                       self.f_json['proc_net_tcp6'])
 
 
 if __name__ == '__main__':

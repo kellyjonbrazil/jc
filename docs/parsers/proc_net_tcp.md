@@ -1,4 +1,9 @@
-"""jc - JSON Convert `/proc/net/tcp` and `proc/net/tcp6` file parser
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.proc_net_tcp"></a>
+
+# jc.parsers.proc\_net\_tcp
+
+jc - JSON Convert `/proc/net/tcp` and `proc/net/tcp6` file parser
 
 IPv4 and IPv6 addresses are converted to standard notation unless the raw
 (--raw) option is used.
@@ -154,140 +159,28 @@ Examples:
       },
       ...
     ]
-"""
-import binascii
-import socket
-import struct
-from typing import List, Dict
-import jc.utils
 
+<a id="jc.parsers.proc_net_tcp.parse"></a>
 
-class info():
-    """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = '`/proc/net/tcp` file parser'
-    author = 'Alvin Solomon'
-    author_email = 'alvinms01@gmail.com'
-    compatible = ['linux']
-    tags = ['file']
-    hidden = True
+### parse
 
+```python
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
+```
 
-__version__ = info.version
+Main text parsing function
 
+Parameters:
 
-def hex_to_ip(hexaddr: str) -> str:
-    if len(hexaddr) == 8:
-        addr_long = int(hexaddr, 16)
-        return socket.inet_ntop(socket.AF_INET, struct.pack("<L", addr_long))
-    elif len(hexaddr) == 32:
-        addr = binascii.a2b_hex(hexaddr)
-        addr_tup = struct.unpack('>IIII', addr)
-        addr_bytes = struct.pack('@IIII', *addr_tup)
-        return socket.inet_ntop(socket.AF_INET6, addr_bytes)
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-    return ''
+Returns:
 
+    List of Dictionaries. Raw or processed structured data.
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
-    """
-    Final processing to conform to the schema.
+### Parser Information
+Compatibility:  linux
 
-    Parameters:
-
-        proc_data:   (List of Dictionaries) raw structured data to process
-
-    Returns:
-
-        List of Dictionaries. Structured to conform to the schema.
-    """
-    int_list = {
-        'timer_active', 'uid', 'unanswered_0_window_probes', 'inode',
-        'sock_ref_count', 'retransmit_timeout', 'soft_clock_tick',
-        'ack_quick_pingpong', 'sending_congestion_window',
-        'slow_start_size_threshold'
-    }
-
-    for entry in proc_data:
-        if 'local_address' in entry:
-            entry['local_address'] = hex_to_ip(entry['local_address'])
-            entry['local_port'] = int(entry['local_port'], 16)
-            entry['remote_address'] = hex_to_ip(entry['remote_address'])
-            entry['remote_port'] = int(entry['remote_port'], 16)
-
-        for item in int_list:
-            if item in entry:
-                entry[item] = jc.utils.convert_to_int(entry[item])
-
-    return proc_data
-
-
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> List[Dict]:
-    """
-    Main text parsing function
-
-    Parameters:
-
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
-
-    Returns:
-
-        List of Dictionaries. Raw or processed structured data.
-    """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    raw_output: List = []
-
-    if jc.utils.has_data(data):
-
-        line_data = data.splitlines()[1:]
-
-        for entry in line_data:
-            line = entry.split()
-            output_line = {}
-            output_line['entry'] = line[0][:-1]
-
-            local_ip_port = line[1]
-            local_ip = local_ip_port.split(':')[0]
-            local_port = local_ip_port.split(':')[1]
-
-            output_line['local_address'] = local_ip
-            output_line['local_port'] = local_port
-
-            remote_ip_port = line[2]
-            remote_ip = remote_ip_port.split(':')[0]
-            remote_port = remote_ip_port.split(':')[1]
-
-            output_line['remote_address'] = remote_ip
-            output_line['remote_port'] = remote_port
-
-            output_line['state'] = line[3]
-            output_line['tx_queue'] = line[4][:8]
-            output_line['rx_queue'] = line[4][9:]
-            output_line['timer_active'] = line[5][:2]
-            output_line['jiffies_until_timer_expires'] = line[5][3:]
-            output_line['unrecovered_rto_timeouts'] = line[6]
-            output_line['uid'] = line[7]
-            output_line['unanswered_0_window_probes'] = line[8]
-            output_line['inode'] = line[9]
-            output_line['sock_ref_count'] = line[10]
-            output_line['sock_mem_loc'] = line[11]
-
-            # fields not always included
-            if len(line) > 12:
-                output_line['retransmit_timeout'] = line[12]
-                output_line['soft_clock_tick'] = line[13]
-                output_line['ack_quick_pingpong'] = line[14]
-                output_line['sending_congestion_window'] = line[15]
-                output_line['slow_start_size_threshold'] = line[16]
-
-            raw_output.append(output_line)
-
-    return raw_output if raw else _process(raw_output)
+Version 1.0 by Alvin Solomon (alvinms01@gmail.com)
