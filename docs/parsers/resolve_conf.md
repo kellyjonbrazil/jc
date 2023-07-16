@@ -5,6 +5,11 @@
 
 jc - JSON Convert `/etc/resolve.conf` file parser
 
+This parser may be more forgiving than the system parser. For example, if
+multiple `search` lists are defined, this parser will append all entries to
+the `search` field, while the system parser may only use the list from the
+last defined instance.
+
 Usage (cli):
 
     $ cat /etc/resolve.conf | jc --resolve-conf
@@ -25,6 +30,9 @@ Schema:
                             string
       ],
       "options": [
+                            string
+      ],
+      "sortlist": [
                             string
       ]
     }

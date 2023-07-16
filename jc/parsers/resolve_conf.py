@@ -1,5 +1,10 @@
 """jc - JSON Convert `/etc/resolve.conf` file parser
 
+This parser may be more forgiving than the system parser. For example, if
+multiple `search` lists are defined, this parser will append all entries to
+the `search` field, while the system parser may only use the list from the
+last defined instance.
+
 Usage (cli):
 
     $ cat /etc/resolve.conf | jc --resolve-conf
@@ -20,6 +25,9 @@ Schema:
                             string
       ],
       "options": [
+                            string
+      ],
+      "sortlist": [
                             string
       ]
     }
@@ -103,6 +111,7 @@ def parse(
     search: List[str] = []
     nameservers: List[str] = []
     options: List[str] = []
+    sortlist: List[str] = []
 
     if jc.utils.has_data(data):
 
@@ -141,6 +150,12 @@ def parse(
                 options.extend(option_list)
                 continue
 
+            if userdata_str.startswith('sortlist'):
+                sortlist_items = userdata_str.split(maxsplit=1)[1]
+                sortlist_list = sortlist_items.split()
+                sortlist.extend(sortlist_list)
+                continue
+
     if search:
         raw_output['search'] = search
 
@@ -149,5 +164,8 @@ def parse(
 
     if options:
         raw_output['options'] = options
+
+    if sortlist:
+        raw_output['sortlist'] = sortlist
 
     return raw_output if raw else _process(raw_output)

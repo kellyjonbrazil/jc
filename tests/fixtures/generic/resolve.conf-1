@@ -7,3 +7,6 @@ nameserver 75.75.76.76        # test inline comment
 # The nameservers listed below may not be recognized.
 nameserver 2001:558:feed::2
 
+
+sortlist 130.155.160.0/255.255.240.0 130.155.0.0
+search hello.com world.com   # add another search list for fun
