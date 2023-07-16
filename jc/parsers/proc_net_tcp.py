@@ -165,7 +165,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`/proc/net/tcp` file parser'
+    description = '`/proc/net/tcp` and `/proc/net/tcp6` file parser'
     author = 'Alvin Solomon'
     author_email = 'alvinms01@gmail.com'
     compatible = ['linux']
