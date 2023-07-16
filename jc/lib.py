@@ -157,6 +157,7 @@ parsers: List[str] = [
     'proc-pid-statm',
     'proc-pid-status',
     'ps',
+    'resolve-conf',
     'route',
     'rpm-qi',
     'rsync',
