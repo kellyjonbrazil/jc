@@ -1,5 +1,12 @@
 jc changelog
 
+20230730 v1.23.4
+- Add `/etc/resolve.conf` file parser
+- Add `/proc/net/tcp` and `/proc/net/tcp6` file parser
+- Add `find` command parser
+- Add `ip route` command parser
+- Fix `certbot` command parser to be more robust with different line endings
+
 20230621 v1.23.3
 - Add `lsattr` command parser
 - Add `srt` file parser
@@ -13,7 +20,6 @@ jc changelog
 - Enhance `ss` command parser to support extended options
 - Enhance the compatibility warning message
 - Fix `bluetoothctl` command parser for some mouse devices
-- Fix `certbot` command parser to be more robust with different line endings
 - Fix `ping` command parsers for output with missing hostname
 - Fix `stat` command parser for older versions that may not contain all fields
 - Fix deprecated option in `setup.cfg`

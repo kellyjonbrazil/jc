@@ -187,6 +187,7 @@ option.
 | `--email-address` | Email Address string parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/email_address)  |
 |           `--env` | `env` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/env)            |
 |          `--file` | `file` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/file)           |
+|          `--find` | `find` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/find)           |
 |       `--findmnt` | `findmnt` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/findmnt)        |
 |        `--finger` | `finger` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/finger)         |
 |          `--free` | `free` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/free)           |
@@ -210,6 +211,7 @@ option.
 |      `--iostat-s` | `iostat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s)       |
 |    `--ip-address` | IPv4 and IPv6 Address string parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_address)     |
 |      `--iptables` | `iptables` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables)       |
+|      `--ip-route` | `ip route` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_route)       |
 |       `--iw-scan` | `iw dev [device] scan` command parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan)        |
 |      `--iwconfig` | `iwconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iwconfig)       |
 |  `--jar-manifest` | Java MANIFEST.MF file parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jar_manifest)   |
@@ -248,6 +250,7 @@ option.
 |      `--postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
 |          `--proc` | `/proc/` file parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/proc)           |
 |            `--ps` | `ps` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)             |
+|  `--resolve-conf` | `/etc/resolve.conf` file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/resolve_conf)   |
 |         `--route` | `route` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/route)          |
 |        `--rpm-qi` | `rpm -qi` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi)         |
 |         `--rsync` | `rsync` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync)          |

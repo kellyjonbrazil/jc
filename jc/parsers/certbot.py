@@ -138,7 +138,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`certbot` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -201,7 +201,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cert_pattern = re.compile(r'^Found the following certs:$', re.MULTILINE)
+        cert_pattern = re.compile(r'^Found the following certs:\r?$', re.MULTILINE)
 
         if re.search(cert_pattern, data):
             cmd_option = 'certificates'

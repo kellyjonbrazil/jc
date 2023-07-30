@@ -1,0 +1,13 @@
+[{"path": null, "node": "."},
+{"path":".","node":null},
+{"path": ".","node": "jc"},
+{"path": "./jc","node": "tests"},
+{"path": "./jc/tests","node": "test_find.py"},
+{"path": "./jc/tests","node": "test_history.py"},
+{"path": "./jc/tests","node": "test_hosts.py"},
+{"path": "./jc","node": "anotherdirectory"},
+{"path": null,"node": null,"error": "find: './inaccessible': Permission denied"},
+{"path": "./jc","node": "directory2"},
+{"path": "./jc/directory2","node": "file.txt"},
+{"path": "./jc/directory2","node": "file2.txt"},
+{"path": ".","node": "newfile.txt"}]

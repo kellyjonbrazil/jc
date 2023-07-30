@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.23.3'
+__version__ = '1.23.4'
 
 parsers: List[str] = [
     'acpi',
@@ -43,6 +43,7 @@ parsers: List[str] = [
     'email-address',
     'env',
     'file',
+    'find',
     'findmnt',
     'finger',
     'free',
@@ -66,6 +67,7 @@ parsers: List[str] = [
     'iostat-s',
     'ip-address',
     'iptables',
+    'ip-route',
     'iso-datetime',
     'iw-scan',
     'iwconfig',
@@ -143,6 +145,7 @@ parsers: List[str] = [
     'proc-net-packet',
     'proc-net-protocols',
     'proc-net-route',
+    'proc-net-tcp',
     'proc-net-unix',
     'proc-pid-fdinfo',
     'proc-pid-io',
@@ -154,6 +157,7 @@ parsers: List[str] = [
     'proc-pid-statm',
     'proc-pid-status',
     'ps',
+    'resolve-conf',
     'route',
     'rpm-qi',
     'rsync',
