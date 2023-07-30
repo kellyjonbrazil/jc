@@ -1,6 +1,6 @@
 jc changelog
 
-20230715 v1.23.4
+20230730 v1.23.4
 - Add `/etc/resolve.conf` file parser
 - Add `/proc/net/tcp` and `/proc/net/tcp6` file parser
 - Add `find` command parser
