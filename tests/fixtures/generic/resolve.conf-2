@@ -1,0 +1,4 @@
+search eng.myprime.com dev.eng.myprime.com labs.myprime.com qa.myprime.com
+options rotate
+options ndots:1
+nameserver 10.136.17.15
