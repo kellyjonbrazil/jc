@@ -214,7 +214,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         import jc.parsers.route_windows
-        if cleandata[0] in jc.parsers.route_windows.SEPERATORS:
+        if cleandata[0] in jc.parsers.route_windows.SEPARATORS:
            raw_output = jc.parsers.route_windows.parse(cleandata)
         else:
           cleandata.pop(0)  # Removing "Kernel IP routing table".

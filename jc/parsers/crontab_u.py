@@ -194,7 +194,7 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
-    # put itmes in lists
+    # put items in lists
     try:
         for entry in proc_data['schedule']:
             entry['minute'] = entry['minute'].split(',')

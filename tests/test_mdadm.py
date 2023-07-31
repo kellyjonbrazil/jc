@@ -173,7 +173,7 @@ class MyTests(unittest.TestCase):
         mdadm_examine_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-detail.json'), 'r', encoding='utf-8') as f:
-        mdadm_query_detial_json = json.loads(f.read())
+        mdadm_query_detail_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mdadm-query-raid0-ok.json'), 'r', encoding='utf-8') as f:
         mdadm_query_raid0_ok_json = json.loads(f.read())
@@ -360,7 +360,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'mdadm --query --detail'
         """
-        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_detail, quiet=True), self.mdadm_query_detial_json)
+        self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_detail, quiet=True), self.mdadm_query_detail_json)
 
 
     def test_mdadm_query_raid0_ok(self):
