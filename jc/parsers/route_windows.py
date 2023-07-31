@@ -6,7 +6,7 @@
 import re
 from typing import List
 
-SEPERATORS = (
+SEPARATORS = (
     "===========================================================================",
     "  None"
 )
@@ -24,7 +24,7 @@ ROUTE_TYPES = ("Active Routes:", "Persistent Routes:")
 def get_lines_until_seperator(iterator):
     lines = []
     for line in iterator:
-        if line in SEPERATORS:
+        if line in SEPARATORS:
             break
         lines.append(line)
     return lines
@@ -86,7 +86,7 @@ def parse(cleandata: List[str]):
             interfaces = []
             for interface_line in data_iterator:
                 interface_line = interface_line.strip()
-                if interface_line in SEPERATORS:
+                if interface_line in SEPARATORS:
                     break
 
                 interface_match = INTERFACE_REGEX.search(interface_line)
