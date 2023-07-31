@@ -160,7 +160,7 @@ def _aix_parse(data):
 
         # AIX mount entries have the remote node as the zeroth element. If the
         # mount is local, the zeroth element is the filesystem instead. We can
-        # detect this by the lenth of the list. For local mounts, length is 7,
+        # detect this by the length of the list. For local mounts, length is 7,
         # and for remote mounts, the length is 8. In the remote case, pop off
         # the zeroth element. Then parsed_line has a consistent format.
         if len(parsed_line) == 8:
