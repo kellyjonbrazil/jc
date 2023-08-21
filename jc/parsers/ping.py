@@ -30,6 +30,8 @@ Schema:
       "packets_received":            integer,
       "packet_loss_percent":         float,
       "duplicates":                  integer,
+      "errors":                      integer,
+      "corrupted":                   integer,
       "round_trip_ms_min":           float,
       "round_trip_ms_avg":           float,
       "round_trip_ms_max":           float,
@@ -157,6 +159,7 @@ Examples:
       ]
     }
 """
+import re
 import string
 import ipaddress
 import jc.utils
@@ -190,7 +193,7 @@ def _process(proc_data):
     """
     int_list = {
         'data_bytes', 'packets_transmitted', 'packets_received', 'bytes', 'icmp_seq', 'ttl',
-        'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks'
+        'duplicates', 'corrupted', 'errors', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks'
     }
 
     float_list = {
@@ -321,41 +324,43 @@ def _linux_parse(data):
             continue
 
         if footer:
-            if 'packets transmitted' in line:
-                if ' duplicates,' in line:
-                    raw_output.update(
-                        {
-                            'packets_transmitted': line.split()[0],
-                            'packets_received': line.split()[3],
-                            'packet_loss_percent': line.split()[7].rstrip('%'),
-                            'duplicates': line.split()[5].lstrip('+'),
-                            'time_ms': line.split()[11].replace('ms', '')
-                        }
-                    )
-                    continue
-                else:
-                    raw_output.update(
-                        {
-                            'packets_transmitted': line.split()[0],
-                            'packets_received': line.split()[3],
-                            'packet_loss_percent': line.split()[5].rstrip('%'),
-                            'duplicates': '0',
-                            'time_ms': line.split()[9].replace('ms', '')
-                        }
-                    )
-                    continue
+            #
+            # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
+            #
+            m = re.search(r'(\d+) packets transmitted', line)
+            if m:
+                raw_output['packets_transmitted'] = int(m.group(1))
 
-            else:
-                split_line = line.split(' = ')[1]
-                split_line = split_line.split('/')
-                raw_output.update(
-                    {
-                        'round_trip_ms_min': split_line[0],
-                        'round_trip_ms_avg': split_line[1],
-                        'round_trip_ms_max': split_line[2],
-                        'round_trip_ms_stddev': split_line[3].split()[0]
-                    }
-                )
+            m = re.search(r'(\d+) received,', line)
+            if m:
+                raw_output['packets_received'] = int(m.group(1))
+
+            m = re.search(r'[+](\d+) duplicates', line)
+            if m:
+                raw_output['duplicates'] = int(m.group(1))
+
+            m = re.search(r'[+](\d+) corrupted', line)
+            if m:
+                raw_output['corrupted'] = int(m.group(1))
+
+            m = re.search(r'[+](\d+) errors', line)
+            if m:
+                raw_output['errors'] = int(m.group(1))
+
+            m = re.search(r'(\d+)% packet loss', line)
+            if m:
+                raw_output['packet_loss_percent'] = int(m.group(1))
+
+            m = re.search(r'time (\d+)ms', line)
+            if m:
+                raw_output['time_ms'] = int(m.group(1))
+
+            m = re.search(r'rtt min\/avg\/max\/mdev += +([\d.]+)\/([\d.]+)\/([\d.]+)\/([\d.]+) ms', line)
+            if m:
+                raw_output['round_trip_ms_min'] = float(m.group(1))
+                raw_output['round_trip_ms_avg'] = float(m.group(2))
+                raw_output['round_trip_ms_max'] = float(m.group(3))
+                raw_output['round_trip_ms_stddev'] = float(m.group(4))
 
         # ping response lines
         else:
