@@ -128,7 +128,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`pidstat -H` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -156,7 +156,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
     float_list = {'percent_usr', 'percent_system', 'percent_guest', 'percent_cpu',
                   'minflt_s', 'majflt_s', 'percent_mem', 'kb_rd_s', 'kb_wr_s',
-                  'kb_ccwr_s', 'cswch_s', 'nvcswch_s'}
+                  'kb_ccwr_s', 'cswch_s', 'nvcswch_s', 'percent_wait'}
 
     for entry in proc_data:
         for key in entry:
