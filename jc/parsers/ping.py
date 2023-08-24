@@ -347,15 +347,15 @@ def _linux_parse(data):
             if m:
                 raw_output['errors'] = int(m.group(1))
 
-            m = re.search(r'(\d+)% packet loss', line)
+            m = re.search(r'([\d\.]+)% packet loss', line)
             if m:
-                raw_output['packet_loss_percent'] = int(m.group(1))
+                raw_output['packet_loss_percent'] = float(m.group(1))
 
             m = re.search(r'time (\d+)ms', line)
             if m:
                 raw_output['time_ms'] = int(m.group(1))
 
-            m = re.search(r'rtt min\/avg\/max\/mdev += +([\d.]+)\/([\d.]+)\/([\d.]+)\/([\d.]+) ms', line)
+            m = re.search(r'rtt min\/avg\/max\/mdev += +([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+) ms', line)
             if m:
                 raw_output['round_trip_ms_min'] = float(m.group(1))
                 raw_output['round_trip_ms_avg'] = float(m.group(2))
