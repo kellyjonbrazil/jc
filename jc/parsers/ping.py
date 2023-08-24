@@ -324,6 +324,10 @@ def _linux_parse(data):
             continue
 
         if footer:
+            # Init in zero, to keep compatibility with previous behaviour
+            if 'duplicates' not in raw_output:
+                raw_output['duplicates'] = 0
+
             #
             # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
             #
