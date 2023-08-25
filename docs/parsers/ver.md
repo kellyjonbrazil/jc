@@ -7,7 +7,7 @@ jc - JSON Convert Version string output parser
 
 Best-effort attempt to parse various styles of version numbers. This parser
 is based off of the version parser included in the CPython distutils
-libary.
+library.
 
 If the version string conforms to some de facto-standard versioning rules
 followed by many developers a `strict` key will be present in the output
