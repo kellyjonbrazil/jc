@@ -91,6 +91,7 @@ parsers: List[str] = [
     'mpstat-s',
     'netstat',
     'nmcli',
+    'nsd-control',
     'ntpq',
     'openvpn',
     'os-prober',
