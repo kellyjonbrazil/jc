@@ -58,6 +58,7 @@ parsers: List[str] = [
     'hashsum',
     'hciconfig',
     'history',
+    'host',
     'hosts',
     'id',
     'ifconfig',
