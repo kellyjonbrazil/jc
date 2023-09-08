@@ -204,7 +204,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
             if ' has SOA record ' in line:
                 linedata = line.split(' ', maxsplit=10)
 
-                zone = linedata[0]
+                zone = linedata[0].strip()
                 mname = linedata[4]
                 rname = linedata[5]
                 serial = linedata[6]
