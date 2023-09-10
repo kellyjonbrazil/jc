@@ -44,6 +44,8 @@ Schema:
       "packets_received":           integer,
       "packet_loss_percent":        float,
       "duplicates":                 integer,
+      "errors":                     integer,
+      "corrupted":                  integer,
       "round_trip_ms_min":          float,
       "round_trip_ms_avg":          float,
       "round_trip_ms_max":          float,
@@ -74,6 +76,7 @@ Examples:
     {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","patte...}
     ...
 """
+import re
 import string
 import ipaddress
 import jc.utils
@@ -85,7 +88,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,6 +147,12 @@ class _state:
     packet_loss_percent = None
     time_ms = None
     duplicates = None
+    corrupted = None
+    errors = None
+    round_trip_ms_min = None
+    round_trip_ms_avg = None
+    round_trip_ms_max = None
+    round_trip_ms_stddev = None
 
 
 def _ipv6_in(line):
@@ -369,41 +378,64 @@ def _linux_parse(line, s):
         return None
 
     if s.footer:
-        if 'packets transmitted' in line:
-            if ' duplicates,' in line:
-                s.packets_transmitted = line.split()[0]
-                s.packets_received = line.split()[3]
-                s.packet_loss_percent = line.split()[7].rstrip('%')
-                s.duplicates = line.split()[5].lstrip('+')
-                s.time_ms = line.split()[11].replace('ms', '')
-                return None
+        #
+        # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
+        #
+        m = re.search(r'(\d+) packets transmitted', line)
+        if m:
+            s.packets_transmitted = int(m.group(1))
 
-            s.packets_transmitted = line.split()[0]
-            s.packets_received = line.split()[3]
-            s.packet_loss_percent = line.split()[5].rstrip('%')
-            s.duplicates = '0'
-            s.time_ms = line.split()[9].replace('ms', '')
-            return None
+        m = re.search(r'(\d+) received,', line)
+        if m:
+            s.packets_received = int(m.group(1))
 
-        split_line = line.split(' = ')[1]
-        split_line = split_line.split('/')
-        output_line = {
-            'type': 'summary',
-            'destination_ip': s.destination_ip or None,
-            'sent_bytes': s.sent_bytes or None,
-            'pattern': s.pattern or None,
-            'packets_transmitted': s.packets_transmitted or None,
-            'packets_received': s.packets_received or None,
-            'packet_loss_percent': s.packet_loss_percent or None,
-            'duplicates': s.duplicates or None,
-            'time_ms': s.time_ms or None,
-            'round_trip_ms_min': split_line[0],
-            'round_trip_ms_avg': split_line[1],
-            'round_trip_ms_max': split_line[2],
-            'round_trip_ms_stddev': split_line[3].split()[0]
-        }
+        m = re.search(r'[+](\d+) duplicates', line)
+        if m:
+            s.duplicates = int(m.group(1))
 
-        return output_line
+        m = re.search(r'[+](\d+) corrupted', line)
+        if m:
+            s.corrupted = int(m.group(1))
+
+        m = re.search(r'[+](\d+) errors', line)
+        if m:
+            s.errors = int(m.group(1))
+
+        m = re.search(r'([\d\.]+)% packet loss', line)
+        if m:
+            s.packet_loss_percent = float(m.group(1))
+
+        m = re.search(r'time (\d+)ms', line)
+        if m:
+            s.time_ms = int(m.group(1))
+
+        m = re.search(r'rtt min\/avg\/max\/mdev += +([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+) ms', line)
+
+        if m:
+            s.round_trip_ms_min = float(m.group(1))
+            s.round_trip_ms_avg = float(m.group(2))
+            s.round_trip_ms_max = float(m.group(3))
+            s.round_trip_ms_stddev = float(m.group(4))
+
+        if line.startswith('rtt '):
+            output_line = {
+                'type': 'summary',
+                'destination_ip': s.destination_ip or None,
+                'sent_bytes': s.sent_bytes or None,
+                'pattern': s.pattern or None,
+                'packets_transmitted': s.packets_transmitted or None,
+                'packets_received': s.packets_received or None,
+                'packet_loss_percent': s.packet_loss_percent,
+                'duplicates': s.duplicates or 0,
+                'time_ms': s.time_ms,
+                'round_trip_ms_min': s.round_trip_ms_min or 0,
+                'round_trip_ms_avg': s.round_trip_ms_avg or 0,
+                'round_trip_ms_max': s.round_trip_ms_max or 0,
+                'round_trip_ms_stddev': s.round_trip_ms_stddev or 0
+            }
+            return output_line
+
+        return None
 
     # ping response lines
 
