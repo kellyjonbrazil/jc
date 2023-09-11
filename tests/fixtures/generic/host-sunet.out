@@ -1,0 +1,16 @@
+Nameserver 192.36.125.2:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 193.10.252.19:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 2001:6b0:1::250:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 2001:948:4:2::19:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 2001:6b0:5a:4020::384:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 130.237.72.250:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 2001:6b0:7::2:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
+Nameserver 89.47.185.240:
+	sunet.se has SOA record hidden-master.sunet.se. hostmaster.sunet.se. 2023091102 28800 7200 604800 300
