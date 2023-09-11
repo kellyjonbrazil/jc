@@ -156,14 +156,16 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
         mail = []
         text = []
         rrdata = {}
+        soaparse = False
 
         for line in filter(None, data.splitlines()):
+            line = line.strip()
 
             # default
             if ' has address ' in line:
                 linedata = line.split(' ', maxsplit=3)
-                hostname = linedata[0].strip()
-                address = linedata[3].strip()
+                hostname = linedata[0]
+                address = linedata[3]
                 addresses.append(address)
                 rrdata.update({'hostname': hostname})
                 rrdata.update({'address': addresses})
@@ -171,8 +173,8 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
 
             if ' has IPv6 address ' in line:
                 linedata = line.split(' ', maxsplit=4)
-                hostname = linedata[0].strip()
-                v6address = linedata[4].strip()
+                hostname = linedata[0]
+                v6address = linedata[4]
                 v6addresses.append(v6address)
                 rrdata.update({'hostname': hostname})
                 rrdata.update({'v6-address': v6addresses})
@@ -180,8 +182,8 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
 
             if ' mail is handled by ' in line:
                 linedata = line.split(' ', maxsplit=6)
-                hostname = linedata[0].strip()
-                mx = linedata[6].strip()
+                hostname = linedata[0]
+                mx = linedata[6]
                 mail.append(mx)
                 rrdata.update({'hostname': hostname})
                 rrdata.update({'mail': mail})
@@ -191,7 +193,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
             # TXT parsing
             if ' descriptive text ' in line:
                 linedata = line.split('descriptive text "', maxsplit=1)
-                hostname = linedata[0].strip()
+                hostname = linedata[0]
                 txt = linedata[1].strip('"')
                 text.append(txt)
                 rrdata.update({'hostname': hostname})
@@ -201,15 +203,17 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
 
             # -C / SOA parsing
             if line.startswith('Nameserver '):
+                soaparse = True
+                rrdata = {}
                 linedata = line.split(' ', maxsplit=1)
-                nameserverip = linedata[1].strip().rstrip(':')
+                nameserverip = linedata[1].rstrip(':')
                 rrdata.update({'nameserver': nameserverip})
                 continue
 
             if ' has SOA record ' in line:
                 linedata = line.split(' ', maxsplit=10)
 
-                zone = linedata[0].strip()
+                zone = linedata[0]
                 mname = linedata[4]
                 rname = linedata[5]
                 serial = linedata[6]
@@ -231,14 +235,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                             'minimum': minimum 
                         },
                     )
+                    raw_output.append(rrdata)
+
                 except IndexError:
                     if not warned:
                         jc.utils.warning_message(['Unknown format detected.'])
                         warned = True
 
-                raw_output.append(rrdata)
-                continue
-
-        raw_output.append(rrdata)
+        if not soaparse:
+            raw_output.append(rrdata)
 
     return raw_output if raw else _process(raw_output)
