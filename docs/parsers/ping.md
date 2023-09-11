@@ -35,6 +35,8 @@ Schema:
       "packets_received":            integer,
       "packet_loss_percent":         float,
       "duplicates":                  integer,
+      "errors":                      integer,
+      "corrupted":                   integer,
       "round_trip_ms_min":           float,
       "round_trip_ms_avg":           float,
       "round_trip_ms_max":           float,
@@ -185,4 +187,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)
