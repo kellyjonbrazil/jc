@@ -31,13 +31,12 @@ def normalize_interface_headers(header):
 
 
 def parse_network(headers, entry):
-    # programs running on UDP protocol allways have the column "State" empty
-    # limit max split in this case so the column "PID/Program name"
-    # wont get split if it contains space
-    if entry.startswith("udp"):
-        entry = entry.split(maxsplit=len(headers) - 2)
-    else:
-        entry = entry.split(maxsplit=len(headers) - 1)
+    LIST_OF_STATES = ["ESTABLISHED", "SYN_SENT", "SYN_RECV", "FIN_WAIT1", "FIN_WAIT2", "TIME_WAIT", "CLOSED", "CLOSE_WAIT", "LAST_ACK", "LISTEN", "CLOSING", "UNKNOWN"]
+
+    # split entry based on presence of value in "State" column
+    contains_state = any(state in entry for state in LIST_OF_STATES)
+    split_modifier = 1 if contains_state else 2
+    entry = entry.split(maxsplit=len(headers) - split_modifier)
 
     # Count words in header
     # if len of line is one less than len of header, then insert None in field 5
