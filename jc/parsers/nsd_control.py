@@ -98,7 +98,12 @@ def _process(proc_data):
         List of Dictionaries. Structured to conform to the schema.
     """
 
-    # process the data here
+    int_list = {'verbosity', 'ratelimit', 'wait'}
+
+    for entry in proc_data:
+        for key in entry:
+            if key in int_list:
+                entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 
@@ -126,45 +131,59 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        itrparse = False
+        itr = {}
 
-            # parse the content here
-            # check out helper functions in jc.utils
-            # and jc.parsers.universal
+        for line in filter(None, data.splitlines()):
+            line = line.strip()
 
             # default 'ok'
             if line.startswith('ok'):
                 raw_output.append({'command': 'ok'})
+                continue
 
             # status
-            elif line.startswith('version:'):
+            if line.startswith('version:'):
                 status = {}
-                linedata = line.rsplit(':', maxsplit=1)
-                version = linedata[1].strip().rstrip()
+                linedata = line.split(':', maxsplit=1)
+                version = linedata[1].strip()
                 status.update({'version': version})
+                continue
 
-            elif line.startswith('verbosity:'):
-                linedata = line.rsplit(':', maxsplit=1)
-                verbosity = linedata[1].strip().rstrip()
+            if line.startswith('verbosity:'):
+                linedata = line.split(':', maxsplit=1)
+                verbosity = linedata[1]
                 status.update({'verbosity': verbosity})
+                continue
 
-            elif line.startswith('ratelimit:'):
-                linedata = line.rsplit(':', maxsplit=1)
-                ratelimit = linedata[1].strip().rstrip()
+            if line.startswith('ratelimit:'):
+                linedata = line.split(':', maxsplit=1)
+                ratelimit = linedata[1]
                 status.update({'ratelimit': ratelimit})
                 raw_output.append(status)
+                continue
 
             # print_cookie_secrets
-            elif line.startswith('active'):
-                linedata = line.rsplit(':', maxsplit=1)
-                secret = linedata[1].strip().rstrip()
-                raw_output.append({'active': secret})
+            if line.startswith('active'):
+                itrparse = True
+                itr = {}
+                linedata = line.split(':', maxsplit=1)
+                active = linedata[1].strip()
+                cookies.update({'active': active})
+                continue
+
+            if line.startswith('staging'):
+                linedata = line.split(':', maxsplit=1)
+                staging = linedata[1].strip()
+                cookies.update({'staging': staging})
+                continue
+
 
             # print_tsig
-            elif line.startswith('key:'):
+            if line.startswith('key:'):
                 tsigs = {}
                 tsigdata = dict()
-                linedata = line.rsplit(' ', maxsplit=6)
+                linedata = line.split(' ', maxsplit=6)
                 name = linedata[2].strip('"').rstrip('"')
                 tsigdata.update({'name': name})
                 secret = linedata[4].strip('"').rstrip('"')
@@ -173,36 +192,58 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 tsigdata.update({'algorithm': algorithm})
                 tsigs.update({'key': tsigdata})
                 raw_output.append(tsigs)
+                continue
+
 
             # zonestatus
-            elif line.startswith('zone:'):
+            if line.startswith('zone:'):
                 zonename = dict()
                 zstatus = dict()
-                linedata = line.rsplit(':\t', maxsplit=1)
-                zone = linedata[1].strip().rstrip()
+                linedata = line.split(':\t', maxsplit=1)
+                zone = linedata[1]
                 zonename.update({'zone': zone})
+                continue
 
-            elif line.startswith('\tstate:'):
-                linedata = line.rsplit(': ', maxsplit=1)
-                state = linedata[1].strip().rstrip()
+            if line.startswith('state:'):
+                linedata = line.split(': ', maxsplit=1)
+                state = linedata[1]
                 zstatus.update({'state': state})
+                continue
 
-            elif line.startswith('\tserved-serial:'):
-                linedata = line.rsplit(': ', maxsplit=1)
+            if line.startswith('served-serial:'):
+                linedata = line.split(': ', maxsplit=1)
                 served = linedata[1].strip('"').rstrip('"')
                 zstatus.update({'served-serial': served})
+                continue
 
-            elif line.startswith('\tcommit-serial:'):
-                linedata = line.rsplit(': ', maxsplit=1)
+            if line.startswith('commit-serial:'):
+                linedata = line.split(': ', maxsplit=1)
                 commit = linedata[1].strip('"').rstrip('"')
                 zstatus.update({'commit-serial': commit})
+                continue
 
-            elif line.startswith('\twait:'):
-                linedata = line.rsplit(': ', maxsplit=1)
+            if line.startswith('wait:'):
+                linedata = line.split(': ', maxsplit=1)
                 wait = linedata[1].strip('"').rstrip('"')
                 zstatus.update({'wait': wait})
                 zonename.update({'status': zstatus})
                 raw_output.append(zonename)
+                continue
 
+
+            # stats
+            if line.startswith('server') or line.startswith('num.') or line.startswith('size.') or line.startswith('time.') or line.startswith('zone.'):
+                itrparse = True
+                linedata = line.split('=', maxsplit=1)
+                key = linedata[0]
+                if key.startswith('time.'):
+                    value = float(linedata[1])
+                else:
+                    value = int(linedata[1])
+                itr.update({key: value})
+                continue
+
+        if itrparse:
+            raw_output.append(itr)
 
     return raw_output if raw else _process(raw_output)
