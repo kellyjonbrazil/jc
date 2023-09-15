@@ -1,0 +1,8 @@
+PING 10.0.3.22 (10.0.3.22) 56(84) bytes of data.
+From 10.0.0.1 icmp_seq=1 Destination Host Unreachable
+From 10.0.0.1 icmp_seq=2 Destination Host Unreachable
+From 10.0.0.1 icmp_seq=3 Destination Host Unreachable
+
+--- 10.0.3.22 ping statistics ---
+3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 2049ms
+pipe 3
