@@ -14,6 +14,9 @@ class MyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         fixtures = {
+            'default': (
+                'fixtures/generic/nsd_control.out',
+                'fixtures/generic/nsd_control.json'),
             'status': (
                 'fixtures/generic/nsd_control-status.out',
                 'fixtures/generic/nsd_control-status.json'),
@@ -29,11 +32,14 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
-#    def test_nsd_control_nodata(self):
-#        """
-#        Test 'nsd-control' with no data
-#        """
-#        self.assertEqual(parse('', quiet=True), {})
+    def test_nsd_control_default(self):
+        """
+        Test 'nsd-control <command>' with default output
+        """
+        self.assertEqual(
+            parse(self.f_in['default'], quiet=True),
+            self.f_json['default']
+        )
 
 
     def test_host_google(self):
