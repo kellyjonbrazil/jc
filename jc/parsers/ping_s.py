@@ -40,8 +40,8 @@ Schema:
       "ttl":                        integer,
       "time_ms":                    float,
       "duplicate":                  boolean,
-      "packets_transmitted":        integer,  # null if not set
-      "packets_received":           integer,  # null if not set
+      "packets_transmitted":        integer,
+      "packets_received":           integer,
       "packet_loss_percent":        float,
       "duplicates":                 integer,
       "errors":                     integer,  # null if not set
@@ -384,38 +384,38 @@ def _linux_parse(line, s):
         #
         m = re.search(r'(\d+) packets transmitted', line)
         if m:
-            s.packets_transmitted = int(m.group(1))
+            s.packets_transmitted = m.group(1)
 
         m = re.search(r'(\d+) received,', line)
         if m:
-            s.packets_received = int(m.group(1))
+            s.packets_received = m.group(1)
 
         m = re.search(r'[+](\d+) duplicates', line)
         if m:
-            s.duplicates = int(m.group(1))
+            s.duplicates = m.group(1)
 
         m = re.search(r'[+](\d+) corrupted', line)
         if m:
-            s.corrupted = int(m.group(1))
+            s.corrupted = m.group(1)
 
         m = re.search(r'[+](\d+) errors', line)
         if m:
-            s.errors = int(m.group(1))
+            s.errors = m.group(1)
 
         m = re.search(r'([\d\.]+)% packet loss', line)
         if m:
-            s.packet_loss_percent = float(m.group(1))
+            s.packet_loss_percent = m.group(1)
 
         m = re.search(r'time (\d+)ms', line)
         if m:
-            s.time_ms = int(m.group(1))
+            s.time_ms = m.group(1)
 
         m = re.search(r'rtt min\/avg\/max\/mdev += +([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+) ms', line)
         if m:
-            s.round_trip_ms_min = float(m.group(1))
-            s.round_trip_ms_avg = float(m.group(2))
-            s.round_trip_ms_max = float(m.group(3))
-            s.round_trip_ms_stddev = float(m.group(4))
+            s.round_trip_ms_min = m.group(1)
+            s.round_trip_ms_avg = m.group(2)
+            s.round_trip_ms_max = m.group(3)
+            s.round_trip_ms_stddev = m.group(4)
 
         output_line = {
             'type': 'summary',

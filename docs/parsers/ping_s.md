@@ -45,8 +45,8 @@ Schema:
       "ttl":                        integer,
       "time_ms":                    float,
       "duplicate":                  boolean,
-      "packets_transmitted":        integer,  # null if not set
-      "packets_received":           integer,  # null if not set
+      "packets_transmitted":        integer,
+      "packets_received":           integer,
       "packet_loss_percent":        float,
       "duplicates":                 integer,
       "errors":                     integer,  # null if not set
