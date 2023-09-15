@@ -42,7 +42,7 @@ class MyTests(unittest.TestCase):
         )
 
 
-    def test_host_google(self):
+    def test_nsd_control_status(self):
         """
         Test 'nsd-control status'
         """
