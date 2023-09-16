@@ -1,0 +1,8 @@
+Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384
+test-3-1 disconnected primary (normal left inverted right x axis y axis)
+test-3-2 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 521mm x 293mm
+   1920x1080     60.00*+  59.94    60.00
+   1680x1050     60.00    59.88
+   1400x1050     60.00
+   1600x900      60.00
+   1280x1024     75.02    60.02    60.00

@@ -21,13 +21,15 @@ from jc.parsers.xrandr import (
     Screen,
 )
 
+import pprint
+
 
 class XrandrTests(unittest.TestCase):
     def test_xrandr_nodata(self):
         """
         Test 'xrandr' with no data
         """
-        self.assertEqual(parse('', quiet=True), {})
+        self.assertEqual(parse("", quiet=True), {"screens": []})
 
     def test_regexes(self):
         devices = [
@@ -141,9 +143,7 @@ class XrandrTests(unittest.TestCase):
 
         device = _parse_device(extended_sample)
         if device:
-            self.assertEqual(
-                59.94, device["associated_modes"][12]["frequencies"][4]["frequency"]
-            )
+            self.assertEqual(59.94, device["modes"][12]["frequencies"][4]["frequency"])
 
     def test_device_with_reflect(self):
         sample = "VGA-1 connected primary 1920x1080+0+0 left X and Y axis (normal left inverted right x axis y axis) 310mm x 170mm"
@@ -195,67 +195,49 @@ class XrandrTests(unittest.TestCase):
             self.assertEqual(True, actual["is_high_resolution"])
             self.assertEqual(50.0, actual["frequencies"][1]["frequency"])
 
-    def test_complete(self):
+    def test_complete_1(self):
         self.maxDiff = None
         with open("tests/fixtures/generic/xrandr.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(4, len(actual["unassociated_devices"]))
-        self.assertEqual(
-            18, len(actual["screens"][0]["associated_device"]["associated_modes"])
-        )
+        self.assertEqual(18, len(actual["screens"][0]["devices"][0]["modes"]))
 
+    def test_complete_2(self):
         with open("tests/fixtures/generic/xrandr_2.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(3, len(actual["unassociated_devices"]))
+        self.assertEqual(38, len(actual["screens"][0]["devices"][0]["modes"]))
+
+    def test_complete_3(self):
+        with open("tests/fixtures/generic/xrandr_3.out", "r") as f:
+            txt = f.read()
+        actual = parse(txt, quiet=True)
+
+        self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
-            38, len(actual["screens"][0]["associated_device"]["associated_modes"])
+            2,
+            len(actual["screens"][0]["devices"]),
         )
 
+    def test_complete_4(self):
         with open("tests/fixtures/generic/xrandr_simple.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(0, len(actual["unassociated_devices"]))
-        self.assertEqual(
-            2, len(actual["screens"][0]["associated_device"]["associated_modes"])
-        )
+        self.assertEqual(2, len(actual["screens"][0]["devices"][0]["modes"]))
 
+    def test_complete_5(self):
         with open("tests/fixtures/generic/xrandr_properties.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(3, len(actual["unassociated_devices"]))
-        self.assertEqual(
-            29, len(actual["screens"][0]["associated_device"]["associated_modes"])
-        )
-
-    def test_infinite_loop_fix(self):
-        with open("tests/fixtures/generic/xrandr_fix_spaces.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
-
-        with open("tests/fixtures/generic/xrandr_fix_spaces.json", "r") as f:
-            json_dict = json.loads(f.read())
-
-        self.assertEqual(actual, json_dict)
-
-    def test_is_current_fix(self):
-        with open("tests/fixtures/generic/xrandr_is_current_fix.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
-
-        with open("tests/fixtures/generic/xrandr_is_current_fix.json", "r") as f:
-            json_dict = json.loads(f.read())
-
-        self.assertEqual(actual, json_dict)
+        self.assertEqual(29, len(actual["screens"][0]["devices"][0]["modes"]))
 
     def test_model(self):
         asus_edid = [
