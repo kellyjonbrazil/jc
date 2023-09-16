@@ -1,5 +1,9 @@
 jc changelog
 
+20230820 v1.23.5
+- Fix `pidstat` command parser when using `-T ALL`
+- Add error and corrupted support for `ping` and `ping-s` parsers
+
 20230730 v1.23.4
 - Add `/etc/resolve.conf` file parser
 - Add `/proc/net/tcp` and `/proc/net/tcp6` file parser

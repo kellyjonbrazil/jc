@@ -36,7 +36,7 @@ Schema:
       "source_ip":                  string,
       "destination_ip":             string,
       "sent_bytes":                 integer,
-      "pattern":                    string,   # (null if not set)
+      "pattern":                    string,   # null if not set
       "destination":                string,
       "timestamp":                  float,
       "response_bytes":             integer,
@@ -49,10 +49,12 @@ Schema:
       "packets_received":           integer,
       "packet_loss_percent":        float,
       "duplicates":                 integer,
-      "round_trip_ms_min":          float,
-      "round_trip_ms_avg":          float,
-      "round_trip_ms_max":          float,
-      "round_trip_ms_stddev":       float,
+      "errors":                     integer,  # null if not set
+      "corrupted":                  integer,  # null if not set
+      "round_trip_ms_min":          float,    # null if not set
+      "round_trip_ms_avg":          float,    # null if not set
+      "round_trip_ms_max":          float,    # null if not set
+      "round_trip_ms_stddev":       float,    # null if not set
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
@@ -106,4 +108,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
