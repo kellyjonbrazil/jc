@@ -263,7 +263,7 @@ try:
             "current_height": int,
             "maximum_width": int,
             "maximum_height": int,
-            "devices": list[Device],
+            "devices": List[Device],
         },
     )
     Response = TypedDict(
