@@ -192,14 +192,15 @@ from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
+
     version = "1.2"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
-    author_email = "lyter_git at sent.com"
-    details = 'Using parts of the pyedid library at https://github.com/jojonas/pyedid.'
+    author_email = "code (at) lyterk.com"
+    details = "Using parts of the pyedid library at https://github.com/jojonas/pyedid."
     compatible = ["linux", "darwin", "cygwin", "aix", "freebsd"]
     magic_commands = ["xrandr"]
-    tags = ['command']
+    tags = ["command"]
 
 
 __version__ = info.version
@@ -349,14 +350,21 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         "reflection": matches["reflection"] or "normal",
     }
     for k, v in matches.items():
-        if k not in {"is_connected", "is_primary", "device_name", "rotation", "reflection"}:
+        if k not in {
+            "is_connected",
+            "is_primary",
+            "device_name",
+            "rotation",
+            "reflection",
+        }:
             try:
                 if v:
                     device[k] = int(v)
-            except ValueError and not quiet:
-                jc.utils.warning_message(
-                    [f"{next_line} : {k} - {v} is not int-able"]
-                )
+            except ValueError:
+                if not quiet:
+                    jc.utils.warning_message(
+                        [f"{next_line} : {k} - {v} is not int-able"]
+                    )
 
     model: Optional[Model] = _parse_model(next_lines, quiet)
     if model:
@@ -463,7 +471,7 @@ def _parse_mode(line: str) -> Optional[Mode]:
     return mode
 
 
-def parse(data: str, raw: bool =False, quiet: bool =False) -> Dict:
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict:
     """
     Main text parsing function
 

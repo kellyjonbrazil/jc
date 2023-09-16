@@ -46,7 +46,7 @@ class XrandrTests(unittest.TestCase):
 
         screens = [
             "Screen 0: minimum 8 x 8, current 1920 x 1080, maximum 32767 x 32767",
-            "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
+            "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384",
         ]
         for screen in screens:
             self.assertIsNotNone(re.match(_screen_pattern, screen))
@@ -65,7 +65,7 @@ class XrandrTests(unittest.TestCase):
             if match:
                 rest = match.groupdict()["rest"]
                 self.assertIsNotNone(re.match(_frequencies_pattern, rest))
-        
+
         edid_lines = [
             "     EDID: ",
             "            00ffffffffffff000469d41901010101 ",
@@ -75,7 +75,7 @@ class XrandrTests(unittest.TestCase):
             "            360098ff1000001c000000fd00374b1e ",
             "            530f000a202020202020000000fc0041 ",
             "            535553205657313933530a20000000ff ",
-            "            0037384c383032313130370a20200077 "
+            "            0037384c383032313130370a20200077 ",
         ]
 
         for i in range(len(edid_lines)):
@@ -106,7 +106,9 @@ class XrandrTests(unittest.TestCase):
             for k, v in expected.items():
                 self.assertEqual(v, actual[k], f"screens regex failed on {k}")
 
-        sample = "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
+        sample = (
+            "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
+        )
         actual = _parse_screen([sample])
         if actual:
             self.assertEqual(320, actual["minimum_width"])
@@ -249,7 +251,7 @@ class XrandrTests(unittest.TestCase):
             "         360098ff1000001c000000fd00374b1e",
             "         530f000a202020202020000000fc0041",
             "         535553205657313933530a20000000ff",
-            "         0037384c383032313130370a20200077"
+            "         0037384c383032313130370a20200077",
         ]
         asus_edid.reverse()
 
@@ -275,8 +277,8 @@ class XrandrTests(unittest.TestCase):
             "         250058c2100000190000000f00000000",
             "         000000000025d9066a00000000fe0053",
             "         414d53554e470a204ca34154000000fe",
-            "         004c544e313536415432343430310018"
-        ]       
+            "         004c544e313536415432343430310018",
+        ]
         generic_edid.reverse()
 
         expected = {
@@ -296,5 +298,6 @@ class XrandrTests(unittest.TestCase):
         actual: Optional[Model] = _parse_model(empty_edid)
         self.assertIsNone(actual)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
