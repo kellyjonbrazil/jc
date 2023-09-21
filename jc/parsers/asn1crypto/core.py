@@ -2333,8 +2333,8 @@ class BitString(_IntegerBitString, Constructable, Castable, Primitive, ValueMap)
             if self._map:
                 self._native = set()
                 for index, bit in enumerate(bits):
-                    if bit:
-                        name = self._map.get(index, index)
+                    if bit and index in self._map:
+                        name = self._map.get(index)
                         self._native.add(name)
             else:
                 self._native = bits
