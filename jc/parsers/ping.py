@@ -326,45 +326,45 @@ def _linux_parse(data):
         if footer:
             # Init in zero, to keep compatibility with previous behaviour
             if 'duplicates' not in raw_output:
-                raw_output['duplicates'] = 0
+                raw_output['duplicates'] = '0'
 
             #
             # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
             #
             m = re.search(r'(\d+) packets transmitted', line)
             if m:
-                raw_output['packets_transmitted'] = int(m.group(1))
+                raw_output['packets_transmitted'] = m.group(1)
 
             m = re.search(r'(\d+) received,', line)
             if m:
-                raw_output['packets_received'] = int(m.group(1))
+                raw_output['packets_received'] = m.group(1)
 
             m = re.search(r'[+](\d+) duplicates', line)
             if m:
-                raw_output['duplicates'] = int(m.group(1))
+                raw_output['duplicates'] = m.group(1)
 
             m = re.search(r'[+](\d+) corrupted', line)
             if m:
-                raw_output['corrupted'] = int(m.group(1))
+                raw_output['corrupted'] = m.group(1)
 
             m = re.search(r'[+](\d+) errors', line)
             if m:
-                raw_output['errors'] = int(m.group(1))
+                raw_output['errors'] = m.group(1)
 
             m = re.search(r'([\d\.]+)% packet loss', line)
             if m:
-                raw_output['packet_loss_percent'] = float(m.group(1))
+                raw_output['packet_loss_percent'] = m.group(1)
 
             m = re.search(r'time (\d+)ms', line)
             if m:
-                raw_output['time_ms'] = int(m.group(1))
+                raw_output['time_ms'] = m.group(1)
 
             m = re.search(r'rtt min\/avg\/max\/mdev += +([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+) ms', line)
             if m:
-                raw_output['round_trip_ms_min'] = float(m.group(1))
-                raw_output['round_trip_ms_avg'] = float(m.group(2))
-                raw_output['round_trip_ms_max'] = float(m.group(3))
-                raw_output['round_trip_ms_stddev'] = float(m.group(4))
+                raw_output['round_trip_ms_min'] = m.group(1)
+                raw_output['round_trip_ms_avg'] = m.group(2)
+                raw_output['round_trip_ms_max'] = m.group(3)
+                raw_output['round_trip_ms_stddev'] = m.group(4)
 
         # ping response lines
         else:
