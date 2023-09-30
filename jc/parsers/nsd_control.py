@@ -1,7 +1,5 @@
 """jc - JSON Convert `nsd-control` command output parser
 
-<<Short nsd-control description and caveats>>
-
 Usage (cli):
 
     $ nsd-control | jc --nsd-control
@@ -21,15 +19,15 @@ Schema:
       {
         "version":    string,
         "verbosity":  integer,
-        "ratelimit":  integer 
+        "ratelimit":  integer
       }
     ]
 
     [
       {
-        "zone":             string 
+        "zone":             string
         "status": {
-          "state":          string, 
+          "state":          string,
           "served-serial":  string,
           "commit-serial":  string,
           "wait":           string
@@ -72,12 +70,7 @@ class info():
     description = '`nsd-control` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-
-    # tags options: generic, standard, file, string, binary, command
     tags = ['command']
     magic_commands = ['nsd-control']
 
@@ -97,7 +90,6 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
     int_list = {'verbosity', 'ratelimit', 'wait'}
 
     for entry in proc_data:
@@ -126,8 +118,6 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
- 
-    warned = False
 
     if jc.utils.has_data(data):
 
@@ -168,16 +158,15 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 itrparse = True
                 itr = {}
                 linedata = line.split(':', maxsplit=1)
-                active = linedata[1].strip()
-                cookies.update({'active': active})
+                # active = linedata[1].strip()  # This isn't doing anything
+                # cookies.update({'active': active})  # This isn't doing anything
                 continue
 
             if line.startswith('staging'):
                 linedata = line.split(':', maxsplit=1)
-                staging = linedata[1].strip()
-                cookies.update({'staging': staging})
+                # staging = linedata[1].strip()  # This isn't doing anything
+                # cookies.update({'staging': staging})  # This isn't doing anything
                 continue
-
 
             # print_tsig
             if line.startswith('key:'):
@@ -193,7 +182,6 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 tsigs.update({'key': tsigdata})
                 raw_output.append(tsigs)
                 continue
-
 
             # zonestatus
             if line.startswith('zone:'):
@@ -229,7 +217,6 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 zonename.update({'status': zstatus})
                 raw_output.append(zonename)
                 continue
-
 
             # stats
             if line.startswith('server') or line.startswith('num.') or line.startswith('size.') or line.startswith('time.') or line.startswith('zone.'):

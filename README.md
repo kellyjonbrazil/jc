@@ -235,6 +235,7 @@ option.
 |      `--mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |
 |       `--netstat` | `netstat` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat)        |
 |         `--nmcli` | `nmcli` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli)          |
+|   `--nsd-control` | `nsd-control` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nsd_control)    |
 |          `--ntpq` | `ntpq -p` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq)           |
 |       `--openvpn` | openvpn-status.log file parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/openvpn)        |
 |     `--os-prober` | `os-prober` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_prober)      |
