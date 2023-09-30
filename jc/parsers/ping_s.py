@@ -31,7 +31,7 @@ Schema:
       "source_ip":                  string,
       "destination_ip":             string,
       "sent_bytes":                 integer,
-      "pattern":                    string,   # (null if not set)
+      "pattern":                    string,   # null if not set
       "destination":                string,
       "timestamp":                  float,
       "response_bytes":             integer,
@@ -44,10 +44,12 @@ Schema:
       "packets_received":           integer,
       "packet_loss_percent":        float,
       "duplicates":                 integer,
-      "round_trip_ms_min":          float,
-      "round_trip_ms_avg":          float,
-      "round_trip_ms_max":          float,
-      "round_trip_ms_stddev":       float,
+      "errors":                     integer,  # null if not set
+      "corrupted":                  integer,  # null if not set
+      "round_trip_ms_min":          float,    # null if not set
+      "round_trip_ms_avg":          float,    # null if not set
+      "round_trip_ms_max":          float,    # null if not set
+      "round_trip_ms_stddev":       float,    # null if not set
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
@@ -74,6 +76,7 @@ Examples:
     {"type":"reply","destination_ip":"1.1.1.1","sent_bytes":"56","patte...}
     ...
 """
+import re
 import string
 import ipaddress
 import jc.utils
@@ -85,7 +88,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,13 +113,14 @@ def _process(proc_data):
         Dictionary. Structured data to conform to the schema.
     """
     int_list = {
-        'sent_bytes', 'packets_transmitted', 'packets_received', 'response_bytes', 'icmp_seq',
-        'ttl', 'duplicates', 'vr', 'hl', 'tos', 'len', 'id', 'flg', 'off', 'pro', 'cks'
+        'sent_bytes', 'packets_transmitted', 'packets_received',
+        'response_bytes', 'icmp_seq', 'ttl', 'duplicates', 'vr', 'hl', 'tos',
+        'len', 'id', 'flg', 'off', 'pro', 'cks', 'errors', 'corrupted'
     }
 
     float_list = {
-        'packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg', 'round_trip_ms_max',
-        'round_trip_ms_stddev', 'timestamp', 'time_ms'
+        'packet_loss_percent', 'round_trip_ms_min', 'round_trip_ms_avg',
+        'round_trip_ms_max', 'round_trip_ms_stddev', 'timestamp', 'time_ms'
     }
 
     for key in proc_data:
@@ -144,6 +148,12 @@ class _state:
     packet_loss_percent = None
     time_ms = None
     duplicates = None
+    corrupted = None
+    errors = None
+    round_trip_ms_min = None
+    round_trip_ms_avg = None
+    round_trip_ms_max = None
+    round_trip_ms_stddev = None
 
 
 def _ipv6_in(line):
@@ -369,24 +379,44 @@ def _linux_parse(line, s):
         return None
 
     if s.footer:
-        if 'packets transmitted' in line:
-            if ' duplicates,' in line:
-                s.packets_transmitted = line.split()[0]
-                s.packets_received = line.split()[3]
-                s.packet_loss_percent = line.split()[7].rstrip('%')
-                s.duplicates = line.split()[5].lstrip('+')
-                s.time_ms = line.split()[11].replace('ms', '')
-                return None
+        #
+        # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
+        #
+        m = re.search(r'(\d+) packets transmitted', line)
+        if m:
+            s.packets_transmitted = m.group(1)
 
-            s.packets_transmitted = line.split()[0]
-            s.packets_received = line.split()[3]
-            s.packet_loss_percent = line.split()[5].rstrip('%')
-            s.duplicates = '0'
-            s.time_ms = line.split()[9].replace('ms', '')
-            return None
+        m = re.search(r'(\d+) received,', line)
+        if m:
+            s.packets_received = m.group(1)
 
-        split_line = line.split(' = ')[1]
-        split_line = split_line.split('/')
+        m = re.search(r'[+](\d+) duplicates', line)
+        if m:
+            s.duplicates = m.group(1)
+
+        m = re.search(r'[+](\d+) corrupted', line)
+        if m:
+            s.corrupted = m.group(1)
+
+        m = re.search(r'[+](\d+) errors', line)
+        if m:
+            s.errors = m.group(1)
+
+        m = re.search(r'([\d\.]+)% packet loss', line)
+        if m:
+            s.packet_loss_percent = m.group(1)
+
+        m = re.search(r'time (\d+)ms', line)
+        if m:
+            s.time_ms = m.group(1)
+
+        m = re.search(r'rtt min\/avg\/max\/mdev += +([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+) ms', line)
+        if m:
+            s.round_trip_ms_min = m.group(1)
+            s.round_trip_ms_avg = m.group(2)
+            s.round_trip_ms_max = m.group(3)
+            s.round_trip_ms_stddev = m.group(4)
+
         output_line = {
             'type': 'summary',
             'destination_ip': s.destination_ip or None,
@@ -394,15 +424,16 @@ def _linux_parse(line, s):
             'pattern': s.pattern or None,
             'packets_transmitted': s.packets_transmitted or None,
             'packets_received': s.packets_received or None,
-            'packet_loss_percent': s.packet_loss_percent or None,
-            'duplicates': s.duplicates or None,
-            'time_ms': s.time_ms or None,
-            'round_trip_ms_min': split_line[0],
-            'round_trip_ms_avg': split_line[1],
-            'round_trip_ms_max': split_line[2],
-            'round_trip_ms_stddev': split_line[3].split()[0]
+            'packet_loss_percent': s.packet_loss_percent,
+            'duplicates': s.duplicates or '0',
+            'errors': s.errors,
+            'corrupted': s.corrupted,
+            'time_ms': s.time_ms,
+            'round_trip_ms_min': s.round_trip_ms_min,
+            'round_trip_ms_avg': s.round_trip_ms_avg,
+            'round_trip_ms_max': s.round_trip_ms_max,
+            'round_trip_ms_stddev': s.round_trip_ms_stddev
         }
-
         return output_line
 
     # ping response lines
@@ -488,6 +519,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     streaming_input_type_check(data)
 
     s = _state()
+    summary_obj = {}
 
     for line in data:
         try:
@@ -528,6 +560,12 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             if s.os_detected and s.linux:
                 output_line = _linux_parse(line, s)
 
+                # summary can be multiple lines so don't output until the end
+                if output_line:
+                    if output_line.get('type', None) == 'summary':
+                        summary_obj = output_line
+                        continue
+
             elif s.os_detected and s.bsd:
                 output_line = _bsd_parse(line, s)
 
@@ -542,3 +580,10 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
+
+    # yield summary, if it exists
+    try:
+        if summary_obj:
+            yield summary_obj if raw else _process(summary_obj)
+    except Exception as e:
+        yield raise_or_yield(ignore_exceptions, e, str(summary_obj))

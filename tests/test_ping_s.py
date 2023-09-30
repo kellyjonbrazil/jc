@@ -58,7 +58,7 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-missing-hostname.out'), 'r', encoding='utf-8') as f:
         centos_7_7_ping_missing_hostname = f.read()
 
-    # ubuntu
+    # ubuntu 18.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ping_ip_O = f.read()
 
@@ -85,6 +85,10 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ping6_hostname_O_D_p_s = f.read()
+
+    # ubuntu 22.4
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-dest-unreachable.out'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping_dest_unreachable = f.read()
 
     # fedora
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.out'), 'r', encoding='utf-8') as f:
@@ -252,7 +256,7 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-missing-hostname-streaming.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ping_missing_hostname_json = json.loads(f.read())
 
-    # ubunutu
+    # ubunutu 18.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ping_ip_O_streaming_json = json.loads(f.read())
 
@@ -279,6 +283,10 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping6-hostname-O-D-p-s-streaming.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json = json.loads(f.read())
+
+    # ubuntu 22.4
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-dest-unreachable-streaming.json'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping_dest_unreachable_streaming_json = json.loads(f.read())
 
     # fedora
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O-streaming.json'), 'r', encoding='utf-8') as f:
@@ -560,6 +568,12 @@ class MyTests(unittest.TestCase):
         Test 'ping6 <hostname> -O -D -p -s' on Ubuntu 18.4
         """
         self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_18_4_ping6_hostname_O_D_p_s.splitlines(), quiet=True)), self.ubuntu_18_4_ping6_hostname_O_D_p_s_streaming_json)
+
+    def test_ping_dest_unreachable_ubuntu_22_4(self):
+        """
+        Test 'ping' on Ubuntu 22.4 with destination unreachable message
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_22_4_ping_dest_unreachable.splitlines(), quiet=True)), [self.ubuntu_22_4_ping_dest_unreachable_streaming_json])
 
     def test_ping_s_ip_O_fedora32(self):
         """
