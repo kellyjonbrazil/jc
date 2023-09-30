@@ -26,8 +26,8 @@ Schema:
           "current_height":                    integer,
           "maximum_width":                     integer,
           "maximum_height":                    integer,
-          "associated_device": {
-            "associated_modes": [
+          "devices": {
+            "modes": [
               {
                 "resolution_width":            integer,
                 "resolution_height":           integer,
@@ -58,24 +58,6 @@ Schema:
           "reflection":                        string
         }
       ],
-      "unassociated_devices": [
-        {
-          "associated_modes": [
-            {
-              "resolution_width":              integer,
-              "resolution_height":             integer,
-              "is_high_resolution":            boolean,
-              "frequencies": [
-                {
-                  "frequency":                 float,
-                  "is_current":                boolean,
-                  "is_preferred":              boolean
-                }
-              ]
-            }
-          ]
-        }
-      ]
     }
 
 Examples:
@@ -91,8 +73,8 @@ Examples:
           "current_height": 1080,
           "maximum_width": 32767,
           "maximum_height": 32767,
-          "associated_device": {
-            "associated_modes": [
+          "devices": {
+            "modes": [
               {
                 "resolution_width": 1920,
                 "resolution_height": 1080,
@@ -136,8 +118,7 @@ Examples:
             "reflection": "normal"
           }
         }
-      ],
-      "unassociated_devices": []
+      ]
     }
 
     $ xrandr --properties | jc --xrandr -p
@@ -151,8 +132,8 @@ Examples:
           "current_height": 1080,
           "maximum_width": 32767,
           "maximum_height": 32767,
-          "associated_device": {
-            "associated_modes": [
+          "devices": {
+            "modes": [
               {
                 "resolution_width": 1920,
                 "resolution_height": 1080,
@@ -199,8 +180,7 @@ Examples:
             "reflection": "normal"
           }
         }
-      ],
-      "unassociated_devices": []
+      ]
     }
 """
 import re
@@ -212,14 +192,15 @@ from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
+
     version = "1.2"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
-    author_email = "lyter_git at sent.com"
-    details = 'Using parts of the pyedid library at https://github.com/jojonas/pyedid.'
+    author_email = "code (at) lyterk.com"
+    details = "Using parts of the pyedid library at https://github.com/jojonas/pyedid."
     compatible = ["linux", "darwin", "cygwin", "aix", "freebsd"]
     magic_commands = ["xrandr"]
-    tags = ['command']
+    tags = ["command"]
 
 
 __version__ = info.version
@@ -267,7 +248,7 @@ try:
             "offset_height": int,
             "dimension_width": int,
             "dimension_height": int,
-            "associated_modes": List[Mode],
+            "modes": List[Mode],
             "rotation": str,
             "reflection": str,
         },
@@ -282,14 +263,13 @@ try:
             "current_height": int,
             "maximum_width": int,
             "maximum_height": int,
-            "associated_device": Device,
+            "devices": List[Device],
         },
     )
     Response = TypedDict(
         "Response",
         {
             "screens": List[Screen],
-            "unassociated_devices": List[Device],
         },
     )
 except ImportError:
@@ -317,14 +297,17 @@ def _parse_screen(next_lines: List[str]) -> Optional[Screen]:
         return None
 
     raw_matches = result.groupdict()
-    screen: Screen = {}
+
+    screen: Screen = {"devices": []}
     for k, v in raw_matches.items():
         screen[k] = int(v)
 
-    if next_lines:
+    while next_lines:
         device: Optional[Device] = _parse_device(next_lines)
-        if device:
-            screen["associated_device"] = device
+        if not device:
+            break
+        else:
+            screen["devices"].append(device)
 
     return screen
 
@@ -358,7 +341,7 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
     matches = result.groupdict()
 
     device: Device = {
-        "associated_modes": [],
+        "modes": [],
         "is_connected": matches["is_connected"] == "connected",
         "is_primary": matches["is_primary"] is not None
         and len(matches["is_primary"]) > 0,
@@ -367,14 +350,21 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         "reflection": matches["reflection"] or "normal",
     }
     for k, v in matches.items():
-        if k not in {"is_connected", "is_primary", "device_name", "rotation", "reflection"}:
+        if k not in {
+            "is_connected",
+            "is_primary",
+            "device_name",
+            "rotation",
+            "reflection",
+        }:
             try:
                 if v:
                     device[k] = int(v)
-            except ValueError and not quiet:
-                jc.utils.warning_message(
-                    [f"{next_line} : {k} - {v} is not int-able"]
-                )
+            except ValueError:
+                if not quiet:
+                    jc.utils.warning_message(
+                        [f"{next_line} : {k} - {v} is not int-able"]
+                    )
 
     model: Optional[Model] = _parse_model(next_lines, quiet)
     if model:
@@ -386,7 +376,7 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         next_line = next_lines.pop()
         next_mode: Optional[Mode] = _parse_mode(next_line)
         if next_mode:
-            device["associated_modes"].append(next_mode)
+            device["modes"].append(next_mode)
         else:
             if re.match(_device_pattern, next_line):
                 next_lines.append(next_line)
@@ -481,7 +471,7 @@ def _parse_mode(line: str) -> Optional[Mode]:
     return mode
 
 
-def parse(data: str, raw: bool =False, quiet: bool =False) -> Dict:
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict:
     """
     Main text parsing function
 
@@ -500,19 +490,12 @@ def parse(data: str, raw: bool =False, quiet: bool =False) -> Dict:
 
     linedata = data.splitlines()
     linedata.reverse()  # For popping
-    result: Response = {"screens": [], "unassociated_devices": []}
+    result: Response = {"screens": []}
 
     if jc.utils.has_data(data):
         while linedata:
             screen = _parse_screen(linedata)
             if screen:
                 result["screens"].append(screen)
-            else:
-                device = _parse_device(linedata, quiet)
-                if device:
-                    result["unassociated_devices"].append(device)
-
-    if not result["unassociated_devices"] and not result["screens"]:
-        return {}
 
     return result
