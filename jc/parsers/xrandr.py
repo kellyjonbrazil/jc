@@ -193,7 +193,7 @@ from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.2"
+    version = "1.3"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"

@@ -31,8 +31,8 @@ Schema:
           "current_height":                    integer,
           "maximum_width":                     integer,
           "maximum_height":                    integer,
-          "associated_device": {
-            "associated_modes": [
+          "devices": {
+            "modes": [
               {
                 "resolution_width":            integer,
                 "resolution_height":           integer,
@@ -63,24 +63,6 @@ Schema:
           "reflection":                        string
         }
       ],
-      "unassociated_devices": [
-        {
-          "associated_modes": [
-            {
-              "resolution_width":              integer,
-              "resolution_height":             integer,
-              "is_high_resolution":            boolean,
-              "frequencies": [
-                {
-                  "frequency":                 float,
-                  "is_current":                boolean,
-                  "is_preferred":              boolean
-                }
-              ]
-            }
-          ]
-        }
-      ]
     }
 
 Examples:
@@ -96,8 +78,8 @@ Examples:
           "current_height": 1080,
           "maximum_width": 32767,
           "maximum_height": 32767,
-          "associated_device": {
-            "associated_modes": [
+          "devices": {
+            "modes": [
               {
                 "resolution_width": 1920,
                 "resolution_height": 1080,
@@ -141,8 +123,7 @@ Examples:
             "reflection": "normal"
           }
         }
-      ],
-      "unassociated_devices": []
+      ]
     }
 
     $ xrandr --properties | jc --xrandr -p
@@ -156,8 +137,8 @@ Examples:
           "current_height": 1080,
           "maximum_width": 32767,
           "maximum_height": 32767,
-          "associated_device": {
-            "associated_modes": [
+          "devices": {
+            "modes": [
               {
                 "resolution_width": 1920,
                 "resolution_height": 1080,
@@ -204,8 +185,7 @@ Examples:
             "reflection": "normal"
           }
         }
-      ],
-      "unassociated_devices": []
+      ]
     }
 
 <a id="jc.parsers.xrandr.parse"></a>
@@ -231,4 +211,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.2 by Kevin Lyter (lyter_git at sent.com)
+Version 1.3 by Kevin Lyter (code (at) lyterk.com)
