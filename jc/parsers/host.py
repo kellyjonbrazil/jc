@@ -92,12 +92,7 @@ class info():
     description = '`host` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-
-    # tags options: generic, standard, file, string, binary, command
     tags = ['command']
     magic_commands = ['host']
 
@@ -146,7 +141,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
- 
+
     warned = False
 
     if jc.utils.has_data(data):
@@ -221,7 +216,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 retry = linedata[8]
                 expire = linedata[9]
                 minimum = linedata[10]
-            
+
                 try:
                     rrdata.update(
                         {

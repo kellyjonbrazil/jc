@@ -29,11 +29,11 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 #    host cannot run without input (will only display help)
-#    def test_host_nodata(self):
-#        """
-#        Test 'host' with no data
-#        """
-#        self.assertEqual(parse('', quiet=True), {})
+    def test_host_nodata(self):
+       """
+       Test 'host' with no data
+       """
+       self.assertEqual(parse('', quiet=True), [])
 
 
     def test_host_google(self):

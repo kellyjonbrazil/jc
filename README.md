@@ -202,6 +202,7 @@ option.
 |       `--hashsum` | hashsum command parser (`md5sum`, `shasum`, etc.)       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hashsum)        |
 |     `--hciconfig` | `hciconfig` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hciconfig)      |
 |       `--history` | `history` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/history)        |
+|          `--host` | `host` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/host)           |
 |         `--hosts` | `/etc/hosts` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts)          |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
