@@ -4,6 +4,7 @@ jc changelog
 - TODO: Fix `pidstat` command parser when using `-T ALL`
 - Fix `x509-cert` parser to allow negative serial numbers
 - Fix `x509-cert` parser for cases when bitstrings are larger than standard
+- Fix `xrandr` command parser for associated device issues
 - Add error and corrupted support for `ping` and `ping-s` parsers
 
 20230730 v1.23.4
