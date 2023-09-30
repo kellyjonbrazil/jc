@@ -28,7 +28,7 @@ class MyTests(unittest.TestCase):
                 cls.f_in[file] = a.read()
                 cls.f_json[file] = json.loads(b.read())
 
-#    host cannot run without input (will only display help)
+    # host cannot run without input (will only display help)
     def test_host_nodata(self):
        """
        Test 'host' with no data
