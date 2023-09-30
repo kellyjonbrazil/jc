@@ -413,7 +413,7 @@ from jc.parsers.asn1crypto import pem, x509, jc_global
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
