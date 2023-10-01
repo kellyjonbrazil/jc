@@ -1,8 +1,9 @@
 jc changelog
 
-20230930 v1.23.5
+20231001 v1.23.5
 - Add `host` command parser
 - Add `nsd-control` command parser
+- Enhance `xml` parser to include comments in the JSON output
 - Fix `pidstat` command parser when using `-T ALL`
 - Fix `x509-cert` parser to allow negative serial numbers
 - Fix `x509-cert` parser for cases when bitstrings are larger than standard
