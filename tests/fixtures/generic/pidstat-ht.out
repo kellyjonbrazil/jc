@@ -1,0 +1,8 @@
+Linux 4.18.0-477.10.1.el8_8.x86_64 (localhost.localdomain) 	08/20/2023 	_x86_64_	(1 CPU)
+
+# Time        UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+1692579199      0         1    0.00    0.07    0.00    0.08    0.08     0  systemd
+
+# Time        UID       PID    usr-ms system-ms  guest-ms  Command
+1692579199      0         1      2890      4260         0  systemd
+

@@ -45,6 +45,9 @@ Schema:
         "kb_ccwr_s":        float,
         "cswch_s":          float,
         "nvcswch_s":        float,
+        "usr_ms":           integer,
+        "system_ms":        integer,
+        "guest_ms":         integer,
         "command":          string
       }
     ]
@@ -148,4 +151,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

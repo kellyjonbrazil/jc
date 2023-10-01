@@ -22,6 +22,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5.out'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat_hdlrsuw_2_5 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-ht.out'), 'r', encoding='utf-8') as f:
+        generic_pidstat_ht = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hl.json'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat_hl_json = json.loads(f.read())
@@ -31,6 +34,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5.json'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat_hdlrsuw_2_5_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-ht.json'), 'r', encoding='utf-8') as f:
+        generic_pidstat_ht_json = json.loads(f.read())
 
 
     def test_pidstat_nodata(self):
@@ -62,6 +68,12 @@ class MyTests(unittest.TestCase):
         Test 'pidstat -hdlrsuw 2 5' on Centos 7.7
         """
         self.assertEqual(jc.parsers.pidstat.parse(self.centos_7_7_pidstat_hdlrsuw_2_5, quiet=True), self.centos_7_7_pidstat_hdlrsuw_2_5_json)
+
+    def test_pidstat_ht(self):
+        """
+        Test 'pidstat -hT'
+        """
+        self.assertEqual(jc.parsers.pidstat.parse(self.generic_pidstat_ht, quiet=True), self.generic_pidstat_ht_json)
 
 
 if __name__ == '__main__':
