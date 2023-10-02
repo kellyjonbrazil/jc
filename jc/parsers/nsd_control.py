@@ -11,7 +11,7 @@ or
 Usage (module):
 
     import jc
-    result = jc.parse('nsd-control', nsd-control_command_output)
+    result = jc.parse('nsd_control', nsd_control_command_output)
 
 Schema:
 
