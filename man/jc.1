@@ -1,4 +1,4 @@
-.TH jc 1 2023-09-14 1.23.5 "JSON Convert"
+.TH jc 1 2023-10-02 1.23.5 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -269,6 +269,11 @@ hashsum command parser (`md5sum`, `shasum`, etc.)
 
 .TP
 .B
+\fB--host\fP
+`host` command parser
+
+.TP
+.B
 \fB--hosts\fP
 `/etc/hosts` file parser
 
@@ -374,6 +379,11 @@ Key/Value file and string parser
 
 .TP
 .B
+\fB--lsb-release\fP
+`lsb_release` command parser
+
+.TP
+.B
 \fB--lsblk\fP
 `lsblk` command parser
 
@@ -434,6 +444,11 @@ M3U and M3U8 file parser
 
 .TP
 .B
+\fB--nsd-control\fP
+`nsd-control` command parser
+
+.TP
+.B
 \fB--ntpq\fP
 `ntpq -p` command parser
 
@@ -446,6 +461,11 @@ openvpn-status.log file parser
 .B
 \fB--os-prober\fP
 `os-prober` command parser
+
+.TP
+.B
+\fB--os-release\fP
+`/etc/os-release` file parser
 
 .TP
 .B

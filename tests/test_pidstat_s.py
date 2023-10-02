@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5.out'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat_hdlrsuw_2_5 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-ht.out'), 'r', encoding='utf-8') as f:
+        generic_pidstat_ht = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hl-streaming.json'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat_hl_streaming_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat-hdlrsuw-2-5-streaming.json'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat_hdlrsuw_2_5_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-ht-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_pidstat_ht_streaming_json = json.loads(f.read())
 
 
     def test_pidstat_s_nodata(self):
@@ -64,6 +70,12 @@ class MyTests(unittest.TestCase):
         Test 'pidstat -hdlrsuw 2 5' on Centos 7.7
         """
         self.assertEqual(list(jc.parsers.pidstat_s.parse(self.centos_7_7_pidstat_hdlrsuw_2_5.splitlines(), quiet=True)), self.centos_7_7_pidstat_hdlrsuw_2_5_streaming_json)
+
+    def test_pidstat_s_ht(self):
+        """
+        Test 'pidstat -hT'
+        """
+        self.assertEqual(list(jc.parsers.pidstat_s.parse(self.generic_pidstat_ht.splitlines(), quiet=True)), self.generic_pidstat_ht_streaming_json)
 
 
 if __name__ == '__main__':

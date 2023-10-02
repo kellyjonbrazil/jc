@@ -34,6 +34,7 @@ Schema:
       "percent_usr":      float,
       "percent_system":   float,
       "percent_guest":    float,
+      "percent_wait":     float,
       "percent_cpu":      float,
       "cpu":              integer,
       "minflt_s":         float,
@@ -48,6 +49,9 @@ Schema:
       "kb_ccwr_s":        float,
       "cswch_s":          float,
       "nvcswch_s":        float,
+      "usr_ms":           integer,
+      "system_ms":        integer,
+      "guest_ms":         integer,
       "command":          string,
 
       # below object only exists if using -qq or ignore_exceptions=True
@@ -72,7 +76,7 @@ Examples:
     {"time":"1646859134","uid":"0","pid":"9","percent_usr":"0.00","perc...}
     ...
 """
-from typing import Dict, Iterable, Union
+from typing import List, Dict, Iterable, Union
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -83,7 +87,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`pidstat -H` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -107,11 +111,16 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = {'time', 'uid', 'pid', 'cpu', 'vsz', 'rss', 'stksize', 'stkref'}
+    int_list = {
+        'time', 'uid', 'pid', 'cpu', 'vsz', 'rss', 'stksize', 'stkref',
+        'usr_ms', 'system_ms', 'guest_ms'
+    }
 
-    float_list = {'percent_usr', 'percent_system', 'percent_guest', 'percent_cpu',
-                  'minflt_s', 'majflt_s', 'percent_mem', 'kb_rd_s', 'kb_wr_s',
-                  'kb_ccwr_s', 'cswch_s', 'nvcswch_s'}
+    float_list = {
+        'percent_usr', 'percent_system', 'percent_guest', 'percent_wait',
+        'percent_cpu', 'minflt_s', 'majflt_s', 'percent_mem', 'kb_rd_s',
+        'kb_wr_s', 'kb_ccwr_s', 'cswch_s', 'nvcswch_s'
+    }
 
     for key in proc_data:
         if key in int_list:
@@ -121,6 +130,14 @@ def _process(proc_data: Dict) -> Dict:
             proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     return proc_data
+
+
+def normalize_header(header: str) -> str:
+    return header.replace('#', ' ')\
+                 .replace('-', '_')\
+                 .replace('/', '_')\
+                 .replace('%', 'percent_')\
+                 .lower()
 
 
 @add_jc_meta
@@ -149,8 +166,8 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)
 
-    found_first_hash = False
-    header = ''
+    table_list: List = []
+    header: str = ''
 
     for line in data:
         try:
@@ -161,29 +178,30 @@ def parse(
                 # skip blank lines
                 continue
 
-            if not line.startswith('#') and not found_first_hash:
-                # skip preamble lines before header row
+            if line.startswith('#'):
+                if len(table_list) > 1:
+                    output_line = simple_table_parse(table_list)[0]
+                    yield output_line if raw else _process(output_line)
+                    header = ''
+
+                header = normalize_header(line)
+                table_list = [header]
                 continue
 
-            if line.startswith('#') and not found_first_hash:
-                # normalize header
-                header = line.replace('#', ' ')\
-                             .replace('/', '_')\
-                             .replace('%', 'percent_')\
-                             .lower()
-                found_first_hash = True
-                continue
-
-            if line.startswith('#') and found_first_hash:
-                # skip header lines after first one is found
-                continue
-
-            output_line = simple_table_parse([header, line])[0]
-
-            if output_line:
+            if header:
+                table_list.append(line)
+                output_line = simple_table_parse(table_list)[0]
                 yield output_line if raw else _process(output_line)
-            else:
-                raise ParseError('Not pidstat data')
+                table_list = [header]
+                continue
 
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
+
+    try:
+        if len(table_list) > 1:
+            output_line = simple_table_parse(table_list)[0]
+            yield output_line if raw else _process(output_line)
+
+    except Exception as e:
+        yield raise_or_yield(ignore_exceptions, e, str(table_list))

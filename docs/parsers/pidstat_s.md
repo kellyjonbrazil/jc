@@ -39,6 +39,7 @@ Schema:
       "percent_usr":      float,
       "percent_system":   float,
       "percent_guest":    float,
+      "percent_wait":     float,
       "percent_cpu":      float,
       "cpu":              integer,
       "minflt_s":         float,
@@ -53,6 +54,9 @@ Schema:
       "kb_ccwr_s":        float,
       "cswch_s":          float,
       "nvcswch_s":        float,
+      "usr_ms":           integer,
+      "system_ms":        integer,
+      "guest_ms":         integer,
       "command":          string,
 
       # below object only exists if using -qq or ignore_exceptions=True
@@ -107,4 +111,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

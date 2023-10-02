@@ -22,12 +22,12 @@ contained in lists/arrays.
 
 Usage (cli):
 
-    $ cat foo.ini | jc --ini
+    $ cat foo.ini | jc --ini-dup
 
 Usage (module):
 
     import jc
-    result = jc.parse('ini', ini_file_output)
+    result = jc.parse('ini_dup', ini_file_output)
 
 Schema:
 
@@ -67,7 +67,7 @@ Examples:
     fruit = peach
     color = green
 
-    $ cat example.ini | jc --ini -p
+    $ cat example.ini | jc --ini-dup -p
     {
       "foo": [
         "fiz"
@@ -118,4 +118,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

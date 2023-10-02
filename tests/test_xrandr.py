@@ -21,13 +21,15 @@ from jc.parsers.xrandr import (
     Screen,
 )
 
+import pprint
+
 
 class XrandrTests(unittest.TestCase):
     def test_xrandr_nodata(self):
         """
         Test 'xrandr' with no data
         """
-        self.assertEqual(parse('', quiet=True), {})
+        self.assertEqual(parse("", quiet=True), {"screens": []})
 
     def test_regexes(self):
         devices = [
@@ -44,7 +46,7 @@ class XrandrTests(unittest.TestCase):
 
         screens = [
             "Screen 0: minimum 8 x 8, current 1920 x 1080, maximum 32767 x 32767",
-            "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
+            "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384",
         ]
         for screen in screens:
             self.assertIsNotNone(re.match(_screen_pattern, screen))
@@ -63,7 +65,7 @@ class XrandrTests(unittest.TestCase):
             if match:
                 rest = match.groupdict()["rest"]
                 self.assertIsNotNone(re.match(_frequencies_pattern, rest))
-        
+
         edid_lines = [
             "     EDID: ",
             "            00ffffffffffff000469d41901010101 ",
@@ -73,7 +75,7 @@ class XrandrTests(unittest.TestCase):
             "            360098ff1000001c000000fd00374b1e ",
             "            530f000a202020202020000000fc0041 ",
             "            535553205657313933530a20000000ff ",
-            "            0037384c383032313130370a20200077 "
+            "            0037384c383032313130370a20200077 ",
         ]
 
         for i in range(len(edid_lines)):
@@ -104,7 +106,9 @@ class XrandrTests(unittest.TestCase):
             for k, v in expected.items():
                 self.assertEqual(v, actual[k], f"screens regex failed on {k}")
 
-        sample = "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
+        sample = (
+            "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
+        )
         actual = _parse_screen([sample])
         if actual:
             self.assertEqual(320, actual["minimum_width"])
@@ -141,9 +145,7 @@ class XrandrTests(unittest.TestCase):
 
         device = _parse_device(extended_sample)
         if device:
-            self.assertEqual(
-                59.94, device["associated_modes"][12]["frequencies"][4]["frequency"]
-            )
+            self.assertEqual(59.94, device["modes"][12]["frequencies"][4]["frequency"])
 
     def test_device_with_reflect(self):
         sample = "VGA-1 connected primary 1920x1080+0+0 left X and Y axis (normal left inverted right x axis y axis) 310mm x 170mm"
@@ -195,67 +197,49 @@ class XrandrTests(unittest.TestCase):
             self.assertEqual(True, actual["is_high_resolution"])
             self.assertEqual(50.0, actual["frequencies"][1]["frequency"])
 
-    def test_complete(self):
+    def test_complete_1(self):
         self.maxDiff = None
         with open("tests/fixtures/generic/xrandr.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(4, len(actual["unassociated_devices"]))
-        self.assertEqual(
-            18, len(actual["screens"][0]["associated_device"]["associated_modes"])
-        )
+        self.assertEqual(18, len(actual["screens"][0]["devices"][0]["modes"]))
 
+    def test_complete_2(self):
         with open("tests/fixtures/generic/xrandr_2.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(3, len(actual["unassociated_devices"]))
+        self.assertEqual(38, len(actual["screens"][0]["devices"][0]["modes"]))
+
+    def test_complete_3(self):
+        with open("tests/fixtures/generic/xrandr_3.out", "r") as f:
+            txt = f.read()
+        actual = parse(txt, quiet=True)
+
+        self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
-            38, len(actual["screens"][0]["associated_device"]["associated_modes"])
+            2,
+            len(actual["screens"][0]["devices"]),
         )
 
+    def test_complete_4(self):
         with open("tests/fixtures/generic/xrandr_simple.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(0, len(actual["unassociated_devices"]))
-        self.assertEqual(
-            2, len(actual["screens"][0]["associated_device"]["associated_modes"])
-        )
+        self.assertEqual(2, len(actual["screens"][0]["devices"][0]["modes"]))
 
+    def test_complete_5(self):
         with open("tests/fixtures/generic/xrandr_properties.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(3, len(actual["unassociated_devices"]))
-        self.assertEqual(
-            29, len(actual["screens"][0]["associated_device"]["associated_modes"])
-        )
-
-    def test_infinite_loop_fix(self):
-        with open("tests/fixtures/generic/xrandr_fix_spaces.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
-
-        with open("tests/fixtures/generic/xrandr_fix_spaces.json", "r") as f:
-            json_dict = json.loads(f.read())
-
-        self.assertEqual(actual, json_dict)
-
-    def test_is_current_fix(self):
-        with open("tests/fixtures/generic/xrandr_is_current_fix.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
-
-        with open("tests/fixtures/generic/xrandr_is_current_fix.json", "r") as f:
-            json_dict = json.loads(f.read())
-
-        self.assertEqual(actual, json_dict)
+        self.assertEqual(29, len(actual["screens"][0]["devices"][0]["modes"]))
 
     def test_model(self):
         asus_edid = [
@@ -267,7 +251,7 @@ class XrandrTests(unittest.TestCase):
             "         360098ff1000001c000000fd00374b1e",
             "         530f000a202020202020000000fc0041",
             "         535553205657313933530a20000000ff",
-            "         0037384c383032313130370a20200077"
+            "         0037384c383032313130370a20200077",
         ]
         asus_edid.reverse()
 
@@ -293,8 +277,8 @@ class XrandrTests(unittest.TestCase):
             "         250058c2100000190000000f00000000",
             "         000000000025d9066a00000000fe0053",
             "         414d53554e470a204ca34154000000fe",
-            "         004c544e313536415432343430310018"
-        ]       
+            "         004c544e313536415432343430310018",
+        ]
         generic_edid.reverse()
 
         expected = {
@@ -314,5 +298,6 @@ class XrandrTests(unittest.TestCase):
         actual: Optional[Model] = _parse_model(empty_edid)
         self.assertIsNone(actual)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

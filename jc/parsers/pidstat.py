@@ -40,6 +40,9 @@ Schema:
         "kb_ccwr_s":        float,
         "cswch_s":          float,
         "nvcswch_s":        float,
+        "usr_ms":           integer,
+        "system_ms":        integer,
+        "guest_ms":         integer,
         "command":          string
       }
     ]
@@ -128,7 +131,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`pidstat -H` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -152,11 +155,16 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {'time', 'uid', 'pid', 'cpu', 'vsz', 'rss', 'stksize', 'stkref'}
+    int_list = {
+        'time', 'uid', 'pid', 'cpu', 'vsz', 'rss', 'stksize', 'stkref',
+        'usr_ms', 'system_ms', 'guest_ms'
+    }
 
-    float_list = {'percent_usr', 'percent_system', 'percent_guest', 'percent_cpu',
-                  'minflt_s', 'majflt_s', 'percent_mem', 'kb_rd_s', 'kb_wr_s',
-                  'kb_ccwr_s', 'cswch_s', 'nvcswch_s', 'percent_wait'}
+    float_list = {
+        'percent_usr', 'percent_system', 'percent_guest', 'percent_cpu',
+        'minflt_s', 'majflt_s', 'percent_mem', 'kb_rd_s', 'kb_wr_s',
+        'kb_ccwr_s', 'cswch_s', 'nvcswch_s', 'percent_wait'
+    }
 
     for entry in proc_data:
         for key in entry:
@@ -167,6 +175,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 entry[key] = jc.utils.convert_to_float(entry[key])
 
     return proc_data
+
+
+def normalize_header(header: str) -> str:
+    return header.replace('#', ' ')\
+                 .replace('-', '_')\
+                 .replace('/', '_')\
+                 .replace('%', 'percent_')\
+                 .lower()
 
 
 def parse(
@@ -191,29 +207,28 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
+    table_list: List = []
+    header_found = False
 
     if jc.utils.has_data(data):
 
-        # check for line starting with # as the start of the table
         data_list = list(filter(None, data.splitlines()))
-        for line in data_list.copy():
+
+        for line in data_list:
             if line.startswith('#'):
-                break
-            else:
-                data_list.pop(0)
+                header_found = True
+                if len(table_list) > 1:
+                    raw_output.extend(simple_table_parse(table_list))
+                table_list = [normalize_header(line)]
+                continue
 
-        if not data_list:
+            if header_found:
+                table_list.append(line)
+
+        if len(table_list) > 1:
+            raw_output.extend(simple_table_parse(table_list))
+
+        if not header_found:
             raise ParseError('Could not parse pidstat output. Make sure to use "pidstat -h".')
-
-        # normalize header
-        data_list[0] = data_list[0].replace('#', ' ')\
-                                   .replace('/', '_')\
-                                   .replace('%', 'percent_')\
-                                   .lower()
-
-        # remove remaining header lines (e.g. pidstat -H 2 5)
-        data_list = [i for i in data_list if not i.startswith('#')]
-
-        raw_output = simple_table_parse(data_list)
 
     return raw_output if raw else _process(raw_output)

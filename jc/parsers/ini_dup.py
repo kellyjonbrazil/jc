@@ -17,12 +17,12 @@ contained in lists/arrays.
 
 Usage (cli):
 
-    $ cat foo.ini | jc --ini
+    $ cat foo.ini | jc --ini-dup
 
 Usage (module):
 
     import jc
-    result = jc.parse('ini', ini_file_output)
+    result = jc.parse('ini_dup', ini_file_output)
 
 Schema:
 
@@ -62,7 +62,7 @@ Examples:
     fruit = peach
     color = green
 
-    $ cat example.ini | jc --ini -p
+    $ cat example.ini | jc --ini-dup -p
     {
       "foo": [
         "fiz"
@@ -97,7 +97,7 @@ import uuid
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'INI with duplicate key file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

@@ -413,7 +413,7 @@ from jc.parsers.asn1crypto import pem, x509, jc_global
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -477,7 +477,10 @@ def _fix_objects(obj):
                 # according to the spec this field can be string or integer
                 if isinstance(v, int):
                     v_str = str(v)
-                    v_hex = _b2a(_i2b(v))
+                    if v < 0:
+                        v_hex = "(Negative)" + _b2a(_i2b(abs(v)))
+                    else:
+                        v_hex = _b2a(_i2b(v))
                 else:
                     v_str = str(v)
                     v_hex = _b2a(v_str.encode())
