@@ -1,10 +1,11 @@
 jc changelog
 
-20231001 v1.23.5
+20231002 v1.23.5
 - Add `host` command parser
 - Add `nsd-control` command parser
 - Add `lsb_release` command parser
 - Add `/etc/os-release` file parser
+- Enhance `env` command parser to support multi-line values
 - Enhance `ping` and `ping-s` parsers to add error and corrupted support
 - Enhance `xml` parser to include comments in the JSON output
 - Fix `pidstat` command parser when using `-T ALL`
