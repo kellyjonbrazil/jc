@@ -96,6 +96,7 @@ parsers: List[str] = [
     'ntpq',
     'openvpn',
     'os-prober',
+    'os-release',
     'passwd',
     'pci-ids',
     'pgpass',
