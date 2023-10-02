@@ -17,9 +17,9 @@ Schema:
 
     [
       {
-        "version":    string,
-        "verbosity":  integer,
-        "ratelimit":  integer
+        "version":          string,
+        "verbosity":        integer,
+        "ratelimit":        integer
       }
     ]
 
@@ -122,7 +122,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
     if jc.utils.has_data(data):
 
         itrparse = False
-        itr = {}
+        itr: Dict = {}
 
         for line in filter(None, data.splitlines()):
             line = line.strip()
@@ -158,14 +158,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 itrparse = True
                 itr = {}
                 linedata = line.split(':', maxsplit=1)
-                # active = linedata[1].strip()  # This isn't doing anything
-                # cookies.update({'active': active})  # This isn't doing anything
+                active = linedata[1].strip()
+                itr.update({'active': active})
                 continue
 
             if line.startswith('staging'):
                 linedata = line.split(':', maxsplit=1)
-                # staging = linedata[1].strip()  # This isn't doing anything
-                # cookies.update({'staging': staging})  # This isn't doing anything
+                staging = linedata[1].strip()
+                itr.update({'staging': staging})
                 continue
 
             # print_tsig
@@ -185,8 +185,8 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
 
             # zonestatus
             if line.startswith('zone:'):
-                zonename = dict()
-                zstatus = dict()
+                zonename: Dict = dict()
+                zstatus: Dict = dict()
                 linedata = line.split(':\t', maxsplit=1)
                 zone = linedata[1]
                 zonename.update({'zone': zone})
