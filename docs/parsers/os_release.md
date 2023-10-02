@@ -14,7 +14,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('os_release', os_release_command_output)
+    result = jc.parse('os_release', os_release_output)
 
 Schema:
 
