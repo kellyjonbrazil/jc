@@ -80,6 +80,7 @@ parsers: List[str] = [
     'ls',
     'ls-s',
     'lsattr',
+    'lsb-release',
     'lsblk',
     'lsmod',
     'lsof',
