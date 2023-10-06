@@ -1,0 +1,1 @@
+key: name: "test-tsig" secret: "83d61b962c20f5352955dc197d3db6d3" algorithm: hmac-md5
