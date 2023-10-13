@@ -31,7 +31,11 @@ def normalize_interface_headers(header):
 
 
 def parse_network(headers, entry):
-    LIST_OF_STATES = ["ESTABLISHED", "SYN_SENT", "SYN_RECV", "FIN_WAIT1", "FIN_WAIT2", "TIME_WAIT", "CLOSED", "CLOSE_WAIT", "LAST_ACK", "LISTEN", "CLOSING", "UNKNOWN"]
+    LIST_OF_STATES = [
+        "ESTABLISHED", "SYN_SENT", "SYN_RECV", "FIN_WAIT1", "FIN_WAIT2",
+        "TIME_WAIT", "CLOSED", "CLOSE_WAIT", "LAST_ACK", "LISTEN", "CLOSING",
+        "UNKNOWN", "7"
+    ]
 
     # split entry based on presence of value in "State" column
     contains_state = any(state in entry for state in LIST_OF_STATES)
