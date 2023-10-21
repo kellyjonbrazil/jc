@@ -1,0 +1,6 @@
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                           442/avahi-daemon: r
+udp        0      0 0.0.0.0:49926           0.0.0.0:*                           442/avahi-daemon: r
+udp6       0      0 :::5353                 :::*                                442/avahi-daemon: r
+udp6       0      0 :::35569                :::*                                442/avahi-daemon: r

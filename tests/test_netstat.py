@@ -76,6 +76,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.out'), 'r', encoding='utf-8') as f:
         generic_netstat_old = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-no-state.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_no_state = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat.out'), 'r', encoding='utf-8') as f:
         windows_netstat = f.read()
 
@@ -199,6 +202,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-old.json'), 'r', encoding='utf-8') as f:
         generic_netstat_old_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-no-state.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_no_state_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/netstat.json'), 'r', encoding='utf-8') as f:
         windows_netstat_json = json.loads(f.read())
@@ -388,6 +394,12 @@ class MyTests(unittest.TestCase):
         Test 'netstat' with older version of netstat on linux
         """
         self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_old, quiet=True), self.generic_netstat_old_json)
+
+    def test_netstat_no_state_generic(self):
+        """
+        Test 'netstat' with no state in network output
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_no_state, quiet=True), self.generic_netstat_no_state_json)
 
     def test_netstat_r_centos_7_7(self):
         """

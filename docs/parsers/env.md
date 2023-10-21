@@ -90,10 +90,10 @@ Parameters:
 
 Returns:
 
-    Dictionary of raw structured data or
-    List of Dictionaries of processed structured data
+    Dictionary of raw structured data or (default)
+    List of Dictionaries of processed structured data (raw)
 
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -67,12 +67,13 @@ Examples:
       "_": "/usr/bin/env"
     }
 """
+import re
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`env` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -83,6 +84,7 @@ class info():
 
 __version__ = info.version
 
+VAR_DEF_PATTERN = re.compile(r'^[a-zA-Z_][a-zA-Z0-9_]*=\S*.*$')
 
 def _process(proc_data):
     """
@@ -96,8 +98,6 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-
-    # rebuild output for added semantic information
     processed = []
     for k, v in proc_data.items():
         proc_line = {}
@@ -120,24 +120,29 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary of raw structured data or
-        List of Dictionaries of processed structured data
+        Dictionary of raw structured data or (default)
+        List of Dictionaries of processed structured data (raw)
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
     raw_output = {}
-
-    # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    key = ''
+    value = None
 
     if jc.utils.has_data(data):
+        for line in data.splitlines():
+            if VAR_DEF_PATTERN.match(line):
+                if not value is None:
+                    raw_output[key] = value
+                key, value = line.split('=', maxsplit=1)
+                continue
 
-        for entry in cleandata:
-            parsed_line = entry.split('=', maxsplit=1)
-            raw_output[parsed_line[0]] = parsed_line[1]
+            if not value is None:
+                value = value + '\n' + line
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    if not value is None:
+        raw_output[key] = value
+
+    return raw_output if raw else _process(raw_output)
+

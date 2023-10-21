@@ -27,6 +27,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-bad-email.pem'), 'rb') as f:
         x509_cert_bad_email = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-superfluous-bits.pem'), 'rb') as f:
+        x509_cert_superfluous_bits = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-negative-serial.pem'), 'rb') as f:
+        x509_cert_negative_serial = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-ca-cert.json'), 'r', encoding='utf-8') as f:
         x509_ca_cert_json = json.loads(f.read())
@@ -45,6 +51,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-bad-email.json'), 'r', encoding='utf-8') as f:
         x509_cert_bad_email_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-superfluous-bits.json'), 'r', encoding='utf-8') as f:
+        x509_cert_superfluous_bits_json = json.loads(f.read())
+        
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-negative-serial.json'), 'r', encoding='utf-8') as f:
+        x509_cert_negative_serial_json = json.loads(f.read())
 
 
     def test_x509_cert_nodata(self):
@@ -88,6 +100,18 @@ class MyTests(unittest.TestCase):
         Test 'cat x509-cert-bad-email.pem' (PEM file with a non-compliant email address)
         """
         self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_bad_email, quiet=True), self.x509_cert_bad_email_json)
+
+    def test_x509_cert_superfluous_bits(self):
+        """
+        Test 'cat x509-cert-superfluous-bits.pem' (PEM file with more bits set for the keyUsage extension than defined by the RFC)
+        """
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_superfluous_bits, quiet=True),
+                         self.x509_cert_superfluous_bits_json)
+    def test_x509_cert_negative_serial(self):
+        """
+        Test 'cat x509-cert-bad-email.pem' (PEM file with a non-compliant email address)
+        """
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_negative_serial, quiet=True), self.x509_cert_negative_serial_json)
 
 
 if __name__ == '__main__':

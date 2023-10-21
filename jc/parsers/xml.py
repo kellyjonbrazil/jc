@@ -81,7 +81,7 @@ except Exception:
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -105,13 +105,18 @@ def _process(proc_data, has_data=False):
 
         Dictionary representing an XML document.
     """
-    raw_output = []
+    proc_output = []
 
     if has_data:
         # standard output with @ prefix for attributes
-        raw_output = xmltodict.parse(proc_data, dict_constructor=dict)
+        try:
+            proc_output = xmltodict.parse(proc_data,
+                                          dict_constructor=dict,
+                                          process_comments=True)
+        except ValueError:
+            proc_output = xmltodict.parse(proc_data, dict_constructor=dict)
 
-    return raw_output
+    return proc_output
 
 
 def parse(data, raw=False, quiet=False):
@@ -137,10 +142,17 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         has_data = True
 
-    if raw:
-        if has_data:
-            # modified output with _ prefix for attributes
-            raw_output = xmltodict.parse(data, dict_constructor=dict, attr_prefix='_')
+    if raw and has_data:
+        # modified output with _ prefix for attributes
+        try:
+            raw_output = xmltodict.parse(data,
+                                            dict_constructor=dict,
+                                            process_comments=True,
+                                            attr_prefix='_')
+        except ValueError:
+            raw_output = xmltodict.parse(data,
+                                            dict_constructor=dict,
+                                            attr_prefix='_')
 
         return raw_output
 

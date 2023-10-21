@@ -1,0 +1,1 @@
+[{"time":1692579199,"uid":0,"pid":1,"percent_usr":0.0,"percent_system":0.07,"percent_guest":0.0,"percent_wait":0.08,"percent_cpu":0.08,"cpu":0,"command":"systemd"},{"time":1692579199,"uid":0,"pid":1,"usr_ms":2890,"system_ms":4260,"guest_ms":0,"command":"systemd"}]

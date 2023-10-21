@@ -378,4 +378,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd, win32
 
-Version 1.14 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.15 by Kelly Brazil (kellyjonbrazil@gmail.com)

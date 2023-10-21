@@ -1,0 +1,90 @@
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.nsd_control"></a>
+
+# jc.parsers.nsd\_control
+
+jc - JSON Convert `nsd-control` command output parser
+
+Usage (cli):
+
+    $ nsd-control | jc --nsd-control
+
+or
+
+    $ jc nsd-control
+
+Usage (module):
+
+    import jc
+    result = jc.parse('nsd_control', nsd_control_command_output)
+
+Schema:
+
+    [
+      {
+        "version":          string,
+        "verbosity":        integer,
+        "ratelimit":        integer
+      }
+    ]
+
+    [
+      {
+        "zone":             string
+        "status": {
+          "state":          string,
+          "served-serial":  string,
+          "commit-serial":  string,
+          "wait":           string
+        }
+      }
+    ]
+
+Examples:
+
+    $ nsd-control | jc --nsd-control status
+    [
+      {
+        "version": "4.6.2",
+        "verbosity": "2",
+        "ratelimit": "0"
+      }
+    ]
+
+    $ nsd-control | jc --nsd-control zonestatus sunet.se
+    [
+      {
+        "zone": "sunet.se",
+        "status": {
+          "state": "ok",
+          "served-serial": "2023090704 since 2023-09-07T16:34:27",
+          "commit-serial": "2023090704 since 2023-09-07T16:34:27",
+          "wait": "28684 sec between attempts"
+        }
+      }
+    ]
+
+<a id="jc.parsers.nsd_control.parse"></a>
+
+### parse
+
+```python
+def parse(data: str, raw: bool = False, quiet: bool = False)
+```
+
+Main text parsing function
+
+Parameters:
+
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
+
+Returns:
+
+    List of Dictionaries. Raw or processed structured data.
+
+### Parser Information
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
+
+Version 1.0 by Pettai (pettai@sunet.se)

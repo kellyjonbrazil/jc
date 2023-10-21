@@ -202,6 +202,7 @@ option.
 |       `--hashsum` | hashsum command parser (`md5sum`, `shasum`, etc.)       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hashsum)        |
 |     `--hciconfig` | `hciconfig` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hciconfig)      |
 |       `--history` | `history` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/history)        |
+|          `--host` | `host` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/host)           |
 |         `--hosts` | `/etc/hosts` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts)          |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
@@ -222,6 +223,7 @@ option.
 |            `--ls` | `ls` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls)             |
 |          `--ls-s` | `ls` command streaming parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s)           |
 |        `--lsattr` | `lsattr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsattr)         |
+|   `--lsb-release` | `lsb_release` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsb_release)    |
 |         `--lsblk` | `lsblk` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsblk)          |
 |         `--lsmod` | `lsmod` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsmod)          |
 |          `--lsof` | `lsof` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsof)           |
@@ -234,9 +236,11 @@ option.
 |      `--mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |
 |       `--netstat` | `netstat` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat)        |
 |         `--nmcli` | `nmcli` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli)          |
+|   `--nsd-control` | `nsd-control` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nsd_control)    |
 |          `--ntpq` | `ntpq -p` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq)           |
 |       `--openvpn` | openvpn-status.log file parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/openvpn)        |
 |     `--os-prober` | `os-prober` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_prober)      |
+|    `--os-release` | `/etc/os-release` file parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_release)     |
 |        `--passwd` | `/etc/passwd` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd)         |
 |       `--pci-ids` | `pci.ids` file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pci_ids)        |
 |        `--pgpass` | PostgreSQL password file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pgpass)         |
