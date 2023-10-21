@@ -145,33 +145,34 @@ class JcCli():
         JC_COLORS=blue,brightblack,magenta,green
         JC_COLORS=default,default,default,default
         """
-        input_error = False
-        env_colors = os.getenv('JC_COLORS')
+        if PYGMENTS_INSTALLED:
+            input_error = False
+            env_colors = os.getenv('JC_COLORS')
 
-        if env_colors:
-            color_list = env_colors.split(',')
-        else:
-            color_list = ['default', 'default', 'default', 'default']
+            if env_colors:
+                color_list = env_colors.split(',')
+            else:
+                color_list = ['default', 'default', 'default', 'default']
 
-        if len(color_list) != 4:
-            input_error = True
-
-        for color in color_list:
-            if color != 'default' and color not in PYGMENT_COLOR:
+            if len(color_list) != 4:
                 input_error = True
 
-        # if there is an issue with the env variable, just set all colors to default and move on
-        if input_error:
-            utils.warning_message(['Could not parse JC_COLORS environment variable'])
-            color_list = ['default', 'default', 'default', 'default']
+            for color in color_list:
+                if color != 'default' and color not in PYGMENT_COLOR:
+                    input_error = True
 
-        # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
-        self.custom_colors = {
-            Name.Tag: f'bold {PYGMENT_COLOR[color_list[0]]}' if color_list[0] != 'default' else f"bold {PYGMENT_COLOR['blue']}",   # key names
-            Keyword: PYGMENT_COLOR[color_list[1]] if color_list[1] != 'default' else PYGMENT_COLOR['brightblack'],                 # true, false, null
-            Number: PYGMENT_COLOR[color_list[2]] if color_list[2] != 'default' else PYGMENT_COLOR['magenta'],                      # numbers
-            String: PYGMENT_COLOR[color_list[3]] if color_list[3] != 'default' else PYGMENT_COLOR['green']                         # strings
-        }
+            # if there is an issue with the env variable, just set all colors to default and move on
+            if input_error:
+                utils.warning_message(['Could not parse JC_COLORS environment variable'])
+                color_list = ['default', 'default', 'default', 'default']
+
+            # Try the color set in the JC_COLORS env variable first. If it is set to default, then fall back to default colors
+            self.custom_colors = {
+                Name.Tag: f'bold {PYGMENT_COLOR[color_list[0]]}' if color_list[0] != 'default' else f"bold {PYGMENT_COLOR['blue']}",   # key names
+                Keyword: PYGMENT_COLOR[color_list[1]] if color_list[1] != 'default' else PYGMENT_COLOR['brightblack'],                 # true, false, null
+                Number: PYGMENT_COLOR[color_list[2]] if color_list[2] != 'default' else PYGMENT_COLOR['magenta'],                      # numbers
+                String: PYGMENT_COLOR[color_list[3]] if color_list[3] != 'default' else PYGMENT_COLOR['green']                         # strings
+            }
 
     def set_mono(self) -> None:
         """
