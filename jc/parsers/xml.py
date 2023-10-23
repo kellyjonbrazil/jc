@@ -146,13 +146,13 @@ def parse(data, raw=False, quiet=False):
         # modified output with _ prefix for attributes
         try:
             raw_output = xmltodict.parse(data,
-                                            dict_constructor=dict,
-                                            process_comments=True,
-                                            attr_prefix='_')
+                                         dict_constructor=dict,
+                                         process_comments=True,
+                                         attr_prefix='_')
         except (ValueError, TypeError):
             raw_output = xmltodict.parse(data,
-                                            dict_constructor=dict,
-                                            attr_prefix='_')
+                                         dict_constructor=dict,
+                                         attr_prefix='_')
 
         return raw_output
 
