@@ -2,8 +2,19 @@ import os
 import unittest
 import json
 import jc.parsers.xml
+import xmltodict
+
+# fix for whether tests are run directly or via runtests.sh
+try:
+    from ._vendor.packaging import version
+except:
+    from _vendor.packaging import version  # type: ignore
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+XMLTODICT_0_13_0_OR_HIGHER = version.parse(xmltodict.__version__) >= version.parse('0.13.0')
+
+if not XMLTODICT_0_13_0_OR_HIGHER:
+    print('\n### Using older version of xmltodict library. Testing without comment support. ###\n')
 
 
 class MyTests(unittest.TestCase):
@@ -28,8 +39,14 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-nmap.json'), 'r', encoding='utf-8') as f:
         generic_xml_nmap_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-nmap-nocomment.json'), 'r', encoding='utf-8') as f:
+        generic_xml_nmap_nocomment_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-nmap-raw.json'), 'r', encoding='utf-8') as f:
         generic_xml_nmap_r_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xml-nmap-raw-nocomment.json'), 'r', encoding='utf-8') as f:
+        generic_xml_nmap_r_nocomment_json = json.loads(f.read())
 
 
     def test_xml_nodata(self):
@@ -60,13 +77,19 @@ class MyTests(unittest.TestCase):
         """
         Test nmap xml output
         """
-        self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, quiet=True), self.generic_xml_nmap_json)
+        if XMLTODICT_0_13_0_OR_HIGHER:
+            self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, quiet=True), self.generic_xml_nmap_json)
+        else:
+            self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, quiet=True), self.generic_xml_nmap_nocomment_json)
 
     def test_xml_nmap_r(self):
         """
         Test nmap xml raw output
         """
-        self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, raw=True, quiet=True), self.generic_xml_nmap_r_json)
+        if XMLTODICT_0_13_0_OR_HIGHER:
+            self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, raw=True, quiet=True), self.generic_xml_nmap_r_json)
+        else:
+            self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, raw=True, quiet=True), self.generic_xml_nmap_r_nocomment_json)
 
 
 if __name__ == '__main__':
