@@ -272,6 +272,12 @@ def parse(data, raw=False, quiet=False):
                 output_line['time'] = ' '.join([linedata.pop(0),
                                                 linedata.pop(0)])
 
+            # if the rest of the data is within parens, then it's the remote IP or console
+            if len(linedata) > 1 and ' '.join(linedata).startswith('(') and ' '.join(linedata).endswith(')'):
+                output_line['from'] = ' '.join(linedata)[1:-1]
+                raw_output.append(output_line)
+                continue
+
             # if just one more field, then it's the remote IP
             if len(linedata) == 1:
                 output_line['from'] = linedata[0].replace('(', '').replace(')', '')
