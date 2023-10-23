@@ -13,9 +13,6 @@ except:
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 XMLTODICT_0_13_0_OR_HIGHER = version.parse(xmltodict.__version__) >= version.parse('0.13.0')
 
-if not XMLTODICT_0_13_0_OR_HIGHER:
-    print('\n### Using older version of xmltodict library. Testing without comment support. ###\n')
-
 
 class MyTests(unittest.TestCase):
 
@@ -80,6 +77,7 @@ class MyTests(unittest.TestCase):
         if XMLTODICT_0_13_0_OR_HIGHER:
             self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, quiet=True), self.generic_xml_nmap_json)
         else:
+            print('\n### Using older version of xmltodict library. Testing without comment support. ### ... ')
             self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, quiet=True), self.generic_xml_nmap_nocomment_json)
 
     def test_xml_nmap_r(self):
@@ -89,6 +87,7 @@ class MyTests(unittest.TestCase):
         if XMLTODICT_0_13_0_OR_HIGHER:
             self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, raw=True, quiet=True), self.generic_xml_nmap_r_json)
         else:
+            print('\n### Using older version of xmltodict library. Testing without comment support. ### ... ')
             self.assertEqual(jc.parsers.xml.parse(self.generic_xml_nmap, raw=True, quiet=True), self.generic_xml_nmap_r_nocomment_json)
 
 
