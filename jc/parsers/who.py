@@ -303,7 +303,4 @@ def parse(data, raw=False, quiet=False):
 
             raw_output.append(output_line)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
