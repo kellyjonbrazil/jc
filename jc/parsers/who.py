@@ -276,6 +276,7 @@ def parse(data, raw=False, quiet=False):
             if len(linedata) > 1 and ' '.join(linedata).startswith('(') and ' '.join(linedata).endswith(')'):
                 output_line['from'] = ' '.join(linedata)[1:-1]
                 raw_output.append(output_line)
+                linedata = []
                 continue
 
             # if just one more field, then it's the remote IP
