@@ -34,6 +34,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.out'), 'r', encoding='utf-8') as f:
         osx_10_14_6_who_a = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/who-login-screen.out'), 'r', encoding='utf-8') as f:
+        generic_who_login_screen = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who.json'), 'r', encoding='utf-8') as f:
         centos_7_7_who_json = json.loads(f.read())
@@ -52,6 +55,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/who-a.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_who_a_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/who-login-screen.json'), 'r', encoding='utf-8') as f:
+        generic_who_login_screen_json = json.loads(f.read())
 
 
     def test_who_nodata(self):
@@ -96,6 +102,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.who.parse(self.osx_10_14_6_who_a, quiet=True), self.osx_10_14_6_who_a_json)
 
+    def test_who_login_screen(self):
+        """
+        Test 'who' with (login screen) as remote
+        """
+        self.assertEqual(jc.parsers.who.parse(self.generic_who_login_screen, quiet=True), self.generic_who_login_screen_json)
 
 if __name__ == '__main__':
     unittest.main()

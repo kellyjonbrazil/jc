@@ -1,5 +1,9 @@
 jc changelog
 
+20231023 v1.23.6
+- Fix XML parser for xmltodict library versions < 0.13.0
+- Fix `who` command parser for cases when the from field contains spaces
+
 20231021 v1.23.5
 - Add `host` command parser
 - Add `nsd-control` command parser

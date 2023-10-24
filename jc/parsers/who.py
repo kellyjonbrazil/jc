@@ -136,7 +136,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`who` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -272,6 +272,13 @@ def parse(data, raw=False, quiet=False):
                 output_line['time'] = ' '.join([linedata.pop(0),
                                                 linedata.pop(0)])
 
+            # if the rest of the data is within parens, then it's the remote IP or console
+            if len(linedata) > 1 and ' '.join(linedata).startswith('(') and ' '.join(linedata).endswith(')'):
+                output_line['from'] = ' '.join(linedata)[1:-1]
+                raw_output.append(output_line)
+                linedata = []
+                continue
+
             # if just one more field, then it's the remote IP
             if len(linedata) == 1:
                 output_line['from'] = linedata[0].replace('(', '').replace(')', '')
@@ -296,7 +303,4 @@ def parse(data, raw=False, quiet=False):
 
             raw_output.append(output_line)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

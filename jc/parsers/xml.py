@@ -81,7 +81,7 @@ except Exception:
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -113,7 +113,7 @@ def _process(proc_data, has_data=False):
             proc_output = xmltodict.parse(proc_data,
                                           dict_constructor=dict,
                                           process_comments=True)
-        except ValueError:
+        except (ValueError, TypeError):
             proc_output = xmltodict.parse(proc_data, dict_constructor=dict)
 
     return proc_output
@@ -146,13 +146,13 @@ def parse(data, raw=False, quiet=False):
         # modified output with _ prefix for attributes
         try:
             raw_output = xmltodict.parse(data,
-                                            dict_constructor=dict,
-                                            process_comments=True,
-                                            attr_prefix='_')
-        except ValueError:
+                                         dict_constructor=dict,
+                                         process_comments=True,
+                                         attr_prefix='_')
+        except (ValueError, TypeError):
             raw_output = xmltodict.parse(data,
-                                            dict_constructor=dict,
-                                            attr_prefix='_')
+                                         dict_constructor=dict,
+                                         attr_prefix='_')
 
         return raw_output
 
