@@ -1,7 +1,7 @@
 jc changelog
 
-20231023 v1.23.7
-- xxx
+20231024 v1.23.7
+- Fix `iptables` parser for cases where the `target` field is blank in a rule
 
 20231023 v1.23.6
 - Fix XML parser for xmltodict library versions < 0.13.0

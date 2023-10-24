@@ -163,7 +163,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -271,6 +271,10 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             else:
+                # sometimes the "target" column is blank. Stuff in a dummy character
+                if headers[0] == 'target' and line.startswith(' '):
+                    line = '\u2063' + line
+
                 rule = line.split(maxsplit=len(headers) - 1)
                 temp_rule = dict(zip(headers, rule))
                 if temp_rule:
@@ -279,7 +283,4 @@ def parse(data, raw=False, quiet=False):
         if chain:
             raw_output.append(chain)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
