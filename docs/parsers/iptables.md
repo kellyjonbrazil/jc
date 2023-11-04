@@ -30,7 +30,7 @@ Schema:
             "num"               integer,
             "pkts":             integer,
             "bytes":            integer,  # converted based on suffix
-            "target":           string,
+            "target":           string,   # Null if blank
             "prot":             string,
             "opt":              string,   # "--" = Null
             "in":               string,
