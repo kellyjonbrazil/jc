@@ -25,7 +25,7 @@ Schema:
             "num"               integer,
             "pkts":             integer,
             "bytes":            integer,  # converted based on suffix
-            "target":           string,
+            "target":           string,   # Null if blank
             "prot":             string,
             "opt":              string,   # "--" = Null
             "in":               string,
@@ -222,6 +222,10 @@ def _process(proc_data):
                 if rule['opt'] == '--':
                     rule['opt'] = None
 
+            if 'target' in rule:
+                if rule['target'] == '':
+                    rule['target'] = None
+
     return proc_data
 
 
@@ -278,6 +282,8 @@ def parse(data, raw=False, quiet=False):
                 rule = line.split(maxsplit=len(headers) - 1)
                 temp_rule = dict(zip(headers, rule))
                 if temp_rule:
+                    if temp_rule.get('target') == '\u2063':
+                        temp_rule['target'] = ''
                     chain['rules'].append(temp_rule)
 
         if chain:
