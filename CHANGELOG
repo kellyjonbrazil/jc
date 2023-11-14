@@ -1,9 +1,10 @@
 jc changelog
 
-20231104 v1.23.7
+20231114 v1.23.7
 - Add `deb-packages` parser for Debian/Ubuntu Package Index files
 - Fix `iptables` parser for cases where the `target` field is blank in a rule
 - Fix `vmstat` parsers for some cases where wide output is used
+- Fix `mount` parser for cases with spaces in the mount point name
 
 20231023 v1.23.6
 - Fix XML parser for xmltodict library versions < 0.13.0

@@ -77,7 +77,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,11 +149,13 @@ def _linux_parse(data):
         match = pattern.match(entry)
         groups = match.groupdict()
 
-        output_line['filesystem'] = groups["filesystem"]
-        output_line['mount_point'] = groups["mount_point"]
-        output_line['type'] = groups["type"]
-        output_line['options'] = groups["options"].split(',')
-        output.append(output_line)
+        if groups:
+            output_line['filesystem'] = groups["filesystem"]
+            output_line['mount_point'] = groups["mount_point"]
+            output_line['type'] = groups["type"]
+            output_line['options'] = groups["options"].split(',')
+            output.append(output_line)
+
     return output
 
 def _aix_parse(data):
