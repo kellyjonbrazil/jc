@@ -1,7 +1,7 @@
 jc changelog
 
 20231114 v1.23.7
-- Add `deb-packages` parser for Debian/Ubuntu Package Index files
+- Add `deb-packages-index` parser for Debian/Ubuntu Package Index files
 - Fix `iptables` parser for cases where the `target` field is blank in a rule
 - Fix `vmstat` parsers for some cases where wide output is used
 - Fix `mount` parser for cases with spaces in the mount point name

@@ -34,6 +34,7 @@ parsers: List[str] = [
     'csv-s',
     'date',
     'datetime-iso',
+    'deb-packages-index',
     'df',
     'dig',
     'dir',

@@ -185,7 +185,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    int_list = {'epoch', 'size'}
+    int_list = {'epoch', 'size', 'installed_size'}
 
     for entry in proc_data:
         for key in entry:
@@ -247,7 +247,7 @@ def parse(data, raw=False, quiet=False):
                         desc_entry = False
 
             if len(split_line) == 2:
-                entry_obj[split_line[0].strip().lower().replace(' ', '_')] = split_line[1].strip()
+                entry_obj[split_line[0].strip().lower().replace(' ', '_').replace('-', '_')] = split_line[1].strip()
 
             if line.startswith('Description :'):
                 desc_entry = True
