@@ -30,7 +30,7 @@ Schema:
                     "last_40s": string,
                     "cumulative": string,
                 },
-                "recieve": {
+                "receive": {
                     "host_name": string,
                     "host_port": string, # can be service
                     "last_2s": string,
@@ -45,12 +45,12 @@ Schema:
             "last_10s": string,
             "last_40s": string,
         }
-        "total_recieve_rate": {
+        "total_receive_rate": {
             "last_2s": string,
             "last_10s": string,
             "last_40s": string,
         }
-        "total_send_and_recieve_rate": {
+        "total_send_and_receive_rate": {
             "last_2s": string,
             "last_10s": string,
             "last_40s": string,
@@ -60,7 +60,7 @@ Schema:
             "last_10s": string,
             "last_40s": string,
         }
-        "comulative_rate": {
+        "cumulative_rate": {
             "last_2s": string,
             "last_10s": string,
             "last_40s": string,
@@ -86,7 +86,7 @@ Examples:
                     "last_40s": "2.14Mb",
                     "cumulative": "548KB",
                 }
-                "recieve": {
+                "receive": {
                     "host_name": "target",
                     "host_port": "51234"
                     "last_2s": "4.79Kb",
@@ -101,12 +101,12 @@ Examples:
             "last_10s": "2.14Mb",
             "last_40s": "2.14Mb",
         }
-        "total_recieve_rate": {
+        "total_receive_rate": {
             "last_2s": "4.79Kb",
             "last_10s": "4.79Kb",
             "last_40s": "4.79Kb",
         }
-        "total_send_and_recieve_rate": {
+        "total_send_and_receive_rate": {
             "last_2s": "268.09Kb",
             "last_10s": "268.09Kb",
             "last_40s": "268.09Kb",
@@ -123,8 +123,7 @@ Examples:
         }
 """
 import re
-from ipaddress import IPv4Network
-from typing import List, Dict, Optional
+from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -177,7 +176,7 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: List[Dict] = []
+    # raw_output: List[Dict] = []
 
     # for backwards compatibility, preset all fields to None
     interface_obj: Dict = {
@@ -186,15 +185,15 @@ def parse(
         "mac_address": None,
         "clients": None,
         "total_send_rate": None,
-        "total_recieve_rate": None,
-        "total_send_and_recieve_rate": None,
+        "total_receive_rate": None,
+        "total_send_and_receive_rate": None,
         "peak_rate": None,
-        "comulative_rate": None,
+        "cumulative_rate": None,
     }
 
-    interface_item: Dict = interface_obj.copy()
+    interface_item: Dict = interface_obj.copy()  # noqa: F841
 
-    clients: List = []
+    # clients: List = []
 
     re_linux_device = re.compile(r'''
     Listening\son\s(?P<device>.+)
