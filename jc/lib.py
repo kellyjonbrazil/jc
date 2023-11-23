@@ -35,6 +35,7 @@ parsers: List[str] = [
     'date',
     'datetime-iso',
     'deb-packages-index',
+    'debconf-show',
     'df',
     'dig',
     'dir',

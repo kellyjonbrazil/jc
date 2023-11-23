@@ -180,6 +180,7 @@ option.
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
 | `--deb-packages-index` | Debian Packages Index file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/deb_packages_index) |
+|  `--debconf-show` | `debconf-show` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/debconf_show)   |
 |            `--df` | `df` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/df)             |
 |           `--dig` | `dig` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dig)            |
 |           `--dir` | `dir` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dir)            |
