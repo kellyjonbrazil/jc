@@ -288,6 +288,7 @@ option.
 |         `--top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 |     `--tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
 |    `--traceroute` | `traceroute` and `traceroute6` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute)     |
+|       `--tune2fs` | `tune2fs -l` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tune2fs)        |
 |       `--udevadm` | `udevadm info` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/udevadm)        |
 |           `--ufw` | `ufw status` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw)            |
 |   `--ufw-appinfo` | `ufw app info [application]` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo)    |
