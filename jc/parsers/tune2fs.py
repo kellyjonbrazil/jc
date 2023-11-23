@@ -203,7 +203,7 @@ Examples:
       "checksum": "0x7809afff"
     }
 """
-from typing import List, Dict
+from typing import Dict
 from jc.jc_types import JSONDictType
 import jc.utils
 
