@@ -337,19 +337,15 @@ def parse(data, raw=False, quiet=False):
                     output_line['state'] = 'Not charging'
                     output_line['charge_percent'] = line.split()[-1].rstrip('%,')
 
-                if 'Charging' in line \
-                    or 'Discharging' in line \
-                    or 'Full' in line:
-
+                if any(word in line for word in ('Charging', 'Discharging', 'Full')):
                     output_line['state'] = line.split()[2][:-1]
                     output_line['charge_percent'] = line.split()[3].rstrip('%,')
-                    if 'will never fully discharge' in line:
+                    if 'will never fully discharge' in line or 'rate information unavailable' in line:
                         pass
-                    elif 'rate information unavailable' not in line:
-                        if 'Charging' in line:
-                            output_line['until_charged'] = line.split()[4]
-                        if 'Discharging' in line:
-                            output_line['charge_remaining'] = line.split()[4]
+                    elif 'Charging' in line:
+                        output_line['until_charged'] = line.split()[4]
+                    elif 'Discharging' in line:
+                        output_line['charge_remaining'] = line.split()[4]
 
                 if 'design capacity' in line:
                     output_line['design_capacity_mah'] = line.split()[4]
@@ -359,10 +355,7 @@ def parse(data, raw=False, quiet=False):
             if obj_type == 'Adapter':
                 output_line['type'] = obj_type
                 output_line['id'] = obj_id
-                if 'on-line' in line:
-                    output_line['on-line'] = True
-                else:
-                    output_line['on-line'] = False
+                output_line['on-line'] = 'on-line' in line
 
             if obj_type == 'Thermal':
                 output_line['type'] = obj_type
