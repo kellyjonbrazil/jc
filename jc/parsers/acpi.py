@@ -342,9 +342,9 @@ def parse(data, raw=False, quiet=False):
                     output_line['charge_percent'] = line.split()[3].rstrip('%,')
                     if 'will never fully discharge' in line or 'rate information unavailable' in line:
                         pass
-                    if 'Charging' in line:
+                    elif 'Charging' in line:
                         output_line['until_charged'] = line.split()[4]
-                    if 'Discharging' in line:
+                    elif 'Discharging' in line:
                         output_line['charge_remaining'] = line.split()[4]
 
                 if 'design capacity' in line:
