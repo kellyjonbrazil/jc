@@ -2,11 +2,11 @@
 
 Usage (cli):
 
-    $ debconf-show | jc --debconf-show
+    $ debconf-show onlyoffice-documentserver | jc --debconf-show
 
 or
 
-    $ jc debconf-show
+    $ jc debconf-show onlyoffice-documentserver
 
 Usage (module):
 
@@ -17,19 +17,60 @@ Schema:
 
     [
       {
-        "debconf-show":     string,
-        "bar":     boolean,
-        "baz":     integer
+        "asked":              boolean,
+        "packagename":        string,
+        "name":               string,
+        "value":              string
       }
     ]
 
 Examples:
 
-    $ debconf-show | jc --debconf-show -p
-    []
-
-    $ debconf-show | jc --debconf-show -p -r
-    []
+    $ debconf-show onlyoffice-documentserver | jc --debconf-show -p
+    [
+      {
+        "asked": true,
+        "packagename": "onlyoffice",
+        "name": "jwt_secret",
+        "value": "aL8ei2iereuzee7cuJ6Cahjah1ixee2ah"
+      },
+      {
+        "asked": false,
+        "packagename": "onlyoffice",
+        "name": "db_pwd",
+        "value": "(password omitted)"
+      },
+      {
+        "asked": true,
+        "packagename": "onlyoffice",
+        "name": "rabbitmq_pwd",
+        "value": "(password omitted)"
+      },
+      {
+        "asked": true,
+        "packagename": "onlyoffice",
+        "name": "db_port",
+        "value": "5432"
+      },
+      {
+        "asked": true,
+        "packagename": "onlyoffice",
+        "name": "db_user",
+        "value": "onlyoffice"
+      },
+      {
+        "asked": true,
+        "packagename": "onlyoffice",
+        "name": "rabbitmq_proto",
+        "value": "amqp"
+      },
+      {
+        "asked": true,
+        "packagename": "onlyoffice",
+        "name": "cluster_mode",
+        "value": "false"
+      }
+    ]
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
