@@ -38,6 +38,7 @@ Schema:
       "inode_count":                        integer,
       "block_count":                        integer,
       "reserved_block_count":               integer,
+      "overhead_clusters":                  integer,
       "free_blocks":                        integer,
       "free_inodes":                        integer,
       "first_block":                        integer,

@@ -33,6 +33,7 @@ Schema:
       "inode_count":                        integer,
       "block_count":                        integer,
       "reserved_block_count":               integer,
+      "overhead_clusters":                  integer,
       "free_blocks":                        integer,
       "free_inodes":                        integer,
       "first_block":                        integer,
@@ -240,7 +241,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
                 'fragments_per_group', 'inodes_per_group', 'inode_blocks_per_group',
                 'flex_block_group_size', 'mount_count', 'maximum_mount_count',
                 'first_inode', 'inode_size', 'required_extra_isize', 'desired_extra_isize',
-                'journal_inode'}
+                'journal_inode', 'overhead_clusters'}
 
     datetime_list = {'filesystem_created', 'last_mount_time', 'last_write_time', 'last_checked'}
 
