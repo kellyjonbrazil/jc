@@ -70,12 +70,14 @@ Example:
       ...
     ]
 """
+import re
+
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,14 +135,26 @@ def _linux_parse(data):
 
     for entry in data:
         output_line = {}
-        parsed_line = entry.split()
 
-        output_line['filesystem'] = parsed_line[0]
-        output_line['mount_point'] = parsed_line[2]
-        output_line['type'] = parsed_line[4]
-        output_line['options'] = parsed_line[5].lstrip('(').rstrip(')').split(',')
+        pattern = re.compile(
+            r'''
+            (?P<filesystem>\S+)\s+
+            on\s+
+            (?P<mount_point>.*?)\s+
+            type\s+
+            (?P<type>\S+)\s+
+            \((?P<options>.*?)\)\s*''',
+            re.VERBOSE)
 
-        output.append(output_line)
+        match = pattern.match(entry)
+        groups = match.groupdict()
+
+        if groups:
+            output_line['filesystem'] = groups["filesystem"]
+            output_line['mount_point'] = groups["mount_point"]
+            output_line['type'] = groups["type"]
+            output_line['options'] = groups["options"].split(',')
+            output.append(output_line)
 
     return output
 
