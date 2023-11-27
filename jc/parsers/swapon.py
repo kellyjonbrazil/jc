@@ -71,6 +71,7 @@ class _Column(Enum):
     USED = "used"
     PRIO = "priority"
     LABEL = "label"
+    UUID = "uuid"
 
     @classmethod
     def from_header(cls, header: str) -> "_Column":
@@ -86,6 +87,8 @@ class _Column(Enum):
             return cls.PRIO
         elif header == "LABEL":
             return cls.LABEL
+        elif header == "UUID":
+            return cls.UUID
         else:
             raise ParseError(f"Unknown header: {header}")
 
@@ -157,10 +160,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
         columns = headers.split()
         for line in lines:
             line = line.split()
-            if len(line) == len(columns) - 1:
-                line.append("")  # Empty label column
-            elif len(line) != len(columns):
-                raise ParseError("Number of columns in line does not match number of headers")
+            diff = len(columns) - len(line)
+            if not 0 <= diff <= 2:
+                raise ParseError(
+                    f"Number of columns ({len(line)}) in line does not match number of headers ({len(columns)})"
+                )
 
             document: _Entry = {}
             for column, value in zip(columns, line):
