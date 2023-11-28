@@ -177,6 +177,7 @@ parsers: List[str] = [
     'sshd-conf',
     'stat',
     'stat-s',
+    'swapon',
     'sysctl',
     'syslog',
     'syslog-s',
