@@ -158,8 +158,8 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
         lines = iter(data.splitlines())
         headers = next(lines)
         columns = headers.split()
-        for line in lines:
-            line = line.split()
+        for each_line in lines:
+            line = each_line.split()
             diff = len(columns) - len(line)
             if not 0 <= diff <= 2:
                 raise ParseError(
@@ -167,8 +167,8 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
                 )
 
             document: _Entry = {}
-            for column, value in zip(columns, line):
-                column = _Column.from_header(column)
+            for each_column, value in zip(columns, line):
+                column = _Column.from_header(each_column)
                 document[column.value] = _value(value, column)
 
             raw_output.append(document)
