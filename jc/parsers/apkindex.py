@@ -63,7 +63,7 @@ Example:
         "provides": [
           "cmd:vsyasm=1.3.0-r4",
           "cmd:yasm=1.3.0-r4",
-         "cmd:ytasm=1.3.0-r4"
+          "cmd:ytasm=1.3.0-r4"
         ]
       }
     ]
