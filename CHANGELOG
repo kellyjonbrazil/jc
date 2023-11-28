@@ -1,8 +1,9 @@
 jc changelog
 
-20231124 v1.23.7
+20231128 v1.23.7
 - Add `deb-packages-index` parser for Debian/Ubuntu Package Index files
 - Add `debconf-show` command parser
+- Add `swapon` command parser
 - Add `tune2fs` command parser
 - Update timezone change in Github Actions for node v16 requirement
 - Refactor `acpi` command parser for code cleanup
