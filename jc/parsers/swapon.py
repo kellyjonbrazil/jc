@@ -152,7 +152,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output = list[dict]()
+    raw_output: List[dict] = []
 
     if jc.utils.has_data(data):
         lines = iter(data.splitlines())
