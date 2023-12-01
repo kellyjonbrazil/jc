@@ -20,7 +20,7 @@ import hashlib
 import math
 
 from ._errors import unwrap, APIException
-from ._types import type_name, byte_cls
+from ._types import type_name
 from .algos import _ForceNullParameters, DigestAlgorithm, EncryptionAlgorithm, RSAESOAEPParams, RSASSAPSSParams
 from .core import (
     Any,
@@ -582,7 +582,7 @@ class ECPrivateKey(Sequence):
             if self._key_size is None:
                 # Infer the key_size from the existing private key if possible
                 pkey_contents = self['private_key'].contents
-                if isinstance(pkey_contents, byte_cls) and len(pkey_contents) > 1:
+                if isinstance(pkey_contents, bytes) and len(pkey_contents) > 1:
                     self.set_key_size(len(self['private_key'].contents))
 
             elif self._key_size is not None:
@@ -744,7 +744,7 @@ class PrivateKeyInfo(Sequence):
             A PrivateKeyInfo object
         """
 
-        if not isinstance(private_key, byte_cls) and not isinstance(private_key, Asn1Value):
+        if not isinstance(private_key, bytes) and not isinstance(private_key, Asn1Value):
             raise TypeError(unwrap(
                 '''
                 private_key must be a byte string or Asn1Value, not %s
@@ -1112,7 +1112,7 @@ class PublicKeyInfo(Sequence):
             A PublicKeyInfo object
         """
 
-        if not isinstance(public_key, byte_cls) and not isinstance(public_key, Asn1Value):
+        if not isinstance(public_key, bytes) and not isinstance(public_key, Asn1Value):
             raise TypeError(unwrap(
                 '''
                 public_key must be a byte string or Asn1Value, not %s
@@ -1268,7 +1268,7 @@ class PublicKeyInfo(Sequence):
         """
 
         if self._sha1 is None:
-            self._sha1 = hashlib.sha1(byte_cls(self['public_key'])).digest()
+            self._sha1 = hashlib.sha1(bytes(self['public_key'])).digest()
         return self._sha1
 
     @property
@@ -1279,7 +1279,7 @@ class PublicKeyInfo(Sequence):
         """
 
         if self._sha256 is None:
-            self._sha256 = hashlib.sha256(byte_cls(self['public_key'])).digest()
+            self._sha256 = hashlib.sha256(bytes(self['public_key'])).digest()
         return self._sha256
 
     @property

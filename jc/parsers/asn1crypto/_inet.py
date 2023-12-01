@@ -5,7 +5,7 @@ import socket
 import struct
 
 from ._errors import unwrap
-from ._types import byte_cls, bytes_to_list, str_cls, type_name
+from ._types import type_name
 
 
 def inet_ntop(address_family, packed_ip):
@@ -33,7 +33,7 @@ def inet_ntop(address_family, packed_ip):
             repr(address_family)
         ))
 
-    if not isinstance(packed_ip, byte_cls):
+    if not isinstance(packed_ip, bytes):
         raise TypeError(unwrap(
             '''
             packed_ip must be a byte string, not %s
@@ -52,7 +52,7 @@ def inet_ntop(address_family, packed_ip):
         ))
 
     if address_family == socket.AF_INET:
-        return '%d.%d.%d.%d' % tuple(bytes_to_list(packed_ip))
+        return '%d.%d.%d.%d' % tuple(list(packed_ip))
 
     octets = struct.unpack(b'!HHHHHHHH', packed_ip)
 
@@ -106,7 +106,7 @@ def inet_pton(address_family, ip_string):
             repr(address_family)
         ))
 
-    if not isinstance(ip_string, str_cls):
+    if not isinstance(ip_string, str):
         raise TypeError(unwrap(
             '''
             ip_string must be a unicode string, not %s
