@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: "Set up timezone to America/Los_Angeles"
-      uses: szenius/set-timezone@v1.0
+      uses: szenius/set-timezone@v1.2
       with:
         timezoneLinux: "America/Los_Angeles"
         timezoneMacos: "America/Los_Angeles"

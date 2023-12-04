@@ -161,7 +161,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -185,7 +185,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    int_list = {'epoch', 'size'}
+    int_list = {'epoch', 'size', 'installed_size'}
 
     for entry in proc_data:
         for key in entry:
@@ -234,7 +234,7 @@ def parse(data, raw=False, quiet=False):
         for line in filter(None, data.splitlines()):
             split_line = line.split(': ', maxsplit=1)
 
-            if split_line[0].startswith('Name') and len(split_line) == 2:
+            if (split_line[0].startswith('Name') or split_line[0] == 'Package') and len(split_line) == 2:
                 this_entry = split_line[1].strip()
 
                 if this_entry != last_entry:
@@ -247,7 +247,7 @@ def parse(data, raw=False, quiet=False):
                         desc_entry = False
 
             if len(split_line) == 2:
-                entry_obj[split_line[0].strip().lower().replace(' ', '_')] = split_line[1].strip()
+                entry_obj[split_line[0].strip().lower().replace(' ', '_').replace('-', '_')] = split_line[1].strip()
 
             if line.startswith('Description :'):
                 desc_entry = True
