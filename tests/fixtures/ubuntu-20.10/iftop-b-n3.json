@@ -6,24 +6,26 @@
         "clients": [
             {
                 "index": 1,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "33222",
-                    "last_2s": "4.72Kb",
-                    "last_10s": "4.72Kb",
-                    "last_40s": "4.72Kb",
-                    "cumulative": "1.18KB",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.72",
-                    "host_port": "https",
-                    "last_2s": "1.99Mb",
-                    "last_10s": "1.99Mb",
-                    "last_40s": "1.99Mb",
-                    "cumulative": "508KB",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "33222",
+                        "last_2s": "4.72Kb",
+                        "last_10s": "4.72Kb",
+                        "last_40s": "4.72Kb",
+                        "cumulative": "1.18KB",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "https",
+                        "last_2s": "1.99Mb",
+                        "last_10s": "1.99Mb",
+                        "last_40s": "1.99Mb",
+                        "cumulative": "508KB",
+                        "direction": "receive"
+                    }
+                ]
             },
             {
                 "index": 2,
@@ -80,45 +82,49 @@
         "clients": [
             {
                 "index": 1,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "33222",
-                    "last_2s": "4.72Kb",
-                    "last_10s": "4.72Kb",
-                    "last_40s": "4.72Kb",
-                    "cumulative": "1.18KB",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.72",
-                    "host_port": "https",
-                    "last_2s": "1.99Mb",
-                    "last_10s": "1.99Mb",
-                    "last_40s": "1.99Mb",
-                    "cumulative": "508KB",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "33222",
+                        "last_2s": "4.72Kb",
+                        "last_10s": "4.72Kb",
+                        "last_40s": "4.72Kb",
+                        "cumulative": "1.18KB",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "https",
+                        "last_2s": "1.99Mb",
+                        "last_10s": "1.99Mb",
+                        "last_40s": "1.99Mb",
+                        "cumulative": "508KB",
+                        "direction": "receive"
+                    }
+                ]
             },
             {
                 "index": 2,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "https",
-                    "last_2s": "1.98Mb",
-                    "last_10s": "1.98Mb",
-                    "last_40s": "1.98Mb",
-                    "cumulative": "507KB",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.73",
-                    "host_port": "34562",
-                    "last_2s": "3.17Kb",
-                    "last_10s": "3.17Kb",
-                    "last_40s": "3.17Kb",
-                    "cumulative": "811B",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "33222",
+                        "last_2s": "4.72Kb",
+                        "last_10s": "4.72Kb",
+                        "last_40s": "4.72Kb",
+                        "cumulative": "1.18KB",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "https",
+                        "last_2s": "1.99Mb",
+                        "last_10s": "1.99Mb",
+                        "last_40s": "1.99Mb",
+                        "cumulative": "508KB",
+                        "direction": "receive"
+                    }
+                ]
             }
         ],
         "total_send_rate": {
@@ -154,45 +160,49 @@
         "clients": [
             {
                 "index": 1,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "33222",
-                    "last_2s": "4.72Kb",
-                    "last_10s": "4.72Kb",
-                    "last_40s": "4.72Kb",
-                    "cumulative": "1.18KB",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.72",
-                    "host_port": "https",
-                    "last_2s": "1.99Mb",
-                    "last_10s": "1.99Mb",
-                    "last_40s": "1.99Mb",
-                    "cumulative": "508KB",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "33222",
+                        "last_2s": "4.72Kb",
+                        "last_10s": "4.72Kb",
+                        "last_40s": "4.72Kb",
+                        "cumulative": "1.18KB",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "https",
+                        "last_2s": "1.99Mb",
+                        "last_10s": "1.99Mb",
+                        "last_40s": "1.99Mb",
+                        "cumulative": "508KB",
+                        "direction": "receive"
+                    }
+                ]
             },
             {
                 "index": 2,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "https",
-                    "last_2s": "1.98Mb",
-                    "last_10s": "1.98Mb",
-                    "last_40s": "1.98Mb",
-                    "cumulative": "507KB",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.73",
-                    "host_port": "34562",
-                    "last_2s": "3.17Kb",
-                    "last_10s": "3.17Kb",
-                    "last_40s": "3.17Kb",
-                    "cumulative": "811B",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "33222",
+                        "last_2s": "4.72Kb",
+                        "last_10s": "4.72Kb",
+                        "last_40s": "4.72Kb",
+                        "cumulative": "1.18KB",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "https",
+                        "last_2s": "1.99Mb",
+                        "last_10s": "1.99Mb",
+                        "last_40s": "1.99Mb",
+                        "cumulative": "508KB",
+                        "direction": "receive"
+                    }
+                ]
             }
         ],
         "total_send_rate": {

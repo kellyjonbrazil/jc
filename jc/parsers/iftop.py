@@ -22,24 +22,17 @@ Schema:
         "clients": [
             {
                 "index": integer,
-                "send": {
-                    "host_name": string,
-                    "host_port": string, # can be service
-                    "last_2s": string,
-                    "last_10s": string,
-                    "last_40s": string,
-                    "cumulative": string,
-                    "direction": string
-                },
-                "receive": {
-                    "host_name": string,
-                    "host_port": string, # can be service
-                    "last_2s": string,
-                    "last_10s": string,
-                    "last_40s": string,
-                    "cumulative": string,
-                    "direction": string
-                }
+                "connections": [
+                    {
+                        "host_name": string,
+                        "host_port": string, # can be service
+                        "last_2s": string,
+                        "last_10s": string,
+                        "last_40s": string,
+                        "cumulative": string,
+                        "direction": string
+                    }
+                ]
             }
         ]
         "total_send_rate": {
@@ -80,24 +73,26 @@ Examples:
         "clients": [
             {
                 "index": 1,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "ssh",
-                    "last_2s": "448b",
-                    "last_10s": "448b",
-                    "last_40s": "448b",
-                    "cumulative": "112B",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.72",
-                    "host_port": "40876",
-                    "last_2s": "208b",
-                    "last_10s": "208b",
-                    "last_40s": "208b",
-                    "cumulative": "52B",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "ssh",
+                        "last_2s": "448b",
+                        "last_10s": "448b",
+                        "last_40s": "448b",
+                        "cumulative": "112B",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "40876",
+                        "last_2s": "208b",
+                        "last_10s": "208b",
+                        "last_40s": "208b",
+                        "cumulative": "52B",
+                        "direction": "receive"
+                    }
+                ]
             }
         ],
         "total_send_rate": {
@@ -196,10 +191,10 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         "cumulative_rate": None,
     }
 
-    
     interface_item: Dict = interface_obj.copy()
 
     clients: List = []
+    connections: List = []
 
     before_arrow = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+):(?P<host_port>[^\s]+)\s+"
     after_arrow_before_newline = r"\s+(?P<send_last_2s>[^\s]+)\s+(?P<send_last_10s>[^\s]+)\s+(?P<send_last_40s>[^\s]+)\s+(?P<send_cumulative>[^\s]+)"
@@ -284,7 +279,6 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                     "mac_address": old_interface_item["mac_address"],
                 }
             )
-            
 
         elif "=>" in line and is_previous_line_interface:
             # should not happen
@@ -297,18 +291,18 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             match_dict = re_linux_clients_before_newline.match(line).groupdict()
             current_client = {}
             current_client["index"] = int(match_dict["index"])
-            current_client["send"] = {}
-            current_client["send"].update(
-                {
-                    "host_name": match_dict["host_name"],
-                    "host_port": match_dict["host_port"],
-                    "last_2s": match_dict["send_last_2s"],
-                    "last_10s": match_dict["send_last_10s"],
-                    "last_40s": match_dict["send_last_40s"],
-                    "cumulative": match_dict["send_cumulative"],
-                    "direction": "send",
-                }
-            )
+            current_client["connections"] = []
+            current_client_send = {
+                "host_name": match_dict["host_name"],
+                "host_port": match_dict["host_port"],
+                "last_2s": match_dict["send_last_2s"],
+                "last_10s": match_dict["send_last_10s"],
+                "last_40s": match_dict["send_last_40s"],
+                "cumulative": match_dict["send_cumulative"],
+                "direction": "send",
+            }
+            current_client["connections"].append(current_client_send)
+
             # not adding yet as the receive part is not yet parsed
         elif "<=" in line and not is_previous_line_interface:
             # should not happen
@@ -319,18 +313,17 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
             is_previous_line_interface = False
             match_dict = re_linux_clients_after_newline.match(line).groupdict()
-            current_client["receive"] = {}
-            current_client["receive"].update(
-                {
-                    "host_name": match_dict["receive_ip"],
-                    "host_port": match_dict["receive_port"],
-                    "last_2s": match_dict["receive_last_2s"],
-                    "last_10s": match_dict["receive_last_10s"],
-                    "last_40s": match_dict["receive_last_40s"],
-                    "cumulative": match_dict["receive_cumulative"],
-                    "direction": "receive",
-                }
-            )
+            current_client_receive = {
+                "host_name": match_dict["receive_ip"],
+                "host_port": match_dict["receive_port"],
+                "last_2s": match_dict["receive_last_2s"],
+                "last_10s": match_dict["receive_last_10s"],
+                "last_40s": match_dict["receive_last_40s"],
+                "cumulative": match_dict["receive_cumulative"],
+                "direction": "receive",
+            }
+
+            current_client["connections"].append(current_client_receive)
             clients.append(current_client)
         # check if all of the characters are dashes or equal signs
         elif all(c == "-" for c in line):

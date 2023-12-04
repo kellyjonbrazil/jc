@@ -6,24 +6,26 @@
         "clients": [
             {
                 "index": 1,
-                "send": {
-                    "host_name": "ubuntu-2004-clean-01",
-                    "host_port": "ssh",
-                    "last_2s": "448b",
-                    "last_10s": "448b",
-                    "last_40s": "448b",
-                    "cumulative": "112B",
-                    "direction": "send"
-                },
-                "receive": {
-                    "host_name": "10.10.15.72",
-                    "host_port": "40876",
-                    "last_2s": "208b",
-                    "last_10s": "208b",
-                    "last_40s": "208b",
-                    "cumulative": "52B",
-                    "direction": "receive"
-                }
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "ssh",
+                        "last_2s": "448b",
+                        "last_10s": "448b",
+                        "last_40s": "448b",
+                        "cumulative": "112B",
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "40876",
+                        "last_2s": "208b",
+                        "last_10s": "208b",
+                        "last_40s": "208b",
+                        "cumulative": "52B",
+                        "direction": "receive"
+                    }
+                ]
             }
         ],
         "total_send_rate": {
