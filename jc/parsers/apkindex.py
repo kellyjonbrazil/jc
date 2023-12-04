@@ -1,4 +1,4 @@
-"""jc - JSON Convert `APKINDEX` files
+"""jc - JSON Convert Alpine Linux Package Index files
 
 Usage (cli):
 
@@ -7,32 +7,38 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('apkindex', apkindex)
+    result = jc.parse('apkindex', apkindex_output)
 
 Schema:
 
     [
       {
-        "checksum": string,
-        "package": string,
-        "version": string,
-        "architecture": string,
-        "package_size": integer,
-        "installed_size": integer,
-        "description": string,
-        "url": string,
-        "license": string,
-        "origin": string,
+        "checksum":             string,
+        "package":              string,
+        "version":              string,
+        "architecture":         string,
+        "package_size":         integer,
+        "installed_size":       integer,
+        "description":          string,
+        "url":                  string,
+        "license":              string,
+        "origin":               string,
         "maintainer": {
-          "name": string,
-          "email": string,
+          "name":               string,
+          "email":              string,
         },
-        "build_time": integer,
-        "commit": string,
-        "provider_priority": string,
-        "dependencies": [string],
-        "provides": [string],
-        "install_if": [string],
+        "build_time":           integer,
+        "commit":               string,
+        "provider_priority":    string,
+        "dependencies": [
+                                string
+        ],
+        "provides": [
+                                string
+        ],
+        "install_if": [
+                                string
+        ],
       }
     ]
 
@@ -47,7 +53,7 @@ Example:
         "architecture": "x86_64",
         "package_size": 772109,
         "installed_size": 1753088,
-        "description": "A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.)",
+        "description": "A rewrite of NASM to allow for multiple synta...",
         "url": "http://www.tortall.net/projects/yasm/",
         "license": "BSD-2-Clause",
         "origin": "yasm",
@@ -77,7 +83,7 @@ Example:
         "A": "x86_64",
         "S": "772109",
         "I": "1753088",
-        "T": "A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.)",
+        "T": "A rewrite of NASM to allow for multiple syntax supported...",
         "U": "http://www.tortall.net/projects/yasm/",
         "L": "BSD-2-Clause",
         "o": "yasm",
@@ -96,13 +102,12 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-
     version = "1.0"
-    description = "APKINDEX parser"
+    description = "Alpine Linux Package Index file parser"
     author = "Roey Darwish Dror"
     author_email = "roey.ghost@gmail.com"
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    tags = ['standard', 'file', 'string', 'binary']
+    tags = ['standard', 'file', 'string']
 
 
 __version__ = info.version
@@ -125,7 +130,7 @@ _KEY = {
     "k": "provider_priority",
     "D": "dependencies",
     "p": "provides",
-    "i": "install_if",
+    "i": "install_if"
 }
 
 def _value(key: str, value: str) -> Union[str, int, List[str], Dict[str, str]]:
@@ -155,8 +160,9 @@ def _value(key: str, value: str) -> Union[str, int, List[str], Dict[str, str]]:
         else:
             return {'name': value}
 
-
     return value
+
+
 def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
@@ -184,14 +190,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]:
 
     Returns:
 
-        Dictionary. Raw or processed structured data.
+        List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
     raw_output: List[dict] = []
 
-    package = {}
+    package: Dict = {}
     if jc.utils.has_data(data):
         lines = iter(data.splitlines())
         for line in lines:
