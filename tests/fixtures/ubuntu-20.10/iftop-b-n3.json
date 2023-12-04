@@ -1,0 +1,224 @@
+[
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "clients": [
+            {
+                "index": 1,
+                "send": {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "33222",
+                    "last_2s": "4.72Kb",
+                    "last_10s": "4.72Kb",
+                    "last_40s": "4.72Kb",
+                    "cumulative": "1.18KB",
+                    "direction": "send"
+                },
+                "receive": {
+                    "host_name": "10.10.15.72",
+                    "host_port": "https",
+                    "last_2s": "1.99Mb",
+                    "last_10s": "1.99Mb",
+                    "last_40s": "1.99Mb",
+                    "cumulative": "508KB",
+                    "direction": "receive"
+                }
+            },
+            {
+                "index": 2,
+                "send": {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "https",
+                    "last_2s": "1.98Mb",
+                    "last_10s": "1.98Mb",
+                    "last_40s": "1.98Mb",
+                    "cumulative": "507KB",
+                    "direction": "send"
+                },
+                "receive": {
+                    "host_name": "10.10.15.73",
+                    "host_port": "34562",
+                    "last_2s": "3.17Kb",
+                    "last_10s": "3.17Kb",
+                    "last_40s": "3.17Kb",
+                    "cumulative": "811B",
+                    "direction": "receive"
+                }
+            }
+        ],
+        "total_send_rate": {
+            "last_2s": "23.2Mb",
+            "last_10s": "23.2Mb",
+            "last_40s": "23.2Mb"
+        },
+        "total_receive_rate": {
+            "last_2s": "5.65Mb",
+            "last_10s": "5.65Mb",
+            "last_40s": "5.65Mb"
+        },
+        "total_send_and_receive_rate": {
+            "last_2s": "28.8Mb",
+            "last_10s": "28.8Mb",
+            "last_40s": "28.8Mb"
+        },
+        "peak_rate": {
+            "last_2s": "23.2Mb",
+            "last_10s": "5.65Mb",
+            "last_40s": "28.8Mb"
+        },
+        "cumulative_rate": {
+            "last_2s": "5.79MB",
+            "last_10s": "1.41MB",
+            "last_40s": "7.20MB"
+        }
+    },
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "clients": [
+            {
+                "index": 1,
+                "send": {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "33222",
+                    "last_2s": "4.72Kb",
+                    "last_10s": "4.72Kb",
+                    "last_40s": "4.72Kb",
+                    "cumulative": "1.18KB",
+                    "direction": "send"
+                },
+                "receive": {
+                    "host_name": "10.10.15.72",
+                    "host_port": "https",
+                    "last_2s": "1.99Mb",
+                    "last_10s": "1.99Mb",
+                    "last_40s": "1.99Mb",
+                    "cumulative": "508KB",
+                    "direction": "receive"
+                }
+            },
+            {
+                "index": 2,
+                "send": {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "https",
+                    "last_2s": "1.98Mb",
+                    "last_10s": "1.98Mb",
+                    "last_40s": "1.98Mb",
+                    "cumulative": "507KB",
+                    "direction": "send"
+                },
+                "receive": {
+                    "host_name": "10.10.15.73",
+                    "host_port": "34562",
+                    "last_2s": "3.17Kb",
+                    "last_10s": "3.17Kb",
+                    "last_40s": "3.17Kb",
+                    "cumulative": "811B",
+                    "direction": "receive"
+                }
+            }
+        ],
+        "total_send_rate": {
+            "last_2s": "23.2Mb",
+            "last_10s": "23.2Mb",
+            "last_40s": "23.2Mb"
+        },
+        "total_receive_rate": {
+            "last_2s": "5.65Mb",
+            "last_10s": "5.65Mb",
+            "last_40s": "5.65Mb"
+        },
+        "total_send_and_receive_rate": {
+            "last_2s": "28.8Mb",
+            "last_10s": "28.8Mb",
+            "last_40s": "28.8Mb"
+        },
+        "peak_rate": {
+            "last_2s": "23.2Mb",
+            "last_10s": "5.65Mb",
+            "last_40s": "28.8Mb"
+        },
+        "cumulative_rate": {
+            "last_2s": "5.79MB",
+            "last_10s": "1.41MB",
+            "last_40s": "7.20MB"
+        }
+    },
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "clients": [
+            {
+                "index": 1,
+                "send": {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "33222",
+                    "last_2s": "4.72Kb",
+                    "last_10s": "4.72Kb",
+                    "last_40s": "4.72Kb",
+                    "cumulative": "1.18KB",
+                    "direction": "send"
+                },
+                "receive": {
+                    "host_name": "10.10.15.72",
+                    "host_port": "https",
+                    "last_2s": "1.99Mb",
+                    "last_10s": "1.99Mb",
+                    "last_40s": "1.99Mb",
+                    "cumulative": "508KB",
+                    "direction": "receive"
+                }
+            },
+            {
+                "index": 2,
+                "send": {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "https",
+                    "last_2s": "1.98Mb",
+                    "last_10s": "1.98Mb",
+                    "last_40s": "1.98Mb",
+                    "cumulative": "507KB",
+                    "direction": "send"
+                },
+                "receive": {
+                    "host_name": "10.10.15.73",
+                    "host_port": "34562",
+                    "last_2s": "3.17Kb",
+                    "last_10s": "3.17Kb",
+                    "last_40s": "3.17Kb",
+                    "cumulative": "811B",
+                    "direction": "receive"
+                }
+            }
+        ],
+        "total_send_rate": {
+            "last_2s": "23.2Mb",
+            "last_10s": "23.2Mb",
+            "last_40s": "23.2Mb"
+        },
+        "total_receive_rate": {
+            "last_2s": "5.65Mb",
+            "last_10s": "5.65Mb",
+            "last_40s": "5.65Mb"
+        },
+        "total_send_and_receive_rate": {
+            "last_2s": "28.8Mb",
+            "last_10s": "28.8Mb",
+            "last_40s": "28.8Mb"
+        },
+        "peak_rate": {
+            "last_2s": "23.2Mb",
+            "last_10s": "5.65Mb",
+            "last_40s": "28.8Mb"
+        },
+        "cumulative_rate": {
+            "last_2s": "5.79MB",
+            "last_10s": "1.41MB",
+            "last_40s": "7.20MB"
+        }
+    }
+]

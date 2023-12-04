@@ -2,7 +2,7 @@
     {
         "device": "enp0s3",
         "ip_address": "10.10.15.129",
-        "mac_address": "11:22:33:44:55:66",
+        "mac_address": "08:00:27:c0:4a:4f",
         "clients": [
             {
                 "index": 1,
@@ -12,7 +12,8 @@
                     "last_2s": "448b",
                     "last_10s": "448b",
                     "last_40s": "448b",
-                    "cumulative": "112B"
+                    "cumulative": "112B",
+                    "direction": "send"
                 },
                 "receive": {
                     "host_name": "10.10.15.72",
@@ -20,7 +21,8 @@
                     "last_2s": "208b",
                     "last_10s": "208b",
                     "last_40s": "208b",
-                    "cumulative": "52B"
+                    "cumulative": "52B",
+                    "direction": "receive"
                 }
             }
         ],
