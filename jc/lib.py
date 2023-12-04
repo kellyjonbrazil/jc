@@ -15,6 +15,7 @@ parsers: List[str] = [
     'acpi',
     'airport',
     'airport-s',
+    'apkindex',
     'arp',
     'asciitable',
     'asciitable-m',
