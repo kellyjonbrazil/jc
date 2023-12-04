@@ -71,7 +71,7 @@ Examples:
 
     $ iftop -i eno0 -t -P -s 1 | jc --iftop -p -r
     [
-      {
+    {
         "device": eno0,
         "ip_address": "192.168.71.137",
         "mac_address": "11:22:33:44:55:66",
@@ -85,7 +85,7 @@ Examples:
                     "last_10s": "2.14Mb",
                     "last_40s": "2.14Mb",
                     "cumulative": "548KB",
-                }
+                },
                 "receive": {
                     "host_name": "target",
                     "host_port": "51234"
@@ -95,32 +95,35 @@ Examples:
                     "cumulative": "1.20KB",
                 }
             }
-        ]
+        ],
         "total_send_rate": {
             "last_2s": "2.14Mb",
             "last_10s": "2.14Mb",
             "last_40s": "2.14Mb",
-        }
+        },
         "total_receive_rate": {
             "last_2s": "4.79Kb",
             "last_10s": "4.79Kb",
             "last_40s": "4.79Kb",
-        }
+        },
         "total_send_and_receive_rate": {
             "last_2s": "268.09Kb",
             "last_10s": "268.09Kb",
             "last_40s": "268.09Kb",
-        }
+        },
         "peak_rate": {
             "last_2s": "2.14Mb",
             "last_10s": "2.14Mb",
             "last_40s": "2.14Mb",
-        }
+        },
         "cumulative_rate": {
             "last_2s": string,
             "last_10s": string,
             "last_40s": string,
         }
+    }
+    ]
+      
 """
 import re
 from typing import List, Dict
