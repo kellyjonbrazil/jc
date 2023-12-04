@@ -48,8 +48,10 @@ Other type classes are defined that help compose the types listed above.
 
 from __future__ import unicode_literals, division, absolute_import, print_function
 
+from collections import OrderedDict
 from datetime import datetime, timedelta
 from fractions import Fraction
+from io import BytesIO
 import binascii
 import copy
 import math
@@ -58,21 +60,9 @@ import sys
 
 from . import _teletex_codec
 from ._errors import unwrap
-from ._ordereddict import OrderedDict
-from ._types import type_name, str_cls, byte_cls, int_types, chr_cls
+from ._types import type_name, chr_cls
 from .parser import _parse, _dump_header
 from .util import int_to_bytes, int_from_bytes, timezone, extended_datetime, create_timezone, utc_with_dst
-
-if sys.version_info <= (3,):
-    from cStringIO import StringIO as BytesIO
-
-    range = xrange  # noqa
-    _PY2 = True
-
-else:
-    from io import BytesIO
-
-    _PY2 = False
 
 
 _teletex_codec.register()
@@ -220,7 +210,7 @@ class Asn1Value(object):
             An instance of the current class
         """
 
-        if not isinstance(encoded_data, byte_cls):
+        if not isinstance(encoded_data, bytes):
             raise TypeError('encoded_data must be a byte string, not %s' % type_name(encoded_data))
 
         spec = None
@@ -291,7 +281,7 @@ class Asn1Value(object):
                 cls = self.__class__
                 # Allow explicit to be specified as a simple 2-element tuple
                 # instead of requiring the user make a nested tuple
-                if cls.explicit is not None and isinstance(cls.explicit[0], int_types):
+                if cls.explicit is not None and isinstance(cls.explicit[0], int):
                     cls.explicit = (cls.explicit, )
                 if hasattr(cls, '_setup'):
                     self._setup()
@@ -299,7 +289,7 @@ class Asn1Value(object):
 
             # Normalize tagging values
             if explicit is not None:
-                if isinstance(explicit, int_types):
+                if isinstance(explicit, int):
                     if class_ is None:
                         class_ = 'context'
                     explicit = (class_, explicit)
@@ -309,7 +299,7 @@ class Asn1Value(object):
                     tag = None
 
             if implicit is not None:
-                if isinstance(implicit, int_types):
+                if isinstance(implicit, int):
                     if class_ is None:
                         class_ = 'context'
                     implicit = (class_, implicit)
@@ -336,11 +326,11 @@ class Asn1Value(object):
 
             if explicit is not None:
                 # Ensure we have a tuple of 2-element tuples
-                if len(explicit) == 2 and isinstance(explicit[1], int_types):
+                if len(explicit) == 2 and isinstance(explicit[1], int):
                     explicit = (explicit, )
                 for class_, tag in explicit:
                     invalid_class = None
-                    if isinstance(class_, int_types):
+                    if isinstance(class_, int):
                         if class_ not in CLASS_NUM_TO_NAME_MAP:
                             invalid_class = class_
                     else:
@@ -356,7 +346,7 @@ class Asn1Value(object):
                             repr(invalid_class)
                         ))
                     if tag is not None:
-                        if not isinstance(tag, int_types):
+                        if not isinstance(tag, int):
                             raise TypeError(unwrap(
                                 '''
                                 explicit tag must be an integer, not %s
@@ -379,7 +369,7 @@ class Asn1Value(object):
                         repr(class_)
                     ))
                 if tag is not None:
-                    if not isinstance(tag, int_types):
+                    if not isinstance(tag, int):
                         raise TypeError(unwrap(
                             '''
                             implicit tag must be an integer, not %s
@@ -445,10 +435,7 @@ class Asn1Value(object):
             A unicode string
         """
 
-        if _PY2:
-            return self.__bytes__()
-        else:
-            return self.__unicode__()
+        return self.__unicode__()
 
     def __repr__(self):
         """
@@ -456,10 +443,7 @@ class Asn1Value(object):
             A unicode string
         """
 
-        if _PY2:
-            return '<%s %s b%s>' % (type_name(self), id(self), repr(self.dump()))
-        else:
-            return '<%s %s %s>' % (type_name(self), id(self), repr(self.dump()))
+        return '<%s %s %s>' % (type_name(self), id(self), repr(self.dump()))
 
     def __bytes__(self):
         """
@@ -609,10 +593,7 @@ class Asn1Value(object):
         elif hasattr(self, 'chosen'):
             self.chosen.debug(nest_level + 2)
         else:
-            if _PY2 and isinstance(self.native, byte_cls):
-                print('%s    Native: b%s' % (prefix, repr(self.native)))
-            else:
-                print('%s    Native: %s' % (prefix, self.native))
+            print('%s    Native: %s' % (prefix, self.native))
 
     def dump(self, force=False):
         """
@@ -1058,7 +1039,7 @@ class Choice(Asn1Value):
             A instance of the current class
         """
 
-        if not isinstance(encoded_data, byte_cls):
+        if not isinstance(encoded_data, bytes):
             raise TypeError('encoded_data must be a byte string, not %s' % type_name(encoded_data))
 
         value, _ = _parse_build(encoded_data, spec=cls, spec_params=kwargs, strict=strict)
@@ -1425,17 +1406,11 @@ class Concat(object):
 
     def __str__(self):
         """
-        Since str is different in Python 2 and 3, this calls the appropriate
-        method, __unicode__() or __bytes__()
-
         :return:
             A unicode string
         """
 
-        if _PY2:
-            return self.__bytes__()
-        else:
-            return self.__unicode__()
+        return self.__unicode__()
 
     def __bytes__(self):
         """
@@ -1684,7 +1659,7 @@ class Primitive(Asn1Value):
             A byte string
         """
 
-        if not isinstance(value, byte_cls):
+        if not isinstance(value, bytes):
             raise TypeError(unwrap(
                 '''
                 %s value must be a byte string, not %s
@@ -1784,7 +1759,7 @@ class AbstractString(Constructable, Primitive):
             A unicode string
         """
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be a unicode string, not %s
@@ -1915,7 +1890,7 @@ class Integer(Primitive, ValueMap):
             ValueError - when an invalid value is passed
         """
 
-        if isinstance(value, str_cls):
+        if isinstance(value, str):
             if self._map is None:
                 raise ValueError(unwrap(
                     '''
@@ -1935,7 +1910,7 @@ class Integer(Primitive, ValueMap):
 
             value = self._reverse_map[value]
 
-        elif not isinstance(value, int_types):
+        elif not isinstance(value, int):
             raise TypeError(unwrap(
                 '''
                 %s value must be an integer or unicode string when a name_map
@@ -2004,7 +1979,7 @@ class _IntegerBitString(object):
             # return an empty chunk, for cases like \x23\x80\x00\x00
             return []
 
-        unused_bits_len = ord(self.contents[0]) if _PY2 else self.contents[0]
+        unused_bits_len = self.contents[0]
         value = int_from_bytes(self.contents[1:])
         bits = (len(self.contents) - 1) * 8
 
@@ -2135,7 +2110,7 @@ class BitString(_IntegerBitString, Constructable, Castable, Primitive, ValueMap)
                 if key in value:
                     bits[index] = 1
 
-            value = ''.join(map(str_cls, bits))
+            value = ''.join(map(str, bits))
 
         elif value.__class__ == tuple:
             if self._map is None:
@@ -2146,7 +2121,7 @@ class BitString(_IntegerBitString, Constructable, Castable, Primitive, ValueMap)
                     if bit:
                         name = self._map.get(index, index)
                         self._native.add(name)
-            value = ''.join(map(str_cls, value))
+            value = ''.join(map(str, value))
 
         else:
             raise TypeError(unwrap(
@@ -2220,7 +2195,7 @@ class BitString(_IntegerBitString, Constructable, Castable, Primitive, ValueMap)
             A boolean if the bit is set
         """
 
-        is_int = isinstance(key, int_types)
+        is_int = isinstance(key, int)
         if not is_int:
             if not isinstance(self._map, dict):
                 raise ValueError(unwrap(
@@ -2266,7 +2241,7 @@ class BitString(_IntegerBitString, Constructable, Castable, Primitive, ValueMap)
             ValueError - when _map is not set or the key name is invalid
         """
 
-        is_int = isinstance(key, int_types)
+        is_int = isinstance(key, int)
         if not is_int:
             if self._map is None:
                 raise ValueError(unwrap(
@@ -2365,7 +2340,7 @@ class OctetBitString(Constructable, Castable, Primitive):
             ValueError - when an invalid value is passed
         """
 
-        if not isinstance(value, byte_cls):
+        if not isinstance(value, bytes):
             raise TypeError(unwrap(
                 '''
                 %s value must be a byte string, not %s
@@ -2435,7 +2410,7 @@ class OctetBitString(Constructable, Castable, Primitive):
             List with one tuple, consisting of a byte string and an integer (unused bits)
         """
 
-        unused_bits_len = ord(self.contents[0]) if _PY2 else self.contents[0]
+        unused_bits_len = self.contents[0]
         if not unused_bits_len:
             return [(self.contents[1:], ())]
 
@@ -2448,11 +2423,11 @@ class OctetBitString(Constructable, Castable, Primitive):
             raise ValueError('Bit string has {0} unused bits'.format(unused_bits_len))
 
         mask = (1 << unused_bits_len) - 1
-        last_byte = ord(self.contents[-1]) if _PY2 else self.contents[-1]
+        last_byte = self.contents[-1]
 
         # zero out the unused bits in the last byte.
         zeroed_byte = last_byte & ~mask
-        value = self.contents[1:-1] + (chr(zeroed_byte) if _PY2 else bytes((zeroed_byte,)))
+        value = self.contents[1:-1] + bytes((zeroed_byte,))
 
         unused_bits = _int_to_bit_tuple(last_byte & mask, unused_bits_len)
 
@@ -2505,7 +2480,7 @@ class IntegerBitString(_IntegerBitString, Constructable, Castable, Primitive):
             ValueError - when an invalid value is passed
         """
 
-        if not isinstance(value, int_types):
+        if not isinstance(value, int):
             raise TypeError(unwrap(
                 '''
                 %s value must be a positive integer, not %s
@@ -2570,7 +2545,7 @@ class OctetString(Constructable, Castable, Primitive):
             A byte string
         """
 
-        if not isinstance(value, byte_cls):
+        if not isinstance(value, bytes):
             raise TypeError(unwrap(
                 '''
                 %s value must be a byte string, not %s
@@ -2654,7 +2629,7 @@ class IntegerOctetString(Constructable, Castable, Primitive):
             ValueError - when an invalid value is passed
         """
 
-        if not isinstance(value, int_types):
+        if not isinstance(value, int):
             raise TypeError(unwrap(
                 '''
                 %s value must be a positive integer, not %s
@@ -2752,7 +2727,7 @@ class ParsableOctetString(Constructable, Castable, Primitive):
             A byte string
         """
 
-        if not isinstance(value, byte_cls):
+        if not isinstance(value, bytes):
             raise TypeError(unwrap(
                 '''
                 %s value must be a byte string, not %s
@@ -2904,7 +2879,7 @@ class ParsableOctetBitString(ParsableOctetString):
             ValueError - when an invalid value is passed
         """
 
-        if not isinstance(value, byte_cls):
+        if not isinstance(value, bytes):
             raise TypeError(unwrap(
                 '''
                 %s value must be a byte string, not %s
@@ -2934,7 +2909,7 @@ class ParsableOctetBitString(ParsableOctetString):
             A byte string
         """
 
-        unused_bits_len = ord(self.contents[0]) if _PY2 else self.contents[0]
+        unused_bits_len = self.contents[0]
         if unused_bits_len:
             raise ValueError('ParsableOctetBitString should have no unused bits')
 
@@ -3007,7 +2982,7 @@ class ObjectIdentifier(Primitive, ValueMap):
                 type_name(cls)
             ))
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 value must be a unicode string, not %s
@@ -3045,7 +3020,7 @@ class ObjectIdentifier(Primitive, ValueMap):
                 type_name(cls)
             ))
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 value must be a unicode string, not %s
@@ -3079,7 +3054,7 @@ class ObjectIdentifier(Primitive, ValueMap):
             ValueError - when an invalid value is passed
         """
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be a unicode string, not %s
@@ -3153,24 +3128,22 @@ class ObjectIdentifier(Primitive, ValueMap):
 
             part = 0
             for byte in self.contents:
-                if _PY2:
-                    byte = ord(byte)
                 part = part * 128
                 part += byte & 127
                 # Last byte in subidentifier has the eighth bit set to 0
                 if byte & 0x80 == 0:
                     if len(output) == 0:
                         if part >= 80:
-                            output.append(str_cls(2))
-                            output.append(str_cls(part - 80))
+                            output.append(str(2))
+                            output.append(str(part - 80))
                         elif part >= 40:
-                            output.append(str_cls(1))
-                            output.append(str_cls(part - 40))
+                            output.append(str(1))
+                            output.append(str(part - 40))
                         else:
-                            output.append(str_cls(0))
-                            output.append(str_cls(part))
+                            output.append(str(0))
+                            output.append(str(part))
                     else:
-                        output.append(str_cls(part))
+                        output.append(str(part))
                     part = 0
 
             self._dotted = '.'.join(output)
@@ -3240,7 +3213,7 @@ class Enumerated(Integer):
             ValueError - when an invalid value is passed
         """
 
-        if not isinstance(value, int_types) and not isinstance(value, str_cls):
+        if not isinstance(value, int) and not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be an integer or a unicode string, not %s
@@ -3249,7 +3222,7 @@ class Enumerated(Integer):
                 type_name(value)
             ))
 
-        if isinstance(value, str_cls):
+        if isinstance(value, str):
             if value not in self._reverse_map:
                 raise ValueError(unwrap(
                     '''
@@ -3507,7 +3480,7 @@ class Sequence(Asn1Value):
         if self.children is None:
             self._parse_children()
 
-        if not isinstance(key, int_types):
+        if not isinstance(key, int):
             if key not in self._field_map:
                 raise KeyError(unwrap(
                     '''
@@ -3554,7 +3527,7 @@ class Sequence(Asn1Value):
         if self.children is None:
             self._parse_children()
 
-        if not isinstance(key, int_types):
+        if not isinstance(key, int):
             if key not in self._field_map:
                 raise KeyError(unwrap(
                     '''
@@ -3605,7 +3578,7 @@ class Sequence(Asn1Value):
         if self.children is None:
             self._parse_children()
 
-        if not isinstance(key, int_types):
+        if not isinstance(key, int):
             if key not in self._field_map:
                 raise KeyError(unwrap(
                     '''
@@ -4003,7 +3976,7 @@ class Sequence(Asn1Value):
             encoded using
         """
 
-        if not isinstance(field_name, str_cls):
+        if not isinstance(field_name, str):
             raise TypeError(unwrap(
                 '''
                 field_name must be a unicode string, not %s
@@ -4051,7 +4024,7 @@ class Sequence(Asn1Value):
                     try:
                         name = self._fields[index][0]
                     except (IndexError):
-                        name = str_cls(index)
+                        name = str(index)
                     self._native[name] = child.native
             except (ValueError, TypeError) as e:
                 self._native = None
@@ -4879,7 +4852,7 @@ class AbstractTime(AbstractString):
             A dict with the parsed values
         """
 
-        string = str_cls(self)
+        string = str(self)
 
         m = self._TIMESTRING_RE.match(string)
         if not m:
@@ -5018,8 +4991,6 @@ class UTCTime(AbstractTime):
                 raise ValueError('Year of the UTCTime is not in range [1950, 2049], use GeneralizedTime instead')
 
             value = value.strftime('%y%m%d%H%M%SZ')
-            if _PY2:
-                value = value.decode('ascii')
 
         AbstractString.set(self, value)
         # Set it to None and let the class take care of converting the next
@@ -5117,8 +5088,6 @@ class GeneralizedTime(AbstractTime):
                 fraction = ''
 
             value = value.strftime('%Y%m%d%H%M%S') + fraction + 'Z'
-            if _PY2:
-                value = value.decode('ascii')
 
         AbstractString.set(self, value)
         # Set it to None and let the class take care of converting the next
@@ -5340,7 +5309,7 @@ def _build_id_tuple(params, spec):
         else:
             required_class = 2
             required_tag = params['implicit']
-    if required_class is not None and not isinstance(required_class, int_types):
+    if required_class is not None and not isinstance(required_class, int):
         required_class = CLASS_NAME_TO_NUM_MAP[required_class]
 
     required_class = params.get('class_', required_class)
