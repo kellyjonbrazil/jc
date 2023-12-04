@@ -71,7 +71,6 @@ parsers: List[str] = [
     'ip-address',
     'iptables',
     'ip-route',
-    'iso-datetime',
     'iw-scan',
     'iwconfig',
     'jar-manifest',
