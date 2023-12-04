@@ -91,16 +91,20 @@ Examples:
     {"runnable_procs":"2","uninterruptible_sleeping_procs":"0","virtua...}
     ...
 """
+import re
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
 from jc.exceptions import ParseError
 
+PROCS_HEADER_RE = re.compile(r'^-*procs-* ')
+DISK_HEADER_RE = re.compile(r'^-*disk-* ')
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`vmstat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -182,18 +186,18 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 continue
 
             # detect output type
-            if not procs and not disk and line.startswith('procs'):
+            if not procs and not disk and PROCS_HEADER_RE.match(line):
                 procs = True
                 tstamp = '-timestamp-' in line
                 continue
 
-            if not procs and not disk and line.startswith('disk'):
+            if not procs and not disk and DISK_HEADER_RE.match(line):
                 disk = True
                 tstamp = '-timestamp-' in line
                 continue
 
             # skip header rows
-            if (procs or disk) and (line.startswith('procs') or line.startswith('disk')):
+            if (procs or disk) and (PROCS_HEADER_RE.match(line) or DISK_HEADER_RE.match(line)):
                 continue
 
             if 'swpd' in line and 'free' in line and 'buff' in line and 'cache' in line:

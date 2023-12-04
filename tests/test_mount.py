@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/mount.out'), 'r', encoding='utf-8') as f:
         aix_7_1_mount = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-mountpoint.out'), 'r', encoding='utf-8') as f:
+        generic_mount_spaces_in_mountpoint = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.json'), 'r', encoding='utf-8') as f:
         centos_7_7_mount_json = json.loads(f.read())
@@ -39,6 +42,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/mount.json'), 'r', encoding='utf-8') as f:
         aix_7_1_mount_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-mountpoint.json'), 'r', encoding='utf-8') as f:
+        generic_mount_spaces_in_mountpoint_json = json.loads(f.read())
 
 
     def test_mount_nodata(self):
@@ -76,6 +82,12 @@ class MyTests(unittest.TestCase):
         Test 'mount' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.mount.parse(self.aix_7_1_mount, quiet=True), self.aix_7_1_mount_json)
+
+    def test_mount_spaces_in_mountpoint(self):
+        """
+        Test 'mount' with spaces in the mountpoint
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_spaces_in_mountpoint, quiet=True), self.generic_mount_spaces_in_mountpoint_json)
 
 
 if __name__ == '__main__':
