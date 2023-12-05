@@ -122,12 +122,13 @@ Examples:
         }
     }
     ]
-      
+
 """
 import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
+from humanfriendly import parse_size
 
 
 class info:
@@ -144,19 +145,50 @@ class info:
 __version__ = info.version
 
 
-# def _process(proc_data: List[JSONDictType], quiet: bool = False) -> List[JSONDictType]:
-#     """
-#     Final processing to conform to the schema.
+def _process(proc_data: List[JSONDictType], quiet: bool = False) -> List[JSONDictType]:
+    """
+    Final processing to conform to the schema.
 
-#     Parameters:
+    Parameters:
 
-#         proc_data:   (List of Dictionaries) raw structured data to process
+        proc_data:   (List of Dictionaries) raw structured data to process
 
-#     Returns:
+    Returns:
 
-#         List of Dictionaries. Structured to conform to the schema.
-#     """
-#     return proc_data
+        List of Dictionaries. Structured to conform to the schema.
+    """
+    string_to_bytes_fields = ["last_2s", "last_10s", "last_40s", "cumulative"]
+    one_nesting = [
+        "total_send_rate",
+        "total_receive_rate",
+        "total_send_and_receive_rate",
+        "peak_rate",
+        "cumulative_rate",
+    ]
+    if not proc_data:
+        return proc_data
+    for entry in proc_data:
+        # print(f"{entry=}")
+        for entry_key in entry:
+            # print(f"{entry_key=}")
+            if entry_key in one_nesting:
+                # print(f"{entry[entry_key]=}")
+                for one_nesting_item_key in entry[entry_key]:
+                    # print(f"{one_nesting_item_key=}")
+                    if one_nesting_item_key in string_to_bytes_fields:
+                        entry[entry_key][one_nesting_item_key] = parse_size(entry[entry_key][one_nesting_item_key])
+            elif entry_key == "clients":
+                for client in entry[entry_key]:
+                    # print(f"{client=}")
+                    if "connections" not in client:
+                        continue
+                    for connection in client["connections"]:
+                        # print(f"{connection=}")
+                        for connection_key in connection:
+                            # print(f"{connection_key=}")
+                            if connection_key in string_to_bytes_fields:
+                                connection[connection_key] = parse_size(connection[connection_key])
+    return proc_data
 
 
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
@@ -216,7 +248,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     current_client: Dict = {}
 
     if not jc.utils.has_data(data):
-        return raw_output
+        return raw_output if raw else _process(raw_output, quiet=quiet)
 
     is_previous_line_interface = False
     saw_already_host_line = False
@@ -409,11 +441,8 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         elif all(c == "=" for c in line):
             interface_item["clients"] = clients
             clients = []
-            raw_output.append(interface_item)
+            raw_output.append(interface_item.copy()) # keep the copy here as without it keeps the objects linked 
         else:
             pass
 
-    # interface_item["clients"] = clients
-    # raw_output.append(interface_item)
-
-    return raw_output
+    return raw_output if raw else _process(raw_output, quiet=quiet)
