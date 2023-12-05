@@ -178,23 +178,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
     raw_output: List[Dict] = []
 
-    # for backwards compatibility, preset all fields to None
-    interface_obj: Dict = {
-        "device": None,
-        "ip_address": None,
-        "mac_address": None,
-        "clients": None,
-        "total_send_rate": None,
-        "total_receive_rate": None,
-        "total_send_and_receive_rate": None,
-        "peak_rate": None,
-        "cumulative_rate": None,
-    }
-
-    interface_item: Dict = interface_obj.copy()
+    interface_item: Dict = {}
 
     clients: List = []
-    connections: List = []
 
     before_arrow = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+):(?P<host_port>[^\s]+)\s+"
     after_arrow_before_newline = r"\s+(?P<send_last_2s>[^\s]+)\s+(?P<send_last_10s>[^\s]+)\s+(?P<send_last_40s>[^\s]+)\s+(?P<send_cumulative>[^\s]+)"
@@ -227,6 +213,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     jc.utils.input_type_check(data)
 
     raw_output: List[Dict] = []
+    current_client: Dict = {}
 
     if not jc.utils.has_data(data):
         return raw_output
@@ -270,8 +257,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             line.startswith("# Host name (port/service if enabled)")
             and saw_already_host_line
         ):
-            old_interface_item = interface_item.copy()
-            interface_item = interface_obj.copy()
+            old_interface_item, interface_item = interface_item, {}
             interface_item.update(
                 {
                     "device": old_interface_item["device"],
@@ -288,7 +274,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             #    1 ubuntu-2004-clean-01:ssh                 =>       448b       448b       448b       112B
 
             is_previous_line_interface = True
-            match_dict = re_linux_clients_before_newline.match(line).groupdict()
+            match_raw = re_linux_clients_before_newline.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             current_client = {}
             current_client["index"] = int(match_dict["index"])
             current_client["connections"] = []
@@ -312,7 +303,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             #      10.10.15.72:40876                        <=       208b       208b       208b        52B
 
             is_previous_line_interface = False
-            match_dict = re_linux_clients_after_newline.match(line).groupdict()
+
+            match_raw = re_linux_clients_after_newline.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             current_client_receive = {
                 "host_name": match_dict["receive_ip"],
                 "host_port": match_dict["receive_port"],
@@ -331,7 +328,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         elif line.startswith("Total send rate"):
             # Example:
             # Total send rate:                                       448b       448b       448b
-            match_dict = re_total_send_rate.match(line).groupdict()
+            match_raw = re_total_send_rate.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             interface_item["total_send_rate"] = {}
             interface_item["total_send_rate"].update(
                 {
@@ -343,7 +345,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         elif line.startswith("Total receive rate"):
             # Example:
             # Total receive rate:                                    208b       208b       208b
-            match_dict = re_total_receive_rate.match(line).groupdict()
+            match_raw = re_total_receive_rate.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             interface_item["total_receive_rate"] = {}
             interface_item["total_receive_rate"].update(
                 {
@@ -355,7 +362,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         elif line.startswith("Total send and receive rate"):
             # Example:
             # Total send and receive rate:                           656b       656b       656b
-            match_dict = re_total_send_and_receive_rate.match(line).groupdict()
+            match_raw = re_total_send_and_receive_rate.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             interface_item["total_send_and_receive_rate"] = {}
             interface_item["total_send_and_receive_rate"].update(
                 {
@@ -365,7 +377,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                 }
             )
         elif line.startswith("Peak rate"):
-            match_dict = re_peak_rate.match(line).groupdict()
+            match_raw = re_peak_rate.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             interface_item["peak_rate"] = {}
             interface_item["peak_rate"].update(
                 {
@@ -375,7 +392,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                 }
             )
         elif line.startswith("Cumulative"):
-            match_dict = re_cumulative_rate.match(line).groupdict()
+            match_raw = re_cumulative_rate.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
             interface_item["cumulative_rate"] = {}
             interface_item["cumulative_rate"].update(
                 {
@@ -385,9 +407,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                 }
             )
         elif all(c == "=" for c in line):
-            interface_item["clients"] = clients.copy()
+            interface_item["clients"] = clients
             clients = []
-            raw_output.append(interface_item.copy())
+            raw_output.append(interface_item)
         else:
             pass
 
