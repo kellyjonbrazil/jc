@@ -1,0 +1,18 @@
+interface: enp0s3
+IP address is: 10.10.15.129
+MAC address is: 08:00:27:c0:4a:4f
+Listening on enp0s3
+   # Host name (port/service if enabled)            last 2s   last 10s   last 40s cumulative
+--------------------------------------------------------------------------------------------
+   1 ubuntu-2004-clean-01                     =>     4.82KB     4.82KB     4.82KB     9.63KB
+     10.10.15.72                              <=     14.5KB     14.5KB     14.5KB     29.1KB
+   2 ubuntu-2004-clean-02                     =>         0B         0B         0B         0B
+     10.10.15.72                              <=     2.02KB     2.02KB     2.02KB     4.04KB
+--------------------------------------------------------------------------------------------
+Total send rate:                                     4.82KB     4.82KB     4.82KB
+Total receive rate:                                  16.6KB     16.6KB     16.6KB
+Total send and receive rate:                         21.4KB     21.4KB     21.4KB
+--------------------------------------------------------------------------------------------
+Peak rate (sent/received/total):                     4.82KB     16.6KB     21.4KB
+Cumulative (sent/received/total):                    9.63KB     33.1KB     42.8KB
+============================================================================================

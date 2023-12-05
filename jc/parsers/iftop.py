@@ -25,7 +25,7 @@ Schema:
                 "connections": [
                     {
                         "host_name": string,
-                        "host_port": string, # can be service
+                        "host_port": string, # can be service or missing
                         "last_2s": string,
                         "last_10s": string,
                         "last_40s": string,
@@ -215,12 +215,21 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     clients: List = []
 
     before_arrow = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+):(?P<host_port>[^\s]+)\s+"
+    before_arrow_no_port = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+)\s+"
     after_arrow_before_newline = r"\s+(?P<send_last_2s>[^\s]+)\s+(?P<send_last_10s>[^\s]+)\s+(?P<send_last_40s>[^\s]+)\s+(?P<send_cumulative>[^\s]+)"
     newline_before_arrow = r"\s+(?P<receive_ip>.+):(?P<receive_port>\w+)\s+"
+    newline_before_arrow_no_port = r"\s+(?P<receive_ip>.+)\s+"
     after_arrow_till_end = r"\s+(?P<receive_last_2s>[^\s]+)\s+(?P<receive_last_10s>[^\s]+)\s+(?P<receive_last_40s>[^\s]+)\s+(?P<receive_cumulative>[^\s]+)"
     re_linux_clients_before_newline = re.compile(
         rf"{before_arrow}=>{after_arrow_before_newline}"
     )
+    re_linux_clients_before_newline_no_port = re.compile(
+        rf"{before_arrow_no_port}=>{after_arrow_before_newline}"
+    )
+    re_linux_clients_after_newline_no_port = re.compile(
+        rf"{newline_before_arrow_no_port}<={after_arrow_till_end}"
+    )
+
     re_linux_clients_after_newline = re.compile(
         rf"{newline_before_arrow}<={after_arrow_till_end}"
     )
@@ -298,10 +307,10 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                 }
             )
 
-        elif "=>" in line and is_previous_line_interface:
+        elif "=>" in line and is_previous_line_interface and ":" in line:
             # should not happen
             pass
-        elif "=>" in line and not is_previous_line_interface:
+        elif "=>" in line and not is_previous_line_interface and ":" in line:
             # Example:
             #    1 ubuntu-2004-clean-01:ssh                 =>       448b       448b       448b       112B
 
@@ -325,12 +334,35 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                 "direction": "send",
             }
             current_client["connections"].append(current_client_send)
-
             # not adding yet as the receive part is not yet parsed
-        elif "<=" in line and not is_previous_line_interface:
+        elif "=>" in line and not is_previous_line_interface and ":" not in line:
             # should not happen
             pass
-        elif "<=" in line and is_previous_line_interface:
+        elif "=>" in line and is_previous_line_interface and ":" not in line:
+            is_previous_line_interface = True
+            match_raw = re_linux_clients_before_newline_no_port.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
+            current_client = {}
+            current_client["index"] = int(match_dict["index"])
+            current_client["connections"] = []
+            current_client_send = {
+                "host_name": match_dict["host_name"],
+                "last_2s": match_dict["send_last_2s"],
+                "last_10s": match_dict["send_last_10s"],
+                "last_40s": match_dict["send_last_40s"],
+                "cumulative": match_dict["send_cumulative"],
+                "direction": "send",
+            }
+            current_client["connections"].append(current_client_send)
+            # not adding yet as the receive part is not yet parsed
+        elif "<=" in line and not is_previous_line_interface and ":" in line:
+            # should not happen
+            pass
+        elif "<=" in line and is_previous_line_interface and ":" in line:
             # Example:
             #      10.10.15.72:40876                        <=       208b       208b       208b        52B
 
@@ -345,6 +377,32 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client_receive = {
                 "host_name": match_dict["receive_ip"],
                 "host_port": match_dict["receive_port"],
+                "last_2s": match_dict["receive_last_2s"],
+                "last_10s": match_dict["receive_last_10s"],
+                "last_40s": match_dict["receive_last_40s"],
+                "cumulative": match_dict["receive_cumulative"],
+                "direction": "receive",
+            }
+
+            current_client["connections"].append(current_client_receive)
+            clients.append(current_client)
+        elif "<=" in line and not is_previous_line_interface and ":" not in line:
+            # should not happen
+            pass
+        elif "<=" in line and is_previous_line_interface and ":" not in line:
+            # Example:
+            #      10.10.15.72:40876                        <=       208b       208b       208b        52B
+
+            is_previous_line_interface = False
+
+            match_raw = re_linux_clients_after_newline_no_port.match(line)
+            if not match_raw:
+                # this is a bug in iftop
+                #
+                continue
+            match_dict = match_raw.groupdict()
+            current_client_receive = {
+                "host_name": match_dict["receive_ip"],
                 "last_2s": match_dict["receive_last_2s"],
                 "last_10s": match_dict["receive_last_10s"],
                 "last_40s": match_dict["receive_last_40s"],
