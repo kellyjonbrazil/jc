@@ -13,7 +13,6 @@ setuptools.setup(
         'ruamel.yaml>=0.15.0',
         'xmltodict>=0.12.0',
         'Pygments>=2.3.0',
-        'humanfriendly>=10.0'
     ],
     license='MIT',
     long_description=long_description,
