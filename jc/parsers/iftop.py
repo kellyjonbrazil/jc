@@ -1,11 +1,12 @@
 """jc - JSON Convert `iftop` command output parser
 
-No `iftop` options are supported.
+Some of `iftop` options are supported.
 
 
 Usage (cli):
 
     $ iftop -i <device> -t -P -s 1 | jc --iftop
+    $ iftop -i <device> -t -B -s1 | jc --iftop
 
 Usage (module):
 
