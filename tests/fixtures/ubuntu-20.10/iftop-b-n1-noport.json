@@ -1,0 +1,33 @@
+[
+  {
+    "device": "enp0s3",
+    "ip_address": "10.10.15.129",
+    "mac_address": "08:00:27:c0:4a:4f",
+    "total_send_rate": {
+      "last_2s": 4820,
+      "last_10s": 4820,
+      "last_40s": 4820
+    },
+    "total_receive_rate": {
+      "last_2s": 16600,
+      "last_10s": 16600,
+      "last_40s": 16600
+    },
+    "total_send_and_receive_rate": {
+      "last_2s": 21400,
+      "last_10s": 21400,
+      "last_40s": 21400
+    },
+    "peak_rate": {
+      "last_2s": 4820,
+      "last_10s": 16600,
+      "last_40s": 21400
+    },
+    "cumulative_rate": {
+      "last_2s": 9630,
+      "last_10s": 33100,
+      "last_40s": 42800
+    },
+    "clients": []
+  }
+]

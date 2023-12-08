@@ -1,0 +1,57 @@
+[
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "clients": [
+            {
+                "index": 1,
+                "connections": [
+                    {
+                        "host_name": "ubuntu-2004-clean-01",
+                        "host_port": "ssh",
+                        "last_2s": 448,
+                        "last_10s": 448,
+                        "last_40s": 448,
+                        "cumulative": 112,
+                        "direction": "send"
+                    },
+                    {
+                        "host_name": "10.10.15.72",
+                        "host_port": "40876",
+                        "last_2s": 208,
+                        "last_10s": 208,
+                        "last_40s": 208,
+                        "cumulative": 52,
+                        "direction": "receive"
+                    }
+                ]
+            }
+        ],
+        "total_send_rate": {
+            "last_2s": 448,
+            "last_10s": 448,
+            "last_40s": 448
+        },
+        "total_receive_rate": {
+            "last_2s": 208,
+            "last_10s": 208,
+            "last_40s": 208
+        },
+        "total_send_and_receive_rate": {
+            "last_2s": 656,
+            "last_10s": 656,
+            "last_40s": 656
+        },
+        "peak_rate": {
+            "last_2s": 448,
+            "last_10s": 208,
+            "last_40s": 656
+        },
+        "cumulative_rate": {
+            "last_2s": 112,
+            "last_10s": 52,
+            "last_40s": 164
+        }
+    }
+]
