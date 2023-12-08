@@ -9,7 +9,7 @@ _jc() {
              jc_help_options jc_help_options_describe \
              jc_special_options jc_special_options_describe
 
-    jc_commands=(acpi airport arp blkid bluetoothctl cbt certbot chage cksum crontab date df dig dmidecode dpkg du env file findmnt finger free git gpg hciconfig host id ifconfig iostat ip iptables iw iwconfig jobs last lastb ls lsattr lsb_release lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat netstat nmcli nsd-control ntpq os-prober pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss ssh sshd stat sum sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 udevadm ufw uname update-alternatives upower uptime vdir veracrypt vmstat w wc who xrandr zipinfo zpool)
+    jc_commands=(acpi airport arp blkid bluetoothctl cbt certbot chage cksum crontab date debconf-show df dig dmidecode dpkg du env file findmnt finger free git gpg hciconfig host id ifconfig iostat ip iptables iw iwconfig jobs last lastb ls lsattr lsb_release lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat netstat nmcli nsd-control ntpq os-prober pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss ssh sshd stat sum swapon sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 tune2fs udevadm ufw uname update-alternatives upower uptime vdir veracrypt vmstat w wc who xrandr zipinfo zpool)
     jc_commands_describe=(
         'acpi:run "acpi" command with magic syntax.'
         'airport:run "airport" command with magic syntax.'
@@ -22,6 +22,7 @@ _jc() {
         'cksum:run "cksum" command with magic syntax.'
         'crontab:run "crontab" command with magic syntax.'
         'date:run "date" command with magic syntax.'
+        'debconf-show:run "debconf-show" command with magic syntax.'
         'df:run "df" command with magic syntax.'
         'dig:run "dig" command with magic syntax.'
         'dmidecode:run "dmidecode" command with magic syntax.'
@@ -87,6 +88,7 @@ _jc() {
         'sshd:run "sshd" command with magic syntax.'
         'stat:run "stat" command with magic syntax.'
         'sum:run "sum" command with magic syntax.'
+        'swapon:run "swapon" command with magic syntax.'
         'sysctl:run "sysctl" command with magic syntax.'
         'systemctl:run "systemctl" command with magic syntax.'
         'systeminfo:run "systeminfo" command with magic syntax.'
@@ -96,6 +98,7 @@ _jc() {
         'tracepath6:run "tracepath6" command with magic syntax.'
         'traceroute:run "traceroute" command with magic syntax.'
         'traceroute6:run "traceroute6" command with magic syntax.'
+        'tune2fs:run "tune2fs" command with magic syntax.'
         'udevadm:run "udevadm" command with magic syntax.'
         'ufw:run "ufw" command with magic syntax.'
         'uname:run "uname" command with magic syntax.'
@@ -112,11 +115,12 @@ _jc() {
         'zipinfo:run "zipinfo" command with magic syntax.'
         'zpool:run "zpool" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --arp --asciitable --asciitable-m --blkid --bluetoothctl --cbt --cef --cef-s --certbot --chage --cksum --clf --clf-s --crontab --crontab-u --csv --csv-s --date --datetime-iso --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --find --findmnt --finger --free --fstab --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --host --hosts --id --ifconfig --ini --ini-dup --iostat --iostat-s --ip-address --iptables --ip-route --iw-scan --iwconfig --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsattr --lsb-release --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --nsd-control --ntpq --openvpn --os-prober --os-release --passwd --pci-ids --pgpass --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-tcp --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --resolve-conf --route --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --srt --ss --ssh-conf --sshd-conf --stat --stat-s --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --toml --top --top-s --tracepath --traceroute --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --ver --veracrypt --vmstat --vmstat-s --w --wc --who --x509-cert --x509-csr --xml --xrandr --yaml --zipinfo --zpool-iostat --zpool-status)
+    jc_parsers=(--acpi --airport --airport-s --apkindex --arp --asciitable --asciitable-m --blkid --bluetoothctl --cbt --cef --cef-s --certbot --chage --cksum --clf --clf-s --crontab --crontab-u --csv --csv-s --date --datetime-iso --deb-packages-index --debconf-show --df --dig --dir --dmidecode --dpkg-l --du --email-address --env --file --find --findmnt --finger --free --fstab --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --host --hosts --id --ifconfig --ini --ini-dup --iostat --iostat-s --ip-address --iptables --ip-route --iw-scan --iwconfig --jar-manifest --jobs --jwt --kv --last --ls --ls-s --lsattr --lsb-release --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --netstat --nmcli --nsd-control --ntpq --openvpn --os-prober --os-release --passwd --pci-ids --pgpass --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --plist --postconf --proc --proc-buddyinfo --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-tcp --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --resolve-conf --route --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --srt --ss --ssh-conf --sshd-conf --stat --stat-s --swapon --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --toml --top --top-s --tracepath --traceroute --tune2fs --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --uptime --url --ver --veracrypt --vmstat --vmstat-s --w --wc --who --x509-cert --x509-csr --xml --xrandr --yaml --zipinfo --zpool-iostat --zpool-status)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
         '--airport-s:`airport -s` command parser'
+        '--apkindex:Alpine Linux Package Index file parser'
         '--arp:`arp` command parser'
         '--asciitable:ASCII and Unicode table parser'
         '--asciitable-m:multi-line ASCII and Unicode table parser'
@@ -136,6 +140,8 @@ _jc() {
         '--csv-s:CSV file streaming parser'
         '--date:`date` command parser'
         '--datetime-iso:ISO 8601 Datetime string parser'
+        '--deb-packages-index:Debian Packages Index file parser'
+        '--debconf-show:`debconf-show` command parser'
         '--df:`df` command parser'
         '--dig:`dig` command parser'
         '--dir:`dir` command parser'
@@ -276,6 +282,7 @@ _jc() {
         '--sshd-conf:`sshd` config file and `sshd -T` command parser'
         '--stat:`stat` command parser'
         '--stat-s:`stat` command streaming parser'
+        '--swapon:`swapon` command parser'
         '--sysctl:`sysctl` command parser'
         '--syslog:Syslog RFC 5424 string parser'
         '--syslog-s:Syslog RFC 5424 string streaming parser'
@@ -294,6 +301,7 @@ _jc() {
         '--top-s:`top -b` command streaming parser'
         '--tracepath:`tracepath` and `tracepath6` command parser'
         '--traceroute:`traceroute` and `traceroute6` command parser'
+        '--tune2fs:`tune2fs -l` command parser'
         '--udevadm:`udevadm info` command parser'
         '--ufw:`ufw status` command parser'
         '--ufw-appinfo:`ufw app info [application]` command parser'

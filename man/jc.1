@@ -1,4 +1,4 @@
-.TH jc 1 2023-10-23 1.23.6 "JSON Convert"
+.TH jc 1 2023-12-04 1.24.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -51,6 +51,11 @@ Parsers:
 .B
 \fB--airport-s\fP
 `airport -s` command parser
+
+.TP
+.B
+\fB--apkindex\fP
+Alpine Linux Package Index file parser
 
 .TP
 .B
@@ -146,6 +151,16 @@ CSV file streaming parser
 .B
 \fB--datetime-iso\fP
 ISO 8601 Datetime string parser
+
+.TP
+.B
+\fB--deb-packages-index\fP
+Debian Packages Index file parser
+
+.TP
+.B
+\fB--debconf-show\fP
+`debconf-show` command parser
 
 .TP
 .B
@@ -321,11 +336,6 @@ IPv4 and IPv6 Address string parser
 .B
 \fB--ip-route\fP
 `ip route` command parser
-
-.TP
-.B
-\fB--iso-datetime\fP
-Deprecated - please use datetime-iso
 
 .TP
 .B
@@ -854,6 +864,11 @@ SRT file parser
 
 .TP
 .B
+\fB--swapon\fP
+`swapon` command parser
+
+.TP
+.B
 \fB--sysctl\fP
 `sysctl` command parser
 
@@ -941,6 +956,11 @@ TOML file parser
 .B
 \fB--traceroute\fP
 `traceroute` and `traceroute6` command parser
+
+.TP
+.B
+\fB--tune2fs\fP
+`tune2fs -l` command parser
 
 .TP
 .B

@@ -15,6 +15,7 @@ Other type classes are defined that help compose the types listed above.
 
 from __future__ import unicode_literals, division, absolute_import, print_function
 
+from collections import OrderedDict
 from contextlib import contextmanager
 from encodings import idna  # noqa
 import hashlib
@@ -26,8 +27,7 @@ import unicodedata
 
 from ._errors import unwrap
 from ._iri import iri_to_uri, uri_to_iri
-from ._ordereddict import OrderedDict
-from ._types import type_name, str_cls, bytes_to_list
+from ._types import type_name
 from .algos import AlgorithmIdentifier, AnyAlgorithmIdentifier, DigestAlgorithm, SignedDigestAlgorithm
 from .core import (
     Any,
@@ -100,7 +100,7 @@ class DNSName(IA5String):
             A unicode string
         """
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be a unicode string, not %s
@@ -131,7 +131,7 @@ class URI(IA5String):
             A unicode string
         """
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be a unicode string, not %s
@@ -215,7 +215,7 @@ class EmailAddress(IA5String):
             A unicode string
         """
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be a unicode string, not %s
@@ -323,7 +323,7 @@ class IPAddress(OctetString):
             an IPv6 address or IPv6 address with CIDR
         """
 
-        if not isinstance(value, str_cls):
+        if not isinstance(value, str):
             raise TypeError(unwrap(
                 '''
                 %s value must be a unicode string, not %s
@@ -413,7 +413,7 @@ class IPAddress(OctetString):
             if cidr_int is not None:
                 cidr_bits = '{0:b}'.format(cidr_int)
                 cidr = len(cidr_bits.rstrip('0'))
-                value = value + '/' + str_cls(cidr)
+                value = value + '/' + str(cidr)
             self._native = value
         return self._native
 
@@ -2598,7 +2598,7 @@ class Certificate(Sequence):
         """
 
         if self._issuer_serial is None:
-            self._issuer_serial = self.issuer.sha256 + b':' + str_cls(self.serial_number).encode('ascii')
+            self._issuer_serial = self.issuer.sha256 + b':' + str(self.serial_number).encode('ascii')
         return self._issuer_serial
 
     @property
@@ -2647,7 +2647,7 @@ class Certificate(Sequence):
                 # We untag the element since it is tagged via being a choice from GeneralName
                 issuer = issuer.untag()
                 authority_serial = self.authority_key_identifier_value['authority_cert_serial_number'].native
-                self._authority_issuer_serial = issuer.sha256 + b':' + str_cls(authority_serial).encode('ascii')
+                self._authority_issuer_serial = issuer.sha256 + b':' + str(authority_serial).encode('ascii')
             else:
                 self._authority_issuer_serial = None
         return self._authority_issuer_serial
@@ -2860,7 +2860,7 @@ class Certificate(Sequence):
             with a space between each pair of characters, all uppercase
         """
 
-        return ' '.join('%02X' % c for c in bytes_to_list(self.sha1))
+        return ' '.join('%02X' % c for c in list(self.sha1))
 
     @property
     def sha256(self):
@@ -2882,7 +2882,7 @@ class Certificate(Sequence):
             with a space between each pair of characters, all uppercase
         """
 
-        return ' '.join('%02X' % c for c in bytes_to_list(self.sha256))
+        return ' '.join('%02X' % c for c in list(self.sha256))
 
     def is_valid_domain_ip(self, domain_ip):
         """
@@ -2896,7 +2896,7 @@ class Certificate(Sequence):
             A boolean - if the domain or IP is valid for the certificate
         """
 
-        if not isinstance(domain_ip, str_cls):
+        if not isinstance(domain_ip, str):
             raise TypeError(unwrap(
                 '''
                 domain_ip must be a unicode string, not %s

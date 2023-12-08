@@ -64,12 +64,10 @@ def GetFileEncoding(path):
 def OpenFileWithEncoding(file_path, encoding):
     return codecs.open(file_path, 'r', encoding=encoding, errors='ignore')
 
-if sys.version_info < (3, 0):
-    def OpenFile(file_path):
-        return open(file_path, 'rb')
-else:
-    def OpenFile(file_path):
-        return open(file_path, 'br')
+
+def OpenFile(file_path):
+    return open(file_path, 'rb')
+
 
 class PBParser(object):
 

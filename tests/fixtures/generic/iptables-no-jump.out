@@ -1,0 +1,4 @@
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+           udp  --  anywhere             anywhere
+

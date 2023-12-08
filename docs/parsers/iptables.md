@@ -30,7 +30,7 @@ Schema:
             "num"               integer,
             "pkts":             integer,
             "bytes":            integer,  # converted based on suffix
-            "target":           string,
+            "target":           string,   # Null if blank
             "prot":             string,
             "opt":              string,   # "--" = Null
             "in":               string,
@@ -186,4 +186,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

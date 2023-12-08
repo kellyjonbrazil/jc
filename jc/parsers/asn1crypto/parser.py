@@ -15,10 +15,9 @@ from __future__ import unicode_literals, division, absolute_import, print_functi
 
 import sys
 
-from ._types import byte_cls, chr_cls, type_name
+from ._types import chr_cls, type_name
 from .util import int_from_bytes, int_to_bytes
 
-_PY2 = sys.version_info <= (3,)
 _INSUFFICIENT_DATA_MESSAGE = 'Insufficient data - %s bytes requested but only %s available'
 _MAX_DEPTH = 10
 
@@ -66,7 +65,7 @@ def emit(class_, method, tag, contents):
     if tag < 0:
         raise ValueError('tag must be greater than zero, not %s' % tag)
 
-    if not isinstance(contents, byte_cls):
+    if not isinstance(contents, bytes):
         raise TypeError('contents must be a byte string, not %s' % type_name(contents))
 
     return _dump_header(class_, method, tag, contents) + contents
@@ -101,7 +100,7 @@ def parse(contents, strict=False):
          - 5: byte string trailer
     """
 
-    if not isinstance(contents, byte_cls):
+    if not isinstance(contents, bytes):
         raise TypeError('contents must be a byte string, not %s' % type_name(contents))
 
     contents_len = len(contents)
@@ -130,7 +129,7 @@ def peek(contents):
         An integer with the number of bytes occupied by the ASN.1 value
     """
 
-    if not isinstance(contents, byte_cls):
+    if not isinstance(contents, bytes):
         raise TypeError('contents must be a byte string, not %s' % type_name(contents))
 
     info, consumed = _parse(contents, len(contents))
@@ -171,7 +170,7 @@ def _parse(encoded_data, data_len, pointer=0, lengths_only=False, depth=0):
 
     if data_len < pointer + 1:
         raise ValueError(_INSUFFICIENT_DATA_MESSAGE % (1, data_len - pointer))
-    first_octet = ord(encoded_data[pointer]) if _PY2 else encoded_data[pointer]
+    first_octet = encoded_data[pointer]
 
     pointer += 1
 
@@ -183,7 +182,7 @@ def _parse(encoded_data, data_len, pointer=0, lengths_only=False, depth=0):
         while True:
             if data_len < pointer + 1:
                 raise ValueError(_INSUFFICIENT_DATA_MESSAGE % (1, data_len - pointer))
-            num = ord(encoded_data[pointer]) if _PY2 else encoded_data[pointer]
+            num = encoded_data[pointer]
             pointer += 1
             if num == 0x80 and tag == 0:
                 raise ValueError('Non-minimal tag encoding')
@@ -196,7 +195,7 @@ def _parse(encoded_data, data_len, pointer=0, lengths_only=False, depth=0):
 
     if data_len < pointer + 1:
         raise ValueError(_INSUFFICIENT_DATA_MESSAGE % (1, data_len - pointer))
-    length_octet = ord(encoded_data[pointer]) if _PY2 else encoded_data[pointer]
+    length_octet = encoded_data[pointer]
     pointer += 1
     trailer = b''
 

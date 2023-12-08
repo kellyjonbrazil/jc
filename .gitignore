@@ -6,3 +6,4 @@ build/
 .github/
 .vscode/
 _config.yml
+.venv
