@@ -2,10 +2,8 @@
 
 Some of `iftop` options are supported.
 
-
 Usage (cli):
 
-    $ iftop -i <device> -t -P -s 1 | jc --iftop
     $ iftop -i <device> -t -B -s1 | jc --iftop
 
 Usage (module):
@@ -135,7 +133,6 @@ from numbers import Number
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-
     version = "0.1"
     description = "`iftop` command parser"
     author = "Ron Green"

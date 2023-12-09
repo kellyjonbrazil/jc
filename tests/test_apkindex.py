@@ -2,7 +2,7 @@ import os
 import unittest
 import json
 from typing import Dict
-from jc.parsers.apkindex import parse
+from jc.parsers.pkg_index_alpine import parse
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -15,11 +15,11 @@ class Apkindex(unittest.TestCase):
     def setUpClass(cls):
         fixtures = {
             'normal': (
-                'fixtures/generic/apkindex',
-                'fixtures/generic/apkindex.json'),
+                'fixtures/generic/pkg-index-alpine.out',
+                'fixtures/generic/pkg-index-alpine.json'),
             'raw': (
-                'fixtures/generic/apkindex',
-                'fixtures/generic/apkindex.raw.json')
+                'fixtures/generic/pkg-index-alpine.out',
+                'fixtures/generic/pkg-index-alpine-raw.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -29,16 +29,16 @@ class Apkindex(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
-    def test_apkindex_nodata(self):
+    def test_pkg_index_alpine_nodata(self):
         """
-        Test 'apkindex' with no data
+        Test 'pkg-index-alpine' with no data
         """
         self.assertEqual(parse('', quiet=True), [])
 
 
-    def test_apkindex(self):
+    def test_pkg_index_alpine(self):
         """
-        Test 'apkindex' normal output
+        Test 'pkg-index-alpine' normal output
         """
         self.assertEqual(
             parse(self.f_in['normal'], quiet=True),
@@ -46,9 +46,9 @@ class Apkindex(unittest.TestCase):
         )
 
 
-    def test_apkindex_raw(self):
+    def test_pkg_index_alpine_raw(self):
         """
-        Test 'apkindex' raw output
+        Test 'pkg-index-alpine' raw output
         """
         self.assertEqual(
             parse(self.f_in['raw'], quiet=True, raw=True),
