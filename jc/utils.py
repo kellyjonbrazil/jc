@@ -3,6 +3,8 @@ import sys
 import re
 import locale
 import shutil
+from collections import namedtuple
+from numbers import Number
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
@@ -272,6 +274,116 @@ def convert_to_bool(value: object) -> bool:
             return value.lower() in truthy
 
     return False
+
+
+# convert_size_to_int from https://github.com/xolox/python-humanfriendly
+
+# Copyright (c) 2021 Peter Odding
+
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
+    """
+    Parse a human readable data size and return the number of bytes.
+
+    Parameters:
+
+        size:           (string) The human readable file size to parse.
+        binary:         (boolean) `True` to use binary multiples of bytes
+                        (base-2) for ambiguous unit symbols and names,
+                        `False` to use decimal multiples of bytes (base-10).
+    Returns:
+        integer/None    Integer if successful conversion, otherwise None
+
+    This function knows how to parse sizes in bytes, kilobytes, megabytes,
+    gigabytes, terabytes and petabytes. Some examples:
+
+    >>> convert_size_to_int('42')
+    42
+    >>> convert_size_to_int('13b')
+    13
+    >>> convert_size_to_int('5 bytes')
+    5
+    >>> convert_size_to_int('1 KB')
+    1000
+    >>> convert_size_to_int('1 kilobyte')
+    1000
+    >>> convert_size_to_int('1 KiB')
+    1024
+    >>> convert_size_to_int('1 KB', binary=True)
+    1024
+    >>> convert_size_to_int('1.5 GB')
+    1500000000
+    >>> convert_size_to_int('1.5 GB', binary=True)
+    1610612736
+    """
+    def tokenize(text: str) -> List[str]:
+        tokenized_input: List = []
+        for token in re.split(r'(\d+(?:\.\d+)?)', text):
+            token = token.strip()
+            if re.match(r'\d+\.\d+', token):
+                tokenized_input.append(float(token))
+            elif token.isdigit():
+                tokenized_input.append(int(token))
+            elif token:
+                tokenized_input.append(token)
+        return tokenized_input
+
+    SizeUnit = namedtuple('SizeUnit', 'divider, symbol, name')
+    CombinedUnit = namedtuple('CombinedUnit', 'decimal, binary')
+    disk_size_units = (
+        CombinedUnit(SizeUnit(1000**1, 'KB', 'kilobyte'), SizeUnit(1024**1, 'KiB', 'kibibyte')),
+        CombinedUnit(SizeUnit(1000**2, 'MB', 'megabyte'), SizeUnit(1024**2, 'MiB', 'mebibyte')),
+        CombinedUnit(SizeUnit(1000**3, 'GB', 'gigabyte'), SizeUnit(1024**3, 'GiB', 'gibibyte')),
+        CombinedUnit(SizeUnit(1000**4, 'TB', 'terabyte'), SizeUnit(1024**4, 'TiB', 'tebibyte')),
+        CombinedUnit(SizeUnit(1000**5, 'PB', 'petabyte'), SizeUnit(1024**5, 'PiB', 'pebibyte')),
+        CombinedUnit(SizeUnit(1000**6, 'EB', 'exabyte'), SizeUnit(1024**6, 'EiB', 'exbibyte')),
+        CombinedUnit(SizeUnit(1000**7, 'ZB', 'zettabyte'), SizeUnit(1024**7, 'ZiB', 'zebibyte')),
+        CombinedUnit(SizeUnit(1000**8, 'YB', 'yottabyte'), SizeUnit(1024**8, 'YiB', 'yobibyte')),
+    )
+    tokens = tokenize(size)
+    if tokens and isinstance(tokens[0], Number):
+        # Get the normalized unit (if any) from the tokenized input.
+        normalized_unit = tokens[1].lower() if len(tokens) == 2 and isinstance(tokens[1], str) else ''
+        # If the input contains only a number, it's assumed to be the number of
+        # bytes. The second token can also explicitly reference the unit bytes.
+        if len(tokens) == 1 or normalized_unit.startswith('b'):
+            return int(tokens[0])
+        # Otherwise we expect two tokens: A number and a unit.
+        if normalized_unit:
+            # Convert plural units to singular units, for details:
+            # https://github.com/xolox/python-humanfriendly/issues/26
+            normalized_unit = normalized_unit.rstrip('s')
+            for unit in disk_size_units:
+                # First we check for unambiguous symbols (KiB, MiB, GiB, etc)
+                # and names (kibibyte, mebibyte, gibibyte, etc) because their
+                # handling is always the same.
+                if normalized_unit in (unit.binary.symbol.lower(), unit.binary.name.lower()):
+                    return int(tokens[0] * unit.binary.divider)
+                # Now we will deal with ambiguous prefixes (K, M, G, etc),
+                # symbols (KB, MB, GB, etc) and names (kilobyte, megabyte,
+                # gigabyte, etc) according to the caller's preference.
+                if (normalized_unit in (unit.decimal.symbol.lower(), unit.decimal.name.lower()) or
+                        normalized_unit.startswith(unit.decimal.symbol[0].lower())):
+                    return int(tokens[0] * (unit.binary.divider if binary else unit.decimal.divider))
+    # We failed to parse the size specification.
+    return None
 
 
 def input_type_check(data: object) -> None:
