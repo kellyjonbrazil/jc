@@ -1,13 +1,13 @@
-"""jc - JSON Convert Debian Packages Index file parser
+"""jc - JSON Convert Debian Package Index file parser
 
 Usage (cli):
 
-    $ cat Packages | jc --deb-packages-index
+    $ cat Packages | jc --pkg-index-deb
 
 Usage (module):
 
     import jc
-    result = jc.parse('deb_packages_index', deb_package_index_output)
+    result = jc.parse('pkg_index_deb', pkg_index_deb_output)
 
 Schema:
 
@@ -35,7 +35,7 @@ Schema:
 
 Examples:
 
-    $ cat Packages | jc --deb-packages-index
+    $ cat Packages | jc --pkg-index-deb
     [
       {
         "package": "aspnetcore-runtime-2.1",
@@ -70,7 +70,7 @@ Examples:
       }
     ]
 
-    $ cat Packages | jc --deb-packages-index -r
+    $ cat Packages | jc --pkg-index-deb -r
     [
       {
         "package": "aspnetcore-runtime-2.1",
@@ -113,7 +113,7 @@ import jc.parsers.rpm_qi as rpm_qi
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'Debian Packages Index file parser'
+    description = 'Debian Package Index file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the rpm-qi parser'

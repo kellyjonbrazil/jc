@@ -179,7 +179,6 @@ option.
 |         `--csv-s` | CSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s)          |
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
-| `--deb-packages-index` | Debian Packages Index file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/deb_packages_index) |
 |  `--debconf-show` | `debconf-show` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/debconf_show)   |
 |            `--df` | `df` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/df)             |
 |           `--dig` | `dig` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dig)            |
@@ -254,6 +253,7 @@ option.
 |      `--pip-list` | `pip list` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)       |
 |      `--pip-show` | `pip show` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)       |
 | `--pkg-index-alpine` | Alpine Linux Package Index file parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_alpine) |
+| `--pkg-index-deb` | Debian Package Index file parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_deb)  |
 |         `--plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 |      `--postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
 |          `--proc` | `/proc/` file parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/proc)           |
