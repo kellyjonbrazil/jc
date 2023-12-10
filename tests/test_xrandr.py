@@ -1,4 +1,3 @@
-import json
 import re
 import unittest
 from typing import Optional
@@ -22,8 +21,6 @@ from jc.parsers.xrandr import (
 )
 import jc.parsers.xrandr
 
-import pprint
-
 
 class XrandrTests(unittest.TestCase):
     def setUp(self):
@@ -33,7 +30,7 @@ class XrandrTests(unittest.TestCase):
         """
         Test 'xrandr' with no data
         """
-        self.assertEqual(parse("", quiet=True), {"screens": []})
+        self.assertEqual(parse("", quiet=True), {})
 
     def test_regexes(self):
         devices = [

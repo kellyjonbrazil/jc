@@ -211,4 +211,4 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.3 by Kevin Lyter (code (at) lyterk.com)
+Version 1.4 by Kevin Lyter (code (at) lyterk.com)
