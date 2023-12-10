@@ -346,8 +346,8 @@ _device_pattern = (
     + r"\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
     + r"(?P<rotation>(normal|right|left|inverted)?) ?"
     + r"(?P<reflection>(X axis|Y axis|X and Y axis)?) ?"
-    + r"\(normal left inverted right x axis y axis\)"
-    + r"( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
+    + r"(\(normal left inverted right x axis y axis\))?"
+    + r"( ?((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
 
 
