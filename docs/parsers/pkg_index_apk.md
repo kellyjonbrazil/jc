@@ -1,18 +1,18 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
-<a id="jc.parsers.apkindex"></a>
+<a id="jc.parsers.pkg_index_apk"></a>
 
-# jc.parsers.apkindex
+# jc.parsers.pkg\_index\_apk
 
 jc - JSON Convert Alpine Linux Package Index files
 
 Usage (cli):
 
-    $ jc --apkindex < APKINDEX
+    $ cat APKINDEX | jc --pkg-index-apk
 
 Usage (module):
 
     import jc
-    result = jc.parse('apkindex', apkindex_output)
+    result = jc.parse('pkg_index_apk', pkg_index_apk_output)
 
 Schema:
 
@@ -49,7 +49,7 @@ Schema:
 
 Example:
 
-    $ jc --apkindex < APKINDEX
+    $ cat APKINDEX | jc --pkg-index-apk
     [
       {
         "checksum": "Q1znBl9k+RKgY6gl5Eg3iz73KZbLY=",
@@ -79,7 +79,7 @@ Example:
       }
     ]
 
-    $ jc --apkindex --raw < APKINDEX
+    $ cat APKINDEX | jc --pkg-index-apk --raw
     [
       {
         "C": "Q1znBl9k+RKgY6gl5Eg3iz73KZbLY=",
@@ -100,7 +100,7 @@ Example:
       },
     ]
 
-<a id="jc.parsers.apkindex.parse"></a>
+<a id="jc.parsers.pkg_index_apk.parse"></a>
 
 ### parse
 
