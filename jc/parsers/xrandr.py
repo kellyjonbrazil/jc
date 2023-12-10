@@ -193,7 +193,7 @@ from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.3"
+    version = "1.4"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"
@@ -204,6 +204,25 @@ class info:
 
 
 __version__ = info.version
+
+# keep parsing state so we know which parsers have already tried the line
+parse_state: Dict[str, List] = {}
+
+def _was_parsed(line: str, parser: str) -> bool:
+    """
+    Check if entered parser has already parsed. If so return True.
+    If not, return false and add the parser to the list for the line entry.
+    """
+    if line in parse_state:
+        if parser in parse_state[line]:
+            return True
+
+        parse_state[line].append(parser)
+        return False
+
+    parse_state[line] = [parser]
+    return False
+
 
 try:
     from typing import TypedDict
@@ -291,6 +310,10 @@ _screen_pattern = (
 
 def _parse_screen(next_lines: List[str]) -> Optional[Screen]:
     next_line = next_lines.pop()
+
+    if _was_parsed(next_line, 'screen'):
+        return None
+
     result = re.match(_screen_pattern, next_line)
     if not result:
         next_lines.append(next_line)
@@ -333,6 +356,10 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         return None
 
     next_line = next_lines.pop()
+
+    if _was_parsed(next_line, 'device'):
+        return None
+
     result = re.match(_device_pattern, next_line)
     if not result:
         next_lines.append(next_line)
@@ -402,6 +429,10 @@ def _parse_model(next_lines: List[str], quiet: bool = False) -> Optional[Model]:
         return None
 
     next_line = next_lines.pop()
+
+    if _was_parsed(next_line, 'model'):
+        return None
+
     if not re.match(_edid_head_pattern, next_line):
         next_lines.append(next_line)
         return None
@@ -438,6 +469,7 @@ _frequencies_pattern = r"(((?P<frequency>\d+\.\d+)(?P<star>\*| |)(?P<plus>\+?)?)
 def _parse_mode(line: str) -> Optional[Mode]:
     result = re.match(_mode_pattern, line)
     frequencies: List[Frequency] = []
+
     if not result:
         return None
 

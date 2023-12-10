@@ -18,13 +18,17 @@ from jc.parsers.xrandr import (
     Mode,
     Model,
     Device,
-    Screen,
+    Screen
 )
+import jc.parsers.xrandr
 
 import pprint
 
 
 class XrandrTests(unittest.TestCase):
+    def setUp(self):
+        jc.parsers.xrandr.parse_state = {}
+
     def test_xrandr_nodata(self):
         """
         Test 'xrandr' with no data
@@ -287,6 +291,7 @@ class XrandrTests(unittest.TestCase):
             "serial_number": "0",
         }
 
+        jc.parsers.xrandr.parse_state = {}
         actual: Optional[Model] = _parse_model(generic_edid)
         self.assertIsNotNone(actual)
 
