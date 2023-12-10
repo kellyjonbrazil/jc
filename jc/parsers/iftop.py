@@ -22,40 +22,40 @@ Schema:
             "connections": [
               {
                 "host_name":        string,
-                "host_port":        string, # can be service or missing
-                "last_2s":          string,
-                "last_10s":         string,
-                "last_40s":         string,
-                "cumulative":       string,
+                "host_port":        string,   # can be service or missing
+                "last_2s":          integer,
+                "last_10s":         integer,
+                "last_40s":         integer,
+                "cumulative":       integer,
                 "direction":        string
               }
             ]
           }
         ]
         "total_send_rate": {
-          "last_2s":                string,
-          "last_10s":               string,
-          "last_40s":               string
+          "last_2s":                integer,
+          "last_10s":               integer,
+          "last_40s":               integer
         }
         "total_receive_rate": {
-          "last_2s":                string,
-          "last_10s":               string,
-          "last_40s":               string
+          "last_2s":                integer,
+          "last_10s":               integer,
+          "last_40s":               integer
         }
         "total_send_and_receive_rate": {
-          "last_2s":                string,
-          "last_10s":               string,
-          "last_40s":               string
+          "last_2s":                integer,
+          "last_10s":               integer,
+          "last_40s":               integer
         }
         "peak_rate": {
-          "last_2s":                string,
-          "last_10s":               string,
-          "last_40s":               string
+          "last_2s":                integer,
+          "last_10s":               integer,
+          "last_40s":               integer
         }
         "cumulative_rate": {
-          "last_2s":                string,
-          "last_10s":               string,
-          "last_40s":               string
+          "last_2s":                integer,
+          "last_10s":               integer,
+          "last_40s":               integer
         }
       }
     ]

@@ -64,7 +64,7 @@ Schema:
           "rotation":                          string,
           "reflection":                        string
         }
-      ],
+      ]
     }
 
 Examples:
