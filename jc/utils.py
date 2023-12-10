@@ -309,29 +309,30 @@ def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
                         (base-2) for ambiguous unit symbols and names,
                         `False` to use decimal multiples of bytes (base-10).
     Returns:
+
         integer/None    Integer if successful conversion, otherwise None
 
     This function knows how to parse sizes in bytes, kilobytes, megabytes,
     gigabytes, terabytes and petabytes. Some examples:
 
-    >>> convert_size_to_int('42')
-    42
-    >>> convert_size_to_int('13b')
-    13
-    >>> convert_size_to_int('5 bytes')
-    5
-    >>> convert_size_to_int('1 KB')
-    1000
-    >>> convert_size_to_int('1 kilobyte')
-    1000
-    >>> convert_size_to_int('1 KiB')
-    1024
-    >>> convert_size_to_int('1 KB', binary=True)
-    1024
-    >>> convert_size_to_int('1.5 GB')
-    1500000000
-    >>> convert_size_to_int('1.5 GB', binary=True)
-    1610612736
+        >>> convert_size_to_int('42')
+        42
+        >>> convert_size_to_int('13b')
+        13
+        >>> convert_size_to_int('5 bytes')
+        5
+        >>> convert_size_to_int('1 KB')
+        1000
+        >>> convert_size_to_int('1 kilobyte')
+        1000
+        >>> convert_size_to_int('1 KiB')
+        1024
+        >>> convert_size_to_int('1 KB', binary=True)
+        1024
+        >>> convert_size_to_int('1.5 GB')
+        1500000000
+        >>> convert_size_to_int('1.5 GB', binary=True)
+        1610612736
     """
     def tokenize(text: str) -> List[str]:
         tokenized_input: List = []
