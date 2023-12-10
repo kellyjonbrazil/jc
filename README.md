@@ -252,7 +252,7 @@ option.
 |        `--ping-s` | `ping` and `ping6` command streaming parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s)         |
 |      `--pip-list` | `pip list` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)       |
 |      `--pip-show` | `pip show` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)       |
-| `--pkg-index-alpine` | Alpine Linux Package Index file parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_alpine) |
+| `--pkg-index-apk` | Alpine Linux Package Index file parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_apk)  |
 | `--pkg-index-deb` | Debian Package Index file parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_deb)  |
 |         `--plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 |      `--postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |

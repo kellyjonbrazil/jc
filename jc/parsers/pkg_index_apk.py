@@ -2,12 +2,12 @@
 
 Usage (cli):
 
-    $ cat APKINDEX | jc --pkg-index-alpine
+    $ cat APKINDEX | jc --pkg-index-apk
 
 Usage (module):
 
     import jc
-    result = jc.parse('pkg_index_alpine', pkg_index_alpine_output)
+    result = jc.parse('pkg_index_apk', pkg_index_apk_output)
 
 Schema:
 
@@ -44,7 +44,7 @@ Schema:
 
 Example:
 
-    $ cat APKINDEX | jc --pkg-index-alpine
+    $ cat APKINDEX | jc --pkg-index-apk
     [
       {
         "checksum": "Q1znBl9k+RKgY6gl5Eg3iz73KZbLY=",
@@ -74,7 +74,7 @@ Example:
       }
     ]
 
-    $ cat APKINDEX | jc --pkg-index-alpine --raw
+    $ cat APKINDEX | jc --pkg-index-apk --raw
     [
       {
         "C": "Q1znBl9k+RKgY6gl5Eg3iz73KZbLY=",

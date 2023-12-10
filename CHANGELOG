@@ -1,9 +1,9 @@
 jc changelog
 
-20231209 v1.24.0
+20231210 v1.24.0
 - Add `debconf-show` command parser
 - Add `iftop` command parser
-- Add `pkg-index-alpine` parser for Alpine Linux Package Index files
+- Add `pkg-index-apk` parser for Alpine Linux Package Index files
 - Add `pkg-index-deb` parser for Debian/Ubuntu Package Index files
 - Add `swapon` command parser
 - Add `tune2fs` command parser

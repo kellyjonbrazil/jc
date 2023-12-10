@@ -107,7 +107,7 @@ parsers: List[str] = [
     'ping-s',
     'pip-list',
     'pip-show',
-    'pkg-index-alpine',
+    'pkg-index-apk',
     'pkg-index-deb',
     'plist',
     'postconf',
