@@ -301,5 +301,16 @@ class XrandrTests(unittest.TestCase):
         self.assertIsNone(actual)
 
 
+    def test_issue_490(self):
+        """test for issue 490: https://github.com/kellyjonbrazil/jc/issues/490"""
+        data_in = '''\
+Screen 0: minimum 1024 x 600, current 1024 x 600, maximum 1024 x 600
+default connected 1024x600+0+0 0mm x 0mm
+   1024x600 0.00*
+'''
+        expected = {"screens":[{"devices":[{"modes":[{"resolution_width":1024,"resolution_height":600,"is_high_resolution":False,"frequencies":[{"frequency":0.0,"is_current":True,"is_preferred":False}]}],"is_connected":True,"is_primary":False,"device_name":"default","rotation":"normal","reflection":"normal","resolution_width":1024,"resolution_height":600,"offset_width":0,"offset_height":0,"dimension_width":0,"dimension_height":0}],"screen_number":0,"minimum_width":1024,"minimum_height":600,"current_width":1024,"current_height":600,"maximum_width":1024,"maximum_height":600}]}
+        self.assertEqual(jc.parsers.xrandr.parse(data_in), expected)
+
+
 if __name__ == "__main__":
     unittest.main()
