@@ -120,7 +120,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -154,6 +154,7 @@ def parse(
     if jc.utils.has_data(data):
         # signatures
         buddyinfo_p = re.compile(r'^Node \d+, zone\s+\w+\s+(?:\d+\s+){11}\n')
+        cmdline_p = re.compile(r'^BOOT_IMAGE=')
         consoles_p = re.compile(r'^\w+\s+[\-WUR]{3} \([ECBpba ]+\)\s+\d+:\d+\n')
         cpuinfo_p = re.compile(r'^processor\t+: \d+.*bogomips\t+: \d+.\d\d\n', re.DOTALL)
         crypto_p = re.compile(r'^name\s+:.*\ndriver\s+:.*\nmodule\s+:.*\n')
@@ -212,6 +213,7 @@ def parse(
 
         procmap = {
             buddyinfo_p: 'proc_buddyinfo',
+            cmdline_p: 'proc_cmdline',
             consoles_p: 'proc_consoles',
             cpuinfo_p: 'proc_cpuinfo',
             crypto_p: 'proc_crypto',

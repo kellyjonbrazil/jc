@@ -19,21 +19,47 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "foo":     string,
-        "bar":     boolean,
-        "baz":     integer
-      }
-    ]
+    {
+      "<key>":          string,
+      "_options": [
+                        string
+      ]
+    }
 
 Examples:
 
-    $ foo | jc --foo -p
-    []
-
-    $ foo | jc --foo -p -r
-    []
+    $ cat /proc/cmdline | jc --proc -p
+    {
+      "BOOT_IMAGE": "clonezilla/live/vmlinuz",
+      "consoleblank": "0",
+      "keyboard-options": "grp:ctrl_shift_toggle,lctrl_shift_toggle",
+      "ethdevice-timeout": "130",
+      "toram": "filesystem.squashfs",
+      "boot": "live",
+      "edd": "on",
+      "ocs_daemonon": "ssh lighttpd",
+      "ocs_live_run": "sudo screen /usr/sbin/ocs-sr -g auto -e1 auto -e2 -batch -r -j2 -k -scr -p true restoreparts win7-64 sda1",
+      "ocs_live_extra_param": "",
+      "keyboard-layouts": "us,ru",
+      "ocs_live_batch": "no",
+      "locales": "ru_RU.UTF-8",
+      "vga": "788",
+      "net.ifnames": "0",
+      "union": "overlay",
+      "fetch": "http://10.1.1.1/tftpboot/clonezilla/live/filesystem.squashfs",
+      "ocs_postrun99": "sudo reboot",
+      "initrd": "clonezilla/live/initrd.img",
+      "_options": [
+        "config",
+        "noswap",
+        "nolocales",
+        "nomodeset",
+        "noprompt",
+        "nosplash",
+        "nodmraid",
+        "components"
+      ]
+    }
 """
 import shlex
 from typing import List, Dict
