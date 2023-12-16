@@ -1,6 +1,6 @@
 jc changelog
 
-20231210 v1.24.0
+20231216 v1.24.0
 - Add `debconf-show` command parser
 - Add `iftop` command parser
 - Add `pkg-index-apk` parser for Alpine Linux Package Index files
@@ -15,6 +15,7 @@ jc changelog
 - Fix `iptables` parser for cases where the `target` field is blank in a rule
 - Fix `vmstat` parsers for some cases where wide output is used
 - Fix `mount` parser for cases with spaces in the mount point name
+- Fix `xrandr` parser for infinite loop issues
 
 20231023 v1.23.6
 - Fix XML parser for xmltodict library versions < 0.13.0
