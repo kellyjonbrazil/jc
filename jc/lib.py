@@ -113,6 +113,7 @@ parsers: List[str] = [
     'postconf',
     'proc',
     'proc-buddyinfo',
+    'proc-cmdline',
     'proc-consoles',
     'proc-cpuinfo',
     'proc-crypto',
