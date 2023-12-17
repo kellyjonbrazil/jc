@@ -1,0 +1,48 @@
+interface: enp0s3
+IP address is: 10.10.15.129
+MAC address is: 08:00:27:c0:4a:4f
+Listening on enp0s3
+   # Host name (port/service if enabled)            last 2s   last 10s   last 40s cumulative
+--------------------------------------------------------------------------------------------
+   1 ubuntu-2004-clean-01:33222               =>     4.72Kb     4.72Kb     4.72Kb     1.18KB
+     10.10.15.72:https                        <=     1.99Mb     1.99Mb     1.99Mb      508KB
+   2 ubuntu-2004-clean-01:https               =>     1.98Mb     1.98Mb     1.98Mb      507KB
+     10.10.15.73:34562                        <=     3.17Kb     3.17Kb     3.17Kb       811B
+--------------------------------------------------------------------------------------------
+Total send rate:                                     23.2Mb     23.2Mb     23.2Mb
+Total receive rate:                                  5.65Mb     5.65Mb     5.65Mb
+Total send and receive rate:                         28.8Mb     28.8Mb     28.8Mb
+--------------------------------------------------------------------------------------------
+Peak rate (sent/received/total):                     23.2Mb     5.65Mb     28.8Mb
+Cumulative (sent/received/total):                    5.79MB     1.41MB     7.20MB
+============================================================================================
+
+   # Host name (port/service if enabled)            last 2s   last 10s   last 40s cumulative
+--------------------------------------------------------------------------------------------
+   1 ubuntu-2004-clean-01:33222               =>     4.72Kb     4.72Kb     4.72Kb     1.18KB
+     10.10.15.72:https                        <=     1.99Mb     1.99Mb     1.99Mb      508KB
+   2 ubuntu-2004-clean-01:https               =>     1.98Mb     1.98Mb     1.98Mb      507KB
+     10.10.15.73:34562                        <=     3.17Kb     3.17Kb     3.17Kb       811B
+--------------------------------------------------------------------------------------------
+Total send rate:                                     23.2Mb     23.2Mb     23.2Mb
+Total receive rate:                                  5.65Mb     5.65Mb     5.65Mb
+Total send and receive rate:                         28.8Mb     28.8Mb     28.8Mb
+--------------------------------------------------------------------------------------------
+Peak rate (sent/received/total):                     23.2Mb     5.65Mb     28.8Mb
+Cumulative (sent/received/total):                    5.79MB     1.41MB     7.20MB
+============================================================================================
+
+   # Host name (port/service if enabled)            last 2s   last 10s   last 40s cumulative
+--------------------------------------------------------------------------------------------
+   1 ubuntu-2004-clean-01:33222               =>     4.72Kb     4.72Kb     4.72Kb     1.18KB
+     10.10.15.72:https                        <=     1.99Mb     1.99Mb     1.99Mb      508KB
+   2 ubuntu-2004-clean-01:https               =>     1.98Mb     1.98Mb     1.98Mb      507KB
+     10.10.15.73:34562                        <=     3.17Kb     3.17Kb     3.17Kb       811B
+--------------------------------------------------------------------------------------------
+Total send rate:                                     23.2Mb     23.2Mb     23.2Mb
+Total receive rate:                                  5.65Mb     5.65Mb     5.65Mb
+Total send and receive rate:                         28.8Mb     28.8Mb     28.8Mb
+--------------------------------------------------------------------------------------------
+Peak rate (sent/received/total):                     23.2Mb     5.65Mb     28.8Mb
+Cumulative (sent/received/total):                    5.79MB     1.41MB     7.20MB
+============================================================================================

@@ -26,22 +26,24 @@ Schema:
           "current_height":                    integer,
           "maximum_width":                     integer,
           "maximum_height":                    integer,
-          "devices": {
-            "modes": [
-              {
-                "resolution_width":            integer,
-                "resolution_height":           integer,
-                "is_high_resolution":          boolean,
-                "frequencies": [
-                  {
-                    "frequency":               float,
-                    "is_current":              boolean,
-                    "is_preferred":            boolean
-                  }
-                ]
-              }
-            ]
-          },
+          "devices": [
+            {
+              "modes": [
+                {
+                  "resolution_width":          integer,
+                  "resolution_height":         integer,
+                  "is_high_resolution":        boolean,
+                  "frequencies": [
+                    {
+                      "frequency":             float,
+                      "is_current":            boolean,
+                      "is_preferred":          boolean
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
           "is_connected":                      boolean,
           "is_primary":                        boolean,
           "device_name":                       string,
@@ -57,7 +59,7 @@ Schema:
           "rotation":                          string,
           "reflection":                        string
         }
-      ],
+      ]
     }
 
 Examples:
@@ -73,50 +75,52 @@ Examples:
           "current_height": 1080,
           "maximum_width": 32767,
           "maximum_height": 32767,
-          "devices": {
-            "modes": [
-              {
-                "resolution_width": 1920,
-                "resolution_height": 1080,
-                "is_high_resolution": false,
-                "frequencies": [
-                  {
-                    "frequency": 60.03,
-                    "is_current": true,
-                    "is_preferred": true
-                  },
-                  {
-                    "frequency": 59.93,
-                    "is_current": false,
-                    "is_preferred": false
-                  }
-                ]
-              },
-              {
-                "resolution_width": 1680,
-                "resolution_height": 1050,
-                "is_high_resolution": false,
-                "frequencies": [
-                  {
-                    "frequency": 59.88,
-                    "is_current": false,
-                    "is_preferred": false
-                  }
-                ]
-              }
-            ],
-            "is_connected": true,
-            "is_primary": true,
-            "device_name": "eDP1",
-            "resolution_width": 1920,
-            "resolution_height": 1080,
-            "offset_width": 0,
-            "offset_height": 0,
-            "dimension_width": 310,
-            "dimension_height": 170,
-            "rotation": "normal",
-            "reflection": "normal"
-          }
+          "devices": [
+            {
+              "modes": [
+                {
+                  "resolution_width": 1920,
+                  "resolution_height": 1080,
+                  "is_high_resolution": false,
+                  "frequencies": [
+                    {
+                      "frequency": 60.03,
+                      "is_current": true,
+                      "is_preferred": true
+                    },
+                    {
+                      "frequency": 59.93,
+                      "is_current": false,
+                      "is_preferred": false
+                    }
+                  ]
+                },
+                {
+                  "resolution_width": 1680,
+                  "resolution_height": 1050,
+                  "is_high_resolution": false,
+                  "frequencies": [
+                    {
+                      "frequency": 59.88,
+                      "is_current": false,
+                      "is_preferred": false
+                    }
+                  ]
+                }
+              ],
+              "is_connected": true,
+              "is_primary": true,
+              "device_name": "eDP1",
+              "resolution_width": 1920,
+              "resolution_height": 1080,
+              "offset_width": 0,
+              "offset_height": 0,
+              "dimension_width": 310,
+              "dimension_height": 170,
+              "rotation": "normal",
+              "reflection": "normal"
+            }
+          ]
         }
       ]
     }
@@ -132,53 +136,55 @@ Examples:
           "current_height": 1080,
           "maximum_width": 32767,
           "maximum_height": 32767,
-          "devices": {
-            "modes": [
-              {
-                "resolution_width": 1920,
-                "resolution_height": 1080,
-                "is_high_resolution": false,
-                "frequencies": [
-                  {
-                    "frequency": 60.03,
-                    "is_current": true,
-                    "is_preferred": true
-                  },
-                  {
-                    "frequency": 59.93,
-                    "is_current": false,
-                    "is_preferred": false
-                  }
-                ]
-              },
-              {
-                "resolution_width": 1680,
-                "resolution_height": 1050,
-                "is_high_resolution": false,
-                "frequencies": [
-                  {
-                    "frequency": 59.88,
-                    "is_current": false,
-                    "is_preferred": false
-                  }
-                ]
-              }
-            ],
-            "is_connected": true,
-            "is_primary": true,
-            "device_name": "eDP1",
-            "model_name": "ASUS VW193S",
-            "product_id": "54297",
-            "serial_number": "78L8021107",
-            "resolution_width": 1920,
-            "resolution_height": 1080,
-            "offset_width": 0,
-            "offset_height": 0,
-            "dimension_width": 310,
-            "dimension_height": 170,
-            "rotation": "normal",
-            "reflection": "normal"
-          }
+          "devices": [
+            {
+              "modes": [
+                {
+                  "resolution_width": 1920,
+                  "resolution_height": 1080,
+                  "is_high_resolution": false,
+                  "frequencies": [
+                    {
+                      "frequency": 60.03,
+                      "is_current": true,
+                      "is_preferred": true
+                    },
+                    {
+                      "frequency": 59.93,
+                      "is_current": false,
+                      "is_preferred": false
+                    }
+                  ]
+                },
+                {
+                  "resolution_width": 1680,
+                  "resolution_height": 1050,
+                  "is_high_resolution": false,
+                  "frequencies": [
+                    {
+                      "frequency": 59.88,
+                      "is_current": false,
+                      "is_preferred": false
+                    }
+                  ]
+                }
+              ],
+              "is_connected": true,
+              "is_primary": true,
+              "device_name": "eDP1",
+              "model_name": "ASUS VW193S",
+              "product_id": "54297",
+              "serial_number": "78L8021107",
+              "resolution_width": 1920,
+              "resolution_height": 1080,
+              "offset_width": 0,
+              "offset_height": 0,
+              "dimension_width": 310,
+              "dimension_height": 170,
+              "rotation": "normal",
+              "reflection": "normal"
+            }
+          ]
         }
       ]
     }
@@ -192,8 +198,7 @@ from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-
-    version = "1.3"
+    version = "1.4"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"
@@ -204,6 +209,35 @@ class info:
 
 
 __version__ = info.version
+
+# keep parsing state so we know which parsers have already tried the line
+# Structure is:
+# {
+#   <line_string>: [
+#     <parser_string>
+#   ]
+# }
+#
+# Where <line_string> is the xrandr output line to be checked and <parser_string>
+# can contain "screen", "device", or "model"
+parse_state: Dict[str, List] = {}
+
+
+def _was_parsed(line: str, parser: str) -> bool:
+    """
+    Check if entered parser has already parsed. If so return True.
+    If not, return false and add the parser to the list for the line entry.
+    """
+    if line in parse_state:
+        if parser in parse_state[line]:
+            return True
+
+        parse_state[line].append(parser)
+        return False
+
+    parse_state[line] = [parser]
+    return False
+
 
 try:
     from typing import TypedDict
@@ -291,6 +325,10 @@ _screen_pattern = (
 
 def _parse_screen(next_lines: List[str]) -> Optional[Screen]:
     next_line = next_lines.pop()
+
+    if _was_parsed(next_line, 'screen'):
+        return None
+
     result = re.match(_screen_pattern, next_line)
     if not result:
         next_lines.append(next_line)
@@ -323,8 +361,8 @@ _device_pattern = (
     + r"\+(?P<offset_width>\d+)\+(?P<offset_height>\d+))? "
     + r"(?P<rotation>(normal|right|left|inverted)?) ?"
     + r"(?P<reflection>(X axis|Y axis|X and Y axis)?) ?"
-    + r"\(normal left inverted right x axis y axis\)"
-    + r"( ((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
+    + r"(\(normal left inverted right x axis y axis\))?"
+    + r"( ?((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
 
 
@@ -333,6 +371,10 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
         return None
 
     next_line = next_lines.pop()
+
+    if _was_parsed(next_line, 'device'):
+        return None
+
     result = re.match(_device_pattern, next_line)
     if not result:
         next_lines.append(next_line)
@@ -402,6 +444,10 @@ def _parse_model(next_lines: List[str], quiet: bool = False) -> Optional[Model]:
         return None
 
     next_line = next_lines.pop()
+
+    if _was_parsed(next_line, 'model'):
+        return None
+
     if not re.match(_edid_head_pattern, next_line):
         next_lines.append(next_line)
         return None
@@ -438,6 +484,7 @@ _frequencies_pattern = r"(((?P<frequency>\d+\.\d+)(?P<star>\*| |)(?P<plus>\+?)?)
 def _parse_mode(line: str) -> Optional[Mode]:
     result = re.match(_mode_pattern, line)
     frequencies: List[Frequency] = []
+
     if not result:
         return None
 
@@ -490,9 +537,10 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict:
 
     linedata = data.splitlines()
     linedata.reverse()  # For popping
-    result: Response = {"screens": []}
+    result: Dict = {}
 
     if jc.utils.has_data(data):
+        result = {"screens": []}
         while linedata:
             screen = _parse_screen(linedata)
             if screen:

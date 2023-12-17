@@ -28,12 +28,12 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import sys
 import string
 
-if sys.version_info >= (3, 0):
-    def unichr(character): # pylint: disable=redefined-builtin
-        return chr(character)
+
+def unichr(character):  # pylint: disable=redefined-builtin
+    return chr(character)
+
 
 def ConvertNEXTSTEPToUnicode(hex_digits):
     # taken from http://ftp.unicode.org/Public/MAPPINGS/VENDORS/NEXT/NEXTSTEP.TXT

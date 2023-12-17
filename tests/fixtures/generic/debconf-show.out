@@ -1,0 +1,18 @@
+* onlyoffice/jwt-secret: aL8ei2iereuzee7cuJ6Cahjah1ixee2ah
+  onlyoffice/db-pwd: (password omitted)
+* onlyoffice/rabbitmq-pwd: (password omitted)
+* onlyoffice/ds-port: 80
+* onlyoffice/docservice-port: 8000
+* onlyoffice/jwt-enabled: true
+* onlyoffice/remove-db: false
+* onlyoffice/jwt-header: Authorization
+* onlyoffice/db-port: 5432
+* onlyoffice/rabbitmq-user: onlyoffice
+* onlyoffice/example-port: 3000
+* onlyoffice/db-name: onlyoffice
+* onlyoffice/db-host: localhost
+* onlyoffice/db-type: postgres
+* onlyoffice/rabbitmq-host: localhost
+* onlyoffice/db-user: onlyoffice
+* onlyoffice/rabbitmq-proto: amqp
+* onlyoffice/cluster-mode: false

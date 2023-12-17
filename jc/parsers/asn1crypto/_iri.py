@@ -13,25 +13,16 @@ from __future__ import unicode_literals, division, absolute_import, print_functi
 from encodings import idna  # noqa
 import codecs
 import re
-import sys
 
 from ._errors import unwrap
-from ._types import byte_cls, str_cls, type_name, bytes_to_list, int_types
+from ._types import type_name
 
-if sys.version_info < (3,):
-    from urlparse import urlsplit, urlunsplit
-    from urllib import (
-        quote as urlquote,
-        unquote as unquote_to_bytes,
-    )
-
-else:
-    from urllib.parse import (
-        quote as urlquote,
-        unquote_to_bytes,
-        urlsplit,
-        urlunsplit,
-    )
+from urllib.parse import (
+    quote as urlquote,
+    unquote_to_bytes,
+    urlsplit,
+    urlunsplit,
+)
 
 
 def iri_to_uri(value, normalize=False):
@@ -48,7 +39,7 @@ def iri_to_uri(value, normalize=False):
         A byte string of the ASCII-encoded URI
     """
 
-    if not isinstance(value, str_cls):
+    if not isinstance(value, str):
         raise TypeError(unwrap(
             '''
             value must be a unicode string, not %s
@@ -57,19 +48,7 @@ def iri_to_uri(value, normalize=False):
         ))
 
     scheme = None
-    # Python 2.6 doesn't split properly is the URL doesn't start with http:// or https://
-    if sys.version_info < (2, 7) and not value.startswith('http://') and not value.startswith('https://'):
-        real_prefix = None
-        prefix_match = re.match('^[^:]*://', value)
-        if prefix_match:
-            real_prefix = prefix_match.group(0)
-            value = 'http://' + value[len(real_prefix):]
-        parsed = urlsplit(value)
-        if real_prefix:
-            value = real_prefix + value[7:]
-            scheme = _urlquote(real_prefix[:-3])
-    else:
-        parsed = urlsplit(value)
+    parsed = urlsplit(value)
 
     if scheme is None:
         scheme = _urlquote(parsed.scheme)
@@ -81,7 +60,7 @@ def iri_to_uri(value, normalize=False):
     password = _urlquote(parsed.password, safe='!$&\'()*+,;=')
     port = parsed.port
     if port is not None:
-        port = str_cls(port).encode('ascii')
+        port = str(port).encode('ascii')
 
     netloc = b''
     if username is not None:
@@ -112,7 +91,7 @@ def iri_to_uri(value, normalize=False):
         path = ''
 
     output = urlunsplit((scheme, netloc, path, query, fragment))
-    if isinstance(output, str_cls):
+    if isinstance(output, str):
         output = output.encode('latin1')
     return output
 
@@ -128,7 +107,7 @@ def uri_to_iri(value):
         A unicode string of the IRI
     """
 
-    if not isinstance(value, byte_cls):
+    if not isinstance(value, bytes):
         raise TypeError(unwrap(
             '''
             value must be a byte string, not %s
@@ -148,7 +127,7 @@ def uri_to_iri(value):
     if hostname:
         hostname = hostname.decode('idna')
     port = parsed.port
-    if port and not isinstance(port, int_types):
+    if port and not isinstance(port, int):
         port = port.decode('ascii')
 
     netloc = ''
@@ -160,7 +139,7 @@ def uri_to_iri(value):
     if hostname is not None:
         netloc += hostname
     if port is not None:
-        netloc += ':' + str_cls(port)
+        netloc += ':' + str(port)
 
     path = _urlunquote(parsed.path, remap=['/'], preserve=True)
     query = _urlunquote(parsed.query, remap=['&', '='], preserve=True)
@@ -182,7 +161,7 @@ def _iri_utf8_errors_handler(exc):
         resume at)
     """
 
-    bytes_as_ints = bytes_to_list(exc.object[exc.start:exc.end])
+    bytes_as_ints = list(exc.object[exc.start:exc.end])
     replacements = ['%%%02x' % num for num in bytes_as_ints]
     return (''.join(replacements), exc.end)
 
@@ -230,7 +209,7 @@ def _urlquote(string, safe=''):
         string = re.sub('%[0-9a-fA-F]{2}', _extract_escape, string)
 
     output = urlquote(string.encode('utf-8'), safe=safe.encode('utf-8'))
-    if not isinstance(output, byte_cls):
+    if not isinstance(output, bytes):
         output = output.encode('ascii')
 
     # Restore the existing quoted values that we extracted

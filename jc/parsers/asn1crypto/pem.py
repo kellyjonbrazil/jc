@@ -11,17 +11,13 @@ Encoding DER to PEM and decoding PEM to DER. Exports the following items:
 
 from __future__ import unicode_literals, division, absolute_import, print_function
 
+from io import BytesIO
 import base64
 import re
-import sys
 
 from ._errors import unwrap
-from ._types import type_name as _type_name, str_cls, byte_cls
+from ._types import type_name as _type_name
 
-if sys.version_info < (3,):
-    from cStringIO import StringIO as BytesIO
-else:
-    from io import BytesIO
 
 
 def detect(byte_string):
@@ -36,7 +32,7 @@ def detect(byte_string):
         string
     """
 
-    if not isinstance(byte_string, byte_cls):
+    if not isinstance(byte_string, bytes):
         raise TypeError(unwrap(
             '''
             byte_string must be a byte string, not %s
@@ -67,14 +63,14 @@ def armor(type_name, der_bytes, headers=None):
         A byte string of the PEM block
     """
 
-    if not isinstance(der_bytes, byte_cls):
+    if not isinstance(der_bytes, bytes):
         raise TypeError(unwrap(
             '''
             der_bytes must be a byte string, not %s
             ''' % _type_name(der_bytes)
         ))
 
-    if not isinstance(type_name, str_cls):
+    if not isinstance(type_name, str):
         raise TypeError(unwrap(
             '''
             type_name must be a unicode string, not %s
@@ -127,7 +123,7 @@ def _unarmor(pem_bytes):
         in the form "Name: Value" that are right after the begin line.
     """
 
-    if not isinstance(pem_bytes, byte_cls):
+    if not isinstance(pem_bytes, bytes):
         raise TypeError(unwrap(
             '''
             pem_bytes must be a byte string, not %s

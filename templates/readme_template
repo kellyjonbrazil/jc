@@ -120,6 +120,7 @@ pip3 install jc
 | NixOS linux                          | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
 | Guix System linux                    | `guix install jc`                                                             |
 | Gentoo Linux                         | `emerge dev-python/jc`                                                        |
+| Photon linux                         | `tdnf install jc`                                                             |
 | macOS                                | `brew install jc`                                                             |
 | FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |

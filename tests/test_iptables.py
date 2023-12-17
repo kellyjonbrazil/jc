@@ -45,6 +45,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iptables-raw.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_iptables_raw = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump.out'), 'r', encoding='utf-8') as f:
+        generic_iptables_no_jump = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iptables-filter.json'), 'r', encoding='utf-8') as f:
         centos_7_7_iptables_filter_json = json.loads(f.read())
@@ -81,6 +84,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/iptables-raw.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_iptables_raw_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump.json'), 'r', encoding='utf-8') as f:
+        generic_iptables_no_jump_json = json.loads(f.read())
 
 
     def test_iptables_nodata(self):
@@ -160,6 +166,12 @@ class MyTests(unittest.TestCase):
         Test 'sudo iptables -L -t raw' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.iptables.parse(self.ubuntu_18_4_iptables_raw, quiet=True), self.ubuntu_18_4_iptables_raw_json)
+
+    def test_iptables_no_jump_generic(self):
+        """
+        Test 'sudo iptables' with no jump target
+        """
+        self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump, quiet=True), self.generic_iptables_no_jump_json)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,236 @@
+[
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "total_send_rate": {
+            "last_2s": 23200000,
+            "last_10s": 23200000,
+            "last_40s": 23200000
+        },
+        "total_receive_rate": {
+            "last_2s": 5650000,
+            "last_10s": 5650000,
+            "last_40s": 5650000
+        },
+        "total_send_and_receive_rate": {
+            "last_2s": 28800000,
+            "last_10s": 28800000,
+            "last_40s": 28800000
+        },
+        "peak_rate": {
+            "last_2s": 23200000,
+            "last_10s": 5650000,
+            "last_40s": 28800000
+        },
+        "cumulative_rate": {
+            "last_2s": 5790000,
+            "last_10s": 1410000,
+            "last_40s": 7200000
+        },
+        "clients": [
+        {
+            "index": 1,
+            "connections": [
+                {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "33222",
+                "last_2s": 4720,
+                "last_10s": 4720,
+                "last_40s": 4720,
+                "cumulative": 1180,
+                "direction": "send"
+            },
+            {
+                "host_name": "10.10.15.72",
+                "host_port": "https",
+                "last_2s": 1990000,
+                "last_10s": 1990000,
+                "last_40s": 1990000,
+                "cumulative": 508000,
+                "direction": "receive"
+            }
+        ]
+    },
+    {
+        "index": 2,
+        "connections": [
+            {
+                "host_name": "ubuntu-2004-clean-01",
+                "host_port": "https",
+                "last_2s": 1980000,
+                "last_10s": 1980000,
+                "last_40s": 1980000,
+                "cumulative": 507000,
+                "direction": "send"
+            },
+            {
+                "host_name": "10.10.15.73",
+                "host_port": "34562",
+                "last_2s": 3170,
+                "last_10s": 3170,
+                "last_40s": 3170,
+                "cumulative": 811,
+                "direction": "receive"
+            }
+        ]
+    }
+        ]
+    },
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "total_send_rate": {
+        "last_2s": 23200000,
+        "last_10s": 23200000,
+        "last_40s": 23200000
+        },
+        "total_receive_rate": {
+        "last_2s": 5650000,
+        "last_10s": 5650000,
+        "last_40s": 5650000
+        },
+        "total_send_and_receive_rate": {
+        "last_2s": 28800000,
+        "last_10s": 28800000,
+        "last_40s": 28800000
+        },
+        "peak_rate": {
+        "last_2s": 23200000,
+        "last_10s": 5650000,
+        "last_40s": 28800000
+        },
+        "cumulative_rate": {
+        "last_2s": 5790000,
+        "last_10s": 1410000,
+        "last_40s": 7200000
+    },
+        "clients": [
+        {
+            "index": 1,
+            "connections": [
+                {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "33222",
+                "last_2s": 4720,
+                "last_10s": 4720,
+                "last_40s": 4720,
+                "cumulative": 1180,
+                "direction": "send"
+            },
+            {
+                "host_name": "10.10.15.72",
+                "host_port": "https",
+                "last_2s": 1990000,
+                "last_10s": 1990000,
+                "last_40s": 1990000,
+                "cumulative": 508000,
+                "direction": "receive"
+            }
+        ]
+    },
+    {
+        "index": 2,
+        "connections": [
+            {
+                "host_name": "ubuntu-2004-clean-01",
+                "host_port": "https",
+                "last_2s": 1980000,
+                "last_10s": 1980000,
+                "last_40s": 1980000,
+                "cumulative": 507000,
+                "direction": "send"
+            },
+            {
+                "host_name": "10.10.15.73",
+                "host_port": "34562",
+                "last_2s": 3170,
+                "last_10s": 3170,
+                "last_40s": 3170,
+                "cumulative": 811,
+                "direction": "receive"
+            }
+        ]
+    }
+        ]
+    },
+    {
+        "device": "enp0s3",
+        "ip_address": "10.10.15.129",
+        "mac_address": "08:00:27:c0:4a:4f",
+        "total_send_rate": {
+        "last_2s": 23200000,
+        "last_10s": 23200000,
+        "last_40s": 23200000
+        },
+        "total_receive_rate": {
+        "last_2s": 5650000,
+        "last_10s": 5650000,
+        "last_40s": 5650000
+        },
+        "total_send_and_receive_rate": {
+        "last_2s": 28800000,
+        "last_10s": 28800000,
+        "last_40s": 28800000
+        },
+        "peak_rate": {
+        "last_2s": 23200000,
+        "last_10s": 5650000,
+        "last_40s": 28800000
+        },
+        "cumulative_rate": {
+        "last_2s": 5790000,
+        "last_10s": 1410000,
+        "last_40s": 7200000
+    },
+        "clients": [
+        {
+            "index": 1,
+            "connections": [
+                {
+                    "host_name": "ubuntu-2004-clean-01",
+                    "host_port": "33222",
+                "last_2s": 4720,
+                "last_10s": 4720,
+                "last_40s": 4720,
+                "cumulative": 1180,
+                "direction": "send"
+            },
+            {
+                "host_name": "10.10.15.72",
+                "host_port": "https",
+                "last_2s": 1990000,
+                "last_10s": 1990000,
+                "last_40s": 1990000,
+                "cumulative": 508000,
+                "direction": "receive"
+            }
+        ]
+    },
+    {
+        "index": 2,
+        "connections": [
+            {
+                "host_name": "ubuntu-2004-clean-01",
+                "host_port": "https",
+                "last_2s": 1980000,
+                "last_10s": 1980000,
+                "last_40s": 1980000,
+                "cumulative": 507000,
+                "direction": "send"
+            },
+            {
+                "host_name": "10.10.15.73",
+                "host_port": "34562",
+                "last_2s": 3170,
+                "last_10s": 3170,
+                "last_40s": 3170,
+                "cumulative": 811,
+                "direction": "receive"
+            }
+        ]
+    }
+        ]
+    }
+]

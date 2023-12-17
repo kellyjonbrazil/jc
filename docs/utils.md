@@ -9,6 +9,7 @@
   * [convert\_to\_int](#jc.utils.convert_to_int)
   * [convert\_to\_float](#jc.utils.convert_to_float)
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
+  * [convert\_size\_to\_int](#jc.utils.convert_size_to_int)
   * [input\_type\_check](#jc.utils.input_type_check)
   * [timestamp](#jc.utils.timestamp)
     * [\_\_init\_\_](#jc.utils.timestamp.__init__)
@@ -177,6 +178,48 @@ Returns:
 
     True/False      False unless a 'truthy' number or string is found
                     ('y', 'yes', 'true', '1', 1, -1, etc.)
+
+<a id="jc.utils.convert_size_to_int"></a>
+
+### convert\_size\_to\_int
+
+```python
+def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]
+```
+
+Parse a human readable data size and return the number of bytes.
+
+Parameters:
+
+    size:           (string) The human readable file size to parse.
+    binary:         (boolean) `True` to use binary multiples of bytes
+                    (base-2) for ambiguous unit symbols and names,
+                    `False` to use decimal multiples of bytes (base-10).
+Returns:
+
+    integer/None    Integer if successful conversion, otherwise None
+
+This function knows how to parse sizes in bytes, kilobytes, megabytes,
+gigabytes, terabytes and petabytes. Some examples:
+
+    >>> convert_size_to_int('42')
+    42
+    >>> convert_size_to_int('13b')
+    13
+    >>> convert_size_to_int('5 bytes')
+    5
+    >>> convert_size_to_int('1 KB')
+    1000
+    >>> convert_size_to_int('1 kilobyte')
+    1000
+    >>> convert_size_to_int('1 KiB')
+    1024
+    >>> convert_size_to_int('1 KB', binary=True)
+    1024
+    >>> convert_size_to_int('1.5 GB')
+    1500000000
+    >>> convert_size_to_int('1.5 GB', binary=True)
+    1610612736
 
 <a id="jc.utils.input_type_check"></a>
 
