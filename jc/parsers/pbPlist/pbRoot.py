@@ -32,7 +32,7 @@ import sys
 from functools import cmp_to_key
 
 # for python 3.10+ compatibility
-if sys.version_info.major == 3 and sys.version_info.minor >= 10:
+if sys.version_info >= (3, 10):
     import collections
     setattr(collections, "MutableMapping", collections.abc.MutableMapping)
 

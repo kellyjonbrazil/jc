@@ -1,0 +1,16 @@
+interface: enp0s3
+IP address is: 10.10.15.129
+MAC address is: 08:00:27:c0:4a:4f
+Listening on enp0s3
+   # Host name (port/service if enabled)            last 2s   last 10s   last 40s cumulative
+--------------------------------------------------------------------------------------------
+   1 ubuntu-2004-clean-01:ssh                 =>       448b       448b       448b       112B
+     10.10.15.72:40876                        <=       208b       208b       208b        52B
+--------------------------------------------------------------------------------------------
+Total send rate:                                       448b       448b       448b
+Total receive rate:                                    208b       208b       208b
+Total send and receive rate:                           656b       656b       656b
+--------------------------------------------------------------------------------------------
+Peak rate (sent/received/total):                       448b       208b       656b
+Cumulative (sent/received/total):                      112B        52B       164B
+============================================================================================

@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.23.6'
+__version__ = '1.24.0'
 
 parsers: List[str] = [
     'acpi',
@@ -34,6 +34,7 @@ parsers: List[str] = [
     'csv-s',
     'date',
     'datetime-iso',
+    'debconf-show',
     'df',
     'dig',
     'dir',
@@ -69,7 +70,6 @@ parsers: List[str] = [
     'ip-address',
     'iptables',
     'ip-route',
-    'iso-datetime',
     'iw-scan',
     'iwconfig',
     'jar-manifest',
@@ -107,10 +107,13 @@ parsers: List[str] = [
     'ping-s',
     'pip-list',
     'pip-show',
+    'pkg-index-apk',
+    'pkg-index-deb',
     'plist',
     'postconf',
     'proc',
     'proc-buddyinfo',
+    'proc-cmdline',
     'proc-consoles',
     'proc-cpuinfo',
     'proc-crypto',
@@ -175,6 +178,7 @@ parsers: List[str] = [
     'sshd-conf',
     'stat',
     'stat-s',
+    'swapon',
     'sysctl',
     'syslog',
     'syslog-s',
@@ -193,6 +197,7 @@ parsers: List[str] = [
     'top-s',
     'tracepath',
     'traceroute',
+    'tune2fs',
     'udevadm',
     'ufw',
     'ufw-appinfo',

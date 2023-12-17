@@ -120,6 +120,7 @@ pip3 install jc
 | NixOS linux                          | `nix-env -iA nixpkgs.jc` or `nix-env -iA nixos.jc`                            |
 | Guix System linux                    | `guix install jc`                                                             |
 | Gentoo Linux                         | `emerge dev-python/jc`                                                        |
+| Photon linux                         | `tdnf install jc`                                                             |
 | macOS                                | `brew install jc`                                                             |
 | FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
@@ -178,6 +179,7 @@ option.
 |         `--csv-s` | CSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s)          |
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
+|  `--debconf-show` | `debconf-show` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/debconf_show)   |
 |            `--df` | `df` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/df)             |
 |           `--dig` | `dig` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dig)            |
 |           `--dir` | `dir` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dir)            |
@@ -250,6 +252,8 @@ option.
 |        `--ping-s` | `ping` and `ping6` command streaming parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping_s)         |
 |      `--pip-list` | `pip list` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_list)       |
 |      `--pip-show` | `pip show` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pip_show)       |
+| `--pkg-index-apk` | Alpine Linux Package Index file parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_apk)  |
+| `--pkg-index-deb` | Debian Package Index file parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_deb)  |
 |         `--plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 |      `--postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
 |          `--proc` | `/proc/` file parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/proc)           |
@@ -268,6 +272,7 @@ option.
 |     `--sshd-conf` | `sshd` config file and `sshd -T` command parser         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sshd_conf)      |
 |          `--stat` | `stat` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat)           |
 |        `--stat-s` | `stat` command streaming parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/stat_s)         |
+|        `--swapon` | `swapon` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/swapon)         |
 |        `--sysctl` | `sysctl` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/sysctl)         |
 |        `--syslog` | Syslog RFC 5424 string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog)         |
 |      `--syslog-s` | Syslog RFC 5424 string streaming parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/syslog_s)       |
@@ -286,6 +291,7 @@ option.
 |         `--top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 |     `--tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
 |    `--traceroute` | `traceroute` and `traceroute6` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute)     |
+|       `--tune2fs` | `tune2fs -l` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tune2fs)        |
 |       `--udevadm` | `udevadm info` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/udevadm)        |
 |           `--ufw` | `ufw status` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw)            |
 |   `--ufw-appinfo` | `ufw app info [application]` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo)    |
