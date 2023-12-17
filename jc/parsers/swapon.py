@@ -1,7 +1,5 @@
 """jc - JSON Convert `swapon` command output parser
 
-> Note: Must use `swapon`
-
 Usage (cli):
 
     $ swapon | jc --swapon
@@ -13,17 +11,17 @@ or
 Usage (module):
 
     import jc
-    result = jc.parse('swapon', uname_command_output)
+    result = jc.parse('swapon', swapon_command_output)
 
 Schema:
 
     [
       {
-        "name": string,
-        "type": string,
-        "size": int,
-        "used": int,
-        "priority": int,
+        "name":             string,
+        "type":             string,
+        "size":             integer,
+        "used":             integer,
+        "priority":         integer
       }
     ]
 
@@ -48,7 +46,6 @@ from typing import List, Dict, Union
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-
     version = "1.0"
     description = "`swapon` command parser"
     author = "Roey Darwish Dror"
