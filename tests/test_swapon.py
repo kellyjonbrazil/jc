@@ -25,9 +25,9 @@ class Swapon(unittest.TestCase):
                 cls.f_in[file] = a.read()
                 cls.f_json[file] = json.loads(b.read())
 
-    def test_foo_nodata(self):
+    def test_swapon_nodata(self):
         """
-        Test 'foo' with no data
+        Test 'swapon' with no data
         """
         self.assertEqual(parse('', quiet=True), [])
 
