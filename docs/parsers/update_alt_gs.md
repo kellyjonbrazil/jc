@@ -68,4 +68,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/update_alt_gs.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/update_alt_gs.py)
+
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

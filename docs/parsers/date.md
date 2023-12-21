@@ -100,4 +100,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
+Source: [`jc/parsers/date.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/date.py)
+
 Version 2.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

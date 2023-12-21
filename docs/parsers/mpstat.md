@@ -137,4 +137,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/mpstat.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/mpstat.py)
+
 Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -184,4 +184,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/rpm_qi.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/rpm_qi.py)
+
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
