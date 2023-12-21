@@ -42,29 +42,36 @@ https://github.com/torvalds/linux/blob/master/net/ipv6/tcp_ipv6.c
 
     [
       {
-        "entry":                        integer,
-        "local_address":                string,
-        "local_port":                   integer,
-        "remote_address":               string,
-        "remote_port":                  integer,
-        "state":                        string,
-        "tx_queue":                     string,
-        "rx_queue":                     string,
-        "timer_active":                 integer,
-        "jiffies_until_timer_expires":  string,
-        "unrecovered_rto_timeouts":     string,
-        "uid":                          integer,
-        "unanswered_0_window_probes":   integer,
-        "inode":                        integer,
-        "sock_ref_count":               integer,
-        "sock_mem_loc":                 string,
-        "retransmit_timeout":           integer,
-        "soft_clock_tick":              integer,
-        "ack_quick_pingpong":           integer,
-        "sending_congestion_window":    integer,
-        "slow_start_size_threshold":    integer
+        "entry":                                integer,
+        "local_address":                        string,
+        "local_port":                           integer,
+        "remote_address":                       string,
+        "remote_port":                          integer,
+        "state":                                string,
+        "tx_queue":                             string,
+        "rx_queue":                             string,
+        "timer_active":                         integer,
+        "jiffies_until_timer_expires":          string,
+        "unrecovered_rto_timeouts":             string,
+        "uid":                                  integer,
+        "unanswered_0_window_probes":           integer,
+        "inode":                                integer,
+        "sock_ref_count":                       integer,
+        "sock_mem_loc":                         string,
+        "retransmit_timeout":                   integer,
+        "soft_clock_tick":                      integer,
+        "ack_quick_pingpong":                   integer,
+        "sending_congestion_window":            integer,
+        "slow_start_size_threshold":            integer,
+        "opposite_endian_local_address":        string,    [0]
+        "opposite_endian_remote_address":       string     [0]
       }
     ]
+
+    [0] For IPv6 output originating from an opposite endian architecture
+        (e.g. s390x vs. x64) You should not need to use this to process
+        output originating from the same machine running `jc` or from a
+        machine with the same endianness.
 
 Examples:
 
@@ -183,4 +190,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.0 by Alvin Solomon (alvinms01@gmail.com)
+Source: [`jc/parsers/proc_net_tcp.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_net_tcp.py)
+
+Version 1.1 by Alvin Solomon (alvinms01@gmail.com)
