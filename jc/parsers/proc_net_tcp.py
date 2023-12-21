@@ -37,29 +37,36 @@ https://github.com/torvalds/linux/blob/master/net/ipv6/tcp_ipv6.c
 
     [
       {
-        "entry":                        integer,
-        "local_address":                string,
-        "local_port":                   integer,
-        "remote_address":               string,
-        "remote_port":                  integer,
-        "state":                        string,
-        "tx_queue":                     string,
-        "rx_queue":                     string,
-        "timer_active":                 integer,
-        "jiffies_until_timer_expires":  string,
-        "unrecovered_rto_timeouts":     string,
-        "uid":                          integer,
-        "unanswered_0_window_probes":   integer,
-        "inode":                        integer,
-        "sock_ref_count":               integer,
-        "sock_mem_loc":                 string,
-        "retransmit_timeout":           integer,
-        "soft_clock_tick":              integer,
-        "ack_quick_pingpong":           integer,
-        "sending_congestion_window":    integer,
-        "slow_start_size_threshold":    integer
+        "entry":                                integer,
+        "local_address":                        string,
+        "local_port":                           integer,
+        "remote_address":                       string,
+        "remote_port":                          integer,
+        "state":                                string,
+        "tx_queue":                             string,
+        "rx_queue":                             string,
+        "timer_active":                         integer,
+        "jiffies_until_timer_expires":          string,
+        "unrecovered_rto_timeouts":             string,
+        "uid":                                  integer,
+        "unanswered_0_window_probes":           integer,
+        "inode":                                integer,
+        "sock_ref_count":                       integer,
+        "sock_mem_loc":                         string,
+        "retransmit_timeout":                   integer,
+        "soft_clock_tick":                      integer,
+        "ack_quick_pingpong":                   integer,
+        "sending_congestion_window":            integer,
+        "slow_start_size_threshold":            integer,
+        "opposite_endian_local_address":        string,    [0]
+        "opposite_endian_remote_address":       string     [0]
       }
     ]
+
+    [0] For IPv6 output originating from an opposite endian architecture
+        (e.g. s390x vs. x64) You should not need to use this to process
+        output originating from the same machine running `jc` or from a
+        machine with the same endianness.
 
 Examples:
 
@@ -155,16 +162,16 @@ Examples:
       ...
     ]
 """
-import binascii
 import socket
 import struct
+import ipaddress
 from typing import List, Dict
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/tcp` and `/proc/net/tcp6` file parser'
     author = 'Alvin Solomon'
     author_email = 'alvinms01@gmail.com'
@@ -181,10 +188,15 @@ def hex_to_ip(hexaddr: str) -> str:
         addr_long = int(hexaddr, 16)
         return socket.inet_ntop(socket.AF_INET, struct.pack("<L", addr_long))
     elif len(hexaddr) == 32:
-        addr = binascii.a2b_hex(hexaddr)
-        addr_tup = struct.unpack('>IIII', addr)
-        addr_bytes = struct.pack('@IIII', *addr_tup)
-        return socket.inet_ntop(socket.AF_INET6, addr_bytes)
+        newaddr = ''
+        for chunk in range(0, 32, 8):
+            chunk_a = hexaddr[chunk + 6:chunk + 8]
+            chunk_b = hexaddr[chunk + 4:chunk + 6]
+            chunk_c = hexaddr[chunk + 2:chunk + 4]
+            chunk_d = hexaddr[chunk + 0:chunk + 2]
+            newaddr = newaddr + chunk_a + chunk_b + chunk_c + chunk_d
+        full_addr = ':'.join(newaddr[i:i + 4] for i in range(0, 32, 4))
+        return ipaddress.IPv6Address(full_addr).compressed
 
     return ''
 
@@ -210,10 +222,22 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
     for entry in proc_data:
         if 'local_address' in entry:
-            entry['local_address'] = hex_to_ip(entry['local_address'])
+            local_addr = entry['local_address']
+            remote_addr = entry['remote_address']
+
+            entry['local_address'] = hex_to_ip(local_addr)
             entry['local_port'] = int(entry['local_port'], 16)
-            entry['remote_address'] = hex_to_ip(entry['remote_address'])
+            entry['remote_address'] = hex_to_ip(remote_addr)
             entry['remote_port'] = int(entry['remote_port'], 16)
+
+            if len(local_addr) == 32:
+                opp_endian_local_addr = ':'.join(local_addr[i:i + 4] for i in range(0, 32, 4))
+                opp_endian_local_addr = ipaddress.IPv6Address(opp_endian_local_addr).compressed
+                opp_endian_remote_addr = ':'.join(remote_addr[i:i + 4] for i in range(0, 32, 4))
+                opp_endian_remote_addr = ipaddress.IPv6Address(opp_endian_remote_addr).compressed
+
+                entry['opposite_endian_local_address'] = opp_endian_local_addr
+                entry['opposite_endian_remote_address'] = opp_endian_remote_addr
 
         for item in int_list:
             if item in entry:
