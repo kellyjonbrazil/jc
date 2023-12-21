@@ -17,7 +17,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 2. Fork the repo and create your branch from `dev`, if available, otherwise `master`.
 3. For new parsers:
    - Templates: Use the [`jc/parsers/foo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo.py) or [`jc/parsers/foo_s.py (streaming)`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/foo_s.py) parsers as a template to get started.
-   - Local Development: You can even place a new parser python module file in the [parser plugin directory](https://github.com/kellyjonbrazil/jc#parser-plugins) to get started right away with just a standard `jc` installation.
+   - Local development: You can even place a new parser python module file in the [parser plugin directory](https://github.com/kellyjonbrazil/jc#parser-plugins) to get started right away with just a standard `jc` installation.
    - Parser registry: Add the parser name to the [jc/lib.py](https://github.com/kellyjonbrazil/jc/blob/master/jc/lib.py) file.
 4. If you've added code that should be tested, add tests. All new parsers should have several sample outputs and tests.
 5. Documentation is auto-generated from docstrings, so ensure they are clear and accurate.
