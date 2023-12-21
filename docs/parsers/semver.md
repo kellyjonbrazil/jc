@@ -74,4 +74,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/semver.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/semver.py)
+
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

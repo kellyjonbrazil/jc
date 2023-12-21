@@ -117,4 +117,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
+Source: [`jc/parsers/passwd.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/passwd.py)
+
 Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -336,4 +336,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/top.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/top.py)
+
 Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

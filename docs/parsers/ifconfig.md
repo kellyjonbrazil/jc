@@ -240,4 +240,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
+Source: [`jc/parsers/ifconfig.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ifconfig.py)
+
 Version 2.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

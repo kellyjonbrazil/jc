@@ -193,4 +193,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
+Source: [`jc/parsers/stat.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/stat.py)
+
 Version 1.13 by Kelly Brazil (kellyjonbrazil@gmail.com)

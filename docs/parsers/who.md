@@ -158,4 +158,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
+Source: [`jc/parsers/who.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/who.py)
+
 Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

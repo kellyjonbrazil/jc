@@ -80,4 +80,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
+Source: [`jc/parsers/sysctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/sysctl.py)
+
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

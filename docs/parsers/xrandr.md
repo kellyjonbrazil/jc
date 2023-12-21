@@ -217,4 +217,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
+Source: [`jc/parsers/xrandr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/xrandr.py)
+
 Version 1.4 by Kevin Lyter (code (at) lyterk.com)

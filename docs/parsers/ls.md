@@ -140,4 +140,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
+Source: [`jc/parsers/ls.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ls.py)
+
 Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)

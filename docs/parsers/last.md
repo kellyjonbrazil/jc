@@ -127,4 +127,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
+Source: [`jc/parsers/last.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/last.py)
+
 Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
