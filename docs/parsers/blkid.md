@@ -143,4 +143,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/blkid.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/blkid.py)
+
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

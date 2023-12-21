@@ -223,4 +223,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/ufw.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ufw.py)
+
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

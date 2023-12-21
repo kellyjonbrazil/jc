@@ -229,4 +229,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
+Source: [`jc/parsers/ps.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ps.py)
+
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

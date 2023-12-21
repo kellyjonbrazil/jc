@@ -91,4 +91,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
+Source: [`jc/parsers/hashsum.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/hashsum.py)
+
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

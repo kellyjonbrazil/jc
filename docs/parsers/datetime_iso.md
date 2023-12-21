@@ -88,4 +88,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
+Source: [`jc/parsers/datetime_iso.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/datetime_iso.py)
+
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
