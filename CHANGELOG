@@ -1,6 +1,7 @@
 jc changelog
 
 20231221 v1.24.1
+- Add `kv-dup` parser for Key/Value files with duplicate keys
 - Enhance `proc-net-tcp` parser to add opposite endian support for architectures
   like the s390x
 - Add source link to parser documentation
