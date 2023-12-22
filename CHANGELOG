@@ -1,10 +1,11 @@
 jc changelog
 
-20231221 v1.24.1
+20231222 v1.24.1
 - Add `kv-dup` parser for Key/Value files with duplicate keys
 - Enhance `proc-net-tcp` parser to add opposite endian support for architectures
   like the s390x
-- Add source link to parser documentation
+- Fix `ini` and `ini-dup` parsers to consistently handle null values as empty strings
+- Add source link to online parser documentation
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
 
 20231216 v1.24.0
