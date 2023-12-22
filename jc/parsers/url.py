@@ -365,21 +365,21 @@ def parse(
             decoded_path = re.sub(r'/+', '/', unquoted_parts.path)
 
             # get parent, file, stem, and exension info from path
-            parent = str(pathlib.PurePath(my_path).parent)
-            encoded_parent = str(pathlib.PurePath(encoded_path).parent)
-            decoded_parent = str(pathlib.PurePath(decoded_path).parent)
+            parent = str(pathlib.PurePosixPath(my_path).parent)
+            encoded_parent = str(pathlib.PurePosixPath(encoded_path).parent)
+            decoded_parent = str(pathlib.PurePosixPath(decoded_path).parent)
 
-            filename = str(pathlib.PurePath(my_path).name)
-            encoded_filename = str(pathlib.PurePath(encoded_path).name)
-            decoded_filename = str(pathlib.PurePath(decoded_path).name)
+            filename = str(pathlib.PurePosixPath(my_path).name)
+            encoded_filename = str(pathlib.PurePosixPath(encoded_path).name)
+            decoded_filename = str(pathlib.PurePosixPath(decoded_path).name)
 
-            stem = str(pathlib.PurePath(my_path).stem)
-            encoded_stem = str(pathlib.PurePath(encoded_path).stem)
-            decoded_stem = str(pathlib.PurePath(decoded_path).stem)
+            stem = str(pathlib.PurePosixPath(my_path).stem)
+            encoded_stem = str(pathlib.PurePosixPath(encoded_path).stem)
+            decoded_stem = str(pathlib.PurePosixPath(decoded_path).stem)
 
-            extension = str(pathlib.PurePath(my_path).suffix)[1:]
-            encoded_extension = str(pathlib.PurePath(encoded_path).suffix)[1:]
-            decoded_extension = str(pathlib.PurePath(decoded_path).suffix)[1:]
+            extension = str(pathlib.PurePosixPath(my_path).suffix)[1:]
+            encoded_extension = str(pathlib.PurePosixPath(encoded_path).suffix)[1:]
+            decoded_extension = str(pathlib.PurePosixPath(decoded_path).suffix)[1:]
 
             # remove first '/' and split
             path_list = my_path.replace('/', '', 1).split('/')
