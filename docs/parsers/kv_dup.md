@@ -19,12 +19,12 @@ values. All values are contained in lists/arrays.
 
 Usage (cli):
 
-    $ cat foo.txt | jc --kv
+    $ cat foo.txt | jc --kv-dup
 
 Usage (module):
 
     import jc
-    result = jc.parse('kv', kv_file_output)
+    result = jc.parse('kv_dup', kv_file_output)
 
 Schema:
 
@@ -55,7 +55,7 @@ Examples:
     occupation:"Engineer"
     occupation = "Pilot"
 
-    $ cat keyvalue.txt | jc --kv -p
+    $ cat keyvalue.txt | jc --kv-dup -p
     {
       "name": ["John Doe"],
       "address": ["555 California Drive"],
