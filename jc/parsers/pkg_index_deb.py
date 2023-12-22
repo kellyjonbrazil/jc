@@ -112,7 +112,7 @@ import jc.parsers.rpm_qi as rpm_qi
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Debian Package Index file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -143,6 +143,5 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     # This parser is an alias of rpm_qi.py
-    rpm_qi.info.compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    rpm_qi.info.tags = ['file']
+    rpm_qi.info = info  # type: ignore
     return rpm_qi.parse(data, raw, quiet)

@@ -31,38 +31,22 @@ Examples:
     }
 """
 from jc.jc_types import JSONDictType
-import jc.parsers.kv
-import jc.utils
+import jc.parsers.ini as ini
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`lsb_release` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the Key/Value parser'
+    details = 'Using the ini parser'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     magic_commands = ['lsb_release']
     tags = ['command']
 
 
 __version__ = info.version
-
-
-def _process(proc_data: JSONDictType) -> JSONDictType:
-    """
-    Final processing to conform to the schema.
-
-    Parameters:
-
-        proc_data:   (Dictionary) raw structured data to process
-
-    Returns:
-
-        Dictionary. Structured to conform to the schema.
-    """
-    return jc.parsers.kv._process(proc_data)
 
 
 def parse(
@@ -83,7 +67,6 @@ def parse(
 
         Dictionary. Raw or processed structured data.
     """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    raw_output = jc.parsers.kv.parse(data, raw, quiet)
-
-    return raw_output if raw else _process(raw_output)
+    # This parser is an alias of ini.py
+    ini.info = info  # type: ignore
+    return ini.parse(data, raw, quiet)
