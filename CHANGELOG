@@ -4,6 +4,7 @@ jc changelog
 - Add `kv-dup` parser for Key/Value files with duplicate keys
 - Enhance `proc-net-tcp` parser to add opposite endian support for architectures
   like the s390x
+- Enhance `url` parser to add `parent`, `filename`, `stem`, and `extension` fields
 - Fix `ini` and `ini-dup` parsers to consistently handle null values as empty strings
 - Add source link to online parser documentation
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
