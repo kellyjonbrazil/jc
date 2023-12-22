@@ -76,6 +76,7 @@ parsers: List[str] = [
     'jobs',
     'jwt',
     'kv',
+    'kv-dup',
     'last',
     'ls',
     'ls-s',
