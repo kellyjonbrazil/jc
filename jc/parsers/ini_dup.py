@@ -97,7 +97,7 @@ import uuid
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'INI with duplicate key file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -112,6 +112,9 @@ __version__ = info.version
 class MultiDict(dict):
     # https://stackoverflow.com/a/38286559/12303989
     def __setitem__(self, key, value):
+        if value is None:
+            self[key] = ['']
+
         if key in self:
             if isinstance(value, list):
                 self[key].extend(value)
@@ -125,10 +128,7 @@ class MultiDict(dict):
 
 
 def _remove_quotes(value):
-    if value is None:
-        value = ''
-
-    elif value.startswith('"') and value.endswith('"'):
+    if value.startswith('"') and value.endswith('"'):
         value = value[1:-1]
 
     elif value.startswith("'") and value.endswith("'"):
