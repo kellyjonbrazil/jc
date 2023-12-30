@@ -297,4 +297,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/lsblk.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsblk.py)
+
 Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

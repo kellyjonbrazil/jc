@@ -545,4 +545,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
+Source: [`jc/parsers/ssh_conf.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ssh_conf.py)
+
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

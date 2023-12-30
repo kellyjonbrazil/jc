@@ -98,4 +98,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd, aix
 
+Source: [`jc/parsers/mount.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/mount.py)
+
 Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

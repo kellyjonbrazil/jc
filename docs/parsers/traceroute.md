@@ -143,4 +143,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
+Source: [`jc/parsers/traceroute.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/traceroute.py)
+
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

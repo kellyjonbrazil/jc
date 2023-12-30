@@ -244,4 +244,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/proc_cpuinfo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_cpuinfo.py)
+
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

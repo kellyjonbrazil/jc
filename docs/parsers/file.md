@@ -85,4 +85,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
+Source: [`jc/parsers/file.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/file.py)
+
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

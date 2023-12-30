@@ -133,4 +133,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/srt.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/srt.py)
+
 Version 1.0 by Mark Rotner (rotner.mr@gmail.com)

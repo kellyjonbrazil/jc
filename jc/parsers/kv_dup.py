@@ -1,10 +1,12 @@
-"""jc - JSON Convert `Key/Value` file and string parser
+"""jc - JSON Convert `Key/Value` with duplicate key file and string parser
 
-Supports files containing simple key/value pairs.
+Supports files containing simple key/value pairs and preserves duplicate
+values. All values are contained in lists/arrays.
 
 - Delimiter can be `=` or `:`. Missing values are supported.
 - Comment prefix can be `#` or `;`. Comments must be on their own line.
-- If duplicate keys are found, only the last value will be used.
+- If multi-line values are used, each line will be a separate item in the
+  value list. Blank lines in multi-line values are not supported.
 
 > Note: Values starting and ending with quotation marks will have the marks
 > removed. If you would like to keep the quotation marks, use the `-r`
@@ -12,12 +14,12 @@ Supports files containing simple key/value pairs.
 
 Usage (cli):
 
-    $ cat foo.txt | jc --kv
+    $ cat foo.txt | jc --kv-dup
 
 Usage (module):
 
     import jc
-    result = jc.parse('kv', kv_file_output)
+    result = jc.parse('kv_dup', kv_file_output)
 
 Schema:
 
@@ -25,8 +27,12 @@ Key/Value document converted to a dictionary - see the python configparser
 standard library documentation for more details.
 
     {
-      "key1":       string,
-      "key2":       string
+      "<key1>": [
+                            string
+      ],
+      "<key2>": [
+                            string
+      ]
     }
 
 Examples:
@@ -42,25 +48,26 @@ Examples:
     # quoted values have quotation marks stripped by default
     # but can be preserved with the -r argument
     occupation:"Engineer"
+    occupation = "Pilot"
 
-    $ cat keyvalue.txt | jc --kv -p
+    $ cat keyvalue.txt | jc --kv-dup -p
     {
-      "name": "John Doe",
-      "address": "555 California Drive",
-      "age": "34",
-      "occupation": "Engineer"
+      "name": ["John Doe"],
+      "address": ["555 California Drive"],
+      "age": ["34"],
+      "occupation": ["Engineer", "Pilot"]
     }
 """
-import jc.parsers.ini as ini
+import jc.parsers.ini_dup as ini_dup
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.1'
-    description = 'Key/Value file and string parser'
+    version = '1.0'
+    description = 'Key/Value with duplicate key file and string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the ini parser'
+    details = 'Using the ini-dup parser'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['generic', 'file', 'string']
 
@@ -82,6 +89,6 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary representing a Key/Value pair document.
     """
-    # This parser is an alias of ini.py
-    ini.info = info  # type: ignore
-    return ini.parse(data, raw, quiet)
+    # This parser is an alias of ini_dup.py
+    ini_dup.info = info  # type: ignore
+    return ini_dup.parse(data, raw, quiet)

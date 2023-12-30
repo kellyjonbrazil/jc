@@ -346,4 +346,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
+Source: [`jc/parsers/dig.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/dig.py)
+
 Version 2.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

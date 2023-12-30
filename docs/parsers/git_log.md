@@ -172,4 +172,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/git_log.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_log.py)
+
 Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
