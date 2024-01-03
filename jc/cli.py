@@ -55,7 +55,7 @@ class info():
     author: str = 'Kelly Brazil'
     author_email: str = 'kellyjonbrazil@gmail.com'
     website: str = 'https://github.com/kellyjonbrazil/jc'
-    copyright: str = '© 2019-2023 Kelly Brazil'
+    copyright: str = '© 2019-2024 Kelly Brazil'
     license: str = 'MIT License'
 
 
@@ -283,6 +283,7 @@ class JcCli():
             'standard_parser_count': len(standard_parser_mod_list(show_hidden=True, show_deprecated=True)),
             'streaming_parser_count': len(streaming_parser_mod_list(show_hidden=True, show_deprecated=True)),
             'plugin_parser_count': len(plugin_parser_mod_list(show_hidden=True, show_deprecated=True)),
+            'slurpable_parser_count': len(slurpable_parser_mod_list(show_hidden=True, show_deprecated=True)),
             'parsers': all_parser_info(show_hidden=True, show_deprecated=True)
         }
 
@@ -315,9 +316,15 @@ class JcCli():
                 version: str = p_info.get('version', 'unknown')
                 author: str = p_info.get('author', 'unknown')
                 author_email: str = p_info.get('author_email', 'unknown')
+
+                slurpy = ''
+                if 'slurpable' in p_info.get('tags', []):
+                    slurpy = 'This parser can be used with the --slurp command-line option.\n\n'
+
                 doc_text: str = \
-                    f'{docs}\n'\
-                    f'Compatibility:  {compatible}\n\n'\
+                    f'{docs}\n' \
+                    f'Compatibility:  {compatible}\n\n' \
+                    f'{slurpy}' \
                     f'Version {version} by {author} ({author_email})\n'
 
                 utils._safe_pager(doc_text)
@@ -770,7 +777,6 @@ class JcCli():
         if self.parser_module:
             if self.slurp:
                 self.create_slurp_output()
-
             else:
                 self.create_normal_output()
 

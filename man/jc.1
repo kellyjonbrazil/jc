@@ -1,4 +1,4 @@
-.TH jc 1 2023-12-22 1.24.0 "JSON Convert"
+.TH jc 1 2024-01-03 1.24.1 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -1142,6 +1142,10 @@ Raw output. Provides more literal output, typically with string values and no
 additional semantic processing
 .TP
 .B
+\fB-s\fP, \fB--slurp\fP
+Slurp multiple lines into an array. (use \fB-hhh\fP` to find compatible parsers)
+.TP
+.B
 \fB-u\fP, \fB--unbuffer\fP
 Unbuffer output (useful for slow streaming data with streaming parsers)
 .TP
@@ -1510,6 +1514,6 @@ Kelly Brazil (kellyjonbrazil@gmail.com)
 https://github.com/kellyjonbrazil/jc
 
 .SH COPYRIGHT
-Copyright (c) 2019-2023 Kelly Brazil
+Copyright (c) 2019-2024 Kelly Brazil
 
 License:  MIT License
