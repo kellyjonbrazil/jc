@@ -131,6 +131,7 @@ from .lib import (
     plugin_parser_mod_list as plugin_parser_mod_list,
     standard_parser_mod_list as standard_parser_mod_list,
     streaming_parser_mod_list as streaming_parser_mod_list,
+    slurpable_parser_mod_list as slurpable_parser_mod_list,
     parser_info as parser_info,
     all_parser_info as all_parser_info,
     get_help as get_help
