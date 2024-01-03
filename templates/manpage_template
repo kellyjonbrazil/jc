@@ -92,6 +92,10 @@ Raw output. Provides more literal output, typically with string values and no
 additional semantic processing
 .TP
 .B
+\fB-s\fP, \fB--slurp\fP
+Slurp multiple lines into an array. (use \fB-hhh\fP` to find compatible parsers)
+.TP
+.B
 \fB-u\fP, \fB--unbuffer\fP
 Unbuffer output (useful for slow streaming data with streaming parsers)
 .TP

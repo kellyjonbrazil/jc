@@ -329,7 +329,7 @@ _jc() {
         '--zpool-iostat:`zpool iostat` command parser'
         '--zpool-status:`zpool status` command parser'
     )
-    jc_options=(--force-color -C --debug -d --monochrome -m --meta-out -M --pretty -p --quiet -q --raw -r --unbuffer -u --yaml-out -y)
+    jc_options=(--force-color -C --debug -d --monochrome -m --meta-out -M --pretty -p --quiet -q --raw -r --slurp -s --unbuffer -u --yaml-out -y)
     jc_options_describe=(
         '--force-color:force color output (overrides -m)'
         '-C:force color output (overrides -m)'
@@ -345,6 +345,8 @@ _jc() {
         '-q:suppress warnings (double to ignore streaming errors)'
         '--raw:raw output'
         '-r:raw output'
+        '--slurp:slurp multiple lines into an array'
+        '-s:slurp multiple lines into an array'
         '--unbuffer:unbuffer output'
         '-u:unbuffer output'
         '--yaml-out:YAML output'

@@ -554,4 +554,6 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/ip_address.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ip_address.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
