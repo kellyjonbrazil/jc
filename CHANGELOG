@@ -13,7 +13,7 @@ jc changelog
 - Add source link to online parser documentation
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
 - TODO: Add `line_slice` function to `utils.py`
-- TODO: Update copyright date
+- Update copyright date
 
 20231216 v1.24.0
 - Add `debconf-show` command parser

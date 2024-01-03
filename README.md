@@ -331,6 +331,7 @@ option.
 | `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
 | `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
 | `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
+| `-s`  | `--slurp`       | Slurp multiple lines into an array. (use `-hhh` to find compatible parsers)                                         |
 | `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
 | `-v`  | `--version`     | Version information                                                                                                 |
 | `-y`  | `--yaml-out`    | YAML output                                                                                                         |
@@ -1314,4 +1315,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-© 2019-2023 Kelly Brazil
+© 2019-2024 Kelly Brazil

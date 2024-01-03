@@ -6,6 +6,7 @@
   * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
   * [standard\_parser\_mod\_list](#jc.lib.standard_parser_mod_list)
   * [streaming\_parser\_mod\_list](#jc.lib.streaming_parser_mod_list)
+  * [slurpable\_parser\_mod\_list](#jc.lib.slurpable_parser_mod_list)
   * [parser\_info](#jc.lib.parser_info)
   * [all\_parser\_info](#jc.lib.all_parser_info)
   * [get\_help](#jc.lib.get_help)
@@ -154,6 +155,18 @@ def streaming_parser_mod_list(show_hidden: bool = False,
 ```
 
 Returns a list of streaming parser module names. This function is a
+subset of `parser_mod_list()`.
+
+<a id="jc.lib.slurpable_parser_mod_list"></a>
+
+### slurpable\_parser\_mod\_list
+
+```python
+def slurpable_parser_mod_list(show_hidden: bool = False,
+                              show_deprecated: bool = False) -> List[str]
+```
+
+Returns a list of slurpable parser module names. This function is a
 subset of `parser_mod_list()`.
 
 <a id="jc.lib.parser_info"></a>
