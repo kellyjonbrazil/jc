@@ -69,13 +69,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'ISO 8601 Datetime string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Using the pyiso8601 library from https://github.com/micktwomey/pyiso8601/releases/tag/1.0.2'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
-    tags = ['standard', 'string']
+    tags = ['standard', 'string', 'slurpable']
 
 
 __version__ = info.version

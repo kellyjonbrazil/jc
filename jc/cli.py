@@ -15,7 +15,8 @@ from typing import List, Dict, Iterable, Union, Optional, TextIO
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
-    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list
+    parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
+    slurpable_parser_mod_list, _parser_is_slurpable
 )
 from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
@@ -72,7 +73,7 @@ class JcCli():
         'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
         'custom_colors', 'show_hidden', 'show_categories', 'ascii_only', 'json_separators',
         'json_indent', 'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono',
-        'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'meta_out', 'unbuffer',
+        'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'slurp', 'meta_out', 'unbuffer',
         'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
         'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
         'magic_stderr', 'magic_returncode', 'slice_str', 'slice_start', 'slice_end'
@@ -111,6 +112,7 @@ class JcCli():
         self.quiet: bool = False
         self.ignore_exceptions: bool = False
         self.raw: bool = False
+        self.slurp: bool = False
         self.meta_out: bool = False
         self.unbuffer: bool = False
         self.version_info: bool = False
@@ -219,6 +221,7 @@ class JcCli():
         generic = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'generic' in x.get('tags', [])]
         standard = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'standard' in x.get('tags', [])]
         command = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'command' in x.get('tags', [])]
+        slurpable = [{'arg': x['argument'], 'desc': x['description']} for x in all_parsers if 'slurpable' in x.get('tags', [])]
         file_str_bin = [
             {'arg': x['argument'], 'desc': x['description']} for x in all_parsers
                 if 'file' in x.get('tags', []) or
@@ -230,6 +233,7 @@ class JcCli():
             'Generic Parsers:': generic,
             'Standard Spec Parsers:': standard,
             'File/String/Binary Parsers:': file_str_bin,
+            'Slurpable Parsers:': slurpable,
             'Streaming Parsers:': streaming,
             'Command Parsers:': command
         }
@@ -694,6 +698,41 @@ class JcCli():
                 elif self.data_in:
                     self.data_in = list(self.data_in)[self.slice_start:self.slice_end]
 
+    def create_slurp_output(self) -> None:
+        """Slurp output into an array. Only works for single-line strings."""
+        if self.parser_module and not _parser_is_slurpable(self.parser_module):
+            utils.error_message([
+                f'Slurp option not available with the {self.parser_name} parser.'
+            ])
+            self.exit_error()
+
+        if self.parser_module and isinstance(self.data_in, str):
+            self.data_out = []
+            for line in self.data_in.splitlines():
+                parsed_line = self.parser_module.parse(
+                    line,
+                    raw=self.raw,
+                    quiet=self.quiet
+                )
+                self.data_out.append(parsed_line)
+
+            if self.meta_out:
+                self.run_timestamp = datetime.now(timezone.utc)
+                self.add_metadata_to_output()
+
+    def create_normal_output(self) -> None:
+        if self.parser_module:
+            self.data_out = self.parser_module.parse(
+                self.data_in,
+                raw=self.raw,
+                quiet=self.quiet
+            )
+
+            if self.meta_out:
+                self.run_timestamp = datetime.now(timezone.utc)
+                self.add_metadata_to_output()
+
+
     def streaming_parse_and_print(self) -> None:
         """only supports UTF-8 string data for now"""
         self.data_in = sys.stdin
@@ -729,15 +768,11 @@ class JcCli():
         self.slicer()
 
         if self.parser_module:
-            self.data_out = self.parser_module.parse(
-                self.data_in,
-                raw=self.raw,
-                quiet=self.quiet
-            )
+            if self.slurp:
+                self.create_slurp_output()
 
-            if self.meta_out:
-                self.run_timestamp = datetime.now(timezone.utc)
-                self.add_metadata_to_output()
+            else:
+                self.create_normal_output()
 
             self.safe_print_out()
 
@@ -786,6 +821,7 @@ class JcCli():
         self.quiet = 'q' in self.options
         self.ignore_exceptions = self.options.count('q') > 1
         self.raw = 'r' in self.options
+        self.slurp = 's' in self.options
         self.meta_out = 'M' in self.options
         self.unbuffer = 'u' in self.options
         self.version_info = 'v' in self.options
