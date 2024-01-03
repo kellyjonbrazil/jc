@@ -240,12 +240,12 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'URL string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    tags = ['standard', 'string']
+    tags = ['standard', 'string', 'slurpable']
 
 
 __version__ = info.version

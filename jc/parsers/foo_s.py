@@ -55,13 +55,20 @@ class info():
     description = '`foo` command streaming parser'
     author = 'John Doe'
     author_email = 'johndoe@gmail.com'
+    # details = 'enter any other details here'
 
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
-    # tags options: generic, standard, file, string, binary, command
+    # tags options: generic, standard, file, string, binary, command, slurpable
     tags = ['command']
+
+    # required for streaming parsers
     streaming = True
+
+    # other attributes - only enable if needed
+    deprecated = False
+    hidden = False
 
 
 __version__ = info.version
