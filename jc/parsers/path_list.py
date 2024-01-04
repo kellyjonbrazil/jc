@@ -250,11 +250,11 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
     Parameters:
 
-        proc_data:   (Dictionary) raw structured data to process
+        proc_data:   (List of Dictionaries) raw structured data to process
 
     Returns:
 
-        Dictionary. Structured to conform to the schema.
+        List of Dictionaries. Structured to conform to the schema.
     """
     hold_list = [
         'path',
