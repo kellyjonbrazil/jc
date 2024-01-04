@@ -7,13 +7,6 @@ are included in the output. Encoding and Decoding is best effort.
 > Encoded. Similarly, do not use the Decoded fields for a URL that has
 > already been Decoded.
 
-This parser will work with naked and wrapped URL strings:
-
-- `scheme://host/path`
-- `URL:scheme://host/path`
-- `<scheme://host/path>`
-- `<URL:scheme://host/path>`
-
 Usage (cli):
 
     $ echo "/Users/admin/.docker/bin:/Users/admin/.asdf/shims" | jc --path-list
@@ -86,113 +79,139 @@ Schema:
 
 Examples:
 
-    $ echo "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag" \\
-           | jc --url -p
-    {
-      "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
-      "scheme": "http",
-      "netloc": "example.com",
-      "path": "/test/path",
-      "path_list": [
-        "test",
-        "path"
-      ],
-      "query": "q1=foo&q1=bar&q2=baz",
-      "query_obj": {
-        "q1": [
-          "foo",
-          "bar"
-        ],
-        "q2": [
-          "baz"
-        ]
-      },
-      "fragment": "frag",
-      "username": null,
-      "password": null,
-      "hostname": "example.com",
-      "port": null,
-      "encoded": {
-        "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
-        "scheme": "http",
-        "netloc": "example.com",
-        "path": "/test/path",
-        "path_list": [
-          "test",
-          "path"
-        ],
-        "query": "q1=foo&q1=bar&q2=baz",
-        "fragment": "frag",
-        "username": null,
-        "password": null,
-        "hostname": "example.com",
-        "port": null
-      },
-      "decoded": {
-        "url": "http://example.com/test/path?q1=foo&q1=bar&q2=baz#frag",
-        "scheme": "http",
-        "netloc": "example.com",
-        "path": "/test/path",
-        "path_list": [
-          "test",
-          "path"
-        ],
-        "query": "q1=foo&q1=bar&q2=baz",
-        "fragment": "frag",
-        "username": null,
-        "password": null,
-        "hostname": "example.com",
-        "port": null
-      }
-    }
+    $ echo "/abc/def/gh.txt:/xyz/uvw/ab.app" | jc --path-list -p
 
-    $ echo "ftp://localhost/filepath" | jc --url -p
-    {
-      "url": "ftp://localhost/filepath",
-      "scheme": "ftp",
-      "netloc": "localhost",
-      "path": "/filepath",
-      "path_list": [
-        "filepath"
-      ],
-      "query": null,
-      "query_obj": null,
-      "fragment": null,
-      "username": null,
-      "password": null,
-      "hostname": "localhost",
-      "port": null,
-      "encoded": {
-        "url": "ftp://localhost/filepath",
-        "scheme": "ftp",
-        "netloc": "localhost",
-        "path": "/filepath",
+    [
+      {
+        "url": "/abc/def/gh.txt",
+        "scheme": null,
+        "netloc": null,
+        "path": "/abc/def/gh.txt",
+        "parent": "/abc/def",
+        "filename": "gh.txt",
+        "stem": "gh",
+        "extension": "txt",
         "path_list": [
-          "filepath"
+          "abc",
+          "def",
+          "gh.txt"
         ],
         "query": null,
+        "query_obj": null,
         "fragment": null,
         "username": null,
         "password": null,
-        "hostname": "localhost",
-        "port": null
+        "hostname": null,
+        "port": null,
+        "encoded": {
+          "url": "/abc/def/gh.txt",
+          "scheme": null,
+          "netloc": null,
+          "path": "/abc/def/gh.txt",
+          "parent": "/abc/def",
+          "filename": "gh.txt",
+          "stem": "gh",
+          "extension": "txt",
+          "path_list": [
+            "abc",
+            "def",
+            "gh.txt"
+          ],
+          "query": null,
+          "fragment": null,
+          "username": null,
+          "password": null,
+          "hostname": null,
+          "port": null
+        },
+        "decoded": {
+          "url": "/abc/def/gh.txt",
+          "scheme": null,
+          "netloc": null,
+          "path": "/abc/def/gh.txt",
+          "parent": "/abc/def",
+          "filename": "gh.txt",
+          "stem": "gh",
+          "extension": "txt",
+          "path_list": [
+            "abc",
+            "def",
+            "gh.txt"
+          ],
+          "query": null,
+          "fragment": null,
+          "username": null,
+          "password": null,
+          "hostname": null,
+          "port": null
+        }
       },
-      "decoded": {
-        "url": "ftp://localhost/filepath",
-        "scheme": "ftp",
-        "netloc": "localhost",
-        "path": "/filepath",
+      {
+        "url": "/xyz/uvw/ab.app",
+        "scheme": null,
+        "netloc": null,
+        "path": "/xyz/uvw/ab.app",
+        "parent": "/xyz/uvw",
+        "filename": "ab.app",
+        "stem": "ab",
+        "extension": "app",
         "path_list": [
-          "filepath"
+          "xyz",
+          "uvw",
+          "ab.app"
         ],
         "query": null,
+        "query_obj": null,
         "fragment": null,
         "username": null,
         "password": null,
-        "hostname": "localhost",
-        "port": null
+        "hostname": null,
+        "port": null,
+        "encoded": {
+          "url": "/xyz/uvw/ab.app",
+          "scheme": null,
+          "netloc": null,
+          "path": "/xyz/uvw/ab.app",
+          "parent": "/xyz/uvw",
+          "filename": "ab.app",
+          "stem": "ab",
+          "extension": "app",
+          "path_list": [
+            "xyz",
+            "uvw",
+            "ab.app"
+          ],
+          "query": null,
+          "fragment": null,
+          "username": null,
+          "password": null,
+          "hostname": null,
+          "port": null
+        },
+        "decoded": {
+          "url": "/xyz/uvw/ab.app",
+          "scheme": null,
+          "netloc": null,
+          "path": "/xyz/uvw/ab.app",
+          "parent": "/xyz/uvw",
+          "filename": "ab.app",
+          "stem": "ab",
+          "extension": "app",
+          "path_list": [
+            "xyz",
+            "uvw",
+            "ab.app"
+          ],
+          "query": null,
+          "fragment": null,
+          "username": null,
+          "password": null,
+          "hostname": null,
+          "port": null
+        }
       }
-    }
+    ]
+
 """
 
 import jc.parsers.url as url
