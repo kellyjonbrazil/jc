@@ -27,6 +27,34 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 7. Make sure your code lints.
 8. Issue that pull request!
 
+## Setup Debug Environment
+
+Install requirements:
+
+```shell
+pip install -r requirements.txt
+```
+
+Use jc in development mode (changes are direct available):
+
+```shell
+python3 setup.py develop
+```
+
+Uninstall local development:
+
+```shell
+python3 setup.py develop --uninstall
+```
+
+Use `--debug` to see error messages (double to see more):
+
+```shell
+echo 'abc' | jc --parser-with-error --debug
+```
+
+
+
 ## Parser Schema Guidelines
 - Try to keep the schema as flat as possible - typically a list of flat dictionaries
 - Keys should be lowercase, contain no special characters, and spaces should be converted to underscores
@@ -71,6 +99,12 @@ Good:
 It is essential to have good command output sample coverage and tests to keep the `jc` parser quality high.
 
 Many parsers include calculated timestamp fields using the `jc.utils.timestamp` class. Naive timestamps created with this class should be generated on a system configured with the "**America/Los_Angeles**" timezone on linux/macOS/unix and "**Pacific Standard Time**" timezone on Windows for tests to pass on the Github Actions CI tests. This timezone should be configured on your local system before running the tests locally, as well.
+
+Run the tests:
+
+```shell
+./runtests.sh
+```
 
 ## Any contributions you make will be under the MIT Software License
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
