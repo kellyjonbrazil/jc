@@ -24,6 +24,10 @@ Schema:
         "scheme":                    string or null,
         "netloc":                    string or null,
         "path":                      string or null,
+        "parent":                    string or null,
+        "filename":                  string or null,
+        "stem":                      string or null,
+        "extension":                 string or null,
         "path_list": [               array or null
                                      string
         ],
@@ -43,6 +47,10 @@ Schema:
           "scheme":                  string or null,
           "netloc":                  string or null,
           "path":                    string or null,
+          "parent":                  string or null,
+          "filename":                string or null,
+          "stem":                    string or null,
+          "extension":               string or null,
           "path_list": [             array or null
                                      string
           ],
@@ -58,6 +66,10 @@ Schema:
           "scheme":                  string or null,
           "netloc":                  string or null,
           "path":                    string or null,
+          "parent":                  string or null,
+          "filename":                string or null,
+          "stem":                    string or null,
+          "extension":               string or null,
           "path_list": [             array or null
                                      string
           ],
