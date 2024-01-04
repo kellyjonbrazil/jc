@@ -53,8 +53,6 @@ Use `--debug` to see error messages (double to see more):
 echo 'abc' | jc --parser-with-error --debug
 ```
 
-
-
 ## Parser Schema Guidelines
 - Try to keep the schema as flat as possible - typically a list of flat dictionaries
 - Keys should be lowercase, contain no special characters, and spaces should be converted to underscores
