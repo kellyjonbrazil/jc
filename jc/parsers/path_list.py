@@ -261,6 +261,9 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary representing a Key/Value pair document.
     """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
     # This parser is an alias of url.py
     url.info = info  # type: ignore
 
