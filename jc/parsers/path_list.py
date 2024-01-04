@@ -215,7 +215,7 @@ Examples:
 """
 
 import jc.parsers.url as url
-from typing import Dict
+from typing import Dict, List
 import jc.utils
 
 
@@ -232,7 +232,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: Dict) -> Dict:
+def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
 
@@ -267,8 +267,8 @@ def parse(data, raw=False, quiet=False):
     # This parser is an alias of url.py
     url.info = info  # type: ignore
 
+    raw_output: List[Dict] = []
     if jc.utils.has_data(data):
-        raw_output = []
         for line in data.split(":"):
             parsed_line = url.parse(
                 line,
