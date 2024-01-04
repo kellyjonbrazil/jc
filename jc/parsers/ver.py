@@ -89,13 +89,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Version string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     details = 'Based on distutils/version.py from CPython 3.9.5.'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    tags = ['generic', 'string']
+    tags = ['generic', 'string', 'slurpable']
 
 
 __version__ = info.version

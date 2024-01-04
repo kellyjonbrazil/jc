@@ -9,7 +9,7 @@ from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
 
 
-__version__ = '1.24.0'
+__version__ = '1.24.1'
 
 parsers: List[str] = [
     'acpi',
@@ -278,6 +278,18 @@ def _get_parser(parser_mod_name: str) -> ModuleType:
     modpath: str = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     return importlib.import_module(f'{modpath}{parser_mod_name}')
 
+def _parser_is_slurpable(parser: ModuleType) -> bool:
+    """
+    Returns True if this parser can use the `--slurp` command option, else False
+
+    parser is a parser module object.
+    """
+    tag_list = getattr(parser.info, 'tags', [])
+    if 'slurpable' in tag_list:
+        return True
+
+    return False
+
 def _parser_is_streaming(parser: ModuleType) -> bool:
     """
     Returns True if this is a streaming parser, else False
@@ -492,6 +504,30 @@ def streaming_parser_mod_list(
         parser = _get_parser(p)
 
         if _parser_is_streaming(parser):
+
+            if not show_hidden and _parser_is_hidden(parser):
+                continue
+
+            if not show_deprecated and _parser_is_deprecated(parser):
+                continue
+
+            plist.append(_cliname_to_modname(p))
+
+    return plist
+
+def slurpable_parser_mod_list(
+    show_hidden: bool = False,
+    show_deprecated: bool = False
+) -> List[str]:
+    """
+    Returns a list of slurpable parser module names. This function is a
+    subset of `parser_mod_list()`.
+    """
+    plist: List[str] = []
+    for p in parsers:
+        parser = _get_parser(p)
+
+        if _parser_is_slurpable(parser):
 
             if not show_hidden and _parser_is_hidden(parser):
                 continue

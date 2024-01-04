@@ -1,13 +1,19 @@
 jc changelog
 
-20231222 v1.24.1
+20240103 v1.24.1
 - Add `kv-dup` parser for Key/Value files with duplicate keys
+- TODO: Add `path-list` string parser to parse path list strings found in env variables
+- Add `--slurp` functionality to wrap output from multiple lines into a single array.
+  Note, this only works with single-line input parsers. (e.g. `date`, `ip-address`, `url`, etc.)
+  Streaming parsers are not supported. Use `jc -hhh` to find parsers compatible with the slurp option.
 - Enhance `proc-net-tcp` parser to add opposite endian support for architectures
   like the s390x
 - Enhance `url` parser to add `parent`, `filename`, `stem`, and `extension` fields
 - Fix `ini` and `ini-dup` parsers to consistently handle null values as empty strings
 - Add source link to online parser documentation
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
+- TODO: Add `line_slice` function to `utils.py`
+- Update copyright date
 
 20231216 v1.24.0
 - Add `debconf-show` command parser
