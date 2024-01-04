@@ -101,6 +101,7 @@ parsers: List[str] = [
     'os-release',
     'passwd',
     'path-list',
+    'path',
     'pci-ids',
     'pgpass',
     'pidstat',

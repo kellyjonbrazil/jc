@@ -226,8 +226,9 @@ Examples:
 
 """
 
-import jc.parsers.path as path
-from typing import Dict, List
+from typing import Dict
+
+import jc.parsers.url as url
 import jc.utils
 
 
@@ -244,7 +245,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
+def _process(proc_data: Dict) -> Dict:
     """
     Final processing to conform to the schema.
 
@@ -256,9 +257,16 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    hold_list = [
+        'path',
+        'parent',
+        'filename',
+        'stem',
+        'extension',
+        'path_list'
+    ]
 
-    # no changes
-    return proc_data
+    return {key: proc_data.get(key) for key in hold_list}
 
 
 def parse(data, raw=False, quiet=False):
@@ -278,13 +286,9 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    # This parser is an alias of path.py
-    path.info = info  # type: ignore
+    # This parser is an alias of url.py
+    url.info = info  # type: ignore
 
-    raw_output = [
-        path.parse(line, raw=raw, quiet=quiet)
-        for line in data.split(":")
-        if jc.utils.has_data(data)
-    ]
+    raw_output = url.parse(data, raw=raw, quiet=quiet) if jc.utils.has_data(data) else {}
 
     return raw_output if raw else _process(raw_output)
