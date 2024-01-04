@@ -112,7 +112,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['id']
-    tags = ['command']
+    tags = ['command', 'slurpable']
 
 
 __version__ = info.version
