@@ -1,11 +1,6 @@
-"""jc - JSON Convert URL string parser
+"""jc - JSON Convert path list string parser
 
-Normalized, Encoded, and Decoded versions of the original URL and URL parts
-are included in the output. Encoding and Decoding is best effort.
-
-> Note: Do not use the Encoded fields for a URL that has already been
-> Encoded. Similarly, do not use the Decoded fields for a URL that has
-> already been Decoded.
+Parse a colon-separated path list, commonly found in environment variables.
 
 Usage (cli):
 
@@ -20,9 +15,6 @@ Schema:
 
     [
       {
-        "url":                       string,
-        "scheme":                    string or null,
-        "netloc":                    string or null,
         "path":                      string or null,
         "parent":                    string or null,
         "filename":                  string or null,
@@ -31,63 +23,8 @@ Schema:
         "path_list": [               array or null
                                      string
         ],
-        "query":                     string or null,
-        "query_obj": {               object or null
-          <query-key>: [             array or null
-            <query-value>            string            # [0]
-          ]
-        },
-        "fragment":                  string or null,
-        "username":                  string or null,
-        "password":                  string or null,
-        "hostname":                  string or null,
-        "port":                      integer or null,  # [1]
-        "encoded": {
-          "url":                     string,
-          "scheme":                  string or null,
-          "netloc":                  string or null,
-          "path":                    string or null,
-          "parent":                  string or null,
-          "filename":                string or null,
-          "stem":                    string or null,
-          "extension":               string or null,
-          "path_list": [             array or null
-                                     string
-          ],
-          "query":                   string or null,
-          "fragment":                string or null,
-          "username":                string or null,
-          "password":                string or null,
-          "hostname":                string or null,
-          "port":                    integer or null,  # [1]
-        },
-        "decoded": {
-          "url":                     string,
-          "scheme":                  string or null,
-          "netloc":                  string or null,
-          "path":                    string or null,
-          "parent":                  string or null,
-          "filename":                string or null,
-          "stem":                    string or null,
-          "extension":               string or null,
-          "path_list": [             array or null
-                                     string
-          ],
-          "query":                   string or null,
-          "fragment":                string or null,
-          "username":                string or null,
-          "password":                string or null,
-          "hostname":                string or null,
-          "port":                    integer or null,  # [1]
-        }
       }
     ]
-
-    [0] Duplicate query-keys will have their values consolidated into the
-        array of query-values
-
-    [1] Invalid port values will be converted to null/None and a warning
-        message will be printed to `STDERR` if quiet=False
 
 Examples:
 
@@ -95,9 +32,6 @@ Examples:
 
     [
       {
-        "url": "/abc/def/gh.txt",
-        "scheme": null,
-        "netloc": null,
         "path": "/abc/def/gh.txt",
         "parent": "/abc/def",
         "filename": "gh.txt",
@@ -107,61 +41,9 @@ Examples:
           "abc",
           "def",
           "gh.txt"
-        ],
-        "query": null,
-        "query_obj": null,
-        "fragment": null,
-        "username": null,
-        "password": null,
-        "hostname": null,
-        "port": null,
-        "encoded": {
-          "url": "/abc/def/gh.txt",
-          "scheme": null,
-          "netloc": null,
-          "path": "/abc/def/gh.txt",
-          "parent": "/abc/def",
-          "filename": "gh.txt",
-          "stem": "gh",
-          "extension": "txt",
-          "path_list": [
-            "abc",
-            "def",
-            "gh.txt"
-          ],
-          "query": null,
-          "fragment": null,
-          "username": null,
-          "password": null,
-          "hostname": null,
-          "port": null
-        },
-        "decoded": {
-          "url": "/abc/def/gh.txt",
-          "scheme": null,
-          "netloc": null,
-          "path": "/abc/def/gh.txt",
-          "parent": "/abc/def",
-          "filename": "gh.txt",
-          "stem": "gh",
-          "extension": "txt",
-          "path_list": [
-            "abc",
-            "def",
-            "gh.txt"
-          ],
-          "query": null,
-          "fragment": null,
-          "username": null,
-          "password": null,
-          "hostname": null,
-          "port": null
-        }
+        ]
       },
       {
-        "url": "/xyz/uvw/ab.app",
-        "scheme": null,
-        "netloc": null,
         "path": "/xyz/uvw/ab.app",
         "parent": "/xyz/uvw",
         "filename": "ab.app",
@@ -171,56 +53,7 @@ Examples:
           "xyz",
           "uvw",
           "ab.app"
-        ],
-        "query": null,
-        "query_obj": null,
-        "fragment": null,
-        "username": null,
-        "password": null,
-        "hostname": null,
-        "port": null,
-        "encoded": {
-          "url": "/xyz/uvw/ab.app",
-          "scheme": null,
-          "netloc": null,
-          "path": "/xyz/uvw/ab.app",
-          "parent": "/xyz/uvw",
-          "filename": "ab.app",
-          "stem": "ab",
-          "extension": "app",
-          "path_list": [
-            "xyz",
-            "uvw",
-            "ab.app"
-          ],
-          "query": null,
-          "fragment": null,
-          "username": null,
-          "password": null,
-          "hostname": null,
-          "port": null
-        },
-        "decoded": {
-          "url": "/xyz/uvw/ab.app",
-          "scheme": null,
-          "netloc": null,
-          "path": "/xyz/uvw/ab.app",
-          "parent": "/xyz/uvw",
-          "filename": "ab.app",
-          "stem": "ab",
-          "extension": "app",
-          "path_list": [
-            "xyz",
-            "uvw",
-            "ab.app"
-          ],
-          "query": null,
-          "fragment": null,
-          "username": null,
-          "password": null,
-          "hostname": null,
-          "port": null
-        }
+        ]
       }
     ]
 
@@ -273,7 +106,7 @@ def parse(data, raw=False, quiet=False):
 
     Returns:
 
-        Dictionary representing a Key/Value pair document.
+        List of Dictionaries representing a Key/Value pair document.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
