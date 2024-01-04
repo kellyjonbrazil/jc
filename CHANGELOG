@@ -11,6 +11,7 @@ jc changelog
 - Enhance `url` parser to add `parent`, `filename`, `stem`, and `extension` fields
 - Fix `ini` and `ini-dup` parsers to consistently handle null values as empty strings
 - Add source link to online parser documentation
+- Add snap package build scripts
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
 - TODO: Add `line_slice` function to `utils.py`
 - Update copyright date

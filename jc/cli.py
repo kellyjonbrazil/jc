@@ -319,7 +319,7 @@ class JcCli():
 
                 slurpy = ''
                 if 'slurpable' in p_info.get('tags', []):
-                    slurpy = 'This parser can be used with the --slurp command-line option.\n\n'
+                    slurpy = 'This parser can be used with the `--slurp` command-line option.\n\n'
 
                 doc_text: str = \
                     f'{docs}\n' \
