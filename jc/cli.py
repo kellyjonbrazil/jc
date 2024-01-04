@@ -721,13 +721,19 @@ class JcCli():
                     raw=self.raw,
                     quiet=self.quiet
                 )
-                self.data_out.append(parsed_line)
+
+                # keep output as flat as possible (no list of lists)
+                if isinstance(parsed_line, dict):
+                    self.data_out.append(parsed_line)
+                else:
+                    self.data_out.extend(parsed_line)
 
             if self.meta_out:
                 self.run_timestamp = datetime.now(timezone.utc)
                 self.add_metadata_to_output()
 
     def create_normal_output(self) -> None:
+        """standard output"""
         if self.parser_module:
             self.data_out = self.parser_module.parse(
                 self.data_in,
