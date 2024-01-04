@@ -256,7 +256,20 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         Dictionary. Structured to conform to the schema.
     """
-    return proc_data
+    hold_list = [
+        'path',
+        'parent',
+        'filename',
+        'stem',
+        'extension',
+        'path_list'
+    ]
+
+    # error when key not exist in item
+    # return [{key: item[key] for key in hold_list} for item in proc_data]
+
+    # more failsafe if key not exist
+    return [{key: item.get(key) for key in hold_list} for item in proc_data]
 
 
 def parse(data, raw=False, quiet=False):
