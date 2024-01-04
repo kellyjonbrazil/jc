@@ -53,6 +53,18 @@ Use `--debug` to see error messages (double to see more):
 echo 'abc' | jc --parser-with-error --debug
 ```
 
+## Install `jc` with `pip` from source
+
+Please note: Development mode is preferred for observing instant changes.
+
+```shell
+pip install .
+
+pip freeze | grep jc  # check if jc is installed 
+
+pip uninstall jc
+```
+
 ## Parser Schema Guidelines
 - Try to keep the schema as flat as possible - typically a list of flat dictionaries
 - Keys should be lowercase, contain no special characters, and spaces should be converted to underscores
