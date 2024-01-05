@@ -35,6 +35,7 @@ Examples:
       "stem": "gh",
       "extension": "txt",
       "path_list": [
+        "/",
         "abc",
         "def",
         "gh.txt"
@@ -42,10 +43,9 @@ Examples:
     }
 
 """
-
+from pathlib import Path
 from typing import Dict
 
-import jc.parsers.url as url
 import jc.utils
 
 
@@ -74,16 +74,9 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured to conform to the schema.
     """
-    hold_list = [
-        'path',
-        'parent',
-        'filename',
-        'stem',
-        'extension',
-        'path_list'
-    ]
 
-    return {key: proc_data.get(key) for key in hold_list}
+    # no changes
+    return proc_data
 
 
 def parse(data, raw=False, quiet=False):
@@ -103,12 +96,18 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    # This parser is an alias of url.py
-    url.info = info  # type: ignore
-
     if not jc.utils.has_data(data):
         return {}
 
-    raw_output = url.parse(data, raw=raw, quiet=quiet)
+    path = Path(data)
+
+    raw_output = {
+        'path': str(path),
+        'parent': str(path.parent),
+        'filename': path.name,
+        'stem': path.stem,
+        'extension': path.suffix.strip('.'),
+        'path_list': list(path.parts)
+    }
 
     return raw_output if raw else _process(raw_output)

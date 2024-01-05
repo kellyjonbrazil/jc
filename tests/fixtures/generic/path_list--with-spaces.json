@@ -6,6 +6,7 @@
     "stem": "App",
     "extension": "app",
     "path_list": [
+      "/",
       "User",
       "admin",
       "Application Support",
@@ -17,8 +18,9 @@
     "parent": "/User/admin",
     "filename": "path",
     "stem": "path",
-    "extension": null,
+    "extension": "",
     "path_list": [
+      "/",
       "User",
       "admin",
       "path"

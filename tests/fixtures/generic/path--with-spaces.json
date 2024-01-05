@@ -5,6 +5,7 @@
   "stem": "App",
   "extension": "app",
   "path_list": [
+    "/",
     "User",
     "admin",
     "Application Support",

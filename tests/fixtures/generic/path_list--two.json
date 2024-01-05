@@ -6,6 +6,7 @@
     "stem": "gh",
     "extension": "txt",
     "path_list": [
+      "/",
       "abc",
       "def",
       "gh.txt"
@@ -18,6 +19,7 @@
     "stem": "ab",
     "extension": "app",
     "path_list": [
+      "/",
       "xyz",
       "uvw",
       "ab.app"

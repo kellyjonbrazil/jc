@@ -5,6 +5,7 @@
   "stem": "gh",
   "extension": "txt",
   "path_list": [
+    "/",
     "abc",
     "def",
     "gh.txt"

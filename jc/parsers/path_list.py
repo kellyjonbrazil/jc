@@ -38,6 +38,7 @@ Examples:
         "stem": "gh",
         "extension": "txt",
         "path_list": [
+          "/",
           "abc",
           "def",
           "gh.txt"
@@ -50,6 +51,7 @@ Examples:
         "stem": "ab",
         "extension": "app",
         "path_list": [
+          "/",
           "xyz",
           "uvw",
           "ab.app"
