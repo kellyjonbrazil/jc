@@ -106,6 +106,9 @@ def parse(data, raw=False, quiet=False):
     # This parser is an alias of url.py
     url.info = info  # type: ignore
 
-    raw_output = url.parse(data, raw=raw, quiet=quiet) if jc.utils.has_data(data) else {}
+    if not jc.utils.has_data(data):
+        return {}
+
+    raw_output = url.parse(data, raw=raw, quiet=quiet)
 
     return raw_output if raw else _process(raw_output)
