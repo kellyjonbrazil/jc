@@ -722,11 +722,7 @@ class JcCli():
                     quiet=self.quiet
                 )
 
-                # keep output as flat as possible (no list of lists)
-                if isinstance(parsed_line, dict):
-                    self.data_out.append(parsed_line)
-                else:
-                    self.data_out.extend(parsed_line)
+                self.data_out.append(parsed_line)
 
             if self.meta_out:
                 self.run_timestamp = datetime.now(timezone.utc)
