@@ -3,6 +3,7 @@ import sys
 import re
 import locale
 import shutil
+from itertools import islice
 from collections import namedtuple
 from numbers import Number
 from datetime import datetime, timezone
@@ -391,6 +392,80 @@ def input_type_check(data: object) -> None:
     """Ensure input data is a string. Raises `TypeError` if not."""
     if not isinstance(data, str):
         raise TypeError("Input data must be a 'str' object.")
+
+
+def _lazy_splitlines(text: str) -> Iterable[str]:
+    NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
+    NEWLINES_RE = re.compile(NEWLINES_PATTERN)
+    start = 0
+    for m in NEWLINES_RE.finditer(text):
+        begin, end = m.span()
+        if begin != start:
+            yield text[start:begin]
+        start = end
+
+    if text[start:]:
+        yield text[start:]
+
+
+def line_slice(
+        data: Union[str, Iterable],
+        slice_start: Optional[int] = None,
+        slice_end: Optional[int] = None
+) -> Union[str, Iterable]:
+    """
+    Slice input data by lines - lazily, if possible.
+
+    Accepts a string (for normal parsers) or an iterable (for streaming
+    parsers). Uses normal start/stop slicing values, but will always slice
+    on lines instead of characters. Positive slices will use less memory as
+    the function will attempt to lazily iterate over the input. A negative
+    slice parameter will force the function to read in all of the data and
+    then slice, which will use more memory.
+
+    Parameters:
+
+        data:              (string or iterable) - input to slice by lines
+        slice_start:       (int) - starting line
+        slice_end:         (int) - ending line
+
+    Returns:
+        string if input is a string.
+        iterable of strings if input is an iterable (for streaming parsers)
+    """
+    if not slice_start is None or not slice_end is None:
+        # standard parsers UTF-8 input
+        if isinstance(data, str):
+            data_iter = _lazy_splitlines(data)
+
+            # positive slices
+            if (slice_start is None or slice_start >= 0) \
+                and (slice_end is None or slice_end >= 0):
+
+                return '\n'.join(islice(data_iter, slice_start, slice_end))
+
+            # negative slices found (non-lazy, uses more memory)
+            else:
+                return '\n'.join(list(data_iter)[slice_start:slice_end])
+
+        # standard parsers bytes input
+        elif isinstance(data, bytes):
+            raise ValueError('Cannot slice bytes data.')
+
+        # streaming parsers UTF-8 input
+        else:
+            # positive slices
+            if (slice_start is None or slice_start >= 0) \
+                and (slice_end is None or slice_end >= 0) \
+                and data:
+
+                return islice(data, slice_start, slice_end)
+
+            # negative slices found (non-lazy, uses more memory)
+            elif data:
+                return list(data)[slice_start:slice_end]
+
+    return data
 
 
 class timestamp:
