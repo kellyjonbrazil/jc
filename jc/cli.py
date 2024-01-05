@@ -721,6 +721,7 @@ class JcCli():
                     raw=self.raw,
                     quiet=self.quiet
                 )
+
                 self.data_out.append(parsed_line)
 
             if self.meta_out:
@@ -728,6 +729,7 @@ class JcCli():
                 self.add_metadata_to_output()
 
     def create_normal_output(self) -> None:
+        """standard output"""
         if self.parser_module:
             self.data_out = self.parser_module.parse(
                 self.data_in,
