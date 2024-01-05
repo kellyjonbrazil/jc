@@ -43,7 +43,7 @@ Examples:
     }
 
 """
-from pathlib import Path
+from pathlib import PurePosixPath
 from typing import Dict
 
 import jc.utils
@@ -99,7 +99,7 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return {}
 
-    path = Path(data)
+    path = PurePosixPath(data)
 
     raw_output = {
         'path': str(path),
