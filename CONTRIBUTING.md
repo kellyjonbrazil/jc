@@ -27,7 +27,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 7. Make sure your code lints.
 8. Issue that pull request!
 
-## Setup Debug Environment
+## Setup Environment
 
 Install requirements:
 
@@ -35,34 +35,26 @@ Install requirements:
 pip install -r requirements.txt
 ```
 
+## Development Mode
+
 Use jc in development mode (changes are direct available):
 
 ```shell
-python3 setup.py develop
+./install.sh
 ```
 
 Uninstall local development:
 
 ```shell
-python3 setup.py develop --uninstall
+./uninstall.sh
 ```
+
+## Debug Messages
 
 Use `--debug` to see error messages (double to see more):
 
 ```shell
 echo 'abc' | jc --parser-with-error --debug
-```
-
-## Install `jc` with `pip` from source
-
-Please note: Development mode is preferred for observing instant changes.
-
-```shell
-pip install .
-
-pip freeze | grep jc  # check if jc is installed 
-
-pip uninstall jc
 ```
 
 ## Parser Schema Guidelines

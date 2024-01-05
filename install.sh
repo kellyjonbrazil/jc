@@ -1,2 +1,4 @@
 #!/bin/bash
-pip3 install --upgrade --user -e .
+
+# install jc in development mode
+pip3 install --upgrade --editable .
