@@ -22,9 +22,9 @@ class MyTests(unittest.TestCase):
     f_json: Dict = {}
 
     fixtures = {
-        'path-list--one': 'fixtures/generic/path-list--one',
-        'path-list--two': 'fixtures/generic/path-list--two',
-        'path-list--with-spaces': 'fixtures/generic/path-list--with-spaces',
+        'path_list--one': 'fixtures/generic/path_list--one',
+        'path_list--two': 'fixtures/generic/path_list--two',
+        'path_list--with-spaces': 'fixtures/generic/path_list--with-spaces',
     }
 
     @classmethod
