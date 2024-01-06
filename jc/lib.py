@@ -271,6 +271,21 @@ def _parser_argument(parser_mod_name: str) -> str:
     return f'--{parser}'
 
 def get_parser(parser_mod_name) -> ModuleType:
+    """
+    Return the parser module object
+
+    Parameters:
+
+        parser_mod_name:    (string or   name of the parser module. This
+                            Module)      function will accept module_name,
+                                         cli-name, and --argument-name
+                                         variants of the module name.
+    Returns:
+
+        Parser: the parser module object
+
+
+    """
     if isinstance(parser_mod_name, ModuleType):
         jc_parser = parser_mod_name
     else:
