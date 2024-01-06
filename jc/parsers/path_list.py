@@ -116,9 +116,11 @@ def parse(data, raw=False, quiet=False):
     # This parser is an alias of path.py
     path.info = info  # type: ignore
 
+    delimiter = ":" if "\\" not in data else ";"
+
     raw_output = [
         path.parse(line, raw=raw, quiet=quiet)
-        for line in data.split(":")
+        for line in data.split(delimiter)
         if jc.utils.has_data(data)
     ]
 

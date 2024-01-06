@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     fixtures = {
         'path_list--one': 'fixtures/generic/path_list--one',
         'path_list--two': 'fixtures/generic/path_list--two',
+        'path_list--windows': 'fixtures/generic/path_list--windows',
+        'path_list--windows-long': 'fixtures/generic/path_list--windows-long',
+        'path_list--windows-environment': 'fixtures/generic/path_list--windows-environment',
         'path_list--with-spaces': 'fixtures/generic/path_list--with-spaces',
     }
 

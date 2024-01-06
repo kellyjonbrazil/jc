@@ -43,7 +43,7 @@ Examples:
     }
 
 """
-from pathlib import PurePosixPath, PurePath
+from pathlib import PurePosixPath, PureWindowsPath
 from typing import Dict
 
 import jc.utils
@@ -99,11 +99,19 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return {}
 
-    path = PurePosixPath(PurePath(data).as_posix())
-    # path = PurePosixPath(data)
+    print()
+    if "\\" in data:
+        path = PureWindowsPath(data.rstrip("\n"))
+        print("windows")
+    else:
+        path = PurePosixPath(data)
+        print("posix")
 
-    print(path.drive)
-    print(path.root)
+    print()
+    print(" path: " + str(path))
+    print("drive: " + path.drive)
+    print(" root: " + path.root)
+    print()
 
 
     raw_output = {

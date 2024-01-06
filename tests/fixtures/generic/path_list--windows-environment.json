@@ -1,0 +1,26 @@
+[
+  {
+    "path": "%PROGRAMFILES%\\Git\\bin",
+    "parent": "%PROGRAMFILES%\\Git",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "%PROGRAMFILES%",
+      "Git",
+      "bin"
+    ]
+  },
+  {
+    "path": "c:\\my\\folder",
+    "parent": "c:\\my",
+    "filename": "folder",
+    "stem": "folder",
+    "extension": "",
+    "path_list": [
+      "c:\\",
+      "my",
+      "folder"
+    ]
+  }
+]
