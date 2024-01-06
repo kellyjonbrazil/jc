@@ -134,5 +134,6 @@ from .lib import (
     slurpable_parser_mod_list as slurpable_parser_mod_list,
     parser_info as parser_info,
     all_parser_info as all_parser_info,
-    get_help as get_help
+    get_help as get_help,
+    get_parser as get_parser
 )
