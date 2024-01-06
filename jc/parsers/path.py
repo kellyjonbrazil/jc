@@ -106,7 +106,7 @@ def parse(data, raw=False, quiet=False):
         'parent': str(path.parent),
         'filename': path.name,
         'stem': path.stem,
-        'extension': path.suffix.strip('.'),
+        'extension': path.suffix[1:],
         'path_list': list(path.parts)
     }
 
