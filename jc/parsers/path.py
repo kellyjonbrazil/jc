@@ -102,15 +102,17 @@ def parse(data, raw=False, quiet=False):
     path = PurePosixPath(PurePath(data).as_posix())
     # path = PurePosixPath(data)
 
+    print(path.drive)
+    print(path.root)
+
+
     raw_output = {
         'path': str(path),
         'parent': str(path.parent),
         'filename': path.name,
         'stem': path.stem,
         'extension': path.suffix[1:],
-        'path_list': list(path.parts),
-        'drive': path.drive,
-        'root': path.root
+        'path_list': list(path.parts)
     }
 
     return raw_output if raw else _process(raw_output)
