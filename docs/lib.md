@@ -1,7 +1,6 @@
 # Table of Contents
 
 * [jc.lib](#jc.lib)
-  * [data\_dir](#jc.lib.data_dir)
   * [get\_parser](#jc.lib.get_parser)
   * [parse](#jc.lib.parse)
   * [parser\_mod\_list](#jc.lib.parser_mod_list)
