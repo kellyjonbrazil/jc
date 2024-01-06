@@ -6,7 +6,6 @@ import io
 import sys
 import os
 import re
-from itertools import islice
 from datetime import datetime, timezone
 import textwrap
 import shlex
@@ -45,8 +44,6 @@ JC_ERROR_EXIT: int = 100
 MAX_EXIT: int = 255
 SLICER_PATTERN: str = r'-?[0-9]*\:-?[0-9]*$'
 SLICER_RE = re.compile(SLICER_PATTERN)
-NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
-NEWLINES_RE = re.compile(NEWLINES_PATTERN)
 
 
 class info():
