@@ -665,13 +665,6 @@ class JcCli():
 
     def create_slurp_output(self) -> None:
         """Slurp output into an array. Only works for single-line strings."""
-        if self.parser_module and not _parser_is_slurpable(self.parser_module):
-            utils.error_message([
-                f'Slurp option not available with the {self.parser_name} parser.',
-                'Use `jc -hhh` to find compatible parsers.'
-            ])
-            self.exit_error()
-
         if self.parser_module and isinstance(self.data_in, str):
             self.data_out = []
             for line in self.data_in.splitlines():
@@ -830,6 +823,13 @@ class JcCli():
 
         # parse and print to stdout
         if self.parser_module:
+            if self.slurp and not _parser_is_slurpable(self.parser_module):
+                utils.error_message([
+                    f'Slurp option not available with the {self.parser_name} parser.',
+                    'Use "jc -hhh" to find compatible parsers.'
+                ])
+                self.exit_error()
+
             try:
                 if _parser_is_streaming(self.parser_module):
                     self.streaming_parse_and_print()
