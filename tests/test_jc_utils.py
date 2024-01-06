@@ -205,6 +205,48 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.utils.input_type_check('abc'), None)
 
 
+    def test_line_slice_string_positive_slice(self):
+        data = '''line1
+line2
+line3
+line4
+'''
+        expected = 'line2\nline3'
+        self.assertEqual(jc.utils.line_slice(data, 1, 3), expected)
+
+
+    def test_line_slice_string_negative_slice(self):
+        data = '''line1
+line2
+line3
+line4
+'''
+        expected = 'line2\nline3'
+        self.assertEqual(jc.utils.line_slice(data, 1, -1), expected)
+
+
+    def test_line_slice_iter_positive_slice(self):
+        data = [
+            'line1',
+            'line2',
+            'line3',
+            'line4'
+        ]
+        expected = ['line2', 'line3']
+        self.assertEqual(list(jc.utils.line_slice(data, 1, 3)), expected)
+
+
+    def test_line_slice_iter_negative_slice(self):
+        data = [
+            'line1',
+            'line2',
+            'line3',
+            'line4'
+        ]
+        expected = ['line2', 'line3']
+        self.assertEqual(list(jc.utils.line_slice(data, 1, -1)), expected)
+
+
     # need to mock shutil.get_terminal_size().columns or add a column parameter to test
     # def test_warning_message(self):
     #     msg = [
