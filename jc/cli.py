@@ -709,7 +709,8 @@ class JcCli():
         """Slurp output into an array. Only works for single-line strings."""
         if self.parser_module and not _parser_is_slurpable(self.parser_module):
             utils.error_message([
-                f'Slurp option not available with the {self.parser_name} parser.'
+                f'Slurp option not available with the {self.parser_name} parser.',
+                'Use `jc -hhh` to find compatible parsers.'
             ])
             self.exit_error()
 
