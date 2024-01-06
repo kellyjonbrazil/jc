@@ -1,6 +1,6 @@
-"""jc - JSON Convert path list string parser
+"""jc - JSON Convert POSIX path list string parser
 
-Parse a colon-separated path list, commonly found in environment variables.
+Parse a colon-separated POSIX path list, commonly found in environment variables.
 
 Usage (cli):
 

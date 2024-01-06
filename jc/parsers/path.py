@@ -1,6 +1,6 @@
-"""jc - JSON Convert path string parser
+"""jc - JSON Convert POSIX path string parser
 
-Parse a path.
+Parse a POSIX path.
 
 Usage (cli):
 
