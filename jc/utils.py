@@ -409,10 +409,10 @@ def _lazy_splitlines(text: str) -> Iterable[str]:
 
 
 def line_slice(
-        data: Union[str, Iterable],
+        data: Union[str, Iterable[str], TextIO, bytes, None],
         slice_start: Optional[int] = None,
         slice_end: Optional[int] = None
-) -> Union[str, Iterable]:
+) -> Union[str, Iterable[str], TextIO, bytes, None]:
     """
     Slice input data by lines - lazily, if possible.
 

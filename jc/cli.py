@@ -652,18 +652,6 @@ class JcCli():
                 utils.error_message(['Parser returned an unsupported object type.'])
                 self.exit_error()
 
-    @staticmethod
-    def lazy_splitlines(text: str) -> Iterable[str]:
-        start = 0
-        for m in NEWLINES_RE.finditer(text):
-            begin, end = m.span()
-            if begin != start:
-                yield text[start:begin]
-            start = end
-
-        if text[start:]:
-            yield text[start:]
-
     def slicer(self) -> None:
         """Slice input data lazily, if possible. Updates self.data_in"""
         if self.slice_str:
@@ -673,37 +661,7 @@ class JcCli():
             if slice_end_str:
                 self.slice_end = int(slice_end_str)
 
-        if not self.slice_start is None or not self.slice_end is None:
-            # standard parsers UTF-8 input
-            if isinstance(self.data_in, str):
-                data_in_iter = self.lazy_splitlines(self.data_in)
-
-                # positive slices
-                if (self.slice_start is None or self.slice_start >= 0) \
-                    and (self.slice_end is None or self.slice_end >= 0):
-
-                    self.data_in = '\n'.join(islice(data_in_iter, self.slice_start, self.slice_end))
-
-                # negative slices found (non-lazy, uses more memory)
-                else:
-                    self.data_in = '\n'.join(list(data_in_iter)[self.slice_start:self.slice_end])
-
-            # standard parsers bytes input
-            elif isinstance(self.data_in, bytes):
-                utils.warning_message(['Cannot slice bytes data.'])
-
-            # streaming parsers UTF-8 input
-            else:
-                # positive slices
-                if (self.slice_start is None or self.slice_start >= 0) \
-                    and (self.slice_end is None or self.slice_end >= 0) \
-                    and self.data_in:
-
-                    self.data_in = islice(self.data_in, self.slice_start, self.slice_end)
-
-                # negative slices found (non-lazy, uses more memory)
-                elif self.data_in:
-                    self.data_in = list(self.data_in)[self.slice_start:self.slice_end]
+        self.data_in = utils.line_slice(self.data_in, self.slice_start, self.slice_end)
 
     def create_slurp_output(self) -> None:
         """Slurp output into an array. Only works for single-line strings."""
@@ -741,7 +699,6 @@ class JcCli():
             if self.meta_out:
                 self.run_timestamp = datetime.now(timezone.utc)
                 self.add_metadata_to_output()
-
 
     def streaming_parse_and_print(self) -> None:
         """only supports UTF-8 string data for now"""
