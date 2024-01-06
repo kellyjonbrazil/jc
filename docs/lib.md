@@ -1,6 +1,8 @@
 # Table of Contents
 
 * [jc.lib](#jc.lib)
+  * [data\_dir](#jc.lib.data_dir)
+  * [get\_parser](#jc.lib.get_parser)
   * [parse](#jc.lib.parse)
   * [parser\_mod\_list](#jc.lib.parser_mod_list)
   * [plugin\_parser\_mod\_list](#jc.lib.plugin_parser_mod_list)
@@ -16,6 +18,26 @@
 # jc.lib
 
 jc - JSON Convert lib module
+
+<a id="jc.lib.get_parser"></a>
+
+### get\_parser
+
+```python
+def get_parser(parser_mod_name) -> ModuleType
+```
+
+Return the parser module object
+
+Parameters:
+
+    parser_mod_name:    (string or   name of the parser module. This
+                        Module)      function will accept module_name,
+                                     cli-name, and --argument-name
+                                     variants of the module name.
+Returns:
+
+    Parser: the parser module object
 
 <a id="jc.lib.parse"></a>
 
