@@ -127,6 +127,7 @@ Get a list of streaming parser module names to be used in
 from .lib import (
     __version__ as __version__,
     parse as parse,
+    get_parser as get_parser,
     parser_mod_list as parser_mod_list,
     plugin_parser_mod_list as plugin_parser_mod_list,
     standard_parser_mod_list as standard_parser_mod_list,
@@ -134,6 +135,5 @@ from .lib import (
     slurpable_parser_mod_list as slurpable_parser_mod_list,
     parser_info as parser_info,
     all_parser_info as all_parser_info,
-    get_help as get_help,
-    get_parser as get_parser
+    get_help as get_help
 )
