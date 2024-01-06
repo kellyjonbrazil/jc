@@ -43,7 +43,7 @@ Examples:
     }
 
 """
-from pathlib import PurePosixPath
+from pathlib import PurePosixPath, PurePath
 from typing import Dict
 
 import jc.utils
@@ -99,7 +99,8 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return {}
 
-    path = PurePosixPath(data)
+    path = PurePosixPath(PurePath(data).as_posix())
+    # path = PurePosixPath(data)
 
     raw_output = {
         'path': str(path),
@@ -107,7 +108,9 @@ def parse(data, raw=False, quiet=False):
         'filename': path.name,
         'stem': path.stem,
         'extension': path.suffix[1:],
-        'path_list': list(path.parts)
+        'path_list': list(path.parts),
+        'drive': path.drive,
+        'root': path.root
     }
 
     return raw_output if raw else _process(raw_output)
