@@ -270,6 +270,28 @@ def _parser_argument(parser_mod_name: str) -> str:
     parser = _modname_to_cliname(parser_mod_name)
     return f'--{parser}'
 
+def get_parser(parser_mod_name) -> ModuleType:
+    """
+    Return the parser module object
+
+    Parameters:
+
+        parser_mod_name:    (string or   name of the parser module. This
+                            Module)      function will accept module_name,
+                                         cli-name, and --argument-name
+                                         variants of the module name.
+    Returns:
+
+        Parser: the parser module object
+
+
+    """
+    if isinstance(parser_mod_name, ModuleType):
+        jc_parser = parser_mod_name
+    else:
+        jc_parser = _get_parser(parser_mod_name)
+    return jc_parser
+
 def _get_parser(parser_mod_name: str) -> ModuleType:
     """Return the parser module object"""
     # ensure parser_mod_name is a true module name and not a cli name
@@ -409,10 +431,7 @@ def parse(
         Standard Parsers:   Dictionary or List of Dictionaries
         Streaming Parsers:  Generator Object containing Dictionaries
     """
-    if isinstance(parser_mod_name, ModuleType):
-        jc_parser = parser_mod_name
-    else:
-        jc_parser = _get_parser(parser_mod_name)
+    jc_parser = get_parser(parser_mod_name)
 
     if ignore_exceptions is not None:
         return jc_parser.parse(
