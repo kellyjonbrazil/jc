@@ -1,10 +1,20 @@
 from copy import deepcopy
 import unittest
 from typing import Generator
+from types import ModuleType
 import jc.lib
+import jc.parsers.csv as csv_parser
 
 
 class MyTests(unittest.TestCase):
+    def test_lib_get_parser_string(self):
+        p = jc.lib.get_parser('arp')
+        self.assertIsInstance(p, ModuleType)
+
+    def test_lib_get_parser_module(self):
+        p = jc.lib.get_parser(csv_parser)
+        self.assertIsInstance(p, ModuleType)
+
     def test_lib_parse_csv(self):
         data = {
             '': [],
