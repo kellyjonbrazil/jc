@@ -7,6 +7,7 @@ from typing import List, Iterable, Optional, Union, Iterator
 from types import ModuleType
 from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
+from jc import utils
 
 
 __version__ = '1.24.1'
@@ -242,6 +243,9 @@ def _is_valid_parser_plugin(name: str, local_parsers_dir: str) -> bool:
             if hasattr(plugin, 'info') and hasattr(plugin, 'parse'):
                 del plugin
                 return True
+            else:
+                utils.warning_message([f'Not installing invalid parser plugin "{parser_mod_name}" at {local_parsers_dir}'])
+                return False
         except Exception:
             return False
     return False
@@ -270,9 +274,10 @@ def _parser_argument(parser_mod_name: str) -> str:
     parser = _modname_to_cliname(parser_mod_name)
     return f'--{parser}'
 
-def get_parser(parser_mod_name) -> ModuleType:
+def get_parser(parser_mod_name: Union[str, ModuleType]) -> ModuleType:
     """
-    Return the parser module object
+    Return the parser module object and check that the module is a valid
+    parser module.
 
     Parameters:
 
@@ -283,13 +288,18 @@ def get_parser(parser_mod_name) -> ModuleType:
     Returns:
 
         Parser: the parser module object
-
-
     """
     if isinstance(parser_mod_name, ModuleType):
         jc_parser = parser_mod_name
     else:
-        jc_parser = _get_parser(parser_mod_name)
+        try:
+            jc_parser = _get_parser(parser_mod_name)
+        except ModuleNotFoundError:
+            raise ModuleNotFoundError(f'"{parser_mod_name}" is not found or is not a valid parser module.')
+
+    if not hasattr(jc_parser, 'info') or not hasattr(jc_parser, 'parse'):
+        raise ModuleNotFoundError(f'"{jc_parser}" is not a valid parser module.')
+
     return jc_parser
 
 def _get_parser(parser_mod_name: str) -> ModuleType:
@@ -382,15 +392,25 @@ def parse(
     Alternatively, a parser module object can be supplied:
 
         >>> import jc
-        >>> import jc.parsers.date as jc_date
+        >>> jc_date = jc.get_parser('date')
         >>> date_obj = jc.parse(jc_date, 'Tue Jan 18 10:23:07 PST 2022')
         >>> print(f'The year is: {date_obj["year"]}')
         The year is: 2022
 
-    You can also use the lower-level parser modules directly:
+    You can also use the parser modules directly via `get_parser()`:
+
+        >>> import jc
+        >>> jc_date = jc.get_parser('date')
+        >>> date_obj = jc_date.parse('Tue Jan 18 10:23:07 PST 2022')
+        >>> print(f'The year is: {date_obj["year"]}')
+        The year is: 2022
+
+    Finally, you can access the low-level parser modules manually:
 
         >>> import jc.parsers.date
-        >>> jc.parsers.date.parse('Tue Jan 18 10:23:07 PST 2022')
+        >>> date_obj = jc.parsers.date.parse('Tue Jan 18 10:23:07 PST 2022')
+        >>> print(f'The year is: {date_obj["year"]}')
+        The year is: 2022
 
     Though, accessing plugin parsers directly is a bit more cumbersome, so
     this higher-level API is recommended. Here is how you can access plugin
@@ -413,7 +433,7 @@ def parse(
                                          variants of the module name.
 
                                          A Module object can also be passed
-                                         directly or via _get_parser()
+                                         directly or via get_parser()
 
         data:               (string or   data to parse (string or bytes for
                             bytes or     standard parsers, iterable of
@@ -451,7 +471,7 @@ def parser_mod_list(
     """Returns a list of all available parser module names."""
     plist: List[str] = []
     for p in parsers:
-        parser = _get_parser(p)
+        parser = get_parser(p)
 
         if not show_hidden and _parser_is_hidden(parser):
             continue
@@ -473,7 +493,7 @@ def plugin_parser_mod_list(
     """
     plist: List[str] = []
     for p in local_parsers:
-        parser = _get_parser(p)
+        parser = get_parser(p)
 
         if not show_hidden and _parser_is_hidden(parser):
             continue
@@ -496,7 +516,7 @@ def standard_parser_mod_list(
     """
     plist: List[str] = []
     for p in parsers:
-        parser = _get_parser(p)
+        parser = get_parser(p)
 
         if not _parser_is_streaming(parser):
 
@@ -520,7 +540,7 @@ def streaming_parser_mod_list(
     """
     plist: List[str] = []
     for p in parsers:
-        parser = _get_parser(p)
+        parser = get_parser(p)
 
         if _parser_is_streaming(parser):
 
@@ -544,7 +564,7 @@ def slurpable_parser_mod_list(
     """
     plist: List[str] = []
     for p in parsers:
-        parser = _get_parser(p)
+        parser = get_parser(p)
 
         if _parser_is_slurpable(parser):
 
@@ -575,33 +595,26 @@ def parser_info(
 
         documentation:      (boolean)    include parser docstring if True
     """
-    if isinstance(parser_mod_name, ModuleType):
-        parser_mod = parser_mod_name
-        parser_mod_name = parser_mod.__name__.split('.')[-1]
-    else:
-        # ensure parser_mod_name is a true module name and not a cli name
-        parser_mod_name = _cliname_to_modname(parser_mod_name)
-        parser_mod = _get_parser(parser_mod_name)
+    parser_mod = get_parser(parser_mod_name)
+    parser_mod_name = parser_mod.__name__.split('.')[-1]
 
     info_dict: ParserInfoType = {}
+    info_dict['name'] = parser_mod_name
+    info_dict['argument'] = _parser_argument(parser_mod_name)
+    parser_entry = vars(parser_mod.info)
 
-    if hasattr(parser_mod, 'info'):
-        info_dict['name'] = parser_mod_name
-        info_dict['argument'] = _parser_argument(parser_mod_name)
-        parser_entry = vars(parser_mod.info)
+    for k, v in parser_entry.items():
+        if not k.startswith('__'):
+            info_dict[k] = v  # type: ignore
 
-        for k, v in parser_entry.items():
-            if not k.startswith('__'):
-                info_dict[k] = v  # type: ignore
+    if _modname_to_cliname(parser_mod_name) in local_parsers:
+        info_dict['plugin'] = True
 
-        if _modname_to_cliname(parser_mod_name) in local_parsers:
-            info_dict['plugin'] = True
-
-        if documentation:
-            docs = parser_mod.__doc__
-            if not docs:
-                docs = 'No documentation available.\n'
-            info_dict['documentation'] = docs
+    if documentation:
+        docs = parser_mod.__doc__
+        if not docs:
+            docs = 'No documentation available.\n'
+        info_dict['documentation'] = docs
 
     return info_dict
 
@@ -625,7 +638,7 @@ def all_parser_info(
     """
     plist: List[str] = []
     for p in parsers:
-        parser = _get_parser(p)
+        parser = get_parser(p)
 
         if not show_hidden and _parser_is_hidden(parser):
             continue
@@ -633,7 +646,7 @@ def all_parser_info(
         if not show_deprecated and _parser_is_deprecated(parser):
             continue
 
-        plist.append(_cliname_to_modname(p))
+        plist.append(p)
 
     p_info_list: List[ParserInfoType] = [parser_info(p, documentation=documentation) for p in plist]
 
@@ -647,9 +660,5 @@ def get_help(parser_mod_name: Union[str, ModuleType]) -> None:
     **--argument-name** variants of the module name string as well as a
     parser module object.
     """
-    if isinstance(parser_mod_name, ModuleType):
-        jc_parser = parser_mod_name
-    else:
-        jc_parser = _get_parser(parser_mod_name)
-
+    jc_parser = get_parser(parser_mod_name)
     help(jc_parser)

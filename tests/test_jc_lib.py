@@ -78,7 +78,7 @@ class MyTests(unittest.TestCase):
     def test_lib_all_parser_info_show_deprecated(self):
         # save old state
         old_parsers = deepcopy(jc.lib.parsers)
-        old_get_parser = deepcopy(jc.lib._get_parser)
+        old_get_parser = deepcopy(jc.lib.get_parser)
 
         # mock data
         class mock_parser_info:
@@ -92,21 +92,23 @@ class MyTests(unittest.TestCase):
 
         class mock_parser:
             info = mock_parser_info
+            def parse():
+                pass
 
         jc.lib.parsers = ['deprecated']
-        jc.lib._get_parser = lambda x: mock_parser  # type: ignore
+        jc.lib.get_parser = lambda x: mock_parser  # type: ignore
         result = jc.lib.all_parser_info(show_deprecated=True)
 
         # reset
         jc.lib.parsers = old_parsers
-        jc.lib._get_parser = old_get_parser
+        jc.lib.get_parser = old_get_parser
 
         self.assertEqual(len(result), 1)
 
     def test_lib_all_parser_info_show_hidden(self):
         # save old state
         old_parsers = deepcopy(jc.lib.parsers)
-        old_get_parser = deepcopy(jc.lib._get_parser)
+        old_get_parser = deepcopy(jc.lib.get_parser)
 
         # mock data
         class mock_parser_info:
@@ -120,14 +122,16 @@ class MyTests(unittest.TestCase):
 
         class mock_parser:
             info = mock_parser_info
+            def parse():
+                pass
 
         jc.lib.parsers = ['deprecated']
-        jc.lib._get_parser = lambda x: mock_parser  # type: ignore
+        jc.lib.get_parser = lambda x: mock_parser  # type: ignore
         result = jc.lib.all_parser_info(show_hidden=True)
 
         # reset
         jc.lib.parsers = old_parsers
-        jc.lib._get_parser = old_get_parser
+        jc.lib.get_parser = old_get_parser
 
         self.assertEqual(len(result), 1)
 
