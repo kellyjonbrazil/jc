@@ -237,9 +237,11 @@ Ensure input data is a string. Raises `TypeError` if not.
 ### line\_slice
 
 ```python
-def line_slice(data: Union[str, Iterable],
-               slice_start: Optional[int] = None,
-               slice_end: Optional[int] = None) -> Union[str, Iterable]
+def line_slice(
+    data: Union[str, Iterable[str], TextIO, bytes, None],
+    slice_start: Optional[int] = None,
+    slice_end: Optional[int] = None
+) -> Union[str, Iterable[str], TextIO, bytes, None]
 ```
 
 Slice input data by lines - lazily, if possible.
