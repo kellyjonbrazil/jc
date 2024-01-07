@@ -23,10 +23,11 @@ jc - JSON Convert lib module
 ### get\_parser
 
 ```python
-def get_parser(parser_mod_name) -> ModuleType
+def get_parser(parser_mod_name: Union[str, ModuleType]) -> ModuleType
 ```
 
-Return the parser module object
+Return the parser module object and check that the module is a valid
+parser module.
 
 Parameters:
 
@@ -81,15 +82,25 @@ To get a list of available parser module names, use `parser_mod_list()`.
 Alternatively, a parser module object can be supplied:
 
     >>> import jc
-    >>> import jc.parsers.date as jc_date
+    >>> jc_date = jc.get_parser('date')
     >>> date_obj = jc.parse(jc_date, 'Tue Jan 18 10:23:07 PST 2022')
     >>> print(f'The year is: {date_obj["year"]}')
     The year is: 2022
 
-You can also use the lower-level parser modules directly:
+You can also use the parser modules directly via `get_parser()`:
+
+    >>> import jc
+    >>> jc_date = jc.get_parser('date')
+    >>> date_obj = jc_date.parse('Tue Jan 18 10:23:07 PST 2022')
+    >>> print(f'The year is: {date_obj["year"]}')
+    The year is: 2022
+
+Finally, you can access the low-level parser modules manually:
 
     >>> import jc.parsers.date
-    >>> jc.parsers.date.parse('Tue Jan 18 10:23:07 PST 2022')
+    >>> date_obj = jc.parsers.date.parse('Tue Jan 18 10:23:07 PST 2022')
+    >>> print(f'The year is: {date_obj["year"]}')
+    The year is: 2022
 
 Though, accessing plugin parsers directly is a bit more cumbersome, so
 this higher-level API is recommended. Here is how you can access plugin
@@ -112,7 +123,7 @@ Parameters:
                                      variants of the module name.
 
                                      A Module object can also be passed
-                                     directly or via _get_parser()
+                                     directly or via get_parser()
 
     data:               (string or   data to parse (string or bytes for
                         bytes or     standard parsers, iterable of

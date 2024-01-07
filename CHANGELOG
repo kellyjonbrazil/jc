@@ -1,6 +1,6 @@
 jc changelog
 
-20240103 v1.24.1
+20240106 v1.24.1
 - Add `kv-dup` parser for Key/Value files with duplicate keys
 - TODO: Add `path-list` string parser to parse path list strings found in env variables
 - Add `--slurp` functionality to wrap output from multiple lines into a single array.
@@ -14,6 +14,7 @@ jc changelog
 - Add snap package build scripts
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
 - Add `line_slice` function to `utils.py`
+- Add `get_parser` function to `lib.py`
 - Update copyright date
 
 20231216 v1.24.0
