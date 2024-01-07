@@ -31,13 +31,24 @@ parser module.
 
 Parameters:
 
-    parser_mod_name:    (string or   name of the parser module. This
+    parser_mod_name:    (string or   Name of the parser module. This
                         Module)      function will accept module_name,
                                      cli-name, and --argument-name
                                      variants of the module name.
+
+                                     If a Module is given and the Module
+                                     is a valid parser Module, then the
+                                     same Module is returned.
+
 Returns:
 
-    Parser: the parser module object
+    Module:  the parser Module object
+
+Raises:
+
+    ModuleNotFoundError:  If the Module is not found or is not a valid
+                          parser Module, then a ModuleNotFoundError
+                          exception is raised.
 
 <a id="jc.lib.parse"></a>
 
