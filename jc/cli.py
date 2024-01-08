@@ -6,7 +6,6 @@ import io
 import sys
 import os
 import re
-from itertools import islice
 from datetime import datetime, timezone
 import textwrap
 import shlex
@@ -14,7 +13,7 @@ import subprocess
 from typing import List, Dict, Iterable, Union, Optional, TextIO
 from types import ModuleType
 from .lib import (
-    __version__, parser_info, all_parser_info, parsers, _get_parser, _parser_is_streaming,
+    __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
     slurpable_parser_mod_list, _parser_is_slurpable
 )
@@ -45,8 +44,6 @@ JC_ERROR_EXIT: int = 100
 MAX_EXIT: int = 255
 SLICER_PATTERN: str = r'-?[0-9]*\:-?[0-9]*$'
 SLICER_RE = re.compile(SLICER_PATTERN)
-NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
-NEWLINES_RE = re.compile(NEWLINES_PATTERN)
 
 
 class info():
@@ -587,7 +584,7 @@ class JcCli():
 
     def set_parser_module_and_parser_name(self) -> None:
         if self.magic_found_parser:
-            self.parser_module = _get_parser(self.magic_found_parser)
+            self.parser_module = get_parser(self.magic_found_parser)
             self.parser_name = self.parser_shortname(self.magic_found_parser)
 
         else:
@@ -596,7 +593,7 @@ class JcCli():
                 self.parser_name = self.parser_shortname(arg)
 
                 if self.parser_name in parsers:
-                    self.parser_module = _get_parser(arg)
+                    self.parser_module = get_parser(arg)
                     found = True
                     break
 

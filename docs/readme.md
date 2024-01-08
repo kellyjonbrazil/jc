@@ -53,6 +53,18 @@ Alternatively, you can bypass the high-level API and call the parser
 modules directly:
 
     >>> import subprocess
+    >>> import jc
+    >>>
+    >>> jc_dig = jc.get_parser('dig')
+    >>> cmd_output = subprocess.check_output(['dig', 'example.com'],
+                                             text=True)
+    >>> data = jc_dig.parse(cmd_output)
+    >>> data
+    [{'id': 64612, 'opcode': 'QUERY', 'status': 'NOERROR', ...}]
+
+or
+
+    >>> import subprocess
     >>> import jc.parsers.dig
     >>>
     >>> cmd_output = subprocess.check_output(['dig', 'example.com'],
@@ -74,6 +86,14 @@ Use `help(jc.lib)` for details.
 
 High-level API to easily access the parser. This API will find both
 built-in parsers and local plugin parsers.
+
+### get_parser
+
+    get_parser(
+        parser_module_name: str
+    ) -> ModuleType
+
+Get a parser Module object so you can use it directly.
 
 ### parser_info
 
