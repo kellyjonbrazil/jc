@@ -99,9 +99,11 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return {}
 
+    data = data.rstrip("\n")
+
     print()
     if "\\" in data:
-        path = PureWindowsPath(data.rstrip("\n"))
+        path = PureWindowsPath(data)
         print("windows")
     else:
         path = PurePosixPath(data)
