@@ -32,7 +32,6 @@ Schema:
       ],
       "schedule": [
         {
-          "occurrence"        string,
           "minute": [
                               string
           ],
