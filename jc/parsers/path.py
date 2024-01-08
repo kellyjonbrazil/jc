@@ -101,20 +101,10 @@ def parse(data, raw=False, quiet=False):
 
     data = data.rstrip("\n")
 
-    print()
     if "\\" in data:
         path = PureWindowsPath(data)
-        print("windows")
     else:
         path = PurePosixPath(data)
-        print("posix")
-
-    print()
-    print(" path: " + str(path))
-    print("drive: " + path.drive)
-    print(" root: " + path.root)
-    print()
-
 
     raw_output = {
         'path': str(path),
