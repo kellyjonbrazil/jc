@@ -23,6 +23,7 @@ class MyTests(unittest.TestCase):
 
     fixtures = {
         'path--one': 'fixtures/generic/path--one',
+        'path--long': 'fixtures/generic/path--long',
         'path--windows': 'fixtures/generic/path--windows',
         'path--with-spaces': 'fixtures/generic/path--with-spaces',
     }
