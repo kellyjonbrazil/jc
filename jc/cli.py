@@ -194,7 +194,8 @@ class JcCli():
     @staticmethod
     def parser_shortname(parser_arg: str) -> str:
         """Return short name of the parser with dashes and no -- prefix"""
-        return parser_arg.lstrip('-')
+        p = parser_arg.lstrip('-')
+        return p.replace('_', '-')
 
     def parsers_text(self) -> str:
         """Return the argument and description information from each parser"""
