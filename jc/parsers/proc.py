@@ -120,12 +120,12 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`/proc/` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
-    tags = ['file']
+    tags = ['file', 'slurpable']
 
 
 __version__ = info.version
