@@ -122,7 +122,7 @@ class JcCli():
         self.magic_options: List[str] = []
         self.magic_run_command: Optional[List[str]] = None
         self.magic_run_command_str: str = ''
-        self.magic_stdout: Optional[str] = None
+        self.magic_stdout: Optional[Union[str, Iterable[str]]] = None
         self.magic_stderr: Optional[str] = None
         self.magic_returncode: int = 0
 
@@ -194,7 +194,7 @@ class JcCli():
     @staticmethod
     def parser_shortname(parser_arg: str) -> str:
         """Return short name of the parser with dashes and no -- prefix"""
-        return parser_arg[2:]
+        return parser_arg.lstrip('-')
 
     def parsers_text(self) -> str:
         """Return the argument and description information from each parser"""
@@ -528,11 +528,32 @@ class JcCli():
 
         Supports running magic commands or opening /proc files to set the
         output to magic_stdout.
+
+        If multiple /proc files are detected, then a list of string output
+        is sento to magic_stdout. Since the proc parser is slurpable, it will
+        take the list of strings and parse the data into an array.
         """
         if self.magic_run_command_str.startswith('/proc'):
             try:
                 self.magic_found_parser = 'proc'
-                self.magic_stdout = self.open_text_file(self.magic_run_command_str)
+
+                # multiple proc files detected
+                if ' ' in self.magic_run_command_str:
+                    self.slurp = True
+                    multi_out: List[str] = []
+                    proc_files = self.magic_run_command_str.split()
+
+                    for file in proc_files:
+                        # multi_out.append(self.open_text_file('/Users/kelly/temp/' + file))
+                        multi_out.append(self.open_text_file(file))
+
+                    self.magic_stdout = multi_out
+
+                # single proc file
+                else:
+                    file = self.magic_run_command_str
+                    # self.magic_stdout = self.open_text_file('/Users/kelly/temp/' + file)
+                    self.magic_stdout = self.open_text_file(file)
 
             except OSError as e:
                 if self.debug:
@@ -540,7 +561,7 @@ class JcCli():
 
                 error_msg = os.strerror(e.errno)
                 utils.error_message([
-                    f'"{self.magic_run_command_str}" file could not be opened: {error_msg}.'
+                    f'"{file}" file could not be opened: {error_msg}.'
                 ])
                 self.exit_error()
 
@@ -549,7 +570,7 @@ class JcCli():
                     raise
 
                 utils.error_message([
-                    f'"{self.magic_run_command_str}" file could not be opened. For details use the -d or -dd option.'
+                    f'"{file}" file could not be opened. For details use the -d or -dd option.'
                 ])
                 self.exit_error()
 
@@ -661,10 +682,20 @@ class JcCli():
         self.data_in = utils.line_slice(self.data_in, self.slice_start, self.slice_end)
 
     def create_slurp_output(self) -> None:
-        """Slurp output into an array. Only works for single-line strings."""
-        if self.parser_module and isinstance(self.data_in, str):
+        """
+        Slurp output into an array. Only works for single-line strings or
+        multiple files coming from the /proc magic syntax.
+        """
+        if self.parser_module and isinstance(self.data_in, (str, Iterable)):
+            items = []
+
+            if isinstance(self.data_in, str):
+                items = self.data_in.splitlines()
+            elif isinstance(self.data_in, List):
+                items = self.data_in
+
             self.data_out = []
-            for line in self.data_in.splitlines():
+            for line in items:
                 parsed_line = self.parser_module.parse(
                     line,
                     raw=self.raw,
