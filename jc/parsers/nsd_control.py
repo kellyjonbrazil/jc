@@ -192,6 +192,18 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 zonename.update({'zone': zone})
                 continue
 
+            if line.startswith('pattern:'):
+                linedata = line.split(': ', maxsplit=1)
+                pattern = linedata[1]
+                zstatus.update({'pattern': pattern})
+                continue
+
+            if line.startswith('catalog-member-id:'):
+                linedata = line.split(': ', maxsplit=1)
+                catalog-member-id = linedata[1]
+                zstatus.update({'catalog-member-id': catalog-member-id})
+                continue
+
             if line.startswith('state:'):
                 linedata = line.split(': ', maxsplit=1)
                 state = linedata[1]
