@@ -194,14 +194,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
 
             if line.startswith('pattern:'):
                 linedata = line.split(': ', maxsplit=1)
-                pattern = linedata[1]
-                zstatus.update({'pattern': pattern})
+                catz_pattern = linedata[1]
+                zstatus.update({'pattern': catz_pattern})
                 continue
 
             if line.startswith('catalog-member-id:'):
                 linedata = line.split(': ', maxsplit=1)
-                catalog-member-id = linedata[1]
-                zstatus.update({'catalog-member-id': catalog-member-id})
+                catz_member_id = linedata[1]
+                zstatus.update({'catalog-member-id': catz_member_id})
                 continue
 
             if line.startswith('state:'):
