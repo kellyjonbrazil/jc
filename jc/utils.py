@@ -402,6 +402,8 @@ def _lazy_splitlines(text: str) -> Iterable[str]:
         begin, end = m.span()
         if begin != start:
             yield text[start:begin]
+        else:
+            yield ''
         start = end
 
     if text[start:]:
