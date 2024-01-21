@@ -9,7 +9,10 @@ jc changelog
 - Enhance `proc-net-tcp` parser to add opposite endian support for architectures
   like the s390x
 - Enhance `url` parser to add `parent`, `filename`, `stem`, and `extension` fields
+- Enhance `/proc` file magic syntax to allow slurping when multiple files are selected
+  and to include the `_file` metadata field in the data
 - Fix `ini` and `ini-dup` parsers to consistently handle null values as empty strings
+- Fix line slicer to not skip blank lines
 - Add source link to online parser documentation
 - Add snap package build scripts
 - Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
