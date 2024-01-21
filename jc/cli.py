@@ -21,7 +21,7 @@ from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
 from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
-    helptext_end_string
+    slicetext_string, helptext_end_string
 )
 from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
@@ -289,7 +289,7 @@ class JcCli():
         """Return the help text with the list of parsers"""
         parsers_string: str = self.parsers_text()
         options_string: str = self.options_text()
-        helptext_string: str = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
+        helptext_string: str = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{slicetext_string}\n{helptext_end_string}'
         return helptext_string
 
     def help_doc(self) -> None:

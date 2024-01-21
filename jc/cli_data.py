@@ -79,6 +79,17 @@ Usage:
 Parsers:
 '''
 
+slicetext_string: str = '''\
+Slice:
+    [start]:[end]
+
+        start: [[-]index] - Zero-based start line, negative index for
+                counting from the end
+
+        end:   [[-]index] - Zero-based end line (excluding the index),
+                negative index for counting from the end
+'''
+
 helptext_end_string: str = '''\
 Examples:
     Standard Syntax:
@@ -90,7 +101,8 @@ Examples:
         $ jc --pretty /proc/meminfo
 
     Line Slicing:
-        $ cat file.csv | jc :101 --csv    # parse first 100 lines
+        $ $ cat output.txt | jc 4:15 --parser    # Parse from line 4 to 14
+                                                   with parser (zero-based)
 
     Parser Documentation:
         $ jc --help --dig
