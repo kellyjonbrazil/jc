@@ -169,7 +169,7 @@ def _ipv6_in(line):
     return ipv6
 
 
-def _error_type(line):
+def _error_type_v4(line):
     # from https://github.com/dgibson/iputils/blob/master/ping.c
     # https://android.googlesource.com/platform/external/ping/+/8fc3c91cf9e7f87bc20b9e6d3ea2982d87b70d9a/ping.c
     # https://opensource.apple.com/source/network_cmds/network_cmds-328/ping.tproj/ping.c
@@ -205,6 +205,37 @@ def _error_type(line):
             return code
 
     return None
+
+
+def _error_type_v6(line):
+    type_map = {
+        'Destination unreachable': 'destination_unreachable',
+        'Packet too big': 'packet_too_big',
+        'Time exceeded:': 'time_exceeded',
+        'Parameter problem:': 'parameter_problem',
+    }
+    code_map = {
+        'destination_unreachable': {
+            'No route': 'no_route',
+            'Administratively prohibited': 'administratively_prohibited',
+            "Beyond scope of source address": 'beyond_scope_of_source_address',
+            'Address unreachable': 'address_unreachable',
+            'Port unreachable': 'port_unreachable',
+        },
+        'time_exceeded': {
+            'Hop limit': 'hop_limit',
+            'Fragment reassembly time exceeded': 'fragment_reassembly_time_exceeded',
+        },
+    }
+
+    return_code = None
+    for err_type, code in type_map.items():
+        if err_type in line:
+            return_code = code
+            for err_code, code_name in code_map[code].items():
+                if err_code in line:
+                    return_code += '_' + code_name
+    return return_code
 
 
 def _bsd_parse(line, s):
@@ -263,6 +294,24 @@ def _bsd_parse(line, s):
 
     # ping response lines
 
+    err = None
+    if s.ipv4:
+        err = _error_type_v4(line)
+    else:
+        err = _error_type_v6(line)
+
+    if err:
+        output_line = {
+            'type': err
+        }
+        try:
+            output_line['sent_bytes'] = line.split()[0]
+            output_line['destination_ip'] = s.destination_ip
+            output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+        except Exception:
+            pass
+        return output_line
+
     # ipv4 lines
     if not _ipv6_in(line):
 
@@ -279,7 +328,7 @@ def _bsd_parse(line, s):
             return output_line
 
         # catch error responses
-        err = _error_type(line)
+        err = _error_type_v4(line)
         if err:
             output_line = {
                 'type': err
@@ -445,6 +494,23 @@ def _linux_parse(line, s):
         return output_line
 
     # ping response lines
+    err = None
+    if s.ipv4:
+        err = _error_type_v4(line)
+    else:
+        err = _error_type_v6(line)
+
+    if err:
+        output_line = {
+            'type': err
+        }
+        try:
+            output_line['sent_bytes'] = line.split()[0]
+            output_line['destination_ip'] = s.destination_ip
+            output_line['response_ip'] = line.split()[1]
+        except Exception:
+            pass
+        return output_line
 
     # request timeout
     if 'no answer yet for icmp_seq=' in line:
