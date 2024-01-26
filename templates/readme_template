@@ -10,8 +10,6 @@ Ansible filter plugin in the `community.general` collection. See this
 [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 for an example.
 
-> Looking for something like `jc` but lower-level? Check out [regex2json](https://gitlab.com/tozd/regex2json).
-
 # JC
 JSON Convert
 
