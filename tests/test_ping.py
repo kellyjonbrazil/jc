@@ -84,6 +84,14 @@ class MyTests(unittest.TestCase):
     # ubuntu 22.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-dest-unreachable.out'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_dest_unreachable = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-ip-source-ip.out'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping_ip_source_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-hostname-source-ip.out'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping_hostname_source_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-ip-source-ip.out'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping6_ip_source_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-hostname-source-ip.out'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping6_hostname_source_ip = f.read()
 
     # fedora
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.out'), 'r', encoding='utf-8') as f:
@@ -292,6 +300,14 @@ class MyTests(unittest.TestCase):
     # ubuntu 22.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-dest-unreachable.json'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_dest_unreachable_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-ip-source-ip.json'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping_ip_source_ip_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-hostname-source-ip.json'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping_hostname_source_ip_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-ip-source-ip.json'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping6_ip_source_ip_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-hostname-source-ip.json'), 'r', encoding='utf-8') as f:
+        ubuntu_22_4_ping6_hostname_source_ip_json = json.loads(f.read())
 
     # fedora
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/ping-ip-O.json'), 'r', encoding='utf-8') as f:
@@ -568,6 +584,30 @@ class MyTests(unittest.TestCase):
         Test 'ping' on Ubuntu 22.4 with destination unreachable message
         """
         self.assertEqual(jc.parsers.ping.parse(self.ubuntu_22_4_ping_dest_unreachable, quiet=True), self.ubuntu_22_4_ping_dest_unreachable_json)
+
+    def test_ping_ip_source_ip_ubuntu_22_4(self):
+        """
+        Test 'ping -I <source_ip> <ip>' on Ubuntu 22.4
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.ubuntu_22_4_ping_ip_source_ip, quiet=True), self.ubuntu_22_4_ping_ip_source_ip_json)
+
+    def test_ping_hostname_source_ip_ubuntu_22_4(self):
+        """
+        Test 'ping -I <source_ip> <hostname>' on Ubuntu 22.4
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.ubuntu_22_4_ping_hostname_source_ip, quiet=True), self.ubuntu_22_4_ping_hostname_source_ip_json)
+
+    def test_ping6_ip_source_ip_ubuntu_22_4(self):
+        """
+        Test 'ping6 -I <source_ip> <ip>' on Ubuntu 22.4 with source IP address
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.ubuntu_22_4_ping6_ip_source_ip, quiet=True), self.ubuntu_22_4_ping6_ip_source_ip_json)
+
+    def test_ping6_hostname_source_ip_ubuntu_22_4(self):
+        """
+        Test 'ping6 -I <source_ip> <hostname>' on Ubuntu 22.4 with source IP address
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.ubuntu_22_4_ping6_hostname_source_ip, quiet=True), self.ubuntu_22_4_ping6_hostname_source_ip_json)
 
     def test_ping_ip_O_fedora32(self):
         """

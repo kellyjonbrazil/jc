@@ -138,6 +138,7 @@ class _state:
     linux = None
     bsd = None
     ipv4 = None
+    source_ip = None
     hostname = None
     destination_ip = None
     sent_bytes = None
@@ -347,6 +348,7 @@ def _linux_parse(line, s):
 
     if line.startswith('PING '):
         s.ipv4 = 'bytes of data' in line
+        s.source_ip = 'from' in line
 
         if s.ipv4 and line[5] not in string.digits:
             s.hostname = True
@@ -359,14 +361,20 @@ def _linux_parse(line, s):
         else:
             s.hostname = False
 
-        if s.ipv4 and not s.hostname:
-            dst_ip, dta_byts = (2, 3)
-        elif s.ipv4 and s.hostname:
-            dst_ip, dta_byts = (2, 3)
-        elif not s.ipv4 and not s.hostname:
-            dst_ip, dta_byts = (2, 3)
+        if s.ipv4:
+            if s.source_ip:
+                dst_ip, dta_byts = (2, 6)
+            else:
+                dst_ip, dta_byts = (2, 3)
         else:
-            dst_ip, dta_byts = (3, 4)
+            if s.source_ip and s.hostname:
+                dst_ip, dta_byts = (3, 7)
+            elif s.source_ip and not s.hostname:
+                dst_ip, dta_byts = (2, 6)
+            elif not s.source_ip and s.hostname:
+                dst_ip, dta_byts = (3, 4)
+            else:
+                dst_ip, dta_byts = (2, 3)
 
         line = line.replace('(', ' ').replace(')', ' ')
         s.destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
