@@ -246,6 +246,27 @@ line4
         expected = ['line2', 'line3']
         self.assertEqual(list(jc.utils.line_slice(data, 1, -1)), expected)
 
+    def test_line_slice_string_blank_lines(self):
+        data = '''line1
+line2
+
+line4
+line5
+'''
+        expected = 'line2\n\nline4'
+        self.assertEqual(jc.utils.line_slice(data, 1, 4), expected)
+
+    def test_line_slice_iter_positive_blank_lines(self):
+        data = [
+            'line1',
+            'line2',
+            '',
+            'line4',
+            'line5'
+        ]
+        expected = ['line2', '', 'line4']
+        self.assertEqual(list(jc.utils.line_slice(data, 1, 4)), expected)
+
 
     # need to mock shutil.get_terminal_size().columns or add a column parameter to test
     # def test_warning_message(self):
