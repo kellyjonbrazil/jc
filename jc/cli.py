@@ -535,8 +535,7 @@ class JcCli():
 
         If multiple /proc files are detected, then a list of string output
         is sent to self.magic_stdout and a corresponding list of proc filenames
-        is sent to self.inputlist. These will be turned into a dict when slurped
-        downstream.
+        is sent to self.inputlist.
         """
         if self.magic_run_command_str.startswith('/proc'):
             try:
