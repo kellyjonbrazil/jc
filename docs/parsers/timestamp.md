@@ -119,4 +119,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin, win32, cygwin
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/timestamp.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/timestamp.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

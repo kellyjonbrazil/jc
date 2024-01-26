@@ -128,4 +128,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/id.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/id.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

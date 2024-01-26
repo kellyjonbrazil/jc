@@ -122,4 +122,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/cbt.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/cbt.py)
+
 Version 1.0 by Andreas Weiden (andreas.weiden@gmail.com)

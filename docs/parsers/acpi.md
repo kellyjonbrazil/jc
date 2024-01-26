@@ -250,4 +250,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/acpi.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/acpi.py)
+
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -234,4 +234,6 @@ Returns:
 ### Parser Information
 Compatibility:  win32
 
+Source: [`jc/parsers/systeminfo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/systeminfo.py)
+
 Version 1.3 by Jon Smith (jon@rebelliondefense.com)

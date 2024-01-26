@@ -9,6 +9,7 @@ are included in the output. Encoding and Decoding is best effort.
 
 This parser will work with naked and wrapped URL strings:
 
+- `/path`
 - `scheme://host/path`
 - `URL:scheme://host/path`
 - `<scheme://host/path>`
@@ -30,6 +31,10 @@ Schema:
       "scheme":                    string or null,
       "netloc":                    string or null,
       "path":                      string or null,
+      "parent":                    string or null,
+      "filename":                  string or null,
+      "stem":                      string or null,
+      "extension":                 string or null,
       "path_list": [               array or null
                                    string
       ],
@@ -49,6 +54,10 @@ Schema:
         "scheme":                  string or null,
         "netloc":                  string or null,
         "path":                    string or null,
+        "parent":                  string or null,
+        "filename":                string or null,
+        "stem":                    string or null,
+        "extension":               string or null,
         "path_list": [             array or null
                                    string
         ],
@@ -64,6 +73,10 @@ Schema:
         "scheme":                  string or null,
         "netloc":                  string or null,
         "path":                    string or null,
+        "parent":                  string or null,
+        "filename":                string or null,
+        "stem":                    string or null,
+        "extension":               string or null,
         "path_list": [             array or null
                                    string
         ],
@@ -91,6 +104,10 @@ Examples:
       "scheme": "http",
       "netloc": "example.com",
       "path": "/test/path",
+      "parent": "/test",
+      "filename": "path",
+      "stem": "path",
+      "extension": null,
       "path_list": [
         "test",
         "path"
@@ -115,6 +132,10 @@ Examples:
         "scheme": "http",
         "netloc": "example.com",
         "path": "/test/path",
+        "parent": "/test",
+        "filename": "path",
+        "stem": "path",
+        "extension": null,
         "path_list": [
           "test",
           "path"
@@ -131,6 +152,10 @@ Examples:
         "scheme": "http",
         "netloc": "example.com",
         "path": "/test/path",
+        "parent": "/test",
+        "filename": "path",
+        "stem": "path",
+        "extension": null,
         "path_list": [
           "test",
           "path"
@@ -150,6 +175,10 @@ Examples:
       "scheme": "ftp",
       "netloc": "localhost",
       "path": "/filepath",
+      "parent": "/",
+      "filename": "filepath",
+      "stem": "filepath",
+      "extension": null,
       "path_list": [
         "filepath"
       ],
@@ -165,6 +194,10 @@ Examples:
         "scheme": "ftp",
         "netloc": "localhost",
         "path": "/filepath",
+        "parent": "/",
+        "filename": "filepath",
+        "stem": "filepath",
+        "extension": null,
         "path_list": [
           "filepath"
         ],
@@ -180,6 +213,10 @@ Examples:
         "scheme": "ftp",
         "netloc": "localhost",
         "path": "/filepath",
+        "parent": "/",
+        "filename": "filepath",
+        "stem": "filepath",
+        "extension": null,
         "path_list": [
           "filepath"
         ],
@@ -192,6 +229,7 @@ Examples:
       }
     }
 """
+import pathlib
 import re
 from urllib.parse import (
     urlsplit, unwrap, parse_qs, urlunsplit, quote, quote_plus, unquote, unquote_plus
@@ -202,12 +240,12 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.2'
     description = 'URL string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    tags = ['standard', 'string']
+    tags = ['standard', 'string', 'slurpable']
 
 
 __version__ = info.version
@@ -294,6 +332,18 @@ def parse(
         my_path = None
         encoded_path = None
         decoded_path = None
+        parent = None
+        encoded_parent = None
+        decoded_parent = None
+        filename = None
+        encoded_filename = None
+        decoded_filename = None
+        stem = None
+        encoded_stem = None
+        decoded_stem = None
+        extension = None
+        encoded_extension = None
+        decoded_extension = None
         path_list = None
         encoded_path_list = None
         decoded_path_list = None
@@ -313,6 +363,23 @@ def parse(
             my_path = re.sub(r'/+', '/', normalized.path)
             encoded_path = re.sub(r'/+', '/', quoted_parts.path)
             decoded_path = re.sub(r'/+', '/', unquoted_parts.path)
+
+            # get parent, file, stem, and exension info from path
+            parent = str(pathlib.PurePosixPath(my_path).parent)
+            encoded_parent = str(pathlib.PurePosixPath(encoded_path).parent)
+            decoded_parent = str(pathlib.PurePosixPath(decoded_path).parent)
+
+            filename = str(pathlib.PurePosixPath(my_path).name)
+            encoded_filename = str(pathlib.PurePosixPath(encoded_path).name)
+            decoded_filename = str(pathlib.PurePosixPath(decoded_path).name)
+
+            stem = str(pathlib.PurePosixPath(my_path).stem)
+            encoded_stem = str(pathlib.PurePosixPath(encoded_path).stem)
+            decoded_stem = str(pathlib.PurePosixPath(decoded_path).stem)
+
+            extension = str(pathlib.PurePosixPath(my_path).suffix)[1:]
+            encoded_extension = str(pathlib.PurePosixPath(encoded_path).suffix)[1:]
+            decoded_extension = str(pathlib.PurePosixPath(decoded_path).suffix)[1:]
 
             # remove first '/' and split
             path_list = my_path.replace('/', '', 1).split('/')
@@ -372,6 +439,10 @@ def parse(
             'scheme': normalized.scheme or None,
             'netloc': normalized.netloc or None,
             'path': my_path or None,
+            'parent': parent or None,
+            'filename': filename or None,
+            'stem': stem or None,
+            'extension': extension or None,
             'path_list': path_list or None,
             'query': normalized.query or None,
             'query_obj': query_obj or None,
@@ -385,6 +456,10 @@ def parse(
                 'scheme': quoted_parts.scheme or None,
                 'netloc': quoted_parts.netloc or None,
                 'path': encoded_path or None,
+                'parent': encoded_parent or None,
+                'filename': encoded_filename or None,
+                'stem': encoded_stem or None,
+                'extension': encoded_extension or None,
                 'path_list': encoded_path_list or None,
                 'query': quoted_parts.query or None,
                 'fragment': quoted_parts.fragment or None,
@@ -398,6 +473,10 @@ def parse(
                 'scheme': unquoted_parts.scheme or None,
                 'netloc': unquoted_parts.netloc or None,
                 'path': decoded_path or None,
+                'parent': decoded_parent or None,
+                'filename': decoded_filename or None,
+                'stem': decoded_stem or None,
+                'extension': decoded_extension or None,
                 'path_list': decoded_path_list or None,
                 'query': unquoted_parts.query or None,
                 'fragment': unquoted_parts.fragment or None,

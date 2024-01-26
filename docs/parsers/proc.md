@@ -139,4 +139,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/proc.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc.py)
+
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

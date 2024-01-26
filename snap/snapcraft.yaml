@@ -1,0 +1,58 @@
+---
+name: jc
+title: Convert command output to json
+summary: CLI tool that converts the output command-line tools to JSON
+description: |
+    CLI tool and python library that converts the output of popular command-line
+    tools, file-types, and common strings to JSON, YAML, or Dictionaries.
+    This allows piping of output to tools like jq and simplifying automation scripts.
+
+    How to use `jc` with plugins:
+    1. Put your plugin in the "$HOME/.local/share/jc" directory.
+    2. Run for `snap connect jc:dot-jc-plugins snapd` connect the directory.
+# version: git
+base: core22
+confinement: strict
+license: MIT
+type: app
+
+website: https://github.com/kellyjonbrazil/jc
+contact: Kelly Brazil <kellyjonbrazil@gmail.com>
+source-code: https://github.com/kellyjonbrazil/jc
+issues: https://github.com/kellyjonbrazil/jc/issues
+
+adopt-info: jc
+
+parts:
+  launcher:
+    plugin: dump
+    source: snap/local
+    organize:
+      jc-launcher.sh: bin/
+
+  jc:
+    plugin: python
+    source: .
+    # pulled v1.17.2, `git describe`
+    # source: https://github.com/kellyjonbrazil/jc
+    override-pull: |
+      craftctl default
+      JC_VERSION=$(grep version= setup.py | cut -d '=' -f 2 | sed "s/,$// ; s/'//g")
+      craftctl set version=$JC_VERSION
+      craftctl set grade="stable"
+
+plugs:
+  dot-jc-plugins:
+    interface: personal-files
+    read:
+      - $HOME/.local
+      - $HOME/.local/share
+
+apps:
+  jc:
+    command: bin/jc-launcher.sh
+    environment:
+      LC_ALL: C.UTF-8
+    plugs:
+      - home
+      - dot-jc-plugins

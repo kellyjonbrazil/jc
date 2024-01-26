@@ -130,6 +130,14 @@ for parser in "${parsers[@]}"; do
                 echo "### Parser Information" >> ../docs/parsers/"${parser_name}".md
                 echo "Compatibility:  ${compatible}" >> ../docs/parsers/"${parser_name}".md
                 echo >> ../docs/parsers/"${parser_name}".md
+                echo "Source: [\`jc/parsers/${parser_name}.py\`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/${parser_name}.py)" >> ../docs/parsers/"${parser_name}".md
+                echo >> ../docs/parsers/"${parser_name}".md
+
+                if $(jq -e '.tags | contains(["slurpable"])' <<< "$parser"); then
+                    echo "This parser can be used with the \`--slurp\` command-line option." >> ../docs/parsers/"${parser_name}".md
+                    echo >> ../docs/parsers/"${parser_name}".md
+                fi
+
                 echo "Version ${version} by ${author} (${author_email})" >> ../docs/parsers/"${parser_name}".md
                 echo "+++ ${parser_name} docs complete"
             fi

@@ -106,13 +106,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'aix', 'freebsd']
     magic_commands = ['id']
-    tags = ['command']
+    tags = ['command', 'slurpable']
 
 
 __version__ = info.version

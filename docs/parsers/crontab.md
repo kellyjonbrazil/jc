@@ -32,7 +32,6 @@ Schema:
       ],
       "schedule": [
         {
-          "occurrence"        string,
           "minute": [
                               string
           ],
@@ -196,4 +195,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/crontab.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/crontab.py)
+
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

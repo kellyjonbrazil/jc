@@ -154,4 +154,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/dpkg_l.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/dpkg_l.py)
+
 Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

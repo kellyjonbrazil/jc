@@ -97,12 +97,12 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Unix Epoch Timestamp string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32', 'cygwin']
-    tags = ['standard', 'string']
+    tags = ['standard', 'string', 'slurpable']
 
 
 __version__ = info.version

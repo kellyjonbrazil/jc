@@ -221,4 +221,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/upower.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/upower.py)
+
 Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

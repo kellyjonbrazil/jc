@@ -131,4 +131,6 @@ Returns:
 ### Parser Information
 Compatibility:  darwin
 
+Source: [`jc/parsers/airport_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/airport_s.py)
+
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

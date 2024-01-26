@@ -105,4 +105,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/veracrypt.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/veracrypt.py)
+
 Version 1.0 by Jake Ob (iakopap at gmail.com)
