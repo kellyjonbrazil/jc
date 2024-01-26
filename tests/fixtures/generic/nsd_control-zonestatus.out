@@ -3,10 +3,3 @@ zone:	sunet.se
 	served-serial: "2023091302 since 2023-09-14T00:50:11"
 	commit-serial: "2023091302 since 2023-09-14T07:04:05"
 	wait: "27023 sec between attempts"
-zone:	catz.sunet.se
-	pattern: example.catalog
-	catalog-member-id: 4b6f6ce2de5929e4.zones.example.catalog.
-	state: ok
-	served-serial: "1705484863 since 2024-01-17T13:06:02"
-	commit-serial: "1705484863 since 2024-01-17T13:06:02"
-	wait: "21341 sec between attempts"
