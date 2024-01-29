@@ -66,7 +66,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nsd-control` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
