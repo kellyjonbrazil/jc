@@ -1,0 +1,8 @@
+PING 2001:0db8::1(2001:0db8::1) from 2001:0db8::2 : 56 data bytes
+64 bytes from 2001:0db8::1: icmp_seq=1 ttl=114 time=13.4 ms
+64 bytes from 2001:0db8::1: icmp_seq=2 ttl=114 time=11.0 ms
+64 bytes from 2001:0db8::1: icmp_seq=2 ttl=114 time=11.0 ms
+
+--- 2001:0db8::1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 11.021/12.204/13.388/1.183 ms
