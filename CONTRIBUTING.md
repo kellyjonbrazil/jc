@@ -53,7 +53,7 @@ actively welcome your pull requests:
   should not contain lists or dictionaries
 
 This will make it easier to use tools like `jq` without requiring escaping of
-special characters, encapsulating key names in [""], keeps paths predictable,
+special characters, encapsulating key names in `[""]`, keeps paths predictable,
 and makes iterating and searching for values easier.
 
 **Examples**
