@@ -84,12 +84,16 @@ class MyTests(unittest.TestCase):
     # ubuntu 22.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-dest-unreachable.out'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_dest_unreachable = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-ip-source-ip.out'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_ip_source_ip = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-hostname-source-ip.out'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_hostname_source_ip = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-ip-source-ip.out'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping6_ip_source_ip = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-hostname-source-ip.out'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping6_hostname_source_ip = f.read()
 
@@ -300,12 +304,16 @@ class MyTests(unittest.TestCase):
     # ubuntu 22.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-dest-unreachable.json'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_dest_unreachable_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-ip-source-ip.json'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_ip_source_ip_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping-hostname-source-ip.json'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping_hostname_source_ip_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-ip-source-ip.json'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping6_ip_source_ip_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-22.04/ping6-hostname-source-ip.json'), 'r', encoding='utf-8') as f:
         ubuntu_22_4_ping6_hostname_source_ip_json = json.loads(f.read())
 
