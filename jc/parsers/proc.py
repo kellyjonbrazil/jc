@@ -119,7 +119,7 @@ Examples:
 """
 import re
 import importlib
-from typing import List, Dict
+from typing import List, Dict, Union
 import jc.utils
 from jc.exceptions import ParseError
 
@@ -141,7 +141,7 @@ def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> List[Dict]:
+) -> Union[List[Dict], Dict]:
     """
     Main text parsing function
 
@@ -153,7 +153,7 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary or List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.input_type_check(data)
 
