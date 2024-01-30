@@ -127,7 +127,9 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
+def parse(data: str,
+          raw: bool = False,
+          quiet: bool = False) -> Union[List[Dict], Dict]
 ```
 
 Main text parsing function
@@ -140,7 +142,7 @@ Parameters:
 
 Returns:
 
-    List of Dictionaries. Raw or processed structured data.
+    Dictionary or List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
 Compatibility:  linux
