@@ -189,23 +189,48 @@ class MyTests(unittest.TestCase):
             self.assertEqual(jc.utils.convert_to_bool(input_string), expected_output)
 
 
-    def test_has_data_nodata(self):
+    def test_utils_convert_size_to_int(self):
+        io_map = {
+            '42': 42,
+            '13b': 13,
+            '5 bytes': 5,
+            '1 KB': 1000,
+            '1 kilobyte': 1000,
+            '1 KiB': 1024,
+            '1.5 GB': 1500000000
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_size_to_int(input_string), expected_output)
+
+
+    def test_utils_convert_size_to_int_binary_true(self):
+        io_map = {
+            '1 KB': 1024,
+            '1.5 GB': 1610612736
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_size_to_int(input_string, binary=True), expected_output)
+
+
+    def test_utils_has_data_nodata(self):
         self.assertFalse(jc.utils.has_data('     \n      '))
 
 
-    def test_has_data_withdata(self):
+    def test_utils_has_data_withdata(self):
         self.assertTrue(jc.utils.has_data('     \n  abcd    \n    '))
 
 
-    def test_input_type_check_wrong(self):
+    def test_utils_input_type_check_wrong(self):
         self.assertRaises(TypeError, jc.utils.input_type_check, ['abc'])
 
 
-    def test_input_type_check_correct(self):
+    def test_utils_input_type_check_correct(self):
         self.assertEqual(jc.utils.input_type_check('abc'), None)
 
 
-    def test_line_slice_string_positive_slice(self):
+    def test_utils_line_slice_string_positive_slice(self):
         data = '''line1
 line2
 line3
@@ -215,7 +240,7 @@ line4
         self.assertEqual(jc.utils.line_slice(data, 1, 3), expected)
 
 
-    def test_line_slice_string_negative_slice(self):
+    def test_utils_line_slice_string_negative_slice(self):
         data = '''line1
 line2
 line3
@@ -225,7 +250,7 @@ line4
         self.assertEqual(jc.utils.line_slice(data, 1, -1), expected)
 
 
-    def test_line_slice_iter_positive_slice(self):
+    def test_utils_line_slice_iter_positive_slice(self):
         data = [
             'line1',
             'line2',
@@ -236,7 +261,7 @@ line4
         self.assertEqual(list(jc.utils.line_slice(data, 1, 3)), expected)
 
 
-    def test_line_slice_iter_negative_slice(self):
+    def test_utils_line_slice_iter_negative_slice(self):
         data = [
             'line1',
             'line2',
@@ -246,7 +271,7 @@ line4
         expected = ['line2', 'line3']
         self.assertEqual(list(jc.utils.line_slice(data, 1, -1)), expected)
 
-    def test_line_slice_string_blank_lines(self):
+    def test_utils_line_slice_string_blank_lines(self):
         data = '''line1
 line2
 
@@ -256,7 +281,7 @@ line5
         expected = 'line2\n\nline4'
         self.assertEqual(jc.utils.line_slice(data, 1, 4), expected)
 
-    def test_line_slice_iter_positive_blank_lines(self):
+    def test_utils_line_slice_iter_positive_blank_lines(self):
         data = [
             'line1',
             'line2',
@@ -269,7 +294,7 @@ line5
 
 
     # need to mock shutil.get_terminal_size().columns or add a column parameter to test
-    # def test_warning_message(self):
+    # def test_utils_warning_message(self):
     #     msg = [
     #         'this is a long first line that will be wrapped yada yada yada yada yada yada yada.',
     #         'this is a second long line that will be wrapped yada yada yada yada yada yada yada yada yada.',
