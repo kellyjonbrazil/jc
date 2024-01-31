@@ -101,6 +101,8 @@ parsers: List[str] = [
     'os-prober',
     'os-release',
     'passwd',
+    'path',
+    'path-list',
     'pci-ids',
     'pgpass',
     'pidstat',

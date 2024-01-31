@@ -1,0 +1,14 @@
+{
+  "path": "/User/admin/Application Support/App.app",
+  "parent": "/User/admin/Application Support",
+  "filename": "App.app",
+  "stem": "App",
+  "extension": "app",
+  "path_list": [
+    "/",
+    "User",
+    "admin",
+    "Application Support",
+    "App.app"
+  ]
+}
