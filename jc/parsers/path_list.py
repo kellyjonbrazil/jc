@@ -1,6 +1,7 @@
 """jc - JSON Convert POSIX path list string parser
 
-Parse a colon-separated POSIX path list, commonly found in environment variables.
+Parse a colon-separated POSIX path list, commonly found in environment
+variables.
 
 Usage (cli):
 
@@ -15,12 +16,12 @@ Schema:
 
     [
       {
-        "path":                      string or null,
-        "parent":                    string or null,
-        "filename":                  string or null,
-        "stem":                      string or null,
-        "extension":                 string or null,
-        "path_list": [               array or null
+        "path":                      string,
+        "parent":                    string,
+        "filename":                  string,
+        "stem":                      string,
+        "extension":                 string,
+        "path_list": [
                                      string
         ],
       }
@@ -69,7 +70,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'path list string parser'
+    description = 'POSIX path list string parser'
     author = 'Michael Nietzold'
     author_email = 'https://github.com/muescha'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
@@ -91,7 +92,6 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-
     # no changes
     return proc_data
 
@@ -113,7 +113,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    # This parser is an alias of path.py
+    # This parser uses path.py
     path.info = info  # type: ignore
 
     delimiter = ":" if "\\" not in data else ";"
