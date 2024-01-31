@@ -33,6 +33,7 @@ parsers: List[str] = [
     'crontab-u',
     'csv',
     'csv-s',
+    'curl-head',
     'date',
     'datetime-iso',
     'debconf-show',
