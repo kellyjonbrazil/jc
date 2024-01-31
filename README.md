@@ -243,6 +243,8 @@ option.
 |     `--os-prober` | `os-prober` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_prober)      |
 |    `--os-release` | `/etc/os-release` file parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_release)     |
 |        `--passwd` | `/etc/passwd` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd)         |
+|          `--path` | POSIX path string parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path)           |
+|     `--path-list` | POSIX path list string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path_list)      |
 |       `--pci-ids` | `pci.ids` file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pci_ids)        |
 |        `--pgpass` | PostgreSQL password file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pgpass)         |
 |       `--pidstat` | `pidstat -H` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat)        |
