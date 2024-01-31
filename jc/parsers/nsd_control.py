@@ -66,7 +66,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nsd-control` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
@@ -190,6 +190,18 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 linedata = line.split(':\t', maxsplit=1)
                 zone = linedata[1]
                 zonename.update({'zone': zone})
+                continue
+
+            if line.startswith('pattern:'):
+                linedata = line.split(': ', maxsplit=1)
+                catz_pattern = linedata[1]
+                zstatus.update({'pattern': catz_pattern})
+                continue
+
+            if line.startswith('catalog-member-id:'):
+                linedata = line.split(': ', maxsplit=1)
+                catz_member_id = linedata[1]
+                zstatus.update({'catalog-member-id': catz_member_id})
                 continue
 
             if line.startswith('state:'):

@@ -318,23 +318,23 @@ option.
 
 ### Options
 
-| Short | Long            | Description                                                                                                         |
-|-------|-----------------|---------------------------------------------------------------------------------------------------------------------|
-| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                             |
-| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                           |
-| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
-| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation. Use twice to show hidden parsers (e.g. `-hh`)             |
-| `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
-| `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.               |                                                                        |
-| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
-| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
-| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
-| `-s`  | `--slurp`       | Slurp multiple lines into an array. (use `-hhh` to find compatible parsers)                                         |
-| `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
-| `-v`  | `--version`     | Version information                                                                                                 |
-| `-y`  | `--yaml-out`    | YAML output                                                                                                         |
-| `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))    |
-| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))     |
+| Short | Long            | Description                                                                                                                                                  |
+|-------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                                                                      |
+| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                                                                    |
+| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                                                         |
+| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation. Use twice to show hidden parsers (e.g. `-hh`). Use thrice to show parser categories (e.g. `-hhh`). |
+| `-m`  | `--monochrome`  | Monochrome output                                                                                                                                            |
+| `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.                                                        |                                                                        |
+| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                                                                |
+| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                                                                 |
+| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing                                                 |
+| `-s`  | `--slurp`       | Slurp multiple lines into an array. (use `-hhh` to find compatible parsers)                                                                                  |
+| `-u`  | `--unbuffer`    | Unbuffer output                                                                                                                                              |
+| `-v`  | `--version`     | Version information                                                                                                                                          |
+| `-y`  | `--yaml-out`    | YAML output                                                                                                                                                  |
+| `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                             |
+| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                              |
 
 ### Slice
 Line slicing is supported using the `START:STOP` syntax similar to Python

@@ -66,7 +66,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .B
 \fB-h\fP, \fB--help\fP
 Help (\fB--help --parser_name\fP for parser documentation). Use twice to show
-hidden parsers (e.g. \fB-hh\fP)
+hidden parsers (e.g. \fB-hh\fP). Use thrice to show parser categories (e.g. \fB-hhh\fP).
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP

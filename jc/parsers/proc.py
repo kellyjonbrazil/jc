@@ -5,10 +5,16 @@ corresponding parser to perform the parsing.
 
 Magic syntax for converting `/proc` files is also supported by running
 `jc /proc/<path to file>`. Any `jc` options must be specified before the
-`/proc` path.
+`/proc` path. The magic syntax supports "slurping" multiple files as input.
+When multiple files are selected (e.g. `jc /proc/*/stat`) all of the output
+will be wrapped inside an array. Also, a `_file` field will be included in
+the output which helps correlate the input and output. The `--meta-out`
+option can also be used to list the `/proc` input files for correlation with
+the output list.
 
-specific Proc file parsers can also be called directly, if desired and have
-a naming convention of `proc-<name>` (cli) or `proc_<name>` (module).
+Specific Proc file parsers can also be called directly, if desired, and have
+a naming convention of `proc-<name>` (cli) or `proc_<name>` (module). To see
+a list of Proc file parsers, use `jc -hh` or `jc -a`.
 
 Usage (cli):
 
@@ -113,7 +119,7 @@ Examples:
 """
 import re
 import importlib
-from typing import List, Dict
+from typing import List, Dict, Union
 import jc.utils
 from jc.exceptions import ParseError
 
@@ -135,7 +141,7 @@ def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> List[Dict]:
+) -> Union[List[Dict], Dict]:
     """
     Main text parsing function
 
@@ -147,7 +153,7 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary or List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.input_type_check(data)
 
