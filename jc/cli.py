@@ -21,7 +21,7 @@ from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
 from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
-    helptext_end_string
+    slicetext_string, helptext_end_string
 )
 from .shell_completions import bash_completion, zsh_completion
 from . import tracebackplus
@@ -66,15 +66,17 @@ if PYGMENTS_INSTALLED:
 
 
 class JcCli():
-    __slots__ = (
-        'data_in', 'data_out', 'options', 'args', 'parser_module', 'parser_name', 'indent', 'pad',
-        'custom_colors', 'show_hidden', 'show_categories', 'ascii_only', 'json_separators',
-        'json_indent', 'run_timestamp', 'about', 'debug', 'verbose_debug', 'force_color', 'mono',
-        'help_me', 'pretty', 'quiet', 'ignore_exceptions', 'raw', 'slurp', 'meta_out', 'unbuffer',
-        'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'magic_found_parser',
-        'magic_options', 'magic_run_command', 'magic_run_command_str', 'magic_stdout',
-        'magic_stderr', 'magic_returncode', 'slice_str', 'slice_start', 'slice_end'
-    )
+    __slots__ = ('data_in', 'data_out', 'options', 'args', 'parser_module',
+                 'parser_name', 'indent', 'pad', 'custom_colors',
+                 'show_hidden', 'show_categories', 'ascii_only',
+                 'json_separators', 'json_indent', 'run_timestamp',
+                 'inputlist', 'about', 'debug', 'verbose_debug',
+                 'force_color', 'mono', 'help_me', 'pretty', 'quiet',
+                 'ignore_exceptions', 'raw', 'slurp', 'meta_out', 'unbuffer',
+                 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp',
+                 'magic_found_parser', 'magic_options', 'magic_run_command',
+                 'magic_run_command_str', 'magic_stdout', 'magic_stderr',
+                 'magic_returncode', 'slice_str', 'slice_start', 'slice_end')
 
     def __init__(self) -> None:
         self.data_in: Optional[Union[str, bytes, TextIO, Iterable[str]]] = None
@@ -92,6 +94,7 @@ class JcCli():
         self.json_separators: Optional[tuple[str, str]] = (',', ':')
         self.json_indent: Optional[int] = None
         self.run_timestamp: Optional[datetime] = None
+        self.inputlist: Optional[List[str]] = None
 
         # slicer
         self.slice_str: str = ''
@@ -289,7 +292,7 @@ class JcCli():
         """Return the help text with the list of parsers"""
         parsers_string: str = self.parsers_text()
         options_string: str = self.options_text()
-        helptext_string: str = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{helptext_end_string}'
+        helptext_string: str = f'{helptext_preamble_string}{parsers_string}\nOptions:\n{options_string}\n{slicetext_string}\n{helptext_end_string}'
         return helptext_string
 
     def help_doc(self) -> None:
@@ -531,8 +534,8 @@ class JcCli():
         output to magic_stdout.
 
         If multiple /proc files are detected, then a list of string output
-        is sento to magic_stdout. Since the proc parser is slurpable, it will
-        take the list of strings and parse the data into an array.
+        is sent to self.magic_stdout and a corresponding list of proc filenames
+        is sent to self.inputlist.
         """
         if self.magic_run_command_str.startswith('/proc'):
             try:
@@ -542,10 +545,12 @@ class JcCli():
                 if ' ' in self.magic_run_command_str:
                     self.slurp = True
                     multi_out: List[str] = []
-                    proc_files = self.magic_run_command_str.split()
+                    filelist = self.magic_run_command_str.split()
+                    filelist = [x.strip() for x in filelist]
+                    self.inputlist = filelist
 
-                    for file in proc_files:
-                        # multi_out.append(self.open_text_file('/Users/kelly/temp/' + file))
+                    for file in self.inputlist:
+                        # multi_out.append(self.open_text_file('/Users/kelly/temp' + file))
                         multi_out.append(self.open_text_file(file))
 
                     self.magic_stdout = multi_out
@@ -553,7 +558,7 @@ class JcCli():
                 # single proc file
                 else:
                     file = self.magic_run_command_str
-                    # self.magic_stdout = self.open_text_file('/Users/kelly/temp/' + file)
+                    # self.magic_stdout = self.open_text_file('/Users/kelly/temp' + file)
                     self.magic_stdout = self.open_text_file(file)
 
             except OSError as e:
@@ -629,7 +634,7 @@ class JcCli():
 
     def add_metadata_to_output(self) -> None:
         """
-        This function mutates data_out in place. If the _jc_meta field
+        This function mutates self.data_out in place. If the _jc_meta field
         does not already exist, it will be created with the metadata fields. If
         the _jc_meta field already exists, the metadata fields will be added to
         the existing object.
@@ -649,6 +654,9 @@ class JcCli():
             if self.magic_run_command:
                 meta_obj['magic_command'] = self.magic_run_command
                 meta_obj['magic_command_exit'] = self.magic_returncode
+
+            if self.inputlist:
+                meta_obj['input_list'] = self.inputlist
 
             if isinstance(self.data_out, dict):
                 if '_jc_meta' not in self.data_out:
@@ -684,33 +692,66 @@ class JcCli():
 
     def create_slurp_output(self) -> None:
         """
-        Slurp output into an array. Only works for single-line strings or
-        multiple files coming from the /proc magic syntax.
+        Slurp input into a list. If input is coming from multiple /proc files
+        using magic syntax, then also add a `_file` key to the output.
+
+        If --meta-out is used then further wrap the data in a dict like so:
+            {"result": data}
+
+        self.input_list will already exist if the data is coming from the
+        /proc magic sytnax. Otherwise this funcion will build it for normal
+        slurp items.
+
+        This will allow --meta-out to add its information in a clean way.
+
+        This method updates self.data_out
         """
         if self.parser_module and isinstance(self.data_in, (str, Iterable)):
-            items = []
+            self.data_out = []
 
+            # single-line string parsers
             if isinstance(self.data_in, str):
                 items = self.data_in.splitlines()
-            elif isinstance(self.data_in, List):
+                self.inputlist = []
+
+                for line in items:
+                    line = line.strip()
+                    self.inputlist.append(line)
+                    parsed_line = self.parser_module.parse(
+                        line,
+                        raw=self.raw,
+                        quiet=self.quiet
+                    )
+
+                    self.data_out.append(parsed_line)
+
+            # multiple files from /proc magic syntax
+            elif isinstance(self.data_in, List) and self.inputlist:
                 items = self.data_in
 
-            self.data_out = []
-            for line in items:
-                parsed_line = self.parser_module.parse(
-                    line,
-                    raw=self.raw,
-                    quiet=self.quiet
-                )
+                for mline in zip(self.inputlist, items):
+                    parsed_line = self.parser_module.parse(
+                        mline[1],
+                        raw=self.raw,
+                        quiet=self.quiet
+                    )
 
-                self.data_out.append(parsed_line)
+                    if isinstance(parsed_line, dict):
+                        parsed_line.update({'_file': mline[0]})
+
+                    elif isinstance(parsed_line, List):
+                        for obj in parsed_line:
+                            obj.update({'_file': mline[0]})
+
+                    self.data_out.append(parsed_line)
 
             if self.meta_out:
+                self.data_out = {"result": self.data_out}
                 self.run_timestamp = datetime.now(timezone.utc)
                 self.add_metadata_to_output()
 
     def create_normal_output(self) -> None:
-        """standard output"""
+        """standard output - updates self.data_out"""
         if self.parser_module:
             self.data_out = self.parser_module.parse(
                 self.data_in,

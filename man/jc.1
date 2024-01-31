@@ -1,4 +1,4 @@
-.TH jc 1 2024-01-08 1.24.1 "JSON Convert"
+.TH jc 1 2024-01-26 1.24.1 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -1243,6 +1243,64 @@ lines from the beginning through \fBSTOP\fP lines from the end
 .B
 \fB:\fP
 all lines
+
+.SH SlURP
+Some parsers support multi-item input and can output an array of results in a
+single pass. Slurping works for string parsers that accept a single line of
+input. (e.g. \fBurl\fP and \fBip-address\fP) To see a list of parsers that support
+the \fB--slurp\fP option, use \fBjc -hhh\fP.
+
+For example, you can send a file with multiple IP addresses (one per line) to
+\fBjc\fP with the \fB--slurp\fP option and an array of results will output:
+
+.RS
+.nf
+$ cat ip-addresses.txt | jc --slurp --ip-address
+[<multiple output objects>]
+.fi
+.RE
+
+The magic syntax for \fB/proc\fP files automatically supports slurping of multiple
+files (no need to use the \fB--slurp\fP option). For example, you can convert many
+PID files at once:
+
+.RS
+.nf
+$ jc /proc/*/status
+[<multiple output objects>]
+.fi
+.RE
+
+When the \fB/proc\fP magic syntax is used and multiple files are selected, an
+additional \fB_file\fP field is inserted in the output so it is easier to tell what
+file each output object refers to.
+
+Finally, the \fB--meta-out\fP option can be used in conjunction with slurped output.
+In this case, the slurped output is wrapped in an object with the following
+structure:
+
+.RS
+.nf
+{
+  "result": [<multiple output objects>],
+  "_jc_meta": {
+    "parser": "url",
+    "timestamp": 1706235558.654576,
+    "slice_start": null,
+    "slice_end": null,
+    "input_list": [
+      "http://www.google.com",
+      "https://www.apple.com",
+      "https://www.microsoft.com"
+    ]
+  }
+}
+.fi
+.RE
+
+With \fB--meta-out\fP, \fBinput_list\fP contains a list of inputs (actual input strings
+or \fB/proc\fP filenames) so you can identify which output object relates to each
+input string or \fB/proc\fP filename.
 
 .SH EXIT CODES
 Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP,

@@ -10,8 +10,6 @@ Ansible filter plugin in the `community.general` collection. See this
 [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 for an example.
 
-> Looking for something like `jc` but lower-level? Check out [regex2json](https://gitlab.com/tozd/regex2json).
-
 # JC
 JSON Convert
 
@@ -385,6 +383,58 @@ Here is a breakdown of line slice options:
 | `-START:`      | `START` lines from the end through the rest of the output    |
 | `:-STOP`       | lines from the beginning through `STOP` lines from the end   |
 | `:`            | all lines                                                    |
+
+### Slurp
+Some parsers support multi-item input and can output an array of results in a
+single pass. Slurping works for string parsers that accept a single line of
+input. (e.g. `url` and `ip-address`) To see a list of parsers that support
+the `--slurp` option, use `jc -hhh`.
+
+For example, you can send a file with multiple IP addresses (one per line) to
+`jc` with the `--slurp` option and an array of results will output:
+
+```bash
+$ cat ip-addresses.txt | jc --slurp --ip-address
+[<multiple output objects>]
+```
+
+The magic syntax for `/proc` files automatically supports slurping of multiple
+files (no need to use the `--slurp` option). For example, you can convert many
+PID files at once:
+
+```bash
+$ jc /proc/*/status
+[<multiple output objects>]
+```
+
+When the `/proc` magic syntax is used and multiple files are selected, an
+additional `_file` field is inserted in the output so it is easier to tell what
+file each output object refers to.
+
+Finally, the `--meta-out` option can be used in conjunction with slurped output.
+In this case, the slurped output is wrapped in an object with the following
+structure:
+
+```json
+{
+  "result": [<multiple output objects>],
+  "_jc_meta": {
+    "parser": "url",
+    "timestamp": 1706235558.654576,
+    "slice_start": null,
+    "slice_end": null,
+    "input_list": [
+      "http://www.google.com",
+      "https://www.apple.com",
+      "https://www.microsoft.com"
+    ]
+  }
+}
+```
+
+With `--meta-out`, `input_list` contains a list of inputs (actual input strings
+or `/proc` filenames) so you can identify which output object relates to each
+input string or `/proc` filename.
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the

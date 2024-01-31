@@ -1,0 +1,7 @@
+PING example.com(example.com (2001:0db8::1)) from 2001:0db8::2 : 56 data bytes
+64 bytes from example.com (2001:0db8::1): icmp_seq=1 ttl=114 time=15.7 ms
+64 bytes from example.com (2001:0db8::1): icmp_seq=2 ttl=114 time=11.3 ms
+
+--- example.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 11.314/13.495/15.676/2.181 ms
