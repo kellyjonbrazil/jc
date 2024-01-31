@@ -12,7 +12,8 @@ jc changelog
   identifying which input matches to which output when using `--slurp` or when converting multiple
   files via `/proc` file magic syntax.
 - Add `kv-dup` parser for Key/Value files with duplicate keys
-- TODO: Add `path-list` string parser to parse path list strings found in env variables
+- Add `path` string parser to parse posix path
+- Add `path-list` string parser to parse path list strings found in env variables
 - Enhance `nsd-control` parser to support more zone information
 - Enhance `ping` and `ping-s` parsers to support the `-I` command option
 - Enhance `proc-net-tcp` parser to add opposite endian support for architectures
