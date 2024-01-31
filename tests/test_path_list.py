@@ -50,12 +50,15 @@ class MyTests(unittest.TestCase):
         """
         Test 'path' with various logs
         """
+        print()
         for file in self.fixtures:
-            self.assertEqual(
-                parse(self.f_in[file], quiet=True),
-                self.f_json[file],
-                "Should be equal for test files: {0}.*".format(file)
-            )
+            print("fixture: " + file)
+            with self.subTest("fixture: " + file):
+                self.assertEqual(
+                    parse(self.f_in[file], quiet=True),
+                    self.f_json[file],
+                    "Should be equal for test files: {0}.*".format(file)
+                )
 
 
 if __name__ == '__main__':
