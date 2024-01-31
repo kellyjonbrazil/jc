@@ -1,0 +1,14 @@
+{
+  "path": "C:\\Windows\\Program Files\\xfolder\\file.txt",
+  "parent": "C:\\Windows\\Program Files\\xfolder",
+  "filename": "file.txt",
+  "stem": "file",
+  "extension": "txt",
+  "path_list": [
+    "C:\\",
+    "Windows",
+    "Program Files",
+    "xfolder",
+    "file.txt"
+  ]
+}
