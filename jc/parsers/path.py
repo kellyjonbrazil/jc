@@ -14,12 +14,12 @@ Usage (module):
 Schema:
 
     {
-      "path":                      string or null,
-      "parent":                    string or null,
-      "filename":                  string or null,
-      "stem":                      string or null,
-      "extension":                 string or null,
-      "path_list": [               array or null
+      "path":                      string,
+      "parent":                    string,
+      "filename":                  string,
+      "stem":                      string,
+      "extension":                 string,
+      "path_list": [
                                    string
       ],
     }
@@ -27,7 +27,6 @@ Schema:
 Examples:
 
     $ echo "/abc/def/gh.txt" | jc --path -p
-
     {
       "path": "/abc/def/gh.txt",
       "parent": "/abc/def",
@@ -41,18 +40,16 @@ Examples:
         "gh.txt"
       ]
     }
-
 """
 from pathlib import PurePosixPath, PureWindowsPath
 from typing import Dict
-
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'path string parser'
+    description = 'POSIX path string parser'
     author = 'Michael Nietzold'
     author_email = 'https://github.com/muescha'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
@@ -74,7 +71,6 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured to conform to the schema.
     """
-
     # no changes
     return proc_data
 
