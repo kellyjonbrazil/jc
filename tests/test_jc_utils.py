@@ -57,6 +57,8 @@ class MyTests(unittest.TestCase):
             'Tue 23 Mar 2021 04:12:11 PM UTC': {'string': 'Tue 23 Mar 2021 04:12:11 PM UTC', 'format': 2000, 'naive': 1616541131, 'utc': 1616515931},
             # en_US.UTF-8 local format with non-UTC tz (found in upower cli output)
             'Tue 23 Mar 2021 04:12:11 PM IST': {'string': 'Tue 23 Mar 2021 04:12:11 PM IST', 'format': 3000, 'naive': 1616541131, 'utc': None},
+            # HTTP header time format (always GMT so assume UTC)
+            'Wed, 31 Jan 2024 00:39:28 GMT': {'string': 'Wed, 31 Jan 2024 00:39:28 GMT', 'format': 3500, 'naive': 1706690368, 'utc': 1706661568},
             # European local format (found in upower cli output)
             'Tuesday 01 October 2019 12:50:41 PM UTC': {'string': 'Tuesday 01 October 2019 12:50:41 PM UTC', 'format': 4000, 'naive': 1569959441, 'utc': 1569934241},
             # European local format with non-UTC tz (found in upower cli output)
