@@ -50,9 +50,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'path' with various logs
         """
-        print()
         for file in self.fixtures:
-            print("fixture: " + file)
             with self.subTest("fixture: " + file):
                 self.assertEqual(
                     parse(self.f_in[file], quiet=True),
