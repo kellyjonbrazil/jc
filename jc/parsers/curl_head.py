@@ -48,8 +48,8 @@ class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '2.0'
     description = 'curl head parser'
-    author = ''
-    author_email = ''
+    author = 'Michael Nietzold'
+    author_email = 'https://github.com/muescha'
     details = 'Using kv from the python standard library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['generic', 'file', 'string']
