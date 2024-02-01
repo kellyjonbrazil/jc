@@ -114,7 +114,6 @@ def parse(data, raw=False, quiet=False):
                 raw_output['HTTP-Version'] = match.group('version')
                 raw_output['Status-Code'] = match.group('status_code')
                 raw_output['Status-Reason'] = match.group('status_reason')
-                # raw_output.update(match.groupdict())
                 # Remove the original HTTP line from the dictionary
                 del raw_output[key]
                 break  # Break after the first match
