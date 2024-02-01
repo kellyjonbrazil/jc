@@ -40,7 +40,6 @@ curl --silent --head google.com | jc --curl-head --pretty
 }
 """
 import jc.utils
-import configparser
 import re
 from jc.parsers import kv
 
@@ -51,7 +50,7 @@ class info():
     description = 'curl head parser'
     author = ''
     author_email = ''
-    details = 'Using configparser from the python standard library'
+    details = 'Using kv from the python standard library'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['generic', 'file', 'string']
 
