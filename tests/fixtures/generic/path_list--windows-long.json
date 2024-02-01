@@ -1,0 +1,202 @@
+[
+  {
+    "path": "D:\\Program Files\\Autodesk\\Maya2008\\bin",
+    "parent": "D:\\Program Files\\Autodesk\\Maya2008",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "Autodesk",
+      "Maya2008",
+      "bin"
+    ]
+  },
+  {
+    "path": "C:\\Ruby192\\bin",
+    "parent": "C:\\Ruby192",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "Ruby192",
+      "bin"
+    ]
+  },
+  {
+    "path": "C:\\WINDOWS\\system32",
+    "parent": "C:\\WINDOWS",
+    "filename": "system32",
+    "stem": "system32",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "WINDOWS",
+      "system32"
+    ]
+  },
+  {
+    "path": "C:\\WINDOWS",
+    "parent": "C:\\",
+    "filename": "WINDOWS",
+    "stem": "WINDOWS",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "WINDOWS"
+    ]
+  },
+  {
+    "path": "C:\\WINDOWS\\System32\\Wbem",
+    "parent": "C:\\WINDOWS\\System32",
+    "filename": "Wbem",
+    "stem": "Wbem",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "WINDOWS",
+      "System32",
+      "Wbem"
+    ]
+  },
+  {
+    "path": "C:\\PROGRA~1\\DISKEE~2\\DISKEE~1",
+    "parent": "C:\\PROGRA~1\\DISKEE~2",
+    "filename": "DISKEE~1",
+    "stem": "DISKEE~1",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "PROGRA~1",
+      "DISKEE~2",
+      "DISKEE~1"
+    ]
+  },
+  {
+    "path": "c:\\Program Files\\Microsoft SQL Server\\90\\Tools\\binn",
+    "parent": "c:\\Program Files\\Microsoft SQL Server\\90\\Tools",
+    "filename": "binn",
+    "stem": "binn",
+    "extension": "",
+    "path_list": [
+      "c:\\",
+      "Program Files",
+      "Microsoft SQL Server",
+      "90",
+      "Tools",
+      "binn"
+    ]
+  },
+  {
+    "path": "C:\\Program Files\\QuickTime\\QTSystem",
+    "parent": "C:\\Program Files\\QuickTime",
+    "filename": "QTSystem",
+    "stem": "QTSystem",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "Program Files",
+      "QuickTime",
+      "QTSystem"
+    ]
+  },
+  {
+    "path": "D:\\Program Files\\TortoiseSVN\\bin",
+    "parent": "D:\\Program Files\\TortoiseSVN",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "TortoiseSVN",
+      "bin"
+    ]
+  },
+  {
+    "path": "D:\\Program Files\\Bazaar",
+    "parent": "D:\\Program Files",
+    "filename": "Bazaar",
+    "stem": "Bazaar",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "Bazaar"
+    ]
+  },
+  {
+    "path": "C:\\Program Files\\Android\\android-sdk\\tools",
+    "parent": "C:\\Program Files\\Android\\android-sdk",
+    "filename": "tools",
+    "stem": "tools",
+    "extension": "",
+    "path_list": [
+      "C:\\",
+      "Program Files",
+      "Android",
+      "android-sdk",
+      "tools"
+    ]
+  },
+  {
+    "path": "D:\\Program Files\\Microsoft Visual Studio\\Common\\Tools\\WinNT",
+    "parent": "D:\\Program Files\\Microsoft Visual Studio\\Common\\Tools",
+    "filename": "WinNT",
+    "stem": "WinNT",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "Microsoft Visual Studio",
+      "Common",
+      "Tools",
+      "WinNT"
+    ]
+  },
+  {
+    "path": "D:\\Program Files\\Microsoft Visual Studio\\Common\\MSDev98\\Bin",
+    "parent": "D:\\Program Files\\Microsoft Visual Studio\\Common\\MSDev98",
+    "filename": "Bin",
+    "stem": "Bin",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "Microsoft Visual Studio",
+      "Common",
+      "MSDev98",
+      "Bin"
+    ]
+  },
+  {
+    "path": "D:\\Program Files\\Microsoft Visual Studio\\Common\\Tools",
+    "parent": "D:\\Program Files\\Microsoft Visual Studio\\Common",
+    "filename": "Tools",
+    "stem": "Tools",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "Microsoft Visual Studio",
+      "Common",
+      "Tools"
+    ]
+  },
+  {
+    "path": "D:\\Program Files\\Microsoft Visual Studio\\VC98\\bin",
+    "parent": "D:\\Program Files\\Microsoft Visual Studio\\VC98",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "D:\\",
+      "Program Files",
+      "Microsoft Visual Studio",
+      "VC98",
+      "bin"
+    ]
+  }
+]

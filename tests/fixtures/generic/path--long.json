@@ -1,0 +1,17 @@
+{
+  "path": "/Library/Application Support/Script Editor/Templates/Cocoa-AppleScript Applet.app/Contents/Info.plist",
+  "parent": "/Library/Application Support/Script Editor/Templates/Cocoa-AppleScript Applet.app/Contents",
+  "filename": "Info.plist",
+  "stem": "Info",
+  "extension": "plist",
+  "path_list": [
+    "/",
+    "Library",
+    "Application Support",
+    "Script Editor",
+    "Templates",
+    "Cocoa-AppleScript Applet.app",
+    "Contents",
+    "Info.plist"
+  ]
+}

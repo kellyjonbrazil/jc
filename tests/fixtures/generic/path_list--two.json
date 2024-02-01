@@ -1,0 +1,28 @@
+[
+  {
+    "path": "/abc/def/gh.txt",
+    "parent": "/abc/def",
+    "filename": "gh.txt",
+    "stem": "gh",
+    "extension": "txt",
+    "path_list": [
+      "/",
+      "abc",
+      "def",
+      "gh.txt"
+    ]
+  },
+  {
+    "path": "/xyz/uvw/ab.app",
+    "parent": "/xyz/uvw",
+    "filename": "ab.app",
+    "stem": "ab",
+    "extension": "app",
+    "path_list": [
+      "/",
+      "xyz",
+      "uvw",
+      "ab.app"
+    ]
+  }
+]

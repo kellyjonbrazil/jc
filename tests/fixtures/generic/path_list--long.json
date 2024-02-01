@@ -1,0 +1,273 @@
+[
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/Users/macuser/.docker",
+    "path": "/Users/macuser/.docker/bin",
+    "path_list": [
+      "/",
+      "Users",
+      "macuser",
+      ".docker",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "shims",
+    "parent": "/Users/macuser/.asdf",
+    "path": "/Users/macuser/.asdf/shims",
+    "path_list": [
+      "/",
+      "Users",
+      "macuser",
+      ".asdf",
+      "shims"
+    ],
+    "stem": "shims"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/opt/homebrew/opt/asdf/libexec",
+    "path": "/opt/homebrew/opt/asdf/libexec/bin",
+    "path_list": [
+      "/",
+      "opt",
+      "homebrew",
+      "opt",
+      "asdf",
+      "libexec",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/opt/homebrew",
+    "path": "/opt/homebrew/bin",
+    "path_list": [
+      "/",
+      "opt",
+      "homebrew",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "sbin",
+    "parent": "/opt/homebrew",
+    "path": "/opt/homebrew/sbin",
+    "path_list": [
+      "/",
+      "opt",
+      "homebrew",
+      "sbin"
+    ],
+    "stem": "sbin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/usr/local",
+    "path": "/usr/local/bin",
+    "path_list": [
+      "/",
+      "usr",
+      "local",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/System/Cryptexes/App/usr",
+    "path": "/System/Cryptexes/App/usr/bin",
+    "path_list": [
+      "/",
+      "System",
+      "Cryptexes",
+      "App",
+      "usr",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/usr",
+    "path": "/usr/bin",
+    "path_list": [
+      "/",
+      "usr",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/",
+    "path": "/bin",
+    "path_list": [
+      "/",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "sbin",
+    "parent": "/usr",
+    "path": "/usr/sbin",
+    "path_list": [
+      "/",
+      "usr",
+      "sbin"
+    ],
+    "stem": "sbin"
+  },
+  {
+    "extension": "",
+    "filename": "sbin",
+    "parent": "/",
+    "path": "/sbin",
+    "path_list": [
+      "/",
+      "sbin"
+    ],
+    "stem": "sbin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/Library/Apple/usr",
+    "path": "/Library/Apple/usr/bin",
+    "path_list": [
+      "/",
+      "Library",
+      "Apple",
+      "usr",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local",
+    "path": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin",
+    "path_list": [
+      "/",
+      "var",
+      "run",
+      "com.apple.security.cryptexd",
+      "codex.system",
+      "bootstrap",
+      "usr",
+      "local",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr",
+    "path": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin",
+    "path_list": [
+      "/",
+      "var",
+      "run",
+      "com.apple.security.cryptexd",
+      "codex.system",
+      "bootstrap",
+      "usr",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal",
+    "path": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin",
+    "path_list": [
+      "/",
+      "var",
+      "run",
+      "com.apple.security.cryptexd",
+      "codex.system",
+      "bootstrap",
+      "usr",
+      "appleinternal",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/Users/macuser/.fig",
+    "path": "/Users/macuser/.fig/bin",
+    "path_list": [
+      "/",
+      "Users",
+      "macuser",
+      ".fig",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/Users/macuser/.local",
+    "path": "/Users/macuser/.local/bin",
+    "path_list": [
+      "/",
+      "Users",
+      "macuser",
+      ".local",
+      "bin"
+    ],
+    "stem": "bin"
+  },
+  {
+    "extension": "",
+    "filename": "scripts",
+    "parent": "/Users/macuser/Library/Application Support/JetBrains/Toolbox",
+    "path": "/Users/macuser/Library/Application Support/JetBrains/Toolbox/scripts",
+    "path_list": [
+      "/",
+      "Users",
+      "macuser",
+      "Library",
+      "Application Support",
+      "JetBrains",
+      "Toolbox",
+      "scripts"
+    ],
+    "stem": "scripts"
+  },
+  {
+    "extension": "",
+    "filename": "bin",
+    "parent": "/opt/homebrew/opt/fzf",
+    "path": "/opt/homebrew/opt/fzf/bin",
+    "path_list": [
+      "/",
+      "opt",
+      "homebrew",
+      "opt",
+      "fzf",
+      "bin"
+    ],
+    "stem": "bin"
+  }
+]
