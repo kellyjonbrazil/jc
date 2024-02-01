@@ -5,8 +5,9 @@
 
 > Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API](https://github.com/kellyjonbrazil/jc-restapi)
 
-> `jc` is [now available](https://galaxy.ansible.com/community/general) as an
-Ansible filter plugin in the `community.general` collection. See this
+> `jc` is available as an
+[Ansible filter plugin](https://docs.ansible.com/ansible/latest/collections/community/general/jc_filter.html#ansible-collections-community-general-jc-filter)
+in the `community.general` collection. See this
 [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 for an example.
 
