@@ -41,6 +41,7 @@ parsers: List[str] = [
     'dmidecode',
     'dpkg-l',
     'du',
+    'efibootmgr',
     'email-address',
     'env',
     'file',
