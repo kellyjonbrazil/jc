@@ -22,7 +22,7 @@ Curl output converted to a dictionary
 
 Examples:
 
-curl -s -I google.com | python3 -m jc --curl-head | jq
+curl --silent --head google.com | jc --curl-head --pretty
 {
   "Location": "http://www.google.com/",
   "Content-Type": "text/html; charset=UTF-8",
