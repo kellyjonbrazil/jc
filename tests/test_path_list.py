@@ -1,42 +1,34 @@
 import os
 import json
 import unittest
+import jc
+from pathlib import Path
 from typing import Dict
 from jc.parsers.path_list import parse
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-FIXTURES_DIR = 'fixtures/generic/'
-
 
 def open_file(name, ext):
-    return open(get_path(name, ext), 'r', encoding='utf-8')
-
-
-def get_path(name, ext):
-    return os.path.join(THIS_DIR, name + '.' + ext)
+    return open(Path(name).with_suffix(ext), 'r', encoding='utf-8')
 
 
 class MyTests(unittest.TestCase):
     f_in: Dict = {}
     f_json: Dict = {}
 
-    fixtures = {
-        'path_list--one': 'fixtures/generic/path_list--one',
-        'path_list--two': 'fixtures/generic/path_list--two',
-        'path_list--long': 'fixtures/generic/path_list--long',
-        'path_list--windows': 'fixtures/generic/path_list--windows',
-        'path_list--windows-long': 'fixtures/generic/path_list--windows-long',
-        'path_list--windows-environment': 'fixtures/generic/path_list--windows-environment',
-        'path_list--with-spaces': 'fixtures/generic/path_list--with-spaces',
-    }
+    parser_name = Path(__file__).stem[len('test_'):]
+
+    fixtures = {x.stem: str(x.with_suffix('')) for x in
+                (list(Path(THIS_DIR).glob('**/{0}--*.*'.format(parser_name))))}
+
 
     @classmethod
     def setUpClass(cls):
 
         for file, filepath in cls.fixtures.items():
-            with open_file(filepath, 'out') as in_file, \
-                    open_file(filepath, 'json') as json_file:
+            with open_file(filepath, '.out') as in_file, \
+                    open_file(filepath, '.json') as json_file:
                 cls.f_in[file] = in_file.read()
                 cls.f_json[file] = json.loads(json_file.read())
 
@@ -46,14 +38,18 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(parse('', quiet=True), [])
 
-    def test_path(self):
+    def test_all_fixtures(self):
         """
         Test 'path' with various logs
         """
+        # jc_parser = jc.get_parser(self.parser_name)
         for file in self.fixtures:
+            print(f'test "{self.parser_name}" parser with fixture: "{file}"')
             with self.subTest("fixture: " + file):
                 self.assertEqual(
-                    parse(self.f_in[file], quiet=True),
+                    # parse(self.f_in[file], quiet=True),
+                    # jc_parser.parse(self.f_in[file], quiet=True),
+                    jc.parse(self.parser_name, self.f_in[file], quiet=True),
                     self.f_json[file],
                     "Should be equal for test files: {0}.*".format(file)
                 )
