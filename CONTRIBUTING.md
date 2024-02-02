@@ -36,7 +36,7 @@ actively welcome your pull requests:
    - Templates: 
      - [tests/templates/_test_foo.py](https://github.com/kellyjonbrazil/jc/blob/master/tests/templates/_test_foo.py) as a template for a test.
      - [tests/templates/_test_foo_s.py (streaming)](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_s.py) as a template for a streaming test. 
-     - [tests/templates/_test_foo_simple.oy](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_simple.py) as a template if you only have test with fixtures.
+     - [tests/templates/_test_foo_simple.py](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_simple.py) as a template if you only have test with fixtures.
        Execute these steps for standard tests:
        - Save this file as `text_{parser_name}.py` since the helper methods extract parser names from the filename.
        - Organize fixtures in `text/fixtures` for optimal structure.
