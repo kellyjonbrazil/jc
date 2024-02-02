@@ -294,6 +294,25 @@ line5
         expected = ['line2', '', 'line4']
         self.assertEqual(list(jc.utils.line_slice(data, 1, 4)), expected)
 
+    def test_remove_quotes(self):
+        for char in ["'", '"']:
+            with self.subTest(f'Quote character: {char}'):
+                data = f'{char}this is a test{char}'
+                expected = 'this is a test'
+                self.assertEqual(jc.utils.remove_quotes(data), expected)
+
+    def test_normalize_key(self):
+        io_map = {
+            'This is @ crazy  Key!!': 'this_is_crazy_key',
+            'Simple': 'simple',
+            'CamelCase': 'camelcase',
+            '^Complex-Key*': '_complex_key'
+        }
+
+        for data, expected in io_map.items():
+            with self.subTest(f'Original key: {data}'):
+                self.assertEqual(jc.utils.normalize_key(data), expected)
+
 
     # need to mock shutil.get_terminal_size().columns or add a column parameter to test
     # def test_utils_warning_message(self):
