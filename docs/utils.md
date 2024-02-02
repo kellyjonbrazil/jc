@@ -6,6 +6,7 @@
   * [is\_compatible](#jc.utils.is_compatible)
   * [compatibility](#jc.utils.compatibility)
   * [has\_data](#jc.utils.has_data)
+  * [remove\_quotes](#jc.utils.remove_quotes)
   * [convert\_to\_int](#jc.utils.convert_to_int)
   * [convert\_to\_float](#jc.utils.convert_to_float)
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
@@ -121,6 +122,25 @@ Returns:
     Boolean      True if input string (data) contains non-whitespace
                  characters, otherwise False. For bytes data, returns
                  True if there is any data, otherwise False.
+
+<a id="jc.utils.remove_quotes"></a>
+
+### remove\_quotes
+
+```python
+def remove_quotes(data: str) -> str
+```
+
+Remove single or double quotes surrounding a string. If no quotes are
+found then the string is returned unmodified.
+
+Parameters:
+
+    data:       (string) Input value
+
+Returns:
+
+    string
 
 <a id="jc.utils.convert_to_int"></a>
 
