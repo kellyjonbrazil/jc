@@ -8,6 +8,7 @@ df -h    > df-h.out
 dig www.google.com AAAA        > dig-aaaa.out
 dig www.cnn.com www.google.com > dig.out
 dig -x 1.1.1.1                 > dig-x.out
+sudo efibootmgr -v > efibootmgr.out
 env      > env.out
 free     > free.out
 free -h  > free-h.out
