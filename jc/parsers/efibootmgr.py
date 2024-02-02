@@ -20,31 +20,33 @@ Schema:
 
 [
     {
-        "BootCurrent": string,
-        "Timeout": string,
-        "BootOrder": [
+        "boot_current": string,
+        "timeout_seconds": number,
+        "boot_order": [
             string,
             string,
             string
         ],
-        "BootOptions": [
+        mirrored_percentage_above_4g: number,
+        mirror_memory_below_4gb: bool,
+        "boot_options": [
             {
-                "BootOptionReference": string,
-                "DisplayName": string,
-                "UefiDevicePath": string,
-                "BootOptionEnabled": bool
+                "boot_option_reference": string,
+                "display_name": string,
+                "uefi_device_path": string,
+                "boot_option_enabled": bool
             },
             {
-                "BootOptionReference": string,
-                "DisplayName": string,
-                "UefiDevicePath": string,
-                "BootOptionEnabled": bool
+                "boot_option_reference": string,
+                "display_name": string,
+                "uefi_device_path": string,
+                "boot_option_enabled": bool
             },
             {
-                "BootOptionReference": string,
-                "DisplayName": string,
-                "UefiDevicePath": string,
-                "BootOptionEnabled": bool
+                "boot_option_reference": string,
+                "display_name": string,
+                "uefi_device_path": string,
+                "boot_option_enabled": bool
             }
         ]
     }
@@ -55,31 +57,33 @@ Examples:
 $ sudo efibootmgr -v | jc --efibootmgr --pretty
 [
   {
-    "BootCurrent": "0002",
-    "Timeout": "0 seconds",
-    "BootOrder": [
+    "boot_current": "0002",
+    "timeout_seconds": 0,
+    "boot_order": [
       "0002",
       "0000",
       "0001"
     ],
-    "BootOptions": [
+    "mirrored_percentage_above_4g": 0.0,
+    "mirror_memory_below_4gb": false,
+    "boot_options": [
       {
-        "BootOptionReference": "Boot0000",
-        "DisplayName": "WARNADO",
-        "UefiDevicePath": "HD(1,GPT,05b9944c-1c60-492b-a510-7bbedccdc602,0x800,0xfa000)/File(EFI\\boot\\bootx64.efi)",
-        "BootOptionEnabled": true
+        "boot_option_reference": "Boot0000",
+        "display_name": "WARNADO",
+        "uefi_device_path": "HD(1,GPT,05b9944c-1c60-492b-a510-7bbedccdc602,0x800,0xfa000)/File(EFI\\boot\\bootx64.efi)",
+        "boot_option_enabled": true
       },
       {
-        "BootOptionReference": "Boot0001",
-        "DisplayName": "Embedded NIC 1 Port 1 Partition 1",
-        "UefiDevicePath": "VenHw(3a191845-5f86-4e78-8fce-c4cff59f9daa)",
-        "BootOptionEnabled": true
+        "boot_option_reference": "Boot0001",
+        "display_name": "Embedded NIC 1 Port 1 Partition 1",
+        "uefi_device_path": "VenHw(3a191845-5f86-4e78-8fce-c4cff59f9daa)",
+        "boot_option_enabled": true
       },
       {
-        "BootOptionReference": "Boot0002",
-        "DisplayName": "opensuse-secureboot",
-        "UefiDevicePath": "HD(1,GPT,c5d4f69d-6fc2-48c7-acee-af3f30336dc5,0x800,0x19000)/File(\\EFI\\opensuse\\shim.efi)",
-        "BootOptionEnabled": true
+        "boot_option_reference": "Boot0002",
+        "display_name": "opensuse-secureboot",
+        "uefi_device_path": "HD(1,GPT,c5d4f69d-6fc2-48c7-acee-af3f30336dc5,0x800,0x19000)/File(\\EFI\\opensuse\\shim.efi)",
+        "boot_option_enabled": true
       }
     ]
   }
@@ -103,6 +107,14 @@ class info():
 __version__ = info.version
 
 def _process(proc_data):
+    if 0 == len(proc_data):
+        return proc_data
+    proc_data[0]["timeout_seconds"] = int(proc_data[0]["timeout_seconds"].replace("seconds","").strip(), 10)
+    proc_data[0]["boot_order"] = proc_data[0]["boot_order"].split(',')
+    for boot_opt in proc_data[0]["boot_options"]:
+        boot_opt["boot_option_enabled"] = boot_opt["boot_option_enabled"] == '*'
+    proc_data[0]["mirrored_percentage_above_4g"] = float(proc_data[0]["mirrored_percentage_above_4g"])
+    proc_data[0]["mirror_memory_below_4gb"] = not ("false" == proc_data[0]["mirror_memory_below_4gb"])
     return proc_data
 
 def parse(data, raw=False, quiet=False):
@@ -116,25 +128,29 @@ def parse(data, raw=False, quiet=False):
         efibootmgr_dict = {}
         for line in filter(None, data.splitlines()):
             if "BootCurrent" in line:
-                efibootmgr_dict["BootCurrent"] = line.split(':')[1].strip()
+                efibootmgr_dict["boot_current"] = line.split(':')[1].strip()
             elif "Timeout" in line:
-                efibootmgr_dict["Timeout"] = line.split(':')[1].strip()
+                efibootmgr_dict["timeout_seconds"] = line.split(':')[1].strip()
             elif "BootOrder" in line:
-                efibootmgr_dict["BootOrder"] = line.split(':')[1].strip().split(',')
+                efibootmgr_dict["boot_order"] = line.split(':')[1].strip()
             elif "Boot" in line:
                 tmp_dict = {}
                 boot_record = line.split("\t")
-                tmp_dict["BootOptionReference"] = boot_record[0][0:8]
-                tmp_dict["DisplayName"] = boot_record[0][10:]
+                tmp_dict["boot_option_reference"] = boot_record[0][0:8]
+                tmp_dict["display_name"] = boot_record[0][10:].strip()
                 if len(boot_record) > 1:
-                    tmp_dict["UefiDevicePath"] = boot_record[1]
-                tmp_dict["BootOptionEnabled"] = boot_record[0][8] == '*'
+                    tmp_dict["uefi_device_path"] = boot_record[1].strip()
+                tmp_dict["boot_option_enabled"] = boot_record[0][8]
                 boot_opt_list.append(tmp_dict)
+            elif "MirroredPercentageAbove4G" in line:
+                efibootmgr_dict["mirrored_percentage_above_4g"] = line.split(':')[1].strip()
+            elif "MirrorMemoryBelow4GB" in line:
+                efibootmgr_dict["mirror_memory_below_4gb"] = line.split(':')[1].strip()
             else:
                 # print(line)
                 continue
 
-        efibootmgr_dict["BootOptions"] = boot_opt_list
+        efibootmgr_dict["boot_options"] = boot_opt_list
 
         raw_output.append(efibootmgr_dict)
 
