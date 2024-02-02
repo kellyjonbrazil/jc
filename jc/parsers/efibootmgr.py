@@ -52,7 +52,7 @@ Schema:
 
 Examples:
 
-$ sudo efibootmgr -v | jc --efibootmgr | jq
+$ sudo efibootmgr -v | jc --efibootmgr --pretty
 [
   {
     "BootCurrent": "0002",
