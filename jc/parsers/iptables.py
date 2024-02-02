@@ -163,7 +163,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -195,28 +195,7 @@ def _process(proc_data):
                     rule[key] = jc.utils.convert_to_int(rule[key])
 
             if 'bytes' in rule:
-                multiplier = 1
-                if rule['bytes'][-1] == 'K':
-                    multiplier = 10 ** 3
-                    rule['bytes'] = rule['bytes'].rstrip('K')
-                elif rule['bytes'][-1] == 'M':
-                    multiplier = 10 ** 6
-                    rule['bytes'] = rule['bytes'].rstrip('M')
-                elif rule['bytes'][-1] == 'G':
-                    multiplier = 10 ** 9
-                    rule['bytes'] = rule['bytes'].rstrip('G')
-                elif rule['bytes'][-1] == 'T':
-                    multiplier = 10 ** 12
-                    rule['bytes'] = rule['bytes'].rstrip('T')
-                elif rule['bytes'][-1] == 'P':
-                    multiplier = 10 ** 15
-                    rule['bytes'] = rule['bytes'].rstrip('P')
-
-                try:
-                    bytes_int = jc.utils.convert_to_int(rule['bytes'])
-                    rule['bytes'] = bytes_int * multiplier
-                except (ValueError):
-                    rule['bytes'] = None
+                rule['bytes'] = jc.utils.convert_size_to_int(rule['bytes'])
 
             if 'opt' in rule:
                 if rule['opt'] == '--':
