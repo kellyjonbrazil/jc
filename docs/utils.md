@@ -7,6 +7,7 @@
   * [compatibility](#jc.utils.compatibility)
   * [has\_data](#jc.utils.has_data)
   * [remove\_quotes](#jc.utils.remove_quotes)
+  * [normalize\_key](#jc.utils.normalize_key)
   * [convert\_to\_int](#jc.utils.convert_to_int)
   * [convert\_to\_float](#jc.utils.convert_to_float)
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
@@ -133,6 +134,32 @@ def remove_quotes(data: str) -> str
 
 Remove single or double quotes surrounding a string. If no quotes are
 found then the string is returned unmodified.
+
+Parameters:
+
+    data:       (string) Input value
+
+Returns:
+
+    string
+
+<a id="jc.utils.normalize_key"></a>
+
+### normalize\_key
+
+```python
+def normalize_key(data: str) -> str
+```
+
+Normalize a key name by shifting to lower-case and converting special
+characters to underscores.
+
+Special characters are defined as `space` and the following:
+
+    !"#$%&'()*+,-./:;<=>?@[\]^`{|}~
+
+This is a lossy algorithm. Repeating and trailing underscores are
+removed.
 
 Parameters:
 

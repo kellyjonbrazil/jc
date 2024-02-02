@@ -17,6 +17,7 @@ jc changelog
 - Add source link to online parser documentation
 - Add snap package build scripts
 - Add `remove_quotes` function to `utils.py`
+- Add `normalize_key` function to `utils.py`
 - Add `line_slice` function to `utils.py`
 - Add `get_parser` function to `lib.py`
 - Enhance `nsd-control` parser to support more zone information

@@ -205,6 +205,46 @@ def remove_quotes(data: str) -> str:
     return data
 
 
+def normalize_key(data: str) -> str:
+    """
+    Normalize a key name by shifting to lower-case and converting special
+    characters to underscores.
+
+    Special characters are defined as `space` and the following:
+
+        !"#$%&'()*+,-./:;<=>?@[\]^`{|}~
+
+    This is a lossy algorithm. Repeating and trailing underscores are
+    removed.
+
+    Parameters:
+
+        data:       (string) Input value
+
+    Returns:
+
+        string
+    """
+    special = '''!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ '''
+    initial_underscore = False
+    data = data.strip().lower()
+
+    for special_char in special:
+        data = data.replace(special_char, '_')
+
+    if data.startswith('_'):
+        initial_underscore = True
+
+    # swap back to space so split() will compress multiple consecutive down to one
+    data = data.strip('_').replace('_', ' ')
+    data = '_'.join(data.split())
+
+    if initial_underscore:
+        data = '_' + data
+
+    return data
+
+
 def convert_to_int(value: object) -> Optional[int]:
     """
     Converts string and float input to int. Strips all non-numeric
