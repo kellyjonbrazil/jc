@@ -183,6 +183,28 @@ def has_data(data: Union[str, bytes]) -> bool:
     return bool(data)
 
 
+def remove_quotes(data: str) -> str:
+    """
+    Remove single or double quotes surrounding a string. If no quotes are
+    found then the string is returned unmodified.
+
+    Parameters:
+
+        data:       (string) Input value
+
+    Returns:
+
+        string
+    """
+    if data.startswith('"') and data.endswith('"'):
+        data = data[1:-1]
+
+    elif data.startswith("'") and data.endswith("'"):
+        data = data[1:-1]
+
+    return data
+
+
 def convert_to_int(value: object) -> Optional[int]:
     """
     Converts string and float input to int. Strips all non-numeric

@@ -97,7 +97,7 @@ import uuid
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'INI with duplicate key file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -127,16 +127,6 @@ class MultiDict(dict):
             super().__setitem__(key, value)
 
 
-def _remove_quotes(value):
-    if value.startswith('"') and value.endswith('"'):
-        value = value[1:-1]
-
-    elif value.startswith("'") and value.endswith("'"):
-        value = value[1:-1]
-
-    return value
-
-
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -154,16 +144,16 @@ def _process(proc_data):
         if isinstance(v, dict):
             for key, value in v.items():
                 if isinstance(value, list):
-                    v[key] = [_remove_quotes(x) for x in value]
+                    v[key] = [jc.utils.remove_quotes(x) for x in value]
                 else:
-                    v[key] = _remove_quotes(value)
+                    v[key] = jc.utils.remove_quotes(value)
             continue
 
         elif isinstance(v, list):
-            proc_data[k] = [_remove_quotes(x) for x in v]
+            proc_data[k] = [jc.utils.remove_quotes(x) for x in v]
 
         else:
-            proc_data[k] = _remove_quotes(v)
+            proc_data[k] = jc.utils.remove_quotes(v)
 
     return proc_data
 
