@@ -33,8 +33,18 @@ actively welcome your pull requests:
      file.
 4. If you've added code that should be tested, add tests. All new parsers should
    have several sample outputs and tests.
-   - Templates: Use the [tests/templates/_test_foo.py](https://github.com/kellyjonbrazil/jc/blob/master/tests/templates/_test_foo.py)
-     or [tests/templates/_test_foo_s.py (streaming)](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates) files as a template
+   - Templates: 
+     - [tests/templates/_test_foo.py](https://github.com/kellyjonbrazil/jc/blob/master/tests/templates/_test_foo.py) as a template for a test.
+     - [tests/templates/_test_foo_s.py (streaming)](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_s.py) as a template for a streaming test. 
+     - [tests/templates/_test_foo_simple.oy](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_simple.py) as a template if you only have test with fixtures.
+       Execute these steps for standard tests:
+       - Save this file as `text_{parser_name}.py` since the helper methods extract parser names from the filename.
+       - Organize fixtures in `text/fixtures` for optimal structure.
+       - Format fixtures as follows (using double dashes):
+           - `{parser_name}--{some_test_description}.out` for command output.
+           - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
+
+
    - Fixtures: Tests typically consist of an input file and an expected output
      JSON file. Add the data files to the appropriate folder under [tests/fixtures](https://github.com/kellyjonbrazil/jc/tree/master/tests/fixtures)
 5. Documentation is auto-generated from docstrings, so ensure they are clear and
