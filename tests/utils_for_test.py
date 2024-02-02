@@ -1,9 +1,10 @@
 """jc - JSON test utils"""
-import os
-import jc
-import json
 import inspect
+import json
+import os
 from pathlib import Path
+
+import jc
 
 
 def open_file(file_path, ext):
@@ -30,7 +31,7 @@ def get_parser_name_from_path(parser_path):
 
 def get_fixtures(base_dir, parser_name):
     fixtures = {x.stem: str(x.with_suffix('')) for x in
-                (list(Path(base_dir).glob('**/{0}--*.*'.format(parser_name))))}
+                (list(Path(base_dir).glob(f"**/{parser_name}--*.*")))}
     return fixtures
 
 
@@ -39,20 +40,19 @@ def run_no_data(self, test_parser_path, expected):
 
     # expected = jc.get_parser(parser_name).info.default_no_data
 
-    with self.subTest("no data test for: " + parser_name):
+    with self.subTest(f"'no data test' for parser '{parser_name}': "):
         self.assertEqual(jc.parse(parser_name, '', quiet=True), expected)
+
 
 def run_all_fixtures(self, test_parser_path):
     parser_name = get_parser_name_from_path(test_parser_path)
     base_dir = get_base_dir(test_parser_path)
 
     print()
-    print("run all fixtures for " + parser_name + ":")
+    print(f"'run all fixtures' for parser '{parser_name}':")
     for file, file_path in get_fixtures(base_dir, parser_name).items():
-
-        print(f'- test "{parser_name}" parser with fixture: "{file}"')
-        with self.subTest("fixture: " + file):
-
+        print(f"- test '{parser_name}' parser with fixture: '{file}'")
+        with self.subTest(f"fixture: '{file}'"):
             with open_file(file_path, '.out') as in_file, \
                     open_file(file_path, '.json') as json_file:
                 f_in = in_file.read()
@@ -61,6 +61,5 @@ def run_all_fixtures(self, test_parser_path):
                 self.assertEqual(
                     jc.parse(parser_name, f_in, quiet=True),
                     f_json,
-                    "Should be equal for test files: {0}.*".format(file)
+                    f"Should be equal for test files: '{file}.*'"
                 )
-    return "All tests passed from: run_all_fixtures"
