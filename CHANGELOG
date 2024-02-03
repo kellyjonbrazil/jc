@@ -1,6 +1,6 @@
 jc changelog
 
-20240201 v1.24.1
+20240202 v1.25.0
 - Add `--slurp` functionality to wrap output from multiple lines into a single array.
   Note, this only works with single-line input parsers. (e.g. `date`, `ip-address`, `url`, etc.)
   Streaming parsers are not supported. Use `jc -hhh` to find parsers compatible with the slurp option.
