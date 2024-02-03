@@ -387,6 +387,31 @@ def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
     # We failed to parse the size specification.
     return None
 
+def convert_dict_to_nested_dict(nested_data, split_marker):
+    updated_data = {}
+    for key, value in nested_data.items():
+        keys = key.split(split_marker)
+        current_dict = updated_data
+
+        for k in keys[:-1]:
+            if k not in current_dict:
+                current_dict[k] = {}
+            current_dict = current_dict[k]
+
+        current_dict[keys[-1]] = value
+    return updated_data
+
+
+def convert_dict_with_numberkeys_to_lists(data):
+    if isinstance(data, dict):
+        if all(k.isdigit() for k in data.keys()):
+            return [convert_dict_with_numberkeys_to_lists(data[k]) for k in sorted(data.keys(), key=int)]
+        else:
+            return {k: convert_dict_with_numberkeys_to_lists(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [convert_dict_with_numberkeys_to_lists(item) for item in data]
+    else:
+        return data
 
 def input_type_check(data: object) -> None:
     """Ensure input data is a string. Raises `TypeError` if not."""
