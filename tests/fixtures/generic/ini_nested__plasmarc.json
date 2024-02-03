@@ -1,0 +1,280 @@
+{
+  "ActionPlugins": [
+    {
+      "RightButton;NoModifier": "org.kde.contextmenu",
+      "wheel": "Vertical;NoModifier=org.kde.switchdesktop"
+    },
+    {
+      "RightButton;NoModifier": "org.kde.contextmenu"
+    }
+  ],
+  "Containments": [
+    {
+      "ItemGeometries-1279x719": "",
+      "ItemGeometries-1707x960": "Applet-26:80,464,432,400,0;",
+      "ItemGeometries-2560x1440": "",
+      "ItemGeometriesHorizontal": "Applet-26:80,464,432,400,0;",
+      "activityId": "1a6b35af-059d-43ea-850c-6f8ad112899a",
+      "formfactor": "0",
+      "immutability": "1",
+      "lastScreen": "0",
+      "location": "0",
+      "plugin": "org.kde.plasma.folder",
+      "wallpaperplugin": "org.kde.image",
+      "Applets": [
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma_applet_dict",
+          "Configuration": {
+            "ConfigDialog": {
+              "DialogHeight": "539",
+              "DialogWidth": "719"
+            },
+            "General": {
+              "dictionary": "all,fd-eng-rus"
+            }
+          }
+        }
+      ],
+      "General": {
+        "ToolBoxButtonState": "topcenter",
+        "ToolBoxButtonX": "360",
+        "positions": "{\"1707x960\":[]}",
+        "sortMode": "-1"
+      }
+    },
+    {
+      "activityId": "",
+      "formfactor": "2",
+      "immutability": "1",
+      "lastScreen": "0",
+      "location": "4",
+      "plugin": "org.kde.panel",
+      "wallpaperplugin": "org.kde.image",
+      "Applets": [
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.kickoff",
+          "Configuration": {
+            "PreloadWeight": "100",
+            "popupHeight": "514",
+            "popupWidth": "645",
+            "ConfigDialog": {
+              "DialogHeight": "539",
+              "DialogWidth": "719"
+            },
+            "General": {
+              "favoritesPortedToKAstats": "true"
+            },
+            "Shortcuts": {
+              "global": "Alt+F1"
+            }
+          },
+          "Shortcuts": {
+            "global": "Alt+F1"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.pager"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.icontasks",
+          "Configuration": {
+            "General": {
+              "launchers": "applications:systemsettings.desktop,applications:org.kde.discover.desktop,preferred://filemanager,preferred://browser,applications:com.discordapp.Discord.desktop,applications:sublime_text.desktop,applications:sublime_merge.desktop,applications:org.kde.konsole.desktop"
+            }
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.marginsseparator"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.systemtray",
+          "Configuration": {
+            "PreloadWeight": "100",
+            "SystrayContainmentId": "8"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.digitalclock",
+          "Configuration": {
+            "PreloadWeight": "100",
+            "popupHeight": "450",
+            "popupWidth": "396",
+            "Appearance": {
+              "dateFormat": "isoDate"
+            },
+            "ConfigDialog": {
+              "DialogHeight": "539",
+              "DialogWidth": "719"
+            }
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.showdesktop"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.colorpicker",
+          "Configuration": {
+            "PreloadWeight": "60",
+            "General": {
+              "history": "#001e08,#001d06,#ff0000,#ffff00,#0080fe,#f30101,#01f301,#ff8040"
+            }
+          }
+        }
+      ],
+      "ConfigDialog": {
+        "DialogHeight": "84",
+        "DialogWidth": "1707"
+      },
+      "General": {
+        "AppletOrder": "3;4;5;6;27;7;18;19"
+      }
+    },
+    {
+      "activityId": "",
+      "formfactor": "2",
+      "immutability": "1",
+      "lastScreen": "0",
+      "location": "4",
+      "plugin": "org.kde.plasma.private.systemtray",
+      "popupHeight": "431",
+      "popupWidth": "431",
+      "wallpaperplugin": "org.kde.image",
+      "Applets": [
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.nightcolorcontrol"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.vault"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.manage-inputmethod"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.clipboard",
+          "Configuration": {
+            "PreloadWeight": "65"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.keyboardindicator"
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.volume",
+          "Configuration": {
+            "PreloadWeight": "100",
+            "General": {
+              "migrated": "true"
+            }
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.devicenotifier",
+          "Configuration": {
+            "PreloadWeight": "80"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.keyboardlayout",
+          "Configuration": {
+            "ConfigDialog": {
+              "DialogHeight": "539",
+              "DialogWidth": "719"
+            },
+            "General": {
+              "displayStyle": "LabelOverFlag"
+            }
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.notifications",
+          "Configuration": {
+            "PreloadWeight": "90"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.battery",
+          "Configuration": {
+            "PreloadWeight": "100",
+            "General": {
+              "showPercentage": "true"
+            }
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.networkmanagement",
+          "Configuration": {
+            "PreloadWeight": "100"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.bluetooth",
+          "Configuration": {
+            "PreloadWeight": "100"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.plasma.mediacontroller",
+          "Configuration": {
+            "PreloadWeight": "0"
+          }
+        },
+        {
+          "immutability": "1",
+          "plugin": "org.kde.kdeconnect"
+        }
+      ],
+      "General": {
+        "extraItems": "org.kde.plasma.nightcolorcontrol,org.kde.plasma.vault,org.kde.plasma.battery,org.kde.plasma.networkmanagement,org.kde.plasma.manage-inputmethod,org.kde.plasma.clipboard,org.kde.plasma.keyboardindicator,org.kde.plasma.bluetooth,org.kde.plasma.volume,org.kde.plasma.mediacontroller,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.notifications,org.kde.kdeconnect",
+        "knownItems": "org.kde.plasma.nightcolorcontrol,org.kde.plasma.vault,org.kde.plasma.battery,org.kde.plasma.networkmanagement,org.kde.plasma.manage-inputmethod,org.kde.plasma.clipboard,org.kde.plasma.keyboardindicator,org.kde.plasma.bluetooth,org.kde.plasma.volume,org.kde.plasma.mediacontroller,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.notifications,org.kde.kdeconnect"
+      }
+    },
+    {
+      "ItemGeometries-1280x720": "",
+      "ItemGeometriesHorizontal": "",
+      "activityId": "1a6b35af-059d-43ea-850c-6f8ad112899a",
+      "formfactor": "0",
+      "immutability": "1",
+      "lastScreen": "1",
+      "location": "0",
+      "plugin": "org.kde.plasma.folder",
+      "wallpaperplugin": "org.kde.image"
+    },
+    {
+      "ItemGeometries-0x0": "",
+      "ItemGeometriesHorizontal": "",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "formfactor": "0",
+      "immutability": "1",
+      "lastScreen": "0",
+      "location": "0",
+      "plugin": "org.kde.plasma.folder",
+      "wallpaperplugin": "org.kde.image"
+    }
+  ],
+  "ScreenMapping": {
+    "itemsOnDisabledScreens": "",
+    "screenMapping": ""
+  }
+}
