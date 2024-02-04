@@ -1,0 +1,66 @@
+*   Trying [2606:2800:220:1:248:1893:25c8:1946]:80...
+* Connected to example.com (2606:2800:220:1:248:1893:25c8:1946) port 80 (#0)
+> HEAD / HTTP/1.1
+> Host: example.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Age: 155553
+< Cache-Control: max-age=604800
+< Content-Type: text/html; charset=UTF-8
+< Date: Sun, 04 Feb 2024 04:09:08 GMT
+< Etag: "3147526947"
+< Expires: Sun, 11 Feb 2024 04:09:08 GMT
+< Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+< Server: ECS (sac/2575)
+< X-Cache: HIT
+< Content-Length: 1256
+< 
+* Connection #0 to host example.com left intact
+√ ~/temp % curl -ILvs http://google.com 2>&1 > /dev/null 
+*   Trying [2607:f8b0:4002:c08::65]:80...
+* Connected to google.com (2607:f8b0:4002:c08::65) port 80 (#0)
+> HEAD / HTTP/1.1
+> Host: google.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: http://www.google.com/
+< Content-Type: text/html; charset=UTF-8
+< Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-h6Y2V2d8R2XnuFpYfdFwBw' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+< Date: Sun, 04 Feb 2024 04:09:18 GMT
+< Expires: Tue, 05 Mar 2024 04:09:18 GMT
+< Cache-Control: public, max-age=2592000
+< Server: gws
+< Content-Length: 219
+< X-XSS-Protection: 0
+< X-Frame-Options: SAMEORIGIN
+< 
+* Connection #0 to host google.com left intact
+* Issue another request to this URL: 'http://www.google.com/'
+*   Trying [2607:f8b0:4023:1009::6a]:80...
+* Connected to www.google.com (2607:f8b0:4023:1009::6a) port 80 (#1)
+> HEAD / HTTP/1.1
+> Host: www.google.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: text/html; charset=ISO-8859-1
+< Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-rPJVLmgNCmplCGI-2Clr8Q' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+< P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+< Date: Sun, 04 Feb 2024 04:09:18 GMT
+< Server: gws
+< X-XSS-Protection: 0
+< X-Frame-Options: SAMEORIGIN
+< Transfer-Encoding: chunked
+< Expires: Sun, 04 Feb 2024 04:09:18 GMT
+< Cache-Control: private
+< Set-Cookie: 1P_JAR=2024-02-04-04; expires=Tue, 05-Mar-2024 04:09:18 GMT; path=/; domain=.google.com; Secure
+< Set-Cookie: AEC=Ae3NU9Oy-3rzqylRQBgIaeX68Gx3KlkSE8tsoeXZ7xlP6SZ91VmyvVn4vw; expires=Fri, 02-Aug-2024 04:09:18 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=lax
+< Set-Cookie: NID=511=BQdbZ7khjSQZ_Q8XQ9l5pUR0EA6vAT9Ww2tmedQFqp22X9N8e3IfUR5CrSL5zK5_hU_H6ApeyI7ekrOIK8HDYQ_KLkYhrTZZa5pLY4ggfbJDIG0eOExq90kPD7r5iGZnGs4Zm3w2TXua-yGy1NpQeCDqC5BZrwlmrQqqYFF8lHs; expires=Mon, 05-Aug-2024 04:09:18 GMT; path=/; domain=.google.com; HttpOnly
+< 
+* Connection #1 to host www.google.com left intact
