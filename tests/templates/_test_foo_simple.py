@@ -3,21 +3,21 @@ import unittest
 from tests import utils_for_test as test_utils
 
 # Execute these steps for standard tests:
-# - Save this file as `text_{parser_name}.py` since the helper methods extract parser names from the filename.
-# - Organize fixtures in `text/fixtures` for optimal structure.
+# - Save this file as `test_{parser_name}.py` since the helper methods extract parser names from the filename.
+# - Organize fixtures in `test/fixtures` for optimal structure.
 # - Format fixtures as follows (using double dashes):
 #     - `{parser_name}--{some_test_description}.out` for command output.
 #     - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
 
 class MyTests(unittest.TestCase):
 
-    def test_path_nodata(self):
+    def test_foo_nodata(self):
         """
         Test 'my_parser_name' with no data
         """
         test_utils.run_no_data(self, __file__, {})
 
-    def test_all_fixtures(self):
+    def test_foo_all_fixtures(self):
         """
         Test 'my_parser_name' with various fixtures
         """
