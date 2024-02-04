@@ -1,4 +1,4 @@
-.TH jc 1 2024-02-02 1.25.0 "JSON Convert"
+.TH jc 1 2024-02-04 1.25.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -136,6 +136,11 @@ CSV file parser
 .B
 \fB--csv-s\fP
 CSV file streaming parser
+
+.TP
+.B
+\fB--curl-head\fP
+`curl --head` command parser
 
 .TP
 .B
@@ -281,6 +286,11 @@ hashsum command parser (`md5sum`, `shasum`, etc.)
 .B
 \fB--hosts\fP
 `/etc/hosts` file parser
+
+.TP
+.B
+\fB--http-headers\fP
+HTTP headers parser
 
 .TP
 .B

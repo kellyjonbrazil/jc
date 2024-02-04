@@ -176,6 +176,7 @@ option.
 |     `--crontab-u` | `crontab` file parser with user support                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u)      |
 |           `--csv` | CSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv)            |
 |         `--csv-s` | CSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s)          |
+|     `--curl-head` | `curl --head` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/curl_head)      |
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
 |  `--debconf-show` | `debconf-show` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/debconf_show)   |
@@ -205,6 +206,7 @@ option.
 |       `--history` | `history` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/history)        |
 |          `--host` | `host` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/host)           |
 |         `--hosts` | `/etc/hosts` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts)          |
+|  `--http-headers` | HTTP headers parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/http_headers)   |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
 |           `--ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |

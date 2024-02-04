@@ -1,6 +1,6 @@
 jc changelog
 
-20240202 v1.25.0
+20240204 v1.25.0
 - Add `--slurp` functionality to wrap output from multiple lines into a single array.
   Note, this only works with single-line input parsers. (e.g. `date`, `ip-address`, `url`, etc.)
   Streaming parsers are not supported. Use `jc -hhh` to find parsers compatible with the slurp option.
@@ -11,6 +11,8 @@ jc changelog
   For `/proc` file magic syntax, this is a list of `/proc` filenames in order. This can help with
   identifying which input matches to which output when using `--slurp` or when converting multiple
   files via `/proc` file magic syntax.
+- Add `curl-head` command parser for `curl --head` or `curl -I` with verbose support
+- Add `http-headers` parser for plain HTTP header output
 - Add `kv-dup` parser for Key/Value files with duplicate keys
 - Add `path` string parser to parse posix path
 - Add `path-list` string parser to parse path list strings found in env variables
