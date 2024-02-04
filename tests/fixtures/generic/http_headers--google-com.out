@@ -1,0 +1,27 @@
+HTTP/1.1 301 Moved Permanently
+Location: http://www.google.com/
+Content-Type: text/html; charset=UTF-8
+Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-hz60SAtf4llI3wIzHRfCJQ' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+Date: Sun, 04 Feb 2024 22:48:38 GMT
+Expires: Tue, 05 Mar 2024 22:48:38 GMT
+Cache-Control: public, max-age=2592000
+Server: gws
+Content-Length: 219
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=ISO-8859-1
+Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-mX7dt-8o5qVlNVsgmeavew' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+Date: Sun, 04 Feb 2024 22:48:38 GMT
+Server: gws
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+Transfer-Encoding: chunked
+Expires: Sun, 04 Feb 2024 22:48:38 GMT
+Cache-Control: private
+Set-Cookie: 1P_JAR=2024-02-04-22; expires=Tue, 05-Mar-2024 22:48:38 GMT; path=/; domain=.google.com; Secure
+Set-Cookie: AEC=Ae3NU9OU79owVo5-35hp-3J9oKndh-rfsAa-zY1qEjSYgasatkOvi9Cc_P8; expires=Fri, 02-Aug-2024 22:48:38 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=lax
+Set-Cookie: NID=511=YT39CFpNgnJnUOS1bI2BM3RWycjJIJ9HfoYYzzj48nu9tym-Ja_uLvmg-vBYyJYoA7_BBrlj4nGil9o0WYbz2tfMwDVzpHXRVZTZx7P9yI-Ad9t8VgRB4wVS5nGEi9xZ20djOLr-bTWoIiJuXgUdKH30znpJXziu542KaHu0ZcQ; expires=Mon, 05-Aug-2024 22:48:38 GMT; path=/; domain=.google.com; HttpOnly
+
