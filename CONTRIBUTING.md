@@ -46,8 +46,8 @@ actively welcome your pull requests:
 
 ## Documentation And Completions
 
-No need to worry about documentation and completions as those are auto generated via the python
-doc strings.
+No need to worry about documentation and completions as those are auto generated
+via the python doc strings.
 
 ## Parser Schema Guidelines
 - Try to keep the schema as flat as possible - typically a list of flat
