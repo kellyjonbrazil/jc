@@ -123,4 +123,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/pkg_index_apk.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/pkg_index_apk.py)
+
 Version 1.0 by Roey Darwish Dror (roey.ghost@gmail.com)

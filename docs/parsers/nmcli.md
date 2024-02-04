@@ -168,4 +168,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/nmcli.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/nmcli.py)
+
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -70,4 +70,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/jwt.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/jwt.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

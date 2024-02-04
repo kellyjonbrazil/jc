@@ -75,7 +75,7 @@ import uuid
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
+    version = '2.2'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -87,17 +87,14 @@ class info():
 __version__ = info.version
 
 
-def _remove_quotes(value):
-    if value is None:
-        value = ''
+class MyDict(dict):
+    def __setitem__(self, key, value):
+        # convert None values to empty string
+        if value is None:
+            self[key] = ''
 
-    elif value.startswith('"') and value.endswith('"'):
-        value = value[1:-1]
-
-    elif value.startswith("'") and value.endswith("'"):
-        value = value[1:-1]
-
-    return value
+        else:
+            super().__setitem__(key, value)
 
 
 def _process(proc_data):
@@ -116,10 +113,10 @@ def _process(proc_data):
     for k, v in proc_data.items():
         if isinstance(v, dict):
             for key, value in v.items():
-                v[key] = _remove_quotes(value)
+                v[key] = jc.utils.remove_quotes(value)
             continue
 
-        proc_data[k] = _remove_quotes(v)
+        proc_data[k] = jc.utils.remove_quotes(v)
 
     return proc_data
 
@@ -146,6 +143,7 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         ini_parser = configparser.ConfigParser(
+            dict_type = MyDict,
             allow_no_value=True,
             interpolation=None,
             default_section=None,

@@ -108,4 +108,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/iwconfig.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iwconfig.py)
+
 Version 1.1 by Thomas Vincent (vrince@gmail.com)

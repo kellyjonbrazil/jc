@@ -140,4 +140,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, aix, freebsd, darwin
 
+Source: [`jc/parsers/arp.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/arp.py)
+
 Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)

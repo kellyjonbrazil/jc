@@ -1,4 +1,4 @@
-.TH jc 1 2023-12-17 1.24.0 "JSON Convert"
+.TH jc 1 2024-02-04 1.25.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -136,6 +136,11 @@ CSV file parser
 .B
 \fB--csv-s\fP
 CSV file streaming parser
+
+.TP
+.B
+\fB--curl-head\fP
+`curl --head` command parser
 
 .TP
 .B
@@ -284,6 +289,11 @@ hashsum command parser (`md5sum`, `shasum`, etc.)
 
 .TP
 .B
+\fB--http-headers\fP
+HTTP headers parser
+
+.TP
+.B
 \fB--id\fP
 `id` command parser
 
@@ -356,6 +366,11 @@ JWT string parser
 .B
 \fB--kv\fP
 Key/Value file and string parser
+
+.TP
+.B
+\fB--kv-dup\fP
+Key/Value with duplicate key file and string parser
 
 .TP
 .B
@@ -471,6 +486,16 @@ openvpn-status.log file parser
 .B
 \fB--passwd\fP
 `/etc/passwd` file parser
+
+.TP
+.B
+\fB--path\fP
+POSIX path string parser
+
+.TP
+.B
+\fB--path-list\fP
+POSIX path list string parser
 
 .TP
 .B
@@ -1111,7 +1136,7 @@ Debug - show traceback (use \fB-dd\fP for verbose traceback)
 .B
 \fB-h\fP, \fB--help\fP
 Help (\fB--help --parser_name\fP for parser documentation). Use twice to show
-hidden parsers (e.g. \fB-hh\fP)
+hidden parsers (e.g. \fB-hh\fP). Use thrice to show parser categories (e.g. \fB-hhh\fP).
 .TP
 .B
 \fB-m\fP, \fB--monochrome\fP
@@ -1135,6 +1160,10 @@ parser errors)
 \fB-r\fP, \fB--raw\fP
 Raw output. Provides more literal output, typically with string values and no
 additional semantic processing
+.TP
+.B
+\fB-s\fP, \fB--slurp\fP
+Slurp multiple lines into an array. (use \fB-hhh\fP` to find compatible parsers)
 .TP
 .B
 \fB-u\fP, \fB--unbuffer\fP
@@ -1234,6 +1263,64 @@ lines from the beginning through \fBSTOP\fP lines from the end
 .B
 \fB:\fP
 all lines
+
+.SH SlURP
+Some parsers support multi-item input and can output an array of results in a
+single pass. Slurping works for string parsers that accept a single line of
+input. (e.g. \fBurl\fP and \fBip-address\fP) To see a list of parsers that support
+the \fB--slurp\fP option, use \fBjc -hhh\fP.
+
+For example, you can send a file with multiple IP addresses (one per line) to
+\fBjc\fP with the \fB--slurp\fP option and an array of results will output:
+
+.RS
+.nf
+$ cat ip-addresses.txt | jc --slurp --ip-address
+[<multiple output objects>]
+.fi
+.RE
+
+The magic syntax for \fB/proc\fP files automatically supports slurping of multiple
+files (no need to use the \fB--slurp\fP option). For example, you can convert many
+PID files at once:
+
+.RS
+.nf
+$ jc /proc/*/status
+[<multiple output objects>]
+.fi
+.RE
+
+When the \fB/proc\fP magic syntax is used and multiple files are selected, an
+additional \fB_file\fP field is inserted in the output so it is easier to tell what
+file each output object refers to.
+
+Finally, the \fB--meta-out\fP option can be used in conjunction with slurped output.
+In this case, the slurped output is wrapped in an object with the following
+structure:
+
+.RS
+.nf
+{
+  "result": [<multiple output objects>],
+  "_jc_meta": {
+    "parser": "url",
+    "timestamp": 1706235558.654576,
+    "slice_start": null,
+    "slice_end": null,
+    "input_list": [
+      "http://www.google.com",
+      "https://www.apple.com",
+      "https://www.microsoft.com"
+    ]
+  }
+}
+.fi
+.RE
+
+With \fB--meta-out\fP, \fBinput_list\fP contains a list of inputs (actual input strings
+or \fB/proc\fP filenames) so you can identify which output object relates to each
+input string or \fB/proc\fP filename.
 
 .SH EXIT CODES
 Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP,
@@ -1505,6 +1592,6 @@ Kelly Brazil (kellyjonbrazil@gmail.com)
 https://github.com/kellyjonbrazil/jc
 
 .SH COPYRIGHT
-Copyright (c) 2019-2023 Kelly Brazil
+Copyright (c) 2019-2024 Kelly Brazil
 
 License:  MIT License

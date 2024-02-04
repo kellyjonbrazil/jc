@@ -167,7 +167,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -298,14 +298,21 @@ def _linux_parse(data):
 
     for line in filter(None, linedata):
         if line.startswith('PING '):
-            if ipv4 and not hostname:
-                dst_ip, dta_byts = (2, 3)
-            elif ipv4 and hostname:
-                dst_ip, dta_byts = (2, 3)
-            elif not ipv4 and not hostname:
-                dst_ip, dta_byts = (2, 3)
+            source_ip = 'from' in line
+            if ipv4:
+                if source_ip:
+                    dst_ip, dta_byts = (2, 6)
+                else:
+                    dst_ip, dta_byts = (2, 3)
             else:
-                dst_ip, dta_byts = (3, 4)
+                if source_ip and hostname:
+                    dst_ip, dta_byts = (3, 7)
+                elif source_ip and not hostname:
+                    dst_ip, dta_byts = (2, 6)
+                elif not source_ip and hostname:
+                    dst_ip, dta_byts = (3, 4)
+                else:
+                    dst_ip, dta_byts = (2, 3)
 
             line = line.replace('(', ' ').replace(')', ' ')
             raw_output.update(

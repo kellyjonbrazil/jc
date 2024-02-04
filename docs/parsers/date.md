@@ -100,4 +100,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 2.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/date.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/date.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 2.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -37,5 +37,8 @@ class MyTests(unittest.TestCase):
     def test_jc_plugin_parser_mod_list_is_list(self):
         self.assertIsInstance(jc.plugin_parser_mod_list(), list)
 
+    def test_jc_slurpable_parser_mod_list_is_list(self):
+        self.assertIsInstance(jc.slurpable_parser_mod_list(), list)
+
 if __name__ == '__main__':
     unittest.main()

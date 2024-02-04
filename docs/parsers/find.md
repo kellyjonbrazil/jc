@@ -79,4 +79,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/find.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/find.py)
+
 Version 1.0 by Solomon Leang (solomonleang@gmail.com)

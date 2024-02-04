@@ -49,9 +49,13 @@ class info():
     # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
 
-    # tags options: generic, standard, file, string, binary, command
+    # tags options: generic, standard, file, string, binary, command, slurpable
     tags = ['command']
     magic_commands = ['foo']
+
+    # other attributes - only enable if needed
+    deprecated = False
+    hidden = False
 
 
 __version__ = info.version

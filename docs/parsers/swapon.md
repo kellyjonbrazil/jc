@@ -66,4 +66,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, freebsd
 
+Source: [`jc/parsers/swapon.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/swapon.py)
+
 Version 1.0 by Roey Darwish Dror (roey.ghost@gmail.com)

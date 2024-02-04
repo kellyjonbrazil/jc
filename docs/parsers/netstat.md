@@ -378,4 +378,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd, win32
 
+Source: [`jc/parsers/netstat.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/netstat.py)
+
 Version 1.15 by Kelly Brazil (kellyjonbrazil@gmail.com)

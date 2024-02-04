@@ -144,4 +144,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/asciitable.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/asciitable.py)
+
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

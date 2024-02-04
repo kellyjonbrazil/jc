@@ -184,13 +184,11 @@ import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
-from collections import namedtuple
-from numbers import Number
 
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.0"
+    version = "1.1"
     description = "`iftop` command parser"
     author = "Ron Green"
     author_email = "11993626+georgettica@users.noreply.github.com"
@@ -233,7 +231,7 @@ def _process(proc_data: List[JSONDictType], quiet: bool = False) -> List[JSONDic
                 for one_nesting_item_key in entry[entry_key]:
                     # print(f"{one_nesting_item_key=}")
                     if one_nesting_item_key in string_to_bytes_fields:
-                        entry[entry_key][one_nesting_item_key] = _parse_size(entry[entry_key][one_nesting_item_key])
+                        entry[entry_key][one_nesting_item_key] = jc.utils.convert_size_to_int(entry[entry_key][one_nesting_item_key])
             elif entry_key == "clients":
                 for client in entry[entry_key]:
                     # print(f"{client=}")
@@ -244,119 +242,8 @@ def _process(proc_data: List[JSONDictType], quiet: bool = False) -> List[JSONDic
                         for connection_key in connection:
                             # print(f"{connection_key=}")
                             if connection_key in string_to_bytes_fields:
-                                connection[connection_key] = _parse_size(connection[connection_key])
+                                connection[connection_key] = jc.utils.convert_size_to_int(connection[connection_key])
     return proc_data
-
-# _parse_size from https://github.com/xolox/python-humanfriendly
-
-# Copyright (c) 2021 Peter Odding
-
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-# Note: this function can be replaced with jc.utils.convert_size_to_int
-#       in the future.
-def _parse_size(size, binary=False):
-    """
-    Parse a human readable data size and return the number of bytes.
-
-    :param size: The human readable file size to parse (a string).
-    :param binary: :data:`True` to use binary multiples of bytes (base-2) for
-                   ambiguous unit symbols and names, :data:`False` to use
-                   decimal multiples of bytes (base-10).
-    :returns: The corresponding size in bytes (an integer).
-    :raises: :exc:`InvalidSize` when the input can't be parsed.
-
-    This function knows how to parse sizes in bytes, kilobytes, megabytes,
-    gigabytes, terabytes and petabytes. Some examples:
-
-    >>> from humanfriendly import parse_size
-    >>> parse_size('42')
-    42
-    >>> parse_size('13b')
-    13
-    >>> parse_size('5 bytes')
-    5
-    >>> parse_size('1 KB')
-    1000
-    >>> parse_size('1 kilobyte')
-    1000
-    >>> parse_size('1 KiB')
-    1024
-    >>> parse_size('1 KB', binary=True)
-    1024
-    >>> parse_size('1.5 GB')
-    1500000000
-    >>> parse_size('1.5 GB', binary=True)
-    1610612736
-    """
-    def tokenize(text):
-        tokenized_input = []
-        for token in re.split(r'(\d+(?:\.\d+)?)', text):
-            token = token.strip()
-            if re.match(r'\d+\.\d+', token):
-                tokenized_input.append(float(token))
-            elif token.isdigit():
-                tokenized_input.append(int(token))
-            elif token:
-                tokenized_input.append(token)
-        return tokenized_input
-
-    SizeUnit = namedtuple('SizeUnit', 'divider, symbol, name')
-    CombinedUnit = namedtuple('CombinedUnit', 'decimal, binary')
-    disk_size_units = (
-        CombinedUnit(SizeUnit(1000**1, 'KB', 'kilobyte'), SizeUnit(1024**1, 'KiB', 'kibibyte')),
-        CombinedUnit(SizeUnit(1000**2, 'MB', 'megabyte'), SizeUnit(1024**2, 'MiB', 'mebibyte')),
-        CombinedUnit(SizeUnit(1000**3, 'GB', 'gigabyte'), SizeUnit(1024**3, 'GiB', 'gibibyte')),
-        CombinedUnit(SizeUnit(1000**4, 'TB', 'terabyte'), SizeUnit(1024**4, 'TiB', 'tebibyte')),
-        CombinedUnit(SizeUnit(1000**5, 'PB', 'petabyte'), SizeUnit(1024**5, 'PiB', 'pebibyte')),
-        CombinedUnit(SizeUnit(1000**6, 'EB', 'exabyte'), SizeUnit(1024**6, 'EiB', 'exbibyte')),
-        CombinedUnit(SizeUnit(1000**7, 'ZB', 'zettabyte'), SizeUnit(1024**7, 'ZiB', 'zebibyte')),
-        CombinedUnit(SizeUnit(1000**8, 'YB', 'yottabyte'), SizeUnit(1024**8, 'YiB', 'yobibyte')),
-    )
-    tokens = tokenize(size)
-    if tokens and isinstance(tokens[0], Number):
-        # Get the normalized unit (if any) from the tokenized input.
-        normalized_unit = tokens[1].lower() if len(tokens) == 2 and isinstance(tokens[1], str) else ''
-        # If the input contains only a number, it's assumed to be the number of
-        # bytes. The second token can also explicitly reference the unit bytes.
-        if len(tokens) == 1 or normalized_unit.startswith('b'):
-            return int(tokens[0])
-        # Otherwise we expect two tokens: A number and a unit.
-        if normalized_unit:
-            # Convert plural units to singular units, for details:
-            # https://github.com/xolox/python-humanfriendly/issues/26
-            normalized_unit = normalized_unit.rstrip('s')
-            for unit in disk_size_units:
-                # First we check for unambiguous symbols (KiB, MiB, GiB, etc)
-                # and names (kibibyte, mebibyte, gibibyte, etc) because their
-                # handling is always the same.
-                if normalized_unit in (unit.binary.symbol.lower(), unit.binary.name.lower()):
-                    return int(tokens[0] * unit.binary.divider)
-                # Now we will deal with ambiguous prefixes (K, M, G, etc),
-                # symbols (KB, MB, GB, etc) and names (kilobyte, megabyte,
-                # gigabyte, etc) according to the caller's preference.
-                if (normalized_unit in (unit.decimal.symbol.lower(), unit.decimal.name.lower()) or
-                        normalized_unit.startswith(unit.decimal.symbol[0].lower())):
-                    return int(tokens[0] * (unit.binary.divider if binary else unit.decimal.divider))
-    # We failed to parse the size specification.
-    return None
 
 
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
