@@ -197,11 +197,66 @@ Schema:
 
 Examples:
 
-    $ curl-head | jc --curl-head -p
-    []
+    $ curl --head www.example.com | jc --curl-head -p
+    [
+      {
+        "type": "response",
+        "response_version": "HTTP/1.1",
+        "response_status": 200,
+        "response_reason": [
+          "OK"
+        ],
+        "accept-ranges": [
+          "bytes"
+        ],
+        "age": 241144,
+        "cache-control": [
+          "max-age=604800"
+        ],
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 04 Feb 2024 23:26:29 GMT",
+        "etag": "\"3147526947\"",
+        "expires": "Sun, 11 Feb 2024 23:26:29 GMT",
+        "last-modified": "Thu, 17 Oct 2019 07:18:26 GMT",
+        "server": [
+          "ECS (sac/2508)"
+        ],
+        "x-cache": "HIT",
+        "content-length": 1256,
+        "date_epoch_utc": 1707089189,
+        "expires_epoch_utc": 1707693989,
+        "last-modified_epoch_utc": 1571296706
+      }
+    ]
 
-    $ curl-head | jc --curl-head -p -r
-    []
+    $ curl --head www.example.com | jc --curl-head -p -r
+    [
+      {
+        "type": "response",
+        "response_version": "HTTP/1.1",
+        "response_status": 200,
+        "response_reason": [
+          "OK"
+        ],
+        "accept-ranges": [
+          "bytes"
+        ],
+        "age": "225102",
+        "cache-control": [
+          "max-age=604800"
+        ],
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 04 Feb 2024 23:28:17 GMT",
+        "etag": "\"3147526947\"",
+        "expires": "Sun, 11 Feb 2024 23:28:17 GMT",
+        "last-modified": "Thu, 17 Oct 2019 07:18:26 GMT",
+        "server": [
+          "ECS (sac/2575)"
+        ],
+        "x-cache": "HIT",
+        "content-length": "1256"
+      }
+    ]
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
