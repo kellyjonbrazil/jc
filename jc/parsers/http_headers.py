@@ -10,7 +10,7 @@ https://datatracker.ietf.org/doc/html/rfc2616
 https://datatracker.ietf.org/doc/html/rfc3229
 https://datatracker.ietf.org/doc/html/rfc7089
 https://datatracker.ietf.org/doc/html/rfc7231
-https://www.rfc-editor.org/rfc/rfc5789
+https://datatracker.ietf.org/doc/html/rfc5789
 
 If you are converting HTTP headers from `curl` verbose output, use the
 `curl-head` parser which will strip the `>` and `<` characters and remove
