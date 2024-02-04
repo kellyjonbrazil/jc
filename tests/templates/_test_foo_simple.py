@@ -4,7 +4,7 @@ from tests import utils_for_test as test_utils
 
 # Execute these steps for standard tests:
 # - Save this file as `test_{parser_name}.py` since the helper methods extract parser names from the filename.
-# - Organize fixtures in `test/fixtures` for optimal structure.
+# - Organize fixtures in `tests/fixtures` for optimal structure.
 # - Format fixtures as follows (using double dashes):
 #     - `{parser_name}--{some_test_description}.out` for command output.
 #     - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
