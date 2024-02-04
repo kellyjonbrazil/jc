@@ -8,6 +8,10 @@ from tests import utils_for_test as test_utils
 #     - `{parser_name}--{some_test_description}.out` for command output.
 #     - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
 
+# create output with:
+# curl -ILvs http://google.com 2> curl_head--ILvs-google-com.out
+# cat curl_head--ILvs-google-com.out | jc --curl-head > curl_head--ILvs-google-com.json
+
 class MyTests(unittest.TestCase):
 
     def test_curl_head_nodata(self):
