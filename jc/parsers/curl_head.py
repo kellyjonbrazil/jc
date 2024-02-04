@@ -215,7 +215,7 @@ class info():
     description = '`curl --head` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the http-headers parser.'
+    details = 'Using the http-headers parser'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['command', 'standard']
     magic_commands = ['curl']
@@ -233,21 +233,6 @@ def _remove_extra_chars(data: str, verbose: bool) -> str:
         return ''
     else:
         return data
-
-
-def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
-    """
-    Final processing to conform to the schema.
-
-    Parameters:
-
-        proc_data:   (List of Dictionaries) raw structured data to process
-
-    Returns:
-
-        List of Dictionaries. Structured to conform to the schema.
-    """
-    return proc_data
 
 
 def parse(
@@ -280,6 +265,8 @@ def parse(
             curl_verbose = True
         data_list = [_remove_extra_chars(x, verbose=curl_verbose) for x in data_list]
         data_str = '\n'.join(data_list)
+
+        headers_parser.info = info  # type: ignore
         raw_output = headers_parser.parse(data_str, raw, quiet)
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output
