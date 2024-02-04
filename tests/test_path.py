@@ -11,7 +11,7 @@ class MyTests(unittest.TestCase):
         """
         test_utils.run_no_data(self, __file__, {})
 
-    def test_all_fixtures(self):
+    def test_path_all_fixtures(self):
         """
         Test 'path' with various logs
         """
