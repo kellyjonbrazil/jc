@@ -1,62 +1,23 @@
-import os
-import json
 import unittest
-from typing import Dict
-from jc.parsers.path_list import parse
 
-THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-
-FIXTURES_DIR = 'fixtures/generic/'
-
-
-def open_file(name, ext):
-    return open(get_path(name, ext), 'r', encoding='utf-8')
-
-
-def get_path(name, ext):
-    return os.path.join(THIS_DIR, name + '.' + ext)
+from tests import utils_for_test as test_utils
 
 
 class MyTests(unittest.TestCase):
-    f_in: Dict = {}
-    f_json: Dict = {}
-
-    fixtures = {
-        'path_list--one': 'fixtures/generic/path_list--one',
-        'path_list--two': 'fixtures/generic/path_list--two',
-        'path_list--long': 'fixtures/generic/path_list--long',
-        'path_list--windows': 'fixtures/generic/path_list--windows',
-        'path_list--windows-long': 'fixtures/generic/path_list--windows-long',
-        'path_list--windows-environment': 'fixtures/generic/path_list--windows-environment',
-        'path_list--with-spaces': 'fixtures/generic/path_list--with-spaces',
-    }
-
-    @classmethod
-    def setUpClass(cls):
-
-        for file, filepath in cls.fixtures.items():
-            with open_file(filepath, 'out') as in_file, \
-                    open_file(filepath, 'json') as json_file:
-                cls.f_in[file] = in_file.read()
-                cls.f_json[file] = json.loads(json_file.read())
 
     def test_path_nodata(self):
         """
-        Test 'path' with no data
+        Test 'path_list' with no data
         """
-        self.assertEqual(parse('', quiet=True), [])
+        # self.assertEqual(parse('', quiet=True), [])
+        test_utils.run_no_data(self, __file__, [])
 
-    def test_path(self):
+    def test_all_fixtures(self):
         """
-        Test 'path' with various logs
+        Test 'path_list' with various logs
         """
-        for file in self.fixtures:
-            with self.subTest("fixture: " + file):
-                self.assertEqual(
-                    parse(self.f_in[file], quiet=True),
-                    self.f_json[file],
-                    "Should be equal for test files: {0}.*".format(file)
-                )
+
+        test_utils.run_all_fixtures(self, __file__)
 
 
 if __name__ == '__main__':
