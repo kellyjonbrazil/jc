@@ -337,7 +337,9 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 item[key] = jc.utils.convert_to_float(item[key])
 
             if key in DT_HEADERS or key in DT_OR_STR_HEADERS:
-                item[key + '_epoch_utc'] = jc.utils.timestamp(item[key], format_hint=(3500,)).utc
+                timestamp = jc.utils.timestamp(item[key], format_hint=(3500,)).utc
+                if timestamp:
+                    item[key + '_epoch_utc'] = timestamp
 
             if key in DT_OR_INT_HEADERS:
                 timestamp = jc.utils.timestamp(item[key], format_hint=(3500,)).utc
