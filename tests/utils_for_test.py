@@ -10,8 +10,7 @@ def _open_file(file_path, ext):
 
 
 def _get_base_dir(file_path):
-    THIS_DIR = os.path.dirname(os.path.abspath(file_path))
-    return THIS_DIR
+    return os.path.dirname(os.path.abspath(file_path))
 
 
 def _get_parser_name_from_path(parser_path):
