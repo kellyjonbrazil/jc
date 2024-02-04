@@ -341,11 +341,10 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
             if key in DT_OR_INT_HEADERS:
                 timestamp = jc.utils.timestamp(item[key], format_hint=(3500,)).utc
-                int_val = jc.utils.convert_to_int(item[key])
                 if timestamp:
                     item[key + '_epoch_utc'] = timestamp
-                if int_val is not None:
-                    item[key] = int_val
+                if item[key].isnumeric():
+                    item[key] = jc.utils.convert_to_int(item[key])
 
         # special handling
         if 'x-cache-hits' in item:
