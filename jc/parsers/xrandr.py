@@ -28,7 +28,7 @@ Schema:
           "maximum_height":                    integer,
           "devices": [
             {
-              "modes": [
+              "resolution_modes": [
                 {
                   "resolution_width":          integer,
                   "resolution_height":         integer,
@@ -77,7 +77,7 @@ Examples:
           "maximum_height": 32767,
           "devices": [
             {
-              "modes": [
+              "resolution_modes": [
                 {
                   "resolution_width": 1920,
                   "resolution_height": 1080,
@@ -138,7 +138,7 @@ Examples:
           "maximum_height": 32767,
           "devices": [
             {
-              "modes": [
+              "resolution_modes": [
                 {
                   "resolution_width": 1920,
                   "resolution_height": 1080,
@@ -189,15 +189,26 @@ Examples:
       ]
     }
 """
+from collections import defaultdict
+from enum import Enum
 import re
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Tuple, Union
+
 import jc.utils
 from jc.parsers.pyedid.edid import Edid
 from jc.parsers.pyedid.helpers.edid_helper import EdidHelper
 
+Match = None
+try:
+    # Added Python 3.7
+    Match = re.Match
+except AttributeError:
+    Match = type(re.match("", ""))
+
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
+
     version = "1.4"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
@@ -210,36 +221,10 @@ class info:
 
 __version__ = info.version
 
-# keep parsing state so we know which parsers have already tried the line
-# Structure is:
-# {
-#   <line_string>: [
-#     <parser_string>
-#   ]
-# }
-#
-# Where <line_string> is the xrandr output line to be checked and <parser_string>
-# can contain "screen", "device", or "model"
-parse_state: Dict[str, List] = {}
-
-
-def _was_parsed(line: str, parser: str) -> bool:
-    """
-    Check if entered parser has already parsed. If so return True.
-    If not, return false and add the parser to the list for the line entry.
-    """
-    if line in parse_state:
-        if parser in parse_state[line]:
-            return True
-
-        parse_state[line].append(parser)
-        return False
-
-    parse_state[line] = [parser]
-    return False
-
-
+# NOTE: When developing, comment out the try statement and catch block to get
+# TypedDict type hints and valid type errors.
 try:
+    # Added in Python 3.8
     from typing import TypedDict
 
     Frequency = TypedDict(
@@ -250,8 +235,8 @@ try:
             "is_preferred": bool,
         },
     )
-    Mode = TypedDict(
-        "Mode",
+    ResolutionMode = TypedDict(
+        "ResolutionMode",
         {
             "resolution_width": int,
             "resolution_height": int,
@@ -259,14 +244,15 @@ try:
             "frequencies": List[Frequency],
         },
     )
-    Model = TypedDict(
-        "Model",
+    EdidModel = TypedDict(
+        "EdidModel",
         {
             "name": str,
             "product_id": str,
             "serial_number": str,
         },
     )
+    Props = Dict[str, Union[List[str], EdidModel]]
     Device = TypedDict(
         "Device",
         {
@@ -282,7 +268,8 @@ try:
             "offset_height": int,
             "dimension_width": int,
             "dimension_height": int,
-            "modes": List[Mode],
+            "props": Props,
+            "resolution_modes": List[ResolutionMode],
             "rotation": str,
             "reflection": str,
         },
@@ -307,12 +294,13 @@ try:
         },
     )
 except ImportError:
-    Screen = Dict[str, Union[int, str]]
-    Device = Dict[str, Union[str, int, bool]]
+    EdidModel = Dict[str, str]
+    Props = Dict[str, Union[List[str], EdidModel]]
     Frequency = Dict[str, Union[float, bool]]
-    Mode = Dict[str, Union[int, bool, List[Frequency]]]
-    Model = Dict[str, str]
-    Response = Dict[str, Union[Device, Mode, Screen]]
+    ResolutionMode = Dict[str, Union[int, bool, List[Frequency]]]
+    Device = Dict[str, Union[str, int, bool, List[ResolutionMode]]]
+    Screen = Dict[str, Union[int, List[Device]]]
+    Response = Dict[str, Screen]
 
 
 _screen_pattern = (
@@ -321,33 +309,6 @@ _screen_pattern = (
     + r"current (?P<current_width>\d+) x (?P<current_height>\d+), "
     + r"maximum (?P<maximum_width>\d+) x (?P<maximum_height>\d+)"
 )
-
-
-def _parse_screen(next_lines: List[str]) -> Optional[Screen]:
-    next_line = next_lines.pop()
-
-    if _was_parsed(next_line, 'screen'):
-        return None
-
-    result = re.match(_screen_pattern, next_line)
-    if not result:
-        next_lines.append(next_line)
-        return None
-
-    raw_matches = result.groupdict()
-
-    screen: Screen = {"devices": []}
-    for k, v in raw_matches.items():
-        screen[k] = int(v)
-
-    while next_lines:
-        device: Optional[Device] = _parse_device(next_lines)
-        if not device:
-            break
-        else:
-            screen["devices"].append(device)
-
-    return screen
 
 
 # eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis)
@@ -365,25 +326,106 @@ _device_pattern = (
     + r"( ?((?P<dimension_width>\d+)mm x (?P<dimension_height>\d+)mm)?)?"
 )
 
+# 1920x1080i     60.03*+  59.93
+# 1920x1080     60.00 +  50.00    59.94
+_resolution_mode_pattern = r"\s*(?P<resolution_width>\d+)x(?P<resolution_height>\d+)(?P<is_high_resolution>i)?\s+(?P<rest>.*)"
+_frequencies_pattern = r"(((?P<frequency>\d+\.\d+)(?P<star>\*| |)(?P<plus>\+?)?)+)"
 
-def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device]:
-    if not next_lines:
-        return None
 
-    next_line = next_lines.pop()
+# Values sometimes appear on the same lines as the keys (CscMatrix), sometimes on the line
+# below (as with EDIDs), and sometimes both (CTM).
+# Capture the key line that way.
+#
+# CTM: 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0
+#         0 1
+# CscMatrix: 65536 0 0 0 0 65536 0 0 0 0 65536 0
+# EDID:
+#         00ffffffffffff0010ac33424c303541
+#         0f210104b53c22783eee95a3544c9926
+_prop_key_pattern = r"\s+(?P<key>[\w| |\-|_]+):\s?(?P<maybe_value>.*)"
 
-    if _was_parsed(next_line, 'device'):
-        return None
 
-    result = re.match(_device_pattern, next_line)
-    if not result:
-        next_lines.append(next_line)
-        return None
+class LineType(Enum):
+    Screen = 1
+    Device = 2
+    ResolutionMode = 3
+    PropKey = 4
+    PropValue = 5
+    Invalid = 6
 
-    matches = result.groupdict()
+
+class Line:
+    """Provide metadata about line to make handling it more simple across fn boundaries"""
+
+    def __init__(self, s: str, t: LineType, m: Match):
+        self.s = s
+        self.t = t
+        self.m = m
+
+    @classmethod
+    def categorize(cls, line: str) -> "Line":
+        """Iterate through line char by char to see what type of line it is. Apply regexes for more distinctness. Save the regexes and return them for later processing."""
+        i = 0
+        tab_count = 0
+        while True:
+            try:
+                c = line[i]
+            except:
+                # Really shouldn't be getting to the end of the line
+                raise Exception(f"Reached end of line unexpectedly: '{line}'")
+
+            if not c.isspace():
+                if tab_count == 0:
+                    screen_match = re.match(_screen_pattern, line)
+                    if screen_match:
+                        return cls(line, LineType.Screen, screen_match)
+
+                    device_match = re.match(_device_pattern, line)
+                    if device_match:
+                        return cls(line, LineType.Device, device_match)
+                    else:
+                        break
+                elif tab_count == 1:
+                    match = re.match(_prop_key_pattern, line)
+                    if match:
+                        return cls(line, LineType.PropKey, match)
+                    else:
+                        break
+                else:
+                    match = re.match(r"\s+(.*)\s+", line)
+                    if match:
+                        return cls(line, LineType.PropValue, match)
+                    else:
+                        break
+            else:
+                if c == " ":
+                    match = re.match(_resolution_mode_pattern, line)
+                    if match:
+                        return cls(line, LineType.ResolutionMode, match)
+                    else:
+                        break
+                elif c == "\t":
+                    tab_count += 1
+            i += 1
+        raise Exception(f"Line could not be categorized: '{line}'")
+
+
+def _parse_screen(line: Line) -> Screen:
+    d = line.m.groupdict()
+
+    screen: Screen = {"devices": []}  # type: ignore # Will be populated, but not immediately.
+    for k, v in d.items():
+        screen[k] = int(v)
+
+    return screen
+
+
+def _parse_device(line: Line) -> Device:
+    matches = line.m.groupdict()
 
     device: Device = {
-        "modes": [],
+        "props": defaultdict(list),
+        "resolution_modes": [],
         "is_connected": matches["is_connected"] == "connected",
         "is_primary": matches["is_primary"] is not None
         and len(matches["is_primary"]) > 0,
@@ -403,97 +445,20 @@ def _parse_device(next_lines: List[str], quiet: bool = False) -> Optional[Device
                 if v:
                     device[k] = int(v)
             except ValueError:
-                if not quiet:
-                    jc.utils.warning_message(
-                        [f"{next_line} : {k} - {v} is not int-able"]
-                    )
+                raise Exception([f"{line.s} : {k} - {v} is not int-able"])
 
-    model: Optional[Model] = _parse_model(next_lines, quiet)
-    if model:
-        device["model_name"] = model["name"]
-        device["product_id"] = model["product_id"]
-        device["serial_number"] = model["serial_number"]
-
-    while next_lines:
-        next_line = next_lines.pop()
-        next_mode: Optional[Mode] = _parse_mode(next_line)
-        if next_mode:
-            device["modes"].append(next_mode)
-        else:
-            if re.match(_device_pattern, next_line):
-                next_lines.append(next_line)
-                break
     return device
 
 
-# EDID:
-#      00ffffffffffff004ca3523100000000
-#      0014010380221378eac8959e57549226
-#      0f505400000001010101010101010101
-#      010101010101381d56d4500016303020
-#      250058c2100000190000000f00000000
-#      000000000025d9066a00000000fe0053
-#      414d53554e470a204ca34154000000fe
-#      004c544e313536415432343430310018
-_edid_head_pattern = r"\s*EDID:\s*"
-_edid_line_pattern = r"\s*(?P<edid_line>[0-9a-fA-F]{32})\s*"
-
-
-def _parse_model(next_lines: List[str], quiet: bool = False) -> Optional[Model]:
-    if not next_lines:
-        return None
-
-    next_line = next_lines.pop()
-
-    if _was_parsed(next_line, 'model'):
-        return None
-
-    if not re.match(_edid_head_pattern, next_line):
-        next_lines.append(next_line)
-        return None
-
-    edid_hex_value = ""
-
-    while next_lines:
-        next_line = next_lines.pop()
-        result = re.match(_edid_line_pattern, next_line)
-
-        if not result:
-            next_lines.append(next_line)
-            break
-
-        matches = result.groupdict()
-        edid_hex_value += matches["edid_line"]
-
-    edid = Edid(EdidHelper.hex2bytes(edid_hex_value))
-
-    model: Model = {
-        "name": edid.name or "Generic",
-        "product_id": str(edid.product),
-        "serial_number": str(edid.serial),
-    }
-    return model
-
-
-# 1920x1080i     60.03*+  59.93
-# 1920x1080     60.00 +  50.00    59.94
-_mode_pattern = r"\s*(?P<resolution_width>\d+)x(?P<resolution_height>\d+)(?P<is_high_resolution>i)?\s+(?P<rest>.*)"
-_frequencies_pattern = r"(((?P<frequency>\d+\.\d+)(?P<star>\*| |)(?P<plus>\+?)?)+)"
-
-
-def _parse_mode(line: str) -> Optional[Mode]:
-    result = re.match(_mode_pattern, line)
+def _parse_resolution_mode(line: Line) -> ResolutionMode:
     frequencies: List[Frequency] = []
 
-    if not result:
-        return None
-
-    d = result.groupdict()
+    d = line.m.groupdict()
     resolution_width = int(d["resolution_width"])
     resolution_height = int(d["resolution_height"])
     is_high_resolution = d["is_high_resolution"] is not None
 
-    mode: Mode = {
+    mode: ResolutionMode = {
         "resolution_width": resolution_width,
         "resolution_height": resolution_height,
         "is_high_resolution": is_high_resolution,
@@ -518,7 +483,45 @@ def _parse_mode(line: str) -> Optional[Mode]:
     return mode
 
 
-def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict:
+def _parse_props(index: int, line: Line, lines: List[str]) -> Tuple[int, Props]:
+    tmp_props: Dict[str, List[str]] = {}
+    key = ""
+    while index <= len(lines):
+        if line.t == LineType.PropKey:
+            d = line.m.groupdict()
+            # See _prop_key_pattern
+            key = d["key"]
+            maybe_value = d["maybe_value"]
+            if not maybe_value:
+                tmp_props[key] = []
+            else:
+                tmp_props[key] = [maybe_value]
+        elif line.t == LineType.PropValue:
+            tmp_props[key].append(line.s.strip())
+        else:
+            # We've gone past our props and need to ascend
+            index = index - 1
+            break
+        index += 1
+        try:
+            line = Line.categorize(lines[index])
+        except:
+            pass
+
+    props: Props = {}
+    if "EDID" in tmp_props:
+        edid = Edid(EdidHelper.hex2bytes("".join(tmp_props["EDID"])))
+        model: EdidModel = {
+            "name": edid.name or "Generic",
+            "product_id": str(edid.product),
+            "serial_number": str(edid.serial),
+        }
+        props["EdidModel"] = model
+
+    return index, {**tmp_props, **props}
+
+
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Response:
     """
     Main text parsing function
 
@@ -535,15 +538,34 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict:
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    linedata = data.splitlines()
-    linedata.reverse()  # For popping
-    result: Dict = {}
+    index = 0
+    lines = data.splitlines()
+    screen, device = None, None
 
+    result: Response = {"screens": []}
     if jc.utils.has_data(data):
-        result = {"screens": []}
-        while linedata:
-            screen = _parse_screen(linedata)
-            if screen:
+        while index < len(lines):
+            line = Line.categorize(lines[index])
+            if line.t == LineType.Screen:
+                screen = _parse_screen(line)
                 result["screens"].append(screen)
+            elif line.t == LineType.Device:
+                device = _parse_device(line)
+                if not screen:
+                    raise Exception("There should be an identifiable screen")
+                screen["devices"].append(device)
+            elif line.t == LineType.ResolutionMode:
+                resolution_mode = _parse_resolution_mode(line)
+                if not device:
+                    raise Exception("Undefined device")
+                device["resolution_modes"].append(resolution_mode)
+            elif line.t == LineType.PropKey:
+                # Props needs to be state aware, it owns the index.
+                ix, props = _parse_props(index, line, lines)
+                index = ix
+                if not device:
+                    raise Exception("Undefined device")
+                device["props"] = props
+            index += 1
 
     return result
