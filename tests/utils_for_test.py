@@ -48,10 +48,10 @@ def run_all_fixtures(self, test_parser_path):
     if not fixtures:
         raise ValueError(f"No fixtures found for '{parser_name}' tests!")
 
-    _test_print(f"\nRun all fixtures for parser '{parser_name}':")
+    _test_print(f"\n  Run all fixtures for parser '{parser_name}':")
 
     for file, file_path in fixtures:
-        _test_print(f"- test '{parser_name}' parser with fixture: '{file}'")
+        _test_print(f"  - test '{parser_name}' parser with fixture: '{file}'")
 
         with self.subTest(f"fixture: '{file}'"):
             with _open_file(file_path, '.out') as in_file, \
