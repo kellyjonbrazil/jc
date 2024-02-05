@@ -1,7 +1,5 @@
 import os
 import unittest
-import json
-from typing import Dict
 from jc.parsers.os_prober import parse
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
