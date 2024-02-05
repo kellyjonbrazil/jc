@@ -53,5 +53,5 @@ def run_all_fixtures(self, test_parser_path):
                 self.assertEqual(
                     jc.parse(parser_name, f_in, quiet=True),
                     f_json,
-                    f"Should be equal for test files: '{file}.*'"
+                    f"Should be equal for test files: '{file_path}.*'"
                 )
