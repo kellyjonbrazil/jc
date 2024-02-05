@@ -35,9 +35,14 @@ def run_all_fixtures(self, test_parser_path):
     """Call this function to run tests for all fixtures for a parser"""
     parser_name = _get_parser_name_from_path(test_parser_path)
     base_dir = _get_base_dir(test_parser_path)
+    fixtures = _get_fixtures(base_dir, parser_name).items()
 
-    print(f"\n'run all fixtures' for parser '{parser_name}':")
-    for file, file_path in _get_fixtures(base_dir, parser_name).items():
+    if not fixtures:
+        raise ValueError(f"No fixtures found for '{parser_name}' tests!")
+
+    print(f"\nRun all fixtures for parser '{parser_name}':")
+
+    for file, file_path in fixtures:
         print(f"- test '{parser_name}' parser with fixture: '{file}'")
         with self.subTest(f"fixture: '{file}'"):
             with _open_file(file_path, '.out') as in_file, \
