@@ -1,0 +1,64 @@
+*   Trying [2603:1020:201:10::10f]:80...
+*   Trying 20.231.239.246:80...
+* Connected to microsoft.com (2603:1020:201:10::10f) port 80 (#0)
+> HEAD / HTTP/1.1
+> Host: microsoft.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Date: Mon, 05 Feb 2024 21:18:34 GMT
+< Server: Kestrel
+< Location: https://www.microsoft.com/
+< Strict-Transport-Security: max-age=31536000
+< 
+* Connection #0 to host microsoft.com left intact
+* Clear auth, redirects to port from 80 to 443
+* Issue another request to this URL: 'https://www.microsoft.com/'
+*   Trying [2600:1406:3c:383::356e]:443...
+* Connected to www.microsoft.com (2600:1406:3c:383::356e) port 443 (#1)
+* ALPN: offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+* (304) (IN), TLS handshake, Unknown (8):
+* (304) (IN), TLS handshake, Certificate (11):
+* (304) (IN), TLS handshake, CERT verify (15):
+* (304) (IN), TLS handshake, Finished (20):
+* (304) (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / AEAD-AES256-GCM-SHA384
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=WA; L=Redmond; O=Microsoft Corporation; CN=www.microsoft.com
+*  start date: Sep 14 17:24:20 2023 GMT
+*  expire date: Sep  8 17:24:20 2024 GMT
+*  subjectAltName: host "www.microsoft.com" matched cert's "www.microsoft.com"
+*  issuer: C=US; O=Microsoft Corporation; CN=Microsoft Azure RSA TLS Issuing CA 07
+*  SSL certificate verify ok.
+* using HTTP/2
+* h2 [:method: HEAD]
+* h2 [:scheme: https]
+* h2 [:authority: www.microsoft.com]
+* h2 [:path: /]
+* h2 [user-agent: curl/8.1.2]
+* h2 [accept: */*]
+* Using Stream ID: 1 (easy handle 0x7f7a63009600)
+> HEAD / HTTP/2
+> Host: www.microsoft.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/2 200 
+< accept-ranges: bytes
+< content-length: 1020
+< content-type: text/html
+< etag: "6082151bd56ea922e1357f5896a90d0a:1425454794"
+< last-modified: Wed, 04 Mar 2015 07:39:54 GMT
+< server: AkamaiNetStorage
+< expires: Mon, 05 Feb 2024 21:18:34 GMT
+< cache-control: max-age=0, no-cache, no-store
+< pragma: no-cache
+< date: Mon, 05 Feb 2024 21:18:34 GMT
+< 
+* Connection #1 to host www.microsoft.com left intact
