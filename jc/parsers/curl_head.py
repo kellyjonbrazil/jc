@@ -316,8 +316,10 @@ def parse(
 
     if jc.utils.has_data(data):
         data_list = data.splitlines()
+
         if data_list[0].startswith('* '):
             curl_verbose = True
+
         data_list = [_remove_extra_chars(x, verbose=curl_verbose) for x in data_list]
         data_str = '\n'.join(data_list)
 
