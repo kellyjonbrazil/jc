@@ -1,0 +1,115 @@
+*   Trying [2a04:4e42:a00::773]:80...
+* Connected to cnn.com (2a04:4e42:a00::773) port 80 (#0)
+> HEAD / HTTP/1.1
+> Host: cnn.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Connection: close
+< Content-Length: 0
+< Server: Varnish
+< Retry-After: 0
+< Cache-Control: public, max-age=300
+< Location: http://www.cnn.com/
+< Accept-Ranges: bytes
+< Date: Mon, 05 Feb 2024 21:14:25 GMT
+< Via: 1.1 varnish
+< Set-Cookie: countryCode=US; Domain=.cnn.com; Path=/; SameSite=Lax
+< Set-Cookie: stateCode=CA; Domain=.cnn.com; Path=/; SameSite=Lax
+< Set-Cookie: geoData=san francisco|CA|94122|US|NA|-800|broadband|37.760|-122.480|807; Domain=.cnn.com; Path=/; SameSite=Lax
+< X-Served-By: cache-pao-kpao1770073-PAO
+< X-Cache: HIT
+< X-Cache-Hits: 0
+< alt-svc: h3=":443";ma=86400,h3-29=":443";ma=86400,h3-27=":443";ma=86400
+< 
+* Closing connection 0
+* Issue another request to this URL: 'http://www.cnn.com/'
+*   Trying [2a04:4e42:2f::773]:80...
+* Connected to www.cnn.com (2a04:4e42:2f::773) port 80 (#1)
+> HEAD / HTTP/1.1
+> Host: www.cnn.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Connection: close
+< Content-Length: 0
+< Server: Varnish
+< Retry-After: 0
+< Cache-Control: public, max-age=300
+< Location: https://www.cnn.com/
+< Accept-Ranges: bytes
+< Date: Mon, 05 Feb 2024 21:14:25 GMT
+< Via: 1.1 varnish
+< Set-Cookie: countryCode=US; Domain=.cnn.com; Path=/; SameSite=Lax
+< Set-Cookie: stateCode=CA; Domain=.cnn.com; Path=/; SameSite=Lax
+< Set-Cookie: geoData=san francisco|CA|94122|US|NA|-800|broadband|37.760|-122.480|807; Domain=.cnn.com; Path=/; SameSite=Lax
+< X-Served-By: cache-pao-kpao1770065-PAO
+< X-Cache: HIT
+< X-Cache-Hits: 0
+< alt-svc: h3=":443";ma=86400,h3-29=":443";ma=86400,h3-27=":443";ma=86400
+< 
+* Closing connection 1
+* Clear auth, redirects to port from 80 to 443
+* Issue another request to this URL: 'https://www.cnn.com/'
+*   Trying [2a04:4e42:2f::773]:443...
+* Connected to www.cnn.com (2a04:4e42:2f::773) port 443 (#2)
+* ALPN: offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+* (304) (IN), TLS handshake, Unknown (8):
+* (304) (IN), TLS handshake, Certificate (11):
+* (304) (IN), TLS handshake, CERT verify (15):
+* (304) (IN), TLS handshake, Finished (20):
+* (304) (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / AEAD-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=cnn.com
+*  start date: Sep 12 19:38:05 2023 GMT
+*  expire date: Oct 13 19:38:04 2024 GMT
+*  subjectAltName: host "www.cnn.com" matched cert's "*.cnn.com"
+*  issuer: C=BE; O=GlobalSign nv-sa; CN=GlobalSign Atlas R3 DV TLS CA 2023 Q3
+*  SSL certificate verify ok.
+* using HTTP/2
+* h2 [:method: HEAD]
+* h2 [:scheme: https]
+* h2 [:authority: www.cnn.com]
+* h2 [:path: /]
+* h2 [user-agent: curl/8.1.2]
+* h2 [accept: */*]
+* Using Stream ID: 1 (easy handle 0x7f82d780a800)
+> HEAD / HTTP/2
+> Host: www.cnn.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/2 200 
+< content-type: text/html; charset=utf-8
+< x-content-hub: build-env=prod; unique-deployment-key=rn01302n; build-version=v5.1.8-0-g2fef6dfb03; build-commit-hash=2fef6dfb0320b41a52ef682618778884553d483f
+< access-control-allow-origin: *
+< cache-control: max-age=60
+< content-security-policy: default-src 'self' blob: https://*.cnn.com:* http://*.cnn.com:* *.cnn.io:* *.cnn.net:* *.turner.com:* *.turner.io:* *.ugdturner.com:* courageousstudio.com *.vgtf.net:*; script-src 'unsafe-eval' 'unsafe-inline' 'self' *; style-src 'unsafe-inline' 'self' blob: *; child-src 'self' blob: *; frame-src 'self' *; object-src 'self' *; img-src 'self' data: blob: *; media-src 'self' data: blob: *; font-src 'self' data: *; connect-src 'self' data: *; frame-ancestors 'self' https://*.cnn.com:* http://*.cnn.com https://*.cnn.io:* http://*.cnn.io:* *.turner.com:* courageousstudio.com;
+< x-content-type-options: nosniff
+< x-xss-protection: 1; mode=block
+< x-last-modified: Mon, 05 Feb 2024 21:12:57 GMT
+< via: 1.1 varnish, 1.1 varnish
+< accept-ranges: bytes
+< date: Mon, 05 Feb 2024 21:14:26 GMT
+< age: 56
+< set-cookie: countryCode=US; Domain=.cnn.com; Path=/; SameSite=None; Secure
+< set-cookie: stateCode=CA; Domain=.cnn.com; Path=/; SameSite=None; Secure
+< set-cookie: geoData=san francisco|CA|94122|US|NA|-800|broadband|37.760|-122.480|807; Domain=.cnn.com; Path=/; SameSite=None; Secure
+< set-cookie: FastAB=0=1932,1=4478,2=2018,3=7891,4=5506,5=2540,6=3536,7=0344,8=7062,9=0477,10=9516,11=5683,12=1628,13=1765,14=3504,15=0865,16=4713,17=3600,18=0788,19=8777; Domain=.cnn.com; Path=/; Expires=Tue, 04 Feb 2025 21:14:26 GMT; SameSite=Lax
+< x-served-by: cache-iad-kjyo7100119-IAD, cache-pao-kpao1770021-PAO
+< x-cache: HIT, HIT
+< x-cache-hits: 43, 3
+< x-timer: S1707167666.020036,VS0,VE1
+< vary: Accept-Encoding, Accept-Language,Origin
+< alt-svc: h3=":443";ma=86400,h3-29=":443";ma=86400,h3-27=":443";ma=86400
+< content-length: 3042067
+< 
+* Connection #2 to host www.cnn.com left intact

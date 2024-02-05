@@ -29,7 +29,17 @@ Schema:
 
     [
       {
+        "_type":                                string,  # request or response
+        "_request_method":                      string,
+        "_request_uri":                         string,
+        "_request_version":                     string,
+        "_response_version":                    string,
+        "_response_status":                     integer,
+        "_response_reason":                     string or null,
         "<header>":                             string,
+
+        # well-known headers:
+
         "accept": [
                                                 string
         ],
@@ -144,10 +154,16 @@ Schema:
         "permissions-policy": [
                                                 string
         ],
+        "permissions-policy-report-only": [
+                                                string
+        ],
         "pragma": [
                                                 string
         ],
         "proxy-authenticate": [
+                                                string
+        ],
+        "reporting-endpoints": [
                                                 string
         ],
         "retry-after":                          string,
@@ -205,10 +221,10 @@ Examples:
     $ cat headers.txt | jc --http-headers -p
     [
       {
-        "type": "request",
-        "request_method": "HEAD",
-        "request_uri": "/",
-        "request_version": "HTTP/1.1",
+        "_type": "request",
+        "_request_method": "HEAD",
+        "_request_uri": "/",
+        "_request_version": "HTTP/1.1",
         "host": "example.com",
         "user-agent": "curl/8.1.2",
         "accept": [
@@ -216,10 +232,10 @@ Examples:
         ]
       },
       {
-        "type": "response",
-        "response_version": "HTTP/1.1",
-        "response_status": 200,
-        "response_reason": [
+        "_type": "response",
+        "_response_version": "HTTP/1.1",
+        "_response_status": 200,
+        "_response_reason": [
           "OK"
         ],
         "accept-ranges": [
@@ -248,10 +264,10 @@ Examples:
     $ cat headers.txt | jc --http-headers -p -r
     [
       {
-        "type": "request",
-        "request_method": "HEAD",
-        "request_uri": "/",
-        "request_version": "HTTP/1.1",
+        "_type": "request",
+        "_request_method": "HEAD",
+        "_request_uri": "/",
+        "_request_version": "HTTP/1.1",
         "host": "example.com",
         "user-agent": "curl/8.1.2",
         "accept": [
@@ -259,10 +275,10 @@ Examples:
         ]
       },
       {
-        "type": "response",
-        "response_version": "HTTP/1.1",
-        "response_status": 200,
-        "response_reason": [
+        "_type": "response",
+        "_response_version": "HTTP/1.1",
+        "_response_status": 200,
+        "_response_reason": [
           "OK"
         ],
         "accept-ranges": [
@@ -375,8 +391,10 @@ SPLIT_AND_MULTI_HEADERS = {
     'keep-alive',
     'link',
     'permissions-policy',
+    'permissions-policy-report-only',
     'pragma',
     'proxy-authenticate',
+    'reporting-endpoints',
     'sec-ch-ua',
     'sec-ch-ua-full-version-list',
     'server',
@@ -470,10 +488,10 @@ def parse(
 
                 method, uri, version = line.split(maxsplit=2)
                 output_object = {}
-                output_object['type'] = 'request'
-                output_object['request_method'] = method
-                output_object['request_uri'] = uri
-                output_object['request_version'] = version
+                output_object['_type'] = 'request'
+                output_object['_request_method'] = method
+                output_object['_request_uri'] = uri
+                output_object['_request_version'] = version
                 continue
 
             if first_word.startswith('http/'):
@@ -483,10 +501,10 @@ def parse(
                 reason = None
                 version, status, *reason = line.split(maxsplit=2)
                 output_object = {}
-                output_object['type'] = 'response'
-                output_object['response_version'] = version
-                output_object['response_status'] = int(status)
-                output_object['response_reason'] = reason or None
+                output_object['_type'] = 'response'
+                output_object['_response_version'] = version
+                output_object['_response_status'] = int(status)
+                output_object['_response_reason'] = reason or None
                 continue
 
             if first_word in SPLIT_AND_MULTI_HEADERS:

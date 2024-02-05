@@ -29,7 +29,17 @@ Schema:
 
     [
       {
+        "_type":                                string,  # request or response
+        "_request_method":                      string,
+        "_request_uri":                         string,
+        "_request_version":                     string,
+        "_response_version":                    string,
+        "_response_status":                     integer,
+        "_response_reason":                     string or null,
         "<header>":                             string,
+
+        # well-known headers:
+
         "accept": [
                                                 string
         ],
@@ -144,10 +154,16 @@ Schema:
         "permissions-policy": [
                                                 string
         ],
+        "permissions-policy-report-only": [
+                                                string
+        ],
         "pragma": [
                                                 string
         ],
         "proxy-authenticate": [
+                                                string
+        ],
+        "reporting-endpoints": [
                                                 string
         ],
         "retry-after":                          string,
@@ -205,10 +221,10 @@ Examples:
     $ curl --head www.example.com | jc --curl-head -p
     [
       {
-        "type": "response",
-        "response_version": "HTTP/1.1",
-        "response_status": 200,
-        "response_reason": [
+        "_type": "response",
+        "_response_version": "HTTP/1.1",
+        "_response_status": 200,
+        "_response_reason": [
           "OK"
         ],
         "accept-ranges": [
@@ -237,10 +253,10 @@ Examples:
     $ curl --head www.example.com | jc --curl-head -p -r
     [
       {
-        "type": "response",
-        "response_version": "HTTP/1.1",
-        "response_status": 200,
-        "response_reason": [
+        "_type": "response",
+        "_response_version": "HTTP/1.1",
+        "_response_status": 200,
+        "_response_reason": [
           "OK"
         ],
         "accept-ranges": [

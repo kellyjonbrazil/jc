@@ -1,0 +1,121 @@
+*   Trying [2001:4998:24:120d::1:0]:80...
+* Connected to yahoo.com (2001:4998:24:120d::1:0) port 80 (#0)
+> HEAD / HTTP/1.1
+> Host: yahoo.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Date: Mon, 05 Feb 2024 21:08:54 GMT
+< Connection: keep-alive
+< Server: ATS
+< Cache-Control: no-store, no-cache
+< Content-Type: text/html
+< Content-Language: en
+< X-Frame-Options: SAMEORIGIN
+< Location: https://yahoo.com/
+< Content-Length: 8
+< 
+* Connection #0 to host yahoo.com left intact
+* Clear auth, redirects to port from 80 to 443
+* Issue another request to this URL: 'https://yahoo.com/'
+*   Trying [2001:4998:124:1507::f001]:443...
+* Connected to yahoo.com (2001:4998:124:1507::f001) port 443 (#1)
+* ALPN: offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+* (304) (IN), TLS handshake, Unknown (8):
+* (304) (IN), TLS handshake, Certificate (11):
+* (304) (IN), TLS handshake, CERT verify (15):
+* (304) (IN), TLS handshake, Finished (20):
+* (304) (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / AEAD-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=Sunnyvale; O=Oath Holdings Inc.; CN=yahoo.com
+*  start date: Sep 26 00:00:00 2023 GMT
+*  expire date: Mar 20 23:59:59 2024 GMT
+*  subjectAltName: host "yahoo.com" matched cert's "yahoo.com"
+*  issuer: C=US; O=DigiCert Inc; OU=www.digicert.com; CN=DigiCert SHA2 High Assurance Server CA
+*  SSL certificate verify ok.
+* using HTTP/2
+* h2 [:method: HEAD]
+* h2 [:scheme: https]
+* h2 [:authority: yahoo.com]
+* h2 [:path: /]
+* h2 [user-agent: curl/8.1.2]
+* h2 [accept: */*]
+* Using Stream ID: 1 (easy handle 0x7f851d010600)
+> HEAD / HTTP/2
+> Host: yahoo.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/2 301 
+< date: Mon, 05 Feb 2024 21:08:54 GMT
+< strict-transport-security: max-age=31536000
+< server: ATS
+< cache-control: no-store, no-cache
+< content-type: text/html
+< content-language: en
+< x-frame-options: SAMEORIGIN
+< referrer-policy: no-referrer-when-downgrade
+< x-content-type-options: nosniff
+< x-xss-protection: 1; mode=block
+< location: https://www.yahoo.com/
+< content-length: 8
+< 
+* Connection #1 to host yahoo.com left intact
+* Issue another request to this URL: 'https://www.yahoo.com/'
+*   Trying [2001:4998:18:800::4002]:443...
+* Connected to www.yahoo.com (2001:4998:18:800::4002) port 443 (#2)
+* ALPN: offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+* (304) (IN), TLS handshake, Server hello (2):
+* (304) (IN), TLS handshake, Unknown (8):
+* (304) (IN), TLS handshake, Certificate (11):
+* (304) (IN), TLS handshake, CERT verify (15):
+* (304) (IN), TLS handshake, Finished (20):
+* (304) (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / AEAD-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=Sunnyvale; O=Oath Holdings Inc.; CN=*.api.fantasysports.yahoo.com
+*  start date: Jan 22 00:00:00 2024 GMT
+*  expire date: Mar 13 23:59:59 2024 GMT
+*  subjectAltName: host "www.yahoo.com" matched cert's "*.yahoo.com"
+*  issuer: C=US; O=DigiCert Inc; OU=www.digicert.com; CN=DigiCert SHA2 High Assurance Server CA
+*  SSL certificate verify ok.
+* using HTTP/2
+* h2 [:method: HEAD]
+* h2 [:scheme: https]
+* h2 [:authority: www.yahoo.com]
+* h2 [:path: /]
+* h2 [user-agent: curl/8.1.2]
+* h2 [accept: */*]
+* Using Stream ID: 1 (easy handle 0x7f851d010600)
+> HEAD / HTTP/2
+> Host: www.yahoo.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/2 200 
+< date: Mon, 05 Feb 2024 21:08:55 GMT
+< strict-transport-security: max-age=31536000
+< server: ATS
+< cache-control: no-store, no-cache, max-age=0, private
+< content-type: text/html
+< content-language: en
+< expires: -1
+< content-security-policy: frame-ancestors 'self' https://*.builtbygirls.com https://*.rivals.com https://*.engadget.com https://*.intheknow.com https://*.autoblog.com https://*.techcrunch.com https://*.yahoo.com https://*.aol.com https://*.huffingtonpost.com https://*.oath.com https://*.search.yahoo.com https://*.pnr.ouryahoo.com https://pnr.ouryahoo.com https://*.search.aol.com https://*.search.huffpost.com https://*.onesearch.com https://*.verizonmedia.com https://*.publishing.oath.com https://*.autoblog.com; sandbox allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation; report-uri https://csp.yahoo.com/beacon/csp?src=ats&site=frontpage&region=US&lang=en-US&device=desktop&yrid=289ld91is2jj7&partner=;
+< x-frame-options: SAMEORIGIN
+< referrer-policy: no-referrer-when-downgrade
+< content-length: 12
+< age: 0
+< expect-ct: max-age=31536000, report-uri="http://csp.yahoo.com/beacon/csp?src=yahoocom-expect-ct-report-only"
+< x-xss-protection: 1; mode=block
+< x-content-type-options: nosniff
+< 
+* Connection #2 to host www.yahoo.com left intact
