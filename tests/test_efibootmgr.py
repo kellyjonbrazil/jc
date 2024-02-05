@@ -26,7 +26,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'efibootmgr' with no data
         """
-        self.assertEqual(jc.parsers.efibootmgr.parse('', quiet=True), [])
+        self.assertEqual(jc.parsers.efibootmgr.parse('', quiet=True), {})
 
     def test_efibootmgr_v_opensuse_leap_15_5(self):
         """

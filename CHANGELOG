@@ -12,6 +12,7 @@ jc changelog
   identifying which input matches to which output when using `--slurp` or when converting multiple
   files via `/proc` file magic syntax.
 - Add `curl-head` command parser for `curl --head` or `curl -I` with verbose support
+- Add `efibootmgr` command parser
 - Add `http-headers` parser for plain HTTP header output
 - Add `kv-dup` parser for Key/Value files with duplicate keys
 - Add `path` string parser to parse posix path
