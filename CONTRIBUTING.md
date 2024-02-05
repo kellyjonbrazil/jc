@@ -34,15 +34,15 @@ actively welcome your pull requests:
 4. If you've added code that should be tested, add tests. All new parsers should
    have several sample outputs and tests.
    - Templates:
-     - [tests/templates/_test_foo.py](https://github.com/kellyjonbrazil/jc/blob/master/tests/templates/_test_foo.py) as a template for a test.
-     - [tests/templates/_test_foo_s.py (streaming)](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_s.py) as a template for a streaming test.
-     - [tests/templates/_test_foo_simple.py](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_simple.py) as a template if you only have test with fixtures.
+     - **Recommended:** [tests/templates/_test_foo_simple.py](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_simple.py) as a template if you only have test with fixtures.
        Execute these steps for standard tests:
-       - Save this file as `test_{parser_name}.py` since the helper methods extract parser names from the filename.
+       - Save this file as `test_{parser_name}.py` since the helper methods extract parser names from the filename. Use underscores instead of dashes for the parser name.
        - Organize fixtures in `tests/fixtures` for optimal structure.
        - Format fixtures as follows (using double dashes):
-           - `{parser_name}--{some_test_description}.out` for command output.
-           - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
+           - `{parser_name}--{some_test_description}.out` for command output. (no dots in the filename except for the `.out` suffix)
+           - `{parser_name}--{some_test_description}.json` for expected JSON after parsing. (no dots in the filename except for the `.json` suffix)
+     - Custom: [tests/templates/_test_foo.py](https://github.com/kellyjonbrazil/jc/blob/master/tests/templates/_test_foo.py) as a template for tests.
+     - Custom: [tests/templates/_test_foo_s.py](https://github.com/kellyjonbrazil/jc/tree/master/tests/templates/_test_foo_s.py) as a template for **streaming parser** tests.
    - Fixtures: Tests typically consist of an input file and an expected output
      JSON file. Add the data files to the appropriate folder under [tests/fixtures](https://github.com/kellyjonbrazil/jc/tree/master/tests/fixtures)
 5. Documentation is auto-generated from docstrings, so ensure they are clear and
