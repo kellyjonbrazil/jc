@@ -1,9 +1,17 @@
 """jc - JSON test utils"""
 import json
 import os
+import sys
 from pathlib import Path
 import jc
 
+VERBOSE = False
+if '-v' in sys.argv or '--verbose' in sys.argv:
+    VERBOSE = True
+
+def _test_print(data: str) -> None:
+    if VERBOSE:
+        print(data)
 
 def _open_file(file_path, ext):
     return open(Path(file_path).with_suffix(ext), 'r', encoding='utf-8')
@@ -40,10 +48,11 @@ def run_all_fixtures(self, test_parser_path):
     if not fixtures:
         raise ValueError(f"No fixtures found for '{parser_name}' tests!")
 
-    print(f"\nRun all fixtures for parser '{parser_name}':")
+    _test_print(f"\nRun all fixtures for parser '{parser_name}':")
 
     for file, file_path in fixtures:
-        print(f"- test '{parser_name}' parser with fixture: '{file}'")
+        _test_print(f"- test '{parser_name}' parser with fixture: '{file}'")
+
         with self.subTest(f"fixture: '{file}'"):
             with _open_file(file_path, '.out') as in_file, \
                     _open_file(file_path, '.json') as json_file:
