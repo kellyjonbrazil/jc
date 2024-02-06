@@ -80,22 +80,6 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
-    """
-    Final processing to conform to the schema.
-
-    Parameters:
-
-        proc_data:   (List of Dictionaries) raw structured data to process
-
-    Returns:
-
-        List of Dictionaries. Structured to conform to the schema.
-    """
-    # no changes
-    return proc_data
-
-
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -124,4 +108,4 @@ def parse(data, raw=False, quiet=False):
         if jc.utils.has_data(data)
     ]
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output

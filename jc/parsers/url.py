@@ -240,7 +240,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.1'
     description = 'URL string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

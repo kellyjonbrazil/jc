@@ -75,7 +75,7 @@ import uuid
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.2'
+    version = '2.1'
     description = 'INI file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
