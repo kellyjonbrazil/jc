@@ -1,5 +1,8 @@
 jc changelog
 
+20240205 v1.25.1
+- Fix remove extra "$" in slicing help
+
 20240204 v1.25.0
 - Add `--slurp` functionality to wrap output from multiple lines into a single array.
   Note, this only works with single-line input parsers. (e.g. `date`, `ip-address`, `url`, etc.)
