@@ -52,11 +52,11 @@ Specific Proc file parser names can be found with `jc -hh` or `jc -a`.
 
 Schemas can also be found online at:
 
-    https://kellyjonbrazil.github.io/jc/docs/parsers/proc_<name>
+https://kellyjonbrazil.github.io/jc/docs/parsers/proc_<name>
 
 For example:
 
-    https://kellyjonbrazil.github.io/jc/docs/parsers/proc_meminfo
+https://kellyjonbrazil.github.io/jc/docs/parsers/proc_meminfo
 
 Examples:
 
