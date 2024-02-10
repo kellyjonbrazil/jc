@@ -104,6 +104,15 @@ key5 = "quoted"
         """
         self.assertEqual(jc.parsers.ini.parse(self.generic_ini_single_quote, quiet=True), self.generic_ini_single_quote_json)
 
+    def test_ini_single_key_no_value(self):
+        """
+        Test ini file with a single item with no value. This caused issues in jc v.1.25.0
+        """
+        data = '''[data]
+novalue
+'''
+        expected = {"data":{"novalue":""}}
+        self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':
