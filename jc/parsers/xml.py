@@ -73,15 +73,10 @@ Examples:
 import jc.utils
 from jc.exceptions import LibraryNotInstalled
 
-try:
-    import xmltodict
-except Exception:
-    raise LibraryNotInstalled('The xmltodict library is not installed.')
-
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -93,7 +88,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data, has_data=False):
+def _process(proc_data, has_data=False, xml_mod=None):
     """
     Final processing to conform to the schema.
 
@@ -105,16 +100,19 @@ def _process(proc_data, has_data=False):
 
         Dictionary representing an XML document.
     """
+    if not xml_mod:
+        raise LibraryNotInstalled('The xmltodict library is not installed.')
+
     proc_output = []
 
     if has_data:
         # standard output with @ prefix for attributes
         try:
-            proc_output = xmltodict.parse(proc_data,
+            proc_output = xml_mod.parse(proc_data,
                                           dict_constructor=dict,
                                           process_comments=True)
         except (ValueError, TypeError):
-            proc_output = xmltodict.parse(proc_data, dict_constructor=dict)
+            proc_output = xml_mod.parse(proc_data, dict_constructor=dict)
 
     return proc_output
 
@@ -133,6 +131,12 @@ def parse(data, raw=False, quiet=False):
 
         Dictionary. Raw or processed structured data.
     """
+    xmltodict = None
+    try:
+        import xmltodict
+    except Exception:
+        raise LibraryNotInstalled('The xmltodict library is not installed.')
+
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
@@ -156,4 +160,4 @@ def parse(data, raw=False, quiet=False):
 
         return raw_output
 
-    return _process(data, has_data)
+    return _process(data, has_data, xml_mod=xmltodict)

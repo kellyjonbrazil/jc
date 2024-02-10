@@ -100,4 +100,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/xml.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/xml.py)
 
-Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)

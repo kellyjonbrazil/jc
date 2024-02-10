@@ -1,7 +1,10 @@
 jc changelog
 
-20240205 v1.25.1
-- Fix remove extra "$" in slicing help
+20240210 v1.25.1
+- Fix for crash when optional libraries are not installed (e.g. xmltodict)
+- Fix for `ini` parser crashing with some keys with no values
+- Add tests for missing optional libraries
+- Documentation updates
 
 20240204 v1.25.0
 - Add `--slurp` functionality to wrap output from multiple lines into a single array.

@@ -408,7 +408,7 @@ class JcCli():
             ensure_ascii=self.ascii_only
         )
 
-        if not self.mono:
+        if not self.mono and PYGMENTS_INSTALLED:
             class JcStyle(Style):
                 styles: CustomColorType = self.custom_colors
 
