@@ -21,6 +21,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-single-quote.ini'), 'r', encoding='utf-8') as f:
         generic_ini_single_quote = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-mariadb.ini'), 'r', encoding='utf-8') as f:
+        generic_ini_mariadb = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-dup-test.json'), 'r', encoding='utf-8') as f:
         generic_ini_dup_test_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-dup-single-quote.json'), 'r', encoding='utf-8') as f:
         generic_ini_dup_single_quote_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-dup-mariadb.json'), 'r', encoding='utf-8') as f:
+        generic_ini_dup_mariadb_json = json.loads(f.read())
 
 
     def test_ini_dup_nodata(self):
@@ -52,6 +58,12 @@ class MyTests(unittest.TestCase):
         Test the iptelserver ini file
         """
         self.assertEqual(jc.parsers.ini_dup.parse(self.generic_ini_iptelserver, quiet=True), self.generic_ini_dup_iptelserver_json)
+
+    def test_ini_dup_mariadb(self):
+        """
+        Test the mariadb ini file
+        """
+        self.assertEqual(jc.parsers.ini_dup.parse(self.generic_ini_mariadb, quiet=True), self.generic_ini_dup_mariadb_json)
 
     def test_ini_dup_duplicate_keys(self):
         """
@@ -94,7 +106,15 @@ key5 = "quoted"
         """
         self.assertEqual(jc.parsers.ini_dup.parse(self.generic_ini_single_quote, quiet=True), self.generic_ini_dup_single_quote_json)
 
-
+    def test_ini_dup_single_key_no_value(self):
+        """
+        Test ini file with a single item with no value.
+        """
+        data = '''[data]
+novalue
+'''
+        expected = {"data":{"novalue":[""]}}
+        self.assertEqual(jc.parsers.ini_dup.parse(data, quiet=True), expected)
 
 if __name__ == '__main__':
     unittest.main()
