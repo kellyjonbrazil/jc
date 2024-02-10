@@ -65,6 +65,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.uptime.parse(self.osx_10_14_6_uptime, quiet=True), self.osx_10_14_6_uptime_json)
 
+    def test_uptime_busybox(self):
+        """
+        Test 'uptime' on busybox with no user information
+        """
+        data = '00:03:32 up 3 min,  load average: 0.00, 0.00, 0.00'
+        expected = {"time":"00:03:32","uptime":"3 min","load_1m":0.0,"load_5m":0.0,"load_15m":0.0,"time_hour":0,"time_minute":3,"time_second":32,"uptime_days":0,"uptime_hours":0,"uptime_minutes":3,"uptime_total_seconds":180}
+        self.assertEqual(jc.parsers.uptime.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
