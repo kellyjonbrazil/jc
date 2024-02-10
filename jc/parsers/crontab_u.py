@@ -24,7 +24,6 @@ Schema:
       ],
       "schedule": [
         {
-          "occurrence"        string,
           "minute": [
                               string
           ],
@@ -171,7 +170,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`crontab` file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

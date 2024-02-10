@@ -2,7 +2,6 @@ import os
 import unittest
 import json
 import jc.parsers.xml
-import xmltodict
 
 # fix for whether tests are run directly or via runtests.sh
 try:
@@ -10,10 +9,18 @@ try:
 except:
     from _vendor.packaging import version  # type: ignore
 
+# check the version of installed xmltodict library
+try:
+    import xmltodict
+    XMLTODICT_INSTALLED = True
+    XMLTODICT_0_13_0_OR_HIGHER = version.parse(xmltodict.__version__) >= version.parse('0.13.0')  # type: ignore
+except:
+    XMLTODICT_INSTALLED = False
+
+
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-XMLTODICT_0_13_0_OR_HIGHER = version.parse(xmltodict.__version__) >= version.parse('0.13.0')
 
-
+@unittest.skipIf(not XMLTODICT_INSTALLED, 'xmltodict library not installed')
 class MyTests(unittest.TestCase):
 
     # input

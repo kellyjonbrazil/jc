@@ -1,5 +1,45 @@
 jc changelog
 
+20240210 v1.25.1
+- Fix for crash when optional libraries are not installed (e.g. xmltodict)
+- Fix for `ini` parser crashing with some keys with no values
+- Enhance `uptime` parser to support output with no user information
+- Add tests for missing optional libraries
+- Documentation updates
+
+20240204 v1.25.0
+- Add `--slurp` functionality to wrap output from multiple lines into a single array.
+  Note, this only works with single-line input parsers. (e.g. `date`, `ip-address`, `url`, etc.)
+  Streaming parsers are not supported. Use `jc -hhh` to find parsers compatible with the slurp option.
+- Enhance `/proc` file magic syntax to allow slurping when multiple files are selected
+  and to include the `_file` metadata field in the data
+- Enhance `--meta-out` functionality to include a list of the input data when using `--slurp`
+  or `/proc` file magic syntax. For slurpable parsers, this is a list of string inputs in order.
+  For `/proc` file magic syntax, this is a list of `/proc` filenames in order. This can help with
+  identifying which input matches to which output when using `--slurp` or when converting multiple
+  files via `/proc` file magic syntax.
+- Add `curl-head` command parser for `curl --head` or `curl -I` with verbose support
+- Add `efibootmgr` command parser
+- Add `http-headers` parser for plain HTTP header output
+- Add `kv-dup` parser for Key/Value files with duplicate keys
+- Add `path` string parser to parse posix path
+- Add `path-list` string parser to parse path list strings found in env variables
+- Add source link to online parser documentation
+- Add snap package build scripts
+- Add `remove_quotes` function to `utils.py`
+- Add `normalize_key` function to `utils.py`
+- Add `line_slice` function to `utils.py`
+- Add `get_parser` function to `lib.py`
+- Enhance `nsd-control` parser to support more zone information
+- Enhance `ping` and `ping-s` parsers to support the `-I` command option
+- Enhance `proc-net-tcp` parser to add opposite endian support for architectures
+  like the s390x
+- Enhance `url` parser to add `parent`, `filename`, `stem`, and `extension` fields
+- Fix `ini` and `ini-dup` parsers to consistently handle null values as empty strings
+- Fix line slicer to not skip blank lines
+- Refactor parser aliases for `kv`, `pkg_index_deb`, `lsb_release`, and `os-release`
+- Update copyright date
+
 20231216 v1.24.0
 - Add `debconf-show` command parser
 - Add `iftop` command parser

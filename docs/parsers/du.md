@@ -114,4 +114,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, aix, freebsd
 
+Source: [`jc/parsers/du.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/du.py)
+
 Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

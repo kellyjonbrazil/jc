@@ -186,4 +186,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/iptables.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iptables.py)
+
+Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -65,13 +65,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.9'
     description = '`uptime` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
     magic_commands = ['uptime']
-    tags = ['command']
+    tags = ['command', 'slurpable']
 
 
 __version__ = info.version
@@ -160,19 +160,27 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = {}
-    cleandata = data.splitlines()
 
     if jc.utils.has_data(data):
-        time, _, *uptime, users, _, _, _, load_1m, load_5m, load_15m = cleandata[0].split()
+        if 'users' in data:
+            # standard uptime output
+            time, _, *uptime, users, _, _, _, load_1m, load_5m, load_15m = data.split()
 
-        raw_output['time'] = time
-        raw_output['uptime'] = ' '.join(uptime).rstrip(',')
-        raw_output['users'] = users
-        raw_output['load_1m'] = load_1m.rstrip(',')
-        raw_output['load_5m'] = load_5m.rstrip(',')
-        raw_output['load_15m'] = load_15m
+            raw_output['time'] = time
+            raw_output['uptime'] = ' '.join(uptime).rstrip(',')
+            raw_output['users'] = users
+            raw_output['load_1m'] = load_1m.rstrip(',')
+            raw_output['load_5m'] = load_5m.rstrip(',')
+            raw_output['load_15m'] = load_15m
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+        else:
+            # users information missing (e.g. busybox)
+            time, _, *uptime, _, _, load_1m, load_5m, load_15m = data.split()
+
+            raw_output['time'] = time
+            raw_output['uptime'] = ' '.join(uptime).rstrip(',')
+            raw_output['load_1m'] = load_1m.rstrip(',')
+            raw_output['load_5m'] = load_5m.rstrip(',')
+            raw_output['load_15m'] = load_15m
+
+    return raw_output if raw else _process(raw_output)

@@ -3,6 +3,7 @@ import sys
 import re
 import locale
 import shutil
+from itertools import islice
 from collections import namedtuple
 from numbers import Number
 from datetime import datetime, timezone
@@ -180,6 +181,68 @@ def has_data(data: Union[str, bytes]) -> bool:
         return bool(data and not data.isspace())
 
     return bool(data)
+
+
+def remove_quotes(data: str) -> str:
+    """
+    Remove single or double quotes surrounding a string. If no quotes are
+    found then the string is returned unmodified.
+
+    Parameters:
+
+        data:       (string) Input value
+
+    Returns:
+
+        string
+    """
+    if data.startswith('"') and data.endswith('"'):
+        data = data[1:-1]
+
+    elif data.startswith("'") and data.endswith("'"):
+        data = data[1:-1]
+
+    return data
+
+
+def normalize_key(data: str) -> str:
+    """
+    Normalize a key name by shifting to lower-case and converting special
+    characters to underscores.
+
+    Special characters are defined as `space` and the following:
+
+        !"#$%&'()*+,-./:;<=>?@[\]^`{|}~
+
+    This is a lossy algorithm. Repeating and trailing underscores are
+    removed.
+
+    Parameters:
+
+        data:       (string) Input value
+
+    Returns:
+
+        string
+    """
+    special = '''!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ '''
+    initial_underscore = False
+    data = data.strip().lower()
+
+    for special_char in special:
+        data = data.replace(special_char, '_')
+
+    if data.startswith('_'):
+        initial_underscore = True
+
+    # swap back to space so split() will compress multiple consecutive down to one
+    data = data.strip('_').replace('_', ' ')
+    data = '_'.join(data.split())
+
+    if initial_underscore:
+        data = '_' + data
+
+    return data
 
 
 def convert_to_int(value: object) -> Optional[int]:
@@ -393,6 +456,82 @@ def input_type_check(data: object) -> None:
         raise TypeError("Input data must be a 'str' object.")
 
 
+def _lazy_splitlines(text: str) -> Iterable[str]:
+    NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
+    NEWLINES_RE = re.compile(NEWLINES_PATTERN)
+    start = 0
+    for m in NEWLINES_RE.finditer(text):
+        begin, end = m.span()
+        if begin != start:
+            yield text[start:begin]
+        else:
+            yield ''
+        start = end
+
+    if text[start:]:
+        yield text[start:]
+
+
+def line_slice(
+        data: Union[str, Iterable[str], TextIO, bytes, None],
+        slice_start: Optional[int] = None,
+        slice_end: Optional[int] = None
+) -> Union[str, Iterable[str], TextIO, bytes, None]:
+    """
+    Slice input data by lines - lazily, if possible.
+
+    Accepts a string (for normal parsers) or an iterable (for streaming
+    parsers). Uses normal start/stop slicing values, but will always slice
+    on lines instead of characters. Positive slices will use less memory as
+    the function will attempt to lazily iterate over the input. A negative
+    slice parameter will force the function to read in all of the data and
+    then slice, which will use more memory.
+
+    Parameters:
+
+        data:              (string or iterable) - input to slice by lines
+        slice_start:       (int) - starting line
+        slice_end:         (int) - ending line
+
+    Returns:
+        string if input is a string.
+        iterable of strings if input is an iterable (for streaming parsers)
+    """
+    if not slice_start is None or not slice_end is None:
+        # standard parsers UTF-8 input
+        if isinstance(data, str):
+            data_iter = _lazy_splitlines(data)
+
+            # positive slices
+            if (slice_start is None or slice_start >= 0) \
+                and (slice_end is None or slice_end >= 0):
+
+                return '\n'.join(islice(data_iter, slice_start, slice_end))
+
+            # negative slices found (non-lazy, uses more memory)
+            else:
+                return '\n'.join(list(data_iter)[slice_start:slice_end])
+
+        # standard parsers bytes input
+        elif isinstance(data, bytes):
+            raise ValueError('Cannot slice bytes data.')
+
+        # streaming parsers UTF-8 input
+        else:
+            # positive slices
+            if (slice_start is None or slice_start >= 0) \
+                and (slice_end is None or slice_end >= 0) \
+                and data:
+
+                return islice(data, slice_start, slice_end)
+
+            # negative slices found (non-lazy, uses more memory)
+            elif data:
+                return list(data)[slice_start:slice_end]
+
+    return data
+
+
 class timestamp:
     __slots__ = ('string', 'format', 'naive', 'utc', 'iso')
 
@@ -526,6 +665,7 @@ class timestamp:
             {'id': 1800, 'format': '%d/%b/%Y:%H:%M:%S %z', 'locale': None},  # Common Log Format: 10/Oct/2000:13:55:36 -0700
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
+            {'id': 3500, 'format': '%a, %d %b %Y %H:%M:%S %Z', 'locale': None},  # HTTP header time format (always GMT so assume UTC): Wed, 31 Jan 2024 00:39:28 GMT
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
             {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
             {'id': 6000, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # en_US.UTF-8 format (found in date cli): Wed Mar 24 06:16:19 PM UTC 2021
@@ -544,7 +684,7 @@ class timestamp:
         )
 
         # from https://www.timeanddate.com/time/zones/
-        # only removed UTC timezone and added known non-UTC offsets
+        # only removed UTC & GMT timezones and added known non-UTC offsets
         tz_abbr: set[str] = {
             'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
             'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
@@ -553,7 +693,7 @@ class timestamp:
             'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
             'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
             'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
-            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GMT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
+            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
             'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
             'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
             'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
@@ -608,6 +748,9 @@ class timestamp:
 
         # UTC can also be indicated with 'Z' for Zulu time (ISO-8601). Convert to 'UTC'
         data = data.replace('Z', 'UTC')
+
+        # GMT and UTC are practically equivalent. Convert to 'UTC'
+        data = data.replace('GMT', 'UTC')
 
         if 'UTC' in data:
             utc_tz = True

@@ -70,4 +70,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/pip_list.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/pip_list.py)
+
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

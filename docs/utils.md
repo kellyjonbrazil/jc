@@ -6,11 +6,14 @@
   * [is\_compatible](#jc.utils.is_compatible)
   * [compatibility](#jc.utils.compatibility)
   * [has\_data](#jc.utils.has_data)
+  * [remove\_quotes](#jc.utils.remove_quotes)
+  * [normalize\_key](#jc.utils.normalize_key)
   * [convert\_to\_int](#jc.utils.convert_to_int)
   * [convert\_to\_float](#jc.utils.convert_to_float)
   * [convert\_to\_bool](#jc.utils.convert_to_bool)
   * [convert\_size\_to\_int](#jc.utils.convert_size_to_int)
   * [input\_type\_check](#jc.utils.input_type_check)
+  * [line\_slice](#jc.utils.line_slice)
   * [timestamp](#jc.utils.timestamp)
     * [\_\_init\_\_](#jc.utils.timestamp.__init__)
 
@@ -121,6 +124,51 @@ Returns:
                  characters, otherwise False. For bytes data, returns
                  True if there is any data, otherwise False.
 
+<a id="jc.utils.remove_quotes"></a>
+
+### remove\_quotes
+
+```python
+def remove_quotes(data: str) -> str
+```
+
+Remove single or double quotes surrounding a string. If no quotes are
+found then the string is returned unmodified.
+
+Parameters:
+
+    data:       (string) Input value
+
+Returns:
+
+    string
+
+<a id="jc.utils.normalize_key"></a>
+
+### normalize\_key
+
+```python
+def normalize_key(data: str) -> str
+```
+
+Normalize a key name by shifting to lower-case and converting special
+characters to underscores.
+
+Special characters are defined as `space` and the following:
+
+    !"#$%&'()*+,-./:;<=>?@[\]^`{|}~
+
+This is a lossy algorithm. Repeating and trailing underscores are
+removed.
+
+Parameters:
+
+    data:       (string) Input value
+
+Returns:
+
+    string
+
 <a id="jc.utils.convert_to_int"></a>
 
 ### convert\_to\_int
@@ -230,6 +278,37 @@ def input_type_check(data: object) -> None
 ```
 
 Ensure input data is a string. Raises `TypeError` if not.
+
+<a id="jc.utils.line_slice"></a>
+
+### line\_slice
+
+```python
+def line_slice(
+    data: Union[str, Iterable[str], TextIO, bytes, None],
+    slice_start: Optional[int] = None,
+    slice_end: Optional[int] = None
+) -> Union[str, Iterable[str], TextIO, bytes, None]
+```
+
+Slice input data by lines - lazily, if possible.
+
+Accepts a string (for normal parsers) or an iterable (for streaming
+parsers). Uses normal start/stop slicing values, but will always slice
+on lines instead of characters. Positive slices will use less memory as
+the function will attempt to lazily iterate over the input. A negative
+slice parameter will force the function to read in all of the data and
+then slice, which will use more memory.
+
+Parameters:
+
+    data:              (string or iterable) - input to slice by lines
+    slice_start:       (int) - starting line
+    slice_end:         (int) - ending line
+
+Returns:
+    string if input is a string.
+    iterable of strings if input is an iterable (for streaming parsers)
 
 <a id="jc.utils.timestamp"></a>
 

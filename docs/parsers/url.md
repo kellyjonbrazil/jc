@@ -14,6 +14,7 @@ are included in the output. Encoding and Decoding is best effort.
 
 This parser will work with naked and wrapped URL strings:
 
+- `/path`
 - `scheme://host/path`
 - `URL:scheme://host/path`
 - `<scheme://host/path>`
@@ -35,6 +36,10 @@ Schema:
       "scheme":                    string or null,
       "netloc":                    string or null,
       "path":                      string or null,
+      "parent":                    string or null,
+      "filename":                  string or null,
+      "stem":                      string or null,
+      "extension":                 string or null,
       "path_list": [               array or null
                                    string
       ],
@@ -54,6 +59,10 @@ Schema:
         "scheme":                  string or null,
         "netloc":                  string or null,
         "path":                    string or null,
+        "parent":                  string or null,
+        "filename":                string or null,
+        "stem":                    string or null,
+        "extension":               string or null,
         "path_list": [             array or null
                                    string
         ],
@@ -69,6 +78,10 @@ Schema:
         "scheme":                  string or null,
         "netloc":                  string or null,
         "path":                    string or null,
+        "parent":                  string or null,
+        "filename":                string or null,
+        "stem":                    string or null,
+        "extension":               string or null,
         "path_list": [             array or null
                                    string
         ],
@@ -96,6 +109,10 @@ Examples:
       "scheme": "http",
       "netloc": "example.com",
       "path": "/test/path",
+      "parent": "/test",
+      "filename": "path",
+      "stem": "path",
+      "extension": null,
       "path_list": [
         "test",
         "path"
@@ -120,6 +137,10 @@ Examples:
         "scheme": "http",
         "netloc": "example.com",
         "path": "/test/path",
+        "parent": "/test",
+        "filename": "path",
+        "stem": "path",
+        "extension": null,
         "path_list": [
           "test",
           "path"
@@ -136,6 +157,10 @@ Examples:
         "scheme": "http",
         "netloc": "example.com",
         "path": "/test/path",
+        "parent": "/test",
+        "filename": "path",
+        "stem": "path",
+        "extension": null,
         "path_list": [
           "test",
           "path"
@@ -155,6 +180,10 @@ Examples:
       "scheme": "ftp",
       "netloc": "localhost",
       "path": "/filepath",
+      "parent": "/",
+      "filename": "filepath",
+      "stem": "filepath",
+      "extension": null,
       "path_list": [
         "filepath"
       ],
@@ -170,6 +199,10 @@ Examples:
         "scheme": "ftp",
         "netloc": "localhost",
         "path": "/filepath",
+        "parent": "/",
+        "filename": "filepath",
+        "stem": "filepath",
+        "extension": null,
         "path_list": [
           "filepath"
         ],
@@ -185,6 +218,10 @@ Examples:
         "scheme": "ftp",
         "netloc": "localhost",
         "path": "/filepath",
+        "parent": "/",
+        "filename": "filepath",
+        "stem": "filepath",
+        "extension": null,
         "path_list": [
           "filepath"
         ],
@@ -220,4 +257,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/url.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/url.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -187,4 +187,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
-Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/ping.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ping.py)
+
+Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)

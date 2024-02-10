@@ -5,12 +5,11 @@
 
 > Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API](https://github.com/kellyjonbrazil/jc-restapi)
 
-> `jc` is [now available](https://galaxy.ansible.com/community/general) as an
-Ansible filter plugin in the `community.general` collection. See this
+> `jc` is available as an
+[Ansible filter plugin](https://docs.ansible.com/ansible/latest/collections/community/general/jc_filter.html#ansible-collections-community-general-jc-filter)
+in the `community.general` collection. See this
 [blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
 for an example.
-
-> Looking for something like `jc` but lower-level? Check out [regex2json](https://gitlab.com/tozd/regex2json).
 
 # JC
 JSON Convert
@@ -177,6 +176,7 @@ option.
 |     `--crontab-u` | `crontab` file parser with user support                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u)      |
 |           `--csv` | CSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv)            |
 |         `--csv-s` | CSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s)          |
+|     `--curl-head` | `curl --head` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/curl_head)      |
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
 |  `--debconf-show` | `debconf-show` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/debconf_show)   |
@@ -186,6 +186,7 @@ option.
 |     `--dmidecode` | `dmidecode` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dmidecode)      |
 |        `--dpkg-l` | `dpkg -l` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/dpkg_l)         |
 |            `--du` | `du` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/du)             |
+|    `--efibootmgr` | `efibootmgr` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/efibootmgr)     |
 | `--email-address` | Email Address string parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/email_address)  |
 |           `--env` | `env` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/env)            |
 |          `--file` | `file` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/file)           |
@@ -206,6 +207,7 @@ option.
 |       `--history` | `history` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/history)        |
 |          `--host` | `host` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/host)           |
 |         `--hosts` | `/etc/hosts` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts)          |
+|  `--http-headers` | HTTP headers parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/http_headers)   |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
 |           `--ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
@@ -221,6 +223,7 @@ option.
 |          `--jobs` | `jobs` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jobs)           |
 |           `--jwt` | JWT string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/jwt)            |
 |            `--kv` | Key/Value file and string parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |
+|        `--kv-dup` | Key/Value with duplicate key file and string parser     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv_dup)         |
 |          `--last` | `last` and `lastb` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/last)           |
 |            `--ls` | `ls` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls)             |
 |          `--ls-s` | `ls` command streaming parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s)           |
@@ -244,6 +247,8 @@ option.
 |     `--os-prober` | `os-prober` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_prober)      |
 |    `--os-release` | `/etc/os-release` file parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_release)     |
 |        `--passwd` | `/etc/passwd` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd)         |
+|          `--path` | POSIX path string parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path)           |
+|     `--path-list` | POSIX path list string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path_list)      |
 |       `--pci-ids` | `pci.ids` file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pci_ids)        |
 |        `--pgpass` | PostgreSQL password file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pgpass)         |
 |       `--pidstat` | `pidstat -H` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat)        |
@@ -319,22 +324,23 @@ option.
 
 ### Options
 
-| Short | Long            | Description                                                                                                         |
-|-------|-----------------|---------------------------------------------------------------------------------------------------------------------|
-| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                             |
-| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                           |
-| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                |
-| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation. Use twice to show hidden parsers (e.g. `-hh`)             |
-| `-m`  | `--monochrome`  | Monochrome output                                                                                                   |
-| `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.               |                                                                        |
-| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                       |
-| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                        |
-| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing        |
-| `-u`  | `--unbuffer`    | Unbuffer output                                                                                                     |
-| `-v`  | `--version`     | Version information                                                                                                 |
-| `-y`  | `--yaml-out`    | YAML output                                                                                                         |
-| `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))    |
-| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))     |
+| Short | Long            | Description                                                                                                                                                  |
+|-------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-a`  | `--about`       | About `jc`. Prints information about `jc` and the parsers (in JSON or YAML, of course!)                                                                      |
+| `-C`  | `--force-color` | Force color output even when using pipes (overrides `-m` and the `NO_COLOR` env variable)                                                                    |
+| `-d`  | `--debug`       | Debug mode. Prints trace messages if parsing issues are encountered (use`-dd` for verbose debugging)                                                         |
+| `-h`  | `--help`        | Help. Use `jc -h --parser_name` for parser documentation. Use twice to show hidden parsers (e.g. `-hh`). Use thrice to show parser categories (e.g. `-hhh`). |
+| `-m`  | `--monochrome`  | Monochrome output                                                                                                                                            |
+| `-M`  | `--meta-out`    | Add metadata to output including timestamp, parser name, magic command, magic command exit code, etc.                                                        |                                                                        |
+| `-p`  | `--pretty`      | Pretty format the JSON output                                                                                                                                |
+| `-q`  | `--quiet`       | Quiet mode. Suppresses parser warning messages (use `-qq` to ignore streaming parser errors)                                                                 |
+| `-r`  | `--raw`         | Raw output. Provides more literal output, typically with string values and no additional semantic processing                                                 |
+| `-s`  | `--slurp`       | Slurp multiple lines into an array. (use `-hhh` to find compatible parsers)                                                                                  |
+| `-u`  | `--unbuffer`    | Unbuffer output                                                                                                                                              |
+| `-v`  | `--version`     | Version information                                                                                                                                          |
+| `-y`  | `--yaml-out`    | YAML output                                                                                                                                                  |
+| `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                             |
+| `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                              |
 
 ### Slice
 Line slicing is supported using the `START:STOP` syntax similar to Python
@@ -383,6 +389,58 @@ Here is a breakdown of line slice options:
 | `-START:`      | `START` lines from the end through the rest of the output    |
 | `:-STOP`       | lines from the beginning through `STOP` lines from the end   |
 | `:`            | all lines                                                    |
+
+### Slurp
+Some parsers support multi-item input and can output an array of results in a
+single pass. Slurping works for string parsers that accept a single line of
+input. (e.g. `url` and `ip-address`) To see a list of parsers that support
+the `--slurp` option, use `jc -hhh`.
+
+For example, you can send a file with multiple IP addresses (one per line) to
+`jc` with the `--slurp` option and an array of results will output:
+
+```bash
+$ cat ip-addresses.txt | jc --slurp --ip-address
+[<multiple output objects>]
+```
+
+The magic syntax for `/proc` files automatically supports slurping of multiple
+files (no need to use the `--slurp` option). For example, you can convert many
+PID files at once:
+
+```bash
+$ jc /proc/*/status
+[<multiple output objects>]
+```
+
+When the `/proc` magic syntax is used and multiple files are selected, an
+additional `_file` field is inserted in the output so it is easier to tell what
+file each output object refers to.
+
+Finally, the `--meta-out` option can be used in conjunction with slurped output.
+In this case, the slurped output is wrapped in an object with the following
+structure:
+
+```json
+{
+  "result": [<multiple output objects>],
+  "_jc_meta": {
+    "parser": "url",
+    "timestamp": 1706235558.654576,
+    "slice_start": null,
+    "slice_end": null,
+    "input_list": [
+      "http://www.google.com",
+      "https://www.apple.com",
+      "https://www.microsoft.com"
+    ]
+  }
+}
+```
+
+With `--meta-out`, `input_list` contains a list of inputs (actual input strings
+or `/proc` filenames) so you can identify which output object relates to each
+input string or `/proc` filename.
 
 ### Exit Codes
 Any fatal errors within `jc` will generate an exit code of `100`, otherwise the
@@ -1313,4 +1371,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-© 2019-2023 Kelly Brazil
+© 2019-2024 Kelly Brazil

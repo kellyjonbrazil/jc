@@ -103,4 +103,6 @@ Returns:
 ### Parser Information
 Compatibility:  darwin
 
+Source: [`jc/parsers/airport.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/airport.py)
+
 Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

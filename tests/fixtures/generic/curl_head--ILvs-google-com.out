@@ -1,0 +1,44 @@
+*   Trying [2607:f8b0:4002:c11::71]:80...
+* Connected to google.com (2607:f8b0:4002:c11::71) port 80 (#0)
+> HEAD / HTTP/1.1
+> Host: google.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: http://www.google.com/
+< Content-Type: text/html; charset=UTF-8
+< Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-w0if96oCu3EX7tRPyppOPg' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+< Date: Sun, 04 Feb 2024 22:25:09 GMT
+< Expires: Tue, 05 Mar 2024 22:25:09 GMT
+< Cache-Control: public, max-age=2592000
+< Server: gws
+< Content-Length: 219
+< X-XSS-Protection: 0
+< X-Frame-Options: SAMEORIGIN
+< 
+* Connection #0 to host google.com left intact
+* Issue another request to this URL: 'http://www.google.com/'
+*   Trying [2607:f8b0:4002:c03::69]:80...
+* Connected to www.google.com (2607:f8b0:4002:c03::69) port 80 (#1)
+> HEAD / HTTP/1.1
+> Host: www.google.com
+> User-Agent: curl/8.1.2
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: text/html; charset=ISO-8859-1
+< Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-NZmPRDFJDBUjfIdQ12Z3HA' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+< P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+< Date: Sun, 04 Feb 2024 22:25:09 GMT
+< Server: gws
+< X-XSS-Protection: 0
+< X-Frame-Options: SAMEORIGIN
+< Transfer-Encoding: chunked
+< Expires: Sun, 04 Feb 2024 22:25:09 GMT
+< Cache-Control: private
+< Set-Cookie: 1P_JAR=2024-02-04-22; expires=Tue, 05-Mar-2024 22:25:09 GMT; path=/; domain=.google.com; Secure
+< Set-Cookie: AEC=Ae3NU9Nm-_YoxvDgLc8KacFFXJ7YeR8_4xABOi_6TFPHkH3czLzKUMi2_eU; expires=Fri, 02-Aug-2024 22:25:09 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=lax
+< Set-Cookie: NID=511=D1Wo-3cLpM2WxRhuncNJmxkzx96hYr_1QWM5fVPzgPWf03fLZh_MfZEfA0YeSu443m6byeo7l0N9GqFJBxxGMghbMM9p89yQ6ELzgL9N4j31Ejjxj9BxFJ8ccmD794UlzMGAC3PKHTUDUpMRCJ9OOcgiJ8f67JE23iVrWFFkP2w; expires=Mon, 05-Aug-2024 22:25:09 GMT; path=/; domain=.google.com; HttpOnly
+< 
+* Connection #1 to host www.google.com left intact

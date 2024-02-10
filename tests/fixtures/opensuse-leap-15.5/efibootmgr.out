@@ -1,0 +1,8 @@
+BootCurrent: 0002
+Timeout: 0 seconds
+BootOrder: 0002,0000,0001
+Boot0000* WARNING
+Boot0001* Embedded NIC 1 Port 1 Partition 1
+Boot0002* opensuse-secureboot
+MirroredPercentageAbove4G: 0.00
+MirrorMemoryBelow4GB: false

@@ -138,4 +138,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, win32
 
+Source: [`jc/parsers/route.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/route.py)
+
 Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -63,4 +63,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/os_prober.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/os_prober.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

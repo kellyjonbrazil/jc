@@ -44,6 +44,14 @@ Examples:
       ...
     }
 """
+import sys
+
+# ugly hack because I accidentally shadowed the xml module from the
+# standard library with the xml parser. :(
+for index, item in enumerate(sys.path.copy()):
+    if 'jc/jc/parsers' in item or '':
+        del sys.path[index]
+
 from typing import Dict, Union
 import plistlib
 import binascii
@@ -53,7 +61,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'PLIST file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

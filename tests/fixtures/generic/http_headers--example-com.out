@@ -1,0 +1,18 @@
+HEAD / HTTP/1.1
+Host: example.com
+User-Agent: curl/8.1.2
+Accept: */*
+
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Age: 140203
+Cache-Control: max-age=604800
+Content-Type: text/html; charset=UTF-8
+Date: Sun, 04 Feb 2024 02:25:07 GMT
+Etag: "3147526947"
+Expires: Sun, 11 Feb 2024 02:25:07 GMT
+Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+Server: ECS (sac/252F)
+X-Cache: HIT
+Content-Length: 1256
+

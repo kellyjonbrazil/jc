@@ -100,4 +100,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
+Source: [`jc/parsers/jar_manifest.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/jar_manifest.py)
+
 Version 0.01 by Matt J (https://github.com/listuser)

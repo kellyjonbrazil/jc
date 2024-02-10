@@ -87,4 +87,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
+Source: [`jc/parsers/history.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/history.py)
+
 Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

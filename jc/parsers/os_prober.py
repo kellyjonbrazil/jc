@@ -42,13 +42,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`os-prober` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux']
     magic_commands = ['os-prober']
-    tags = ['command']
+    tags = ['command', 'slurpable']
 
 
 __version__ = info.version

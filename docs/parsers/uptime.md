@@ -88,4 +88,8 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, cygwin, aix, freebsd
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Source: [`jc/parsers/uptime.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/uptime.py)
+
+This parser can be used with the `--slurp` command-line option.
+
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -130,4 +130,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/bluetoothctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/bluetoothctl.py)
+
 Version 1.1 by Jake Ob (iakopap at gmail.com)

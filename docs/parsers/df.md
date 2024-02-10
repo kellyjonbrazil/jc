@@ -120,4 +120,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux, darwin, freebsd
 
+Source: [`jc/parsers/df.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/df.py)
+
 Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)

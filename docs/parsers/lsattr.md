@@ -86,4 +86,6 @@ Returns:
 ### Parser Information
 Compatibility:  linux
 
+Source: [`jc/parsers/lsattr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsattr.py)
+
 Version 1.0 by Mark Rotner (rotner.mr@gmail.com)
