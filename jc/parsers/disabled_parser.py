@@ -1,4 +1,8 @@
-"""jc - JSON Convert disabled parser"""
+"""jc - JSON Convert disabled parser
+
+This parser has been disabled due to an error in the parser code.
+"""
+from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -19,4 +23,4 @@ def parse(
     quiet: bool = False
 ) -> dict:
     """Main text parsing function"""
-    return {}
+    raise ParseError('This parser is disabled.')
