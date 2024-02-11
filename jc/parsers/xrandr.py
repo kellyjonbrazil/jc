@@ -209,7 +209,7 @@ except AttributeError:
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.4"
+    version = "2.0"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"
