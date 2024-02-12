@@ -540,13 +540,12 @@ class JcCli():
         if self.magic_run_command_str.startswith('/proc'):
             try:
                 self.magic_found_parser = 'proc'
+                filelist = shlex.split(self.magic_run_command_str)
 
                 # multiple proc files detected
-                if ' ' in self.magic_run_command_str:
+                if len(filelist) > 1:
                     self.slurp = True
                     multi_out: List[str] = []
-                    filelist = self.magic_run_command_str.split()
-                    filelist = [x.strip() for x in filelist]
                     self.inputlist = filelist
 
                     for file in self.inputlist:
@@ -557,7 +556,7 @@ class JcCli():
 
                 # single proc file
                 else:
-                    file = self.magic_run_command_str
+                    file = filelist[0]
                     # self.magic_stdout = self.open_text_file('/Users/kelly/temp' + file)
                     self.magic_stdout = self.open_text_file(file)
 
