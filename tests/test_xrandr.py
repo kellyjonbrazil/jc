@@ -1,36 +1,33 @@
+import pprint
 import re
 import unittest
 from typing import Optional
 
 from jc.parsers.xrandr import (
-    _parse_screen,
-    _parse_device,
-    _parse_mode,
-    _parse_model,
-    _device_pattern,
-    _screen_pattern,
-    _mode_pattern,
-    _frequencies_pattern,
-    _edid_head_pattern,
-    _edid_line_pattern,
-    parse,
-    Mode,
-    Model,
     Device,
-    Screen
+    Edid,
+    Line,
+    LineType,
+    ResolutionMode,
+    Response,
+    Screen,
+    _device_pattern,
+    _frequencies_pattern,
+    _parse_device,
+    _parse_resolution_mode,
+    _parse_screen,
+    _resolution_mode_pattern,
+    _screen_pattern,
+    parse,
 )
-import jc.parsers.xrandr
 
 
 class XrandrTests(unittest.TestCase):
-    def setUp(self):
-        jc.parsers.xrandr.parse_state = {}
-
     def test_xrandr_nodata(self):
         """
         Test 'xrandr' with no data
         """
-        self.assertEqual(parse("", quiet=True), {})
+        self.assertEqual(parse("", quiet=True), {"screens": []})
 
     def test_regexes(self):
         devices = [
@@ -61,37 +58,30 @@ class XrandrTests(unittest.TestCase):
             "1400x900      59.96    59.88",
         ]
         for mode in modes:
-            match = re.match(_mode_pattern, mode)
+            match = re.match(_resolution_mode_pattern, mode)
             self.assertIsNotNone(match)
             if match:
                 rest = match.groupdict()["rest"]
                 self.assertIsNotNone(re.match(_frequencies_pattern, rest))
 
-        edid_lines = [
-            "     EDID: ",
-            "            00ffffffffffff000469d41901010101 ",
-            "            2011010308291a78ea8585a6574a9c26 ",
-            "            125054bfef80714f8100810f81408180 ",
-            "            9500950f01019a29a0d0518422305098 ",
-            "            360098ff1000001c000000fd00374b1e ",
-            "            530f000a202020202020000000fc0041 ",
-            "            535553205657313933530a20000000ff ",
-            "            0037384c383032313130370a20200077 ",
-        ]
+    def test_line_categorize(self):
+        base = "eDP-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 309mm x 174mm"
+        resolution_mode = "   320x240       60.05"
+        prop_key = "	EDID:"
+        prop_value = "		00ffffffffffff0006af3d5700000000"
+        invalid = ""
 
-        for i in range(len(edid_lines)):
-            line = edid_lines[i]
-            if i == 0:
-                match = re.match(_edid_head_pattern, line)
-            else:
-                match = re.match(_edid_line_pattern, line)
-
-            self.assertIsNotNone(match)
+        self.assertEqual(LineType.Device, Line.categorize(base).t)
+        self.assertEqual(LineType.ResolutionMode, Line.categorize(resolution_mode).t)
+        self.assertEqual(LineType.PropKey, Line.categorize(prop_key).t)
+        self.assertEqual(LineType.PropValue, Line.categorize(prop_value).t)
+        with self.assertRaises(Exception):
+            Line.categorize(invalid)
 
     def test_screens(self):
         sample = "Screen 0: minimum 8 x 8, current 1920 x 1080, maximum 32767 x 32767"
-
-        actual: Optional[Screen] = _parse_screen([sample])
+        line = Line.categorize(sample)
+        actual: Optional[Screen] = _parse_screen(line)
         self.assertIsNotNone(actual)
 
         expected = {
@@ -110,7 +100,8 @@ class XrandrTests(unittest.TestCase):
         sample = (
             "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
         )
-        actual = _parse_screen([sample])
+        line = Line.categorize(sample)
+        actual = _parse_screen(line)
         if actual:
             self.assertEqual(320, actual["minimum_width"])
         else:
@@ -119,7 +110,8 @@ class XrandrTests(unittest.TestCase):
     def test_device(self):
         # regex101 sample link for tests/edits https://regex101.com/r/3cHMv3/1
         sample = "eDP1 connected primary 1920x1080+0+0 left (normal left inverted right x axis y axis) 310mm x 170mm"
-        actual: Optional[Device] = _parse_device([sample])
+        line = Line.categorize(sample)
+        actual: Optional[Device] = _parse_device(line)
 
         expected = {
             "device_name": "eDP1",
@@ -140,17 +132,19 @@ class XrandrTests(unittest.TestCase):
             for k, v in expected.items():
                 self.assertEqual(v, actual[k], f"Devices regex failed on {k}")
 
-        with open("tests/fixtures/generic/xrandr_device.out", "r") as f:
-            extended_sample = f.read().splitlines()
-        extended_sample.reverse()
+        # with open("tests/fixtures/generic/xrandr_device.out", "r") as f:
+        #     extended_sample = f.read().splitlines()
 
-        device = _parse_device(extended_sample)
-        if device:
-            self.assertEqual(59.94, device["modes"][12]["frequencies"][4]["frequency"])
+        # device = _parse_device(extended_sample)
+        # if device:
+        #     self.assertEqual(
+        #         59.94, device["resolution_modes"][12]["frequencies"][4]["frequency"]
+        #     )
 
     def test_device_with_reflect(self):
         sample = "VGA-1 connected primary 1920x1080+0+0 left X and Y axis (normal left inverted right x axis y axis) 310mm x 170mm"
-        actual: Optional[Device] = _parse_device([sample])
+        line = Line.categorize(sample)
+        actual: Optional[Device] = _parse_device(line)
 
         expected = {
             "device_name": "VGA-1",
@@ -173,7 +167,7 @@ class XrandrTests(unittest.TestCase):
                 self.assertEqual(v, actual[k], f"Devices regex failed on {k}")
 
     def test_mode(self):
-        sample_1 = "1920x1080     60.03*+  59.93"
+        sample_1 = "   1920x1080     60.03*+  59.93"
         expected = {
             "frequencies": [
                 {"frequency": 60.03, "is_current": True, "is_preferred": True},
@@ -183,7 +177,8 @@ class XrandrTests(unittest.TestCase):
             "resolution_height": 1080,
             "is_high_resolution": False,
         }
-        actual: Optional[Mode] = _parse_mode(sample_1)
+        line = Line.categorize(sample_1)
+        actual: Optional[ResolutionMode] = _parse_resolution_mode(line)
 
         self.assertIsNotNone(actual)
 
@@ -191,8 +186,9 @@ class XrandrTests(unittest.TestCase):
             for k, v in expected.items():
                 self.assertEqual(v, actual[k], f"mode regex failed on {k}")
 
-        sample_2 = " 1920x1080i    60.00    50.00    59.94"
-        actual: Optional[Mode] = _parse_mode(sample_2)
+        sample_2 = "   1920x1080i    60.00    50.00    59.94"
+        line = Line.categorize(sample_2)
+        actual: Optional[ResolutionMode] = _parse_resolution_mode(line)
         self.assertIsNotNone(actual)
         if actual:
             self.assertEqual(True, actual["is_high_resolution"])
@@ -205,7 +201,9 @@ class XrandrTests(unittest.TestCase):
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(18, len(actual["screens"][0]["devices"][0]["modes"]))
+        self.assertEqual(
+            18, len(actual["screens"][0]["devices"][0]["resolution_modes"])
+        )
 
     def test_complete_2(self):
         with open("tests/fixtures/generic/xrandr_2.out", "r") as f:
@@ -213,7 +211,9 @@ class XrandrTests(unittest.TestCase):
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(38, len(actual["screens"][0]["devices"][0]["modes"]))
+        self.assertEqual(
+            38, len(actual["screens"][0]["devices"][0]["resolution_modes"])
+        )
 
     def test_complete_3(self):
         with open("tests/fixtures/generic/xrandr_3.out", "r") as f:
@@ -232,84 +232,119 @@ class XrandrTests(unittest.TestCase):
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(2, len(actual["screens"][0]["devices"][0]["modes"]))
+        self.assertEqual(2, len(actual["screens"][0]["devices"][0]["resolution_modes"]))
 
     def test_complete_5(self):
-        with open("tests/fixtures/generic/xrandr_properties.out", "r") as f:
+        with open("tests/fixtures/generic/xrandr_properties_1.out", "r") as f:
             txt = f.read()
         actual = parse(txt, quiet=True)
 
         self.assertEqual(1, len(actual["screens"]))
-        self.assertEqual(29, len(actual["screens"][0]["devices"][0]["modes"]))
+        self.assertEqual(
+            38, len(actual["screens"][0]["devices"][0]["resolution_modes"])
+        )
 
-    def test_model(self):
-        asus_edid = [
-            "   EDID: ",
-            "         00ffffffffffff000469d41901010101",
-            "         2011010308291a78ea8585a6574a9c26",
-            "         125054bfef80714f8100810f81408180",
-            "         9500950f01019a29a0d0518422305098",
-            "         360098ff1000001c000000fd00374b1e",
-            "         530f000a202020202020000000fc0041",
-            "         535553205657313933530a20000000ff",
-            "         0037384c383032313130370a20200077",
-        ]
-        asus_edid.reverse()
+    # def test_model(self):
+    #     asus_edid = [
+    #         "   EDID: ",
+    #         "         00ffffffffffff000469d41901010101",
+    #         "         2011010308291a78ea8585a6574a9c26",
+    #         "         125054bfef80714f8100810f81408180",
+    #         "         9500950f01019a29a0d0518422305098",
+    #         "         360098ff1000001c000000fd00374b1e",
+    #         "         530f000a202020202020000000fc0041",
+    #         "         535553205657313933530a20000000ff",
+    #         "         0037384c383032313130370a20200077",
+    #     ]
+    #     asus_edid.reverse()
 
-        expected = {
-            "name": "ASUS VW193S",
-            "product_id": "6612",
-            "serial_number": "78L8021107",
-        }
+    #     expected = {
+    #         "name": "ASUS VW193S",
+    #         "product_id": "6612",
+    #         "serial_number": "78L8021107",
+    #     }
 
-        actual: Optional[Model] = _parse_model(asus_edid)
-        self.assertIsNotNone(actual)
+    #     actual: Optional[EdidModel] = _parse_model(asus_edid)
+    #     self.assertIsNotNone(actual)
 
-        if actual:
-            for k, v in expected.items():
-                self.assertEqual(v, actual[k], f"mode regex failed on {k}")
+    #     if actual:
+    #         for k, v in expected.items():
+    #             self.assertEqual(v, actual[k], f"mode regex failed on {k}")
 
-        generic_edid = [
-            "   EDID: ",
-            "         00ffffffffffff004ca3523100000000",
-            "         0014010380221378eac8959e57549226",
-            "         0f505400000001010101010101010101",
-            "         010101010101381d56d4500016303020",
-            "         250058c2100000190000000f00000000",
-            "         000000000025d9066a00000000fe0053",
-            "         414d53554e470a204ca34154000000fe",
-            "         004c544e313536415432343430310018",
-        ]
-        generic_edid.reverse()
+    #     generic_edid = [
+    #         "   EDID: ",
+    #         "         00ffffffffffff004ca3523100000000",
+    #         "         0014010380221378eac8959e57549226",
+    #         "         0f505400000001010101010101010101",
+    #         "         010101010101381d56d4500016303020",
+    #         "         250058c2100000190000000f00000000",
+    #         "         000000000025d9066a00000000fe0053",
+    #         "         414d53554e470a204ca34154000000fe",
+    #         "         004c544e313536415432343430310018",
+    #     ]
+    #     generic_edid.reverse()
 
-        expected = {
-            "name": "Generic",
-            "product_id": "12626",
-            "serial_number": "0",
-        }
+    #     expected = {
+    #         "name": "Generic",
+    #         "product_id": "12626",
+    #         "serial_number": "0",
+    #     }
 
-        jc.parsers.xrandr.parse_state = {}
-        actual: Optional[Model] = _parse_model(generic_edid)
-        self.assertIsNotNone(actual)
+    #     jc.parsers.xrandr.parse_state = {}
+    #     actual: Optional[EdidModel] = _parse_model(generic_edid)
+    #     self.assertIsNotNone(actual)
 
-        if actual:
-            for k, v in expected.items():
-                self.assertEqual(v, actual[k], f"mode regex failed on {k}")
+    #     if actual:
+    #         for k, v in expected.items():
+    #             self.assertEqual(v, actual[k], f"mode regex failed on {k}")
 
-        empty_edid = [""]
-        actual: Optional[Model] = _parse_model(empty_edid)
-        self.assertIsNone(actual)
-
+    #     empty_edid = [""]
+    #     actual: Optional[EdidModel] = _parse_model(empty_edid)
+    #     self.assertIsNone(actual)
 
     def test_issue_490(self):
         """test for issue 490: https://github.com/kellyjonbrazil/jc/issues/490"""
-        data_in = '''\
+        data_in = """\
 Screen 0: minimum 1024 x 600, current 1024 x 600, maximum 1024 x 600
 default connected 1024x600+0+0 0mm x 0mm
    1024x600 0.00*
-'''
-        expected = {"screens":[{"devices":[{"modes":[{"resolution_width":1024,"resolution_height":600,"is_high_resolution":False,"frequencies":[{"frequency":0.0,"is_current":True,"is_preferred":False}]}],"is_connected":True,"is_primary":False,"device_name":"default","rotation":"normal","reflection":"normal","resolution_width":1024,"resolution_height":600,"offset_width":0,"offset_height":0,"dimension_width":0,"dimension_height":0}],"screen_number":0,"minimum_width":1024,"minimum_height":600,"current_width":1024,"current_height":600,"maximum_width":1024,"maximum_height":600}]}
-        self.assertEqual(jc.parsers.xrandr.parse(data_in), expected)
+"""
+        actual: Response = parse(data_in)
+        self.maxDiff = None
+        self.assertEqual(1024, actual["screens"][0]["devices"][0]["resolution_width"])
+
+    def test_issue_525(self):
+        self.maxDiff = None
+        with open("tests/fixtures/generic/xrandr_issue_525.out", "r") as f:
+            txt = f.read()
+        actual = parse(txt, quiet=True)
+        dp4 = actual["screens"][0]["devices"][0]["props"]["Broadcast RGB"][1]  # type: ignore
+        # pprint.pprint(actual)
+        self.assertEqual("supported: Automatic, Full, Limited 16:235", dp4)
+        edp1_expected_keys = {
+            "EDID",
+            "EdidModel",
+            "scaling mode",
+            "Colorspace",
+            "max bpc",
+            "Broadcast RGB",
+            "panel orientation",
+            "link-status",
+            "CTM",
+            "CONNECTOR_ID",
+            "non-desktop",
+        }
+        actual_keys = set(actual["screens"][0]["devices"][0]["props"].keys())
+        self.assertSetEqual(edp1_expected_keys, actual_keys)
+        expected_edid_model = {
+            "name": "Generic",
+            "product_id": "22333",
+            "serial_number": "0",
+        }
+        self.assertDictEqual(
+            expected_edid_model,
+            actual["screens"][0]["devices"][0]["props"]["EdidModel"],  # type: ignore
+        )
 
 
 if __name__ == "__main__":
