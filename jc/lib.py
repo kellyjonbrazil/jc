@@ -330,7 +330,7 @@ def _get_parser(parser_mod_name: str) -> ModuleType:
     try:
         mod =  importlib.import_module(f'{modpath}{parser_mod_name}')
     except Exception as e:
-        mod =  importlib.import_module(f'{modpath}disabled_parser')
+        mod =  importlib.import_module(f'jc.parsers.disabled_parser')
         mod.__name__ = parser_mod_name
         utils.warning_message([f'"{parser_mod_name}" parser disabled due to error: {e}'])
 
