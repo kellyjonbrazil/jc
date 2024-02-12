@@ -324,6 +324,10 @@ class MyTests(unittest.TestCase):
         self.assertGreaterEqual(cli.about_jc()['parser_count'], 55)
         self.assertEqual(cli.about_jc()['parser_count'], len(cli.about_jc()['parsers']))
 
+    def test_cli_parsers_text(self):
+        cli = JcCli()
+        self.assertIsNot(cli.parsers_text, '')
+
     def test_add_meta_to_simple_dict(self):
         cli = JcCli()
         cli.data_out = {'a': 1, 'b': 2}
