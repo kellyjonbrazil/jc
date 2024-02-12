@@ -6,7 +6,7 @@ from typing import Optional
 from jc.parsers.xrandr import (
     Device,
     Edid,
-    Line,
+    _Line,
     LineType,
     ResolutionMode,
     Response,
@@ -71,16 +71,16 @@ class XrandrTests(unittest.TestCase):
         prop_value = "		00ffffffffffff0006af3d5700000000"
         invalid = ""
 
-        self.assertEqual(LineType.Device, Line.categorize(base).t)
-        self.assertEqual(LineType.ResolutionMode, Line.categorize(resolution_mode).t)
-        self.assertEqual(LineType.PropKey, Line.categorize(prop_key).t)
-        self.assertEqual(LineType.PropValue, Line.categorize(prop_value).t)
+        self.assertEqual(LineType.Device, _Line.categorize(base).t)
+        self.assertEqual(LineType.ResolutionMode, _Line.categorize(resolution_mode).t)
+        self.assertEqual(LineType.PropKey, _Line.categorize(prop_key).t)
+        self.assertEqual(LineType.PropValue, _Line.categorize(prop_value).t)
         with self.assertRaises(Exception):
-            Line.categorize(invalid)
+            _Line.categorize(invalid)
 
     def test_screens(self):
         sample = "Screen 0: minimum 8 x 8, current 1920 x 1080, maximum 32767 x 32767"
-        line = Line.categorize(sample)
+        line = _Line.categorize(sample)
         actual: Optional[Screen] = _parse_screen(line)
         self.assertIsNotNone(actual)
 
@@ -100,7 +100,7 @@ class XrandrTests(unittest.TestCase):
         sample = (
             "Screen 0: minimum 320 x 200, current 1920 x 1080, maximum 16384 x 16384"
         )
-        line = Line.categorize(sample)
+        line = _Line.categorize(sample)
         actual = _parse_screen(line)
         if actual:
             self.assertEqual(320, actual["minimum_width"])
@@ -110,7 +110,7 @@ class XrandrTests(unittest.TestCase):
     def test_device(self):
         # regex101 sample link for tests/edits https://regex101.com/r/3cHMv3/1
         sample = "eDP1 connected primary 1920x1080+0+0 left (normal left inverted right x axis y axis) 310mm x 170mm"
-        line = Line.categorize(sample)
+        line = _Line.categorize(sample)
         actual: Optional[Device] = _parse_device(line)
 
         expected = {
@@ -143,7 +143,7 @@ class XrandrTests(unittest.TestCase):
 
     def test_device_with_reflect(self):
         sample = "VGA-1 connected primary 1920x1080+0+0 left X and Y axis (normal left inverted right x axis y axis) 310mm x 170mm"
-        line = Line.categorize(sample)
+        line = _Line.categorize(sample)
         actual: Optional[Device] = _parse_device(line)
 
         expected = {
@@ -177,7 +177,7 @@ class XrandrTests(unittest.TestCase):
             "resolution_height": 1080,
             "is_high_resolution": False,
         }
-        line = Line.categorize(sample_1)
+        line = _Line.categorize(sample_1)
         actual: Optional[ResolutionMode] = _parse_resolution_mode(line)
 
         self.assertIsNotNone(actual)
@@ -187,7 +187,7 @@ class XrandrTests(unittest.TestCase):
                 self.assertEqual(v, actual[k], f"mode regex failed on {k}")
 
         sample_2 = "   1920x1080i    60.00    50.00    59.94"
-        line = Line.categorize(sample_2)
+        line = _Line.categorize(sample_2)
         actual: Optional[ResolutionMode] = _parse_resolution_mode(line)
         self.assertIsNotNone(actual)
         if actual:

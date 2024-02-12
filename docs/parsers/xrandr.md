@@ -33,7 +33,7 @@ Schema:
           "maximum_height":                    integer,
           "devices": [
             {
-              "modes": [
+              "resolution_modes": [
                 {
                   "resolution_width":          integer,
                   "resolution_height":         integer,
@@ -82,7 +82,7 @@ Examples:
           "maximum_height": 32767,
           "devices": [
             {
-              "modes": [
+              "resolution_modes": [
                 {
                   "resolution_width": 1920,
                   "resolution_height": 1080,
@@ -143,7 +143,7 @@ Examples:
           "maximum_height": 32767,
           "devices": [
             {
-              "modes": [
+              "resolution_modes": [
                 {
                   "resolution_width": 1920,
                   "resolution_height": 1080,
@@ -199,7 +199,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Response
 ```
 
 Main text parsing function
@@ -219,4 +219,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/xrandr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/xrandr.py)
 
-Version 1.4 by Kevin Lyter (code (at) lyterk.com)
+Version 2.0 by Kevin Lyter (code (at) lyterk.com)

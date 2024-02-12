@@ -354,7 +354,7 @@ class LineType(Enum):
     Invalid = 6
 
 
-class Line:
+class _Line:
     """Provide metadata about line to make handling it more simple across fn boundaries"""
 
     def __init__(self, s: str, t: LineType, m: Match):
@@ -363,7 +363,7 @@ class Line:
         self.m = m
 
     @classmethod
-    def categorize(cls, line: str) -> "Line":
+    def categorize(cls, line: str) -> "_Line":
         """Iterate through line char by char to see what type of line it is. Apply regexes for more distinctness. Save the regexes and return them for later processing."""
         i = 0
         tab_count = 0
@@ -410,7 +410,7 @@ class Line:
         raise Exception(f"Line could not be categorized: '{line}'")
 
 
-def _parse_screen(line: Line) -> Screen:
+def _parse_screen(line: _Line) -> Screen:
     d = line.m.groupdict()
 
     screen: Screen = {"devices": []}  # type: ignore # Will be populated, but not immediately.
@@ -420,7 +420,7 @@ def _parse_screen(line: Line) -> Screen:
     return screen
 
 
-def _parse_device(line: Line) -> Device:
+def _parse_device(line: _Line) -> Device:
     matches = line.m.groupdict()
 
     device: Device = {
@@ -450,7 +450,7 @@ def _parse_device(line: Line) -> Device:
     return device
 
 
-def _parse_resolution_mode(line: Line) -> ResolutionMode:
+def _parse_resolution_mode(line: _Line) -> ResolutionMode:
     frequencies: List[Frequency] = []
 
     d = line.m.groupdict()
@@ -483,7 +483,7 @@ def _parse_resolution_mode(line: Line) -> ResolutionMode:
     return mode
 
 
-def _parse_props(index: int, line: Line, lines: List[str]) -> Tuple[int, Props]:
+def _parse_props(index: int, line: _Line, lines: List[str]) -> Tuple[int, Props]:
     tmp_props: Dict[str, List[str]] = {}
     key = ""
     while index <= len(lines):
@@ -504,7 +504,7 @@ def _parse_props(index: int, line: Line, lines: List[str]) -> Tuple[int, Props]:
             break
         index += 1
         try:
-            line = Line.categorize(lines[index])
+            line = _Line.categorize(lines[index])
         except:
             pass
 
@@ -545,7 +545,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Response:
     result: Response = {"screens": []}
     if jc.utils.has_data(data):
         while index < len(lines):
-            line = Line.categorize(lines[index])
+            line = _Line.categorize(lines[index])
             if line.t == LineType.Screen:
                 screen = _parse_screen(line)
                 result["screens"].append(screen)
