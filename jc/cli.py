@@ -861,6 +861,9 @@ class JcCli():
         self.set_mono()
         self.set_custom_colors()
 
+        if self.quiet:
+            utils.CLI_QUIET = True
+
         if self.verbose_debug:
             tracebackplus.enable(context=11)  # type: ignore
 

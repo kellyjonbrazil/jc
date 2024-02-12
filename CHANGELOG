@@ -1,9 +1,11 @@
 jc changelog
 
-20240210 v1.25.1
+20240212 v1.25.1
 - Fix for crash when optional libraries are not installed (e.g. xmltodict)
 - Fix for `ini` parser crashing with some keys with no values
+- Fix `xrandr` parser to extract more EDID data
 - Enhance `uptime` parser to support output with no user information
+- Enhance `--quiet` CLI option to cover more warning messages
 - Add tests for missing optional libraries
 - Documentation updates
 
