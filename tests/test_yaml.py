@@ -5,7 +5,14 @@ import jc.parsers.yaml
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
+try:
+    import ruamel.yaml
+    RUAMELYAML_INSTALLED = True
+except:
+    RUAMELYAML_INSTALLED = False
 
+
+@unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
 class MyTests(unittest.TestCase):
 
     # input

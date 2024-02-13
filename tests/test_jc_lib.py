@@ -11,6 +11,12 @@ class MyTests(unittest.TestCase):
         p = jc.lib.get_parser('arp')
         self.assertIsInstance(p, ModuleType)
 
+    def test_lib_get_parser_broken_parser(self):
+        """get_parser substitutes the disabled_parser if a parser is broken"""
+        broken = jc.lib.get_parser('broken_parser')
+        disabled = jc.lib.get_parser('disabled_parser')
+        self.assertIs(broken, disabled)
+
     def test_lib_get_parser_module(self):
         p = jc.lib.get_parser(csv_parser)
         self.assertIsInstance(p, ModuleType)

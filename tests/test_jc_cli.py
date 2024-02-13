@@ -1,12 +1,20 @@
 import os
 import unittest
 from datetime import datetime, timezone
+
 try:
     import pygments
     from pygments.token import (Name, Number, String, Keyword)
     PYGMENTS_INSTALLED=True
-except ModuleNotFoundError:
+except:
     PYGMENTS_INSTALLED=False
+
+try:
+    import ruamel.yaml
+    RUAMELYAML_INSTALLED = True
+except:
+    RUAMELYAML_INSTALLED = False
+
 from jc.cli import JcCli
 import jc.parsers.url as url_parser
 import jc.parsers.proc as proc_parser
@@ -47,164 +55,165 @@ class MyTests(unittest.TestCase):
             resulting_attributes = (cli.magic_found_parser, cli.magic_options, cli.magic_run_command)
             self.assertEqual(expected, resulting_attributes)
 
+    @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_set_env_colors(self):
-        if PYGMENTS_INSTALLED:
-            if pygments.__version__.startswith('2.3.'):
-                env = {
-                    '': {
-                        Name.Tag: 'bold #ansidarkblue',
-                        Keyword: '#ansidarkgray',
-                        Number: '#ansipurple',
-                        String: '#ansidarkgreen'
-                    },
-                    ' ': {
-                        Name.Tag: 'bold #ansidarkblue',
-                        Keyword: '#ansidarkgray',
-                        Number: '#ansipurple',
-                        String: '#ansidarkgreen'
-                    },
-                    'default,default,default,default': {
-                        Name.Tag: 'bold #ansidarkblue',
-                        Keyword: '#ansidarkgray',
-                        Number: '#ansipurple',
-                        String: '#ansidarkgreen'
-                    },
-                    'red,red,red,red': {
-                        Name.Tag: 'bold #ansidarkred',
-                        Keyword: '#ansidarkred',
-                        Number: '#ansidarkred',
-                        String: '#ansidarkred'
-                    },
-                    'red,red,yada,red': {
-                        Name.Tag: 'bold #ansidarkblue',
-                        Keyword: '#ansidarkgray',
-                        Number: '#ansipurple',
-                        String: '#ansidarkgreen'
-                    },
-                    'red,red,red': {
-                        Name.Tag: 'bold #ansidarkblue',
-                        Keyword: '#ansidarkgray',
-                        Number: '#ansipurple',
-                        String: '#ansidarkgreen'
-                    },
-                    'red,red,red,red,red,red': {
-                        Name.Tag: 'bold #ansidarkblue',
-                        Keyword: '#ansidarkgray',
-                        Number: '#ansipurple',
-                        String: '#ansidarkgreen'
-                    }
+        if pygments.__version__.startswith('2.3.'):
+            env = {
+                '': {
+                    Name.Tag: 'bold #ansidarkblue',
+                    Keyword: '#ansidarkgray',
+                    Number: '#ansipurple',
+                    String: '#ansidarkgreen'
+                },
+                ' ': {
+                    Name.Tag: 'bold #ansidarkblue',
+                    Keyword: '#ansidarkgray',
+                    Number: '#ansipurple',
+                    String: '#ansidarkgreen'
+                },
+                'default,default,default,default': {
+                    Name.Tag: 'bold #ansidarkblue',
+                    Keyword: '#ansidarkgray',
+                    Number: '#ansipurple',
+                    String: '#ansidarkgreen'
+                },
+                'red,red,red,red': {
+                    Name.Tag: 'bold #ansidarkred',
+                    Keyword: '#ansidarkred',
+                    Number: '#ansidarkred',
+                    String: '#ansidarkred'
+                },
+                'red,red,yada,red': {
+                    Name.Tag: 'bold #ansidarkblue',
+                    Keyword: '#ansidarkgray',
+                    Number: '#ansipurple',
+                    String: '#ansidarkgreen'
+                },
+                'red,red,red': {
+                    Name.Tag: 'bold #ansidarkblue',
+                    Keyword: '#ansidarkgray',
+                    Number: '#ansipurple',
+                    String: '#ansidarkgreen'
+                },
+                'red,red,red,red,red,red': {
+                    Name.Tag: 'bold #ansidarkblue',
+                    Keyword: '#ansidarkgray',
+                    Number: '#ansipurple',
+                    String: '#ansidarkgreen'
                 }
-            else:
-                env = {
-                    '': {
-                        Name.Tag: 'bold ansiblue',
-                        Keyword: 'ansibrightblack',
-                        Number: 'ansimagenta',
-                        String: 'ansigreen'
-                    },
-                    ' ': {
-                        Name.Tag: 'bold ansiblue',
-                        Keyword: 'ansibrightblack',
-                        Number: 'ansimagenta',
-                        String: 'ansigreen'
-                    },
-                    'default,default,default,default': {
-                        Name.Tag: 'bold ansiblue',
-                        Keyword: 'ansibrightblack',
-                        Number: 'ansimagenta',
-                        String: 'ansigreen'
-                    },
-                    'red,red,red,red': {
-                        Name.Tag: 'bold ansired',
-                        Keyword: 'ansired',
-                        Number: 'ansired',
-                        String: 'ansired'
-                    },
-                    'red,red,yada,red': {
-                        Name.Tag: 'bold ansiblue',
-                        Keyword: 'ansibrightblack',
-                        Number: 'ansimagenta',
-                        String: 'ansigreen'
-                    },
-                    'red,red,red': {
-                        Name.Tag: 'bold ansiblue',
-                        Keyword: 'ansibrightblack',
-                        Number: 'ansimagenta',
-                        String: 'ansigreen'
-                    },
-                    'red,red,red,red,red,red': {
-                        Name.Tag: 'bold ansiblue',
-                        Keyword: 'ansibrightblack',
-                        Number: 'ansimagenta',
-                        String: 'ansigreen'
-                    }
+            }
+        else:
+            env = {
+                '': {
+                    Name.Tag: 'bold ansiblue',
+                    Keyword: 'ansibrightblack',
+                    Number: 'ansimagenta',
+                    String: 'ansigreen'
+                },
+                ' ': {
+                    Name.Tag: 'bold ansiblue',
+                    Keyword: 'ansibrightblack',
+                    Number: 'ansimagenta',
+                    String: 'ansigreen'
+                },
+                'default,default,default,default': {
+                    Name.Tag: 'bold ansiblue',
+                    Keyword: 'ansibrightblack',
+                    Number: 'ansimagenta',
+                    String: 'ansigreen'
+                },
+                'red,red,red,red': {
+                    Name.Tag: 'bold ansired',
+                    Keyword: 'ansired',
+                    Number: 'ansired',
+                    String: 'ansired'
+                },
+                'red,red,yada,red': {
+                    Name.Tag: 'bold ansiblue',
+                    Keyword: 'ansibrightblack',
+                    Number: 'ansimagenta',
+                    String: 'ansigreen'
+                },
+                'red,red,red': {
+                    Name.Tag: 'bold ansiblue',
+                    Keyword: 'ansibrightblack',
+                    Number: 'ansimagenta',
+                    String: 'ansigreen'
+                },
+                'red,red,red,red,red,red': {
+                    Name.Tag: 'bold ansiblue',
+                    Keyword: 'ansibrightblack',
+                    Number: 'ansimagenta',
+                    String: 'ansigreen'
                 }
+            }
 
-            for jc_colors, expected_colors in env.items():
-                cli = JcCli()
-                os.environ["JC_COLORS"] = jc_colors
-                cli.set_custom_colors()
-                self.assertEqual(cli.custom_colors, expected_colors)
+        for jc_colors, expected_colors in env.items():
+            cli = JcCli()
+            os.environ["JC_COLORS"] = jc_colors
+            cli.set_custom_colors()
+            self.assertEqual(cli.custom_colors, expected_colors)
 
+    @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out(self):
-        if PYGMENTS_INSTALLED:
-            test_input = [
-                None,
-                {},
-                [],
-                '',
-                {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
-            ]
+        test_input = [
+            None,
+            {},
+            [],
+            '',
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        ]
 
-            if pygments.__version__.startswith('2.3.'):
-                expected_output = [
-                    '\x1b[30;01mnull\x1b[39;00m',
-                    '{}',
-                    '[]',
-                    '\x1b[32m""\x1b[39m',
-                    '{\x1b[34;01m"key1"\x1b[39;00m:\x1b[32m"value1"\x1b[39m,\x1b[34;01m"key2"\x1b[39;00m:\x1b[35m2\x1b[39m,\x1b[34;01m"key3"\x1b[39;00m:\x1b[30;01mnull\x1b[39;00m,\x1b[34;01m"key4"\x1b[39;00m:\x1b[35m3.14\x1b[39m,\x1b[34;01m"key5"\x1b[39;00m:\x1b[30;01mtrue\x1b[39;00m}'
-                ]
-            else:
-                expected_output = [
-                    '\x1b[90mnull\x1b[39m',
-                    '{}',
-                    '[]',
-                    '\x1b[32m""\x1b[39m',
-                    '{\x1b[34;01m"key1"\x1b[39;00m:\x1b[32m"value1"\x1b[39m,\x1b[34;01m"key2"\x1b[39;00m:\x1b[35m2\x1b[39m,\x1b[34;01m"key3"\x1b[39;00m:\x1b[90mnull\x1b[39m,\x1b[34;01m"key4"\x1b[39;00m:\x1b[35m3.14\x1b[39m,\x1b[34;01m"key5"\x1b[39;00m:\x1b[90mtrue\x1b[39m}'
-                ]
-
-            for test_dict, expected_json in zip(test_input, expected_output):
-                cli = JcCli()
-                os.environ["JC_COLORS"] = "default,default,default,default"
-                cli.set_custom_colors()
-                cli.data_out = test_dict
-                self.assertEqual(cli.json_out(), expected_json)
-
-    def test_cli_json_out_mono(self):
-        if PYGMENTS_INSTALLED:
-            test_input = [
-                None,
-                {},
-                [],
-                '',
-                {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
-            ]
-
+        if pygments.__version__.startswith('2.3.'):
             expected_output = [
-                'null',
+                '\x1b[30;01mnull\x1b[39;00m',
                 '{}',
                 '[]',
-                '""',
-                '{"key1":"value1","key2":2,"key3":null,"key4":3.14,"key5":true}'
+                '\x1b[32m""\x1b[39m',
+                '{\x1b[34;01m"key1"\x1b[39;00m:\x1b[32m"value1"\x1b[39m,\x1b[34;01m"key2"\x1b[39;00m:\x1b[35m2\x1b[39m,\x1b[34;01m"key3"\x1b[39;00m:\x1b[30;01mnull\x1b[39;00m,\x1b[34;01m"key4"\x1b[39;00m:\x1b[35m3.14\x1b[39m,\x1b[34;01m"key5"\x1b[39;00m:\x1b[30;01mtrue\x1b[39;00m}'
+            ]
+        else:
+            expected_output = [
+                '\x1b[90mnull\x1b[39m',
+                '{}',
+                '[]',
+                '\x1b[32m""\x1b[39m',
+                '{\x1b[34;01m"key1"\x1b[39;00m:\x1b[32m"value1"\x1b[39m,\x1b[34;01m"key2"\x1b[39;00m:\x1b[35m2\x1b[39m,\x1b[34;01m"key3"\x1b[39;00m:\x1b[90mnull\x1b[39m,\x1b[34;01m"key4"\x1b[39;00m:\x1b[35m3.14\x1b[39m,\x1b[34;01m"key5"\x1b[39;00m:\x1b[90mtrue\x1b[39m}'
             ]
 
-            for test_dict, expected_json in zip(test_input, expected_output):
-                cli = JcCli()
-                cli.set_custom_colors()
-                cli.mono = True
-                cli.data_out = test_dict
-                self.assertEqual(cli.json_out(), expected_json)
+        for test_dict, expected_json in zip(test_input, expected_output):
+            cli = JcCli()
+            os.environ["JC_COLORS"] = "default,default,default,default"
+            cli.set_custom_colors()
+            cli.data_out = test_dict
+            self.assertEqual(cli.json_out(), expected_json)
 
+    @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
+    def test_cli_json_out_mono(self):
+        test_input = [
+            None,
+            {},
+            [],
+            '',
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        ]
+
+        expected_output = [
+            'null',
+            '{}',
+            '[]',
+            '""',
+            '{"key1":"value1","key2":2,"key3":null,"key4":3.14,"key5":true}'
+        ]
+
+        for test_dict, expected_json in zip(test_input, expected_output):
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_dict
+            self.assertEqual(cli.json_out(), expected_json)
+
+    @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out_pretty(self):
         test_input = [
             {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
@@ -229,40 +238,60 @@ class MyTests(unittest.TestCase):
             cli.data_out = test_dict
             self.assertEqual(cli.json_out(), expected_json)
 
+    @unittest.skipIf(PYGMENTS_INSTALLED, 'pygments library installed')
+    def test_cli_json_out_pretty_no_pygments(self):
+        test_input = [
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+            {"key1": [{"subkey1": "subvalue1"}, {"subkey2": [1, 2, 3]}], "key2": True}
+        ]
+
+        expected_output = [
+            '{\n  "key1": "value1",\n  "key2": 2,\n  "key3": null,\n  "key4": 3.14,\n  "key5": true\n}',
+            '{\n  "key1": [\n    {\n      "subkey1": "subvalue1"\n    },\n    {\n      "subkey2": [\n        1,\n        2,\n        3\n      ]\n    }\n  ],\n  "key2": true\n}'
+        ]
+
+        for test_dict, expected_json in zip(test_input, expected_output):
+            cli = JcCli()
+            cli.pretty = True
+            cli.set_custom_colors()
+            cli.data_out = test_dict
+            self.assertEqual(cli.json_out(), expected_json)
+
+    @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_yaml_out(self):
-        if PYGMENTS_INSTALLED:
-            test_input = [
-                None,
-                {},
-                [],
-                '',
-                {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        test_input = [
+            None,
+            {},
+            [],
+            '',
+            {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
+        ]
+
+        if pygments.__version__.startswith('2.3.'):
+            expected_output = [
+                '---\n...',
+                '--- {}',
+                '--- []',
+                "--- \x1b[32m'\x1b[39m\x1b[32m'\x1b[39m",
+                '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
+            ]
+        else:
+            expected_output = [
+                '---\n...',
+                '--- {}',
+                '--- []',
+                "--- \x1b[32m'\x1b[39m\x1b[32m'\x1b[39m",
+                '---\n\x1b[34;01mkey1\x1b[39;00m: value1\n\x1b[34;01mkey2\x1b[39;00m: 2\n\x1b[34;01mkey3\x1b[39;00m:\n\x1b[34;01mkey4\x1b[39;00m: 3.14\n\x1b[34;01mkey5\x1b[39;00m: true'
             ]
 
-            if pygments.__version__.startswith('2.3.'):
-                expected_output = [
-                    '---\n...',
-                    '--- {}',
-                    '--- []',
-                    "--- \x1b[32m'\x1b[39m\x1b[32m'\x1b[39m",
-                    '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
-                ]
-            else:
-                expected_output = [
-                    '---\n...',
-                    '--- {}',
-                    '--- []',
-                    "--- \x1b[32m'\x1b[39m\x1b[32m'\x1b[39m",
-                    '---\n\x1b[34;01mkey1\x1b[39;00m: value1\n\x1b[34;01mkey2\x1b[39;00m: 2\n\x1b[34;01mkey3\x1b[39;00m:\n\x1b[34;01mkey4\x1b[39;00m: 3.14\n\x1b[34;01mkey5\x1b[39;00m: true'
-                ]
+        for test_dict, expected_json in zip(test_input, expected_output):
+            cli = JcCli()
+            os.environ["JC_COLORS"] = "default,default,default,default"
+            cli.set_custom_colors()
+            cli.data_out = test_dict
+            self.assertEqual(cli.yaml_out(), expected_json)
 
-            for test_dict, expected_json in zip(test_input, expected_output):
-                cli = JcCli()
-                os.environ["JC_COLORS"] = "default,default,default,default"
-                cli.set_custom_colors()
-                cli.data_out = test_dict
-                self.assertEqual(cli.yaml_out(), expected_json)
-
+    @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
     def test_cli_yaml_out_mono(self):
         test_input = [
             None,
@@ -294,6 +323,10 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.about_jc()['name'], 'jc')
         self.assertGreaterEqual(cli.about_jc()['parser_count'], 55)
         self.assertEqual(cli.about_jc()['parser_count'], len(cli.about_jc()['parsers']))
+
+    def test_cli_parsers_text(self):
+        cli = JcCli()
+        self.assertIsNot(cli.parsers_text, '')
 
     def test_add_meta_to_simple_dict(self):
         cli = JcCli()

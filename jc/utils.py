@@ -12,6 +12,7 @@ from functools import lru_cache
 from typing import Any, List, Dict, Iterable, Union, Optional, TextIO
 from .jc_types import TimeStampFormatType
 
+CLI_QUIET = False
 
 def _asciify(string: str) -> str:
     """
@@ -62,6 +63,9 @@ def warning_message(message_lines: List[str]) -> None:
 
         None - just prints output to STDERR
     """
+    if CLI_QUIET:
+        return
+
     # this is for backwards compatibility with existing custom parsers
     if isinstance(message_lines, str):
         message_lines = [message_lines]

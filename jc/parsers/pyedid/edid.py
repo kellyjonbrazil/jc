@@ -8,6 +8,16 @@ from typing import ByteString
 
 __all__ = ["Edid"]
 
+# EDID:
+#      00ffffffffffff004ca3523100000000
+#      0014010380221378eac8959e57549226
+#      0f505400000001010101010101010101
+#      010101010101381d56d4500016303020
+#      250058c2100000190000000f00000000
+#      000000000025d9066a00000000fe0053
+#      414d53554e470a204ca34154000000fe
+#      004c544e313536415432343430310018
+
 
 class Edid:
     """Edid class
@@ -64,36 +74,39 @@ class Edid:
 
     _ASPECT_RATIOS = {
         0b00: (16, 10),
-        0b01: ( 4,  3),
-        0b10: ( 5,  4),
-        0b11: (16,  9),
+        0b01: (4, 3),
+        0b10: (5, 4),
+        0b11: (16, 9),
     }
 
-    _RawEdid = namedtuple("RawEdid",
-                          ("header",
-                           "manu_id",
-                           "prod_id",
-                           "serial_no",
-                           "manu_week",
-                           "manu_year",
-                           "edid_version",
-                           "edid_revision",
-                           "input_type",
-                           "width",
-                           "height",
-                           "gamma",
-                           "features",
-                           "color",
-                           "timings_supported",
-                           "timings_reserved",
-                           "timings_edid",
-                           "timing_1",
-                           "timing_2",
-                           "timing_3",
-                           "timing_4",
-                           "extension",
-                           "checksum")
-                          )
+    _RawEdid = namedtuple(
+        "RawEdid",
+        (
+            "header",
+            "manu_id",
+            "prod_id",
+            "serial_no",
+            "manu_week",
+            "manu_year",
+            "edid_version",
+            "edid_revision",
+            "input_type",
+            "width",
+            "height",
+            "gamma",
+            "features",
+            "color",
+            "timings_supported",
+            "timings_reserved",
+            "timings_edid",
+            "timing_1",
+            "timing_2",
+            "timing_3",
+            "timing_4",
+            "extension",
+            "checksum",
+        ),
+    )
 
     def __init__(self, edid: ByteString):
         self._parse_edid(edid)
@@ -109,18 +122,20 @@ class Edid:
         unpacked = struct.unpack(self._STRUCT_FORMAT, edid)
         raw_edid = self._RawEdid(*unpacked)
 
-        if raw_edid.header != b'\x00\xff\xff\xff\xff\xff\xff\x00':
+        if raw_edid.header != b"\x00\xff\xff\xff\xff\xff\xff\x00":
             raise ValueError("Invalid header.")
 
         self.raw = edid
         self.manufacturer_id = raw_edid.manu_id
         self.product = raw_edid.prod_id
         self.year = raw_edid.manu_year + 1990
-        self.edid_version = "{:d}.{:d}".format(raw_edid.edid_version, raw_edid.edid_revision)
+        self.edid_version = "{:d}.{:d}".format(
+            raw_edid.edid_version, raw_edid.edid_revision
+        )
         self.type = "digital" if (raw_edid.input_type & 0xFF) else "analog"
         self.width = float(raw_edid.width)
         self.height = float(raw_edid.height)
-        self.gamma = (raw_edid.gamma+100)/100
+        self.gamma = (raw_edid.gamma + 100) / 100
         self.dpms_standby = bool(raw_edid.features & 0xFF)
         self.dpms_suspend = bool(raw_edid.features & 0x7F)
         self.dpms_activeoff = bool(raw_edid.features & 0x3F)
@@ -132,22 +147,27 @@ class Edid:
                 self.resolutions.append(self._TIMINGS[i])
 
         for i in range(8):
-            bytes_data = raw_edid.timings_edid[2*i:2*i+2]
-            if bytes_data == b'\x01\x01':
+            bytes_data = raw_edid.timings_edid[2 * i : 2 * i + 2]
+            if bytes_data == b"\x01\x01":
                 continue
             byte1, byte2 = bytes_data
-            x_res = 8*(int(byte1)+31)
-            aspect_ratio = self._ASPECT_RATIOS[(byte2>>6) & 0b11]
-            y_res = int(x_res * aspect_ratio[1]/aspect_ratio[0])
+            x_res = 8 * (int(byte1) + 31)
+            aspect_ratio = self._ASPECT_RATIOS[(byte2 >> 6) & 0b11]
+            y_res = int(x_res * aspect_ratio[1] / aspect_ratio[0])
             rate = (int(byte2) & 0b00111111) + 60.0
             self.resolutions.append((x_res, y_res, rate))
 
         self.name = None
         self.serial = None
 
-        for timing_bytes in (raw_edid.timing_1, raw_edid.timing_2, raw_edid.timing_3, raw_edid.timing_4):
+        for timing_bytes in (
+            raw_edid.timing_1,
+            raw_edid.timing_2,
+            raw_edid.timing_3,
+            raw_edid.timing_4,
+        ):
             # "other" descriptor
-            if timing_bytes[0:2] == b'\x00\x00':
+            if timing_bytes[0:2] == b"\x00\x00":
                 timing_type = timing_bytes[3]
                 if timing_type in (0xFF, 0xFE, 0xFC):
                     buffer = timing_bytes[5:]

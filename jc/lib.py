@@ -10,7 +10,7 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.0'
+__version__ = '1.25.1'
 
 parsers: List[str] = [
     'acpi',
@@ -251,7 +251,8 @@ def _is_valid_parser_plugin(name: str, local_parsers_dir: str) -> bool:
             else:
                 utils.warning_message([f'Not installing invalid parser plugin "{parser_mod_name}" at {local_parsers_dir}'])
                 return False
-        except Exception:
+        except Exception as e:
+            utils.warning_message([f'Not installing parser plugin "{parser_mod_name}" at {local_parsers_dir} due to error: {e}'])
             return False
     return False
 
@@ -324,7 +325,16 @@ def _get_parser(parser_mod_name: str) -> ModuleType:
     parser_mod_name = _cliname_to_modname(parser_mod_name)
     parser_cli_name = _modname_to_cliname(parser_mod_name)
     modpath: str = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
-    return importlib.import_module(f'{modpath}{parser_mod_name}')
+    mod = None
+
+    try:
+        mod =  importlib.import_module(f'{modpath}{parser_mod_name}')
+    except Exception as e:
+        mod =  importlib.import_module(f'jc.parsers.disabled_parser')
+        mod.__name__ = parser_mod_name
+        utils.warning_message([f'"{parser_mod_name}" parser disabled due to error: {e}'])
+
+    return mod
 
 def _parser_is_slurpable(parser: ModuleType) -> bool:
     """

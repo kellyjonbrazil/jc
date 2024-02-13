@@ -408,7 +408,7 @@ class JcCli():
             ensure_ascii=self.ascii_only
         )
 
-        if not self.mono:
+        if not self.mono and PYGMENTS_INSTALLED:
             class JcStyle(Style):
                 styles: CustomColorType = self.custom_colors
 
@@ -540,13 +540,12 @@ class JcCli():
         if self.magic_run_command_str.startswith('/proc'):
             try:
                 self.magic_found_parser = 'proc'
+                filelist = shlex.split(self.magic_run_command_str)
 
                 # multiple proc files detected
-                if ' ' in self.magic_run_command_str:
+                if len(filelist) > 1:
                     self.slurp = True
                     multi_out: List[str] = []
-                    filelist = self.magic_run_command_str.split()
-                    filelist = [x.strip() for x in filelist]
                     self.inputlist = filelist
 
                     for file in self.inputlist:
@@ -557,7 +556,7 @@ class JcCli():
 
                 # single proc file
                 else:
-                    file = self.magic_run_command_str
+                    file = filelist[0]
                     # self.magic_stdout = self.open_text_file('/Users/kelly/temp' + file)
                     self.magic_stdout = self.open_text_file(file)
 
@@ -860,6 +859,9 @@ class JcCli():
 
         self.set_mono()
         self.set_custom_colors()
+
+        if self.quiet:
+            utils.CLI_QUIET = True
 
         if self.verbose_debug:
             tracebackplus.enable(context=11)  # type: ignore
