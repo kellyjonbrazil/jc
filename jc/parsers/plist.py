@@ -48,9 +48,7 @@ import sys
 
 # ugly hack because I accidentally shadowed the xml module from the
 # standard library with the xml parser. :(
-for index, item in enumerate(sys.path.copy()):
-    if 'jc/jc/parsers' in item or '':
-        del sys.path[index]
+sys.path = [x for x in sys.path if 'jc/jc/parsers' not in x]
 
 from typing import Dict, Union
 import plistlib
