@@ -1,6 +1,7 @@
 jc changelog
 
-20240212 v1.25.2
+20240214 v1.25.2
+- Fix `iwconfig` parser to handle more special characters in the SSID name
 - Documentation updates
 
 20240212 v1.25.1

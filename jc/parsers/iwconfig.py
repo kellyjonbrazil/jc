@@ -85,7 +85,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`iwconfig` command parser'
     author = 'Thomas Vincent'
     author_email = 'vrince@gmail.com'
