@@ -118,15 +118,15 @@ Examples:
     ]
 """
 import re
-import importlib
 from typing import List, Dict, Union
 import jc.utils
+from jc.lib import get_parser
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`/proc/` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -280,7 +280,7 @@ def parse(
         for reg_pattern, parse_mod in procmap.items():
             if reg_pattern.search(data):
                 try:
-                    procparser = importlib.import_module('jc.parsers.' + parse_mod)
+                    procparser = get_parser(parse_mod)
                     return procparser.parse(data, quiet=quiet, raw=raw)
                 except ModuleNotFoundError:
                     raise ParseError('Proc file type not yet implemented.')
