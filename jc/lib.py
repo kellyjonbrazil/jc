@@ -10,7 +10,7 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.1'
+__version__ = '1.25.2'
 
 parsers: List[str] = [
     'acpi',

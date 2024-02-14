@@ -1,5 +1,8 @@
 jc changelog
 
+20240212 v1.25.2
+- Documentation updates
+
 20240212 v1.25.1
 - Fix for crash when optional libraries are not installed (e.g. xmltodict)
 - Fix for `ini` parser crashing with some keys with no values
