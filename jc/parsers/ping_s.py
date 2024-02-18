@@ -493,6 +493,13 @@ def _linux_parse(line, s):
         }
         return output_line
 
+    # if timestamp option is specified, then shift icmp sequence field right by one
+    timestamp = False
+    if line[0] == '[':
+        timestamp = True
+
+    timestamp_offset = 1 if timestamp else 0
+
     # ping response lines
     err = None
     if s.ipv4:
@@ -502,33 +509,24 @@ def _linux_parse(line, s):
 
     if err:
         output_line = {
-            'type': err
+            'type': err,
+            'destination_ip': s.destination_ip or None,
+            'sent_bytes': s.sent_bytes or None,
+            'response_ip': line.split()[timestamp_offset + 1] if type != 'timeout' else None,
+            'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 3],
+            'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
         }
-        try:
-            output_line['sent_bytes'] = line.split()[0]
-            output_line['destination_ip'] = s.destination_ip
-            output_line['response_ip'] = line.split()[1]
-        except Exception:
-            pass
         return output_line
 
     # request timeout
     if 'no answer yet for icmp_seq=' in line:
-        timestamp = False
-        isequence = 5
-
-        # if timestamp option is specified, then shift icmp sequence field right by one
-        if line[0] == '[':
-            timestamp = True
-            isequence = 6
-
         output_line = {
             'type': 'timeout',
             'destination_ip': s.destination_ip or None,
             'sent_bytes': s.sent_bytes or None,
             'pattern': s.pattern or None,
             'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-            'icmp_seq': line.replace('=', ' ').split()[isequence]
+            'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 5]
         }
 
         return output_line
@@ -539,20 +537,16 @@ def _linux_parse(line, s):
         line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
 
         # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
+        param_positions = None
         if s.ipv4 and not s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
+            param_positions = (0, 3, 5, 7, 9)
         elif s.ipv4 and s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
+            param_positions = (0, 4, 7, 9, 11)
         elif not s.ipv4 and not s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
+            param_positions = (0, 3, 5, 7, 9)
         elif not s.ipv4 and s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
-
-        # if timestamp option is specified, then shift everything right by one
-        timestamp = False
-        if line[0] == '[':
-            timestamp = True
-            bts, rip, iseq, t2l, tms = (bts + 1, rip + 1, iseq + 1, t2l + 1, tms + 1)
+            param_positions = (0, 4, 7, 9, 11)
+        bts, rip, iseq, t2l, tms = (x + timestamp_offset for x in param_positions)
 
         output_line = {
             'type': 'reply',
