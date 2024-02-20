@@ -76,7 +76,7 @@ function parameter in `parse()` when using `jc` as a python library.
 Schemas for each parser can be found at the documentation link beside each
 [**Parser**](#parsers) below.
 
-Release notes can be found [here](https://blog.kellybrazil.com/category/jc-news/).
+Release notes can be found in the [Releases section](https://github.com/kellyjonbrazil/jc/releases) on Github.
 
 ## Why Would Anyone Do This!?
 For more information on the motivations for this project, please see my blog
