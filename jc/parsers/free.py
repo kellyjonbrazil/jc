@@ -1,5 +1,7 @@
 """jc - JSON Convert `free` command output parser
 
+Values are normalized to bytes when using `free -h`.
+
 Usage (cli):
 
     $ free | jc --free
@@ -17,13 +19,13 @@ Schema:
 
     [
       {
-        "type":         string,
-        "total":        integer,
-        "used":         integer,
-        "free":         integer,
-        "shared":       integer,
-        "buff_cache":   integer,
-        "available":    integer
+        "type":                 string,
+        "total":                integer,
+        "used":                 integer,
+        "free":                 integer,
+        "shared":               integer,
+        "buff_cache":           integer,
+        "available":            integer
       }
     ]
 
@@ -73,7 +75,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`free` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -102,7 +104,7 @@ def _process(proc_data):
     for entry in proc_data:
         for key in entry:
             if key in int_list:
-                entry[key] = jc.utils.convert_to_int(entry[key])
+                entry[key] = jc.utils.convert_size_to_int(entry[key])
 
     return proc_data
 
@@ -138,7 +140,4 @@ def parse(data, raw=False, quiet=False):
         for entry in raw_output:
             entry['type'] = entry['type'].rstrip(':')
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

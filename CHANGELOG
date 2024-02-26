@@ -1,7 +1,7 @@
 jc changelog
 
-20240214 v1.25.2
-- TODO: add human output support to the `free` parser
+20240226 v1.25.2
+- Enhance `free` parser to add human readable output support
 - Enhance `df` parser to include `_bytes` fields for `size`, `used`, and `available`.
   This provides normalized output when human readable `df` output is used
 - Fix `iwconfig` parser to handle more special characters in the SSID name
