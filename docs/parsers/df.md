@@ -5,6 +5,8 @@
 
 jc - JSON Convert `df` command output parser
 
+Values are normalized to bytes when using `df -h`.
+
 Usage (cli):
 
     $ df | jc --df
@@ -23,14 +25,11 @@ Schema:
     [
       {
         "filesystem":        string,
-        "size":              string,
-        "size_bytes":        integer,  # [0]
+        "size":              integer,
         "1k_blocks":         integer,
         "512_blocks":        integer,
         "used":              integer,
-        "used_bytes":        integer,  # [0]
         "available":         integer,
-        "available_bytes":   integer,  # [0]
         "capacity_percent":  integer,
         "ifree":             integer,
         "iused":             integer,
@@ -40,9 +39,6 @@ Schema:
       }
     ]
 
-    [0]  It is recommended to use these fields as they are normalized to bytes
-         and will work even with human-readable `df` output.
-
 Examples:
 
     $ df | jc --df -p
@@ -51,9 +47,7 @@ Examples:
         "filesystem": "devtmpfs",
         "1k_blocks": 1918820,
         "used": 0,
-        "used_bytes": 0,
         "available": 1918820,
-        "available_bytes": 1918820,
         "use_percent": 0,
         "mounted_on": "/dev"
       },
@@ -61,9 +55,7 @@ Examples:
         "filesystem": "tmpfs",
         "1k_blocks": 1930668,
         "used": 0,
-        "used_bytes": 0,
         "available": 1930668,
-        "available_bytes": 1930668,
         "use_percent": 0,
         "mounted_on": "/dev/shm"
       },
@@ -71,9 +63,7 @@ Examples:
         "filesystem": "tmpfs",
         "1k_blocks": 1930668,
         "used": 11800,
-        "used_bytes": 11800,
         "available": 1918868,
-        "available_bytes": 1918868,
         "use_percent": 1,
         "mounted_on": "/run"
       },
@@ -134,4 +124,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/df.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/df.py)
 
-Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

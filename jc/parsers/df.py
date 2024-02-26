@@ -1,5 +1,7 @@
 """jc - JSON Convert `df` command output parser
 
+Values are normalized to bytes when using `df -h`.
+
 Usage (cli):
 
     $ df | jc --df
@@ -18,14 +20,11 @@ Schema:
     [
       {
         "filesystem":        string,
-        "size":              string,
-        "size_bytes":        integer,  # [0]
+        "size":              integer,
         "1k_blocks":         integer,
         "512_blocks":        integer,
         "used":              integer,
-        "used_bytes":        integer,  # [0]
         "available":         integer,
-        "available_bytes":   integer,  # [0]
         "capacity_percent":  integer,
         "ifree":             integer,
         "iused":             integer,
@@ -35,9 +34,6 @@ Schema:
       }
     ]
 
-    [0]  It is recommended to use these fields as they are normalized to bytes
-         and will work even with human-readable `df` output.
-
 Examples:
 
     $ df | jc --df -p
@@ -46,9 +42,7 @@ Examples:
         "filesystem": "devtmpfs",
         "1k_blocks": 1918820,
         "used": 0,
-        "used_bytes": 0,
         "available": 1918820,
-        "available_bytes": 1918820,
         "use_percent": 0,
         "mounted_on": "/dev"
       },
@@ -56,9 +50,7 @@ Examples:
         "filesystem": "tmpfs",
         "1k_blocks": 1930668,
         "used": 0,
-        "used_bytes": 0,
         "available": 1930668,
-        "available_bytes": 1930668,
         "use_percent": 0,
         "mounted_on": "/dev/shm"
       },
@@ -66,9 +58,7 @@ Examples:
         "filesystem": "tmpfs",
         "1k_blocks": 1930668,
         "used": 11800,
-        "used_bytes": 11800,
         "available": 1918868,
-        "available_bytes": 1918868,
         "use_percent": 1,
         "mounted_on": "/run"
       },
@@ -111,7 +101,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '2.0'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,8 +125,8 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema:
     """
-    int_list = {'used', 'available', 'use_percent', 'capacity_percent', 'ifree',
-                'iused', 'iused_percent'}
+    int_list = {'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent'}
+    size_list = {'size', 'used', 'available'}
 
     for entry in proc_data:
         if 'avail' in entry:
@@ -166,15 +156,10 @@ def _process(proc_data):
         if 'iused_percent' in entry:
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
 
-        # parse the size, used, and available fields and create a 'x_bytes' fields
-        if 'size' in entry:
-            entry['size_bytes'] = jc.utils.convert_size_to_int(entry['size'])
-
-        if 'used' in entry:
-            entry['used_bytes'] = jc.utils.convert_size_to_int(entry['used'])
-
-        if 'available' in entry:
-            entry['available_bytes'] = jc.utils.convert_size_to_int(entry['available'])
+        # parse the size, used, and available fields to bytes
+        for key in entry:
+            if key in size_list:
+                entry[key] = jc.utils.convert_size_to_int(entry[key])
 
         # convert integers
         for key in entry:
