@@ -19,10 +19,13 @@ Schema:
       {
         "filesystem":        string,
         "size":              string,
+        "size_bytes":        integer,  # [0]
         "1k_blocks":         integer,
         "512_blocks":        integer,
         "used":              integer,
+        "used_bytes":        integer,  # [0]
         "available":         integer,
+        "available_bytes":   integer,  # [0]
         "capacity_percent":  integer,
         "ifree":             integer,
         "iused":             integer,
@@ -32,6 +35,9 @@ Schema:
       }
     ]
 
+    [0]  It is recommended to use these fields as they are normalized to bytes
+         and will work even with human-readable `df` output.
+
 Examples:
 
     $ df | jc --df -p
@@ -40,7 +46,9 @@ Examples:
         "filesystem": "devtmpfs",
         "1k_blocks": 1918820,
         "used": 0,
+        "used_bytes": 0,
         "available": 1918820,
+        "available_bytes": 1918820,
         "use_percent": 0,
         "mounted_on": "/dev"
       },
@@ -48,7 +56,9 @@ Examples:
         "filesystem": "tmpfs",
         "1k_blocks": 1930668,
         "used": 0,
+        "used_bytes": 0,
         "available": 1930668,
+        "available_bytes": 1930668,
         "use_percent": 0,
         "mounted_on": "/dev/shm"
       },
@@ -56,7 +66,9 @@ Examples:
         "filesystem": "tmpfs",
         "1k_blocks": 1930668,
         "used": 11800,
+        "used_bytes": 11800,
         "available": 1918868,
+        "available_bytes": 1918868,
         "use_percent": 1,
         "mounted_on": "/run"
       },
@@ -99,7 +111,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -124,22 +136,18 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema:
     """
     int_list = {'used', 'available', 'use_percent', 'capacity_percent', 'ifree',
-                    'iused', 'iused_percent'}
+                'iused', 'iused_percent'}
 
     for entry in proc_data:
-        # change 'avail' to 'available'
         if 'avail' in entry:
             entry['available'] = entry.pop('avail')
 
-        # change 'use%' to 'use_percent'
         if 'use%' in entry:
             entry['use_percent'] = entry.pop('use%')
 
-        # change 'capacity' to 'capacity_percent'
         if 'capacity' in entry:
             entry['capacity_percent'] = entry.pop('capacity')
 
-        # change '%iused' to 'iused_percent'
         if '%iused' in entry:
             entry['iused_percent'] = entry.pop('%iused')
 
@@ -157,6 +165,16 @@ def _process(proc_data):
 
         if 'iused_percent' in entry:
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
+
+        # parse the size, used, and available fields and create a 'x_bytes' fields
+        if 'size' in entry:
+            entry['size_bytes'] = jc.utils.convert_size_to_int(entry['size'])
+
+        if 'used' in entry:
+            entry['used_bytes'] = jc.utils.convert_size_to_int(entry['used'])
+
+        if 'available' in entry:
+            entry['available_bytes'] = jc.utils.convert_size_to_int(entry['available'])
 
         # convert integers
         for key in entry:
@@ -245,7 +263,4 @@ def parse(data, raw=False, quiet=False):
                 if item['filesystem'] in filesystem_map:
                     item['filesystem'] = filesystem_map[item['filesystem']]
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
