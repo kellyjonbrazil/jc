@@ -159,4 +159,5 @@ def parse(
     """
     # This parser is an alias of rpm_qi.py
     rpm_qi.info = info  # type: ignore
+    rpm_qi.__name__ = __name__
     return rpm_qi.parse(data, raw, quiet)

@@ -1,4 +1,9 @@
-"""jc - JSON Convert `apt-cache show` command parser
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.apt_cache_show"></a>
+
+# jc.parsers.apt\_cache\_show
+
+jc - JSON Convert `apt-cache show` command parser
 
 Usage (cli):
 
@@ -144,46 +149,32 @@ Examples:
       },
       ...
     ]
-"""
-from typing import List
-from jc.jc_types import JSONDictType
-import jc.parsers.rpm_qi as rpm_qi
 
+<a id="jc.parsers.apt_cache_show.parse"></a>
 
-class info():
-    """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = '`apt-cache show` command parser'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
-    details = 'Using the rpm-qi parser'
-    compatible = ['linux']
-    tags = ['command']
-    magic_commands = ['apt-cache show']
+### parse
 
+```python
+def parse(data: str,
+          raw: bool = False,
+          quiet: bool = False) -> List[JSONDictType]
+```
 
-__version__ = info.version
+Main text parsing function
 
+Parameters:
 
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> List[JSONDictType]:
-    """
-    Main text parsing function
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
-    Parameters:
+Returns:
 
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
+    List of Dictionaries. Raw or processed structured data.
 
-    Returns:
+### Parser Information
+Compatibility:  linux
 
-        List of Dictionaries. Raw or processed structured data.
-    """
-    # This parser is an alias of rpm_qi.py
-    rpm_qi.info = info  # type: ignore
-    rpm_qi.__name__ = __name__
-    return rpm_qi.parse(data, raw, quiet)
+Source: [`jc/parsers/apt_cache_show.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/apt_cache_show.py)
+
+Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
