@@ -43,6 +43,30 @@ Schema:
         "build_epoch_utc":          integer,      # [1]
         "build_host":               string,
         "relocations":              string,
+        "depends": [
+                                    string
+        ],
+        "pre_depends": [
+                                    string
+        ],
+        "recommends": [
+                                    string
+        ],
+        "suggests": [
+                                    string
+        ],
+        "conflicts": [
+                                    string
+        ],
+        "breaks": [
+                                    string
+        ],
+        "tag": [
+                                    string
+        ],
+        "replaces": [
+                                    string
+        ],
         "packager":                 string,
         "vendor":                   string,
         "url":                      string,
@@ -161,7 +185,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -186,11 +210,19 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     int_list = {'epoch', 'size', 'installed_size'}
+    split_list = {'depends', 'pre_depends', 'recommends', 'suggests', 'conflicts',
+                  'breaks', 'tag', 'replaces'}
 
     for entry in proc_data:
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+
+            # for apt-cache show output
+            if key in split_list:
+                val_list = entry[key].split(',')
+                val_list = [x.strip() for x in val_list if x]
+                entry[key] = val_list
 
         if 'build_date' in entry:
             timestamp = jc.utils.timestamp(entry['build_date'], format_hint=(3000,))
@@ -227,6 +259,7 @@ def parse(data, raw=False, quiet=False):
     last_entry = None
     this_entry = None
     desc_entry = False
+    desc_en_entry = False
     description = []
 
     if jc.utils.has_data(data):
@@ -245,24 +278,34 @@ def parse(data, raw=False, quiet=False):
                         entry_obj = {}
                         last_entry = this_entry
                         desc_entry = False
-
-            if len(split_line) == 2:
-                entry_obj[split_line[0].strip().lower().replace(' ', '_').replace('-', '_')] = split_line[1].strip()
+                        desc_en_entry = False
 
             if line.startswith('Description :'):
                 desc_entry = True
                 description = []
                 continue
 
+            # for apt-cache show output
+            if line.startswith('Description-en:'):
+                desc_en_entry = True
+                description = [split_line[1].strip()]
+                continue
+
             if desc_entry:
                 description.append(line)
+                continue
+
+            if desc_en_entry and line.startswith(' '):
+                description.append(line)
+                continue
+
+            if len(split_line) == 2:
+                keyname = jc.utils.normalize_key(split_line[0])
+                entry_obj[keyname] = split_line[1].strip()
 
         if entry_obj:
             if description:
                 entry_obj['description'] = ' '.join(description)
             raw_output.append(entry_obj)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
