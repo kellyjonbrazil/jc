@@ -88,7 +88,7 @@ from jc.streaming import (
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`rsync` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -121,10 +121,26 @@ def _process(proc_data: Dict) -> Dict:
 
     for key in proc_data.copy():
         if key in int_list:
-            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+            proc_data[key] = jc.utils.convert_size_to_int(proc_data[key])
 
         if key in float_list:
-            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
+            converted_val: Union[float, None] = None
+            val = proc_data[key]
+            if any([
+                'K' in val,
+                'M' in val,
+                'G' in val,
+                'T' in val
+            ]):
+                converted_int_val = jc.utils.convert_size_to_int(val)
+
+                if not converted_int_val is None:
+                    converted_val = float(converted_int_val)
+
+            else:
+                converted_val = jc.utils.convert_to_float(val)
+
+            proc_data[key] = converted_val
 
         # add timestamp
         if 'date' in proc_data and 'time' in proc_data:
@@ -253,6 +269,9 @@ def parse(
     file_line_mac_re = re.compile(r'(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
     stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
     stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
+
+    stat1_line_simple_re = re.compile(r'(sent)\s+(?P<sent>[0-9,.TGMK]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,.TGMK]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.TGMK]+)\s+(bytes/sec)')
+    stat2_line_simple_re = re.compile(r'(total\s+size\s+is)\s+(?P<total_size>[0-9,.TGMK]+)\s+(speedup\s+is)\s+(?P<speedup>[0-9,.TGMK]+)')
 
     file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
     file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
@@ -401,6 +420,22 @@ def parse(
             if stat2_line:
                 summary['total_size'] = stat2_line.group('total_size')
                 summary['speedup'] = stat2_line.group('speedup')
+                continue
+
+            stat1_line_simple = stat1_line_simple_re.match(line)
+            if stat1_line_simple:
+                summary = {
+                    'type': 'summary',
+                    'sent': stat1_line_simple.group('sent'),
+                    'received': stat1_line_simple.group('received'),
+                    'bytes_sec': stat1_line_simple.group('bytes_sec')
+                }
+                continue
+
+            stat2_line_simple = stat2_line_simple_re.match(line)
+            if stat2_line_simple:
+                summary['total_size'] = stat2_line_simple.group('total_size')
+                summary['speedup'] = stat2_line_simple.group('speedup')
                 continue
 
             stat_line_log = stat_line_log_re.match(line)

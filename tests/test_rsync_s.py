@@ -172,6 +172,18 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.rsync_s.parse(self.osx_10_14_6_rsync_i_vvv_logfile_nochange.splitlines(), quiet=True)), self.osx_10_14_6_rsync_i_vvv_logfile_nochange_streaming_json)
 
+    def test_rsync_s_simple_summary(self):
+        """
+        Test 'rsync avh' output with a simple summary
+        """
+        data = '''sending incremental file list
+
+sent 8.71M bytes  received 29.88K bytes  10.99K bytes/sec
+total size is 221.79G  speedup is 25,388.23
+'''
+        expected = [{"type":"summary","sent":8710000,"received":29880,"bytes_sec":10990.0,"total_size":221790000000,"speedup":25388.23}]
+        self.assertEqual(list(jc.parsers.rsync_s.parse(data.splitlines(), quiet=True)), expected)
+
 
 
 if __name__ == '__main__':

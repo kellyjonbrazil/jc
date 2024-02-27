@@ -116,4 +116,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/rsync_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/rsync_s.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
