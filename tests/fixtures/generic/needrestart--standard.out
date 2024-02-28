@@ -1,0 +1,9 @@
+NEEDRESTART-VER: 2.1
+NEEDRESTART-KCUR: 3.19.3-tl1+
+NEEDRESTART-KEXP: 3.19.3-tl1+
+NEEDRESTART-KSTA: 1
+NEEDRESTART-SVC: systemd-journald.service
+NEEDRESTART-SVC: systemd-machined.service
+NEEDRESTART-CONT: LXC web1
+NEEDRESTART-SESS: metabase @ user manager service
+NEEDRESTART-SESS: root @ session #28017

@@ -97,6 +97,7 @@ parsers: List[str] = [
     'mount',
     'mpstat',
     'mpstat-s',
+    'needrestart',
     'netstat',
     'nmcli',
     'nsd-control',
