@@ -15,49 +15,49 @@ Usage (module):
     result = jc.parse('xrandr', xrandr_command_output)
 
 Schema:
-    Plain Schema:
+
     {
       "screens": [
         {
+          "screen_number":                     integer,
+          "minimum_width":                     integer,
+          "minimum_height":                    integer,
+          "current_width":                     integer,
+          "current_height":                    integer,
+          "maximum_width":                     integer,
+          "maximum_height":                    integer,
           "devices": [
             {
-              "props": {
-                         [key: string]: List[string],
-                       },
               "resolution_modes": [
                 {
-                  "resolution_width": int,
-                  "resolution_height": int,
-                  "is_high_resolution": boolean,
+                  "resolution_width":          integer,
+                  "resolution_height":         integer,
+                  "is_high_resolution":        boolean,
                   "frequencies": [
                     {
-                      "frequency": float,
-                      "is_current": boolean,
-                      "is_preferred": boolean
+                      "frequency":             float,
+                      "is_current":            boolean,
+                      "is_preferred":          boolean
                     }
                   ]
                 }
-              ],
-              "is_connected": boolean,
-              "is_primary": boolean,
-              "device_name": string,
-              "rotation": string,
-              "reflection": string,
-              "resolution_width": int,
-              "resolution_height": int,
-              "offset_width": int,
-              "offset_height": int,
-              "dimension_width": int,
-              "dimension_height": int
+              ]
             }
           ],
-          "screen_number": int,
-          "minimum_width": int,
-          "minimum_height": int,
-          "current_width": int,
-          "current_height": int,
-          "maximum_width": int,
-          "maximum_height": int
+          "is_connected":                      boolean,
+          "is_primary":                        boolean,
+          "device_name":                       string,
+          "model_name":                        string,
+          "product_id"                         string,
+          "serial_number":                     string,
+          "resolution_width":                  integer,
+          "resolution_height":                 integer,
+          "offset_width":                      integer,
+          "offset_height":                     integer,
+          "dimension_width":                   integer,
+          "dimension_height":                  integer,
+          "rotation":                          string,
+          "reflection":                        string
         }
       ]
     }
