@@ -104,11 +104,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
     return proc_data
 
 
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> JSONDictType:
+def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType:
     """
     Main text parsing function
 
@@ -132,8 +128,8 @@ def parse(
     advertised_link_modes: List[str] = []
     advertised_fec_modes: List[str] = []
     current_message_level: List[str] = []
-    mode: str = ''    # supported_link_modes, supported_fec_modes, advertised_link_modes,
-                      # advertised_fec_modes, current_message_level
+    mode: str = ''  # supported_link_modes, supported_fec_modes, advertised_link_modes,
+    # advertised_fec_modes, current_message_level
 
     if jc.utils.has_data(data):
 
@@ -144,7 +140,7 @@ def parse(
                 continue
 
             data_line = line.replace('\t', ' ')
-            if not data_line.startswith('         '):    # 9 spaces
+            if not data_line.startswith('         '):  # 9 spaces
                 mode = ''
 
             if 'Supported ports:' in line:
@@ -154,27 +150,35 @@ def parse(
                 supported_ports.extend(val_list)
                 continue
 
-            if 'Supported link modes:' in line:
+            if 'Supported link modes:' in line and 'Not reported' not in line:
                 _, val = line.split(':', maxsplit=1)
-                supported_link_modes.append(val.strip())
+                val = val.strip()
+                val_list = val.split()
+                supported_link_modes.extend(val_list)
                 mode = 'supported_link_modes'
                 continue
 
-            if 'Supported FEC modes:' in line:
+            if 'Supported FEC modes:' in line and 'Not reported' not in line:
                 _, val = line.split(':', maxsplit=1)
-                supported_fec_modes.append(val.strip())
+                val = val.strip()
+                val_list = val.split()
+                supported_fec_modes.extend(val_list)
                 mode = 'supported_fec_modes'
                 continue
 
-            if 'Advertised link modes:' in line:
+            if 'Advertised link modes:' in line and 'Not reported' not in line:
                 _, val = line.split(':', maxsplit=1)
-                advertised_link_modes.append(val.strip())
+                val = val.strip()
+                val_list = val.split()
+                advertised_link_modes.extend(val_list)
                 mode = 'advertised_link_modes'
                 continue
 
-            if 'Advertised FEC modes:' in line:
+            if 'Advertised FEC modes:' in line and 'Not reported' not in line:
                 _, val = line.split(':', maxsplit=1)
-                advertised_fec_modes.append(val.strip())
+                val = val.strip()
+                val_list = val.split()
+                advertised_fec_modes.extend(val_list)
                 mode = 'advertised_fec_modes'
                 continue
 
@@ -185,19 +189,27 @@ def parse(
                 continue
 
             if mode == 'supported_link_modes':
-                supported_link_modes.append(line.strip())
+                val = line.strip()
+                val_list = val.split()
+                supported_link_modes.extend(val_list)
                 continue
 
             if mode == 'supported_fec_modes':
-                supported_fec_modes.append(line.strip())
+                val = line.strip()
+                val_list = val.split()
+                supported_fec_modes.extend(val_list)
                 continue
 
             if mode == 'advertised_link_modes':
-                advertised_link_modes.append(line.strip())
+                val = line.strip()
+                val_list = val.split()
+                advertised_link_modes.extend(val_list)
                 continue
 
             if mode == 'advertised_fec_modes':
-                advertised_fec_modes.append(line.strip())
+                val = line.strip()
+                val_list = val.split()
+                advertised_fec_modes.extend(val_list)
                 continue
 
             if mode == 'current_message_level':
