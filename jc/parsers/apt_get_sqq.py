@@ -68,6 +68,16 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    op_map = {
+        'Conf': 'configure',
+        'Remv': 'remove',
+        'Inst': 'unpack'
+    }
+
+    for item in proc_data:
+        if 'operation' in item and item['operation']:
+            item['operation'] = op_map[item['operation']]
+
     return proc_data
 
 
