@@ -1,0 +1,9 @@
+Inst dpkg [1.19.7] (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
+Inst dpkg (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
+Conf dpkg [1.19.7] (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
+Remv dpkg [1.19.7] (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
+
+Inst base-files [10.3+deb10u4] (10.3+deb10u13 Debian:10.13/oldstable [amd64])
+Conf base-files (10.3+deb10u13 Debian:10.13/oldstable [amd64])
+Inst dpkg [1.19.7] (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
+Conf dpkg (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
