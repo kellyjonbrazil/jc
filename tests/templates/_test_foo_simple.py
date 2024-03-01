@@ -13,13 +13,13 @@ class MyTests(unittest.TestCase):
 
     def test_foo_nodata(self):
         """
-        Test 'my_parser_name' with no data
+        Test 'foo' with no data
         """
         test_utils.run_no_data(self, __file__, {})
 
     def test_foo_all_fixtures(self):
         """
-        Test 'my_parser_name' with various fixtures
+        Test 'foo' with various fixtures
         """
         test_utils.run_all_fixtures(self, __file__)
 
