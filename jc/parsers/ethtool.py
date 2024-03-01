@@ -149,7 +149,7 @@ def _parse_default(data: str) -> JSONDictType:
             raw_output['name'] = line.split()[2][:-1]
             continue
 
-        data_line = line.replace('\t', ' ')
+        data_line = line.replace('\t', '    ')
         if not data_line.startswith('         '):  # 9 spaces
             mode = ''
 
