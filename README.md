@@ -160,6 +160,7 @@ option.
 |       `--airport` | `airport -I` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport)        |
 |     `--airport-s` | `airport -s` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s)      |
 | `--apt-cache-show` | `apt-cache show` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_cache_show) |
+|   `--apt-get-sqq` | `apt-get -sqq` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_get_sqq)    |
 |           `--arp` | `arp` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/arp)            |
 |    `--asciitable` | ASCII and Unicode table parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable)     |
 |  `--asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
@@ -190,6 +191,7 @@ option.
 |    `--efibootmgr` | `efibootmgr` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/efibootmgr)     |
 | `--email-address` | Email Address string parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/email_address)  |
 |           `--env` | `env` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/env)            |
+|       `--ethtool` | `ethtool` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ethtool)        |
 |          `--file` | `file` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/file)           |
 |          `--find` | `find` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/find)           |
 |       `--findmnt` | `findmnt` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/findmnt)        |

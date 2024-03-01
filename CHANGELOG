@@ -1,8 +1,10 @@
 jc changelog
 
-20240228 v1.25.2
-- Add `apt-cache show` command parser
-- Add `needrestart -b` command parser
+20240301 v1.25.2
+- Add `apt-cache-show` command parser
+- Add `apt-get-sqq` command parser
+- Add `ethtool` command parser
+- Add `needrestart` command parser
 - Enhance `df` parser to add human readable output support. Note: the `size`
   field has been changed to an integer and all size values have been normalized
   to bytes.
