@@ -82,11 +82,84 @@ Schema:
 
 Examples:
 
-    $ ethtool | jc --ethtool -p
-    []
+    $ ethtool enp0s3 | jc --ethtool -p
+    {
+      "name": "enp0s3",
+      "supported_pause_frame_use": "No",
+      "supports_auto_negotiation": true,
+      "supported_fec_modes": "Not reported",
+      "advertised_pause_frame_use": false,
+      "advertised_auto_negotiation": true,
+      "advertised_fec_modes": "Not reported",
+      "speed": "1000Mb/s",
+      "duplex": "Full",
+      "port": "Twisted Pair",
+      "phyad": "0",
+      "transceiver": "internal",
+      "auto_negotiation": false,
+      "mdi_x": "off (auto)",
+      "supports_wake_on": "umbg",
+      "wake_on": "d",
+      "link_detected": true,
+      "supported_ports": [
+        "TP"
+      ],
+      "supported_link_modes": [
+        "10baseT/Half",
+        "10baseT/Full",
+        "100baseT/Half",
+        "100baseT/Full",
+        "1000baseT/Full"
+      ],
+      "advertised_link_modes": [
+        "10baseT/Half",
+        "10baseT/Full",
+        "100baseT/Half",
+        "100baseT/Full",
+        "1000baseT/Full"
+      ],
+      "current_message_level": [
+        "0x00000007 (7)",
+        "drv probe link"
+      ],
+      "speed_bps": 1000000000
+    }
 
-    $ ethtool | jc --ethtool -p -r
-    []
+    $ ethtool --module-info enp0s3 | jc --ethtool -p
+    {
+      "identifier": "0x03 (SFP)",
+      "extended_identifier": "0x04 (GBIC/SFP defined by 2-wire interface ID)",
+      "connector": "0x21 (Copper pigtail)",
+      "transceiver_codes": "0x01 0x00 0x00 0x04 0x00 0x04 0x80 0xd5 0x00",
+      "transceiver_type": [
+        "Infiniband: 1X Copper Passive",
+        "Ethernet: 1000BASE-CX",
+        "Passive Cable",
+        "FC: Twin Axial Pair (TW)",
+        "FC: 1200 MBytes/sec",
+        "FC: 800 MBytes/sec",
+        "FC: 400 MBytes/sec",
+        "FC: 200 MBytes/sec",
+        "FC: 100 MBytes/sec"
+      ],
+      "encoding": "0x00 (unspecified)",
+      "br_nominal": "10300MBd",
+      "rate_identifier": "0x00 (unspecified)",
+      "length_smf_km": "0km",
+      "length_smf": "0m",
+      "length_50um": "0m",
+      "length_62_5um": "0m",
+      "length_copper": "2m",
+      "length_om3": "0m",
+      "passive_cu_cmplnce": "0x01 (SFF-8431 appendix E) [SFF-8472 rev10.4 only]",
+      "vendor_name": "UbiquitiNetworks",
+      "vendor_oui": "00:40:20",
+      "vendor_pn": "UDC-2",
+      "vendor_rev": "",
+      "option_values": "0x00 0x00",
+      "br_margin_max": "0%",
+      "br_margin_min": "0%"
+    }
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
