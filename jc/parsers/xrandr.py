@@ -15,7 +15,6 @@ Usage (module):
     result = jc.parse('xrandr', xrandr_command_output)
 
 Schema:
-
     {
       "screens": [
         {
@@ -28,6 +27,16 @@ Schema:
           "maximum_height":                    integer,
           "devices": [
             {
+              "props": {
+                [name: string]: {
+                  // Represents EdidModel
+                  "name": string,
+                  "product_id": string,
+                  "serial_number": string,
+                }
+                |
+                list[string]
+              },
               "resolution_modes": [
                 {
                   "resolution_width":          integer,
@@ -68,9 +77,15 @@ Examples:
     {
       "screens": [
         {
+          "screen_number": 0,
+          "minimum_width": 8,
+          "minimum_height": 8,
+          "current_width": 1920,
+          "current_height": 1080,
+          "maximum_width": 32767,
+          "maximum_height": 32767,
           "devices": [
             {
-              "props": {},
               "resolution_modes": [
                 {
                   "resolution_width": 1920,
@@ -83,28 +98,21 @@ Examples:
                       "is_preferred": true
                     }
                   ]
-                }
+                },
               ],
               "is_connected": true,
               "is_primary": true,
-              "device_name": "eDP-1",
-              "rotation": "normal",
-              "reflection": "normal",
+              "device_name": "eDP1",
               "resolution_width": 1920,
               "resolution_height": 1080,
               "offset_width": 0,
               "offset_height": 0,
-              "dimension_width": 309,
-              "dimension_height": 174
+              "dimension_width": 310,
+              "dimension_height": 170,
+              "rotation": "normal",
+              "reflection": "normal"
             }
-          ],
-          "screen_number": 0,
-          "minimum_width": 320,
-          "minimum_height": 200,
-          "current_width": 1920,
-          "current_height": 1080,
-          "maximum_width": 16384,
-          "maximum_height": 16384
+          ]
         }
       ]
     }
@@ -117,7 +125,14 @@ Examples:
             {
               "props": {
                 "EDID": [
-                  "00ffffffffffff0003d700000000",
+                  "00ffff5700000000",
+                  "001c01a5544d9a27",
+                  "0e50540101010101",
+                  "010101383e401010",
+                  "3500350f00000000",
+                  "0000000000fe0041",
+                  "554f0a20000000fe",
+                  "00423137200a0070"
                 ],
                 "scaling mode": [
                   "Full aspect ",
@@ -127,34 +142,6 @@ Examples:
                   "Default ",
                   "supported: Default, RGB_Wide_Gamut_Fixed_Point, RGB_Wide_Gamut_Floating_Point, opRGB, DCI-P3_RGB_D65, BT2020_RGB, BT601_YCC, BT709_YCC, XVYCC_601, XVYCC_709, SYCC_601, opYCC_601, BT2020_CYCC, BT2020_YCC"
                 ],
-                "max bpc": [
-                  "12 ",
-                  "range: (6, 12)"
-                ],
-                "Broadcast RGB": [
-                  "Automatic ",
-                  "supported: Automatic, Full, Limited 16:235"
-                ],
-                "panel orientation": [
-                  "Normal ",
-                  "supported: Normal, Upside Down, Left Side Up, Right Side Up"
-                ],
-                "link-status": [
-                  "Good ",
-                  "supported: Good, Bad"
-                ],
-                "CTM": [
-                  "0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 ",
-                  "0 1"
-                ],
-                "CONNECTOR_ID": [
-                  "95 ",
-                  "supported: 95"
-                ],
-                "non-desktop": [
-                  "0 ",
-                  "range: (0, 1)"
-                ],
                 "EdidModel": {
                   "name": "Generic",
                   "product_id": "22333",
@@ -163,12 +150,12 @@ Examples:
               },
               "resolution_modes": [
                 {
-                  "resolution_width": 1920,
-                  "resolution_height": 1080,
+                  "resolution_width": 320,
+                  "resolution_height": 180,
                   "is_high_resolution": false,
                   "frequencies": [
                     {
-                      "frequency": 59.93,
+                      "frequency": 59.84,
                       "is_current": false,
                       "is_preferred": false
                     }
@@ -186,60 +173,6 @@ Examples:
               "offset_height": 0,
               "dimension_width": 309,
               "dimension_height": 174
-            },
-            {
-              "props": {
-                "HDCP Content Type": [
-                  "HDCP Type0 ",
-                  "supported: HDCP Type0, HDCP Type1"
-                ],
-                "Content Protection": [
-                  "Undesired ",
-                  "supported: Undesired, Desired, Enabled"
-                ],
-                "Colorspace": [
-                  "Default ",
-                  "supported: Default, RGB_Wide_Gamut_Fixed_Point, RGB_Wide_Gamut_Floating_Point, opRGB, DCI-P3_RGB_D65, BT2020_RGB, BT601_YCC, BT709_YCC, XVYCC_601, XVYCC_709, SYCC_601, opYCC_601, BT2020_CYCC, BT2020_YCC"
-                ],
-                "max bpc": [
-                  "12 ",
-                  "range: (6, 12)"
-                ],
-                "Broadcast RGB": [
-                  "Automatic ",
-                  "supported: Automatic, Full, Limited 16:235"
-                ],
-                "audio": [
-                  "auto ",
-                  "supported: force-dvi, off, auto, on"
-                ],
-                "subconnector": [
-                  "Unknown ",
-                  "supported: Unknown, VGA, DVI-D, HDMI, DP, Wireless, Native"
-                ],
-                "link-status": [
-                  "Good ",
-                  "supported: Good, Bad"
-                ],
-                "CTM": [
-                  "0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 ",
-                  "0 1"
-                ],
-                "CONNECTOR_ID": [
-                  "103 ",
-                  "supported: 103"
-                ],
-                "non-desktop": [
-                  "0 ",
-                  "range: (0, 1)"
-                ]
-              },
-              "resolution_modes": [],
-              "is_connected": false,
-              "is_primary": false,
-              "device_name": "DP-1",
-              "rotation": "normal",
-              "reflection": "normal"
             }
           ],
           "screen_number": 0,
