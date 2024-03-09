@@ -1,0 +1,79 @@
+        Identifier                                : 0x03 (SFP)
+        Extended identifier                       : 0x04 (GBIC/SFP defined by 2-wire interface ID)
+        Connector                                 : 0x07 (LC)
+        Transceiver codes                         : 0x20 0x00 0x00 0x00 0x44 0x40 0x00 0x00 0x03
+        Transceiver type                          : 10G Ethernet: 10G Base-LR
+        Transceiver type                          : FC: short distance (S)
+        Transceiver type                          : FC: Shortwave laser, linear Rx (SA)
+        Transceiver type                          : FC: Shortwave laser w/o OFC (SN)
+        Transceiver type                          : Extended: 100G Base-LR4 or 25GBase-LR
+        Encoding                                  : 0x03 (NRZ)
+        BR, Nominal                               : 25750MBd
+        Rate identifier                           : 0x00 (unspecified)
+        Length (SMF,km)                           : 10km
+        Length (SMF)                              : 10000m
+        Length (50um)                             : 0m
+        Length (62.5um)                           : 0m
+        Length (Copper)                           : 0m
+        Length (OM3)                              : 0m
+        Laser wavelength                          : 1310nm
+        Vendor name                               : EDGE
+        Vendor OUI                                : 00:1b:21
+        Vendor PN                                 : SFP-10/25GLR-31
+        Vendor rev                                : 1A
+        Option values                             : 0x08 0x1a
+        Option                                    : RX_LOS implemented
+        Option                                    : TX_FAULT implemented
+        Option                                    : TX_DISABLE implemented
+        Option                                    : Retimer or CDR implemented
+        BR margin, max                            : 0%
+        BR margin, min                            : 0%
+        Vendor SN                                 : EO11111111111
+        Date code                                 : 230619
+        Optical diagnostics support               : Yes
+        Laser bias current                        : 51.494 mA
+        Laser output power                        : 0.8183 mW / -0.87 dBm
+        Receiver signal average optical power     : 0.0001 mW / -40.00 dBm
+        Module temperature                        : 34.99 degrees C / 94.99 degrees F
+        Module voltage                            : 3.2995 V
+        Alarm/warning flags implemented           : Yes
+        Laser bias current high alarm             : Off
+        Laser bias current low alarm              : Off
+        Laser bias current high warning           : Off
+        Laser bias current low warning            : Off
+        Laser output power high alarm             : Off
+        Laser output power low alarm              : Off
+        Laser output power high warning           : Off
+        Laser output power low warning            : Off
+        Module temperature high alarm             : Off
+        Module temperature low alarm              : Off
+        Module temperature high warning           : Off
+        Module temperature low warning            : Off
+        Module voltage high alarm                 : Off
+        Module voltage low alarm                  : Off
+        Module voltage high warning               : Off
+        Module voltage low warning                : Off
+        Laser rx power high alarm                 : Off
+        Laser rx power low alarm                  : On
+        Laser rx power high warning               : Off
+        Laser rx power low warning                : On
+        Laser bias current high alarm threshold   : 110.000 mA
+        Laser bias current low alarm threshold    : 1.000 mA
+        Laser bias current high warning threshold : 100.000 mA
+        Laser bias current low warning threshold  : 1.000 mA
+        Laser output power high alarm threshold   : 3.1623 mW / 5.00 dBm
+        Laser output power low alarm threshold    : 0.1000 mW / -10.00 dBm
+        Laser output power high warning threshold : 1.5849 mW / 2.00 dBm
+        Laser output power low warning threshold  : 0.1995 mW / -7.00 dBm
+        Module temperature high alarm threshold   : 95.00 degrees C / 203.00 degrees F
+        Module temperature low alarm threshold    : -50.00 degrees C / -58.00 degrees F
+        Module temperature high warning threshold : 85.00 degrees C / 185.00 degrees F
+        Module temperature low warning threshold  : -40.00 degrees C / -40.00 degrees F
+        Module voltage high alarm threshold       : 3.6300 V
+        Module voltage low alarm threshold        : 2.9700 V
+        Module voltage high warning threshold     : 3.4650 V
+        Module voltage low warning threshold      : 3.1350 V
+        Laser rx power high alarm threshold       : 3.1623 mW / 5.00 dBm
+        Laser rx power low alarm threshold        : 0.0234 mW / -16.31 dBm
+        Laser rx power high warning threshold     : 1.5849 mW / 2.00 dBm
+        Laser rx power low warning threshold      : 0.0468 mW / -13.30 dBm
