@@ -23,7 +23,7 @@ Schema:
         "package":              string,
         "broken":               string/null,
         "proposed_pkg_ver":     string,
-        "existing_src":         string/null,
+        "existing_pkg_ver":     string/null,
         "architecture":         string
       }
     ]
@@ -37,7 +37,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -45,7 +45,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -53,7 +53,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -61,7 +61,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -69,7 +69,7 @@ Examples:
         "package": "base-files",
         "broken": "10.3+deb10u4",
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -77,7 +77,7 @@ Examples:
         "package": "base-files",
         "broken": null,
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -85,7 +85,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -93,7 +93,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       }
     ]
@@ -105,7 +105,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -113,7 +113,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -121,7 +121,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -129,7 +129,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -137,7 +137,7 @@ Examples:
         "package": "base-files",
         "broken": "10.3+deb10u4",
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -145,7 +145,7 @@ Examples:
         "package": "base-files",
         "broken": null,
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -153,7 +153,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -161,7 +161,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       }
     ]
@@ -238,7 +238,7 @@ def parse(
 
         # Inst dpkg [1.19.7] (1.19.8 Debian:10.13/oldstable, Debian-Security:10/oldstable [amd64])
         #  |    |     |                       |                        |                    \architecture
-        #  |    |     |                       |                         \existing_src (optional)
+        #  |    |     |                       |                         \existing_pkg_ver (optional)
         #  |    |     |                        \proposed_pkg_ver
         #  |    |      \broken (optional)
         #  |     \package
@@ -250,7 +250,7 @@ def parse(
             broken_val = None
             packages_pe = None
             proposed_pkg_ver = None
-            existing_src = None
+            existing_pkg_ver = None
             parsed_line = line_re.match(line)
 
             if parsed_line:
@@ -263,14 +263,14 @@ def parse(
                     packages_pe = parsed_dict['packages_pe'].split(',')
                     proposed_pkg_ver = packages_pe[0].strip()
                     if len(packages_pe) == 2:
-                        existing_src = packages_pe[1].strip()
+                        existing_pkg_ver = packages_pe[1].strip()
 
                 output_line = {
                     'operation': parsed_dict['operation'],
                     'package': parsed_dict['package'],
                     'broken': broken_val,
                     'proposed_pkg_ver': proposed_pkg_ver,
-                    'existing_src': existing_src,
+                    'existing_pkg_ver': existing_pkg_ver,
                     'architecture': parsed_dict['architecture']
                 }
 
