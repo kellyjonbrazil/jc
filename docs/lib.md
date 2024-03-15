@@ -3,7 +3,7 @@
 
 # jc.lib
 
-# Table of Contents
+## Table of Contents
 
 *[jc.lib](#jc.lib)
   *[all_parser_info](#jc.lib.all_parser_info)

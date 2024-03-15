@@ -3,7 +3,7 @@
 
 # jc.parsers.universal
 
-# Table of Contents
+## Table of Contents
 
 *[jc.parsers.universal](#jc.parsers.universal)
   *[simple_table_parse](#jc.parsers.universal.simple_table_parse)

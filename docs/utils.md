@@ -3,7 +3,7 @@
 
 # jc.utils
 
-# Table of Contents
+## Table of Contents
 
 *[jc.utils](#jc.utils)
   *[compatibility](#jc.utils.compatibility)

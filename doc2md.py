@@ -6,7 +6,7 @@ Convert parser doc string to markdown
 import sys
 import importlib
 from inspect import isfunction, signature, cleandoc
-import yapf
+import yapf  # type: ignore
 import os
 import sys
 
@@ -29,7 +29,7 @@ header = f'''[Home](https://kellyjonbrazil.github.io/jc/)
 # {mod_path}
 '''
 
-summary = module.__doc__
+summary = module.__doc__ or ''
 
 functions = []
 for attribute in dir(module):
@@ -45,7 +45,7 @@ for attribute in dir(module):
                 functions.append(attribute)
 
 ######## TABLE OF CONTENTS ########
-toc = f'# Table of Contents\n\n*[{mod_path}](#{mod_path})\n'
+toc = f'## Table of Contents\n\n*[{mod_path}](#{mod_path})\n'
 for api in functions:
     toc = f'{toc}  *[{api}](#{mod_path}.{api})\n'
 
@@ -78,6 +78,7 @@ if 'jc.parsers.' in mod_path and not 'universal' in mod_path:
         footer = footer + 'This parser can be used with the `--slurp` command-line option.\n\n'
     footer = footer + f'Version {ver} by {author} ({author_email})\n'
 
+final_doc = ''
 if 'jc.parsers.' in mod_path and not 'universal' in mod_path:
     final_doc = header + '\n' + summary + '\n\n' + api_docs + '\n' + footer
 elif mod_path == 'jc':

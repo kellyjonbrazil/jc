@@ -3,7 +3,7 @@
 
 # jc.streaming
 
-# Table of Contents
+## Table of Contents
 
 *[jc.streaming](#jc.streaming)
   *[add_jc_meta](#jc.streaming.add_jc_meta)
