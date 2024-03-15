@@ -1,7 +1,12 @@
 import unittest
-
+import os
+import sys
+sys.path.append(os.getcwd())
 from tests import utils_for_test as test_utils
+sys.path.pop()
+print(sys.path)
 
+# TODO: Cleanup sys.path so it doesn't keep appending
 
 class MyTests(unittest.TestCase):
 
