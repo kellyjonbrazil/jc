@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/etc/resolve.conf` file parser
+r"""jc - JSON Convert `/etc/resolve.conf` file parser
 
 This parser may be more forgiving than the system parser. For example, if
 multiple `search` lists are defined, this parser will append all entries to

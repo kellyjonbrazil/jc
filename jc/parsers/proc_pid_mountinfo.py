@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/<pid>/mountinfo` file parser
+r"""jc - JSON Convert `/proc/<pid>/mountinfo` file parser
 
 Usage (cli):
 

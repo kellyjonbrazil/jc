@@ -1,4 +1,4 @@
-"""jc - JSON Convert `efibootmgr` command output parser
+r"""jc - JSON Convert `efibootmgr` command output parser
 
 The `-v` option is also supported.
 

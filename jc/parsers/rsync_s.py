@@ -1,4 +1,4 @@
-"""jc - JSON Convert `rsync` command output streaming parser
+r"""jc - JSON Convert `rsync` command output streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)

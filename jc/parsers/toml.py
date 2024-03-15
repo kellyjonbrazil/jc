@@ -1,4 +1,4 @@
-"""jc - JSON Convert TOML file parser
+r"""jc - JSON Convert TOML file parser
 
 Usage (cli):
 

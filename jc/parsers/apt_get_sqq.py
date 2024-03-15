@@ -1,4 +1,4 @@
-"""jc - JSON Convert `apt-get -sqq` command output parser
+r"""jc - JSON Convert `apt-get -sqq` command output parser
 
 Requires the `-sqq` options in `apt-get`.
 

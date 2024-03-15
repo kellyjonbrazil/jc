@@ -1,4 +1,4 @@
-"""jc - JSON Convert `cbt` command output parser (Google Bigtable)
+r"""jc - JSON Convert `cbt` command output parser (Google Bigtable)
 
 Parses the human-, but not machine-, friendly output of the cbt command (for
 Google's Bigtable).

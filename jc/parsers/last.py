@@ -1,4 +1,4 @@
-"""jc - JSON Convert `last` and `lastb` command output parser
+r"""jc - JSON Convert `last` and `lastb` command output parser
 
 Supports `-w`, `-F`, and `-x` options.
 

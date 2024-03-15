@@ -1,4 +1,4 @@
-"""jc - JSON Convert POSIX path string parser
+r"""jc - JSON Convert POSIX path string parser
 
 Parse a POSIX path.
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `df` command output parser
+r"""jc - JSON Convert `df` command output parser
 
 Values are normalized to bytes when using `df -h`.
 

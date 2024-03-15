@@ -1,4 +1,4 @@
-"""jc - JSON Convert broken parser - for testing purposes only"""
+r"""jc - JSON Convert broken parser - for testing purposes only"""
 import non_existent_library
 
 class info():

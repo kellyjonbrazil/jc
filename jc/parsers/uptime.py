@@ -1,4 +1,4 @@
-"""jc - JSON Convert `uptime` command output parser
+r"""jc - JSON Convert `uptime` command output parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/etc/gshadow` file parser
+r"""jc - JSON Convert `/etc/gshadow` file parser
 
 Usage (cli):
 

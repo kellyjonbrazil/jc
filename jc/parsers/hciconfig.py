@@ -1,4 +1,4 @@
-"""jc - JSON Convert `hciconfig` command output parser
+r"""jc - JSON Convert `hciconfig` command output parser
 
 Usage (cli):
 

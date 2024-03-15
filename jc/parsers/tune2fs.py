@@ -1,4 +1,4 @@
-"""jc - JSON Convert `tune2fs -l` command output parser
+r"""jc - JSON Convert `tune2fs -l` command output parser
 
 Usage (cli):
 

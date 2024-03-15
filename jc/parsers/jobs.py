@@ -1,4 +1,4 @@
-"""jc - JSON Convert `jobs` command output parser
+r"""jc - JSON Convert `jobs` command output parser
 
 Also supports the `-l` option.
 

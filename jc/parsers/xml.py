@@ -1,4 +1,4 @@
-"""jc - JSON Convert `XML` file parser
+r"""jc - JSON Convert `XML` file parser
 
 This parser adds a `@` prefix to attributes by default. This can be changed
 to a `_` prefix by using the `-r` (cli) or `raw=True` (module) option.

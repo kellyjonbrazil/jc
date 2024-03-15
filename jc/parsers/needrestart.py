@@ -1,4 +1,4 @@
-"""jc - JSON Convert `needrestart -b` command output parser
+r"""jc - JSON Convert `needrestart -b` command output parser
 
 Usage (cli):
 

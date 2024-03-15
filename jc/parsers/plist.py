@@ -1,4 +1,4 @@
-"""jc - JSON Convert PLIST file parser
+r"""jc - JSON Convert PLIST file parser
 
 Converts binary, XML, and NeXTSTEP PLIST files.
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `cksum` command output parser
+r"""jc - JSON Convert `cksum` command output parser
 
 This parser works with the following checksum calculation utilities:
 - `sum`

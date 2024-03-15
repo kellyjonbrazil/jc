@@ -1,4 +1,4 @@
-"""jc - JSON Convert `fstab` file parser
+r"""jc - JSON Convert `fstab` file parser
 
 Usage (cli):
 

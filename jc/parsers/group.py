@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/etc/group` file parser
+r"""jc - JSON Convert `/etc/group` file parser
 
 Usage (cli):
 

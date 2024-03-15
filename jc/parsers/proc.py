@@ -1,4 +1,4 @@
-"""jc - JSON Convert Proc file output parser
+r"""jc - JSON Convert Proc file output parser
 
 This parser automatically identifies the Proc file and calls the
 corresponding parser to perform the parsing.

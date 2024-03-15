@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/crypto` file parser
+r"""jc - JSON Convert `/proc/crypto` file parser
 
 Usage (cli):
 

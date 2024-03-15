@@ -1,4 +1,4 @@
-"""jc - JSON Convert `top -b` command output parser
+r"""jc - JSON Convert `top -b` command output parser
 
 Requires batch mode (`-b`). The `-n` option must also be used to limit
 the number of times `top` is run.

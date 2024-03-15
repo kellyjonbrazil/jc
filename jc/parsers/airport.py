@@ -1,4 +1,4 @@
-"""jc - JSON Convert `airport -I` command output parser
+r"""jc - JSON Convert `airport -I` command output parser
 
 The `airport` program can be found at `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport`.
 

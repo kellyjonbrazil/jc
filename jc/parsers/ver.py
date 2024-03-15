@@ -1,4 +1,4 @@
-"""jc - JSON Convert Version string output parser
+r"""jc - JSON Convert Version string output parser
 
 Best-effort attempt to parse various styles of version numbers. This parser
 is based off of the version parser included in the CPython distutils

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `free` command output parser
+r"""jc - JSON Convert `free` command output parser
 
 Values are normalized to bytes when using `free -h`.
 

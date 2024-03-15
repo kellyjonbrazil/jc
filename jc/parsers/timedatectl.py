@@ -1,4 +1,4 @@
-"""jc - JSON Convert `timedatectl` command output parser
+r"""jc - JSON Convert `timedatectl` command output parser
 
 Also supports the `timesync-status` option.
 

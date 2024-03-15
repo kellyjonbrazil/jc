@@ -1,4 +1,4 @@
-"""jc - JSON Convert `zpool status` command output parser
+r"""jc - JSON Convert `zpool status` command output parser
 
 Works with or without the `-v` option.
 

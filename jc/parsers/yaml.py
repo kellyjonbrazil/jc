@@ -1,4 +1,4 @@
-"""jc - JSON Convert `YAML` file parser
+r"""jc - JSON Convert `YAML` file parser
 
 > Note: `datetime` objects will be converted to strings.
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert JWT string parser
+r"""jc - JSON Convert JWT string parser
 
 > Note: `jc` will not check the integrity of the JWT payload.
 

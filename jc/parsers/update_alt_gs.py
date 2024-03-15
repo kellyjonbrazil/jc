@@ -1,4 +1,4 @@
-"""jc - JSON Convert `update-alternatives --get-selections` command output parser
+r"""jc - JSON Convert `update-alternatives --get-selections` command output parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `lsof` command output parser
+r"""jc - JSON Convert `lsof` command output parser
 
 Usage (cli):
 

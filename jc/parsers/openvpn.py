@@ -1,4 +1,4 @@
-"""jc - JSON Convert openvpn-status.log file parser
+r"""jc - JSON Convert openvpn-status.log file parser
 
 The `*_epoch` calculated timestamp fields are naive. (i.e. based on
 the local time of the system the parser is run on)

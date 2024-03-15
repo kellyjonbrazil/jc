@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/dev_mcast` file parser
+r"""jc - JSON Convert `/proc/net/dev_mcast` file parser
 
 Usage (cli):
 

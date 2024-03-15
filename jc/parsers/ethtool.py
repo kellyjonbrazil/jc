@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ethtool` command output parser
+r"""jc - JSON Convert `ethtool` command output parser
 
 Supports standard `ethtool` output and the `--module-info` option.
 

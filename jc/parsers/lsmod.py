@@ -1,4 +1,4 @@
-"""jc - JSON Convert `lsmod` command output parser
+r"""jc - JSON Convert `lsmod` command output parser
 
 Usage (cli):
 

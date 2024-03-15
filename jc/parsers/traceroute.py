@@ -1,4 +1,4 @@
-"""jc - JSON Convert `traceroute` command output parser
+r"""jc - JSON Convert `traceroute` command output parser
 
 Supports `traceroute` and `traceroute6` output.
 

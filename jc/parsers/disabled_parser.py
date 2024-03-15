@@ -1,4 +1,4 @@
-"""jc - JSON Convert disabled parser
+r"""jc - JSON Convert disabled parser
 
 This parser has been disabled due to an error in the parser code.
 """

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/partitions` file parser
+r"""jc - JSON Convert `/proc/partitions` file parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/ioports` file parser
+r"""jc - JSON Convert `/proc/ioports` file parser
 
 Usage (cli):
 

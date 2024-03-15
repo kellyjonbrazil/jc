@@ -1,4 +1,4 @@
-"""jc - JSON Convert `pidstat -H` command output parser
+r"""jc - JSON Convert `pidstat -H` command output parser
 
 Must use the `-H` (or `-h`, if `-H` is not available) option in `pidstat`.
 All other `pidstat` options are supported in combination with this option.

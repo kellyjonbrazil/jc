@@ -1,4 +1,4 @@
-"""jc - JSON Convert `arp` command output parser
+r"""jc - JSON Convert `arp` command output parser
 
 Supports `arp` and `arp -a` output.
 

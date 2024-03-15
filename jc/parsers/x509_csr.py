@@ -1,4 +1,4 @@
-"""jc - JSON Convert X.509 Certificate Request format file parser
+r"""jc - JSON Convert X.509 Certificate Request format file parser
 
 This parser will convert DER and PEM encoded X.509 certificate request files.
 
