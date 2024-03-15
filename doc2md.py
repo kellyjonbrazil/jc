@@ -85,7 +85,3 @@ else:
     final_doc = header + '\n' + toc + '\n' + summary + '\n\n' + api_docs
 
 print(final_doc)
-
-
-
-
