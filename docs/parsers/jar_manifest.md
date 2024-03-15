@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.jar_manifest"></a>
 
-# jc.parsers.jar\_manifest
+# jc.parsers.jar_manifest
 
 jc - JSON Convert Java `MANIFEST.MF` file parser
 

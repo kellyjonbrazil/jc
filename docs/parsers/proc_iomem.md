@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_iomem"></a>
 
-# jc.parsers.proc\_iomem
+# jc.parsers.proc_iomem
 
 jc - JSON Convert `/proc/iomem` file parser
 

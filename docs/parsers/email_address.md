@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.email_address"></a>
 
-# jc.parsers.email\_address
+# jc.parsers.email_address
 
 jc - JSON Convert Email Address string parser
 

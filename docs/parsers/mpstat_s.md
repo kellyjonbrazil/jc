@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.mpstat_s"></a>
 
-# jc.parsers.mpstat\_s
+# jc.parsers.mpstat_s
 
 jc - JSON Convert `mpstat` command output streaming parser
 
@@ -100,7 +100,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,

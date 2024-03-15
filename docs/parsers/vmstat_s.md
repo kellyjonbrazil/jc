@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.vmstat_s"></a>
 
-# jc.parsers.vmstat\_s
+# jc.parsers.vmstat_s
 
 jc - JSON Convert `vmstat` command output streaming parser
 
@@ -101,7 +101,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 

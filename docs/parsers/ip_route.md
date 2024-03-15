@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.ip_route"></a>
 
-# jc.parsers.ip\_route
+# jc.parsers.ip_route
 
 jc - JSON Convert `ip route` command output parser
 

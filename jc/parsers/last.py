@@ -98,7 +98,6 @@ Examples:
       },
       ...
     ]
-
 """
 import re
 import jc.utils

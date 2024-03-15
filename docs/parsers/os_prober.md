@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.os_prober"></a>
 
-# jc.parsers.os\_prober
+# jc.parsers.os_prober
 
 jc - JSON Convert `os-prober` command output parser
 
@@ -45,7 +45,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]
 ```
 
 Main text parsing function

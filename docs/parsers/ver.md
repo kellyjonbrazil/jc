@@ -86,7 +86,6 @@ Examples:
       "strict": false
     }
 
-
 <a id="jc.parsers.ver.parse"></a>
 
 ### parse
@@ -107,13 +106,11 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-
 ### Parser Information
-Compatibility: linux, darwin, cygwin, win32, aix, freebsd
+Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/ver.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ver.py)
 
 This parser can be used with the `--slurp` command-line option.
 
 Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
-

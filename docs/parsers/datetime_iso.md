@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.datetime_iso"></a>
 
-# jc.parsers.datetime\_iso
+# jc.parsers.datetime_iso
 
 jc - JSON Convert ISO 8601 Datetime string parser
 

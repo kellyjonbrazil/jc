@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_stat"></a>
 
-# jc.parsers.proc\_stat
+# jc.parsers.proc_stat
 
 jc - JSON Convert `/proc/stat` file parser
 

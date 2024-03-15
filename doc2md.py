@@ -72,15 +72,15 @@ if 'jc.parsers.' in mod_path and not 'universal' in mod_path:
     author = module.info.author
     author_email = module.info.author_email
     slurpable = 'slurpable' in module.info.tags
-    footer = footer + f'Compatibility: {comp}\n\n'
+    footer = footer + f'Compatibility:  {comp}\n\n'
     footer = footer + f'Source: [`jc/parsers/{mod_name}.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/{mod_name}.py)\n\n'
     if slurpable:
         footer = footer + 'This parser can be used with the `--slurp` command-line option.\n\n'
-    footer = footer + f'Version {ver} by {author} ({author_email})\n'
+    footer = footer + f'Version {ver} by {author} ({author_email})'
 
 final_doc = ''
 if 'jc.parsers.' in mod_path and not 'universal' in mod_path:
-    final_doc = header + '\n' + summary + '\n\n' + api_docs + '\n' + footer
+    final_doc = header + '\n' + summary + '\n' + api_docs + footer
 elif mod_path == 'jc':
     final_doc = header + '\n' + summary
 else:

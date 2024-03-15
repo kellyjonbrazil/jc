@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.pkg_index_deb"></a>
 
-# jc.parsers.pkg\_index\_deb
+# jc.parsers.pkg_index_deb
 
 jc - JSON Convert Debian Package Index file parser
 
@@ -132,7 +132,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

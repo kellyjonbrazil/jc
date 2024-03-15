@@ -59,7 +59,6 @@ Examples:
         ]
       }
     ]
-
 """
 
 import jc.parsers.path as path

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.top_s"></a>
 
-# jc.parsers.top\_s
+# jc.parsers.top_s
 
 jc - JSON Convert `top -b` command output streaming parser
 
@@ -151,7 +151,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,

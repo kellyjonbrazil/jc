@@ -199,7 +199,9 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> Response
+def parse(data: str,
+          raw: bool = False,
+          quiet: bool = False) -> jc.parsers.xrandr.Response
 ```
 
 Main text parsing function

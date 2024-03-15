@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.iw_scan"></a>
 
-# jc.parsers.iw\_scan
+# jc.parsers.iw_scan
 
 jc - JSON Convert `iw dev <device> scan` command output parser
 

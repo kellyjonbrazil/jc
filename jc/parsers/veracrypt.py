@@ -74,7 +74,6 @@ Examples:
             "backup_header": "Yes"
         }
     ]
-
 """
 import re
 from typing import List, Dict, Optional, Any

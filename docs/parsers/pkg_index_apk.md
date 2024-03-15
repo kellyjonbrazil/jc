@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.pkg_index_apk"></a>
 
-# jc.parsers.pkg\_index\_apk
+# jc.parsers.pkg_index_apk
 
 jc - JSON Convert Alpine Linux Package Index files
 

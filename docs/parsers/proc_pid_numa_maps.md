@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_numa_maps"></a>
 
-# jc.parsers.proc\_pid\_numa\_maps
+# jc.parsers.proc_pid_numa_maps
 
 jc - JSON Convert `/proc/<pid>/numa_maps` file parser
 

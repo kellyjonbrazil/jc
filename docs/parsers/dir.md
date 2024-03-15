@@ -120,7 +120,6 @@ Examples:
       ...
     ]
 
-
 <a id="jc.parsers.dir.parse"></a>
 
 ### parse
@@ -141,11 +140,9 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-
 ### Parser Information
-Compatibility: win32
+Compatibility:  win32
 
 Source: [`jc/parsers/dir.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/dir.py)
 
 Version 1.6 by Rasheed Elsaleh (rasheed@rebelliondefense.com)
-

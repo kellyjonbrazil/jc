@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_ipv6_route"></a>
 
-# jc.parsers.proc\_net\_ipv6\_route
+# jc.parsers.proc_net_ipv6_route
 
 jc - JSON Convert `/proc/net/ipv6_route` file parser
 

@@ -248,7 +248,6 @@ Examples:
           "signature": "30:45:02:20:77:ac:5b:51:bf:c5:f5:43:02:52:ae:66:..."
         }
       ]
-
 """
 # import binascii
 # from collections import OrderedDict

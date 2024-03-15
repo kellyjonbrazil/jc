@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_consoles"></a>
 
-# jc.parsers.proc\_consoles
+# jc.parsers.proc_consoles
 
 jc - JSON Convert `/proc/consoles` file parser
 

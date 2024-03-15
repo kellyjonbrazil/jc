@@ -1,4 +1,4 @@
-"""jc - JSON Convert URL string parser
+r"""jc - JSON Convert URL string parser
 
 Normalized, Encoded, and Decoded versions of the original URL and URL parts
 are included in the output. Encoding and Decoding is best effort.

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_cpuinfo"></a>
 
-# jc.parsers.proc\_cpuinfo
+# jc.parsers.proc_cpuinfo
 
 jc - JSON Convert `/proc/cpuinfo` file parser
 

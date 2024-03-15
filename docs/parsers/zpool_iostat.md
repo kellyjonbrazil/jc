@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.zpool_iostat"></a>
 
-# jc.parsers.zpool\_iostat
+# jc.parsers.zpool_iostat
 
 jc - JSON Convert `zpool iostat` command output parser
 
@@ -104,7 +104,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

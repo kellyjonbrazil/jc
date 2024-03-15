@@ -171,7 +171,6 @@ Examples:
       }
     ]
 
-
 <a id="jc.parsers.apt_get_sqq.parse"></a>
 
 ### parse
@@ -194,11 +193,9 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
-
 ### Parser Information
-Compatibility: linux
+Compatibility:  linux
 
 Source: [`jc/parsers/apt_get_sqq.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/apt_get_sqq.py)
 
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
-

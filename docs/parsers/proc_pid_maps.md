@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_maps"></a>
 
-# jc.parsers.proc\_pid\_maps
+# jc.parsers.proc_pid_maps
 
 jc - JSON Convert `/proc/<pid>/maps` file parser
 

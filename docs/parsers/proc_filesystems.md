@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_filesystems"></a>
 
-# jc.parsers.proc\_filesystems
+# jc.parsers.proc_filesystems
 
 jc - JSON Convert `/proc/filesystems` file parser
 

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_tcp"></a>
 
-# jc.parsers.proc\_net\_tcp
+# jc.parsers.proc_net_tcp
 
 jc - JSON Convert `/proc/net/tcp` and `proc/net/tcp6` file parser
 

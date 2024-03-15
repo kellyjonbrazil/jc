@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_vmallocinfo"></a>
 
-# jc.parsers.proc\_vmallocinfo
+# jc.parsers.proc_vmallocinfo
 
 jc - JSON Convert `/proc/vmallocinfo` file parser
 

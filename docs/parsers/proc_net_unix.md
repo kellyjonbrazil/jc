@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_unix"></a>
 
-# jc.parsers.proc\_net\_unix
+# jc.parsers.proc_net_unix
 
 jc - JSON Convert `/proc/net/unix` file parser
 

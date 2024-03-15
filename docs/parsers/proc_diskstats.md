@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_diskstats"></a>
 
-# jc.parsers.proc\_diskstats
+# jc.parsers.proc_diskstats
 
 jc - JSON Convert `/proc/diskstats` file parser
 

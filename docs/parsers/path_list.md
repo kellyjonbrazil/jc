@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.path_list"></a>
 
-# jc.parsers.path\_list
+# jc.parsers.path_list
 
 jc - JSON Convert POSIX path list string parser
 

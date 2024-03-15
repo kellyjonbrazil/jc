@@ -1,4 +1,4 @@
-"""jc - JSON Convert `udevadm info` command output parser
+r"""jc - JSON Convert `udevadm info` command output parser
 
 Usage (cli):
 

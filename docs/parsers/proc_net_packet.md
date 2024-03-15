@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_packet"></a>
 
-# jc.parsers.proc\_net\_packet
+# jc.parsers.proc_net_packet
 
 jc - JSON Convert `/proc/net/packet` file parser
 

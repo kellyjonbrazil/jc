@@ -1,4 +1,4 @@
-"""jc - JSON Convert `SRT` file parser
+r"""jc - JSON Convert `SRT` file parser
 
 Usage (cli):
 

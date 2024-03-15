@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.syslog_s"></a>
 
-# jc.parsers.syslog\_s
+# jc.parsers.syslog_s
 
 jc - JSON Convert Syslog RFC 5424 string streaming parser
 
@@ -85,7 +85,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,

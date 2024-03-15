@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_vmstat"></a>
 
-# jc.parsers.proc\_vmstat
+# jc.parsers.proc_vmstat
 
 jc - JSON Convert `/proc/vmstat` file parser
 

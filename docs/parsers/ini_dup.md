@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.ini_dup"></a>
 
-# jc.parsers.ini\_dup
+# jc.parsers.ini_dup
 
 jc - JSON Convert INI with duplicate key file parser
 

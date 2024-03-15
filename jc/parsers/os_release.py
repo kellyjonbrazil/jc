@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/etc/os-release` file parser
+r"""jc - JSON Convert `/etc/os-release` file parser
 
 This parser is an alias to the Key/Value parser (`--kv`).
 

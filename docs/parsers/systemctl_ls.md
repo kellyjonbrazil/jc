@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.systemctl_ls"></a>
 
-# jc.parsers.systemctl\_ls
+# jc.parsers.systemctl_ls
 
 jc - JSON Convert `systemctl list-sockets` command output
 parser

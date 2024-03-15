@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.nsd_control"></a>
 
-# jc.parsers.nsd\_control
+# jc.parsers.nsd_control
 
 jc - JSON Convert `nsd-control` command output parser
 

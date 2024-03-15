@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.git_log"></a>
 
-# jc.parsers.git\_log
+# jc.parsers.git_log
 
 jc - JSON Convert `git log` command output parser
 

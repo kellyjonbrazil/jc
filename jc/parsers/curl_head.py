@@ -1,4 +1,4 @@
-"""jc - JSON Convert `curl --head` command output parser
+r"""jc - JSON Convert `curl --head` command output parser
 
 This parser converts standard and verbose `curl --head` output.
 

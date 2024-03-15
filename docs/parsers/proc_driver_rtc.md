@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_driver_rtc"></a>
 
-# jc.parsers.proc\_driver\_rtc
+# jc.parsers.proc_driver_rtc
 
 jc - JSON Convert `/proc/driver/rtc` file parser
 
