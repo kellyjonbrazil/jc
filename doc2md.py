@@ -7,7 +7,6 @@ import sys
 import importlib
 from inspect import isfunction, signature, cleandoc
 import yapf  # type: ignore
-import os
 import sys
 
 ignore_lib_functions = [
@@ -17,7 +16,6 @@ ignore_lib_functions = [
     'namedtuple'
 ]
 
-sys.path.append(os.getcwd() + '/jc')
 mod_path = sys.argv[1]
 mod_name = mod_path.split('.')[-1]
 module = importlib.import_module(f'{mod_path}')
