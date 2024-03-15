@@ -166,12 +166,13 @@ Examples:
       "br_margin_min": "0%"
     }
 
+
 <a id="jc.parsers.ethtool.parse"></a>
 
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]
 ```
 
 Main text parsing function
@@ -186,9 +187,11 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+
 ### Parser Information
-Compatibility:  linux
+Compatibility: linux
 
 Source: [`jc/parsers/ethtool.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ethtool.py)
 
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+

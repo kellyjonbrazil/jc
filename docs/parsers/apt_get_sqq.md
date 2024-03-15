@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.apt_get_sqq"></a>
 
-# jc.parsers.apt\_get\_sqq
+# jc.parsers.apt_get_sqq
 
 jc - JSON Convert `apt-get -sqq` command output parser
 
@@ -28,7 +28,7 @@ Schema:
         "package":              string,
         "broken":               string/null,
         "proposed_pkg_ver":     string,
-        "existing_src":         string/null,
+        "existing_pkg_ver":     string/null,
         "architecture":         string
       }
     ]
@@ -42,7 +42,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -50,7 +50,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -58,7 +58,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -66,7 +66,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -74,7 +74,7 @@ Examples:
         "package": "base-files",
         "broken": "10.3+deb10u4",
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -82,7 +82,7 @@ Examples:
         "package": "base-files",
         "broken": null,
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -90,7 +90,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -98,7 +98,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       }
     ]
@@ -110,7 +110,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -118,7 +118,7 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -126,7 +126,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -134,7 +134,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -142,7 +142,7 @@ Examples:
         "package": "base-files",
         "broken": "10.3+deb10u4",
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -150,7 +150,7 @@ Examples:
         "package": "base-files",
         "broken": null,
         "proposed_pkg_ver": "10.3+deb10u13 Debian:10.13/oldstable",
-        "existing_src": null,
+        "existing_pkg_ver": null,
         "architecture": "amd64"
       },
       {
@@ -158,7 +158,7 @@ Examples:
         "package": "dpkg",
         "broken": "1.19.7",
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       },
       {
@@ -166,10 +166,11 @@ Examples:
         "package": "dpkg",
         "broken": null,
         "proposed_pkg_ver": "1.19.8 Debian:10.13/oldstable",
-        "existing_src": "Debian-Security:10/oldstable",
+        "existing_pkg_ver": "Debian-Security:10/oldstable",
         "architecture": "amd64"
       }
     ]
+
 
 <a id="jc.parsers.apt_get_sqq.parse"></a>
 
@@ -178,7 +179,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function
@@ -193,9 +194,11 @@ Returns:
 
     List of Dictionaries. Raw or processed structured data.
 
+
 ### Parser Information
-Compatibility:  linux
+Compatibility: linux
 
 Source: [`jc/parsers/apt_get_sqq.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/apt_get_sqq.py)
 
 Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+
