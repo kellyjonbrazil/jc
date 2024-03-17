@@ -5,17 +5,17 @@
 
 ## Table of Contents
 
-*[jc.lib](#jc.lib)
-  *[all_parser_info](#jc.lib.all_parser_info)
-  *[get_help](#jc.lib.get_help)
-  *[get_parser](#jc.lib.get_parser)
-  *[parse](#jc.lib.parse)
-  *[parser_info](#jc.lib.parser_info)
-  *[parser_mod_list](#jc.lib.parser_mod_list)
-  *[plugin_parser_mod_list](#jc.lib.plugin_parser_mod_list)
-  *[slurpable_parser_mod_list](#jc.lib.slurpable_parser_mod_list)
-  *[standard_parser_mod_list](#jc.lib.standard_parser_mod_list)
-  *[streaming_parser_mod_list](#jc.lib.streaming_parser_mod_list)
+* [jc.lib](#jc.lib)
+  * [all_parser_info](#jc.lib.all_parser_info)
+  * [get_help](#jc.lib.get_help)
+  * [get_parser](#jc.lib.get_parser)
+  * [parse](#jc.lib.parse)
+  * [parser_info](#jc.lib.parser_info)
+  * [parser_mod_list](#jc.lib.parser_mod_list)
+  * [plugin_parser_mod_list](#jc.lib.plugin_parser_mod_list)
+  * [slurpable_parser_mod_list](#jc.lib.slurpable_parser_mod_list)
+  * [standard_parser_mod_list](#jc.lib.standard_parser_mod_list)
+  * [streaming_parser_mod_list](#jc.lib.streaming_parser_mod_list)
 
 jc - JSON Convert lib module
 

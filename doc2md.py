@@ -42,9 +42,9 @@ for attribute in dir(module):
                 functions.append(attribute)
 
 ######## TABLE OF CONTENTS ########
-toc = f'## Table of Contents\n\n*[{mod_path}](#{mod_path})\n'
+toc = f'## Table of Contents\n\n* [{mod_path}](#{mod_path})\n'
 for api in functions:
-    toc = f'{toc}  *[{api}](#{mod_path}.{api})\n'
+    toc = f'{toc}  * [{api}](#{mod_path}.{api})\n'
 
 ######## API DOCS ########
 api_docs = ''

@@ -5,20 +5,20 @@
 
 ## Table of Contents
 
-*[jc.utils](#jc.utils)
-  *[compatibility](#jc.utils.compatibility)
-  *[convert_size_to_int](#jc.utils.convert_size_to_int)
-  *[convert_to_bool](#jc.utils.convert_to_bool)
-  *[convert_to_float](#jc.utils.convert_to_float)
-  *[convert_to_int](#jc.utils.convert_to_int)
-  *[error_message](#jc.utils.error_message)
-  *[has_data](#jc.utils.has_data)
-  *[input_type_check](#jc.utils.input_type_check)
-  *[is_compatible](#jc.utils.is_compatible)
-  *[line_slice](#jc.utils.line_slice)
-  *[normalize_key](#jc.utils.normalize_key)
-  *[remove_quotes](#jc.utils.remove_quotes)
-  *[warning_message](#jc.utils.warning_message)
+* [jc.utils](#jc.utils)
+  * [compatibility](#jc.utils.compatibility)
+  * [convert_size_to_int](#jc.utils.convert_size_to_int)
+  * [convert_to_bool](#jc.utils.convert_to_bool)
+  * [convert_to_float](#jc.utils.convert_to_float)
+  * [convert_to_int](#jc.utils.convert_to_int)
+  * [error_message](#jc.utils.error_message)
+  * [has_data](#jc.utils.has_data)
+  * [input_type_check](#jc.utils.input_type_check)
+  * [is_compatible](#jc.utils.is_compatible)
+  * [line_slice](#jc.utils.line_slice)
+  * [normalize_key](#jc.utils.normalize_key)
+  * [remove_quotes](#jc.utils.remove_quotes)
+  * [warning_message](#jc.utils.warning_message)
 
 jc - JSON Convert utils
 

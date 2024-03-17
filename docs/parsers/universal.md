@@ -5,9 +5,9 @@
 
 ## Table of Contents
 
-*[jc.parsers.universal](#jc.parsers.universal)
-  *[simple_table_parse](#jc.parsers.universal.simple_table_parse)
-  *[sparse_table_parse](#jc.parsers.universal.sparse_table_parse)
+* [jc.parsers.universal](#jc.parsers.universal)
+  * [simple_table_parse](#jc.parsers.universal.simple_table_parse)
+  * [sparse_table_parse](#jc.parsers.universal.sparse_table_parse)
 
 jc - JSON Convert universal parsers
 

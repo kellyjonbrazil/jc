@@ -5,13 +5,13 @@
 
 ## Table of Contents
 
-*[jc.streaming](#jc.streaming)
-  *[add_jc_meta](#jc.streaming.add_jc_meta)
-  *[raise_or_yield](#jc.streaming.raise_or_yield)
-  *[stream_error](#jc.streaming.stream_error)
-  *[stream_success](#jc.streaming.stream_success)
-  *[streaming_input_type_check](#jc.streaming.streaming_input_type_check)
-  *[streaming_line_input_type_check](#jc.streaming.streaming_line_input_type_check)
+* [jc.streaming](#jc.streaming)
+  * [add_jc_meta](#jc.streaming.add_jc_meta)
+  * [raise_or_yield](#jc.streaming.raise_or_yield)
+  * [stream_error](#jc.streaming.stream_error)
+  * [stream_success](#jc.streaming.stream_success)
+  * [streaming_input_type_check](#jc.streaming.streaming_input_type_check)
+  * [streaming_line_input_type_check](#jc.streaming.streaming_line_input_type_check)
 
 jc - JSON Convert streaming utils
 
