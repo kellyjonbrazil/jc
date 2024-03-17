@@ -7,7 +7,6 @@ import sys
 import importlib
 from inspect import isfunction, signature, cleandoc
 import yapf  # type: ignore
-import sys
 
 ignore_lib_functions = [
     'cast',
