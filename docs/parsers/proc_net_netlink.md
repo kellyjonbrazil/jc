@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_netlink"></a>
 
-# jc.parsers.proc\_net\_netlink
+# jc.parsers.proc_net_netlink
 
 jc - JSON Convert `/proc/net/netlink` file parser
 

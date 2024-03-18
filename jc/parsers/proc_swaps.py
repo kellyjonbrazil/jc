@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/swaps` file parser
+r"""jc - JSON Convert `/proc/swaps` file parser
 
 Usage (cli):
 

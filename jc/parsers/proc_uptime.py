@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/uptime` file parser
+r"""jc - JSON Convert `/proc/uptime` file parser
 
 Usage (cli):
 

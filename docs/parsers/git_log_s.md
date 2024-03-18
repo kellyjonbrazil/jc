@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.git_log_s"></a>
 
-# jc.parsers.git\_log\_s
+# jc.parsers.git_log_s
 
 jc - JSON Convert `git log` command output streaming parser
 
@@ -82,7 +82,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,

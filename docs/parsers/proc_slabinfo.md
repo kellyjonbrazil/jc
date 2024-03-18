@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_slabinfo"></a>
 
-# jc.parsers.proc\_slabinfo
+# jc.parsers.proc_slabinfo
 
 jc - JSON Convert `/proc/slabinfo` file parser
 

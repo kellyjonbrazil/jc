@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.update_alt_q"></a>
 
-# jc.parsers.update\_alt\_q
+# jc.parsers.update_alt_q
 
 jc - JSON Convert `update-alternatives --query` command output parser
 

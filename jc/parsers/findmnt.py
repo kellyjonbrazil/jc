@@ -1,4 +1,4 @@
-"""jc - JSON Convert `findmnt` command output parser
+r"""jc - JSON Convert `findmnt` command output parser
 
 Supports `-a`, `-l`, or no `findmnt` options.
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `asciitable-m` parser
+r"""jc - JSON Convert `asciitable-m` parser
 
 This parser converts various styles of ASCII and Unicode text tables with
 multi-line rows. Tables must have a header row and separator line between

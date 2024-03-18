@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_igmp"></a>
 
-# jc.parsers.proc\_net\_igmp
+# jc.parsers.proc_net_igmp
 
 jc - JSON Convert `/proc/net/igmp` file parser
 

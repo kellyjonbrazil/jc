@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pagetypeinfo"></a>
 
-# jc.parsers.proc\_pagetypeinfo
+# jc.parsers.proc_pagetypeinfo
 
 jc - JSON Convert `/proc/pagetypeinfo` file parser
 

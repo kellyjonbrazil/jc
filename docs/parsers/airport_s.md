@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.airport_s"></a>
 
-# jc.parsers.airport\_s
+# jc.parsers.airport_s
 
 jc - JSON Convert `airport -s` command output parser
 

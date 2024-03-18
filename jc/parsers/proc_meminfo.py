@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/meminfo` file parser
+r"""jc - JSON Convert `/proc/meminfo` file parser
 
 Usage (cli):
 

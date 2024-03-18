@@ -1,4 +1,4 @@
-"""jc - JSON Convert `Key/Value` file and string parser
+r"""jc - JSON Convert `Key/Value` file and string parser
 
 Supports files containing simple key/value pairs.
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/buddyinfo` file parser
+r"""jc - JSON Convert `/proc/buddyinfo` file parser
 
 Usage (cli):
 

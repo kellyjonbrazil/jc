@@ -1,4 +1,4 @@
-"""jc - JSON Convert `git ls-remote` command output parser
+r"""jc - JSON Convert `git ls-remote` command output parser
 
 This parser outputs two schemas:
 

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.pip_show"></a>
 
-# jc.parsers.pip\_show
+# jc.parsers.pip_show
 
 jc - JSON Convert `pip-show` command output parser
 

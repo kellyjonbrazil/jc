@@ -1,4 +1,4 @@
-"""
+r"""
     jc - JSON Convert Windows `netstat` command output parser
 """
 

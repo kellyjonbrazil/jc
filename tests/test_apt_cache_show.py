@@ -1,6 +1,9 @@
 import unittest
-
+import os
+import sys
+sys.path.append(os.getcwd())
 from tests import utils_for_test as test_utils
+sys.path.pop()
 
 # Execute these steps for standard tests:
 # - Save this file as `test_{parser_name}.py` since the helper methods extract parser names from the filename.

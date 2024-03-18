@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_ioports"></a>
 
-# jc.parsers.proc\_ioports
+# jc.parsers.proc_ioports
 
 jc - JSON Convert `/proc/ioports` file parser
 

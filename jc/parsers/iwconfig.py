@@ -1,4 +1,4 @@
-"""jc - JSON Convert `iwconfig` command output parser
+r"""jc - JSON Convert `iwconfig` command output parser
 
 No `iwconfig` options are supported.
 

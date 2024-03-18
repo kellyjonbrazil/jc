@@ -1,4 +1,4 @@
-"""jc - JSON Convert Unix Epoch Timestamp string parser
+r"""jc - JSON Convert Unix Epoch Timestamp string parser
 
 The naive fields are based on the local time of the system the parser is
 run on.

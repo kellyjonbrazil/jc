@@ -1,4 +1,4 @@
-"""jc - JSON Convert `Key/Value` with duplicate key file and string parser
+r"""jc - JSON Convert `Key/Value` with duplicate key file and string parser
 
 Supports files containing simple key/value pairs and preserves duplicate
 values. All values are contained in lists/arrays.

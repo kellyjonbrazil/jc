@@ -1,4 +1,4 @@
-"""jc - JSON Convert `iptables` command output parser
+r"""jc - JSON Convert `iptables` command output parser
 
 Supports `-vLn` and `--line-numbers` for all tables.
 

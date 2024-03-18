@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ifconfig` command output parser
+r"""jc - JSON Convert `ifconfig` command output parser
 
 No `ifconfig` options are supported.
 

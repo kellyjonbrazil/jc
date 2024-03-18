@@ -1,4 +1,4 @@
-"""jc - JSON Convert HTTP headers parser
+r"""jc - JSON Convert HTTP headers parser
 
 Converts HTTP request and response headers into a list of dictionaries.
 Well-known headers are processed to allow multiple instances which are

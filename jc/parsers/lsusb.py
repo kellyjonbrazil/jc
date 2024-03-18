@@ -1,4 +1,4 @@
-"""jc - JSON Convert `lsusb` command output parser
+r"""jc - JSON Convert `lsusb` command output parser
 
 Supports the `-v` option or no options.
 

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.iostat_s"></a>
 
-# jc.parsers.iostat\_s
+# jc.parsers.iostat_s
 
 jc - JSON Convert `iostat` command output streaming parser
 
@@ -108,7 +108,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 

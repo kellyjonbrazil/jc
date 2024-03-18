@@ -1,4 +1,4 @@
-"""jc - JSON Convert `apt-cache show` command parser
+r"""jc - JSON Convert `apt-cache show` command parser
 
 Usage (cli):
 

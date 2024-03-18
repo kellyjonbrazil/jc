@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.kv_dup"></a>
 
-# jc.parsers.kv\_dup
+# jc.parsers.kv_dup
 
 jc - JSON Convert `Key/Value` with duplicate key file and string parser
 

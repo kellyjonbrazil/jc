@@ -1,4 +1,4 @@
-"""jc - JSON Convert `lsattr` command output parser
+r"""jc - JSON Convert `lsattr` command output parser
 
 Usage (cli):
 

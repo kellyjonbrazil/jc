@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_locks"></a>
 
-# jc.parsers.proc\_locks
+# jc.parsers.proc_locks
 
 jc - JSON Convert `/proc/locks` file parser
 

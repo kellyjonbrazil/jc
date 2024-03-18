@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/igmp` file parser
+r"""jc - JSON Convert `/proc/net/igmp` file parser
 
 Usage (cli):
 

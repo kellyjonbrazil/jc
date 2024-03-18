@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/vmstat` file parser
+r"""jc - JSON Convert `/proc/vmstat` file parser
 
 Usage (cli):
 

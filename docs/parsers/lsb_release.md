@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.lsb_release"></a>
 
-# jc.parsers.lsb\_release
+# jc.parsers.lsb_release
 
 jc - JSON Convert `lsb_release` command parser
 
@@ -40,7 +40,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]
 ```
 
 Main text parsing function

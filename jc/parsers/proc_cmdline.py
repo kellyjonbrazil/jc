@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/cmdline` file parser
+r"""jc - JSON Convert `/proc/cmdline` file parser
 
 Usage (cli):
 

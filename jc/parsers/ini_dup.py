@@ -1,4 +1,4 @@
-"""jc - JSON Convert INI with duplicate key file parser
+r"""jc - JSON Convert INI with duplicate key file parser
 
 Parses standard INI files and preserves duplicate values. All values are
 contained in lists/arrays.

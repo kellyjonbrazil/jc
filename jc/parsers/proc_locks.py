@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/locks` file parser
+r"""jc - JSON Convert `/proc/locks` file parser
 
 Usage (cli):
 

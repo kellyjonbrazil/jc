@@ -1,4 +1,4 @@
-"""jc - JSON Convert Syslog RFC 5424 string streaming parser
+r"""jc - JSON Convert Syslog RFC 5424 string streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)

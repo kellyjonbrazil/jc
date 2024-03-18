@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ping` command output parser
+r"""jc - JSON Convert `ping` command output parser
 
 Supports `ping` and `ping6` output.
 

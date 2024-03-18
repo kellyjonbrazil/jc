@@ -1,4 +1,4 @@
-"""jc - JSON Convert `lsb_release` command parser
+r"""jc - JSON Convert `lsb_release` command parser
 
 This parser is an alias to the Key/Value parser (`--kv`).
 

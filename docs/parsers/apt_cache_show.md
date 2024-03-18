@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.apt_cache_show"></a>
 
-# jc.parsers.apt\_cache\_show
+# jc.parsers.apt_cache_show
 
 jc - JSON Convert `apt-cache show` command parser
 
@@ -157,7 +157,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

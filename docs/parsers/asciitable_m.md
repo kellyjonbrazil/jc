@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.asciitable_m"></a>
 
-# jc.parsers.asciitable\_m
+# jc.parsers.asciitable_m
 
 jc - JSON Convert `asciitable-m` parser
 

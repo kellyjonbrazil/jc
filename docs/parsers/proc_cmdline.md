@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_cmdline"></a>
 
-# jc.parsers.proc\_cmdline
+# jc.parsers.proc_cmdline
 
 jc - JSON Convert `/proc/cmdline` file parser
 
@@ -71,7 +71,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]
 ```
 
 Main text parsing function

@@ -91,7 +91,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]
 ```
 
 Main text parsing function
@@ -113,4 +113,4 @@ Source: [`jc/parsers/ver.py`](https://github.com/kellyjonbrazil/jc/blob/master/j
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/tcp` and `proc/net/tcp6` file parser
+r"""jc - JSON Convert `/proc/net/tcp` and `proc/net/tcp6` file parser
 
 IPv4 and IPv6 addresses are converted to standard notation unless the raw
 (--raw) option is used.

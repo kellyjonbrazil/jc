@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_devices"></a>
 
-# jc.parsers.proc\_devices
+# jc.parsers.proc_devices
 
 jc - JSON Convert `/proc/devices` file parser
 

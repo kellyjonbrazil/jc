@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_mountinfo"></a>
 
-# jc.parsers.proc\_pid\_mountinfo
+# jc.parsers.proc_pid_mountinfo
 
 jc - JSON Convert `/proc/<pid>/mountinfo` file parser
 

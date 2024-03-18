@@ -1,4 +1,4 @@
-"""jc - JSON Convert Syslog RFC 3164 string parser
+r"""jc - JSON Convert Syslog RFC 3164 string parser
 
 This parser accepts a single syslog line string or multiple syslog lines
 separated by newlines. A warning message to `STDERR` will be printed if an

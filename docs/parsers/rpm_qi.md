@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.rpm_qi"></a>
 
-# jc.parsers.rpm\_qi
+# jc.parsers.rpm_qi
 
 jc - JSON Convert `rpm -qi` command output parser
 

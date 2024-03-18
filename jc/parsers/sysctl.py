@@ -1,4 +1,4 @@
-"""jc - JSON Convert `sysctl -a` command output parser
+r"""jc - JSON Convert `sysctl -a` command output parser
 
 > Note: Since `sysctl` output is not easily parsable only a very simple
 > key/value object will be output. An attempt is made to convert obvious

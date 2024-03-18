@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ufw status` command output parser
+r"""jc - JSON Convert `ufw status` command output parser
 
 Usage (cli):
 

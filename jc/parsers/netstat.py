@@ -1,4 +1,4 @@
-"""jc - JSON Convert `netstat` command output parser
+r"""jc - JSON Convert `netstat` command output parser
 
 Caveats:
 - Use of multiple `l` options is not supported on OSX (e.g. `netstat -rlll`)

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.x509_cert"></a>
 
-# jc.parsers.x509\_cert
+# jc.parsers.x509_cert
 
 jc - JSON Convert X.509 Certificate format file parser
 

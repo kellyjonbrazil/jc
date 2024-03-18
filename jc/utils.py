@@ -210,7 +210,7 @@ def remove_quotes(data: str) -> str:
 
 
 def normalize_key(data: str) -> str:
-    """
+    r"""
     Normalize a key name by shifting to lower-case and converting special
     characters to underscores.
 
@@ -229,7 +229,7 @@ def normalize_key(data: str) -> str:
 
         string
     """
-    special = '''!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ '''
+    special = r'''!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ '''
     initial_underscore = False
     data = data.strip().lower()
 

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_interrupts"></a>
 
-# jc.parsers.proc\_interrupts
+# jc.parsers.proc_interrupts
 
 jc - JSON Convert `/proc/interrupts` file parser
 

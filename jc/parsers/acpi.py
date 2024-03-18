@@ -1,4 +1,4 @@
-"""jc - JSON Convert `acpi` command output parser
+r"""jc - JSON Convert `acpi` command output parser
 
 Usage (cli):
 

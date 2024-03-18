@@ -1,4 +1,4 @@
-"""jc - JSON Convert `asciitable` parser
+r"""jc - JSON Convert `asciitable` parser
 
 This parser converts ASCII and Unicode text tables with single-line rows.
 

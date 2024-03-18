@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/netlink` file parser
+r"""jc - JSON Convert `/proc/net/netlink` file parser
 
 Usage (cli):
 

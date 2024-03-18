@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/interrupts` file parser
+r"""jc - JSON Convert `/proc/interrupts` file parser
 
 Usage (cli):
 

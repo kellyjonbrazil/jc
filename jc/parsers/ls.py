@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ls` and `vdir` command output parser
+r"""jc - JSON Convert `ls` and `vdir` command output parser
 
 Options supported:
 - `lbaR1`

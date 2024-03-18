@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_statm"></a>
 
-# jc.parsers.proc\_pid\_statm
+# jc.parsers.proc_pid_statm
 
 jc - JSON Convert `/proc/<pid>/statm` file parser
 

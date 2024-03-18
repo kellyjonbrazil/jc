@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/iomem` file parser
+r"""jc - JSON Convert `/proc/iomem` file parser
 
 Usage (cli):
 

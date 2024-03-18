@@ -1,4 +1,4 @@
-"""jc - JSON Convert `csv` file streaming parser
+r"""jc - JSON Convert `csv` file streaming parser
 
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)

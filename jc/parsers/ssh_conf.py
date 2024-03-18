@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ssh` configuration file and `ssh -G` command output parser
+r"""jc - JSON Convert `ssh` configuration file and `ssh -G` command output parser
 
 This parser will work with `ssh` configuration files or the output of
 `ssh -G`. Any `Match` blocks in the `ssh` configuration file will be

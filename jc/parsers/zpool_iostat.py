@@ -1,4 +1,4 @@
-"""jc - JSON Convert `zpool iostat` command output parser
+r"""jc - JSON Convert `zpool iostat` command output parser
 
 Supports with or without the `-v` flag.
 

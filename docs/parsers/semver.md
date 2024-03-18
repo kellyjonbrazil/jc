@@ -56,7 +56,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> JSONDictType
+def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]
 ```
 
 Main text parsing function

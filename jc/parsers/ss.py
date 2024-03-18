@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ss` command output parser
+r"""jc - JSON Convert `ss` command output parser
 
 Usage (cli):
 

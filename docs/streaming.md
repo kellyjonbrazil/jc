@@ -1,67 +1,26 @@
-# Table of Contents
-
-* [jc.streaming](#jc.streaming)
-  * [streaming\_input\_type\_check](#jc.streaming.streaming_input_type_check)
-  * [streaming\_line\_input\_type\_check](#jc.streaming.streaming_line_input_type_check)
-  * [stream\_success](#jc.streaming.stream_success)
-  * [stream\_error](#jc.streaming.stream_error)
-  * [add\_jc\_meta](#jc.streaming.add_jc_meta)
-  * [raise\_or\_yield](#jc.streaming.raise_or_yield)
-
+[Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.streaming"></a>
 
 # jc.streaming
 
+## Table of Contents
+
+* [jc.streaming](#jc.streaming)
+  * [add_jc_meta](#jc.streaming.add_jc_meta)
+  * [raise_or_yield](#jc.streaming.raise_or_yield)
+  * [stream_error](#jc.streaming.stream_error)
+  * [stream_success](#jc.streaming.stream_success)
+  * [streaming_input_type_check](#jc.streaming.streaming_input_type_check)
+  * [streaming_line_input_type_check](#jc.streaming.streaming_line_input_type_check)
+
 jc - JSON Convert streaming utils
-
-<a id="jc.streaming.streaming_input_type_check"></a>
-
-### streaming\_input\_type\_check
-
-```python
-def streaming_input_type_check(data: Iterable[Union[str, bytes]]) -> None
-```
-
-Ensure input data is an iterable, but not a string or bytes. Raises
-`TypeError` if not.
-
-<a id="jc.streaming.streaming_line_input_type_check"></a>
-
-### streaming\_line\_input\_type\_check
-
-```python
-def streaming_line_input_type_check(line: str) -> None
-```
-
-Ensure each line is a string. Raises `TypeError` if not.
-
-<a id="jc.streaming.stream_success"></a>
-
-### stream\_success
-
-```python
-def stream_success(output_line: JSONDictType,
-                   ignore_exceptions: bool) -> JSONDictType
-```
-
-Add `_jc_meta` object to output line if `ignore_exceptions=True`
-
-<a id="jc.streaming.stream_error"></a>
-
-### stream\_error
-
-```python
-def stream_error(e: BaseException, line: str) -> JSONDictType
-```
-
-Return an error `_jc_meta` field.
 
 <a id="jc.streaming.add_jc_meta"></a>
 
-### add\_jc\_meta
+### add_jc_meta
 
 ```python
-def add_jc_meta(func: F) -> F
+def add_jc_meta(func: ~F) -> ~F
 ```
 
 Decorator for streaming parsers to add stream_success and stream_error
@@ -103,7 +62,7 @@ In all cases above:
 
 <a id="jc.streaming.raise_or_yield"></a>
 
-### raise\_or\_yield
+### raise_or_yield
 
 ```python
 def raise_or_yield(ignore_exceptions: bool, e: BaseException,
@@ -113,4 +72,47 @@ def raise_or_yield(ignore_exceptions: bool, e: BaseException,
 Return the exception object and line string if ignore_exceptions is
 True. Otherwise, re-raise the exception from the exception object with
 an annotation.
+
+<a id="jc.streaming.stream_error"></a>
+
+### stream_error
+
+```python
+def stream_error(e: BaseException, line: str) -> Dict[str, Any]
+```
+
+Return an error `_jc_meta` field.
+
+<a id="jc.streaming.stream_success"></a>
+
+### stream_success
+
+```python
+def stream_success(output_line: Dict[str, Any],
+                   ignore_exceptions: bool) -> Dict[str, Any]
+```
+
+Add `_jc_meta` object to output line if `ignore_exceptions=True`
+
+<a id="jc.streaming.streaming_input_type_check"></a>
+
+### streaming_input_type_check
+
+```python
+def streaming_input_type_check(data: Iterable[Union[str, bytes]]) -> None
+```
+
+Ensure input data is an iterable, but not a string or bytes. Raises
+`TypeError` if not.
+
+<a id="jc.streaming.streaming_line_input_type_check"></a>
+
+### streaming_line_input_type_check
+
+```python
+def streaming_line_input_type_check(line: str) -> None
+```
+
+Ensure each line is a string. Raises `TypeError` if not.
+
 

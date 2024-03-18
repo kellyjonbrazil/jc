@@ -1,4 +1,4 @@
-"""jc - JSON Convert `nsd-control` command output parser
+r"""jc - JSON Convert `nsd-control` command output parser
 
 Usage (cli):
 
@@ -58,7 +58,6 @@ Examples:
         }
       }
     ]
-
 """
 from typing import List, Dict
 import jc.utils

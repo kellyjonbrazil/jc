@@ -1,4 +1,4 @@
-"""jc - JSON Convert `foo` command output parser
+r"""jc - JSON Convert `foo` command output parser
 
 <<Short foo description and caveats>>
 

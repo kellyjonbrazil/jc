@@ -1,4 +1,4 @@
-"""jc - JSON Convert `hash` command output parser
+r"""jc - JSON Convert `hash` command output parser
 
 Usage (cli):
 

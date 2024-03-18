@@ -1,4 +1,4 @@
-"""jc - JSON Convert Debian Package Index file parser
+r"""jc - JSON Convert Debian Package Index file parser
 
 Usage (cli):
 

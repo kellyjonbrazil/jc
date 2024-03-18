@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_uptime"></a>
 
-# jc.parsers.proc\_uptime
+# jc.parsers.proc_uptime
 
 jc - JSON Convert `/proc/uptime` file parser
 

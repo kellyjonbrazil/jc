@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.update_alt_gs"></a>
 
-# jc.parsers.update\_alt\_gs
+# jc.parsers.update_alt_gs
 
 jc - JSON Convert `update-alternatives --get-selections` command output parser
 

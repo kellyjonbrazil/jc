@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_loadavg"></a>
 
-# jc.parsers.proc\_loadavg
+# jc.parsers.proc_loadavg
 
 jc - JSON Convert `/proc/loadavg` file parser
 

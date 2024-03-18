@@ -1,4 +1,4 @@
-"""jc - JSON Convert `systemctl` command output parser
+r"""jc - JSON Convert `systemctl` command output parser
 
 Usage (cli):
 

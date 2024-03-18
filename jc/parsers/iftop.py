@@ -1,4 +1,4 @@
-"""jc - JSON Convert `iftop` command output parser
+r"""jc - JSON Convert `iftop` command output parser
 
 Usage (cli):
 

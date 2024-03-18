@@ -1,4 +1,4 @@
-"""jc - JSON Convert X.509 Certificate Request format file parser
+r"""jc - JSON Convert X.509 Certificate Request format file parser
 
 This parser will convert DER and PEM encoded X.509 certificate request files.
 
@@ -248,7 +248,6 @@ Examples:
           "signature": "30:45:02:20:77:ac:5b:51:bf:c5:f5:43:02:52:ae:66:..."
         }
       ]
-
 """
 # import binascii
 # from collections import OrderedDict

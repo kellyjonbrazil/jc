@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.systemctl_luf"></a>
 
-# jc.parsers.systemctl\_luf
+# jc.parsers.systemctl_luf
 
 jc - JSON Convert `systemctl list-unit-files` command output
 parser

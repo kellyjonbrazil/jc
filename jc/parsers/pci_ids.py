@@ -1,4 +1,4 @@
-"""jc - JSON Convert `pci.ids` file parser
+r"""jc - JSON Convert `pci.ids` file parser
 
 This parser converts the pci.ids database file.
 

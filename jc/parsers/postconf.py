@@ -1,4 +1,4 @@
-"""jc - JSON Convert `postconf -M` command output parser
+r"""jc - JSON Convert `postconf -M` command output parser
 
 Usage (cli):
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `systeminfo` command output parser
+r"""jc - JSON Convert `systeminfo` command output parser
 
 Blank or missing elements are set to `null`.
 

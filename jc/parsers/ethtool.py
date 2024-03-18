@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ethtool` command output parser
+r"""jc - JSON Convert `ethtool` command output parser
 
 Supports standard `ethtool` output and the `--module-info` option.
 
@@ -161,6 +161,7 @@ Examples:
       "br_margin_min": "0%"
     }
 """
+import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -201,6 +202,39 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
     for key in bool_list:
         if key in proc_data:
             proc_data[key] = jc.utils.convert_to_bool(proc_data[key])
+
+    # find and convert units
+    # "0.0468 mW / -13.30 dBm" or "-40.00 degrees C / -40.00 degrees F"
+    degrees_re = re.compile(r'(?P<deg_c>.*?) degrees C \/ (?P<deg_f>.*?) degrees F')
+    power_re = re.compile(r'(?P<pow_mw>.*?) mW \/ (?P<pow_dbm>.*?) dBm')
+
+    for key, val in proc_data.copy().items():
+        if isinstance(val, str):
+            degrees_match = re.match(degrees_re, val)
+            if degrees_match:
+                degrees_dict = degrees_match.groupdict()
+                proc_data[key + '_celsius'] = float(degrees_dict['deg_c'])
+                proc_data[key + '_farenheit'] = float(degrees_dict['deg_f'])
+                del proc_data[key]
+                continue
+
+            power_match = re.match(power_re, val)
+            if power_match:
+                power_dict = power_match.groupdict()
+                proc_data[key + '_mw'] = float(power_dict['pow_mw'])
+                proc_data[key + '_dbm'] = float(power_dict['pow_dbm'])
+                del proc_data[key]
+                continue
+
+            if val.endswith(' V'):
+                proc_data[key + '_v'] = jc.utils.convert_to_float(val)
+                del proc_data[key]
+                continue
+
+            if val.endswith(' mA'):
+                proc_data[key + '_ma'] = jc.utils.convert_to_float(val)
+                del proc_data[key]
+                continue
 
     return proc_data
 
@@ -304,18 +338,21 @@ def _parse_default(data: str) -> JSONDictType:
         val = val.strip()
         raw_output[key] = val
 
-    if supported_ports:
-        raw_output['supported_ports'] = supported_ports
-    if supported_link_modes:
-        raw_output['supported_link_modes'] = supported_link_modes
-    if supported_fec_modes:
-        raw_output['supported_fec_modes'] = supported_fec_modes
-    if advertised_link_modes:
-        raw_output['advertised_link_modes'] = advertised_link_modes
-    if advertised_fec_modes:
-        raw_output['advertised_fec_modes'] = advertised_fec_modes
-    if current_message_level:
-        raw_output['current_message_level'] = current_message_level
+    list_vals = [
+        (supported_ports, 'supported_ports'),
+        (supported_link_modes, 'supported_link_modes'),
+        (supported_fec_modes, 'supported_fec_modes'),
+        (advertised_link_modes, 'advertised_link_modes'),
+        (advertised_fec_modes, 'advertised_fec_modes'),
+        (current_message_level, 'current_message_level')
+    ]
+
+    for obj_list, obj_key in list_vals:
+        if raw_output.get(obj_key, '').lower() == 'not reported':
+            raw_output[obj_key] = []
+        else:
+            if obj_list:
+                raw_output[obj_key] = obj_list
 
     return raw_output
 
