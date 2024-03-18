@@ -13,6 +13,7 @@ jc changelog
 - Enhance `/proc/pid/stat` parser to support "Idle" state
 - Enhance `rpm_qi` and `pkg_index_deb` parsers to split list fields into arrays
 - Fix `iwconfig` parser to handle more special characters in the SSID name
+- Add aarch64 binaries to Releases for macOS and Linux
 - Documentation and doc build updates
 
 20240212 v1.25.1

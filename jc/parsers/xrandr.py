@@ -15,6 +15,7 @@ Usage (module):
     result = jc.parse('xrandr', xrandr_command_output)
 
 Schema:
+
     {
       "screens": [
         {
@@ -28,14 +29,14 @@ Schema:
           "devices": [
             {
               "props": {
-                [name: string]: {
-                  // Represents EdidModel
+
+                # either an EdidModel object or key value pairs
+                <key_name> : {
                   "name": string,
                   "product_id": string,
                   "serial_number": string,
                 }
-                |
-                list[string]
+
               },
               "resolution_modes": [
                 {
@@ -206,7 +207,7 @@ except AttributeError:
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "2.0"
+    version = "2.1"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"
