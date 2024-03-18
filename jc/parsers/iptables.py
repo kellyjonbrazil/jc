@@ -163,7 +163,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -247,7 +247,10 @@ def parse(data, raw=False, quiet=False):
 
                 continue
 
-            elif line.startswith('target') or line.find('pkts') == 1 or line.startswith('num'):
+            elif line.startswith('target') or \
+                 (line.find('pkts') >= 1 and line.find('pkts') <= 3) or \
+                 line.startswith('num'):
+
                 headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
                 headers.append("options")
 

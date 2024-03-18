@@ -1,6 +1,6 @@
 jc changelog
 
-20240315 v1.25.2
+20240318 v1.25.2
 - Add `apt-cache-show` command parser
 - Add `apt-get-sqq` command parser
 - Add `ethtool` command parser
@@ -10,6 +10,7 @@ jc changelog
   to bytes.
 - Enhance `free` parser to add human readable output support. All size values
   have been normalizd to bytes.
+- Enhance `iptables` parser to handle -x output
 - Enhance `/proc/pid/stat` parser to support "Idle" state
 - Enhance `rpm_qi` and `pkg_index_deb` parsers to split list fields into arrays
 - Fix `iwconfig` parser to handle more special characters in the SSID name

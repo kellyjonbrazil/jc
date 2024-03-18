@@ -173,6 +173,20 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump, quiet=True), self.generic_iptables_no_jump_json)
 
+    def test_iptables_x_option_format(self):
+        """
+        Test iptables -x
+        """
+        data = '''Chain DOCKER-ISOLATION-STAGE-2 (4 references)
+  pkts              bytes target     prot opt in     out     source               destination
+       0        0 DROP       all  --  any    docker0  anywhere             anywhere
+       0        0 DROP       all  --  any    br-b01fa3a90d3b  anywhere             anywhere
+       0        0 DROP       all  --  any    br-642643a59593  anywhere             anywhere
+       0        0 DROP       all  --  any    br-3e698d2f6bc4  anywhere             anywhere
+44758639 38517421321 RETURN     all  --  any    any     anywhere             anywhere'''
+        expected = [{"chain":"DOCKER-ISOLATION-STAGE-2","rules":[{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"docker0","source":"anywhere","destination":"anywhere"},{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"br-b01fa3a90d3b","source":"anywhere","destination":"anywhere"},{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"br-642643a59593","source":"anywhere","destination":"anywhere"},{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"br-3e698d2f6bc4","source":"anywhere","destination":"anywhere"},{"pkts":44758639,"bytes":38517421321,"target":"RETURN","prot":"all","opt":None,"in":"any","out":"any","source":"anywhere","destination":"anywhere"}]}]
+        self.assertEqual(jc.parsers.iptables.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
