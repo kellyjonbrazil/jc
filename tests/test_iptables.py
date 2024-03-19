@@ -187,6 +187,22 @@ class MyTests(unittest.TestCase):
         expected = [{"chain":"DOCKER-ISOLATION-STAGE-2","rules":[{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"docker0","source":"anywhere","destination":"anywhere"},{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"br-b01fa3a90d3b","source":"anywhere","destination":"anywhere"},{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"br-642643a59593","source":"anywhere","destination":"anywhere"},{"pkts":0,"bytes":0,"target":"DROP","prot":"all","opt":None,"in":"any","out":"br-3e698d2f6bc4","source":"anywhere","destination":"anywhere"},{"pkts":44758639,"bytes":38517421321,"target":"RETURN","prot":"all","opt":None,"in":"any","out":"any","source":"anywhere","destination":"anywhere"}]}]
         self.assertEqual(jc.parsers.iptables.parse(data, quiet=True), expected)
 
+    def test_iptables_x_option_format2(self):
+        """
+        Test iptables -x
+        """
+        data = '''Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination
+11291792498 217331852907122 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+  555958 33533576 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0
+128628404869 172804745659762 INPUT_direct  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+128627559128 172804718596050 INPUT_ZONES_SOURCE  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+128627559125 172804718595966 INPUT_ZONES  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+   26599  1082920 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+    1761    79571 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited'''
+        expected = [{"chain":"INPUT","rules":[{"pkts":11291792498,"bytes":217331852907122,"target":"ACCEPT","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0","options":"ctstate RELATED,ESTABLISHED"},{"pkts":555958,"bytes":33533576,"target":"ACCEPT","prot":"all","opt":None,"in":"lo","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":128628404869,"bytes":172804745659762,"target":"INPUT_direct","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":128627559128,"bytes":172804718596050,"target":"INPUT_ZONES_SOURCE","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":128627559125,"bytes":172804718595966,"target":"INPUT_ZONES","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":26599,"bytes":1082920,"target":"DROP","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0","options":"ctstate INVALID"},{"pkts":1761,"bytes":79571,"target":"REJECT","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0","options":"reject-with icmp-host-prohibited"}]}]
+        self.assertEqual(jc.parsers.iptables.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

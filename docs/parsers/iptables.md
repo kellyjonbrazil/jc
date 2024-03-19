@@ -5,7 +5,7 @@
 
 jc - JSON Convert `iptables` command output parser
 
-Supports `-vLn` and `--line-numbers` for all tables.
+Supports `-vLnx` and `--line-numbers` for all tables.
 
 Usage (cli):
 

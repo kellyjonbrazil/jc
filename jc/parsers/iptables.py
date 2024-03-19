@@ -1,6 +1,6 @@
 r"""jc - JSON Convert `iptables` command output parser
 
-Supports `-vLn` and `--line-numbers` for all tables.
+Supports `-vLnx` and `--line-numbers` for all tables.
 
 Usage (cli):
 
@@ -248,7 +248,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             elif line.startswith('target') or \
-                 (line.find('pkts') >= 1 and line.find('pkts') <= 3) or \
+                 (line.find('pkts') >= 1 and line.find('pkts') <= 5) or \
                  line.startswith('num'):
 
                 headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
