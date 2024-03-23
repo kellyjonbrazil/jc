@@ -5,6 +5,8 @@
 
 jc - JSON Convert `df` command output parser
 
+Values are normalized to bytes when using `df -h`.
+
 Usage (cli):
 
     $ df | jc --df
@@ -23,7 +25,7 @@ Schema:
     [
       {
         "filesystem":        string,
-        "size":              string,
+        "size":              integer,
         "1k_blocks":         integer,
         "512_blocks":        integer,
         "used":              integer,
@@ -122,4 +124,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/df.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/df.py)
 
-Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/vmallocinfo` file parser
+r"""jc - JSON Convert `/proc/vmallocinfo` file parser
 
 This parser will attempt to convert number values to integers. If that is
 not desired, please use the `--raw` option (cli) or `raw=True` argument

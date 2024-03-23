@@ -1,4 +1,4 @@
-"""jc - JSON Convert Linux netstat Parser"""
+r"""jc - JSON Convert Linux netstat Parser"""
 import string
 
 

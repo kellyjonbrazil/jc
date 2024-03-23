@@ -1,4 +1,4 @@
-.TH jc 1 2024-02-12 1.25.1 "JSON Convert"
+.TH jc 1 2024-03-23 1.25.2 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -51,6 +51,16 @@ Parsers:
 .B
 \fB--airport-s\fP
 `airport -s` command parser
+
+.TP
+.B
+\fB--apt-cache-show\fP
+`apt-cache show` command parser
+
+.TP
+.B
+\fB--apt-get-sqq\fP
+`apt-get -sqq` command parser
 
 .TP
 .B
@@ -201,6 +211,11 @@ Email Address string parser
 .B
 \fB--env\fP
 `env` command parser
+
+.TP
+.B
+\fB--ethtool\fP
+`ethtool` command parser
 
 .TP
 .B
@@ -451,6 +466,11 @@ M3U and M3U8 file parser
 .B
 \fB--mpstat-s\fP
 `mpstat` command streaming parser
+
+.TP
+.B
+\fB--needrestart\fP
+`needrestart -b` command parser
 
 .TP
 .B
@@ -1158,7 +1178,7 @@ Pretty print output
 .TP
 .B
 \fB-q\fP, \fB--quiet\fP
-Quiet mode. Suppresses parser warning messages (use -qq to ignore streaming
+Quiet mode. Suppresses parser warning messages (use \fB-qq\fP to ignore streaming
 parser errors)
 .TP
 .B
@@ -1168,7 +1188,7 @@ additional semantic processing
 .TP
 .B
 \fB-s\fP, \fB--slurp\fP
-Slurp multiple lines into an array. (use \fB-hhh\fP` to find compatible parsers)
+Slurp multiple lines into an array. (use \fB-hhh\fP to find compatible parsers)
 .TP
 .B
 \fB-u\fP, \fB--unbuffer\fP

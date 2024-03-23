@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/softirqs` file parser
+r"""jc - JSON Convert `/proc/softirqs` file parser
 
 Usage (cli):
 

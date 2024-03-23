@@ -90,7 +90,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function
@@ -110,4 +110,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/iwconfig.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iwconfig.py)
 
-Version 1.1 by Thomas Vincent (vrince@gmail.com)
+Version 1.2 by Thomas Vincent (vrince@gmail.com)

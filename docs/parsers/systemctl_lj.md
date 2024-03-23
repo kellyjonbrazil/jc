@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.systemctl_lj"></a>
 
-# jc.parsers.systemctl\_lj
+# jc.parsers.systemctl_lj
 
 jc - JSON Convert `systemctl list-jobs` command output parser
 

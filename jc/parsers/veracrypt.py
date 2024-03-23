@@ -1,4 +1,4 @@
-"""jc - JSON Convert `veracrypt` command output parser
+r"""jc - JSON Convert `veracrypt` command output parser
 
 Supports the following `veracrypt` subcommands:
 - `veracrypt --text --list`
@@ -74,7 +74,6 @@ Examples:
             "backup_header": "Yes"
         }
     ]
-
 """
 import re
 from typing import List, Dict, Optional, Any

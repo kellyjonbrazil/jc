@@ -1,4 +1,4 @@
-"""jc - JSON Convert `mdadm` command output parser
+r"""jc - JSON Convert `mdadm` command output parser
 
 Supports the `--query` and `--examine` options in `mdadm`.
 

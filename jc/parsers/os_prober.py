@@ -1,4 +1,4 @@
-"""jc - JSON Convert `os-prober` command output parser
+r"""jc - JSON Convert `os-prober` command output parser
 
 Usage (cli):
 

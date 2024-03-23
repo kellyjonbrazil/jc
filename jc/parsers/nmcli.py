@@ -1,4 +1,4 @@
-"""jc - JSON Convert `nmcli` command output parser
+r"""jc - JSON Convert `nmcli` command output parser
 
 Supports the following `nmcli` subcommands:
 - `nmcli general`

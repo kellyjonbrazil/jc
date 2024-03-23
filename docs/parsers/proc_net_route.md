@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_route"></a>
 
-# jc.parsers.proc\_net\_route
+# jc.parsers.proc_net_route
 
 jc - JSON Convert `/proc/net/route` file parser
 

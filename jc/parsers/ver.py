@@ -1,4 +1,4 @@
-"""jc - JSON Convert Version string output parser
+r"""jc - JSON Convert Version string output parser
 
 Best-effort attempt to parse various styles of version numbers. This parser
 is based off of the version parser included in the CPython distutils
@@ -89,7 +89,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'Version string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -132,7 +132,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
     return proc_data
 
 
-def strict_parse(vstring):
+def _strict_parse(vstring):
     version_re = re.compile(r'^(\d+) \. (\d+) (\. (\d+))? ([ab](\d+))?$', re.VERBOSE)
     match = version_re.match(vstring)
     if not match:
@@ -158,7 +158,7 @@ def strict_parse(vstring):
     }
 
 
-def loose_parse(vstring):
+def _loose_parse(vstring):
     component_re = re.compile(r'(\d+ | [a-z]+ | \.)', re.VERBOSE)
     components = [x for x in component_re.split(vstring) if x and x != '.']
 
@@ -197,10 +197,10 @@ def parse(
         data = data.strip()
 
         try:
-            raw_output = strict_parse(data)
+            raw_output = _strict_parse(data)
 
         except ValueError:
-            raw_output['components'] = loose_parse(data)
+            raw_output['components'] = _loose_parse(data)
             strict = False
 
         if raw_output:

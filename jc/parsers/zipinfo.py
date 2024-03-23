@@ -1,4 +1,4 @@
-"""jc - JSON Convert `zipinfo` command output parser
+r"""jc - JSON Convert `zipinfo` command output parser
 
 > Note: No `zipinfo` options are supported.
 

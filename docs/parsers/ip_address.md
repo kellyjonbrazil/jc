@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.ip_address"></a>
 
-# jc.parsers.ip\_address
+# jc.parsers.ip_address
 
 jc - JSON Convert IP Address string parser
 

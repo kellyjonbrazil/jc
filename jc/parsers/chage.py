@@ -1,4 +1,4 @@
-"""jc - JSON Convert `chage --list` command output parser
+r"""jc - JSON Convert `chage --list` command output parser
 
 Supports `chage -l <username>` or `chage --list <username>`
 

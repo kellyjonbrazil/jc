@@ -1,4 +1,4 @@
-"""jc - JSON Convert `sfdisk` command output parser
+r"""jc - JSON Convert `sfdisk` command output parser
 
 Supports the following `sfdisk` options:
 - `-l`

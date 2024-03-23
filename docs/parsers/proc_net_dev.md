@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_dev"></a>
 
-# jc.parsers.proc\_net\_dev
+# jc.parsers.proc_net_dev
 
 jc - JSON Convert `/proc/net/dev` file parser
 

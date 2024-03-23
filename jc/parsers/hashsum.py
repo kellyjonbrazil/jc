@@ -1,4 +1,4 @@
-"""jc - JSON Convert `hash sum` command output parser
+r"""jc - JSON Convert `hash sum` command output parser
 
 This parser works with the following hash calculation utilities:
 - `md5`

@@ -1,5 +1,23 @@
 jc changelog
 
+20240323 v1.25.2
+- Add `apt-cache-show` command parser
+- Add `apt-get-sqq` command parser
+- Add `ethtool` command parser
+- Add `needrestart` command parser
+- Enhance `df` parser to add human readable output support. Note: the `size`
+  field has been changed to an integer and all size values have been normalized
+  to bytes.
+- Enhance `free` parser to add human readable output support. All size values
+  have been normalizd to bytes.
+- Enhance `iptables` parser to handle -x output
+- Enhance `/proc/pid/stat` parser to support "Idle" state
+- Enhance `rpm_qi` and `pkg_index_deb` parsers to split list fields into arrays
+- Fix `iwconfig` parser to handle more special characters in the SSID name
+- Fix `xrandr` parser to ignore extra horizontal and vertical stats lines
+- Add aarch64 binaries to Releases for macOS and Linux
+- Documentation and doc build updates
+
 20240212 v1.25.1
 - Fix for crash when optional libraries are not installed (e.g. xmltodict)
 - Fix for `ini` parser crashing with some keys with no values

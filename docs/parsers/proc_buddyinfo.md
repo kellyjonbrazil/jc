@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_buddyinfo"></a>
 
-# jc.parsers.proc\_buddyinfo
+# jc.parsers.proc_buddyinfo
 
 jc - JSON Convert `/proc/buddyinfo` file parser
 

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_softirqs"></a>
 
-# jc.parsers.proc\_softirqs
+# jc.parsers.proc_softirqs
 
 jc - JSON Convert `/proc/softirqs` file parser
 

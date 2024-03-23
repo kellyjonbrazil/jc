@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_version"></a>
 
-# jc.parsers.proc\_version
+# jc.parsers.proc_version
 
 jc - JSON Convert `/proc/version` file parser
 

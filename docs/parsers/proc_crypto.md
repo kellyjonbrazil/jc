@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_crypto"></a>
 
-# jc.parsers.proc\_crypto
+# jc.parsers.proc_crypto
 
 jc - JSON Convert `/proc/crypto` file parser
 

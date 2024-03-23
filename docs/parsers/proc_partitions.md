@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_partitions"></a>
 
-# jc.parsers.proc\_partitions
+# jc.parsers.proc_partitions
 
 jc - JSON Convert `/proc/partitions` file parser
 

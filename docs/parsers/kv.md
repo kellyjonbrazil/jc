@@ -81,4 +81,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/kv.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/kv.py)
 
-Version 2.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

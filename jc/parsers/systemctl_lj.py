@@ -1,4 +1,4 @@
-"""jc - JSON Convert `systemctl list-jobs` command output parser
+r"""jc - JSON Convert `systemctl list-jobs` command output parser
 
 Usage (cli):
 

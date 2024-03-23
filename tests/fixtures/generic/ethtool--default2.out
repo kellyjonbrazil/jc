@@ -1,0 +1,33 @@
+Settings for enp1s0:
+        Supported ports: [ FIBRE ]
+        Supported link modes:   10000baseKX4/Full
+                                40000baseCR4/Full
+                                40000baseSR4/Full
+                                56000baseCR4/Full
+                                56000baseSR4/Full
+                                1000baseX/Full
+                                10000baseCR/Full
+                                10000baseSR/Full
+        Supported pause frame use: Symmetric Receive-only
+        Supports auto-negotiation: Yes
+        Supported FEC modes: Not reported
+        Advertised link modes:  10000baseKX4/Full
+                                40000baseCR4/Full
+                                40000baseSR4/Full
+                                1000baseX/Full
+                                10000baseCR/Full
+                                10000baseSR/Full
+        Advertised pause frame use: Symmetric
+        Advertised auto-negotiation: Yes
+        Advertised FEC modes: Not reported
+        Speed: 40000Mb/s
+        Duplex: Full
+        Auto-negotiation: off
+        Port: FIBRE
+        PHYAD: 0
+        Transceiver: internal
+        Supports Wake-on: d
+        Wake-on: d
+        Current message level: 0x00000014 (20)
+                               link ifdown
+        Link detected: yes

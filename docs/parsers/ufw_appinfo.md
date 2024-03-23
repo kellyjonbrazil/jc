@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.ufw_appinfo"></a>
 
-# jc.parsers.ufw\_appinfo
+# jc.parsers.ufw_appinfo
 
 jc - JSON Convert `ufw app info [application]` command
 output parser

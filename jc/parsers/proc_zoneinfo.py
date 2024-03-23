@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/zoneinfo` file parser
+r"""jc - JSON Convert `/proc/zoneinfo` file parser
 
 Usage (cli):
 

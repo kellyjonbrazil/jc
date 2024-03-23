@@ -1,4 +1,4 @@
-"""jc - JSON Convert `env` and `printenv` command output parser
+r"""jc - JSON Convert `env` and `printenv` command output parser
 
 This parser will output a list of dictionaries each containing `name` and
 `value` keys. If you would like a simple dictionary output, then use the

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_swaps"></a>
 
-# jc.parsers.proc\_swaps
+# jc.parsers.proc_swaps
 
 jc - JSON Convert `/proc/swaps` file parser
 

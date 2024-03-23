@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_mtrr"></a>
 
-# jc.parsers.proc\_mtrr
+# jc.parsers.proc_mtrr
 
 jc - JSON Convert `/proc/mtrr` file parser
 

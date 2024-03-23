@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.git_ls_remote"></a>
 
-# jc.parsers.git\_ls\_remote
+# jc.parsers.git_ls_remote
 
 jc - JSON Convert `git ls-remote` command output parser
 
@@ -71,7 +71,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> Union[JSONDictType, List[JSONDictType]]
+          quiet: bool = False) -> Union[Dict[str, Any], List[Dict[str, Any]]]
 ```
 
 Main text parsing function

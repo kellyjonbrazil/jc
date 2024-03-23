@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.csv_s"></a>
 
-# jc.parsers.csv\_s
+# jc.parsers.csv_s
 
 jc - JSON Convert `csv` file streaming parser
 
@@ -64,7 +64,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data, raw=False, quiet=False, ignore_exceptions=False)
 ```
 

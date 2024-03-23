@@ -1,4 +1,4 @@
-"""jc - JSON Convert `host` command output parser
+r"""jc - JSON Convert `host` command output parser
 
 Supports parsing of the most commonly used RR types (A, AAAA, MX, TXT)
 

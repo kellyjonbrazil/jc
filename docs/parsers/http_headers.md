@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.http_headers"></a>
 
-# jc.parsers.http\_headers
+# jc.parsers.http_headers
 
 jc - JSON Convert HTTP headers parser
 
@@ -313,7 +313,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

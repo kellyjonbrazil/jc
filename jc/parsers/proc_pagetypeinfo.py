@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/pagetypeinfo` file parser
+r"""jc - JSON Convert `/proc/pagetypeinfo` file parser
 
 Usage (cli):
 

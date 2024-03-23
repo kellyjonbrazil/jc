@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/<pid>/stat` file parser
+r"""jc - JSON Convert `/proc/<pid>/stat` file parser
 
 Usage (cli):
 
@@ -202,7 +202,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/<pid>/stat` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -239,6 +239,7 @@ def _process(proc_data: Dict) -> Dict:
         'K': 'Wakekill',
         'W': 'Waking',
         'P': 'Parked',
+        'I': 'Idle'
     }
 
     if 'state' in proc_data:

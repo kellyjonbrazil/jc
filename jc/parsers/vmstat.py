@@ -1,4 +1,4 @@
-"""jc - JSON Convert `vmstat` command output parser
+r"""jc - JSON Convert `vmstat` command output parser
 
 Options supported: `-a`, `-w`, `-d`, `-t`
 

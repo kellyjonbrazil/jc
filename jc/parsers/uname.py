@@ -1,4 +1,4 @@
-"""jc - JSON Convert `uname -a` command output parser
+r"""jc - JSON Convert `uname -a` command output parser
 
 > Note: Must use `uname -a`
 

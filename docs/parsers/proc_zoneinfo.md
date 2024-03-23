@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_zoneinfo"></a>
 
-# jc.parsers.proc\_zoneinfo
+# jc.parsers.proc_zoneinfo
 
 jc - JSON Convert `/proc/zoneinfo` file parser
 

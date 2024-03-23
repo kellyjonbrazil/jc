@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.crontab_u"></a>
 
-# jc.parsers.crontab\_u
+# jc.parsers.crontab_u
 
 jc - JSON Convert `crontab -l` command output and crontab
 file parser

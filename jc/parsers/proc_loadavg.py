@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/loadavg` file parser
+r"""jc - JSON Convert `/proc/loadavg` file parser
 
 Usage (cli):
 

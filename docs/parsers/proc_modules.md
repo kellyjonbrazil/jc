@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_modules"></a>
 
-# jc.parsers.proc\_modules
+# jc.parsers.proc_modules
 
 jc - JSON Convert `/proc/modules` file parser
 

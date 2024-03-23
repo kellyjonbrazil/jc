@@ -1,4 +1,4 @@
-"""jc - JSON Convert `Key/Value` with duplicate key file and string parser
+r"""jc - JSON Convert `Key/Value` with duplicate key file and string parser
 
 Supports files containing simple key/value pairs and preserves duplicate
 values. All values are contained in lists/arrays.
@@ -63,7 +63,7 @@ import jc.parsers.ini_dup as ini_dup
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Key/Value with duplicate key file and string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -91,4 +91,5 @@ def parse(data, raw=False, quiet=False):
     """
     # This parser is an alias of ini_dup.py
     ini_dup.info = info  # type: ignore
+    ini_dup.__name__ = __name__
     return ini_dup.parse(data, raw, quiet)

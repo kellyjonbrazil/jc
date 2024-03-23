@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.clf_s"></a>
 
-# jc.parsers.clf\_s
+# jc.parsers.clf_s
 
 jc - JSON Convert Common Log Format file streaming parser
 
@@ -88,11 +88,12 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
-def parse(data: Iterable[str],
-          raw: bool = False,
-          quiet: bool = False,
-          ignore_exceptions: bool = False) -> StreamingOutputType
+def parse(
+    data: Iterable[str],
+    raw: bool = False,
+    quiet: bool = False,
+    ignore_exceptions: bool = False
+) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
 ```
 
 Main text parsing generator function. Returns an iterable object.

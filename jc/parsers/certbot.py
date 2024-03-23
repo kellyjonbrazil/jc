@@ -1,4 +1,4 @@
-"""jc - JSON Convert `certbot` command output parser
+r"""jc - JSON Convert `certbot` command output parser
 
 Supports the following `certbot` commands:
 

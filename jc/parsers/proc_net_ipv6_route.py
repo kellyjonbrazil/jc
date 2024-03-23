@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/ipv6_route` file parser
+r"""jc - JSON Convert `/proc/net/ipv6_route` file parser
 
 Usage (cli):
 

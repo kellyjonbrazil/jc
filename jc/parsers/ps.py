@@ -1,4 +1,4 @@
-"""jc - JSON Convert `ps` command output parser
+r"""jc - JSON Convert `ps` command output parser
 
 `ps` options supported:
 - `ef`

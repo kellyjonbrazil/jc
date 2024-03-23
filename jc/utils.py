@@ -210,7 +210,7 @@ def remove_quotes(data: str) -> str:
 
 
 def normalize_key(data: str) -> str:
-    """
+    r"""
     Normalize a key name by shifting to lower-case and converting special
     characters to underscores.
 
@@ -229,7 +229,7 @@ def normalize_key(data: str) -> str:
 
         string
     """
-    special = '''!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ '''
+    special = r'''!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ '''
     initial_underscore = False
     data = data.strip().lower()
 
@@ -401,6 +401,9 @@ def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
         >>> convert_size_to_int('1.5 GB', binary=True)
         1610612736
     """
+    # normalize input by removing commas
+    size = size.replace(',', '')
+
     def tokenize(text: str) -> List[str]:
         tokenized_input: List = []
         for token in re.split(r'(\d+(?:\.\d+)?)', text):

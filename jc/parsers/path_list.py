@@ -1,4 +1,4 @@
-"""jc - JSON Convert POSIX path list string parser
+r"""jc - JSON Convert POSIX path list string parser
 
 Parse a colon-separated POSIX path list, commonly found in environment
 variables.
@@ -59,7 +59,6 @@ Examples:
         ]
       }
     ]
-
 """
 
 import jc.parsers.path as path

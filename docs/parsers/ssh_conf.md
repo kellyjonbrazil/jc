@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.ssh_conf"></a>
 
-# jc.parsers.ssh\_conf
+# jc.parsers.ssh_conf
 
 jc - JSON Convert `ssh` configuration file and `ssh -G` command output parser
 
@@ -527,7 +527,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

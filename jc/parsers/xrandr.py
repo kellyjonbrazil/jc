@@ -1,4 +1,4 @@
-"""jc - JSON Convert `xrandr` command output parser
+r"""jc - JSON Convert `xrandr` command output parser
 
 Usage (cli):
 
@@ -28,6 +28,16 @@ Schema:
           "maximum_height":                    integer,
           "devices": [
             {
+              "props": {
+
+                # either an EdidModel object or key value pairs
+                <key_name> : {
+                  "name": string,
+                  "product_id": string,
+                  "serial_number": string,
+                }
+
+              },
               "resolution_modes": [
                 {
                   "resolution_width":          integer,
@@ -87,26 +97,9 @@ Examples:
                       "frequency": 60.03,
                       "is_current": true,
                       "is_preferred": true
-                    },
-                    {
-                      "frequency": 59.93,
-                      "is_current": false,
-                      "is_preferred": false
                     }
                   ]
                 },
-                {
-                  "resolution_width": 1680,
-                  "resolution_height": 1050,
-                  "is_high_resolution": false,
-                  "frequencies": [
-                    {
-                      "frequency": 59.88,
-                      "is_current": false,
-                      "is_preferred": false
-                    }
-                  ]
-                }
               ],
               "is_connected": true,
               "is_primary": true,
@@ -129,40 +122,41 @@ Examples:
     {
       "screens": [
         {
-          "screen_number": 0,
-          "minimum_width": 8,
-          "minimum_height": 8,
-          "current_width": 1920,
-          "current_height": 1080,
-          "maximum_width": 32767,
-          "maximum_height": 32767,
           "devices": [
             {
+              "props": {
+                "EDID": [
+                  "00ffff5700000000",
+                  "001c01a5544d9a27",
+                  "0e50540101010101",
+                  "010101383e401010",
+                  "3500350f00000000",
+                  "0000000000fe0041",
+                  "554f0a20000000fe",
+                  "00423137200a0070"
+                ],
+                "scaling mode": [
+                  "Full aspect ",
+                  "supported: Full, Center, Full aspect"
+                ],
+                "Colorspace": [
+                  "Default ",
+                  "supported: Default, RGB_Wide_Gamut_Fixed_Point, RGB_Wide_Gamut_Floating_Point, opRGB, DCI-P3_RGB_D65, BT2020_RGB, BT601_YCC, BT709_YCC, XVYCC_601, XVYCC_709, SYCC_601, opYCC_601, BT2020_CYCC, BT2020_YCC"
+                ],
+                "EdidModel": {
+                  "name": "Generic",
+                  "product_id": "22333",
+                  "serial_number": "0"
+                }
+              },
               "resolution_modes": [
                 {
-                  "resolution_width": 1920,
-                  "resolution_height": 1080,
+                  "resolution_width": 320,
+                  "resolution_height": 180,
                   "is_high_resolution": false,
                   "frequencies": [
                     {
-                      "frequency": 60.03,
-                      "is_current": true,
-                      "is_preferred": true
-                    },
-                    {
-                      "frequency": 59.93,
-                      "is_current": false,
-                      "is_preferred": false
-                    }
-                  ]
-                },
-                {
-                  "resolution_width": 1680,
-                  "resolution_height": 1050,
-                  "is_high_resolution": false,
-                  "frequencies": [
-                    {
-                      "frequency": 59.88,
+                      "frequency": 59.84,
                       "is_current": false,
                       "is_preferred": false
                     }
@@ -171,20 +165,24 @@ Examples:
               ],
               "is_connected": true,
               "is_primary": true,
-              "device_name": "eDP1",
-              "model_name": "ASUS VW193S",
-              "product_id": "54297",
-              "serial_number": "78L8021107",
+              "device_name": "eDP-1",
+              "rotation": "normal",
+              "reflection": "normal",
               "resolution_width": 1920,
               "resolution_height": 1080,
               "offset_width": 0,
               "offset_height": 0,
-              "dimension_width": 310,
-              "dimension_height": 170,
-              "rotation": "normal",
-              "reflection": "normal"
+              "dimension_width": 309,
+              "dimension_height": 174
             }
-          ]
+          ],
+          "screen_number": 0,
+          "minimum_width": 320,
+          "minimum_height": 200,
+          "current_width": 1920,
+          "current_height": 1080,
+          "maximum_width": 16384,
+          "maximum_height": 16384
         }
       ]
     }
@@ -209,7 +207,7 @@ except AttributeError:
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "2.0"
+    version = "2.1"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"
@@ -542,9 +540,19 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Response:
     lines = data.splitlines()
     screen, device = None, None
 
+    # temporary fix to ignore specific unhandled lines
+    ignore_pattern = re.compile(r'^\s+(h|v):\s+(height|width)\s+\d+\s+start\s+\d+\s+end')
+
     result: Response = {"screens": []}
     if jc.utils.has_data(data):
         while index < len(lines):
+
+            # temporary fix to ignore specific unhandled lines
+            ignore_re = ignore_pattern.match(lines[index])
+            if ignore_re:
+                index += 1
+                continue
+
             line = _Line.categorize(lines[index])
             if line.t == LineType.Screen:
                 screen = _parse_screen(line)

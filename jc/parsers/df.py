@@ -1,4 +1,6 @@
-"""jc - JSON Convert `df` command output parser
+r"""jc - JSON Convert `df` command output parser
+
+Values are normalized to bytes when using `df -h`.
 
 Usage (cli):
 
@@ -18,7 +20,7 @@ Schema:
     [
       {
         "filesystem":        string,
-        "size":              string,
+        "size":              integer,
         "1k_blocks":         integer,
         "512_blocks":        integer,
         "used":              integer,
@@ -99,7 +101,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '2.0'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -123,23 +125,19 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema:
     """
-    int_list = {'used', 'available', 'use_percent', 'capacity_percent', 'ifree',
-                    'iused', 'iused_percent'}
+    int_list = {'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent'}
+    size_list = {'size', 'used', 'available'}
 
     for entry in proc_data:
-        # change 'avail' to 'available'
         if 'avail' in entry:
             entry['available'] = entry.pop('avail')
 
-        # change 'use%' to 'use_percent'
         if 'use%' in entry:
             entry['use_percent'] = entry.pop('use%')
 
-        # change 'capacity' to 'capacity_percent'
         if 'capacity' in entry:
             entry['capacity_percent'] = entry.pop('capacity')
 
-        # change '%iused' to 'iused_percent'
         if '%iused' in entry:
             entry['iused_percent'] = entry.pop('%iused')
 
@@ -157,6 +155,11 @@ def _process(proc_data):
 
         if 'iused_percent' in entry:
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
+
+        # parse the size, used, and available fields to bytes
+        for key in entry:
+            if key in size_list:
+                entry[key] = jc.utils.convert_size_to_int(entry[key])
 
         # convert integers
         for key in entry:
@@ -245,7 +248,4 @@ def parse(data, raw=False, quiet=False):
                 if item['filesystem'] in filesystem_map:
                     item['filesystem'] = filesystem_map[item['filesystem']]
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

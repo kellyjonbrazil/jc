@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.curl_head"></a>
 
-# jc.parsers.curl\_head
+# jc.parsers.curl_head
 
 jc - JSON Convert `curl --head` command output parser
 
@@ -286,7 +286,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

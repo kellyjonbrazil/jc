@@ -1,4 +1,4 @@
-"""jc - JSON Convert `find` command output parser
+r"""jc - JSON Convert `find` command output parser
 
 This parser returns a list of objects by default and a list of strings if
 the `--raw` option is used.

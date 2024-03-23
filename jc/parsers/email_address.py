@@ -1,4 +1,4 @@
-"""jc - JSON Convert Email Address string parser
+r"""jc - JSON Convert Email Address string parser
 
 Usage (cli):
 

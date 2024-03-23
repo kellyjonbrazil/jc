@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/etc/hosts` file parser
+r"""jc - JSON Convert `/etc/hosts` file parser
 
 Usage (cli):
 

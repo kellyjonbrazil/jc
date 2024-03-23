@@ -84,7 +84,7 @@ Examples:
 ```python
 def parse(data: Union[str, bytes],
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

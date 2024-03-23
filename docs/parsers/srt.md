@@ -91,23 +91,6 @@ Examples:
         ...
     ]
 
-<a id="jc.parsers.srt.parse_timestamp"></a>
-
-### parse\_timestamp
-
-```python
-def parse_timestamp(timestamp: str) -> Dict
-```
-
-timestamp: "hours:minutes:seconds,milliseconds" --->
-{
-    "hours": "hours",
-    "minutes": "minutes",
-    "seconds": "seconds",
-    "milliseconds": "milliseconds",
-    "timestamp": "hours:minutes:seconds,milliseconds"
-}
-
 <a id="jc.parsers.srt.parse"></a>
 
 ### parse
@@ -115,7 +98,7 @@ timestamp: "hours:minutes:seconds,milliseconds" --->
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[JSONDictType]
+          quiet: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function

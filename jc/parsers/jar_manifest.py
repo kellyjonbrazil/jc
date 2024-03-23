@@ -1,4 +1,4 @@
-"""jc - JSON Convert Java `MANIFEST.MF` file parser
+r"""jc - JSON Convert Java `MANIFEST.MF` file parser
 
 Usage (cli):
 

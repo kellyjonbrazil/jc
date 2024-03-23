@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.dpkg_l"></a>
 
-# jc.parsers.dpkg\_l
+# jc.parsers.dpkg_l
 
 jc - JSON Convert `dpkg -l` command output parser
 

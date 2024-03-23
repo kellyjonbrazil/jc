@@ -1,4 +1,4 @@
-"""jc - JSON Convert CEF string parser
+r"""jc - JSON Convert CEF string parser
 
 This parser conforms to the Microfocus Arcsight CEF specification.
 

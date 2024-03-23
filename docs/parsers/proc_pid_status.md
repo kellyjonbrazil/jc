@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_status"></a>
 
-# jc.parsers.proc\_pid\_status
+# jc.parsers.proc_pid_status
 
 jc - JSON Convert `/proc/<pid>/status` file parser
 

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/<pid>/statm` file parser
+r"""jc - JSON Convert `/proc/<pid>/statm` file parser
 
 Usage (cli):
 

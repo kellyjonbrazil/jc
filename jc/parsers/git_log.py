@@ -1,4 +1,4 @@
-"""jc - JSON Convert `git log` command output parser
+r"""jc - JSON Convert `git log` command output parser
 
 Can be used with the following format options:
 - `oneline`

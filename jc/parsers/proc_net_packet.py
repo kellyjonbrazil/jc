@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/net/packet` file parser
+r"""jc - JSON Convert `/proc/net/packet` file parser
 
 Usage (cli):
 

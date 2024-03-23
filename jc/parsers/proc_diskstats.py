@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/diskstats` file parser
+r"""jc - JSON Convert `/proc/diskstats` file parser
 
 Usage (cli):
 

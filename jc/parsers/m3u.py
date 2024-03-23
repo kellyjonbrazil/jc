@@ -1,4 +1,4 @@
-"""jc - JSON Convert M3U and M3U8 file parser
+r"""jc - JSON Convert M3U and M3U8 file parser
 
 This parser will make a best-effort to parse extended field information. If
 the extended fields cannot be successfully parsed, then an `unparsed_info`

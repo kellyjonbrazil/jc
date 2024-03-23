@@ -1,4 +1,4 @@
-"""jc - JSON Convert `rsync` command output parser
+r"""jc - JSON Convert `rsync` command output parser
 
 Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the `STDOUT` output or a log file
@@ -131,13 +131,13 @@ Examples:
 """
 import re
 from copy import deepcopy
-from typing import List, Dict
+from typing import List, Dict, Union
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`rsync` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -171,10 +171,26 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     for item in proc_data:
         for key in item['summary']:
             if key in int_list:
-                item['summary'][key] = jc.utils.convert_to_int(item['summary'][key])
+                item['summary'][key] = jc.utils.convert_size_to_int(item['summary'][key])
 
             if key in float_list:
-                item['summary'][key] = jc.utils.convert_to_float(item['summary'][key])
+                converted_val: Union[float, None] = None
+                val = item['summary'][key]
+                if any([
+                    'K' in val,
+                    'M' in val,
+                    'G' in val,
+                    'T' in val
+                ]):
+                    converted_int_val = jc.utils.convert_size_to_int(val)
+
+                    if not converted_int_val is None:
+                        converted_val = float(converted_int_val)
+
+                else:
+                    converted_val = jc.utils.convert_to_float(val)
+
+                item['summary'][key] = converted_val
 
         for entry in item['files']:
             for key in entry:
@@ -311,6 +327,9 @@ def parse(
     stat1_line_re = re.compile(r'(sent)\s+(?P<sent>[0-9,]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.]+)\s+(bytes/sec)')
     stat2_line_re = re.compile(r'(total size is)\s+(?P<total_size>[0-9,]+)\s+(speedup is)\s+(?P<speedup>[0-9,.]+)')
 
+    stat1_line_simple_re = re.compile(r'(sent)\s+(?P<sent>[0-9,.TGMK]+)\s+(bytes)\s+(received)\s+(?P<received>[0-9,.TGMK]+)\s+(bytes)\s+(?P<bytes_sec>[0-9,.TGMK]+)\s+(bytes/sec)')
+    stat2_line_simple_re = re.compile(r'(total\s+size\s+is)\s+(?P<total_size>[0-9,.TGMK]+)\s+(speedup\s+is)\s+(?P<speedup>[0-9,.TGMK]+)')
+
     file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
     file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
     stat_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+total\s+size\s+(?P<total_size>[\d,]+)')
@@ -443,6 +462,21 @@ def parse(
             if stat2_line:
                 rsync_run['summary']['total_size'] = stat2_line.group('total_size')
                 rsync_run['summary']['speedup'] = stat2_line.group('speedup')
+                continue
+
+            stat1_line_simple = stat1_line_simple_re.match(line)
+            if stat1_line_simple:
+                rsync_run['summary'] = {
+                    'sent': stat1_line_simple.group('sent'),
+                    'received': stat1_line_simple.group('received'),
+                    'bytes_sec': stat1_line_simple.group('bytes_sec')
+                }
+                continue
+
+            stat2_line_simple = stat2_line_simple_re.match(line)
+            if stat2_line_simple:
+                rsync_run['summary']['total_size'] = stat2_line_simple.group('total_size')
+                rsync_run['summary']['speedup'] = stat2_line_simple.group('speedup')
                 continue
 
             stat_line_log = stat_line_log_re.match(line)

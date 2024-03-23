@@ -1,4 +1,4 @@
-"""jc - JSON Convert `crontab -l` command output and crontab
+r"""jc - JSON Convert `crontab -l` command output and crontab
 file parser
 
 Supports `crontab -l` command output and crontab files.

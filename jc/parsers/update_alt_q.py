@@ -1,4 +1,4 @@
-"""jc - JSON Convert `update-alternatives --query` command output parser
+r"""jc - JSON Convert `update-alternatives --query` command output parser
 
 Usage (cli):
 

@@ -1,0 +1,11 @@
+NEEDRESTART-VER: 3.5
+NEEDRESTART-KCUR: 5.10.0-19-amd64
+NEEDRESTART-KEXP: 5.10.0-20-amd64
+NEEDRESTART-KSTA: 3
+NEEDRESTART-UCSTA: 1
+NEEDRESTART-UCCUR: 0x08108109
+Use of uninitialized value $ucode_vars{"AVAIL"} in concatenation (.) or string at /usr/sbin/needrestart line 904.
+NEEDRESTART-UCEXP: 
+NEEDRESTART-SVC: exim4.service
+NEEDRESTART-SVC: NetworkManager.service
+NEEDRESTART-SVC: packagekit.service

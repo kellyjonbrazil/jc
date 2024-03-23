@@ -1,4 +1,4 @@
-"""jc - JSON Convert `bluetoothctl` command output parser
+r"""jc - JSON Convert `bluetoothctl` command output parser
 
 Supports the following `bluetoothctl` subcommands:
 - `bluetoothctl list`

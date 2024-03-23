@@ -1,4 +1,4 @@
-"""jc - JSON Convert `who` command output parser
+r"""jc - JSON Convert `who` command output parser
 
 Accepts any of the following who options (or no options): `-aTH`
 

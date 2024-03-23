@@ -5,6 +5,8 @@
 
 jc - JSON Convert `free` command output parser
 
+Values are normalized to bytes when using `free -h`.
+
 Usage (cli):
 
     $ free | jc --free
@@ -22,13 +24,13 @@ Schema:
 
     [
       {
-        "type":         string,
-        "total":        integer,
-        "used":         integer,
-        "free":         integer,
-        "shared":       integer,
-        "buff_cache":   integer,
-        "available":    integer
+        "type":                 string,
+        "total":                integer,
+        "used":                 integer,
+        "free":                 integer,
+        "shared":               integer,
+        "buff_cache":           integer,
+        "available":            integer
       }
     ]
 
@@ -97,4 +99,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/free.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/free.py)
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

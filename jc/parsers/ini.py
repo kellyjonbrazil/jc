@@ -1,4 +1,4 @@
-"""jc - JSON Convert INI file parser
+r"""jc - JSON Convert INI file parser
 
 Parses standard INI files.
 

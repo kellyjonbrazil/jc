@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.pip_list"></a>
 
-# jc.parsers.pip\_list
+# jc.parsers.pip_list
 
 jc - JSON Convert `pip-list` command output parser
 

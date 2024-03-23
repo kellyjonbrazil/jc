@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/cpuinfo` file parser
+r"""jc - JSON Convert `/proc/cpuinfo` file parser
 
 Usage (cli):
 

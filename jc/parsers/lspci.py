@@ -1,4 +1,4 @@
-"""jc - JSON Convert `lspci -mmv` command output parser
+r"""jc - JSON Convert `lspci -mmv` command output parser
 
 This parser supports the following `lspci` options:
 - `-mmv`

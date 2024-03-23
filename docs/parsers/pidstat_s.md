@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.pidstat_s"></a>
 
-# jc.parsers.pidstat\_s
+# jc.parsers.pidstat_s
 
 jc - JSON Convert `pidstat -H` command output streaming parser
 
@@ -86,7 +86,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,

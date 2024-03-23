@@ -1,4 +1,4 @@
-"""jc - JSON Convert Semantic Version string parser
+r"""jc - JSON Convert Semantic Version string parser
 
 This parser conforms to the specification at https://semver.org/
 

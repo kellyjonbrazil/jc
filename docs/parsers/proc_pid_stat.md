@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_stat"></a>
 
-# jc.parsers.proc\_pid\_stat
+# jc.parsers.proc_pid_stat
 
 jc - JSON Convert `/proc/<pid>/stat` file parser
 
@@ -225,4 +225,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/proc_pid_stat.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_pid_stat.py)
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,0 +1,67 @@
+Package: systemd
+Version: 247.3-6~bpo10+1
+Installed-Size: 16121
+Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+Architecture: amd64
+Depends: libacl1 (>= 2.2.23), libapparmor1 (>= 2.13), libaudit1 (>= 1:2.2.1), libcap2 (>= 1:2.10), libcryptsetup12 (>= 2:2.0.1), libgnutls30 (>= 3.6.6), libgpg-error0 (>= 1.14), libip4tc0 (>= 1.6.0+snapshot20161117), libkmod2 (>= 5~), liblz4-1 (>= 0.0~r130), libmount1 (>= 2.30), libpam0g (>= 0.99.7.1), libseccomp2 (>= 2.3.1), libsystemd0 (= 247.3-6~bpo10+1), systemd-timesyncd | time-daemon, util-linux (>= 2.27.1), mount (>= 2.26), adduser
+Pre-Depends: libblkid1 (>= 2.24), libc6 (>= 2.28), libgcrypt20 (>= 1.8.0), liblz4-1 (>= 0.0~r122), liblzma5 (>= 5.1.1alpha+20120614), libselinux1 (>= 2.1.9), libzstd1 (>= 1.4.0)
+Recommends: dbus
+Suggests: systemd-container, policykit-1
+Conflicts: consolekit, libpam-ck-connector
+Breaks: python-dbusmock (<< 0.18), python3-dbusmock (<< 0.18), resolvconf (<< 1.83~), systemd-shim (<< 10-4~), udev (<< 247~)
+Description-en: system and service manager
+ systemd is a system and service manager for Linux. It provides aggressive
+ parallelization capabilities, uses socket and D-Bus activation for starting
+ services, offers on-demand starting of daemons, keeps track of processes using
+ Linux control groups, maintains mount and automount points and implements an
+ elaborate transactional dependency-based service control logic.
+ .
+ systemd is compatible with SysV and LSB init scripts and can work as a
+ drop-in replacement for sysvinit.
+ .
+ Installing the systemd package will not switch your init system unless you
+ boot with init=/lib/systemd/systemd or install systemd-sysv in addition.
+Description-md5: 19399579cbc0c47a303288bf15eadcd4
+Multi-Arch: foreign
+Homepage: https://www.freedesktop.org/wiki/Software/systemd
+Section: admin
+Priority: important
+Filename: pool/main/s/systemd/systemd_247.3-6~bpo10+1_amd64.deb
+Size: 4382056
+SHA256: 2035450655ad02faa0f75dc952128b503e51df5795c67273c0f62e75c509dcb0
+
+Package: systemd
+Version: 241-7~deb10u8
+Installed-Size: 13484
+Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+Architecture: amd64
+Replaces: udev (<< 228-5)
+Depends: libacl1 (>= 2.2.23), libapparmor1 (>= 2.9.0-3+exp2), libaudit1 (>= 1:2.2.1), libcap2 (>= 1:2.10), libcryptsetup12 (>= 2:1.6.0), libgnutls30 (>= 3.6.6), libgpg-error0 (>= 1.14), libidn11 (>= 1.13), libip4tc0 (>= 1.6.0+snapshot20161117), libkmod2 (>= 5~), liblz4-1 (>= 0.0~r130), libmount1 (>= 2.30), libpam0g (>= 0.99.7.1), libseccomp2 (>= 2.3.1), libsystemd0 (= 241-7~deb10u8), util-linux (>= 2.27.1), mount (>= 2.26), adduser
+Pre-Depends: libblkid1 (>= 2.24), libc6 (>= 2.28), libgcrypt20 (>= 1.8.0), liblz4-1 (>= 0.0~r122), liblzma5 (>= 5.1.1alpha+20120614), libselinux1 (>= 2.1.9)
+Recommends: libpam-systemd, dbus
+Suggests: systemd-container, policykit-1
+Conflicts: consolekit, libpam-ck-connector
+Breaks: apparmor (<< 2.9.2-1), ifupdown (<< 0.8.5~), laptop-mode-tools (<< 1.68~), python-dbusmock (<< 0.18), python3-dbusmock (<< 0.18), systemd-shim (<< 10-4~), udev (<< 228-5)
+Description-en: system and service manager
+ systemd is a system and service manager for Linux. It provides aggressive
+ parallelization capabilities, uses socket and D-Bus activation for starting
+ services, offers on-demand starting of daemons, keeps track of processes using
+ Linux control groups, maintains mount and automount points and implements an
+ elaborate transactional dependency-based service control logic.
+ .
+ systemd is compatible with SysV and LSB init scripts and can work as a
+ drop-in replacement for sysvinit.
+ .
+ Installing the systemd package will not switch your init system unless you
+ boot with init=/bin/systemd or install systemd-sysv in addition.
+Description-md5: 00afa0c6fd35cc93a91e4654874648cb
+Multi-Arch: foreign
+Homepage: https://www.freedesktop.org/wiki/Software/systemd
+Tag: admin::boot, implemented-in::c, interface::daemon, role::program,
+ works-with::software:running
+Section: admin
+Priority: important
+Filename: pool/main/s/systemd/systemd_241-7~deb10u8_amd64.deb
+Size: 3496060
+MD5sum: 51a8de8b75a388c4965baf50ca788897
+SHA256: a60a47ef65cf1d5680555b749a22e679c2889095df10031a6321771e70e9ce4d

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `pip-list` command output parser
+r"""jc - JSON Convert `pip-list` command output parser
 
 Usage (cli):
 

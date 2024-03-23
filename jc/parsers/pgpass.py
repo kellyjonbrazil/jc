@@ -1,4 +1,4 @@
-"""jc - JSON Convert PostgreSQL password file parser
+r"""jc - JSON Convert PostgreSQL password file parser
 
 Usage (cli):
 

@@ -10,12 +10,14 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.1'
+__version__ = '1.25.2'
 
 parsers: List[str] = [
     'acpi',
     'airport',
     'airport-s',
+    'apt-cache-show',
+    'apt-get-sqq',
     'arp',
     'asciitable',
     'asciitable-m',
@@ -46,6 +48,7 @@ parsers: List[str] = [
     'efibootmgr',
     'email-address',
     'env',
+    'ethtool',
     'file',
     'find',
     'findmnt',
@@ -96,6 +99,7 @@ parsers: List[str] = [
     'mount',
     'mpstat',
     'mpstat-s',
+    'needrestart',
     'netstat',
     'nmcli',
     'nsd-control',

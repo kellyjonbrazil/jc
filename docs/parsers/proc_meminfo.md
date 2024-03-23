@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_meminfo"></a>
 
-# jc.parsers.proc\_meminfo
+# jc.parsers.proc_meminfo
 
 jc - JSON Convert `/proc/meminfo` file parser
 

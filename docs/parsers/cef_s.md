@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.cef_s"></a>
 
-# jc.parsers.cef\_s
+# jc.parsers.cef_s
 
 jc - JSON Convert CEF string output streaming parser
 
@@ -95,7 +95,6 @@ Examples:
 ### parse
 
 ```python
-@add_jc_meta
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,

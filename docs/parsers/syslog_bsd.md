@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.syslog_bsd"></a>
 
-# jc.parsers.syslog\_bsd
+# jc.parsers.syslog_bsd
 
 jc - JSON Convert Syslog RFC 3164 string parser
 

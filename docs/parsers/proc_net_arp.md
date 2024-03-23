@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_arp"></a>
 
-# jc.parsers.proc\_net\_arp
+# jc.parsers.proc_net_arp
 
 jc - JSON Convert `/proc/net/arp` file parser
 

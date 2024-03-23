@@ -48,7 +48,9 @@ Example:
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]
+def parse(data: str,
+          raw: bool = False,
+          quiet: bool = False) -> List[Dict[str, Union[str, int]]]
 ```
 
 Main text parsing function

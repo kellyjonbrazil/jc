@@ -1,4 +1,4 @@
-"""jc - JSON Convert Proc file output parser
+r"""jc - JSON Convert Proc file output parser
 
 This parser automatically identifies the Proc file and calls the
 corresponding parser to perform the parsing.
@@ -47,7 +47,7 @@ Specific Proc file parser names can be found with `jc -hh` or `jc -a`.
 
 Schemas can also be found online at:
 
-https://kellyjonbrazil.github.io/jc/docs/parsers/proc_<name>
+    https://kellyjonbrazil.github.io/jc/docs/parsers/proc_<name>
 
 For example:
 
@@ -118,15 +118,15 @@ Examples:
     ]
 """
 import re
-import importlib
 from typing import List, Dict, Union
 import jc.utils
+from jc.lib import get_parser
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`/proc/` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -280,7 +280,7 @@ def parse(
         for reg_pattern, parse_mod in procmap.items():
             if reg_pattern.search(data):
                 try:
-                    procparser = importlib.import_module('jc.parsers.' + parse_mod)
+                    procparser = get_parser(parse_mod)
                     return procparser.parse(data, quiet=quiet, raw=raw)
                 except ModuleNotFoundError:
                     raise ParseError('Proc file type not yet implemented.')

@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/devices` file parser
+r"""jc - JSON Convert `/proc/devices` file parser
 
 Usage (cli):
 

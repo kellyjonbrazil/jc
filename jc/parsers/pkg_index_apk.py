@@ -1,4 +1,4 @@
-"""jc - JSON Convert Alpine Linux Package Index files
+r"""jc - JSON Convert Alpine Linux Package Index files
 
 Usage (cli):
 

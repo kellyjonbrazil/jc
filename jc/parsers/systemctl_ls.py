@@ -1,4 +1,4 @@
-"""jc - JSON Convert `systemctl list-sockets` command output
+r"""jc - JSON Convert `systemctl list-sockets` command output
 parser
 
 Usage (cli):

@@ -1,4 +1,4 @@
-"""jc - JSON Convert Common Log Format file parser
+r"""jc - JSON Convert Common Log Format file parser
 
 This parser will handle the Common Log Format standard as specified at
 https://www.w3.org/Daemon/User/Config/Logging.html#common-logfile-format.

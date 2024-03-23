@@ -1,4 +1,4 @@
-"""jc - JSON Convert universal parsers"""
+r"""jc - JSON Convert universal parsers"""
 from typing import Iterable, List, Dict
 
 

@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_netstat"></a>
 
-# jc.parsers.proc\_net\_netstat
+# jc.parsers.proc_net_netstat
 
 jc - JSON Convert `/proc/net/netstat` file parser
 

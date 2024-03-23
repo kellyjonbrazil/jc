@@ -5,7 +5,7 @@
 
 jc - JSON Convert `iptables` command output parser
 
-Supports `-vLn` and `--line-numbers` for all tables.
+Supports `-vLnx` and `--line-numbers` for all tables.
 
 Usage (cli):
 
@@ -188,4 +188,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/iptables.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iptables.py)
 
-Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)

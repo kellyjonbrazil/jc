@@ -1,4 +1,4 @@
-"""jc - JSON Convert `mount` command output parser
+r"""jc - JSON Convert `mount` command output parser
 
 Usage (cli):
 

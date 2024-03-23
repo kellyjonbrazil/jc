@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/etc/os-release` file parser
+r"""jc - JSON Convert `/etc/os-release` file parser
 
 This parser is an alias to the Key/Value parser (`--kv`).
 
@@ -61,7 +61,7 @@ import jc.parsers.ini as ini
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/etc/os-release` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -93,4 +93,5 @@ def parse(
     """
     # This parser is an alias of ini.py
     ini.info = info  # type: ignore
+    ini.__name__ = __name__
     return ini.parse(data, raw, quiet)

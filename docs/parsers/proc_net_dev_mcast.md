@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_net_dev_mcast"></a>
 
-# jc.parsers.proc\_net\_dev\_mcast
+# jc.parsers.proc_net_dev_mcast
 
 jc - JSON Convert `/proc/net/dev_mcast` file parser
 

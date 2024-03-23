@@ -1,4 +1,4 @@
-"""jc - JSON Convert `sshd` configuration file and `sshd -T` command output parser
+r"""jc - JSON Convert `sshd` configuration file and `sshd -T` command output parser
 
 This parser will work with `sshd` configuration files or the output of
 `sshd -T`. Any `Match` blocks in the `sshd` configuration file will be

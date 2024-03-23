@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.kv_dup"></a>
 
-# jc.parsers.kv\_dup
+# jc.parsers.kv_dup
 
 jc - JSON Convert `Key/Value` with duplicate key file and string parser
 
@@ -88,4 +88,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/kv_dup.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/kv_dup.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

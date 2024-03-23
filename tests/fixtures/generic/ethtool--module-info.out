@@ -1,0 +1,30 @@
+        Identifier                                : 0x03 (SFP)
+        Extended identifier                       : 0x04 (GBIC/SFP defined by 2-wire interface ID)
+        Connector                                 : 0x21 (Copper pigtail)
+        Transceiver codes                         : 0x01 0x00 0x00 0x04 0x00 0x04 0x80 0xd5 0x00
+        Transceiver type                          : Infiniband: 1X Copper Passive
+        Transceiver type                          : Ethernet: 1000BASE-CX
+        Transceiver type                          : Passive Cable
+        Transceiver type                          : FC: Twin Axial Pair (TW)
+        Transceiver type                          : FC: 1200 MBytes/sec
+        Transceiver type                          : FC: 800 MBytes/sec
+        Transceiver type                          : FC: 400 MBytes/sec
+        Transceiver type                          : FC: 200 MBytes/sec
+        Transceiver type                          : FC: 100 MBytes/sec
+        Encoding                                  : 0x00 (unspecified)
+        BR, Nominal                               : 10300MBd
+        Rate identifier                           : 0x00 (unspecified)
+        Length (SMF,km)                           : 0km
+        Length (SMF)                              : 0m
+        Length (50um)                             : 0m
+        Length (62.5um)                           : 0m
+        Length (Copper)                           : 2m
+        Length (OM3)                              : 0m
+        Passive Cu cmplnce.                       : 0x01 (SFF-8431 appendix E) [SFF-8472 rev10.4 only]
+        Vendor name                               : UbiquitiNetworks
+        Vendor OUI                                : 00:40:20
+        Vendor PN                                 : UDC-2
+        Vendor rev                                : 
+        Option values                             : 0x00 0x00
+        BR margin, max                            : 0%
+        BR margin, min                            : 0%

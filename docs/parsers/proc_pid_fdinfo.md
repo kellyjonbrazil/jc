@@ -1,7 +1,7 @@
 [Home](https://kellyjonbrazil.github.io/jc/)
 <a id="jc.parsers.proc_pid_fdinfo"></a>
 
-# jc.parsers.proc\_pid\_fdinfo
+# jc.parsers.proc_pid_fdinfo
 
 jc - JSON Convert `/proc/<pid>/fdinfo/<fd>` file parser
 

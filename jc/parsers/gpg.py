@@ -1,4 +1,4 @@
-"""jc - JSON Convert `gpg --with-colons` command output parser
+r"""jc - JSON Convert `gpg --with-colons` command output parser
 
 Usage (cli):
 

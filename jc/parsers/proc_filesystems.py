@@ -1,4 +1,4 @@
-"""jc - JSON Convert `/proc/filesystems` file parser
+r"""jc - JSON Convert `/proc/filesystems` file parser
 
 Usage (cli):
 
