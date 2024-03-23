@@ -1,4 +1,5 @@
 import pprint
+import json
 import re
 import unittest
 from typing import Optional
@@ -197,52 +198,67 @@ class XrandrTests(unittest.TestCase):
     def test_complete_1(self):
         self.maxDiff = None
         with open("tests/fixtures/generic/xrandr.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr.json', 'r') as f:
+            reference = json.loads(f.read())
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
             18, len(actual["screens"][0]["devices"][0]["resolution_modes"])
         )
+        self.assertEqual(actual, reference)
 
     def test_complete_2(self):
         with open("tests/fixtures/generic/xrandr_2.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr_2.json', 'r') as f:
+            reference = json.loads(f.read())
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
             38, len(actual["screens"][0]["devices"][0]["resolution_modes"])
         )
+        self.assertEqual(actual, reference)
 
     def test_complete_3(self):
         with open("tests/fixtures/generic/xrandr_3.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr_3.json', 'r') as f:
+            reference = json.loads(f.read())
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
             2,
             len(actual["screens"][0]["devices"]),
         )
+        self.assertEqual(actual, reference)
 
     def test_complete_4(self):
         with open("tests/fixtures/generic/xrandr_simple.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr_simple.json', 'r') as f:
+            reference = json.loads(f.read())
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(2, len(actual["screens"][0]["devices"][0]["resolution_modes"]))
+        self.assertEqual(actual, reference)
 
     def test_complete_5(self):
         with open("tests/fixtures/generic/xrandr_properties_1.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr_properties_1.json', 'r') as f:
+            reference = json.loads(f.read())
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
             38, len(actual["screens"][0]["devices"][0]["resolution_modes"])
         )
+        self.assertEqual(actual, reference)
 
     # def test_model(self):
     #     asus_edid = [
@@ -345,6 +361,16 @@ default connected 1024x600+0+0 0mm x 0mm
             expected_edid_model,
             actual["screens"][0]["devices"][0]["props"]["EdidModel"],  # type: ignore
         )
+
+    def test_issue_549(self):
+        """https://github.com/kellyjonbrazil/jc/issues/549"""
+        with open("tests/fixtures/generic/xrandr_extra_hv_lines.out", "r") as f:
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr_extra_hv_lines.json', 'r') as f:
+            reference = json.loads(f.read())
+
+        self.assertEqual(actual, reference)
 
 
 if __name__ == "__main__":

@@ -540,9 +540,19 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Response:
     lines = data.splitlines()
     screen, device = None, None
 
+    # temporary fix to ignore specific unhandled lines
+    ignore_pattern = re.compile(r'^\s+(h|v):\s+(height|width)\s+\d+\s+start\s+\d+\s+end')
+
     result: Response = {"screens": []}
     if jc.utils.has_data(data):
         while index < len(lines):
+
+            # temporary fix to ignore specific unhandled lines
+            ignore_re = ignore_pattern.match(lines[index])
+            if ignore_re:
+                index += 1
+                continue
+
             line = _Line.categorize(lines[index])
             if line.t == LineType.Screen:
                 screen = _parse_screen(line)
