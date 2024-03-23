@@ -19,6 +19,9 @@ Usage (module):
 
 Schema:
 
+Note: many units fields are converted to integers and floats
+when detected. Use raw output for the original string values.
+
     {
       "name":                               string,
       "supported_ports": [

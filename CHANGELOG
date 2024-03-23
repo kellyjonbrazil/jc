@@ -1,6 +1,6 @@
 jc changelog
 
-20240318 v1.25.2
+20240323 v1.25.2
 - Add `apt-cache-show` command parser
 - Add `apt-get-sqq` command parser
 - Add `ethtool` command parser
@@ -14,6 +14,7 @@ jc changelog
 - Enhance `/proc/pid/stat` parser to support "Idle" state
 - Enhance `rpm_qi` and `pkg_index_deb` parsers to split list fields into arrays
 - Fix `iwconfig` parser to handle more special characters in the SSID name
+- Fix `xrandr` parser to ignore extra horizontal and vertical stats lines
 - Add aarch64 binaries to Releases for macOS and Linux
 - Documentation and doc build updates
 
