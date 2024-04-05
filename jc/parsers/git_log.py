@@ -320,7 +320,20 @@ def parse(
             if line.startswith(' ') and 'changed, ' not in line:
                 # this is a file name
                 file_name = line.split('|')[0].strip()
-                file_list.append(file_name)
+                file_stats = line.split('|')[1].strip()
+                lines_changed_str = file_stats.split(' ')
+                lines_changed_count_str = lines_changed_str[0].strip()
+                lines_changed = 0
+                try:
+                    lines_changed = int(lines_changed_count_str)
+                except:
+                    #nothing to do
+                    pass
+
+                file = {}
+                file["name"] = file_name
+                file["lines_changed"] = lines_changed
+                file_list.append(file)
                 continue
 
             if line.startswith(' ') and 'changed, ' in line:
