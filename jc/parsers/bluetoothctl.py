@@ -164,7 +164,7 @@ try:
             "txpower": int,
             "uuids": List[str],
             "modalias": str,
-            "battery_percentage": int,
+            "battery_percentage": int
         },
     )
 except ImportError:
