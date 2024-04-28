@@ -5,8 +5,6 @@ import jc.parsers.uptime
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# force github actions testing again
-
 
 class MyTests(unittest.TestCase):
 
