@@ -1,16 +1,9 @@
 import os
-import sys
-import time
 import json
 import unittest
 import jc.parsers.rsync_s
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Set the timezone on POSIX systems. Need to manually set for Windows tests
-if not sys.platform.startswith('win32'):
-    os.environ['TZ'] = 'America/Los_Angeles'
-    time.tzset()
 
 
 # To create streaming output use:

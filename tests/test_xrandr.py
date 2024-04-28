@@ -325,7 +325,7 @@ Screen 0: minimum 1024 x 600, current 1024 x 600, maximum 1024 x 600
 default connected 1024x600+0+0 0mm x 0mm
    1024x600 0.00*
 """
-        actual: Response = parse(data_in)
+        actual: Response = parse(data_in, quiet=True)
         self.maxDiff = None
         self.assertEqual(1024, actual["screens"][0]["devices"][0]["resolution_width"])
 

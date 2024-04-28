@@ -1,0 +1,17 @@
+Device 67:F6:B4:0E:5C:94 (public)
+	Name: WH-1000XM3
+	Alias: WH-1000XM3
+	Class: 0x11240404 (2360324)
+	Icon: audio-headset
+	Paired: yes
+	Bonded: yes
+	Trusted: yes
+	Blocked: no
+	Connected: yes
+	LegacyPairing: no
+	UUID: Vendor specific           (fd096fad-eed7-4504-943b-5fa1c0e761b2)
+	UUID: Vendor specific           (03c57488-f7b6-45a3-8a23-ed4a890075cd)
+	UUID: Vendor specific           (77a369ae-e453-4ff7-bc84-dc8f411eaa6a)
+	UUID: Vendor specific           (8c274bd0-e7bd-4ed0-a391-55465e38005c)
+	Modalias: usb:v052Cp0DC3d1426
+	Battery Percentage: 0x46 (70)
