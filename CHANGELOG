@@ -1,6 +1,7 @@
 jc changelog
 
 20240422 v1.25.3
+- Add `battery_percentage` field to `bluetoothctl` parser output
 - Documentation updates
 
 20240323 v1.25.2
