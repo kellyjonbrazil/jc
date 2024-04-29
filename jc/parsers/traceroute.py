@@ -123,7 +123,7 @@ from copy import deepcopy
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`traceroute` and `traceroute6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -238,6 +238,7 @@ class _Probe(object):
         text += "\n"
         return text
 
+
 def _get_probes(hop_string: str):
     probes = []
     probe_asn_match = [ (match, "ASN") for match in RE_PROBE_ASN.finditer(hop_string)]
@@ -272,16 +273,15 @@ def _get_probes(hop_string: str):
 
             # If the last match is a RTT, then copy all probe values and replace RTT field
             if is_last_match_rtt:
-                probe = deepcopy(last_probe)
+                probe = deepcopy(last_probe)  # type: ignore
             # Set RTT values
             probe.rtt = probe_rtt
             probe.annotation = match.groups()[2] or None
             # RTT is the last value shown for a hop
             if any([probe.ip, probe.asn, probe.annotation, probe.rtt, probe.name]):
-                probes.append(probe)    
+                probes.append(probe)
             last_probe = probe
             probe = _Probe()
-        
 
         if match_type == "RTT":
             is_last_match_rtt = True
@@ -289,6 +289,7 @@ def _get_probes(hop_string: str):
             is_last_match_rtt = False
 
     return probes
+
 
 def _loads(data):
     lines = data.splitlines()
@@ -325,7 +326,6 @@ def _loads(data):
         probes = _get_probes(hop_string)
         for probe in probes:
             hop.add_probe(probe)
-        
 
     return traceroute
 
@@ -335,6 +335,7 @@ class ParseError(Exception):
 
 
 ########################################################################################
+
 
 def _process(proc_data):
     """
@@ -441,7 +442,4 @@ def parse(data, raw=False, quiet=False):
             'hops': hops_list
         }
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
