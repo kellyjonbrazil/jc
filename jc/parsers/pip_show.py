@@ -66,7 +66,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`pip show` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,6 +144,8 @@ def parse(
                     item_value = None
 
                 if last_key_data and last_key != item_key:
+                    if not isinstance(package[last_key], str):
+                        package[last_key] = ''
                     package[last_key] = package[last_key] + '\n' + '\n'.join(last_key_data)
                     last_key_data = []
 
