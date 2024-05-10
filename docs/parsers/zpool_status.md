@@ -162,4 +162,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/zpool_status.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/zpool_status.py)
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -25,7 +25,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/generic/zpool-status-v3.json'),
             'zpool_status4': (
                 'fixtures/generic/zpool-status-v4.out',
-                'fixtures/generic/zpool-status-v4.json')
+                'fixtures/generic/zpool-status-v4.json'),
+            'zpool_status_spares': (
+                'fixtures/generic/zpool-status-spares.out',
+                'fixtures/generic/zpool-status-spares.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -76,6 +79,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(
             parse(self.f_in['zpool_status4'], quiet=True),
             self.f_json['zpool_status4']
+        )
+
+    def test_zpool_status_spares(self):
+        """
+        Test 'zpool status' with spares section
+        """
+        self.assertEqual(
+            parse(self.f_in['zpool_status_spares'], quiet=True),
+            self.f_json['zpool_status_spares']
         )
 
 
