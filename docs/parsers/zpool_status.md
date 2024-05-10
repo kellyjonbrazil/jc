@@ -34,11 +34,11 @@ Schema:
         "config": [
           {
             "name":                           string,
-            "state":                          string,
-            "read":                           integer,
-            "write":                          integer,
-            "checksum":                       integer,
-            "errors":                         string,
+            "state":                          string/null,
+            "read":                           integer/null,
+            "write":                          integer/null,
+            "checksum":                       integer/null,
+            "errors":                         string/null,
           }
         ],
         "errors":                             string
