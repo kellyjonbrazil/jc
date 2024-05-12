@@ -1,13 +1,6 @@
-import os
 import sys
-import time
 import unittest
 import jc.utils
-
-# Set the timezone on POSIX systems. Need to manually set for Windows tests
-if not sys.platform.startswith('win32'):
-    os.environ['TZ'] = 'America/Los_Angeles'
-    time.tzset()
 
 
 class MyTests(unittest.TestCase):

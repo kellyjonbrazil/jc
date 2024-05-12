@@ -194,7 +194,7 @@ lines from the beginning through \fBSTOP\fP lines from the end
 \fB:\fP
 all lines
 
-.SH SlURP
+.SH SLURP
 Some parsers support multi-item input and can output an array of results in a
 single pass. Slurping works for string parsers that accept a single line of
 input. (e.g. \fBurl\fP and \fBip-address\fP) To see a list of parsers that support

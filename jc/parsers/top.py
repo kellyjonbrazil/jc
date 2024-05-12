@@ -316,7 +316,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`top -b` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -565,7 +565,7 @@ def parse(
                     item_obj = {}
 
                 uptime_str = line[6:]
-                item_obj.update(parse_uptime(uptime_str, raw=True))
+                item_obj.update(parse_uptime(uptime_str, raw=True, quiet=True))
                 continue
 
             if line.startswith('Tasks:'):

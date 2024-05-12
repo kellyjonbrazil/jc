@@ -1,5 +1,15 @@
 jc changelog
 
+20240510 v1.25.3
+- Add `battery_percentage` field to `bluetoothctl` parser output
+- Fix `pci-ids` parser to correctly handle multiple subdevices
+- Fix `pip-show` parser to handle multi-line fields with a beginning blank line
+- Fix `top` parsers to quiet uptime info parsing
+- Fix `traceroute` parser to correctly handle hops with multiple IPs
+- Fix `zpool-status` parser for config items lacking data values
+- Optimize some tests by removing timezone settings and using quiet=True
+- Documentation updates
+
 20240323 v1.25.2
 - Add `apt-cache-show` command parser
 - Add `apt-get-sqq` command parser

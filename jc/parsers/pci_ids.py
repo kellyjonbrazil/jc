@@ -76,7 +76,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`pci.ids` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -182,7 +182,8 @@ def parse(
             if vdc_subvendor:
                 subvendor = '_' + vdc_subvendor.groupdict()['subvendor']
                 subdevice = '_' + vdc_subvendor.groupdict()['subdevice']
-                vdc_obj[vendor_id][device_id][subvendor] = {}
+                if not vdc_obj[vendor_id][device_id].get(subvendor) or not isinstance(vdc_obj[vendor_id][device_id][subvendor], dict):
+                    vdc_obj[vendor_id][device_id][subvendor] = {}
                 vdc_obj[vendor_id][device_id][subvendor][subdevice] = {}
                 vdc_obj[vendor_id][device_id][subvendor][subdevice]['subsystem_name'] = vdc_subvendor.groupdict()['subsystem_name']
                 continue
