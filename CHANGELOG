@@ -1,7 +1,8 @@
 jc changelog
 
 20240510 v1.25.3
-- Add `battery_percentage` field to `bluetoothctl` parser output
+- Enhance `bluetoothctl` parser with added `battery_percentage` field
+- Enhance `git-log` standard and streaming parsers with added `lines_changed` field under `file_stats`
 - Fix `pci-ids` parser to correctly handle multiple subdevices
 - Fix `pip-show` parser to handle multi-line fields with a beginning blank line
 - Fix `top` parsers to quiet uptime info parsing

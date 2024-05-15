@@ -7,7 +7,7 @@ from jc.exceptions import ParseError
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # To create streaming output use:
-# $ cat git-log.out | jc --git-log-s | jello -c > git-log-streaming.json
+# $ cat git-log.out | jc --git-log-s | jello -c > git-log-streaming.json    # or jq -sc
 
 
 class MyTests(unittest.TestCase):
