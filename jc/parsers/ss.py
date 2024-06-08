@@ -288,7 +288,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -407,11 +407,17 @@ def parse(data, raw=False, quiet=False):
     cleandata = list(filter(None, data.splitlines()))
 
     if jc.utils.has_data(data):
-
         header_text = cleandata[0].lower()
+
+        # get the position of Recv-Q since sometimes it doesn't leave enough space
+        # to parse. need at least two spaces between main fields do differentiate
+        # from opt fields, which are only separated by one space
+        recv_q_position = header_text.find('recv-q')
+
         header_text = header_text.replace('netidstate', 'netid state')
         header_text = header_text.replace('local address:port', 'local_address local_port')
         header_text = header_text.replace('peer address:port', 'peer_address peer_port')
+        header_text = header_text.replace('portprocess', 'port')  # don't support process info today
         header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()
@@ -420,6 +426,8 @@ def parse(data, raw=False, quiet=False):
         for entry in cleandata[1:]:
             output_line = {}
             if entry[0] not in string.whitespace:
+                # fix issue where recv-q can be too close to state
+                entry = entry[:recv_q_position] + '  ' + entry[recv_q_position:]
 
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
@@ -444,7 +452,7 @@ def parse(data, raw=False, quiet=False):
                     entry_list[6] = p_address
                     entry_list.insert(7, p_port)
 
-                if re.search(r'ino:|uid:|sk:|users:|timer:',entry_list[-1]):
+                if re.search(r'ino:|uid:|sk:|users:|timer:|cgroup:|v6only:', entry_list[-1]):
                     header_list.append('opts')
                     entry_list[-1] = _parse_opts(entry_list[-1])
 
@@ -476,7 +484,4 @@ def parse(data, raw=False, quiet=False):
 
             raw_output.append(output_line)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
