@@ -42,6 +42,13 @@ field names
               "file_descriptor":      string
             }
           }
+          "inode_number":             string,
+          "cookie":                   string,
+          "cgroup":                   string,
+          "v6only":                   string,
+          "timer_name":               string,
+          "expire_time":              string,
+          "retrans":                  string
         }
       }
     ]
@@ -344,13 +351,16 @@ def _parse_opts(proc_data):
     """
     o_field = proc_data.split(' ')
     opts = {}
+
     for item in o_field:
         # -e option:
         item = re.sub(
             'uid', 'uid_number',
             re.sub('sk', 'cookie', re.sub('ino', 'inode_number', item)))
+
         if ":" in item:
             key, val = item.split(':')
+
             # -o option
             if key == "timer":
                 val = val.replace('(', '[').replace(')', ']')
@@ -361,6 +371,7 @@ def _parse_opts(proc_data):
                     'retrans': val[2]
                 }
                 opts[key] = val
+
             # -p option
             if key == "users":
                 key = 'process_id'
@@ -380,7 +391,9 @@ def _parse_opts(proc_data):
                         }
                     })
                 val = data
+
             opts[key] = val
+
     return opts
 
 def parse(data, raw=False, quiet=False):
@@ -432,10 +445,10 @@ def parse(data, raw=False, quiet=False):
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = re.split(r'[ ]{1,}',entry.strip())
+                entry_list = re.split(r'[ ]{1,}', entry.strip())
 
                 if len(entry_list) > len(header_list) or extra_opts == True:
-                    entry_list = re.split(r'[ ]{2,}',entry.strip())
+                    entry_list = re.split(r'[ ]{2,}', entry.strip())
                     extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
@@ -453,7 +466,8 @@ def parse(data, raw=False, quiet=False):
                     entry_list.insert(7, p_port)
 
                 if re.search(r'ino:|uid:|sk:|users:|timer:|cgroup:|v6only:', entry_list[-1]):
-                    header_list.append('opts')
+                    if header_list[-1] != 'opts':
+                        header_list.append('opts')
                     entry_list[-1] = _parse_opts(entry_list[-1])
 
             output_line = dict(zip(header_list, entry_list))
