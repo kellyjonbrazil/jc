@@ -415,6 +415,8 @@ def parse(data, raw=False, quiet=False):
 
     contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
+    ONE_SPACE_PATTERN = r'[ ]{1,}'
+    TWO_SPACE_PATTERN = r'[ ]{2,}'
 
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
@@ -423,7 +425,7 @@ def parse(data, raw=False, quiet=False):
         header_text = cleandata[0].lower()
 
         # get the position of Recv-Q since sometimes it doesn't leave enough space
-        # to parse. need at least two spaces between main fields do differentiate
+        # to parse. need at least two spaces between main fields to differentiate
         # from opt fields, which are only separated by one space
         recv_q_position = header_text.find('recv-q')
 
@@ -445,10 +447,10 @@ def parse(data, raw=False, quiet=False):
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = re.split(r'[ ]{1,}', entry.strip())
+                entry_list = re.split(ONE_SPACE_PATTERN, entry.strip())
 
                 if len(entry_list) > len(header_list) or extra_opts == True:
-                    entry_list = re.split(r'[ ]{2,}', entry.strip())
+                    entry_list = re.split(TWO_SPACE_PATTERN, entry.strip())
                     extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
