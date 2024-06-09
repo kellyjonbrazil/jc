@@ -415,8 +415,8 @@ def parse(data, raw=False, quiet=False):
 
     contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
-    ONE_SPACE_PATTERN = r'[ ]{1,}'
-    TWO_SPACE_PATTERN = r'[ ]{2,}'
+    ONE_OR_MORE_SPACE_PATTERN = r'[ ]{1,}'
+    TWO_OR_MORE_SPACES_PATTERN = r'[ ]{2,}'
 
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
@@ -447,10 +447,10 @@ def parse(data, raw=False, quiet=False):
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = re.split(ONE_SPACE_PATTERN, entry.strip())
+                entry_list = re.split(ONE_OR_MORE_SPACE_PATTERN, entry.strip())
 
                 if len(entry_list) > len(header_list) or extra_opts == True:
-                    entry_list = re.split(TWO_SPACE_PATTERN, entry.strip())
+                    entry_list = re.split(TWO_OR_MORE_SPACES_PATTERN, entry.strip())
                     extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
