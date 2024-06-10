@@ -180,6 +180,49 @@ class BluetoothctlTests(unittest.TestCase):
         if actual:
             for k, v in expected.items():
                 self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
+    def test_bluetoothctl_device_with_battery(self):
+        """
+        Test 'bluetoothctl' with device that has a battery
+        """
+
+        with open("tests/fixtures/generic/bluetoothctl_device_with_battery.out", "r") as f:
+            output = f.read()
+
+        actual = parse(output, quiet=True)
+
+        self.assertIsNotNone(actual)
+        self.assertIsNotNone(actual[0], actual)
+
+        expected = {
+            "name": "WH-1000XM3",
+            "is_public": True,
+            "is_random": False,
+            "address": "67:F6:B4:0E:5C:94",
+            "alias": "WH-1000XM3",
+            "appearance": "",
+            "class": "0x11240404 (2360324)",
+            "icon": "audio-headset",
+            "paired": "yes",
+            "bonded": "yes",
+            "trusted": "yes",
+            "blocked": "no",
+            "connected": "yes",
+            "legacy_pairing": "no",
+            "rssi": 0,
+            "txpower": 0,
+            "uuids": [
+                "Vendor specific           (fd096fad-eed7-4504-943b-5fa1c0e761b2)",
+                "Vendor specific           (03c57488-f7b6-45a3-8a23-ed4a890075cd)",
+                "Vendor specific           (77a369ae-e453-4ff7-bc84-dc8f411eaa6a)",
+                "Vendor specific           (8c274bd0-e7bd-4ed0-a391-55465e38005c)"
+            ],
+            "modalias": "usb:v052Cp0DC3d1426",
+            "battery_percentage": 70
+        }
+        
+        if actual:
+            for k, v in expected.items():
+                self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
 
     def test_bluetoothctl_device_random(self):
         """

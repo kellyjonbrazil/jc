@@ -1,13 +1,6 @@
-import os
 import sys
-import time
 import unittest
 import jc.utils
-
-# Set the timezone on POSIX systems. Need to manually set for Windows tests
-if not sys.platform.startswith('win32'):
-    os.environ['TZ'] = 'America/Los_Angeles'
-    time.tzset()
 
 
 class MyTests(unittest.TestCase):
@@ -214,6 +207,34 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_size_to_int(input_string, binary=True), expected_output)
+
+
+    def test_utils_convert_size_to_int_posix_mode(self):
+        io_map = {
+            '1 K': 1024,
+            '1 KiB': 1024,
+            '1 KB': 1000,
+            '1.5 G': 1610612736,
+            '1.5 GiB': 1610612736,
+            '1.5 GB': 1500000000
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_size_to_int(input_string, posix_mode=True), expected_output)
+
+
+    def test_utils_convert_size_to_int_decimal_bias(self):
+        io_map = {
+            '1 K': 1000,
+            '1 Ki': 1000,
+            '1 KiB': 1024,
+            '1.5 G': 1500000000,
+            '1.5 Gi': 1500000000,
+            '1.5 GiB': 1610612736
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_size_to_int(input_string, decimal_bias=True), expected_output)
 
 
     def test_utils_has_data_nodata(self):

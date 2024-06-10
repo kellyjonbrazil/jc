@@ -29,11 +29,11 @@ Schema:
         "config": [
           {
             "name":                           string,
-            "state":                          string,
-            "read":                           integer,
-            "write":                          integer,
-            "checksum":                       integer,
-            "errors":                         string,
+            "state":                          string/null,
+            "read":                           integer/null,
+            "write":                          integer/null,
+            "checksum":                       integer/null,
+            "errors":                         string/null,
           }
         ],
         "errors":                             string
@@ -138,7 +138,7 @@ from jc.parsers.kv import parse as kv_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`zpool status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -182,11 +182,11 @@ def _build_config_list(string: str) -> List[Dict]:
 
         line_list = line.strip().split(maxsplit=5)
         config_obj: Dict = {}
-        config_obj['name'] = line_list[0]
-        config_obj['state'] = line_list[1]
-        config_obj['read'] = line_list[2]
-        config_obj['write'] = line_list[3]
-        config_obj['checksum'] = line_list[4]
+        config_obj['name'] = line_list[0] if len(line_list) > 0 else None
+        config_obj['state'] = line_list[1] if len(line_list) > 1 else None
+        config_obj['read'] = line_list[2] if len(line_list) > 2 else None
+        config_obj['write'] = line_list[3] if len(line_list) > 3 else None
+        config_obj['checksum'] = line_list[4] if len(line_list) > 4 else None
         if len(line_list) == 6:
             config_obj['errors'] = line_list[5]
         config_list.append(config_obj)

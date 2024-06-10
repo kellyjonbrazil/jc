@@ -1,0 +1,1 @@
+//10.100.1.237/Bilder und Videos on /mnt/smb/thw/media type cifs (rw,nosuid,nodev,relatime,vers=2.1,cache=strict,username=iweinmann,uid=1000,noforceuid,gid=1000,noforcegid,addr=10.100.1.237,file_mode=0755,dir_mode=0755,iocharset=utf8,soft,nounix,serverino,mapposix,rsize=1048576,wsize=1048576,bsize=1048576,retrans=1,echo_interval=60,actimeo=1,closetimeo=1,user=ingo)

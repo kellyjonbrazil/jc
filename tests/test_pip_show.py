@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license.out'), 'r', encoding='utf-8') as f:
         generic_pip_show_multiline_license = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license-first-blank.out'), 'r', encoding='utf-8') as f:
+        generic_pip_show_multiline_license_first_blank = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pip-show.json'), 'r', encoding='utf-8') as f:
         centos_7_7_pip_show_json = json.loads(f.read())
@@ -39,6 +42,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license.json'), 'r', encoding='utf-8') as f:
         generic_pip_show_multiline_license_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pip-show-multiline-license-first-blank.json'), 'r', encoding='utf-8') as f:
+        generic_pip_show_multiline_license_first_blank_json = json.loads(f.read())
 
 
     def test_pip_show_nodata(self):
@@ -76,6 +82,12 @@ class MyTests(unittest.TestCase):
         Test 'pip show' with a multiline license
         """
         self.assertEqual(jc.parsers.pip_show.parse(self.generic_pip_show_multiline_license, quiet=True), self.generic_pip_show_multiline_license_json)
+
+    def test_pip_show_multiline_license_first_blank(self):
+        """
+        Test 'pip show' with a multiline license where the first line is blank
+        """
+        self.assertEqual(jc.parsers.pip_show.parse(self.generic_pip_show_multiline_license_first_blank, quiet=True), self.generic_pip_show_multiline_license_first_blank_json)
 
 
 if __name__ == '__main__':

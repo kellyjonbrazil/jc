@@ -9,11 +9,11 @@ Requires the `-sqq` options in `apt-get`.
 
 Usage (cli):
 
-    $ apt-get -sqq | jc --apt-get-sqq
+    $ apt-get -sqq upgrade | jc --apt-get-sqq
 
 or
 
-    $ jc apt-get -sqq
+    $ jc apt-get -sqq full-upgrade
 
 Usage (module):
 
@@ -35,7 +35,7 @@ Schema:
 
 Examples:
 
-    $ apt-get -sqq | jc --apt-get-sqq -p
+    $ apt-get -sqq upgrade | jc --apt-get-sqq -p
     [
       {
         "operation": "unpack",
@@ -103,7 +103,7 @@ Examples:
       }
     ]
 
-    $ apt-get -sqq | jc --apt-get-sqq -p -r
+    $ apt-get -sqq upgrade | jc --apt-get-sqq -p -r
     [
       {
         "operation": "Inst",
@@ -198,4 +198,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/apt_get_sqq.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/apt_get_sqq.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

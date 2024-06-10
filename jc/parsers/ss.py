@@ -42,6 +42,13 @@ field names
               "file_descriptor":      string
             }
           }
+          "inode_number":             string,
+          "cookie":                   string,
+          "cgroup":                   string,
+          "v6only":                   string,
+          "timer_name":               string,
+          "expire_time":              string,
+          "retrans":                  string
         }
       }
     ]
@@ -288,7 +295,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -344,13 +351,16 @@ def _parse_opts(proc_data):
     """
     o_field = proc_data.split(' ')
     opts = {}
+
     for item in o_field:
         # -e option:
         item = re.sub(
             'uid', 'uid_number',
             re.sub('sk', 'cookie', re.sub('ino', 'inode_number', item)))
+
         if ":" in item:
             key, val = item.split(':')
+
             # -o option
             if key == "timer":
                 val = val.replace('(', '[').replace(')', ']')
@@ -361,6 +371,7 @@ def _parse_opts(proc_data):
                     'retrans': val[2]
                 }
                 opts[key] = val
+
             # -p option
             if key == "users":
                 key = 'process_id'
@@ -380,7 +391,9 @@ def _parse_opts(proc_data):
                         }
                     })
                 val = data
+
             opts[key] = val
+
     return opts
 
 def parse(data, raw=False, quiet=False):
@@ -402,16 +415,24 @@ def parse(data, raw=False, quiet=False):
 
     contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
+    ONE_OR_MORE_SPACE_PATTERN = r'[ ]{1,}'
+    TWO_OR_MORE_SPACES_PATTERN = r'[ ]{2,}'
 
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
 
     if jc.utils.has_data(data):
-
         header_text = cleandata[0].lower()
+
+        # get the position of Recv-Q since sometimes it doesn't leave enough space
+        # to parse. need at least two spaces between main fields to differentiate
+        # from opt fields, which are only separated by one space
+        recv_q_position = header_text.find('recv-q')
+
         header_text = header_text.replace('netidstate', 'netid state')
         header_text = header_text.replace('local address:port', 'local_address local_port')
         header_text = header_text.replace('peer address:port', 'peer_address peer_port')
+        header_text = header_text.replace('portprocess', 'port')  # don't support process info today
         header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()
@@ -420,14 +441,16 @@ def parse(data, raw=False, quiet=False):
         for entry in cleandata[1:]:
             output_line = {}
             if entry[0] not in string.whitespace:
+                # fix issue where recv-q can be too close to state
+                entry = entry[:recv_q_position] + '  ' + entry[recv_q_position:]
 
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
 
-                entry_list = re.split(r'[ ]{1,}',entry.strip())
+                entry_list = re.split(ONE_OR_MORE_SPACE_PATTERN, entry.strip())
 
                 if len(entry_list) > len(header_list) or extra_opts == True:
-                    entry_list = re.split(r'[ ]{2,}',entry.strip())
+                    entry_list = re.split(TWO_OR_MORE_SPACES_PATTERN, entry.strip())
                     extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
@@ -444,8 +467,9 @@ def parse(data, raw=False, quiet=False):
                     entry_list[6] = p_address
                     entry_list.insert(7, p_port)
 
-                if re.search(r'ino:|uid:|sk:|users:|timer:',entry_list[-1]):
-                    header_list.append('opts')
+                if re.search(r'ino:|uid:|sk:|users:|timer:|cgroup:|v6only:', entry_list[-1]):
+                    if header_list[-1] != 'opts':
+                        header_list.append('opts')
                     entry_list[-1] = _parse_opts(entry_list[-1])
 
             output_line = dict(zip(header_list, entry_list))
@@ -476,7 +500,4 @@ def parse(data, raw=False, quiet=False):
 
             raw_output.append(output_line)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

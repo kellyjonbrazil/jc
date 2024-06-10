@@ -53,7 +53,6 @@ Schema:
         "sdevice_id_int":               integer,
         "rev":                          string,
         "physlot":                      string,
-        "physlot_int":                  integer,
         "progif":                       string,
         "progif_int":                   integer
       }
@@ -89,7 +88,6 @@ Examples:
         "sdevice_id": "07e0",
         "sdevice_id_int": 2016,
         "physlot": "37",
-        "physlot_int": 55,
         "progif": "01",
         "progif_int": 1
       },
@@ -147,4 +145,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/lspci.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lspci.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

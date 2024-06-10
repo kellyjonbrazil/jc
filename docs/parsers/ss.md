@@ -47,6 +47,13 @@ field names
               "file_descriptor":      string
             }
           }
+          "inode_number":             string,
+          "cookie":                   string,
+          "cgroup":                   string,
+          "v6only":                   string,
+          "timer_name":               string,
+          "expire_time":              string,
+          "retrans":                  string
         }
       }
     ]
@@ -310,4 +317,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/ss.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ss.py)
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
