@@ -4,11 +4,11 @@ Requires the `-sqq` options in `apt-get`.
 
 Usage (cli):
 
-    $ apt-get -sqq | jc --apt-get-sqq
+    $ apt-get -sqq upgrade | jc --apt-get-sqq
 
 or
 
-    $ jc apt-get -sqq
+    $ jc apt-get -sqq full-upgrade
 
 Usage (module):
 
@@ -30,7 +30,7 @@ Schema:
 
 Examples:
 
-    $ apt-get -sqq | jc --apt-get-sqq -p
+    $ apt-get -sqq upgrade | jc --apt-get-sqq -p
     [
       {
         "operation": "unpack",
@@ -98,7 +98,7 @@ Examples:
       }
     ]
 
-    $ apt-get -sqq | jc --apt-get-sqq -p -r
+    $ apt-get -sqq upgrade | jc --apt-get-sqq -p -r
     [
       {
         "operation": "Inst",
@@ -174,7 +174,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`apt-get -sqq` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

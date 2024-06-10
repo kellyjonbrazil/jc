@@ -48,7 +48,6 @@ Schema:
         "sdevice_id_int":               integer,
         "rev":                          string,
         "physlot":                      string,
-        "physlot_int":                  integer,
         "progif":                       string,
         "progif_int":                   integer
       }
@@ -84,7 +83,6 @@ Examples:
         "sdevice_id": "07e0",
         "sdevice_id_int": 2016,
         "physlot": "37",
-        "physlot_int": 55,
         "progif": "01",
         "progif_int": 1
       },
@@ -123,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`lspci -mmv` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,7 +147,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     int_list: set[str] = {
         'domain', 'bus', 'dev', 'function', 'class_id', 'vendor_id', 'device_id',
-        'svendor_id', 'sdevice_id', 'physlot', 'progif'
+        'svendor_id', 'sdevice_id', 'progif'
     }
 
     new_list: List[JSONDictType] = []

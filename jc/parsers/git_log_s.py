@@ -51,6 +51,12 @@ Schema:
         "deletions":          integer,
         "files": [
                               string
+        ],
+        "file_stats": [
+          {
+            "name":           string,
+            "lines_changed":  integer
+          }
         ]
       }
 
@@ -73,7 +79,7 @@ Examples:
     ...
 """
 import re
-from typing import List, Dict, Iterable, Union
+from typing import List, Dict, Any, Iterable, Union
 import jc.utils
 from jc.parsers.git_log import _parse_name_email
 from jc.streaming import (
@@ -88,7 +94,7 @@ changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<ins
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -112,7 +118,7 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = {'files_changed', 'insertions', 'deletions'}
+    int_list = {'files_changed', 'insertions', 'deletions', 'lines_changed'}
 
     if 'date' in proc_data:
         ts = jc.utils.timestamp(proc_data['date'], format_hint=(1100,))
@@ -123,6 +129,13 @@ def _process(proc_data: Dict) -> Dict:
         for key in proc_data['stats']:
             if key in int_list:
                 proc_data['stats'][key] = jc.utils.convert_to_int(proc_data['stats'][key])
+
+        if 'file_stats' in proc_data['stats']:
+                file_stats = proc_data['stats']['file_stats']
+                for file_entry in file_stats:
+                    for key in file_entry:
+                        if key in int_list:
+                            file_entry[key] = jc.utils.convert_to_int(file_entry[key])
 
     return proc_data
 
@@ -168,6 +181,7 @@ def parse(
     output_line: Dict = {}
     message_lines: List[str] = []
     file_list: List[str] = []
+    file_stats_list: List[Dict[str, Any]] = []
 
     for line in data:
         try:
@@ -184,11 +198,15 @@ def parse(
                     if file_list:
                         output_line['stats']['files'] = file_list
 
+                    if file_stats_list:
+                        output_line['stats']['file_stats'] = file_stats_list
+
                     yield output_line if raw else _process(output_line)
 
                     output_line = {}
                     message_lines = []
                     file_list = []
+                    file_stats_list = []
                 output_line = {
                     'commit': line_list[0],
                     'message': line_list[1]
@@ -204,11 +222,15 @@ def parse(
                     if file_list:
                         output_line['stats']['files'] = file_list
 
+                    if file_stats_list:
+                        output_line['stats']['file_stats'] = file_stats_list
+
                     yield output_line if raw else _process(output_line)
 
                     output_line = {}
                     message_lines = []
                     file_list = []
+                    file_stats_list = []
                 output_line['commit'] = line_list[1]
                 continue
 
@@ -242,8 +264,19 @@ def parse(
 
             if line.startswith(' ') and 'changed, ' not in line:
                 # this is a file name
-                file_name = line.split('|')[0].strip()
+                file_line_split = line.split('|')
+                file_name = file_line_split[0].strip()
                 file_list.append(file_name)
+
+                if len(file_line_split) > 1:
+                    file_stats = file_line_split[1].strip()
+                    lines_changed_str = file_stats.split(' ')
+                    lines_changed_count_str = lines_changed_str[0].strip()
+
+                file_stat = {}
+                file_stat["name"] = file_name
+                file_stat["lines_changed"] = lines_changed_count_str
+                file_stats_list.append(file_stat)
                 continue
 
             if line.startswith(' ') and 'changed, ' in line:
@@ -273,6 +306,9 @@ def parse(
 
             if file_list:
                 output_line['stats']['files'] = file_list
+
+            if file_stats_list:
+                output_line['stats']['file_stats'] = file_stats_list
 
             yield output_line if raw else _process(output_line)
 

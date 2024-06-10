@@ -1,0 +1,23 @@
+  pool: tank
+ state: ONLINE
+  scan: scrub repaired 0B in <snip>
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdh     ONLINE       0     0     0
+	    sdk     ONLINE       0     0     0
+	  mirror-1  ONLINE       0     0     0
+	    sdl     ONLINE       0     0     0
+	    sdj     ONLINE       0     0     0
+	  mirror-2  ONLINE       0     0     0
+	    sdn     ONLINE       0     0     0
+	    sdm     ONLINE       0     0     0
+	  mirror-3  ONLINE       0     0     0
+	    sdg     ONLINE       0     0     0
+	    sdi     ONLINE       0     0     0
+	spares
+	  sdf       AVAIL
+
+errors: No known data errors

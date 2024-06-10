@@ -34,11 +34,11 @@ Schema:
         "config": [
           {
             "name":                           string,
-            "state":                          string,
-            "read":                           integer,
-            "write":                          integer,
-            "checksum":                       integer,
-            "errors":                         string,
+            "state":                          string/null,
+            "read":                           integer/null,
+            "write":                          integer/null,
+            "checksum":                       integer/null,
+            "errors":                         string/null,
           }
         ],
         "errors":                             string
@@ -162,4 +162,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/zpool_status.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/zpool_status.py)
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

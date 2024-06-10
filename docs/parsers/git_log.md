@@ -55,6 +55,12 @@ Schema:
           "deletions":          integer,
           "files": [
                                 string
+          ],
+          "file_stats": [
+            {
+              "name":           string,
+              "lines_changed":  integer
+            }
           ]
         }
       }
@@ -79,6 +85,16 @@ Examples:
           "files": [
             "docs/parsers/git_log.md",
             "jc/parsers/git_log.py"
+          ],
+          "file_stats": [
+            {
+              "name": "docs/parsers/git_log.md",
+              "lines_changed": 3
+            },
+            {
+              "name": "jc/parsers/git_log.py",
+              "lines_changed": 7
+            }
           ]
         },
         "message": "add timestamp docs and examples",
@@ -100,6 +116,28 @@ Examples:
             "jc/parsers/git_log.py",
             "jc/utils.py",
             "man/jc.1"
+          ],
+          "file_stats": [
+            {
+              "name": "docs/parsers/git_log.md",
+              "lines_changed": 3
+            },
+            {
+              "name": "docs/utils.md",
+              "lines_changed": 7
+            },
+            {
+              "name": "jc/parsers/git_log.py",
+              "lines_changed": 1
+            },
+            {
+              "name": "jc/utils.py",
+              "lines_changed": 12
+            },
+            {
+              "name": "man/jc.1",
+              "lines_changed": 14
+            }
           ]
         },
         "message": "add calculated timestamp",
@@ -123,6 +161,16 @@ Examples:
           "files": [
             "docs/parsers/git_log.md",
             "jc/parsers/git_log.py"
+          ],
+          "file_stats": [
+            {
+              "name": "docs/parsers/git_log.md",
+              "lines_changed": "3"
+            },
+            {
+              "name": "jc/parsers/git_log.py",
+              "lines_changed": "7"
+            }
           ]
         },
         "message": "add timestamp docs and examples"
@@ -142,6 +190,28 @@ Examples:
             "jc/parsers/git_log.py",
             "jc/utils.py",
             "man/jc.1"
+          ],
+          "file_stats": [
+            {
+              "name": "docs/parsers/git_log.md",
+              "lines_changed": "3"
+            },
+            {
+              "name": "docs/utils.md",
+              "lines_changed": "7"
+            },
+            {
+              "name": "jc/parsers/git_log.py",
+              "lines_changed": "1"
+            },
+            {
+              "name": "jc/utils.py",
+              "lines_changed": "12"
+            },
+            {
+              "name": "man/jc.1",
+              "lines_changed": "14"
+            }
           ]
         },
         "message": "add calculated timestamp"
@@ -174,4 +244,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/git_log.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_log.py)
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

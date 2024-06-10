@@ -70,7 +70,8 @@ a controller and a device but there might be fields corresponding to one entity.
             "rssi":                 int,
             "txpower":              int,
             "uuids":                array,
-            "modalias":             string
+            "modalias":             string,
+            "battery_percentage":   int
         }
     ]
 
@@ -101,7 +102,8 @@ Examples:
                 "Headset HS                (00001831-0000-1000-8000-00805f9b34fb)"
             ],
             "rssi": -52,
-            "txpower": 4
+            "txpower": 4,
+            "battery_percentage": 70
         }
     ]
 
@@ -132,4 +134,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/bluetoothctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/bluetoothctl.py)
 
-Version 1.1 by Jake Ob (iakopap at gmail.com)
+Version 1.2 by Jake Ob (iakopap at gmail.com)

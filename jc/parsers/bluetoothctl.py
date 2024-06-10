@@ -65,7 +65,8 @@ a controller and a device but there might be fields corresponding to one entity.
             "rssi":                 int,
             "txpower":              int,
             "uuids":                array,
-            "modalias":             string
+            "modalias":             string,
+            "battery_percentage":   int
         }
     ]
 
@@ -96,7 +97,8 @@ Examples:
                 "Headset HS                (00001831-0000-1000-8000-00805f9b34fb)"
             ],
             "rssi": -52,
-            "txpower": 4
+            "txpower": 4,
+            "battery_percentage": 70
         }
     ]
 """
@@ -108,7 +110,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`bluetoothctl` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
@@ -161,7 +163,8 @@ try:
             "rssi": int,
             "txpower": int,
             "uuids": List[str],
-            "modalias": str
+            "modalias": str,
+            "battery_percentage": int
         },
     )
 except ImportError:
@@ -280,6 +283,7 @@ _device_line_pattern = (
     + r"|\s*Modalias:\s*(?P<modalias>.+)"
     + r"|\s*RSSI:\s*(?P<rssi>.+)"
     + r"|\s*TxPower:\s*(?P<txpower>.+)"
+    + r"|\s*Battery\sPercentage:\s*0[xX][0-9a-fA-F]*\s*\((?P<battery_percentage>[0-9]+)\)"
     + r"|\s*UUID:\s*(?P<uuid>.+))"
 )
 
@@ -317,7 +321,8 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
         "rssi": 0,
         "txpower": 0,
         "uuids": [],
-        "modalias": ''
+        "modalias": '',
+        "battery_percentage": 0
     }
 
     if name.endswith("(public)"):
@@ -381,6 +386,13 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
             device["uuids"].append(matches["uuid"])
         elif matches["modalias"]:
             device["modalias"] = matches["modalias"]
+        elif matches["battery_percentage"]:
+            battery_percentage = matches["battery_percentage"]
+            try:
+                device["battery_percentage"] = int(battery_percentage)
+            except ValueError:
+                if not quiet:
+                    jc.utils.warning_message([f"{next_line} : battery_percentage - {battery_percentage} is not int-able"])
 
     return device
 
