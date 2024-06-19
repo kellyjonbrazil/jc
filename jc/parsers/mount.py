@@ -138,15 +138,16 @@ def _linux_parse(data):
 
         pattern = re.compile(
             r'''
-            (?P<filesystem>.*)
-            \son\s
-            (?P<mount_point>.*?)
-            \stype\s
-            (?P<type>\S+)
-            \s+
-            \((?P<options>.*?)\)
-            \s*''',
-            re.VERBOSE)
+                (?P<filesystem>.*)
+                \son\s
+                (?P<mount_point>.*?)
+                \stype\s
+                (?P<type>\S+)
+                \s+
+                \((?P<options>.*?)\)
+                \s*
+            ''', re.VERBOSE
+        )
 
         mymatch = pattern.match(entry)
         groups = mymatch.groupdict()
@@ -225,7 +226,4 @@ def parse(data, raw=False, quiet=False):
         else:
             raw_output = _linux_parse(cleandata)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)
