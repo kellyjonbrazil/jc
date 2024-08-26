@@ -203,6 +203,7 @@ def parse(
         net_route_p = re.compile(r'^Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT\s+\n')
         net_tcp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode')
         net_unix_p = re.compile(r'^Num       RefCount Protocol Flags    Type St Inode Path\n')
+        net_wireless = re.compile(r'^Inter-\|\s+sta-\|\s+Quality\s+\|\s+Discarded packets\s+\|\s+Missed\s+\|\s+WE\n')
 
         pid_fdinfo_p = re.compile(r'^pos:\t\d+\nflags:\t\d+\nmnt_id:\t\d+\n')
         pid_io_p = re.compile(r'^rchar: \d+\nwchar: \d+\nsyscr: \d+\n')
@@ -262,6 +263,7 @@ def parse(
             net_unix_p: 'proc_net_unix',
             net_ipv6_route_p: 'proc_net_ipv6_route',  # before net_dev_mcast
             net_dev_mcast_p: 'proc_net_dev_mcast',    # after net_ipv6_route
+            net_wireless: 'proc_net_wireless',
 
             pid_fdinfo_p: 'proc_pid_fdinfo',
             pid_io_p: 'proc_pid_io',
