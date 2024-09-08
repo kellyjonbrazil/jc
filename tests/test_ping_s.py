@@ -597,7 +597,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'ping' on Ubuntu 22.4 with destination unreachable message
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_22_4_ping_dest_unreachable.splitlines(), quiet=True)), [self.ubuntu_22_4_ping_dest_unreachable_streaming_json])
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.ubuntu_22_4_ping_dest_unreachable.splitlines(), quiet=True)), self.ubuntu_22_4_ping_dest_unreachable_streaming_json)
 
 
     def test_ping_s_hostname_I_ubuntu_22_4(self):
