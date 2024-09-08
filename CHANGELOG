@@ -1,6 +1,7 @@
 jc changelog
 
 20240907 v1.25.4
+- Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
 - Fix `mount` parser for cases where there are spaces in the filesystem name
 - Fix `ip-address` parser for Python 3.13 changes to IPv4 mapped IPv6 addresses
