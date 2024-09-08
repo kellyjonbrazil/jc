@@ -1,8 +1,9 @@
 jc changelog
 
-20240906 v1.25.4
+20240907 v1.25.4
 - Fix `mount` parser for cases where there are spaces in the filesystem name
 - Fix `ip-address` parser for Python 3.13 changes to IPv4 mapped IPv6 addresses
+- Fix `uptime` parser for data that contains `user` instead of `users`
 
 20240609 v1.25.3
 - Enhance `bluetoothctl` parser with added `battery_percentage` field
