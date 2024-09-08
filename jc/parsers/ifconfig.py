@@ -212,14 +212,14 @@ Examples:
 """
 import re
 from ipaddress import IPv4Network
-from typing import List, Dict, Optional
+from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.3'
+    version = '2.4'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -548,6 +548,11 @@ def parse(
         broadcast\s+(?P<broadcast>(?:[0-9]{1,3}\.){3}[0-9]{1,3}))?
         ''', re.IGNORECASE | re.VERBOSE
     )
+    re_freebsd_ipv4_utun = re.compile(r'''
+        inet\s(?P<address>(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s-->\s(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3})\s
+        netmask\s(?P<mask>\S*)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
     re_freebsd_ipv6 = re.compile(r'''
         \s?inet6\s(?P<address>.*?)
         (?:\%(?P<scope_id>\w+\d+))?\s
@@ -624,14 +629,14 @@ def parse(
         re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats
     ]
     re_freebsd = [
-        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv6,
+        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun, re_freebsd_ipv6,
         re_freebsd_details, re_freebsd_status, re_freebsd_nd6_options, re_freebsd_plugged,
         re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts, re_freebsd_hwaddr, re_freebsd_media,
         re_freebsd_tx_rx_power, re_freebsd_options
     ]
 
     interface_patterns = [re_linux_interface, re_openbsd_interface, re_freebsd_interface]
-    ipv4_patterns = [re_linux_ipv4, re_openbsd_ipv4, re_freebsd_ipv4, re_freebsd_ipv4_v2]
+    ipv4_patterns = [re_linux_ipv4, re_openbsd_ipv4, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun]
     ipv6_patterns = [re_linux_ipv6, re_openbsd_ipv6, re_freebsd_ipv6]
 
     if jc.utils.has_data(data):
