@@ -26,7 +26,7 @@ or
 
 or
 
-    $ cat /proc/meminfo | jc --proc-memifno
+    $ cat /proc/meminfo | jc --proc-meminfo
 
 Usage (module):
 
