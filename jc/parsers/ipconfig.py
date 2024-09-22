@@ -28,6 +28,9 @@ Schema:
           "name":                              string,
           "type":                              string,
           "connection_specific_dns_suffix":    string,
+          "connection_specific_dns_suffix_search_list": [
+                                               string
+          ]
           "description":                       string,
           "physical_address":                  string,
           "dhcp_enabled":                      boolean,
@@ -52,10 +55,10 @@ Schema:
           ],
           "ipv4_addresses": [
             {
-              "address":                       string,
+              "address":                       string,     # [2]
               "subnet_mask":                   string,
               "preferred":                     boolean,
-              "autoconfigured":                boolean
+              "autoconfigured":                boolean     # [1]
             }
           ],
           "default_gateways": [
@@ -68,8 +71,8 @@ Schema:
                                                string
           ],
           "primary_wins_server":               string,
-          "lease_expires":                     string,
-          "lease_obtained":                    string,
+          "lease_expires":                     string,     # [0]
+          "lease_obtained":                    string,     # [0]
           "netbios_over_tcpip":                boolean,
           "media_state":                       string,
           "extras": [
@@ -79,7 +82,13 @@ Schema:
       ]
     }
 
-    Note: 'lease_expires' and 'lease_obtained' are strings in ISO8601 format
+    Notes:
+      [0] - 'lease_expires' and 'lease_obtained' are parsed to ISO8601 format date strings. if the value was unable 
+            to be parsed by datetime, the fields will be in their raw form
+      [1] - 'autoconfigured' under 'ipv4_address' is only providing indication if the ipv4 address was labeled as
+            "Autoconfiguration IPv4 Address" vs "IPv4 Address". It does not infer any information from other fields
+      [2] - Windows XP uses 'IP Address' instead of 'IPv4 Address'. Both values are parsed to the 'ipv4_address' 
+            object for consistency
 
 Examples:
 
@@ -398,9 +407,9 @@ Examples:
       "extras": []
     }
 """
+import datetime
 import re
 import jc.utils
-from dateutil import parser
 
 
 class info():
@@ -491,12 +500,12 @@ def _process(proc_data):
             adapter["netbios_over_tcpip"] = (adapter["netbios_over_tcpip"].lower() == "enabled")
         if "lease_expires" in adapter and adapter["lease_expires"] is not None and adapter["lease_expires"] != "":
             try:
-                adapter["lease_expires"] = parser.parse(adapter["lease_expires"]).isoformat()
+                adapter["lease_expires"] = datetime.strptime(adapter["lease_expires"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
             except:
                 pass # Leave date in raw format if not parseable
         if "lease_obtained" in adapter and adapter["lease_obtained"] is not None and adapter["lease_obtained"] != "":
             try:
-                adapter["lease_obtained"] = parser.parse(adapter["lease_obtained"]).isoformat()
+                adapter["lease_obtained"] = datetime.strptime(adapter["lease_obtained"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
             except:
                 pass # Leave date in raw format if not parseable
         adapter["ipv6_addresses"] = [_process_ipv6_address(address) for address in adapter.get("ipv6_addresses", [])]
@@ -597,6 +606,7 @@ def _initialize_adapter(adapter_name):
         "name": adapter_short_name,
         "type": adapter_type,
         "connection_specific_dns_suffix": None,
+        "connection_specific_dns_suffix_search_list": [],
         "description": None,
         "physical_address": None,
         "dhcp_enabled": None,
@@ -685,9 +695,14 @@ def _parse_adapter_line(adapter, key, value, line_iter):
             adapter["temporary_ipv6_addresses"].append(address_dict)
         elif key == "link_local_ipv6_address":
             adapter["link_local_ipv6_addresses"].append(address_dict)
-    elif key in ["ipv4_address", "autoconfiguration_ipv4_address"]:
+    elif key in ["ipv4_address", "autoconfiguration_ipv4_address", "ip_address", "autoconfiguration_ip_address"]:
         ipv4_address_dict = _parse_ipv4_address(value, key, line_iter)
         adapter["ipv4_addresses"].append(ipv4_address_dict)
+    elif key == "connection_specific_dns_suffix_search_list":
+        if value:
+            adapter["connection_specific_dns_suffix_search_list"].append(value)
+        # Process additional connection specific dns suffix search list entries
+        _parse_additional_entries(adapter["connection_specific_dns_suffix_search_list"], line_iter)
     elif key == "default_gateway":
         if value:
             adapter["default_gateways"].append(value)
