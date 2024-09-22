@@ -75,6 +75,7 @@ parsers: List[str] = [
     'iostat',
     'iostat-s',
     'ip-address',
+    'ipconfig',
     'iptables',
     'ip-route',
     'iw-scan',
