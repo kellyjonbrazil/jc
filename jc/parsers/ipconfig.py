@@ -407,7 +407,7 @@ Examples:
       "extras": []
     }
 """
-import datetime
+from datetime import datetime
 import re
 import jc.utils
 
