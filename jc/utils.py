@@ -365,7 +365,11 @@ def convert_to_bool(value: object) -> bool:
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
+def convert_size_to_int(
+        size: str,
+        binary: bool = False,
+        posix_mode: bool = False,
+        decimal_bias: bool = False) -> Optional[int]:
     """
     Parse a human readable data size and return the number of bytes.
 
@@ -375,6 +379,11 @@ def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
         binary:         (boolean) `True` to use binary multiples of bytes
                         (base-2) for ambiguous unit symbols and names,
                         `False` to use decimal multiples of bytes (base-10).
+        posix_mode:     Treat one-letter units (k, m, g, etc.) as binary.
+        decimal_bias:   (boolean) `True` to treat slightly ambiguous two-
+                        letter unit symbols ending in "i" (e.g. Ki, Gi) to
+                        use decimal multiples of bytes (base-10). `False`
+                        (default) to use binary multiples of bytes.
     Returns:
 
         integer/None    Integer if successful conversion, otherwise None
@@ -394,6 +403,10 @@ def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
         1000
         >>> convert_size_to_int('1 KiB')
         1024
+        >>> convert_size_to_int('1 Ki')
+        1024
+        >>> convert_size_to_int('1 Ki', decimal_bias=True)
+        1000
         >>> convert_size_to_int('1 KB', binary=True)
         1024
         >>> convert_size_to_int('1.5 GB')
@@ -441,17 +454,33 @@ def convert_size_to_int(size: str, binary: bool = False) -> Optional[int]:
             # Convert plural units to singular units, for details:
             # https://github.com/xolox/python-humanfriendly/issues/26
             normalized_unit = normalized_unit.rstrip('s')
+
+            # Handle POSIX mode units where `k`, `m`, etc. are treated as bindary
+            # https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html
+            if len(normalized_unit) == 1 and posix_mode:
+                normalized_unit = normalized_unit + 'ib'
+
+            # Handle two-letter units (Ki, Gi, etc.) These are somewhat
+            # ambiguous, but are treated as binary by default. This can be
+            # changed with the `decimal_bias` parameter
+            if len(normalized_unit) == 2 and normalized_unit[1].lower() == 'i':
+                if decimal_bias:
+                    normalized_unit = normalized_unit[0]
+                else:
+                    normalized_unit = normalized_unit + 'b'
+
             for unit in disk_size_units:
                 # First we check for unambiguous symbols (KiB, MiB, GiB, etc)
                 # and names (kibibyte, mebibyte, gibibyte, etc) because their
                 # handling is always the same.
                 if normalized_unit in (unit.binary.symbol.lower(), unit.binary.name.lower()):
                     return int(tokens[0] * unit.binary.divider)
+
                 # Now we will deal with ambiguous prefixes (K, M, G, etc),
                 # symbols (KB, MB, GB, etc) and names (kilobyte, megabyte,
                 # gigabyte, etc) according to the caller's preference.
-                if (normalized_unit in (unit.decimal.symbol.lower(), unit.decimal.name.lower()) or
-                        normalized_unit.startswith(unit.decimal.symbol[0].lower())):
+                if (normalized_unit in (unit.decimal.symbol.lower(), unit.decimal.name.lower())
+                    or normalized_unit.startswith(unit.decimal.symbol[0].lower())):
                     return int(tokens[0] * (unit.binary.divider if binary else unit.decimal.divider))
     # We failed to parse the size specification.
     return None

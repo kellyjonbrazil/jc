@@ -101,7 +101,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
+    version = '2.1'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -127,6 +127,7 @@ def _process(proc_data):
     """
     int_list = {'use_percent', 'capacity_percent', 'ifree', 'iused', 'iused_percent'}
     size_list = {'size', 'used', 'available'}
+    posix_mode = False
 
     for entry in proc_data:
         if 'avail' in entry:
@@ -134,6 +135,7 @@ def _process(proc_data):
 
         if 'use%' in entry:
             entry['use_percent'] = entry.pop('use%')
+            posix_mode = True
 
         if 'capacity' in entry:
             entry['capacity_percent'] = entry.pop('capacity')
@@ -159,7 +161,7 @@ def _process(proc_data):
         # parse the size, used, and available fields to bytes
         for key in entry:
             if key in size_list:
-                entry[key] = jc.utils.convert_size_to_int(entry[key], True)
+                entry[key] = jc.utils.convert_size_to_int(entry[key], posix_mode=posix_mode)
 
         # convert integers
         for key in entry:
