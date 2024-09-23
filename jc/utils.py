@@ -366,10 +366,10 @@ def convert_to_bool(value: object) -> bool:
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 def convert_size_to_int(
-        size: str,
-        binary: bool = False,
-        posix_mode: bool = False,
-        decimal_bias: bool = False) -> Optional[int]:
+    size: str,
+    binary: bool = False,
+    posix_mode: bool = False,
+    decimal_bias: bool = False) -> Optional[int]:
     """
     Parse a human readable data size and return the number of bytes.
 
@@ -379,7 +379,8 @@ def convert_size_to_int(
         binary:         (boolean) `True` to use binary multiples of bytes
                         (base-2) for ambiguous unit symbols and names,
                         `False` to use decimal multiples of bytes (base-10).
-        posix_mode:     Treat one-letter units (k, m, g, etc.) as binary.
+        posix_mode:     (boolean) Treat one-letter units (k, m, g, etc.) as
+                        binary.
         decimal_bias:   (boolean) `True` to treat slightly ambiguous two-
                         letter unit symbols ending in "i" (e.g. Ki, Gi) to
                         use decimal multiples of bytes (base-10). `False`
