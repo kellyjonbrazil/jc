@@ -38,26 +38,27 @@ Schema:
           "ipv6_addresses": [
             {
               "address":                       string,
-              "preferred":                     boolean,
+              "status":                        string,
             },
           ],
           "temporary_ipv6_addresses": [
             {
               "address":                       string,
-              "preferred":                     boolean,
+              "status":                        string,
             },
           ],
           "link_local_ipv6_addresses": [
             {
               "address":                       string,
-              "preferred":                     boolean,
+              "status":                        string,
+              "prefix_length":                 int,
             }
           ],
           "ipv4_addresses": [
             {
               "address":                       string,     # [2]
               "subnet_mask":                   string,
-              "preferred":                     boolean,
+              "status":                        string,
               "autoconfigured":                boolean     # [1]
             }
           ],
@@ -79,7 +80,8 @@ Schema:
                       string:                  string
           ]
         }
-      ]
+      ],
+      "extras": []
     }
 
     Notes:
@@ -94,7 +96,7 @@ Examples:
 
     $ ipconfig /all | jc --ipconfig -p
     {
-      "host_name": "DESKTOP-LHJ9K5M",
+      "host_name": "DESKTOP-WIN11-HOME",
       "primary_dns_suffix": null,
       "node_type": "Hybrid",
       "ip_routing_enabled": false,
@@ -108,6 +110,7 @@ Examples:
           "name": "Ethernet",
           "type": "Ethernet",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "Intel(R) I211 Gigabit Network Connection",
           "physical_address": "24-4B-FE-AB-43-C3",
           "dhcp_enabled": true,
@@ -133,6 +136,7 @@ Examples:
           "name": "Ethernet 2",
           "type": "Ethernet",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "Realtek PCIe 2.5GbE Family Controller",
           "physical_address": "24-4B-FE-57-3D-F2",
           "dhcp_enabled": true,
@@ -158,6 +162,7 @@ Examples:
           "name": "OpenVPN Data Channel Offload for NordVPN",
           "type": "Unknown",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "OpenVPN Data Channel Offload",
           "physical_address": null,
           "dhcp_enabled": true,
@@ -183,6 +188,7 @@ Examples:
           "name": "Local Area Connection",
           "type": "Unknown",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "TAP-NordVPN Windows Adapter V9",
           "physical_address": "00-FF-4C-F4-5E-49",
           "dhcp_enabled": true,
@@ -208,6 +214,7 @@ Examples:
           "name": "Local Area Connection* 1",
           "type": "Wireless LAN",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "Microsoft Wi-Fi Direct Virtual Adapter",
           "physical_address": "A8-7E-EA-5A-7F-DE",
           "dhcp_enabled": true,
@@ -233,6 +240,7 @@ Examples:
           "name": "Local Area Connection* 2",
           "type": "Wireless LAN",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "Microsoft Wi-Fi Direct Virtual Adapter #2",
           "physical_address": "AA-7E-EA-F3-64-C3",
           "dhcp_enabled": true,
@@ -258,6 +266,7 @@ Examples:
           "name": "VMware Network Adapter VMnet1",
           "type": "Ethernet",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "VMware Virtual Ethernet Adapter for VMnet1",
           "physical_address": "00-50-56-CC-27-73",
           "dhcp_enabled": true,
@@ -266,15 +275,16 @@ Examples:
           "temporary_ipv6_addresses": [],
           "link_local_ipv6_addresses": [
             {
-              "address": "fe80::f47d:9c7f:69dc:591e%8",
-              "preferred": true
+              "address": "fe80::f47d:9c7f:69dc:591e",
+              "prefix_length": 8,
+              "status": "Preferred"
             }
           ],
           "ipv4_addresses": [
             {
               "address": "192.168.181.1",
               "subnet_mask": "255.255.255.0",
-              "preferred": true,
+              "status": "Preferred",
               "autoconfigured": false
             }
           ],
@@ -295,6 +305,7 @@ Examples:
           "name": "VMware Network Adapter VMnet8",
           "type": "Ethernet",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "VMware Virtual Ethernet Adapter for VMnet8",
           "physical_address": "00-50-56-C9-A3-78",
           "dhcp_enabled": true,
@@ -303,15 +314,16 @@ Examples:
           "temporary_ipv6_addresses": [],
           "link_local_ipv6_addresses": [
             {
-              "address": "fe80::4551:bf0d:59dd:a4f0%10",
-              "preferred": true
+              "address": "fe80::4551:bf0d:59dd:a4f0",
+              "prefix_length": 10,
+              "status": "Preferred"
             }
           ],
           "ipv4_addresses": [
             {
               "address": "192.168.213.1",
               "subnet_mask": "255.255.255.0",
-              "preferred": true,
+              "status": "Preferred",
               "autoconfigured": false
             }
           ],
@@ -332,6 +344,7 @@ Examples:
           "name": "Wi-Fi",
           "type": "Wireless LAN",
           "connection_specific_dns_suffix": "localdomain",
+          "connection_specific_dns_suffix_search_list": [],
           "description": "Intel(R) Wi-Fi 6 AX200 160MHz",
           "physical_address": "A8-7E-EA-55-26-B0",
           "dhcp_enabled": true,
@@ -339,26 +352,27 @@ Examples:
           "ipv6_addresses": [
             {
               "address": "fd63:cc9c:65eb:3f95:57c2:aa:10d8:db08",
-              "preferred": true
+              "status": "Preferred"
             }
           ],
           "temporary_ipv6_addresses": [
             {
               "address": "fd63:cc9c:65eb:3f95:8928:348e:d692:b7ef",
-              "preferred": true
+              "status": "Preferred"
             }
           ],
           "link_local_ipv6_addresses": [
             {
-              "address": "fe80::4fae:1380:5a1b:8b6b%11",
-              "preferred": true
+              "address": "fe80::4fae:1380:5a1b:8b6b",
+              "prefix_length": 11,
+              "status": "Preferred"
             }
           ],
           "ipv4_addresses": [
             {
               "address": "192.168.1.169",
               "subnet_mask": "255.255.255.0",
-              "preferred": true,
+              "status": "Preferred",
               "autoconfigured": false
             }
           ],
@@ -383,6 +397,7 @@ Examples:
           "name": "Bluetooth Network Connection",
           "type": "Ethernet",
           "connection_specific_dns_suffix": null,
+          "connection_specific_dns_suffix_search_list": [],
           "description": "Bluetooth Device (Personal Area Network)",
           "physical_address": "A8-7E-EA-43-23-14",
           "dhcp_enabled": true,
@@ -405,7 +420,8 @@ Examples:
         }
       ],
       "extras": []
-    }
+        }
+
 """
 from datetime import datetime
 import re
@@ -450,23 +466,31 @@ def parse(data, raw=False, quiet=False):
 
     return raw_output if raw else _process(raw_output)
 
-
-
 def _process_ipv6_address(ip_address):
-    preferred = True if ip_address.get("preferred","") is not None and 'preferred' in ip_address.get("preferred","") else False
+    address_split = ip_address["address"].split('%')
+    try:
+        if len(address_split) > 1:
+            address = address_split[0]
+            prefix_length = int(address_split[1])
+        else:
+            address = ip_address["address"]
+            prefix_length = None
+    except:
+        address = ip_address["address"]
+        prefix_length = None
     return {
-              "address": ip_address["address"],
-              "preferred": preferred
+              "address": address,
+              "prefix_length": prefix_length,
+              "status": ip_address["status"]
            }
 
 def _process_ipv4_address(ip_address):
-    preferred = True if ip_address.get("preferred","") is not None and 'preferred' in ip_address.get("preferred","") else False
     autoconfigured = True if ip_address.get("autoconfigured","") is not None and 'autoconfigured' in ip_address.get("autoconfigured","") else False
     subnet_mask = ip_address["subnet_mask"]
     return {
               "address": ip_address["address"],
               "subnet_mask": subnet_mask,
-              "preferred": preferred,
+              "status": ip_address["status"],
               "autoconfigured": autoconfigured
           }
 
@@ -508,8 +532,6 @@ def _process(proc_data):
                 adapter["lease_obtained"] = datetime.strptime(adapter["lease_obtained"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
             except:
                 pass # Leave date in raw format if not parseable
-        adapter["ipv6_addresses"] = [_process_ipv6_address(address) for address in adapter.get("ipv6_addresses", [])]
-        adapter["temporary_ipv6_addresses"] = [_process_ipv6_address(address) for address in adapter.get("temporary_ipv6_addresses", [])]
         adapter["link_local_ipv6_addresses"] = [_process_ipv6_address(address) for address in adapter.get("link_local_ipv6_addresses", [])]
         adapter["ipv4_addresses"] = [_process_ipv4_address(address) for address in adapter.get("ipv4_addresses", [])]
     return processed
@@ -726,32 +748,25 @@ def _parse_ipv6_address(value):
     match = re.match(r"([^\(]+)\((.*)\)", value) if value else None
     if match:
         address = match.group(1).strip()
-        statuses = match.group(2).lower().split(')(')
-        statuses = [status.strip('()') for status in statuses]
-        preferred = 'preferred' if 'preferred' in statuses else None
+        status = match.group(2).strip('()')
     else:
         address = value
-        preferred = None
-        statuses = []
+        status = None
     return {
         "address": address,
-        "preferred": preferred,
-        "statuses": statuses
+        "status": status
     }
 
 def _parse_ipv4_address(value, key, line_iter):
-    # Handle preferred and autoconfigured status
+    # Handle autoconfigured status
     match = re.match(r"([^\(]+)\((.*)\)", value) if value else None
     if match:
         address = match.group(1).strip()
-        statuses = match.group(2).lower().split(')(')
-        statuses = [status.strip('()') for status in statuses]
-        preferred = 'preferred' if 'preferred' in statuses else None
-        autoconfigured = 'autoconfigured' if 'autoconfiguration' in key or 'autoconfigured' in statuses else None
+        status = match.group(2).strip('()')
+        autoconfigured = 'autoconfigured' if 'autoconfiguration' in key or 'autoconfigured' in status else None
     else:
         address = value
-        preferred = None
-        statuses = []
+        status = None
         autoconfigured = 'autoconfigured' if 'autoconfiguration' in key else None
     # Get subnet mask
     subnet_mask = None
@@ -769,9 +784,8 @@ def _parse_ipv4_address(value, key, line_iter):
     return {
             "address": address,
             "subnet_mask": subnet_mask,
-            "preferred": preferred,
             "autoconfigured": autoconfigured,
-            "statuses": statuses
+            "status": status
         }
 
 def _parse_additional_entries(entry_list, line_iter):

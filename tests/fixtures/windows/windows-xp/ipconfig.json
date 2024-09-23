@@ -26,7 +26,7 @@
         {
           "address": "192.168.22.135",
           "subnet_mask": "255.255.255.0",
-          "preferred": false,
+          "status": null,
           "autoconfigured": false
         }
       ],

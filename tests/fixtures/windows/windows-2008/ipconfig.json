@@ -20,15 +20,16 @@
       "temporary_ipv6_addresses": [],
       "link_local_ipv6_addresses": [
         {
-          "address": "fe80::9595:e8d9:b190:ecac%11",
-          "preferred": true
+          "address": "fe80::9595:e8d9:b190:ecac",
+          "prefix_length": 11,
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "192.168.23.154",
           "subnet_mask": "255.255.255.0",
-          "preferred": true,
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],

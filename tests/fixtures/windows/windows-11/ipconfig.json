@@ -178,15 +178,16 @@
       "temporary_ipv6_addresses": [],
       "link_local_ipv6_addresses": [
         {
-          "address": "fe80::f47d:9c7f:69dc:591e%8",
-          "preferred": true
+          "address": "fe80::f47d:9c7f:69dc:591e",
+          "prefix_length": 8,
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "192.168.181.1",
           "subnet_mask": "255.255.255.0",
-          "preferred": true,
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],
@@ -216,15 +217,16 @@
       "temporary_ipv6_addresses": [],
       "link_local_ipv6_addresses": [
         {
-          "address": "fe80::4551:bf0d:59dd:a4f0%10",
-          "preferred": true
+          "address": "fe80::4551:bf0d:59dd:a4f0",
+          "prefix_length": 10,
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "192.168.213.1",
           "subnet_mask": "255.255.255.0",
-          "preferred": true,
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],
@@ -253,26 +255,27 @@
       "ipv6_addresses": [
         {
           "address": "fd63:cc9c:65eb:3f95:57c2:aa:10d8:db08",
-          "preferred": true
+          "status": "Preferred"
         }
       ],
       "temporary_ipv6_addresses": [
         {
           "address": "fd63:cc9c:65eb:3f95:8928:348e:d692:b7ef",
-          "preferred": true
+          "status": "Preferred"
         }
       ],
       "link_local_ipv6_addresses": [
         {
-          "address": "fe80::4fae:1380:5a1b:8b6b%11",
-          "preferred": true
+          "address": "fe80::4fae:1380:5a1b:8b6b",
+          "prefix_length": 11,
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "192.168.1.169",
           "subnet_mask": "255.255.255.0",
-          "preferred": true,
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],

@@ -24,21 +24,22 @@
       "ipv6_addresses": [
         {
           "address": "fd7a:115c:a1e0:ab12:4843:cd96:6293:47b2",
-          "preferred": true
+          "status": "Preferred"
         }
       ],
       "temporary_ipv6_addresses": [],
       "link_local_ipv6_addresses": [
         {
-          "address": "fe80::99d0:ec2d:b2e7:536b%8",
-          "preferred": true
+          "address": "fe80::99d0:ec2d:b2e7:536b",
+          "prefix_length": 8,
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "100.115.71.66",
           "subnet_mask": "255.255.255.255",
-          "preferred": true,
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],
@@ -72,15 +73,16 @@
       "temporary_ipv6_addresses": [],
       "link_local_ipv6_addresses": [
         {
-          "address": "fe80::c936:c2db:79ad:e1c6%16",
-          "preferred": true
+          "address": "fe80::c936:c2db:79ad:e1c6",
+          "prefix_length": 16,
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "10.50.13.132",
           "subnet_mask": "255.255.255.0",
-          "preferred": true,
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],
