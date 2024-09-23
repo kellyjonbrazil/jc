@@ -456,7 +456,7 @@ def convert_size_to_int(
             # https://github.com/xolox/python-humanfriendly/issues/26
             normalized_unit = normalized_unit.rstrip('s')
 
-            # Handle POSIX mode units where `k`, `m`, etc. are treated as bindary
+            # Handle POSIX mode units where `k`, `m`, etc. are treated as binary
             # https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html
             if len(normalized_unit) == 1 and posix_mode:
                 normalized_unit = normalized_unit + 'ib'
