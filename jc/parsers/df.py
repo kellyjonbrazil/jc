@@ -159,7 +159,7 @@ def _process(proc_data):
         # parse the size, used, and available fields to bytes
         for key in entry:
             if key in size_list:
-                entry[key] = jc.utils.convert_size_to_int(entry[key])
+                entry[key] = jc.utils.convert_size_to_int(entry[key], True)
 
         # convert integers
         for key in entry:
