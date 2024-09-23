@@ -124,4 +124,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/df.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/df.py)
 
-Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -88,7 +88,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -169,7 +169,7 @@ def _ipv6_in(line):
     return ipv6
 
 
-def _error_type(line):
+def _error_type_v4(line):
     # from https://github.com/dgibson/iputils/blob/master/ping.c
     # https://android.googlesource.com/platform/external/ping/+/8fc3c91cf9e7f87bc20b9e6d3ea2982d87b70d9a/ping.c
     # https://opensource.apple.com/source/network_cmds/network_cmds-328/ping.tproj/ping.c
@@ -205,6 +205,37 @@ def _error_type(line):
             return code
 
     return None
+
+
+def _error_type_v6(line):
+    type_map = {
+        'Destination unreachable': 'destination_unreachable',
+        'Packet too big': 'packet_too_big',
+        'Time exceeded:': 'time_exceeded',
+        'Parameter problem:': 'parameter_problem',
+    }
+    code_map = {
+        'destination_unreachable': {
+            'No route': 'no_route',
+            'Administratively prohibited': 'administratively_prohibited',
+            "Beyond scope of source address": 'beyond_scope_of_source_address',
+            'Address unreachable': 'address_unreachable',
+            'Port unreachable': 'port_unreachable',
+        },
+        'time_exceeded': {
+            'Hop limit': 'hop_limit',
+            'Fragment reassembly time exceeded': 'fragment_reassembly_time_exceeded',
+        },
+    }
+
+    return_code = None
+    for err_type, code in type_map.items():
+        if err_type in line:
+            return_code = code
+            for err_code, code_name in code_map[code].items():
+                if err_code in line:
+                    return_code += '_' + code_name
+    return return_code
 
 
 def _bsd_parse(line, s):
@@ -263,6 +294,24 @@ def _bsd_parse(line, s):
 
     # ping response lines
 
+    err = None
+    if s.ipv4:
+        err = _error_type_v4(line)
+    else:
+        err = _error_type_v6(line)
+
+    if err:
+        output_line = {
+            'type': err
+        }
+        try:
+            output_line['sent_bytes'] = line.split()[0]
+            output_line['destination_ip'] = s.destination_ip
+            output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+        except Exception:
+            pass
+        return output_line
+
     # ipv4 lines
     if not _ipv6_in(line):
 
@@ -279,7 +328,7 @@ def _bsd_parse(line, s):
             return output_line
 
         # catch error responses
-        err = _error_type(line)
+        err = _error_type_v4(line)
         if err:
             output_line = {
                 'type': err
@@ -444,25 +493,40 @@ def _linux_parse(line, s):
         }
         return output_line
 
+    # if timestamp option is specified, then shift icmp sequence field right by one
+    timestamp = False
+    if line[0] == '[':
+        timestamp = True
+
+    timestamp_offset = 1 if timestamp else 0
+
     # ping response lines
+    err = None
+    if s.ipv4:
+        err = _error_type_v4(line)
+    else:
+        err = _error_type_v6(line)
+
+    if err:
+        output_line = {
+            'type': err,
+            'destination_ip': s.destination_ip or None,
+            'sent_bytes': s.sent_bytes or None,
+            'response_ip': line.split()[timestamp_offset + 1] if type != 'timeout' else None,
+            'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 3],
+            'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
+        }
+        return output_line
 
     # request timeout
     if 'no answer yet for icmp_seq=' in line:
-        timestamp = False
-        isequence = 5
-
-        # if timestamp option is specified, then shift icmp sequence field right by one
-        if line[0] == '[':
-            timestamp = True
-            isequence = 6
-
         output_line = {
             'type': 'timeout',
             'destination_ip': s.destination_ip or None,
             'sent_bytes': s.sent_bytes or None,
             'pattern': s.pattern or None,
             'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-            'icmp_seq': line.replace('=', ' ').split()[isequence]
+            'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 5]
         }
 
         return output_line
@@ -473,20 +537,16 @@ def _linux_parse(line, s):
         line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
 
         # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
+        param_positions = None
         if s.ipv4 and not s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
+            param_positions = (0, 3, 5, 7, 9)
         elif s.ipv4 and s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
+            param_positions = (0, 4, 7, 9, 11)
         elif not s.ipv4 and not s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
+            param_positions = (0, 3, 5, 7, 9)
         elif not s.ipv4 and s.hostname:
-            bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
-
-        # if timestamp option is specified, then shift everything right by one
-        timestamp = False
-        if line[0] == '[':
-            timestamp = True
-            bts, rip, iseq, t2l, tms = (bts + 1, rip + 1, iseq + 1, t2l + 1, tms + 1)
+            param_positions = (0, 4, 7, 9, 11)
+        bts, rip, iseq, t2l, tms = (x + timestamp_offset for x in param_positions)
 
         output_line = {
             'type': 'reply',

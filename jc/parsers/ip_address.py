@@ -533,7 +533,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'IPv4 and IPv6 Address string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -661,8 +661,18 @@ def parse(
 
         if interface.version == 4:
             ip_split = ip_exploded.split('.')
+
         else:
-            ip_split = ip_exploded.split(':')
+            # regular IPv6
+            if not '.' in ip_exploded:
+                ip_split = ip_exploded.split(':')
+
+            # IPv4 mapped IPv6
+            else:
+                ip_split_v6 = ip_exploded.split(':')[:-1]
+                ip_split_v4_mapped_str = ip_exploded.split(':')[-1]
+                ip_split_v4_mapped = ip_split_v4_mapped_str.split('.')
+                ip_split = ip_split_v6 + ip_split_v4_mapped
 
         # fix for ipv6-only attributes
         scope_id = None
