@@ -663,16 +663,8 @@ def _parse_line(line):
         return None, None
 
 def _parse_header_line(result, key, value, line_iter):
-    if key == "host_name":
-        result["host_name"] = value
-    elif key == "primary_dns_suffix":
-        result["primary_dns_suffix"] = value
-    elif key == "node_type":
-        result["node_type"] = value
-    elif key == "ip_routing_enabled":
-        result["ip_routing_enabled"] = value
-    elif key == "wins_proxy_enabled":
-        result["wins_proxy_enabled"] = value
+    if key in ["host_name", "primary_dns_suffix", "node_type", "ip_routing_enabled", "wins_proxy_enabled"]:
+        result[key] = value
     elif key == "dns_suffix_search_list":
         if value:
             result["dns_suffix_search_list"].append(value)
@@ -683,32 +675,10 @@ def _parse_header_line(result, key, value, line_iter):
         result["extras"].append({key: value})
 
 def _parse_adapter_line(adapter, key, value, line_iter):
-    if key == "connection_specific_dns_suffix":
-        adapter["connection_specific_dns_suffix"] = value
-    elif key == "media_state":
-        adapter["media_state"] = value
-    elif key == "description":
-        adapter["description"] = value
-    elif key == "physical_address":
-        adapter["physical_address"] = value
-    elif key == "dhcp_enabled":
-        adapter["dhcp_enabled"] = value
-    elif key == "autoconfiguration_enabled":
-        adapter["autoconfiguration_enabled"] = value
-    elif key == "dhcpv6_iaid":
-        adapter["dhcpv6_iaid"] = value
-    elif key == "dhcpv6_client_duid":
-        adapter["dhcpv6_client_duid"] = value
-    elif key == "netbios_over_tcpip":
-        adapter["netbios_over_tcpip"] = value
-    elif key == "dhcp_server":
-        adapter["dhcp_server"] = value
-    elif key == "lease_obtained":
-        adapter["lease_obtained"] = value
-    elif key == "lease_expires":
-        adapter["lease_expires"] = value
-    elif key == "primary_wins_server":
-        adapter["primary_wins_server"] = value
+    if key in ["connection_specific_dns_suffix","media_state", "description", "physical_address", "dhcp_enabled", 
+               "autoconfiguration_enabled", "dhcpv6_iaid", "dhcpv6_client_duid", "netbios_over_tcpip", "dhcp_server", 
+               "lease_obtained", "lease_expires", "primary_wins_server"]:
+        adapter[key] = value
     elif key in ["ipv6_address", "temporary_ipv6_address", "link_local_ipv6_address"]:
         address_dict = _parse_ipv6_address(value)
         if key == "ipv6_address":

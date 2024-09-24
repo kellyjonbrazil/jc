@@ -24,14 +24,14 @@
         {
           "address": "fe80::c447:d1ef:c29f:c44c",
           "prefix_length": 10,
-          "status": "preferred"
+          "status": "Preferred"
         }
       ],
       "ipv4_addresses": [
         {
           "address": "192.168.22.33",
           "subnet_mask": "255.255.255.0",
-          "status": "preferred",
+          "status": "Preferred",
           "autoconfigured": false
         }
       ],
