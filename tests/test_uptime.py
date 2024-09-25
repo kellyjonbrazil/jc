@@ -73,6 +73,14 @@ class MyTests(unittest.TestCase):
         expected = {"time":"00:03:32","uptime":"3 min","load_1m":0.0,"load_5m":0.0,"load_15m":0.0,"time_hour":0,"time_minute":3,"time_second":32,"uptime_days":0,"uptime_hours":0,"uptime_minutes":3,"uptime_total_seconds":180}
         self.assertEqual(jc.parsers.uptime.parse(data, quiet=True), expected)
 
+    def test_uptime_user(self):
+        """
+        Test 'uptime' with 'user' instead of 'users' in the data
+        """
+        data = ' 12:44:19 up 1 day, 23:12,  0 user,  load average: 3.94, 4.43, 2.75'
+        expected = {"time":"12:44:19","uptime":"1 day, 23:12","users":0,"load_1m":3.94,"load_5m":4.43,"load_15m":2.75,"time_hour":12,"time_minute":44,"time_second":19,"uptime_days":1,"uptime_hours":23,"uptime_minutes":12,"uptime_total_seconds":169920}
+        self.assertEqual(jc.parsers.uptime.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

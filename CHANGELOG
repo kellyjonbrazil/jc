@@ -1,5 +1,15 @@
 jc changelog
 
+20240922 v1.25.4
+- Enhance `ping-s` streaming parser to support error replies
+- Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
+- Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
+- Fix `df` parser to correctly output binary vs. decimal size outputs
+- Fix `mount` parser for cases where there are spaces in the filesystem name
+- Fix `ip-address` parser for Python 3.13 changes to IPv4 mapped IPv6 addresses
+- Fix `uptime` parser for data that contains `user` instead of `users`
+- Enhance `jc.utils.convert_size_to_int()` to add `posix_mode` and `decimal_bias` parameters
+
 20240609 v1.25.3
 - Enhance `bluetoothctl` parser with added `battery_percentage` field
 - Enhance `git-log` standard and streaming parsers with added `lines_changed` field under `file_stats`
