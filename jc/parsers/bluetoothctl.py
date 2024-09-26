@@ -28,6 +28,8 @@ a controller and a device but there might be fields corresponding to one entity.
     Controller:
     [
         {
+            "manufacturer":         string,
+            "version":              string,
             "name":                 string,
             "is_default":           boolean,
             "is_public":            boolean,
@@ -127,6 +129,8 @@ try:
     Controller = TypedDict(
         "Controller",
         {
+            "manufacturer": str,
+            "version": str,
             "name": str,
             "is_default": bool,
             "is_public": bool,
@@ -175,7 +179,9 @@ except ImportError:
 _controller_head_pattern = r"Controller (?P<address>([0-9A-F]{2}:){5}[0-9A-F]{2}) (?P<name>.+)"
 
 _controller_line_pattern = (
-    r"(\s*Name:\s*(?P<name>.+)"
+    r"(\s*Manufacturer:\s*(?P<manufacturer>.+)"
+    + r"|\s*Version:\s*(?P<version>.+)"
+    + r"|\s*Name:\s*(?P<name>.+)"
     + r"|\s*Alias:\s*(?P<alias>.+)"
     + r"|\s*Class:\s*(?P<class>.+)"
     + r"|\s*Powered:\s*(?P<powered>.+)"
@@ -203,6 +209,8 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
         return None
 
     controller: Controller = {
+            "manufacturer": '',
+            "version": '',
             "name": '',
             "is_default": False,
             "is_public": False,
@@ -241,7 +249,11 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
 
         matches = result.groupdict()
 
-        if matches["name"]:
+        if matches["manufacturer"]:
+            controller["manufacturer"] = matches["manufacturer"]
+        elif matches["version"]:
+            controller["version"] = matches["version"]
+        elif matches["name"]:
             controller["name"] = matches["name"]
         elif matches["alias"]:
             controller["alias"] = matches["alias"]
