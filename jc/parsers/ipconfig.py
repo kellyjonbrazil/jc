@@ -420,7 +420,7 @@ Examples:
         }
       ],
       "extras": []
-        }
+    }
 
 """
 from datetime import datetime
