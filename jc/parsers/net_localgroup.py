@@ -4,8 +4,9 @@ r"""jc - JSON Convert `net localgroup` command output parser
 Usage (cli):
 
     $ net localgroup | jc --net-localgroup
-    $ net localgroup Administrators | jc --net-localgroup
     $ net localgroup /domain | jc --net-localgroup
+    $ net localgroup Administrators | jc --net-localgroup
+    $ net localgroup Administrators /domain | jc --net-localgroup
 
 Usage (module):
 

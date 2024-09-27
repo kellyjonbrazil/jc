@@ -1,0 +1,87 @@
+{
+  "account_origin": "\\\\DESKTOP-WIN10-PRO",
+  "domain": null,
+  "comment": null,
+  "groups": [
+    {
+      "name": "Access Control Assistance Operators",
+      "members": []
+    },
+    {
+      "name": "Administrators",
+      "members": []
+    },
+    {
+      "name": "Backup Operators",
+      "members": []
+    },
+    {
+      "name": "Cryptographic Operators",
+      "members": []
+    },
+    {
+      "name": "Device Owners",
+      "members": []
+    },
+    {
+      "name": "Distributed COM Users",
+      "members": []
+    },
+    {
+      "name": "docker-users",
+      "members": []
+    },
+    {
+      "name": "Event Log Readers",
+      "members": []
+    },
+    {
+      "name": "Guests",
+      "members": []
+    },
+    {
+      "name": "Hyper-V Administrators",
+      "members": []
+    },
+    {
+      "name": "IIS_IUSRS",
+      "members": []
+    },
+    {
+      "name": "Network Configuration Operators",
+      "members": []
+    },
+    {
+      "name": "Performance Log Users",
+      "members": []
+    },
+    {
+      "name": "Performance Monitor Users",
+      "members": []
+    },
+    {
+      "name": "Power Users",
+      "members": []
+    },
+    {
+      "name": "Remote Desktop Users",
+      "members": []
+    },
+    {
+      "name": "Remote Management Users",
+      "members": []
+    },
+    {
+      "name": "Replicator",
+      "members": []
+    },
+    {
+      "name": "System Managed Accounts Group",
+      "members": []
+    },
+    {
+      "name": "Users",
+      "members": []
+    }
+  ]
+}
