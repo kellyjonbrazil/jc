@@ -10,7 +10,7 @@ Compatibility:
 
 Example:
 
-    $ systemextensionsctl list | jc --systemextensionsctl-list -p
+    $ systemextensionsctl list | jc --systemextensionsctl -p
     {
       "total_extensions": 1,
       "sections": [
@@ -43,6 +43,7 @@ class info():
     version = '1.0'
     description = '`systemextensionsctl list` command parser'
     author = 'Ron Green'
+    author_email = '11993626+georgettica@users.noreply.github.com'
     compatible = ['darwin']
     magic_commands = ['systemextensionsctl list']
 
