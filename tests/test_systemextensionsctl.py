@@ -44,8 +44,8 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(
             jc.parsers.systemextensionsctl.parse(
-                self.systemextensionsctl_empty_output, quiet=True),
-            self.systemextensionsctl_empty_expected
+                '', quiet=True),
+            {}
         )
 
     def test_systemextensionsctl_no_extensions(self):

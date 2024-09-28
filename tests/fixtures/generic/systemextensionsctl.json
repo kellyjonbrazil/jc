@@ -1,0 +1,20 @@
+{
+  "total_extensions": 1,
+  "sections": [
+    {
+      "category": "com.apple.system_extension.network_extension",
+      "description": "Go to 'System Settings > General > Login Items & Extensions > Network Extensions' to modify these system extension(s)",
+      "entries": [
+        {
+          "enabled": "*",
+          "active": "*",
+          "teamID": "XXX",
+          "bundleID": "YYY",
+          "version": "QQQ",
+          "name": "ZZZ",
+          "state": "activated enabled"
+        }
+      ]
+    }
+  ]
+}
