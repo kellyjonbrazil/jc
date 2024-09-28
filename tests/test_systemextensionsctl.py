@@ -12,18 +12,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemextensionsctl.out'), 'r', encoding='utf-8') as f:
         systemextensionsctl_output = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemextensionsctl-empty.out'), 'r', encoding='utf-8') as f:
-        systemextensionsctl_empty_output = f.read()
-
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemextensionsctl-no-extensions.out'), 'r', encoding='utf-8') as f:
         systemextensionsctl_no_extensions_output = f.read()
 
     # Expected output data from fixtures
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemextensionsctl.json'), 'r', encoding='utf-8') as f:
         systemextensionsctl_expected = json.loads(f.read())
-
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemextensionsctl-empty.json'), 'r', encoding='utf-8') as f:
-        systemextensionsctl_empty_expected = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemextensionsctl-no-extensions.json'), 'r', encoding='utf-8') as f:
         systemextensionsctl_no_extensions_expected = json.loads(f.read())
