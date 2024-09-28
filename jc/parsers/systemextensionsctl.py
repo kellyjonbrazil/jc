@@ -2,7 +2,7 @@
 
 Usage:
 
-    $ systemextensionsctl list | jc --systemextensionsctl-list
+    $ systemextensionsctl list | jc --systemextensionsctl
 
 Compatibility:
 
