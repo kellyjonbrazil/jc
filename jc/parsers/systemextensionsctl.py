@@ -46,7 +46,6 @@ class info():
     author_email = '11993626+georgettica@users.noreply.github.com'
     compatible = ['darwin']
     magic_commands = ['systemextensionsctl list']
-
 def parse(data, raw=False, quiet=False):
     """
     Parses the output of `systemextensionsctl list` command.
@@ -77,31 +76,49 @@ def parse(data, raw=False, quiet=False):
                 if match:
                     total_extensions = int(match.group(1))
             elif line.startswith('--- '):
-                # Start of a new section
-                category_line = line
-                # Extract category and description
-                category_and_desc = line[4:]
-                # Category is up to the first '('
-                if '(' in category_and_desc:
-                    category = category_and_desc.split('(')[0].strip()
-                    description = category_and_desc[category_and_desc.find('(')+1:-1]
+                # Only process sections if total_extensions > 0
+                if total_extensions is not None and total_extensions > 0:
+                    category_line = line
+                    # Extract category and description
+                    category_and_desc = line[4:]
+                    # Category is up to the first '('
+                    if '(' in category_and_desc and ')' in category_and_desc:
+                        category = category_and_desc.split('(')[0].strip()
+                        description = category_and_desc[category_and_desc.find('(')+1:category_and_desc.rfind(')')].strip()
+                    else:
+                        category = category_and_desc.strip()
+                        description = ''
+                    section = {
+                        'category': category,
+                        'description': description,
+                        'entries': []
+                    }
+                    sections.append(section)
+                    try:
+                        # Read the header line
+                        headers_line = next(line_iter).strip()
+                        # Check if headers_line contains expected headers
+                        expected_headers = ['enabled', 'active', 'teamID', 'bundleID (version)', 'name', '[state]']
+                        actual_headers = [h.strip().lower() for h in headers_line.split('\t')]
+                        if not all(header.lower() in actual_headers for header in expected_headers):
+                            # Headers do not match expected format
+                            headers = None
+                            continue
+                        headers = headers_line.split('\t')
+                        headers = [h.strip() for h in headers]
+                    except StopIteration:
+                        # No more lines; headers not found
+                        headers = None
+                        continue
                 else:
-                    category = category_and_desc.strip()
-                    description = ''
-                section = {
-                    'category': category,
-                    'description': description,
-                    'entries': []
-                }
-                sections.append(section)
-                # Read the header line
-                headers_line = next(line_iter)
-                headers = headers_line.split('\t')
-                # Normalize headers
-                headers = [h.strip() for h in headers]
+                    # If total_extensions is 0 or not set, skip processing sections
+                    continue
             else:
                 # Data line
                 if not line.strip():
+                    continue
+                if not section or not headers:
+                    # No section defined or headers missing; skip the line
                     continue
                 fields = line.split('\t')
                 # Pad fields with empty strings if needed
@@ -135,10 +152,14 @@ def parse(data, raw=False, quiet=False):
                 # Add entry to the current section
                 section['entries'].append(entry)
 
-        result = {
-            'total_extensions': total_extensions,
-            'sections': sections
-        }
-        return result
+        # Finalize the result
+        if total_extensions is not None:
+            result = {
+                'total_extensions': total_extensions,
+                'sections': sections
+            }
+            return result
+        else:
+            return {}
     else:
         return {}
