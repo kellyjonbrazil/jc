@@ -180,6 +180,7 @@ parsers: List[str] = [
     'ps',
     'resolve-conf',
     'route',
+    'route-print',
     'rpm-qi',
     'rsync',
     'rsync-s',
