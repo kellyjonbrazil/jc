@@ -372,7 +372,7 @@ def _parse(data):
                         continue  # Skip empty lines
                     
                     match = kv_pattern.match(line)
-                    if "The command completed successfully" in line:
+                    if "The command completed" in line:
                         break
                     elif match:
                         key_raw = match.group(1).strip()
@@ -420,7 +420,7 @@ def _parse(data):
                         continue
 
                     # Check for the completion message
-                    if line.startswith('The command completed successfully'):
+                    if line.startswith('The command completed'):
                         break
 
                     if collecting_users:
