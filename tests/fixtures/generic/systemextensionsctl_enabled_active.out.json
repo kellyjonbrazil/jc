@@ -6,8 +6,8 @@
       "description": "Go to 'System Settings > General > Login Items & Extensions > Network Extensions' to modify these system extension(s)",
       "entries": [
         {
-          "enabled": true,
-          "active": true,
+          "enabled": false,
+          "active": false,
           "teamID": "XXX",
           "bundleID": "YYY",
           "version": "QQQ",
