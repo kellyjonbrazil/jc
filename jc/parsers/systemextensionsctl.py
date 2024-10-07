@@ -29,10 +29,8 @@ Example:
             }
           ]
         }
-
       ]
     }
-
 """
 
 import jc.utils
@@ -47,7 +45,7 @@ class info:
     author = "Ron Green"
     author_email = "11993626+georgettica@users.noreply.github.com"
     compatible = ["darwin"]
-    magic_commands = ["systemextensionsctl list"]
+    magic_commands = ["systemextensionsctl"]
 
 
 def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]:
