@@ -89,8 +89,7 @@ class MyTests(unittest.TestCase):
         Test ipv6 address with ipv4 mapped string
         """
         # IPv4 mapped behavior changes in newer versions of python are being backported
-        # to old versions so we are checking if more than one style fails before
-        # failing the test
+        # to old versions so we are checking if at least one style passes
 
         data = r'::FFFF:192.168.1.35'
         actual = jc.parsers.ip_address.parse(data, quiet=True)
@@ -152,8 +151,7 @@ class MyTests(unittest.TestCase):
         Test ipv6 6to4 address string
         """
         # 6to4 behavior changes in newer versions of python are being backported
-        # to old versions so we are checking if more than one style fails before
-        # failing the test
+        # to old versions so we are checking if at least one style passes
 
         data = r'2002:c000:204::/48'
         actual = jc.parsers.ip_address.parse(data, quiet=True)
