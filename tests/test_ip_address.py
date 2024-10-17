@@ -1,7 +1,6 @@
 import unittest
 import json
 import jc.parsers.ip_address
-import sys
 
 
 class MyTests(unittest.TestCase):
@@ -89,17 +88,42 @@ class MyTests(unittest.TestCase):
         """
         Test ipv6 address with ipv4 mapped string
         """
+        # IPv4 mapped behavior changes in newer versions of python are being backported
+        # to old versions so we are checking if more than one style fails before
+        # failing the test
+
         data = r'::FFFF:192.168.1.35'
-        if sys.version_info >= (3, 13, 0):
-            expected_ipv4 = '192.168.1.35'
-            expected_ipv4_exploded = '192.168.1.35'
-            expected_ipv4_split = '["0000", "0000", "0000", "0000", "0000", "ffff", "192", "168", "1", "35"]'
-        else:
-            expected_ipv4 = 'c0a8:123'
-            expected_ipv4_exploded = 'c0a8:0123'
-            expected_ipv4_split = '["0000", "0000", "0000", "0000", "0000", "ffff", "c0a8", "0123"]'
+        actual = jc.parsers.ip_address.parse(data, quiet=True)
+        failures = 0
+        failure_msg1 = ''
+        failure_msg2 = ''
+
+        # New-Style IPv4 Mapped output
+        expected_ipv4 = '192.168.1.35'
+        expected_ipv4_exploded = '192.168.1.35'
+        expected_ipv4_split = '["0000", "0000", "0000", "0000", "0000", "ffff", "192", "168", "1", "35"]'
         expected = json.loads(f'''{{"version":6,"max_prefix_length":128,"ip":"::ffff:{expected_ipv4}","ip_compressed":"::ffff:{expected_ipv4}","ip_exploded":"0000:0000:0000:0000:0000:ffff:{expected_ipv4_exploded}","ip_split":{expected_ipv4_split},"scope_id":null,"ipv4_mapped":"192.168.1.35","six_to_four":null,"teredo_client":null,"teredo_server":null,"dns_ptr":"3.2.1.0.8.a.0.c.f.f.f.f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa","network":"::ffff:{expected_ipv4}","broadcast":"::ffff:{expected_ipv4}","hostmask":"::","netmask":"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff","cidr_netmask":128,"hosts":1,"first_host":"::ffff:{expected_ipv4}","last_host":"::ffff:{expected_ipv4}","is_multicast":false,"is_private":true,"is_global":false,"is_link_local":false,"is_loopback":false,"is_reserved":true,"is_unspecified":false,"int":{{"ip":281473913979171,"network":281473913979171,"broadcast":281473913979171,"first_host":281473913979171,"last_host":281473913979171}},"hex":{{"ip":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","network":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","broadcast":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","hostmask":"00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00","netmask":"ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff","first_host":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","last_host":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23"}},"bin":{{"ip":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","network":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","broadcast":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","hostmask":"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","netmask":"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111","first_host":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","last_host":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011"}}}}''')
-        self.assertEqual(jc.parsers.ip_address.parse(data, quiet=True), expected)
+
+        try:
+            self.assertEqual(actual, expected)
+        except AssertionError:
+            failures += 1
+            failure_msg1 = f'New-style IPv4 Mapped failure:\n  Expected:  {expected}\n  Actual:  {actual}'
+
+        # Old-Style IPv4 Mapped output
+        expected_ipv4 = 'c0a8:123'
+        expected_ipv4_exploded = 'c0a8:0123'
+        expected_ipv4_split = '["0000", "0000", "0000", "0000", "0000", "ffff", "c0a8", "0123"]'
+        expected = json.loads(f'''{{"version":6,"max_prefix_length":128,"ip":"::ffff:{expected_ipv4}","ip_compressed":"::ffff:{expected_ipv4}","ip_exploded":"0000:0000:0000:0000:0000:ffff:{expected_ipv4_exploded}","ip_split":{expected_ipv4_split},"scope_id":null,"ipv4_mapped":"192.168.1.35","six_to_four":null,"teredo_client":null,"teredo_server":null,"dns_ptr":"3.2.1.0.8.a.0.c.f.f.f.f.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa","network":"::ffff:{expected_ipv4}","broadcast":"::ffff:{expected_ipv4}","hostmask":"::","netmask":"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff","cidr_netmask":128,"hosts":1,"first_host":"::ffff:{expected_ipv4}","last_host":"::ffff:{expected_ipv4}","is_multicast":false,"is_private":true,"is_global":false,"is_link_local":false,"is_loopback":false,"is_reserved":true,"is_unspecified":false,"int":{{"ip":281473913979171,"network":281473913979171,"broadcast":281473913979171,"first_host":281473913979171,"last_host":281473913979171}},"hex":{{"ip":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","network":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","broadcast":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","hostmask":"00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00","netmask":"ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff","first_host":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23","last_host":"00:00:00:00:00:00:00:00:00:00:ff:ff:c0:a8:01:23"}},"bin":{{"ip":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","network":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","broadcast":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","hostmask":"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","netmask":"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111","first_host":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011","last_host":"00000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111000000101010000000000100100011"}}}}''')
+
+        try:
+            self.assertEqual(actual, expected)
+        except AssertionError:
+            failures += 1
+            failure_msg2 = f'Old-style IPv4 Mapped failure:\n  Expected:  {expected}\n  Actual:  {actual}'
+
+        if failures > 1:
+            self.fail(failure_msg1 + '\n' + failure_msg2)
 
 
     def test_ip_address_ipv6_6to4(self):
@@ -120,7 +144,7 @@ class MyTests(unittest.TestCase):
         expected_private = r'"is_private":true,"is_global":false'
         expected = json.loads(r'''{"version":6,"max_prefix_length":128,"ip":"2002:c000:204::","ip_compressed":"2002:c000:204::","ip_exploded":"2002:c000:0204:0000:0000:0000:0000:0000","ip_split":["2002","c000","0204","0000","0000","0000","0000","0000"],"scope_id":null,"ipv4_mapped":null,"six_to_four":"192.0.2.4","teredo_client":null,"teredo_server":null,"dns_ptr":"0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.0.2.0.0.0.0.c.2.0.0.2.ip6.arpa","network":"2002:c000:204::","broadcast":"2002:c000:204:ffff:ffff:ffff:ffff:ffff","hostmask":"::ffff:ffff:ffff:ffff:ffff","netmask":"ffff:ffff:ffff::","cidr_netmask":48,"hosts":1208925819614629174706174,"first_host":"2002:c000:204::1","last_host":"2002:c000:204:ffff:ffff:ffff:ffff:fffe","is_multicast":false,''' + expected_private + r''',"is_link_local":false,"is_loopback":false,"is_reserved":false,"is_unspecified":false,"int":{"ip":42549574682102084431821433448024768512,"network":42549574682102084431821433448024768512,"broadcast":42549574682103293357641048077199474687,"first_host":42549574682102084431821433448024768513,"last_host":42549574682103293357641048077199474686},"hex":{"ip":"20:02:c0:00:02:04:00:00:00:00:00:00:00:00:00:00","network":"20:02:c0:00:02:04:00:00:00:00:00:00:00:00:00:00","broadcast":"20:02:c0:00:02:04:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff","hostmask":"00:00:00:00:00:00:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff","netmask":"ff:ff:ff:ff:ff:ff:00:00:00:00:00:00:00:00:00:00","first_host":"20:02:c0:00:02:04:00:00:00:00:00:00:00:00:00:01","last_host":"20:02:c0:00:02:04:ff:ff:ff:ff:ff:ff:ff:ff:ff:fe"},"bin":{"ip":"00100000000000101100000000000000000000100000010000000000000000000000000000000000000000000000000000000000000000000000000000000000","network":"00100000000000101100000000000000000000100000010000000000000000000000000000000000000000000000000000000000000000000000000000000000","broadcast":"00100000000000101100000000000000000000100000010011111111111111111111111111111111111111111111111111111111111111111111111111111111","hostmask":"00000000000000000000000000000000000000000000000011111111111111111111111111111111111111111111111111111111111111111111111111111111","netmask":"11111111111111111111111111111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000","first_host":"00100000000000101100000000000000000000100000010000000000000000000000000000000000000000000000000000000000000000000000000000000001","last_host":"00100000000000101100000000000000000000100000010011111111111111111111111111111111111111111111111111111111111111111111111111111110"}}''')
         try:
-            self.assertEqual(jc.parsers.ip_address.parse(data, quiet=True), expected)
+            self.assertEqual(actual, expected)
         except AssertionError:
             failures += 1
             failure_msg1 = f'New-style 6to4 address failure:\n  Expected:  {expected}\n  Actual:  {actual}'
@@ -129,7 +153,7 @@ class MyTests(unittest.TestCase):
         expected_private = r'"is_private":false,"is_global":true'
         expected = json.loads(r'''{"version":6,"max_prefix_length":128,"ip":"2002:c000:204::","ip_compressed":"2002:c000:204::","ip_exploded":"2002:c000:0204:0000:0000:0000:0000:0000","ip_split":["2002","c000","0204","0000","0000","0000","0000","0000"],"scope_id":null,"ipv4_mapped":null,"six_to_four":"192.0.2.4","teredo_client":null,"teredo_server":null,"dns_ptr":"0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.0.2.0.0.0.0.c.2.0.0.2.ip6.arpa","network":"2002:c000:204::","broadcast":"2002:c000:204:ffff:ffff:ffff:ffff:ffff","hostmask":"::ffff:ffff:ffff:ffff:ffff","netmask":"ffff:ffff:ffff::","cidr_netmask":48,"hosts":1208925819614629174706174,"first_host":"2002:c000:204::1","last_host":"2002:c000:204:ffff:ffff:ffff:ffff:fffe","is_multicast":false,''' + expected_private + r''',"is_link_local":false,"is_loopback":false,"is_reserved":false,"is_unspecified":false,"int":{"ip":42549574682102084431821433448024768512,"network":42549574682102084431821433448024768512,"broadcast":42549574682103293357641048077199474687,"first_host":42549574682102084431821433448024768513,"last_host":42549574682103293357641048077199474686},"hex":{"ip":"20:02:c0:00:02:04:00:00:00:00:00:00:00:00:00:00","network":"20:02:c0:00:02:04:00:00:00:00:00:00:00:00:00:00","broadcast":"20:02:c0:00:02:04:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff","hostmask":"00:00:00:00:00:00:ff:ff:ff:ff:ff:ff:ff:ff:ff:ff","netmask":"ff:ff:ff:ff:ff:ff:00:00:00:00:00:00:00:00:00:00","first_host":"20:02:c0:00:02:04:00:00:00:00:00:00:00:00:00:01","last_host":"20:02:c0:00:02:04:ff:ff:ff:ff:ff:ff:ff:ff:ff:fe"},"bin":{"ip":"00100000000000101100000000000000000000100000010000000000000000000000000000000000000000000000000000000000000000000000000000000000","network":"00100000000000101100000000000000000000100000010000000000000000000000000000000000000000000000000000000000000000000000000000000000","broadcast":"00100000000000101100000000000000000000100000010011111111111111111111111111111111111111111111111111111111111111111111111111111111","hostmask":"00000000000000000000000000000000000000000000000011111111111111111111111111111111111111111111111111111111111111111111111111111111","netmask":"11111111111111111111111111111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000","first_host":"00100000000000101100000000000000000000100000010000000000000000000000000000000000000000000000000000000000000000000000000000000001","last_host":"00100000000000101100000000000000000000100000010011111111111111111111111111111111111111111111111111111111111111111111111111111110"}}''')
         try:
-            self.assertEqual(jc.parsers.ip_address.parse(data, quiet=True), expected)
+            self.assertEqual(actual, expected)
         except AssertionError:
             failures += 1
             failure_msg2 = f'Old-style 6to4 address failure:\n  Expected:  {expected}\n  Actual:  {actual}'

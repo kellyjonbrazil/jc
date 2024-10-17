@@ -1,4 +1,4 @@
-r"""jc - JSON Convert IP Address string parser - force test
+r"""jc - JSON Convert IP Address string parser
 
 Accepts standard and integer IP address notation for both IPv4 and IPv6
 addresses. CIDR subnet mask and Scope ID is also allowed for standard
