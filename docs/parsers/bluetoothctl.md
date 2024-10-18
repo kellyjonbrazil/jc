@@ -33,6 +33,8 @@ a controller and a device but there might be fields corresponding to one entity.
     Controller:
     [
         {
+            "manufacturer":         string,
+            "version":              string,
             "name":                 string,
             "is_default":           boolean,
             "is_public":            boolean,
@@ -134,4 +136,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/bluetoothctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/bluetoothctl.py)
 
-Version 1.2 by Jake Ob (iakopap at gmail.com)
+Version 1.3 by Jake Ob (iakopap at gmail.com)

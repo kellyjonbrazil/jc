@@ -1,6 +1,7 @@
 jc changelog
 
 20241018 v1.25.4
+- Add `ipconfig` command parser
 - Enhance `ping-s` streaming parser to support error replies
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS

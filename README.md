@@ -218,6 +218,7 @@ option.
 |        `--iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |
 |      `--iostat-s` | `iostat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat_s)       |
 |    `--ip-address` | IPv4 and IPv6 Address string parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_address)     |
+|      `--ipconfig` | `ipconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ipconfig)       |
 |      `--iptables` | `iptables` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iptables)       |
 |      `--ip-route` | `ip route` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ip_route)       |
 |       `--iw-scan` | `iw dev [device] scan` command parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iw_scan)        |
