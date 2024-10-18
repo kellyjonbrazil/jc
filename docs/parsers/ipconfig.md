@@ -3,7 +3,7 @@
 
 # jc.parsers.ipconfig
 
-jc - JSON Convert `ipconfig` command output parser
+jc - JSON Convert `ipconfig` Windows command output parser
 
 Usage (cli):
 

@@ -186,7 +186,7 @@ _jc() {
         '--iostat:`iostat` command parser'
         '--iostat-s:`iostat` command streaming parser'
         '--ip-address:IPv4 and IPv6 Address string parser'
-        '--ipconfig:`ipconfig` command parser'
+        '--ipconfig:`ipconfig` Windows command parser'
         '--iptables:`iptables` command parser'
         '--ip-route:`ip route` command parser'
         '--iw-scan:`iw dev [device] scan` command parser'

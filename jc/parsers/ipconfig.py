@@ -1,4 +1,4 @@
-r"""jc - JSON Convert `ipconfig` command output parser
+r"""jc - JSON Convert `ipconfig` Windows command output parser
 
 Usage (cli):
 
@@ -433,7 +433,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`ipconfig` command parser'
+    description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
     compatible = ['windows']
