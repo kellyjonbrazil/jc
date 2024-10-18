@@ -1,0 +1,25 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : DESKTOP-PC4
+   Primary Dns Suffix  . . . . . . . : somecompany.corp
+   Node Type . . . . . . . . . . . . : Unknown
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : somecompany.corp
+                                       somecompany.xyz
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) PRO/1000 MT Network Connection
+   Physical Address. . . . . . . . . : 00-0C-29-25-B6-4D
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IP Address. . . . . . . . . . . . : 192.168.22.135
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.22.1
+   DHCP Server . . . . . . . . . . . : 192.168.22.1
+   DNS Servers . . . . . . . . . . . : 192.168.22.151
+   Lease Obtained. . . . . . . . . . : Saturday, September 21, 2024 10:31:26 PM
+   Lease Expires . . . . . . . . . . : Sunday, September 22, 2024 10:31:26 PM
