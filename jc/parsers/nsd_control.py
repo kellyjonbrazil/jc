@@ -89,7 +89,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list = {'verbosity', 'ratelimit', 'wait'}
+    int_list = {'verbosity', 'ratelimit', 'wait', 'transfer'}
 
     for entry in proc_data:
         for key in entry:
@@ -225,6 +225,20 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 linedata = line.split(': ', maxsplit=1)
                 wait = linedata[1].strip('"').rstrip('"')
                 zstatus.update({'wait': wait})
+                zonename.update({'status': zstatus})
+                raw_output.append(zonename)
+                continue
+
+            if line.startswith('notified-serial:'):
+                linedata = line.split(': ', maxsplit=1)
+                notified = linedata[1].strip('"').rstrip('"')
+                zstatus.update({'notified-serial': notified})
+                continue
+
+            if line.startswith('transfer:'):
+                linedata = line.split(': ', maxsplit=1)
+                transfer = linedata[1].strip('"').rstrip('"')
+                zstatus.update({'transfer': transfer})
                 zonename.update({'status': zstatus})
                 raw_output.append(zonename)
                 continue
