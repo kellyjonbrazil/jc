@@ -20,7 +20,7 @@ Schema:
       "ip_routing_enabled":                    boolean,
       "wins_proxy_enabled":                    boolean,
       "dns_suffix_search_list": [
-        string
+                                               string
       ],
       "adapters": [
         {
@@ -51,7 +51,7 @@ Schema:
             {
               "address":                       string,
               "status":                        string,
-              "prefix_length":                 int,
+              "prefix_length":                 integer,
             }
           ],
           "ipv4_addresses": [
@@ -81,7 +81,7 @@ Schema:
           "netbios_over_tcpip":                boolean,
           "media_state":                       string,
           "extras": [
-                      string:                  string
+            <string>:                          string
           ]
         }
       ],
