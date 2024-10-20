@@ -225,6 +225,7 @@ parsers: List[str] = [
     'vmstat-s',
     'w',
     'wc',
+    'wg-show',
     'who',
     'x509-cert',
     'x509-csr',

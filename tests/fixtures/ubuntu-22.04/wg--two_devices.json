@@ -1,0 +1,245 @@
+[
+  {
+    "device": "wg0",
+    "privateKey": "ZkG2dvJSUq5ohkDFNWBqToaVSyk4Pp8/bULaf6yX+3N=",
+    "publicKey": "PQsbRs4w2fidQ7uhjgCypl5fc/804bHZbfl83gGvakN=",
+    "listenPort": 51820,
+    "fwmark": null,
+    "peers": [
+      {
+        "publicKey": "rQFRAjRdx1aD8DnTFpkcBOY9Edjt3ZU7+P9HokZv7xe=",
+        "presharedKey": null,
+        "endpoint": "82.132.137.204:50024",
+        "latestHandshake": 1829439251,
+        "transferRx": 1536642,
+        "transferSx": 492320,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.2/32"
+        ]
+      },
+      {
+        "publicKey": "A0fsnrwsv7S9hrk8yzCgOON9gKPYfpCrzqil4bPpxAE=",
+        "presharedKey": null,
+        "endpoint": "82.132.137.204:49732",
+        "latestHandshake": 1829439125,
+        "transferRx": 5641359,
+        "transferSx": 4206783,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.3/32"
+        ]
+      },
+      {
+        "publicKey": "pkjVZR5VdfnSFhlWsqnkf+wv/eHGLHzOtKu8v2CvOD5=",
+        "presharedKey": null,
+        "endpoint": null,
+        "latestHandshake": 0,
+        "transferRx": 0,
+        "transferSx": 0,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.4/32"
+        ]
+      },
+      {
+        "publicKey": "hz0+KJRHJyXfDNjUnZ9LRAnShFFjZNTrW2jRbXjIazx=",
+        "presharedKey": null,
+        "endpoint": "180.255.226.203:21678",
+        "latestHandshake": 1829439243,
+        "transferRx": 1555523,
+        "transferSx": 544780,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.5/32"
+        ]
+      },
+      {
+        "publicKey": "kujr4Z8eutQ8ebzFf33DLc3PNKrO3J+ZVy3jkrR1cUZ=",
+        "presharedKey": null,
+        "endpoint": "82.132.137.204:67130",
+        "latestHandshake": 0,
+        "transferRx": 0,
+        "transferSx": 0,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.6/32"
+        ]
+      },
+      {
+        "publicKey": "XcgkMRmxhQiIgXowYqsxUt1SlwUydXJd4Zmi8dgGeYe=",
+        "presharedKey": null,
+        "endpoint": "180.255.226.203:56092",
+        "latestHandshake": 1829439121,
+        "transferRx": 1900247,
+        "transferSx": 1352639,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.8/32"
+        ]
+      },
+      {
+        "publicKey": "tB9yFqLmyvcDD1rJ1rTgeKtKK98hdUL1jefMRt4XbDh=",
+        "presharedKey": null,
+        "endpoint": "82.132.137.204:60184",
+        "latestHandshake": 1829037182,
+        "transferRx": 75047,
+        "transferSx": 184725,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.7/32"
+        ]
+      },
+      {
+        "publicKey": "JH8Fz8KGH5vDYu3eUuWwRcTUcvRqFHZfMlNtsg2xZwF=",
+        "presharedKey": null,
+        "endpoint": "91.142.150.210:51478",
+        "latestHandshake": 1829037123,
+        "transferRx": 985632,
+        "transferSx": 723582,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.9/32"
+        ]
+      },
+      {
+        "publicKey": "Yx6kNq8xhPmKhYq0YqTxVt2ZmxZvdYKg5Ymj9fgHkGh=",
+        "presharedKey": null,
+        "endpoint": "92.233.144.193:61112",
+        "latestHandshake": 1829037212,
+        "transferRx": 1350235,
+        "transferSx": 945301,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.0.10/32"
+        ]
+      }
+    ]
+  },
+  {
+    "device": "wg1",
+    "privateKey": "JnR8bwIHKq7yqfNDOWBlTohSTxl7Wa9/sTLcf6tQ+4O=",
+    "publicKey": "MUocVr6x4gjhT9vkkDrzm6hc/906dJHYcgk93iHvbmR=",
+    "listenPort": 51821,
+    "fwmark": null,
+    "peers": [
+      {
+        "publicKey": "yQHRBjVgy2fC9EkUFlhdDPZ0Lekv4YM9+Q0GmnXw9gf=",
+        "presharedKey": null,
+        "endpoint": "72.144.138.212:50135",
+        "latestHandshake": 1929850372,
+        "transferRx": 1678923,
+        "transferSx": 513470,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.2/32"
+        ]
+      },
+      {
+        "publicKey": "C1gsotwrx9S9jsq9yzJgPPO0hNRYgrDsblmj6dSrkZE=",
+        "presharedKey": null,
+        "endpoint": "59.232.145.213:49364",
+        "latestHandshake": 1929850156,
+        "transferRx": 5982563,
+        "transferSx": 4378204,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.3/32"
+        ]
+      },
+      {
+        "publicKey": "qjkYZR6WfgnTGjnXrqokf+xw/fIFMHyPtLu9w3DwOF6=",
+        "presharedKey": null,
+        "endpoint": null,
+        "latestHandshake": 0,
+        "transferRx": 0,
+        "transferSx": 0,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.4/32"
+        ]
+      }
+    ]
+  },
+  {
+    "device": "wg1",
+    "privateKey": "JpK6HvHKLp9zmqDFQXBqUmxTSvW6Vp9/zTLbf6pT+7N=",
+    "publicKey": "LQdcXs5y5dkgU0vmkCszm8hf/907fKHYdhk94jHvbnQ=",
+    "listenPort": 51821,
+    "fwmark": null,
+    "peers": [
+      {
+        "publicKey": "tRFGGjUhy3hD0GmVEljeDQY0Mhlv5YM7+Q2HmnWy9je=",
+        "presharedKey": null,
+        "endpoint": "69.157.149.222:51049",
+        "latestHandshake": 1929851223,
+        "transferRx": 1680921,
+        "transferSx": 523451,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.5/32"
+        ]
+      },
+      {
+        "publicKey": "K2hzotyrx8S1jsq0yzHgTQO1kOYVhrDwblmj7eTrkZF=",
+        "presharedKey": null,
+        "endpoint": "61.242.155.214:48012",
+        "latestHandshake": 1929851045,
+        "transferRx": 6052145,
+        "transferSx": 4435280,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.6/32"
+        ]
+      },
+      {
+        "publicKey": "VliYZS7WggpUFkWNralkg+wz/eIHMHyStMpu0x4EoEJ=",
+        "presharedKey": null,
+        "endpoint": null,
+        "latestHandshake": 0,
+        "transferRx": 0,
+        "transferSx": 0,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.7/32"
+        ]
+      },
+      {
+        "publicKey": "kB8yFrKmyvaDF1uL2uUgeOsLL99jeUL2kefKRt3ZoFh=",
+        "presharedKey": null,
+        "endpoint": "72.132.145.206:62084",
+        "latestHandshake": 1929137285,
+        "transferRx": 95023,
+        "transferSx": 197982,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.8/32"
+        ]
+      },
+      {
+        "publicKey": "Z9fsqvwty8U9jqj1zyKgPRQ1hOXYgrFtcmli8fSprHF=",
+        "presharedKey": null,
+        "endpoint": "68.243.154.222:54321",
+        "latestHandshake": 1929137125,
+        "transferRx": 1200475,
+        "transferSx": 890678,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.9/32"
+        ]
+      },
+      {
+        "publicKey": "Lx9lNq9xhPnJhYr1YqYxVt3ZmyawdZLg5Zmj0fhGlJk=",
+        "presharedKey": null,
+        "endpoint": "71.233.144.204:59012",
+        "latestHandshake": 1929137243,
+        "transferRx": 1450234,
+        "transferSx": 1006235,
+        "persistentKeepalive": -1,
+        "allowedIps": [
+          "10.10.1.10/32"
+        ]
+      }
+    ]
+  }
+]
