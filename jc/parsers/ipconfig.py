@@ -72,8 +72,12 @@ Schema:
                                                string
           ],
           "primary_wins_server":               string,
-          "lease_expires":                     string,     # [0]
-          "lease_obtained":                    string,     # [0]
+          "lease_expires":                     string,
+          "lease_expires_epoch":               integer,    # [0]
+          "lease_expires_iso":                 string,
+          "lease_obtained":                    string,
+          "lease_obtained_epoch":              integer,    # [0]
+          "lease_obtained_iso":                string,
           "netbios_over_tcpip":                boolean,
           "media_state":                       string,
           "extras": [
@@ -85,9 +89,8 @@ Schema:
     }
 
     Notes:
-      [0] - 'lease_expires' and 'lease_obtained' are parsed to ISO8601
-            format date strings. if the value was unable to be parsed by
-            datetime, the fields will be in their raw form
+      [0] - The epoch calculated timestamp field is naive. (i.e. based on
+            the local time of the system the parser is run on)
       [1] - 'autoconfigured' under 'ipv4_address' is only providing
             indication if the ipv4 address was labeled as "Autoconfiguration
             IPv4 Address" vs "IPv4 Address". It does not infer any
@@ -529,17 +532,15 @@ def _process(proc_data):
         if "netbios_over_tcpip" in adapter and adapter["netbios_over_tcpip"] is not None:
             adapter["netbios_over_tcpip"] = (adapter["netbios_over_tcpip"].lower() == "enabled")
 
-        if "lease_expires" in adapter and adapter["lease_expires"] is not None and adapter["lease_expires"] != "":
-            try:
-                adapter["lease_expires"] = datetime.strptime(adapter["lease_expires"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
-            except:
-                pass # Leave date in raw format if not parseable
+        if "lease_expires" in adapter and adapter["lease_expires"]:
+            ts = jc.utils.timestamp(adapter['lease_expires'], format_hint=(1720,))
+            adapter["lease_expires_epoch"] = ts.naive
+            adapter["lease_expires_iso"] = ts.iso
 
-        if "lease_obtained" in adapter and adapter["lease_obtained"] is not None and adapter["lease_obtained"] != "":
-            try:
-                adapter["lease_obtained"] = datetime.strptime(adapter["lease_obtained"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
-            except:
-                pass # Leave date in raw format if not parseable
+        if "lease_obtained" in adapter and adapter["lease_obtained"]:
+            ts = jc.utils.timestamp(adapter['lease_obtained'], format_hint=(1720,))
+            adapter["lease_obtained_epoch"] = ts.naive
+            adapter["lease_obtained_iso"] = ts.iso
 
         adapter["link_local_ipv6_addresses"] = [_process_ipv6_address(address) for address in adapter.get("link_local_ipv6_addresses", [])]
         adapter["ipv4_addresses"] = [_process_ipv4_address(address) for address in adapter.get("ipv4_addresses", [])]

@@ -37,6 +37,8 @@ class MyTests(unittest.TestCase):
             '3/22/2021, 1:15:51 PM (Coordinated Universal Time)': {'string': '3/22/2021, 1:15:51 PM (Coordinated Universal Time)', 'format': 1705, 'naive': 1616444151, 'utc': 1616418951},
             # Windows english format with UTC tz (found in systeminfo cli output)
             '3/22/2021, 1:15:51 PM (UTC+0000)': {'string': '3/22/2021, 1:15:51 PM (UTC+0000)', 'format': 1710, 'naive': 1616444151, 'utc': 1616418951},
+            # Windows ipconfig cli output format
+            'Thursday, June 22, 2023 10:39:04 AM': {'string': 'Thursday, June 22, 2023 10:39:04 AM', 'format': 1720, 'naive': 1687455544, 'utc': None},
             # Google Big Table format with no timezone:
             '2000/01/01-01:00:00.000000': {'string': '2000/01/01-01:00:00.000000', 'format': 1750, 'naive': 946717200, 'utc': None},
             # Google Big Table format with timezone:
