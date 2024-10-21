@@ -425,12 +425,14 @@ def _parse(data):
 
                     if collecting_users:
                         # Split the line into usernames
-                        user_matches = re.match(r'(.{1,20})\s+(.{1,20})\s+(.{1,20})', line)
+                        user_matches = re.match(r'(.{1,20})(\s+.{1,20})?(\s+.{1,20})?', line)
                         if user_matches:
                             for username in user_matches.groups():
-                                username = username.strip()
-                                user_account = {"user_name": username}
-                                result["user_accounts"].append(user_account)
+                                if username:
+                                    username = username.strip()
+                                    print(username)
+                                    user_account = {"user_name": username}
+                                    result["user_accounts"].append(user_account)
                 except StopIteration:
                     break
         else:
