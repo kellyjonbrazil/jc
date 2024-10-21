@@ -1,0 +1,24 @@
+{
+  "domain": "",
+  "user_accounts": [
+    {
+      "user_name": "Administrator"
+    },
+    {
+      "user_name": "DefaultAccount"
+    },
+    {
+      "user_name": "Guest"
+    },
+    {
+      "user_name": "user1"
+    },
+    {
+      "user_name": "sshd"
+    },
+    {
+      "user_name": "WDAGUtilityAccount"
+    }
+  ],
+  "account_origin": "\\\\DESKTOP-WIN10-PRO"
+}

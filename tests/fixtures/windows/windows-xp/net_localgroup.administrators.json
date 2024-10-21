@@ -1,0 +1,14 @@
+{
+  "account_origin": null,
+  "domain": null,
+  "comment": "Administrators have complete and unrestricted access to the computer/domain",
+  "groups": [
+    {
+      "name": "Administrators",
+      "members": [
+        "Administrator",
+        "SOMECOMPANY\\Domain Admins"
+      ]
+    }
+  ]
+}

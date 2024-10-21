@@ -1,0 +1,15 @@
+{
+  "domain": "",
+  "user_accounts": [
+    {
+      "user_name": "Administrator"
+    },
+    {
+      "user_name": "Guest"
+    },
+    {
+      "user_name": "SUPPORT_3556336b0"
+    }
+  ],
+  "account_origin": "\\\\DESKTOP-WINXP"
+}
