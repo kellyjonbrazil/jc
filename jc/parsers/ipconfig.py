@@ -1,10 +1,10 @@
-r"""jc - JSON Convert `ipconfig` command output parser
-
+r"""jc - JSON Convert `ipconfig` Windows command output parser
 
 Usage (cli):
 
     $ ipconfig /all | jc --ipconfig
     $ ipconfig | jc --ipconfig
+    $ jc ipconfig /all
 
 Usage (module):
 
@@ -20,7 +20,7 @@ Schema:
       "ip_routing_enabled":                    boolean,
       "wins_proxy_enabled":                    boolean,
       "dns_suffix_search_list": [
-        string
+                                               string
       ],
       "adapters": [
         {
@@ -51,7 +51,7 @@ Schema:
             {
               "address":                       string,
               "status":                        string,
-              "prefix_length":                 int,
+              "prefix_length":                 integer,
             }
           ],
           "ipv4_addresses": [
@@ -72,12 +72,16 @@ Schema:
                                                string
           ],
           "primary_wins_server":               string,
-          "lease_expires":                     string,     # [0]
-          "lease_obtained":                    string,     # [0]
+          "lease_expires":                     string,
+          "lease_expires_epoch":               integer,    # [0]
+          "lease_expires_iso":                 string,
+          "lease_obtained":                    string,
+          "lease_obtained_epoch":              integer,    # [0]
+          "lease_obtained_iso":                string,
           "netbios_over_tcpip":                boolean,
           "media_state":                       string,
           "extras": [
-                      string:                  string
+            <string>:                          string
           ]
         }
       ],
@@ -85,12 +89,14 @@ Schema:
     }
 
     Notes:
-      [0] - 'lease_expires' and 'lease_obtained' are parsed to ISO8601 format date strings. if the value was unable 
-            to be parsed by datetime, the fields will be in their raw form
-      [1] - 'autoconfigured' under 'ipv4_address' is only providing indication if the ipv4 address was labeled as
-            "Autoconfiguration IPv4 Address" vs "IPv4 Address". It does not infer any information from other fields
-      [2] - Windows XP uses 'IP Address' instead of 'IPv4 Address'. Both values are parsed to the 'ipv4_address' 
-            object for consistency
+      [0] - The epoch calculated timestamp field is naive. (i.e. based on
+            the local time of the system the parser is run on)
+      [1] - 'autoconfigured' under 'ipv4_address' is only providing
+            indication if the ipv4 address was labeled as "Autoconfiguration
+            IPv4 Address" vs "IPv4 Address". It does not infer any
+            information from other fields
+      [2] - Windows XP uses 'IP Address' instead of 'IPv4 Address'. Both
+            values are parsed to the 'ipv4_address' object for consistency
 
 Examples:
 
@@ -421,7 +427,6 @@ Examples:
       ],
       "extras": []
     }
-
 """
 from datetime import datetime
 import re
@@ -431,7 +436,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`ipconfig` command parser'
+    description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
     compatible = ['windows']
@@ -466,6 +471,7 @@ def parse(data, raw=False, quiet=False):
 
     return raw_output if raw else _process(raw_output)
 
+
 def _process_ipv6_address(ip_address):
     address_split = ip_address["address"].split('%')
     try:
@@ -484,6 +490,7 @@ def _process_ipv6_address(ip_address):
               "status": ip_address["status"]
            }
 
+
 def _process_ipv4_address(ip_address):
     autoconfigured = True if ip_address.get("autoconfigured","") is not None and 'autoconfigured' in ip_address.get("autoconfigured","") else False
     subnet_mask = ip_address["subnet_mask"]
@@ -493,6 +500,7 @@ def _process_ipv4_address(ip_address):
               "status": ip_address["status"],
               "autoconfigured": autoconfigured
           }
+
 
 def _process(proc_data):
     """
@@ -507,8 +515,7 @@ def _process(proc_data):
         Processed Dictionary. Structured data to conform to the schema.
     """
     processed = proc_data
-    
-    
+
     if "ip_routing_enabled" in processed and processed["ip_routing_enabled"] is not None:
         processed["ip_routing_enabled"] = (processed["ip_routing_enabled"].lower() == "yes")
 
@@ -518,37 +525,46 @@ def _process(proc_data):
     for adapter in processed["adapters"]:
         if "dhcp_enabled" in adapter and adapter["dhcp_enabled"] is not None:
             adapter["dhcp_enabled"] = (adapter["dhcp_enabled"].lower() == "yes")
+
         if "autoconfiguration_enabled" in adapter and adapter["autoconfiguration_enabled"] is not None:
             adapter["autoconfiguration_enabled"] = (adapter["autoconfiguration_enabled"].lower() == "yes")
+
         if "netbios_over_tcpip" in adapter and adapter["netbios_over_tcpip"] is not None:
             adapter["netbios_over_tcpip"] = (adapter["netbios_over_tcpip"].lower() == "enabled")
-        if "lease_expires" in adapter and adapter["lease_expires"] is not None and adapter["lease_expires"] != "":
-            try:
-                adapter["lease_expires"] = datetime.strptime(adapter["lease_expires"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
-            except:
-                pass # Leave date in raw format if not parseable
-        if "lease_obtained" in adapter and adapter["lease_obtained"] is not None and adapter["lease_obtained"] != "":
-            try:
-                adapter["lease_obtained"] = datetime.strptime(adapter["lease_obtained"], "%A, %B %d, %Y %I:%M:%S %p").isoformat()
-            except:
-                pass # Leave date in raw format if not parseable
+
+        if "lease_expires" in adapter and adapter["lease_expires"]:
+            ts = jc.utils.timestamp(adapter['lease_expires'], format_hint=(1720,))
+            adapter["lease_expires_epoch"] = ts.naive
+            adapter["lease_expires_iso"] = ts.iso
+
+        if "lease_obtained" in adapter and adapter["lease_obtained"]:
+            ts = jc.utils.timestamp(adapter['lease_obtained'], format_hint=(1720,))
+            adapter["lease_obtained_epoch"] = ts.naive
+            adapter["lease_obtained_iso"] = ts.iso
+
         adapter["link_local_ipv6_addresses"] = [_process_ipv6_address(address) for address in adapter.get("link_local_ipv6_addresses", [])]
         adapter["ipv4_addresses"] = [_process_ipv4_address(address) for address in adapter.get("ipv4_addresses", [])]
+
     return processed
+
 
 class _PushbackIterator:
     def __init__(self, iterator):
         self.iterator = iterator
         self.pushback_stack = []
+
     def __iter__(self):
         return self
+
     def __next__(self):
         if self.pushback_stack:
             return self.pushback_stack.pop()
         else:
             return next(self.iterator)
+
     def pushback(self, value):
         self.pushback_stack.append(value)
+
 
 def _parse(data):
     # Initialize the parsed output dictionary with all fields set to None or empty lists
@@ -609,9 +625,11 @@ def _parse(data):
 
     return parse_output
 
+
 def _is_adapter_start_line(line):
     # Detect adapter start lines, e.g., "Ethernet adapter Ethernet:"
     return re.match(r"^[^\s].*adapter.*:", line, re.IGNORECASE)
+
 
 def _initialize_adapter(adapter_name):
     adapter_name_split = adapter_name.split(" adapter ", 1)
@@ -650,6 +668,7 @@ def _initialize_adapter(adapter_name):
         "extras": []  # To store unrecognized fields
     }
 
+
 def _parse_line(line):
     # Split the line into key and value using ':' or multiple spaces
     key_value = re.split(r":", line.strip(), 1)
@@ -661,6 +680,7 @@ def _parse_line(line):
         return key, value
     else:
         return None, None
+
 
 def _parse_header_line(result, key, value, line_iter):
     if key in ["host_name", "primary_dns_suffix", "node_type", "ip_routing_enabled", "wins_proxy_enabled"]:
@@ -674,11 +694,13 @@ def _parse_header_line(result, key, value, line_iter):
         # Store unrecognized fields in extras
         result["extras"].append({key: value})
 
+
 def _parse_adapter_line(adapter, key, value, line_iter):
     if key in ["connection_specific_dns_suffix","media_state", "description", "physical_address", "dhcp_enabled", 
                "autoconfiguration_enabled", "dhcpv6_iaid", "dhcpv6_client_duid", "netbios_over_tcpip", "dhcp_server", 
                "lease_obtained", "lease_expires", "primary_wins_server"]:
         adapter[key] = value
+
     elif key in ["ipv6_address", "temporary_ipv6_address", "link_local_ipv6_address"]:
         address_dict = _parse_ipv6_address(value)
         if key == "ipv6_address":
@@ -687,31 +709,38 @@ def _parse_adapter_line(adapter, key, value, line_iter):
             adapter["temporary_ipv6_addresses"].append(address_dict)
         elif key == "link_local_ipv6_address":
             adapter["link_local_ipv6_addresses"].append(address_dict)
+
     elif key in ["ipv4_address", "autoconfiguration_ipv4_address", "ip_address", "autoconfiguration_ip_address"]:
         ipv4_address_dict = _parse_ipv4_address(value, key, line_iter)
         adapter["ipv4_addresses"].append(ipv4_address_dict)
+
     elif key == "connection_specific_dns_suffix_search_list":
         if value:
             adapter["connection_specific_dns_suffix_search_list"].append(value)
         # Process additional connection specific dns suffix search list entries
         _parse_additional_entries(adapter["connection_specific_dns_suffix_search_list"], line_iter)
+
     elif key == "default_gateway":
         if value:
             adapter["default_gateways"].append(value)
         # Process additional gateways
         _parse_additional_entries(adapter["default_gateways"], line_iter)
+
     elif key == "dns_servers":
         if value:
             adapter["dns_servers"].append(value)
         # Process additional DNS servers
         _parse_additional_entries(adapter["dns_servers"], line_iter)
+
     elif key == "subnet_mask":
         # Subnet Mask should be associated with the last IPv4 address
         if adapter["ipv4_addresses"]:
             adapter["ipv4_addresses"][-1]["subnet_mask"] = value
+
     else:
         # Store unrecognized fields in extras
         adapter["extras"].append({key: value})
+
 
 def _parse_ipv6_address(value):
     # Handle multiple status indicators
@@ -726,6 +755,7 @@ def _parse_ipv6_address(value):
         "address": address,
         "status": status
     }
+
 
 def _parse_ipv4_address(value, key, line_iter):
     # Handle autoconfigured status
@@ -757,6 +787,7 @@ def _parse_ipv4_address(value, key, line_iter):
             "autoconfigured": autoconfigured,
             "status": status
         }
+
 
 def _parse_additional_entries(entry_list, line_iter):
     # Process additional lines that belong to the current entry (e.g., additional DNS servers, DNS Suffix Search List)

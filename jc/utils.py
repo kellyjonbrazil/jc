@@ -696,6 +696,7 @@ class timestamp:
             {'id': 1700, 'format': '%m/%d/%Y, %I:%M:%S %p', 'locale': None},  # Windows english format wint non-UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC-0600)
             {'id': 1705, 'format': '%m/%d/%Y, %I:%M:%S %p %Z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC)
             {'id': 1710, 'format': '%m/%d/%Y, %I:%M:%S %p UTC%z', 'locale': None},  # Windows english format with UTC tz (found in systeminfo cli output): 3/22/2021, 1:15:51 PM (UTC+0000)
+            {'id': 1720, 'format': '%A, %B %d, %Y %I:%M:%S %p', 'locale': None},  # ipconfig cli output format: Thursday, June 22, 2023 10:39:04 AM
             {'id': 1750, 'format': '%Y/%m/%d-%H:%M:%S.%f', 'locale': None},  # Google Big Table format with no timezone: 1970/01/01-01:00:00.000000
             {'id': 1755, 'format': '%Y/%m/%d-%H:%M:%S.%f%z', 'locale': None},  # Google Big Table format with timezone: 1970/01/01-01:00:00.000000+00:00
             {'id': 1760, 'format': '%Y-%m-%d %H:%M:%S%z', 'locale': None},  # certbot format with timezone: 2023-06-12 01:35:30+00:00
