@@ -28,9 +28,13 @@ Schema:
         "zone":             string
         "status": {
           "state":          string,
+          "pattern":        string,     # Additional
+          "catalog-member-id": string,  # Additional
           "served-serial":  string,
           "commit-serial":  string,
-          "wait":           string
+          "notified-serial": string,    # Conditional
+          "wait":           string,
+          "transfer":       string	# Conditional
         }
       }
     ]
