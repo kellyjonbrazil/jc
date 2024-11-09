@@ -69,7 +69,8 @@ Parameters:
     binary:         (boolean) `True` to use binary multiples of bytes
                     (base-2) for ambiguous unit symbols and names,
                     `False` to use decimal multiples of bytes (base-10).
-    posix_mode:     Treat one-letter units (k, m, g, etc.) as binary.
+    posix_mode:     (boolean) Treat one-letter units (k, m, g, etc.) as
+                    binary.
     decimal_bias:   (boolean) `True` to treat slightly ambiguous two-
                     letter unit symbols ending in "i" (e.g. Ki, Gi) to
                     use decimal multiples of bytes (base-10). `False`
