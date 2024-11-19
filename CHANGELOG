@@ -1,6 +1,6 @@
 jc changelog
 
-20241018 v1.25.4
+20241118 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
 - Enhance `ping-s` streaming parser to support error replies
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
@@ -9,6 +9,7 @@ jc changelog
 - Fix `df` parser to correctly output binary vs. decimal size outputs
 - Fix `mount` parser for cases where there are spaces in the filesystem name
 - Fix `ip-address` parser for Python 3.13 changes to IPv4 mapped IPv6 addresses
+- Fix `pkg-index-deb`, `apt-cache-show`, and  `rpm-qi` parsers to correctly convert contiguous packages with the same name
 - Fix `uptime` parser for data that contains `user` instead of `users`
 - Enhance `jc.utils.convert_size_to_int()` to add `posix_mode` and `decimal_bias` parameters
 

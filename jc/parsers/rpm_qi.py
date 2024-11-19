@@ -185,7 +185,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -256,8 +256,6 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
     entry_obj = {}
-    last_entry = None
-    this_entry = None
     desc_entry = False
     desc_en_entry = False
     description = []
@@ -268,17 +266,13 @@ def parse(data, raw=False, quiet=False):
             split_line = line.split(': ', maxsplit=1)
 
             if (split_line[0].startswith('Name') or split_line[0] == 'Package') and len(split_line) == 2:
-                this_entry = split_line[1].strip()
-
-                if this_entry != last_entry:
-                    if entry_obj:
-                        if description:
-                            entry_obj['description'] = ' '.join(description)
-                        raw_output.append(entry_obj)
-                        entry_obj = {}
-                        last_entry = this_entry
-                        desc_entry = False
-                        desc_en_entry = False
+                if entry_obj:
+                    if description:
+                        entry_obj['description'] = ' '.join(description)
+                    raw_output.append(entry_obj)
+                    entry_obj = {}
+                    desc_entry = False
+                    desc_en_entry = False
 
             if line.startswith('Description :'):
                 desc_entry = True
