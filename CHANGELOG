@@ -14,6 +14,7 @@ jc changelog
 - Fix `pkg-index-deb`, `apt-cache-show`, and  `rpm-qi` parsers to correctly convert contiguous packages with the same name
 - Fix `traceroute` parser to support extreme IPv6 cases
 - Fix `uptime` parser for data that contains `user` instead of `users`
+- Fix `yaml` parser to support values that start with an equal sign
 - Enhance `jc.utils.convert_size_to_int()` to add `posix_mode` and `decimal_bias` parameters
 
 20240609 v1.25.3
