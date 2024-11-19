@@ -104,6 +104,58 @@ class BluetoothctlTests(unittest.TestCase):
         if actual:
             for k, v in expected.items():
                 self.assertEqual(v, actual[0][k], f"Controller regex failed on {k}")
+    
+    def test_bluetoothctl_controller_with_manufacturer(self):
+        """
+        Test 'bluetoothctl' with controller having manufacturer attr
+        """
+
+        with open("tests/fixtures/generic/bluetoothctl_controller_with_manufacturer.out", "r") as f:
+            output = f.read()
+
+        actual = parse(output, quiet=True)
+
+        self.assertIsNotNone(actual)
+        self.assertIsNotNone(actual[0])
+
+        expected = {
+            "manufacturer": "0x0002 (2)",
+            "version": "0x08 (8)",
+            "address": "48:A4:72:3C:96:63",
+            "is_public": True,
+            "name": "ubuntu",
+            "alias": "ubuntu",
+            "class": "0x007c0104 (8126724)",
+            "powered": "yes",
+            "discoverable": "yes",
+            "discoverable_timeout": "0x000000b4 (180)",
+            "pairable": "yes",
+            "uuids": [
+                "Message Notification Se.. (00001133-0000-1000-8000-00805f9b34fb)",
+                "A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)",
+                "OBEX Object Push          (00001105-0000-1000-8000-00805f9b34fb)",
+                "Message Access Server     (00001132-0000-1000-8000-00805f9b34fb)",
+                "PnP Information           (00001200-0000-1000-8000-00805f9b34fb)",
+                "IrMC Sync                 (00001104-0000-1000-8000-00805f9b34fb)",
+                "Vendor specific           (00005005-0000-1000-8000-0002ee000001)",
+                "A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)",
+                "Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)",
+                "Phonebook Access Server   (0000112f-0000-1000-8000-00805f9b34fb)",
+                "Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)",
+                "Device Information        (0000180a-0000-1000-8000-00805f9b34fb)",
+                "Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)",
+                "Handsfree Audio Gateway   (0000111f-0000-1000-8000-00805f9b34fb)",
+                "Audio Source              (0000110a-0000-1000-8000-00805f9b34fb)",
+                "OBEX File Transfer        (00001106-0000-1000-8000-00805f9b34fb)",
+                "Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)"
+            ],
+            "modalias": "usb:v1D6Bp0246d0548",
+            "discovering": "yes"
+        }
+
+        if actual:
+            for k, v in expected.items():
+                self.assertEqual(v, actual[0][k], f"Controller regex failed on {k}")
 
     def test_bluetoothctl_controllers(self):
         """

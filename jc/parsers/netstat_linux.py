@@ -1,5 +1,6 @@
 r"""jc - JSON Convert Linux netstat Parser"""
 import string
+import re
 
 
 def normalize_headers(header):
@@ -38,7 +39,7 @@ def parse_network(headers, entry):
     ]
 
     # split entry based on presence of value in "State" column
-    contains_state = any(state in entry for state in LIST_OF_STATES)
+    contains_state = any(re.search(rf"\b{re.escape(state)}\b", entry) for state in LIST_OF_STATES)
     split_modifier = 1 if contains_state else 2
     entry = entry.split(maxsplit=len(headers) - split_modifier)
 
