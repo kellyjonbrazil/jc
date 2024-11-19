@@ -4,6 +4,7 @@ jc changelog
 - Add `ipconfig` command parser (`ipconfig` for Windows)
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
+- Enhance `nsd-control` parser with additional state fields
 - Enhance `ping-s` streaming parser to support error replies
 - Fix `bluetoothctl` parser when extra attributes like `manufacturer` and `version` exist
 - Fix `df` parser to correctly output binary vs. decimal size outputs

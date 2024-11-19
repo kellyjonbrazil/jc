@@ -17,24 +17,24 @@ Schema:
 
     [
       {
-        "version":          string,
-        "verbosity":        integer,
-        "ratelimit":        integer
+        "version":              string,
+        "verbosity":            integer,
+        "ratelimit":            integer
       }
     ]
 
     [
       {
-        "zone":             string
+        "zone":                 string
         "status": {
-          "state":          string,
-          "pattern":        string,     # Additional
-          "catalog-member-id": string,  # Additional
-          "served-serial":  string,
-          "commit-serial":  string,
-          "notified-serial": string,    # Conditional
-          "wait":           string,
-          "transfer":       string	# Conditional
+          "state":              string,
+          "pattern":            string,  # Additional
+          "catalog-member-id":  string,  # Additional
+          "served-serial":      string,
+          "commit-serial":      string,
+          "notified-serial":    string,  # Conditional
+          "wait":               string,
+          "transfer":           string	 # Conditional
         }
       }
     ]
@@ -69,7 +69,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`nsd-control` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
