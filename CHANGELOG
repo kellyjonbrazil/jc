@@ -11,6 +11,7 @@ jc changelog
 - Fix `mount` parser for cases where there are spaces in the filesystem name
 - Fix `netstat` parser for cases where there are spaces in the program name
 - Fix `pkg-index-deb`, `apt-cache-show`, and  `rpm-qi` parsers to correctly convert contiguous packages with the same name
+- Fix `traceroute` parser to support extreme IPv6 cases
 - Fix `uptime` parser for data that contains `user` instead of `users`
 - Enhance `jc.utils.convert_size_to_int()` to add `posix_mode` and `decimal_bias` parameters
 
