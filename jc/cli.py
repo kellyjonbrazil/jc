@@ -401,11 +401,16 @@ class JcCli():
             self.json_indent = 2
             self.json_separators = None
 
+        # Convert any non-serializable object to a string
+        def string_serializer(data):
+            return str(data)
+
         j_string = json.dumps(
             self.data_out,
             indent=self.json_indent,
             separators=self.json_separators,
-            ensure_ascii=self.ascii_only
+            ensure_ascii=self.ascii_only,
+            default=string_serializer
         )
 
         if not self.mono and PYGMENTS_INSTALLED:

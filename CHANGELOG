@@ -1,6 +1,6 @@
 jc changelog
 
-20241119 v1.25.4
+20241120 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
@@ -16,6 +16,7 @@ jc changelog
 - Fix `uptime` parser for data that contains `user` instead of `users`
 - Fix `yaml` parser to support values that start with an equal sign
 - Enhance `jc.utils.convert_size_to_int()` to add `posix_mode` and `decimal_bias` parameters
+- Enhance cli to coerce any non-JSON-serializable objects to a string
 
 20240609 v1.25.3
 - Enhance `bluetoothctl` parser with added `battery_percentage` field
