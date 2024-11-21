@@ -59,6 +59,7 @@ def parse(
     Returns:
 
         List of Dictionaries. Raw or processed structured data.
+        push test
     """
     # jc.utils.compatibility(__name__, info.compatible, quiet)
     # jc.utils.input_type_check(data)
