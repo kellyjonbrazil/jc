@@ -1,9 +1,10 @@
 jc changelog
 
-20241119 v1.25.4
+20241120 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
+- Enhance `nsd-control` parser with additional state fields
 - Enhance `ping-s` streaming parser to support error replies
 - Fix `bluetoothctl` parser when extra attributes like `manufacturer` and `version` exist
 - Fix `df` parser to correctly output binary vs. decimal size outputs
@@ -13,7 +14,9 @@ jc changelog
 - Fix `pkg-index-deb`, `apt-cache-show`, and  `rpm-qi` parsers to correctly convert contiguous packages with the same name
 - Fix `traceroute` parser to support extreme IPv6 cases
 - Fix `uptime` parser for data that contains `user` instead of `users`
+- Fix `yaml` parser to support values that start with an equal sign
 - Enhance `jc.utils.convert_size_to_int()` to add `posix_mode` and `decimal_bias` parameters
+- Enhance cli to coerce any non-JSON-serializable objects to a string
 
 20240609 v1.25.3
 - Enhance `bluetoothctl` parser with added `battery_percentage` field
