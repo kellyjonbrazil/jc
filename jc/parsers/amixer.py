@@ -9,7 +9,7 @@ class info():
     description = '`amixer` command parser'
     author = 'Eden Refael'
     author_email = 'edenraf@hotmail.com'
-    compatible = ['linux', 'darwin', 'cygwin', 'aix', 'freebsd']
+    compatible = ['linux']
     magic_commands = ['amixer']
     tags = ['command']
 
@@ -48,23 +48,25 @@ def parse(
     quiet: bool = False
 ) -> List[Dict]:
     """
-    Main text parsing function
+    Main text parsing function, The amixer is alsa mixer tool and output, Will work with
+    Linux OS only.
 
     Parameters:
-
         data:        (string)  text data to parse
         raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
 
     Returns:
-
         List of Dictionaries. Raw or processed structured data.
         push test
     """
-    # jc.utils.compatibility(__name__, info.compatible, quiet)
-    # jc.utils.input_type_check(data)
-    #
-    # raw_output = []
+    # checks os compatibility and print a stderr massage if not compatible. quiet True could remove this check.
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+
+    # check if string
+    jc.utils.input_type_check(data)
+
+    raw_output = []
     # cleandata = list(filter(None, data.splitlines()))
     #
     # if jc.utils.has_data(data):
