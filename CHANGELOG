@@ -2,6 +2,7 @@ jc changelog
 
 20241120 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
+- Add `wg show` command parser
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
 - Enhance `nsd-control` parser with additional state fields
@@ -21,6 +22,7 @@ jc changelog
 20240609 v1.25.3
 - Enhance `bluetoothctl` parser with added `battery_percentage` field
 - Enhance `git-log` standard and streaming parsers with added `lines_changed` field under `file_stats`
+- Fix `lspci` parser to handle `physlot` fields with a range value
 - Fix `pci-ids` parser to correctly handle multiple subdevices
 - Fix `pip-show` parser to handle multi-line fields with a beginning blank line
 - Fix `ss` parser to correctly handle the `Recv-Q` field being too close to the `Status` field

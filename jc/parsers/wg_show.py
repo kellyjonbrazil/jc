@@ -8,7 +8,7 @@ Usage (cli):
 
 or
 
-    $ jc wg-show
+    $ jc wg show all dump
 
 Usage (module):
 
@@ -85,7 +85,6 @@ Examples:
         }
     ]
 
-
     $ wg show all dump | jc --wg-show -p -r
     [
         {
@@ -151,7 +150,7 @@ class info:
     author_email = "hamzasaht01@gmail.com"
     compatible = ["linux", "darwin", "cygwin", "win32", "aix", "freebsd"]
     tags = ["command"]
-    magic_commands = ["wg-show"]
+    magic_commands = ["wg show"]
 
 
 __version__ = info.version
