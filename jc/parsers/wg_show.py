@@ -1,19 +1,19 @@
-r"""jc - JSON Convert `wg` command output parser
+r"""jc - JSON Convert `wg show` command output parser
 
 Parses the output of the `wg show all dump` command, providing structured JSON output for easy integration and analysis.
 
 Usage (cli):
 
-    $ wg show all dump | jc --wg
+    $ wg show all dump | jc --wg-show
 
 or
 
-    $ jc wg
+    $ jc wg-show
 
 Usage (module):
 
     import jc
-    result = jc.parse('wg', wg_command_output)
+    result = jc.parse('wg-show', wg_command_output)
 
 Schema:
 
@@ -41,7 +41,7 @@ Schema:
 
 Examples:
 
-    $ wg show all dump | jc --wg -p
+    $ wg show all dump | jc --wg-show -p
     [
         {
             "device": "wg0",
@@ -86,7 +86,7 @@ Examples:
     ]
 
 
-    $ wg show all dump | jc --wg -p -r
+    $ wg show all dump | jc --wg-show -p -r
     [
         {
             "device": "wg0",
@@ -138,18 +138,23 @@ import jc.utils
 PeerData = Dict[str, Union[Optional[str], Optional[int], List[str]]]
 DeviceData = Dict[str, Union[Optional[str], Optional[int], Dict[str, PeerData]]]
 
-class info():
+
+class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = 'Parses the output of the `wg` command to provide structured JSON data'
-    author = 'Hamza Saht'
-    author_email = 'hamzasaht01@gmail.com'
-    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-    tags = ['command']
-    magic_commands = ['wg']
+
+    version = "1.0"
+    description = (
+        "Parses the output of the `wg show` command to provide structured JSON data"
+    )
+    author = "Hamza Saht"
+    author_email = "hamzasaht01@gmail.com"
+    compatible = ["linux", "darwin", "cygwin", "win32", "aix", "freebsd"]
+    tags = ["command"]
+    magic_commands = ["wg-show"]
 
 
 __version__ = info.version
+
 
 def _process(proc_data: List[DeviceData]) -> List[JSONDictType]:
     """
@@ -180,19 +185,16 @@ def _process(proc_data: List[DeviceData]) -> List[JSONDictType]:
                     "transferRx": peer_data.get("transferRx", 0),
                     "transferSx": peer_data.get("transferSx", 0),
                     "persistentKeepalive": peer_data.get("persistentKeepalive", -1),
-                    "allowedIps": peer_data.get("allowedIps", [])
+                    "allowedIps": peer_data.get("allowedIps", []),
                 }
                 for peer_key, peer_data in device.get("peers", {}).items()
-            ]
+            ],
         }
         processed_data.append(processed_device)
     return processed_data
 
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> List[DeviceData]:
+
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[DeviceData]:
     """
     Main text parsing function.
 
@@ -217,8 +219,8 @@ def parse(
 
     if jc.utils.has_data(data):
         for line in filter(None, data.splitlines()):
-            fields = line.split('\t')
-            if len(fields) == 5:  
+            fields = line.split("\t")
+            if len(fields) == 5:
                 device, private_key, public_key, listen_port, fwmark = fields
                 if current_device:
                     raw_output.append({"device": current_device, **device_data})
@@ -228,23 +230,40 @@ def parse(
                     "publicKey": public_key if public_key != "(none)" else None,
                     "listenPort": int(listen_port) if listen_port != "0" else None,
                     "fwmark": int(fwmark) if fwmark != "off" else None,
-                    "peers": {}
+                    "peers": {},
                 }
-            elif len(fields) == 9:  
-                interface, public_key, preshared_key, endpoint, allowed_ips, latest_handshake, transfer_rx, transfer_tx, persistent_keepalive = fields
+            elif len(fields) == 9:
+                (
+                    interface,
+                    public_key,
+                    preshared_key,
+                    endpoint,
+                    allowed_ips,
+                    latest_handshake,
+                    transfer_rx,
+                    transfer_tx,
+                    persistent_keepalive,
+                ) = fields
                 peer_data: PeerData = {
-                    "presharedKey": preshared_key if preshared_key != "(none)" else None,
+                    "presharedKey": preshared_key
+                    if preshared_key != "(none)"
+                    else None,
                     "endpoint": endpoint if endpoint != "(none)" else None,
                     "latestHandshake": int(latest_handshake),
                     "transferRx": int(transfer_rx),
                     "transferSx": int(transfer_tx),
-                    "persistentKeepalive": int(persistent_keepalive) if persistent_keepalive != "off" else -1,
-                    "allowedIps": allowed_ips.split(',') if allowed_ips != "(none)" else []
+                    "persistentKeepalive": int(persistent_keepalive)
+                    if persistent_keepalive != "off"
+                    else -1,
+                    "allowedIps": allowed_ips.split(",")
+                    if allowed_ips != "(none)"
+                    else [],
                 }
-                device_data["peers"][public_key] = {k: v for k, v in peer_data.items() if v is not None}
+                device_data["peers"][public_key] = {
+                    k: v for k, v in peer_data.items() if v is not None
+                }
 
         if current_device:
             raw_output.append({"device": current_device, **device_data})
 
     return raw_output if raw else _process(raw_output)
-
