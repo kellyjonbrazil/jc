@@ -134,6 +134,7 @@ Examples:
 from typing import List, Dict, Optional, Union
 from jc.jc_types import JSONDictType
 import jc.utils
+import re
 
 PeerData = Dict[str, Union[Optional[str], Optional[int], List[str]]]
 DeviceData = Dict[str, Union[Optional[str], Optional[int], Dict[str, PeerData]]]
@@ -219,7 +220,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[DeviceData]
 
     if jc.utils.has_data(data):
         for line in filter(None, data.splitlines()):
-            fields = line.split("\t")
+            fields = re.split(r"\s+", line.strip())
             if len(fields) == 5:
                 device, private_key, public_key, listen_port, fwmark = fields
                 if current_device:
