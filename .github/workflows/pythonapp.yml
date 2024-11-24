@@ -10,6 +10,7 @@ on:
 
 jobs:
   old_python:
+    if: github.event.pull_request.draft == false
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -37,6 +38,7 @@ jobs:
         python -m unittest discover tests
 
   latest_python:
+    if: github.event.pull_request.draft == false
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
