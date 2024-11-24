@@ -108,6 +108,7 @@ parsers: List[str] = [
     'openvpn',
     'os-prober',
     'os-release',
+    'pacman',
     'passwd',
     'path',
     'path-list',
