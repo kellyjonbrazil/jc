@@ -67,12 +67,59 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output = []
-    # cleandata = list(filter(None, data.splitlines()))
-    #
+    lines = list(filter(None, data.splitlines())) # lines=cleandata
+
+    data = {}
+    # Strip and check for the first line to extract the control name directly
+    first_line = lines[0].strip()
+    if first_line.startswith("Simple mixer control"):
+        # Extract the control name, removing the single quotes
+        control_name = first_line.split("'")[1]  # Extracts the part inside the single quotes
+    else:
+        raise ValueError("Invalid amixer output format: missing control name.")
+
+    # Add control name to the parsed data as a key
+    data["control_name"] = control_name
+
+    # Parse the rest of the output
+    for line in lines[1:]:
+        line = line.strip()
+        if line.startswith("Capabilities:"):
+            data["capabilities"] = line.split(":")[1].strip().split()
+        elif line.startswith("Playback channels:"):
+            data["playback_channels"] = line.split(":")[1].strip().split(" - ")
+        elif line.startswith("Limits:"):
+            limits = line.split(":")[1].strip().split(" - ")
+            data["limits"] = {
+                "playback_min": int(limits[0].split()[1]),
+                "playback_max": int(limits[1])
+            }
+        elif line.startswith("Mono:") or line.startswith("Front Left:") or line.startswith("Front Right:"):
+            # Identifying whether it's Mono, Front Left, or Front Right
+            channel_name = line.split(":")[0].strip().lower().replace(" ", "_")
+            channel_info = line.split(":")[1].strip()
+
+            # Example: "Playback 255 [100%] [0.00dB] [on]"
+            channel_data = channel_info.split(" ")
+            playback_value = int(channel_data[0])
+            percentage = channel_data[1][1:-1]  # Extract percentage e.g. "100%"
+            db_value = channel_data[2][1:-3]  # Extract dB value e.g. "0.00dB"
+            status = channel_data[3][1:-1]  # Extract status "on" or "off"
+
+            # Storing channel data in the dict
+            data[channel_name] = {
+                "playback_value": playback_value,
+                "percentage": percentage,
+                "dB": db_value,
+                "status": status
+            }
+
+    return data
+
     # if jc.utils.has_data(data):
-    #
-    #     # remove final Entries row if -v was used
-    #     if cleandata[-1].startswith('Entries:'):
+
+        # remove final Entries row if -v was used
+        # if cleandata[-1].startswith('Entries:'):
     #         cleandata.pop(-1)
     #
     #     # detect if freebsd/osx style was used
