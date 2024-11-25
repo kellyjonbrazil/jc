@@ -1,7 +1,8 @@
 jc changelog
 
-20241120 v1.25.4
+20241124 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
+- Add `pacman` command parser
 - Add `wg show` command parser
 - Enhance `ethtool` parser to support `link_partner_advertised_link_modes`
 - Enhance `ifconfig` parser to support `utun` interfaces with assigned IPv4 addresses on macOS
