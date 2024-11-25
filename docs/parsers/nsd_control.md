@@ -22,20 +22,24 @@ Schema:
 
     [
       {
-        "version":          string,
-        "verbosity":        integer,
-        "ratelimit":        integer
+        "version":              string,
+        "verbosity":            integer,
+        "ratelimit":            integer
       }
     ]
 
     [
       {
-        "zone":             string
+        "zone":                 string
         "status": {
-          "state":          string,
-          "served-serial":  string,
-          "commit-serial":  string,
-          "wait":           string
+          "state":              string,
+          "pattern":            string,  # Additional
+          "catalog-member-id":  string,  # Additional
+          "served-serial":      string,
+          "commit-serial":      string,
+          "notified-serial":    string,  # Conditional
+          "wait":               string,
+          "transfer":           string	 # Conditional
         }
       }
     ]
@@ -89,4 +93,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/nsd_control.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/nsd_control.py)
 
-Version 1.1 by Pettai (pettai@sunet.se)
+Version 1.2 by Pettai (pettai@sunet.se)

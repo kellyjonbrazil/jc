@@ -19,21 +19,23 @@ Schema:
 
     [
       {
-        "device": string,
-        "privateKey": string,
-        "publicKey": string,
-        "listenPort": integer,
-        "fwmark": integer,
+        "device":                       string,
+        "private_key":                  string,
+        "public_key":                   string,
+        "listen_port":                  integer,
+        "fwmark":                       integer,
         "peers": [
           {
-            "publicKey": string,
-            "presharedKey": string,
-            "endpoint": string,
-            "latestHandshake": integer,
-            "transferRx": integer,
-            "transferSx": integer,
-            "persistentKeepalive": integer,
-            "allowedIps": [string]
+            "public_key":               string,
+            "preshared_key":            string,
+            "endpoint":                 string,
+            "latest_handshake":         integer,
+            "transfer_rx":              integer,
+            "transfer_sx":              integer,
+            "persistent_keepalive":     integer,
+            "allowed_ips": [
+                                        string
+            ]
           }
         ]
       }
@@ -43,90 +45,94 @@ Examples:
 
     $ wg show all dump | jc --wg-show -p
     [
-        {
-            "device": "wg0",
-            "privateKey": "aEbVdvHSEp3oofHDNVCsUoaRSxk1Og8/pTLof5yF+1M=",
-            "publicKey": "OIxbQszw1chdO5uigAxpsl4fc/h04yMYafl72gUbakM=",
-            "listenPort": 51820,
-            "fwmark": null,
-            "peers": {
-                "sQFGAhSdx0aC7DmTFojzBOW8Ccjv1XV5+N9FnkZu5zc=": {
-                    "presharedKey": null,
-                    "endpoint": "79.134.136.199:40036",
-                    "latestHandshake": 1728809756,
-                    "transferRx": 1378724,
-                    "transferSx": 406524,
-                    "persistentKeepalive": null,
-                    "allowedIps": ["10.10.0.2/32"]
-                },
-                "B9csmpvrv4Q7gpjc6zAbNNO8hIOYfpBqxmik2aNpwwE=": {
-                    "presharedKey": null,
-                    "endpoint": "79.134.136.199:35946",
-                    "latestHandshake": 1728809756,
-                    "transferRx": 4884248,
-                    "transferSx": 3544596,
-                    "persistentKeepalive": null,
-                    "allowedIps": ["10.10.0.3/32"]
-                },
-                "miiSYR5UdevREhlWpmnci+vv/dEGLHbNtKu7u1CuOD4=": {
-                    "presharedKey": null,
-                    "allowedIps": ["10.10.0.4/32"]
-                },
-                "gx9+JHLHJvOfBNjTmZ8KQAnThFFiZMQrX1kRaYcIYzw=": {
-                    "presharedKey": null,
-                    "endpoint": "173.244.225.194:45014",
-                    "latestHandshake": 1728809827,
-                    "transferRx": 1363652,
-                    "transferSx": 458252,
-                    "persistentKeepalive": null,
-                    "allowedIps": ["10.10.0.5/32"]
-                }
-            }
-        }
+      {
+        "device": "wg0",
+        "private_key": "aEbVdvHSEp3oofHDNVCsUoaRSxk1Og8/pTLof5yF+1M=",
+        "public_key": "OIxbQszw1chdO5uigAxpsl4fc/h04yMYafl72gUbakM=",
+        "listen_port": 51820,
+        "fwmark": null,
+        "peers": [
+          {
+            "public_key": "sQFGAhSdx0aC7DmTFojzBOW8Ccjv1XV5+N9FnkZu5zc=",
+            "preshared_key": null,
+            "endpoint": "79.134.136.199:40036",
+            "latest_handshake": 1728809756,
+            "transfer_rx": 1378724,
+            "transfer_sx": 406524,
+            "persistent_keepalive": null,
+            "allowed_ips": ["10.10.0.2/32"]
+          },
+          {
+            "public_key": "B9csmpvrv4Q7gpjc6zAbNNO8hIOYfpBqxmik2aNpwwE=",
+            "preshared_key": null,
+            "endpoint": "79.134.136.199:35946",
+            "latest_handshake": 1728809756,
+            "transfer_rx": 4884248,
+            "transfer_sx": 3544596,
+            "persistent_keepalive": null,
+            "allowed_ips": ["10.10.0.3/32"]
+          },
+          {
+            "public_key": "miiSYR5UdevREhlWpmnci+vv/dEGLHbNtKu7u1CuOD4=",
+            "preshared_key": null,
+            "allowed_ips": ["10.10.0.4/32"]
+          },
+          {
+            "public_key": "gx9+JHLHJvOfBNjTmZ8KQAnThFFiZMQrX1kRaYcIYzw=",
+            "preshared_key": null,
+            "endpoint": "173.244.225.194:45014",
+            "latest_handshake": 1728809827,
+            "transfer_rx": 1363652,
+            "transfer_sx": 458252,
+            "persistent_keepalive": null,
+            "allowed_ips": ["10.10.0.5/32"]
+          }
+        ]
+      }
     ]
 
     $ wg show all dump | jc --wg-show -p -r
     [
-        {
-            "device": "wg0",
-            "privateKey": "aEbVdvHSEp3oofHDNVCsUoaRSxk1Og8/pTLof5yF+1M=",
-            "publicKey": "OIxbQszw1chdO5uigAxpsl4fc/h04yMYafl72gUbakM=",
-            "listenPort": 51820,
-            "fwmark": null,
-            "peers": {
-                "sQFGAhSdx0aC7DmTFojzBOW8Ccjv1XV5+N9FnkZu5zc=": {
-                    "presharedKey": null,
-                    "endpoint": "79.134.136.199:40036",
-                    "latestHandshake": 1728809756,
-                    "transferRx": 1378724,
-                    "transferSx": 406524,
-                    "persistentKeepalive": -1,
-                    "allowedIps": ["10.10.0.2/32"]
-                },
-                "B9csmpvrv4Q7gpjc6zAbNNO8hIOYfpBqxmik2aNpwwE=": {
-                    "presharedKey": null,
-                    "endpoint": "79.134.136.199:35946",
-                    "latestHandshake": 1728809756,
-                    "transferRx": 4884248,
-                    "transferSx": 3544596,
-                    "persistentKeepalive": -1,
-                    "allowedIps": ["10.10.0.3/32"]
-                },
-                "miiSYR5UdevREhlWpmnci+vv/dEGLHbNtKu7u1CuOD4=": {
-                    "presharedKey": null,
-                    "allowedIps": ["10.10.0.4/32"]
-                },
-                "gx9+JHLHJvOfBNjTmZ8KQAnThFFiZMQrX1kRaYcIYzw=": {
-                    "presharedKey": null,
-                    "endpoint": "173.244.225.194:45014",
-                    "latestHandshake": 1728809827,
-                    "transferRx": 1363652,
-                    "transferSx": 458252,
-                    "persistentKeepalive": -1,
-                    "allowedIps": ["10.10.0.5/32"]
-                }
-            }
+      {
+        "device": "wg0",
+        "private_key": "aEbVdvHSEp3oofHDNVCsUoaRSxk1Og8/pTLof5yF+1M=",
+        "public_key": "OIxbQszw1chdO5uigAxpsl4fc/h04yMYafl72gUbakM=",
+        "listen_port": 51820,
+        "fwmark": null,
+        "peers": {
+          "sQFGAhSdx0aC7DmTFojzBOW8Ccjv1XV5+N9FnkZu5zc=": {
+            "preshared_key": null,
+            "endpoint": "79.134.136.199:40036",
+            "latest_handshake": 1728809756,
+            "transfer_rx": 1378724,
+            "transfer_sx": 406524,
+            "persistent_keepalive": -1,
+            "allowed_ips": ["10.10.0.2/32"]
+          },
+          "B9csmpvrv4Q7gpjc6zAbNNO8hIOYfpBqxmik2aNpwwE=": {
+            "preshared_key": null,
+            "endpoint": "79.134.136.199:35946",
+            "latest_handshake": 1728809756,
+            "transfer_rx": 4884248,
+            "transfer_sx": 3544596,
+            "persistent_keepalive": -1,
+            "allowed_ips": ["10.10.0.3/32"]
+          },
+          "miiSYR5UdevREhlWpmnci+vv/dEGLHbNtKu7u1CuOD4=": {
+            "preshared_key": null,
+            "allowed_ips": ["10.10.0.4/32"]
+          },
+          "gx9+JHLHJvOfBNjTmZ8KQAnThFFiZMQrX1kRaYcIYzw=": {
+            "preshared_key": null,
+            "endpoint": "173.244.225.194:45014",
+            "latest_handshake": 1728809827,
+            "transfer_rx": 1363652,
+            "transfer_sx": 458252,
+            "persistent_keepalive": -1,
+            "allowed_ips": ["10.10.0.5/32"]
+          }
         }
+      }
     ]
 """
 
@@ -143,9 +149,7 @@ class info:
     """Provides parser metadata (version, author, etc.)"""
 
     version = "1.0"
-    description = (
-        "Parses the output of the `wg show` command to provide structured JSON data"
-    )
+    description = "`wg show` command parser"
     author = "Hamza Saht"
     author_email = "hamzasaht01@gmail.com"
     compatible = ["linux", "darwin", "cygwin", "win32", "aix", "freebsd"]
@@ -172,20 +176,20 @@ def _process(proc_data: List[DeviceData]) -> List[JSONDictType]:
     for device in proc_data:
         processed_device = {
             "device": device["device"],
-            "privateKey": device.get("privateKey"),
-            "publicKey": device.get("publicKey"),
-            "listenPort": device.get("listenPort"),
+            "private_key": device.get("private_key"),
+            "public_key": device.get("public_key"),
+            "listen_port": device.get("listen_port"),
             "fwmark": device.get("fwmark"),
             "peers": [
                 {
-                    "publicKey": peer_key,
-                    "presharedKey": peer_data.get("presharedKey"),
+                    "public_key": peer_key,
+                    "preshared_key": peer_data.get("preshared_key"),
                     "endpoint": peer_data.get("endpoint"),
-                    "latestHandshake": peer_data.get("latestHandshake", 0),
-                    "transferRx": peer_data.get("transferRx", 0),
-                    "transferSx": peer_data.get("transferSx", 0),
-                    "persistentKeepalive": peer_data.get("persistentKeepalive", -1),
-                    "allowedIps": peer_data.get("allowedIps", []),
+                    "latest_handshake": peer_data.get("latest_handshake", 0),
+                    "transfer_rx": peer_data.get("transfer_rx", 0),
+                    "transfer_sx": peer_data.get("transfer_sx", 0),
+                    "persistent_keepalive": peer_data.get("persistent_keepalive", -1),
+                    "allowed_ips": peer_data.get("allowed_ips", []),
                 }
                 for peer_key, peer_data in device.get("peers", {}).items()
             ],
@@ -194,7 +198,7 @@ def _process(proc_data: List[DeviceData]) -> List[JSONDictType]:
     return processed_data
 
 
-def parse(data: str, raw: bool = False, quiet: bool = False) -> List[DeviceData]:
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
     """
     Main text parsing function.
 
@@ -226,9 +230,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[DeviceData]
                     raw_output.append({"device": current_device, **device_data})
                 current_device = device
                 device_data = {
-                    "privateKey": private_key if private_key != "(none)" else None,
-                    "publicKey": public_key if public_key != "(none)" else None,
-                    "listenPort": int(listen_port) if listen_port != "0" else None,
+                    "private_key": private_key if private_key != "(none)" else None,
+                    "public_key": public_key if public_key != "(none)" else None,
+                    "listen_port": int(listen_port) if listen_port != "0" else None,
                     "fwmark": int(fwmark) if fwmark != "off" else None,
                     "peers": {},
                 }
@@ -245,17 +249,17 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[DeviceData]
                     persistent_keepalive,
                 ) = fields
                 peer_data: PeerData = {
-                    "presharedKey": preshared_key
+                    "preshared_key": preshared_key
                     if preshared_key != "(none)"
                     else None,
                     "endpoint": endpoint if endpoint != "(none)" else None,
-                    "latestHandshake": int(latest_handshake),
-                    "transferRx": int(transfer_rx),
-                    "transferSx": int(transfer_tx),
-                    "persistentKeepalive": int(persistent_keepalive)
+                    "latest_handshake": int(latest_handshake),
+                    "transfer_rx": int(transfer_rx),
+                    "transfer_sx": int(transfer_tx),
+                    "persistent_keepalive": int(persistent_keepalive)
                     if persistent_keepalive != "off"
                     else -1,
-                    "allowedIps": allowed_ips.split(",")
+                    "allowed_ips": allowed_ips.split(",")
                     if allowed_ips != "(none)"
                     else [],
                 }

@@ -13,7 +13,6 @@ sys.path.pop()
 #     - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
 
 class MyTests(unittest.TestCase):
-    maxDiff = None
 
     def test_pacman_nodata(self):
         """
