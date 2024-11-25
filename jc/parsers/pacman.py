@@ -48,6 +48,9 @@ Schema:
             "description":          string
           }
         ],
+        "optional_for": [
+                                    string
+        ],
         "conflicts_with": [
                                     string
         ],
@@ -106,11 +109,34 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    list_list = [
-        'licenses', 'groups', 'provides', 'depends_on', 'optional_deps',
-        'conflicts_with', 'replaces', 'validated_by', 'backup_files'
-    ]
+    split_fields = {
+        'licenses', 'groups', 'provides', 'depends_on', 'conflicts_with',
+        'replaces', 'optional_for'
+    }
 
+    space_split_fields = {
+        'required_by', 'groups', 'provides', 'depends_on',
+        'conflicts_with', 'replaces', 'validated_by'
+    }
+
+    two_space_fields = {'licenses', 'validated_by'}
+
+    # initial split for field lists
+    for item in proc_data:
+        for key, val in item.items():
+            if key in split_fields:
+                if val is None:
+                    item[key] = []
+                else:
+                    item[key] = val.split()
+
+            # fixup for specific lists
+            if key in space_split_fields and isinstance(val, List):
+                val_list = [x.split() for x in val]
+                item[key] = [x for xs in val_list for x in xs]  # flatten the list
+
+            if key in two_space_fields and isinstance(val, str):
+                item[key] = val.split('  ')
 
     return proc_data
 
