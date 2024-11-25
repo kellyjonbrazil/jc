@@ -1,4 +1,4 @@
-r"""jc - JSON Convert `route-print` command output parser
+r"""jc - JSON Convert `route print` command output parser
 
 
 Usage (cli):
@@ -8,7 +8,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('route-print', route_print_command_output)
+    result = jc.parse('route_print', route_print_command_output)
 
 Schema:
 
@@ -312,6 +312,7 @@ Examples:
 
 import re
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -321,7 +322,7 @@ class info():
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
     compatible = ['windows']
-    magic_commands = ['route-print']
+    magic_commands = ['route print']
     tags = ['command']
 
 
@@ -352,7 +353,7 @@ def parse(data, raw=False, quiet=False):
             return raw_output if raw else _process(raw_output)
         except Exception as e:
             if not quiet:
-                jc.utils.warning_message(['Could not parse data due to unexpected format.'])
+                raise ParseError('Could not parse data due to unexpected format.')
             return {}
 
 def _process(proc_data):

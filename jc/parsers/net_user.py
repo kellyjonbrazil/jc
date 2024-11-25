@@ -11,7 +11,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('net-user', net_user_command_output)
+    result = jc.parse('net_user', net_user_command_output)
 
 Schema:
 
@@ -51,7 +51,7 @@ Schema:
 
 Examples:
 
-    $ net users | jc --net-user -p | jq
+    $ net users | jc --net-user -p
     {
         "account_origin": "\\\\WIN-SERVER16",
         "domain": "",
@@ -184,6 +184,7 @@ Examples:
 from datetime import datetime
 import re
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -193,7 +194,7 @@ class info():
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
     compatible = ['windows']
-    magic_commands = ['net-user']
+    magic_commands = ['net user']
     tags = ['command']
 
 
@@ -224,7 +225,7 @@ def parse(data, raw=False, quiet=False):
             return raw_output if raw else _process(raw_output)
         except Exception as e:
             if not quiet:
-                jc.utils.warning_message(['Could not parse data due to unexpected format.'])
+                raise ParseError('Could not parse data due to unexpected format.')
             return {}
         
 def _set_if_not_none(output_dict, key, value):
@@ -430,7 +431,6 @@ def _parse(data):
                             for username in user_matches.groups():
                                 if username:
                                     username = username.strip()
-                                    print(username)
                                     user_account = {"user_name": username}
                                     result["user_accounts"].append(user_account)
                 except StopIteration:

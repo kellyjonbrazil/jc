@@ -3,15 +3,15 @@ r"""jc - JSON Convert `net localgroup` command output parser
 
 Usage (cli):
 
-    $ net localgroup | jc --net-localgroup
-    $ net localgroup /domain | jc --net-localgroup
-    $ net localgroup Administrators | jc --net-localgroup
-    $ net localgroup Administrators /domain | jc --net-localgroup
+    $ net localgroup | jc --net-localgroup -p
+    $ net localgroup /domain | jc --net-localgroup -p
+    $ net localgroup Administrators | jc --net-localgroup -p
+    $ net localgroup Administrators /domain | jc --net-localgroup -p
 
 Usage (module):
 
     import jc
-    result = jc.parse('net-localgroup', net_localgroup_command_output)
+    result = jc.parse('net_localgroup', net_localgroup_command_output)
 
 Schema:
 
@@ -40,7 +40,7 @@ Schema:
 
 Examples:
 
-    $ net localgroup | jc --net-localgroup -p | jq
+    $ net localgroup | jc --net-localgroup -p
     {
         "account_origin": null,
         "comment": null,
@@ -57,8 +57,8 @@ Examples:
             }
         ]
     }
-    $ net localgroup Administrators | jc --net-localgroup -p | jq
-    $ net localgroup /domain | jc --net-localgroup -p | jq
+    $ net localgroup Administrators | jc --net-localgroup -p
+    $ net localgroup /domain | jc --net-localgroup -p
 
 """
 
@@ -74,7 +74,7 @@ class info():
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
     compatible = ['windows']
-    magic_commands = ['net-localgroup']
+    magic_commands = ['net localgroup']
     tags = ['command']
 
 
