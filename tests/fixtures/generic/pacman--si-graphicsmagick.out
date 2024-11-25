@@ -1,0 +1,23 @@
+Repository      : extra
+Name            : graphicsmagick
+Version         : 1.3.43-1
+Description     : Image processing system
+Architecture    : x86_64
+URL             : http://www.graphicsmagick.org/
+Licenses        : MIT
+Groups          : None
+Provides        : Magick.so  libGraphicsMagickWand.so=2-64  libGraphicsMagick.so=3-64  libGraphicsMagick++-Q16.so
+Depends On      : bzip2  freetype2  lcms2  libltdl  libpng  libsm  libtiff  libwebp  libxext  xz
+Optional Deps   : jasper: jp2 module
+                  libwmf: wmf module
+                  libxml2: msl, svg, url modules
+                  ghostscript: pdf, ps modules
+                  libheif: heic module
+                  libjxl: jpeg-xl module
+Conflicts With  : None
+Replaces        : None
+Download Size   : 2.58 MiB
+Installed Size  : 13.97 MiB
+Packager        : Caleb Maclennan <alerque@archlinux.org>
+Build Date      : Sat 23 Mar 2024 09:55:47 PM CET
+Validated By    : MD5 Sum  SHA-256 Sum  Signature

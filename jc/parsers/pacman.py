@@ -72,11 +72,93 @@ Schema:
 
 Examples:
 
-    $ pacman | jc --pacman -p
-    []
+    $ pacman -qii zstd | jc --pacman -p
+    [
+      {
+        "name": "zstd",
+        "version": "1.5.6-1",
+        "description": "Zstandard - Fast real-time compression algorithm",
+        "architecture": "x86_64",
+        "url": "https://facebook.github.io/zstd/",
+        "licenses": [
+          "BSD-3-Clause",
+          "GPL-2.0-only"
+        ],
+        "groups": [],
+        "provides": [
+          "libzstd.so=1-64"
+        ],
+        "depends_on": [
+          "glibc",
+          "gcc-libs",
+          "zlib",
+          "xz",
+          "lz4"
+        ],
+        "required_by": [
+          "android-tools",
+          "appstream",
+          ...
+          "tiled",
+          "vulkan-radeon",
+          "wireshark-cli"
+        ],
+        "optional_for": [
+          "xarchiver"
+        ],
+        "conflicts_with": [],
+        "replaces": [],
+        "installed_size": "1527.00 KiB",
+        "packager": "Levente Polyak <anthraxx@archlinux.org>",
+        "build_date": "Sat 11 May 2024 06:14:19 AM +08",
+        "install_date": "Fri 24 May 2024 09:50:31 AM +08",
+        "install_reason": "Installed as a dependency for another package",
+        "install_script": "No",
+        "validated_by": [
+          "Signature"
+        ],
+        "extended_data": "pkgtype=pkg"
+      }
+    ]
 
-    $ pacman | jc --pacman -p -r
-    []
+    $ pacman -qii zstd | jc --pacman -p -r
+    [
+      {
+        "name": "zstd",
+        "version": "1.5.6-1",
+        "description": "Zstandard - Fast real-time compression algorithm",
+        "architecture": "x86_64",
+        "url": "https://facebook.github.io/zstd/",
+        "licenses": "BSD-3-Clause  GPL-2.0-only",
+        "groups": null,
+        "provides": "libzstd.so=1-64",
+        "depends_on": "glibc  gcc-libs  zlib  xz  lz4",
+        "required_by": [
+          "android-tools  appstream  avr-gcc  binutils  blender  blosc",
+          "boost-libs  btrfs-progs  cloudflare-warp-bin  comgr  curl",
+          "dolphin-emu  file  flatpak  gcc  gdal  gnutls  karchive",
+          "karchive5  kmod  lib32-zstd  libarchive  libelf  libtiff",
+          "libva-mesa-driver  libxmlb  libzip  lld  llvm-libs  mariadb-libs",
+          "mesa  mesa-vdpau  minizip-ng  mkinitcpio  mold  netcdf",
+          "opencl-clover-mesa  opencl-rusticl-mesa  openucx  postgresql",
+          "postgresql-libs  ppsspp  qemu-img  qemu-system-riscv",
+          "qemu-system-x86  qgis  qt6-base  qt6-tools  rsync  rustup",
+          "squashfs-tools  squashfuse  systemd-libs  tiled  vulkan-radeon",
+          "wireshark-cli"
+        ],
+        "optional_for": "xarchiver",
+        "conflicts_with": null,
+        "replaces": null,
+        "installed_size": "1527.00 KiB",
+        "packager": "Levente Polyak <anthraxx@archlinux.org>",
+        "build_date": "Sat 11 May 2024 06:14:19 AM +08",
+        "install_date": "Fri 24 May 2024 09:50:31 AM +08",
+        "install_reason": "Installed as a dependency for another package",
+        "install_script": "No",
+        "validated_by": "Signature",
+        "extended_data": "pkgtype=pkg"
+      }
+    ]
 """
 from typing import List, Dict
 from jc.jc_types import JSONDictType
@@ -121,6 +203,8 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
     two_space_fields = {'licenses', 'validated_by'}
 
+    name_description_fields = {'optional_deps'}
+
     # initial split for field lists
     for item in proc_data:
         for key, val in item.items():
@@ -137,6 +221,14 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
             if key in two_space_fields and isinstance(val, str):
                 item[key] = val.split('  ')
+
+            if key in name_description_fields and isinstance(val, list):
+                new_list = []
+                for name_desc in val:
+                    n, d = name_desc.split(': ')
+                    new_obj = {'name': n, 'description': d}
+                    new_list.append(new_obj)
+                item[key] = new_list
 
     return proc_data
 
@@ -193,6 +285,8 @@ def parse(
                     continue
 
                 if key in multiline_fields:
+                    if multiline_list:
+                        entry_obj[multiline_key] = multiline_list
                     multiline_list = []
                     if val != 'None':
                         multiline_list.append(val)
