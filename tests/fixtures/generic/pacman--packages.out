@@ -5,10 +5,11 @@ Description     : Access control list utilities, libraries and headers
 Architecture    : x86_64
 URL             : https://savannah.nongnu.org/projects/acl
 Licenses        : LGPL
-Groups          : None
+Groups          : kde-applications  kde-sdk
 Provides        : xfsacl  libacl.so=1-64
 Depends On      : glibc
-Optional Deps   : None
+Optional Deps   : testing: this is a test description
+                  name-with-no-description
 Required By     : advcpmv  bfs  borg  borg2  bup  casync  cdrtools  clifm-git  coreutils  coreutils-hybrid-git  cups  emacs  emacs-nativecomp  emacs-nox  emacs-wayland  gettext  incus  incus-tools  kio  krusader  lib32-acl  libarchive  libisofs  logrotate  lxd  proftpd  proxmox-backup-client  rsync  rsync-reflink  sed  shadow  snapper  spice-gtk  systemd  tar  udisks2  udisks2-btrfs  udisks2-lvm2  vim  vis  xfsdump
 Optional For    : diffoscope  mkosi  mkosi-git
 Conflicts With  : xfsacl

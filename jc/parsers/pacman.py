@@ -57,8 +57,8 @@ Schema:
         "replaces": [
                                     string
         ],
-        "download_size":            string,
-        "installed_size":           string,
+        "download_size":            integer,  # in bytes
+        "installed_size":           integer,  # in bytes
         "packager":                 string,
         "build_date":               string,
         "validated_by": [
@@ -108,7 +108,7 @@ Examples:
         ],
         "conflicts_with": [],
         "replaces": [],
-        "installed_size": "1527.00 KiB",
+        "installed_size": "1563648",
         "packager": "Levente Polyak <anthraxx@archlinux.org>",
         "build_date": "Sat 11 May 2024 06:14:19 AM +08",
         "install_date": "Fri 24 May 2024 09:50:31 AM +08",
@@ -205,6 +205,8 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
     name_description_fields = {'optional_deps'}
 
+    size_fields = {'download_size', 'installed_size'}
+
     # initial split for field lists
     for item in proc_data:
         for key, val in item.items():
@@ -225,10 +227,17 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             if key in name_description_fields and isinstance(val, list):
                 new_list = []
                 for name_desc in val:
-                    n, d = name_desc.split(': ')
+                    n, *d = name_desc.split(': ')
+                    if d == []:
+                        d = ''
+                    else:
+                        d = d[0]
                     new_obj = {'name': n, 'description': d}
                     new_list.append(new_obj)
                 item[key] = new_list
+
+            if key in size_fields:
+                item[key] = jc.utils.convert_size_to_int(val)
 
     return proc_data
 
