@@ -7,6 +7,9 @@ Supports the following `pacman` arguments:
 - `-Qi`
 - `-Qii`
 
+The `*_epoch` calculated timestamp fields are naive. (i.e. based on the
+local time of the system the parser is run on)
+
 Usage (cli):
 
     $ pacman -Si <package> | jc --pacman
@@ -57,10 +60,15 @@ Schema:
         "replaces": [
                                     string
         ],
-        "download_size":            integer,  # in bytes
-        "installed_size":           integer,  # in bytes
+        "download_size":            string,
+        "download_size_bytes":      integer     [0]
+        "installed_size":           string,
+        "installed_size_bytes":     integer,    [0]
         "packager":                 string,
         "build_date":               string,
+        "build_date_epoch":         integer,    [0]
+        "install_date":             string,
+        "install_date_epoch":       integer,    [0]
         "validated_by": [
                                     string
         ],
@@ -69,6 +77,8 @@ Schema:
         ]
       }
     ]
+
+    [0] Field exists if conversion successful
 
 Examples:
 
@@ -108,10 +118,13 @@ Examples:
         ],
         "conflicts_with": [],
         "replaces": [],
-        "installed_size": "1563648",
+        "installed_size": "1527.00 KiB",
+        "installed_size_bytes": 1563648,
         "packager": "Levente Polyak <anthraxx@archlinux.org>",
         "build_date": "Sat 11 May 2024 06:14:19 AM +08",
+        "build_date_epoch": 1715433259,
         "install_date": "Fri 24 May 2024 09:50:31 AM +08",
+        "install_date_epoch": 1715663342,
         "install_reason": "Installed as a dependency for another package",
         "install_script": "No",
         "validated_by": [
@@ -195,21 +208,18 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         'licenses', 'groups', 'provides', 'depends_on', 'conflicts_with',
         'replaces', 'optional_for'
     }
-
     space_split_fields = {
         'required_by', 'groups', 'provides', 'depends_on',
         'conflicts_with', 'replaces', 'validated_by'
     }
-
     two_space_fields = {'licenses', 'validated_by'}
-
     name_description_fields = {'optional_deps'}
-
     size_fields = {'download_size', 'installed_size'}
+    date_fields = {'build_date', 'install_date'}
 
     # initial split for field lists
     for item in proc_data:
-        for key, val in item.items():
+        for key, val in item.copy().items():
             if key in split_fields:
                 if val is None:
                     item[key] = []
@@ -237,7 +247,20 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 item[key] = new_list
 
             if key in size_fields:
-                item[key] = jc.utils.convert_size_to_int(val)
+                bts = jc.utils.convert_size_to_int(val)
+                if bts:
+                    item[key + '_bytes'] = bts
+
+            if key in date_fields:
+                # need to append '00' to date for conversion
+                ts = jc.utils.timestamp(val + '00', format_hint=(3100,))
+                if ts.naive:
+                    item[key + '_epoch'] = ts.naive
+                else:
+                    # try taking off the text TZ identifier
+                    ts = jc.utils.timestamp(val[:-4], format_hint=(3000,))
+                    if ts.naive:
+                        item[key + '_epoch'] = ts.naive
 
     return proc_data
 

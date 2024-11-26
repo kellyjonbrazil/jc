@@ -12,6 +12,9 @@ Supports the following `pacman` arguments:
 - `-Qi`
 - `-Qii`
 
+The `*_epoch` calculated timestamp fields are naive. (i.e. based on the
+local time of the system the parser is run on)
+
 Usage (cli):
 
     $ pacman -Si <package> | jc --pacman
@@ -62,10 +65,15 @@ Schema:
         "replaces": [
                                     string
         ],
-        "download_size":            integer,  # in bytes
-        "installed_size":           integer,  # in bytes
+        "download_size":            string,
+        "download_size_bytes":      integer     [0]
+        "installed_size":           string,
+        "installed_size_bytes":     integer,    [0]
         "packager":                 string,
         "build_date":               string,
+        "build_date_epoch":         integer,    [0]
+        "install_date":             string,
+        "install_date_epoch":       integer,    [0]
         "validated_by": [
                                     string
         ],
@@ -74,6 +82,8 @@ Schema:
         ]
       }
     ]
+
+    [0] Field exists if conversion successful
 
 Examples:
 
@@ -113,10 +123,13 @@ Examples:
         ],
         "conflicts_with": [],
         "replaces": [],
-        "installed_size": "1563648",
+        "installed_size": "1527.00 KiB",
+        "installed_size_bytes": 1563648,
         "packager": "Levente Polyak <anthraxx@archlinux.org>",
         "build_date": "Sat 11 May 2024 06:14:19 AM +08",
+        "build_date_epoch": 1715433259,
         "install_date": "Fri 24 May 2024 09:50:31 AM +08",
+        "install_date_epoch": 1715663342,
         "install_reason": "Installed as a dependency for another package",
         "install_script": "No",
         "validated_by": [
