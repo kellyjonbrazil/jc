@@ -10,7 +10,7 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.3'
+__version__ = '1.25.4'
 
 parsers: List[str] = [
     'acpi',
@@ -75,6 +75,7 @@ parsers: List[str] = [
     'iostat',
     'iostat-s',
     'ip-address',
+    'ipconfig',
     'iptables',
     'ip-route',
     'iw-scan',
@@ -107,6 +108,7 @@ parsers: List[str] = [
     'openvpn',
     'os-prober',
     'os-release',
+    'pacman',
     'passwd',
     'path',
     'path-list',
@@ -224,6 +226,7 @@ parsers: List[str] = [
     'vmstat-s',
     'w',
     'wc',
+    'wg-show',
     'who',
     'x509-cert',
     'x509-csr',

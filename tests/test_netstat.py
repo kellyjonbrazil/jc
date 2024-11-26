@@ -37,6 +37,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_netstat_sudo_lnp = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp-space.out'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_sudo_lnp_space = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-aeep.out'), 'r', encoding='utf-8') as f:
         centos_7_7_netstat_sudo_aeep = f.read()
 
@@ -163,6 +166,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_netstat_sudo_lnp_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/netstat-sudo-lnp-space.json'), 'r', encoding='utf-8') as f:
+        ubuntu_18_4_netstat_sudo_lnp_space_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat-sudo-aeep.json'), 'r', encoding='utf-8') as f:
         centos_7_7_netstat_sudo_aeep_json = json.loads(f.read())
@@ -316,6 +322,12 @@ class MyTests(unittest.TestCase):
         Test 'sudo netstat -lnp' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_sudo_lnp, quiet=True), self.ubuntu_18_4_netstat_sudo_lnp_json)
+
+    def test_netstat_sudo_lnp_ubuntu_18_4(self):
+        """
+        Test 'sudo netstat -lnp' on Ubuntu 18.4 with a space in the process name(special case)
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.ubuntu_18_4_netstat_sudo_lnp_space, quiet=True), self.ubuntu_18_4_netstat_sudo_lnp_space_json)
 
     def test_netstat_sudo_aeep_centos_7_7(self):
         """

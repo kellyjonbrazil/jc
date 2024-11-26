@@ -122,7 +122,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.7'
+    version = '0.75'
     description = '`iw dev [device] scan` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -298,6 +298,7 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
     section = {}
+    header = ''
 
     if jc.utils.has_data(data):
 
@@ -323,7 +324,9 @@ def parse(data, raw=False, quiet=False):
                     split_line[0] = split_line[0].lower().replace('*', '').replace('(', '')\
                                                  .replace(')', '').replace(',', '').replace('-', '_')\
                                                  .strip().replace(' ', '_')
-                    section[split_line[0]] = split_line[1].strip()
+                    if split_line[1] == '':
+                        header = split_line[0] + '_'
+                    section[header + split_line[0]] = split_line[1].strip()
 
                 continue
 

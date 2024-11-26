@@ -1,0 +1,130 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : DESKTOP-WIN11-HOME
+   Primary Dns Suffix  . . . . . . . :
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : localdomain
+
+Ethernet adapter Ethernet:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) I211 Gigabit Network Connection
+   Physical Address. . . . . . . . . : 24-4B-FE-AB-43-C3
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Ethernet adapter Ethernet 2:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Realtek PCIe 2.5GbE Family Controller
+   Physical Address. . . . . . . . . : 24-4B-FE-57-3D-F2
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Unknown adapter OpenVPN Data Channel Offload for NordVPN:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : OpenVPN Data Channel Offload
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Unknown adapter Local Area Connection:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : TAP-NordVPN Windows Adapter V9
+   Physical Address. . . . . . . . . : 00-FF-4C-F4-5E-49
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter Local Area Connection* 1:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter
+   Physical Address. . . . . . . . . : A8-7E-EA-5A-7F-DE
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter Local Area Connection* 2:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #2
+   Physical Address. . . . . . . . . : AA-7E-EA-F3-64-C3
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Ethernet adapter VMware Network Adapter VMnet1:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : VMware Virtual Ethernet Adapter for VMnet1
+   Physical Address. . . . . . . . . : 00-50-56-CC-27-73
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::f47d:9c7f:69dc:591e%8(Preferred)
+   IPv4 Address. . . . . . . . . . . : 192.168.181.1(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Thursday, September 19, 2024 8:31:29 AM
+   Lease Expires . . . . . . . . . . : Thursday, September 19, 2024 6:01:29 PM
+   Default Gateway . . . . . . . . . :
+   DHCP Server . . . . . . . . . . . : 192.168.181.254
+   DHCPv6 IAID . . . . . . . . . . . : 771772502
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2C-CF-19-EB-24-4B-FE-5B-9B-E6
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Ethernet adapter VMware Network Adapter VMnet8:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : VMware Virtual Ethernet Adapter for VMnet8
+   Physical Address. . . . . . . . . : 00-50-56-C9-A3-78
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::4551:bf0d:59dd:a4f0%10(Preferred)
+   IPv4 Address. . . . . . . . . . . : 192.168.213.1(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Thursday, September 19, 2024 8:31:29 AM
+   Lease Expires . . . . . . . . . . : Thursday, September 19, 2024 6:01:29 PM
+   Default Gateway . . . . . . . . . :
+   DHCP Server . . . . . . . . . . . : 192.168.213.254
+   DHCPv6 IAID . . . . . . . . . . . : 788549718
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2C-CF-19-EB-24-4B-FE-5B-9B-E6
+   Primary WINS Server . . . . . . . : 192.168.213.2
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Wireless LAN adapter Wi-Fi:
+
+   Connection-specific DNS Suffix  . : localdomain
+   Description . . . . . . . . . . . : Intel(R) Wi-Fi 6 AX200 160MHz
+   Physical Address. . . . . . . . . : A8-7E-EA-55-26-B0
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : fd63:cc9c:65eb:3f95:57c2:aa:10d8:db08(Preferred)
+   Temporary IPv6 Address. . . . . . : fd63:cc9c:65eb:3f95:8928:348e:d692:b7ef(Preferred)
+   Link-local IPv6 Address . . . . . : fe80::4fae:1380:5a1b:8b6b%11(Preferred)
+   IPv4 Address. . . . . . . . . . . : 192.168.1.169(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Thursday, September 19, 2024 8:31:30 AM
+   Lease Expires . . . . . . . . . . : Friday, September 20, 2024 8:31:30 AM
+   Default Gateway . . . . . . . . . : 192.168.1.1
+   DHCP Server . . . . . . . . . . . : 192.168.1.1
+   DHCPv6 IAID . . . . . . . . . . . : 162037482
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2C-CF-19-EB-24-4B-FE-5B-9B-E6
+   DNS Servers . . . . . . . . . . . : 192.168.1.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Ethernet adapter Bluetooth Network Connection:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Bluetooth Device (Personal Area Network)
+   Physical Address. . . . . . . . . : A8-7E-EA-43-23-14
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
