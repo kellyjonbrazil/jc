@@ -49,13 +49,69 @@ def parse(
     quiet: bool = False
 ) -> List[Dict]:
     """
-    Main text parsing function, The amixer is alsa mixer tool and output, Will work with
-    Linux OS only.
+    Main text parsing function, The amixer is alsa mixer tool and output, Will work with Linux OS only.
+
+
+    The Algorithm for parsing the `amixer sget` command, Input Explained/Rules/Pseudo Algorithm:
+    1. There will always be the first line which tells the user about the control name.
+    2. There will always be the Capabilities which include many of capabilities - It will be listed and separated by `" "`.
+    3. After that we'll need to distinct between the Channel - Could be many of channels - It will be listed and separated
+       by `" "`.
+        3a. Capture channels - List of channels
+        3b. Playback channels - List of channels
+    4. Limits - We'll always have the minimum limit and the maximum limit.
+
+
+    Input Example:
+        1.user@kazuar-endpoint:~$ amixer sget Capture
+        Simple mixer control 'Capture',0
+          Capabilities: cvolume cswitch
+          Capture channels: Front Left - Front Right
+          Limits: Capture 0 - 63
+          Front Left: Capture 63 [100%] [30.00dB] [on]
+          Front Right: Capture 63 [100%] [30.00dB] [on]
+
+
+
+
+        2.user@kazuar-endpoint:~$ amixer sget Master
+        Simple mixer control 'Master',0
+          Capabilities: pvolume pvolume-joined pswitch pswitch-joined
+          Playback channels: Mono
+          Limits: Playback 0 - 87
+          Mono: Playback 87 [100%] [0.00dB] [on]
+
+
+
+
+
+        3.user@kazuar-endpoint:~$ amixer sget Speaker
+        Simple mixer control 'Speaker',0
+          Capabilities: pvolume pswitch
+          Playback channels: Front Left - Front Right
+          Limits: Playback 0 - 87
+          Mono:
+          Front Left: Playback 87 [100%] [0.00dB] [on]
+          Front Right: Playback 87 [100%] [0.00dB] [on]
+
+
+
+
+        4.user@kazuar-endpoint:~$ amixer sget Headphone
+        Simple mixer control 'Headphone',0
+          Capabilities: pvolume pswitch
+          Playback channels: Front Left - Front Right
+          Limits: Playback 0 - 87
+          Mono:
+          Front Left: Playback 0 [0%] [-65.25dB] [off]
+          Front Right: Playback 0 [0%] [-65.25dB] [off]
+
 
     Parameters:
         data:        (string)  text data to parse
         raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
+
 
     Returns:
         List of Dictionaries. Raw or processed structured data.
@@ -121,64 +177,6 @@ def parse(
 
     return mapping
 
-"""
-Input Explained/Rules/Pseudo Algorithm:
-1. There will always be the first line which tells the user about the control name.
-2. There will always be the Capabilities which include many of capabilities - It will be listed and separated by `" "`.
-3. After that we'll need to distinct between the Channel - Could be many of channels - It will be listed and separated 
-   by `" "`.
-    3a. Capture channels - List of channels 
-    3b. Playback channels - List of channels
-4. Limits - We'll always have the minimum limit and the maximum limit.
-
-Input Example:
-
-1.user@kazuar-endpoint:~$ amixer sget Capture
-Simple mixer control 'Capture',0
-  Capabilities: cvolume cswitch
-  Capture channels: Front Left - Front Right
-  Limits: Capture 0 - 63
-  Front Left: Capture 63 [100%] [30.00dB] [on]
-  Front Right: Capture 63 [100%] [30.00dB] [on]
-
-
-
-
-2.user@kazuar-endpoint:~$ amixer sget Master
-Simple mixer control 'Master',0
-  Capabilities: pvolume pvolume-joined pswitch pswitch-joined
-  Playback channels: Mono
-  Limits: Playback 0 - 87
-  Mono: Playback 87 [100%] [0.00dB] [on]
-
-
-
-
-
-3.user@kazuar-endpoint:~$ amixer sget Speaker
-Simple mixer control 'Speaker',0
-  Capabilities: pvolume pswitch
-  Playback channels: Front Left - Front Right
-  Limits: Playback 0 - 87
-  Mono:
-  Front Left: Playback 87 [100%] [0.00dB] [on]
-  Front Right: Playback 87 [100%] [0.00dB] [on]
-
-
-
-
-4.user@kazuar-endpoint:~$ amixer sget Headphone
-Simple mixer control 'Headphone',0
-  Capabilities: pvolume pswitch
-  Playback channels: Front Left - Front Right
-  Limits: Playback 0 - 87
-  Mono:
-  Front Left: Playback 0 [0%] [-65.25dB] [off]
-  Front Right: Playback 0 [0%] [-65.25dB] [off]
-
-
-
-"""
 
 if __name__ == '__main__':
     data_sget_master = """Simple mixer control 'Master',0
