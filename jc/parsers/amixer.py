@@ -49,7 +49,7 @@ def parse(
 
 
     Input Example:
-        1.user@kazuar-endpoint:~$ amixer sget Capture
+        1."":~$ amixer sget Capture
         Simple mixer control 'Capture',0
           Capabilities: cvolume cswitch
           Capture channels: Front Left - Front Right
@@ -60,7 +60,7 @@ def parse(
 
 
 
-        2.user@kazuar-endpoint:~$ amixer sget Master
+        2."":~$ amixer sget Master
         Simple mixer control 'Master',0
           Capabilities: pvolume pvolume-joined pswitch pswitch-joined
           Playback channels: Mono
@@ -71,7 +71,7 @@ def parse(
 
 
 
-        3.user@kazuar-endpoint:~$ amixer sget Speaker
+        3."":~$ amixer sget Speaker
         Simple mixer control 'Speaker',0
           Capabilities: pvolume pswitch
           Playback channels: Front Left - Front Right
@@ -83,7 +83,7 @@ def parse(
 
 
 
-        4.user@kazuar-endpoint:~$ amixer sget Headphone
+        4."":~$ amixer sget Headphone
         Simple mixer control 'Headphone',0
           Capabilities: pvolume pswitch
           Playback channels: Front Left - Front Right
