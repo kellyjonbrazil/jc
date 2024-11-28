@@ -21,6 +21,7 @@ parsers: List[str] = [
     'arp',
     'asciitable',
     'asciitable-m',
+    'amixer',
     'blkid',
     'bluetoothctl',
     'cbt',
