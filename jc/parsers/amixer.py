@@ -109,10 +109,9 @@ def parse(
     # check if string
     jc.utils.input_type_check(data)
 
-    # split the output lines \r\n or \n
-    # raw_output = []
-    # lines: list = list(filter(None, data.splitlines())) # lines=cleandata
+    # starts the parsing from here
     mapping = {}
+    # split lines and than work on each line
     lines = data.splitlines()
     first_line = lines[0].strip()
 
