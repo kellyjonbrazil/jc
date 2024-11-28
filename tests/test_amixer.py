@@ -8,7 +8,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class AmixerTests(unittest.TestCase):
     AMIXER_CMD = 'amixer'
-    UBUNTU_22_04_TEST_FIXTURES_PATH = f'tests/fixtures/ubuntu-22.04/'
+    UBUNTU_22_04_TEST_FIXTURES_PATH = f'{THIS_DIR}/fixtures/ubuntu-22.04/'
     AMIXER_CONTROL_PATH = f'{UBUNTU_22_04_TEST_FIXTURES_PATH}amixer-control-'
     TEST_FILES_NAME = [
         f"{AMIXER_CONTROL_PATH}capture",
