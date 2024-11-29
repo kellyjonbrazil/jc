@@ -146,4 +146,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/iw_scan.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iw_scan.py)
 
-Version 0.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 0.75 by Kelly Brazil (kellyjonbrazil@gmail.com)
