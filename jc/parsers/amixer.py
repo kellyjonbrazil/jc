@@ -5,7 +5,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1'
+    version = '1.0'
     description = '`amixer` command parser'
     author = 'Eden Refael'
     author_email = 'edenraf@hotmail.com'
