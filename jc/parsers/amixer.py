@@ -38,6 +38,17 @@ def parse(
     Main text parsing function, The amixer is alsa mixer tool and output, Will work with Linux OS only.
 
 
+    Parameters:
+        data:        (string)  text data to parse
+        raw:         (boolean) unprocessed output if True
+        quiet:       (boolean) suppress warning messages if True
+
+
+    Returns:
+        List of Dictionaries. Raw or processed structured data.
+        push test
+    """
+    """
     The Algorithm for parsing the `amixer sget` command, Input Explained/Rules/Pseudo Algorithm:
     1. There will always be the first line which tells the user about the control name.
     2. There will always be the Capabilities which include many of capabilities - It will be listed and separated by `" "`.
@@ -91,17 +102,6 @@ def parse(
           Mono:
           Front Left: Playback 0 [0%] [-65.25dB] [off]
           Front Right: Playback 0 [0%] [-65.25dB] [off]
-
-
-    Parameters:
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
-
-
-    Returns:
-        List of Dictionaries. Raw or processed structured data.
-        push test
     """
     # checks os compatibility and print a stderr massage if not compatible. quiet True could remove this check.
     jc.utils.compatibility(__name__, info.compatible, quiet)
