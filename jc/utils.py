@@ -703,6 +703,7 @@ class timestamp:
             {'id': 1800, 'format': '%d/%b/%Y:%H:%M:%S %z', 'locale': None},  # Common Log Format: 10/Oct/2000:13:55:36 -0700
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
+            {'id': 3100, 'format': '%a %d %b %Y %I:%M:%S %p %z', 'locale': None},  # pacman format - append 00 to end to make it work: # Sat 11 May 2024 06:14:19 AM +0800
             {'id': 3500, 'format': '%a, %d %b %Y %H:%M:%S %Z', 'locale': None},  # HTTP header time format (always GMT so assume UTC): Wed, 31 Jan 2024 00:39:28 GMT
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
             {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST

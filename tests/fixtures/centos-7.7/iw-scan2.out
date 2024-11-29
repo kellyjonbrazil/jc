@@ -1,0 +1,109 @@
+BSS xx:xx:xx:xx:3e:41(on wlan0-1)
+	last seen: 4206.107s [boottime]
+	TSF: 608162896731 usec (7d, 00:56:02)
+	freq: 2412
+	beacon interval: 100 TUs
+	capability: ESS (0x1431)
+	signal: -54.00 dBm
+	last seen: 1410 ms ago
+	Information elements from Probe Response frame:
+	SSID: Troubleshooting
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+		 * Capabilities: 16-PTKSA-RC 1-GTKSA-RC (0x000c)
+	HT capabilities:
+		Capabilities: 0x1ef
+			RX LDPC
+			HT20/HT40
+			SM Power Save disabled
+			RX HT20 SGI
+			RX HT40 SGI
+			TX STBC
+			RX STBC 1-stream
+			Max AMSDU length: 3839 bytes
+			No DSSS/CCK HT40
+		Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
+		Minimum RX AMPDU time spacing: No restriction (0x00)
+		HT RX MCS rate indexes supported: 0-15
+		HT TX MCS rate indexes are undefined
+	HT operation:
+		 * primary channel: 1
+		 * secondary channel offset: no secondary
+		 * STA channel width: 20 MHz
+	VHT capabilities:
+		VHT Capabilities (0x33800192):
+			Max MPDU length: 11454
+			Supported Channel Width: neither 160 nor 80 80
+			RX LDPC
+			TX STBC
+			RX antenna pattern consistency
+			TX antenna pattern consistency
+		VHT RX MCS set:
+			1 streams: MCS 0-9
+			2 streams: MCS 0-9
+			3 streams: not supported
+			4 streams: not supported
+			5 streams: not supported
+			6 streams: not supported
+			7 streams: not supported
+			8 streams: not supported
+		VHT RX highest supported: 780 Mbps
+		VHT TX MCS set:
+			1 streams: MCS 0-9
+			2 streams: MCS 0-9
+			3 streams: not supported
+			4 streams: not supported
+			5 streams: not supported
+			6 streams: not supported
+			7 streams: not supported
+			8 streams: not supported
+		VHT TX highest supported: 780 Mbps
+		VHT extended NSS: not supported
+	VHT operation:
+		 * channel width: 0 (20 or 40 MHz)
+		 * center freq segment 1: 0
+		 * center freq segment 2: 0
+		 * VHT basic MCS set: 0xfffa
+	HE capabilities:
+		HE MAC Capabilities (0x010102000040):
+			 HTC HE Supported
+			Minimum Payload size of 128 bytes: 1
+			OM Control
+			A-MSDU in A-MPDU
+		HE PHY Capabilities: (0x06304c090c008008020c00):
+			HE40/2.4GHz
+			HE40/HE80/5GHz
+			Device Class: 1
+			LDPC Coding in Payload
+			STBC Tx <= 80MHz
+			STBC Rx <= 80MHz
+			Full Bandwidth UL MU-MIMO
+			DCM Max Constellation: 1
+			DCM Max Constellation Rx: 1
+			Beamformee STS <= 80Mhz: 3
+			PPE Threshold Present
+			Max NC: 1
+			20MHz in 40MHz HE PPDU 2.4GHz
+			TX 1024-QAM
+			RX 1024-QAM
+		HE RX MCS and NSS set <= 80 MHz
+			1 streams: MCS 0-11
+			2 streams: MCS 0-11
+			3 streams: not supported
+			4 streams: not supported
+			5 streams: not supported
+			6 streams: not supported
+			7 streams: not supported
+			8 streams: not supported
+		HE TX MCS and NSS set <= 80 MHz
+			1 streams: MCS 0-11
+			2 streams: MCS 0-11
+			3 streams: not supported
+			4 streams: not supported
+			5 streams: not supported
+			6 streams: not supported
+			7 streams: not supported
+			8 streams: not supported
+		PPE Threshold 0x19 0x1c 0xc7 0x71 

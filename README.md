@@ -251,6 +251,7 @@ option.
 |       `--openvpn` | openvpn-status.log file parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/openvpn)        |
 |     `--os-prober` | `os-prober` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_prober)      |
 |    `--os-release` | `/etc/os-release` file parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/os_release)     |
+|        `--pacman` | `pacman` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pacman)         |
 |        `--passwd` | `/etc/passwd` file parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/passwd)         |
 |          `--path` | POSIX path string parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path)           |
 |     `--path-list` | POSIX path list string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path_list)      |
@@ -317,6 +318,7 @@ option.
 |      `--vmstat-s` | `vmstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/vmstat_s)       |
 |             `--w` | `w` command parser                                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/w)              |
 |            `--wc` | `wc` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/wc)             |
+|       `--wg-show` | `wg show` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/wg_show)        |
 |           `--who` | `who` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/who)            |
 |     `--x509-cert` | X.509 PEM and DER certificate file parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_cert)      |
 |      `--x509-csr` | X.509 PEM and DER certificate request file parser       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_csr)       |
