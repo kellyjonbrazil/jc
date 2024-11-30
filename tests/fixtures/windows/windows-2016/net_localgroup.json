@@ -1,0 +1,103 @@
+{
+  "account_origin": "\\\\WIN-SERVER16",
+  "domain": null,
+  "comment": null,
+  "groups": [
+    {
+      "name": "Access Control Assistance Operators",
+      "members": []
+    },
+    {
+      "name": "Administrators",
+      "members": []
+    },
+    {
+      "name": "Backup Operators",
+      "members": []
+    },
+    {
+      "name": "Certificate Service DCOM Access",
+      "members": []
+    },
+    {
+      "name": "Cryptographic Operators",
+      "members": []
+    },
+    {
+      "name": "Distributed COM Users",
+      "members": []
+    },
+    {
+      "name": "Event Log Readers",
+      "members": []
+    },
+    {
+      "name": "Guests",
+      "members": []
+    },
+    {
+      "name": "Hyper-V Administrators",
+      "members": []
+    },
+    {
+      "name": "IIS_IUSRS",
+      "members": []
+    },
+    {
+      "name": "Network Configuration Operators",
+      "members": []
+    },
+    {
+      "name": "Performance Log Users",
+      "members": []
+    },
+    {
+      "name": "Performance Monitor Users",
+      "members": []
+    },
+    {
+      "name": "Power Users",
+      "members": []
+    },
+    {
+      "name": "Print Operators",
+      "members": []
+    },
+    {
+      "name": "RDS Endpoint Servers",
+      "members": []
+    },
+    {
+      "name": "RDS Management Servers",
+      "members": []
+    },
+    {
+      "name": "RDS Remote Access Servers",
+      "members": []
+    },
+    {
+      "name": "Remote Desktop Users",
+      "members": []
+    },
+    {
+      "name": "Remote Management Users",
+      "members": []
+    },
+    {
+      "name": "Replicator",
+      "members": []
+    },
+    {
+      "name": "Storage Replica Administrators",
+      "members": []
+    },
+    {
+      "name": "System Managed Accounts Group",
+      "members": []
+    },
+    {
+      "name": "Users",
+      "members": []
+    }
+  ]
+}

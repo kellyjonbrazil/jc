@@ -1,0 +1,23 @@
+{
+  "domain": "",
+  "user_accounts": [
+    {
+      "user_name": "Administrator",
+      "comment": "Built-in account for administering the computer/dom",
+      "account_active": true,
+      "account_expires": "Never",
+      "password_last_set": "2024-01-11T21:34:38",
+      "password_expires": "2024-02-22T21:34:38",
+      "password_changeable": "2024-01-11T21:34:38",
+      "password_required": true,
+      "user_may_change_password": true,
+      "workstations_allowed": "All",
+      "last_logon": "2010-11-20T20:48:04",
+      "logon_hours_allowed": "All",
+      "local_group_memberships": [
+        "Administrators"
+      ],
+      "global_group_memberships": []
+    }
+  ]
+}
