@@ -239,13 +239,16 @@ parsers: List[str] = [
     'zpool-status'
 ]
 
+
 def _cliname_to_modname(parser_cli_name: str) -> str:
     """Return real module name (dashes converted to underscores)"""
     return parser_cli_name.replace('--', '').replace('-', '_')
 
+
 def _modname_to_cliname(parser_mod_name: str) -> str:
     """Return module's cli name (underscores converted to dashes)"""
     return parser_mod_name.replace('_', '-')
+
 
 def _is_valid_parser_plugin(name: str, local_parsers_dir: str) -> bool:
     if re.match(r'\w+\.py$', name) and os.path.isfile(os.path.join(local_parsers_dir, name)):
@@ -283,10 +286,12 @@ if os.path.isdir(local_parsers_dir):
     except Exception:
         pass
 
+
 def _parser_argument(parser_mod_name: str) -> str:
     """Return short name of the parser with dashes and with -- prefix"""
     parser = _modname_to_cliname(parser_mod_name)
     return f'--{parser}'
+
 
 def get_parser(parser_mod_name: Union[str, ModuleType]) -> ModuleType:
     """
@@ -327,6 +332,7 @@ def get_parser(parser_mod_name: Union[str, ModuleType]) -> ModuleType:
 
     return jc_parser
 
+
 def _get_parser(parser_mod_name: str) -> ModuleType:
     """Return the parser module object"""
     # ensure parser_mod_name is a true module name and not a cli name
@@ -344,6 +350,7 @@ def _get_parser(parser_mod_name: str) -> ModuleType:
 
     return mod
 
+
 def _parser_is_slurpable(parser: ModuleType) -> bool:
     """
     Returns True if this parser can use the `--slurp` command option, else False
@@ -356,6 +363,7 @@ def _parser_is_slurpable(parser: ModuleType) -> bool:
 
     return False
 
+
 def _parser_is_streaming(parser: ModuleType) -> bool:
     """
     Returns True if this is a streaming parser, else False
@@ -366,6 +374,7 @@ def _parser_is_streaming(parser: ModuleType) -> bool:
         return True
 
     return False
+
 
 def _parser_is_hidden(parser: ModuleType) -> bool:
     """
@@ -378,6 +387,7 @@ def _parser_is_hidden(parser: ModuleType) -> bool:
 
     return False
 
+
 def _parser_is_deprecated(parser: ModuleType) -> bool:
     """
     Returns True if this is a deprecated parser, else False
@@ -388,6 +398,7 @@ def _parser_is_deprecated(parser: ModuleType) -> bool:
         return True
 
     return False
+
 
 def parse(
     parser_mod_name: Union[str, ModuleType],
@@ -498,6 +509,7 @@ def parse(
 
     return jc_parser.parse(data, quiet=quiet, raw=raw, **kwargs)
 
+
 def parser_mod_list(
     show_hidden: bool = False,
     show_deprecated: bool = False
@@ -516,6 +528,7 @@ def parser_mod_list(
         plist.append(_cliname_to_modname(p))
 
     return plist
+
 
 def plugin_parser_mod_list(
     show_hidden: bool = False,
@@ -538,6 +551,7 @@ def plugin_parser_mod_list(
         plist.append(_cliname_to_modname(p))
 
     return plist
+
 
 def standard_parser_mod_list(
     show_hidden: bool = False,
@@ -564,6 +578,7 @@ def standard_parser_mod_list(
 
     return plist
 
+
 def streaming_parser_mod_list(
     show_hidden: bool = False,
     show_deprecated: bool = False
@@ -588,6 +603,7 @@ def streaming_parser_mod_list(
 
     return plist
 
+
 def slurpable_parser_mod_list(
     show_hidden: bool = False,
     show_deprecated: bool = False
@@ -611,6 +627,7 @@ def slurpable_parser_mod_list(
             plist.append(_cliname_to_modname(p))
 
     return plist
+
 
 def parser_info(
     parser_mod_name: Union[str, ModuleType],
@@ -652,6 +669,7 @@ def parser_info(
 
     return info_dict
 
+
 def all_parser_info(
     documentation: bool = False,
     show_hidden: bool = False,
@@ -685,6 +703,7 @@ def all_parser_info(
     p_info_list: List[ParserInfoType] = [parser_info(p, documentation=documentation) for p in plist]
 
     return p_info_list
+
 
 def get_help(parser_mod_name: Union[str, ModuleType]) -> None:
     """
