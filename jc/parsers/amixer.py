@@ -1,57 +1,63 @@
 r"""jc - JSON Convert `amixer sget` command output parser
+
 Usage (cli):
+
     $ amixer sget <control_name> | jc --amixer
     $ amixer sget Master | jc --amixer
     $ amixer sget Capture | jc --amixer
     $ amixer sget Speakers | jc --amixer
+
 Usage (module):
+
     import jc
     result = jc.parse('amixer', <amixer sget command output>)
 Schema:
-{
-    "control_name":                     string,
-    "capabilities": [
-                                        string
-    ],
-    "playback_channels": [
-        string
-    ],
-    "limits": {
-        "playback_min":                 string,
-        "playback_max":                 string
-    },
-    "mono": {
-        "playback_value":               string,
-        "percentage":                   string,
-        "dB":                           string,
-        "status":                       string
+
+    {
+        "control_name":                     string,
+        "capabilities": [
+                                            string
+        ],
+        "playback_channels": [
+            string
+        ],
+        "limits": {
+            "playback_min":                 string,
+            "playback_max":                 string
+        },
+        "mono": {
+            "playback_value":               string,
+            "percentage":                   string,
+            "dB":                           string,
+            "status":                       string
+        }
     }
-}
 
 Examples:
-$ amixer sget Master | jc --amixer -p
-{
-    "control_name": "Master",
-    "capabilities": [
-        "pvolume",
-        "pvolume-joined",
-        "pswitch",
-        "pswitch-joined"
-    ],
-    "playback_channels": [
-        "Mono"
-    ],
-    "limits": {
-        "playback_min": "0",
-        "playback_max": "87"
-    },
-    "mono": {
-        "playback_value": "87",
-        "percentage": "100%",
-        "dB": "0.00dB",
-        "status": "on"
+
+    $ amixer sget Master | jc --amixer -p
+    {
+        "control_name": "Master",
+        "capabilities": [
+            "pvolume",
+            "pvolume-joined",
+            "pswitch",
+            "pswitch-joined"
+        ],
+        "playback_channels": [
+            "Mono"
+        ],
+        "limits": {
+            "playback_min": "0",
+            "playback_max": "87"
+        },
+        "mono": {
+            "playback_value": "87",
+            "percentage": "100%",
+            "dB": "0.00dB",
+            "status": "on"
+        }
     }
-}
 
 """
 from typing import List, Dict
