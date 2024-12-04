@@ -11,6 +11,7 @@ Usage (module):
 
     import jc
     result = jc.parse('amixer', <amixer sget command output>)
+
 Schema:
 
     {
@@ -22,20 +23,23 @@ Schema:
             string
         ],
         "limits": {
-            "playback_min":                 string,
-            "playback_max":                 string
+            "playback_min":                 integer,
+            "playback_max":                 integer
         },
         "mono": {
-            "playback_value":               string,
-            "percentage":                   string,
-            "dB":                           string,
-            "status":                       string
+            "playback_value":               integer,
+            "percentage":                   integer,
+            "dB":                           float,
+            "status":                       boolean
         }
     }
 
 Examples:
 
     $ amixer sget Master | jc --amixer -p
+
+
+    $ amixer sget Master | jc --amixer -p -r
     {
         "control_name": "Master",
         "capabilities": [
@@ -59,6 +63,7 @@ Examples:
         }
     }
 
+
 """
 from typing import List, Dict
 
@@ -78,6 +83,7 @@ class info():
 
 __version__ = info.version
 
+
 def _process(proc_data: dict) -> dict:
     """
     Parameters:
@@ -88,6 +94,7 @@ def _process(proc_data: dict) -> dict:
 
         dictionary of amixer sget <control_name>
     """
+
     return proc_data
 
 
@@ -221,47 +228,5 @@ def parse(
                 "dB": db_value,
                 "status": status
             }
-    return _process(mapping) if raw else mapping
 
-
-if __name__ == '__main__':
-    data_sget_master = """Simple mixer control 'Master',0
-      Capabilities: pvolume pvolume-joined pswitch pswitch-joined
-      Playback channels: Mono
-      Limits: Playback 0 - 87
-      Mono: Playback 87 [100%] [0.00dB] [on]"""
-
-    data_sget_capture = """Simple mixer control 'Capture',0
-      Capabilities: cvolume cswitch
-      Capture channels: Front Left - Front Right
-      Limits: Capture 0 - 63
-      Front Left: Capture 63 [100%] [30.00dB] [on]
-      Front Right: Capture 63 [100%] [30.00dB] [on]"""
-
-
-    data_sget_speakers = """Simple mixer control 'Speaker',0
-      Capabilities: pvolume pswitch
-      Playback channels: Front Left - Front Right
-      Limits: Playback 0 - 87
-      Mono:
-      Front Left: Playback 87 [100%] [0.00dB] [on]
-      Front Right: Playback 87 [100%] [0.00dB] [on]"""
-
-    data_sget_headphones = """Simple mixer control 'Headphone',0
-      Capabilities: pvolume pswitch
-      Playback channels: Front Left - Front Right
-      Limits: Playback 0 - 87
-      Mono:
-      Front Left: Playback 0 [0%] [-65.25dB] [off]
-      Front Right: Playback 0 [0%] [-65.25dB] [off]"""
-    output_data_sget_master = parse(data=data_sget_master)
-    output_data_sget_speakers = parse(data=data_sget_speakers)
-    output_data_sget_headphones = parse(data=data_sget_headphones)
-    output_data_sget_capture = parse(data=data_sget_capture)
-    di = {'master': output_data_sget_master,
-          'speakers': output_data_sget_speakers,
-          'headphones': output_data_sget_headphones,
-          'capture': output_data_sget_capture}
-    for key, val in di.items():
-        print(f"[info] for key: {key}")
-        print(f"[info] the output is: {val}")
+    return mapping if raw else _process(mapping)
