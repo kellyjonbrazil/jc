@@ -86,16 +86,38 @@ __version__ = info.version
 
 def _process(proc_data: dict) -> dict:
     """
-    Parameters:
+    Processes raw structured data to match the schema requirements.
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+    Parameters:
+        proc_data: (dict) raw structured data from the parser
 
     Returns:
-
-        dictionary of amixer sget <control_name>
+        (dict) processed structured data adhering to the schema
     """
+    # Initialize the processed dictionary
+    processed = {
+        "control_name": proc_data.get("control_name", ""),
+        "capabilities": proc_data.get("capabilities", []),
+        "playback_channels": proc_data.get("playback_channels", []),
+        "limits": {
+            "playback_min": int(proc_data.get("limits", {}).get("playback_min", 0)),
+            "playback_max": int(proc_data.get("limits", {}).get("playback_max", 0)),
+        },
+    }
 
-    return proc_data
+    # Process Mono or channel-specific data
+    channels = ["mono", "front_left", "front_right"]
+    for channel in channels:
+        if channel in proc_data:
+            channel_data = proc_data[channel]
+            processed[channel] = {
+                "playback_value": int(channel_data.get("playback_value", 0)),
+                "percentage": int(channel_data.get("percentage", "0%").strip("%")),
+                "dB": float(channel_data.get("dB", "0.0dB").strip("dB")),
+                "status": channel_data.get("status", "off") == "on",
+            }
+
+    return processed
 
 
 def parse(
