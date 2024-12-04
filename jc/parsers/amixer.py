@@ -37,7 +37,30 @@ Schema:
 Examples:
 
     $ amixer sget Master | jc --amixer -p
-
+    {
+      "control_name": "Capture",
+      "capabilities": [
+        "cvolume",
+        "cswitch"
+      ],
+      "playback_channels": [],
+      "limits": {
+        "playback_min": 0,
+        "playback_max": 63
+      },
+      "front_left": {
+        "playback_value": 63,
+        "percentage": 100,
+        "dB": 30.0,
+        "status": true
+      },
+      "front_right": {
+        "playback_value": 63,
+        "percentage": 100,
+        "dB": 30.0,
+        "status": true
+      }
+    }
 
     $ amixer sget Master | jc --amixer -p -r
     {
