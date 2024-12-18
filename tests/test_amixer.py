@@ -35,10 +35,12 @@ class AmixerTests(unittest.TestCase):
                 expected_amixer_sget_processed_json_map: dict = json.loads(expected_amixer_sget_processed_json_output)
 
             # Tests for raw=True
-            amixer_sget_json_map: dict = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=True)
+            amixer_sget_json_map: dict = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=True,
+                                                  quiet=True)
             self.assertEqual(amixer_sget_json_map, expected_amixer_sget_json_map)
             # Tests for raw=False process
-            amixer_sget_json_processed_map: dict = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=False)
+            amixer_sget_json_processed_map: dict = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=False,
+                                                            quiet=True)
             self.assertEqual(amixer_sget_json_processed_map, expected_amixer_sget_processed_json_map)
 
 
