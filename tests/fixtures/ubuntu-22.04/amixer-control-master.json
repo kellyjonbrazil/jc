@@ -1,0 +1,1 @@
+{"control_name": "Master", "capabilities": ["pvolume", "pvolume-joined", "pswitch", "pswitch-joined"], "playback_channels": ["Mono"], "limits": {"playback_min": "0", "playback_max": "87"}, "mono": {"playback_value": "87", "percentage": "100%", "db": "0.00db", "status": "on"}}
