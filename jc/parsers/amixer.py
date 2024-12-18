@@ -29,7 +29,7 @@ Schema:
         "mono": {
             "playback_value":               integer,
             "percentage":                   integer,
-            "dB":                           float,
+            "db":                           float,
             "status":                       boolean
         }
     }
@@ -51,13 +51,13 @@ Examples:
       "front_left": {
         "playback_value": 63,
         "percentage": 100,
-        "dB": 30.0,
+        "db": 30.0,
         "status": true
       },
       "front_right": {
         "playback_value": 63,
         "percentage": 100,
-        "dB": 30.0,
+        "db": 30.0,
         "status": true
       }
     }
@@ -81,7 +81,7 @@ Examples:
         "mono": {
             "playback_value": "87",
             "percentage": "100%",
-            "dB": "0.00dB",
+            "db": "0.00db",
             "status": "on"
         }
     }
@@ -91,7 +91,7 @@ Examples:
 from typing import List, Dict
 
 import jc.utils
-
+from jc.utils import convert_to_int
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -123,8 +123,8 @@ def _process(proc_data: dict) -> dict:
         "capabilities": proc_data.get("capabilities", []),
         "playback_channels": proc_data.get("playback_channels", []),
         "limits": {
-            "playback_min": int(proc_data.get("limits", {}).get("playback_min", 0)),
-            "playback_max": int(proc_data.get("limits", {}).get("playback_max", 0)),
+            "playback_min": convert_to_int(proc_data.get("limits", {}).get("playback_min", 0)),
+            "playback_max": convert_to_int(proc_data.get("limits", {}).get("playback_max", 0)),
         },
     }
 
@@ -134,9 +134,9 @@ def _process(proc_data: dict) -> dict:
         if channel in proc_data:
             channel_data = proc_data[channel]
             processed[channel] = {
-                "playback_value": int(channel_data.get("playback_value", 0)),
-                "percentage": int(channel_data.get("percentage", "0%").strip("%")),
-                "db": float(channel_data.get("db", "0.0dB").strip("db")),
+                "playback_value": convert_to_int(channel_data.get("playback_value", 0)),
+                "percentage": convert_to_int(channel_data.get("percentage", "0%").strip("%")),
+                "db": float(channel_data.get("db", "0.0db").strip("db")),
                 "status": channel_data.get("status", "off") == "on",
             }
 
@@ -179,8 +179,8 @@ def parse(
           Capabilities: cvolume cswitch
           Capture channels: Front Left - Front Right
           Limits: Capture 0 - 63
-          Front Left: Capture 63 [100%] [30.00dB] [on]
-          Front Right: Capture 63 [100%] [30.00dB] [on]
+          Front Left: Capture 63 [100%] [30.00db] [on]
+          Front Right: Capture 63 [100%] [30.00db] [on]
 
 
 
@@ -190,7 +190,7 @@ def parse(
           Capabilities: pvolume pvolume-joined pswitch pswitch-joined
           Playback channels: Mono
           Limits: Playback 0 - 87
-          Mono: Playback 87 [100%] [0.00dB] [on]
+          Mono: Playback 87 [100%] [0.00db] [on]
 
 
 
@@ -202,8 +202,8 @@ def parse(
           Playback channels: Front Left - Front Right
           Limits: Playback 0 - 87
           Mono:
-          Front Left: Playback 87 [100%] [0.00dB] [on]
-          Front Right: Playback 87 [100%] [0.00dB] [on]
+          Front Left: Playback 87 [100%] [0.00db] [on]
+          Front Right: Playback 87 [100%] [0.00db] [on]
 
 
 
@@ -214,8 +214,8 @@ def parse(
           Playback channels: Front Left - Front Right
           Limits: Playback 0 - 87
           Mono:
-          Front Left: Playback 0 [0%] [-65.25dB] [off]
-          Front Right: Playback 0 [0%] [-65.25dB] [off]
+          Front Left: Playback 0 [0%] [-65.25db] [off]
+          Front Right: Playback 0 [0%] [-65.25db] [off]
     """
     # checks os compatibility and print a stderr massage if not compatible. quiet True could remove this check.
     jc.utils.compatibility(__name__, info.compatible, quiet)
@@ -257,13 +257,13 @@ def parse(
             # Identify the channel name and parse its information
             channel_name = line.split(":")[0].strip().lower().replace(" ", "_")
             channel_info = line.split(":")[1].strip()
-            # Example: "Playback 255 [100%] [0.00dB] [on]"
+            # Example: "Playback 255 [100%] [0.00db] [on]"
             channel_data = channel_info.split(" ")
             if channel_data[0] == "":
                 continue
             playback_value = channel_data[1]
             percentage = channel_data[2].strip("[]")  # Extract percentage e.g., "100%"
-            db_value = channel_data[3].strip("[]")  # Extract dB value e.g., "0.00dB"
+            db_value = channel_data[3].strip("[]")  # Extract db value e.g., "0.00db"
             status = channel_data[4].strip("[]")  # Extract status e.g., "on" or "off"
 
             # Store channel mapping in the dictionary
