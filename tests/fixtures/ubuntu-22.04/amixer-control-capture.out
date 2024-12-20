@@ -1,0 +1,6 @@
+Simple mixer control 'Capture',0
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 63
+  Front Left: Capture 63 [100%] [30.00dB] [on]
+  Front Right: Capture 63 [100%] [30.00dB] [on]
