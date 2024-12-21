@@ -90,6 +90,7 @@ from typing import Dict
 
 import jc.utils
 from jc.utils import convert_to_int
+from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -115,6 +116,9 @@ def _process(proc_data: Dict) -> Dict:
     Returns:
         (dict) processed structured data adhering to the schema
     """
+    if not proc_data:
+        return {}
+
     # Initialize the processed dictionary
     processed = {
         "control_name": proc_data.get("control_name", ""),
@@ -209,53 +213,55 @@ def parse(
 
     # starts the parsing from here
     mapping: Dict = {}
-    # split lines and than work on each line
-    lines = data.splitlines()
-    first_line = lines[0].strip()
 
-    # Extract the control name from the first line
-    if first_line.startswith("Simple mixer control"):
-        control_name = first_line.split("'")[1]
-    else:
-        raise ValueError("Invalid amixer output format: missing control name.")
-    # map the control name
-    mapping["control_name"] = control_name
+    if jc.utils.has_data(data):
+        # split lines and than work on each line
+        lines = data.splitlines()
+        first_line = lines[0].strip()
 
-    # Process subsequent lines for capabilities, channels, limits, and channel-specific mapping.
-    # gets the lines from the next line - because we already took care the first line.
-    for line in lines[1:]:
-        # strip the line (maybe there are white spaces in the begin&end)
-        line = line.strip()
+        # Extract the control name from the first line
+        if first_line.startswith("Simple mixer control"):
+            control_name = first_line.split("'")[1]
+        else:
+            raise ParseError("Invalid amixer output format: missing control name.")
+        # map the control name
+        mapping["control_name"] = control_name
 
-        if line.startswith("Capabilities:"):
-            mapping["capabilities"] = line.split(":")[1].strip().split()
-        elif line.startswith("Playback channels:"):
-            mapping["playback_channels"] = line.split(":")[1].strip().split(" - ")
-        elif line.startswith("Limits:"):
-            limits = line.split(":")[1].strip().split(" - ")
-            mapping["limits"] = {
-                "playback_min": limits[0].split()[1],
-                "playback_max": limits[1]
-            }
-        elif line.startswith("Mono:") or line.startswith("Front Left:") or line.startswith("Front Right:"):
-            # Identify the channel name and parse its information
-            channel_name = line.split(":")[0].strip().lower().replace(" ", "_")
-            channel_info = line.split(":")[1].strip()
-            # Example: "Playback 255 [100%] [0.00db] [on]"
-            channel_data = channel_info.split(" ")
-            if channel_data[0] == "":
-                continue
-            playback_value = channel_data[1]
-            percentage = channel_data[2].strip("[]")  # Extract percentage e.g., "100%"
-            db_value = channel_data[3].strip("[]")  # Extract db value e.g., "0.00db"
-            status = channel_data[4].strip("[]")  # Extract status e.g., "on" or "off"
+        # Process subsequent lines for capabilities, channels, limits, and channel-specific mapping.
+        # gets the lines from the next line - because we already took care the first line.
+        for line in lines[1:]:
+            # strip the line (maybe there are white spaces in the begin&end)
+            line = line.strip()
 
-            # Store channel mapping in the dictionary
-            mapping[channel_name] = {
-                "playback_value": playback_value,
-                "percentage": percentage,
-                "db": db_value.lower(),
-                "status": status
-            }
+            if line.startswith("Capabilities:"):
+                mapping["capabilities"] = line.split(":")[1].strip().split()
+            elif line.startswith("Playback channels:"):
+                mapping["playback_channels"] = line.split(":")[1].strip().split(" - ")
+            elif line.startswith("Limits:"):
+                limits = line.split(":")[1].strip().split(" - ")
+                mapping["limits"] = {
+                    "playback_min": limits[0].split()[1],
+                    "playback_max": limits[1]
+                }
+            elif line.startswith("Mono:") or line.startswith("Front Left:") or line.startswith("Front Right:"):
+                # Identify the channel name and parse its information
+                channel_name = line.split(":")[0].strip().lower().replace(" ", "_")
+                channel_info = line.split(":")[1].strip()
+                # Example: "Playback 255 [100%] [0.00db] [on]"
+                channel_data = channel_info.split(" ")
+                if channel_data[0] == "":
+                    continue
+                playback_value = channel_data[1]
+                percentage = channel_data[2].strip("[]")  # Extract percentage e.g., "100%"
+                db_value = channel_data[3].strip("[]")  # Extract db value e.g., "0.00db"
+                status = channel_data[4].strip("[]")  # Extract status e.g., "on" or "off"
+
+                # Store channel mapping in the dictionary
+                mapping[channel_name] = {
+                    "playback_value": playback_value,
+                    "percentage": percentage,
+                    "db": db_value.lower(),
+                    "status": status
+                }
 
     return mapping if raw else _process(mapping)
