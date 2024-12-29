@@ -155,3 +155,53 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
             output.append(output_line)
 
     return output
+
+
+def simple_key_value_parse(data: Iterable[str]) -> List[Dict]:
+    """
+    Parse key-value metadata from a block of formatted text into a list of dictionaries.
+    Each line should contain a key and a corresponding value, separated by a delimiter
+    such as a colon (`:`). Keys are normalized to lowercase with spaces replaced by underscores.
+
+    Example Metadata Block:
+
+        key_1: value_1
+        key_2: value_2
+        key_3: value with spaces
+        key_4: 123
+        key_5:
+
+        [{'key_1': 'value_1'}, {'key_2': 'value_2'}, {'key_3': 'value with spaces'}, {'key_4': '123'}, {'key_5': None}]
+
+    Parameters:
+
+        data:   (iter)   An iterable of string lines (e.g. str.splitlines())
+                         Each line should follow a `key: value` format. Keys
+                         should not repeat. Blank values will be converted
+                         to `None`. Keys will be normalized by replacing spaces
+                         with underscores and converting to lowercase.
+
+                         Ensure there are no blank lines between key-value pairs.
+
+    Returns:
+
+        List of Dictionaries
+    """
+    output = []
+
+    for line in data:
+        line = line.strip()
+        if not line:
+            continue
+
+        if ":" in line:
+            key, value = line.split(":", 1)
+            key = key.strip().lower().replace(" ", "_")
+            value = value.strip() if value.strip() else None
+            output.append({key: value})
+        else:
+            raise ValueError(
+                f"Invalid line format: {line}. Expected 'key: value' format."
+            )
+
+    return output

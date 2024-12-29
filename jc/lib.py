@@ -114,6 +114,7 @@ parsers: List[str] = [
     'path',
     'path-list',
     'pci-ids',
+    'pdfinfo'
     'pgpass',
     'pidstat',
     'pidstat-s',
