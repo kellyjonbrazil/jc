@@ -22,6 +22,12 @@ class AmixerTests(unittest.TestCase):
         self.test_files_json = [f'{file}.json' for file in self.TEST_FILES_NAME]
         self.test_files_processed_json = [f'{file}-processed.json' for file in self.TEST_FILES_NAME]
 
+    def test_amixer_sget_nodata(self):
+        """
+        Test 'amixer' with no data
+        """
+        self.assertEqual(jc.parsers.amixer.parse('', quiet=True), {})
+
     def test_amixer_sget(self):
         for file_out, file_json, file_processed_json in zip(self.test_files_out, self.test_files_json,
                                                             self.test_files_processed_json):

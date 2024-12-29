@@ -1,5 +1,8 @@
 jc changelog
 
+20241220 v1.25.5
+- Add `amixer` command parser
+
 20241125 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
 - Add `pacman` command parser
