@@ -139,6 +139,7 @@ try:
             "alias": str,
             "class": str,
             "powered": str,
+            "power_state": str,
             "discoverable": str,
             "discoverable_timeout": str,
             "pairable": str,
@@ -185,6 +186,7 @@ _controller_line_pattern = (
     + r"|\s*Alias:\s*(?P<alias>.+)"
     + r"|\s*Class:\s*(?P<class>.+)"
     + r"|\s*Powered:\s*(?P<powered>.+)"
+    + r"|\s*PowerState:\s*(?P<power_state>.+)"
     + r"|\s*Discoverable:\s*(?P<discoverable>.+)"
     + r"|\s*DiscoverableTimeout:\s*(?P<discoverable_timeout>.+)"
     + r"|\s*Pairable:\s*(?P<pairable>.+)"
@@ -219,6 +221,7 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
             "alias": '',
             "class": '',
             "powered": '',
+            "power_state": '',
             "discoverable": '',
             "discoverable_timeout": '',
             "pairable": '',
@@ -261,6 +264,8 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
             controller["class"] = matches["class"]
         elif matches["powered"]:
             controller["powered"] = matches["powered"]
+        elif matches["power_state"]:
+            controller["power_state"] = matches["power_state"]
         elif matches["discoverable"]:
             controller["discoverable"] = matches["discoverable"]
         elif matches["discoverable_timeout"]:
