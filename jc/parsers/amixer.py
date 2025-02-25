@@ -136,7 +136,6 @@ def _process(proc_data: dict) -> dict:
             processed[channel] = {
                 "playback_value": convert_to_int(channel_data.get("playback_value", 0)),
                 "percentage": convert_to_int(channel_data.get("percentage", "0%").strip("%")),
-                "db": float(channel_data.get("db", "0.0db").strip("db")),
                 "status": channel_data.get("status", "off") == "on",
             }
 
@@ -261,10 +260,15 @@ def parse(
             channel_data = channel_info.split(" ")
             if channel_data[0] == "":
                 continue
+            if "db" in channel_data[3]:
+                    db_value = channel_data[3].strip("[]")
+                    status = channel_data[4].strip("[]")
+            else:
+                db_value = "0.0db"
+                status = channel_data[3].strip("[]")
             playback_value = channel_data[1]
+            
             percentage = channel_data[2].strip("[]")  # Extract percentage e.g., "100%"
-            db_value = channel_data[3].strip("[]")  # Extract db value e.g., "0.00db"
-            status = channel_data[4].strip("[]")  # Extract status e.g., "on" or "off"
 
             # Store channel mapping in the dictionary
             mapping[channel_name] = {
