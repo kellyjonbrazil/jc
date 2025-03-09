@@ -207,6 +207,9 @@ def _normalize_key(keyname: str) -> str:
                   .lower()
 
 def _normalize_value(value: str) -> Optional[str]:
+    if value == None:
+        return None
+
     value = value.strip()
 
     if value == '--':
