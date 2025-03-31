@@ -26,7 +26,7 @@ Schema:
         "type":             string,
         "mountpoint":       string,
         "mountpoints": [
-                            string    # null if no mountpoints
+                            string
         ],
         "kname":            string,
         "fstype":           string,
@@ -380,8 +380,11 @@ def parse(data, raw=False, quiet=False):
         # find multiple mount points and add to a single entry
         for entry in raw_output:
             if entry['name']:
-                if 'mountpoints' in entry and entry['mountpoints']:
-                    entry['mountpoints'] = [entry['mountpoints']]
+                if 'mountpoints' in entry:
+                    if entry['mountpoints']:
+                        entry['mountpoints'] = [entry['mountpoints']]
+                    else:
+                        entry['mountpoints'] = []
                 new_list.append(entry)
             elif 'mountpoints' in entry and entry['mountpoints']:
                 new_list[-1]['mountpoints'].append(entry['mountpoints'])
