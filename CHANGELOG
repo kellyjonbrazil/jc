@@ -1,7 +1,8 @@
 jc changelog
 
-20250330 v1.25.5
+20250331 v1.25.5
 - Add `amixer` command parser
+- Fix `time` command parser for output that does not contain centiseconds
 - Fix typing for upcoming python v3.14
 - Fix timezone setting for tests to support minimal chrooted builds
 
