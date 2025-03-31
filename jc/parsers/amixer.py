@@ -251,10 +251,16 @@ def parse(
                 channel_data = channel_info.split(" ")
                 if channel_data[0] == "":
                     continue
+
+                if "dB" in channel_data[3]:
+                    db_value = channel_data[3].strip("[]")
+                    status = channel_data[4].strip("[]")
+                else:
+                    db_value = "0.0db"
+                    status = channel_data[3].strip("[]")
+
                 playback_value = channel_data[1]
                 percentage = channel_data[2].strip("[]")  # Extract percentage e.g., "100%"
-                db_value = channel_data[3].strip("[]")  # Extract db value e.g., "0.00db"
-                status = channel_data[4].strip("[]")  # Extract status e.g., "on" or "off"
 
                 # Store channel mapping in the dictionary
                 mapping[channel_name] = {
