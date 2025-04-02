@@ -1,7 +1,8 @@
 jc changelog
 
-20250331 v1.25.5
+20250402 v1.25.5
 - Add `amixer` command parser
+- Fix `bluetoothctl` parser failing to parse controllers with power state prop
 - Fix `lsblk` command parser to support multiple mountpoints. Also, added
   byte conversions for size fields.
 - Fix `time` command parser for output that does not contain centiseconds
