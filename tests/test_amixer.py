@@ -32,23 +32,39 @@ class AmixerTests(unittest.TestCase):
         for file_out, file_json, file_processed_json in zip(self.test_files_out, self.test_files_json,
                                                             self.test_files_processed_json):
             with open(file_out, 'r') as f:
-                amixer_sget_raw_output: str = f.read()
+                amixer_sget_raw_output = f.read()
             with open(file_json, 'r') as f:
-                expected_amixer_sget_json_output: str = f.read()
-                expected_amixer_sget_json_map: dict = json.loads(expected_amixer_sget_json_output)
+                expected_amixer_sget_json_output = f.read()
+                expected_amixer_sget_json_map = json.loads(expected_amixer_sget_json_output)
             with open(file_processed_json, 'r') as f:
-                expected_amixer_sget_processed_json_output: str = f.read()
-                expected_amixer_sget_processed_json_map: dict = json.loads(expected_amixer_sget_processed_json_output)
+                expected_amixer_sget_processed_json_output = f.read()
+                expected_amixer_sget_processed_json_map = json.loads(expected_amixer_sget_processed_json_output)
 
             # Tests for raw=True
-            amixer_sget_json_map: dict = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=True,
+            amixer_sget_json_map = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=True,
                                                   quiet=True)
             self.assertEqual(amixer_sget_json_map, expected_amixer_sget_json_map)
             # Tests for raw=False process
-            amixer_sget_json_processed_map: dict = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=False,
+            amixer_sget_json_processed_map = jc.parse(self.AMIXER_CMD, amixer_sget_raw_output, raw=False,
                                                             quiet=True)
             self.assertEqual(amixer_sget_json_processed_map, expected_amixer_sget_processed_json_map)
 
+    def test_amixer_missing_db(self):
+        data = '''Simple mixer control 'Master',0
+  Capabilities: pvolume pswitch pswitch-joined
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 65536
+  Mono:
+  Front Left: Playback 55039 [84%] [on]
+  Front Right: Playback 54383 [83%] [on]
+Simple mixer control 'Capture',0
+  Capabilities: cvolume cswitch cswitch-joined
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 65536
+  Front Left: Capture 24672 [38%] [on]
+  Front Right: Capture 24672 [38%] [on]'''
+        expected = {"control_name":"Master","capabilities":["cvolume","cswitch","cswitch-joined"],"playback_channels":["Front Left","Front Right"],"limits":{"playback_min":0,"playback_max":65536},"front_left":{"playback_value":24672,"percentage":38,"db":0.0,"status":True},"front_right":{"playback_value":24672,"percentage":38,"db":0.0,"status":True}}
+        self.assertEqual(expected, jc.parsers.amixer.parse(data, quiet=True))
 
 if __name__ == '__main__':
     unittest.main()

@@ -3,7 +3,7 @@ EDID helper
 """
 
 from subprocess import CalledProcessError, check_output
-from typing import ByteString, List
+from typing import List
 
 __all__ = ["EdidHelper"]
 
@@ -12,14 +12,14 @@ class EdidHelper:
     """Class for working with EDID data"""
 
     @staticmethod
-    def hex2bytes(hex_data: str) -> ByteString:
+    def hex2bytes(hex_data: str) -> bytes:
         """Convert hex EDID string to bytes
 
         Args:
             hex_data (str): hex edid string
 
         Returns:
-            ByteString: edid byte string
+            bytes: edid byte string
         """
         # delete edid 1.3 additional block
         if len(hex_data) > 256:
@@ -32,14 +32,14 @@ class EdidHelper:
         return bytes(numbers)
 
     @classmethod
-    def get_edids(cls) -> List[ByteString]:
+    def get_edids(cls) -> List[bytes]:
         """Get edids from xrandr
 
         Raises:
             `RuntimeError`: if error with retrieving xrandr util data
 
         Returns:
-            List[ByteString]: list with edids
+            List[bytes]: list with edids
         """
         try:
             output = check_output(["xrandr", "--verbose"])
