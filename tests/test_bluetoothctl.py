@@ -104,7 +104,48 @@ class BluetoothctlTests(unittest.TestCase):
         if actual:
             for k, v in expected.items():
                 self.assertEqual(v, actual[0][k], f"Controller regex failed on {k}")
-    
+
+    def test_bluetoothctl_controller_2(self):
+        """
+        Test 'bluetoothctl' with controller 2
+        """
+
+        with open("tests/fixtures/generic/bluetoothctl_controller_2.out", "r") as f:
+            output = f.read()
+
+        actual = parse(output, quiet=True)
+
+        self.assertIsNotNone(actual)
+        self.assertIsNotNone(actual[0])
+
+        expected = {
+            "address": "CC:52:AF:17:6A:E4",
+            "is_public": True,
+            "name": "starbase",
+            "alias": "starbase",
+            "class": "0x006c010c (7078156)",
+            "powered": "yes",
+            "power_state": "on",
+            "discoverable": "no",
+            "discoverable_timeout": "0x000000b4 (180)",
+            "pairable": "no",
+            "uuids": [
+                "Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)",
+                "Audio Source              (0000110a-0000-1000-8000-00805f9b34fb)",
+                "Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)",
+                "PnP Information           (00001200-0000-1000-8000-00805f9b34fb)",
+                "A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)",
+                "A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)",
+                "Handsfree Audio Gateway   (0000111f-0000-1000-8000-00805f9b34fb)"
+            ],
+            "modalias": "usb:v1D6Bp0246d054F",
+            "discovering": "no"
+        }
+
+        if actual:
+            for k, v in expected.items():
+                self.assertEqual(v, actual[0][k], f"Controller regex failed on {k}")
+
     def test_bluetoothctl_controller_with_manufacturer(self):
         """
         Test 'bluetoothctl' with controller having manufacturer attr

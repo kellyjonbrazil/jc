@@ -4,7 +4,6 @@ Edid module
 
 import struct
 from collections import namedtuple
-from typing import ByteString
 
 __all__ = ["Edid"]
 
@@ -108,10 +107,10 @@ class Edid:
         ),
     )
 
-    def __init__(self, edid: ByteString):
+    def __init__(self, edid: bytes):
         self._parse_edid(edid)
 
-    def _parse_edid(self, edid: ByteString):
+    def _parse_edid(self, edid: bytes):
         """Convert edid byte string to edid object"""
         if struct.calcsize(self._STRUCT_FORMAT) != 128:
             raise ValueError("Wrong edid size.")

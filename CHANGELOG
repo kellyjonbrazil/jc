@@ -1,7 +1,13 @@
 jc changelog
 
-20241220 v1.25.5
+20250402 v1.25.5
 - Add `amixer` command parser
+- Fix `bluetoothctl` parser failing to parse controllers with power state prop
+- Fix `lsblk` command parser to support multiple mountpoints. Also, added
+  byte conversions for size fields.
+- Fix `time` command parser for output that does not contain centiseconds
+- Fix typing for upcoming python v3.14
+- Fix timezone setting for tests to support minimal chrooted builds
 
 20241125 v1.25.4
 - Add `ipconfig` command parser (`ipconfig` for Windows)
