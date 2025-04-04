@@ -340,7 +340,7 @@ def _process(proc_data):
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
             if key in size_list:
-                entry[key + '_bytes'] = jc.utils.convert_size_to_int(entry[key])
+                entry[key + '_bytes'] = jc.utils.convert_size_to_int(entry[key], posix_mode=True)
 
     return proc_data
 
