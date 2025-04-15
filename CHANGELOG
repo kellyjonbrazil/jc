@@ -1,7 +1,8 @@
 jc changelog
 
-20250412 v1.25.5
+20250414 v1.25.5
 - Add `amixer` command parser
+- Enhance `iptables` command parser to add default policy statistics fields
 - Fix `bluetoothctl` parser failing to parse controllers with power state prop
 - Fix `lsblk` command parser to support multiple mountpoints. Also, added
   byte conversions for size fields.
