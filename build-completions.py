@@ -7,3 +7,5 @@ with open('completions/jc_bash_completion.sh', 'w') as f:
 
 with open('completions/jc_zsh_completion.sh', 'w') as f:
     print(zsh_completion(), file=f)
+
+# force test run
