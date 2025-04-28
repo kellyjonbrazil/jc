@@ -1,0 +1,15 @@
+{
+  "domain": "",
+  "user_accounts": [
+    {
+      "user_name": "Administrator"
+    },
+    {
+      "user_name": "Guest"
+    },
+    {
+      "user_name": "user1"
+    }
+  ],
+  "account_origin": "\\\\DESKTOP-WIN7"
+}

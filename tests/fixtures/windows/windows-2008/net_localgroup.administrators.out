@@ -1,0 +1,10 @@
+Alias name     Administrators
+Comment        Administrators have complete and unrestricted access to the computer/domain
+
+Members
+
+-------------------------------------------------------------------------------
+Administrator
+user1
+vagrant
+The command completed successfully.
