@@ -141,6 +141,7 @@ Examples:
     ]
 """
 import re
+import json
 from typing import List, Dict, Optional
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
@@ -149,7 +150,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nmcli` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -313,8 +314,29 @@ def _device_show_parse(data: str) -> List[Dict]:
 def _connection_show_x_parse(data: str) -> List[Dict]:
     raw_output: List = []
     item: Dict = {}
+    in_team_config: bool = False
+    team_config_value: List = []
 
     for line in filter(None, data.splitlines()):
+
+        # fix for team.config, which is multi-line JSON
+        if line.startswith('team.config:'):
+            in_team_config = True
+            _, value = line.split(':', maxsplit=1)
+            team_config_value.append(value.strip())
+            item['team_config'] = []
+            continue
+
+        if not line.startswith('team.') and in_team_config:
+            team_config_value.append(line.strip())
+            continue
+
+        in_team_config = False
+
+        if team_config_value:
+            item['team_config'] = json.loads(''.join(team_config_value))
+            team_config_value = []
+
         key, value = line.split(':', maxsplit=1)
 
         key_n = _normalize_key(key)
