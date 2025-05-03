@@ -36,6 +36,7 @@ These are documented below.
     [
       {
         "<key>":                  string/integer/float,   # [0]
+        "team_config":            object,
         "dhcp4_option_x": {
           "name":                 string,
           "value":                string/integer/float,
