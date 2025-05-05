@@ -325,7 +325,7 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
             in_team_config = True
             _, value = line.split(':', maxsplit=1)
             team_config_value.append(value.strip())
-            item['team_config'] = []
+            item['team_config'] = {}
             continue
 
         if not line.startswith('team.') and in_team_config:
@@ -335,6 +335,7 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
         in_team_config = False
 
         if team_config_value:
+            # team.config value should always be JSON
             item['team_config'] = json.loads(''.join(team_config_value))
             team_config_value = []
 
