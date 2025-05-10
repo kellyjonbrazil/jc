@@ -20,6 +20,9 @@ Schema:
     [
       {
         "chain":                string,
+        "default_policy":       string,
+        "default_packets":      integer,
+        "default_bytes":        integer,
         "rules": [
           {
             "num"               integer,
@@ -44,6 +47,9 @@ Examples:
     [
       {
         "chain": "PREROUTING",
+        "default_policy": "DROP",
+        "default_packets": 0,
+        "default_bytes": 0,
         "rules": [
           {
             "num": 1,
@@ -103,6 +109,9 @@ Examples:
     [
       {
         "chain": "PREROUTING",
+        "default_policy": "DROP",
+        "default_packets": "0",
+        "default_bytes": "0",
         "rules": [
           {
             "num": "1",
@@ -158,12 +167,13 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -174,6 +184,17 @@ class info():
 
 __version__ = info.version
 
+chain_pkt_byt_pattern = re.compile(
+    r'''
+        \s\(policy\s
+        (?P<policy_name>.+)
+        \s
+        (?P<packets>.+)
+        \spackets,\s
+        (?P<bytes>.+)
+        \sbytes\)
+    ''', re.VERBOSE
+)
 
 def _process(proc_data):
     """
@@ -188,6 +209,13 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
+
+        if 'default_packets' in entry:
+            entry['default_packets'] = jc.utils.convert_to_int(entry['default_packets'])
+
+        if 'default_bytes' in entry:
+            entry['default_bytes'] = jc.utils.convert_size_to_int(entry['default_bytes'])
+
         for rule in entry['rules']:
             int_list = ['num', 'pkts']
             for key in rule:
@@ -243,6 +271,14 @@ def parse(data, raw=False, quiet=False):
                 parsed_line = line.split()
 
                 chain['chain'] = parsed_line[1]
+
+                stats_match = re.search(chain_pkt_byt_pattern, line)
+                if stats_match:
+                    stats = stats_match.groupdict()
+                    chain['default_policy'] = stats['policy_name']
+                    chain['default_packets'] = stats['packets']
+                    chain['default_bytes'] = stats['bytes']
+
                 chain['rules'] = []
 
                 continue

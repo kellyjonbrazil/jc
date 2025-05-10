@@ -25,6 +25,9 @@ Schema:
     [
       {
         "chain":                string,
+        "default_policy":       string,
+        "default_packets":      integer,
+        "default_bytes":        integer,
         "rules": [
           {
             "num"               integer,
@@ -49,6 +52,9 @@ Examples:
     [
       {
         "chain": "PREROUTING",
+        "default_policy": "DROP",
+        "default_packets": 0,
+        "default_bytes": 0,
         "rules": [
           {
             "num": 1,
@@ -108,6 +114,9 @@ Examples:
     [
       {
         "chain": "PREROUTING",
+        "default_policy": "DROP",
+        "default_packets": "0",
+        "default_bytes": "0",
         "rules": [
           {
             "num": "1",
@@ -188,4 +197,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/iptables.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iptables.py)
 
-Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)

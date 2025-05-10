@@ -9,13 +9,41 @@ on:
     - "**/*.py"
 
 jobs:
+  very_old_python:
+    if: github.event.pull_request.draft == false
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-13, windows-2019]
+        python-version: ["3.6"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: "Set up timezone to America/Los_Angeles"
+      uses: szenius/set-timezone@v1.2
+      with:
+        timezoneLinux: "America/Los_Angeles"
+        timezoneMacos: "America/Los_Angeles"
+        timezoneWindows: "Pacific Standard Time"
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Test with unittest
+      run: |
+        python -m unittest discover tests
+
   old_python:
     if: github.event.pull_request.draft == false
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-13, ubuntu-20.04, windows-2019]
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        os: [macos-13, ubuntu-22.04, windows-2019]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
 
     steps:
     - uses: actions/checkout@v3

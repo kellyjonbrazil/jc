@@ -159,6 +159,7 @@ option.
 |          `--acpi` | `acpi` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi)           |
 |       `--airport` | `airport -I` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport)        |
 |     `--airport-s` | `airport -s` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s)      |
+|        `--amixer` | `amixer` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/amixer)         |
 | `--apt-cache-show` | `apt-cache show` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_cache_show) |
 |   `--apt-get-sqq` | `apt-get -sqq` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_get_sqq)    |
 |           `--arp` | `arp` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/arp)            |
@@ -1378,4 +1379,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-© 2019-2024 Kelly Brazil
+© 2019-2025 Kelly Brazil
