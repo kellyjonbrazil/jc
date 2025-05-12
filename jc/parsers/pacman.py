@@ -186,7 +186,7 @@ class info():
     author_email = 'kellyjonbrazil@gmail.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['command', 'file']
-    magic_commands = ['pacman']
+    magic_commands = ['pacman', 'yay']
 
 
 __version__ = info.version
