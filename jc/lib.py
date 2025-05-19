@@ -230,6 +230,7 @@ parsers: List[str] = [
     'wg-show',
     'who',
     'x509-cert',
+    'x509-crl',
     'x509-csr',
     'xml',
     'xrandr',
