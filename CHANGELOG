@@ -1,6 +1,7 @@
 jc changelog
 
 20250518 v1.25.6
+- Add `x509-crl` file parser to support Certificate Revocation List PEM and DER files
 - Fix `nmcli` command parser to support blank `team.config` JSON value and `team-port.config` JSON value
 
 20250503 v1.25.5
