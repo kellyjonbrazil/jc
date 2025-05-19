@@ -1,5 +1,8 @@
 jc changelog
 
+20250518 v1.25.6
+- Fix `nmcli` command parser to support blank `team.config` JSON value and `team-port.config` JSON value
+
 20250503 v1.25.5
 - Add `amixer` command parser
 - Enhance `iptables` command parser to add default policy statistics fields
