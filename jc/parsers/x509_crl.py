@@ -6,6 +6,7 @@ list files.
 Usage (cli):
 
     $ cat certificateRevocationList.pem | jc --x509-crl
+    $ cat certificateRevocationList.der | jc --x509-crl
 
 Usage (module):
 
@@ -14,52 +15,50 @@ Usage (module):
 
 Schema:
 
-    [
-      {
-        "tbs_cert_list": {
-          "version":                      string,
-          "signature": {
-            "algorithm":                  string,
-            "parameters":                 string/null
-          },
-          "issuer": {
-            "organization_name":          string,
-            "organizational_unit_name":   string,
-            "common_name":                string
-          },
-          "this_update":                  integer,  # [1]
-          "next_update":                  integer,  # [1]
-          "revoked_certificates": [
-            {
-              "user_certificate":         integer,
-              "revocation_date":          integer,  # [1]
-              "crl_entry_extensions": [
-                {
-                  "extn_id":              string,
-                  "critical":             boolean,
-                  "extn_value":           string,
-                  "extn_value_iso":       string
-                },
-              "revocation_date_iso":      string
-            }
-          ],
-          "crl_extensions": [
-            {
-              "extn_id":                  string,
-              "critical":                 boolean,
-              "extn_value":               array/object/string/integer  # [2]
-            }
-          ],
-          "this_update_iso":              string,
-          "next_update_iso":              string
+    {
+      "tbs_cert_list": {
+        "version":                      string,
+        "signature": {
+          "algorithm":                  string,
+          "parameters":                 string/null
         },
-        "signature_algorithm": {
-          "algorithm":                    string,
-          "parameters":                   string/null
+        "issuer": {
+          "organization_name":          string,
+          "organizational_unit_name":   string,
+          "common_name":                string
         },
-        "signature":                      string  # [0]
-      }
-    ]
+        "this_update":                  integer,  # [1]
+        "next_update":                  integer,  # [1]
+        "revoked_certificates": [
+          {
+            "user_certificate":         integer,
+            "revocation_date":          integer,  # [1]
+            "crl_entry_extensions": [
+              {
+                "extn_id":              string,
+                "critical":             boolean,
+                "extn_value":           string,
+                "extn_value_iso":       string
+              },
+            "revocation_date_iso":      string
+          }
+        ],
+        "crl_extensions": [
+          {
+            "extn_id":                  string,
+            "critical":                 boolean,
+            "extn_value":               array/object/string/integer  # [2]
+          }
+        ],
+        "this_update_iso":              string,
+        "next_update_iso":              string
+      },
+      "signature_algorithm": {
+        "algorithm":                    string,
+        "parameters":                   string/null
+      },
+      "signature":                      string  # [0]
+    }
 
     [0] in colon-delimited hex notation
     [1] time-zone-aware (UTC) epoch timestamp
@@ -323,15 +322,14 @@ def parse(
         except TypeError:
             der_bytes = data  # type: ignore
 
-        certs = []
         if pem.detect(der_bytes):
             for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
                 if type_name == 'X509 CRL':
-                    certs.append(crl.CertificateList.load(der_bytes))
-
+                    crl_obj = crl.CertificateList.load(der_bytes)
+                    break
         else:
-            certs.append(crl.CertificateList.load(der_bytes))
+            crl_obj = crl.CertificateList.load(der_bytes)
 
-        raw_output = [_fix_objects(cert.native) for cert in certs]
+        raw_output = _fix_objects(crl_obj.native)
 
     return raw_output if raw else _process(raw_output)
