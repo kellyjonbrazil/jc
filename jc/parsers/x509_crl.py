@@ -274,7 +274,7 @@ Examples:
 from typing import List, Dict, Union
 import jc.utils
 from jc.parsers.asn1crypto import pem, crl, jc_global
-from jc.parsers.x509_cert import _fix_objects, _process
+from jc.parsers.x509_cert import _fix_objects
 
 
 class info():
@@ -295,7 +295,7 @@ def parse(
     data: Union[str, bytes],
     raw: bool = False,
     quiet: bool = False
-) -> List[Dict]:
+) -> Dict:
     """
     Main text parsing function
 
@@ -307,12 +307,12 @@ def parse(
 
     Returns:
 
-        List of Dictionaries. Raw or processed structured data.
+        Dictionary. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc_global.quiet = quiet  # to inject quiet setting into asn1crypto library
 
-    raw_output: List = []
+    raw_output: Dict = {}
 
     if jc.utils.has_data(data):
         # convert to bytes, if not already, for PEM detection since that's
@@ -332,4 +332,4 @@ def parse(
 
         raw_output = _fix_objects(crl_obj.native)
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output
