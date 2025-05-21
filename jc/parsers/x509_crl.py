@@ -137,139 +137,137 @@ Schema:
 Examples:
 
     $ cat sample-crl.pem | jc --x509-crl -p
-    [
-      {
-        "tbs_cert_list": {
-          "version": "v2",
-          "signature": {
-            "algorithm": "sha1_rsa",
-            "parameters": null
-          },
-          "issuer": {
-            "organization_name": "Sample Signer Organization",
-            "organizational_unit_name": "Sample Signer Unit",
-            "common_name": "Sample Signer Cert"
-          },
-          "this_update": 1361183520,
-          "next_update": 1361184120,
-          "revoked_certificates": [
-            {
-              "user_certificate": 1341767,
-              "revocation_date": 1361182932,
-              "crl_entry_extensions": [
-                {
-                  "extn_id": "crl_reason",
-                  "critical": false,
-                  "extn_value": "affiliation_changed"
-                },
-                {
-                  "extn_id": "invalidity_date",
-                  "critical": false,
-                  "extn_value": 1361182920,
-                  "extn_value_iso": "2013-02-18T10:22:00+00:00"
-                }
-              ],
-              "revocation_date_iso": "2013-02-18T10:22:12+00:00"
-            },
-            {
-              "user_certificate": 1341768,
-              "revocation_date": 1361182942,
-              "crl_entry_extensions": [
-                {
-                  "extn_id": "crl_reason",
-                  "critical": false,
-                  "extn_value": "certificate_hold"
-                },
-                {
-                  "extn_id": "invalidity_date",
-                  "critical": false,
-                  "extn_value": 1361182920,
-                  "extn_value_iso": "2013-02-18T10:22:00+00:00"
-                }
-              ],
-              "revocation_date_iso": "2013-02-18T10:22:22+00:00"
-            },
-            {
-              "user_certificate": 1341769,
-              "revocation_date": 1361182952,
-              "crl_entry_extensions": [
-                {
-                  "extn_id": "crl_reason",
-                  "critical": false,
-                  "extn_value": "superseded"
-                },
-                {
-                  "extn_id": "invalidity_date",
-                  "critical": false,
-                  "extn_value": 1361182920,
-                  "extn_value_iso": "2013-02-18T10:22:00+00:00"
-                }
-              ],
-              "revocation_date_iso": "2013-02-18T10:22:32+00:00"
-            },
-            {
-              "user_certificate": 1341770,
-              "revocation_date": 1361182962,
-              "crl_entry_extensions": [
-                {
-                  "extn_id": "crl_reason",
-                  "critical": false,
-                  "extn_value": "key_compromise"
-                },
-                {
-                  "extn_id": "invalidity_date",
-                  "critical": false,
-                  "extn_value": 1361182920,
-                  "extn_value_iso": "2013-02-18T10:22:00+00:00"
-                }
-              ],
-              "revocation_date_iso": "2013-02-18T10:22:42+00:00"
-            },
-            {
-              "user_certificate": 1341771,
-              "revocation_date": 1361182971,
-              "crl_entry_extensions": [
-                {
-                  "extn_id": "crl_reason",
-                  "critical": false,
-                  "extn_value": "cessation_of_operation"
-                },
-                {
-                  "extn_id": "invalidity_date",
-                  "critical": false,
-                  "extn_value": 1361182920,
-                  "extn_value_iso": "2013-02-18T10:22:00+00:00"
-                }
-              ],
-              "revocation_date_iso": "2013-02-18T10:22:51+00:00"
-            }
-          ],
-          "crl_extensions": [
-            {
-              "extn_id": "authority_key_identifier",
-              "critical": false,
-              "extn_value": {
-                "key_identifier": "be:12:01:cc:aa:ea:11:80:da:2e:ad:b2...",
-                "authority_cert_issuer": null,
-                "authority_cert_serial_number": null
-              }
-            },
-            {
-              "extn_id": "crl_number",
-              "critical": false,
-              "extn_value": 3
-            }
-          ],
-          "this_update_iso": "2013-02-18T10:32:00+00:00",
-          "next_update_iso": "2013-02-18T10:42:00+00:00"
-        },
-        "signature_algorithm": {
+    {
+      "tbs_cert_list": {
+        "version": "v2",
+        "signature": {
           "algorithm": "sha1_rsa",
           "parameters": null
         },
-        "signature": "42:21:be:81:f1:c3:79:76:66:5b:ce:21:13:8a:68:a..."
-      }
-    ]
+        "issuer": {
+          "organization_name": "Sample Signer Organization",
+          "organizational_unit_name": "Sample Signer Unit",
+          "common_name": "Sample Signer Cert"
+        },
+        "this_update": 1361183520,
+        "next_update": 1361184120,
+        "revoked_certificates": [
+          {
+            "user_certificate": 1341767,
+            "revocation_date": 1361182932,
+            "crl_entry_extensions": [
+              {
+                "extn_id": "crl_reason",
+                "critical": false,
+                "extn_value": "affiliation_changed"
+              },
+              {
+                "extn_id": "invalidity_date",
+                "critical": false,
+                "extn_value": 1361182920,
+                "extn_value_iso": "2013-02-18T10:22:00+00:00"
+              }
+            ],
+            "revocation_date_iso": "2013-02-18T10:22:12+00:00"
+          },
+          {
+            "user_certificate": 1341768,
+            "revocation_date": 1361182942,
+            "crl_entry_extensions": [
+              {
+                "extn_id": "crl_reason",
+                "critical": false,
+                "extn_value": "certificate_hold"
+              },
+              {
+                "extn_id": "invalidity_date",
+                "critical": false,
+                "extn_value": 1361182920,
+                "extn_value_iso": "2013-02-18T10:22:00+00:00"
+              }
+            ],
+            "revocation_date_iso": "2013-02-18T10:22:22+00:00"
+          },
+          {
+            "user_certificate": 1341769,
+            "revocation_date": 1361182952,
+            "crl_entry_extensions": [
+              {
+                "extn_id": "crl_reason",
+                "critical": false,
+                "extn_value": "superseded"
+              },
+              {
+                "extn_id": "invalidity_date",
+                "critical": false,
+                "extn_value": 1361182920,
+                "extn_value_iso": "2013-02-18T10:22:00+00:00"
+              }
+            ],
+            "revocation_date_iso": "2013-02-18T10:22:32+00:00"
+          },
+          {
+            "user_certificate": 1341770,
+            "revocation_date": 1361182962,
+            "crl_entry_extensions": [
+              {
+                "extn_id": "crl_reason",
+                "critical": false,
+                "extn_value": "key_compromise"
+              },
+              {
+                "extn_id": "invalidity_date",
+                "critical": false,
+                "extn_value": 1361182920,
+                "extn_value_iso": "2013-02-18T10:22:00+00:00"
+              }
+            ],
+            "revocation_date_iso": "2013-02-18T10:22:42+00:00"
+          },
+          {
+            "user_certificate": 1341771,
+            "revocation_date": 1361182971,
+            "crl_entry_extensions": [
+              {
+                "extn_id": "crl_reason",
+                "critical": false,
+                "extn_value": "cessation_of_operation"
+              },
+              {
+                "extn_id": "invalidity_date",
+                "critical": false,
+                "extn_value": 1361182920,
+                "extn_value_iso": "2013-02-18T10:22:00+00:00"
+              }
+            ],
+            "revocation_date_iso": "2013-02-18T10:22:51+00:00"
+          }
+        ],
+        "crl_extensions": [
+          {
+            "extn_id": "authority_key_identifier",
+            "critical": false,
+            "extn_value": {
+              "key_identifier": "be:12:01:cc:aa:ea:11:80:da:2e:ad:b2...",
+              "authority_cert_issuer": null,
+              "authority_cert_serial_number": null
+            }
+          },
+          {
+            "extn_id": "crl_number",
+            "critical": false,
+            "extn_value": 3
+          }
+        ],
+        "this_update_iso": "2013-02-18T10:32:00+00:00",
+        "next_update_iso": "2013-02-18T10:42:00+00:00"
+      },
+      "signature_algorithm": {
+        "algorithm": "sha1_rsa",
+        "parameters": null
+      },
+      "signature": "42:21:be:81:f1:c3:79:76:66:5b:ce:21:13:8a:68:a..."
+    }
 """
 from typing import List, Dict, Union
 import jc.utils
