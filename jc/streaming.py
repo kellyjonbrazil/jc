@@ -47,8 +47,9 @@ def stream_error(e: BaseException, line: str) -> JSONDictType:
 
 def add_jc_meta(func: F) -> F:
     """
-    Decorator for streaming parsers to add stream_success and stream_error
-    objects. This simplifies the yield lines in the streaming parsers.
+    Decorator for streaming parsers to add `stream_success` and
+    `stream_error` objects. This simplifies the `yield` lines in the
+    streaming parsers.
 
     With the decorator on parse():
 
@@ -82,7 +83,7 @@ def add_jc_meta(func: F) -> F:
                       successfully parse.
 
         ignore_exceptions:  (bool)  continue processing lines and ignore
-                            exceptions if True.
+                            exceptions if `True`.
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -109,8 +110,8 @@ def raise_or_yield(
     line: str
 ) -> Tuple[BaseException, str]:
     """
-    Return the exception object and line string if ignore_exceptions is
-    True. Otherwise, re-raise the exception from the exception object with
+    Return the exception object and line string if `ignore_exceptions` is
+    `True`. Otherwise, re-raise the exception from the exception object with
     an annotation.
     """
     ignore_exceptions_msg = '... Use the ignore_exceptions option (-qq) to ignore streaming parser errors.'
