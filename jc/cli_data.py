@@ -101,8 +101,8 @@ Examples:
         $ jc --pretty /proc/meminfo
 
     Line Slicing:
-        $ cat output.txt | jc 4:15 --parser    # Parse from line 4 to 14
-                                                 with parser (zero-based)
+        $ cat output.txt | jc 4:15 --<PARSER>   # Parse from line 4 to 14
+                                                # with <PARSER> (zero-based)
 
     Parser Documentation:
         $ jc --help --dig
