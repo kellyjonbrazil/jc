@@ -1,7 +1,7 @@
 """jc - JSON Convert streaming utils"""
 
 from functools import wraps
-from typing import Dict, Tuple, Union, Iterable, Callable, TypeVar, cast, Any
+from typing import Tuple, Union, Iterable, Callable, TypeVar, cast, Any
 from .jc_types import JSONDictType
 
 
