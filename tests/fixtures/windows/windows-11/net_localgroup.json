@@ -1,0 +1,63 @@
+{
+  "account_origin": "\\\\DESKTOP-WIN11-HOME",
+  "domain": null,
+  "comment": null,
+  "groups": [
+    {
+      "name": "__vmware__",
+      "members": []
+    },
+    {
+      "name": "Administrators",
+      "members": []
+    },
+    {
+      "name": "Device Owners",
+      "members": []
+    },
+    {
+      "name": "Distributed COM Users",
+      "members": []
+    },
+    {
+      "name": "docker-users",
+      "members": []
+    },
+    {
+      "name": "Event Log Readers",
+      "members": []
+    },
+    {
+      "name": "Guests",
+      "members": []
+    },
+    {
+      "name": "Hyper-V Administrators",
+      "members": []
+    },
+    {
+      "name": "IIS_IUSRS",
+      "members": []
+    },
+    {
+      "name": "Performance Log Users",
+      "members": []
+    },
+    {
+      "name": "Performance Monitor Users",
+      "members": []
+    },
+    {
+      "name": "Remote Management Users",
+      "members": []
+    },
+    {
+      "name": "System Managed Accounts Group",
+      "members": []
+    },
+    {
+      "name": "Users",
+      "members": []
+    }
+  ]
+}

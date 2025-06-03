@@ -1,0 +1,13 @@
+Alias name     Administrators
+Comment
+
+Members
+
+-------------------------------------------------------------------------------
+Administrator
+SOMECOMPANY\ansible
+SOMECOMPANY\da
+SOMECOMPANY\Domain Admins
+SOMECOMPANY\localadmin
+user1
+The command completed successfully.

@@ -1,0 +1,73 @@
+===========================================================================
+Interface List
+ 17...24 4b fe 5b 9b e6 ......Intel(R) I211 Gigabit Network Connection
+ 20...24 4b fe 5b 9b e7 ......Realtek PCIe 2.5GbE Family Controller
+  3...........................OpenVPN Data Channel Offload
+  7...00 ff 4c ff b8 68 ......TAP-NordVPN Windows Adapter V9
+ 13...a8 7e ea 36 46 61 ......Microsoft Wi-Fi Direct Virtual Adapter
+ 22...aa 7e ea 36 46 60 ......Microsoft Wi-Fi Direct Virtual Adapter #2
+  8...00 50 56 c0 00 01 ......VMware Virtual Ethernet Adapter for VMnet1
+ 10...00 50 56 c0 00 08 ......VMware Virtual Ethernet Adapter for VMnet8
+ 11...a8 7e ea 36 46 60 ......Intel(R) Wi-Fi 6 AX200 160MHz
+  4...a8 7e ea 36 46 64 ......Bluetooth Device (Personal Area Network)
+  1...........................Software Loopback Interface 1
+===========================================================================
+
+IPv4 Route Table
+===========================================================================
+Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric
+          0.0.0.0          0.0.0.0      192.168.1.1    192.168.1.169     35
+        127.0.0.0        255.0.0.0         On-link         127.0.0.1    331
+        127.0.0.1  255.255.255.255         On-link         127.0.0.1    331
+  127.255.255.255  255.255.255.255         On-link         127.0.0.1    331
+      192.168.1.0    255.255.255.0         On-link     192.168.1.169    291
+    192.168.1.169  255.255.255.255         On-link     192.168.1.169    291
+    192.168.1.255  255.255.255.255         On-link     192.168.1.169    291
+    192.168.181.0    255.255.255.0         On-link     192.168.181.1    291
+    192.168.181.1  255.255.255.255         On-link     192.168.181.1    291
+  192.168.181.255  255.255.255.255         On-link     192.168.181.1    291
+    192.168.213.0    255.255.255.0         On-link     192.168.213.1    291
+    192.168.213.1  255.255.255.255         On-link     192.168.213.1    291
+  192.168.213.255  255.255.255.255         On-link     192.168.213.1    291
+        224.0.0.0        240.0.0.0         On-link         127.0.0.1    331
+        224.0.0.0        240.0.0.0         On-link     192.168.181.1    291
+        224.0.0.0        240.0.0.0         On-link     192.168.213.1    291
+        224.0.0.0        240.0.0.0         On-link     192.168.1.169    291
+  255.255.255.255  255.255.255.255         On-link         127.0.0.1    331
+  255.255.255.255  255.255.255.255         On-link     192.168.181.1    291
+  255.255.255.255  255.255.255.255         On-link     192.168.213.1    291
+  255.255.255.255  255.255.255.255         On-link     192.168.1.169    291
+===========================================================================
+Persistent Routes:
+  None
+
+IPv6 Route Table
+===========================================================================
+Active Routes:
+ If Metric Network Destination      Gateway
+  1    331 ::1/128                  On-link
+ 11    291 fd18:4310:ad04:1::/64    fe80::4600:49ff:fee1:c6ee
+ 11    291 fd63:cc9c:65eb:3f95::/64 On-link
+ 11    291 fd63:cc9c:65eb:3f95:85e:ed3a:ebbf:d3ea/128
+                                    On-link
+ 11    291 fd63:cc9c:65eb:3f95:3d2f:46d0:6f06:f255/128
+                                    On-link
+ 11    291 fd63:cc9c:65eb:3f95:57c2:aa:10d8:db08/128
+                                    On-link
+  8    291 fe80::/64                On-link
+ 10    291 fe80::/64                On-link
+ 11    291 fe80::/64                On-link
+ 10    291 fe80::4551:bf0d:59dd:a4f0/128
+                                    On-link
+ 11    291 fe80::4fae:1380:5a1b:8b6b/128
+                                    On-link
+  8    291 fe80::f47d:9c7f:69dc:591e/128
+                                    On-link
+  1    331 ff00::/8                 On-link
+  8    291 ff00::/8                 On-link
+ 10    291 ff00::/8                 On-link
+ 11    291 ff00::/8                 On-link
+===========================================================================
+Persistent Routes:
+  None
