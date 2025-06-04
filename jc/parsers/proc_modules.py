@@ -33,7 +33,8 @@ Schema:
                                     string
         ],
         "status":                   string,
-        "location":                 string
+        "location":                 string,
+        "taint_state":              string
       }
     ]
 
@@ -47,7 +48,8 @@ Examples:
         "used": 1,
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "location": "0xffffffffc0ab4000",
+        "taint_state": "(E)"
       },
       {
         "module": "vsock_loopback",
@@ -55,7 +57,8 @@ Examples:
         "used": 0,
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a14000"
+        "location": "0xffffffffc0a14000",
+        "taint_state": "(F)"
       },
       {
         "module": "vmw_vsock_virtio_transport_common",
@@ -65,7 +68,8 @@ Examples:
           "vsock_loopback"
         ],
         "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "location": "0xffffffffc0a03000",
+        "taint_state": "(E)"
       },
       ...
     ]
@@ -78,7 +82,8 @@ Examples:
         "used": "1",
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "location": "0xffffffffc0ab4000",
+        "taint_state": null
       },
       {
         "module": "vsock_loopback",
@@ -86,7 +91,8 @@ Examples:
         "used": "0",
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a14000"
+        "location": "0xffffffffc0a14000",
+        "taint_state": null
       },
       {
         "module": "vmw_vsock_virtio_transport_common",
@@ -96,7 +102,8 @@ Examples:
           "vsock_loopback"
         ],
         "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "location": "0xffffffffc0a03000",
+        "taint_state": null
       },
       ...
     ]
@@ -168,7 +175,9 @@ def parse(
 
         for line in filter(None, data.splitlines()):
 
-            module, size, used, used_by, status, location = line.split()
+            module_info = line.split()
+            module, size, used, used_by, status, location = module_info[:6]
+            taint_state = module_info[6] if len(module_info) > 6 else None
             used_by_list = used_by.split(',')[:-1]
 
             raw_output.append(
@@ -178,7 +187,8 @@ def parse(
                     'used': used,
                     'used_by': used_by_list,
                     'status': status,
-                    'location': location
+                    'location': location,
+                    'taint_state': taint_state
                 }
             )
 
