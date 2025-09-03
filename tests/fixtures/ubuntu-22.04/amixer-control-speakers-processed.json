@@ -1,0 +1,1 @@
+{"control_name":"Speaker","capabilities":["pvolume","pswitch"],"playback_channels":["Front Left","Front Right"],"limits":{"playback_min":0,"playback_max":87},"front_left":{"playback_value":87,"percentage":100,"db":0.0,"status":true},"front_right":{"playback_value":87,"percentage":100,"db":0.0,"status":true}}
