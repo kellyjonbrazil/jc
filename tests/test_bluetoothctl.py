@@ -312,7 +312,7 @@ class BluetoothctlTests(unittest.TestCase):
             "modalias": "usb:v052Cp0DC3d1426",
             "battery_percentage": 70
         }
-        
+
         if actual:
             for k, v in expected.items():
                 self.assertEqual(v, actual[0][k], f"Device regex failed on {k}")
@@ -389,6 +389,46 @@ class BluetoothctlTests(unittest.TestCase):
 
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Device regex failed on {k}")
+
+    def test_bluetoothctl_devices_w_cable_pairing(self):
+        """
+        Test 'bluetoothctl' with devices with CablePairing field
+        """
+        data =  '''Device 3C:B0:ED:C4:8F:32 (public)
+	Name: Nothing Ear
+	Alias: Nothing Ear
+	Class: 0x00240404 (2360324)
+	Icon: audio-headset
+	Paired: yes
+	Bonded: yes
+	Trusted: yes
+	Blocked: no
+	Connected: yes
+	LegacyPairing: no
+	CablePairing: no
+	UUID: SDP                       (00000001-0000-1000-8000-00805f9b34fb)
+	UUID: Serial Port               (00001101-0000-1000-8000-00805f9b34fb)
+	UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+	UUID: Advanced Audio Distribu.. (0000110d-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control Cont.. (0000110f-0000-1000-8000-00805f9b34fb)
+	UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
+	UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Audio             (00001203-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+	UUID: Guangzhou SuperSound In.. (0000fd90-0000-1000-8000-00805f9b34fb)
+	UUID: Google                    (0000fe2c-0000-1000-8000-00805f9b34fb)
+	UUID: Vendor specific           (66666666-6666-6666-6666-666666666666)
+	UUID: Vendor specific           (aeac4a03-dff5-498f-843a-34487cf133eb)
+	UUID: Vendor specific           (df21fe2c-2515-4fdb-8886-f12c4d67927c)
+	Modalias: bluetooth:v02B0p0000d001F
+	Battery Percentage: 0x5f (95)
+'''
+        expected = [{"name":"Nothing Ear","is_public":True,"is_random":False,"address":"3C:B0:ED:C4:8F:32","alias":"Nothing Ear","appearance":"","class":"0x00240404 (2360324)","icon":"audio-headset","paired":"yes","bonded":"yes","trusted":"yes","blocked":"no","connected":"yes","legacy_pairing":"no","cable_pairing":"no","rssi":0,"txpower":0,"uuids":["SDP                       (00000001-0000-1000-8000-00805f9b34fb)","Serial Port               (00001101-0000-1000-8000-00805f9b34fb)","Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)","A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)","Advanced Audio Distribu.. (0000110d-0000-1000-8000-00805f9b34fb)","A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)","A/V Remote Control Cont.. (0000110f-0000-1000-8000-00805f9b34fb)","Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)","PnP Information           (00001200-0000-1000-8000-00805f9b34fb)","Generic Audio             (00001203-0000-1000-8000-00805f9b34fb)","Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)","Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)","Guangzhou SuperSound In.. (0000fd90-0000-1000-8000-00805f9b34fb)","Google                    (0000fe2c-0000-1000-8000-00805f9b34fb)","Vendor specific           (66666666-6666-6666-6666-666666666666)","Vendor specific           (aeac4a03-dff5-498f-843a-34487cf133eb)","Vendor specific           (df21fe2c-2515-4fdb-8886-f12c4d67927c)"],"modalias":"bluetooth:v02B0p0000d001F","battery_percentage":95}]
+
+        self.assertEqual(parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

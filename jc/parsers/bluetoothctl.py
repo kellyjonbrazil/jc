@@ -64,6 +64,7 @@ a controller and a device but there might be fields corresponding to one entity.
             "blocked":              string,
             "connected":            string,
             "legacy_pairing":       string,
+            "cable_pairing":        string,
             "rssi":                 int,
             "txpower":              int,
             "uuids":                array,
@@ -112,7 +113,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`bluetoothctl` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
@@ -165,6 +166,7 @@ try:
             "blocked": str,
             "connected": str,
             "legacy_pairing": str,
+            "cable_pairing": str,
             "rssi": int,
             "txpower": int,
             "uuids": List[str],
@@ -302,6 +304,7 @@ _device_line_pattern = (
     + r"|\s*TxPower:\s*(?P<txpower>.+)"
     + r"|\s*Battery\sPercentage:\s*0[xX][0-9a-fA-F]*\s*\((?P<battery_percentage>[0-9]+)\)"
     + r"|\s*UUID:\s*(?P<uuid>.+))"
+    + r"|\s*CablePairing:\s*(?P<cable_pairing>.+)"
 )
 
 
@@ -335,6 +338,7 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
         "blocked": '',
         "connected": '',
         "legacy_pairing": '',
+        "cable_pairing": '',
         "rssi": 0,
         "txpower": 0,
         "uuids": [],
@@ -383,6 +387,8 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
             device["connected"] = matches["connected"]
         elif matches["legacy_pairing"]:
             device["legacy_pairing"] = matches["legacy_pairing"]
+        elif matches["cable_pairing"]:
+            device["cable_pairing"] = matches["cable_pairing"]
         elif matches["rssi"]:
             rssi = matches["rssi"]
             try:
