@@ -556,4 +556,4 @@ Source: [`jc/parsers/ip_address.py`](https://github.com/kellyjonbrazil/jc/blob/m
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -65,7 +65,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`uptime` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -162,7 +162,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-        if 'users' in data:
+        if 'user' in data:
             # standard uptime output
             time, _, *uptime, users, _, _, _, load_1m, load_5m, load_15m = data.split()
 

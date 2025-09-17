@@ -1,0 +1,57 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : DESKTOP-WIN10-PRO
+   Primary Dns Suffix  . . . . . . . :
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : tailff123.ts.net
+                                       internal.companyname.com
+
+Unknown adapter Tailscale:
+
+   Connection-specific DNS Suffix  . : tailff123.ts.net
+   Description . . . . . . . . . . . : Tailscale Tunnel
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : fd7a:115c:a1e0:ab12:4843:cd96:6293:47b2(Preferred)
+   Link-local IPv6 Address . . . . . : fe80::99d0:ec2d:b2e7:536b%8(Preferred)
+   IPv4 Address. . . . . . . . . . . : 100.115.71.66(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . :
+   DNS Servers . . . . . . . . . . . : fec0:0:0:ffff::1%1
+                                       fec0:0:0:ffff::2%1
+                                       fec0:0:0:ffff::3%1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+   Connection-specific DNS Suffix Search List :
+                                       tailff123.ts.net
+
+Ethernet adapter Ethernet 2:
+
+   Connection-specific DNS Suffix  . : internal.companyname.com
+   Description . . . . . . . . . . . : ASIX AX88179 USB 3.0 to Gigabit Ethernet Adapter #2
+   Physical Address. . . . . . . . . : F8-E4-3B-AD-F2-6D
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::c936:c2db:79ad:e1c6%16(Preferred)
+   IPv4 Address. . . . . . . . . . . : 10.50.13.132(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Thursday, June 22, 2023 10:39:04 AM
+   Lease Expires . . . . . . . . . . : Monday, September 23, 2024 2:31:46 AM
+   Default Gateway . . . . . . . . . : 10.50.13.1
+   DHCP Server . . . . . . . . . . . : 10.50.13.1
+   DHCPv6 IAID . . . . . . . . . . . : 351866565
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2A-15-C3-11-1C-D3-05-F1-58-E1
+   DNS Servers . . . . . . . . . . . : 10.50.13.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Ethernet adapter Bluetooth Network Connection:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Bluetooth Device (Personal Area Network)
+   Physical Address. . . . . . . . . : 1C-C1-0C-C3-25-B4
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes

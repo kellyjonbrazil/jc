@@ -52,6 +52,21 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-device-show.out'), 'r', encoding='utf-8') as f:
         fedora32_nmcli_device_show = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-config.out'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_config = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-config-blank.out'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_config_blank = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-port-config.out'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_port_config = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-port-config-blank.out'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_port_config_blank = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-and-team-port-config.out'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_and_team_port_config = f.read()
+
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/nmcli-connection-all.json'), 'r', encoding='utf-8') as f:
@@ -92,6 +107,21 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/fedora32/nmcli-device-show.json'), 'r', encoding='utf-8') as f:
         fedora32_nmcli_device_show_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-config.json'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_config_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-config-blank.json'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_config_blank_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-port-config.json'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_port_config_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-port-config-blank.json'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_port_config_blank_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-and-team-port-config.json'), 'r', encoding='utf-8') as f:
+        generic_nmcli_team_and_team_port_config_json = json.loads(f.read())
 
 
 
@@ -184,6 +214,36 @@ class MyTests(unittest.TestCase):
         Test 'nmcli device show' on fedora32
         """
         self.assertEqual(jc.parsers.nmcli.parse(self.fedora32_nmcli_device_show, quiet=True), self.fedora32_nmcli_device_show_json)
+
+    def test_nmcli_team_config(self):
+        """
+        Test nmcli with team.config JSON value
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_team_config, quiet=True), self.generic_nmcli_team_config_json)
+
+    def test_nmcli_team_config_blank(self):
+        """
+        Test nmcli with blank team.config JSON value
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_team_config_blank, quiet=True), self.generic_nmcli_team_config_blank_json)
+
+    def test_nmcli_team_port_config(self):
+        """
+        Test nmcli with team-port.config JSON value
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_team_port_config, quiet=True), self.generic_nmcli_team_port_config_json)
+
+    def test_nmcli_team_port_config_blank(self):
+        """
+        Test nmcli with blank team-port.config JSON value
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_team_port_config_blank, quiet=True), self.generic_nmcli_team_port_config_blank_json)
+
+    def test_nmcli_team_and_team_port_config_blank(self):
+        """
+        Test nmcli with both team.config and team-port.config JSON value
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_team_and_team_port_config, quiet=True), self.generic_nmcli_team_and_team_port_config_json)
 
 
 if __name__ == '__main__':

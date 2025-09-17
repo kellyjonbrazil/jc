@@ -37,6 +37,8 @@ class MyTests(unittest.TestCase):
             '3/22/2021, 1:15:51 PM (Coordinated Universal Time)': {'string': '3/22/2021, 1:15:51 PM (Coordinated Universal Time)', 'format': 1705, 'naive': 1616444151, 'utc': 1616418951},
             # Windows english format with UTC tz (found in systeminfo cli output)
             '3/22/2021, 1:15:51 PM (UTC+0000)': {'string': '3/22/2021, 1:15:51 PM (UTC+0000)', 'format': 1710, 'naive': 1616444151, 'utc': 1616418951},
+            # Windows ipconfig cli output format
+            'Thursday, June 22, 2023 10:39:04 AM': {'string': 'Thursday, June 22, 2023 10:39:04 AM', 'format': 1720, 'naive': 1687455544, 'utc': None},
             # Google Big Table format with no timezone:
             '2000/01/01-01:00:00.000000': {'string': '2000/01/01-01:00:00.000000', 'format': 1750, 'naive': 946717200, 'utc': None},
             # Google Big Table format with timezone:
@@ -207,6 +209,34 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_size_to_int(input_string, binary=True), expected_output)
+
+
+    def test_utils_convert_size_to_int_posix_mode(self):
+        io_map = {
+            '1 K': 1024,
+            '1 KiB': 1024,
+            '1 KB': 1000,
+            '1.5 G': 1610612736,
+            '1.5 GiB': 1610612736,
+            '1.5 GB': 1500000000
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_size_to_int(input_string, posix_mode=True), expected_output)
+
+
+    def test_utils_convert_size_to_int_decimal_bias(self):
+        io_map = {
+            '1 K': 1000,
+            '1 Ki': 1000,
+            '1 KiB': 1024,
+            '1.5 G': 1500000000,
+            '1.5 Gi': 1500000000,
+            '1.5 GiB': 1610612736
+        }
+
+        for input_string, expected_output in io_map.items():
+            self.assertEqual(jc.utils.convert_size_to_int(input_string, decimal_bias=True), expected_output)
 
 
     def test_utils_has_data_nodata(self):

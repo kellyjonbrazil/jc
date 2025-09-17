@@ -33,6 +33,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-h.out'), 'r', encoding='utf-8') as f:
         osx_10_14_6_df_h = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-hh.out'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_df_hh = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.out'), 'r', encoding='utf-8') as f:
         generic_df_long_filesystem = f.read()
 
@@ -60,6 +63,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-h.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_df_h_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-hh.json'), 'r', encoding='utf-8') as f:
+        osx_10_14_6_df_hh_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.json'), 'r', encoding='utf-8') as f:
         generic_df_long_filesystem_json = json.loads(f.read())
@@ -118,6 +124,12 @@ class MyTests(unittest.TestCase):
         Test 'df -h' on OSX 10.14.6
         """
         self.assertEqual(jc.parsers.df.parse(self.osx_10_14_6_df_h, quiet=True), self.osx_10_14_6_df_h_json)
+
+    def test_df_hh_osx_10_14_6(self):
+        """
+        Test 'df -H' on OSX 10.14.6
+        """
+        self.assertEqual(jc.parsers.df.parse(self.osx_10_14_6_df_hh, quiet=True), self.osx_10_14_6_df_hh_json)
 
     def test_df_long_filesystem(self):
         """

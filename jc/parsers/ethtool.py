@@ -172,7 +172,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ethtool` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -248,10 +248,11 @@ def _parse_default(data: str) -> JSONDictType:
     supported_link_modes: List[str] = []
     supported_fec_modes: List[str] = []
     advertised_link_modes: List[str] = []
+    link_partner_advertised_link_modes: List[str] = []
     advertised_fec_modes: List[str] = []
     current_message_level: List[str] = []
     mode: str = ''  # supported_link_modes, supported_fec_modes, advertised_link_modes,
-                    # advertised_fec_modes, current_message_level
+                    # link_partner_advertised_link_modes, advertised_fec_modes, current_message_level
 
     for line in filter(None, data.splitlines()):
 
@@ -294,6 +295,14 @@ def _parse_default(data: str) -> JSONDictType:
             mode = 'advertised_link_modes'
             continue
 
+        if 'Link partner advertised link modes:' in line and 'Not reported' not in line:
+            _, val = line.split(':', maxsplit=1)
+            val = val.strip()
+            val_list = val.split()
+            link_partner_advertised_link_modes.extend(val_list)
+            mode = 'link_partner_advertised_link_modes'
+            continue
+
         if 'Advertised FEC modes:' in line and 'Not reported' not in line:
             _, val = line.split(':', maxsplit=1)
             val = val.strip()
@@ -326,6 +335,12 @@ def _parse_default(data: str) -> JSONDictType:
             advertised_link_modes.extend(val_list)
             continue
 
+        if mode == 'link_partner_advertised_link_modes':
+            val = line.strip()
+            val_list = val.split()
+            link_partner_advertised_link_modes.extend(val_list)
+            continue
+
         if mode == 'advertised_fec_modes':
             val = line.strip()
             val_list = val.split()
@@ -346,6 +361,7 @@ def _parse_default(data: str) -> JSONDictType:
         (supported_link_modes, 'supported_link_modes'),
         (supported_fec_modes, 'supported_fec_modes'),
         (advertised_link_modes, 'advertised_link_modes'),
+        (link_partner_advertised_link_modes, 'link_partner_advertised_link_modes'),
         (advertised_fec_modes, 'advertised_fec_modes'),
         (current_message_level, 'current_message_level')
     ]

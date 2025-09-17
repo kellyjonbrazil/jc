@@ -71,13 +71,12 @@ Example:
     ]
 """
 import re
-
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.11'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -111,19 +110,24 @@ def _osx_parse(data):
     for entry in data:
         output_line = {}
 
-        filesystem = entry.split(' on ')
-        filesystem = filesystem[0]
-        output_line['filesystem'] = filesystem
+        pattern = re.compile(
+            r'''
+                (?P<filesystem>.*)
+                \son\s
+                (?P<mount_point>.*?)
+                \s
+                \((?P<options>.*?)\)\s*
+            ''', re.VERBOSE
+        )
 
-        mount_point = entry.split(' on ')
-        mount_point = mount_point[1].split(' (')
-        mount_point = mount_point[0]
-        output_line['mount_point'] = mount_point
+        mymatch = pattern.match(entry)
+        groups = mymatch.groupdict()
 
-        options = entry.split('(', maxsplit=1)
-        options = options[1].rstrip(')')
-        options = options.split(', ')
-        output_line['options'] = options
+        if groups:
+            output_line['filesystem'] = groups['filesystem']
+            output_line['mount_point'] = groups['mount_point']
+            options = groups['options'].split(', ')
+            output_line['options'] = options
 
         output.append(output_line)
 
@@ -138,16 +142,19 @@ def _linux_parse(data):
 
         pattern = re.compile(
             r'''
-            (?P<filesystem>\S+)\s+
-            on\s+
-            (?P<mount_point>.*?)\s+
-            type\s+
-            (?P<type>\S+)\s+
-            \((?P<options>.*?)\)\s*''',
-            re.VERBOSE)
+                (?P<filesystem>.*)
+                \son\s
+                (?P<mount_point>.*?)
+                \stype\s
+                (?P<type>\S+)
+                \s+
+                \((?P<options>.*?)\)
+                \s*
+            ''', re.VERBOSE
+        )
 
-        match = pattern.match(entry)
-        groups = match.groupdict()
+        mymatch = pattern.match(entry)
+        groups = mymatch.groupdict()
 
         if groups:
             output_line['filesystem'] = groups["filesystem"]
@@ -215,7 +222,7 @@ def parse(data, raw=False, quiet=False):
 
         # check for OSX and AIX output
         if ' type ' not in cleandata[0]:
-            if 'node' in cleandata[0]:
+            if '  node  ' in cleandata[0]:
                 raw_output = _aix_parse(cleandata)
             else:
                 raw_output = _osx_parse(cleandata)
@@ -223,7 +230,4 @@ def parse(data, raw=False, quiet=False):
         else:
             raw_output = _linux_parse(cleandata)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

@@ -1,0 +1,80 @@
+{
+  "host_name": "WIN-SERVER8",
+  "primary_dns_suffix": null,
+  "node_type": "Hybrid",
+  "ip_routing_enabled": false,
+  "wins_proxy_enabled": false,
+  "dns_suffix_search_list": [],
+  "adapters": [
+    {
+      "name_long": "Ethernet adapter Local Area Connection",
+      "name": "Local Area Connection",
+      "type": "Ethernet",
+      "connection_specific_dns_suffix": null,
+      "connection_specific_dns_suffix_search_list": [],
+      "description": "Intel(R) PRO/1000 MT Network Connection",
+      "physical_address": "00-0C-29-76-C8-D0",
+      "dhcp_enabled": false,
+      "autoconfiguration_enabled": true,
+      "ipv6_addresses": [],
+      "temporary_ipv6_addresses": [],
+      "link_local_ipv6_addresses": [
+        {
+          "address": "fe80::9595:e8d9:b190:ecac",
+          "prefix_length": 11,
+          "status": "Preferred"
+        }
+      ],
+      "ipv4_addresses": [
+        {
+          "address": "192.168.23.154",
+          "subnet_mask": "255.255.255.0",
+          "status": "Preferred",
+          "autoconfigured": false
+        }
+      ],
+      "default_gateways": [
+        "192.168.23.1"
+      ],
+      "dhcp_server": null,
+      "dhcpv6_iaid": "234884137",
+      "dhcpv6_client_duid": "00-01-00-01-2D-32-79-97-00-0C-29-76-C8-D0",
+      "dns_servers": [
+        "192.168.23.151"
+      ],
+      "primary_wins_server": null,
+      "lease_expires": null,
+      "lease_obtained": null,
+      "netbios_over_tcpip": true,
+      "media_state": null,
+      "extras": []
+    },
+    {
+      "name_long": "Tunnel adapter isatap.{F856FDB3-CE70-489D-A231-704790DC1351}",
+      "name": "isatap.{F856FDB3-CE70-489D-A231-704790DC1351}",
+      "type": "Tunnel",
+      "connection_specific_dns_suffix": null,
+      "connection_specific_dns_suffix_search_list": [],
+      "description": "Microsoft ISATAP Adapter",
+      "physical_address": "00-00-00-00-00-00-00-E0",
+      "dhcp_enabled": false,
+      "autoconfiguration_enabled": true,
+      "ipv6_addresses": [],
+      "temporary_ipv6_addresses": [],
+      "link_local_ipv6_addresses": [],
+      "ipv4_addresses": [],
+      "default_gateways": [],
+      "dhcp_server": null,
+      "dhcpv6_iaid": null,
+      "dhcpv6_client_duid": null,
+      "dns_servers": [],
+      "primary_wins_server": null,
+      "lease_expires": null,
+      "lease_obtained": null,
+      "netbios_over_tcpip": null,
+      "media_state": "Media disconnected",
+      "extras": []
+    }
+  ],
+  "extras": []
+}

@@ -27,6 +27,13 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-mountpoint.out'), 'r', encoding='utf-8') as f:
         generic_mount_spaces_in_mountpoint = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-filename.out'), 'r', encoding='utf-8') as f:
+        generic_mount_spaces_in_filename = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-parens-in-filesystem.out'), 'r', encoding='utf-8') as f:
+        generic_mount_parens_in_filesystem = f.read()
+
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.json'), 'r', encoding='utf-8') as f:
         centos_7_7_mount_json = json.loads(f.read())
@@ -45,6 +52,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-mountpoint.json'), 'r', encoding='utf-8') as f:
         generic_mount_spaces_in_mountpoint_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-filename.json'), 'r', encoding='utf-8') as f:
+        generic_mount_spaces_in_filename_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-parens-in-filesystem.json'), 'r', encoding='utf-8') as f:
+        generic_mount_parens_in_filesystem_json = json.loads(f.read())
 
 
     def test_mount_nodata(self):
@@ -88,6 +101,18 @@ class MyTests(unittest.TestCase):
         Test 'mount' with spaces in the mountpoint
         """
         self.assertEqual(jc.parsers.mount.parse(self.generic_mount_spaces_in_mountpoint, quiet=True), self.generic_mount_spaces_in_mountpoint_json)
+
+    def test_mount_spaces_in_filename(self):
+        """
+        Test 'mount' with spaces in the filename
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_spaces_in_filename, quiet=True), self.generic_mount_spaces_in_filename_json)
+
+    def test_mount_parens_in_filesystem(self):
+        """
+        Test 'mount' with parenthesis in the filesystem
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_parens_in_filesystem, quiet=True), self.generic_mount_parens_in_filesystem_json)
 
 
 if __name__ == '__main__':

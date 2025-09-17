@@ -3,6 +3,12 @@ zone:	sunet.se
 	served-serial: "2023091302 since 2023-09-14T00:50:11"
 	commit-serial: "2023091302 since 2023-09-14T07:04:05"
 	wait: "27023 sec between attempts"
+zone:	sunet.dev
+	state: refreshing
+	served-serial: "2023095893 since 2024-10-10T10:10:35"
+	commit-serial: "2023095893 since 2024-10-18T10:00:45"
+	notified-serial: "2023095880 since 2024-10-19T06:11:35"
+	transfer: "TCP connected to 192.168.1.100"
 zone:	catz.sunet.se
 	pattern: example.catalog
 	catalog-member-id: 4b6f6ce2de5929e4.zones.example.catalog.

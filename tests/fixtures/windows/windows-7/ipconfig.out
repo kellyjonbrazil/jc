@@ -1,0 +1,37 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : DESKTOP-WIN7
+   Primary Dns Suffix  . . . . . . . : somecompany.corp
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : somecompany.corp
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) PRO/1000 MT Network Connection
+   Physical Address. . . . . . . . . : 00-0C-29-37-3B-4E
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::c447:d1ef:c29f:c44c%10(Preferred)
+   IPv4 Address. . . . . . . . . . . : 192.168.22.33(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Friday, September 20, 2024 12:13:59 PM
+   Lease Expires . . . . . . . . . . : Tuesday, September 24, 2024 7:02:58 AM
+   Default Gateway . . . . . . . . . : 192.168.22.1
+   DHCP Server . . . . . . . . . . . : 192.168.22.1
+   DHCPv6 IAID . . . . . . . . . . . : 234881473
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-29-4E-8F-8A-00-0C-29-88-1B-1F
+   DNS Servers . . . . . . . . . . . : 192.168.22.151
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Tunnel adapter isatap.{E24F3EA8-436E-3B26-8BB9-CED33928744B}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Microsoft ISATAP Adapter
+   Physical Address. . . . . . . . . : 00-00-00-00-00-00-00-E0
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
