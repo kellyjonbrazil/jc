@@ -255,7 +255,7 @@ class EmailAddress(IA5String):
                 # fix to allow incorrectly encoded email addresses to succeed with warning
                 try:
                     self._unicode = mailbox.decode('cp1252') + '@' + hostname.decode('idna')
-                except UnicodeDecodeError:
+                except (UnicodeDecodeError, UnicodeError):
                     ascii_mailbox = mailbox.decode('ascii', errors='backslashreplace')
                     ascii_hostname = hostname.decode('ascii', errors='backslashreplace')
                     from jc.utils import warning_message

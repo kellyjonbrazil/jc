@@ -1,0 +1,95 @@
+[
+  {
+    "device": "wg0",
+    "private_key": "ZkG2dvJSUq5ohkDFNWBqToaVSyk4Pp8/bULaf6yX+3N=",
+    "public_key": "PQsbRs4w2fidQ7uhjgCypl5fc/804bHZbfl83gGvakN=",
+    "listen_port": 51820,
+    "fwmark": null,
+    "peers": [
+      {
+        "public_key": "rQFRAjRdx1aD8DnTFpkcBOY9Edjt3ZU7+P9HokZv7xe=",
+        "preshared_key": null,
+        "endpoint": "82.132.137.204:50024",
+        "latest_handshake": 1829439251,
+        "transfer_rx": 1536642,
+        "transfer_sx": 492320,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.2/32"
+        ]
+      },
+      {
+        "public_key": "A0fsnrwsv7S9hrk8yzCgOON9gKPYfpCrzqil4bPpxAE=",
+        "preshared_key": null,
+        "endpoint": "82.132.137.204:49732",
+        "latest_handshake": 1829439125,
+        "transfer_rx": 5641359,
+        "transfer_sx": 4206783,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.3/32"
+        ]
+      },
+      {
+        "public_key": "pkjVZR5VdfnSFhlWsqnkf+wv/eHGLHzOtKu8v2CvOD5=",
+        "preshared_key": null,
+        "endpoint": null,
+        "latest_handshake": 0,
+        "transfer_rx": 0,
+        "transfer_sx": 0,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.4/32"
+        ]
+      },
+      {
+        "public_key": "hz0+KJRHJyXfDNjUnZ9LRAnShFFjZNTrW2jRbXjIazx=",
+        "preshared_key": null,
+        "endpoint": "180.255.226.203:21678",
+        "latest_handshake": 1829439243,
+        "transfer_rx": 1555523,
+        "transfer_sx": 544780,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.5/32"
+        ]
+      },
+      {
+        "public_key": "kujr4Z8eutQ8ebzFf33DLc3PNKrO3J+ZVy3jkrR1cUZ=",
+        "preshared_key": null,
+        "endpoint": "82.132.137.204:67130",
+        "latest_handshake": 0,
+        "transfer_rx": 0,
+        "transfer_sx": 0,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.6/32"
+        ]
+      },
+      {
+        "public_key": "XcgkMRmxhQiIgXowYqsxUt1SlwUydXJd4Zmi8dgGeYe=",
+        "preshared_key": null,
+        "endpoint": "180.255.226.203:56092",
+        "latest_handshake": 1829439121,
+        "transfer_rx": 1900247,
+        "transfer_sx": 1352639,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.8/32"
+        ]
+      },
+      {
+        "public_key": "tB9yFqLmyvcDD1rJ1rTgeKtKK98hdUL1jefMRt4XbDh=",
+        "preshared_key": null,
+        "endpoint": "82.132.137.204:60184",
+        "latest_handshake": 1829037182,
+        "transfer_rx": 75047,
+        "transfer_sx": 184725,
+        "persistent_keepalive": -1,
+        "allowed_ips": [
+          "10.10.0.7/32"
+        ]
+      }
+    ]
+  }
+]

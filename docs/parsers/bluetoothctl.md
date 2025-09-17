@@ -136,4 +136,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/bluetoothctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/bluetoothctl.py)
 
-Version 1.3 by Jake Ob (iakopap at gmail.com)
+Version 1.4 by Jake Ob (iakopap at gmail.com)

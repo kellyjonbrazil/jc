@@ -36,7 +36,7 @@ returned.
 
 Parameters:
 
-    documentation:      (boolean)    include parser docstrings if True
+    documentation:      (boolean)    include parser docstrings if `True`
     show_hidden:        (boolean)    also show parsers marked as hidden
                                      in their info metadata.
     show_deprecated:    (boolean)    also show parsers marked as
@@ -172,17 +172,17 @@ Parameters:
                                      variants of the module name.
 
                                      A Module object can also be passed
-                                     directly or via get_parser()
+                                     directly or via `get_parser()`
 
     data:               (string or   data to parse (string or bytes for
                         bytes or     standard parsers, iterable of
                         iterable)    strings for streaming parsers)
 
-    raw:                (boolean)    output preprocessed JSON if True
+    raw:                (boolean)    output preprocessed JSON if `True`
 
-    quiet:              (boolean)    suppress warning messages if True
+    quiet:              (boolean)    suppress warning messages if `True`
 
-    ignore_exceptions:  (boolean)    ignore parsing exceptions if True
+    ignore_exceptions:  (boolean)    ignore parsing exceptions if `True`
                                      (streaming parsers only)
 
 Returns:
@@ -209,7 +209,7 @@ Parameters:
                                      variants of the module name as well
                                      as a parser module object.
 
-    documentation:      (boolean)    include parser docstring if True
+    documentation:      (boolean)    include parser docstring if `True`
 
 <a id="jc.lib.parser_mod_list"></a>
 

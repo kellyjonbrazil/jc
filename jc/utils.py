@@ -100,7 +100,7 @@ def error_message(message_lines: List[str]) -> None:
 
     Returns:
 
-        None - just prints output to STDERR
+        None - just prints output to `STDERR`
     """
     columns = shutil.get_terminal_size().columns
 
@@ -148,7 +148,7 @@ def compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> 
                       the parser. compatible options:
                       linux, darwin, cygwin, win32, aix, freebsd
 
-        quiet:        (bool) suppress compatibility message if True
+        quiet:        (bool) suppress compatibility message if `True`
 
     Returns:
 
@@ -169,7 +169,7 @@ def has_data(data: Union[str, bytes]) -> bool:
     Checks if the string input contains data. If there are any
     non-whitespace characters then return `True`, else return `False`.
 
-    For bytes, returns True if there is any data.
+    For bytes, returns `True` if there is any data.
 
     Parameters:
 
@@ -177,9 +177,9 @@ def has_data(data: Union[str, bytes]) -> bool:
 
     Returns:
 
-        Boolean      True if input string (data) contains non-whitespace
-                     characters, otherwise False. For bytes data, returns
-                     True if there is any data, otherwise False.
+        Boolean      `True` if input string (data) contains non-whitespace
+                     characters, otherwise `False`. For bytes data, returns
+                     `True` if there is any data, otherwise `False`.
     """
     if isinstance(data, str):
         return bool(data and not data.isspace())
@@ -703,6 +703,7 @@ class timestamp:
             {'id': 1800, 'format': '%d/%b/%Y:%H:%M:%S %z', 'locale': None},  # Common Log Format: 10/Oct/2000:13:55:36 -0700
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
+            {'id': 3100, 'format': '%a %d %b %Y %I:%M:%S %p %z', 'locale': None},  # pacman format - append 00 to end to make it work: # Sat 11 May 2024 06:14:19 AM +0800
             {'id': 3500, 'format': '%a, %d %b %Y %H:%M:%S %Z', 'locale': None},  # HTTP header time format (always GMT so assume UTC): Wed, 31 Jan 2024 00:39:28 GMT
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
             {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
