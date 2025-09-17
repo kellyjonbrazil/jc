@@ -36,6 +36,8 @@ These are documented below.
     [
       {
         "<key>":                  string/integer/float,   # [0]
+        "team_config":            object/null,
+        "team_port_config":       object/null,
         "dhcp4_option_x": {
           "name":                 string,
           "value":                string/integer/float,
@@ -141,6 +143,7 @@ Examples:
     ]
 """
 import re
+import json
 from typing import List, Dict, Optional
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
@@ -149,7 +152,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.2'
     description = '`nmcli` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -313,8 +316,39 @@ def _device_show_parse(data: str) -> List[Dict]:
 def _connection_show_x_parse(data: str) -> List[Dict]:
     raw_output: List = []
     item: Dict = {}
+    in_team_config: bool = False
+    team_config_value: List = []
 
     for line in filter(None, data.splitlines()):
+
+        # fix for team.config and team-port.config, which are multi-line JSON
+        if line.startswith('team.config:') or line.startswith('team-port.config:'):
+            key, value = line.split(':', maxsplit=1)
+            key_team = _normalize_key(key)
+            value_team = value.strip()
+
+            if value_team == '--':
+                team_config_value = []
+                item[key_team] = None
+                continue
+
+            in_team_config = True
+            team_config_value.append(value_team)
+            item[key_team] = {}
+            continue
+
+        STARTSWITH_TEAM = line.startswith('team.') or line.startswith('team-port.')
+        if not STARTSWITH_TEAM and in_team_config:
+            team_config_value.append(line.strip())
+            continue
+
+        in_team_config = False
+
+        if team_config_value:
+            # team.config and team-port.config values should always be JSON
+            item[key_team] = json.loads(''.join(team_config_value))
+            team_config_value = []
+
         key, value = line.split(':', maxsplit=1)
 
         key_n = _normalize_key(key)

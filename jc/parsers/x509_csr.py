@@ -249,9 +249,6 @@ Examples:
         }
       ]
 """
-# import binascii
-# from collections import OrderedDict
-# from datetime import datetime
 from typing import List, Dict, Union
 import jc.utils
 from jc.parsers.asn1crypto import pem, csr, jc_global

@@ -1,0 +1,334 @@
+Name            : zstd
+Version         : 1.5.6-1
+Description     : Zstandard - Fast real-time compression algorithm
+Architecture    : x86_64
+URL             : https://facebook.github.io/zstd/
+Licenses        : BSD-3-Clause  GPL-2.0-only
+Groups          : None
+Provides        : libzstd.so=1-64
+Depends On      : glibc  gcc-libs  zlib  xz  lz4
+Optional Deps   : None
+Required By     : android-tools  appstream  avr-gcc  binutils  blender  blosc
+                  boost-libs  btrfs-progs  cloudflare-warp-bin  comgr  curl
+                  dolphin-emu  file  flatpak  gcc  gdal  gnutls  karchive
+                  karchive5  kmod  lib32-zstd  libarchive  libelf  libtiff
+                  libva-mesa-driver  libxmlb  libzip  lld  llvm-libs  mariadb-libs
+                  mesa  mesa-vdpau  minizip-ng  mkinitcpio  mold  netcdf
+                  opencl-clover-mesa  opencl-rusticl-mesa  openucx  postgresql
+                  postgresql-libs  ppsspp  qemu-img  qemu-system-riscv
+                  qemu-system-x86  qgis  qt6-base  qt6-tools  rsync  rustup
+                  squashfs-tools  squashfuse  systemd-libs  tiled  vulkan-radeon
+                  wireshark-cli
+Optional For    : xarchiver
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 1527.00 KiB
+Packager        : Levente Polyak <anthraxx@archlinux.org>
+Build Date      : Sat 11 May 2024 06:14:19 AM +08
+Install Date    : Fri 24 May 2024 09:50:31 AM +08
+Install Reason  : Installed as a dependency for another package
+Install Script  : No
+Validated By    : Signature
+Backup Files    : None
+Extended Data   : pkgtype=pkg
+
+Name            : apparmor
+Version         : 3.1.7-4
+Description     : Mandatory Access Control (MAC) using Linux Security Module (LSM)
+Architecture    : x86_64
+URL             : https://gitlab.com/apparmor/apparmor
+Licenses        : GPL-2.0-only  LGPL-2.0-only  LGPL-2.1-only
+Groups          : None
+Provides        : libapparmor.so=1-64
+Depends On      : audit  bash  gcc-libs  glibc  pam  python
+Optional Deps   : perl: for perl bindings [installed]
+                  python-notify2: for aa-notify
+                  python-psutil: for aa-notify [installed]
+                  ruby: for ruby bindings
+Required By     : firejail
+Optional For    : podman
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 4.11 MiB
+Packager        : Antonio Rojas <arojas@archlinux.org>
+Build Date      : Sun 01 Sep 2024 07:43:58 PM +08
+Install Date    : Thu 05 Sep 2024 06:01:08 AM +08
+Install Reason  : Explicitly installed
+Install Script  : No
+Validated By    : Signature
+Backup Files    : /etc/apparmor/easyprof.conf [unmodified]
+                  /etc/apparmor/logprof.conf [unmodified]
+                  /etc/apparmor/notify.conf [unmodified]
+                  /etc/apparmor/parser.conf [unmodified]
+                  /etc/apparmor/severity.db [unmodified]
+                  /etc/apparmor.d/abi/3.0 [unmodified]
+                  /etc/apparmor.d/abi/kernel-5.4-outoftree-network [unmodified]
+                  /etc/apparmor.d/abi/kernel-5.4-vanilla [unmodified]
+                  /etc/apparmor.d/abstractions/X [unmodified]
+                  /etc/apparmor.d/abstractions/apache2-common [unmodified]
+                  /etc/apparmor.d/abstractions/apparmor_api/change_profile [unmodified]
+                  /etc/apparmor.d/abstractions/apparmor_api/examine [unmodified]
+                  /etc/apparmor.d/abstractions/apparmor_api/find_mountpoint [unmodified]
+                  /etc/apparmor.d/abstractions/apparmor_api/introspect [unmodified]
+                  /etc/apparmor.d/abstractions/apparmor_api/is_enabled [unmodified]
+                  /etc/apparmor.d/abstractions/aspell [unmodified]
+                  /etc/apparmor.d/abstractions/audio [unmodified]
+                  /etc/apparmor.d/abstractions/authentication [unmodified]
+                  /etc/apparmor.d/abstractions/base [unmodified]
+                  /etc/apparmor.d/abstractions/bash [unmodified]
+                  /etc/apparmor.d/abstractions/consoles [unmodified]
+                  /etc/apparmor.d/abstractions/crypto [unmodified]
+                  /etc/apparmor.d/abstractions/cups-client [unmodified]
+                  /etc/apparmor.d/abstractions/dbus [unmodified]
+                  /etc/apparmor.d/abstractions/dbus-accessibility [unmodified]
+                  /etc/apparmor.d/abstractions/dbus-accessibility-strict [unmodified]
+                  /etc/apparmor.d/abstractions/dbus-network-manager-strict [unmodified]
+                  /etc/apparmor.d/abstractions/dbus-session [unmodified]
+                  /etc/apparmor.d/abstractions/dbus-session-strict [unmodified]
+                  /etc/apparmor.d/abstractions/dbus-strict [unmodified]
+                  /etc/apparmor.d/abstractions/dconf [unmodified]
+                  /etc/apparmor.d/abstractions/dovecot-common [unmodified]
+                  /etc/apparmor.d/abstractions/dri-common [unmodified]
+                  /etc/apparmor.d/abstractions/dri-enumerate [unmodified]
+                  /etc/apparmor.d/abstractions/enchant [unmodified]
+                  /etc/apparmor.d/abstractions/exo-open [unmodified]
+                  /etc/apparmor.d/abstractions/fcitx [unmodified]
+                  /etc/apparmor.d/abstractions/fcitx-strict [unmodified]
+                  /etc/apparmor.d/abstractions/fonts [unmodified]
+                  /etc/apparmor.d/abstractions/freedesktop.org [unmodified]
+                  /etc/apparmor.d/abstractions/gio-open [unmodified]
+                  /etc/apparmor.d/abstractions/gnome [unmodified]
+                  /etc/apparmor.d/abstractions/gnupg [unmodified]
+                  /etc/apparmor.d/abstractions/groff [unmodified]
+                  /etc/apparmor.d/abstractions/gtk [unmodified]
+                  /etc/apparmor.d/abstractions/gvfs-open [unmodified]
+                  /etc/apparmor.d/abstractions/hosts_access [unmodified]
+                  /etc/apparmor.d/abstractions/ibus [unmodified]
+                  /etc/apparmor.d/abstractions/kde [unmodified]
+                  /etc/apparmor.d/abstractions/kde-globals-write [unmodified]
+                  /etc/apparmor.d/abstractions/kde-icon-cache-write [unmodified]
+                  /etc/apparmor.d/abstractions/kde-language-write [unmodified]
+                  /etc/apparmor.d/abstractions/kde-open5 [unmodified]
+                  /etc/apparmor.d/abstractions/kerberosclient [unmodified]
+                  /etc/apparmor.d/abstractions/ldapclient [unmodified]
+                  /etc/apparmor.d/abstractions/libpam-systemd [unmodified]
+                  /etc/apparmor.d/abstractions/likewise [unmodified]
+                  /etc/apparmor.d/abstractions/mdns [unmodified]
+                  /etc/apparmor.d/abstractions/mesa [unmodified]
+                  /etc/apparmor.d/abstractions/mir [unmodified]
+                  /etc/apparmor.d/abstractions/mozc [unmodified]
+                  /etc/apparmor.d/abstractions/mysql [unmodified]
+                  /etc/apparmor.d/abstractions/nameservice [unmodified]
+                  /etc/apparmor.d/abstractions/nis [unmodified]
+                  /etc/apparmor.d/abstractions/nss-systemd [unmodified]
+                  /etc/apparmor.d/abstractions/nvidia [unmodified]
+                  /etc/apparmor.d/abstractions/opencl [unmodified]
+                  /etc/apparmor.d/abstractions/opencl-common [unmodified]
+                  /etc/apparmor.d/abstractions/opencl-intel [unmodified]
+                  /etc/apparmor.d/abstractions/opencl-mesa [unmodified]
+                  /etc/apparmor.d/abstractions/opencl-nvidia [unmodified]
+                  /etc/apparmor.d/abstractions/opencl-pocl [unmodified]
+                  /etc/apparmor.d/abstractions/openssl [unmodified]
+                  /etc/apparmor.d/abstractions/orbit2 [unmodified]
+                  /etc/apparmor.d/abstractions/p11-kit [unmodified]
+                  /etc/apparmor.d/abstractions/perl [unmodified]
+                  /etc/apparmor.d/abstractions/php [unmodified]
+                  /etc/apparmor.d/abstractions/php-worker [unmodified]
+                  /etc/apparmor.d/abstractions/php5 [unmodified]
+                  /etc/apparmor.d/abstractions/postfix-common [unmodified]
+                  /etc/apparmor.d/abstractions/private-files [unmodified]
+                  /etc/apparmor.d/abstractions/private-files-strict [unmodified]
+                  /etc/apparmor.d/abstractions/python [unmodified]
+                  /etc/apparmor.d/abstractions/qt5 [unmodified]
+                  /etc/apparmor.d/abstractions/qt5-compose-cache-write [unmodified]
+                  /etc/apparmor.d/abstractions/qt5-settings-write [unmodified]
+                  /etc/apparmor.d/abstractions/recent-documents-write [unmodified]
+                  /etc/apparmor.d/abstractions/ruby [unmodified]
+                  /etc/apparmor.d/abstractions/samba [unmodified]
+                  /etc/apparmor.d/abstractions/samba-rpcd [unmodified]
+                  /etc/apparmor.d/abstractions/smbpass [unmodified]
+                  /etc/apparmor.d/abstractions/snap_browsers [unmodified]
+                  /etc/apparmor.d/abstractions/ssl_certs [unmodified]
+                  /etc/apparmor.d/abstractions/ssl_keys [unmodified]
+                  /etc/apparmor.d/abstractions/svn-repositories [unmodified]
+                  /etc/apparmor.d/abstractions/trash [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-bittorrent-clients [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/chromium-browser [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/java [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/kde [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/mailto [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/multimedia [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/plugins-common [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/productivity [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/text-editors [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/ubuntu-integration [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/ubuntu-integration-xul [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-browsers.d/user-files [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-console-browsers [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-console-email [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-email [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-feed-readers [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-gnome-terminal [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-helpers [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-konsole [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-media-players [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-unity7-base [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-unity7-launcher [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-unity7-messaging [unmodified]
+                  /etc/apparmor.d/abstractions/ubuntu-xterm [unmodified]
+                  /etc/apparmor.d/abstractions/user-download [unmodified]
+                  /etc/apparmor.d/abstractions/user-mail [unmodified]
+                  /etc/apparmor.d/abstractions/user-manpages [unmodified]
+                  /etc/apparmor.d/abstractions/user-tmp [unmodified]
+                  /etc/apparmor.d/abstractions/user-write [unmodified]
+                  /etc/apparmor.d/abstractions/video [unmodified]
+                  /etc/apparmor.d/abstractions/vulkan [unmodified]
+                  /etc/apparmor.d/abstractions/wayland [unmodified]
+                  /etc/apparmor.d/abstractions/web-data [unmodified]
+                  /etc/apparmor.d/abstractions/winbind [unmodified]
+                  /etc/apparmor.d/abstractions/wutmp [unmodified]
+                  /etc/apparmor.d/abstractions/xad [unmodified]
+                  /etc/apparmor.d/abstractions/xdg-desktop [unmodified]
+                  /etc/apparmor.d/abstractions/xdg-open [unmodified]
+                  /etc/apparmor.d/apache2.d/phpsysinfo [unmodified]
+                  /etc/apparmor.d/bin.ping [unmodified]
+                  /etc/apparmor.d/local/README [unmodified]
+                  /etc/apparmor.d/local/bin.ping [unmodified]
+                  /etc/apparmor.d/local/lsb_release [unmodified]
+                  /etc/apparmor.d/local/nvidia_modprobe [unmodified]
+                  /etc/apparmor.d/local/php-fpm [unmodified]
+                  /etc/apparmor.d/local/samba-bgqd [unmodified]
+                  /etc/apparmor.d/local/samba-dcerpcd [unmodified]
+                  /etc/apparmor.d/local/samba-rpcd [unmodified]
+                  /etc/apparmor.d/local/samba-rpcd-classic [unmodified]
+                  /etc/apparmor.d/local/samba-rpcd-spoolss [unmodified]
+                  /etc/apparmor.d/local/sbin.klogd [unmodified]
+                  /etc/apparmor.d/local/sbin.syslog-ng [unmodified]
+                  /etc/apparmor.d/local/sbin.syslogd [unmodified]
+                  /etc/apparmor.d/local/usr.lib.apache2.mpm-prefork.apache2 [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.anvil [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.auth [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.config [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.deliver [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.dict [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.director [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.doveadm-server [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.dovecot-auth [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.dovecot-lda [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.imap [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.imap-login [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.lmtp [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.log [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.managesieve [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.managesieve-login [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.pop3 [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.pop3-login [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.replicator [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.script-login [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.ssl-params [unmodified]
+                  /etc/apparmor.d/local/usr.lib.dovecot.stats [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.apache2 [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.avahi-daemon [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.dnsmasq [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.dovecot [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.identd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.mdnsd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.nmbd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.nscd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.ntpd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.smbd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.smbldap-useradd [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.traceroute [unmodified]
+                  /etc/apparmor.d/local/usr.sbin.winbindd [unmodified]
+                  /etc/apparmor.d/local/zgrep [unmodified]
+                  /etc/apparmor.d/lsb_release [unmodified]
+                  /etc/apparmor.d/nvidia_modprobe [unmodified]
+                  /etc/apparmor.d/php-fpm [unmodified]
+                  /etc/apparmor.d/samba-bgqd [unmodified]
+                  /etc/apparmor.d/samba-dcerpcd [unmodified]
+                  /etc/apparmor.d/samba-rpcd [unmodified]
+                  /etc/apparmor.d/samba-rpcd-classic [unmodified]
+                  /etc/apparmor.d/samba-rpcd-spoolss [unmodified]
+                  /etc/apparmor.d/sbin.klogd [unmodified]
+                  /etc/apparmor.d/sbin.syslog-ng [unmodified]
+                  /etc/apparmor.d/sbin.syslogd [unmodified]
+                  /etc/apparmor.d/tunables/alias [unmodified]
+                  /etc/apparmor.d/tunables/apparmorfs [unmodified]
+                  /etc/apparmor.d/tunables/dovecot [unmodified]
+                  /etc/apparmor.d/tunables/etc [unmodified]
+                  /etc/apparmor.d/tunables/global [unmodified]
+                  /etc/apparmor.d/tunables/home [unmodified]
+                  /etc/apparmor.d/tunables/home.d/site.local [unmodified]
+                  /etc/apparmor.d/tunables/kernelvars [unmodified]
+                  /etc/apparmor.d/tunables/multiarch [unmodified]
+                  /etc/apparmor.d/tunables/multiarch.d/site.local [unmodified]
+                  /etc/apparmor.d/tunables/ntpd [unmodified]
+                  /etc/apparmor.d/tunables/proc [unmodified]
+                  /etc/apparmor.d/tunables/run [unmodified]
+                  /etc/apparmor.d/tunables/securityfs [unmodified]
+                  /etc/apparmor.d/tunables/share [unmodified]
+                  /etc/apparmor.d/tunables/sys [unmodified]
+                  /etc/apparmor.d/tunables/xdg-user-dirs [unmodified]
+                  /etc/apparmor.d/tunables/xdg-user-dirs.d/site.local [unmodified]
+                  /etc/apparmor.d/usr.lib.apache2.mpm-prefork.apache2 [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.anvil [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.auth [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.config [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.deliver [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.dict [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.director [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.doveadm-server [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.dovecot-auth [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.dovecot-lda [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.imap [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.imap-login [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.lmtp [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.log [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.managesieve [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.managesieve-login [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.pop3 [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.pop3-login [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.replicator [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.script-login [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.ssl-params [unmodified]
+                  /etc/apparmor.d/usr.lib.dovecot.stats [unmodified]
+                  /etc/apparmor.d/usr.sbin.apache2 [unmodified]
+                  /etc/apparmor.d/usr.sbin.avahi-daemon [unmodified]
+                  /etc/apparmor.d/usr.sbin.dnsmasq [unmodified]
+                  /etc/apparmor.d/usr.sbin.dovecot [unmodified]
+                  /etc/apparmor.d/usr.sbin.identd [unmodified]
+                  /etc/apparmor.d/usr.sbin.mdnsd [unmodified]
+                  /etc/apparmor.d/usr.sbin.nmbd [unmodified]
+                  /etc/apparmor.d/usr.sbin.nscd [unmodified]
+                  /etc/apparmor.d/usr.sbin.ntpd [unmodified]
+                  /etc/apparmor.d/usr.sbin.smbd [unmodified]
+                  /etc/apparmor.d/usr.sbin.smbldap-useradd [unmodified]
+                  /etc/apparmor.d/usr.sbin.traceroute [unmodified]
+                  /etc/apparmor.d/usr.sbin.winbindd [unmodified]
+                  /etc/apparmor.d/zgrep [unmodified]
+Extended Data   : pkgtype=pkg
+
+Name            : apulse
+Version         : 0.1.13-1
+Description     : PulseAudio emulation for ALSA
+Architecture    : x86_64
+URL             : https://github.com/i-rinat/apulse
+Licenses        : custom:MIT
+Groups          : None
+Provides        : None
+Depends On      : alsa-lib  glib2
+Optional Deps   : None
+Required By     : None
+Optional For    : None
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 135.71 KiB
+Packager        : Unknown Packager
+Build Date      : Fri 05 Aug 2022 04:06:57 AM +08
+Install Date    : Fri 05 Aug 2022 04:07:04 AM +08
+Install Reason  : Explicitly installed
+Install Script  : Yes
+Validated By    : None
+Backup Files    : None
+Extended Data   : None

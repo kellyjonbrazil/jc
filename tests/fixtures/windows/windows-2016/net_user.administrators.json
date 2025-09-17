@@ -1,0 +1,24 @@
+{
+  "domain": "",
+  "user_accounts": [
+    {
+      "user_name": "Administrator",
+      "comment": "Built-in account for administering the computer/domain",
+      "country_region_code": "000 (System Default)",
+      "account_active": true,
+      "account_expires": "Never",
+      "password_last_set": "2021-12-16T11:07:14",
+      "password_expires": "2022-01-27T11:07:14",
+      "password_changeable": "2021-12-17T11:07:14",
+      "password_required": true,
+      "user_may_change_password": true,
+      "workstations_allowed": "All",
+      "last_logon": "2024-08-23T13:47:11",
+      "logon_hours_allowed": "All",
+      "local_group_memberships": [
+        "Administrators"
+      ],
+      "global_group_memberships": []
+    }
+  ]
+}

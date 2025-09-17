@@ -1,4 +1,4 @@
-.TH jc 1 2024-10-18 1.25.4 "JSON Convert"
+.TH jc 1 2025-05-27 1.25.6 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -51,6 +51,11 @@ Parsers:
 .B
 \fB--airport-s\fP
 `airport -s` command parser
+
+.TP
+.B
+\fB--amixer\fP
+`amixer` command parser
 
 .TP
 .B
@@ -511,6 +516,11 @@ openvpn-status.log file parser
 .B
 \fB--os-release\fP
 `/etc/os-release` file parser
+
+.TP
+.B
+\fB--pacman\fP
+`pacman` command parser
 
 .TP
 .B
@@ -1099,6 +1109,11 @@ Version string parser
 
 .TP
 .B
+\fB--wg-show\fP
+`wg show` command parser
+
+.TP
+.B
 \fB--who\fP
 `who` command parser
 
@@ -1106,6 +1121,11 @@ Version string parser
 .B
 \fB--x509-cert\fP
 X.509 PEM and DER certificate file parser
+
+.TP
+.B
+\fB--x509-crl\fP
+X.509 PEM and DER certificate revocation list file parser
 
 .TP
 .B
@@ -1622,6 +1642,6 @@ Kelly Brazil (kellyjonbrazil@gmail.com)
 https://github.com/kellyjonbrazil/jc
 
 .SH COPYRIGHT
-Copyright (c) 2019-2024 Kelly Brazil
+Copyright (c) 2019-2025 Kelly Brazil
 
 License:  MIT License

@@ -1,0 +1,18 @@
+{
+  "domain": "",
+  "user_accounts": [
+    {
+      "user_name": "Administrator"
+    },
+    {
+      "user_name": "DefaultAccount"
+    },
+    {
+      "user_name": "Guest"
+    },
+    {
+      "user_name": "user1"
+    }
+  ],
+  "account_origin": "\\\\WIN-SERVER16"
+}

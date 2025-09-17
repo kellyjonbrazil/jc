@@ -7,3 +7,4 @@ build/
 .vscode/
 _config.yml
 .venv
+.DS_Store

@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`/usr/bin/time` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -171,13 +171,18 @@ def _process(proc_data):
         proc_data['command_being_timed'] = proc_data['command_being_timed'][1:-1]
 
     if 'elapsed_time' in proc_data:
-        proc_data['elapsed_time'] = proc_data['elapsed_time'].replace('.', ':')
-        *hours, minutes, seconds, centiseconds = proc_data['elapsed_time'].split(':')
-        proc_data['elapsed_time'] = proc_data['elapsed_time'][::-1].replace(':', '.', 1)[::-1]
+        *hours, minutes, ss = proc_data['elapsed_time'].split(':')
+        if '.' in ss:
+            seconds, centiseconds = ss.split('.')
+        else:
+            seconds = ss
+            centiseconds = '0'
+
         if hours:
             proc_data['elapsed_time_hours'] = jc.utils.convert_to_int(hours[0])
         else:
             proc_data['elapsed_time_hours'] = 0
+
         proc_data['elapsed_time_minutes'] = jc.utils.convert_to_int(minutes)
         proc_data['elapsed_time_seconds'] = jc.utils.convert_to_int(seconds)
         proc_data['elapsed_time_centiseconds'] = jc.utils.convert_to_int(centiseconds)
