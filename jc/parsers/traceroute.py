@@ -292,8 +292,23 @@ def _get_probes(hop_string: str):
     return probes
 
 
-def _loads(data):
-    lines = data.splitlines()
+def loads(data: str, quiet: bool):
+    lines = []
+
+    # remove any warning lines
+    for data_line in data.splitlines():
+        if 'traceroute: Warning: ' not in data_line and 'traceroute6: Warning: ' not in data_line:
+            lines.append(data_line)
+        else:
+            continue
+
+    # check if header row exists, otherwise add a dummy header
+    if not lines[0].startswith('traceroute to ') and not lines[0].startswith('traceroute6 to '):
+        lines[:0] = ['traceroute to <<_>>  (<<_>>), 30 hops max, 60 byte packets']
+
+        # print warning to STDERR
+        if not quiet:
+            jc.utils.warning_message(['No header row found. For destination info redirect STDERR to STDOUT'])
 
     # Get headers
     match_dest = RE_HEADER.search(lines[0])
@@ -390,26 +405,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-
-        # remove any warning lines
-        new_data = []
-        for data_line in data.splitlines():
-            if 'traceroute: Warning: ' not in data_line and 'traceroute6: Warning: ' not in data_line:
-                new_data.append(data_line)
-            else:
-                continue
-
-        # check if header row exists, otherwise add a dummy header
-        if not new_data[0].startswith('traceroute to ') and not new_data[0].startswith('traceroute6 to '):
-            new_data[:0] = ['traceroute to <<_>>  (<<_>>), 30 hops max, 60 byte packets']
-
-            # print warning to STDERR
-            if not quiet:
-                jc.utils.warning_message(['No header row found. For destination info redirect STDERR to STDOUT'])
-
-        data = '\n'.join(new_data)
-
-        tr = _loads(data)
+        tr = loads(data, quiet)
         hops = tr.hops
         hops_list = []
 
