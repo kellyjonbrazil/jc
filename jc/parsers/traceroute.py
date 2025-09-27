@@ -119,6 +119,7 @@ import re
 from decimal import Decimal
 import jc.utils
 from copy import deepcopy
+from jc.exceptions import ParseError
 
 
 class info():
@@ -328,10 +329,6 @@ def _loads(data):
             hop.add_probe(probe)
 
     return traceroute
-
-
-class ParseError(Exception):
-    pass
 
 
 ########################################################################################
