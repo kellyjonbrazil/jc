@@ -349,6 +349,27 @@ def loads(data: str, quiet: bool):
 ########################################################################################
 
 
+def serialize_hop(hop: _Hop):
+    hop_obj = {}
+    hop_obj['hop'] = str(hop.idx)
+    probe_list = []
+
+    if hop.probes:
+        for probe in hop.probes:
+            probe_obj = {
+                'annotation': probe.annotation,
+                'asn': None if probe.asn is None else str(probe.asn),
+                'ip': probe.ip,
+                'name': probe.name,
+                'rtt': None if probe.rtt is None else str(probe.rtt)
+            }
+            probe_list.append(probe_obj)
+
+    hop_obj['probes'] = probe_list
+
+    return hop_obj
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -406,28 +427,10 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         tr = loads(data, quiet)
-        hops = tr.hops
         hops_list = []
 
-        if hops:
-            for hop in hops:
-                hop_obj = {}
-                hop_obj['hop'] = str(hop.idx)
-                probe_list = []
-
-                if hop.probes:
-                    for probe in hop.probes:
-                        probe_obj = {
-                            'annotation': probe.annotation,
-                            'asn': None if probe.asn is None else str(probe.asn),
-                            'ip': probe.ip,
-                            'name': probe.name,
-                            'rtt': None if probe.rtt is None else str(probe.rtt)
-                        }
-                        probe_list.append(probe_obj)
-
-                hop_obj['probes'] = probe_list
-                hops_list.append(hop_obj)
+        for hop in tr.hops:
+            hops_list.append(serialize_hop(hop))
 
         raw_output = {
             'destination_ip': tr.dest_ip,
