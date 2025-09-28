@@ -385,23 +385,17 @@ def _process(proc_data):
     int_list = {'hop', 'asn'}
     float_list = {'rtt'}
 
-    if 'hops' in proc_data:
-        for entry in proc_data['hops']:
-            for key in entry:
-                if key in int_list:
-                    entry[key] = jc.utils.convert_to_int(entry[key])
+    for entry in proc_data.get('hops', []):
+        process(entry)
+    for entry in proc_data.get('probes', []):
+        process(entry)
 
-                if key in float_list:
-                    entry[key] = jc.utils.convert_to_float(entry[key])
+    for key in proc_data:
+        if key in int_list:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
-            if 'probes' in entry:
-                for item in entry['probes']:
-                    for key in item:
-                        if key in int_list:
-                            item[key] = jc.utils.convert_to_int(item[key])
-
-                        if key in float_list:
-                            item[key] = jc.utils.convert_to_float(item[key])
+        if key in float_list:
+            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
     return proc_data
 
