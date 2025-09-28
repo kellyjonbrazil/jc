@@ -1,0 +1,78 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "2a04:4e42:200::323",
+    "destination_name": "turner-tls.map.fastly.net",
+    "max_hops": 5,
+    "data_bytes": 12
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": null,
+        "name": null,
+        "rtt": 27.635
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": null,
+        "name": null,
+        "rtt": 20.383
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": null,
+        "name": null,
+        "rtt": 23.438
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:1890:ff:ff08:12:242:117:16",
+        "name": null,
+        "rtt": 20.118
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:1890:ff:ff08:12:242:117:16",
+        "name": null,
+        "rtt": 20.327
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:1890:ff:ff08:12:242:117:16",
+        "name": null,
+        "rtt": 21.213
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": []
+  }
+]

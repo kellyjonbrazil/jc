@@ -191,7 +191,7 @@ class _Traceroute(object):
         return text
 
 
-class _Hop(object):
+class Hop(object):
     def __init__(self, idx):
         self.idx = idx  # Hop count, starting at 1 (usually)
         self.probes = []  # Series of Probe instances
@@ -334,7 +334,7 @@ def loads(data: str, quiet: bool):
             hop_index = None
 
         if hop_index is not None:
-            hop = _Hop(hop_index)
+            hop = Hop(hop_index)
             traceroute.add_hop(hop)
 
         hop_string = hop_match.group(2)
@@ -349,7 +349,7 @@ def loads(data: str, quiet: bool):
 ########################################################################################
 
 
-def serialize_hop(hop: _Hop):
+def serialize_hop(hop: Hop):
     hop_obj = {}
     hop_obj['hop'] = str(hop.idx)
     probe_list = []
@@ -370,7 +370,7 @@ def serialize_hop(hop: _Hop):
     return hop_obj
 
 
-def _process(proc_data):
+def process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -382,7 +382,7 @@ def _process(proc_data):
 
         Dictionary. Structured to conform to the schema.
     """
-    int_list = {'hop', 'asn'}
+    int_list = {'hop', 'asn', 'max_hops', 'data_bytes'}
     float_list = {'rtt'}
 
     for entry in proc_data.get('hops', []):
@@ -432,4 +432,4 @@ def parse(data, raw=False, quiet=False):
             'hops': hops_list
         }
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output if raw else process(raw_output)

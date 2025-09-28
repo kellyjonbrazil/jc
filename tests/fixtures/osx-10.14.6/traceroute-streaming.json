@@ -1,0 +1,208 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "8.8.8.8",
+    "destination_name": "8.8.8.8",
+    "max_hops": 64,
+    "data_bytes": 52
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 12.07
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 4.328
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 4.167
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 20.595
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 26.13
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 28.555
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 149.663
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 27.761
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 160.709
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.3.70",
+        "name": "sffca22crs.ip.att.net",
+        "rtt": 27.131
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.3.70",
+        "name": "sffca22crs.ip.att.net",
+        "rtt": 160.459
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.3.70",
+        "name": "sffca22crs.ip.att.net",
+        "rtt": 32.274
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.163.61",
+        "name": "12.122.163.61",
+        "rtt": 143.143
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.163.61",
+        "name": "12.122.163.61",
+        "rtt": 27.034
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.163.61",
+        "name": "12.122.163.61",
+        "rtt": 152.676
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.255.10.234",
+        "name": "12.255.10.234",
+        "rtt": 24.912
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.255.10.234",
+        "name": "12.255.10.234",
+        "rtt": 23.802
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.255.10.234",
+        "name": "12.255.10.234",
+        "rtt": 157.338
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "8.8.8.8",
+        "name": "dns.google",
+        "rtt": 30.84
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "8.8.8.8",
+        "name": "dns.google",
+        "rtt": 22.503
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "8.8.8.8",
+        "name": "dns.google",
+        "rtt": 23.538
+      }
+    ]
+  }
+]

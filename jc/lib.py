@@ -214,6 +214,7 @@ parsers: List[str] = [
     'top-s',
     'tracepath',
     'traceroute',
+    'traceroute-s',
     'tune2fs',
     'udevadm',
     'ufw',
