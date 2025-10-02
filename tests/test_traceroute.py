@@ -72,6 +72,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.out'), 'r', encoding='utf-8') as f:
         generic_traceroute_n_ipv6 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-long-ipv6.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute_long_ipv6 = f.read()
+
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/traceroute-no-header.json'), 'r', encoding='utf-8') as f:
@@ -136,6 +139,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-n-ipv6.json'), 'r', encoding='utf-8') as f:
         generic_traceroute_n_ipv6_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-long-ipv6.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute_long_ipv6_json = json.loads(f.read())
 
 
     def test_traceroute_nodata(self):
@@ -274,14 +280,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'traceroute6' with a long ipv6 response
         """
-        data = '''traceroute6 to turner-tls.map.fastly.net (2a04:4e42:200::323) from 2600:1700:bab0:d40:985:f00a:98bd:f142, 5 hops max, 12 byte packets
- 1  * * *
- 2  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::  27.635 ms  20.383 ms  23.438 ms
- 3  * * *
- 4  2001:1890:ff:ff08:12:242:117:16  20.118 ms  20.327 ms  21.213 ms
- 5  * * *'''
-        expected = json.loads('''{"destination_ip":"2a04:4e42:200::323","destination_name":"turner-tls.map.fastly.net","hops":[{"hop":1,"probes":[]},{"hop":2,"probes":[{"annotation":null,"asn":null,"ip":null,"name":null,"rtt":27.635},{"annotation":null,"asn":null,"ip":null,"name":null,"rtt":20.383},{"annotation":null,"asn":null,"ip":null,"name":null,"rtt":23.438}]},{"hop":3,"probes":[]},{"hop":4,"probes":[{"annotation":null,"asn":null,"ip":"2001:1890:ff:ff08:12:242:117:16","name":null,"rtt":20.118},{"annotation":null,"asn":null,"ip":"2001:1890:ff:ff08:12:242:117:16","name":null,"rtt":20.327},{"annotation":null,"asn":null,"ip":"2001:1890:ff:ff08:12:242:117:16","name":null,"rtt":21.213}]},{"hop":5,"probes":[]}]}''')
-        self.assertEqual(jc.parsers.traceroute.parse(data, quiet=True), expected)
+        self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_long_ipv6, quiet=True), self.generic_traceroute_long_ipv6_json)
 
 
 if __name__ == '__main__':
