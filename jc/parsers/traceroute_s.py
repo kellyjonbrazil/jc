@@ -139,7 +139,7 @@ from jc.exceptions import ParseError
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
-from .traceroute import RE_HEADER, RE_HOP, Hop, loads, process, serialize_hop
+from .traceroute import RE_HEADER, RE_HOP, _Hop, _loads, _process, serialize_hop
 
 
 class info():
@@ -186,13 +186,13 @@ SOFTWARE.
 RE_HEADER_HOPS_BYTES = re.compile(r'(\d+) hops max, (\d+) byte packets')
 
 
-def _hop_output(hop: Hop, raw: bool):
+def _hop_output(hop: _Hop, raw: bool):
     raw_output = {
         'type': 'hop',
         **serialize_hop(hop),
     }
 
-    return raw_output if raw else process(raw_output)
+    return raw_output if raw else _process(raw_output)
 
 
 @add_jc_meta
@@ -219,14 +219,14 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     # Estimated number of probe packets per hop. See `traceroute -q` on Linux, for example.
     queries = 0
     # Accumulated hop across multiple lines
-    hop_cache: Optional[Hop] = None
+    hop_cache: Optional[_Hop] = None
 
     for line in data:  # type: str
         try:
             streaming_line_input_type_check(line)
 
             if RE_HEADER.search(line):
-                tr = loads(line, quiet)
+                tr = _loads(line, quiet)
                 raw_output = {
                     'type': 'header',
                     'destination_ip': tr.dest_ip,
@@ -241,7 +241,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                         'data_bytes': m.group(2),
                     })
 
-                yield raw_output if raw else process(raw_output)
+                yield raw_output if raw else _process(raw_output)
 
             else:
                 m = RE_HOP.match(line)
@@ -260,7 +260,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                     # If the hop index is not found, prepend the hop index (6) to the following lines before parsing.
                     line = f"{hop_cache.idx} {line}"
                     # Specify quiet=True to suppress the 'No header row found' warning for hop lines
-                    tr = loads(line, quiet=True)
+                    tr = _loads(line, quiet=True)
                     if not tr.hops:
                         continue
 
@@ -273,7 +273,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                         hop_cache = None
 
                     # Specify quiet=True to suppress the 'No header row found' warning for hop lines
-                    tr = loads(line, quiet=True)
+                    tr = _loads(line, quiet=True)
                     if not tr.hops:
                         continue
 

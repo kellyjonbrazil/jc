@@ -191,7 +191,7 @@ class _Traceroute(object):
         return text
 
 
-class Hop(object):
+class _Hop(object):
     def __init__(self, idx):
         self.idx = idx  # Hop count, starting at 1 (usually)
         self.probes = []  # Series of Probe instances
@@ -292,7 +292,7 @@ def _get_probes(hop_string: str):
     return probes
 
 
-def loads(data: str, quiet: bool):
+def _loads(data: str, quiet: bool):
     lines = []
 
     # remove any warning lines
@@ -334,7 +334,7 @@ def loads(data: str, quiet: bool):
             hop_index = None
 
         if hop_index is not None:
-            hop = Hop(hop_index)
+            hop = _Hop(hop_index)
             traceroute.add_hop(hop)
 
         hop_string = hop_match.group(2)
@@ -349,7 +349,7 @@ def loads(data: str, quiet: bool):
 ########################################################################################
 
 
-def serialize_hop(hop: Hop):
+def serialize_hop(hop: _Hop):
     hop_obj = {}
     hop_obj['hop'] = str(hop.idx)
     probe_list = []
@@ -370,7 +370,7 @@ def serialize_hop(hop: Hop):
     return hop_obj
 
 
-def process(proc_data):
+def _process(proc_data):
     """
     Final processing to conform to the schema.
 
@@ -386,9 +386,9 @@ def process(proc_data):
     float_list = {'rtt'}
 
     for entry in proc_data.get('hops', []):
-        process(entry)
+        _process(entry)
     for entry in proc_data.get('probes', []):
-        process(entry)
+        _process(entry)
 
     for key in proc_data:
         if key in int_list:
@@ -420,7 +420,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-        tr = loads(data, quiet)
+        tr = _loads(data, quiet)
         hops_list = []
 
         for hop in tr.hops:
@@ -432,4 +432,4 @@ def parse(data, raw=False, quiet=False):
             'hops': hops_list
         }
 
-    return raw_output if raw else process(raw_output)
+    return raw_output if raw else _process(raw_output)
