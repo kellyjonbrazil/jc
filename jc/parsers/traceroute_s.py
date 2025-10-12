@@ -146,8 +146,8 @@ class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
     description = '`traceroute` and `traceroute6` command streaming parser'
-    author = 'Kelly Brazil'
-    author_email = 'kellyjonbrazil@gmail.com'
+    author = 'Shintaro Kojima'
+    author_email = 'goodies@codeout.net'
     compatible = ['linux', 'darwin', 'freebsd']
     tags = ['command']
     streaming = True
