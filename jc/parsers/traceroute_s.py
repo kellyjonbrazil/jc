@@ -139,7 +139,7 @@ from jc.exceptions import ParseError
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
-from .traceroute import RE_HEADER, RE_HOP, _Hop, _loads, _process, serialize_hop
+from .traceroute import RE_HEADER, RE_HOP, _Hop, _loads, _process, _serialize_hop
 
 
 class info():
@@ -189,7 +189,7 @@ RE_HEADER_HOPS_BYTES = re.compile(r'(\d+) hops max, (\d+) byte packets')
 def _hop_output(hop: _Hop, raw: bool):
     raw_output = {
         'type': 'hop',
-        **serialize_hop(hop),
+        **_serialize_hop(hop),
     }
 
     return raw_output if raw else _process(raw_output)

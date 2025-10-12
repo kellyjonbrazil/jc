@@ -349,7 +349,7 @@ def _loads(data: str, quiet: bool):
 ########################################################################################
 
 
-def serialize_hop(hop: _Hop):
+def _serialize_hop(hop: _Hop):
     hop_obj = {}
     hop_obj['hop'] = str(hop.idx)
     probe_list = []
@@ -424,7 +424,7 @@ def parse(data, raw=False, quiet=False):
         hops_list = []
 
         for hop in tr.hops:
-            hops_list.append(serialize_hop(hop))
+            hops_list.append(_serialize_hop(hop))
 
         raw_output = {
             'destination_ip': tr.dest_ip,
