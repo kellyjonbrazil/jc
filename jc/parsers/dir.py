@@ -184,7 +184,12 @@ def parse(data, raw=False, quiet=False):
 
         for line in data.splitlines():
             if line.startswith(" Directory of"):
-                parent_dir = line.lstrip(" Directory of ")
+                # Use removeprefix (or slice) instead of lstrip to avoid
+                # stripping drive letters that happen to be in the character
+                # set of the prefix string.  lstrip(" Directory of ") strips
+                # any char in {' ','D','i','r','e','c','t','o','y','f'} which
+                # removes the 'D' from paths like 'D:\Users\...'.
+                parent_dir = line.removeprefix(" Directory of ")
                 continue
             # skip lines that don't start with a date
             if not re.match(r'^\d{2}/\d{2}/\d{4}', line):
