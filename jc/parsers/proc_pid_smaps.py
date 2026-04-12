@@ -231,7 +231,10 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         'mm':  'mixed map area',
         'hg':  'huge page advise flag',
         'nh':  'no-huge page advise flag',
-        'mg':  'mergable advise flag'
+        'mg':  'mergable advise flag',
+        'um':  'userfaultfd missing pages tracking',
+        'uw':  'userfaultfd write-protect pages tracking',
+        'wf':  'wipe on fork'
     }
 
     for entry in proc_data:
@@ -245,7 +248,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         if 'VmFlags' in entry:
             entry['VmFlags'] = entry['VmFlags'].split()
-            entry['VmFlags_pretty'] = [vmflags_map[x] for x in entry['VmFlags']]
+            entry['VmFlags_pretty'] = [vmflags_map.get(x, x) for x in entry['VmFlags']]
 
     return proc_data
 
