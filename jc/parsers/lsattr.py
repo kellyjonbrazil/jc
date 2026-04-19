@@ -149,7 +149,7 @@ def parse(
 
         # attributes file
         # --------------e----- /etc/passwd
-        attributes, file = line.split()
+        attributes, file = line.split(None, 1)
         line_output['file'] = file
         for attribute in list(attributes):
             attribute_key = ATTRIBUTES.get(attribute)
