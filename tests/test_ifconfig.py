@@ -160,5 +160,18 @@ class MyTests(unittest.TestCase):
         expected = [{"name":"utun2","flags":8051,"state":["UP","POINTOPOINT","RUNNING","MULTICAST"],"mtu":1400,"type":None,"mac_addr":None,"ipv4_addr":"10.85.40.243","ipv4_mask":"255.255.255.255","ipv4_bcast":None,"ipv6_addr":"fdae:f7e0:9f37:64::146","ipv6_mask":128,"ipv6_scope":None,"ipv6_type":None,"metric":None,"rx_packets":None,"rx_errors":None,"rx_dropped":None,"rx_overruns":None,"rx_frame":None,"tx_packets":None,"tx_errors":None,"tx_dropped":None,"tx_overruns":None,"tx_carrier":None,"tx_collisions":None,"rx_bytes":None,"tx_bytes":None,"ipv6_scope_id":None,"nd6_options":201,"nd6_flags":["PERFORMNUD","DAD"],"ipv4":[{"address":"10.85.40.243","mask":"255.255.255.255"}],"ipv6":[{"address":"fe80::3af9:d3ff:fe69:1732","scope_id":"utun2","mask":64,"scope":"0xd"},{"address":"fdae:f7e0:9f37:64::146","scope_id":None,"mask":128,"scope":None}]}]
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_ifconfig_osx_hex_mask_all_zeros(self):
+        """
+        Test 'ifconfig' with a macOS/FreeBSD hex netmask of 0x00000000.
+        lstrip('0x') incorrectly strips leading hex digits when they are 0,
+        producing an empty string instead of '0.0.0.0'.
+        Regression test for https://github.com/kellyjonbrazil/jc/issues/685.
+        """
+        data = (
+            'lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384\n'
+            '\toptions=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>\n'
+            '\tinet 192.168.1.1 netmask 0x00000000\n'
+        )
+        result = jc.parsers.ifconfig.parse(data, quiet=True)
+        self.assertEqual(result[0]['ipv4_mask'], '0.0.0.0')
+

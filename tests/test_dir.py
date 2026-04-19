@@ -95,6 +95,25 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir_S, quiet=True),
                          self.windows_10_dir_S_json)
 
+    def test_dir_drive_letter_preserved(self):
+        """
+        Test that a drive letter at the start of the Directory path is preserved.
+        lstrip(" Directory of ") incorrectly strips the leading 'D' from 'D:\\...',
+        because lstrip strips individual characters, not a literal prefix string.
+        Regression test for https://github.com/kellyjonbrazil/jc/issues/687.
+        """
+        data = (
+            ' Volume in drive D has no label.\r\n'
+            ' Volume Serial Number is 1234-5678\r\n'
+            '\r\n'
+            ' Directory of D:\\Users\\testuser\r\n'
+            '\r\n'
+            '03/24/2021  03:15 PM    <DIR>          .\r\n'
+            '03/24/2021  03:15 PM    <DIR>          ..\r\n'
+        )
+        result = jc.parsers.dir.parse(data, quiet=True)
+        self.assertEqual(result[0]['parent'], 'D:\\Users\\testuser')
+
 
 if __name__ == '__main__':
     unittest.main()
