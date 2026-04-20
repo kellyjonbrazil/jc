@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
@@ -183,8 +183,8 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in data.splitlines():
-            if line.startswith(" Directory of"):
-                parent_dir = line.lstrip(" Directory of ")
+            if line.startswith(" Directory of "):
+                parent_dir = line[len(" Directory of "):]
                 continue
             # skip lines that don't start with a date
             if not re.match(r'^\d{2}/\d{2}/\d{4}', line):

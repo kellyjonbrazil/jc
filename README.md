@@ -123,6 +123,7 @@ pip3 install jc
 | FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
 | Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
 | FortiSOAR connector                  | Install from FortiSOAR Connector Marketplace                                  |
+| Mise-en-place (Linux/MacOS)          | `mise use -g jc@latest`                                                       |
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
 

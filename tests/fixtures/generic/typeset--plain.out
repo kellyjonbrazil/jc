@@ -1,0 +1,19 @@
+BASHOPTS=checkwinsize:cmdhist:complete_fullquote:expand_aliases:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:patsub_replacement:progcomp:promptvars:sourcepath
+BASH_ALIASES=()
+BASH_VERSINFO=([0]="5" [1]="3" [2]="9" [3]="1" [4]="release" [5]="aarch64-apple-darwin24.6.0")
+BASH_VERSION='5.3.9(1)-release'
+COLUMNS=92
+IFS=$' \t\n'
+INFOPATH=/opt/homebrew/share/info:
+JC_COLORS=cyan,default,default,default
+PS1='\s-\v\$ '
+PS2='> '
+PS4='+ '
+TERM_PROGRAM_VERSION=455.1
+TERM_SESSION_ID=E5896C5D-9C9A-4178-9246-00158A3F832F
+XPC_FLAGS=0x0
+_=-a
+associative_array=([key2]="abc" [key3]="1 2 3" [key1]="hello \"world\"" )
+integers_array=([0]="1" [1]="100" [2]="999")
+simple_array=([0]="hello \"world\"" [1]="abc" [2]="1 2 3")
+uppercase_array=([0]="ABC" [1]="123" [2]="XYZ")

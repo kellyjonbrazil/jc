@@ -19,4 +19,4 @@ Apache Full (v6)           ALLOW IN    Anywhere (v6)
 OpenSSH  (v6)              DENY IN        Anywhere (v6)
 10.10.10.10 8080 on enp34s0 ALLOW       127.0.0.1 8000
 50200:50300/tcp (v6)       DENY FWD        Anywhere (v6)
-Anywhere (v6)              LIMIT      2405:204:7449:49fc:f09a:6f4a:bc93:1955    # this is a comment
+Anywhere (v6)              LIMIT      2405:204:7449:49fc:f09a:6f4a:bc93:1955    (log) # this is a comment

@@ -2,9 +2,9 @@ Status: active
 
      To                         Action      From
      --                         ------      ----
-[ 1] 22                         ALLOW IN    Anywhere                  
+[ 1] 22                         ALLOW IN    Anywhere                   (log) 
 [ 2] 80,443/tcp                 ALLOW IN    Anywhere                  
-[ 3] 80 on eth0                 ALLOW IN    Anywhere                   # test
+[ 3] 80 on eth0                 ALLOW IN    Anywhere                   (log) # test
 [ 4] 10.0.0.1/ipv6              ALLOW IN    10.4.0.0/16/ipv6          
 [ 5] 10.0.0.1/esp               ALLOW IN    Anywhere                  
 [ 6] 10.0.0.1/esp               ALLOW IN    10.4.0.0/16/esp           
