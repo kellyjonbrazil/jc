@@ -10,7 +10,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 class MyTests(unittest.TestCase):
     f_in: Dict = {}
     f_json: Dict = {}
-
+    maxDiff = None
     @classmethod
     def setUpClass(cls):
         fixtures = {
@@ -19,7 +19,11 @@ class MyTests(unittest.TestCase):
                 'fixtures/generic/certbot-account.json'),
             'certificates': (
                 'fixtures/generic/certbot-certs.out',
-                'fixtures/generic/certbot-certs.json')
+                'fixtures/generic/certbot-certs.json'),
+            'certificates-cert-name': (
+                'fixtures/generic/certbot-certs-cert-name.out',
+                'fixtures/generic/certbot-certs-cert-name.json')
+
         }
 
         for file, filepaths in fixtures.items():
@@ -45,6 +49,14 @@ class MyTests(unittest.TestCase):
             self.f_json['certificates']
         )
 
+    def test_certbot_certificates_cert_name(self):
+        """
+        Test 'certbot certificates' with cert name
+        """
+        self.assertEqual(
+            parse(self.f_in['certificates-cert-name'], quiet=True),
+            self.f_json['certificates-cert-name']
+        )
     def test_certbot_account(self):
         """
         Test 'certbot account'

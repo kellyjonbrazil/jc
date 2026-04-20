@@ -201,7 +201,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cert_pattern = re.compile(r'^Found the following certs:\r?$', re.MULTILINE)
+        cert_pattern = re.compile(r'^Found the following (matching )?certs:\r?$', re.MULTILINE)
 
         if re.search(cert_pattern, data):
             cmd_option = 'certificates'
