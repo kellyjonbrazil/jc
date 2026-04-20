@@ -1,11 +1,12 @@
 import setuptools
 
+
 with open('README.md', 'r') as f:
     long_description = f.read()
 
 setuptools.setup(
     name='jc',
-    version='1.25.6',
+    version='1.25.7',
     author='Kelly Brazil',
     author_email='kellyjonbrazil@gmail.com',
     description='Converts the output of popular command-line tools and file-types to JSON.',

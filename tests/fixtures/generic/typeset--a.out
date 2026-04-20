@@ -1,0 +1,12 @@
+declare -a BASH_ARGC=()
+declare -a BASH_ARGV=()
+declare -a BASH_LINENO=()
+declare -a BASH_SOURCE=()
+declare -ar BASH_VERSINFO=([0]="5" [1]="3" [2]="9" [3]="1" [4]="release" [5]="aarch64-apple-darwin24.6.0")
+declare -a DIRSTACK=()
+declare -a FUNCNAME
+declare -a GROUPS=()
+declare -a PIPESTATUS=([0]="0")
+declare -ai integers_array=([0]="1" [1]="100" [2]="999")
+declare -a simple_array=([0]="hello \"world\"" [1]="abc" [2]="1 2 3")
+declare -aru uppercase_array=([0]="ABC" [1]="123" [2]="XYZ")

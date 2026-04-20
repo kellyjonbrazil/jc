@@ -300,8 +300,8 @@ class JcCli():
         Pages the parser documentation if a parser is found in the arguments,
         otherwise the general help text is printed.
         """
-        self.indent = 4
-        self.pad = 22
+        self.indent = 2
+        self.pad = 21
 
         if self.show_categories:
             utils._safe_print(self.parser_categories_text())
@@ -569,7 +569,11 @@ class JcCli():
                 if self.debug:
                     raise
 
-                error_msg = os.strerror(e.errno)
+                if e.errno:
+                    error_msg = os.strerror(e.errno)
+                else:
+                    error_msg = "no further information provided"
+
                 utils.error_message([
                     f'"{file}" file could not be opened: {error_msg}.'
                 ])
@@ -594,7 +598,11 @@ class JcCli():
                 if self.debug:
                     raise
 
-                error_msg = os.strerror(e.errno)
+                if e.errno:
+                    error_msg = os.strerror(e.errno)
+                else:
+                    error_msg = "no further information provided"
+
                 utils.error_message([
                     f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
                 ])

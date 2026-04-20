@@ -4,6 +4,8 @@ Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the `STDOUT` output or a log file
 generated with the `--log-file` option.
 
+The `--stats` or `--info=stats[1-3]` options are also supported.
+
 Usage (cli):
 
     $ rsync -i -a source/ dest | jc --rsync
@@ -37,7 +39,21 @@ Schema:
           "false_alarms":                     integer,
           "data":                             integer,
           "bytes_sec":                        float,
-          "speedup":                          float
+          "speedup":                          float,
+          "total_files":                      integer,
+          "regular_files":                    integer,
+          "dir_files":                        integer,
+          "total_created_files":              integer,
+          "created_regular_files":            integer,
+          "created_dir_files":                integer,
+          "deleted_files":                    integer,
+          "transferred_files":                integer,
+          "transferred_file_size":            integer,
+          "literal_data":                     integer,
+          "matched_data":                     integer,
+          "file_list_size":                   integer,
+          "file_list_generation_time":        float,
+          "file_list_transfer_time":          float,
         },
         "files": [
           {
@@ -61,6 +77,8 @@ Schema:
         ]
       }
     ]
+
+    Size values are in bytes.
 
     [0] 'file sent', 'file received', 'local change or creation',
         'hard link', 'not updated', 'message'
@@ -137,7 +155,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`rsync` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -163,10 +181,16 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     int_list = {
         'process', 'sent', 'received', 'total_size', 'matches', 'hash_hits',
-        'false_alarms', 'data'
+        'false_alarms', 'data', 'total_files', 'regular_files', 'dir_files',
+        'total_created_files', 'created_regular_files', 'created_dir_files',
+        'deleted_files', 'transferred_files', 'transferred_file_size',
+        'literal_data', 'matched_data', 'file_list_size'
     }
 
-    float_list = {'bytes_sec', 'speedup'}
+    float_list = {
+        'bytes_sec', 'speedup', 'file_list_generation_time',
+        'file_list_transfer_time'
+    }
 
     for item in proc_data:
         for key in item['summary']:
@@ -338,6 +362,17 @@ def parse(
     stat2_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+(?P<bytes_sec>[\d,.]+)\s+bytes/sec')
     stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
 
+    stat_ex_files_number_re = re.compile(r'Number\sof\sfiles:\s(?P<files_total>[,0123456789]+)\s\(reg:\s(?P<files_regular>[,0123456789]+),\sdir:\s(?P<files_dir>[,0123456789]+)\)$')
+    stat_ex_files_created_re = re.compile(r'Number\sof\screated\sfiles:\s(?P<files_created_total>[,0123456789]+)\s\(reg:\s(?P<files_created_regular>[,0123456789]+),\sdir:\s(?P<files_created_dir>[,0123456789]+)\)$')
+    stat_ex_files_deleted_re = re.compile(r'Number\sof\sdeleted\sfiles:\s(?P<files_deleted>[,0123456789]+)$')
+    stat_ex_files_transferred_re = re.compile(r'Number\sof\sregular\sfiles\stransferred:\s(?P<files_transferred>[,0123456789]+)$')
+    stat_ex_files_transferred_size_re = re.compile(r'Total\sfile\ssize:\s(?P<files_transferred_size>[,.0123456789]+\S?)\sbytes$')
+    stat_ex_literal_data_re = re.compile(r'Literal\sdata:\s(?P<literal_data>[,.0123456789]+\S?)\sbytes$')
+    stat_ex_matched_data_re = re.compile(r'Matched\sdata:\s(?P<matched_data>[,.0123456789]+\S?)\sbytes$')
+    stat_ex_file_list_size_re = re.compile(r'File\slist\ssize:\s(?P<file_list_size>[,.0123456789]+\S?)$')
+    stat_ex_file_list_generation_time_re = re.compile(r'File\slist\sgeneration\stime:\s(?P<file_list_generation_time>[,.0123456789]+\S?)\sseconds$')
+    stat_ex_file_list_transfer_time_re = re.compile(r'File\slist\stransfer\stime:\s(?P<file_list_transfer_time>[,.0123456789]+\S?)\sseconds$')
+
     if jc.utils.has_data(data):
         for line in filter(None, data.splitlines()):
 
@@ -451,11 +486,11 @@ def parse(
 
             stat1_line = stat1_line_re.match(line)
             if stat1_line:
-                rsync_run['summary'] = {
+                rsync_run['summary'].update({
                     'sent': stat1_line.group('sent'),
                     'received': stat1_line.group('received'),
                     'bytes_sec': stat1_line.group('bytes_sec')
-                }
+                })
                 continue
 
             stat2_line = stat2_line_re.match(line)
@@ -466,11 +501,11 @@ def parse(
 
             stat1_line_simple = stat1_line_simple_re.match(line)
             if stat1_line_simple:
-                rsync_run['summary'] = {
+                rsync_run['summary'].update({
                     'sent': stat1_line_simple.group('sent'),
                     'received': stat1_line_simple.group('received'),
                     'bytes_sec': stat1_line_simple.group('bytes_sec')
-                }
+                })
                 continue
 
             stat2_line_simple = stat2_line_simple_re.match(line)
@@ -481,19 +516,19 @@ def parse(
 
             stat_line_log = stat_line_log_re.match(line)
             if stat_line_log:
-                rsync_run['summary'] = {
+                rsync_run['summary'].update({
                     'date': stat_line_log.group('date'),
                     'time': stat_line_log.group('time'),
                     'process': stat_line_log.group('process'),
                     'sent': stat_line_log.group('sent'),
                     'received': stat_line_log.group('received'),
                     'total_size': stat_line_log.group('total_size')
-                }
+                })
                 continue
 
             stat1_line_log_v = stat1_line_log_v_re.match(line)
             if stat1_line_log_v:
-                rsync_run['summary'] = {
+                rsync_run['summary'].update({
                     'date': stat1_line_log_v.group('date'),
                     'time': stat1_line_log_v.group('time'),
                     'process': stat1_line_log_v.group('process'),
@@ -501,7 +536,7 @@ def parse(
                     'hash_hits': stat1_line_log_v.group('hash_hits'),
                     'false_alarms': stat1_line_log_v.group('false_alarms'),
                     'data': stat1_line_log_v.group('data')
-                }
+                })
                 continue
 
             stat2_line_log_v = stat2_line_log_v_re.match(line)
@@ -515,6 +550,61 @@ def parse(
             if stat3_line_log_v:
                 rsync_run['summary']['total_size'] = stat3_line_log_v.group('total_size')
                 rsync_run['summary']['speedup'] = stat3_line_log_v.group('speedup')
+                continue
+
+            # extra stats lines when using rsync --stats or --info=stats[1-3]
+            stat_ex_files_number_v = stat_ex_files_number_re.match(line)
+            if stat_ex_files_number_v:
+                rsync_run['summary']['total_files'] = stat_ex_files_number_v.group('files_total')
+                rsync_run['summary']['regular_files'] = stat_ex_files_number_v.group('files_regular')
+                rsync_run['summary']['dir_files'] = stat_ex_files_number_v.group('files_dir')
+                continue
+
+            stat_ex_files_created_v = stat_ex_files_created_re.match(line)
+            if stat_ex_files_created_v:
+                rsync_run['summary']['total_created_files'] = stat_ex_files_created_v.group('files_created_total')
+                rsync_run['summary']['created_regular_files'] = stat_ex_files_created_v.group('files_created_regular')
+                rsync_run['summary']['created_dir_files'] = stat_ex_files_created_v.group('files_created_dir')
+                continue
+
+            stat_ex_files_deleted_v = stat_ex_files_deleted_re.match(line)
+            if stat_ex_files_deleted_v:
+                rsync_run['summary']['deleted_files'] = stat_ex_files_deleted_v.group('files_deleted')
+                continue
+
+            stat_ex_files_transferred_v = stat_ex_files_transferred_re.match(line)
+            if stat_ex_files_transferred_v:
+                rsync_run['summary']['transferred_files'] = stat_ex_files_transferred_v.group('files_transferred')
+                continue
+
+            stat_ex_files_transferred_size_v = stat_ex_files_transferred_size_re.match(line)
+            if stat_ex_files_transferred_size_v:
+                rsync_run['summary']['transferred_file_size'] = stat_ex_files_transferred_size_v.group('files_transferred_size')
+                continue
+
+            stat_ex_literal_data_v = stat_ex_literal_data_re.match(line)
+            if stat_ex_literal_data_v:
+                rsync_run['summary']['literal_data'] = stat_ex_literal_data_v.group('literal_data')
+                continue
+
+            stat_ex_matched_data_v = stat_ex_matched_data_re.match(line)
+            if stat_ex_matched_data_v:
+                rsync_run['summary']['matched_data'] = stat_ex_matched_data_v.group('matched_data')
+                continue
+
+            stat_ex_file_list_size_v = stat_ex_file_list_size_re.match(line)
+            if stat_ex_file_list_size_v:
+                rsync_run['summary']['file_list_size'] = stat_ex_file_list_size_v.group('file_list_size')
+                continue
+
+            stat_ex_file_list_generation_time_v = stat_ex_file_list_generation_time_re.match(line)
+            if stat_ex_file_list_generation_time_v:
+                rsync_run['summary']['file_list_generation_time'] = stat_ex_file_list_generation_time_v.group('file_list_generation_time')
+                continue
+
+            stat_ex_file_list_transfer_time_v = stat_ex_file_list_transfer_time_re.match(line)
+            if stat_ex_file_list_transfer_time_v:
+                rsync_run['summary']['file_list_transfer_time'] = stat_ex_file_list_transfer_time_v.group('file_list_transfer_time')
                 continue
 
     raw_output.append(rsync_run)

@@ -10,7 +10,7 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.6'
+__version__ = '1.25.7'
 
 parsers: List[str] = [
     'acpi',
@@ -216,6 +216,7 @@ parsers: List[str] = [
     'traceroute',
     'traceroute-s',
     'tune2fs',
+    'typeset',
     'udevadm',
     'ufw',
     'ufw-appinfo',
