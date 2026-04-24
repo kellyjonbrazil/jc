@@ -183,8 +183,9 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in data.splitlines():
-            if line.startswith(" Directory of"):
-                parent_dir = line.lstrip(" Directory of ")
+            if line.startswith(" Directory of "):
+                # lstrip() would strip any char in the set, eating the drive letter in 'D:\...'
+                parent_dir = line[len(" Directory of "):]
                 continue
             # skip lines that don't start with a date
             if not re.match(r'^\d{2}/\d{2}/\d{4}', line):
