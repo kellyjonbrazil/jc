@@ -1,0 +1,9 @@
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), deny (routed)
+
+To                         Action      From
+--                         ------      ----
+80/tcp                     ALLOW IN    1.2.3.4        (log)  # Allow HTTP from build server
+443/tcp                    ALLOW IN    10.0.0.0/8     (log-all)
+22/tcp                     ALLOW IN    Anywhere

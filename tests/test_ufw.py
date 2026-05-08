@@ -27,6 +27,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.out'), 'r', encoding='utf-8') as f:
         generic_ufw_inactive = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-log.out'), 'r', encoding='utf-8') as f:
+        generic_ufw_log = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ufw-verbose.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_04_ufw_verbose_json = json.loads(f.read())
@@ -45,6 +48,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-inactive.json'), 'r', encoding='utf-8') as f:
         generic_ufw_inactive_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ufw-log.json'), 'r', encoding='utf-8') as f:
+        generic_ufw_log_json = json.loads(f.read())
 
 
     def test_ufw_nodata(self):
@@ -88,6 +94,12 @@ class MyTests(unittest.TestCase):
         Test 'ufw status' when firewall is inactive
         """
         self.assertEqual(jc.parsers.ufw.parse(self.generic_ufw_inactive, quiet=True), self.generic_ufw_inactive_json)
+
+    def test_ufw_generic_log(self):
+        """
+        Test 'ufw status verbose' with per-rule (log) and (log-all) markers
+        """
+        self.assertEqual(jc.parsers.ufw.parse(self.generic_ufw_log, quiet=True), self.generic_ufw_log_json)
 
 
 if __name__ == '__main__':

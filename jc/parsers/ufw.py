@@ -280,6 +280,10 @@ def _parse_to_from(linedata, direction, rule_obj=None):
     elif not rule_obj.get('network_protocol'):
         rule_obj['network_protocol'] = 'ipv4'
 
+    # pull (log) and (log-all) - these are per-rule logging markers
+    RE_LOG = re.compile(r'\(log(?:-all)?\)')
+    linedata = re.sub(RE_LOG, '', linedata)
+
     # pull 'Anywhere' if exists. Assign to 0.0.0.0/0 or ::/0 depending on if (v6) is found
     if 'Anywhere' in linedata:
         if rule_obj.get('network_protocol') == 'ipv6':
