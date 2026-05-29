@@ -95,6 +95,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir_S, quiet=True),
                          self.windows_10_dir_S_json)
 
+    def test_dir_drive_d_lstrip_bug(self):
+        """
+        Test that ' Directory of D:\\...' is parsed correctly.
+        (Regression: lstrip(" Directory of ") strips 'D' as well, producing ':\\...')
+        """
+        data = " Directory of D:\\Users\\testuser\n\n05/27/2026  10:30 AM             1,024  test.txt"
+        result = jc.parsers.dir.parse(data, quiet=True)
+        self.assertEqual(len(result), 1, f"Expected 1 entry, got {len(result)}")
+        self.assertEqual(result[0]["filename"], "test.txt")
+
 
 if __name__ == '__main__':
     unittest.main()
