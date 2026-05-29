@@ -148,6 +148,59 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
 
+    def test_ifconfig_zero_mask_lstrip_bug(self):
+        """
+        Regression test: lstrip('0x') strips individual chars, not the literal prefix.
+        0x00000000 would become '' (empty) with old code, crashing the mask conversion.
+        """
+        data = r'''lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+    inet 127.0.0.1 netmask 0x00000000
+    inet6 ::1 prefixlen 128'''
+        expected = [{
+            "name": "lo0", "flags": 8049,
+            "state": ["UP", "LOOPBACK", "RUNNING", "MULTICAST"],
+            "mtu": 16384, "type": None, "mac_addr": None,
+            "ipv4_addr": "127.0.0.1", "ipv4_mask": "0.0.0.0", "ipv4_bcast": None,
+            "ipv6_addr": "::1", "ipv6_mask": 128, "ipv6_scope": None, "ipv6_type": None,
+            "metric": None,
+            "rx_packets": None, "rx_errors": None, "rx_dropped": None,
+            "rx_overruns": None, "rx_frame": None,
+            "tx_packets": None, "tx_errors": None, "tx_dropped": None,
+            "tx_overruns": None, "tx_carrier": None, "tx_collisions": None,
+            "rx_bytes": None, "tx_bytes": None,
+            "ipv6_scope_id": None,
+            "ipv4": [{"address": "127.0.0.1", "mask": "0.0.0.0", "broadcast": None}],
+            "ipv6": [{"address": "::1", "scope_id": None, "mask": 128, "scope": None}]
+        }]
+        self.assertEqual(jc.parsers.ifconfig.parse(data, quiet=True), expected)
+
+    def test_ifconfig_zero_mask_ipv4_list_lstrip_bug(self):
+        """
+        Regression test: lstrip('0x') in the ipv4 list branch.
+        0x00ffffff would have leading '00' stripped by lstrip,
+        producing 'ffffff' (3 octets → malformed).
+        """
+        data = r'''utun2: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1400
+    inet 10.85.40.243 --> 10.85.40.243 netmask 0x00ffffff
+    inet6 fe80::3af9:d3ff:fe69:1732%utun2 prefixlen 64 scopeid 0xd'''
+        expected = [{
+            "name": "utun2", "flags": 8051,
+            "state": ["UP", "POINTOPOINT", "RUNNING", "MULTICAST"],
+            "mtu": 1400, "type": None, "mac_addr": None,
+            "ipv4_addr": "10.85.40.243", "ipv4_mask": "0.255.255.255", "ipv4_bcast": None,
+            "ipv6_addr": "fe80::3af9:d3ff:fe69:1732", "ipv6_mask": 64, "ipv6_scope": "0xd", "ipv6_type": None,
+            "metric": None,
+            "rx_packets": None, "rx_errors": None, "rx_dropped": None,
+            "rx_overruns": None, "rx_frame": None,
+            "tx_packets": None, "tx_errors": None, "tx_dropped": None,
+            "tx_overruns": None, "tx_carrier": None, "tx_collisions": None,
+            "rx_bytes": None, "tx_bytes": None,
+            "ipv6_scope_id": "utun2",
+            "ipv4": [{"address": "10.85.40.243", "mask": "0.255.255.255"}],
+            "ipv6": [{"address": "fe80::3af9:d3ff:fe69:1732", "scope_id": "utun2", "mask": 64, "scope": "0xd"}]
+        }]
+        self.assertEqual(jc.parsers.ifconfig.parse(data, quiet=True), expected)
+
     def test_ifconfig_utun_ipv4(self):
         """
         Test 'ifconfig' with ipv4 utun addresses (macOS)

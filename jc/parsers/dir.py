@@ -184,7 +184,7 @@ def parse(data, raw=False, quiet=False):
 
         for line in data.splitlines():
             if line.startswith(" Directory of"):
-                parent_dir = line.lstrip(" Directory of ")
+                parent_dir = line[len(" Directory of "):]
                 continue
             # skip lines that don't start with a date
             if not re.match(r'^\d{2}/\d{2}/\d{4}', line):
