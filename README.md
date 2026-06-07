@@ -178,6 +178,7 @@ option.
 |     `--crontab-u` | `crontab` file parser with user support                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u)      |
 |           `--csv` | CSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv)            |
 |         `--csv-s` | CSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s)          |
+|        `--csv-ih` | CSV implicit header file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_ih)         |
 |     `--curl-head` | `curl --head` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/curl_head)      |
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
@@ -306,6 +307,8 @@ option.
 |     `--tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
 |    `--traceroute` | `traceroute` and `traceroute6` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute)     |
 |  `--traceroute-s` | `traceroute` and `traceroute6` command streaming parser | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute_s)   |
+|           `--tsv` | TSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tsv)            |
+|        `--tsv-ih` | TSV implicit header file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tsv_ih)         |
 |       `--tune2fs` | `tune2fs -l` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tune2fs)        |
 |       `--udevadm` | `udevadm info` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/udevadm)        |
 |           `--ufw` | `ufw status` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw)            |
@@ -737,7 +740,7 @@ Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/bl
 - CI automation and code optimizations by [philippeitis](https://github.com/philippeitis)
 - [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module
   by KnightWhoSayNi
-- [`xmltodict`](https://github.com/martinblech/xmltodict) module by MartÃ­n Blech
+- [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
 - [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van
   der Neut
 - [`trparse`](https://github.com/lbenitez000/trparse) module by Luis Benitez
@@ -1383,4 +1386,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-Â© 2019-2025 Kelly Brazil
+© 2019-2025 Kelly Brazil

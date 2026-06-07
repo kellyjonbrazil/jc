@@ -113,16 +113,20 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 def parse(
     data: Union[str, bytes],
     raw: bool = False,
-    quiet: bool = False
+    quiet: bool = False,
+    implicit_header: bool = False,
+    tsv: bool = False,
 ) -> List[JSONDictType]:
     """
     Main text parsing function
 
     Parameters:
 
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
+        data:               (string)  text data to parse
+        raw:                (boolean) unprocessed output if True
+        quiet:              (boolean) suppress warning messages if True
+        implicit_header:    (boolean) data has no header, generate column names
+        tsv:                (boolean) force TSV delimiter
 
     Returns:
 
@@ -145,17 +149,23 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        dialect: Union[str, Type[csv.Dialect]]  = 'excel'  # default in csv module
-        try:
-            dialect = csv.Sniffer().sniff(data[:1024])
-            if '""' in data:
-                dialect.doublequote = True
-        except Exception:
-            pass
+        dialect: Union[str, Type[csv.Dialect]] = (
+            'excel-tab' if tsv
+            else 'excel'  # default in csv module
+        )
+        if not tsv:
+            try:
+                dialect = csv.Sniffer().sniff(data[:1024])
+                if '""' in data:
+                    dialect.doublequote = True
+            except Exception:
+                pass
 
-        reader = csv.DictReader(cleandata, dialect=dialect)
+        reader = csv.DictReader(cleandata, dialect=dialect, fieldnames=[] if implicit_header else None)
 
         for row in reader:
+            if implicit_header:
+                row = { f"f{idx}": col for idx, col in enumerate(row[None]) }
             raw_output.append(row)
 
     return raw_output if raw else _process(raw_output)
