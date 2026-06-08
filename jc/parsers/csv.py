@@ -72,10 +72,10 @@ Examples:
       ...
     ]
 """
+import csv
 from typing import List, Union, Type
 from jc.jc_types import JSONDictType
 import jc.utils
-import csv
 
 
 class info():
@@ -161,7 +161,13 @@ def parse(
             except Exception:
                 pass
 
-        reader = csv.DictReader(cleandata, dialect=dialect, fieldnames=[] if implicit_header else None)
+        reader = csv.DictReader(
+            cleandata,
+            dialect=dialect,
+            # In implicit mode Python will skip the header
+            # and put all fields in `restkey` (`None`).
+            fieldnames=[] if implicit_header else None
+        )
 
         for row in reader:
             if implicit_header:
