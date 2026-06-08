@@ -54,6 +54,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv-dpkg-query.tsv'), 'r', encoding='utf-8') as f:
         generic_tsv_dpkg_query_csv = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-simple-double-quote.tsv'), 'r', encoding='utf-8') as f:
+        generic_tsv_simple_double_quote_csv = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.json'), 'r', encoding='utf-8') as f:
         generic_csv_biostats_json = json.loads(f.read())
@@ -96,6 +99,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv-dpkg-query.json'), 'r', encoding='utf-8') as f:
         generic_tsv_dpkg_query_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-simple-double-quote.json'), 'r', encoding='utf-8') as f:
+        generic_tsv_simple_double_quote_json = json.loads(f.read())
 
 
     def test_csv_nodata(self):
@@ -187,6 +193,13 @@ class MyTests(unittest.TestCase):
         Test 'tsv_ih-dpkg-query.tsv' file in implicit header mode.
         """
         self.assertEqual(jc.parsers.tsv_ih.parse(self.generic_tsv_ih_dpkg_query_csv, quiet=True), self.generic_tsv_ih_dpkg_query_json)
+
+
+    def test_tsv_simple_double_quote(self):
+        """
+        Test 'tsv_ih-dpkg-query.tsv' file in implicit header mode.
+        """
+        self.assertEqual(jc.parsers.tsv_ih.parse(self.generic_tsv_simple_double_quote_csv, quiet=True), self.generic_tsv_simple_double_quote_json)
 
 
 if __name__ == '__main__':
