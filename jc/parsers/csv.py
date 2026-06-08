@@ -172,7 +172,7 @@ def parse(
 
         for row in reader:
             if implicit_header:
-                row = { f"f{idx}": col for idx, col in enumerate(row[None]) }
+                row = { f"c{idx}": col for idx, col in enumerate(row[None]) }
             raw_output.append(row)
 
     return raw_output if raw else _process(raw_output)

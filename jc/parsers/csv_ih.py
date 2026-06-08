@@ -2,7 +2,7 @@ r"""jc - JSON Convert `csv` implicit header file parser
 
 The `csv` implicit header parser will attempt to automatically detect the delimiter
 character. If the delimiter cannot be detected it will default to comma.
-The file must have no header, and the field names will be generated as "f0", "f1", etc.
+The file must have no header, and the field names will be generated as "c0", "c1", etc.
 
 Usage (cli):
 
@@ -11,7 +11,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('csv', csv_output)
+    result = jc.parse('csv_ih', csv_output)
 
 Schema:
 
@@ -20,8 +20,8 @@ https://docs.python.org/3/library/csv.html
 
     [
       {
-        "f0":     string,
-        "f1":     string
+        "column_name1":     string,
+        "column_name2":     string
       }
     ]
 
@@ -36,37 +36,37 @@ Examples:
     $ cat homes.csv | jc --csv-ih -p
     [
       {
-        "f0": "142",
-        "f1": "160",
-        "f2": "28",
-        "f3": "10",
-        "f4": "5",
-        "f5": "3",
-        "f6": "60",
-        "f7": "0.28",
-        "f8": "3167"
+        "c0": "142",
+        "c1": "160",
+        "c2": "28",
+        "c3": "10",
+        "c4": "5",
+        "c5": "3",
+        "c6": "60",
+        "c7": "0.28",
+        "c8": "3167"
       },
       {
-        "f0": "175",
-        "f1": "180",
-        "f2": "18",
-        "f3": "8",
-        "f4": "4",
-        "f5": "1",
-        "f6": "12",
-        "f7": "0.43",
-        "f8": "4033"
+        "c0": "175",
+        "c1": "180",
+        "c2": "18",
+        "c3": "8",
+        "c4": "4",
+        "c5": "1",
+        "c6": "12",
+        "c7": "0.43",
+        "c8": "4033"
       },
       {
-        "f0": "129",
-        "f1": "132",
-        "f2": "13",
-        "f3": "6",
-        "f4": "3",
-        "f5": "1",
-        "f6": "41",
-        "f7": "0.33",
-        "f8": "1471"
+        "c0": "129",
+        "c1": "132",
+        "c2": "13",
+        "c3": "6",
+        "c4": "3",
+        "c5": "1",
+        "c6": "41",
+        "c7": "0.33",
+        "c8": "1471"
       },
       ...
     ]
