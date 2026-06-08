@@ -48,6 +48,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-homes.csv'), 'r', encoding='utf-8') as f:
         generic_csv_ih_homes_csv = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-jagged.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_ih_jagged_csv = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-dpkg-query.tsv'), 'r', encoding='utf-8') as f:
         generic_tsv_ih_dpkg_query_csv = f.read()
 
@@ -93,6 +96,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-homes.json'), 'r', encoding='utf-8') as f:
         generic_csv_ih_homes_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-jagged.json'), 'r', encoding='utf-8') as f:
+        generic_csv_ih_jagged_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-dpkg-query.json'), 'r', encoding='utf-8') as f:
         generic_tsv_ih_dpkg_query_json = json.loads(f.read())
@@ -181,6 +187,12 @@ class MyTests(unittest.TestCase):
         Test 'csv_ih-homes.csv' file in implicit header mode.
         """
         self.assertEqual(jc.parsers.csv_ih.parse(self.generic_csv_ih_homes_csv, quiet=True), self.generic_csv_ih_homes_json)
+
+    def test_csv_ih_jagged(self):
+        """
+        Test 'csv_ih-jagged.csv' file in implicit header mode.
+        """
+        self.assertEqual(jc.parsers.csv_ih.parse(self.generic_csv_ih_jagged_csv, quiet=True), self.generic_csv_ih_jagged_json)
 
     def test_tsv_dpkg_query(self):
         """
