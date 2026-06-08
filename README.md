@@ -740,7 +740,7 @@ Please see the [Contributing Guidelines](https://github.com/kellyjonbrazil/jc/bl
 - CI automation and code optimizations by [philippeitis](https://github.com/philippeitis)
 - [`ifconfig-parser`](https://github.com/KnightWhoSayNi/ifconfig-parser) module
   by KnightWhoSayNi
-- [`xmltodict`](https://github.com/martinblech/xmltodict) module by Martín Blech
+- [`xmltodict`](https://github.com/martinblech/xmltodict) module by MartÃ­n Blech
 - [`ruamel.yaml`](https://pypi.org/project/ruamel.yaml) module by Anthon van
   der Neut
 - [`trparse`](https://github.com/lbenitez000/trparse) module by Luis Benitez
@@ -1386,4 +1386,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-© 2019-2025 Kelly Brazil
+Â© 2019-2025 Kelly Brazil
