@@ -223,6 +223,7 @@ parsers: List[str] = [
     'update-alt-gs',
     'update-alt-q',
     'upower',
+    'upsc',
     'uptime',
     'url',
     'ver',
