@@ -2,6 +2,9 @@ import os
 import json
 import unittest
 import jc.parsers.csv
+import jc.parsers.csv_ih
+import jc.parsers.tsv
+import jc.parsers.tsv_ih
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -42,6 +45,21 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-homes.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_ih_homes_csv = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-jagged.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_ih_jagged_csv = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-dpkg-query.tsv'), 'r', encoding='utf-8') as f:
+        generic_tsv_ih_dpkg_query_csv = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv-dpkg-query.tsv'), 'r', encoding='utf-8') as f:
+        generic_tsv_dpkg_query_csv = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-simple-double-quote.tsv'), 'r', encoding='utf-8') as f:
+        generic_tsv_simple_double_quote_csv = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-biostats.json'), 'r', encoding='utf-8') as f:
         generic_csv_biostats_json = json.loads(f.read())
@@ -75,6 +93,21 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.json'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-homes.json'), 'r', encoding='utf-8') as f:
+        generic_csv_ih_homes_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv_ih-jagged.json'), 'r', encoding='utf-8') as f:
+        generic_csv_ih_jagged_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-dpkg-query.json'), 'r', encoding='utf-8') as f:
+        generic_tsv_ih_dpkg_query_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv-dpkg-query.json'), 'r', encoding='utf-8') as f:
+        generic_tsv_dpkg_query_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-simple-double-quote.json'), 'r', encoding='utf-8') as f:
+        generic_tsv_simple_double_quote_json = json.loads(f.read())
 
 
     def test_csv_nodata(self):
@@ -148,6 +181,37 @@ class MyTests(unittest.TestCase):
         Test 'csv-utf-8-bom.csv' file to ensure the first column is correct if UTF-8 BOM bytes are present
         """
         self.assertEqual(jc.parsers.csv.parse(self.generic_csv_utf8_bom, quiet=True), self.generic_csv_utf8_bom_json)
+
+    def test_csv_ih_homes(self):
+        """
+        Test 'csv_ih-homes.csv' file in implicit header mode.
+        """
+        self.assertEqual(jc.parsers.csv_ih.parse(self.generic_csv_ih_homes_csv, quiet=True), self.generic_csv_ih_homes_json)
+
+    def test_csv_ih_jagged(self):
+        """
+        Test 'csv_ih-jagged.csv' file in implicit header mode.
+        """
+        self.assertEqual(jc.parsers.csv_ih.parse(self.generic_csv_ih_jagged_csv, quiet=True), self.generic_csv_ih_jagged_json)
+
+    def test_tsv_dpkg_query(self):
+        """
+        Test 'tsv-dpkg-query.tsv' file
+        """
+        self.assertEqual(jc.parsers.tsv.parse(self.generic_tsv_dpkg_query_csv, quiet=True), self.generic_tsv_dpkg_query_json)
+
+    def test_tsv_ih_dpkg_query(self):
+        """
+        Test 'tsv_ih-dpkg-query.tsv' file in implicit header mode.
+        """
+        self.assertEqual(jc.parsers.tsv_ih.parse(self.generic_tsv_ih_dpkg_query_csv, quiet=True), self.generic_tsv_ih_dpkg_query_json)
+
+
+    def test_tsv_simple_double_quote(self):
+        """
+        Test 'tsv_ih-dpkg-query.tsv' file in implicit header mode.
+        """
+        self.assertEqual(jc.parsers.tsv_ih.parse(self.generic_tsv_simple_double_quote_csv, quiet=True), self.generic_tsv_simple_double_quote_json)
 
 
 if __name__ == '__main__':

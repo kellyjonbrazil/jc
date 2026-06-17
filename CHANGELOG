@@ -1,6 +1,21 @@
 jc changelog
 
-202501012 v1.25.6
+20260422 v1.25.7
+- Add `typeset` and `declare` Bash internal command parser to convert variables
+  simple arrays, and associative arrays along with object metadata
+- Enhance `pip-show` command parser to add `-f` show files support
+- Enhance `rsync` and `rsync-s` parsers to add `--stats` or `--info=stats[1-3]` fields
+- Fix `certbot` command parser to allow parsing of named certs
+- Fix `dir` command parser for incorrect stripping of the `D:` drive letter
+- Fix `hashsum` command parser to correctly parse the `mode` indicator
+- Fix `ifconfig` command parser for incorrect stripping of leading zeros in some hex numbers
+- Fix `iptables` command parser when Target is blank and verbose output is used
+- Fix `lsattr` command parser for filenames with spaces (newlines in filenames are
+  still not supported)
+- Fix `proc-pid-smaps` proc parser when unknown VmFlags are output
+- Fix `ufw` command parser to support rule logging. A new boolean `log` field is introduced
+
+20251012 v1.25.6
 - Add `net-localgroup` Windows command parser
 - Add `net-user` Windows command parser
 - Add `route-print` Windows command parser

@@ -26,6 +26,7 @@ Schema:
           "action":                 string,
           "action_direction":       string,     # null if blank
           "index":                  integer,    # null if blank
+          "log":                    boolean,
           "network_protocol":       string,
           "to_ip":                  string,
           "to_ip_prefix":           integer,
@@ -77,6 +78,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": true,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "any",
@@ -103,6 +105,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": false,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -142,6 +145,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": true,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "any",
@@ -168,6 +172,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": false,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -202,7 +207,7 @@ import ipaddress
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`ufw status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -270,6 +275,15 @@ def _parse_to_from(linedata, direction, rule_obj=None):
             linedata = re.sub(RE_COMMENT, '', linedata)
         else:
             rule_obj['comment'] = None
+
+    # pull (log)
+    RE_LOG = re.compile(r'\(log\)')
+    log_match = re.search(RE_LOG, linedata)
+    if log_match:
+        rule_obj['log'] = True
+        linedata = re.sub(RE_LOG, '', linedata)
+    else:
+        rule_obj['log'] = False
 
     # pull (v6)
     RE_V6 = re.compile(r'\(v6\)')

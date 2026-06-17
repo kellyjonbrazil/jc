@@ -168,7 +168,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/<pid>/smaps` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -205,33 +205,46 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
     vmflags_map = {
         'rd': 'readable',
-        'wr':  'writeable',
-        'ex':  'executable',
-        'sh':  'shared',
-        'mr':  'may read',
-        'mw':  'may write',
-        'me':  'may execute',
-        'ms':  'may share',
-        'mp':  'MPX-specific VMA',
-        'gd':  'stack segment growns down',
-        'pf':  'pure PFN range',
-        'dw':  'disabled write to the mapped file',
-        'lo':  'pages are locked in memory',
-        'io':  'memory mapped I/O area',
-        'sr':  'sequential read advise provided',
-        'rr':  'random read advise provided',
-        'dc':  'do not copy area on fork',
-        'de':  'do not expand area on remapping',
-        'ac':  'area is accountable',
-        'nr':  'swap space is not reserved for the area',
-        'ht':  'area uses huge tlb pages',
-        'ar':  'architecture specific flag',
-        'dd':  'do not include area into core dump',
-        'sd':  'soft-dirty flag',
-        'mm':  'mixed map area',
-        'hg':  'huge page advise flag',
-        'nh':  'no-huge page advise flag',
-        'mg':  'mergable advise flag'
+        'wr': 'writeable',
+        'ex': 'executable',
+        'sh': 'shared',
+        'mr': 'may read',
+        'mw': 'may write',
+        'me': 'may execute',
+        'ms': 'may share',
+        'mp': 'MPX-specific VMA',
+        'gd': 'stack segment growns down',
+        'pf': 'pure PFN range',
+        'dw': 'disabled write to the mapped file',
+        'lo': 'pages are locked in memory',
+        'io': 'memory mapped I/O area',
+        'sr': 'sequential read advise provided',
+        'rr': 'random read advise provided',
+        'dc': 'do not copy area on fork',
+        'de': 'do not expand area on remapping',
+        'ac': 'area is accountable',
+        'nr': 'swap space is not reserved for the area',
+        'ht': 'area uses huge tlb pages',
+        'sf': 'perform synchronous page faults',
+        'nl': 'non-linear mapping',
+        'ar': 'architecture specific flag',
+        'wf': 'wipe on fork',
+        'dd': 'do not include area into core dump',
+        'sd': 'soft-dirty flag',
+        'mm': 'mixed map area',
+        'hg': 'huge page advise flag',
+        'nh': 'no-huge page advise flag',
+        'mg': 'mergable advise flag',
+        'bt': 'arm64 BTI guarded page',
+        'mt': 'arm64 MTE allocation tags are enabled',
+        'um': 'userfaultfd missing pages tracking',
+        'uw': 'userfaultfd wprotect pages tracking',
+        'ui': 'userfaultfd minor fault',
+        'ss': 'shadow/guarded control stack page',
+        'sl': 'sealed',
+        'lf': 'lock on fault pages',
+        'dp': 'always lazily freeable mapping',
+        'gu': 'maybe contains guard regions'
     }
 
     for entry in proc_data:
@@ -245,7 +258,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         if 'VmFlags' in entry:
             entry['VmFlags'] = entry['VmFlags'].split()
-            entry['VmFlags_pretty'] = [vmflags_map[x] for x in entry['VmFlags']]
+            entry['VmFlags_pretty'] = [vmflags_map.get(x, x) for x in entry['VmFlags']]
 
     return proc_data
 

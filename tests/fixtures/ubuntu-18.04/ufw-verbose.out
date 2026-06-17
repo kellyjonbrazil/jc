@@ -5,9 +5,9 @@ New profiles: skip
 
 To                         Action      From
 --                         ------      ----
-22                         ALLOW IN    Anywhere                  
+22                         ALLOW IN    Anywhere                   (log)
 80,443/tcp                 ALLOW IN    Anywhere                  
-80 on eth0                 ALLOW IN    Anywhere                   # test
+80 on eth0                 ALLOW IN    Anywhere                   (log) # test
 10.0.0.1/ipv6              ALLOW IN    10.4.0.0/16/ipv6          
 10.0.0.1/esp               ALLOW IN    Anywhere                  
 10.0.0.1/esp               ALLOW IN    10.4.0.0/16/esp           
