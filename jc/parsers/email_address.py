@@ -93,22 +93,23 @@ def parse(
 
     if jc.utils.has_data(data):
         data = data.strip()
-        domain = data.rsplit('@', maxsplit=1)[1]
-        local = data.rsplit('@', maxsplit=1)[0]
+        if '@' in data:
+            domain = data.rsplit('@', maxsplit=1)[1]
+            local = data.rsplit('@', maxsplit=1)[0]
 
-        local_plus_prefix = None
-        local_plus_suffix = None
-        try:
-            local_plus_suffix = local.split('+', maxsplit=1)[1]
-            local_plus_prefix = local.split('+', maxsplit=1)[0]
-        except IndexError:
-            pass
+            local_plus_prefix = None
+            local_plus_suffix = None
+            try:
+                local_plus_suffix = local.split('+', maxsplit=1)[1]
+                local_plus_prefix = local.split('+', maxsplit=1)[0]
+            except IndexError:
+                pass
 
-        raw_output = {
-            'username': local_plus_prefix or local,
-            'domain': domain,
-            'local': local,
-            'local_plus_suffix': local_plus_suffix
-        }
+            raw_output = {
+                'username': local_plus_prefix or local,
+                'domain': domain,
+                'local': local,
+                'local_plus_suffix': local_plus_suffix
+            }
 
     return raw_output if raw else _process(raw_output)
