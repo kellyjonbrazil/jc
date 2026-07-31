@@ -1,0 +1,4 @@
+declare -- var1="hello"
+declare -- var2="[bracketed]"
+declare -- var3="world"
+declare -- empty=""
