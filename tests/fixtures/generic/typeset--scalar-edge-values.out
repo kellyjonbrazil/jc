@@ -3,3 +3,4 @@ declare -- empty=""
 declare -- one="x"
 declare -- two="xy"
 declare -a array=([0]="x")
+declare -a array_with_assignment=([0]="foo=a[x]")

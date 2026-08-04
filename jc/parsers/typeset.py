@@ -287,15 +287,6 @@ def parse(
                 "exported": None
             }
 
-            # regular variable
-            var_def_match = re.search(VAR_DEF_PATTERN, line)
-            if var_def_match:
-                item['name'] = var_def_match['name']
-                item['value'] = _remove_quotes(var_def_match['val'])
-                item.update(_get_declare_options(line, 'variable'))
-                raw_output.append(item)
-                continue
-
             # empty variable
             empty_var_def_match = re.search(EMPTY_VAR_DEF_PATTERN, line)
             if empty_var_def_match:
@@ -329,6 +320,15 @@ def parse(
                 item['name'] = empty_arr_def_match['name']
                 item['value'] = []
                 item.update(_get_declare_options(line, 'array'))
+                raw_output.append(item)
+                continue
+
+            # regular variable
+            var_def_match = re.search(VAR_DEF_PATTERN, line)
+            if var_def_match:
+                item['name'] = var_def_match['name']
+                item['value'] = _remove_quotes(var_def_match['val'])
+                item.update(_get_declare_options(line, 'variable'))
                 raw_output.append(item)
                 continue
 
