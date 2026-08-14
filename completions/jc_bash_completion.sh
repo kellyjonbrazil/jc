@@ -9,7 +9,7 @@ _jc()
     jc_about_options=(--about -a)
     jc_about_mod_options=(--pretty -p --yaml-out -y --monochrome -m --force-color -C)
     jc_help_options=(--help -h)
-    jc_special_options=(--version -v --bash-comp -B --zsh-comp -Z)
+    jc_special_options=(--version -v --bash-comp -B --zsh-comp -Z --xonsh-comp -X)
 
     COMPREPLY=()
     _get_comp_words_by_ref cur prev words cword
