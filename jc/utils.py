@@ -838,18 +838,23 @@ class timestamp:
         remaining_formats = [fmt for fmt in formats if not fmt['id'] in format_hint]
         optimized_formats = hint_obj_list + remaining_formats
 
-        for fmt in optimized_formats:
-            try:
-                locale.setlocale(locale.LC_TIME, fmt['locale'])
-                dt = datetime.strptime(normalized_datetime, fmt['format'])
-                timestamp_obj['format'] = fmt['id']
-                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
-                iso_string = dt.replace(tzinfo=None).isoformat()
-                locale.setlocale(locale.LC_TIME, None)
-                break
-            except Exception:
-                locale.setlocale(locale.LC_TIME, None)
-                continue
+        # save the original LC_TIME so it can be restored on every exit path.
+        # (setlocale with None is a query and does not restore anything)
+        original_lc_time = locale.setlocale(locale.LC_TIME)
+
+        try:
+            for fmt in optimized_formats:
+                try:
+                    locale.setlocale(locale.LC_TIME, fmt['locale'])
+                    dt = datetime.strptime(normalized_datetime, fmt['format'])
+                    timestamp_obj['format'] = fmt['id']
+                    timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
+                    iso_string = dt.replace(tzinfo=None).isoformat()
+                    break
+                except Exception:
+                    continue
+        finally:
+            locale.setlocale(locale.LC_TIME, original_lc_time)
 
         if dt and utc_tz:
             dt_utc = dt.replace(tzinfo=timezone.utc)
