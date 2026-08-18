@@ -1,7 +1,14 @@
-r"""jc - JSON Convert `typeset` and `declare` Bash internal command output parser
+r"""jc - JSON Convert `typeset` and `declare` command output parser
 
-Convert `typeset` and `declare` bash internal commands with no options or the
-following:  `-a`, `-A`, `-i`, `-l`, `-p`, `-r`, `-u`, and `-x`
+Convert `typeset` and `declare` output from `bash`, `ksh`, and `zsh` with no
+options or the following:  `-a`, `-A`, `-i`, `-l`, `-p`, `-r`, `-u`, and `-x`
+
+ksh and zsh print `typeset -p` a little differently than bash: attributes come
+from the `typeset` keyword (or `export` for zsh exported vars) instead of
+`declare`, indexed arrays are printed as bare values with no `[index]=` prefix,
+and zsh wraps array/associative bodies in spaces. Those variants are normalized
+into the same schema. ksh prints plain scalars with no keyword at all, so those
+keep null attributes just like bash output without the `-p` option.
 
 Note: function parsing is not supported (e.g. `-f` or `-F`)
 
@@ -113,17 +120,49 @@ Examples:
         "exported": false
       }
     ]
+
+    $ typeset -p | jc --typeset -p    # ksh/zsh
+    [
+      {
+        "name": "user_roles",
+        "value": {
+          "admin": "alice",
+          "guest": "charlie",
+          "manager": "bob"
+        },
+        "type": "associative",
+        "readonly": false,
+        "integer": false,
+        "lowercase": false,
+        "uppercase": false,
+        "exported": false
+      },
+      {
+        "name": "indexed_array",
+        "value": [
+          "one",
+          "two",
+          "three four"
+        ],
+        "type": "array",
+        "readonly": false,
+        "integer": false,
+        "lowercase": false,
+        "uppercase": false,
+        "exported": false
+      }
+    ]
 """
 import shlex
 import re
-from typing import List, Dict
+from typing import List, Dict, Optional
 from jc.jc_types import JSONDictType
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`typeset` and `declare` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,12 +172,14 @@ class info():
 
 __version__ = info.version
 
-VAR_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<val>[^(][^[].+)$')
+VAR_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<val>[^([].*)$')
 SIMPLE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\[\d+\]=.+\))$')
-ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\[[a-zA-Z_][a-zA-Z0-9_]*\]=.+\))$')
-EMPTY_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=\(\)$')
-EMPTY_VAR_DEF_PATTERN = re.compile(r'declare\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
-DECLARE_OPTS_PATTERN = re.compile(r'declare\s(?P<options>.+?)\s[a-zA-Z_][a-zA-Z0-9_]*')
+# ksh/zsh print indexed arrays as bare values with no [index]= prefix
+BARE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\s*[^[].*\))$')
+# allow a leading space after the paren (zsh) and quoted keys
+ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\s*\[.+\]=.+\))$')
+EMPTY_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=\(\s*\)$')
+EMPTY_VAR_DEF_PATTERN = re.compile(r'(?:declare|typeset)\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -200,6 +241,12 @@ def _get_associative_array_vals(body: str) -> Dict[str, str]:
     return values
 
 
+def _get_bare_array_vals(body: str) -> List[str]:
+    # ksh/zsh indexed arrays are printed as bare values with no [index]=
+    body = _remove_bookends(body)
+    return shlex.split(body)
+
+
 def _get_declare_options(line: str, type_hint: str = 'variable') -> Dict:
     opts = {
         'type': type_hint,
@@ -218,22 +265,41 @@ def _get_declare_options(line: str, type_hint: str = 'variable') -> Dict:
         'x': 'exported'
     }
 
-    declare_opts_match = re.match(DECLARE_OPTS_PATTERN, line)
-    if declare_opts_match:
-        for opt in declare_opts_match['options']:
-            if opt in opts_map:
-                opts[opts_map[opt]] = True
-                continue
-        if 'a' in declare_opts_match['options']:
-            opts['type'] = 'array'
-        elif 'A' in declare_opts_match['options']:
-            opts['type'] = 'associative'
+    tokens = line.split()
+    keyword = tokens[0] if tokens else ''
 
-        # flip all remaining Nones to False
-        for option in opts.items():
-            key, val = option
-            if val is None:
-                opts[key] = False
+    # Bash without `-p` and ksh both print bare `name=value` lines with no
+    # keyword. There are no attributes to read, so leave them null like the
+    # existing Bash plain-output behavior.
+    if keyword not in ('declare', 'typeset', 'export'):
+        return opts
+
+    # zsh prints exported scalars with the `export` keyword instead of typeset
+    if keyword == 'export':
+        opts['exported'] = True
+
+    # gather leading flag tokens; ksh may split them (e.g. `typeset -A -i`)
+    flags = ''
+    for tok in tokens[1:]:
+        if tok.startswith('-'):
+            flags += tok
+        else:
+            break
+
+    for char in flags:
+        if char in opts_map:
+            opts[opts_map[char]] = True
+
+    if 'a' in flags:
+        opts['type'] = 'array'
+    elif 'A' in flags:
+        opts['type'] = 'associative'
+
+    # flip all remaining Nones to False
+    for key, val in opts.items():
+        if val is None:
+            opts[key] = False
+
     return opts
 
 
@@ -243,7 +309,12 @@ def _remove_bookends(data: str, start_char: str = '(', end_char: str = ')') -> s
     return data
 
 
-def _remove_quotes(data: str, remove_char: str ='"') -> str:
+def _remove_quotes(data: str, remove_char: Optional[str] = None) -> str:
+    # strip a matching pair of double or single quotes (ksh/zsh use single quotes)
+    if remove_char is None:
+        if len(data) >= 2 and data[0] == data[-1] and data[0] in ('"', "'"):
+            return data[1:-1]
+        return data
     if data.startswith(remove_char) and data.endswith(remove_char):
         return data[1:-1]
     return data
@@ -320,6 +391,15 @@ def parse(
                 item['name'] = associative_arr_def_match['name']
                 item['value'] = _get_associative_array_vals(associative_arr_def_match['body'])
                 item.update(_get_declare_options(line, 'associative'))
+                raw_output.append(item)
+                continue
+
+            # bare-value indexed array (ksh/zsh have no [index]= prefix)
+            bare_arr_def_match = re.search(BARE_ARRAY_DEF_PATTERN, line)
+            if bare_arr_def_match:
+                item['name'] = bare_arr_def_match['name']
+                item['value'] = _get_bare_array_vals(bare_arr_def_match['body'])
+                item.update(_get_declare_options(line, 'array'))
                 raw_output.append(item)
                 continue
 
