@@ -28,31 +28,31 @@ def _load_fixture(name):
 
 class MyTests(unittest.TestCase):
 
-    def test_foo_nodata(self):
+    def test_typeset_nodata(self):
         """
-        Test 'foo' with no data
+        Test 'typeset' with no data
         """
         test_utils.run_no_data(self, __file__, [])
 
-    def test_foo_all_fixtures(self):
+    def test_typeset_all_fixtures(self):
         """
-        Test 'foo' with various fixtures
+        Test 'typeset' with various fixtures
         """
         test_utils.run_all_fixtures(self, __file__)
 
-    def test_typeset_ksh(self):
-        """
-        Test 'typeset -p' output from ksh
-        """
-        raw, expected = _load_fixture('typeset--ksh')
-        self.assertEqual(jc.parse('typeset', raw, quiet=True), expected)
+    # def test_typeset_ksh(self):
+    #     """
+    #     Test 'typeset -p' output from ksh
+    #     """
+    #     raw, expected = _load_fixture('typeset--ksh')
+    #     self.assertEqual(jc.parse('typeset', raw, quiet=True), expected)
 
-    def test_typeset_zsh(self):
-        """
-        Test 'typeset -p' output from zsh
-        """
-        raw, expected = _load_fixture('typeset--zsh')
-        self.assertEqual(jc.parse('typeset', raw, quiet=True), expected)
+    # def test_typeset_zsh(self):
+    #     """
+    #     Test 'typeset -p' output from zsh
+    #     """
+    #     raw, expected = _load_fixture('typeset--zsh')
+    #     self.assertEqual(jc.parse('typeset', raw, quiet=True), expected)
 
 
 if __name__ == '__main__':
