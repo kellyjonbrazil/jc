@@ -1,7 +1,7 @@
 jc changelog
 
 20260823 v1.26.0
--
+- Fix `typeset` parser to allow scalar values starting with the `[` character
 
 20260617 v1.25.7
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
