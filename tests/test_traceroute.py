@@ -1,6 +1,7 @@
 import os
 import unittest
 import json
+import jc.exceptions
 import jc.parsers.traceroute
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -149,6 +150,25 @@ class MyTests(unittest.TestCase):
         Test 'traceroute' with no data
         """
         self.assertEqual(jc.parsers.traceroute.parse('', quiet=True), {})
+
+    def test_traceroute_unparsable_data(self):
+        """
+        Test 'traceroute' with data that has no hop lines. This used to raise
+        an UnboundLocalError instead of returning an empty result.
+        """
+        expected = {'destination_ip': None, 'destination_name': None,
+                    'max_hops': None, 'data_bytes': None, 'hops': []}
+        self.assertEqual(jc.parsers.traceroute.parse('foo bar', quiet=True), expected)
+
+    def test_traceroute_only_warning_lines(self):
+        """
+        Test 'traceroute' where every line is a warning. This used to raise an
+        IndexError from lines[0].
+        """
+        self.assertRaises(
+            jc.exceptions.ParseError,
+            jc.parsers.traceroute.parse,
+            'traceroute: Warning: something', quiet=True)
 
     def test_traceroute_noheader(self):
         """
