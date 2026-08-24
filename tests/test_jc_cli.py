@@ -8,13 +8,13 @@ try:
     import pygments
     from pygments.token import (Name, Number, String, Keyword)
     PYGMENTS_INSTALLED=True
-except:
+except ImportError:
     PYGMENTS_INSTALLED=False
 
 try:
     import ruamel.yaml
     RUAMELYAML_INSTALLED = True
-except:
+except ImportError:
     RUAMELYAML_INSTALLED = False
 
 from jc.cli import JcCli
