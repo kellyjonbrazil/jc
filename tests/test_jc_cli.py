@@ -633,6 +633,7 @@ power management:
         self.assertIsNone(cli.magic_stdout)
         self.assertIn('/proc/../etc/hosts', err.getvalue())
 
+    @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
     def test_magic_proc_path_traversal_multiple_files(self):
         # a bad entry in the file list should exit with an error, even if the first entry is valid
         cli = JcCli()
