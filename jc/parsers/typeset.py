@@ -10,6 +10,11 @@ and zsh wraps array/associative bodies in spaces. Those variants are normalized
 into the same schema. ksh prints plain scalars with no keyword at all, so those
 keep null attributes just like bash output without the `-p` option.
 
+This parser will serialize ANSI-C quoting in values (e.g. `$'foo'`). Use the
+`--raw` option if you don't want quoted values decoded. For example, standard
+output of `$'\t\n'` will be `"\t\n"` in JSON. With the `--raw`option it will
+output as `"\\t\\n"`.
+
 Note: function parsing is not supported (e.g. `-f` or `-F`)
 
 Usage (cli):
@@ -181,6 +186,7 @@ ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?
 EMPTY_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=\(\s*\)$')
 EMPTY_VAR_DEF_PATTERN = re.compile(r'(?:declare|typeset)\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
 
+_raw = False
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
@@ -220,7 +226,24 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
+def _remove_ansi_c(line):
+    pattern = r"\$'((?:[^'\\]|\\.)*)'"
+
+    def decode_ansi_c(match):
+        inner_content = match.group(1)
+
+        if _raw:   # global variable because of laziness
+            decoded = inner_content
+        else:
+            decoded = inner_content.encode('utf-8').decode('unicode_escape')
+
+        return f"'{decoded}'"
+
+    return re.sub(pattern, decode_ansi_c, line)
+
+
 def _get_simple_array_vals(body: str) -> List[str]:
+    body = _remove_ansi_c(body)
     body = _remove_bookends(body)
     body_split = shlex.split(body)
     values = []
@@ -231,6 +254,7 @@ def _get_simple_array_vals(body: str) -> List[str]:
 
 
 def _get_associative_array_vals(body: str) -> Dict[str, str]:
+    body = _remove_ansi_c(body)
     body = _remove_bookends(body)
     body_split = shlex.split(body)
     values: Dict = {}
@@ -243,6 +267,7 @@ def _get_associative_array_vals(body: str) -> Dict[str, str]:
 
 def _get_bare_array_vals(body: str) -> List[str]:
     # ksh/zsh indexed arrays are printed as bare values with no [index]=
+    body = _remove_ansi_c(body)
     body = _remove_bookends(body)
     return shlex.split(body)
 
@@ -341,6 +366,9 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
+    global _raw
+    _raw = raw
+
     raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
@@ -407,7 +435,8 @@ def parse(
             var_def_match = re.search(VAR_DEF_PATTERN, line)
             if var_def_match:
                 item['name'] = var_def_match['name']
-                item['value'] = _remove_quotes(var_def_match['val'])
+                item['value'] = _remove_ansi_c(var_def_match['val'])
+                item['value'] = _remove_quotes(item['value'])
                 item.update(_get_declare_options(line, 'variable'))
                 raw_output.append(item)
                 continue

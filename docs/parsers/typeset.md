@@ -15,6 +15,11 @@ and zsh wraps array/associative bodies in spaces. Those variants are normalized
 into the same schema. ksh prints plain scalars with no keyword at all, so those
 keep null attributes just like bash output without the `-p` option.
 
+This parser will serialize ANSI-C quoting in values (e.g. `$'foo'`). Use the
+`--raw` option if you don't want quoted values decoded. For example, standard
+output of `$'\t\n'` will be `"\t\n"` in JSON. With the `--raw`option it will
+output as `"\\t\\n"`.
+
 Note: function parsing is not supported (e.g. `-f` or `-F`)
 
 Usage (cli):
