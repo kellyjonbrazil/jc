@@ -8,13 +8,6 @@ jc - JSON Convert `typeset` and `declare` command output parser
 Convert `typeset` and `declare` output from `bash`, `ksh`, and `zsh` with no
 options or the following:  `-a`, `-A`, `-i`, `-l`, `-p`, `-r`, `-u`, and `-x`
 
-ksh and zsh print `typeset -p` a little differently than bash: attributes come
-from the `typeset` keyword (or `export` for zsh exported vars) instead of
-`declare`, indexed arrays are printed as bare values with no `[index]=` prefix,
-and zsh wraps array/associative bodies in spaces. Those variants are normalized
-into the same schema. ksh prints plain scalars with no keyword at all, so those
-keep null attributes just like bash output without the `-p` option.
-
 This parser will serialize ANSI-C quoting in values (e.g. `$'foo'`). Use the
 `--raw` option if you don't want quoted values decoded. For example, standard
 output of `$'\t\n'` will be `"\t\n"` in JSON. With the `--raw`option it will
