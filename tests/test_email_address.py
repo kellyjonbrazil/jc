@@ -28,6 +28,14 @@ class MyTests(unittest.TestCase):
         expected = json.loads(r'''{"username":"fred","domain":"example.com","local":"fred+spam","local_plus_suffix":"spam"}''')
         self.assertEqual(jc.parsers.email_address.parse(data, quiet=True), expected)
 
+    def test_no_at_sign(self):
+        """
+        Test email address with no @ sign should return empty dict
+        """
+        data = r'not-an-email'
+        expected = {}
+        self.assertEqual(jc.parsers.email_address.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
