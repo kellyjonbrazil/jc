@@ -5,6 +5,7 @@ JC cli module
 import io
 import sys
 import os
+import posixpath
 import re
 from datetime import datetime, timezone
 import textwrap
@@ -508,6 +509,12 @@ class JcCli():
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     @staticmethod
+    def is_proc_path(path_string: str) -> bool:
+        # normpath, not realpath: /proc is full of symlinks that must keep working
+        normalized_path: str = posixpath.normpath(re.sub(r'^/+', '/', path_string))
+        return normalized_path == '/proc' or normalized_path.startswith('/proc/')
+
+    @staticmethod
     def open_text_file(path_string: str) -> str:
         with open(path_string, 'r') as f:
             return f.read()
@@ -554,6 +561,8 @@ class JcCli():
                     self.inputlist = filelist
 
                     for file in self.inputlist:
+                        if not self.is_proc_path(file):
+                            raise ValueError(f'{file} is not a /proc file')
                         # multi_out.append(self.open_text_file('/Users/kelly/temp' + file))
                         multi_out.append(self.open_text_file(file))
 
@@ -562,6 +571,8 @@ class JcCli():
                 # single proc file
                 else:
                     file = filelist[0]
+                    if not self.is_proc_path(file):
+                        raise ValueError(f'{file} is not a /proc file')
                     # self.magic_stdout = self.open_text_file('/Users/kelly/temp' + file)
                     self.magic_stdout = self.open_text_file(file)
 
