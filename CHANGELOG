@@ -1,9 +1,10 @@
 jc changelog
 
-20260823 v1.26.0
+20260824 v1.26.0
 - Enhance `typeset` parser to support ksh and zsh output
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
 - Fix `typeset` parser to allow scalar values starting with the `[` character
+- Fix path traversal vulnerability with magic syntax
 
 20260617 v1.25.7
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
