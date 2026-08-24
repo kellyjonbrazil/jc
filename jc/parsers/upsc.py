@@ -34,21 +34,21 @@ Examples:
 
     $ upsc ups@localhost | jc --upsc -p
     {
-      "battery.charge": 100,
-      "battery.voltage": 24.0,
-      "device.serial": "000000000000",
-      "ups.status": "OL",
-      "ups.vendorid": "0764"
+      "battery_charge": 100,
+      "battery_voltage": 24.0,
+      "device_serial": "000000000000",
+      "ups_status": "OL",
+      "ups_vendorid": "0764"
       ...
     }
 
     $ upsc ups@localhost | jc --upsc -p -r
     {
-      "battery.charge": "100",
-      "battery.voltage": "24.0",
-      "device.serial": "000000000000",
-      "ups.status": "OL",
-      "ups.vendorid": "0764"
+      "battery_charge": "100",
+      "battery_voltage": "24.0",
+      "device_serial": "000000000000",
+      "ups_status": "OL",
+      "ups_vendorid": "0764"
       ...
     }
 """
@@ -141,7 +141,6 @@ def parse(data, raw=False, quiet=False):
 
             raw_output[key.strip()] = value.strip()
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+        raw_output = {jc.utils.normalize_key(k): v for k, v in raw_output.items()}
+
+    return raw_output if raw else _process(raw_output)
