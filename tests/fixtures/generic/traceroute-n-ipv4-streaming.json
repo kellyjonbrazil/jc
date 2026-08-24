@@ -1,0 +1,225 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "199.58.80.40",
+    "destination_name": "www.koumbit.org",
+    "max_hops": 30,
+    "data_bytes": 60
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.2.1",
+        "name": null,
+        "rtt": 0.967
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.2.1",
+        "name": null,
+        "rtt": 1.022
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.2.1",
+        "name": null,
+        "rtt": 1.204
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "24.212.242.17",
+        "name": null,
+        "rtt": 10.176
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "24.212.242.17",
+        "name": null,
+        "rtt": 18.136
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "24.212.242.17",
+        "name": null,
+        "rtt": 18.244
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "10.170.192.58",
+        "name": null,
+        "rtt": 19.396
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "10.170.192.58",
+        "name": null,
+        "rtt": 19.575
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "10.170.192.58",
+        "name": null,
+        "rtt": 19.572
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.171.61.61",
+        "name": null,
+        "rtt": 23.072
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "206.248.155.109",
+        "name": null,
+        "rtt": 17.073
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.171.63.17",
+        "name": null,
+        "rtt": 23.308
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "206.248.189.97",
+        "name": null,
+        "rtt": 20.521
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "206.248.189.97",
+        "name": null,
+        "rtt": 22.837
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "206.248.189.97",
+        "name": null,
+        "rtt": 23.194
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "198.179.18.41",
+        "name": null,
+        "rtt": 18.334
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "198.179.18.41",
+        "name": null,
+        "rtt": 17.894
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "198.179.18.41",
+        "name": null,
+        "rtt": 17.792
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "64.15.69.54",
+        "name": null,
+        "rtt": 17.056
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "64.15.69.54",
+        "name": null,
+        "rtt": 14.033
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "64.15.69.54",
+        "name": null,
+        "rtt": 12.351
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "199.58.80.40",
+        "name": null,
+        "rtt": 18.203
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "199.58.80.40",
+        "name": null,
+        "rtt": 18.789
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "199.58.80.40",
+        "name": null,
+        "rtt": 18.906
+      }
+    ]
+  }
+]

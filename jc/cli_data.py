@@ -62,52 +62,52 @@ jc converts the output of many commands, file-types, and strings to JSON or YAML
 
 Usage:
 
-    Standard syntax:
+  Standard syntax:
 
-        COMMAND | jc [SLICE] [OPTIONS] PARSER
+    COMMAND | jc [SLICE] [OPTIONS] PARSER
 
-        cat FILE | jc [SLICE] [OPTIONS] PARSER
+    cat FILE | jc [SLICE] [OPTIONS] PARSER
 
-        echo STRING | jc [SLICE] [OPTIONS] PARSER
+    echo STRING | jc [SLICE] [OPTIONS] PARSER
 
-    Magic syntax:
+  Magic syntax:
 
-        jc [SLICE] [OPTIONS] COMMAND
+    jc [SLICE] [OPTIONS] COMMAND
 
-        jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
+    jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
 
 Parsers:
 '''
 
 slicetext_string: str = '''\
 Slice:
-    [start]:[end]
+  [start]:[end]
 
-        start: [[-]index] - Zero-based start line, negative index for
-                counting from the end
+    start: [[-]index] - Zero-based start line, negative index for
+            counting from the end
 
-        end:   [[-]index] - Zero-based end line (excluding the index),
-                negative index for counting from the end
+    end:   [[-]index] - Zero-based end line (excluding the index),
+            negative index for counting from the end
 '''
 
 helptext_end_string: str = '''\
 Examples:
-    Standard Syntax:
-        $ dig www.google.com | jc --pretty --dig
-        $ cat /proc/meminfo | jc --pretty --proc
+  Standard Syntax:
+    $ dig www.google.com | jc --pretty --dig
+    $ cat /proc/meminfo | jc --pretty --proc
 
-    Magic Syntax:
-        $ jc --pretty dig www.google.com
-        $ jc --pretty /proc/meminfo
+  Magic Syntax:
+    $ jc --pretty dig www.google.com
+    $ jc --pretty /proc/meminfo
 
-    Line Slicing:
-        $ cat output.txt | jc 4:15 --<PARSER>   # Parse from line 4 to 14
-                                                # with <PARSER> (zero-based)
+  Line Slicing:
+    $ cat output.txt | jc 4:15 --<PARSER>   # Parse from line 4 to 14
+                                            # with <PARSER> (zero-based)
 
-    Parser Documentation:
-        $ jc --help --dig
+  Parser Documentation:
+    $ jc --help --dig
 
-    More Help:
-        $ jc -hh          # show hidden parsers
-        $ jc -hhh         # list parsers by category tags
+  More Help:
+    $ jc -hh          # show hidden parsers
+    $ jc -hhh         # list parsers by category tags
 '''

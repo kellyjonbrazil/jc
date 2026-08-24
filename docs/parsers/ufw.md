@@ -31,6 +31,7 @@ Schema:
           "action":                 string,
           "action_direction":       string,     # null if blank
           "index":                  integer,    # null if blank
+          "log":                    boolean,
           "network_protocol":       string,
           "to_ip":                  string,
           "to_ip_prefix":           integer,
@@ -82,6 +83,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": true,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "any",
@@ -108,6 +110,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": false,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -147,6 +150,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": true,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "any",
@@ -173,6 +177,7 @@ Examples:
           "action": "ALLOW",
           "action_direction": "IN",
           "index": null,
+          "log": false,
           "network_protocol": "ipv4",
           "to_interface": "any",
           "to_transport": "tcp",
@@ -225,4 +230,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/ufw.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ufw.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

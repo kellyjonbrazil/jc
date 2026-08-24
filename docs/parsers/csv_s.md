@@ -64,7 +64,14 @@ Examples:
 ### parse
 
 ```python
-def parse(data, raw=False, quiet=False, ignore_exceptions=False)
+def parse(
+    data: Iterable[str],
+    raw: bool = False,
+    quiet: bool = False,
+    ignore_exceptions: bool = False,
+    implicit_header: bool = False,
+    tsv: bool = False
+) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -87,4 +94,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/csv_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/csv_s.py)
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

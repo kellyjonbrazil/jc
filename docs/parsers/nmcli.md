@@ -41,7 +41,8 @@ These are documented below.
     [
       {
         "<key>":                  string/integer/float,   # [0]
-        "team_config":            object,
+        "team_config":            object/null,
+        "team_port_config":       object/null,
         "dhcp4_option_x": {
           "name":                 string,
           "value":                string/integer/float,
@@ -171,4 +172,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/nmcli.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/nmcli.py)
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -5,6 +5,8 @@
 
 jc - JSON Convert `lsattr` command output parser
 
+> Note: filenames with newlines are not supported.
+
 Usage (cli):
 
     $ lsattr | jc --lsattr
@@ -88,4 +90,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/lsattr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsattr.py)
 
-Version 1.0 by Mark Rotner (rotner.mr@gmail.com)
+Version 1.1 by Mark Rotner (rotner.mr@gmail.com)

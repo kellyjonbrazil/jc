@@ -5,6 +5,7 @@ JC cli module
 import io
 import sys
 import os
+import posixpath
 import re
 from datetime import datetime, timezone
 import textwrap
@@ -52,7 +53,7 @@ class info():
     author: str = 'Kelly Brazil'
     author_email: str = 'kellyjonbrazil@gmail.com'
     website: str = 'https://github.com/kellyjonbrazil/jc'
-    copyright: str = '© 2019-2025 Kelly Brazil'
+    copyright: str = '© 2019-2026 Kelly Brazil'
     license: str = 'MIT License'
 
 
@@ -300,8 +301,8 @@ class JcCli():
         Pages the parser documentation if a parser is found in the arguments,
         otherwise the general help text is printed.
         """
-        self.indent = 4
-        self.pad = 22
+        self.indent = 2
+        self.pad = 21
 
         if self.show_categories:
             utils._safe_print(self.parser_categories_text())
@@ -508,6 +509,12 @@ class JcCli():
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     @staticmethod
+    def is_proc_path(path_string: str) -> bool:
+        # normpath, not realpath: /proc is full of symlinks that must keep working
+        normalized_path: str = posixpath.normpath(re.sub(r'^/+', '/', path_string))
+        return normalized_path == '/proc' or normalized_path.startswith('/proc/')
+
+    @staticmethod
     def open_text_file(path_string: str) -> str:
         with open(path_string, 'r') as f:
             return f.read()
@@ -554,6 +561,8 @@ class JcCli():
                     self.inputlist = filelist
 
                     for file in self.inputlist:
+                        if not self.is_proc_path(file):
+                            raise ValueError(f'{file} is not a /proc file')
                         # multi_out.append(self.open_text_file('/Users/kelly/temp' + file))
                         multi_out.append(self.open_text_file(file))
 
@@ -562,6 +571,8 @@ class JcCli():
                 # single proc file
                 else:
                     file = filelist[0]
+                    if not self.is_proc_path(file):
+                        raise ValueError(f'{file} is not a /proc file')
                     # self.magic_stdout = self.open_text_file('/Users/kelly/temp' + file)
                     self.magic_stdout = self.open_text_file(file)
 
@@ -569,7 +580,11 @@ class JcCli():
                 if self.debug:
                     raise
 
-                error_msg = os.strerror(e.errno)
+                if e.errno:
+                    error_msg = os.strerror(e.errno)
+                else:
+                    error_msg = "no further information provided"
+
                 utils.error_message([
                     f'"{file}" file could not be opened: {error_msg}.'
                 ])
@@ -594,7 +609,11 @@ class JcCli():
                 if self.debug:
                     raise
 
-                error_msg = os.strerror(e.errno)
+                if e.errno:
+                    error_msg = os.strerror(e.errno)
+                else:
+                    error_msg = "no further information provided"
+
                 utils.error_message([
                     f'"{self.magic_run_command_str}" command could not be run: {error_msg}.'
                 ])
@@ -703,7 +722,7 @@ class JcCli():
             {"result": data}
 
         self.input_list will already exist if the data is coming from the
-        /proc magic sytnax. Otherwise this funcion will build it for normal
+        /proc magic syntax. Otherwise this function will build it for normal
         slurp items.
 
         This will allow --meta-out to add its information in a clean way.

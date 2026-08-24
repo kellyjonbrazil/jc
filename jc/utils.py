@@ -722,6 +722,12 @@ class timestamp:
             {'id': 9000, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
         )
 
+        # fixup for behavior changes in python 3.15
+        # add any formats that need to be removed to `remove_ids`
+        if sys.version_info >= (3, 15, 0):
+            remove_ids = {7250}
+            formats = tuple((x for x in formats if x['id'] not in remove_ids))
+
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC & GMT timezones and added known non-UTC offsets
         tz_abbr: set[str] = {

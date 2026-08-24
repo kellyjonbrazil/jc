@@ -1,0 +1,333 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "2607:f8b0:4020:806::2004",
+    "destination_name": "www.google.com",
+    "max_hops": 30,
+    "data_bytes": 80
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:402:6a01::1",
+        "name": null,
+        "rtt": 4.181
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:402:6a01::1",
+        "name": null,
+        "rtt": 4.294
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:402:6a01::1",
+        "name": null,
+        "rtt": 4.253
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:0:400a::f1",
+        "name": null,
+        "rtt": 0.354
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:0:400a::f1",
+        "name": null,
+        "rtt": 0.532
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:0:400a::f1",
+        "name": null,
+        "rtt": 0.484
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:40:100::51",
+        "name": null,
+        "rtt": 15.284
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2605:9000:0:101::1",
+        "name": null,
+        "rtt": 4.864
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:40:100::51",
+        "name": null,
+        "rtt": 15.415
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:40:100::51",
+        "name": null,
+        "rtt": 15.379
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:300:200::202",
+        "name": null,
+        "rtt": 12.709
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:40:100::51",
+        "name": null,
+        "rtt": 15.289
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:1900:100::12",
+        "name": null,
+        "rtt": 10.02
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:1900:100::12",
+        "name": null,
+        "rtt": 10.212
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:1900:100::12",
+        "name": null,
+        "rtt": 10.163
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:1900:100::12",
+        "name": null,
+        "rtt": 10.113
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:400:700::17",
+        "name": null,
+        "rtt": 8.399
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:1900:100::12",
+        "name": null,
+        "rtt": 10.215
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860:0:1127::2",
+        "name": null,
+        "rtt": 9.11
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:400:700::17",
+        "name": null,
+        "rtt": 8.476
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:5a0:400:700::17",
+        "name": null,
+        "rtt": 8.38
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::8:4000:cd80",
+        "name": null,
+        "rtt": 9.428
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860:0:1128::14",
+        "name": null,
+        "rtt": 9.36
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::8:4000:cd80",
+        "name": null,
+        "rtt": 9.229
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::9:4001:d508",
+        "name": null,
+        "rtt": 9.376
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::c:4002:652a",
+        "name": null,
+        "rtt": 9.105
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::c:4002:6523",
+        "name": null,
+        "rtt": 9.384
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 10,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860:0:11da::1",
+        "name": null,
+        "rtt": 8.489
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::9:4001:d508",
+        "name": null,
+        "rtt": 8.978
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860::1c:4000:f5eb",
+        "name": null,
+        "rtt": 9.64
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 11,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860:0:1::c73",
+        "name": null,
+        "rtt": 9.596
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860:0:1::c73",
+        "name": null,
+        "rtt": 9.077
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2001:4860:0:1::c73",
+        "name": null,
+        "rtt": 9.724
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 12,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2607:f8b0:4020:806::2004",
+        "name": null,
+        "rtt": 8.086
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2607:f8b0:4020:806::2004",
+        "name": null,
+        "rtt": 8.091
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "2607:f8b0:4020:806::2004",
+        "name": null,
+        "rtt": 8.436
+      }
+    ]
+  }
+]

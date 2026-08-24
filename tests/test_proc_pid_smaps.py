@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_pid_smaps': (
                 'fixtures/linux-proc/pid_smaps',
-                'fixtures/linux-proc/pid_smaps.json')
+                'fixtures/linux-proc/pid_smaps.json'),
+            'proc_pid_smaps_unknown_flag': (
+                'fixtures/linux-proc/pid_smaps_unknown_flag',
+                'fixtures/linux-proc/pid_smaps_unknown_flag.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -38,6 +41,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_smaps.parse(self.f_in['proc_pid_smaps'], quiet=True),
                                                          self.f_json['proc_pid_smaps'])
+
+    def test_proc_pid_smaps_unknown_flag(self):
+        """
+        Test '/proc/<pid>/smaps' with an unknown flag
+        """
+        self.assertEqual(jc.parsers.proc_pid_smaps.parse(self.f_in['proc_pid_smaps_unknown_flag'], quiet=True),
+                                                         self.f_json['proc_pid_smaps_unknown_flag'])
 
 
 if __name__ == '__main__':
