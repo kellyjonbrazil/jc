@@ -180,16 +180,18 @@ def parse(
             taint_state = module_info[6] if len(module_info) > 6 else None
             used_by_list = used_by.split(',')[:-1]
 
-            raw_output.append(
-                {
-                    'module': module,
-                    'size': size,
-                    'used': used,
-                    'used_by': used_by_list,
-                    'status': status,
-                    'location': location,
-                    'taint_state': taint_state
-                }
-            )
+            out = {
+                'module': module,
+                'size': size,
+                'used': used,
+                'used_by': used_by_list,
+                'status': status,
+                'location': location
+            }
+
+            if taint_state:
+                out['taint_state'] = taint_state
+
+            raw_output.append(out)
 
     return raw_output if raw else _process(raw_output)
