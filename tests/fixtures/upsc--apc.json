@@ -1,0 +1,23 @@
+{
+  "battery.charge": 100,
+  "battery.runtime": 1860,
+  "battery.voltage": 27.3,
+  "battery.voltage.nominal": 24.0,
+  "device.mfr": "American Power Conversion",
+  "device.model": "Back-UPS ES 700G",
+  "device.serial": "3B1234A56789",
+  "device.type": "ups",
+  "driver.name": "usbhid-ups",
+  "driver.version": "2.7.4",
+  "driver.version.internal": 0.41,
+  "input.voltage": 122.0,
+  "input.voltage.nominal": 120,
+  "ups.beeper.status": "enabled",
+  "ups.load": 15,
+  "ups.mfr": "American Power Conversion",
+  "ups.model": "Back-UPS ES 700G",
+  "ups.productid": "0002",
+  "ups.serial": "3B1234A56789",
+  "ups.status": "OL",
+  "ups.vendorid": "051d"
+}
