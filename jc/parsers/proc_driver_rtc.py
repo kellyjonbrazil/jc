@@ -128,7 +128,7 @@ def _process(proc_data: Dict) -> Dict:
     for key, val in proc_data.items():
         try:
             proc_data[key] = int(val)
-        except:
+        except ValueError:
             pass
 
         if val == 'yes':

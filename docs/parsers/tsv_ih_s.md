@@ -23,7 +23,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('tsv_ih_s', tsv_output)
+    result = jc.parse('tsv_ih_s', tsv_output.splitlines())
 
 Schema:
 
@@ -50,7 +50,7 @@ Examples:
     129   132   13    6     3   1   41    0.33    1471
     ...
 
-    $ cat homes.tsv | jc --tsv-ih-s -p
+    $ cat homes.tsv | jc --tsv-ih-s
     {"c0":"142","c1":"160","c2":"28","c3":"10","c4":"5"...}
     {"c0":"175","c1":"180","c2":"18","c3":"8","c4":"4"...}
     {"c0":"129","c1":"132","c2":"13","c3":"6","c4":"3"...}

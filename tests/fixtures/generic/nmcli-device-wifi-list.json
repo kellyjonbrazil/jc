@@ -1,0 +1,24 @@
+[
+  {
+    "in_use": "*",
+    "bssid": "AA:AA:AA:AA:AA:AA",
+    "ssid": "go_away",
+    "mode": "Infra",
+    "chan": 40,
+    "rate": "270 Mbit/s",
+    "signal": 25,
+    "bars": "▂___",
+    "security": "WPA2"
+  },
+  {
+    "in_use": "",
+    "bssid": "BB:BB:BB:BB:BB:BB",
+    "ssid": "coffee:shop\\guest",
+    "mode": "Infra",
+    "chan": 6,
+    "rate": "54 Mbit/s",
+    "signal": 80,
+    "bars": "▂▄▆_",
+    "security": null
+  }
+]
