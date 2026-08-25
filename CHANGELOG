@@ -13,6 +13,7 @@ jc changelog
 - Fix `traceroute` parser to handle missing hop information gracefully
 - Fix `typeset` parser to allow scalar values starting with the `[` character
 - Fix path traversal vulnerability with magic syntax
+- Fix tests for Debian build
 
 20260617 v1.25.7
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
