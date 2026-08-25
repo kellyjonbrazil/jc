@@ -428,14 +428,13 @@ Examples:
       "extras": []
     }
 """
-from datetime import datetime
 import re
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -671,7 +670,7 @@ def _initialize_adapter(adapter_name):
 
 def _parse_line(line):
     # Split the line into key and value using ':' or multiple spaces
-    key_value = re.split(r":", line.strip(), 1)
+    key_value = re.split(r":", line.strip(), maxsplit=1)
     if len(key_value) == 2:
         key, value = key_value
         key = key.strip().rstrip('. ')
