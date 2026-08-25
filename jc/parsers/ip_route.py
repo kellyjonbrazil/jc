@@ -50,7 +50,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ip route` command parser'
     author = 'Julian Jackson'
     author_email = 'jackson.julian55@yahoo.com'
