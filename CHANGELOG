@@ -6,7 +6,8 @@ jc changelog
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
 - Fix `email-address` parser to output an empty object for an invalid email
   address instead of failing with an error
-  Fix `traceroute` parser to handle missing hop information gracefully
+- Fix `proc-modules` parser to support additional taint status column
+- Fix `traceroute` parser to handle missing hop information gracefully
 - Fix `typeset` parser to allow scalar values starting with the `[` character
 - Fix path traversal vulnerability with magic syntax
 

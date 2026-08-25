@@ -34,7 +34,12 @@ Schema:
         ],
         "status":                   string,
         "location":                 string,
-        "taint_state":              string
+        "taint_state": [
+                                    string
+        ],
+        "taint_state_verbose": [
+                                    string
+        ]
       }
     ]
 
@@ -43,69 +48,89 @@ Examples:
     $ cat /proc/modules | jc --proc -p
     [
       {
-        "module": "binfmt_misc",
-        "size": 24576,
-        "used": 1,
+        "module": "i2c_piix4",
+        "size": 28672,
+        "used": 0,
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0ab4000",
-        "taint_state": "(E)"
+        "location": "0xffffffffc0222000"
       },
       {
-        "module": "vsock_loopback",
+        "module": "pata_acpi",
         "size": 16384,
         "used": 0,
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a14000",
-        "taint_state": "(F)"
+        "location": "0xffffffffc021a000"
       },
       {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": 36864,
+        "module": "falcon_lsm_serviceable",
+        "size": 87169,
         "used": 1,
-        "used_by": [
-          "vsock_loopback"
-        ],
+        "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a03000",
-        "taint_state": "(E)"
+        "location": "0xffffffffc056f000",
+        "taint_state": [
+          "P",
+          "E"
+        ],
+        "taint_state_verbose": [
+          "Proprietary or non-GPL-compatible module loaded",
+          "Unsigned module loaded"
+        ]
       },
-      ...
+      {
+        "module": "nic_driver",
+        "size": 16384,
+        "used": 0,
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc011a000",
+        "taint_state": [
+          "O"
+        ],
+        "taint_state_verbose": [
+          "Out-of-tree (externally built) module loaded"
+        ]
+      }
     ]
 
     $ cat /proc/modules | jc --proc-modules -p -r
     [
       {
-        "module": "binfmt_misc",
-        "size": "24576",
-        "used": "1",
+        "module": "i2c_piix4",
+        "size": "28672",
+        "used": "0",
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0ab4000",
-        "taint_state": null
+        "location": "0xffffffffc0222000"
       },
       {
-        "module": "vsock_loopback",
+        "module": "pata_acpi",
         "size": "16384",
         "used": "0",
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a14000",
-        "taint_state": null
+        "location": "0xffffffffc021a000"
       },
       {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": "36864",
+        "module": "falcon_lsm_serviceable",
+        "size": "87169",
         "used": "1",
-        "used_by": [
-          "vsock_loopback"
-        ],
+        "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a03000",
-        "taint_state": null
+        "location": "0xffffffffc056f000",
+        "taint_state": "(PE)"
       },
-      ...
+      {
+        "module": "nic_driver",
+        "size": "16384",
+        "used": "0",
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc011a000",
+        "taint_state": "(O)"
+      }
     ]
 """
 from typing import List, Dict
@@ -114,7 +139,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/modules` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -140,10 +165,26 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     int_list = {'size', 'used'}
 
+    taint_map = {
+        "P": "Proprietary or non-GPL-compatible module loaded",
+        "O": "Out-of-tree (externally built) module loaded",
+        "E": "Unsigned module loaded",
+        "F": "Module was force-loaded"
+    }
+
     for entry in proc_data:
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+
+    for entry in proc_data:
+        taint_pretty = {}
+        for key in entry:
+            if 'taint_state' in key:
+                taint_pretty[key] = entry[key][1:-1]
+                taint_pretty[key] = list(taint_pretty[key])
+                taint_pretty['taint_state_verbose'] = [taint_map[x] for x in taint_pretty[key]]
+        entry.update(taint_pretty)
 
     return proc_data
 
