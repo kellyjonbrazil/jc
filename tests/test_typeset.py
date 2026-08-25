@@ -5,6 +5,9 @@ sys.path.append(os.getcwd())
 from tests import utils_for_test as test_utils
 sys.path.pop()
 
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Execute these steps for standard tests:
 # - Save this file as `test_{parser_name}.py` since the helper methods extract parser names from the filename.
 # - Organize fixtures in `tests/fixtures` for optimal structure.
@@ -12,17 +15,18 @@ sys.path.pop()
 #     - `{parser_name}--{some_test_description}.out` for command output.
 #     - `{parser_name}--{some_test_description}.json` for expected JSON after parsing.
 
+
 class MyTests(unittest.TestCase):
 
-    def test_foo_nodata(self):
+    def test_typeset_nodata(self):
         """
-        Test 'foo' with no data
+        Test 'typeset' with no data
         """
         test_utils.run_no_data(self, __file__, [])
 
-    def test_foo_all_fixtures(self):
+    def test_typeset_all_fixtures(self):
         """
-        Test 'foo' with various fixtures
+        Test 'typeset' with various fixtures
         """
         test_utils.run_all_fixtures(self, __file__)
 

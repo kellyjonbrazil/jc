@@ -133,7 +133,7 @@ class MyTests(unittest.TestCase):
 
     def test_sha256sum_ubuntu_18_04_unsupported_mode(self):
         """
-        Test 'sha256sum' on Ubuntu 18.04, portable mode (no firendly name)
+        Test 'sha256sum' on Ubuntu 18.04, portable mode (no friendly name)
         """
         self.assertEqual(jc.parsers.hashsum.parse(
             self.ubuntu_18_04_shasum_portable, quiet=True),
@@ -141,7 +141,7 @@ class MyTests(unittest.TestCase):
 
     def test_sha256sum_ubuntu_18_04_unsupported_mode_raw(self):
         """
-        Test 'sha256sum' on Ubuntu 18.04, portable mode (no firendly name), raw output
+        Test 'sha256sum' on Ubuntu 18.04, portable mode (no friendly name), raw output
         """
         self.assertEqual(jc.parsers.hashsum.parse(
             self.ubuntu_18_04_shasum_portable, quiet=True, raw=True),
