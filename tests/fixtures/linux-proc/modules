@@ -90,3 +90,5 @@ scsi_transport_spi 32768 1 mptspi, Live 0xffffffffc02e7000
 drm 565248 4 vmwgfx,ttm,drm_kms_helper, Live 0xffffffffc022e000
 i2c_piix4 28672 0 - Live 0xffffffffc0222000
 pata_acpi 16384 0 - Live 0xffffffffc021a000
+falcon_lsm_serviceable 87169 1 - Live 0xffffffffc056f000 (PE)
+nic_driver 16384 0 - Live 0xffffffffc011a000 (O)
