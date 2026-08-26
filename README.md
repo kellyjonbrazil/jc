@@ -361,6 +361,7 @@ option.
 | `-y`  | `--yaml-out`    | YAML output                                                                                                                                                  |
 | `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                             |
 | `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                              |
+| `-X`  | `--xonsh-comp`  | Generate Xonsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                            |
 
 ### Slice
 Line slicing is supported using the `START:STOP` syntax similar to Python

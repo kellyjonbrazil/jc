@@ -412,7 +412,7 @@ _jc() {
         '--help:help (--help --parser_name for parser documentation)'
         '-h:help (--help --parser_name for parser documentation)'
     )
-    jc_special_options=(--version -v --bash-comp -B --zsh-comp -Z)
+    jc_special_options=(--version -v --bash-comp -B --zsh-comp -Z --xonsh-comp -X)
     jc_special_options_describe=(
         '--version:version info'
         '-v:version info'
@@ -420,6 +420,8 @@ _jc() {
         '-B:gen Bash completion: jc -B > /etc/bash_completion.d/jc'
         '--zsh-comp:gen Zsh completion: jc -Z > "${fpath[1]}/_jc"'
         '-Z:gen Zsh completion: jc -Z > "${fpath[1]}/_jc"'
+        '--xonsh-comp:gen Xonsh completion: jc -X > ~/.config/xonsh/rc.d/jc.py'
+        '-X:gen Xonsh completion: jc -X > ~/.config/xonsh/rc.d/jc.py'
     )
 
     # if jc_about_options are found anywhere in the line, then only complete from jc_about_mod_options

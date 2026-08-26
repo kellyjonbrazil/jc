@@ -16,7 +16,8 @@ long_options_map: Dict[str, List[str]] = {
     '--version': ['v', 'version info'],
     '--yaml-out': ['y', 'YAML output'],
     '--bash-comp': ['B', 'gen Bash completion: jc -B > /etc/bash_completion.d/jc'],
-    '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"']
+    '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"'],
+    '--xonsh-comp': ['X', 'gen Xonsh completion: jc -X > ~/.config/xonsh/rc.d/jc.py']
 }
 
 new_pygments_colors: Dict[str, str] = {

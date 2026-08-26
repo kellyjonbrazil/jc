@@ -114,6 +114,10 @@ Generate Bash shell completion script
 .B
 \fB-Z\fP, \fB--zsh-comp\fP
 Generate Zsh shell completion script
+.TP
+.B
+\fB-X\fP, \fB--xonsh-comp\fP
+Generate Xonsh shell completion script
 
 .RE
 .PP
