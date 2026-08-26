@@ -1,4 +1,4 @@
-.TH jc 1 2025-05-27 1.25.6 "JSON Convert"
+.TH jc 1 2026-08-25 1.26.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -149,8 +149,18 @@ CSV file parser
 
 .TP
 .B
+\fB--csv-ih\fP
+CSV implicit header file parser
+
+.TP
+.B
 \fB--csv-s\fP
 CSV file streaming parser
+
+.TP
+.B
+\fB--csv-ih-s\fP
+CSV implicit header file streaming parser
 
 .TP
 .B
@@ -486,6 +496,16 @@ M3U and M3U8 file parser
 .B
 \fB--netstat\fP
 `netstat` command parser
+
+.TP
+.B
+\fB--net-localgroup\fP
+`net localgroup` command parser
+
+.TP
+.B
+\fB--net-user\fP
+`net user` command parser
 
 .TP
 .B
@@ -874,6 +894,11 @@ PLIST file parser
 
 .TP
 .B
+\fB--route-print\fP
+`route print` command parser
+
+.TP
+.B
 \fB--rpm-qi\fP
 `rpm -qi` command parser
 
@@ -1029,8 +1054,38 @@ TOML file parser
 
 .TP
 .B
+\fB--traceroute-s\fP
+`traceroute` and `traceroute6` command streaming parser
+
+.TP
+.B
+\fB--tsv\fP
+TSV file parser
+
+.TP
+.B
+\fB--tsv-ih\fP
+TSV implicit header file parser
+
+.TP
+.B
+\fB--tsv-s\fP
+TSV file streaming parser
+
+.TP
+.B
+\fB--tsv-ih-s\fP
+TSV implicit header file streaming parser
+
+.TP
+.B
 \fB--tune2fs\fP
 `tune2fs -l` command parser
+
+.TP
+.B
+\fB--typeset\fP
+`typeset` and `declare` command parser
 
 .TP
 .B
@@ -1066,6 +1121,11 @@ TOML file parser
 .B
 \fB--upower\fP
 `upower` command parser
+
+.TP
+.B
+\fB--upsc\fP
+`upsc` command parser
 
 .TP
 .B
@@ -1642,6 +1702,6 @@ Kelly Brazil (kellyjonbrazil@gmail.com)
 https://github.com/kellyjonbrazil/jc
 
 .SH COPYRIGHT
-Copyright (c) 2019-2025 Kelly Brazil
+Copyright (c) 2019-2026 Kelly Brazil
 
 License:  MIT License

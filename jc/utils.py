@@ -722,6 +722,12 @@ class timestamp:
             {'id': 9000, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
         )
 
+        # fixup for behavior changes in python 3.15
+        # add any formats that need to be removed to `remove_ids`
+        if sys.version_info >= (3, 15, 0):
+            remove_ids = {7250}
+            formats = tuple((x for x in formats if x['id'] not in remove_ids))
+
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC & GMT timezones and added known non-UTC offsets
         tz_abbr: set[str] = {
@@ -832,18 +838,23 @@ class timestamp:
         remaining_formats = [fmt for fmt in formats if not fmt['id'] in format_hint]
         optimized_formats = hint_obj_list + remaining_formats
 
-        for fmt in optimized_formats:
-            try:
-                locale.setlocale(locale.LC_TIME, fmt['locale'])
-                dt = datetime.strptime(normalized_datetime, fmt['format'])
-                timestamp_obj['format'] = fmt['id']
-                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
-                iso_string = dt.replace(tzinfo=None).isoformat()
-                locale.setlocale(locale.LC_TIME, None)
-                break
-            except Exception:
-                locale.setlocale(locale.LC_TIME, None)
-                continue
+        # save the original LC_TIME so it can be restored on every exit path.
+        # (setlocale with None is a query and does not restore anything)
+        original_lc_time = locale.setlocale(locale.LC_TIME)
+
+        try:
+            for fmt in optimized_formats:
+                try:
+                    locale.setlocale(locale.LC_TIME, fmt['locale'])
+                    dt = datetime.strptime(normalized_datetime, fmt['format'])
+                    timestamp_obj['format'] = fmt['id']
+                    timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
+                    iso_string = dt.replace(tzinfo=None).isoformat()
+                    break
+                except Exception:
+                    continue
+        finally:
+            locale.setlocale(locale.LC_TIME, original_lc_time)
 
         if dt and utc_tz:
             dt_utc = dt.replace(tzinfo=timezone.utc)

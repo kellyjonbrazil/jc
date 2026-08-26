@@ -33,6 +33,7 @@ Schema:
     [
       {
         "filename":     string,
+        "mode":         string,
         "hash":         string,
       }
     ]
@@ -43,26 +44,32 @@ Examples:
     [
       {
         "filename": "devtoolset-3-gcc-4.9.2-6.el7.x86_64.rpm",
+        "mode": "text",
         "hash": "65fc958c1add637ec23c4b137aecf3d3"
       },
       {
         "filename": "digout",
+        "mode": "text",
         "hash": "5b9312ee5aff080927753c63a347707d"
       },
       {
         "filename": "dmidecode.out",
+        "mode": "text",
         "hash": "716fd11c2ac00db109281f7110b8fb9d"
       },
       {
         "filename": "file with spaces in the name",
+        "mode": "text",
         "hash": "d41d8cd98f00b204e9800998ecf8427e"
       },
       {
         "filename": "id-centos.out",
+        "mode": "text",
         "hash": "4295be239a14ad77ef3253103de976d2"
       },
       {
         "filename": "ifcfg.json",
+        "mode": "text",
         "hash": "01fda0d9ba9a75618b072e64ff512b43"
       },
       ...
@@ -93,4 +100,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/hashsum.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/hashsum.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

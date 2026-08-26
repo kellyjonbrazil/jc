@@ -1,0 +1,113 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "199.58.80.40",
+    "destination_name": "www.koumbit.org",
+    "max_hops": 30,
+    "data_bytes": 60
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.2.1",
+        "name": null,
+        "rtt": 3.425
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "24.212.242.17",
+        "name": null,
+        "rtt": 16.153
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "10.170.192.58",
+        "name": null,
+        "rtt": 17.231
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.171.61.161",
+        "name": null,
+        "rtt": 25.393
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "206.248.189.97",
+        "name": null,
+        "rtt": 25.322
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "198.179.18.41",
+        "name": null,
+        "rtt": 23.755
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "64.15.69.54",
+        "name": null,
+        "rtt": 25.091
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "199.58.80.40",
+        "name": null,
+        "rtt": 25.196
+      }
+    ]
+  }
+]

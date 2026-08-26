@@ -294,7 +294,7 @@ def _process(proc_data):
 
 class _PushbackIterator:
     """Iterator that allows pushing back values onto the iterator. Supports handing off
-       parsing to localized parsers while maintaining line synchonization."""
+       parsing to localized parsers while maintaining line synchronization."""
 
     def __init__(self, iterator):
         self.iterator = iterator

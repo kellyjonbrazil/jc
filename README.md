@@ -177,7 +177,9 @@ option.
 |       `--crontab` | `crontab` command and file parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab)        |
 |     `--crontab-u` | `crontab` file parser with user support                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/crontab_u)      |
 |           `--csv` | CSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv)            |
+|        `--csv-ih` | CSV implicit header file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_ih)         |
 |         `--csv-s` | CSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_s)          |
+|      `--csv-ih-s` | CSV implicit header file streaming parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/csv_ih_s)       |
 |     `--curl-head` | `curl --head` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/curl_head)      |
 |          `--date` | `date` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/date)           |
 |  `--datetime-iso` | ISO 8601 Datetime string parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/datetime_iso)   |
@@ -245,6 +247,8 @@ option.
 |      `--mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |
 |   `--needrestart` | `needrestart -b` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/needrestart)    |
 |       `--netstat` | `netstat` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat)        |
+| `--net-localgroup` | `net localgroup` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/net_localgroup) |
+|      `--net-user` | `net user` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/net_user)       |
 |         `--nmcli` | `nmcli` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli)          |
 |   `--nsd-control` | `nsd-control` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nsd_control)    |
 |          `--ntpq` | `ntpq -p` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ntpq)           |
@@ -271,6 +275,7 @@ option.
 |            `--ps` | `ps` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)             |
 |  `--resolve-conf` | `/etc/resolve.conf` file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/resolve_conf)   |
 |         `--route` | `route` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/route)          |
+|   `--route-print` | `route print` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/route_print)    |
 |        `--rpm-qi` | `rpm -qi` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rpm_qi)         |
 |         `--rsync` | `rsync` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync)          |
 |       `--rsync-s` | `rsync` command streaming parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/rsync_s)        |
@@ -302,7 +307,13 @@ option.
 |         `--top-s` | `top -b` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/top_s)          |
 |     `--tracepath` | `tracepath` and `tracepath6` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tracepath)      |
 |    `--traceroute` | `traceroute` and `traceroute6` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute)     |
+|  `--traceroute-s` | `traceroute` and `traceroute6` command streaming parser | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/traceroute_s)   |
+|           `--tsv` | TSV file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tsv)            |
+|        `--tsv-ih` | TSV implicit header file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tsv_ih)         |
+|         `--tsv-s` | TSV file streaming parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tsv_s)          |
+|      `--tsv-ih-s` | TSV implicit header file streaming parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tsv_ih_s)       |
 |       `--tune2fs` | `tune2fs -l` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/tune2fs)        |
+|       `--typeset` | `typeset` and `declare` command parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/typeset)        |
 |       `--udevadm` | `udevadm info` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/udevadm)        |
 |           `--ufw` | `ufw status` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw)            |
 |   `--ufw-appinfo` | `ufw app info [application]` command parser             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ufw_appinfo)    |
@@ -310,6 +321,7 @@ option.
 | `--update-alt-gs` | `update-alternatives --get-selections` command parser   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs)  |
 |  `--update-alt-q` | `update-alternatives --query` command parser            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q)   |
 |        `--upower` | `upower` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upower)         |
+|          `--upsc` | `upsc` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upsc)           |
 |        `--uptime` | `uptime` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime)         |
 |           `--url` | URL string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/url)            |
 |           `--ver` | Version string parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ver)            |
@@ -1379,4 +1391,4 @@ cat istio.yaml | jc -p --yaml
 ]
 ```
 
-© 2019-2025 Kelly Brazil
+© 2019-2026 Kelly Brazil

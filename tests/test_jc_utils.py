@@ -1,4 +1,5 @@
 import sys
+import locale
 import unittest
 import jc.utils
 
@@ -95,7 +96,16 @@ class MyTests(unittest.TestCase):
                 'utc': ts.utc
             }
 
-            self.assertEqual(ts_dict, expected_output)
+            try:
+                self.assertEqual(ts_dict, expected_output)
+            except AssertionError:
+                # fixup for behavior change in python 3.15
+                format_changes = {7250: 1760}
+                if sys.version_info >= (3, 15, 0) and expected_output['format'] in format_changes:
+                    expected_output['format'] = format_changes[expected_output['format']]
+                    self.assertEqual(ts_dict, expected_output)
+                else:
+                    raise
 
     def test_utils_convert_to_int(self):
         io_map = {
@@ -237,6 +247,41 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_size_to_int(input_string, decimal_bias=True), expected_output)
+
+
+    def test_utils_timestamp_does_not_change_locale(self):
+        # jc.utils.timestamp sets LC_TIME while trying date formats. It should
+        # always restore the original LC_TIME, on both success and failure.
+        original = locale.setlocale(locale.LC_TIME)
+
+        try:
+            # find a locale that differs from the environment locale, since
+            # some timestamp formats use the environment locale ('')
+            environment = locale.setlocale(locale.LC_TIME, '')
+            test_locale = None
+
+            for candidate in ('C', 'en_US.utf8', 'de_DE.utf8', 'fr_FR.utf8'):
+                if candidate == environment:
+                    continue
+                try:
+                    test_locale = locale.setlocale(locale.LC_TIME, candidate)
+                    break
+                except locale.Error:
+                    continue
+
+            if test_locale is None:
+                self.skipTest('no alternate LC_TIME locale available for testing')
+
+            # failed parse
+            jc.utils.timestamp('not a parsable timestamp at all', format_hint=(1000,))
+            self.assertEqual(locale.setlocale(locale.LC_TIME), test_locale)
+
+            # successful parse
+            self.assertIsNotNone(jc.utils.timestamp('Tue Mar 23 16:12:11 2021', format_hint=(1000,)).naive)
+            self.assertEqual(locale.setlocale(locale.LC_TIME), test_locale)
+
+        finally:
+            locale.setlocale(locale.LC_TIME, original)
 
 
     def test_utils_has_data_nodata(self):

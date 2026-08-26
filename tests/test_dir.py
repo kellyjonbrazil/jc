@@ -95,6 +95,25 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.dir.parse(self.windows_10_dir_S, quiet=True),
                          self.windows_10_dir_S_json)
 
+    def test_dir_drive_letter_d(self):
+        """
+        Test that the D: drive letter is not stripped from the parent path.
+        Regression test: lstrip(" Directory of ") strips any char in the set
+        {' ','D','i','r','e','c','t','o','y','f'}, which incorrectly removes
+        the 'D' from 'D:\\'.
+        """
+        data = (
+            ' Volume in drive D has no label.\r\n'
+            ' Volume Serial Number is 1234-5678\r\n'
+            '\r\n'
+            ' Directory of D:\\Users\\testuser\r\n'
+            '\r\n'
+            '03/24/2021  03:15 PM    <DIR>          .\r\n'
+            '03/24/2021  03:15 PM    <DIR>          ..\r\n'
+        )
+        result = jc.parsers.dir.parse(data, quiet=True)
+        self.assertEqual(result[0]['parent'], 'D:\\Users\\testuser')
+
 
 if __name__ == '__main__':
     unittest.main()

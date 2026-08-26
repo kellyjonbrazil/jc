@@ -10,7 +10,7 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.6'
+__version__ = '1.26.0'
 
 parsers: List[str] = [
     'acpi',
@@ -35,7 +35,9 @@ parsers: List[str] = [
     'crontab',
     'crontab-u',
     'csv',
+    'csv-ih',
     'csv-s',
+    'csv-ih-s',
     'curl-head',
     'date',
     'datetime-iso',
@@ -215,7 +217,13 @@ parsers: List[str] = [
     'top-s',
     'tracepath',
     'traceroute',
+    'traceroute-s',
+    'tsv',
+    'tsv-ih',
+    'tsv-s',
+    'tsv-ih-s',
     'tune2fs',
+    'typeset',
     'udevadm',
     'ufw',
     'ufw-appinfo',
@@ -223,6 +231,7 @@ parsers: List[str] = [
     'update-alt-gs',
     'update-alt-q',
     'upower',
+    'upsc',
     'uptime',
     'url',
     'ver',

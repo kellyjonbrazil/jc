@@ -120,7 +120,7 @@ git clone https://github.com/kellyjonbrazil/jc.git
 
 ### Install In Developer Mode
 Next, use the `./install.sh` script to install `jc` and the requirements in
-developer mode (code chages take effect immediately). This will install the
+developer mode (code changes take effect immediately). This will install the
 console-script entry point to `$HOME/.local/bin` so you may need to add this
 to your path.
 

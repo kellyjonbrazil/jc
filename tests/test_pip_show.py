@@ -89,6 +89,58 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.pip_show.parse(self.generic_pip_show_multiline_license_first_blank, quiet=True), self.generic_pip_show_multiline_license_first_blank_json)
 
+    def test_pip_show_files_section(self):
+        """
+        Test 'pip show -f' output with a files section
+        """
+        data = """\
+Name: jc
+Version: 1.25.4
+Summary: Converts the output of popular command-line tools and file-types to JSON.
+Home-page: https://github.com/kellyjonbrazil/jc
+Author: Kelly Brazil
+Author-email: kelly@gmail.com
+License: MIT
+Location: /home/pi/.local/lib/python3.11/site-packages
+Requires: Pygments, ruamel.yaml, xmltodict
+Required-by: pypiwifi
+Files:
+  ../../../bin/jc
+  jc-1.25.4.dist-info/RECORD
+"""
+        expected = [{
+            'name': 'jc',
+            'version': '1.25.4',
+            'summary': 'Converts the output of popular command-line tools and file-types to JSON.',
+            'home_page': 'https://github.com/kellyjonbrazil/jc',
+            'author': 'Kelly Brazil',
+            'author_email': 'kelly@gmail.com',
+            'license': 'MIT',
+            'location': '/home/pi/.local/lib/python3.11/site-packages',
+            'requires': 'Pygments, ruamel.yaml, xmltodict',
+            'required_by': 'pypiwifi',
+            'files': ['../../../bin/jc', 'jc-1.25.4.dist-info/RECORD']
+        }]
+        self.assertEqual(jc.parsers.pip_show.parse(data, quiet=True), expected)
+
+    def test_pip_show_files_section_with_following_field(self):
+        """
+        Test 'pip show -f' output when the files section is followed by a new field
+        """
+        data = """\
+Name: jc
+Files:
+  ../../../bin/jc
+  jc-1.25.4.dist-info/RECORD
+Foo: bar
+"""
+        expected = [{
+            'name': 'jc',
+            'files': ['../../../bin/jc', 'jc-1.25.4.dist-info/RECORD'],
+            'foo': 'bar'
+        }]
+        self.assertEqual(jc.parsers.pip_show.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

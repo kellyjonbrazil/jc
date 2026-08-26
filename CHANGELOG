@@ -1,9 +1,57 @@
 jc changelog
 
-20250908 v1.25.6
+20260825 v1.26.0
+- Add `upsc` command parser
+- Enhance `git-log` standard and streaming parsers with added `insertions`
+  and `deletions` fields under `file_stats` when using `--numstat`
+- Enhance `nmcli` parser to support `nmcli -t device wifi list`
+- Enhance `typeset` parser to support ksh and zsh output
+- Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
+- Fix `email-address` parser to gracefully handle invalid email addresses
+- Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
+- Fix `ip-route` parser to handle whitespace-only input gracefully
+- Fix `pgpass` parser handling of escaped characters
+- Fix `proc-modules` parser to support additional taint status column
+- Fix `traceroute` parser to handle missing hop information gracefully
+- Fix `typeset` parser to allow scalar values starting with the `[` character
+- Fix `ufw` parser to handle `(log-all)` messages
+- Fix path traversal vulnerability with magic syntax
+- Fix tests for Debian build
+- Fix for broken locale behavior (permanently changing to user's locale) when
+  unparsable datetimes are handled
+
+20260617 v1.25.7
+Note: macOS Intel binaries are no longer provided from the github releases section
+(Intel mac build server died)
+- Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
+  TSV files, and TSV files without headers. Note that these are standard and
+  not streaming parsers so the entire CSV/TSV will be loaded into memory. For
+  lazy loading equivalents, see below.
+- Add `csv-ih-s`, `tsv-s`, and `tsv-ih-s` streaming file parsers for CSV files
+  without headers, TSV files, and TSV files without headers. These streaming
+  parsers will lazily load the data into memory and may be more suitable for
+  extremely large files.
+- Add `typeset` and `declare` Bash internal command parser to convert variables
+  simple arrays, and associative arrays along with object metadata
+- Enhance `pip-show` command parser to add `-f` show files support
+- Enhance `rsync` and `rsync-s` parsers to add `--stats` or `--info=stats[1-3]` fields
+- Fix `certbot` command parser to allow parsing of named certs
+- Fix `dir` command parser for incorrect stripping of the `D:` drive letter
+- Fix `hashsum` command parser to correctly parse the `mode` indicator
+- Fix `ifconfig` command parser for incorrect stripping of leading zeros in some hex numbers
+- Fix `iptables` command parser when Target is blank and verbose output is used
+- Fix `lsattr` command parser for filenames with spaces (newlines in filenames are
+  still not supported)
+- Fix `proc-pid-smaps` proc parser when unknown VmFlags are output
+- Fix `jc.utils.timestamp` function and tests for behavior change in python 3.15
+- Fix `ufw` command parser to support rule logging. A new boolean `log` field is introduced
+
+20251012 v1.25.6
 - Add `net-localgroup` Windows command parser
 - Add `net-user` Windows command parser
 - Add `route-print` Windows command parser
+- Add `traceroute-s` streaming command parser
+- Add `max_hops` and `data_bytes` fields to `traceroute` command parser
 - Add `x509-crl` file parser to support Certificate Revocation List PEM and DER files
 - Add `yay` as a magic command for the `pacman` command parser
 - Fix `bluetoothctl` command parser to support output with the `cable_pairing` attribute
