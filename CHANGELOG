@@ -10,6 +10,7 @@ jc changelog
 - Fix `email-address` parser to gracefully handle invalid email addresses
 - Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
 - Fix `ip-route` parser to handle whitespace-only input gracefully
+- Fix `pgpass` parser handling of escaped characters
 - Fix `proc-modules` parser to support additional taint status column
 - Fix `traceroute` parser to handle missing hop information gracefully
 - Fix `typeset` parser to allow scalar values starting with the `[` character
