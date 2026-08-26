@@ -49,7 +49,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'PostgreSQL password file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -73,6 +73,31 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         List of Dictionaries. Structured to conform to the schema.
     """
     return proc_data
+
+
+def _split_line(line: str) -> List[str]:
+    """Split on unescaped colons, consuming backslash escapes left to right."""
+    fields: List[str] = []
+    field: List[str] = []
+    escaped = False
+
+    for char in line:
+        if escaped:
+            field.append(char)
+            escaped = False
+        elif char == '\\':
+            escaped = True
+        elif char == ':':
+            fields.append(''.join(field))
+            field = []
+        else:
+            field.append(char)
+
+    if escaped:
+        field.append('\\')
+
+    fields.append(''.join(field))
+    return fields
 
 
 def parse(
@@ -106,12 +131,7 @@ def parse(
             if line.strip().startswith('#'):
                 continue
 
-            # convert escaped characters (\ and :)
-            line = line.replace(':', '\u2063')
-            line = line.replace('\\\\', '\\')
-            line = line.replace('\\\u2063', ':')
-
-            hostname, port, database, username, password = line.split('\u2063')
+            hostname, port, database, username, password = _split_line(line)
 
             raw_output.append(
                 {
