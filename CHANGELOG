@@ -8,6 +8,7 @@ jc changelog
 - Enhance `typeset` parser to support ksh and zsh output
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
 - Fix `email-address` parser to gracefully handle invalid email addresses
+- Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
 - Fix `ip-route` parser to handle whitespace-only input gracefully
 - Fix `proc-modules` parser to support additional taint status column
 - Fix `traceroute` parser to handle missing hop information gracefully
@@ -15,8 +16,12 @@ jc changelog
 - Fix `ufw` parser to handle `(log-all)` messages
 - Fix path traversal vulnerability with magic syntax
 - Fix tests for Debian build
+- Fix for broken locale behavior (permanently changing to user's locale) when
+  unparsable datetimes are handled
 
 20260617 v1.25.7
+Note: macOS Intel binaries are no longer provided from the github releases section
+(Intel mac build server died)
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
   TSV files, and TSV files without headers. Note that these are standard and
   not streaming parsers so the entire CSV/TSV will be loaded into memory. For
