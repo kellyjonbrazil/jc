@@ -2,6 +2,7 @@ jc changelog
 
 20260826 v1.26.0
 - Add `upsc` command parser
+- Add xonsh shell completion
 - Enhance `git-log` standard and streaming parsers with added `insertions`
   and `deletions` fields under `file_stats` when using `--numstat`
 - Enhance `nmcli` parser to support `nmcli -t device wifi list`
