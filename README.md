@@ -321,6 +321,7 @@ option.
 | `--update-alt-gs` | `update-alternatives --get-selections` command parser   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs)  |
 |  `--update-alt-q` | `update-alternatives --query` command parser            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q)   |
 |        `--upower` | `upower` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upower)         |
+|          `--upsc` | `upsc` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upsc)           |
 |        `--uptime` | `uptime` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime)         |
 |           `--url` | URL string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/url)            |
 |           `--ver` | Version string parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ver)            |
