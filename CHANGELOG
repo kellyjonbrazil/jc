@@ -1,6 +1,6 @@
 jc changelog
 
-20260825 v1.26.0
+20260826 v1.26.0
 - Add `upsc` command parser
 - Enhance `git-log` standard and streaming parsers with added `insertions`
   and `deletions` fields under `file_stats` when using `--numstat`
@@ -9,6 +9,7 @@ jc changelog
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
 - Fix `email-address` parser to gracefully handle invalid email addresses
 - Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
+- Fix `hosts` parser to ignore whitespace only lines
 - Fix `ip-route` parser to handle whitespace-only input gracefully
 - Fix `pgpass` parser handling of escaped characters
 - Fix `proc-modules` parser to support additional taint status column
