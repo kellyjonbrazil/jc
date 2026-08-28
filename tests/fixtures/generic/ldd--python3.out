@@ -1,0 +1,5 @@
+	linux-vdso.so.1 (0x00007f4fc700e000)
+	libpython3.14.so.1.0 => /lib64/libpython3.14.so.1.0 (0x00007f4fc6800000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007f4fc6605000)
+	libm.so.6 => /lib64/libm.so.6 (0x00007f4fc6ee5000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f4fc7010000)

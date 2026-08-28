@@ -91,6 +91,7 @@ parsers: List[str] = [
     'kv',
     'kv-dup',
     'last',
+    'ldd',
     'ls',
     'ls-s',
     'lsattr',
