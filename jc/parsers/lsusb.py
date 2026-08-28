@@ -115,7 +115,7 @@ Schema:
                     ]
                   }
                 },
-                "videocontrol_descriptors": [
+                "videocontrol_interface_descriptors": [
                   {
                     "<item>": {
                       "value":                string,
@@ -126,7 +126,40 @@ Schema:
                     }
                   }
                 ],
-                "videostreaming_descriptors": [
+                "videostreaming_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "audiocontrol_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "audiostreaming_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "midistreaming_interface_descriptors": [
                   {
                     "<item>": {
                       "value":                string,
@@ -145,6 +178,24 @@ Schema:
                       "attributes": [
                                               string
                       ]
+                    },
+                    "audiostreaming_endpoint_descriptor": {
+                      "<item>": {
+                        "value":              string,
+                        "description":        string,
+                        "attributes": [
+                                              string
+                        ]
+                      }
+                    },
+                    "midistreaming_endpoint_descriptor": {
+                      "<item>": {
+                        "value":              string,
+                        "description":        string,
+                        "attributes": [
+                                              string
+                        ]
+                      }
                     }
                   }
                 ]
@@ -309,7 +360,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
+    version = '2.1'
     description = '`lsusb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -362,6 +413,11 @@ _SECTION_TREE = {
     'endpoint_descriptor':                 ('interface_descriptor', 'endpoint_descriptors', True),
     'videocontrol_interface_descriptor':   ('interface_descriptor', 'videocontrol_interface_descriptors', True),
     'videostreaming_interface_descriptor': ('interface_descriptor', 'videostreaming_interface_descriptors', True),
+    'audiocontrol_interface_descriptor':   ('interface_descriptor', 'audiocontrol_interface_descriptors', True),
+    'audiostreaming_interface_descriptor': ('interface_descriptor', 'audiostreaming_interface_descriptors', True),
+    'audiostreaming_endpoint_descriptor':  ('endpoint_descriptor', 'audiostreaming_endpoint_descriptor', False),
+    'midistreaming_interface_descriptor':  ('interface_descriptor', 'midistreaming_interface_descriptors', True),
+    'midistreaming_endpoint_descriptor':   ('endpoint_descriptor', 'midistreaming_endpoint_descriptor', False),
     'hub_descriptor':                      (None, 'hub_descriptor', False),
     'hub_port_status':                     ('hub_descriptor', 'hub_port_status', False),
     'device_qualifier':                    (None, 'device_qualifier', False),
@@ -377,6 +433,11 @@ _SECTION_HEADERS = (
     ('      Endpoint Descriptor:', 'endpoint_descriptor'),
     ('      VideoControl Interface Descriptor:', 'videocontrol_interface_descriptor'),
     ('      VideoStreaming Interface Descriptor:', 'videostreaming_interface_descriptor'),
+    ('      AudioControl Interface Descriptor:', 'audiocontrol_interface_descriptor'),
+    ('      AudioStreaming Interface Descriptor:', 'audiostreaming_interface_descriptor'),
+    ('        AudioStreaming Endpoint Descriptor:', 'audiostreaming_endpoint_descriptor'),
+    ('      MIDIStreaming Interface Descriptor:', 'midistreaming_interface_descriptor'),
+    ('        MIDIStreaming Endpoint Descriptor:', 'midistreaming_endpoint_descriptor'),
     ('Device Descriptor:', 'device_descriptor'),
     ('  Configuration Descriptor:', 'configuration_descriptor'),
     ('    Interface Association:', 'interface_association'),
