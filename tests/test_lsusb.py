@@ -40,6 +40,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-cdc-mbim.out'), 'r', encoding='utf-8') as f:
         generic_lsusb_cdc_mbim = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-superspeed-endpoint-companion.out'), 'r', encoding='utf-8') as f:
+        generic_lsusb_superspeed_endpoint_companion = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-audio-midi-class.out'), 'r', encoding='utf-8') as f:
+        generic_lsusb_audio_midi_class = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsusb.json'), 'r', encoding='utf-8') as f:
         centos_7_7_lsusb_json = json.loads(f.read())
@@ -67,6 +73,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-cdc-mbim.json'), 'r', encoding='utf-8') as f:
         generic_lsusb_cdc_mbim_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-superspeed-endpoint-companion.json'), 'r', encoding='utf-8') as f:
+        generic_lsusb_superspeed_endpoint_companion_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsusb-audio-midi-class.json'), 'r', encoding='utf-8') as f:
+        generic_lsusb_audio_midi_class_json = json.loads(f.read())
 
 
     def test_lsusb_nodata(self):
@@ -134,6 +146,19 @@ class MyTests(unittest.TestCase):
         Test 'lsusb -v' with CDC MBIM and CDC MBIM Extended fields
         """
         self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_cdc_mbim, quiet=True), self.generic_lsusb_cdc_mbim_json)
+
+    def test_lsusb_superspeed_endpoint_companion(self):
+        """
+        Test 'lsusb -v' with a USB 3.x SuperSpeed Endpoint Companion descriptor
+        """
+        self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_superspeed_endpoint_companion, quiet=True), self.generic_lsusb_superspeed_endpoint_companion_json)
+
+    def test_lsusb_audio_midi_class(self):
+        """
+        Test 'lsusb -v' with Audio/MIDI class interface and endpoint descriptors
+        (AudioControl, AudioStreaming, MIDIStreaming)
+        """
+        self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_audio_midi_class, quiet=True), self.generic_lsusb_audio_midi_class_json)
 
 
 if __name__ == '__main__':

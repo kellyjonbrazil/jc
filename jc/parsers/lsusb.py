@@ -115,7 +115,7 @@ Schema:
                     ]
                   }
                 },
-                "videocontrol_descriptors": [
+                "videocontrol_interface_descriptors": [
                   {
                     "<item>": {
                       "value":                string,
@@ -126,7 +126,40 @@ Schema:
                     }
                   }
                 ],
-                "videostreaming_descriptors": [
+                "videostreaming_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "audiocontrol_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "audiostreaming_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "midistreaming_interface_descriptors": [
                   {
                     "<item>": {
                       "value":                string,
@@ -145,6 +178,24 @@ Schema:
                       "attributes": [
                                               string
                       ]
+                    },
+                    "audiostreaming_endpoint_descriptor": {
+                      "<item>": {
+                        "value":              string,
+                        "description":        string,
+                        "attributes": [
+                                              string
+                        ]
+                      }
+                    },
+                    "midistreaming_endpoint_descriptor": {
+                      "<item>": {
+                        "value":              string,
+                        "description":        string,
+                        "attributes": [
+                                              string
+                        ]
+                      }
                     }
                   }
                 ]
@@ -309,7 +360,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '2.0'
     description = '`lsusb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -337,267 +388,187 @@ def _process(proc_data):
     return proc_data
 
 
-class _NestedDict(dict):
-    # for ease of creating/updating nested dictionary structures
-    # https://stackoverflow.com/questions/5369723/multi-level-defaultdict-with-variable-depth
-    # https://ohuiginn.net/mt/2010/07/nested_dictionaries_in_python.html
-    def __getitem__(self, key):
-        if key in self:
-            return self.get(key)
-        return self.setdefault(key, _NestedDict())
+# Each non-root section's parent section and where its data attaches:
+# (parent_section, key_in_parent, is_list). `parent_section` of None
+# means the section attaches directly to the current bus/device object.
+# `is_list` sections (e.g. multiple Endpoint Descriptors) get a new
+# dict appended to a list on every occurrence; others merge into a
+# single dict (last value wins for a duplicate key, as noted in the
+# schema above). `key_in_parent` of None marks a section that isn't
+# implemented: its lines are still tracked (so indentation stays
+# correct for whatever follows) but discarded.
+_SECTION_TREE = {
+    'device_descriptor':                   (None, 'device_descriptor', False),
+    'configuration_descriptor':            ('device_descriptor', 'configuration_descriptor', False),
+    'interface_association':               ('configuration_descriptor', 'interface_association', False),
+    'interface_descriptor':                ('configuration_descriptor', 'interface_descriptors', True),
+    'cdc_header':                          ('interface_descriptor', 'cdc_header', False),
+    'cdc_call_management':                 ('interface_descriptor', 'cdc_call_management', False),
+    'cdc_acm':                             ('interface_descriptor', 'cdc_acm', False),
+    'cdc_union':                           ('interface_descriptor', 'cdc_union', False),
+    'cdc_mbim':                            ('interface_descriptor', 'cdc_mbim', False),
+    'cdc_mbim_extended':                   ('interface_descriptor', 'cdc_mbim_extended', False),
+    'hid_device_descriptor':               ('interface_descriptor', 'hid_device_descriptor', False),
+    'report_descriptors':                  ('hid_device_descriptor', None, False),  # not implemented
+    'endpoint_descriptor':                 ('interface_descriptor', 'endpoint_descriptors', True),
+    'videocontrol_interface_descriptor':   ('interface_descriptor', 'videocontrol_interface_descriptors', True),
+    'videostreaming_interface_descriptor': ('interface_descriptor', 'videostreaming_interface_descriptors', True),
+    'audiocontrol_interface_descriptor':   ('interface_descriptor', 'audiocontrol_interface_descriptors', True),
+    'audiostreaming_interface_descriptor': ('interface_descriptor', 'audiostreaming_interface_descriptors', True),
+    'audiostreaming_endpoint_descriptor':  ('endpoint_descriptor', 'audiostreaming_endpoint_descriptor', False),
+    'midistreaming_interface_descriptor':  ('interface_descriptor', 'midistreaming_interface_descriptors', True),
+    'midistreaming_endpoint_descriptor':   ('endpoint_descriptor', 'midistreaming_endpoint_descriptor', False),
+    'hub_descriptor':                      (None, 'hub_descriptor', False),
+    'hub_port_status':                     ('hub_descriptor', 'hub_port_status', False),
+    'device_qualifier':                    (None, 'device_qualifier', False),
+    'device_status':                       (None, 'device_status', False),
+    'binary_object_store':                 (None, None, False),  # not implemented
+}
+
+# section headers, matched with str.startswith(), mapped to their
+# _SECTION_TREE name. 'Bus ' and 'Device Status:' are handled
+# separately since their line also carries data.
+_SECTION_HEADERS = (
+    ('    Interface Descriptor:', 'interface_descriptor'),
+    ('      Endpoint Descriptor:', 'endpoint_descriptor'),
+    ('      VideoControl Interface Descriptor:', 'videocontrol_interface_descriptor'),
+    ('      VideoStreaming Interface Descriptor:', 'videostreaming_interface_descriptor'),
+    ('      AudioControl Interface Descriptor:', 'audiocontrol_interface_descriptor'),
+    ('      AudioStreaming Interface Descriptor:', 'audiostreaming_interface_descriptor'),
+    ('        AudioStreaming Endpoint Descriptor:', 'audiostreaming_endpoint_descriptor'),
+    ('      MIDIStreaming Interface Descriptor:', 'midistreaming_interface_descriptor'),
+    ('        MIDIStreaming Endpoint Descriptor:', 'midistreaming_endpoint_descriptor'),
+    ('Device Descriptor:', 'device_descriptor'),
+    ('  Configuration Descriptor:', 'configuration_descriptor'),
+    ('    Interface Association:', 'interface_association'),
+    ('      CDC Header:', 'cdc_header'),
+    ('      CDC Call Management:', 'cdc_call_management'),
+    ('      CDC ACM:', 'cdc_acm'),
+    ('      CDC Union:', 'cdc_union'),
+    ('        HID Device Descriptor:', 'hid_device_descriptor'),
+    ('         Report Descriptors:', 'report_descriptors'),
+    ('      CDC MBIM:', 'cdc_mbim'),
+    ('      CDC MBIM Extended:', 'cdc_mbim_extended'),
+    ('Hub Descriptor:', 'hub_descriptor'),
+    (' Hub Port Status:', 'hub_port_status'),
+    ('Device Qualifier (for other device speed):', 'device_qualifier'),
+    ('Binary Object Store Descriptor:', 'binary_object_store'),
+)
+
+# sections whose key/val/description columns are wider than normal
+_LARGER_HEADER_SECTIONS = {
+    'videocontrol_interface_descriptor',
+    'videostreaming_interface_descriptor',
+    'cdc_mbim_extended',
+}
 
 
-class _root_obj:
-    def __init__(self, name):
-        self.name = name
-        self.list = []
-
-    def _entries_for_this_bus_exist(self, bus_idx):
-        """Returns true if there are object entries for the corresponding bus index"""
-        for item in self.list:
-            keyname = tuple(item.keys())[0]
-
-            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:
-                return True
-
-        return False
-
-    def _update_output(self, bus_idx, output_line):
-        """modifies output_line dictionary for the corresponding bus index.
-        output_line is the self.output_line attribute from the _lsusb object."""
-        for item in self.list:
-            keyname = tuple(item.keys())[0]
-
-            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:
-                # is this a top level value or an attribute?
-                if item[keyname]['_state']['attribute_value']:
-                    last_item = item[keyname]['_state']['last_item']
-                    if 'attributes' not in output_line[f'{self.name}'][last_item]:
-                        output_line[f'{self.name}'][last_item]['attributes'] = []
-
-                    this_attribute = f'{keyname} {item[keyname].get("value", "")} {item[keyname].get("description", "")}'.strip()
-                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)
-                    continue
-
-                output_line[f'{self.name}'].update(item)
-                del output_line[f'{self.name}'][keyname]['_state']
-
-
-class _descriptor_obj:
-    def __init__(self, name):
-        self.name = name
-        self.list = []
-
-    def _entries_for_this_bus_and_interface_idx_exist(self, bus_idx, iface_idx):
-        """Returns true if there are object entries for the corresponding bus index
-        and interface index"""
-        for item in self.list:
-            keyname = tuple(item.keys())[0]
-
-            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx \
-                and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-
-                return True
-
-        return False
-
-    def _update_output(self, bus_idx, iface_idx, output_line):
-        """modifies output_line dictionary for the corresponding bus index and
-        interface index. output_line is the i_desc_obj object."""
-        for item in self.list:
-            keyname = tuple(item.keys())[0]
-
-            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx \
-                and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-
-                # is this a top level value or an attribute?
-                if item[keyname]['_state']['attribute_value']:
-                    last_item = item[keyname]['_state']['last_item']
-                    if 'attributes' not in output_line[f'{self.name}'][last_item]:
-                        output_line[f'{self.name}'][last_item]['attributes'] = []
-
-                    this_attribute = f'{keyname} {item[keyname].get("value", "")} {item[keyname].get("description", "")}'.strip()
-                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)
-                    continue
-
-                output_line[f'{self.name}'].update(item)
-                del output_line[f'{self.name}'][keyname]['_state']
-
-
-class _descriptor_list:
-    def __init__(self, name):
-        self.name = name
-        self.list = []
-
-    def _entries_for_this_bus_and_interface_idx_exist(self, bus_idx, iface_idx):
-        """Returns true if there are object entries for the corresponding bus index
-        and interface index"""
-        for item in self.list:
-            keyname = tuple(item.keys())[0]
-
-            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx \
-                and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-
-                return True
-
-        return False
-
-    def _get_objects_list(self, bus_idx, iface_idx):
-        """Returns a list of descriptor object dictionaries for the corresponding
-        bus index and interface index"""
-        object_collection = []
-
-        # find max number of items in this object that match the bus_idx and iface_idx
-        num_of_items = -1
-        for item in self.list:
-            keyname = tuple(item.keys())[0]
-
-            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx \
-                and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-
-                num_of_items = item[keyname]['_state'][f'{self.name}_idx']
-
-        # create and return the collection of objects that match the bus_idx and iface_idx
-        if num_of_items > -1:
-            for obj_idx in range(num_of_items + 1):
-                this_object = {}
-                for item in self.list:
-                    keyname = tuple(item.keys())[0]
-
-                    if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx \
-                        and item[keyname]['_state']['interface_descriptor_idx'] == iface_idx \
-                        and item[keyname]['_state'][f'{self.name}_idx'] == obj_idx:
-
-                        # is this a top level value or an attribute?
-                        if item[keyname]['_state']['attribute_value']:
-                            last_item = item[keyname]['_state']['last_item']
-                            if 'attributes' not in this_object[last_item]:
-                                this_object[last_item]['attributes'] = []
-
-                            this_attribute = f'{keyname} {item[keyname].get("value", "")} {item[keyname].get("description", "")}'.strip()
-                            this_object[last_item]['attributes'].append(this_attribute)
-                            continue
-
-                        this_object.update(item)
-                        del item[keyname]['_state']
-
-                object_collection.append(this_object)
-
-        return object_collection
-
-
-class _LsUsb():
+class _LsUsb:
     def __init__(self):
         self.raw_output = []
-        self.output_line = _NestedDict()
-
-        self.section = ''
-        self.old_section = ''
+        self.root = None
+        self.stack = []      # list of (section_name, container) from root to current
+        self.section = None  # current section name; None means no active/recognized section
 
         # section_header is formatted with the correct spacing to be used with
-        # jc.parsers.universal.sparse_table_parse(). Pad end of string to be at least len of 25
-        # this value changes for different sections (e.g. videocontrol & videostreaming)
+        # jc.parsers.universal.sparse_table_parse(). Pad end of string to be
+        # at least len of 25. This value changes for different sections (e.g.
+        # videocontrol & videostreaming)
         self.normal_section_header = 'key                   val description'
         self.larger_section_header = 'key                               val description'
 
-        self.bus_idx = -1
-        self.interface_descriptor_idx = -1
-        self.endpoint_descriptor_idx = -1
-        self.videocontrol_interface_descriptor_idx = -1
-        self.videostreaming_interface_descriptor_idx = -1
         self.last_item = ''
         self.last_indent = 0
         self.attribute_value = False
-
-        self.bus_list = []
-        self.device_descriptor = _root_obj('device_descriptor')
-        self.configuration_descriptor = _root_obj('configuration_descriptor')
-        self.interface_association = _root_obj('interface_association')
-        self.interface_descriptor_list = []
-        self.cdc_header = _descriptor_obj('cdc_header')
-        self.cdc_call_management = _descriptor_obj('cdc_call_management')
-        self.cdc_acm = _descriptor_obj('cdc_acm')
-        self.cdc_union = _descriptor_obj('cdc_union')
-        self.cdc_mbim = _descriptor_obj('cdc_mbim')
-        self.cdc_mbim_extended = _descriptor_obj('cdc_mbim_extended')
-        self.endpoint_descriptors = _descriptor_list('endpoint_descriptor')
-        self.videocontrol_interface_descriptors = _descriptor_list('videocontrol_interface_descriptor')
-        self.videostreaming_interface_descriptors = _descriptor_list('videostreaming_interface_descriptor')
-        self.hid_device_descriptor = _descriptor_obj('hid_device_descriptor')
-        # self.report_descriptors_list = []          # not implemented
-        self.hub_descriptor = _root_obj('hub_descriptor')
-        self.hub_port_status_list = []
-        self.device_qualifier_list = []
-        self.device_status_list = []
+        self.fresh_section = False
 
     @staticmethod
     def _count_indent(line):
         indent = 0
         for char in line:
-            if char == ' ':
-                indent += 1
-                continue
-            break
+            if char != ' ':
+                break
+            indent += 1
         return indent
 
-    def _add_attributes(self, line):
-        indent = self._count_indent(line)
+    def _enter_section(self, section_name):
+        """
+        Move to the container for `section_name`, creating/attaching it
+        under its parent as needed, and reset attribute-line tracking
+        for the new section. Returns the new current container.
+        """
+        parent_name, key, is_list = _SECTION_TREE[section_name]
 
-        # determine whether this is a top-level value item or lower-level attribute
-        if indent > self.last_indent and self.old_section == self.section:
-            self.attribute_value = True
+        while self.stack and self.stack[-1][0] != parent_name:
+            self.stack.pop()
 
-        elif indent == self.last_indent and self.attribute_value \
-            and self.old_section == self.section:
+        parent_container = self.stack[-1][1] if self.stack else self.root
 
-            self.attribute_value = True
-
+        if key is None:
+            container = {}  # not implemented; content is parsed then discarded
+        elif is_list:
+            container = {}
+            parent_container.setdefault(key, []).append(container)
         else:
-            self.attribute_value = False
+            container = parent_container.setdefault(key, {})
 
-        section_header = self.normal_section_header
+        self.stack.append((section_name, container))
+        self.section = section_name
+        self.attribute_value = False
+        self.fresh_section = True
 
-        if self.section == 'videocontrol_interface_descriptor' \
-            or self.section == 'videostreaming_interface_descriptor' \
-            or self.section == 'cdc_mbim_extended':
+        return container
 
-            section_header = self.larger_section_header
+    def _start_new_bus(self, line):
+        if self.root is not None:
+            self.raw_output.append(self.root)
 
-        temp_obj = [section_header, line.strip() + (' ' * 25)]
-        temp_obj = sparse_table_parse(temp_obj)
-        temp_obj = temp_obj[0]
-
-        line_obj = {
-            temp_obj['key']: {
-                'value': temp_obj['val'],
-                'description': temp_obj['description'],
-                '_state': {
-                    'attribute_value': self.attribute_value,
-                    'last_item': self.last_item,
-                    'bus_idx': self.bus_idx,
-                    'interface_descriptor_idx': self.interface_descriptor_idx,
-                    'endpoint_descriptor_idx': self.endpoint_descriptor_idx,
-                    'videocontrol_interface_descriptor_idx': self.videocontrol_interface_descriptor_idx,
-                    'videostreaming_interface_descriptor_idx': self.videostreaming_interface_descriptor_idx
-                }
-            }
+        # Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+        line_split = line.strip().split(maxsplit=6)
+        self.root = {
+            'bus': line_split[1],
+            'device': line_split[3][:-1],
+            'id': line_split[5],
+            # way to get a list item or None
+            'description': (line_split[6:7] or [None])[0],
         }
+        self.stack = [(None, self.root)]
+        self.section = 'bus'
+        self.attribute_value = False
+        self.fresh_section = True
 
-        if line_obj[temp_obj['key']]['value'] is None:
-            del line_obj[temp_obj['key']]['value']
+    def _start_device_status(self, line):
+        # Device Status:     0x0001
+        container = self._enter_section('device_status')
+        _, value = line.strip().split(':', maxsplit=1)
+        container['value'] = value.strip()
 
-        if line_obj[temp_obj['key']]['description'] is None:
-            del line_obj[temp_obj['key']]['description']
+    def _handle_section_header(self, line):
+        """
+        If `line` starts a new section, transition to it and return
+        True. Otherwise return False.
+        """
+        if not line:
+            self.section = None
+            self.attribute_value = False
+            return True
 
-        self.old_section = self.section
-        self.last_indent = indent
+        if line.startswith('Bus '):
+            self._start_new_bus(line)
+            return True
 
-        if not self.attribute_value:
-            self.last_item = temp_obj['key']
+        if line.startswith('Device Status:'):
+            self._start_device_status(line)
+            return True
 
-        return line_obj
+        for prefix, section_name in _SECTION_HEADERS:
+            if line.startswith(prefix):
+                self._enter_section(section_name)
+                return True
 
-    def _add_hub_port_status_attributes(self, line):
+        return False
+
+    def _add_hub_port_status_line(self, line):
         # Port 1: 0000.0103 power enable connect
         first_split = line.split(': ', maxsplit=1)
         port_field = first_split[0].strip()
@@ -605,335 +576,67 @@ class _LsUsb():
         port_val = second_split[0]
         attributes = second_split[1].split()
 
-        return {
-            port_field: {
-                'value': port_val,
-                'attributes': attributes,
-                '_state': {
-                    'bus_idx': self.bus_idx
-                }
-            }
+        self.stack[-1][1][port_field] = {
+            'value': port_val,
+            'attributes': attributes,
         }
 
-    def _add_device_status_attributes(self, line):
-        return {
-            'description': line.strip(),
-            '_state': {
-                'bus_idx': self.bus_idx
-            }
-        }
+    def _add_content_line(self, line):
+        indent = self._count_indent(line)
 
-    def _set_sections(self, line):
-        # ignore blank lines
-        if not line:
-            self.section = ''
+        # determine whether this is a top-level value item or a
+        # lower-level attribute of the last-seen item. The first line
+        # of a freshly-entered section is never an attribute, even if
+        # its indentation happens to look like a continuation.
+        if self.fresh_section:
             self.attribute_value = False
-            return True
-
-        # bus information is on the same line so need to extract data
-        # immediately and set indexes
-        if line.startswith('Bus '):
-            self.section = 'bus'
-            self.bus_idx += 1
-            self.interface_descriptor_idx = -1
-            self.endpoint_descriptor_idx = -1
-            self.videocontrol_interface_descriptor_idx = -1
-            self.videostreaming_interface_descriptor_idx = -1
+        elif indent > self.last_indent:
+            self.attribute_value = True
+        elif indent == self.last_indent and self.attribute_value:
+            self.attribute_value = True
+        else:
             self.attribute_value = False
-            line_split = line.strip().split(maxsplit=6)
-            self.bus_list.append(
-                {
-                    'bus': line_split[1],
-                    'device': line_split[3][:-1],
-                    'id': line_split[5],
-                    # way to get a list item or None
-                    'description': (line_split[6:7] or [None])[0],
-                    '_state': {
-                        'bus_idx': self.bus_idx
-                    }
-                }
-            )
-            return True
 
-        # These sections are lists, so need to update indexes
-        if line.startswith('    Interface Descriptor:'):
-            self.section = 'interface_descriptor'
-            self.interface_descriptor_idx += 1
-            self.endpoint_descriptor_idx = -1
-            self.videocontrol_interface_descriptor_idx = -1
-            self.videostreaming_interface_descriptor_idx = -1
-            self.attribute_value = False
-            return True
+        self.fresh_section = False
 
-        if line.startswith('      Endpoint Descriptor:'):
-            self.section = 'endpoint_descriptor'
-            self.endpoint_descriptor_idx += 1
-            self.attribute_value = False
-            return True
+        section_header = self.normal_section_header
+        if self.section in _LARGER_HEADER_SECTIONS:
+            section_header = self.larger_section_header
 
-        if line.startswith('      VideoControl Interface Descriptor:'):
-            self.section = 'videocontrol_interface_descriptor'
-            self.videocontrol_interface_descriptor_idx += 1
-            self.attribute_value = False
-            return True
+        parsed = sparse_table_parse([section_header, line.strip() + (' ' * 25)])[0]
 
-        if line.startswith('      VideoStreaming Interface Descriptor:'):
-            self.section = 'videostreaming_interface_descriptor'
-            self.videostreaming_interface_descriptor_idx += 1
-            self.attribute_value = False
-            return True
+        container = self.stack[-1][1]
 
-        # some device status information is displayed on the initial line so
-        # need to extract immediately
-        if line.startswith('Device Status:'):
-            self.section = 'device_status'
-            self.attribute_value = False
-            line_split = line.strip().split(':', maxsplit=1)
-            self.device_status_list.append(
-                {
-                    'value': line_split[1].strip(),
-                    '_state': {
-                        'bus_idx': self.bus_idx
-                    }
-                }
-            )
-            return True
+        if self.attribute_value:
+            target = container.setdefault(self.last_item, {})
+            this_attribute = f'{parsed["key"]} {parsed["val"] or ""} {parsed["description"] or ""}'.strip()
+            target.setdefault('attributes', []).append(this_attribute)
+        else:
+            entry = {}
+            if parsed['val'] is not None:
+                entry['value'] = parsed['val']
+            if parsed['description'] is not None:
+                entry['description'] = parsed['description']
+            container[parsed['key']] = entry
+            self.last_item = parsed['key']
 
-        # set the rest of the sections
-        string_section_map = {
-            'Device Descriptor:': 'device_descriptor',
-            '  Configuration Descriptor:': 'configuration_descriptor',
-            '    Interface Association:': 'interface_association',
-            '      CDC Header:': 'cdc_header',
-            '      CDC Call Management:': 'cdc_call_management',
-            '      CDC ACM:': 'cdc_acm',
-            '      CDC Union:': 'cdc_union',
-            '        HID Device Descriptor:': 'hid_device_descriptor',
-            '         Report Descriptors:': 'report_descriptors',
-            '      CDC MBIM:': 'cdc_mbim',
-            '      CDC MBIM Extended:': 'cdc_mbim_extended',
-            'Hub Descriptor:': 'hub_descriptor',
-            ' Hub Port Status:': 'hub_port_status',
-            'Device Qualifier (for other device speed):': 'device_qualifier',
-            'Binary Object Store Descriptor:': None   # not implemented
-        }
+        self.last_indent = indent
 
-        for sec_string, section_val in string_section_map.items():
-            if line.startswith(sec_string):
-                self.section = section_val
-                self.attribute_value = False
-                return True
+    def _handle_content_line(self, line):
+        if self.section is None or not line.startswith(' '):
+            return
 
-        return False
+        if self.section == 'device_status':
+            self.stack[-1][1]['description'] = line.strip()
+            return
 
-    def _populate_lists(self, line):
-        section_list_map = {
-            'device_descriptor': self.device_descriptor.list,
-            'configuration_descriptor': self.configuration_descriptor.list,
-            'interface_association': self.interface_association.list,
-            'interface_descriptor': self.interface_descriptor_list,
-            'cdc_header': self.cdc_header.list,
-            'cdc_call_management': self.cdc_call_management.list,
-            'cdc_acm': self.cdc_acm.list,
-            'cdc_union': self.cdc_union.list,
-            'cdc_mbim': self.cdc_mbim.list,
-            'cdc_mbim_extended': self.cdc_mbim_extended.list,
-            'hid_device_descriptor': self.hid_device_descriptor.list,
-            # 'report_descriptors': self.report_descriptors_list,         # not implemented
-            'videocontrol_interface_descriptor': self.videocontrol_interface_descriptors.list,
-            'videostreaming_interface_descriptor': self.videostreaming_interface_descriptors.list,
-            'endpoint_descriptor': self.endpoint_descriptors.list,
-            'hub_descriptor': self.hub_descriptor.list,
-            'device_qualifier': self.device_qualifier_list
-        }
+        if self.section == 'hub_port_status':
+            # deeper-indented sub-lines (e.g. "Ext Status:") are not implemented
+            if not line.startswith('     '):
+                self._add_hub_port_status_line(line)
+            return
 
-        for sec in section_list_map:
-            if line.startswith(' ') and self.section == sec:
-                section_list_map[self.section].append(self._add_attributes(line))
-                return True
-
-        # special handling of these sections
-        if line.startswith(' ') and not line.startswith('     ') \
-            and self.section == 'hub_port_status':
-
-            self.hub_port_status_list.append(self._add_hub_port_status_attributes(line))
-            return True
-
-        if line.startswith(' ') and self.section == 'device_status':
-            self.device_status_list.append(self._add_device_status_attributes(line))
-            return True
-
-        return False
-
-    def _populate_schema(self):
-        """
-        Schema:
-        = {}
-        ['device_descriptor'] = {}
-        ['device_descriptor']['configuration_descriptor'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_association'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['videocontrol_interface_descriptors'] = []
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['videocontrol_interface_descriptors'][0] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['videostreaming_interface_descriptors'] = []
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['videostreaming_interface_descriptors'][0] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_header'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_call_management'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_acm'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_union'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_mbim'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['cdc_mbim_extended'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['hid_device_descriptor'] = {}
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'] = []
-        ['device_descriptor']['configuration_descriptor']['interface_descriptors'][0]['endpoint_descriptors'][0] = {}
-        ['hub_descriptor'] = {}
-        ['hub_descriptor']['hub_port_status'] = {}
-        ['device_qualifier'] = {}
-        ['device_status'] = {}
-        """
-        for idx, item in enumerate(self.bus_list):
-            if self.output_line:
-                self.raw_output.append(self.output_line)
-
-            self.output_line = _NestedDict()
-
-            del item['_state']
-            self.output_line.update(item)
-
-            # add initial root-level keys
-            if self.device_descriptor._entries_for_this_bus_exist(idx):
-                self.device_descriptor._update_output(idx, self.output_line)
-
-            if self.configuration_descriptor._entries_for_this_bus_exist(idx):
-                self.configuration_descriptor._update_output(
-                    idx, self.output_line['device_descriptor']
-                )
-
-            if self.interface_association._entries_for_this_bus_exist(idx):
-                self.interface_association._update_output(
-                    idx, self.output_line['device_descriptor']['configuration_descriptor']
-                )
-
-            # add interface_descriptor key if it doesn't exist and there
-            # are entries for this bus
-            for iface_attrs in self.interface_descriptor_list:
-                keyname = tuple(iface_attrs.keys())[0]
-
-                if '_state' in iface_attrs[keyname] \
-                    and iface_attrs[keyname]['_state']['bus_idx'] == idx:
-
-                    self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'] = []
-
-            # find max index for this bus idx, then iterate over that range
-            i_desc_iters = -1
-            for iface_attrs in self.interface_descriptor_list:
-                keyname = tuple(iface_attrs.keys())[0]
-
-                if '_state' in iface_attrs[keyname] \
-                    and iface_attrs[keyname]['_state']['bus_idx'] == idx:
-
-                    i_desc_iters = iface_attrs[keyname]['_state']['interface_descriptor_idx']
-
-            # create the interface descriptor object
-            if i_desc_iters > -1:
-                for iface_idx in range(i_desc_iters + 1):
-                    i_desc_obj = _NestedDict()
-
-                    for iface_attrs in self.interface_descriptor_list:
-                        keyname = tuple(iface_attrs.keys())[0]
-
-                        if '_state' in iface_attrs[keyname] \
-                            and iface_attrs[keyname]['_state']['bus_idx'] == idx \
-                            and iface_attrs[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-
-                            # is this a top level value or an attribute?
-                            if iface_attrs[keyname]['_state']['attribute_value']:
-                                last_item = iface_attrs[keyname]['_state']['last_item']
-
-                                if 'attributes' not in i_desc_obj[last_item]:
-                                    i_desc_obj[last_item]['attributes'] = []
-
-                                this_attribute = f'{keyname} {iface_attrs[keyname].get("value", "")} {iface_attrs[keyname].get("description", "")}'.strip()
-                                i_desc_obj[last_item]['attributes'].append(this_attribute)
-                                continue
-
-                            del iface_attrs[keyname]['_state']
-                            i_desc_obj.update(iface_attrs)
-
-                    # add the rest of the interface descriptor keys to the object
-                    if self.cdc_header._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.cdc_header._update_output(idx, iface_idx, i_desc_obj)
-
-                    if self.cdc_call_management._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.cdc_call_management._update_output(idx, iface_idx, i_desc_obj)
-
-                    if self.cdc_acm._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.cdc_acm._update_output(idx, iface_idx, i_desc_obj)
-
-                    if self.cdc_union._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.cdc_union._update_output(idx, iface_idx, i_desc_obj)
-
-                    if self.cdc_mbim._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.cdc_mbim._update_output(idx, iface_idx, i_desc_obj)
-
-                    if self.cdc_mbim_extended._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.cdc_mbim_extended._update_output(idx, iface_idx, i_desc_obj)
-
-                    if self.hid_device_descriptor._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        self.hid_device_descriptor._update_output(idx, iface_idx, i_desc_obj)
-
-                    # Not Implemented: Report Descriptors (need more samples)
-                    # for rd in self.report_descriptors_list:
-                    #     keyname = tuple(rd.keys())[0]
-                    #     if '_state' in rd[keyname] and rd[keyname]['_state']['bus_idx'] == idx and rd[keyname]['_state']['interface_descriptor_idx'] == iface_idx:
-                    #         i_desc_obj['hid_device_descriptor']['report_descriptors'].update(rd)
-                    #         del i_desc_obj['hid_device_descriptor']['report_descriptors'][keyname]['_state']
-
-                    if self.videocontrol_interface_descriptors._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        i_desc_obj['videocontrol_interface_descriptors'] = []
-                        i_desc_obj['videocontrol_interface_descriptors'].extend(
-                            self.videocontrol_interface_descriptors._get_objects_list(idx, iface_idx)
-                        )
-
-                    if self.videostreaming_interface_descriptors._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        i_desc_obj['videostreaming_interface_descriptors'] = []
-                        i_desc_obj['videostreaming_interface_descriptors'].extend(
-                            self.videostreaming_interface_descriptors._get_objects_list(idx, iface_idx)
-                        )
-
-                    if self.endpoint_descriptors._entries_for_this_bus_and_interface_idx_exist(idx, iface_idx):
-                        i_desc_obj['endpoint_descriptors'] = []
-                        i_desc_obj['endpoint_descriptors'].extend(
-                            self.endpoint_descriptors._get_objects_list(idx, iface_idx)
-                        )
-
-                    # add the object to the list of interface descriptors
-                    self.output_line['device_descriptor']['configuration_descriptor']['interface_descriptors'].append(i_desc_obj)
-
-            # add final root-level keys
-            if self.hub_descriptor._entries_for_this_bus_exist(idx):
-                self.hub_descriptor._update_output(idx, self.output_line)
-
-            for hps in self.hub_port_status_list:
-                keyname = tuple(hps.keys())[0]
-
-                if '_state' in hps[keyname] and hps[keyname]['_state']['bus_idx'] == idx:
-                    self.output_line['hub_descriptor']['hub_port_status'].update(hps)
-                    del self.output_line['hub_descriptor']['hub_port_status'][keyname]['_state']
-
-            for dq in self.device_qualifier_list:
-                keyname = tuple(dq.keys())[0]
-
-                if '_state' in dq[keyname] and dq[keyname]['_state']['bus_idx'] == idx:
-                    self.output_line['device_qualifier'].update(dq)
-                    del self.output_line['device_qualifier'][keyname]['_state']
-
-            for ds in self.device_status_list:
-
-                if '_state' in ds and ds['_state']['bus_idx'] == idx:
-                    self.output_line['device_status'].update(ds)
-                    del self.output_line['device_status']['_state']
+        self._add_content_line(line)
 
 
 def parse(data, raw=False, quiet=False):
@@ -956,7 +659,6 @@ def parse(data, raw=False, quiet=False):
     lsusb = _LsUsb()
 
     if jc.utils.has_data(data):
-
         # fix known too-long field names
         data = data.replace('bmNetworkCapabilities', 'bmNetworkCapabilit   ')
 
@@ -965,19 +667,12 @@ def parse(data, raw=False, quiet=False):
             if line.startswith('/'):
                 raise ParseError('Only `lsusb` or `lsusb -v` are supported.')
 
-            # sections
-            if lsusb._set_sections(line):
+            if lsusb._handle_section_header(line):
                 continue
 
-            # create section lists and schema
-            if lsusb._populate_lists(line):
-                continue
+            lsusb._handle_content_line(line)
 
-    # populate the schema
-    lsusb._populate_schema()
-
-    # add any final output object if it exists and return the raw_output list
-    if lsusb.output_line:
-        lsusb.raw_output.append(lsusb.output_line)
+    if lsusb.root is not None:
+        lsusb.raw_output.append(lsusb.root)
 
     return lsusb.raw_output if raw else _process(lsusb.raw_output)
