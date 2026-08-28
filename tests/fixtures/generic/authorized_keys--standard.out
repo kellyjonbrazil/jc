@@ -1,0 +1,8 @@
+# This is a sample authorized_keys file
+# Comments and blank lines should be ignored
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8wb9u8Rx1RgPHJOSnTPi50enG++yjyJ/UIQqGrqqJjCzaH32j9NDaSefn67c+1M8C1En17IoDSe+ZQjP2tsDTZwvRQ62VO3vzzOd3tfPXeoCtEJ/pE/V+cn4yQF9k20U8tIavYnEwNya+LnmYABTgwz1VV9ODVwiDjKwzclT9Kwc1bK9LLbu0gDUOZw119gDVWC5ofMPoER/zv/Nm6y3AW7m2d5iUSHrWkZ/Oqo6lRwY2OJa9oU9fYTeZ0+zQXPfRMj9RCL9KSPF/a2PpGc3PBO0JBcF5DFjKiaQHx8YLgxEOWyRjbOceiFRgTP alice@example.com
+
+command="/usr/bin/rsync --server",no-port-forwarding,no-X11-forwarding,no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHghxye3Vq/KsZ0sFBplo+n3lp/BWBJyDG2VzlIqynfX bob@laptop
+ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNitMnbk2ldiUPUNNQ9td6d2R9KnKVEqDkdkALNkzBXI07CpYhvBVmerPYImUxzwXtCiOxPuado9RC9c5foD43g=
+environment="LC_ALL=en_US.UTF-8",command="/usr/bin/echo \"hi there\"" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8wb9u8Rx1RgPHJOSnTPi50enG++yjyJ/UIQqGrqqJjCzaH32j9NDaSefn67c+1M8C1En17IoDSe+ZQjP2tsDTZwvRQ62VO3vzzOd3tfPXeoCtEJ/pE/V+cn4yQF9k20U8tIavYnEwNya+LnmYABTgwz1VV9ODVwiDjKwzclT9Kwc1bK9LLbu0gDUOZw119gDVWC5ofMPoER/zv/Nm6y3AW7m2d5iUSHrWkZ/Oqo6lRwY2OJa9oU9fYTeZ0+zQXPfRMj9RCL9KSPF/a2PpGc3PBO0JBcF5DFjKiaQHx8YLgxEOWyRjbOceiFRgTP deploy@ci

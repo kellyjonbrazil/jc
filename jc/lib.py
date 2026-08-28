@@ -22,6 +22,7 @@ parsers: List[str] = [
     'arp',
     'asciitable',
     'asciitable-m',
+    'authorized-keys',
     'blkid',
     'bluetoothctl',
     'cbt',
