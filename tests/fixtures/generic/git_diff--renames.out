@@ -1,0 +1,5 @@
+M	CHANGELOG
+R100	tests/fixtures/upsc--apc.json	tests/fixtures/generic/upsc--apc.json
+R100	tests/fixtures/upsc--apc.out	tests/fixtures/generic/upsc--apc.out
+R100	tests/fixtures/upsc--cyberpower.json	tests/fixtures/generic/upsc--cyberpower.json
+R100	tests/fixtures/upsc--cyberpower.out	tests/fixtures/generic/upsc--cyberpower.out
