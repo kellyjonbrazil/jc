@@ -164,6 +164,7 @@ option.
 |           `--arp` | `arp` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/arp)            |
 |    `--asciitable` | ASCII and Unicode table parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable)     |
 |  `--asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
+| `--authorized-keys` | `~/.ssh/authorized_keys` file parser                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/authorized_keys) |
 |         `--blkid` | `blkid` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid)          |
 |  `--bluetoothctl` | `bluetoothctl` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/bluetoothctl)   |
 |           `--cbt` | `cbt` (Google Bigtable) command parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cbt)            |

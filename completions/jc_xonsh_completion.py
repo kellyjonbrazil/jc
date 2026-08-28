@@ -140,6 +140,7 @@ jc_parsers = {
     '--arp': '`arp` command parser',
     '--asciitable': 'ASCII and Unicode table parser',
     '--asciitable-m': 'multi-line ASCII and Unicode table parser',
+    '--authorized-keys': '`~/.ssh/authorized_keys` file parser',
     '--blkid': '`blkid` command parser',
     '--bluetoothctl': '`bluetoothctl` command parser',
     '--cbt': '`cbt` (Google Bigtable) command parser',
