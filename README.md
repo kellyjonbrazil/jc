@@ -200,6 +200,7 @@ option.
 |        `--finger` | `finger` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/finger)         |
 |          `--free` | `free` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/free)           |
 |         `--fstab` | `/etc/fstab` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab)          |
+|      `--git-diff` | `git diff --name-status` command parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_diff)       |
 |       `--git-log` | `git log` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log)        |
 |     `--git-log-s` | `git log` command streaming parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log_s)      |
 | `--git-ls-remote` | `git ls-remote` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_ls_remote)  |
