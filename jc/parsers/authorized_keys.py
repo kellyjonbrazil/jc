@@ -2,9 +2,9 @@ r"""jc - JSON Convert `~/.ssh/authorized_keys` file parser
 
 Comment lines (starting with `#`) and blank lines are ignored. The
 leading `options` field (e.g. `command="...",no-port-forwarding`) is
-optional, as is the trailing `comment` field. `options` is left
-unparsed as a single raw string since values may contain quoted commas
-and spaces.
+optional, as is the trailing `comment` field. Each entry in `options`
+is left unparsed (not split into key/value) since values may contain
+quoted commas and spaces.
 
 Usage (cli):
 
@@ -19,7 +19,9 @@ Schema:
 
     [
       {
-        "options":  string/null,
+        "options": [
+                      string
+        ]/null,
         "type":     string,
         "key":      string,
         "comment":  string/null
@@ -37,7 +39,10 @@ Examples:
         "comment": "bob@laptop"
       },
       {
-        "options": "command=\"/usr/bin/rsync --server\",no-port-forwarding",
+        "options": [
+          "command=\"/usr/bin/rsync --server\"",
+          "no-port-forwarding"
+        ],
         "type": "ssh-rsa",
         "key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8w...",
         "comment": null
@@ -65,17 +70,18 @@ __version__ = info.version
 _KEY_TYPE_PREFIXES = ('ssh-', 'ecdsa-sha2-', 'sk-ecdsa-sha2-', 'sk-ssh-')
 
 
-def _tokenize(line):
+def _quote_aware_split(text, is_delimiter):
     """
-    Split a line on unquoted whitespace, leaving double-quoted spans
-    (which may contain whitespace and backslash-escaped quotes) intact.
+    Split text on characters accepted by `is_delimiter`, leaving
+    double-quoted spans (which may contain delimiters and
+    backslash-escaped quotes) intact.
     """
     tokens = []
     current = []
     in_quotes = False
     escaped = False
 
-    for char in line:
+    for char in text:
         if escaped:
             current.append(char)
             escaped = False
@@ -91,7 +97,7 @@ def _tokenize(line):
             current.append(char)
             continue
 
-        if char.isspace() and not in_quotes:
+        if is_delimiter(char) and not in_quotes:
             if current:
                 tokens.append(''.join(current))
                 current = []
@@ -147,14 +153,14 @@ def parse(data, raw=False, quiet=False):
             if not line or line.startswith('#'):
                 continue
 
-            tokens = _tokenize(line)
+            tokens = _quote_aware_split(line, str.isspace)
 
             if tokens[0].startswith(_KEY_TYPE_PREFIXES):
                 options = None
                 key_type = tokens[0]
                 remaining = tokens[1:]
             else:
-                options = tokens[0]
+                options = _quote_aware_split(tokens[0], lambda c: c == ',')
                 key_type = tokens[1] if len(tokens) > 1 else None
                 remaining = tokens[2:]
 
