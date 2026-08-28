@@ -19,14 +19,16 @@ Schema:
 
     [
       {
-        "status":       string,        # A, M, D, R, C, T, U, or X
-        "similarity":   integer/null,  # [0]
-        "old_path":     string/null,   # [0]
-        "path":         string
+        "status":               string,        # A, M, D, R, C, T, U, or X
+        "status_description":   string,        # [0]
+        "similarity":           integer/null,  # [1]
+        "old_path":             string/null,   # [1]
+        "path":                 string
       }
     ]
 
-    [0] only available for renamed (`R`) and copied (`C`) entries
+    [0] only available when `raw=False` (the default)
+    [1] only available for renamed (`R`) and copied (`C`) entries
 
 Examples:
 
@@ -34,24 +36,28 @@ Examples:
     [
       {
         "status": "M",
+        "status_description": "Modified",
         "similarity": null,
         "old_path": null,
         "path": "bootstrap/bootstrap.sh"
       },
       {
         "status": "D",
+        "status_description": "Deleted",
         "similarity": null,
         "old_path": null,
         "path": "configs/sample.json"
       },
       {
         "status": "A",
+        "status_description": "Added",
         "similarity": null,
         "old_path": null,
         "path": "scripts/status.py"
       },
       {
         "status": "R",
+        "status_description": "Renamed",
         "similarity": 100,
         "old_path": "README.md",
         "path": "README_now.md"
@@ -84,6 +90,18 @@ class info():
 
 __version__ = info.version
 
+_STATUS_DESCRIPTIONS = {
+    'A': 'Added',
+    'C': 'Copied',
+    'D': 'Deleted',
+    'M': 'Modified',
+    'R': 'Renamed',
+    'T': 'Type changed',
+    'U': 'Unmerged',
+    'X': 'Unknown',
+    'B': 'Pairing broken',
+}
+
 
 def _process(proc_data):
     """
@@ -99,6 +117,7 @@ def _process(proc_data):
     """
     for entry in proc_data:
         entry['status'] = entry['status'][0]
+        entry['status_description'] = _STATUS_DESCRIPTIONS.get(entry['status'])
         entry['similarity'] = jc.utils.convert_to_int(entry['similarity'])
 
     return proc_data
