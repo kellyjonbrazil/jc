@@ -50,6 +50,22 @@ Examples:
         "comment": null
       }
     ]
+
+    $ cat ~/.ssh/authorized_keys | jc --authorized-keys -p -r
+    [
+      {
+        "options": null,
+        "type": "ssh-ed25519",
+        "key": "AAAAC3NzaC1lZDI1NTE5AAAAIHghxye3Vq/KsZ0sFBplo+n3lp/BWBJyDG2VzlIqynfX",
+        "comment": "bob@laptop"
+      },
+      {
+        "options": "command=\"/usr/bin/rsync --server\",no-port-forwarding",
+        "type": "ssh-rsa",
+        "key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8w...",
+        "comment": null
+      }
+    ]
 """
 import jc.utils
 
