@@ -1,12 +1,6 @@
 r"""jc - JSON Convert `~/.ssh/authorized_keys` file parser
 
-Comment lines (starting with `#`) and blank lines are ignored. Each
-line may have a leading, comma-separated `options` string (e.g.
-`command="...",no-port-forwarding`), which is split into a list on
-unquoted commas; each entry is left unparsed (not split into
-key/value) since values may contain quoted commas and spaces.
-`options` is `[]` when none are present. The trailing `comment` field
-is optional.
+Comment lines (starting with `#`) and blank lines are ignored.
 
 Usage (cli):
 
@@ -21,12 +15,12 @@ Schema:
 
     [
       {
+        "type":            string,
+        "key":             string,
         "options": [
-                     string
+                           string
         ],
-        "type":      string,
-        "key":       string,
-        "comment":   string/null
+        "comment":         string/null
       }
     ]
 
