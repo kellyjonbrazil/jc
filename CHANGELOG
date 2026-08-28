@@ -3,6 +3,7 @@ jc changelog
 20260828 v1.26.0
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `git diff --name-status` command parser
+- Add `ldd` command parser
 - Add `upsc` command parser
 - Add xonsh shell completion
 - Enhance `git-log` standard and streaming parsers with added `insertions`

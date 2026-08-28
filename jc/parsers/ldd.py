@@ -24,22 +24,22 @@ Schema:
 
     [
       {
-        "file":           string/null,
+        "file":               string/null,
         "dependencies": [
           {
-            "name":       string,
-            "path":       string/null,  # [0]
-            "address":    string/null   # [0]
+            "name":           string,
+            "path":           string/null,  # [0]
+            "address":        string/null   # [0]
           }
         ],
         "version_info": [
           {
-            "for":        string,
+            "for":            string,
             "requires": [
               {
-                "name":     string,
-                "version":  string,
-                "path":     string
+                "name":       string,
+                "version":    string,
+                "path":       string
               }
             ]
           }
@@ -119,7 +119,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.0'
     description = '`ldd` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

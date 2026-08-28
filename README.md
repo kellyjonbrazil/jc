@@ -233,6 +233,7 @@ option.
 |            `--kv` | Key/Value file and string parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |
 |        `--kv-dup` | Key/Value with duplicate key file and string parser     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv_dup)         |
 |          `--last` | `last` and `lastb` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/last)           |
+|           `--ldd` | `ldd` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ldd)            |
 |            `--ls` | `ls` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls)             |
 |          `--ls-s` | `ls` command streaming parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s)           |
 |        `--lsattr` | `lsattr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsattr)         |
