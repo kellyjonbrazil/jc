@@ -176,7 +176,6 @@ jc_parsers = {
     '--finger': '`finger` command parser',
     '--free': '`free` command parser',
     '--fstab': '`/etc/fstab` file parser',
-    '--git-diff': '`git diff --name-status` command parser',
     '--git-log': '`git log` command parser',
     '--git-log-s': '`git log` command streaming parser',
     '--git-ls-remote': '`git ls-remote` command parser',
