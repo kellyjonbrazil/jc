@@ -20,15 +20,14 @@ Schema:
     [
       {
         "status":               string,        # A, M, D, R, C, T, U, or X
-        "status_description":   string,        # [0]
-        "similarity":           integer/null,  # [1]
-        "old_path":             string/null,   # [1]
+        "status_description":   string,
+        "similarity":           integer/null,  # [0]
+        "old_path":             string/null,   # [0]
         "path":                 string
       }
     ]
 
-    [0] only available when `raw=False` (the default)
-    [1] only available for renamed (`R`) and copied (`C`) entries
+    [0] only available for renamed (`R`) and copied (`C`) entries
 
 Examples:
 

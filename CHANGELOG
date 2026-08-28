@@ -1,6 +1,7 @@
 jc changelog
 
-20260826 v1.26.0
+20260828 v1.26.0
+- Add `git diff --name-status` command parser
 - Add `upsc` command parser
 - Add xonsh shell completion
 - Enhance `git-log` standard and streaming parsers with added `insertions`
