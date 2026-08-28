@@ -155,8 +155,8 @@ class MyTests(unittest.TestCase):
 
     def test_lsusb_audio_midi_class(self):
         """
-        Test 'lsusb -v' with Audio/MIDI class interface descriptors (unimplemented
-        class; verifies no crash and stable, if imprecise, output)
+        Test 'lsusb -v' with Audio/MIDI class interface and endpoint descriptors
+        (AudioControl, AudioStreaming, MIDIStreaming)
         """
         self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_audio_midi_class, quiet=True), self.generic_lsusb_audio_midi_class_json)
 
