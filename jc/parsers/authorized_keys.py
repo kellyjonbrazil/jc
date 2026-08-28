@@ -21,7 +21,7 @@ Schema:
       {
         "options": [
                       string
-        ]/null,
+        ],
         "type":     string,
         "key":      string,
         "comment":  string/null
@@ -33,7 +33,7 @@ Examples:
     $ cat ~/.ssh/authorized_keys | jc --authorized-keys -p
     [
       {
-        "options": null,
+        "options": [],
         "type": "ssh-ed25519",
         "key": "AAAAC3NzaC1lZDI1NTE5AAAAIHghxye3Vq/KsZ0sFBplo+n3lp/BWBJyDG2VzlIqynfX",
         "comment": "bob@laptop"
@@ -156,7 +156,7 @@ def parse(data, raw=False, quiet=False):
             tokens = _quote_aware_split(line, str.isspace)
 
             if tokens[0].startswith(_KEY_TYPE_PREFIXES):
-                options = None
+                options = []
                 key_type = tokens[0]
                 remaining = tokens[1:]
             else:
