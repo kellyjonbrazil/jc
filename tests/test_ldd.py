@@ -12,7 +12,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'ldd' with no data
         """
-        test_utils.run_no_data(self, __file__, {'dependencies': [], 'version_info': []})
+        test_utils.run_no_data(self, __file__, [])
 
     def test_ldd_all_fixtures(self):
         """
