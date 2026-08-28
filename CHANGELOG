@@ -13,6 +13,9 @@ jc changelog
 - Enhance `lsusb` parser to support USB Audio and MIDI class interface and
   endpoint descriptors (AudioControl, AudioStreaming, MIDIStreaming)
 - Simplify `lsusb` parser internals to build nested output in a single pass
+  Note: this is a complete rewrite (v2.0) and it is possible some output may
+  deviate from the previous version. It is believed this version is more
+  accurate and will be easier to maintain going forward.
 - Fix `email-address` parser to gracefully handle invalid email addresses
 - Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
 - Fix `hosts` parser to ignore whitespace only lines
