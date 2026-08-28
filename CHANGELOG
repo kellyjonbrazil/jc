@@ -10,6 +10,9 @@ jc changelog
 - Enhance `nmcli` parser to support `nmcli -t device wifi list`
 - Enhance `typeset` parser to support ksh and zsh output
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
+- Enhance `lsusb` parser to support USB Audio and MIDI class interface and
+  endpoint descriptors (AudioControl, AudioStreaming, MIDIStreaming)
+- Simplify `lsusb` parser internals to build nested output in a single pass
 - Fix `email-address` parser to gracefully handle invalid email addresses
 - Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
 - Fix `hosts` parser to ignore whitespace only lines
