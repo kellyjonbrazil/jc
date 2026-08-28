@@ -8,6 +8,10 @@ key/value) since values may contain quoted commas and spaces.
 `options` is `[]` when none are present. The trailing `comment` field
 is optional.
 
+The `options` split only happens when `raw=False` (the default). Use
+the `-r` command-line argument or the `raw=True` argument in `parse()`
+to get the original, un-split `options` string.
+
 Usage (cli):
 
     $ cat ~/.ssh/authorized_keys | jc --authorized-keys
@@ -45,6 +49,22 @@ Examples:
           "command=\"/usr/bin/rsync --server\"",
           "no-port-forwarding"
         ],
+        "type": "ssh-rsa",
+        "key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8w...",
+        "comment": null
+      }
+    ]
+
+    $ cat ~/.ssh/authorized_keys | jc --authorized-keys -p -r
+    [
+      {
+        "options": null,
+        "type": "ssh-ed25519",
+        "key": "AAAAC3NzaC1lZDI1NTE5AAAAIHghxye3Vq/KsZ0sFBplo+n3lp/BWBJyDG2VzlIqynfX",
+        "comment": "bob@laptop"
+      },
+      {
+        "options": "command=\"/usr/bin/rsync --server\",no-port-forwarding",
         "type": "ssh-rsa",
         "key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8w...",
         "comment": null
@@ -125,7 +145,12 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    # no additional processing needed
+    for entry in proc_data:
+        if entry['options']:
+            entry['options'] = _quote_aware_split(entry['options'], lambda c: c == ',')
+        else:
+            entry['options'] = []
+
     return proc_data
 
 
@@ -158,11 +183,11 @@ def parse(data, raw=False, quiet=False):
             tokens = _quote_aware_split(line, str.isspace)
 
             if tokens[0].startswith(_KEY_TYPE_PREFIXES):
-                options = []
+                options = None
                 key_type = tokens[0]
                 remaining = tokens[1:]
             else:
-                options = _quote_aware_split(tokens[0], lambda c: c == ',')
+                options = tokens[0]
                 key_type = tokens[1] if len(tokens) > 1 else None
                 remaining = tokens[2:]
 
