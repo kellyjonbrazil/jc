@@ -184,7 +184,7 @@ class info():
 
 __version__ = info.version
 
-chain_pkt_byt_pattern = re.compile(
+chain_pkt_byte_pattern = re.compile(
     r'''
         \s\(policy\s
         (?P<policy_name>.+)
@@ -272,7 +272,7 @@ def parse(data, raw=False, quiet=False):
 
                 chain['chain'] = parsed_line[1]
 
-                stats_match = re.search(chain_pkt_byt_pattern, line)
+                stats_match = re.search(chain_pkt_byte_pattern, line)
                 if stats_match:
                     stats = stats_match.groupdict()
                     chain['default_policy'] = stats['policy_name']

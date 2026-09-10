@@ -60,7 +60,7 @@ Schema:
           "flg":                     integer,       # [2]
           "off":                     integer,       # [2]
           "pro":                     integer,       # [2]
-          "cks":                     ingeger,       # [2]
+          "cks":                     integer,       # [2]
           "src":                     string,
           "dst":                     string
         }

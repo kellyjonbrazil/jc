@@ -423,8 +423,8 @@ example. To display the data on the terminal in realtime, you can disable the
 buffer with the `-u` (unbuffer) cli option:
 ```
 $ ping 1.1.1.1 | jc --ping-s -u | jq
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","respons...}
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","respons...}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response...}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response...}
 ...
 ```
 
