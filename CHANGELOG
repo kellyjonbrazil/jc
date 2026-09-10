@@ -1,6 +1,6 @@
 jc changelog
 
-20260828 v1.26.0
+20260910 v1.26.0
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `git diff --name-status` command parser
 - Add `ldd` command parser
@@ -30,10 +30,9 @@ jc changelog
 - Fix tests for Debian build
 - Fix for broken locale behavior (permanently changing to user's locale) when
   unparsable datetimes are handled
+- Fix timestamp function for 12 hour format found in some `date` command output
 
 20260617 v1.25.7
-Note: macOS Intel binaries are no longer provided from the github releases section
-(Intel mac build server died)
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
   TSV files, and TSV files without headers. Note that these are standard and
   not streaming parsers so the entire CSV/TSV will be loaded into memory. For
