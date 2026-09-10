@@ -12,6 +12,13 @@ class MyTests(unittest.TestCase):
             # C locale format conversion, or date cli command in C locale with non-UTC tz
             'Tue Mar 23 16:12:11 2021': {'string': 'Tue Mar 23 16:12:11 2021', 'format': 1000, 'naive': 1616541131, 'utc': None},
             'Tue Mar 23 16:12:11 IST 2021': {'string': 'Tue Mar 23 16:12:11 IST 2021', 'format': 1000, 'naive': 1616541131, 'utc': None},
+            # date cli command in a locale that prints a 12-hour clock (#748).
+            # The tz abbreviation is stripped before any format is tried, so these
+            # reach strptime as 'Thu Sep 10 11:10:44 AM 2026' and need the 12-hour
+            # twin of 1000. PM is asserted too: without %p the hour is read as 11.
+            'Thu Sep 10 11:10:44 AM EEST 2026': {'string': 'Thu Sep 10 11:10:44 AM EEST 2026', 'format': 1200, 'naive': 1789063844, 'utc': None},
+            'Thu Sep 10 11:10:44 PM EEST 2026': {'string': 'Thu Sep 10 11:10:44 PM EEST 2026', 'format': 1200, 'naive': 1789107044, 'utc': None},
+            'Thu Sep 10 11:10:44 AM 2026': {'string': 'Thu Sep 10 11:10:44 AM 2026', 'format': 1200, 'naive': 1789063844, 'utc': None},
             # Git date output
             'Thu Mar 5 09:17:40 2020 -0800': {'string': 'Thu Mar 5 09:17:40 2020 -0800', 'format': 1100, 'naive': 1583428660, 'utc': None},
             # ISO Format with UTC (found in syslog 5424)
