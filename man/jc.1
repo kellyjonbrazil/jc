@@ -1,4 +1,4 @@
-.TH jc 1 2026-06-18 1.25.7 "JSON Convert"
+.TH jc 1 2026-09-10 1.26.0 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -81,6 +81,11 @@ ASCII and Unicode table parser
 .B
 \fB--asciitable-m\fP
 multi-line ASCII and Unicode table parser
+
+.TP
+.B
+\fB--authorized-keys\fP
+`~/.ssh/authorized_keys` file parser
 
 .TP
 .B
@@ -264,6 +269,11 @@ Email Address string parser
 
 .TP
 .B
+\fB--git-diff\fP
+`git diff --name-status` command parser
+
+.TP
+.B
 \fB--git-log\fP
 `git log` command parser
 
@@ -416,6 +426,11 @@ Key/Value with duplicate key file and string parser
 .B
 \fB--last\fP
 `last` and `lastb` command parser
+
+.TP
+.B
+\fB--ldd\fP
+`ldd` command parser
 
 .TP
 .B
@@ -1124,6 +1139,11 @@ TSV implicit header file streaming parser
 
 .TP
 .B
+\fB--upsc\fP
+`upsc` command parser
+
+.TP
+.B
 \fB--uptime\fP
 `uptime` command parser
 
@@ -1289,6 +1309,10 @@ Generate Bash shell completion script
 .B
 \fB-Z\fP, \fB--zsh-comp\fP
 Generate Zsh shell completion script
+.TP
+.B
+\fB-X\fP, \fB--xonsh-comp\fP
+Generate Xonsh shell completion script
 
 .RE
 .PP

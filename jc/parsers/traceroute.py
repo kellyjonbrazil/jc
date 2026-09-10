@@ -130,7 +130,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`traceroute` and `traceroute6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -311,6 +311,9 @@ def _loads(data: str, quiet: bool):
         else:
             continue
 
+    if not lines:
+        raise ParseError('Could not find any traceroute data.')
+
     # check if header row exists, otherwise add a dummy header
     if not lines[0].startswith('traceroute to ') and not lines[0].startswith('traceroute6 to '):
         lines[:0] = ['traceroute to <<_>>  (<<_>>), ? hops max, ? byte packets']
@@ -337,6 +340,7 @@ def _loads(data: str, quiet: bool):
     traceroute = _Traceroute(dest_name, dest_ip, max_hops, data_bytes)
 
     # Parse the remaining lines, they should be only hops/probes
+    hop = None
     for line in lines[1:]:
         # Skip empty lines
         if not line:
@@ -344,17 +348,25 @@ def _loads(data: str, quiet: bool):
 
         hop_match = RE_HOP.match(line)
 
-        if hop_match:
-            if hop_match.group(1):
-                hop_index = int(hop_match.group(1))
-            else:
-                hop_index = None
+        # Skip lines that are not a hop/probe line; otherwise hop_string would
+        # be referenced before assignment.
+        if not hop_match:
+            continue
 
-            if hop_index is not None:
-                hop = _Hop(hop_index)
-                traceroute.add_hop(hop)
+        if hop_match.group(1):
+            hop_index = int(hop_match.group(1))
+        else:
+            hop_index = None
 
-            hop_string = hop_match.group(2)
+        if hop_index is not None:
+            hop = _Hop(hop_index)
+            traceroute.add_hop(hop)
+
+        hop_string = hop_match.group(2)
+
+        # A probe line before the first numbered hop has no hop to attach to.
+        if hop is None:
+            continue
 
         probes = _get_probes(hop_string)
         for probe in probes:

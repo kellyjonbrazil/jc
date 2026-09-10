@@ -685,6 +685,7 @@ class timestamp:
         formats: tuple[TimeStampFormatType, ...] = (
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
+            {'id': 1200, 'format': '%a %b %d %I:%M:%S %p %Y', 'locale': None},  # 12-hour twin of 1000, for locales where `date` prints AM/PM: Thu Sep 10 11:10:44 AM 2026
             {'id': 1300, 'format': '%Y-%m-%dT%H:%M:%S.%f%Z', 'locale': None}, # ISO Format with UTC (found in syslog 5424): 2003-10-11T22:14:15.003Z
             {'id': 1310, 'format': '%Y-%m-%dT%H:%M:%S.%f', 'locale': None}, # ISO Format without TZ (found in syslog 5424): 2003-10-11T22:14:15.003
             {'id': 1400, 'format': '%b %d %Y %H:%M:%S.%f UTC', 'locale': None}, # CEF Format with UTC: Nov 08 2022 12:30:00.111 UTC
@@ -838,18 +839,23 @@ class timestamp:
         remaining_formats = [fmt for fmt in formats if not fmt['id'] in format_hint]
         optimized_formats = hint_obj_list + remaining_formats
 
-        for fmt in optimized_formats:
-            try:
-                locale.setlocale(locale.LC_TIME, fmt['locale'])
-                dt = datetime.strptime(normalized_datetime, fmt['format'])
-                timestamp_obj['format'] = fmt['id']
-                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
-                iso_string = dt.replace(tzinfo=None).isoformat()
-                locale.setlocale(locale.LC_TIME, None)
-                break
-            except Exception:
-                locale.setlocale(locale.LC_TIME, None)
-                continue
+        # save the original LC_TIME so it can be restored on every exit path.
+        # (setlocale with None is a query and does not restore anything)
+        original_lc_time = locale.setlocale(locale.LC_TIME)
+
+        try:
+            for fmt in optimized_formats:
+                try:
+                    locale.setlocale(locale.LC_TIME, fmt['locale'])
+                    dt = datetime.strptime(normalized_datetime, fmt['format'])
+                    timestamp_obj['format'] = fmt['id']
+                    timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
+                    iso_string = dt.replace(tzinfo=None).isoformat()
+                    break
+                except Exception:
+                    continue
+        finally:
+            locale.setlocale(locale.LC_TIME, original_lc_time)
 
         if dt and utc_tz:
             dt_utc = dt.replace(tzinfo=timezone.utc)

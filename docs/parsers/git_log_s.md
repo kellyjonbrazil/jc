@@ -18,6 +18,7 @@ Can be used with the following format options:
 Additional options supported:
 - `--stat`
 - `--shortstat`
+- `--numstat`
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -60,7 +61,9 @@ Schema:
         "file_stats": [
           {
             "name":           string,
-            "lines_changed":  integer
+            "lines_changed":  integer,  # [2]
+            "insertions":     integer,  # [3]
+            "deletions":      integer   # [3]
           }
         ]
       }
@@ -75,6 +78,8 @@ Schema:
 
     [0] naive timestamp if "date" field is parsable, else null
     [1] timezone aware timestamp available for UTC, else null
+    [2] only available with `--stat`
+    [3] only available with `--numstat`. null for binary files
 
 Examples:
 
@@ -115,4 +120,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/git_log_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_log_s.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

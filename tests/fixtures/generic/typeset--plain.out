@@ -13,7 +13,7 @@ TERM_PROGRAM_VERSION=455.1
 TERM_SESSION_ID=E5896C5D-9C9A-4178-9246-00158A3F832F
 XPC_FLAGS=0x0
 _=-a
-associative_array=([key2]="abc" [key3]="1 2 3" [key1]="hello \"world\"" )
+associative_array=([key2]="abc" [key3]="1 2 3" [key1]="hello \"world\"" [key4]=$' \t\n' [key5]="" [key6]=$'hello \tworld\n')
 integers_array=([0]="1" [1]="100" [2]="999")
-simple_array=([0]="hello \"world\"" [1]="abc" [2]="1 2 3")
+simple_array=([0]="hello \"world\"" [1]="abc" [2]="1 2 3" [3]=$' \t\n' [4]="" [5]=$'hello \tworld\n')
 uppercase_array=([0]="ABC" [1]="123" [2]="XYZ")

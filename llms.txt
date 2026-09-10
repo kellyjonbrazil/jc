@@ -1,0 +1,21 @@
+# jc
+
+> `jc` is a CLI tool and Python library that converts the output of ~100+ popular command-line tools, file types, and common strings (e.g. `ps`, `ifconfig`, `ls`, `netstat`, `dig`, `/proc` files, CSV, INI, XML) into structured JSON, YAML, or Python dictionaries — for piping into `jq`, use in scripts, or programmatic parsing.
+
+## Getting Started
+
+- [Installation](https://github.com/kellyjonbrazil/jc#installation): `pip3 install jc`, OS package managers (apt, dnf, brew, pacman, etc.), or precompiled binaries.
+- [Usage](https://github.com/kellyjonbrazil/jc#usage): pipe syntax (`COMMAND | jc PARSER`) and "magic" syntax (`jc COMMAND`); compact or pretty (`-p`) JSON output.
+- [Why jc exists](https://github.com/kellyjonbrazil/jc#why-would-anyone-do-this): motivation and use cases (bash scripting, Ansible/Saltstack/Nornir output parsing).
+
+## Reference
+
+- [Full parser list](https://github.com/kellyjonbrazil/jc#parsers): all ~100+ supported commands/file types and their CLI flags (e.g. `--dig`, `--csv`, `--ifconfig`, `--ls`), each linking to per-parser docs.
+- [Parser docs index](https://kellyjonbrazil.github.io/jc/docs/parsers/acpi): example of a per-parser documentation page (schema, sample input/output); replace `acpi` with any parser name from the full list above.
+- [Compatibility](https://github.com/kellyjonbrazil/jc#compatibility): which parsers are platform-specific vs. universal, and how to suppress unsupported-platform warnings with `-q`.
+- [Use in other shells](https://github.com/kellyjonbrazil/jc#use-in-other-shells): integration notes for shells with built-in JSON handling (e.g. NGS).
+
+## Optional
+
+- [Contributing a parser](https://github.com/kellyjonbrazil/jc#contributions): template files (`jc/parsers/foo.py`, `foo_s.py` for streaming) and the contribution guide.
+- [License](https://github.com/kellyjonbrazil/jc/blob/master/LICENSE.md): MIT.

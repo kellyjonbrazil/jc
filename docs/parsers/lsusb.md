@@ -120,7 +120,7 @@ Schema:
                     ]
                   }
                 },
-                "videocontrol_descriptors": [
+                "videocontrol_interface_descriptors": [
                   {
                     "<item>": {
                       "value":                string,
@@ -131,7 +131,40 @@ Schema:
                     }
                   }
                 ],
-                "videostreaming_descriptors": [
+                "videostreaming_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "audiocontrol_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "audiostreaming_interface_descriptors": [
+                  {
+                    "<item>": {
+                      "value":                string,
+                      "description":          string,
+                      "attributes": [
+                                              string
+                      ]
+                    }
+                  }
+                ],
+                "midistreaming_interface_descriptors": [
                   {
                     "<item>": {
                       "value":                string,
@@ -150,6 +183,24 @@ Schema:
                       "attributes": [
                                               string
                       ]
+                    },
+                    "audiostreaming_endpoint_descriptor": {
+                      "<item>": {
+                        "value":              string,
+                        "description":        string,
+                        "attributes": [
+                                              string
+                        ]
+                      }
+                    },
+                    "midistreaming_endpoint_descriptor": {
+                      "<item>": {
+                        "value":              string,
+                        "description":        string,
+                        "attributes": [
+                                              string
+                        ]
+                      }
                     }
                   }
                 ]
@@ -332,4 +383,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/lsusb.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsusb.py)
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)

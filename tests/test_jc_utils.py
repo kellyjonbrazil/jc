@@ -1,4 +1,5 @@
 import sys
+import locale
 import unittest
 import jc.utils
 
@@ -11,6 +12,13 @@ class MyTests(unittest.TestCase):
             # C locale format conversion, or date cli command in C locale with non-UTC tz
             'Tue Mar 23 16:12:11 2021': {'string': 'Tue Mar 23 16:12:11 2021', 'format': 1000, 'naive': 1616541131, 'utc': None},
             'Tue Mar 23 16:12:11 IST 2021': {'string': 'Tue Mar 23 16:12:11 IST 2021', 'format': 1000, 'naive': 1616541131, 'utc': None},
+            # date cli command in a locale that prints a 12-hour clock (#748).
+            # The tz abbreviation is stripped before any format is tried, so these
+            # reach strptime as 'Thu Sep 10 11:10:44 AM 2026' and need the 12-hour
+            # twin of 1000. PM is asserted too: without %p the hour is read as 11.
+            'Thu Sep 10 11:10:44 AM EEST 2026': {'string': 'Thu Sep 10 11:10:44 AM EEST 2026', 'format': 1200, 'naive': 1789063844, 'utc': None},
+            'Thu Sep 10 11:10:44 PM EEST 2026': {'string': 'Thu Sep 10 11:10:44 PM EEST 2026', 'format': 1200, 'naive': 1789107044, 'utc': None},
+            'Thu Sep 10 11:10:44 AM 2026': {'string': 'Thu Sep 10 11:10:44 AM 2026', 'format': 1200, 'naive': 1789063844, 'utc': None},
             # Git date output
             'Thu Mar 5 09:17:40 2020 -0800': {'string': 'Thu Mar 5 09:17:40 2020 -0800', 'format': 1100, 'naive': 1583428660, 'utc': None},
             # ISO Format with UTC (found in syslog 5424)
@@ -246,6 +254,41 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_size_to_int(input_string, decimal_bias=True), expected_output)
+
+
+    def test_utils_timestamp_does_not_change_locale(self):
+        # jc.utils.timestamp sets LC_TIME while trying date formats. It should
+        # always restore the original LC_TIME, on both success and failure.
+        original = locale.setlocale(locale.LC_TIME)
+
+        try:
+            # find a locale that differs from the environment locale, since
+            # some timestamp formats use the environment locale ('')
+            environment = locale.setlocale(locale.LC_TIME, '')
+            test_locale = None
+
+            for candidate in ('C', 'en_US.utf8', 'de_DE.utf8', 'fr_FR.utf8'):
+                if candidate == environment:
+                    continue
+                try:
+                    test_locale = locale.setlocale(locale.LC_TIME, candidate)
+                    break
+                except locale.Error:
+                    continue
+
+            if test_locale is None:
+                self.skipTest('no alternate LC_TIME locale available for testing')
+
+            # failed parse
+            jc.utils.timestamp('not a parsable timestamp at all', format_hint=(1000,))
+            self.assertEqual(locale.setlocale(locale.LC_TIME), test_locale)
+
+            # successful parse
+            self.assertIsNotNone(jc.utils.timestamp('Tue Mar 23 16:12:11 2021', format_hint=(1000,)).naive)
+            self.assertEqual(locale.setlocale(locale.LC_TIME), test_locale)
+
+        finally:
+            locale.setlocale(locale.LC_TIME, original)
 
 
     def test_utils_has_data_nodata(self):

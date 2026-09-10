@@ -23,7 +23,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('csv_ih', csv_output)
+    result = jc.parse('csv_ih', csv_output.splitlines())
 
 Schema:
 

@@ -1,5 +1,37 @@
 jc changelog
 
+20260910 v1.26.0
+- Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
+- Add `git diff --name-status` command parser
+- Add `ldd` command parser
+- Add `upsc` command parser
+- Add xonsh shell completion
+- Enhance `git-log` standard and streaming parsers with added `insertions`
+  and `deletions` fields under `file_stats` when using `--numstat`
+- Enhance `nmcli` parser to support `nmcli -t device wifi list`
+- Enhance `typeset` parser to support ksh and zsh output
+- Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
+- Enhance `lsusb` parser to support USB Audio and MIDI class interface and
+  endpoint descriptors (AudioControl, AudioStreaming, MIDIStreaming)
+- Simplify `lsusb` parser internals to build nested output in a single pass
+  Note: this is a complete rewrite (v2.0) and it is possible some output may
+  deviate from the previous version. It is believed this version is more
+  accurate and will be easier to maintain going forward.
+- Fix `email-address` parser to gracefully handle invalid email addresses
+- Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
+- Fix `hosts` parser to ignore whitespace only lines
+- Fix `ip-route` parser to handle whitespace-only input gracefully
+- Fix `pgpass` parser handling of escaped characters
+- Fix `proc-modules` parser to support additional taint status column
+- Fix `traceroute` parser to handle missing hop information gracefully
+- Fix `typeset` parser to allow scalar values starting with the `[` character
+- Fix `ufw` parser to handle `(log-all)` messages
+- Fix path traversal vulnerability with magic syntax
+- Fix tests for Debian build
+- Fix for broken locale behavior (permanently changing to user's locale) when
+  unparsable datetimes are handled
+- Fix timestamp function for 12 hour format found in some `date` command output
+
 20260617 v1.25.7
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
   TSV files, and TSV files without headers. Note that these are standard and

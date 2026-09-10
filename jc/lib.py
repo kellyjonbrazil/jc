@@ -10,7 +10,7 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.25.7'
+__version__ = '1.26.0'
 
 parsers: List[str] = [
     'acpi',
@@ -22,6 +22,7 @@ parsers: List[str] = [
     'arp',
     'asciitable',
     'asciitable-m',
+    'authorized-keys',
     'blkid',
     'bluetoothctl',
     'cbt',
@@ -58,6 +59,7 @@ parsers: List[str] = [
     'finger',
     'free',
     'fstab',
+    'git-diff',
     'git-log',
     'git-log-s',
     'git-ls-remote',
@@ -89,6 +91,7 @@ parsers: List[str] = [
     'kv',
     'kv-dup',
     'last',
+    'ldd',
     'ls',
     'ls-s',
     'lsattr',
@@ -230,6 +233,7 @@ parsers: List[str] = [
     'update-alt-gs',
     'update-alt-q',
     'upower',
+    'upsc',
     'uptime',
     'url',
     'ver',

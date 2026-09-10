@@ -1,0 +1,13 @@
+M	CHANGELOG
+D	docs/parsers/git_log.md
+D	docs/parsers/git_log_s.md
+M	jc/parsers/git_log.py
+M	jc/parsers/git_log_s.py
+A	tests/fixtures/generic/git-log-fuller-numstat-streaming.json
+A	tests/fixtures/generic/git-log-fuller-numstat.json
+A	tests/fixtures/generic/git-log-fuller-numstat.out
+A	tests/fixtures/generic/git-log-fuller-stat-numstat-streaming.json
+A	tests/fixtures/generic/git-log-fuller-stat-numstat.json
+A	tests/fixtures/generic/git-log-fuller-stat-numstat.out
+M	tests/test_git_log.py
+M	tests/test_git_log_s.py

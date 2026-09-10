@@ -1,3 +1,5 @@
+import contextlib
+import io
 import os
 import unittest
 from datetime import datetime, timezone
@@ -6,13 +8,13 @@ try:
     import pygments
     from pygments.token import (Name, Number, String, Keyword)
     PYGMENTS_INSTALLED=True
-except:
+except ImportError:
     PYGMENTS_INSTALLED=False
 
 try:
     import ruamel.yaml
     RUAMELYAML_INSTALLED = True
-except:
+except ImportError:
     RUAMELYAML_INSTALLED = False
 
 from jc.cli import JcCli
@@ -619,6 +621,80 @@ power management:
         cli.parser_name = 'proc'
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
+
+    def test_magic_proc_path_traversal(self):
+        # traversal outside of /proc should exit with an error instead of opening the file
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/../etc/hosts']
+        cli.magic_run_command_str = '/proc/../etc/hosts'
+        with self.assertRaises(SystemExit):
+            with contextlib.redirect_stderr(io.StringIO()) as err:
+                cli.do_magic()
+        self.assertIsNone(cli.magic_stdout)
+        self.assertIn('/proc/../etc/hosts', err.getvalue())
+
+    @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
+    def test_magic_proc_path_traversal_multiple_files(self):
+        # a bad entry in the file list should exit with an error, even if the first entry is valid
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/uptime', '/proc/../etc/hosts']
+        cli.magic_run_command_str = '/proc/uptime /proc/../etc/hosts'
+        with self.assertRaises(SystemExit):
+            with contextlib.redirect_stderr(io.StringIO()) as err:
+                cli.do_magic()
+        self.assertIsNone(cli.magic_stdout)
+        self.assertIn('/proc/../etc/hosts', err.getvalue())
+
+    @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
+    def test_magic_proc_single_file(self):
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/uptime']
+        cli.magic_run_command_str = '/proc/uptime'
+        cli.do_magic()
+        self.assertEqual('proc', cli.magic_found_parser)
+        self.assertIsInstance(cli.magic_stdout, str)
+
+    @unittest.skipIf(not os.path.exists('/proc/self/status'), '/proc not available')
+    def test_magic_proc_symlinked_file(self):
+        # /proc/self is a symlink and must still be readable
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/self/status']
+        cli.magic_run_command_str = '/proc/self/status'
+        cli.do_magic()
+        self.assertIsInstance(cli.magic_stdout, str)
+
+    @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
+    def test_magic_proc_multiple_files(self):
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/uptime', '/proc/stat']
+        cli.magic_run_command_str = '/proc/uptime /proc/stat'
+        cli.do_magic()
+        self.assertTrue(cli.slurp)
+        self.assertEqual(['/proc/uptime', '/proc/stat'], cli.inputlist)
+        self.assertEqual(2, len(cli.magic_stdout))
+
+    def test_magic_is_proc_path(self):
+        paths = {
+            '/proc': True,
+            '/proc/uptime': True,
+            '/proc/self/status': True,
+            '/proc/1/fd/1': True,
+            '/proc//uptime': True,
+            '//proc/uptime': True,
+            '/proc/./uptime': True,
+            '/proc/': True,
+            '/proc/../proc/uptime': True,
+            '/proc/../etc/hosts': False,
+            '/proc/..': False,
+            '/proc/./..': False,
+            '/proc/../tmp/uptime': False,
+            '/procfs/uptime': False,
+            '/etc/hosts': False
+        }
+
+        for path, expected in paths.items():
+            self.assertEqual(expected, JcCli.is_proc_path(path), path)
+
 
 if __name__ == '__main__':
     unittest.main()

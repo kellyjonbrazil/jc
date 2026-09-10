@@ -48,6 +48,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat.out'), 'r', encoding='utf-8') as f:
         git_log_fuller_shortstat = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-numstat.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_numstat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-numstat.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_stat_numstat = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline.out'), 'r', encoding='utf-8') as f:
         git_log_oneline = f.read()
 
@@ -105,6 +111,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat.json'), 'r', encoding='utf-8') as f:
         git_log_fuller_shortstat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-numstat.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_numstat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-numstat.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_stat_numstat_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline.json'), 'r', encoding='utf-8') as f:
         git_log_oneline_json = json.loads(f.read())
@@ -208,6 +220,19 @@ class MyTests(unittest.TestCase):
         Test 'git_log --format=fuller --shortstat'
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_shortstat, quiet=True), self.git_log_fuller_shortstat_json)
+
+    def test_git_log_fuller_numstat(self):
+        """
+        Test 'git_log --format=fuller --numstat'
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_numstat, quiet=True), self.git_log_fuller_numstat_json)
+
+    def test_git_log_fuller_stat_numstat(self):
+        """
+        Test 'git_log --format=fuller --stat --numstat' (both flags: files
+        should not be counted twice)
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_stat_numstat, quiet=True), self.git_log_fuller_stat_numstat_json)
 
     def test_git_log_oneline(self):
         """

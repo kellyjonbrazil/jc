@@ -13,6 +13,7 @@ Can be used with the following format options:
 Additional options supported:
 - `--stat`
 - `--shortstat`
+- `--numstat`
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -55,7 +56,9 @@ Schema:
         "file_stats": [
           {
             "name":           string,
-            "lines_changed":  integer
+            "lines_changed":  integer,  # [2]
+            "insertions":     integer,  # [3]
+            "deletions":      integer   # [3]
           }
         ]
       }
@@ -70,6 +73,8 @@ Schema:
 
     [0] naive timestamp if "date" field is parsable, else null
     [1] timezone aware timestamp available for UTC, else null
+    [2] only available with `--stat`
+    [3] only available with `--numstat`. null for binary files
 
 Examples:
 
@@ -90,11 +95,12 @@ from jc.exceptions import ParseError
 
 hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
 changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<insertions>\d+)\s+(insertions?\(\+\)))?(?:,\s+(?P<deletions>\d+)\s+(deletions?\(\-\)))?')
+numstat_pattern = re.compile(r'^(?P<insertions>\d+|-)\t(?P<deletions>\d+|-)\t(?P<name>.+)$')
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -182,6 +188,7 @@ def parse(
     message_lines: List[str] = []
     file_list: List[str] = []
     file_stats_list: List[Dict[str, Any]] = []
+    numstat_found: bool = False
 
     for line in data:
         try:
@@ -207,6 +214,7 @@ def parse(
                     message_lines = []
                     file_list = []
                     file_stats_list = []
+                    numstat_found = False
                 output_line = {
                     'commit': line_list[0],
                     'message': line_list[1]
@@ -231,6 +239,7 @@ def parse(
                     message_lines = []
                     file_list = []
                     file_stats_list = []
+                    numstat_found = False
                 output_line['commit'] = line_list[1]
                 continue
 
@@ -262,8 +271,26 @@ def parse(
                 message_lines.append(line.strip())
                 continue
 
+            numstat = numstat_pattern.match(line)
+            if numstat:
+                # this is a --numstat line
+                file_stats_list.append({
+                    'name': numstat['name'],
+                    'insertions': numstat['insertions'],
+                    'deletions': numstat['deletions']
+                })
+                file_list.append(numstat['name'])
+                output_line.setdefault('stats', {})
+                numstat_found = True
+                continue
+
             if line.startswith(' ') and 'changed, ' not in line:
-                # this is a file name
+                # this is a file name from `--stat`. Ignore if `--numstat`
+                # output was already found for this commit since it is
+                # more detailed.
+                if numstat_found:
+                    continue
+
                 file_line_split = line.split('|')
                 file_name = file_line_split[0].strip()
                 file_list.append(file_name)

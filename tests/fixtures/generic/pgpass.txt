@@ -8,3 +8,6 @@ dbserver3:8888:inventory:joeuser:abc123
 localhost:5555:table\\1:user\:w\:colon:password123
     # anther comment
 hostname:*:database:username:password
+host2:5432:db\\:user:pw
+host3:5432:db\x:user:pw
+host4:5432:db:user:pw\

@@ -5,6 +5,7 @@ JC cli module
 import io
 import sys
 import os
+import posixpath
 import re
 from datetime import datetime, timezone
 import textwrap
@@ -23,7 +24,7 @@ from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
     slicetext_string, helptext_end_string
 )
-from .shell_completions import bash_completion, zsh_completion
+from .shell_completions import bash_completion, zsh_completion, xonsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
@@ -73,7 +74,7 @@ class JcCli():
                  'inputlist', 'about', 'debug', 'verbose_debug',
                  'force_color', 'mono', 'help_me', 'pretty', 'quiet',
                  'ignore_exceptions', 'raw', 'slurp', 'meta_out', 'unbuffer',
-                 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp',
+                 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'xonsh_comp',
                  'magic_found_parser', 'magic_options', 'magic_run_command',
                  'magic_run_command_str', 'magic_stdout', 'magic_stderr',
                  'magic_returncode', 'slice_str', 'slice_start', 'slice_end')
@@ -119,6 +120,7 @@ class JcCli():
         self.yaml_output: bool = False
         self.bash_comp: bool = False
         self.zsh_comp: bool = False
+        self.xonsh_comp: bool = False
 
         # magic attributes
         self.magic_found_parser: Optional[str] = None
@@ -508,6 +510,12 @@ class JcCli():
         self.magic_found_parser = magic_dict.get(two_word_command, magic_dict.get(one_word_command))
 
     @staticmethod
+    def is_proc_path(path_string: str) -> bool:
+        # normpath, not realpath: /proc is full of symlinks that must keep working
+        normalized_path: str = posixpath.normpath(re.sub(r'^/+', '/', path_string))
+        return normalized_path == '/proc' or normalized_path.startswith('/proc/')
+
+    @staticmethod
     def open_text_file(path_string: str) -> str:
         with open(path_string, 'r') as f:
             return f.read()
@@ -554,6 +562,8 @@ class JcCli():
                     self.inputlist = filelist
 
                     for file in self.inputlist:
+                        if not self.is_proc_path(file):
+                            raise ValueError(f'{file} is not a /proc file')
                         # multi_out.append(self.open_text_file('/Users/kelly/temp' + file))
                         multi_out.append(self.open_text_file(file))
 
@@ -562,6 +572,8 @@ class JcCli():
                 # single proc file
                 else:
                     file = filelist[0]
+                    if not self.is_proc_path(file):
+                        raise ValueError(f'{file} is not a /proc file')
                     # self.magic_stdout = self.open_text_file('/Users/kelly/temp' + file)
                     self.magic_stdout = self.open_text_file(file)
 
@@ -869,6 +881,7 @@ class JcCli():
         self.yaml_output = 'y' in self.options
         self.bash_comp = 'B' in self.options
         self.zsh_comp = 'Z' in self.options
+        self.xonsh_comp = 'X' in self.options
 
         self.set_mono()
         self.set_custom_colors()
@@ -898,6 +911,10 @@ class JcCli():
 
         if self.zsh_comp:
             utils._safe_print(zsh_completion())
+            self.exit_clean()
+
+        if self.xonsh_comp:
+            utils._safe_print(xonsh_completion())
             self.exit_clean()
 
         # if magic syntax used, try to run the command and set the magic attributes

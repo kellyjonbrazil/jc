@@ -32,6 +32,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ip_route.parse('', quiet=True), [])
 
+    def test_ip_route_whitespace_only(self):
+        """
+        Test 'ip_route' with whitespace-only data. This used to raise an
+        UnboundLocalError because the has_data() check ran after the parse loop.
+        """
+        self.assertEqual(jc.parsers.ip_route.parse('   \n  ', quiet=True), [])
+
     def test_ip_route_ubuntu_18_4(self):
         """
         Test 'ip_route' on Ubuntu 18.4
