@@ -287,7 +287,7 @@ def parse(data, raw=False, quiet=False):
                 # fixup - realign columns since we added the 's' column
                 cleandata[i + 1] = line[:1] + '  ' + line[1:]
 
-            # fixup for occaisional ip/hostname fields with a space
+            # fixup for occasional ip/hostname fields with a space
             cleandata[i + 1] = cleandata[i + 1].replace(' (', '_(')
 
         raw_output = jc.parsers.universal.simple_table_parse(cleandata)

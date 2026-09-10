@@ -711,7 +711,7 @@ class JcCli():
             {"result": data}
 
         self.input_list will already exist if the data is coming from the
-        /proc magic sytnax. Otherwise this funcion will build it for normal
+        /proc magic syntax. Otherwise this function will build it for normal
         slurp items.
 
         This will allow --meta-out to add its information in a clean way.

@@ -93,7 +93,7 @@ jc changelog
   field has been changed to an integer and all size values have been normalized
   to bytes.
 - Enhance `free` parser to add human readable output support. All size values
-  have been normalizd to bytes.
+  have been normalized to bytes.
 - Enhance `iptables` parser to handle -x output
 - Enhance `/proc/pid/stat` parser to support "Idle" state
 - Enhance `rpm_qi` and `pkg_index_deb` parsers to split list fields into arrays
@@ -285,7 +285,7 @@ jc changelog
 - enhance `xml` parser with optional `_` prefix for attributes instead of
   `@` by using the `--raw` option. This can make it easier to filter the
   JSON output in some tools.
-- fix the `xml` parser to output a normal Dictionary instead of OrderdDict.
+- fix the `xml` parser to output a normal Dictionary instead of OrderedDict.
   This cleans up YAML output. (No `!!omap` comments)
 - fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
 - fix exit code to be non-zero on interrupt
@@ -427,7 +427,7 @@ jc changelog
   keys to `jc -a` output
 - Add `is_compatible` function to the `utils` module
 - Fix `pip-show` parser for packages with a multi-line license field
-- Fix ASCII Table parser for cases where centered headers cause mis-aligned fields
+- Fix ASCII Table parser for cases where centered headers cause misaligned fields
 
 20220513 v1.19.0
 - Add `chage --list` command parser tested on linux

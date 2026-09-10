@@ -150,8 +150,8 @@ def _value(key: str, value: str) -> Union[str, int, List[str], Dict[str, str]]:
         return int(value)
 
     if key in ['D', 'p', 'i']:
-        splitted = value.split(' ')
-        return splitted
+        split_value = value.split(' ')
+        return split_value
 
     if key == "m":
         m = re.match(r'(.*) <(.*)>', value)
