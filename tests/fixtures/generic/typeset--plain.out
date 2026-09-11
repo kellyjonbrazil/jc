@@ -17,3 +17,6 @@ associative_array=([key2]="abc" [key3]="1 2 3" [key1]="hello \"world\"" )
 integers_array=([0]="1" [1]="100" [2]="999")
 simple_array=([0]="hello \"world\"" [1]="abc" [2]="1 2 3")
 uppercase_array=([0]="ABC" [1]="123" [2]="XYZ")
+empty_var=""
+bracket_var="[test]"
+bracket_var2=[test]

@@ -133,7 +133,7 @@ class info():
 
 __version__ = info.version
 
-VAR_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<val>[^(][^[].+)$')
+VAR_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<val>[^(].*)$')
 SIMPLE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\[\d+\]=.+\))$')
 ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\[[a-zA-Z_][a-zA-Z0-9_]*\]=.+\))$')
 EMPTY_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=\(\)$')

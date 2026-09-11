@@ -128,8 +128,8 @@ def parse(data, raw=False, quiet=False):
 
         for line in cleandata:
             output_line = {}
-            # ignore commented lines
-            if line.strip().startswith('#'):
+            # ignore empty and commented lines
+            if not line.strip() or line.strip().startswith('#'):
                 continue
 
             line_list = line.split(maxsplit=1)

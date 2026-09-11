@@ -708,6 +708,7 @@ class timestamp:
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
             {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
             {'id': 6000, 'format': '%a %b %d %I:%M:%S %p %Z %Y', 'locale': None},  # en_US.UTF-8 format (found in date cli): Wed Mar 24 06:16:19 PM UTC 2021
+            {'id': 6100, 'format': '%a %b %d %I:%M:%S %p %Y', 'locale': None},  # en_US.UTF-8 format with non-UTC tz (found in date cli): Wed Mar 24 06:16:19 PM IST 2021
             {'id': 7000, 'format': '%a %b %d %H:%M:%S %Z %Y', 'locale': None},  # C locale format (found in date cli): Wed Mar 24 11:11:30 UTC 2021
             {'id': 7100, 'format': '%b %d %H:%M:%S %Y', 'locale': None},  # C locale format (found in stat cli output - osx): # Mar 29 11:49:05 2021
             {'id': 7200, 'format': '%Y-%m-%d %H:%M:%S.%f %z', 'locale': None},  # C locale format (found in stat cli output - linux): 2019-08-13 18:13:43.555604315 -0400
