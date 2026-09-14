@@ -3,6 +3,7 @@ import os
 import sys
 sys.path.append(os.getcwd())
 from tests import utils_for_test as test_utils
+import jc.parsers.curl_head
 sys.path.pop()
 
 # Execute these steps for standard tests:
@@ -29,6 +30,23 @@ class MyTests(unittest.TestCase):
         Test 'curl_head' with various fixtures
         """
         test_utils.run_all_fixtures(self, __file__)
+
+    def test_curl_head_whitespace_only_line(self):
+        """
+        Test 'curl_head' with whitespace-only lines
+        """
+        data = 'GET / HTTP/1.1\nHost: example.com\n \nAccept: */*\n'
+        expected = [
+            {
+                '_type': 'request',
+                '_request_method': 'GET',
+                '_request_uri': '/',
+                '_request_version': 'HTTP/1.1',
+                'host': 'example.com',
+                'accept': ['*/*']
+            }
+        ]
+        self.assertEqual(jc.parsers.curl_head.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':
