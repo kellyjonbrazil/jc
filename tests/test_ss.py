@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian-12/ss-sudo-tulnpe.out'), 'r', encoding='utf-8') as f:
         debian_12_ss_sudo_tulnpe = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-edge-cases.out'), 'r', encoding='utf-8') as f:
+        ss_users_edge_cases = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ss_sudo_a_json = json.loads(f.read())
@@ -39,6 +42,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian-12/ss-sudo-tulnpe.json'), 'r', encoding='utf-8') as f:
         debian_12_ss_sudo_tulnpe_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-edge-cases.json'), 'r', encoding='utf-8') as f:
+        ss_users_edge_cases_json = json.loads(f.read())
 
     def test_ss_nodata(self):
         """
@@ -81,6 +87,19 @@ class MyTests(unittest.TestCase):
         bracket, so 'svc(1' was reported as 'svc[1'.
         """
         self.assertEqual(jc.parsers.ss.parse(self.debian_12_ss_sudo_tulnpe, quiet=True), self.debian_12_ss_sudo_tulnpe_json)
+
+    def test_ss_users_edge_cases(self):
+        """
+        Test 'ss' users: parsing edge cases beyond the debian-12 fixture:
+
+        - a process name that is itself wrapped in parens ('(sd-pam)', a
+          real systemd user-session process name)
+        - two users: records sharing one users:() block, both containing a
+          space and a colon ('nginx: worker process', a real nginx name)
+        - users: combined with timer: in the same opts field, and a process
+          name containing balanced parens ('app(prod)')
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ss_users_edge_cases, quiet=True), self.ss_users_edge_cases_json)
 
 
 if __name__ == '__main__':
