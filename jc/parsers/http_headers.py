@@ -476,7 +476,10 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        # Clear any blank lines
+        cleandata = [line for line in data.splitlines() if line.strip()]
+
+        for line in cleandata:
 
             first_word = line.split(maxsplit=1)[0]
             first_word = first_word.rstrip(':')
