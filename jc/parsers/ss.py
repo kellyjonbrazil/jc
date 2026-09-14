@@ -289,6 +289,19 @@ Examples:
 """
 import re
 import ast
+
+#: Stands in for a space inside a quoted process name while the row is split
+#: on whitespace. Restored in _parse_opts. A NUL cannot occur in ss output.
+_SPACE_HOLD = '\x00'
+
+#: The whole `users:((...))` block, which may contain spaces inside a quoted
+#: process name and so must be taken out before any space-based tokenizing.
+_USERS_BLOCK_RE = re.compile(r'users:\(\(.*?\)\)(?=\s|$)')
+
+#: One `("name",pid=N,fd=M)` record inside a `users:` block. The name is
+#: non-greedy up to the quote that precedes `,pid=`, so spaces, colons and
+#: parentheses inside it are preserved rather than rewritten.
+_USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),fd=(?P<fd>\d+)\)')
 import string
 import jc.utils
 
@@ -349,8 +362,22 @@ def _parse_opts(proc_data):
 
         Structured data dictionary for extra/optional headerless options.
     """
-    o_field = proc_data.split(' ')
+    proc_data = proc_data.replace(_SPACE_HOLD, ' ')
     opts = {}
+
+    # `users:` is the only field here that can contain a space, because a
+    # process name can. Lift it out before the naive space split below, which
+    # would otherwise tear `users:(("my proc",pid=2,fd=3))` into two tokens and
+    # lose the record entirely.
+    users = _USERS_BLOCK_RE.search(proc_data)
+    if users:
+        opts['process_id'] = {
+            pid: {'user': user, 'file_descriptor': fd}
+            for user, pid, fd in _USERS_RE.findall(users.group(0))
+        }
+        proc_data = proc_data[:users.start()] + proc_data[users.end():]
+
+    o_field = proc_data.split(' ')
 
     for item in o_field:
         # -e option:
@@ -359,7 +386,9 @@ def _parse_opts(proc_data):
             re.sub('sk', 'cookie', re.sub('ino', 'inode_number', item)))
 
         if ":" in item:
-            key, val = item.split(':')
+            # maxsplit=1: a process name can contain a colon, and splitting on
+            # every one of them raises before the value is ever looked at.
+            key, val = item.split(':', maxsplit=1)
 
             # -o option
             if key == "timer":
@@ -371,26 +400,6 @@ def _parse_opts(proc_data):
                     'retrans': val[2]
                 }
                 opts[key] = val
-
-            # -p option
-            if key == "users":
-                key = 'process_id'
-                val = val.replace('(', '[').replace(')', ']')
-                val = ast.literal_eval(re.sub(r'([a-z]+=[0-9]+)', '"\\1"', val))
-                data = {}
-                for rec in val:
-                    params = {}
-                    params['user'] = rec[0]
-                    for i in [x for x in rec if '=' in x]:
-                        k, v = i.split('=')
-                        params[k] = v
-                    data.update({
-                        params['pid']: {
-                            'user': params['user'],
-                            'file_descriptor': params['fd']
-                        }
-                    })
-                val = data
 
             opts[key] = val
 
@@ -446,6 +455,18 @@ def parse(data, raw=False, quiet=False):
 
                 # fix weird ss bug where first two columns have no space between them sometimes
                 entry = entry[:5] + '  ' + entry[5:]
+
+                # A process name may contain spaces, and both splits below are
+                # space-based, so the users: block is shielded first and put
+                # back in _parse_opts. Without this the row splits mid-name and
+                # dict(zip(...)) silently drops the overflow: the opts column
+                # ends up holding the truncated `users:(("my` and the pid and
+                # fd are lost with no error anywhere.
+                users_here = _USERS_BLOCK_RE.search(entry)
+                if users_here:
+                    entry = (entry[:users_here.start()]
+                             + users_here.group(0).replace(' ', _SPACE_HOLD)
+                             + entry[users_here.end():])
 
                 entry_list = re.split(ONE_OR_MORE_SPACE_PATTERN, entry.strip())
 
