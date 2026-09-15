@@ -107,6 +107,7 @@ parsers: List[str] = [
     'mpstat',
     'mpstat-s',
     'needrestart',
+    'netrc',
     'netstat',
     'net-localgroup',
     'net-user',
