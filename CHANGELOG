@@ -20,6 +20,7 @@ jc changelog
 - Fix `email-address` parser to gracefully handle invalid email addresses
 - Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
 - Fix `hosts` parser to ignore whitespace only lines
+- Fix `http-headers` parser to ignore whitespace-only lines
 - Fix `ip-route` parser to handle whitespace-only input gracefully
 - Fix `pgpass` parser handling of escaped characters
 - Fix `proc-modules` parser to support additional taint status column
