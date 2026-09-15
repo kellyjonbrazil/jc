@@ -26,7 +26,7 @@ Schema:
         "account":                   string,
         "macdef":                    string,
         "definition": [
-                                      string
+                                     string
         ]
       }
     ]
@@ -34,37 +34,6 @@ Schema:
 Examples:
 
     $ cat ~/.netrc | jc --netrc -p
-    [
-      {
-        "machine": "mail.example.com",
-        "login": "jdoe",
-        "password": "secret123",
-        "account": null,
-        "macdef": null,
-        "definition": null
-      },
-      {
-        "machine": "default",
-        "login": "anonymous",
-        "password": "user@example.com",
-        "account": null,
-        "macdef": null,
-        "definition": null
-      },
-      {
-        "machine": null,
-        "login": null,
-        "password": null,
-        "account": null,
-        "macdef": "init",
-        "definition": [
-          "cd /pub",
-          "mget *"
-        ]
-      }
-    ]
-
-    $ cat ~/.netrc | jc --netrc -p -r
     [
       {
         "machine": "mail.example.com",
