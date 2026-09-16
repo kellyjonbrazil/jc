@@ -8,3 +8,4 @@ build/
 _config.yml
 .venv
 .DS_Store
+CLAUDE.md
