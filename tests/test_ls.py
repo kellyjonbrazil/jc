@@ -114,6 +114,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ls_l_iso = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-devices.out'), 'r', encoding='utf-8') as f:
+        ls_l_devices = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.out'), 'r', encoding='utf-8') as f:
+        ls_l_long_iso = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ls_json = json.loads(f.read())
@@ -219,6 +225,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ls_l_iso_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-devices.json'), 'r', encoding='utf-8') as f:
+        ls_l_devices_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.json'), 'r', encoding='utf-8') as f:
+        ls_l_long_iso_json = json.loads(f.read())
 
 
     def test_ls_empty_dir(self):
@@ -436,6 +448,23 @@ class MyTests(unittest.TestCase):
         Test 'ls -l --time-style=full-iso' for files with convertible dates on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.ls.parse(self.ubuntu_18_4_ls_l_iso, quiet=True), self.ubuntu_18_4_ls_l_iso_json)
+
+    def test_ls_l_devices(self):
+        """
+        Test 'ls -l' on block and character device entries (e.g. /dev),
+        which report major/minor numbers instead of a size. Also
+        includes a regular file to confirm the two forms coexist in one
+        listing.
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_devices, quiet=True), self.ls_l_devices_json)
+
+    def test_ls_l_long_iso(self):
+        """
+        Test 'ls -l --time-style=long-iso', whose date field is 2 tokens
+        wide instead of the default/full-iso 3. Includes a symlink to
+        confirm link_to parsing still works with the narrower date width.
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_long_iso, quiet=True), self.ls_l_long_iso_json)
 
 
 if __name__ == '__main__':
