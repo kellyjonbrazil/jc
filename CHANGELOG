@@ -1,6 +1,6 @@
 jc changelog
 
-20260915 v1.26.0
+20260916 v1.26.0
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `git diff --name-status` command parser
 - Add `ldd` command parser
@@ -12,6 +12,8 @@ jc changelog
 - Enhance `nmcli` parser to support `nmcli -t device wifi list`
 - Enhance `typeset` parser to support ksh and zsh output
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
+- Enhance `ls` and `ls-s` standard and streaming parsers to support device
+  files and added support for long-iso dates
 - Enhance `lsusb` parser to support USB Audio and MIDI class interface and
   endpoint descriptors (AudioControl, AudioStreaming, MIDIStreaming)
 - Simplify `lsusb` parser internals to build nested output in a single pass
