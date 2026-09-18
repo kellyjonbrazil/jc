@@ -1,0 +1,15 @@
+# file: dir
+# owner: tunglpb
+# group: tunglpb
+# flags: -s-
+user::rwx
+user:root:r-x
+group::rwx
+mask::rwx
+other::r-x
+default:user::rwx
+default:user:root:rwx
+default:group::rwx
+default:mask::rwx
+default:other::r-x
+
