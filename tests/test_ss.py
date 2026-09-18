@@ -27,6 +27,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-edge-cases.out'), 'r', encoding='utf-8') as f:
         ss_users_edge_cases = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-padded-opts.out'), 'r', encoding='utf-8') as f:
+        ss_padded_opts = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ss_sudo_a_json = json.loads(f.read())
@@ -45,6 +48,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-edge-cases.json'), 'r', encoding='utf-8') as f:
         ss_users_edge_cases_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-padded-opts.json'), 'r', encoding='utf-8') as f:
+        ss_padded_opts_json = json.loads(f.read())
 
     def test_ss_nodata(self):
         """
@@ -100,6 +106,28 @@ class MyTests(unittest.TestCase):
           name containing balanced parens ('app(prod)')
         """
         self.assertEqual(jc.parsers.ss.parse(self.ss_users_edge_cases, quiet=True), self.ss_users_edge_cases_json)
+
+    def test_ss_padded_opts(self):
+        """
+        Test 'ss' where the options region itself contains runs of two or more
+        spaces, which newer iproute2 emits to align the users: column.
+
+        The first two rows are the same socket with one space and with five;
+        they must parse identically apart from ino and sk.
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ss_padded_opts, quiet=True), self.ss_padded_opts_json)
+
+    def test_ss_padded_opts_matches_unpadded(self):
+        """
+        Padding is alignment, not data: widening the gap before ino: must not
+        change how the row is parsed.
+        """
+        rows = jc.parsers.ss.parse(self.ss_padded_opts, quiet=True)
+        unpadded, padded = rows[0]['opts'], rows[1]['opts']
+        self.assertEqual(unpadded['process_id']['3241']['user'],
+                         padded['process_id']['3242']['user'])
+        self.assertEqual(unpadded['cgroup'], padded['cgroup'])
+        self.assertEqual(sorted(unpadded), sorted(padded))
 
 
 if __name__ == '__main__':
