@@ -1,0 +1,23 @@
+commit 4e4f3904ff7c257699848ff2a10a41e7bee9985b
+Author:     Ada Lovelace <ada@example.com>
+AuthorDate: Tue Mar 2 11:30:00 2021 +0000
+Commit:     Ada Lovelace <ada@example.com>
+CommitDate: Tue Mar 2 11:30:00 2021 +0000
+
+    Make the greeting configurable
+    
+    Add a name argument so the caller can tailor the output.
+
+diff --git a/greet.py b/greet.py
+index 68db5c7..2e18602 100644
+--- a/greet.py
++++ b/greet.py
+@@ -1,5 +1,6 @@
+-def greet():
+-    print("Hello, world!")
++def greet(name="world"):
++    """Print a greeting."""
++    print(f"Hello, {name}!")
+ 
+ 
+    # keep this comment indented as-is
