@@ -1,0 +1,25 @@
+# jc parser index
+
+> Every parser in `jc` {{ version }}, generated from the parser metadata. `jc` converts the output of command-line tools, file types, and strings to JSON. See [llms.txt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/llms.txt) for usage and options.
+
+Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands marked "magic", let `jc` run the command itself (`jc COMMAND`). In Python use `jc.parse('MODULE', text)`, where MODULE is the flag without its leading dashes and with any remaining dashes turned into underscores (`--ls-s` is `ls_s`). Each link is that parser's documentation page, which has the schema, the options the source command must be run with, and examples.
+
+## Parsers
+
+{% for p in parsers %}
+- [{{ p.argument }}]({{ p.url }}): {{ p.description }}{% if p.notes %} ({{ p.notes | join('; ') }}){% endif %}
+
+{% endfor %}
+
+## Streaming Parsers
+
+These process input line by line and output JSON Lines instead of a single JSON document. In Python they return an iterator.
+
+{% for p in streaming %}
+- [{{ p.argument }}]({{ p.url }}): {{ p.description }}{% if p.notes %} ({{ p.notes | join('; ') }}){% endif %}
+
+{% endfor %}
+
+## /proc Files
+
+`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The {{ hidden_count }} individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md]({{ docs_url }}/proc_meminfo.md).
