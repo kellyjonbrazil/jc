@@ -9,7 +9,8 @@ jc changelog
 - Add `upsc` command parser
 - Add xonsh shell completion
 - Enhance `git-log` standard and streaming parsers with added `insertions`
-  and `deletions` fields under `file_stats` when using `--numstat`
+  and `deletions` fields under `file_stats` when using `--numstat`. Also added
+  `--patch` output support
 - Enhance `nmcli` parser to support `nmcli -t device wifi list`
 - Enhance `typeset` parser to support ksh and zsh output
 - Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`

@@ -40,13 +40,13 @@ Schema:
         "author":               string/null,
         "author_email":         string/null,
         "date":                 string,
-        "epoch":                integer,  # [0]
-        "epoch_utc":            integer,  # [1]
+        "epoch":                integer,        # [0]
+        "epoch_utc":            integer,        # [1]
         "commit_by":            string/null,
         "commit_by_email":      string/null,
         "commit_by_date":       string,
         "message":              string,
-        "patch":                string,  # [4]
+        "patch":                string,         # [4]
         "stats" : {
           "files_changed":      integer,
           "insertions":         integer,
@@ -57,9 +57,9 @@ Schema:
           "file_stats": [
             {
               "name":           string,
-              "lines_changed":  integer,  # [2]
-              "insertions":     integer,  # [3]
-              "deletions":      integer   # [3]
+              "lines_changed":  integer,        # [2]
+              "insertions":     integer,        # [3]
+              "deletions":      integer         # [3]
             }
           ]
         }
