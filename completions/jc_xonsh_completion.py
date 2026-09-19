@@ -226,6 +226,7 @@ jc_parsers = {
     '--mpstat': '`mpstat` command parser',
     '--mpstat-s': '`mpstat` command streaming parser',
     '--needrestart': '`needrestart -b` command parser',
+    '--netrc': '`.netrc` file parser',
     '--netstat': '`netstat` command parser',
     '--net-localgroup': '`net localgroup` command parser',
     '--net-user': '`net user` command parser',
