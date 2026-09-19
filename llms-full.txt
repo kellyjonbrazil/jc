@@ -1,0 +1,209 @@
+# jc parser index
+
+> Every parser in `jc` 1.26.0, generated from the parser metadata. `jc` converts the output of command-line tools, file types, and strings to JSON. See [llms.txt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/llms.txt) for usage and options.
+
+Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands marked "magic", let `jc` run the command itself (`jc COMMAND`). In Python use `jc.parse('MODULE', text)`, where MODULE is the flag without its leading dashes and with any remaining dashes turned into underscores (`--ls-s` is `ls_s`). Each link is that parser's documentation page, which has the schema, the options the source command must be run with, and examples.
+
+## Parsers
+
+- [--acpi](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/acpi.md): `acpi` command parser (magic: `acpi`; platforms: linux)
+- [--airport](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/airport.md): `airport -I` command parser (magic: `airport -I`; platforms: darwin)
+- [--airport-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/airport_s.md): `airport -s` command parser (magic: `airport -s`; platforms: darwin)
+- [--amixer](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/amixer.md): `amixer` command parser (magic: `amixer`; platforms: linux)
+- [--apt-cache-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apt_cache_show.md): `apt-cache show` command parser (magic: `apt-cache show`; platforms: linux)
+- [--apt-get-sqq](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apt_get_sqq.md): `apt-get -sqq` command parser (magic: `apt-get -sqq`; platforms: linux)
+- [--arp](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/arp.md): `arp` command parser (magic: `arp`; platforms: linux, aix, freebsd, darwin)
+- [--asciitable](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/asciitable.md): ASCII and Unicode table parser
+- [--asciitable-m](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/asciitable_m.md): multi-line ASCII and Unicode table parser
+- [--authorized-keys](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/authorized_keys.md): `~/.ssh/authorized_keys` file parser
+- [--blkid](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/blkid.md): `blkid` command parser (magic: `blkid`; platforms: linux)
+- [--bluetoothctl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/bluetoothctl.md): `bluetoothctl` command parser (magic: `bluetoothctl`; platforms: linux)
+- [--cbt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/cbt.md): `cbt` (Google Bigtable) command parser (magic: `cbt`)
+- [--cef](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/cef.md): CEF string parser
+- [--certbot](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/certbot.md): `certbot` command parser (magic: `certbot`)
+- [--chage](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/chage.md): `chage --list` command parser (magic: `chage --list`, `chage -l`; platforms: linux)
+- [--cksum](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/cksum.md): `cksum` and `sum` command parser (magic: `cksum`, `sum`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--clf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/clf.md): Common and Combined Log Format file parser
+- [--crontab](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/crontab.md): `crontab` command and file parser (magic: `crontab`; platforms: linux, darwin, aix, freebsd)
+- [--crontab-u](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/crontab_u.md): `crontab` file parser with user support (platforms: linux, darwin, aix, freebsd)
+- [--csv](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/csv.md): CSV file parser
+- [--csv-ih](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/csv_ih.md): CSV implicit header file parser
+- [--curl-head](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/curl_head.md): `curl --head` command parser (magic: `curl`)
+- [--date](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/date.md): `date` command parser (magic: `date`; platforms: linux, darwin, freebsd; supports `--slurp`)
+- [--datetime-iso](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/datetime_iso.md): ISO 8601 Datetime string parser (supports `--slurp`)
+- [--debconf-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/debconf_show.md): `debconf-show` command parser (magic: `debconf-show`; platforms: linux)
+- [--df](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/df.md): `df` command parser (magic: `df`; platforms: linux, darwin, freebsd)
+- [--dig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/dig.md): `dig` command parser (magic: `dig`)
+- [--dir](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/dir.md): `dir` command parser (platforms: win32)
+- [--dmidecode](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/dmidecode.md): `dmidecode` command parser (magic: `dmidecode`; platforms: linux)
+- [--dpkg-l](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/dpkg_l.md): `dpkg -l` command parser (magic: `dpkg -l`; platforms: linux)
+- [--du](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/du.md): `du` command parser (magic: `du`; platforms: linux, darwin, aix, freebsd)
+- [--efibootmgr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/efibootmgr.md): `efibootmgr` command parser (magic: `efibootmgr`; platforms: linux)
+- [--email-address](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/email_address.md): Email Address string parser (supports `--slurp`)
+- [--env](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/env.md): `env` command parser (magic: `env`, `printenv`)
+- [--ethtool](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ethtool.md): `ethtool` command parser (magic: `ethtool`; platforms: linux)
+- [--file](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/file.md): `file` command parser (magic: `file`; platforms: linux, aix, freebsd, darwin)
+- [--find](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/find.md): `find` command parser (platforms: linux)
+- [--findmnt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/findmnt.md): `findmnt` command parser (magic: `findmnt`; platforms: linux)
+- [--finger](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/finger.md): `finger` command parser (magic: `finger`; platforms: linux, darwin, cygwin, freebsd)
+- [--free](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/free.md): `free` command parser (magic: `free`; platforms: linux)
+- [--fstab](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/fstab.md): `/etc/fstab` file parser (platforms: linux, freebsd)
+- [--getfacl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/getfacl.md): `getfacl` command parser (magic: `getfacl`; platforms: linux)
+- [--git-diff](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/git_diff.md): `git diff --name-status` command parser (magic: `git diff`)
+- [--git-log](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/git_log.md): `git log` command parser (magic: `git log`)
+- [--git-ls-remote](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/git_ls_remote.md): `git ls-remote` command parser (magic: `git ls-remote`)
+- [--gpg](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/gpg.md): `gpg --with-colons` command parser (magic: `gpg --with-colons`; platforms: linux)
+- [--group](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/group.md): `/etc/group` file parser (platforms: linux, darwin, aix, freebsd)
+- [--gshadow](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/gshadow.md): `/etc/gshadow` file parser (platforms: linux, aix, freebsd)
+- [--hash](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/hash.md): `hash` command parser (platforms: linux, darwin, cygwin, aix, freebsd)
+- [--hashsum](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/hashsum.md): hashsum command parser (`md5sum`, `shasum`, etc.) (magic: `md5sum`, `md5`, `shasum`, `sha1sum`, `sha224sum`, `sha256sum`, `sha384sum`, `sha512sum`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--hciconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/hciconfig.md): `hciconfig` command parser (magic: `hciconfig`; platforms: linux)
+- [--history](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/history.md): `history` command parser (platforms: linux, darwin, cygwin, aix, freebsd)
+- [--host](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/host.md): `host` command parser (magic: `host`)
+- [--hosts](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/hosts.md): `/etc/hosts` file parser
+- [--http-headers](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/http_headers.md): HTTP headers parser
+- [--id](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/id.md): `id` command parser (magic: `id`; platforms: linux, darwin, aix, freebsd; supports `--slurp`)
+- [--ifconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ifconfig.md): `ifconfig` command parser (magic: `ifconfig`; platforms: linux, aix, freebsd, darwin)
+- [--iftop](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iftop.md): `iftop` command parser (platforms: linux)
+- [--ini](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ini.md): INI file parser
+- [--ini-dup](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ini_dup.md): INI with duplicate key file parser
+- [--iostat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iostat.md): `iostat` command parser (magic: `iostat`; platforms: linux)
+- [--ip-address](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ip_address.md): IPv4 and IPv6 Address string parser (supports `--slurp`)
+- [--ipconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ipconfig.md): `ipconfig` Windows command parser (magic: `ipconfig`; platforms: windows)
+- [--iptables](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iptables.md): `iptables` command parser (magic: `iptables`; platforms: linux)
+- [--ip-route](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ip_route.md): `ip route` command parser (magic: `ip route`; platforms: linux)
+- [--iw-scan](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iw_scan.md): `iw dev [device] scan` command parser (magic: `iw dev`; platforms: linux)
+- [--iwconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iwconfig.md): `iwconfig` command parser (magic: `iwconfig`; platforms: linux)
+- [--jar-manifest](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/jar_manifest.md): Java MANIFEST.MF file parser
+- [--jobs](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/jobs.md): `jobs` command parser (magic: `jobs`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--jwt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/jwt.md): JWT string parser (supports `--slurp`)
+- [--kv](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/kv.md): Key/Value file and string parser
+- [--kv-dup](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/kv_dup.md): Key/Value with duplicate key file and string parser
+- [--last](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/last.md): `last` and `lastb` command parser (magic: `last`, `lastb`; platforms: linux, darwin, aix, freebsd)
+- [--ldd](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ldd.md): `ldd` command parser (magic: `ldd`; platforms: linux)
+- [--ls](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ls.md): `ls` command parser (magic: `ls`, `vdir`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--lsattr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lsattr.md): `lsattr` command parser (magic: `lsattr`; platforms: linux)
+- [--lsb-release](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lsb_release.md): `lsb_release` command parser (magic: `lsb_release`)
+- [--lsblk](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lsblk.md): `lsblk` command parser (magic: `lsblk`; platforms: linux)
+- [--lsmod](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lsmod.md): `lsmod` command parser (magic: `lsmod`; platforms: linux)
+- [--lsof](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lsof.md): `lsof` command parser (magic: `lsof`; platforms: linux, darwin, aix, freebsd)
+- [--lspci](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lspci.md): `lspci -mmv` command parser (magic: `lspci`; platforms: linux)
+- [--lsusb](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/lsusb.md): `lsusb` command parser (magic: `lsusb`; platforms: linux)
+- [--m3u](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/m3u.md): M3U and M3U8 file parser
+- [--mdadm](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/mdadm.md): `mdadm` command parser (magic: `mdadm`; platforms: linux)
+- [--mount](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/mount.md): `mount` command parser (magic: `mount`; platforms: linux, darwin, freebsd, aix)
+- [--mpstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/mpstat.md): `mpstat` command parser (magic: `mpstat`; platforms: linux)
+- [--needrestart](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/needrestart.md): `needrestart -b` command parser (magic: `needrestart -b`; platforms: linux)
+- [--netrc](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/netrc.md): `.netrc` file parser
+- [--netstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/netstat.md): `netstat` command parser (magic: `netstat`; platforms: linux, darwin, freebsd, win32)
+- [--net-localgroup](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/net_localgroup.md): `net localgroup` command parser (magic: `net localgroup`; platforms: win32)
+- [--net-user](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/net_user.md): `net user` command parser (magic: `net user`; platforms: win32)
+- [--nmcli](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nmcli.md): `nmcli` command parser (magic: `nmcli`; platforms: linux)
+- [--nsd-control](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nsd_control.md): `nsd-control` command parser (magic: `nsd-control`)
+- [--ntpq](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ntpq.md): `ntpq -p` command parser (magic: `ntpq`; platforms: linux, freebsd)
+- [--openvpn](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/openvpn.md): openvpn-status.log file parser
+- [--os-prober](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/os_prober.md): `os-prober` command parser (magic: `os-prober`; platforms: linux; supports `--slurp`)
+- [--os-release](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/os_release.md): `/etc/os-release` file parser
+- [--pacman](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pacman.md): `pacman` command parser (magic: `pacman`, `yay`)
+- [--passwd](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/passwd.md): `/etc/passwd` file parser (platforms: linux, darwin, aix, freebsd)
+- [--path](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/path.md): POSIX path string parser (supports `--slurp`)
+- [--path-list](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/path_list.md): POSIX path list string parser (supports `--slurp`)
+- [--pci-ids](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pci_ids.md): `pci.ids` file parser
+- [--pgpass](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pgpass.md): PostgreSQL password file parser
+- [--pidstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pidstat.md): `pidstat -H` command parser (magic: `pidstat`; platforms: linux)
+- [--ping](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ping.md): `ping` and `ping6` command parser (magic: `ping`, `ping6`; platforms: linux, darwin, freebsd)
+- [--pip-list](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pip_list.md): `pip list` command parser (magic: `pip list`, `pip3 list`)
+- [--pip-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pip_show.md): `pip show` command parser (magic: `pip show`, `pip3 show`)
+- [--pkg-index-apk](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pkg_index_apk.md): Alpine Linux Package Index file parser
+- [--pkg-index-deb](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pkg_index_deb.md): Debian Package Index file parser
+- [--plist](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/plist.md): PLIST file parser
+- [--postconf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/postconf.md): `postconf -M` command parser (magic: `postconf -M`; platforms: linux)
+- [--proc](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc.md): `/proc/` file parser (platforms: linux; supports `--slurp`)
+- [--ps](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ps.md): `ps` command parser (magic: `ps`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--resolve-conf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/resolve_conf.md): `/etc/resolve.conf` file parser
+- [--route](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/route.md): `route` command parser (magic: `route`; platforms: linux, win32)
+- [--route-print](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/route_print.md): `route print` command parser (magic: `route print`; platforms: win32)
+- [--rpm-qi](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/rpm_qi.md): `rpm -qi` command parser (magic: `rpm -qi`, `rpm -qia`, `rpm -qai`; platforms: linux)
+- [--rsync](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/rsync.md): `rsync` command parser (magic: `rsync -i`, `rsync --itemize-changes`; platforms: linux, darwin, freebsd)
+- [--semver](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/semver.md): Semantic Version string parser (supports `--slurp`)
+- [--sfdisk](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/sfdisk.md): `sfdisk` command parser (magic: `sfdisk`; platforms: linux)
+- [--shadow](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/shadow.md): `/etc/shadow` file parser (platforms: linux, darwin, aix, freebsd)
+- [--srt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/srt.md): SRT file parser
+- [--ss](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ss.md): `ss` command parser (magic: `ss`; platforms: linux)
+- [--ssh-conf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ssh_conf.md): `ssh` config file and `ssh -G` command parser (magic: `ssh -G`; platforms: linux, darwin, freebsd)
+- [--sshd-conf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/sshd_conf.md): `sshd` config file and `sshd -T` command parser (magic: `sshd -T`; platforms: linux, darwin, freebsd)
+- [--stat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/stat.md): `stat` command parser (magic: `stat`; platforms: linux, darwin, freebsd)
+- [--swapon](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/swapon.md): `swapon` command parser (magic: `swapon`; platforms: linux, freebsd)
+- [--sysctl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/sysctl.md): `sysctl` command parser (magic: `sysctl`; platforms: linux, darwin, freebsd)
+- [--syslog](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/syslog.md): Syslog RFC 5424 string parser
+- [--syslog-bsd](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/syslog_bsd.md): Syslog RFC 3164 string parser
+- [--systemctl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl.md): `systemctl` command parser (magic: `systemctl`; platforms: linux)
+- [--systemctl-lj](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_lj.md): `systemctl list-jobs` command parser (magic: `systemctl list-jobs`; platforms: linux)
+- [--systemctl-ls](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_ls.md): `systemctl list-sockets` command parser (magic: `systemctl list-sockets`; platforms: linux)
+- [--systemctl-luf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_luf.md): `systemctl list-unit-files` command parser (magic: `systemctl list-unit-files`; platforms: linux)
+- [--systeminfo](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systeminfo.md): `systeminfo` command parser (magic: `systeminfo`; platforms: win32)
+- [--time](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/time.md): `/usr/bin/time` command parser (platforms: linux, darwin, cygwin, aix, freebsd)
+- [--timedatectl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/timedatectl.md): `timedatectl status` command parser (magic: `timedatectl`, `timedatectl status`; platforms: linux)
+- [--timestamp](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/timestamp.md): Unix Epoch Timestamp string parser (supports `--slurp`)
+- [--toml](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/toml.md): TOML file parser
+- [--top](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/top.md): `top -b` command parser (magic: `top -b`; platforms: linux)
+- [--tracepath](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/tracepath.md): `tracepath` and `tracepath6` command parser (magic: `tracepath`, `tracepath6`; platforms: linux)
+- [--traceroute](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/traceroute.md): `traceroute` and `traceroute6` command parser (magic: `traceroute`, `traceroute6`; platforms: linux, darwin, freebsd)
+- [--tsv](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/tsv.md): TSV file parser
+- [--tsv-ih](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/tsv_ih.md): TSV implicit header file parser
+- [--tune2fs](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/tune2fs.md): `tune2fs -l` command parser (magic: `tune2fs -l`; platforms: linux)
+- [--typeset](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/typeset.md): `typeset` and `declare` command parser
+- [--udevadm](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/udevadm.md): `udevadm info` command parser (magic: `udevadm info`; platforms: linux)
+- [--ufw](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ufw.md): `ufw status` command parser (magic: `ufw status`; platforms: linux)
+- [--ufw-appinfo](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ufw_appinfo.md): `ufw app info [application]` command parser (magic: `ufw app`; platforms: linux)
+- [--uname](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/uname.md): `uname -a` command parser (magic: `uname`; platforms: linux, darwin, freebsd; supports `--slurp`)
+- [--update-alt-gs](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/update_alt_gs.md): `update-alternatives --get-selections` command parser (magic: `update-alternatives --get-selections`; platforms: linux)
+- [--update-alt-q](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/update_alt_q.md): `update-alternatives --query` command parser (magic: `update-alternatives --query`; platforms: linux)
+- [--upower](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/upower.md): `upower` command parser (magic: `upower`; platforms: linux)
+- [--upsc](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/upsc.md): `upsc` command parser (magic: `upsc`; platforms: linux, darwin, freebsd)
+- [--uptime](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/uptime.md): `uptime` command parser (magic: `uptime`; platforms: linux, darwin, cygwin, aix, freebsd; supports `--slurp`)
+- [--url](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/url.md): URL string parser (supports `--slurp`)
+- [--ver](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ver.md): Version string parser (supports `--slurp`)
+- [--veracrypt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/veracrypt.md): `veracrypt` command parser (magic: `veracrypt`; platforms: linux)
+- [--vmstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/vmstat.md): `vmstat` command parser (magic: `vmstat`; platforms: linux)
+- [--w](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/w.md): `w` command parser (magic: `w`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--wc](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/wc.md): `wc` command parser (magic: `wc`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--wg-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/wg_show.md): `wg show` command parser (magic: `wg show`)
+- [--who](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/who.md): `who` command parser (magic: `who`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--x509-cert](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_cert.md): X.509 PEM and DER certificate file parser
+- [--x509-crl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_crl.md): X.509 PEM and DER certificate revocation list file parser
+- [--x509-csr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_csr.md): X.509 PEM and DER certificate request file parser
+- [--xml](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/xml.md): XML file parser
+- [--xrandr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/xrandr.md): `xrandr` command parser (magic: `xrandr`; platforms: linux, darwin, cygwin, aix, freebsd)
+- [--yaml](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/yaml.md): YAML file parser
+- [--zipinfo](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/zipinfo.md): `zipinfo` command parser (magic: `zipinfo`; platforms: linux, darwin)
+- [--zpool-iostat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/zpool_iostat.md): `zpool iostat` command parser (magic: `zpool iostat`; platforms: linux, darwin, freebsd)
+- [--zpool-status](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/zpool_status.md): `zpool status` command parser (magic: `zpool status`; platforms: linux, darwin, freebsd)
+
+## Streaming Parsers
+
+These process input line by line and output JSON Lines instead of a single JSON document. In Python they return an iterator.
+
+- [--cef-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/cef_s.md): CEF string streaming parser
+- [--clf-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/clf_s.md): Common and Combined Log Format file streaming parser
+- [--csv-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/csv_s.md): CSV file streaming parser
+- [--csv-ih-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/csv_ih_s.md): CSV implicit header file streaming parser
+- [--git-log-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/git_log_s.md): `git log` command streaming parser
+- [--iostat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iostat_s.md): `iostat` command streaming parser (platforms: linux)
+- [--ls-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ls_s.md): `ls` command streaming parser (platforms: linux, darwin, cygwin, aix, freebsd)
+- [--mpstat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/mpstat_s.md): `mpstat` command streaming parser (platforms: linux)
+- [--pidstat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pidstat_s.md): `pidstat -H` command streaming parser (platforms: linux)
+- [--ping-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ping_s.md): `ping` and `ping6` command streaming parser (platforms: linux, darwin, freebsd)
+- [--rsync-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/rsync_s.md): `rsync` command streaming parser (platforms: linux, darwin, freebsd)
+- [--stat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/stat_s.md): `stat` command streaming parser (platforms: linux, darwin, freebsd)
+- [--syslog-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/syslog_s.md): Syslog RFC 5424 string streaming parser
+- [--syslog-bsd-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/syslog_bsd_s.md): Syslog RFC 3164 string streaming parser
+- [--top-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/top_s.md): `top -b` command streaming parser (platforms: linux)
+- [--traceroute-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/traceroute_s.md): `traceroute` and `traceroute6` command streaming parser (platforms: linux, darwin, freebsd)
+- [--tsv-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/tsv_s.md): TSV file streaming parser
+- [--tsv-ih-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/tsv_ih_s.md): TSV implicit header file streaming parser
+- [--vmstat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/vmstat_s.md): `vmstat` command streaming parser (platforms: linux)
+
+## /proc Files
+
+`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 51 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).
