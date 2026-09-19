@@ -1,6 +1,6 @@
 jc changelog
 
-20260916 v1.26.0
+20260919 v1.26.0
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `git diff --name-status` command parser
 - Add `ldd` command parser
@@ -29,6 +29,7 @@ jc changelog
 - Fix `pgpass` parser handling of escaped characters
 - Fix `proc-modules` parser to support additional taint status column
 - Fix `ss` parser for process names with spaces and other special characters
+  and correctly parse the options field when it is padded
 - Fix `traceroute` parser to handle missing hop information gracefully
 - Fix `typeset` parser to allow scalar values starting with the `[` character
 - Fix `ufw` parser to handle `(log-all)` messages
