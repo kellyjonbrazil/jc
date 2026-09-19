@@ -41,14 +41,16 @@ field names
               "user":                 string,
               "file_descriptor":      string
             }
-          }
+          },
+          "timer": {
+            "timer_name":             string,
+            "expire_time":            string,
+            "retrans":                string
+          },
           "inode_number":             string,
           "cookie":                   string,
           "cgroup":                   string,
           "v6only":                   string,
-          "timer_name":               string,
-          "expire_time":              string,
-          "retrans":                  string
         }
       }
     ]
@@ -302,6 +304,10 @@ _USERS_BLOCK_RE = re.compile(r'users:\(\(.*?\)\)(?=\s|$)')
 #: non-greedy up to the quote that precedes `,pid=`, so spaces, colons and
 #: parentheses inside it are preserved rather than rewritten.
 _USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),fd=(?P<fd>\d+)\)')
+
+#: Marks a field belonging to the headerless options region added by -e, -o
+#: and -p. Used both to recognize that region and to find where it starts.
+_OPTS_FIELD_RE = re.compile(r'ino:|uid:|sk:|users:|timer:|cgroup:|v6only:')
 import string
 import jc.utils
 
@@ -488,7 +494,21 @@ def parse(data, raw=False, quiet=False):
                     entry_list[6] = p_address
                     entry_list.insert(7, p_port)
 
-                if re.search(r'ino:|uid:|sk:|users:|timer:|cgroup:|v6only:', entry_list[-1]):
+                # The options region is one logical field, but it can itself
+                # contain runs of two or more spaces: newer iproute2 pads after
+                # the users: block to align the column. The two-or-more split
+                # above then scatters the region over several entries, and only
+                # the last of them is parsed -- while dict(zip(...)) pairs
+                # `opts` with an earlier one, so the caller gets a raw string
+                # and the ino/sk/cgroup fields are dropped with no error.
+                # Rejoin the tail so the whole region reaches _parse_opts.
+                opts_start = (len(header_list) - 1
+                              if header_list[-1] == 'opts' else len(header_list))
+                if (len(entry_list) > opts_start
+                        and _OPTS_FIELD_RE.search(entry_list[opts_start])):
+                    entry_list[opts_start:] = [' '.join(entry_list[opts_start:])]
+
+                if _OPTS_FIELD_RE.search(entry_list[-1]):
                     if header_list[-1] != 'opts':
                         header_list.append('opts')
                     entry_list[-1] = _parse_opts(entry_list[-1])
