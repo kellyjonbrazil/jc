@@ -114,7 +114,7 @@ Examples:
     ]
 """
 import re
-from typing import List, Dict
+from typing import List, Dict, Set
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -145,7 +145,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    int_list: set[str] = {
+    int_list: Set[str] = {
         'domain', 'bus', 'dev', 'function', 'class_id', 'vendor_id', 'device_id',
         'svendor_id', 'sdevice_id', 'progif'
     }

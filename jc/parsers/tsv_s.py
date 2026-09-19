@@ -12,12 +12,12 @@ header row.
 
 Usage (cli):
 
-    $ cat file.csv | jc --tsv-s
+    $ cat file.tsv | jc --tsv-s
 
 Usage (module):
 
     import jc
-    result = jc.parse('tsv_s', tsv_output)
+    result = jc.parse('tsv_s', tsv_output.splitlines())
 
 Schema:
 

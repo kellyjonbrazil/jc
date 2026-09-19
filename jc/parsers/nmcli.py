@@ -5,6 +5,7 @@ Supports the following `nmcli` subcommands:
 - `nmcli general permissions`
 - `nmcli connection`
 - `nmcli connection show <device_name>`
+- `nmcli -t device wifi list`
 - `nmcli device`
 - `nmcli device show`
 - `nmcli device show <device_name>`
@@ -61,6 +62,22 @@ These are documented below.
     ]
 
     [0] all values of `---` are converted to null
+
+For `nmcli -t device wifi list` output, the schema is:
+
+    [
+      {
+        "in_use":                 string,
+        "bssid":                  string,
+        "ssid":                   string,
+        "mode":                   string,
+        "chan":                   integer,
+        "rate":                   string,
+        "signal":                 integer,
+        "bars":                   string,
+        "security":               string/null
+      }
+    ]
 
 Examples:
 
@@ -152,7 +169,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`nmcli` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -276,6 +293,75 @@ def _split_options(value: str) -> Dict:
     output_dict['value'] = v.strip()
 
     return output_dict
+
+
+
+_WIFI_HEADERS = (
+    'in_use',
+    'bssid',
+    'ssid',
+    'mode',
+    'chan',
+    'rate',
+    'signal',
+    'bars',
+    'security'
+)
+
+
+def _split_terse_line(line: str) -> List[str]:
+    """Split an nmcli terse-mode line while honoring escaped delimiters."""
+    output = []
+    field = []
+    escape_character = chr(92)
+    index = 0
+
+    while index < len(line):
+        character = line[index]
+
+        if character == escape_character and index + 1 < len(line):
+            next_character = line[index + 1]
+            if next_character in (escape_character, ':'):
+                field.append(next_character)
+                index += 2
+                continue
+
+        if character == ':':
+            output.append(''.join(field))
+            field = []
+        else:
+            field.append(character)
+
+        index += 1
+
+    output.append(''.join(field))
+    return output
+
+
+def _is_wifi_list_line(line: str) -> bool:
+    fields = _split_terse_line(line)
+    return (
+        len(fields) == len(_WIFI_HEADERS)
+        and re.fullmatch(r'(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}', fields[1]) is not None
+    )
+
+
+def _wifi_list_parse(data: str) -> List[Dict]:
+    raw_output = []
+
+    for line in filter(None, data.splitlines()):
+        values = _split_terse_line(line)
+        if len(values) != len(_WIFI_HEADERS):
+            raise ParseError(
+                'Unexpected number of fields in nmcli terse WiFi list output.'
+            )
+
+        raw_output.append({
+            key: _normalize_value(value)
+            for key, value in zip(_WIFI_HEADERS, values)
+        })
+
+    return raw_output
 
 
 def _device_show_parse(data: str) -> List[Dict]:
@@ -423,8 +509,15 @@ def parse(
 
     if jc.utils.has_data(data):
 
+        data_lines = data.splitlines()
+        first_line = next(line for line in data_lines if line.strip())
+
+        # nmcli -t device wifi list
+        if _is_wifi_list_line(first_line):
+            raw_output = _wifi_list_parse(data)
+
         # nmcli (second line startswith \t)
-        if data.splitlines()[1].startswith('\t'):
+        elif len(data_lines) > 1 and data_lines[1].startswith('\t'):
             raise ParseError('Use the device, connection, or general subcommand in nmcli.')
 
         # nmcli device show

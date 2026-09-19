@@ -1,0 +1,4 @@
+# fs_freq and fs_passno are optional (man 5 fstab)
+UUID=011527a0-c72a-4c00-a50e-ee90da26b6e2 / ext4 defaults 0 1
+UUID=cc1f4d3a-1a34-4e29-b4b1-0d8a0aa4ba97 /home ext4 defaults
+/dev/sdb1 /mnt/data xfs rw,noatime 0

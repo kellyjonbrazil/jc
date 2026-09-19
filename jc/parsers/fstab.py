@@ -85,7 +85,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`/etc/fstab` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -150,6 +150,11 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             line_list = line.split(maxsplit=6)
+
+            # fs_freq and fs_passno are optional and default to 0 (man 5 fstab)
+            if len(line_list) in (4, 5):
+                line_list += ['0'] * (6 - len(line_list))
+
             fs_spec = line_list[0]
             fs_file = line_list[1]
             fs_vfstype = line_list[2]

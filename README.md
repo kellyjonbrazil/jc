@@ -164,6 +164,7 @@ option.
 |           `--arp` | `arp` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/arp)            |
 |    `--asciitable` | ASCII and Unicode table parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable)     |
 |  `--asciitable-m` | multi-line ASCII and Unicode table parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/asciitable_m)   |
+| `--authorized-keys` | `~/.ssh/authorized_keys` file parser                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/authorized_keys) |
 |         `--blkid` | `blkid` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/blkid)          |
 |  `--bluetoothctl` | `bluetoothctl` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/bluetoothctl)   |
 |           `--cbt` | `cbt` (Google Bigtable) command parser                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/cbt)            |
@@ -200,6 +201,8 @@ option.
 |        `--finger` | `finger` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/finger)         |
 |          `--free` | `free` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/free)           |
 |         `--fstab` | `/etc/fstab` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/fstab)          |
+|       `--getfacl` | `getfacl` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/getfacl)        |
+|      `--git-diff` | `git diff --name-status` command parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_diff)       |
 |       `--git-log` | `git log` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log)        |
 |     `--git-log-s` | `git log` command streaming parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_log_s)      |
 | `--git-ls-remote` | `git ls-remote` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/git_ls_remote)  |
@@ -215,6 +218,7 @@ option.
 |  `--http-headers` | HTTP headers parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/http_headers)   |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
+|         `--iftop` | `iftop` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iftop)          |
 |           `--ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
 |       `--ini-dup` | INI with duplicate key file parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini_dup)        |
 |        `--iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |
@@ -231,6 +235,7 @@ option.
 |            `--kv` | Key/Value file and string parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv)             |
 |        `--kv-dup` | Key/Value with duplicate key file and string parser     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/kv_dup)         |
 |          `--last` | `last` and `lastb` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/last)           |
+|           `--ldd` | `ldd` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ldd)            |
 |            `--ls` | `ls` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls)             |
 |          `--ls-s` | `ls` command streaming parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ls_s)           |
 |        `--lsattr` | `lsattr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/lsattr)         |
@@ -246,6 +251,7 @@ option.
 |        `--mpstat` | `mpstat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat)         |
 |      `--mpstat-s` | `mpstat` command streaming parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/mpstat_s)       |
 |   `--needrestart` | `needrestart -b` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/needrestart)    |
+|         `--netrc` | `.netrc` file parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/netrc)          |
 |       `--netstat` | `netstat` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/netstat)        |
 | `--net-localgroup` | `net localgroup` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/net_localgroup) |
 |      `--net-user` | `net user` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/net_user)       |
@@ -321,6 +327,7 @@ option.
 | `--update-alt-gs` | `update-alternatives --get-selections` command parser   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_gs)  |
 |  `--update-alt-q` | `update-alternatives --query` command parser            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/update_alt_q)   |
 |        `--upower` | `upower` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upower)         |
+|          `--upsc` | `upsc` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/upsc)           |
 |        `--uptime` | `uptime` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/uptime)         |
 |           `--url` | URL string parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/url)            |
 |           `--ver` | Version string parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ver)            |
@@ -360,6 +367,7 @@ option.
 | `-y`  | `--yaml-out`    | YAML output                                                                                                                                                  |
 | `-B`  | `--bash-comp`   | Generate Bash shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                             |
 | `-Z`  | `--zsh-comp`    | Generate Zsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                              |
+| `-X`  | `--xonsh-comp`  | Generate Xonsh shell completion script ([more info](https://github.com/kellyjonbrazil/jc/wiki/Shell-Completions))                                            |
 
 ### Slice
 Line slicing is supported using the `START:STOP` syntax similar to Python
@@ -606,8 +614,8 @@ example. To display the data on the terminal in realtime, you can disable the
 buffer with the `-u` (unbuffer) cli option:
 ```
 $ ping 1.1.1.1 | jc --ping-s -u | jq
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","respons...}
-{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","respons...}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response...}
+{"type":"reply","pattern":null,"timestamp":null,"bytes":"64","response...}
 ...
 ```
 

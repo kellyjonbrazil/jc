@@ -1,0 +1,14 @@
+commit 581bd2c456ae8a9111e2982c84fb05a4321fc8ee
+Author:     Ada Lovelace <ada@example.com>
+AuthorDate: Sat Mar 6 15:45:00 2021 +0000
+Commit:     Ada Lovelace <ada@example.com>
+CommitDate: Sat Mar 6 15:45:00 2021 +0000
+
+    Add logo image
+    
+    The logo is a small PNG.
+
+diff --git a/logo.png b/logo.png
+new file mode 100644
+index 0000000..5b958c4
+Binary files /dev/null and b/logo.png differ

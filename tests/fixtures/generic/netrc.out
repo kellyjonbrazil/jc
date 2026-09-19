@@ -1,0 +1,17 @@
+# personal netrc file
+machine mail.example.com
+login jdoe
+password secret123
+
+machine ftp.example.com login anon password guest@example.com account acct42
+
+default
+login anonymous
+password user@example.com
+
+macdef init
+cd /pub
+mget *
+
+macdef greet
+echo hello

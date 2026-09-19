@@ -10,6 +10,8 @@ Can be used with the following format options:
 Additional options supported:
 - `--stat`
 - `--shortstat`
+- `--numstat`
+- `--patch`
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -38,12 +40,13 @@ Schema:
         "author":               string/null,
         "author_email":         string/null,
         "date":                 string,
-        "epoch":                integer,  # [0]
-        "epoch_utc":            integer,  # [1]
+        "epoch":                integer,        # [0]
+        "epoch_utc":            integer,        # [1]
         "commit_by":            string/null,
         "commit_by_email":      string/null,
         "commit_by_date":       string,
         "message":              string,
+        "patch":                string,         # [4]
         "stats" : {
           "files_changed":      integer,
           "insertions":         integer,
@@ -54,7 +57,9 @@ Schema:
           "file_stats": [
             {
               "name":           string,
-              "lines_changed":  integer
+              "lines_changed":  integer,        # [2]
+              "insertions":     integer,        # [3]
+              "deletions":      integer         # [3]
             }
           ]
         }
@@ -63,6 +68,11 @@ Schema:
 
     [0] naive timestamp if "date" field is parsable, else null
     [1] timezone aware timestamp available for UTC, else null
+    [2] only available with `--stat`
+    [3] only available with `--numstat`. null for binary files
+    [4] only available with `--patch`. Raw unified diff for the commit,
+        absent if the commit has no patch. Binary diffs are kept as-is
+        (e.g. "Binary files ... differ")
 
 Examples:
 
@@ -220,10 +230,12 @@ import jc.utils
 
 hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
 changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<insertions>\d+)\s+(insertions?\(\+\)))?(?:,\s+(?P<deletions>\d+)\s+(deletions?\(\-\)))?')
+numstat_pattern = re.compile(r'^(?P<insertions>\d+|-)\t(?P<deletions>\d+|-)\t(?P<name>.+)$')
+patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.7'
     description = '`git log` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -329,6 +341,8 @@ def parse(
     message_lines: List[str] = []
     file_list: List[str] = []
     file_stats_list: List[Dict[str, Any]] = []
+    numstat_found: bool = False
+    patch_lines: List[str] = []
 
     if jc.utils.has_data(data):
 
@@ -344,11 +358,16 @@ def parse(
                     if file_stats_list:
                         output_line['stats']['file_stats'] = file_stats_list
 
+                    if patch_lines:
+                        output_line['patch'] = '\n'.join(patch_lines)
+
                     raw_output.append(output_line)
                     output_line = {}
                     message_lines = []
                     file_list = []
                     file_stats_list = []
+                    numstat_found = False
+                    patch_lines = []
                 output_line = {
                     'commit': line_list[0],
                     'message': line_list[1]
@@ -367,11 +386,16 @@ def parse(
                     if file_stats_list:
                         output_line['stats']['file_stats'] = file_stats_list
 
+                    if patch_lines:
+                        output_line['patch'] = '\n'.join(patch_lines)
+
                     raw_output.append(output_line)
                     output_line = {}
                     message_lines = []
                     file_list = []
                     file_stats_list = []
+                    numstat_found = False
+                    patch_lines = []
                 output_line['commit'] = line_list[1]
                 continue
 
@@ -399,12 +423,39 @@ def parse(
                 output_line['commit_by'], output_line['commit_by_email'] = _parse_name_email(line_list[1])
                 continue
 
+            if patch_start_pattern.match(line) or patch_lines:
+                # this is the commit patch. Everything from the first diff
+                # header up to the next commit is kept verbatim, including
+                # context lines and binary file notices. Any blank line here
+                # is the separator before the next commit.
+                if line:
+                    patch_lines.append(line)
+                continue
+
             if line.startswith('    '):
                 message_lines.append(line.strip())
                 continue
 
+            numstat = numstat_pattern.match(line)
+            if numstat:
+                # this is a --numstat line
+                file_stats_list.append({
+                    'name': numstat['name'],
+                    'insertions': numstat['insertions'],
+                    'deletions': numstat['deletions']
+                })
+                file_list.append(numstat['name'])
+                output_line.setdefault('stats', {})
+                numstat_found = True
+                continue
+
             if line.startswith(' ') and 'changed, ' not in line:
-                # this is a file name
+                # this is a file name from `--stat`. Ignore if `--numstat`
+                # output was already found for this commit since it is
+                # more detailed.
+                if numstat_found:
+                    continue
+
                 file_line_split = line.split('|')
                 file_name = file_line_split[0].strip()
                 file_list.append(file_name)
@@ -443,6 +494,9 @@ def parse(
 
         if file_stats_list:
             output_line['stats']['file_stats'] = file_stats_list
+
+        if patch_lines:
+            output_line['patch'] = '\n'.join(patch_lines)
 
         raw_output.append(output_line)
 

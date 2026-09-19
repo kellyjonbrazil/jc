@@ -29,6 +29,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.hosts.parse('', quiet=True), [])
 
+    def test_hosts_whitespace_only_line(self):
+        """
+        Test 'cat /etc/hosts' with a whitespace-only line
+        """
+        data = ' \t \n127.0.0.1 localhost\n'
+        expected = [{'ip': '127.0.0.1', 'hostname': ['localhost']}]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
     def test_hosts_centos_7_7(self):
         """
         Test 'cat /etc/hosts' on Centos 7.7

@@ -8,7 +8,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 try:
     import ruamel.yaml
     RUAMELYAML_INSTALLED = True
-except:
+except ImportError:
     RUAMELYAML_INSTALLED = False
 
 

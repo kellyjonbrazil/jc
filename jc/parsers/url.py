@@ -364,7 +364,7 @@ def parse(
             encoded_path = re.sub(r'/+', '/', quoted_parts.path)
             decoded_path = re.sub(r'/+', '/', unquoted_parts.path)
 
-            # get parent, file, stem, and exension info from path
+            # get parent, file, stem, and extension info from path
             parent = str(pathlib.PurePosixPath(my_path).parent)
             encoded_parent = str(pathlib.PurePosixPath(encoded_path).parent)
             decoded_parent = str(pathlib.PurePosixPath(decoded_path).parent)

@@ -1,0 +1,48 @@
+# jc
+
+> `jc` converts the output of many popular command-line tools, file types, and common strings (e.g. `ps`, `ifconfig`, `ls`, `netstat`, `dig`, `/proc` files, CSV, INI, XML) into structured JSON, YAML, or Python dictionaries, for piping into `jq`, use in scripts, or programmatic parsing. It is both a CLI tool and a Python library.
+
+Basics:
+
+- Pipe syntax: `COMMAND | jc --PARSER`, e.g. `dig example.com | jc --dig`
+- Magic syntax: `jc COMMAND`, e.g. `jc dig example.com` (`jc` runs the command for you)
+- Python: `import jc; data = jc.parse('dig', command_output)`
+- Common options: `-p` pretty print, `-r` raw (less processed) output, `-y` YAML output, `-s` slurp, `-q` quiet, `-h --PARSER` show that parser's documentation, `-a` about (includes a JSON list of every parser)
+- Streaming parsers have names ending in `-s` (e.g. `--ls-s`) and output JSON Lines instead of one JSON document. In Python they return iterators.
+- Parsers are named by CLI flag (`--ls-s`) and by Python module name (`ls_s`, dashes become underscores). Each has a documentation page at `docs/parsers/<module>.md`.
+- Many parsers need the source command run with specific options (e.g. the `ls-s` parser requires `ls -l`). Check the parser's documentation page before parsing.
+
+## Getting Started
+
+- [Installation](https://github.com/kellyjonbrazil/jc#installation): `pip3 install jc`, OS package managers (apt, dnf, brew, pacman, etc.), or precompiled binaries.
+- [Usage](https://github.com/kellyjonbrazil/jc#usage): pipe syntax, magic syntax, and output options.
+- [Why jc exists](https://github.com/kellyjonbrazil/jc#why-would-anyone-do-this): motivation and use cases (bash scripting, Ansible/Saltstack/Nornir output parsing).
+
+## Parsers
+
+- [Parser index](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/llms-full.txt): every parser with its flag, description, magic-syntax commands, platform limits, and a link to its documentation page. Generated from the parser metadata, so it stays current.
+- [Parser table](https://github.com/kellyjonbrazil/jc#parsers): the same list as a table in the README.
+- [Compatibility](https://github.com/kellyjonbrazil/jc#compatibility): which parsers are platform-specific, and how to suppress unsupported-platform warnings with `-q`.
+
+## CLI Reference
+
+- [Options](https://github.com/kellyjonbrazil/jc#options): every command-line flag.
+- [Slice](https://github.com/kellyjonbrazil/jc#slice): parse only some lines of the input, e.g. `jc 4:15 --PARSER`.
+- [Slurp](https://github.com/kellyjonbrazil/jc#slurp): combine multiple input lines into one array with `-s`.
+- [Streaming parsers](https://github.com/kellyjonbrazil/jc#streaming-parsers): line-by-line parsers, error handling with `-qq`, and unbuffered output.
+- [Exit codes](https://github.com/kellyjonbrazil/jc#exit-codes): what `jc` returns, useful when scripting.
+- [Parser plugins](https://github.com/kellyjonbrazil/jc#parser-plugins): add your own parser or override a built-in one without changing `jc`.
+- [Caveats](https://github.com/kellyjonbrazil/jc#caveats): locale and timezone behavior.
+
+## Python Library
+
+- [Library overview](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/readme.md): usage example and the available functions.
+- [jc.lib reference](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/lib.md): `parse()`, `get_help()`, and the functions that list parsers and their metadata (`parser_info()`, `all_parser_info()`, `parser_mod_list()`, `streaming_parser_mod_list()`, ...).
+
+## Optional
+
+- [Contributing](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/CONTRIBUTING.md): how to add or change a parser, including the schema guidelines and tests.
+- [jc.streaming reference](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/streaming.md) and [jc.utils reference](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/utils.md): helper functions for writing streaming and standard parsers.
+- [Changelog](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/CHANGELOG): what changed in each release.
+- [Shell completions and other shells](https://github.com/kellyjonbrazil/jc#use-in-other-shells): completion scripts for bash, zsh, and xonsh (`jc -B`, `jc -Z`, `jc -X`) and notes for shells with built-in JSON handling.
+- [License](https://github.com/kellyjonbrazil/jc/blob/master/LICENSE.md): MIT.

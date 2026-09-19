@@ -1,5 +1,48 @@
 jc changelog
 
+20260919 v1.26.0
+- Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
+- Add `getfacl` command parser
+- Add `git diff --name-status` command parser
+- Add `iftop` command parser (note this parser was added long ago but never
+  registered so it was effectively hidden)
+- Add `ldd` command parser
+- Add `.netrc` file parser
+- Add `upsc` command parser
+- Add xonsh shell completion
+- Enhance `git-log` standard and streaming parsers with added `insertions`
+  and `deletions` fields under `file_stats` when using `--numstat`. Also added
+  `--patch` output support
+- Enhance `nmcli` parser to support `nmcli -t device wifi list`
+- Enhance `typeset` parser to support ksh and zsh output
+- Enhance `typeset` parser to handle ANSI-C quoting: `$'...'`
+- Enhance `ls` and `ls-s` standard and streaming parsers to support device
+  files and added support for long-iso dates
+- Enhance `lsusb` parser to support USB Audio and MIDI class interface and
+  endpoint descriptors (AudioControl, AudioStreaming, MIDIStreaming)
+- Simplify `lsusb` parser internals to build nested output in a single pass
+  Note: this is a complete rewrite (v2.0) and it is possible some output may
+  deviate from the previous version. It is believed this version is more
+  accurate and will be easier to maintain going forward.
+- Fix `curl-head` parser to ignore whitespace-only lines
+- Fix `email-address` parser to gracefully handle invalid email addresses
+- Fix `fstab` parser for lines that omit the fs_freq and fs_passno fields
+- Fix `hosts` parser to ignore whitespace only lines
+- Fix `http-headers` parser to ignore whitespace-only lines
+- Fix `ip-route` parser to handle whitespace-only input gracefully
+- Fix `pgpass` parser handling of escaped characters
+- Fix `proc-modules` parser to support additional taint status column
+- Fix `ss` parser for process names with spaces and other special characters
+  and correctly parse the options field when it is padded
+- Fix `traceroute` parser to handle missing hop information gracefully
+- Fix `typeset` parser to allow scalar values starting with the `[` character
+- Fix `ufw` parser to handle `(log-all)` messages
+- Fix path traversal vulnerability with magic syntax
+- Fix tests for Debian build
+- Fix for broken locale behavior (permanently changing to user's locale) when
+  unparsable datetimes are handled
+- Fix timestamp function for 12 hour format found in some `date` command output
+
 20260617 v1.25.7
 - Add `csv-ih`, `tsv`, and `tsv-ih` file parsers for CSV files without headers,
   TSV files, and TSV files without headers. Note that these are standard and
@@ -93,7 +136,7 @@ jc changelog
   field has been changed to an integer and all size values have been normalized
   to bytes.
 - Enhance `free` parser to add human readable output support. All size values
-  have been normalizd to bytes.
+  have been normalized to bytes.
 - Enhance `iptables` parser to handle -x output
 - Enhance `/proc/pid/stat` parser to support "Idle" state
 - Enhance `rpm_qi` and `pkg_index_deb` parsers to split list fields into arrays
@@ -285,7 +328,7 @@ jc changelog
 - enhance `xml` parser with optional `_` prefix for attributes instead of
   `@` by using the `--raw` option. This can make it easier to filter the
   JSON output in some tools.
-- fix the `xml` parser to output a normal Dictionary instead of OrderdDict.
+- fix the `xml` parser to output a normal Dictionary instead of OrderedDict.
   This cleans up YAML output. (No `!!omap` comments)
 - fix `csv` and `csv-s` parsers for UTF-8 encoded CSV files with leading BOM bytes
 - fix exit code to be non-zero on interrupt
@@ -427,7 +470,7 @@ jc changelog
   keys to `jc -a` output
 - Add `is_compatible` function to the `utils` module
 - Fix `pip-show` parser for packages with a multi-line license field
-- Fix ASCII Table parser for cases where centered headers cause mis-aligned fields
+- Fix ASCII Table parser for cases where centered headers cause misaligned fields
 
 20220513 v1.19.0
 - Add `chage --list` command parser tested on linux

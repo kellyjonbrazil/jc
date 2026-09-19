@@ -48,6 +48,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat.out'), 'r', encoding='utf-8') as f:
         git_log_fuller_shortstat = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-numstat.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_numstat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-numstat.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_stat_numstat = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline.out'), 'r', encoding='utf-8') as f:
         git_log_oneline = f.read()
 
@@ -65,6 +71,21 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-blank-author-fix.out'), 'r', encoding='utf-8') as f:
         git_log_blank_author_fix = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch-merge.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_merge = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch-binary.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_binary = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch-multi.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_multi = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-patch.out'), 'r', encoding='utf-8') as f:
+        git_log_fuller_stat_patch = f.read()
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log.json'), 'r', encoding='utf-8') as f:
@@ -106,6 +127,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-shortstat.json'), 'r', encoding='utf-8') as f:
         git_log_fuller_shortstat_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-numstat.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_numstat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-numstat.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_stat_numstat_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-oneline.json'), 'r', encoding='utf-8') as f:
         git_log_oneline_json = json.loads(f.read())
 
@@ -123,6 +150,21 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-blank-author-fix.json'), 'r', encoding='utf-8') as f:
         git_log_blank_author_fix_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch-merge.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_merge_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch-binary.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_binary_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-patch-multi.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_patch_multi_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-patch.json'), 'r', encoding='utf-8') as f:
+        git_log_fuller_stat_patch_json = json.loads(f.read())
 
 
     def test_git_log_nodata(self):
@@ -209,6 +251,19 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_shortstat, quiet=True), self.git_log_fuller_shortstat_json)
 
+    def test_git_log_fuller_numstat(self):
+        """
+        Test 'git_log --format=fuller --numstat'
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_numstat, quiet=True), self.git_log_fuller_numstat_json)
+
+    def test_git_log_fuller_stat_numstat(self):
+        """
+        Test 'git_log --format=fuller --stat --numstat' (both flags: files
+        should not be counted twice)
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_stat_numstat, quiet=True), self.git_log_fuller_stat_numstat_json)
+
     def test_git_log_oneline(self):
         """
         Test 'git_log --format=oneline'
@@ -247,6 +302,38 @@ class MyTests(unittest.TestCase):
         empty email, or both
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_blank_author_fix, quiet=True), self.git_log_blank_author_fix_json)
+
+    def test_git_log_fuller_patch(self):
+        """
+        Test 'git_log --format=fuller --patch'
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_patch, quiet=True), self.git_log_fuller_patch_json)
+
+    def test_git_log_fuller_patch_merge(self):
+        """
+        Test 'git_log --format=fuller --patch' on a merge commit, which has
+        no patch of its own
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_patch_merge, quiet=True), self.git_log_fuller_patch_merge_json)
+
+    def test_git_log_fuller_patch_binary(self):
+        """
+        Test 'git_log --format=fuller --patch' on a commit that only touches
+        a binary file
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_patch_binary, quiet=True), self.git_log_fuller_patch_binary_json)
+
+    def test_git_log_fuller_patch_multi(self):
+        """
+        Test 'git_log --format=fuller --patch' with a multi-commit stream
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_patch_multi, quiet=True), self.git_log_fuller_patch_multi_json)
+
+    def test_git_log_fuller_stat_patch(self):
+        """
+        Test 'git_log --format=fuller --stat --patch'
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_stat_patch, quiet=True), self.git_log_fuller_stat_patch_json)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,8 @@
+commit 80d03cb64bdeeb00bff4cca143fb145422219eb7
+Merge: 4ff7157 0136a5a
+Author:     Ada Lovelace <ada@example.com>
+AuthorDate: Fri Mar 5 09:00:00 2021 +0000
+Commit:     Ada Lovelace <ada@example.com>
+CommitDate: Fri Mar 5 09:00:00 2021 +0000
+
+    Merge branch 'feature'
