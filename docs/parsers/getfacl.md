@@ -1,4 +1,9 @@
-r"""jc - JSON Convert `getfacl` command output parser
+[Home](https://kellyjonbrazil.github.io/jc/)
+<a id="jc.parsers.getfacl"></a>
+
+# jc.parsers.getfacl
+
+jc - JSON Convert `getfacl` command output parser
 
 Parses the default (non-tabular) `getfacl` output. The file name, owner, and
 owning group from the comment header are included on every entry, along with
@@ -214,119 +219,32 @@ Examples:
         "default": true
       }
     ]
-"""
-import re
-from typing import List, Dict
-from jc.jc_types import JSONDictType
-import jc.utils
 
+<a id="jc.parsers.getfacl.parse"></a>
 
-class info():
-    """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
-    description = '`getfacl` command parser'
-    author = 'Tung Lam'
-    author_email = '53996158+tunglambk@users.noreply.github.com'
-    compatible = ['linux']
-    tags = ['command']
-    magic_commands = ['getfacl']
+### parse
 
+```python
+def parse(data: str,
+          raw: bool = False,
+          quiet: bool = False) -> List[Dict[str, Any]]
+```
 
-__version__ = info.version
+Main text parsing function
 
-# fields from the `# key: value` comment header. The `# file` line starts a
-# new ACL block, so the remaining fields are reset when it is seen.
-_header_fields = ('file', 'owner', 'group', 'flags')
+Parameters:
 
-_entry_re = re.compile(
-    r'^(?P<default>default:)?'
-    r'(?P<type>user|group|mask|other):'
-    r'(?P<name>[^:]*):'
-    r'(?P<permissions>[r-][w-][x-])$'
-)
-_effective_re = re.compile(r'^effective:(?P<effective>[r-][w-][x-])$')
+    data:        (string)  text data to parse
+    raw:         (boolean) unprocessed output if True
+    quiet:       (boolean) suppress warning messages if True
 
+Returns:
 
-def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
-    """
-    Final processing to conform to the schema.
+    List of Dictionaries. Raw or processed structured data.
 
-    Parameters:
+### Parser Information
+Compatibility:  linux
 
-        proc_data:   (List of Dictionaries) raw structured data to process
+Source: [`jc/parsers/getfacl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/getfacl.py)
 
-    Returns:
-
-        List of Dictionaries. Structured to conform to the schema.
-    """
-    return proc_data
-
-
-def parse(
-    data: str,
-    raw: bool = False,
-    quiet: bool = False
-) -> List[JSONDictType]:
-    """
-    Main text parsing function
-
-    Parameters:
-
-        data:        (string)  text data to parse
-        raw:         (boolean) unprocessed output if True
-        quiet:       (boolean) suppress warning messages if True
-
-    Returns:
-
-        List of Dictionaries. Raw or processed structured data.
-    """
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    raw_output: List[Dict] = []
-
-    if jc.utils.has_data(data):
-        header: Dict = {field: None for field in _header_fields}
-
-        for line in data.splitlines():
-            line = line.strip()
-
-            if not line:
-                continue
-
-            if line.startswith('#'):
-                key, _, value = line.partition(':')
-                field = key.lstrip('#').strip()
-
-                if field in header:
-                    if field == 'file':
-                        header = {field: None for field in _header_fields}
-                    header[field] = value.strip() or None
-
-                continue
-
-            entry, _, comment = line.partition('#')
-            match = _entry_re.match(entry.rstrip())
-
-            if not match:
-                continue
-
-            effective = None
-            effective_match = _effective_re.match(comment.strip())
-
-            if effective_match:
-                effective = effective_match.group('effective')
-
-            raw_output.append({
-                'file': header['file'],
-                'owner': header['owner'],
-                'group': header['group'],
-                'flags': header['flags'],
-                'type': match.group('type'),
-                'name': match.group('name') or None,
-                'permissions': match.group('permissions'),
-                'effective': effective,
-                'default': bool(match.group('default')),
-            })
-
-    return raw_output if raw else _process(raw_output)
+Version 1.0 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
