@@ -1,0 +1,24 @@
+# file: file.txt
+# owner: tunglpb
+# group: tunglpb
+user::rw-
+user:root:rwx	#effective:r--
+group::rw-	#effective:r--
+mask::r--
+other::r--
+
+# file: dir
+# owner: tunglpb
+# group: tunglpb
+# flags: -s-
+user::rwx
+user:root:r-x
+group::rwx
+mask::rwx
+other::r-x
+default:user::rwx
+default:user:root:rwx
+default:group::rwx
+default:mask::rwx
+default:other::r-x
+
