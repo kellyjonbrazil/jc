@@ -59,6 +59,7 @@ parsers: List[str] = [
     'finger',
     'free',
     'fstab',
+    'getfacl',
     'git-diff',
     'git-log',
     'git-log-s',
