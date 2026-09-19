@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Dict, Iterable, Union, Optional, TextIO
+from typing import List, Dict, Iterable, Union, Optional, TextIO, Tuple
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
@@ -92,7 +92,7 @@ class JcCli():
         self.show_hidden: bool = False
         self.show_categories: bool = False
         self.ascii_only: bool = False
-        self.json_separators: Optional[tuple[str, str]] = (',', ':')
+        self.json_separators: Optional[Tuple[str, str]] = (',', ':')
         self.json_indent: Optional[int] = None
         self.run_timestamp: Optional[datetime] = None
         self.inputlist: Optional[List[str]] = None

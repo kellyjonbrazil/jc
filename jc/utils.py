@@ -9,7 +9,7 @@ from numbers import Number
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import Any, List, Dict, Iterable, Union, Optional, TextIO
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO, Set, Tuple
 from .jc_types import TimeStampFormatType
 
 CLI_QUIET = False
@@ -682,7 +682,7 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        formats: tuple[TimeStampFormatType, ...] = (
+        formats: Tuple[TimeStampFormatType, ...] = (
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
             {'id': 1200, 'format': '%a %b %d %I:%M:%S %p %Y', 'locale': None},  # 12-hour twin of 1000, for locales where `date` prints AM/PM: Thu Sep 10 11:10:44 AM 2026
@@ -731,7 +731,7 @@ class timestamp:
 
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC & GMT timezones and added known non-UTC offsets
-        tz_abbr: set[str] = {
+        tz_abbr: Set[str] = {
             'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
             'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
             'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
@@ -759,7 +759,7 @@ class timestamp:
             'UTC+1345', 'UTC+1400'
         }
 
-        offset_suffixes: tuple[str, ...] = (
+        offset_suffixes: Tuple[str, ...] = (
             '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
             '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
             '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
