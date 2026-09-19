@@ -218,6 +218,7 @@ option.
 |  `--http-headers` | HTTP headers parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/http_headers)   |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
+|         `--iftop` | `iftop` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iftop)          |
 |           `--ini` | INI file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini)            |
 |       `--ini-dup` | INI with duplicate key file parser                      | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ini_dup)        |
 |        `--iostat` | `iostat` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iostat)         |

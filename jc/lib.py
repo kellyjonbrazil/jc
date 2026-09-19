@@ -76,6 +76,7 @@ parsers: List[str] = [
     'http-headers',
     'id',
     'ifconfig',
+    'iftop',
     'ini',
     'ini-dup',
     'iostat',

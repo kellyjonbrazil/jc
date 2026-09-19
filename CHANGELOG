@@ -4,6 +4,8 @@ jc changelog
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `getfacl` command parser
 - Add `git diff --name-status` command parser
+- Add `iftop` command parser (note this parser was added long ago but never
+  registered so it was effectively hidden)
 - Add `ldd` command parser
 - Add `.netrc` file parser
 - Add `upsc` command parser

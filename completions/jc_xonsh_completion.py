@@ -196,6 +196,7 @@ jc_parsers = {
     '--http-headers': 'HTTP headers parser',
     '--id': '`id` command parser',
     '--ifconfig': '`ifconfig` command parser',
+    '--iftop': '`iftop` command parser',
     '--ini': 'INI file parser',
     '--ini-dup': 'INI with duplicate key file parser',
     '--iostat': '`iostat` command parser',
