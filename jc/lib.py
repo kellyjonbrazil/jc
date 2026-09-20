@@ -125,6 +125,7 @@ parsers: List[str] = [
     'path-list',
     'pci-ids',
     'pgpass',
+    'php-fpm',
     'pidstat',
     'pidstat-s',
     'ping',
