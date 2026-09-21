@@ -1,0 +1,1 @@
+[{"family": "inet", "name": "filter", "handle": null, "chains": [], "sets": [], "maps": []}, {"family": "ip", "name": "nat", "handle": null, "chains": [], "sets": [], "maps": []}, {"family": "inet", "name": "myset", "handle": null, "chains": [], "sets": [], "maps": []}]

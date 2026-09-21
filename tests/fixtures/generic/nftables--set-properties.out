@@ -1,0 +1,29 @@
+table inet sp {
+	set a {
+		type ipv4_addr
+		flags interval
+		auto-merge
+		elements = { 10.0.0.0/8 }
+	}
+
+	set b {
+		type ipv4_addr
+		size 65535
+		flags dynamic,timeout
+		timeout 1h
+		gc-interval 30s
+	}
+
+	map m {
+		type inet_service : verdict
+		policy memory
+		size 100
+		flags dynamic,timeout
+		timeout 5m
+		elements = { 22 expires 4m59s996ms : accept }
+	}
+
+	chain c {
+		counter packets 0 bytes 0 accept
+	}
+}
