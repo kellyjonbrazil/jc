@@ -1,0 +1,1 @@
+[{"family": "inet", "name": "broken", "handle": null, "chains": [{"name": "input", "handle": null, "type": "filter", "hook": "input", "device": null, "priority": "filter", "policy": "drop", "rules": [{"rule": "tcp dport 22 accept", "handle": null}]}], "sets": [], "maps": []}]

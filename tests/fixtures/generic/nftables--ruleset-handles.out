@@ -1,0 +1,54 @@
+table inet filter { # handle 1
+	chain input { # handle 1
+		type filter hook input priority filter; policy drop;
+		ct state established,related accept # handle 4
+		iif "lo" accept # handle 5
+		ip saddr 192.168.0.0/16 tcp dport { 22, 80, 443 } accept # handle 7
+		tcp dport 8080 counter packets 12 bytes 720 accept # handle 8
+		counter packets 2 bytes 104 drop # handle 9
+	}
+
+	chain forward { # handle 2
+		type filter hook forward priority filter; policy drop;
+	}
+
+	chain output { # handle 3
+		type filter hook output priority filter; policy accept;
+	}
+}
+table ip nat { # handle 2
+	chain prerouting { # handle 1
+		type nat hook prerouting priority dstnat; policy accept;
+		iif "eth0" tcp dport 80 dnat to 10.0.0.2:8080 # handle 3
+	}
+
+	chain postrouting { # handle 2
+		type nat hook postrouting priority srcnat; policy accept;
+		oif "eth0" masquerade # handle 4
+	}
+}
+table inet myset { # handle 3
+	set blacklist { # handle 3
+		type ipv4_addr
+		flags interval
+		elements = { 10.0.0.0/8, 172.16.0.0/12,
+			     192.168.0.0/16 }
+	}
+
+	map portmap { # handle 4
+		type inet_service : verdict
+		elements = { 22 : accept,
+			     80 : jump sink,
+			     443 : drop }
+	}
+
+	chain sink { # handle 1
+		counter packets 0 bytes 0 accept # handle 5
+	}
+
+	chain mangle { # handle 2
+		type filter hook prerouting priority mangle; policy accept;
+		ip saddr @blacklist drop # handle 6
+		tcp dport vmap { 22 : accept, 80 : drop } # handle 8
+	}
+}

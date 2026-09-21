@@ -1,0 +1,8 @@
+table inet quotes { # handle 1
+	chain input { # handle 1
+		type filter hook input priority filter; policy accept;
+		tcp dport 22 accept comment "brace } inside" # handle 2
+		tcp dport 80 accept comment "brace { inside" # handle 3
+		ip saddr 10.0.0.0/8 drop comment "commas, and { braces } together" # handle 4
+	}
+}
