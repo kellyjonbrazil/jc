@@ -29,6 +29,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.gshadow.parse('', quiet=True), [])
 
+    def test_gshadow_whitespace_only_line(self):
+        """
+        Test 'cat /etc/gshadow' with a whitespace-only line
+        """
+        data = ' \t \nwheel:::jdoe\n'
+        expected = [{'group_name': 'wheel', 'password': '', 'administrators': [], 'members': ['jdoe']}]
+        self.assertEqual(jc.parsers.gshadow.parse(data, quiet=True), expected)
+
     def test_gshadow_centos_7_7(self):
         """
         Test 'cat /etc/gshadow' on Centos 7.7
