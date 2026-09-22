@@ -1,4 +1,5 @@
 [1789900901.892922]	 [UPDATE] tcp      6 120 FIN_WAIT src=10.42.0.1 dst=10.42.0.249 sport=52440 dport=8000 src=10.42.0.249 dst=10.42.0.1 sport=8000 dport=52440 [ASSURED]
 [1789900901.892957]	 [UPDATE] tcp      6 30 LAST_ACK src=10.42.0.1 dst=10.42.0.249 sport=52440 dport=8000 src=10.42.0.249 dst=10.42.0.1 sport=8000 dport=52440 [ASSURED]
 [1789900901.892970]	 [UPDATE] tcp      6 120 TIME_WAIT src=10.42.0.1 dst=10.42.0.249 sport=52440 dport=8000 src=10.42.0.249 dst=10.42.0.1 sport=8000 dport=52440 [ASSURED]
-conntrack v1.4.9 (conntrack-tools): 3 flow events have been shown.
+[1789900902.42    ]	 [NEW] tcp      6 120 SYN_SENT src=10.42.0.1 dst=10.42.0.249 sport=52440 dport=8000 [UNREPLIED] src=10.42.0.249 dst=10.42.0.1 sport=8000 dport=52440
+conntrack v1.4.9 (conntrack-tools): 4 flow events have been shown.

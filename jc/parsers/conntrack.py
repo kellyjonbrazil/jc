@@ -17,6 +17,14 @@ protocol-specific fields such as ICMP `type`/`code`/`id` and GRE
 (`mark`, `use`, `portid`, ...) keep their own names. Bracket flags such as
 `[UNREPLIED]`, `[ASSURED]`, and `[EXPECTED]` are collected in `status`.
 
+Hyphens in field names become underscores, so the `delta-time` printed when
+`net.netfilter.nf_conntrack_timestamp` is enabled becomes `delta_time`. With
+`-o ktimestamp` the flow start and stop times are printed as `[start=...]`
+and `[stop=...]`; both are `ctime()` strings, kept as strings and also
+converted to `start_epoch`/`stop_epoch`. Those are naive, i.e. based on the
+local time of the system the parser is run on, which is the system that
+printed them. GRE keys are printed in hex and are converted from base 16.
+
 With `-o extended` the address family is printed before the protocol
 (`ipv4 2 tcp ...`), which populates `family` and `family_number`. With
 `-o timestamp` the event time is prepended to event lines, which populates
@@ -117,6 +125,7 @@ Examples:
       }
     ]
 """
+import re
 from typing import Dict, List, Optional, Tuple
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -146,9 +155,28 @@ _first_tuple_key = 'src'
 # in a tuple (addresses, security contexts, labels, ...) stays a string.
 _int_keys = {
     'family_number', 'protocol_number', 'timeout',
-    'sport', 'dport', 'type', 'code', 'id', 'srckey', 'dstkey',
-    'packets', 'bytes', 'mark', 'use', 'portid', 'zone'
+    'sport', 'dport', 'type', 'code', 'id',
+    'packets', 'bytes', 'mark', 'use', 'portid', 'zone', 'delta_time'
 }
+
+# `-o ktimestamp` prints these as ctime() strings, which is format hint 1000
+_date_keys = {'start', 'stop'}
+
+# GRE is the one protocol whose tuple fields conntrack prints in hex
+# (`srckey=0x%x`), which convert_to_int() would read as a decimal
+_hex_keys = {'srckey', 'dstkey'}
+
+# `-o ktimestamp` prints `[start=...]`/`[stop=...]` as ctime() strings, so a
+# bracketed token can contain spaces and a line cannot be split on whitespace
+_token_re = re.compile(r'\[[^\]]*\]|\S+')
+
+
+def _convert_hex(value: str) -> Optional[int]:
+    """Convert a hex value such as GRE's `srckey=0x1a2b` to an integer."""
+    try:
+        return int(value, 16)
+    except (TypeError, ValueError):
+        return jc.utils.convert_to_int(value)
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -164,7 +192,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         List of Dictionaries. Structured to conform to the schema.
     """
     for entry in proc_data:
-        for key, value in entry.items():
+        for key, value in entry.copy().items():
             if key == 'status':
                 continue
 
@@ -179,6 +207,15 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                     base_key = key[len(prefix):]
                     break
 
+            if base_key in _date_keys:
+                dt = jc.utils.timestamp(value, format_hint=(1000,))
+                entry[key + '_epoch'] = dt.naive
+                continue
+
+            if base_key in _hex_keys:
+                entry[key] = _convert_hex(value)
+                continue
+
             if base_key in _int_keys:
                 entry[key] = jc.utils.convert_to_int(value)
 
@@ -191,7 +228,7 @@ def _parse_line(line: str) -> Optional[Dict]:
     the line is not a conntrack tuple, such as the trailing
     `N flow entries have been shown.` summary.
     """
-    tokens = line.split()
+    tokens = _token_re.findall(line)
 
     if not tokens:
         return None
@@ -202,7 +239,7 @@ def _parse_line(line: str) -> Optional[Dict]:
     # `-E` lines start with the event name; `-o timestamp` puts the event
     # time in front of it
     if tokens[0].startswith('[') and tokens[0].endswith(']'):
-        first = tokens[0][1:-1]
+        first = tokens[0][1:-1].strip()
         tokens = tokens[1:]
 
         if first in _events:
@@ -216,7 +253,7 @@ def _parse_line(line: str) -> Optional[Dict]:
             event_timestamp = first
 
             if tokens and tokens[0].startswith('[') and tokens[0].endswith(']'):
-                event = tokens[0][1:-1]
+                event = tokens[0][1:-1].strip()
                 tokens = tokens[1:]
             else:
                 return None
@@ -271,10 +308,19 @@ def _parse_line(line: str) -> Optional[Dict]:
 
     for token in tokens[idx:]:
         if token.startswith('[') and token.endswith(']'):
-            status.append(token[1:-1])
+            inner = token[1:-1]
+
+            # `-o ktimestamp` prints [start=...] and [stop=...]; every other
+            # bracketed token is a status flag
+            if '=' in inner:
+                key, value = inner.split('=', 1)
+                fields.append((key.replace('-', '_'), value))
+            else:
+                status.append(inner)
+
         elif '=' in token:
             key, value = token.split('=', 1)
-            fields.append((key, value))
+            fields.append((key.replace('-', '_'), value))
         else:
             return None
 
