@@ -40,6 +40,24 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.cksum.parse('', quiet=True), [])
 
+    def test_cksum_stdin_no_filename(self):
+        """
+        Test 'cksum' output from a pipe (checksum and blocks only, no filename)
+        """
+        self.assertEqual(
+            jc.parsers.cksum.parse('1479881546 3', quiet=True),
+            [{'filename': None, 'checksum': 1479881546, 'blocks': 3}]
+        )
+
+    def test_sum_stdin_no_filename(self):
+        """
+        Test 'sum' output from a pipe (checksum and blocks only, no filename)
+        """
+        self.assertEqual(
+            jc.parsers.cksum.parse('32856 1', quiet=True),
+            [{'filename': None, 'checksum': 32856, 'blocks': 1}]
+        )
+
     def test_cksum_centos_7_7(self):
         """
         Test 'cksum' on Centos 7.7
