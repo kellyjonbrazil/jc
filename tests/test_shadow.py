@@ -28,6 +28,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.shadow.parse('', quiet=True), [])
 
+    def test_shadow_whitespace_only_line(self):
+        """
+        Test 'cat /etc/shadow' with a whitespace-only line
+        """
+        data = ' \t \njdoe:!!:18113:0:99999:7:::\n'
+        expected = [{'username': 'jdoe', 'password': '!!', 'last_changed': 18113, 'minimum': 0, 'maximum': 99999, 'warn': 7, 'inactive': None, 'expire': None}]
+        self.assertEqual(jc.parsers.shadow.parse(data, quiet=True), expected)
+
     def test_shadow_centos_7_7(self):
         """
         Test 'cat /etc/shadow' on Centos 7.7
