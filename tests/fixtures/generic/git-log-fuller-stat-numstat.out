@@ -1,0 +1,119 @@
+commit 9d11e1fe5bbdfb9f68b001940a7ae235b68db637
+Author:     Kelly Brazil <kellyjonbrazil@gmail.com>
+AuthorDate: Thu Jun 18 09:46:51 2026 -0700
+Commit:     Kelly Brazil <kellyjonbrazil@gmail.com>
+CommitDate: Thu Jun 18 09:46:51 2026 -0700
+
+    doc update
+
+6	3	README.md
+1	1	completions/jc_bash_completion.sh
+8	1	completions/jc_zsh_completion.sh
+1	1	docs/parsers/certbot.md
+9	5	docs/parsers/csv.md
+107	0	docs/parsers/csv_ih.md
+87	0	docs/parsers/csv_ih_s.md
+9	2	docs/parsers/csv_s.md
+1	1	docs/parsers/dir.md
+8	1	docs/parsers/hashsum.md
+1	1	docs/parsers/ifconfig.md
+1	1	docs/parsers/iptables.md
+3	1	docs/parsers/lsattr.md
+5	2	docs/parsers/pip_show.md
+1	1	docs/parsers/proc_pid_smaps.md
+20	2	docs/parsers/rsync.md
+5	1	docs/parsers/rsync_s.md
+106	0	docs/parsers/tsv.md
+106	0	docs/parsers/tsv_ih.md
+87	0	docs/parsers/tsv_ih_s.md
+86	0	docs/parsers/tsv_s.md
+149	0	docs/parsers/typeset.md
+6	1	docs/parsers/ufw.md
+1	2	docs/parsers/ufw_appinfo.md
+1	1	jc/cli.py
+37	2	man/jc.1
+ README.md                         |   9 ++-
+ completions/jc_bash_completion.sh |   2 +-
+ completions/jc_zsh_completion.sh  |   9 ++-
+ docs/parsers/certbot.md           |   2 +-
+ docs/parsers/csv.md               |  14 ++--
+ docs/parsers/csv_ih.md            | 107 +++++++++++++++++++++++++++
+ docs/parsers/csv_ih_s.md          |  87 ++++++++++++++++++++++
+ docs/parsers/csv_s.md             |  11 ++-
+ docs/parsers/dir.md               |   2 +-
+ docs/parsers/hashsum.md           |   9 ++-
+ docs/parsers/ifconfig.md          |   2 +-
+ docs/parsers/iptables.md          |   2 +-
+ docs/parsers/lsattr.md            |   4 +-
+ docs/parsers/pip_show.md          |   7 +-
+ docs/parsers/proc_pid_smaps.md    |   2 +-
+ docs/parsers/rsync.md             |  22 +++++-
+ docs/parsers/rsync_s.md           |   6 +-
+ docs/parsers/tsv.md               | 106 +++++++++++++++++++++++++++
+ docs/parsers/tsv_ih.md            | 106 +++++++++++++++++++++++++++
+ docs/parsers/tsv_ih_s.md          |  87 ++++++++++++++++++++++
+ docs/parsers/tsv_s.md             |  86 ++++++++++++++++++++++
+ docs/parsers/typeset.md           | 149 ++++++++++++++++++++++++++++++++++++++
+ docs/parsers/ufw.md               |   7 +-
+ docs/parsers/ufw_appinfo.md       |   3 +-
+ jc/cli.py                         |   2 +-
+ man/jc.1                          |  39 +++++++++-
+ 26 files changed, 852 insertions(+), 30 deletions(-)
+
+commit 3a2946b6584f2128917ffe908f749498b8c5ea5c
+Author:     Kelly Brazil <kellyjonbrazil@gmail.com>
+AuthorDate: Thu Jun 18 09:32:33 2026 -0700
+Commit:     Kelly Brazil <kellyjonbrazil@gmail.com>
+CommitDate: Thu Jun 18 09:32:33 2026 -0700
+
+    add streaming csv-ih, tsv, and tsv-ih parsers with doc fixes
+
+10	1	CHANGELOG
+4	1	jc/lib.py
+1	1	jc/parsers/csv.py
+7	6	jc/parsers/csv_ih.py
+95	0	jc/parsers/csv_ih_s.py
+27	5	jc/parsers/csv_s.py
+3	3	jc/parsers/tsv.py
+8	8	jc/parsers/tsv_ih.py
+94	0	jc/parsers/tsv_ih_s.py
+93	0	jc/parsers/tsv_s.py
+1	0	tests/fixtures/generic/csv_ih-homes-streaming.json
+1	0	tests/fixtures/generic/csv_ih-jagged-streaming.json
+1	0	tests/fixtures/generic/tsv-dpkg-query-streaming.json
+1	0	tests/fixtures/generic/tsv_ih-dpkg-query-streaming.json
+1	0	tests/fixtures/generic/tsv_ih-simple-double-quote-streaming.json
+1	2	tests/test_csv.py
+63	0	tests/test_csv_s.py
+ CHANGELOG                                          | 11 ++-
+ jc/lib.py                                          |  5 +-
+ jc/parsers/csv.py                                  |  2 +-
+ jc/parsers/csv_ih.py                               | 13 +--
+ jc/parsers/csv_ih_s.py                             | 95 ++++++++++++++++++++++
+ jc/parsers/csv_s.py                                | 32 ++++++--
+ jc/parsers/tsv.py                                  |  6 +-
+ jc/parsers/tsv_ih.py                               | 16 ++--
+ jc/parsers/tsv_ih_s.py                             | 94 +++++++++++++++++++++
+ jc/parsers/tsv_s.py                                | 93 +++++++++++++++++++++
+ tests/fixtures/generic/csv_ih-homes-streaming.json |  1 +
+ .../fixtures/generic/csv_ih-jagged-streaming.json  |  1 +
+ .../fixtures/generic/tsv-dpkg-query-streaming.json |  1 +
+ .../generic/tsv_ih-dpkg-query-streaming.json       |  1 +
+ .../tsv_ih-simple-double-quote-streaming.json      |  1 +
+ tests/test_csv.py                                  |  3 +-
+ tests/test_csv_s.py                                | 63 ++++++++++++++
+ 17 files changed, 411 insertions(+), 27 deletions(-)
+
+commit 22ff0e33c3957c929d45864cc9790b8f7b6fe9c8
+Author:     Kelly Brazil <kellyjonbrazil@gmail.com>
+AuthorDate: Thu Jun 18 08:15:34 2026 -0700
+Commit:     Kelly Brazil <kellyjonbrazil@gmail.com>
+CommitDate: Thu Jun 18 08:15:34 2026 -0700
+
+    fix for python 3.15 behavior changes
+
+6	0	jc/utils.py
+10	1	tests/test_jc_utils.py
+ jc/utils.py            |  6 ++++++
+ tests/test_jc_utils.py | 11 ++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)

@@ -148,6 +148,21 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
 
+    def test_ifconfig_hex_mask_all_zeros(self):
+        """
+        Test 'ifconfig' with 0x00000000 netmask (FreeBSD/macOS hex format).
+        Regression test: lstrip('0x') incorrectly strips leading '0' chars
+        from the hex digits, producing wrong mask for all-zero masks.
+        """
+        data = (
+            'lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384\n'
+            '\toptions=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>\n'
+            '\tinet 192.168.1.1 netmask 0x00000000\n'
+        )
+        result = jc.parsers.ifconfig.parse(data, quiet=True)
+        self.assertEqual(result[0]['ipv4_mask'], '0.0.0.0')
+        self.assertEqual(result[0]['ipv4'][0]['mask'], '0.0.0.0')
+
     def test_ifconfig_utun_ipv4(self):
         """
         Test 'ifconfig' with ipv4 utun addresses (macOS)

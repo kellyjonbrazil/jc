@@ -32,6 +32,8 @@ Schema:
     {
       "destination_ip":         string,
       "destination_name":       string,
+      "max_hops":               integer,
+      "data_bytes":             integer,
       "hops": [
         {
           "hop":                integer,
@@ -54,6 +56,8 @@ Examples:
     {
       "destination_ip": "216.58.194.46",
       "destination_name": "google.com",
+      "max_hops": 64,
+      "data_bytes": 50,
       "hops": [
         {
           "hop": 1,
@@ -89,6 +93,8 @@ Examples:
     {
       "destination_ip": "216.58.194.46",
       "destination_name": "google.com",
+      "max_hops": "64",
+      "data_bytes": "50",
       "hops": [
         {
           "hop": "1",
@@ -145,4 +151,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/traceroute.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/traceroute.py)
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)

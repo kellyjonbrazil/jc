@@ -48,6 +48,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump.out'), 'r', encoding='utf-8') as f:
         generic_iptables_no_jump = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump2.out'), 'r', encoding='utf-8') as f:
+        generic_iptables_no_jump2 = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iptables-filter.json'), 'r', encoding='utf-8') as f:
         centos_7_7_iptables_filter_json = json.loads(f.read())
@@ -87,6 +90,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump.json'), 'r', encoding='utf-8') as f:
         generic_iptables_no_jump_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump2.json'), 'r', encoding='utf-8') as f:
+        generic_iptables_no_jump2_json = json.loads(f.read())
 
 
     def test_iptables_nodata(self):
@@ -172,6 +178,12 @@ class MyTests(unittest.TestCase):
         Test 'sudo iptables' with no jump target
         """
         self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump, quiet=True), self.generic_iptables_no_jump_json)
+
+    def test_iptables_no_jump2_generic(self):
+        """
+        Test 'sudo iptables' with no jump target and verbose output
+        """
+        self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump2, quiet=True), self.generic_iptables_no_jump2_json)
 
     def test_iptables_x_option_format(self):
         """

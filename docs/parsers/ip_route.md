@@ -73,4 +73,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/ip_route.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ip_route.py)
 
-Version 1.0 by Julian Jackson (jackson.julian55@yahoo.com)
+Version 1.1 by Julian Jackson (jackson.julian55@yahoo.com)

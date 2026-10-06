@@ -50,7 +50,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ip route` command parser'
     author = 'Julian Jackson'
     author_email = 'jackson.julian55@yahoo.com'
@@ -76,12 +76,18 @@ def parse(data, raw=False, quiet=False):
 
         List of Json objects if data is processed and Raw data if raw = true.
     """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
     structure = {}
     items = []
     lines = data.splitlines()
     index = 0
     place = 0
     inc = 0
+
+    if not jc.utils.has_data(data):
+        return items
 
     for line in lines:
         temp = line.split()
@@ -135,11 +141,5 @@ def parse(data, raw=False, quiet=False):
         place = 0
         index += 1
         inc += 1
-
-    jc.utils.compatibility(__name__, info.compatible, quiet)
-    jc.utils.input_type_check(data)
-
-    if not jc.utils.has_data(data):
-        return []
 
     return items

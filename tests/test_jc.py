@@ -43,12 +43,35 @@ class MyTests(unittest.TestCase):
     def test_jc_slurpable_parser_mod_list_is_list(self):
         self.assertIsInstance(jc.slurpable_parser_mod_list(), list)
 
+    def _project_root(self):
+        """Return the directory that contains setup.py.
+
+        Walk up from the test file so the check still works when tests are
+        copied into a build tree (Debian pybuild uses
+        `.pybuild/.../build/tests`, so `tests/../setup.py` is missing).
+        """
+        path = THIS_DIR
+        for _ in range(8):
+            if os.path.isfile(os.path.join(path, 'setup.py')):
+                return path
+            parent = os.path.dirname(path)
+            if parent == path:
+                break
+            path = parent
+        return None
+
     def test_version_info(self):
         """Test that the lib and pkg version strings match."""
-        with open(os.path.join(THIS_DIR, os.pardir, 'jc/lib.py'), 'r', encoding='utf-8') as f:
+        project_root = self._project_root()
+        self.assertIsNotNone(
+            project_root,
+            'setup.py not found above the test directory'
+        )
+
+        with open(os.path.join(project_root, 'jc/lib.py'), 'r', encoding='utf-8') as f:
             lib_file = f.read()
 
-        with open(os.path.join(THIS_DIR, os.pardir, 'setup.py'), 'r', encoding='utf-8') as f:
+        with open(os.path.join(project_root, 'setup.py'), 'r', encoding='utf-8') as f:
             pkg_file = f.read()
 
         lib_pattern = re.compile(r'''__version__ = \'(?P<ver>\d+\.\d+\.\d+)\'''')

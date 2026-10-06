@@ -77,7 +77,7 @@ import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
-from typing import Dict, Iterable
+from typing import Dict, Iterable, Set
 from jc.jc_types import JSONDictType, StreamingOutputType
 from jc.exceptions import ParseError
 
@@ -108,10 +108,10 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list: set[str] = {'size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid',
+    int_list: Set[str] = {'size', 'blocks', 'io_blocks', 'inode', 'links', 'uid', 'gid',
                 'unix_device', 'rdev', 'block_size'}
 
-    null_list: set[str] = {'access_time', 'modify_time', 'change_time', 'birth_time'}
+    null_list: Set[str] = {'access_time', 'modify_time', 'change_time', 'birth_time'}
 
     for key in proc_data.copy():
         if key in int_list:

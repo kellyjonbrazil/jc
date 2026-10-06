@@ -38,7 +38,13 @@ Schema:
                                     string
         ],
         "status":                   string,
-        "location":                 string
+        "location":                 string,
+        "taint_state": [
+                                    string
+        ],
+        "taint_state_verbose": [
+                                    string
+        ]
       }
     ]
 
@@ -47,63 +53,89 @@ Examples:
     $ cat /proc/modules | jc --proc -p
     [
       {
-        "module": "binfmt_misc",
-        "size": 24576,
-        "used": 1,
+        "module": "i2c_piix4",
+        "size": 28672,
+        "used": 0,
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "location": "0xffffffffc0222000"
       },
       {
-        "module": "vsock_loopback",
+        "module": "pata_acpi",
         "size": 16384,
         "used": 0,
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a14000"
+        "location": "0xffffffffc021a000"
       },
       {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": 36864,
+        "module": "falcon_lsm_serviceable",
+        "size": 87169,
         "used": 1,
-        "used_by": [
-          "vsock_loopback"
-        ],
+        "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "location": "0xffffffffc056f000",
+        "taint_state": [
+          "P",
+          "E"
+        ],
+        "taint_state_verbose": [
+          "Proprietary or non-GPL-compatible module loaded",
+          "Unsigned module loaded"
+        ]
       },
-      ...
+      {
+        "module": "nic_driver",
+        "size": 16384,
+        "used": 0,
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc011a000",
+        "taint_state": [
+          "O"
+        ],
+        "taint_state_verbose": [
+          "Out-of-tree (externally built) module loaded"
+        ]
+      }
     ]
 
     $ cat /proc/modules | jc --proc-modules -p -r
     [
       {
-        "module": "binfmt_misc",
-        "size": "24576",
-        "used": "1",
+        "module": "i2c_piix4",
+        "size": "28672",
+        "used": "0",
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0ab4000"
+        "location": "0xffffffffc0222000"
       },
       {
-        "module": "vsock_loopback",
+        "module": "pata_acpi",
         "size": "16384",
         "used": "0",
         "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a14000"
+        "location": "0xffffffffc021a000"
       },
       {
-        "module": "vmw_vsock_virtio_transport_common",
-        "size": "36864",
+        "module": "falcon_lsm_serviceable",
+        "size": "87169",
         "used": "1",
-        "used_by": [
-          "vsock_loopback"
-        ],
+        "used_by": [],
         "status": "Live",
-        "location": "0xffffffffc0a03000"
+        "location": "0xffffffffc056f000",
+        "taint_state": "(PE)"
       },
-      ...
+      {
+        "module": "nic_driver",
+        "size": "16384",
+        "used": "0",
+        "used_by": [],
+        "status": "Live",
+        "location": "0xffffffffc011a000",
+        "taint_state": "(O)"
+      }
     ]
 
 <a id="jc.parsers.proc_modules.parse"></a>
@@ -131,4 +163,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/proc_modules.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_modules.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

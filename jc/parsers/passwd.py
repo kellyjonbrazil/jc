@@ -94,7 +94,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`/etc/passwd` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -147,7 +147,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = [line for line in data.splitlines() if line.strip()]
 
     if jc.utils.has_data(data):
 

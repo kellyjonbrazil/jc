@@ -219,7 +219,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.4'
+    version = '2.5'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -264,7 +264,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             try:
                 if entry['ipv4_mask'].startswith('0x'):
                     new_mask = entry['ipv4_mask']
-                    new_mask = new_mask.lstrip('0x')
+                    new_mask = new_mask[2:]
                     new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
                     entry['ipv4_mask'] = new_mask
             except (ValueError, TypeError, AttributeError):
@@ -289,7 +289,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                     try:
                         if ip_address['mask'].startswith('0x'):
                             new_mask = ip_address['mask']
-                            new_mask = new_mask.lstrip('0x')
+                            new_mask = new_mask[2:]
                             new_mask = '.'.join(str(int(i, 16)) for i in [new_mask[i:i + 2] for i in range(0, len(new_mask), 2)])
                             ip_address['mask'] = new_mask
                     except (ValueError, TypeError, AttributeError):

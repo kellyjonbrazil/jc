@@ -1,0 +1,95 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "8.8.8.8",
+    "destination_name": "8.8.8.8",
+    "max_hops": 4,
+    "data_bytes": 52
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 198949,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 6.07
+      },
+      {
+        "annotation": null,
+        "asn": 198949,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 5.721
+      },
+      {
+        "annotation": null,
+        "asn": 198949,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 5.269
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 160.025
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 178.69
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 33.759
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 7018,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 37.783
+      },
+      {
+        "annotation": null,
+        "asn": 7018,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 23.782
+      },
+      {
+        "annotation": null,
+        "asn": 7018,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 24.958
+      }
+    ]
+  }
+]

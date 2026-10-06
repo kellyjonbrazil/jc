@@ -1,5 +1,4 @@
-r"""jc - JSON Convert `ufw app info [application]` command
-output parser
+r"""jc - JSON Convert `ufw app info [application]` command output parser
 
 Supports individual apps via `ufw app info [application]` and all apps list
 via `ufw app info all`.

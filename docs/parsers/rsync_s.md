@@ -12,6 +12,8 @@ Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the `STDOUT` output or a log file
 generated with the `--log-file` option.
 
+The `--stats` or `--info=stats[1-3]` options are also supported.
+
 Usage (cli):
 
     $ rsync -i -a source/ dest | jc --rsync-s
@@ -69,6 +71,8 @@ Schema:
       }
     }
 
+    Size values are in bytes.
+
     [0] 'file sent', 'file received', 'local change or creation',
         'hard link', 'not updated', 'message'
     [1] 'file', 'directory', 'symlink', 'device', 'special file'
@@ -115,4 +119,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/rsync_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/rsync_s.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

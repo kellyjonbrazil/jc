@@ -69,6 +69,7 @@ a controller and a device but there might be fields corresponding to one entity.
             "blocked":              string,
             "connected":            string,
             "legacy_pairing":       string,
+            "cable_pairing":        string,
             "rssi":                 int,
             "txpower":              int,
             "uuids":                array,
@@ -136,4 +137,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/bluetoothctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/bluetoothctl.py)
 
-Version 1.4 by Jake Ob (iakopap at gmail.com)
+Version 1.5 by Jake Ob (iakopap at gmail.com)

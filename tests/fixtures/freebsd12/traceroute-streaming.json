@@ -1,0 +1,216 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "8.8.8.8",
+    "destination_name": "8.8.8.8",
+    "max_hops": 64,
+    "data_bytes": 40
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice.attlocal.net",
+        "rtt": 3.263
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice.attlocal.net",
+        "rtt": 4.146
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice.attlocal.net",
+        "rtt": 4.273
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 20.839
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 23.434
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 22.032
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 33.17
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 26.593
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 32.851
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.3.70",
+        "name": "sffca22crs.ip.att.net",
+        "rtt": 26.045
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.3.70",
+        "name": "sffca22crs.ip.att.net",
+        "rtt": 29.235
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.3.70",
+        "name": "sffca22crs.ip.att.net",
+        "rtt": 28.28
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.163.61",
+        "name": "12.122.163.61",
+        "rtt": 25.3
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.163.61",
+        "name": "12.122.163.61",
+        "rtt": 24.156
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.163.61",
+        "name": "12.122.163.61",
+        "rtt": 24.849
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.255.10.226",
+        "name": "12.255.10.226",
+        "rtt": 25.375
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.255.10.224",
+        "name": "12.255.10.224",
+        "rtt": 24.011
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.255.10.224",
+        "name": "12.255.10.224",
+        "rtt": 25.322
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "108.170.243.1",
+        "name": "108.170.243.1",
+        "rtt": 29.376
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "8.8.8.8",
+        "name": "dns.google",
+        "rtt": 23.228
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "209.85.252.251",
+        "name": "209.85.252.251",
+        "rtt": 24.548
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "108.170.237.23",
+        "name": "108.170.237.23",
+        "rtt": 24.332
+      }
+    ]
+  }
+]

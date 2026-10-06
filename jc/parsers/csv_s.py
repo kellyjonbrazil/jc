@@ -54,16 +54,18 @@ Examples:
     {"Sell":"129","List":"132","Living":"13","Rooms":"6","Beds":"3"...}
     ...
 """
-import itertools
 import csv
+import itertools
+from typing import Iterable, Union, Type
 import jc.utils
 from jc.streaming import streaming_input_type_check, add_jc_meta, raise_or_yield
+from jc.jc_types import StreamingOutputType
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -94,7 +96,14 @@ def _process(proc_data):
 
 
 @add_jc_meta
-def parse(data, raw=False, quiet=False, ignore_exceptions=False):
+def parse(
+    data: Iterable[str],
+    raw: bool = False,
+    quiet: bool = False,
+    ignore_exceptions: bool = False,
+    implicit_header: bool = False,
+    tsv: bool = False,
+) -> StreamingOutputType:
     """
     Main text parsing generator function. Returns an iterable object.
 
@@ -136,21 +145,34 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         temp_list[0] = temp_list[0].decode('utf-8-sig')
 
     sniffdata = '\r\n'.join(temp_list)[:1024]
-    dialect = 'excel'  # default in csv module
+    dialect: Union[str, Type[csv.Dialect]] = (
+            'excel-tab' if tsv
+            else 'excel'  # default in csv module
+        )
 
     try:
         dialect = csv.Sniffer().sniff(sniffdata)
         if '""' in sniffdata:
             dialect.doublequote = True
+        if tsv:
+            dialect.delimiter = '\t'
     except Exception:
         pass
 
     # chain `temp_list` and `data` together to lazy load the rest of the CSV data
     new_data = itertools.chain(temp_list, data)
-    reader = csv.DictReader(new_data, dialect=dialect)
+    reader = csv.DictReader(
+            new_data,
+            dialect=dialect,
+            # In implicit mode Python will skip the header
+            # and put all fields in `restkey` (`None`).
+            fieldnames=[] if implicit_header else None
+        )
 
     for row in reader:
         try:
+            if implicit_header:
+                row = { f"c{idx}": col for idx, col in enumerate(row[None]) }
             yield row if raw else _process(row)
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, str(row))

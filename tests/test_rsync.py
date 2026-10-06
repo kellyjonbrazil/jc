@@ -45,6 +45,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv-logfile-nochange.out'), 'r', encoding='utf-8') as f:
         osx_10_14_6_rsync_i_vvv_logfile_nochange = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_stats = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i.json'), 'r', encoding='utf-8') as f:
         centos_7_7_rsync_i_json = json.loads(f.read())
@@ -81,6 +84,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/rsync-i-vvv-logfile-nochange.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_rsync_i_vvv_logfile_nochange_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_stats_json = json.loads(f.read())
 
 
     def test_rsync_nodata(self):
@@ -172,6 +178,12 @@ total size is 221.79G  speedup is 25,388.23
 '''
         expected = [{"summary":{"sent":8710000,"received":29880,"bytes_sec":10990.0,"total_size":221790000000,"speedup":25388.23},"files":[]}]
         self.assertEqual(jc.parsers.rsync.parse(data, quiet=True), expected)
+
+    def test_rsync_with_stats(self):
+        """
+        Test 'rsync -i --stats' or 'rsync -i --info=stats[1-3]'
+        """
+        self.assertEqual(jc.parsers.rsync.parse(self.generic_rsync_i_stats, quiet=True), self.generic_rsync_i_stats_json)
 
 
 if __name__ == '__main__':

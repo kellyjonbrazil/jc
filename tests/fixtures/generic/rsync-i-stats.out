@@ -1,0 +1,56 @@
+rsync[1817530] (server sender) heap statistics:
+  arena:        1204224   (bytes from sbrk)
+  ordblks:           46   (chunks not in use)
+
+rsync[1007426] (receiver) heap statistics:
+  arena:        9244672   (bytes from sbrk)
+  ordblks:           57   (chunks not in use)
+  smblks:             1   (free fastbin blocks)
+  hblks:              1   (chunks from mmap)
+  hblkhd:        266240   (bytes from mmap)
+  allmem:       9510912   (bytes from sbrk + mmap)
+  usmblks:            0   (always 0)
+  fsmblks:           96   (bytes in freed fastbin blocks)
+  uordblks:      486480   (bytes used)
+  fordblks:     8758192   (bytes free)
+  keepcost:      133856   (bytes in releasable chunk)
+  smblks:             2   (free fastbin blocks)
+  hblks:              1   (chunks from mmap)
+  hblkhd:        266240   (bytes from mmap)
+  allmem:       1470464   (bytes from sbrk + mmap)
+  usmblks:            0   (always 0)
+  fsmblks:          192   (bytes in freed fastbin blocks)
+  uordblks:      478288   (bytes used)
+  fordblks:      725936   (bytes free)
+  keepcost:      427216   (bytes in releasable chunk)
+
+rsync[1007424] (generator) heap statistics:
+  arena:        1384448   (bytes from sbrk)
+  ordblks:            6   (chunks not in use)
+  smblks:             1   (free fastbin blocks)
+  hblks:              1   (chunks from mmap)
+  hblkhd:        266240   (bytes from mmap)
+  allmem:       1650688   (bytes from sbrk + mmap)
+  usmblks:            0   (always 0)
+  fsmblks:           96   (bytes in freed fastbin blocks)
+  uordblks:      486160   (bytes used)
+  fordblks:      898288   (bytes free)
+  keepcost:      132272   (bytes in releasable chunk)
+
+Number of files: 23,784 (reg: 23,191, dir: 593)
+Number of created files: 2,651 (reg: 2,611, dir: 40)
+Number of deleted files: 0
+Number of regular files transferred: 2,629
+Total file size: 6.88T bytes
+Total transferred file size: 759.17G bytes
+Literal data: 0 bytes
+Matched data: 0 bytes
+File list size: 98.10K
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 8.99K
+Total bytes received: 1.29M
+
+sent 8.99K bytes  received 1.29M bytes  370.21K bytes/sec
+total size is 6.88T  speedup is 5,311,650.06 (DRY RUN)
+

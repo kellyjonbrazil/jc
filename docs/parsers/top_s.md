@@ -48,23 +48,39 @@ Schema:
       "cpu_hardware":                                 float,
       "cpu_software":                                 float,
       "cpu_steal":                                    float,
-      "mem_total":                                    float,    # [0]
-      "mem_free":                                     float,    # [0]
-      "mem_used":                                     float,    # [0]
-      "mem_buff_cache":                               float,    # [0]
-      "swap_total":                                   float,    # [0]
-      "swap_free":                                    float,    # [0]
-      "swap_used":                                    float,    # [0]
-      "mem_available":                                float,    # [0]
+      "mem_unit":                                     string,
+      "swap_unit":                                    string,
+      "mem_total":                                    float,
+      "mem_total_bytes":                              integer,
+      "mem_free":                                     float,
+      "mem_free_bytes":                               integer,
+      "mem_used":                                     float,
+      "mem_used_bytes":                               integer,
+      "mem_buff_cache":                               float,
+      "mem_buff_cache_bytes":                         integer,
+      "swap_total":                                   float,
+      "swap_total_bytes":                             integer,
+      "swap_free":                                    float,
+      "swap_free_bytes":                              integer,
+      "swap_used":                                    float,
+      "swap_used_bytes":                              integer,
+      "mem_available":                                float,
+      "mem_available_bytes":                          integer,
       "processes": [
         {
           "pid":                                      integer,
           "user":                                     string,
           "priority":                                 integer,
           "nice":                                     integer,
-          "virtual_mem":                              float,    # [1]
-          "resident_mem":                             float,    # [1]
-          "shared_mem":                               float,    # [1]
+          "virtual_mem":                              float,
+          "virtual_mem_unit":                         string,
+          "virtual_mem_bytes":                        integer,
+          "resident_mem":                             float,
+          "resident_mem_unit":                        string,
+          "resident_mem_bytes":                       integer,
+          "shared_mem":                               float,
+          "shared_mem_unit":                          string,
+          "shared_mem_bytes":                         integer,
           "status":                                   string,
           "percent_cpu":                              float,
           "percent_mem":                              float,
@@ -85,9 +101,15 @@ Schema:
           "thread_count":                             integer,
           "last_used_processor":                      integer,
           "time":                                     string,
-          "swap":                                     float,    # [1]
-          "code":                                     float,    # [1]
-          "data":                                     float,    # [1]
+          "swap":                                     float,
+          "swap_unit":                                string,
+          "swap_bytes":                               integer,
+          "code":                                     float,
+          "code_unit":                                string,
+          "code_bytes":                               integer
+          "data":                                     float,
+          "data_unit":                                string,
+          "data_bytes":                               integer,
           "major_page_fault_count":                   integer,
           "minor_page_fault_count":                   integer,
           "dirty_pages_count":                        integer,
@@ -106,7 +128,9 @@ Schema:
           ]
           "major_page_fault_count_delta":             integer,
           "minor_page_fault_count_delta":             integer,
-          "used":                                     float,    # [1]
+          "used":                                     float,
+          "used_unit":                                string,
+          "used_bytes":                               integer,
           "ipc_namespace_inode":                      integer,
           "mount_namespace_inode":                    integer,
           "net_namespace_inode":                      integer,
@@ -132,9 +156,6 @@ Schema:
         "line":         string       # exists if "success" is false
       }
     }
-
-    [0] Values are in the units output by `top`
-    [1] Unit suffix stripped during float conversion
 
 Examples:
 
@@ -178,4 +199,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/top_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/top_s.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

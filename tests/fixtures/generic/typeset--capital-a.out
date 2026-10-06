@@ -1,0 +1,4 @@
+declare -A BASH_ALIASES=()
+declare -A BASH_CMDS=()
+declare -A associative_array=([key2]="abc" [key3]="1 2 3" [key1]="hello \"world\"" )
+declare -Ai integers_associative_array=([one]="1" [two]="500" [three]="999" )

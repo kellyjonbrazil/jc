@@ -5,10 +5,10 @@ New profiles: skip
  
 To                         Action      From
 --                         ------      ----
-[ 1] 22/tcp                     ALLOW IN    Anywhere
-[ 2] 22/tcp (v6)                ALLOW OUT    Anywhere (v6)
+[ 1] 22/tcp                     ALLOW IN    Anywhere        (log)
+[ 2] 22/tcp (v6)                ALLOW OUT    Anywhere (v6)  (log)
 [ 3] 443/tcp                    DENY    192.168.0.1
-[ 4] 443/udp                    DENY OUT    192.168.0.7 8080:8081
+[ 4] 443/udp                    DENY OUT    192.168.0.7 8080:8081 (log)
 [ 5] 22/tcp                     ALLOW   192.168.0.0/24
 [ 6] 22/udp                     ALLOW   192.168.0.0/24 8080:8081 on en0
 [ 7] 22/tcp (v6)                ALLOW IN    2405:204:7449:49fc:f09a:6f4a:bc93:1955/64 on en1

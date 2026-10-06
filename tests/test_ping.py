@@ -273,7 +273,7 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ping-missing-hostname.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ping_missing_hostname_json = json.loads(f.read())
 
-    # ubunutu 18.4
+    # ubuntu 18.4
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ping-ip-O.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ping_ip_O_json = json.loads(f.read())
 

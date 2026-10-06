@@ -1,0 +1,223 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "181.40.91.83",
+    "destination_name": "paraguay.com",
+    "max_hops": 64,
+    "data_bytes": 52
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 128742,
+        "ip": "192.168.0.1",
+        "name": "192.168.0.1",
+        "rtt": 9.173
+      },
+      {
+        "annotation": null,
+        "asn": 128742,
+        "ip": "192.168.0.1",
+        "name": "192.168.0.1",
+        "rtt": 5.49
+      },
+      {
+        "annotation": null,
+        "asn": 128742,
+        "ip": "192.168.0.1",
+        "name": "192.168.0.1",
+        "rtt": 5.197
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "192.168.117.58",
+        "name": "192.168.117.58",
+        "rtt": 26.768
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "192.168.117.58",
+        "name": "192.168.117.58",
+        "rtt": 17.878
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "192.168.117.58",
+        "name": "192.168.117.58",
+        "rtt": 16.443
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "192.168.15.1",
+        "name": "192.168.15.1",
+        "rtt": 16.229
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "192.168.15.1",
+        "name": "192.168.15.1",
+        "rtt": 23.514
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "192.168.15.1",
+        "name": "192.168.15.1",
+        "rtt": 16.878
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "91.122.105.27",
+        "name": "91.122.105.27",
+        "rtt": 17.825
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "91.122.105.27",
+        "name": "91.122.105.27",
+        "rtt": 22.906
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "91.122.105.27",
+        "name": "91.122.105.27",
+        "rtt": 29.003
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "94.142.122.45",
+        "name": "94.142.122.45",
+        "rtt": 42.79
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "94.142.122.45",
+        "name": "94.142.122.45",
+        "rtt": 46.352
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "94.142.122.44",
+        "name": "94.142.122.44",
+        "rtt": 41.479
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "94.142.124.46",
+        "name": "94.142.124.46",
+        "rtt": 62.692
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "94.142.124.46",
+        "name": "94.142.124.46",
+        "rtt": 44.691
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "5.53.0.153",
+        "name": "5.53.0.153",
+        "rtt": 61.049
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "181.40.42.30",
+        "name": "pool-30-42-40-181.telecel.com.py",
+        "rtt": 65.148
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "5.53.0.155",
+        "name": "5.53.0.155",
+        "rtt": 65.096
+      },
+      {
+        "annotation": null,
+        "asn": 0,
+        "ip": "181.40.42.30",
+        "name": "pool-30-42-40-181.telecel.com.py",
+        "rtt": 65.157
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 10,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 11,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 12,
+    "probes": []
+  }
+]

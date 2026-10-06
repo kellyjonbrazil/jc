@@ -18,6 +18,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr.out'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_lsattr = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr-spaces.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_lsattr_spaces = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr-error.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_lsattr_error_json = json.loads(f.read())
@@ -27,6 +30,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_lsattr_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr-spaces.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_4_lsattr_spaces_json = json.loads(f.read())
 
     def test_lsattr_nodata(self):
         """
@@ -51,6 +57,13 @@ class MyTests(unittest.TestCase):
         Test 'sudo lsattr' on Ubuntu 20.4
         """
         self.assertEqual(jc.parsers.lsattr.parse(self.ubuntu_20_4_lsattr, quiet=True), self.ubuntu_20_4_lsattr_json)
+
+    def test_lsattr_spaces(self):
+        """
+        Test 'lsattr' with filenames containing spaces
+        """
+        self.assertEqual(jc.parsers.lsattr.parse(self.ubuntu_20_4_lsattr_spaces, quiet=True), self.ubuntu_20_4_lsattr_spaces_json)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -205,4 +205,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/pacman.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/pacman.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

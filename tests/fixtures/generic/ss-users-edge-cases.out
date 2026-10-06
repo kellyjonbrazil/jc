@@ -1,0 +1,4 @@
+Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess
+tcp   LISTEN 0      5            0.0.0.0:19004      0.0.0.0:*    users:(("(sd-pam)",pid=3210,fd=3)) ino:2415308 sk:a007 cgroup:/ <->
+tcp   LISTEN 0      5            0.0.0.0:19005      0.0.0.0:*    users:(("nginx: worker process",pid=4001,fd=6),("nginx: worker process",pid=4002,fd=6)) ino:2415309 sk:a008 cgroup:/system.slice/nginx.service <->
+tcp   LISTEN 0      5            0.0.0.0:19006      0.0.0.0:*    timer:(keepalive,7.20sec,0) users:(("app(prod)",pid=5010,fd=12)) ino:2415310 sk:a009 cgroup:/system.slice/app.service <->
