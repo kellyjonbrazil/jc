@@ -1,5 +1,13 @@
 jc changelog
 
+20261005 v1.26.1
+- Fix `fstab` parser to ignore whitespace-only lines
+- Fix `group` parser to ignore whitespace-only lines
+- Fix `gshadow` parser to ignore whitespace-only lines
+- Fix `passwd` parser to ignore whitespace-only lines
+- Fix `plist` parser for deprecation warning for codecs.open()
+- Fix `shadow` parser to ignore whitespace-only lines
+
 20260919 v1.26.0
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `getfacl` command parser

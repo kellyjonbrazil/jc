@@ -35,6 +35,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.fstab.parse('', quiet=True), [])
 
+    def test_fstab_whitespace_only_line(self):
+        """
+        Test 'cat /etc/fstab' with a whitespace-only line
+        """
+        data = ' \t \n/dev/sda1 / ext4 defaults 0 1\n'
+        expected = [{'fs_spec': '/dev/sda1', 'fs_file': '/', 'fs_vfstype': 'ext4', 'fs_mntops': 'defaults', 'fs_freq': 0, 'fs_passno': 1}]
+        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
+
     def test_fstab_centos_7_7(self):
         """
         Test 'cat /etc/fstab' on Centos 7.7

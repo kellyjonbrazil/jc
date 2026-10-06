@@ -126,4 +126,4 @@ Compatibility:  linux, darwin, aix, freebsd
 
 Source: [`jc/parsers/shadow.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/shadow.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
