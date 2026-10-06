@@ -62,7 +62,7 @@ def GetFileEncoding(path):
     return encoding
 
 def OpenFileWithEncoding(file_path, encoding):
-    return codecs.open(file_path, 'r', encoding=encoding, errors='ignore')
+    return open(file_path, 'r', encoding=encoding, errors='ignore', newline='')
 
 
 def OpenFile(file_path):
