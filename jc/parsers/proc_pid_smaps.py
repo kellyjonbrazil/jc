@@ -234,7 +234,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         'mm': 'mixed map area',
         'hg': 'huge page advise flag',
         'nh': 'no-huge page advise flag',
-        'mg': 'mergable advise flag',
+        'mg': 'mergeable advise flag',
         'bt': 'arm64 BTI guarded page',
         'mt': 'arm64 MTE allocation tags are enabled',
         'um': 'userfaultfd missing pages tracking',

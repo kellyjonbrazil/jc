@@ -207,7 +207,7 @@ import ipaddress
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ufw status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -276,8 +276,8 @@ def _parse_to_from(linedata, direction, rule_obj=None):
         else:
             rule_obj['comment'] = None
 
-    # pull (log)
-    RE_LOG = re.compile(r'\(log\)')
+    # pull (log) or (log-all)
+    RE_LOG = re.compile(r'\(log(-all)?\)')
     log_match = re.search(RE_LOG, linedata)
     if log_match:
         rule_obj['log'] = True

@@ -6,7 +6,7 @@ import jc.parsers.xml
 # fix for whether tests are run directly or via runtests.sh
 try:
     from ._vendor.packaging import version
-except:
+except ImportError:
     from _vendor.packaging import version  # type: ignore
 
 # check the version of installed xmltodict library
@@ -14,7 +14,7 @@ try:
     import xmltodict
     XMLTODICT_INSTALLED = True
     XMLTODICT_0_13_0_OR_HIGHER = version.parse(xmltodict.__version__) >= version.parse('0.13.0')  # type: ignore
-except:
+except Exception:
     XMLTODICT_INSTALLED = False
 
 

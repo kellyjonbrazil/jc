@@ -1,0 +1,15 @@
+# file: ok.txt
+# owner: root
+# group: root
+user::rw-
+user:bad:xyz
+group::r--
+mask::r
+other::r--
+
+# file: broken.txt
+# owner: root
+# group: root
+this is not an ACL entry
+default:
+::

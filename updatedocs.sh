@@ -1,5 +1,5 @@
 #!/bin/bash
-# Update all documentation (README.md, Man page, Doc files)
+# Update all documentation (README.md, Man page, Doc files, llms-full.txt)
 
 (
     echo === Building README.md
@@ -9,6 +9,11 @@
 (
     echo === Building man page
     ./mangen.py && echo "++++ man page build successful" || echo "---- man page build failed"
+) &
+
+(
+    echo === Building llms-full.txt
+    ./llmsgen.py && echo "++++ llms-full.txt build successful" || echo "---- llms-full.txt build failed"
 ) &
 
 (

@@ -77,7 +77,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`/etc/gshadow` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -131,7 +131,7 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
 
     # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    cleandata = [line for line in cleandata if line.strip()]
 
     if jc.utils.has_data(data):
 

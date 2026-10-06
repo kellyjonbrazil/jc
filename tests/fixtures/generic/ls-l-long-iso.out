@@ -1,0 +1,4 @@
+total 8
+-rw-r--r-- 1 root root     6 2024-08-15 10:53 apropos
+-rwxr-xr-x 1 root root 62744 2024-08-08 16:14 ar
+lrwxrwxrwx 1 root root     6 2024-08-15 10:53 arch -> apropos
