@@ -1,0 +1,99 @@
+[NEW] unknown  2 600 src=192.168.136.128 dst=224.0.0.22 [UNREPLIED] src=224.0.0.22 dst=192.168.136.128
+    [NEW] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=36037 dport=53 [UNREPLIED] src=8.8.8.8 dst=192.168.136.128 sport=53 dport=36037
+ [UPDATE] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=36037 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=36037
+    [NEW] tcp      6 120 SYN_SENT src=192.168.136.128 dst=91.189.91.48 sport=38784 dport=80 [UNREPLIED] src=91.189.91.48 dst=192.168.136.128 sport=80 dport=38784
+ [UPDATE] tcp      6 60 SYN_RECV src=192.168.136.128 dst=91.189.91.48 sport=38784 dport=80 src=91.189.91.48 dst=192.168.136.128 sport=80 dport=38784
+ [UPDATE] tcp      6 432000 ESTABLISHED src=192.168.136.128 dst=91.189.91.48 sport=38784 dport=80 src=91.189.91.48 dst=192.168.136.128 sport=80 dport=38784 [ASSURED]
+ [UPDATE] tcp      6 120 FIN_WAIT src=192.168.136.128 dst=91.189.91.48 sport=38784 dport=80 src=91.189.91.48 dst=192.168.136.128 sport=80 dport=38784 [ASSURED]
+ [UPDATE] tcp      6 30 LAST_ACK src=192.168.136.128 dst=91.189.91.48 sport=38784 dport=80 src=91.189.91.48 dst=192.168.136.128 sport=80 dport=38784 [ASSURED]
+ [UPDATE] tcp      6 120 TIME_WAIT src=192.168.136.128 dst=91.189.91.48 sport=38784 dport=80 src=91.189.91.48 dst=192.168.136.128 sport=80 dport=38784 [ASSURED]
+    [NEW] udp      17 30 src=192.168.136.128 dst=224.0.0.251 sport=5353 dport=5353 [UNREPLIED] src=224.0.0.251 dst=192.168.136.128 sport=5353 dport=5353
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=56122 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56122
+    [NEW] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=45365 dport=53 [UNREPLIED] src=8.8.8.8 dst=192.168.136.128 sport=53 dport=45365
+    [NEW] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=48400 dport=53 [UNREPLIED] src=8.8.8.8 dst=192.168.136.128 sport=53 dport=48400
+ [UPDATE] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=45365 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=45365
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=56122 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56122
+ [UPDATE] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=48400 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=48400
+    [NEW] tcp      6 120 SYN_SENT src=192.168.136.128 dst=34.117.59.81 sport=33192 dport=443 [UNREPLIED] src=34.117.59.81 dst=192.168.136.128 sport=443 dport=33192
+    [NEW] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=42007 dport=53 [UNREPLIED] src=8.8.8.8 dst=192.168.136.128 sport=53 dport=42007
+ [UPDATE] tcp      6 60 SYN_RECV src=192.168.136.128 dst=34.117.59.81 sport=33192 dport=443 src=34.117.59.81 dst=192.168.136.128 sport=443 dport=33192
+ [UPDATE] tcp      6 432000 ESTABLISHED src=192.168.136.128 dst=34.117.59.81 sport=33192 dport=443 src=34.117.59.81 dst=192.168.136.128 sport=443 dport=33192 [ASSURED]
+ [UPDATE] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=42007 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=42007
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=51449 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=51449
+    [NEW] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=42284 dport=53 [UNREPLIED] src=8.8.8.8 dst=192.168.136.128 sport=53 dport=42284
+    [NEW] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=59470 dport=53 [UNREPLIED] src=8.8.8.8 dst=192.168.136.128 sport=53 dport=59470
+ [UPDATE] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=59470 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=59470
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=51449 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=51449
+ [UPDATE] udp      17 30 src=192.168.136.128 dst=8.8.8.8 sport=42284 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=42284
+    [NEW] tcp      6 120 SYN_SENT src=192.168.136.128 dst=185.125.188.55 sport=57236 dport=443 [UNREPLIED] src=185.125.188.55 dst=192.168.136.128 sport=443 dport=57236
+ [UPDATE] tcp      6 60 SYN_RECV src=192.168.136.128 dst=185.125.188.55 sport=57236 dport=443 src=185.125.188.55 dst=192.168.136.128 sport=443 dport=57236
+ [UPDATE] tcp      6 432000 ESTABLISHED src=192.168.136.128 dst=185.125.188.55 sport=57236 dport=443 src=185.125.188.55 dst=192.168.136.128 sport=443 dport=57236 [ASSURED]
+    [NEW] tcp      6 120 SYN_SENT src=192.168.136.128 dst=91.189.91.96 sport=49740 dport=80 [UNREPLIED] src=91.189.91.96 dst=192.168.136.128 sport=80 dport=49740
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=49510 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=49510
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=49510 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=49510
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=44514 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=44514
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=44514 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=44514
+[DESTROY] udp      17 src=192.168.136.128 dst=8.8.8.8 sport=42284 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=42284
+[DESTROY] udp      17 src=127.0.0.1 dst=127.0.0.53 sport=44514 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=44514
+[DESTROY] udp      17 src=127.0.0.1 dst=127.0.0.53 sport=51449 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=51449
+[DESTROY] udp      17 src=192.168.136.128 dst=8.8.8.8 sport=42007 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=42007
+[DESTROY] udp      17 src=192.168.136.128 dst=8.8.8.8 sport=59470 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=59470
+[DESTROY] udp      17 src=127.0.0.1 dst=127.0.0.53 sport=49510 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=49510
+[DESTROY] udp      17 src=127.0.0.1 dst=127.0.0.53 sport=56122 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56122
+[DESTROY] udp      17 src=192.168.136.128 dst=8.8.8.8 sport=45365 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=45365
+[DESTROY] udp      17 src=192.168.136.128 dst=224.0.0.251 sport=5353 dport=5353 [UNREPLIED] src=224.0.0.251 dst=192.168.136.128 sport=5353 dport=5353
+[DESTROY] udp      17 src=192.168.136.128 dst=8.8.8.8 sport=36037 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=36037
+[DESTROY] udp      17 src=192.168.136.128 dst=8.8.8.8 sport=48400 dport=53 src=8.8.8.8 dst=192.168.136.128 sport=53 dport=48400
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=52269 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=52269
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=26218 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=26218
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=52269 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=52269
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=26218 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=26218
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=10945 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=10945
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=6420 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=6420
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=10945 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=10945
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=6420 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=6420
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=34417 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=34417
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=34417 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=34417
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=56346 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56346
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=56346 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56346
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=33056 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=33056
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=33056 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=33056
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=36275 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=36275
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=36275 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=36275
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=55493 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=55493
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=8434 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=8434
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=55493 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=55493
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=8434 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=8434
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=16802 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=16802
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=16802 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=16802
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=23501 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=23501
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=23501 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=23501
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=56507 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56507
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=56507 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=56507
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=49527 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=49527
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=49527 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=49527
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=51778 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=51778
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=51778 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=51778
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=50664 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=50664
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=50664 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=50664
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=55780 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=55780
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=55780 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=55780
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=33568 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=33568
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=33568 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=33568
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=52673 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=52673
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=52673 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=52673
+    [NEW] udp      17 29 src=127.0.0.1 dst=127.0.0.53 sport=36742 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=36742
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=36742 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=36742
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=60767 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=60767
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=60767 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=60767
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=36386 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=36386
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=36386 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=36386
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=60340 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=60340
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=60340 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=60340
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=43271 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=43271
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=43271 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=43271
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=41919 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=41919
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=41919 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=41919
+    [NEW] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=55376 dport=53 [UNREPLIED] src=127.0.0.53 dst=127.0.0.1 sport=53 dport=55376
+ [UPDATE] udp      17 30 src=127.0.0.1 dst=127.0.0.53 sport=55376 dport=53 src=127.0.0.53 dst=127.0.0.1 sport=53 dport=55376
+[DESTROY] tcp      6 LAST_ACK src=192.168.136.128 dst=185.125.188.55 sport=57236 dport=443 src=185.125.188.55 dst=192.168.136.128 sport=443 dport=57236 [ASSURED]

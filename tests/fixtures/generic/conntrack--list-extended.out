@@ -1,0 +1,4 @@
+ipv4     2 tcp      6 86352 ESTABLISHED src=10.42.0.18 dst=192.168.67.80 sport=34884 dport=9000 src=192.168.67.80 dst=192.168.114.132 sport=9000 dport=59763 [ASSURED] mark=0 use=1
+ipv4     2 udp      17 22 src=10.42.0.179 dst=10.43.0.10 sport=45255 dport=53 src=10.42.0.188 dst=10.42.0.179 sport=53 dport=45255 mark=0 use=1
+ipv6     10 icmpv6   58 29 src=::1 dst=::1 type=128 code=0 id=9 src=::1 dst=::1 type=129 code=0 id=9 mark=0 use=1
+conntrack v1.4.9 (conntrack-tools): 3 flow entries have been shown.
