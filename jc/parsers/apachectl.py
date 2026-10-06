@@ -1,44 +1,35 @@
-r"""jc - JSON Convert `apache2ctl -S` command output parser
+r"""jc - JSON Convert `apachectl -S` command output parser
 
 Parses the virtual host summary and run configuration printed by
-`apache2ctl -S`, which is a synonym for
-`apache2ctl -t -D DUMP_VHOSTS -D DUMP_RUN_CFG`. The `apachectl -S`,
-`apache2 -S`, and `httpd -S` forms print the same output.
+`apachectl -S`, which is a synonym for
+`apachectl -t -D DUMP_VHOSTS -D DUMP_RUN_CFG`. This parser works with the
+following commands:
+
+- `apachectl -S`
+- `apache2ctl -S` (Debian and Ubuntu)
+- `apache2 -S` (Debian and Ubuntu)
+- `httpd -S` (RHEL and Fedora)
 
 The whole output becomes one object. `virtual_hosts` holds one entry per
-virtual host. The command prints an IP-based virtual host as a single line,
-and prints name-based virtual hosts grouped under an `is a NameVirtualHost`
-line. Within a group the server named by the `default server` line has
-`default` set to `true`, and the aliases and wild aliases printed after a
-virtual host are collected on that entry. A wildcard port stays as the
-string `*` in `port`, and `port_num` is left out for it, the same way
-`jc --ss` handles a wildcard port. An IPv6 address is returned without the
-brackets the command prints around it.
-
-The run configuration that follows the virtual host list is returned as
-top-level fields: `server_root`, `main_document_root`, `main_error_log`,
-`scoreboard_file`, `mutexes`, `pid_file`, `defines`, `user`, `group`, and
-`chroot_dir`. `Define:` lines keep the `name=value` text as printed. The
-`not_used` marker the command appends to `User:` and `Group:` when it is not
-running as root is kept as a boolean on those objects.
-
-Only the `-S` output is parsed. `apache2ctl -t`, `-M`, and `-V` output and
-the start/stop subcommands are not supported. A virtual host line whose shape
-does not match any of the forms the command prints is skipped instead of
-failing the whole parse, and so is any other unrecognized line.
+virtual host, the server named by the `default server` line is marked, and
+the `alias` and `wild alias` lines are collected on the entry they follow.
+An IPv6 address is returned without the brackets the command prints. The run
+configuration after the vhost list becomes top-level fields. Only the `-S`
+output is parsed; a virtual host line whose shape doesn't match any of the
+forms the command prints is skipped instead of failing the parse.
 
 Usage (cli):
 
-    $ apache2ctl -S | jc --apache2ctl
+    $ apachectl -S | jc --apachectl
 
 or
 
-    $ jc apache2ctl -S
+    $ jc apachectl -S
 
 Usage (module):
 
     import jc
-    result = jc.parse('apache2ctl', apache2ctl_command_output)
+    result = jc.parse('apachectl', apachectl_command_output)
 
 Schema:
 
@@ -93,7 +84,7 @@ Schema:
 
 Examples:
 
-    $ apache2ctl -S | jc --apache2ctl -p
+    $ apachectl -S | jc --apachectl -p
     {
       "server_root": "/etc/apache2",
       "main_document_root": "/var/www/html",
@@ -149,12 +140,12 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`apache2ctl -S` command parser'
+    description = '`apachectl -S` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['command']
-    magic_commands = ['apache2ctl -S', 'apachectl -S', 'apache2 -S', 'httpd -S']
+    magic_commands = ['apachectl -S', 'apache2ctl -S', 'apache2 -S', 'httpd -S']
 
 
 __version__ = info.version

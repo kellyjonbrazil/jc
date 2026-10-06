@@ -8,15 +8,15 @@ sys.path.pop()
 
 class MyTests(unittest.TestCase):
 
-    def test_apache2ctl_nodata(self):
+    def test_apachectl_nodata(self):
         """
-        Test 'apache2ctl' with no data
+        Test 'apachectl' with no data
         """
         test_utils.run_no_data(self, __file__, {})
 
-    def test_apache2ctl_all_fixtures(self):
+    def test_apachectl_all_fixtures(self):
         """
-        Test 'apache2ctl' with various fixtures
+        Test 'apachectl' with various fixtures
         """
         test_utils.run_all_fixtures(self, __file__)
 
