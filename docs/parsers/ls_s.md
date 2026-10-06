@@ -11,6 +11,18 @@ jc - JSON Convert `ls` and `vdir` command output streaming parser
 Requires the `-l` option to be used on `ls`. If there are newline characters
 in the filename, then make sure to use the `-b` option on `ls`.
 
+Options supported:
+- `--time-style=full-iso`
+- `--time-style=long-iso`
+
+Block (`b`) and character (`c`) device entries report `major_number` and
+`minor_number` instead of `size`, since `ls` prints the device's major and
+minor numbers in that column rather than a byte count.
+
+`--time-style=iso` is not supported since its date field is a different
+width depending on how old each file is, which this parser cannot detect
+reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
+
 The `jc` `-qq` option can be used to ignore parsing errors. (e.g. filenames
 with newline characters, but `-b` was not used)
 
@@ -42,9 +54,11 @@ Schema:
       "owner":          string,
       "group":          string,
       "size":           integer,
+      "major_number":   integer,     # [0]
+      "minor_number":   integer,     # [0]
       "date":           string,
-      "epoch":          integer,     # [0]
-      "epoch_utc":      integer,     # [1]
+      "epoch":          integer,     # [1]
+      "epoch_utc":      integer,     # [2]
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
@@ -54,8 +68,10 @@ Schema:
       }
     }
 
-    [0] naive timestamp if date field exists and can be converted.
-    [1] timezone aware timestamp if date field is in UTC and can
+    [0] only exists for block (b) and character (c) device entries,
+        in place of size.
+    [1] naive timestamp if date field exists and can be converted.
+    [2] timezone aware timestamp if date field is in UTC and can
         be converted
 
 Examples:
@@ -70,6 +86,10 @@ Examples:
     {"filename":"2to3-","flags":"-rwxr-xr-x","links":"4","owner":"roo"..."}
     {"filename":"2to3-2.7","link_to":"../../System/Library/Frameworks/P...}
     {"filename":"AssetCacheLocatorUtil","flags":"-rwxr-xr-x","links":"1...}
+    ...
+
+    $ ls -l /dev | jc --ls-s
+    {"filename":"null","flags":"crw-rw-rw-","links":1,"owner":"root","g...}
     ...
 
 <a id="jc.parsers.ls_s.parse"></a>
@@ -100,4 +120,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/ls_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ls_s.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

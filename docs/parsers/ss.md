@@ -46,14 +46,16 @@ field names
               "user":                 string,
               "file_descriptor":      string
             }
-          }
+          },
+          "timer": {
+            "timer_name":             string,
+            "expire_time":            string,
+            "retrans":                string
+          },
           "inode_number":             string,
           "cookie":                   string,
           "cgroup":                   string,
           "v6only":                   string,
-          "timer_name":               string,
-          "expire_time":              string,
-          "retrans":                  string
         }
       }
     ]
@@ -317,4 +319,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/ss.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ss.py)
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

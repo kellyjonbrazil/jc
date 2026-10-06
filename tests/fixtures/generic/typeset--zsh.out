@@ -1,0 +1,8 @@
+typeset simple_var='hello world'
+typeset -i int_var=42
+typeset -i count=5
+typeset -r readonly_var=locked
+export exported_var='in env'
+typeset -A user_roles=( [admin]=alice [guest]=charlie [manager]=bob ['spacey key']='spacey value' )
+typeset -a indexed_array=( one two 'three four' )
+typeset -a num_array=( 1 2 3 )

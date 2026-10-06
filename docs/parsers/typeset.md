@@ -3,10 +3,15 @@
 
 # jc.parsers.typeset
 
-jc - JSON Convert `typeset` and `declare` Bash internal command output parser
+jc - JSON Convert `typeset` and `declare` command output parser
 
-Convert `typeset` and `declare` bash internal commands with no options or the
-following:  `-a`, `-A`, `-i`, `-l`, `-p`, `-r`, `-u`, and `-x`
+Convert `typeset` and `declare` output from `bash`, `ksh`, and `zsh` with no
+options or the following:  `-a`, `-A`, `-i`, `-l`, `-p`, `-r`, `-u`, and `-x`
+
+This parser will serialize ANSI-C quoting in values (e.g. `$'foo'`). Use the
+`--raw` option if you don't want quoted values decoded. For example, standard
+output of `$'\t\n'` will be `"\t\n"` in JSON. With the `--raw`option it will
+output as `"\\t\\n"`.
 
 Note: function parsing is not supported (e.g. `-f` or `-F`)
 
@@ -119,6 +124,38 @@ Examples:
       }
     ]
 
+    $ typeset -p | jc --typeset -p    # ksh/zsh
+    [
+      {
+        "name": "user_roles",
+        "value": {
+          "admin": "alice",
+          "guest": "charlie",
+          "manager": "bob"
+        },
+        "type": "associative",
+        "readonly": false,
+        "integer": false,
+        "lowercase": false,
+        "uppercase": false,
+        "exported": false
+      },
+      {
+        "name": "indexed_array",
+        "value": [
+          "one",
+          "two",
+          "three four"
+        ],
+        "type": "array",
+        "readonly": false,
+        "integer": false,
+        "lowercase": false,
+        "uppercase": false,
+        "exported": false
+      }
+    ]
+
 <a id="jc.parsers.typeset.parse"></a>
 
 ### parse
@@ -146,4 +183,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/typeset.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/typeset.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

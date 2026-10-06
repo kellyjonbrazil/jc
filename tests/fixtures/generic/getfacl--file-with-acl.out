@@ -1,0 +1,9 @@
+# file: file.txt
+# owner: tunglpb
+# group: tunglpb
+user::rw-
+user:root:rwx	#effective:r--
+group::rw-	#effective:r--
+mask::r--
+other::r--
+

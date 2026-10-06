@@ -368,7 +368,7 @@ class _Line:
         while True:
             try:
                 c = line[i]
-            except:
+            except IndexError:
                 # Really shouldn't be getting to the end of the line
                 raise Exception(f"Reached end of line unexpectedly: '{line}'")
 
@@ -503,7 +503,7 @@ def _parse_props(index: int, line: _Line, lines: List[str]) -> Tuple[int, Props]
         index += 1
         try:
             line = _Line.categorize(lines[index])
-        except:
+        except Exception:
             pass
 
     props: Props = {}

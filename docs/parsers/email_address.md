@@ -68,4 +68,4 @@ Source: [`jc/parsers/email_address.py`](https://github.com/kellyjonbrazil/jc/blo
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

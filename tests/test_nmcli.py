@@ -67,6 +67,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-and-team-port-config.out'), 'r', encoding='utf-8') as f:
         generic_nmcli_team_and_team_port_config = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-device-wifi-list.out'), 'r', encoding='utf-8') as f:
+        generic_nmcli_device_wifi_list = f.read()
+
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/nmcli-connection-all.json'), 'r', encoding='utf-8') as f:
@@ -122,6 +125,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-team-and-team-port-config.json'), 'r', encoding='utf-8') as f:
         generic_nmcli_team_and_team_port_config_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nmcli-device-wifi-list.json'), 'r', encoding='utf-8') as f:
+        generic_nmcli_device_wifi_list_json = json.loads(f.read())
 
 
 
@@ -244,6 +250,12 @@ class MyTests(unittest.TestCase):
         Test nmcli with both team.config and team-port.config JSON value
         """
         self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_team_and_team_port_config, quiet=True), self.generic_nmcli_team_and_team_port_config_json)
+
+    def test_nmcli_device_wifi_list(self):
+        """
+        Test 'nmcli -t device wifi list' with escaped values
+        """
+        self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_device_wifi_list, quiet=True), self.generic_nmcli_device_wifi_list_json)
 
 
 if __name__ == '__main__':

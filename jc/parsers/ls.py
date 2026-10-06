@@ -3,6 +3,15 @@ r"""jc - JSON Convert `ls` and `vdir` command output parser
 Options supported:
 - `lbaR1`
 - `--time-style=full-iso`
+- `--time-style=long-iso`
+
+Block (`b`) and character (`c`) device entries report `major_number` and
+`minor_number` instead of `size`, since `ls` prints the device's major and
+minor numbers in that column rather than a byte count.
+
+`--time-style=iso` is not supported since its date field is a different
+width depending on how old each file is, which this parser cannot detect
+reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
 
 > Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly
 > parse filenames that include newline characters. Since `ls` does not
@@ -41,14 +50,18 @@ Schema:
         "owner":        string,
         "group":        string,
         "size":         integer,
+        "major_number": integer,     # [0]
+        "minor_number": integer,     # [0]
         "date":         string,
-        "epoch":        integer,     # [0]
-        "epoch_utc":    integer      # [1]
+        "epoch":        integer,     # [1]
+        "epoch_utc":    integer      # [2]
       }
     ]
 
-    [0] naive timestamp if date field exists and can be converted.
-    [1] timezone aware timestamp if date field is in UTC and can
+    [0] only exists for block (b) and character (c) device entries,
+        in place of size.
+    [1] naive timestamp if date field exists and can be converted.
+    [2] timezone aware timestamp if date field is in UTC and can
         be converted.
 
 Examples:
@@ -111,14 +124,33 @@ Examples:
       },
       ...
     ]
+
+    $ ls -l /dev | jc --ls -p
+    [
+      {
+        "filename": "null",
+        "flags": "crw-rw-rw-",
+        "links": 1,
+        "owner": "root",
+        "group": "root",
+        "major_number": 1,
+        "minor_number": 3,
+        "date": "Sep 16 08:00"
+      },
+      ...
+    ]
 """
 import re
 import jc.utils
 
+_PERM_RE = re.compile(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?')
+_LONG_ISO_DATE_RE = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+_LONG_ISO_TIME_RE = re.compile(r'^\d{2}:\d{2}$')
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`ls` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,6 +160,25 @@ class info():
 
 
 __version__ = info.version
+
+
+def _detect_date_width(sample_line):
+    """
+    Return the number of whitespace-separated tokens that make up the
+    date field: 2 for --time-style=long-iso ("2024-08-15 10:53"), 3 for
+    the default and --time-style=full-iso formats. `sample_line` must be
+    a data line that matches _PERM_RE.
+    """
+    device = sample_line[0] in ('b', 'c')
+    tokens = sample_line.split()
+    start = 6 if device else 5
+
+    if len(tokens) > start + 1 \
+       and _LONG_ISO_DATE_RE.match(tokens[start]) \
+       and _LONG_ISO_TIME_RE.match(tokens[start + 1]):
+        return 2
+
+    return 3
 
 
 def _process(proc_data):
@@ -142,7 +193,7 @@ def _process(proc_data):
 
         List of Dictionaries. Structured data to conform to the schema.
     """
-    int_list = {'links', 'size'}
+    int_list = {'links', 'size', 'major_number', 'minor_number'}
 
     for entry in proc_data:
         for key in entry:
@@ -191,7 +242,7 @@ def parse(data, raw=False, quiet=False):
             linedata.pop(0)
 
         # Look for parent line if glob or -R is used
-        if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]) \
+        if not _PERM_RE.match(linedata[0]) \
            and linedata[0].endswith(':'):
             parent = linedata.pop(0)[:-1]
             # Pop following total line if it exists
@@ -199,13 +250,20 @@ def parse(data, raw=False, quiet=False):
                 linedata.pop(0)
 
         # Check if -l was used to parse extra data
-        if re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', linedata[0]):
+        if _PERM_RE.match(linedata[0]):
+            # detect date field width once for the whole listing: 3 tokens
+            # for the default and --time-style=full-iso formats, 2 for
+            # --time-style=long-iso (see _detect_date_width)
+            date_width = 3
+            for candidate in linedata:
+                if _PERM_RE.match(candidate):
+                    date_width = _detect_date_width(candidate)
+                    break
+
             for entry in linedata:
                 output_line = {}
 
-                parsed_line = entry.split(maxsplit=8)
-
-                if not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry) \
+                if not _PERM_RE.match(entry) \
                    and entry.endswith(':'):
                     parent = entry[:-1]
                     new_section = True
@@ -225,13 +283,22 @@ def parse(data, raw=False, quiet=False):
 
                 # fixup for filenames with newlines
                 if not new_section \
-                   and not re.match(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?', entry):
+                   and not _PERM_RE.match(entry):
                     raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
                     continue
 
+                # block (b) and character (c) device entries report
+                # major,minor instead of a size, which takes one extra
+                # whitespace-separated token
+                device = entry[0] in ('b', 'c')
+                size_width = 2 if device else 1
+                fixed_width = 4 + size_width + date_width
+
+                parsed_line = entry.split(maxsplit=fixed_width)
+
                 # split filenames and links
-                if len(parsed_line) == 9:
-                    filename_field = parsed_line[8].split(' -> ')
+                if len(parsed_line) == fixed_width + 1:
+                    filename_field = parsed_line[fixed_width].split(' -> ')
                 else:
                     # in case of filenames starting with a newline character
                     filename_field = ['']
@@ -249,8 +316,15 @@ def parse(data, raw=False, quiet=False):
                 output_line['links'] = parsed_line[1]
                 output_line['owner'] = parsed_line[2]
                 output_line['group'] = parsed_line[3]
-                output_line['size'] = parsed_line[4]
-                output_line['date'] = ' '.join(parsed_line[5:8])
+
+                if device:
+                    output_line['major_number'] = parsed_line[4].rstrip(',')
+                    output_line['minor_number'] = parsed_line[5]
+                else:
+                    output_line['size'] = parsed_line[4]
+
+                date_start = 4 + size_width
+                output_line['date'] = ' '.join(parsed_line[date_start:date_start + date_width])
                 raw_output.append(output_line)
         else:
             for entry in linedata:

@@ -1,0 +1,10 @@
+simple_var='hello world'
+typeset -i int_var=42
+typeset -i count=5
+typeset -r readonly_var=locked
+typeset -u upper_var=ABC
+typeset -l lower_var=abc
+typeset -x exported_var='in env'
+typeset -A user_roles=([admin]=alice [guest]=charlie [manager]=bob ['spacey key']='spacey value')
+typeset -a indexed_array=(one two 'three four')
+typeset -A -i int_assoc=([one]=1 [three]=999 [two]=500)

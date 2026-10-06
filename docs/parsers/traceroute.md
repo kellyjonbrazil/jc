@@ -151,4 +151,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/traceroute.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/traceroute.py)
 
-Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.10 by Kelly Brazil (kellyjonbrazil@gmail.com)
