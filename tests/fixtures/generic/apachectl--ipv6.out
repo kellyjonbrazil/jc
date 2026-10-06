@@ -1,0 +1,15 @@
+VirtualHost configuration:
+[2001:db8::1]:80       localhost6 (/etc/apache2/sites-enabled/ipv6.conf:3)
+[2001:db8::2]:443      is a NameVirtualHost
+         default server secure.example.com (/etc/apache2/sites-enabled/secure.conf:1)
+         port 443 namevhost secure.example.com (/etc/apache2/sites-enabled/secure.conf:1)
+                 alias www.secure.example.com
+ServerRoot: "/etc/apache2"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/var/log/apache2/error.log"
+Mutex default: dir="/var/run/apache2/" mechanism=default [OmitPid]
+PidFile: "/var/run/apache2/apache2.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="www-data" id=33
+Group: name="www-data" id=33

@@ -1,0 +1,12 @@
+VirtualHost configuration:
+*:80                   172.17.0.5 (/etc/apache2/sites-enabled/000-default.conf:1)
+ServerRoot: "/etc/apache2"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/var/log/apache2/error.log"
+Mutex watchdog-callback: using_defaults
+Mutex default: dir="/var/run/apache2/" mechanism=default 
+PidFile: "/var/run/apache2/apache2.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="www-data" id=33
+Group: name="www-data" id=33
