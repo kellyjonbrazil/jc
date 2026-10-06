@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Dict, Iterable, Union, Optional, TextIO
+from typing import List, Dict, Iterable, Union, Optional, TextIO, Tuple
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
@@ -24,7 +24,7 @@ from .cli_data import (
     long_options_map, new_pygments_colors, old_pygments_colors, helptext_preamble_string,
     slicetext_string, helptext_end_string
 )
-from .shell_completions import bash_completion, zsh_completion
+from .shell_completions import bash_completion, zsh_completion, xonsh_completion
 from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
@@ -74,7 +74,7 @@ class JcCli():
                  'inputlist', 'about', 'debug', 'verbose_debug',
                  'force_color', 'mono', 'help_me', 'pretty', 'quiet',
                  'ignore_exceptions', 'raw', 'slurp', 'meta_out', 'unbuffer',
-                 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp',
+                 'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'xonsh_comp',
                  'magic_found_parser', 'magic_options', 'magic_run_command',
                  'magic_run_command_str', 'magic_stdout', 'magic_stderr',
                  'magic_returncode', 'slice_str', 'slice_start', 'slice_end')
@@ -92,7 +92,7 @@ class JcCli():
         self.show_hidden: bool = False
         self.show_categories: bool = False
         self.ascii_only: bool = False
-        self.json_separators: Optional[tuple[str, str]] = (',', ':')
+        self.json_separators: Optional[Tuple[str, str]] = (',', ':')
         self.json_indent: Optional[int] = None
         self.run_timestamp: Optional[datetime] = None
         self.inputlist: Optional[List[str]] = None
@@ -120,6 +120,7 @@ class JcCli():
         self.yaml_output: bool = False
         self.bash_comp: bool = False
         self.zsh_comp: bool = False
+        self.xonsh_comp: bool = False
 
         # magic attributes
         self.magic_found_parser: Optional[str] = None
@@ -880,6 +881,7 @@ class JcCli():
         self.yaml_output = 'y' in self.options
         self.bash_comp = 'B' in self.options
         self.zsh_comp = 'Z' in self.options
+        self.xonsh_comp = 'X' in self.options
 
         self.set_mono()
         self.set_custom_colors()
@@ -909,6 +911,10 @@ class JcCli():
 
         if self.zsh_comp:
             utils._safe_print(zsh_completion())
+            self.exit_clean()
+
+        if self.xonsh_comp:
+            utils._safe_print(xonsh_completion())
             self.exit_clean()
 
         # if magic syntax used, try to run the command and set the magic attributes

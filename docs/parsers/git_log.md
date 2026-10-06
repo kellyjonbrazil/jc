@@ -16,6 +16,7 @@ Additional options supported:
 - `--stat`
 - `--shortstat`
 - `--numstat`
+- `--patch`
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the
 local time of the system the parser is run on)
@@ -44,12 +45,13 @@ Schema:
         "author":               string/null,
         "author_email":         string/null,
         "date":                 string,
-        "epoch":                integer,  # [0]
-        "epoch_utc":            integer,  # [1]
+        "epoch":                integer,        # [0]
+        "epoch_utc":            integer,        # [1]
         "commit_by":            string/null,
         "commit_by_email":      string/null,
         "commit_by_date":       string,
         "message":              string,
+        "patch":                string,         # [4]
         "stats" : {
           "files_changed":      integer,
           "insertions":         integer,
@@ -60,9 +62,9 @@ Schema:
           "file_stats": [
             {
               "name":           string,
-              "lines_changed":  integer,  # [2]
-              "insertions":     integer,  # [3]
-              "deletions":      integer   # [3]
+              "lines_changed":  integer,        # [2]
+              "insertions":     integer,        # [3]
+              "deletions":      integer         # [3]
             }
           ]
         }
@@ -73,6 +75,9 @@ Schema:
     [1] timezone aware timestamp available for UTC, else null
     [2] only available with `--stat`
     [3] only available with `--numstat`. null for binary files
+    [4] only available with `--patch`. Raw unified diff for the commit,
+        absent if the commit has no patch. Binary diffs are kept as-is
+        (e.g. "Binary files ... differ")
 
 Examples:
 
@@ -249,4 +254,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/git_log.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_log.py)
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -21,7 +21,7 @@ ROUTE_TABLES = ("IPv4 Route Table", "IPv6 Route Table")
 ROUTE_TYPES = ("Active Routes:", "Persistent Routes:")
 
 
-def get_lines_until_seperator(iterator):
+def get_lines_until_separator(iterator):
     lines = []
     for line in iterator:
         if line in SEPARATORS:
@@ -108,7 +108,7 @@ def parse(cleandata: List[str]):
             for route_line in data_iterator:
                 if route_line in ROUTE_TYPES:
                     import jc.parsers.universal
-                    route_table = get_lines_until_seperator(
+                    route_table = get_lines_until_separator(
                         data_iterator
                     )
                     if not route_table:

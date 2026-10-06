@@ -218,10 +218,145 @@ _jc() {
 _jc
 ''')
 
+xonsh_template = Template('''\
+"""jc completions for the xonsh shell.
+
+Load this file from your xonsh RC (e.g. ~/.config/xonsh/rc.d/jc.py) or
+source it with `exec(compile(open(...).read(), ...))`.
+"""
+from xonsh.built_ins import XSH
+from xonsh.completers.completer import add_one_completer
+from xonsh.completers.path import contextual_complete_path
+from xonsh.completers.tools import (
+    RichCompletion,
+    contextual_command_completer_for,
+)
+from xonsh.parsers.completion_context import CommandContext, CompletionContext
+
+jc_commands = {
+    ${xonsh_commands}
+}
+jc_parsers = {
+    ${xonsh_parsers}
+}
+jc_options = {
+    ${xonsh_options}
+}
+jc_about_options = {
+    ${xonsh_about_options}
+}
+jc_about_mod_options = {
+    ${xonsh_about_mod_options}
+}
+jc_help_options = {
+    ${xonsh_help_options}
+}
+jc_special_options = {
+    ${xonsh_special_options}
+}
+
+
+def _completions(prefix, *option_maps):
+    """Return RichCompletions matching prefix, with descriptions.
+
+    Matching is by prefix (not xonsh's default substring match) so that
+    completion behaves the same way as the Bash and Zsh completions.
+
+    When nothing matches, stop completing instead of returning an empty
+    result: Bash and Zsh offer nothing here, while xonsh would otherwise
+    fall through to filesystem path completion.
+    """
+    completions = {
+        RichCompletion(opt, description=desc, append_space=True)
+        for option_map in option_maps
+        for opt, desc in option_map.items()
+        if opt.startswith(prefix)
+    }
+
+    if not completions:
+        return _no_completions()
+
+    return completions
+
+
+def _no_completions():
+    """Stop completing and offer nothing.
+
+    Returning None or an empty set only means "this completer produced
+    nothing", which lets xonsh fall through to the remaining completers
+    (e.g. path completion). Raising StopIteration tells xonsh to stop
+    collecting completions entirely, matching the Bash and Zsh behavior
+    of offering nothing at these positions.
+    """
+    raise StopIteration
+
+
+@contextual_command_completer_for('jc')
+def _jc_completer(command: CommandContext):
+    """Completions for the jc command."""
+    words = [arg.value for arg in command.args[1:command.arg_index]]
+    prefix = command.prefix
+
+    # if jc_about_options are found anywhere in the line, then only complete
+    # from jc_about_mod_options
+    if any(word in jc_about_options for word in words):
+        return _completions(prefix, jc_about_mod_options)
+
+    # if jc_help_options and a parser are found anywhere in the line, then no
+    # more completions
+    if any(word in jc_help_options for word in words) \\
+       and any(word in jc_parsers for word in words):
+        return _no_completions()
+
+    # if jc_help_options are found anywhere in the line, then only complete
+    # with parsers
+    if any(word in jc_help_options for word in words):
+        return _completions(prefix, jc_parsers)
+
+    # if special options are found anywhere in the line, then no more
+    # completions
+    if any(word in jc_special_options for word in words):
+        return _no_completions()
+
+    # if magic command is found anywhere in the line, use called command's
+    # autocompletion
+    for index, word in enumerate(words):
+        if word in jc_commands:
+            # strip jc and its options so the magic command is completed
+            magic_context = command._replace(
+                args=command.args[index + 1:],
+                arg_index=command.arg_index - index - 1
+            )
+            completer = XSH.shell.shell.completer
+            return completer.complete_from_context(
+                CompletionContext(magic_context)
+            )
+
+    # if "/pr[oc]" (magic for Procfile parsers) is in the current word,
+    # complete with files/directories in the path
+    if '/pr' in command.prefix:
+        return contextual_complete_path(command)
+
+    # if a parser arg is found anywhere in the line, only show options and
+    # help options
+    if any(word in jc_parsers for word in words):
+        return _completions(prefix, jc_options, jc_help_options)
+
+    # default completion
+    return _completions(
+        prefix, jc_options, jc_about_options, jc_help_options, jc_special_options,
+        jc_parsers, jc_commands
+    )
+
+
+add_one_completer('jc', _jc_completer, 'start')
+''')
+
+
 about_options = ['--about', '-a']
 about_mod_options = ['--pretty', '-p', '--yaml-out', '-y', '--monochrome', '-m', '--force-color', '-C']
 help_options = ['--help', '-h']
-special_options = ['--version', '-v', '--bash-comp', '-B', '--zsh-comp', '-Z']
+special_options = ['--version', '-v', '--bash-comp', '-B', '--zsh-comp', '-Z', '--xonsh-comp', '-X']
 
 def get_commands():
     command_list = []
@@ -284,6 +419,36 @@ def get_descriptions(opt_list):
                 continue
 
     return opt_desc_list
+
+
+def get_xonsh_descriptions(opt_list):
+    """Return a list of python dict items for options."""
+    xonsh_opt_list = []
+    for item in get_descriptions(opt_list):
+        opt, _, desc = item[1:-1].partition(':')
+        xonsh_opt_list.append(f'{opt!r}: {desc!r},')
+
+    return xonsh_opt_list
+
+
+def get_xonsh_parser_descriptions():
+    """Return a list of python dict items for parsers."""
+    return [
+        f"{p['argument']!r}: {p['description']!r},"
+        for p in all_parser_info(show_hidden=True)
+        if 'description' in p
+    ]
+
+
+def get_xonsh_command_descriptions(command_list):
+    """Return a list of python dict items for magic commands."""
+    # the description is built first because quoting it inline would need a
+    # backslash inside an f-string expression, which is a SyntaxError before 3.12
+    items = []
+    for cmd in command_list:
+        description = f'run "{cmd}" command with magic syntax.'
+        items.append(f'{cmd!r}: {description!r},')
+    return items
 
 
 def bash_completion():
@@ -358,4 +523,28 @@ def zsh_completion():
         zsh_options_describe=options_describe,
         zsh_commands=commands_str,
         zsh_commands_describe=commands_describe
+    )
+
+
+def xonsh_completion():
+    opts_no_special = get_options()
+
+    for s_option in special_options:
+        opts_no_special.remove(s_option)
+
+    for a_option in about_options:
+        opts_no_special.remove(a_option)
+
+    for h_option in help_options:
+        opts_no_special.remove(h_option)
+
+    indent = '\n    '
+    return xonsh_template.substitute(
+        xonsh_parsers=indent.join(get_xonsh_parser_descriptions()),
+        xonsh_special_options=indent.join(get_xonsh_descriptions(special_options)),
+        xonsh_about_options=indent.join(get_xonsh_descriptions(about_options)),
+        xonsh_about_mod_options=indent.join(get_xonsh_descriptions(about_mod_options)),
+        xonsh_help_options=indent.join(get_xonsh_descriptions(help_options)),
+        xonsh_options=indent.join(get_xonsh_descriptions(opts_no_special)),
+        xonsh_commands=indent.join(get_xonsh_command_descriptions(get_commands()))
     )

@@ -1,0 +1,9 @@
+# file: effective.txt
+# owner: tunglpb
+# group: tunglpb
+user::rw-
+user:root:r--	#effective:r--
+group::rw-	#effective:rw-
+mask::rw-
+other::r--
+
