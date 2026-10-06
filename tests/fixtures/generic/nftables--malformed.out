@@ -1,0 +1,13 @@
+not nft output at all
+table inet broken {
+	chain input {
+		type filter hook input priority filter; policy drop;
+		tcp dport 22 accept
+	}
+	unknown object {
+		this content is skipped
+	}
+}
+chain orphan {
+	tcp dport 80 accept
+}
