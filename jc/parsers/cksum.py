@@ -110,10 +110,11 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, data.splitlines()):
+            fields = line.split(maxsplit=2)
             item = {
-                'filename': line.split(maxsplit=2)[2],
-                'checksum': line.split(maxsplit=2)[0],
-                'blocks': line.split(maxsplit=2)[1]
+                'filename': fields[2] if len(fields) > 2 else None,
+                'checksum': fields[0],
+                'blocks': fields[1]
             }
             raw_output.append(item)
 
